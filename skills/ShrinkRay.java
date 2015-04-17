@@ -45,23 +45,22 @@ public class ShrinkRay extends Skill {
 	@Override
 	public void resolve(Combat c, Character target) {
 		self.consume(Item.Battery, 2);
-		int permanent = Global.centeredrandom(4, self.get(Attribute.Science)/4, 1) > 2 ? 1 : 0;
+		boolean permanent = Global.random(20) == 0;
 		if(self.human()){
 			if(target.hasDick()){
-				c.write(self,deal(c,permanent,Result.special, target));
-			}
-			else{
-				c.write(self,deal(c,permanent,Result.normal, target));
+				c.write(self,deal(c,permanent ? 1 : 0, Result.special, target));
+			} else {
+				c.write(self,deal(c,permanent ? 1 : 0, Result.normal, target));
 			}
 		} else if(target.human()) {
 			if(target.hasDick()){
-				c.write(self,receive(c,permanent,Result.special, target));
+				c.write(self,receive(c,permanent ? 1 : 0, Result.special, target));
 			} else {
-				c.write(self,receive(c,permanent,Result.normal, target));
+				c.write(self,receive(c,permanent ? 1 : 0, Result.normal, target));
 			}
 		}
 		target.add(new Shamed(target));
-		if (permanent > 0) {
+		if (permanent) {
 			if (target.hasDick()) {
 				CockPart part = target.body.getCockAbove(CockPart.tiny.size);
 				if (part != null) {
