@@ -22,7 +22,7 @@ public class Nothing extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct();
+		return true;
 	}
 
 	@Override
