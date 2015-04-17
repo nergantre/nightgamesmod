@@ -158,6 +158,11 @@ public class Mara extends BasePersonality  {
 	}
 
 	@Override
+	public String temptLiner(Character target) {
+		return "<i>\"If you want me to get you off so badly,\"</i> Mara teases coyly. <i>\"You should have just said so from the start. You don't need to put up this token resistance.\"</i>";
+	}
+
+	@Override
 	public String victory(Combat c,Result flag) {
 		Character target;
 		if(c.p1==character){

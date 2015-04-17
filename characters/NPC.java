@@ -329,6 +329,10 @@ public class NPC extends Character {
 		return ai.taunt();
 	}
 	@Override
+	public String temptLiner(Character target) {
+		return ai.temptLiner(target);
+	}
+	@Override
 	public void detect() {
 		// TODO Auto-generated method stub
 		

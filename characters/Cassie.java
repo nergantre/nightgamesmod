@@ -332,6 +332,10 @@ public class Cassie extends BasePersonality {
 		return "Cassie giggles and taps the head of your dick. <i>\"Your penis is so eager and cooperative,\"</i> she jokes. <i>\"Are you sure you're not just letting me win?\"</i>";
 	}
 	@Override
+	public String temptLiner(Character t) {
+		return "Cassie catches you glancing at her body, and blows you a kiss. <i>\"Why don't you just stop resisting and let me make you cum?\"</i>";
+	}
+	@Override
 	public boolean fightFlight(Character opponent) {
 		return !character.nude();
 	}

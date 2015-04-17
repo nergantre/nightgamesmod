@@ -158,12 +158,17 @@ public class Yui extends BasePersonality {
 	@Override
 	public void advance() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public boolean checkMood(Emotion mood, int value) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public String temptLiner(Character target) {
+		// TODO Auto-generated method stub
+		return "";
 	}
 }

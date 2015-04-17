@@ -153,6 +153,11 @@ public class Kat extends BasePersonality {
 	}
 
 	@Override
+	public String temptLiner(Character target) {
+		return "Kat winks at you and looks at your crotch, <i>\"MmM! That looks tasty nya!\"</i>";
+	}
+
+	@Override
 	public String victory(Combat c,Result flag) {
 		Character opponent;
 		if(c.p1==character){

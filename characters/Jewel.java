@@ -147,6 +147,11 @@ public class Jewel extends BasePersonality {
 	}
 
 	@Override
+	public String temptLiner(Character target) {
+		return "Jewel licks her lips, <i>\"Soon, I'll have you wailing like a whore.\"</i>";
+	}
+
+	@Override
 	public String victory(Combat c, Result flag) {
 		if(flag==Result.anal){
 			return "You gasp as Jewel pounds away at your ass without mercy. You're going to cum, you realize. She isn't even touching your dick but the sensation of the strapon " +

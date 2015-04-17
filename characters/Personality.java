@@ -41,4 +41,5 @@ public interface Personality extends Serializable{
 	public String image();
 	public void pickFeat();
 	public String describeAll();
+	public String temptLiner(Character target);
 }

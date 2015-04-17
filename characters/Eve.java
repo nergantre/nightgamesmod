@@ -139,6 +139,11 @@ public class Eve extends BasePersonality {
 	}
 
 	@Override
+	public String temptLiner(Character target) {
+		return "Eve grins sadistically. <i>\"I'm an expert at making people like you squeal.\"</i>";
+	}
+
+	@Override
 	public String victory(Combat c,Result flag) {
 		character.arousal.empty();
 		return "You try valiantly to outlast Eve, but it's no good. She's got you right where she wants you. She pins you down and skillfully strokes your cock. You feel pleasure rapidly " +

@@ -100,6 +100,13 @@ public class LoadablePersonality extends BasePersonality {
 	}
 
 	@Override
+	public String temptLiner(Character target) {
+        ScriptableObject.putProperty(scope, "target", Context.javaToJS(target, scope));
+		return execute("taunt(target)", "taunt");
+	}
+
+
+	@Override
 	public String victory(Combat c, Result flag) {
         ScriptableObject.putProperty(scope, "combatVar", Context.javaToJS(c, scope));
         ScriptableObject.putProperty(scope, "flagVar", Context.javaToJS(flag, scope));

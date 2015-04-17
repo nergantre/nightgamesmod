@@ -172,6 +172,11 @@ public class Angel extends BasePersonality {
 	}
 
 	@Override
+	public String temptLiner(Character t) {
+		return "Angel looks at you with a grin, <i>\"You're almost drooling. Is staring at my body that much fun? If you want me that much, why don't you just sit there and let me make you feel good.\"</i>";
+	}
+
+	@Override
 	public String victory(Combat c,Result flag) {
 		character.arousal.empty();
 		if(flag==Result.anal){

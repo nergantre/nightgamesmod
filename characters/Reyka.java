@@ -145,6 +145,11 @@ public class Reyka extends BasePersonality {
 	}
 
 	@Override
+	public String temptLiner(Character target) {
+		return "\"Why keep fighting? Wouldn't it just feel SO much better just to let me do what I do best?\"";
+	}
+
+	@Override
 	public String victory(Combat c,Result flag) {
 		Character opponent = (this.character.equals(c.p1) ? c.p2 : c.p1);
 		if(flag==Result.anal){
