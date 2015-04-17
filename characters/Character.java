@@ -1580,4 +1580,8 @@ public abstract class Character extends Observable implements Cloneable{
 			c.write(Global.format("<b>{self:subject-action:have|has} gained "+item.pre()+item.getName()+"</b>", this, this));
 		gain(item, 1);
 	}
+	public String temptLiner(Character target) {
+		//placeholder
+		return Global.format("{self:SUBJECT-ACTION:tempt:tempts} {other:direct-object}.", this, target);
+	}
 }

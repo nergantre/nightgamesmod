@@ -1,7 +1,6 @@
 package skills;
 
 import status.Charmed;
-import status.Shamed;
 import global.Global;
 import characters.Attribute;
 import characters.Character;
@@ -12,7 +11,6 @@ import combat.Combat;
 import combat.Result;
 
 public class Charm extends Skill {
-
 	public Charm(Character self) {
 		super("Charm", self);
 	}
