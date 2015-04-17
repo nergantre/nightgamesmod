@@ -2,6 +2,7 @@ package skills;
 
 import items.Item;
 import status.Hypersensitive;
+import status.Stsflag;
 import global.Global;
 import global.Modifier;
 import characters.Attribute;
@@ -26,7 +27,8 @@ public class Tickle extends Skill {
 	public void resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy()+self.tohit())){
 			if(target.pantsless()&&c.getStance().reachBottom(self)&&!c.getStance().penetration(self)){
-				if(self.has(Item.Tickler2)&&Global.random(2)==1&&self.canSpend(10)&&(!self.human()||Global.getMatch().condition!=Modifier.notoys)){
+				if(self.has(Item.Tickler2)&&Global.random(2)==1&&self.canSpend(10)&&(!self.human()&&!target.is(Stsflag.hypersensitive)
+						||Global.getMatch().condition!=Modifier.notoys)){
 					if(self.human()){
 						c.write(self,deal(c,0,Result.critical, target));
 					}
