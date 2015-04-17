@@ -197,11 +197,15 @@ public class Body implements Cloneable {
 	}
 
 	public void removeOne(String type) {
+		BodyPart removed = null;
 		for (BodyPart part : bodyParts) {
 			if (part.isType(type)) {
-				bodyParts.remove(part);
-				return;
+				removed = part;
+				break;
 			}
+		}
+		if (removed != null) {
+			bodyParts.remove(removed);
 		}
 	}
 
