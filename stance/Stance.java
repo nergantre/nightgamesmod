@@ -1,0 +1,20 @@
+package stance;
+
+public enum Stance {
+	behind,
+	cowgirl,
+	doggy,
+	missionary,
+	mount,
+	neutral,
+	pin,
+	reversecowgirl,
+	reversemount,
+	sixnine,
+	standing,
+	standingover,
+	anal,
+	flying,
+	trib,
+	behindfootjob,
+}

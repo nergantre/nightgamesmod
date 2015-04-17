@@ -1,0 +1,122 @@
+=========Power===================
+Shove	: 0
+Slap	: 7				
+Knee	: 10
+Turnover: 6
+Kick	: 17			-	usable prone	: Jewel
+Tackle	: 26
+Squeeze	: 9
+Nurple	: 13
+*Stomp	: 16			-	Damage+	: Mara
+Restrain : 8
+Armbar	: 20
+Leglock	: 24
+Hip Throw : Cassie
+*Carry	: 30
+Tear	: 32
+
+==========Seduction==============
+Kiss	: 0		-	pleasure+	: 9	-	Inflict Charmed	: Angel
+Tickle	: 0			-	Tempt+	: Mara
+Suck Neck	: 12
+Finger	: 0		-	pleasure+	: 8
+Handjob	: 0		-	pleasure+	: 8
+Blowjob	: 10		-	Pleasure+	: Cassie
+Cunnilingus	: 10		-	Pleasure+	: Cassie
+Fondle Breasts	: 0
+Lick Nipples	: 14
+Paizuri	: 28
+Footjob	: 22
+Flick	: 17
+Spank	: 8		-	Shamed	: Angel
+Fuck	: 0
+Thrust	: 0
+Piston	: 18
+Grind	: 14
+*Spiral	: Jewel
+Tighten : 28
+Whisper	: 32
+Frottage	: 26
+Masturbate	: 0
+Strip Tease	: 24
+AssFuck : 20
+
+===========Cunning================
+Strip	: 0
+Taunt	: 8
+Trip	: 16
+*Reversal	: 24
+*Perfect Touch	: 18
+Escape	: 10
+*Maneuver	: 20
+Focus	: 15
+Counter	: 		- Proc+, Damage+
+Bluff	: Angel
+Bravado	: Jewel
+Diversion	: Cassie
+Tripline	: 0
+Alarm	: 6
+Snare	: 11
+Decoy	: 7
+Spiderweb	: Mara
+Spring trap	: 15
+Aphrodisiac trap	: 14
+Dissolving trap	: 17
+
+===========Arcane=================
+Fairy Familiar	: 3 Pet (male/female)
+Binding			: 9 Binds, duh
+Illusions		: 12 Reduces accuracy
+Illusion Trap	: 6 Temptation
+Naked Bloom		: 15 Destroys clothes
+Magic Missile	: 1 Damage
+Barrier			: 18 grants Shielded
+
+==========Dark================
+Imp				: 6 Pet (male/female)
+Lust Aura		: 3 Tempt over time
+Dark Tendrils	: 12 Immobilizes or trips
+Energy Drain	: 1 Weakens target and heals self - replaces suck neck
+Sacrifice		: 15 Damage self to reduce arousal
+Domination		: 9 Makes target lie down
+Drain			: 20 Sex skill, temporarily steals stats
+Fly				: 18 special sex position
+
+==========Science!===============
+Slime			: 3 Pet (asexual)
+Shrink Ray		: 12 Shames if nude
+Short Circuit	: 15 inflicts Rewired
+Stun blast		: 9 Stuns
+Shock Glove		: 1 Damage Weapon - boosts squeeze, twist nipples
+Aerosolizer		: 6 Potions can't miss
+Defabricator	: 18
+
+===========Ki====================
+Water Form		: 3 Buffs counter rate
+Shredding Palm	: 1 Damages and destroys top - replaces shove
+Fly Catcher		: 9 Removes enemy pet
+Flash Step		: 6 Gets behind target
+Stone Form		: 12 Reduces pain damage
+Fire Form		: 15 Increases Mojo gain and reduces cost
+Ice Form		: 18 Reduces pleasure damage
+Shatter Kick	: 21 Kick with chance to strip instead of dealing damage
+
+===========Animism=================
+Pounce			: 1 Tackle Upgrade
+Purr			: 9 Charms
+Tail Job		: 6
+Tiger Claw		: 12 Slap Upgrade
+Cat's Grace		: 3 Evasion Bonus
+Shred			: 15 Tear Upgrade Destroys clothes
+Beastform		: 18 
+
+===========Fetishism===============
+Exhibitionism	: 3 Builds Mojo when nude
+Masochism		: 1 Target and self gain arousal when damaged
+Bondage			: 6 Target and self gain arousal when bound
+Tentacle Porn	: 12 Binds and Lubricates
+Fetish Goblin	: 9 Pet(Hermaphrodite)
+Face Fuck		: 15 Shames
+
+============Misc======================
+Teabag/Facesit	: lvl 15, shames and reduces mojo
