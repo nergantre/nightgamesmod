@@ -272,6 +272,8 @@ public class Global {
 		skillPool.add(new Barrier(p));
 		skillPool.add(new CatsGrace(p));
 		skillPool.add(new Charm(p));
+		skillPool.add(new Tempt(p));
+		skillPool.add(new EyesOfTemptation(p));
 		skillPool.add(new TailJob(p));
 		skillPool.add(new FaceSit(p));
 		skillPool.add(new Purr(p));
