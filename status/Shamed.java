@@ -31,7 +31,7 @@ public class Shamed extends Status {
 			return affected.name()+" is red faced from embarrassment as much as arousal.";
 		}
 	}
-	
+
 	@Override
 	public boolean mindgames(){
 		return true;
@@ -45,7 +45,7 @@ public class Shamed extends Status {
 	@Override
 	public int mod(Attribute a) {
 		if(a==Attribute.Seduction || a==Attribute.Cunning){
-			return Math.max(-2, affected.getPure(a) / 5);
+			return Math.max(-2, -affected.getPure(a) / 5);
 		}
 		else{
 			return 0;
