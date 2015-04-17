@@ -135,9 +135,9 @@ public class Nothing extends Skill {
 		}
 	}
 	private boolean focused(){
-		return self.getPure(Attribute.Cunning)>=15 && !self.has(Trait.undisciplined);
+		return self.getPure(Attribute.Cunning)>=15 && !self.has(Trait.undisciplined)&&self.canRespond();
 	}
 	private boolean bluff(){
-		return self.has(Trait.pokerface)&&self.getPure(Attribute.Cunning)>=9&&self.canSpend(20);
+		return self.has(Trait.pokerface)&&self.getPure(Attribute.Cunning)>=9&&self.canSpend(20)&&self.canRespond();
 	}
 }

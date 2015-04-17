@@ -42,9 +42,8 @@ public class Cunnilingus extends Skill {
 						if (target.taintedFluids()) {
 							if(target.get(Attribute.Dark)>=6&&Global.random(2)==0 && !target.wary()){
 								c.write(self,deal(c, -2, Result.special, target));
-								this.self.add(new Enthralled(self,target));
-							}
-							else{
+								this.self.add(new Enthralled(self, target, 4));
+							} else {
 								c.write(self,deal(c, -1, Result.special, target));
 							}
 							self.tempt(c, target, 5);
@@ -63,7 +62,7 @@ public class Cunnilingus extends Skill {
 						if (target.taintedFluids()) {
 							if(target.get(Attribute.Dark)>=6&&Global.random(2)==0){
 								c.write(self,deal(c, -2, Result.normal, target));
-								this.self.add(new Enthralled(self,target));
+								this.self.add(new Enthralled(self,target, 3));
 							}
 							else{
 								c.write(self,deal(c, -1, Result.normal, target));

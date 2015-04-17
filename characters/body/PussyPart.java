@@ -172,7 +172,7 @@ public enum PussyPart implements BodyPart {
 			opponent.pain(c, 20 + self.get(Attribute.Ki)/2);
 		}
 		if (this==PussyPart.arcane && Global.random(4) == 0 && !opponent.wary()) {
-			opponent.add(new Enthralled(opponent, self));
+			opponent.add(new Enthralled(opponent, self, 3));
 			c.write(self, self.nameOrPossessivePronoun() + " tattoos surrounding " + self.possessivePronoun() + " vagina suddenly light up with arcane energy. " 
 						+ "The light seems to seep into " + opponent.possessivePronoun() + " " + target.describe(opponent)
 						+ ", leaving " + opponent.directObject() + " enthralled to " + self.possessivePronoun() + " will.");

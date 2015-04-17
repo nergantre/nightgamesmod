@@ -33,7 +33,7 @@ public class Squeeze extends Skill {
 					else if(self.human()){
 						c.write(self,deal(c,0,Result.special, target));
 					}
-					target.pain(c, Global.random(8+target.get(Attribute.Perception))+8);
+					target.pain(c, Global.random(8+target.get(Attribute.Perception))+16);
 					if(target.has(Trait.achilles)){
 						target.pain(c, 6);
 					}

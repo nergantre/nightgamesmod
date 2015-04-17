@@ -91,6 +91,7 @@ public class Cowgirl extends Position {
 		float priority = 0;
 		if (dom(self)) {
 			priority += 4;
+			priority += self.body.getRandomPussy().priority;
 		}
 		return priority;
 	}

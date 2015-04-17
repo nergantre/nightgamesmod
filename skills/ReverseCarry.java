@@ -2,6 +2,7 @@ package skills;
 
 import stance.Jumped;
 import stance.Standing;
+import stance.StandingOver;
 import global.Global;
 import characters.Attribute;
 import characters.Character;
@@ -53,6 +54,7 @@ public class ReverseCarry extends Carry {
 			} else if(target.human()){
 				c.write(self,receive(c,0,Result.miss, target));
 			}
+			c.setStance(new StandingOver(target, self));
 		}
 		self.spendMojo(getMojoSpent());
 	}

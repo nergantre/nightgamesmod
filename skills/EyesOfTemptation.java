@@ -11,7 +11,7 @@ import combat.Result;
 public class EyesOfTemptation extends Skill {
 
 	public EyesOfTemptation(Character self) {
-		super("Tempt", self);
+		super("Eyes of Temptation", self);
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class EyesOfTemptation extends Skill {
 			c.write(self,receive(c,0,Result.normal, target));
 		}
 		if (result == Result.normal) {
-			target.add(new Enthralled(target, self));
+			target.add(new Enthralled(target, self, 5));
 			self.emote(Emotion.dominant, 50);
 			self.spendMojo(30);
 		}
@@ -59,9 +59,9 @@ public class EyesOfTemptation extends Skill {
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.normal)
-			return Global.format("As {target:subject-action:gaze|gazes} into {self:name-possessive} eyes, {target:subject-action:feel|feels} {target:possessive} will slipping into the abyss.", self, target);
+			return Global.format("As {other:subject-action:gaze|gazes} into {self:name-possessive} eyes, {other:subject-action:feel|feels} {other:possessive} will slipping into the abyss.", self, target);
 		else
-			return Global.format("{target:SUBJECT-ACTION:look|looks} away as soon as {self:subject-action:focus|focuses} {self:possessive} eyes on {target:direct-object}", self, target);
+			return Global.format("{other:SUBJECT-ACTION:look|looks} away as soon as {self:subject-action:focus|focuses} {self:possessive} eyes on {other:direct-object}", self, target);
 	}
 
 	@Override

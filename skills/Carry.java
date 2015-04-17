@@ -2,6 +2,7 @@ package skills;
 
 import global.Global;
 import stance.Standing;
+import stance.StandingOver;
 import status.CockBound;
 import characters.Attribute;
 import characters.Character;
@@ -39,13 +40,14 @@ public class Carry extends Fuck {
 				&& c.getStance().mobile(self)
 				&& !c.getStance().prone(self)
 				&& !c.getStance().prone(target)
+				&& !c.getStance().facing()
 				&& self.getStamina().get()>=15
 				&& self.canSpend(getMojoSpent())
 				&& !c.getStance().penetration(self);
 	}
 	
 	public int getMojoSpent() {
-		return 25;
+		return 40;
 	}
 
 	@Override
@@ -65,6 +67,7 @@ public class Carry extends Fuck {
 			} else if(target.human()){
 				c.write(self,receive(c,0,Result.miss, target));
 			}
+			c.setStance(new StandingOver(target, self));
 		}
 		self.spendMojo(getMojoSpent());
 	}
@@ -74,7 +77,7 @@ public class Carry extends Fuck {
 		return new Carry(user);
 	}
 	public int accuracy(){
-		return 2;
+		return 0;
 	}
 	@Override
 	public Tactics type(Combat c) {
@@ -84,7 +87,7 @@ public class Carry extends Fuck {
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
-			return "You pick up "+target.name()+", but she scrambles out of your arms.";
+			return "You pick up "+target.name()+", but she flips out of your arms and manages to trip you.";
 		}
 		else{
 			return "You scoop up "+target.name()+", lifting her into the air and simultaneously thrusting your dick into her hot depths. She lets out a noise that's " +
@@ -95,7 +98,7 @@ public class Carry extends Fuck {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
-			return Global.format("{self:subject} picks you up, but you scramble out of {self:posessive} grip before {self:pronoun} could do anything.", self, target);
+			return Global.format("{self:subject} picks you up, but you scramble out of {self:posessive} grip before {self:pronoun} could do anything. Moreover, you manage to trip her while she's distracted.", self, target);
 		} else {
 			return Global.format("{self:subject} scoops you up in {self:possessive} powerful arms and simultaneously thrusts {self:posessive} {self:body-part:cock} into your {other:body-part:pussy}.", self, target);
 		}

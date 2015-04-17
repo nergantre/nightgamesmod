@@ -23,7 +23,7 @@ public class Blowjob extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return (target.pantsless()&&target.hasDick()&&c.getStance().oral(self)&&!c.getStance().behind(self)&&self.canAct()&&!c.getStance().penetration(self))
-				|| ((c.getStance().inserted(target) && self.has(Trait.vaginaltongue) && c.getStance().en != Stance.anal));
+				|| (self.canRespond() && (c.getStance().inserted(target) && self.has(Trait.vaginaltongue) && c.getStance().en != Stance.anal));
 	}
 
 	@Override

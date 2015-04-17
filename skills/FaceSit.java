@@ -52,7 +52,7 @@ public class FaceSit extends Skill {
 					}else if(target.human()){
 						c.write(self,receive(c,0,Result.special, target));
 					}
-					target.add(new Enthralled(target,self));
+					target.add(new Enthralled(target,self, 5));
 				}
 				else{
 					if(self.human()){

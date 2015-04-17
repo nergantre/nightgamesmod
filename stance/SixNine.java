@@ -30,6 +30,11 @@ public class SixNine extends Position {
 	}
 
 	@Override
+	public boolean facing() {
+		return false;
+	}
+
+	@Override
 	public boolean dom(Character c) {
 		return false;
 	}

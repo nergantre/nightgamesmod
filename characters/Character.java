@@ -1582,6 +1582,6 @@ public abstract class Character extends Observable implements Cloneable{
 	}
 	public String temptLiner(Character target) {
 		//placeholder
-		return Global.format("{self:SUBJECT-ACTION:tempt:tempts} {other:direct-object}.", this, target);
+		return Global.format("{self:SUBJECT-ACTION:tempt|tempts} {other:direct-object}.", this, target);
 	}
 }

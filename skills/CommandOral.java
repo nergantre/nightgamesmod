@@ -27,19 +27,16 @@ public class CommandOral extends PlayerCommand {
 		boolean silvertongue = target.has(Trait.silvertongue);
 		boolean lowStart = self.getArousal().get() < 15;
 		int m = (silvertongue ? 8 : 5) + Global.random(10);
-		self.body.pleasure(target, target.body.getRandom("mouth"), self.body.getRandom("cock"), m, c);					
-
-		self.buildMojo(30);
-		boolean lowEnd = self.getArousal().get() < 15;
-		
 		if (self.human())
 			if (lowStart)
-				if (lowEnd)
+				if (m < 8)
 					c.write(self,deal(c, 0, Result.weak, target));
 				else
 					c.write(self,deal(c, 0, Result.strong, target));
 			else
 				c.write(self,deal(c, 0, Result.normal, target));
+		self.body.pleasure(target, target.body.getRandom("mouth"), self.body.getRandom("cock"), m, c);					
+		self.buildMojo(30);
 	}
 
 	@Override

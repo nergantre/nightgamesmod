@@ -88,7 +88,7 @@ public class Body implements Cloneable {
 	public boolean contains(BodyPart part) {
 		return bodyParts.contains(part);
 	}
-	
+
 	public List<BodyPart> get(String type) {
 		List<BodyPart> parts = new ArrayList<BodyPart>(); 
 		for (BodyPart part : bodyParts) {

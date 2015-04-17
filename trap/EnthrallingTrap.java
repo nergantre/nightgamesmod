@@ -26,7 +26,7 @@ public class EnthrallingTrap implements Trap {
 										+ " appearing to have been drawn in cum. Wisely,"
 										+ " you avoid stepping into it.");
 			} else {
-				target.add(new Enthralled(target,owner));
+				target.add(new Enthralled(target,owner, 5));
 				target.location().opportunity(target,this);
 				Global.gui()
 						.message(
@@ -53,7 +53,7 @@ public class EnthrallingTrap implements Trap {
 										+ " It would seem to be very easy to have your way with her now, but"
 										+ " who or whatever left that thing there will probably be thinking"
 										+ " the same.");
-			target.add(new Enthralled(target,owner));
+			target.add(new Enthralled(target,owner, 5));
 			target.location().opportunity(target,this);
 		}
 

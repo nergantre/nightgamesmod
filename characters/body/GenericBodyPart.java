@@ -85,9 +85,15 @@ public class GenericBodyPart implements BodyPart {
 		return true;
 	}
 
-	public boolean equals(BodyPart other)
+	@Override
+	public boolean equals(Object other)
 	{
 		return this.toString().equals(other.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		return (this.type + ":" +this.toString()).hashCode();
 	}
 
 	@Override

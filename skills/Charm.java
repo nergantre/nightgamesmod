@@ -76,7 +76,7 @@ public class Charm extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return target.getName() + "flashes a dazzling smile at you.";
+		return self.getName() + " flashes a dazzling smile at you.";
 	}
 
 	@Override

@@ -135,53 +135,51 @@ public class Struggle extends Skill {
 								target.body.getRandom("pussy"),
 								self.body.getRandom("cock"), m, c);
 						self.removeStatus(Stsflag.cockbound);
-					} 
-					if (self.human()) {
-						if (c.getStance().behind(self) && self.hasDick() && target.hasPussy()) {
-							c.write(self,
-									"You manage unbalance "
-											+ target.name()
-											+ " and push her forward onto her hands and knees. You follow her, still inside her tight wetness, and continue "
-											+ "to fuck her from behind.");
-							c.setStance(new Doggy(self, target));
-						} else if (c.getStance().en == Stance.flying) {
-							c.write(self,
-									"You manage to shake yourself loose from the demoness.\n"
-											+ "Immediatly afterwards you realize letting go of the person"
-											+ " holding you a good distance up from the ground may not have been"
-											+ " the smartest move you've ever made, as the ground is quickly"
-											+ " approaching your face.");
-							c.setStance(c.getStance().insert(self, self));
-						} else if (c.getStance().prone(self) && self.hasDick() && target.hasPussy()) {
-							c.write(self,
-									"You surpise "
-											+ target.name()
-											+ " by hugging her close to your chest, preventing her from using stabilizing her position with her arms. You "
-											+ "roll on top of her into traditional missionary position, careful not to let your cock slip out of her.");
-							c.setStance(new Missionary(self, target));
-						} else if (c.getStance().prone(self) && target.hasDick() && self.hasPussy()) {
-							c.write(self,
-									self.name()
-											+ " wraps her legs around your waist and suddenly pulls you into a deep kiss. You're so surprised by this sneak attack that you "
-											+ "don't even notice her roll you onto your back until you feel her weight on your hips. She moves her hips experimentally, enjoying the control "
-											+ "she has in cowgirl position.");
-							c.setStance(new Cowgirl(self, target));
-						} else if (c.getStance().inserted(target)) {
-							c.write(self,
-									Global.format(
-											"{self:SUBJECT-ACTION:manage|manages} to reach between {self:possessive} legs and grab hold of {other:possessive} ballsack, stopping {other:direct-object} in mid thrust. {self:SUBJECT-ACTION:smirk|smirks} at {other:direct-object} over {self:possessive} shoulder "
-											+ "and pushes {self:possessive} butt against {other:direct-object}, using the leverage of "
-											+ "{other:possessive} testicles to keep {other:direct-object} from backing away to maintain {self:possessive} balance. {self:SUBJECT-ACTION:force|forces} {other:direct-object} onto {other:possessive} back, while never breaking {other:possessive} connection. After "
-											+ "some complex maneuvering, {other:subject-action:end|ends} up on the floor while {self:subject-action:straddle|straddles} {other:possessive} hips in a reverse cowgirl position.", self, target));
-							c.setStance(new ReverseCowgirl(self, target));
-						} else {
-							c.write(self,
-									Global.format("{self:SUBJECT-ACTION:manage|manages} to shake {target:direct-object} off." ,self,target));
-							if (!self.is(Stsflag.braced)) {
-								self.add(new Braced(self));
-							}
-							c.setStance(new Neutral(self, target));
+					}
+					if (c.getStance().behind(self) && self.hasDick() && target.hasPussy()) {
+						c.write(self,
+								"You manage unbalance "
+										+ target.name()
+										+ " and push her forward onto her hands and knees. You follow her, still inside her tight wetness, and continue "
+										+ "to fuck her from behind.");
+						c.setStance(new Doggy(self, target));
+					} else if (c.getStance().en == Stance.flying) {
+						c.write(self,
+								"You manage to shake yourself loose from the demoness.\n"
+										+ "Immediatly afterwards you realize letting go of the person"
+										+ " holding you a good distance up from the ground may not have been"
+										+ " the smartest move you've ever made, as the ground is quickly"
+										+ " approaching your face.");
+						c.setStance(c.getStance().insert(self, self));
+					} else if (c.getStance().prone(self) && self.hasDick() && target.hasPussy()) {
+						c.write(self,
+								"You surpise "
+										+ target.name()
+										+ " by hugging her close to your chest, preventing her from using stabilizing her position with her arms. You "
+										+ "roll on top of her into traditional missionary position, careful not to let your cock slip out of her.");
+						c.setStance(new Missionary(self, target));
+					} else if (c.getStance().prone(self) && target.hasDick() && self.hasPussy()) {
+						c.write(self,
+								self.name()
+										+ " wraps her legs around your waist and suddenly pulls you into a deep kiss. You're so surprised by this sneak attack that you "
+										+ "don't even notice her roll you onto your back until you feel her weight on your hips. She moves her hips experimentally, enjoying the control "
+										+ "she has in cowgirl position.");
+						c.setStance(new Cowgirl(self, target));
+					} else if (c.getStance().inserted(target)) {
+						c.write(self,
+								Global.format(
+										"{self:SUBJECT-ACTION:manage|manages} to reach between {self:possessive} legs and grab hold of {other:possessive} ballsack, stopping {other:direct-object} in mid thrust. {self:SUBJECT-ACTION:smirk|smirks} at {other:direct-object} over {self:possessive} shoulder "
+										+ "and pushes {self:possessive} butt against {other:direct-object}, using the leverage of "
+										+ "{other:possessive} testicles to keep {other:direct-object} from backing away to maintain {self:possessive} balance. {self:SUBJECT-ACTION:force|forces} {other:direct-object} onto {other:possessive} back, while never breaking {other:possessive} connection. After "
+										+ "some complex maneuvering, {other:subject-action:end|ends} up on the floor while {self:subject-action:straddle|straddles} {other:possessive} hips in a reverse cowgirl position.", self, target));
+						c.setStance(new ReverseCowgirl(self, target));
+					} else {
+						c.write(self,
+								Global.format("{self:SUBJECT-ACTION:manage|manages} to shake {other:direct-object} off." ,self,target));
+						if (!self.is(Stsflag.braced)) {
+							self.add(new Braced(self));
 						}
+						c.setStance(new Neutral(self, target));
 					}
 				} else {
 					if (self.hasStatus(Stsflag.cockbound)) {

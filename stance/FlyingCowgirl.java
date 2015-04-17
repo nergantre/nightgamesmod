@@ -114,6 +114,11 @@ public class FlyingCowgirl extends Position {
 
 	@Override
 	public float priorityMod(Character self) {
-		return dom(self) ? 4.0f : 0;
+		float priority = 0;
+		if (dom(self)) {
+			priority += 4;
+			priority += self.body.getRandomPussy().priority;
+		}
+		return priority;
 	}
 }

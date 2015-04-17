@@ -45,7 +45,7 @@ public class Whisper extends Skill {
 				c.write(self,receive(c,0,Result.special, target));
 			}
 			self.spendMojo(15);
-			target.add(new Enthralled(target,self));
+			target.add(new Enthralled(target,self, 4));
 		}
 		else{
 			if(self.human()){

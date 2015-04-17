@@ -47,9 +47,9 @@ public class Tempt extends Skill {
 
 		boolean tempted = Global.random(5) == 0;
 		if(self.has(Trait.darkpromises)&& tempted && self.canSpend(15) && !target.wary()){
-			c.write(self, Global.format("{self:NAME-POSSESSIVE} words fall on fertile grounds. {target:NAME-POSSESSIVE} will to resist crumbles in light of {self:possessive} temptation.", self, target));
+			c.write(self, Global.format("{self:NAME-POSSESSIVE} words fall on fertile grounds. {other:NAME-POSSESSIVE} will to resist crumbles in light of {self:possessive} temptation.", self, target));
 			self.spendMojo(15);
-			target.add(new Enthralled(target, self));
+			target.add(new Enthralled(target, self, 3));
 		}
 
 		target.tempt(c, self, n);

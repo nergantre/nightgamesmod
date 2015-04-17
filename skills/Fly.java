@@ -1,10 +1,12 @@
 package skills;
 
+import global.Global;
 import characters.Attribute;
 import characters.Character;
 import characters.Emotion;
 import combat.Combat;
 import stance.FlyingCarry;
+import stance.StandingOver;
 import combat.Result;
 
 public class Fly extends Fuck {
@@ -33,33 +35,41 @@ public class Fly extends Fuck {
 				&& (this.self.canAct())
 				&& (c.getStance().mobile(this.self))
 				&& (!c.getStance().prone(this.self))
+				&& c.getStance().facing()
 				&& (this.self.getStamina().get() >= 15)
 				&& (this.self.canSpend(getMojoSpent()))
 				&& (!c.getStance().penetration(this.self));
 	}
-	
+
 	public int getMojoSpent() {
-		return 35;
+		return 50;
 	}
 
 	@Override
 	public String describe() {
 		return "Take off and fuck your opponent's pussy in the air.";
 	}
-
+	public int accuracy(){
+		return 0;
+	}
 	@Override
 	public void resolve(Combat c, Character target) {
+		Result result = target.roll(this, c, accuracy()+self.tohit()) ? Result.normal: Result.miss;
 		if (this.self.human()) {
-			c.write(self,deal(c, 0, Result.normal, target));
+			c.write(self,deal(c, 0, result, target));
 		} else if (target.human()) {
-			c.write(self,receive(c, 0, Result.normal, this.self));
+			c.write(self,receive(c, 0, result, this.self));
 		}
 		self.spendMojo(getMojoSpent());
-		self.emote(Emotion.dominant,50);
-		self.emote(Emotion.horny, 30);
-		target.emote(Emotion.desperate, 50);
-		target.emote(Emotion.nervous, 75);
-		c.setStance(new FlyingCarry(this.self, target));
+		if (result == Result.normal) {
+			self.emote(Emotion.dominant,50);
+			self.emote(Emotion.horny, 30);
+			target.emote(Emotion.desperate, 50);
+			target.emote(Emotion.nervous, 75);
+			c.setStance(new FlyingCarry(this.self, target));
+		} else {
+			c.setStance(new StandingOver(target, self));
+		}
 	}
 
 	@Override
@@ -75,18 +85,26 @@ public class Fly extends Fuck {
 	@Override
 	public String deal(Combat c, int amount,
 			Result modifier, Character target) {
-		return "You grab " + target.name() + " tightly and take off, "
-				+ (target.hasDick()&&self.hasPussy() ? "inserting her dick into your hungry " + self.body.getRandomPussy().describe(self) + "." :
-					 " holding her helpless in the air and thrusting deep into her wet " + target.body.getRandomPussy().describe(self) + ".");
+		if (modifier == Result.miss){
+			return "You grab " + target.name() + " tightly and try to take off. However " +target.pronoun() + " has other ideas. She knees your crotch as you approach and sends you sprawling to the ground.";
+		} else {
+			return "You grab " + target.name() + " tightly and take off, "
+					+ (target.hasDick()&&self.hasPussy() ? "inserting her dick into your hungry " + self.body.getRandomPussy().describe(self) + "." :
+						" holding her helpless in the air and thrusting deep into her wet " + target.body.getRandomPussy().describe(self) + ".");
+		}
 	}
 
 	@Override
 	public String receive(Combat c, int amount,
 			Result modifier, Character target) {
-		return "Suddenly, " + self.name() + " leaps at you, embracing you tightly"
-				+ ". She then flaps her " + self.body.getRandomWings().describe(target) + " hard and before you know it"
-				+ " you are twenty feet in the sky held up by her arms and legs."
-				+ " Somehow, her dick ended up inside of you in the process and"
-				+ " the rythmic movements of her flying arouse you to no end";
+		if (modifier == Result.miss){
+			return target.name() + " lunges for you with a hungry look in her eyes. However you have other ideas. You trip her as she approaches and send her sprawling to the floor.";
+		} else {
+			return "Suddenly, " + self.name() + " leaps at you, embracing you tightly"
+					+ ". She then flaps her " + self.body.getRandomWings().describe(target) + " hard and before you know it"
+					+ " you are twenty feet in the sky held up by her arms and legs."
+					+ " Somehow, her dick ended up inside of you in the process and"
+					+ " the rythmic movements of her flying arouse you to no end";
+		}
 	}
 }

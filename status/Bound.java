@@ -11,7 +11,7 @@ import characters.Emotion;
 public class Bound extends Status {
 	private int toughness;
 	private String binding;
-	
+
 	public Bound(Character affected, int dc, String binding) {
 		super("Bound", affected);
 		toughness = dc;
@@ -31,7 +31,7 @@ public class Bound extends Status {
 	
 	@Override
 	public float fitnessModifier () {
-		return -toughness / 20.0f;
+		return -20.0f;
 	}
 
 	@Override

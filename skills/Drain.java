@@ -109,31 +109,31 @@ public class Drain extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		if(self.hasPussy()){
+		if(c.getStance().inserted(target)){
 			String base = "You put your powerful vaginal muscles to work whilst"
 					+ " transfixing " + target.name()
-					+ "'s gaze with your own, goading his energy into his cock."
+					+ "'s gaze with your own, goading " + target.possessivePronoun() + " energy into "+ target.possessivePronoun() + " cock."
 					+ " Soon it erupts from him into your " + self.body.getRandomPussy() + ", ";
 			switch (damage) {
 			case 3:
-				return base + "and you can feel his strength pumping into you.";
+				return base + "and you can feel " + target.possessivePronoun() + " strength pumping into you.";
 			case 4:
-				return base + "and you can feel his memories and excperiences flow"
+				return base + "and you can feel " + target.possessivePronoun() + " memories and excperiences flow"
 						+ " into you, adding to your skill.";
 			case 5:
-				return base + "taking his fighting spirit with him and"
+				return base + "taking " + target.possessivePronoun() + " fighting spirit with him and"
 						+ " adding it to your own";
 			case 1:
 				return base + "but unfortunately you made a mistake, and only feel a small"
-						+ " bit of his energy traversing the space between you.";
+						+ " bit of " + target.possessivePronoun() + " energy traversing the space between you.";
 			case 2:
 				return base + "but unfortunately you made a mistake, and only feel a small"
-						+ " bit of his energy traversing the space between you.";
+						+ " bit of " + target.possessivePronoun() + " energy traversing the space between you.";
 			case 6:
 				return base
 						+ "far more powerfully than you even thought possible."
-						+ " You feel a fragment of his soul break away from him and"
-						+ " spew into you, taking with it a portion of his strength,"
+						+ " You feel a fragment of " + target.possessivePronoun() + " soul break away from him and"
+						+ " spew into you, taking with it a portion of " + target.possessivePronoun() + " strength,"
 						+ " skill and wits and merging with your own. You have clearly"
 						+ " won this fight, and a lot more than that.";
 			default:

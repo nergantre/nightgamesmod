@@ -670,7 +670,7 @@ public class NPC extends Character {
 	    // The higher, the better the AI will plan for "rare" events better
 	    final int RUN_COUNT = 5;
 	    // Decrease to get an "easier" AI. Make negative to get a suicidal AI.
-	    final float RATING_FACTOR = 0.05f;
+	    final float RATING_FACTOR = 0.02f;
 	    // Increase to take input weights more into consideration
 	    final float INPUT_WEIGHT = 1.0f;
 

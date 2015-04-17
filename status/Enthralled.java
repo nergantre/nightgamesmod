@@ -7,27 +7,50 @@ import characters.Attribute;
 import characters.Character;
 import characters.Emotion;
 import characters.State;
+import characters.Trait;
 
 public class Enthralled extends Status {
 
 	private int duration;
+	private int timesRefreshed;
 	public Character master;
 	
-	public Enthralled(Character self,Character master) {
+	public Enthralled(Character self,Character master, int duration) {
 		super("Enthralled", self);
-		duration = Global.random(3) + (self.state == State.combat ? 2 : 5);
+		if (self.has(Trait.PersonalInertia)) {
+			duration = duration * 3 / 2;
+		}
+		this.duration = duration;
+		timesRefreshed = 0;
 		this.master = master;
 		flag(Stsflag.enthralled);
 	}
-	
+
 	@Override
 	public String describe() {
 		if(affected.human())
-		  return "You feel a constant pull on your mind, forcing you to obey"
-				+ " the succubus' every command.";
+		  return "You feel a constant pull on your mind, forcing you to obey " + master.possessivePronoun() + " every command.";
 		else{
 			return affected.name()+" looks dazed and compliant, ready to follow your orders.";
 		}
+	}
+
+	@Override
+	public String getVariant() {
+			return "enthralled by " + master.name();
+	}
+
+	@Override
+	public boolean overrides(Status s) {
+		return false;
+	}
+
+	@Override
+	public void replace(Status s) {
+		assert (s instanceof Enthralled);
+		Enthralled other = (Enthralled)s;
+		this.duration += Math.max(1, other.duration - timesRefreshed);
+		timesRefreshed += 1;
 	}
 
 	@Override
@@ -37,7 +60,7 @@ public class Enthralled extends Status {
 	
 	@Override
 	public float fitnessModifier () {
-		return -5;
+		return -duration * 5;
 	}
 	
 	@Override
@@ -51,7 +74,7 @@ public class Enthralled extends Status {
 	public int regen(Combat c) {
 		duration--;
 		affected.spendMojo(5);
-		if (duration <= 0|| affected.check(Attribute.Cunning, 10+10*duration)) {
+		if (duration <= 0|| affected.check(Attribute.Cunning, master.get(Attribute.Seduction)/2 +master.get(Attribute.Arcane)/2 + master.get(Attribute.Dark)/2 + 10+10*(duration- timesRefreshed))) {
 			affected.removelist.add(this);
 			affected.addlist.add(new Cynical(affected));
 			if (affected.human() && affected.state != State.combat)
