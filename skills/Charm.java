@@ -24,7 +24,7 @@ public class Charm extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !c.getStance().sub(self)&&self.canSpend(20)&&self.canRespond()&&c.getStance().behind(target);
+		return self.canSpend(20)&&self.canRespond()&&c.getStance().facing();
 	}
 
 	@Override
@@ -83,6 +83,6 @@ public class Charm extends Skill {
 
 	@Override
 	public String describe() {
-		return "Embarrass your opponent, may inflict Shamed";
+		return "Charms your opponent into not hurting you.";
 	}
 }

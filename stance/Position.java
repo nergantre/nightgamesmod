@@ -43,6 +43,10 @@ public abstract class Position implements Serializable, Cloneable{
 	public boolean canthrust(Character c) {
 		return this.dom(c) || c.has(Trait.powerfulhips);
 	}
+
+	public boolean facing() {
+		return !this.behind(top) && !this.behind(bottom);
+	}
 	
 	public float priorityMod(Character self) {
 		return 0;
