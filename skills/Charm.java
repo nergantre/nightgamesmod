@@ -22,7 +22,7 @@ public class Charm extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canSpend(20)&&self.canRespond()&&c.getStance().facing();
+		return self.canSpend(20)&&self.canRespond()&&c.getStance().facing()&&!target.wary();
 	}
 
 	@Override
