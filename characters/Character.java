@@ -1456,9 +1456,9 @@ public abstract class Character extends Observable implements Cloneable{
 		if (hasDick()) {
 			fit += 2.0f * top.size() + 8.0f * bottom.size();
 		} else {
-			fit += 2.0f * top.size() - 50.0f * bottom.size();
+			fit += 2.0f * top.size() + 3.0f * bottom.size();
 		}
-		fit += this.body.getCharismaBonus(other) * (100 - other.getArousal().percent()) / 2;
+		fit += this.body.getCharismaBonus(other) * (other.getArousal().percent()) / 2;
 		// Also somewhat of a factor: Inventory (so we don't
 		// just use it without thinking)
 		for(Item item : inventory.keySet())
@@ -1475,7 +1475,6 @@ public abstract class Character extends Observable implements Cloneable{
 		for (Status status : this.status) {
 			fit += status.fitnessModifier();
 		}
-		// TODO: Pets, status effects...
 		return fit;
 	}
 	
