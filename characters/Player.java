@@ -673,7 +673,7 @@ public class Player extends Character {
 		int pheromoneChance = opponent.top.size() + opponent.bottom.size();
 		if(opponent.has(Trait.pheromones)&&opponent.getArousal().percent()>=20&&Global.random(2 + pheromoneChance)==0){
 			c.write(opponent,"<br>Whenever you're near "+opponent.name()+", you feel your body heat up. Something in her scent is making you extremely horny.");
-			add(new Horny(this,1,10,opponent.nameOrPossessivePronoun() + " pheromones"));
+			add(new Horny(this,opponent.has(Trait.augmentedPheromones) ? 2 : 1,10,opponent.nameOrPossessivePronoun() + " pheromones"));
 		}
 		if(opponent.has(Trait.smqueen)&&!is(Stsflag.masochism)){
 			c.write(String.format("<br>%s seem to shudder in arousal at the thought of pain.", subject()));

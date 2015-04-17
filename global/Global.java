@@ -441,15 +441,17 @@ public class Global {
 		} else if (!(c.getPure(Attribute.Dark)>=6)&&c.has(Trait.darkpromises)){
 			c.remove(Trait.darkpromises);
 		}
-		if(c.getPure(Attribute.Animism)>=2&&!c.has(Trait.pheromones)){
+		boolean pheromonesRequirements = (c.getPure(Attribute.Animism)>=2||c.has(Trait.augmentedPheromones));
+		if(pheromonesRequirements&&!c.has(Trait.pheromones)) {
 			c.add(Trait.pheromones);
-		} else if(!(c.getPure(Attribute.Animism)>=2)&&c.has(Trait.pheromones)){
+		} else if(!pheromonesRequirements&&c.has(Trait.pheromones)){
 			c.remove(Trait.pheromones);
 		}
 		return message;
 	}
 
 	public static void learnSkills(Player p){
+		boolean pheromonesRequirements = (p.getPure(Attribute.Animism)>=2||p.has(Trait.augmentedPheromones));
 		for(Skill skill:skillPool){
 			if(skill.requirements()&&!p.knows(skill)){
 				p.learn(skill);
@@ -458,7 +460,7 @@ public class Global {
 		if(p.getPure(Attribute.Dark)>=6&&!p.has(Trait.darkpromises)){
 			p.add(Trait.darkpromises);
 		}
-		if(p.getPure(Attribute.Animism)>=2&&!p.has(Trait.pheromones)){
+		if(pheromonesRequirements && !p.has(Trait.pheromones)){
 			p.add(Trait.pheromones);
 		}
 	}

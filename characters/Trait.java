@@ -51,6 +51,7 @@ public enum Trait {
 	
 	//Passive Skills
 	exhibitionist("Exhibitionist","More effective without any clothes"), //Passively builds mojo while nude
+	augmentedPheromones("Augmented Pheromones", "Artificially enhanced pheromones"),
 	pheromones("Pheromones","Scent can drive people wild", new TraitDescription() {
 		public void describe(StringBuilder b, Character c, Trait t) {
 			b.append("A primal musk surrounds ");

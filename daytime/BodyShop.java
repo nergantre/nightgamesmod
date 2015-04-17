@@ -264,7 +264,7 @@ public class BodyShop extends Activity  {
 			}
 		});
 		addTraitMod("Fluids Mod: Laced Juices", "Fluids Mod: Remove Laced Juices", Trait.lacedjuices, 1000, 1000, noRequirement);
-		addTraitMod("Scent Mod: Pheromones", "Scent Mod: Remove Pheromones", Trait.pheromones, 1500, 1500, noRequirement);
+		addTraitMod("Scent Mod: Pheromones", "Scent Mod: Remove Pheromones", Trait.augmentedPheromones, 1500, 1500, noRequirement);
 		addBodyPartMod("Wings", WingsPart.normal, null, 1500, 1500);
 		addBodyPartMod("Tail", TailPart.normal, null, 1000, 1000);
 		addBodyPartMod("Fused Boots", new GenericBodyPart(

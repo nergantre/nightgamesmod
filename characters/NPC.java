@@ -566,7 +566,7 @@ public class NPC extends Character {
 		int pheromoneChance = opponent.top.size() + opponent.bottom.size();
 		if(opponent.has(Trait.pheromones)&&opponent.getArousal().percent()>=20&&Global.random(2 + pheromoneChance)==0){
 			c.write(opponent,"<br>You see "+name()+" swoon slightly as she gets close to you. Seems like she's starting to feel the effects of your musk.");
-			add(new Horny(this, 1, 10, opponent.nameOrPossessivePronoun() + " pheromones"));
+			add(new Horny(this, opponent.has(Trait.augmentedPheromones) ? 2 : 1, 10, opponent.nameOrPossessivePronoun() + " pheromones"));
 		}
 		if(opponent.has(Trait.smqueen)&&!is(Stsflag.masochism)){
 			c.write(String.format("<br>%s seems to shudder in arousal at the thought of pain.", subject()));
