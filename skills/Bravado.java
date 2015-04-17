@@ -25,7 +25,7 @@ public class Bravado extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().mobile(self)&&self.canSpend(20);
+		return self.canRespond()&&c.getStance().mobile(self)&&self.canSpend(20);
 	}
 
 	@Override

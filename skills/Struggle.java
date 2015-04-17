@@ -37,7 +37,7 @@ public class Struggle extends Skill {
 			return true;
 		}
 		return ((!c.getStance().mobile(self) && !c.getStance().dom(self)) || self.bound())
-				&& !self.stunned() && !self.distracted() && !self.is(Stsflag.enthralled);
+				&& self.canRespond();
 	}
 
 	@Override

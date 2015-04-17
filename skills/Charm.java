@@ -24,7 +24,7 @@ public class Charm extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !c.getStance().sub(self)&&self.canSpend(20)&&self.canAct();
+		return !c.getStance().sub(self)&&self.canSpend(20)&&self.canRespond()&&c.getStance().behind(target);
 	}
 
 	@Override

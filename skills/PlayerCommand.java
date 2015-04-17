@@ -25,6 +25,6 @@ public abstract class PlayerCommand extends Skill {
 	public boolean usable(Combat c, Character target) {
 		return self.human()&& target.is(Stsflag.enthralled)
 				&& ((Enthralled) target.getStatus(Stsflag.enthralled)).master
-						.equals(self) && !c.getStance().penetration(self);
+						.equals(self) && !c.getStance().penetration(self) && self.canRespond();
 	}
 }

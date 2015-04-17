@@ -26,7 +26,7 @@ public class Bondage extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().mobile(self)&&self.getArousal().get()>=5&&!self.is(Stsflag.bondage);
+		return self.canRespond()&&c.getStance().mobile(self)&&self.getArousal().get()>=5&&!self.is(Stsflag.bondage);
 	}
 
 	@Override

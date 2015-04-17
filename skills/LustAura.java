@@ -28,7 +28,7 @@ public class LustAura extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().mobile(self)&&!c.getStance().prone(self)&&self.canSpend(5)&&!target.is(Stsflag.horny, self.nameOrPossessivePronoun() + " aura of lust");
+		return self.canRespond()&&c.getStance().mobile(self)&&self.canSpend(10)&&!target.is(Stsflag.horny, self.nameOrPossessivePronoun() + " aura of lust");
 	}
 
 	@Override
@@ -38,8 +38,8 @@ public class LustAura extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(5);
-		self.arouse(5, c);
+		self.spendMojo(10);
+		self.arouse(10, c);
 		if(self.human()){
 			c.write(self,deal(c,0,Result.normal, target));
 		}
