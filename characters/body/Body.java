@@ -269,8 +269,10 @@ public class Body implements Cloneable {
 			}
 		}
 		double damage = magnitude * sensitivity * pleasure * perceptionBonus;
-		damage = with.applyBonuses(opponent, character, target, damage, c);
-		damage = target.applyReceiveBonuses(character, opponent, with, damage, c);
+		if (opponent != null) {
+			damage = with.applyBonuses(opponent, character, target, damage, c);
+			damage = target.applyReceiveBonuses(character, opponent, with, damage, c);
+		}
 
 		int result = (int) Math.round(damage);		
 		if (opponent != null) {
