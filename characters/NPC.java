@@ -573,8 +573,8 @@ public class NPC extends Character {
 			add(new Masochistic(this));
 		}
 		if(has(Trait.RawSexuality)){
-			tempt(c, opponent, 1);
-			opponent.tempt(c, this, 1);
+			tempt(c, opponent, getArousal().max() / 25);
+			opponent.tempt(c, this, opponent.getArousal().max() / 25);
 		}
 		if(c.getStance().dom(this)){
 			emote(Emotion.dominant,20);
