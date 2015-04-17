@@ -43,7 +43,7 @@ public class Binding extends Skill {
 		else if(target.human()){
 			c.write(self,receive(c,0,Result.normal, target));
 		}
-		target.add(new Bound(target,10+3*self.get(Attribute.Arcane),"seal"));
+		target.add(new Bound(target,Math.min(10+3*self.get(Attribute.Arcane), 50),"seal"));
 		target.emote(Emotion.nervous, 5);
 		self.emote(Emotion.confident, 20);
 		self.emote(Emotion.dominant, 10);

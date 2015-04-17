@@ -77,7 +77,7 @@ public class TentaclePorn extends Skill {
 					c.write(self,receive(c,0,Result.weak, target));
 				}
 			}
-			target.add(new Bound(target,10,"tentacles"));
+			target.add(new Bound(target,Math.min(10+3*self.get(Attribute.Fetish), 30),"tentacles"));
 		}
 		else{
 			if(self.human()){
