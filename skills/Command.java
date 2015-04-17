@@ -1,6 +1,7 @@
 package skills;
 
 import global.Global;
+import status.Bound;
 import status.Flatfooted;
 import status.Stsflag;
 import characters.Attribute;
@@ -20,17 +21,17 @@ public class Command extends Skill {
 
 	@Override
 	public boolean requirements() {
-		return true;
+		return !self.human();
 	}
 
 	@Override
 	public boolean requirements(Character user) {
-		return true;
+		return !user.human();
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !self.human()&&target.is(Stsflag.enthralled);
+		return !self.human()&&self.canRespond()&&target.is(Stsflag.enthralled);
 	}
 
 	@Override
@@ -45,7 +46,11 @@ public class Command extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if (!target.nude()) { // Undress self
+		if (self.bound()) { // Undress self
+			c.write(self,"You feel a compulsion to loosen " + self.nameOrPossessivePronoun()
+					+ " bondage. She quickly hops to her feet and grins at you like a predator while rubbing her wrists.");
+			self.free();
+		} if (!target.nude()) { // Undress self
 			c.write(self,receive(c, 0, Result.miss, target));
 			new Undress(target).resolve(c, self);
 		} else if (!self.nude()) { // Undress me
