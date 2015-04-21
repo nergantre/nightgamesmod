@@ -24,7 +24,7 @@ public class Abuff extends Status {
 
 	@Override
 	public float fitnessModifier () {
-		return value / (2.0f * Math.min(1.0f, affected.getPure(modded) / 10.0f));
+		return value / (2.0f * Math.min(1.0f, Math.max(1, affected.getPure(modded)) / 10.0f));
 	}
 
 	@Override
