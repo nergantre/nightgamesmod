@@ -16,6 +16,7 @@ import javax.swing.Icon;
 import characters.body.BreastsPart;
 import characters.body.CockPart;
 
+import skills.Nothing;
 import skills.Skill;
 import skills.Cunnilingus;
 import skills.Escape;
@@ -28,7 +29,7 @@ import skills.Kiss;
 import skills.Knee;
 import skills.LickNipples;
 import skills.Maneuver;
-import skills.Nothing;
+import skills.Wait;
 import skills.PerfectTouch;
 import skills.Recover;
 import skills.Restrain;
@@ -171,7 +172,7 @@ public class Player extends Character {
 		HashSet<Skill> summoning = new HashSet<Skill>();
 		HashSet<Skill> stripping = new HashSet<Skill>();
 		HashSet<Skill> misc = new HashSet<Skill>();
-		
+		int count = 0;
 		for(Skill a:skills){
 			if(Skill.skillIsUsable(c, a, target)){
 				if(a.type(c)==Tactics.damage){
@@ -200,7 +201,11 @@ public class Player extends Character {
 				else{
 					misc.add(a);
 				}
+				count += 1;
 			}
+		}
+		if (count == 0) {
+			misc.add(new Nothing(this));
 		}
 		for(Skill a: stripping){
 			gui.addSkill(a,c);

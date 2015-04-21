@@ -32,7 +32,7 @@ import skills.Skill;
 import skills.FondleBreasts;
 import skills.Fuck;
 import skills.Kiss;
-import skills.Nothing;
+import skills.Wait;
 import skills.Recover;
 import skills.ReverseStraddle;
 import skills.Shove;
@@ -131,7 +131,7 @@ public abstract class Character extends Observable implements Cloneable{
 		skills.add(new Kiss(this));
 		skills.add(new Struggle(this));
 		skills.add(new Tickle(this));
-		skills.add(new Nothing(this));
+		skills.add(new Wait(this));
 		skills.add(new StripTop(this));
 		skills.add(new StripBottom(this));
 		skills.add(new Shove(this));

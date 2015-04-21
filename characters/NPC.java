@@ -19,6 +19,7 @@ import javax.swing.Icon;
 
 import characters.body.Body;
 
+import skills.Nothing;
 import skills.Skill;
 import skills.Tactics;
 import stance.Behind;
@@ -241,9 +242,12 @@ public class NPC extends Character {
 			target=c.p1;
 		}
 		for(Skill act:skills){
-			if(Skill.skillIsUsable(c, act, target)){
+			if(Skill.skillIsUsable(c, act, target)) {
 				available.add(act);
 			}
+		}
+		if (available.size() == 0) {
+			available.add(new Nothing(this));
 		}
 		c.act(this, ai.act(available,c));
 	}
@@ -260,6 +264,9 @@ public class NPC extends Character {
 			if(Skill.skillIsUsable(c, act, target)){
 				available.add(act);
 			}
+		}
+		if (available.size() == 0) {
+			available.add(new Nothing(this));
 		}
 		return ai.act(available,c);
 	}

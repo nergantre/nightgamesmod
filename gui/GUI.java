@@ -11,7 +11,6 @@ import items.Item;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -22,7 +21,6 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
@@ -41,19 +39,15 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-import javax.swing.text.StyledDocument;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
 import skills.Skill;
-import skills.Tactics;
 import trap.Trap;
 import actions.Action;
 import actions.Locate;
@@ -65,10 +59,7 @@ import combat.Combat;
 import combat.Encounter;
 import daytime.Activity;
 import daytime.Store;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
-import java.awt.Component;
-import javax.swing.Box;
 
 public class GUI extends JFrame implements Observer {
 
@@ -82,9 +73,6 @@ public class GUI extends JFrame implements Observer {
 	private JLabel mojo;
 	private JLabel lvl;
 	private JLabel xp;
-	private JLabel power;
-	private JLabel cunning;
-	private JLabel seduction;
 	private JProgressBar staminaBar;
 	private JProgressBar arousalBar;
 	private JProgressBar mojoBar;

@@ -9,9 +9,9 @@ import characters.Trait;
 import combat.Combat;
 import combat.Result;
 
-public class Nothing extends Skill {
+public class Wait extends Skill {
 
-	public Nothing(Character self) {
+	public Wait(Character self) {
 		super("Wait", self);
 	}
 
@@ -70,7 +70,7 @@ public class Nothing extends Skill {
 
 	@Override
 	public Skill copy(Character user) {
-		return new Nothing(user);
+		return new Wait(user);
 	}
 	public int speed(){
 		return 0;
@@ -111,6 +111,7 @@ public class Nothing extends Skill {
 			return self.name()+" hesitates, watching you closely.";
 		}
 	}
+
 	public String toString(){
 		if(bluff()){
 			return "Bluff";
@@ -122,6 +123,7 @@ public class Nothing extends Skill {
 			return name;
 		}
 	}
+
 	@Override
 	public String describe() {
 		if(bluff()){
@@ -134,9 +136,11 @@ public class Nothing extends Skill {
 			return "Do nothing";
 		}
 	}
+
 	private boolean focused(){
 		return self.getPure(Attribute.Cunning)>=15 && !self.has(Trait.undisciplined)&&self.canRespond();
 	}
+
 	private boolean bluff(){
 		return self.has(Trait.pokerface)&&self.getPure(Attribute.Cunning)>=9&&self.canSpend(20)&&self.canRespond();
 	}
