@@ -28,10 +28,10 @@ public class Bound extends Status {
 			return "Her hands are restrained by "+binding+".";
 		}
 	}
-	
+
 	@Override
 	public float fitnessModifier () {
-		return -20.0f;
+		return -(5 + Math.min(20, toughness) / 2);
 	}
 
 	@Override
