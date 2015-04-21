@@ -22,8 +22,9 @@ public class SetTrap extends Action {
 	@Override
 	public Movement execute(Character user) {
 		try {
-			user.location().place(trap.getClass().newInstance());
-			String message = trap.setup(user);
+			Trap newTrap = trap.getClass().newInstance();
+			user.location().place(newTrap);
+			String message = newTrap.setup(user);
 			if(user.human()){
 				Global.gui().message(message);
 			}
