@@ -50,7 +50,7 @@ public class ReverseFly extends Fly {
 			self.emote(Emotion.horny, 30);
 			target.emote(Emotion.desperate, 50);
 			target.emote(Emotion.nervous, 75);
-			c.setStance(new FlyingCarry(this.self, target));
+			c.setStance(new FlyingCowgirl(this.self, target));
 		} else {
 			c.setStance(new StandingOver(target, self));
 		}
