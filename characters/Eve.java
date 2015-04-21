@@ -54,7 +54,19 @@ public class Eve extends BasePersonality {
 		character.body.add(CockPart.big);
 		character.body.add(PussyPart.normal);
 		character.body.finishBody("herm");
-		}
+	}
+
+	@Override
+	public void setGrowth() {
+		growth.stamina = 2;
+		growth.arousal = 3;
+		growth.mojo = 3;
+		growth.bonusStamina = 1;
+		growth.bonusArousal = 3;
+		growth.bonusMojo = 2;
+		preferredAttributes.add(Attribute.Fetish);
+		preferredAttributes.add(Attribute.Seduction);
+	}
 
 	public double dickPreference() {
 		return 10;
@@ -195,27 +207,7 @@ public class Eve extends BasePersonality {
 	public boolean attack(Character opponent) {
 		return true;
 	}
-	@Override
-	public void ding() {
-		super.ding();
-		character.mod(Attribute.Seduction, 1);
-		int rand;
-		for(int i=0; i<Global.random(2)+1;i++){
-			rand=Global.random(4);
-			if(rand==0){
-				character.mod(Attribute.Power, 1);
-			}
-			else if(rand==1){
-				character.mod(Attribute.Seduction, 1);
-			}
-			else if(rand==2){
-				character.mod(Attribute.Cunning, 1);
-			}
-			else{
-				character.mod(Attribute.Fetish, 1);
-			}
-		}
-	}
+
 	@Override
 	public String victory3p(Combat c, Character target, Character assist) {
 		if(target.human()){

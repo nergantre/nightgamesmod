@@ -871,8 +871,8 @@ public class GUI extends JFrame implements Observer {
 	}
 	
 	public void ding() {
-		if (this.player.attpoints > 0) {
-			message(this.player.attpoints + " Attribute Points remain.\n");
+		if (this.player.availableAttributePoints > 0) {
+			message(this.player.availableAttributePoints + " Attribute Points remain.\n");
 			clearCommand();
 			for (Attribute att : this.player.att.keySet()) {
 				if (att != Attribute.Perception && att !=Attribute.Speed) {
@@ -1168,7 +1168,7 @@ public class GUI extends JFrame implements Observer {
 			addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					GUI.this.player.mod(GUI.AttributeButton.this.att, 1);
-					GUI.this.player.attpoints -= 1;
+					GUI.this.player.availableAttributePoints -= 1;
 					GUI.this.ding();
 				}
 			});

@@ -59,6 +59,18 @@ public class Jewel extends BasePersonality {
 	}
 
 	@Override
+	public void setGrowth() {
+		growth.stamina = 5;
+		growth.arousal = 3;
+		growth.mojo = 1;
+		growth.bonusStamina = 3;
+		growth.bonusArousal = 1;
+		growth.bonusMojo = 1;
+		preferredAttributes.add(Attribute.Ki);
+		preferredAttributes.add(Attribute.Power);
+	}
+
+	@Override
 	public void rest() {
 		if(character.rank>=1){
 			if(!character.has(Trait.fighter)&&character.money>=1000){

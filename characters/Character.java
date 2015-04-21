@@ -89,6 +89,7 @@ public abstract class Character extends Observable implements Cloneable{
 	public Pet pet;
 	public ArrayList<Challenge> challenges;
 	public Body body;
+	public int availableAttributePoints;
 
 	public Character(String name, int level){
 		this.name=name;

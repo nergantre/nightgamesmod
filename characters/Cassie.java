@@ -61,7 +61,18 @@ public class Cassie extends BasePersonality {
 		character.body.add(BreastsPart.c);
 		character.body.add(PussyPart.normal);
 		character.body.finishBody("female");
-		}
+	}
+
+	@Override
+	public void setGrowth() {
+		growth.stamina = 2;
+		growth.arousal = 4;
+		growth.mojo = 2;
+		growth.bonusStamina = 1;
+		growth.bonusArousal = 3;
+		growth.bonusMojo = 1;
+		preferredAttributes.add(Attribute.Arcane);
+	}
 
 	@Override
 	public Action move(HashSet<Action> available, HashSet<Movement> radar) {

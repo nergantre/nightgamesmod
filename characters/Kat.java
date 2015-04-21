@@ -72,6 +72,17 @@ public class Kat extends BasePersonality {
 		}
 
 	@Override
+	public void setGrowth() {
+		growth.stamina = 2;
+		growth.arousal = 2;
+		growth.mojo = 3;
+		growth.bonusStamina = 1;
+		growth.bonusArousal = 2;
+		growth.bonusMojo = 2;
+		preferredAttributes.add(Attribute.Animism);
+	}
+
+	@Override
 	public void rest() {
 		if(!(character.has(Item.Dildo)||character.has(Item.Dildo2))&&character.money>=250){
 			character.gain(Item.Dildo);
@@ -317,27 +328,7 @@ public class Kat extends BasePersonality {
 	public boolean attack(Character opponent) {
 		return true;
 	}
-	@Override
-	public void ding() {
-		super.ding();
-		int rand;
-		character.mod(Attribute.Animism, 1);
-		for(int i=0; i<Global.random(2)+2;i++){
-			rand=Global.random(4);
-			if(rand==0){
-				character.mod(Attribute.Power, 1);
-			}
-			else if(rand==1){
-				character.mod(Attribute.Seduction, 1);
-			}
-			else if(rand==2){
-				character.mod(Attribute.Cunning, 1);
-			}
-			else{
-				character.mod(Attribute.Animism, 1);
-			}
-		}
-	}
+
 	@Override
 	public String victory3p(Combat c, Character target, Character assist) {
 		if(target.human()){

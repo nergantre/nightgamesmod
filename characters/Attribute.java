@@ -11,5 +11,13 @@ public enum Attribute {
 	Dark,
 	Fetish,
 	Animism,
-	Ki
+	Ki;
+
+	public static boolean isBasic(Attribute a) {
+		return a == Power || a == Seduction || a == Perception;
+	}
+
+	public static boolean isTrainable(Attribute a) {
+		return a != Speed && a != Perception;
+	}
 }

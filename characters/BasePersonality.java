@@ -5,8 +5,14 @@ import global.Global;
 
 import java.io.File;
 import java.net.URISyntaxException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 
 import characters.body.Body;
 
@@ -23,8 +29,16 @@ public abstract class BasePersonality implements Personality {
 	 */
 	private static final long serialVersionUID = 2279220186754458082L;
 	public NPC character;
-	
+	protected Growth growth;
+	protected List<Attribute> preferredAttributes;
+
 	public BasePersonality() {
+		growth = new Growth();
+		preferredAttributes = new ArrayList<Attribute>();
+		setGrowth();
+	}
+
+	public void setGrowth() {
 	}
 	
 	public Skill act(HashSet<Skill> available,Combat c) {
@@ -77,11 +91,20 @@ public abstract class BasePersonality implements Personality {
 		return null;
 	}
 
+	public Growth getGrowth() {
+		return growth;
+	}
+
 	@Override
 	public void ding() {
-		character.getStamina().gain(2);
-		character.getArousal().gain(5);
-		character.getMojo().gain(1);
+		character.getStamina().gain(growth.stamina);
+		character.getArousal().gain(growth.arousal);
+		character.getMojo().gain(growth.mojo);
+		character.availableAttributePoints += growth.attributes[character.rank];
+		if (Global.checkFlag(Flag.hardmode)) {
+			hardmodeBonus();
+		}
+		distributePoints();
 	}
 	
 	public String describeAll() {
@@ -101,5 +124,40 @@ public abstract class BasePersonality implements Personality {
 	@Override
 	public NPC getCharacter() {
 		return character;
+	}
+
+	public void hardmodeBonus() {
+		character.getStamina().gain(growth.bonusStamina);
+		character.getArousal().gain(growth.bonusArousal);
+		character.getMojo().gain(growth.bonusMojo);
+		character.availableAttributePoints += growth.bonusAttributes;
+	}
+
+	public void distributePoints() {
+		if (character.availableAttributePoints <= 0) { return; }
+		ArrayList<Attribute> avail = new ArrayList<Attribute>();
+		ArrayDeque<Attribute> preferred = new ArrayDeque<Attribute>(preferredAttributes);
+		for (Attribute a : character.att.keySet()) {
+			if (Attribute.isTrainable(a) && (character.getPure(a) > 0 || Attribute.isBasic(a))) {
+				avail.add(a);
+			}
+		}
+		if (avail.size() == 0) {
+			avail.add(Attribute.Cunning);
+			avail.add(Attribute.Power);
+			avail.add(Attribute.Seduction);
+		}
+		for (; character.availableAttributePoints > 0; character.availableAttributePoints--) {
+			Attribute selected;
+			while (preferred.size() > 0 && !avail.contains(preferred.peekFirst())) {
+				preferred.removeFirst();
+			}
+			if (preferred.size() > 0) {
+				selected = preferred.removeFirst();
+			} else {
+				selected = avail.get(Global.random(avail.size()));
+			}
+			character.mod(selected, 1);
+		}
 	}
 }

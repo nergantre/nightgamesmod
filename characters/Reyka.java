@@ -59,7 +59,19 @@ public class Reyka extends BasePersonality {
 		character.body.add(TailPart.demonic);
 		character.body.add(WingsPart.demonic);
 		character.body.finishBody("female");
-		}
+	}
+
+	@Override
+	public void setGrowth() {
+		growth.stamina = 1;
+		growth.arousal = 6;
+		growth.mojo = 3;
+		growth.bonusStamina = 1;
+		growth.bonusArousal = 3;
+		growth.bonusMojo = 2;
+		preferredAttributes.add(Attribute.Dark);
+		preferredAttributes.add(Attribute.Seduction);
+	}
 
 	@Override
 	public void rest() {

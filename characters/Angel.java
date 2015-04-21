@@ -68,6 +68,18 @@ public class Angel extends BasePersonality {
 	}
 
 	@Override
+	public void setGrowth() {
+		growth.stamina = 1;
+		growth.arousal = 5;
+		growth.mojo = 2;
+		growth.bonusStamina = 1;
+		growth.bonusArousal = 4;
+		growth.bonusMojo = 1;
+		preferredAttributes.add(Attribute.Dark);
+		preferredAttributes.add(Attribute.Seduction);
+	}
+
+	@Override
 	public void rest() {
 		if(character.rank>=1){
 			if(!character.has(Trait.succubus)&&character.money>=1000){
@@ -322,54 +334,17 @@ public class Angel extends BasePersonality {
 				"for me. I figured I should prove to you which of us has the most staying power.\"</i> She strokes your hair with a surprising amount of affection. <i>\"Don't " +
 				"worry if you can't keep up. As long as you keep making me cum, I'll let you be my pet.\"</i>";
 	}
+
 	@Override
 	public boolean fightFlight(Character opponent) {
 		return !character.nude()||opponent.nude();
 	}
+
 	@Override
 	public boolean attack(Character opponent) {
 		return true;
 	}
-	@Override
-	public void ding() {
-		super.ding();
-		if(character.getPure(Attribute.Dark)>=1){
-			character.mod(Attribute.Dark, 1);
-			character.mod(Attribute.Seduction, 1);
-			int rand;
-			for(int i=0; i<Global.random(2)+1;i++){
-				rand=Global.random(4);
-				if(rand==0){
-					character.mod(Attribute.Power, 1);
-				}
-				else if(rand==1){
-					character.mod(Attribute.Seduction, 1);
-				}
-				else if(rand==2){
-					character.mod(Attribute.Cunning, 1);
-				}
-				else if(rand==3){
-					character.mod(Attribute.Dark, 1);
-				}
-			}
-		}
-		else{
-			character.mod(Attribute.Seduction, 1);
-			int rand;
-			for(int i=0; i<Global.random(2)+1;i++){
-				rand=Global.random(3);
-				if(rand==0){
-					character.mod(Attribute.Power, 1);
-				}
-				else if(rand==1){
-					character.mod(Attribute.Seduction, 1);
-				}
-				else if(rand==2){
-					character.mod(Attribute.Cunning, 1);
-				}
-			}
-		}
-	}
+
 	@Override
 	public String victory3p(Combat c, Character target, Character assist) {
 		if(target.human()){

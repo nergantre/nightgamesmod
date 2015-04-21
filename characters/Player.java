@@ -72,8 +72,8 @@ public class Player extends Character {
 	 */
 	private static final long serialVersionUID = -7547460660118646782L;
 	public GUI gui;
-	public int attpoints;
 	public String sex;
+	private Growth growth;
 	
 	public Player(String name, String sex) {
 		super(name, 1);
@@ -83,16 +83,25 @@ public class Player extends Character {
 		closet.add(Clothing.Tshirt);
 		closet.add(Clothing.boxers);
 		closet.add(Clothing.jeans);
-		//debug2
 		change(Modifier.normal);
-		attpoints=0;
+		availableAttributePoints=0;
 		setUnderwear(Item.PlayerTrophy);
 		body.finishBody(sex);
+		growth = new Growth();
+		setGrowth();
 	}
 	public Player(String name) {
 		this(name, "male");
 	}
 
+	public void setGrowth() {
+		growth.stamina = 2;
+		growth.arousal = 4;
+		growth.mojo = 2;
+		growth.bonusStamina = 1;
+		growth.bonusArousal = 2;
+		growth.bonusMojo = 1;
+	}
 
 	@Override
 	public String describe(int per) {
@@ -420,24 +429,19 @@ public class Player extends Character {
 			}
 		}
 	}
+
 	public void ding(){
 		level++;
-		attpoints+=2;
+		availableAttributePoints+=2;
 		gui.message("You've gained a Level!<br>Select which attributes to increase.");
 		gui.ding();
-		if(has(Trait.fitnessNut)){
-			getStamina().gain(1);
-		}
-		getStamina().gain(2);
-		if(has(Trait.expertGoogler)){
-			getArousal().gain(2);
-		}
-		getArousal().gain(4);
-		if(has(Trait.mojoMaster)){
-			getMojo().gain(1);
-		}
+		getStamina().gain(growth.stamina);
+		getArousal().gain(growth.arousal);
+		getMojo().gain(growth.mojo);
+		availableAttributePoints += growth.attributes[rank];
 		getMojo().gain(1);
 	}
+
 	public void flee(Area location2) {
 		Area[] adjacent = location2.adjacent.toArray(new Area[location2.adjacent.size()]);
 		Area destination = adjacent[Global.random(adjacent.length)];

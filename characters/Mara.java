@@ -61,6 +61,18 @@ public class Mara extends BasePersonality  {
 		}
 
 	@Override
+	public void setGrowth() {
+		growth.stamina = 2;
+		growth.arousal = 2;
+		growth.mojo = 5;
+		growth.bonusStamina = 1;
+		growth.bonusArousal = 2;
+		growth.bonusMojo = 2;
+		preferredAttributes.add(Attribute.Science);
+		preferredAttributes.add(Attribute.Cunning);
+	}
+
+	@Override
 	public void rest() {
 		if(character.rank==1){
 			if(!character.has(Trait.madscientist)&&character.money>=1000){

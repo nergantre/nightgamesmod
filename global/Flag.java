@@ -47,4 +47,5 @@ public enum Flag {
 	YuiAffection,
 	threesome,
 	bodyShop,
+	hardmode,
 }
