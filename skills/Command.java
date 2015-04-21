@@ -64,11 +64,18 @@ public class Command extends Skill {
 		} else if (target.getArousal().get() <= 15) { // Masturbate
 			c.write(self,receive(c, 0, Result.normal, target));
 			new Masturbate(target).resolve(c, self);
-		} else if (!c.getStance().penetration(self) && c.getStance().dom(target)) { // Fuck
-																			// me
+		} else if (!c.getStance().penetration(self)
+				&& c.getStance().dom(target)
+				&& self.hasPussy() && target.hasDick()) { // Fuck me
 			c.setStance(new Mount(target, self));
 			c.write(self,receive(c, 0, Result.special, target));
 			new Fuck(target).resolve(c, self);
+		} else if (!c.getStance().penetration(self)
+				&& c.getStance().dom(target)
+				&& target.hasPussy() && self.hasDick()) { // Fuck me
+			c.setStance(new Mount(target, self));
+			c.write(self,receive(c, 0, Result.special, target));
+			new ReverseFuck(target).resolve(c, self);
 		} else if (c.getStance().penetration(self)) { // I drain you
 			if (Global.random(5) >= 4 && self.get(Attribute.Dark) > 0) {
 				c.write(self,receive(c, 0, Result.critical, target));
@@ -83,11 +90,13 @@ public class Command extends Skill {
 			c.write(self,receive(c, 1, Result.critical, target));
 			c.setStance(new ReverseMount(target, self));
 			c.write(self,"<br>");
-			new Cunnilingus(target).resolve(c, self);
-		} else if (!c.getStance().penetration(self)) { // Lay down
-			c.write(self,receive(c, 2, Result.critical, target));
-			c.setStance(new Cowgirl(self, target));
-			new Thrust(self).resolve(c, target);
+			if (self.hasPussy()) {
+				new Cunnilingus(target).resolve(c, self);
+			} else if (self.hasDick()) {
+				new Blowjob(target).resolve(c, self);
+			} else {
+				new LickNipples(target).resolve(c, self);
+			}
 		} else { // Confused
 			c.write(self,receive(c, 0, null, target));
 			target.removelist.add(target.getStatus(Stsflag.enthralled));
@@ -122,8 +131,7 @@ public class Command extends Skill {
 				return "While commanding you to be still, " + self.name()
 						+ " starts bouncing wildly on your dick.";
 			case 1:
-				return "The scent of her juices overwhelms you, "
-						+ "leaving you wanting nothing more than to taste her";
+				return "Her scent overwhelms you and you feel a compulsion to pleasure her.";
 			case 2:
 				return "You feel an irresistible comuplsion to lay down on your back";
 			default:
