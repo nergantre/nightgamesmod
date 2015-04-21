@@ -93,4 +93,8 @@ public class Maneuver extends Skill {
 	public String describe() {
 		return "Get behind opponent: 8 Mojo";
 	}
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

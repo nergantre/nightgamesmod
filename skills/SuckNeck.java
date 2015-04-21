@@ -118,4 +118,9 @@ public class SuckNeck extends Skill {
 	public String describe() {
 		return "Suck on opponent's neck. Highly variable effectiveness";
 	}
+
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

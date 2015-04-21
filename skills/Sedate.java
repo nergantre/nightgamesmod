@@ -102,5 +102,4 @@ public class Sedate extends Skill {
 	public String describe() {
 		return "Throw sedative at opponent, weakening her";
 	}
-
 }

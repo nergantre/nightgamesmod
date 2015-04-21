@@ -78,4 +78,8 @@ public class Grind extends Thrust {
 	public String getName(Combat c) {
 		return "Grind";
 	}
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

@@ -114,4 +114,9 @@ public class Spank extends Skill {
 	public String describe() {
 		return "Slap opponent on the ass";
 	}
+
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

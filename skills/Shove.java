@@ -123,4 +123,9 @@ public class Shove extends Skill {
 	public String describe() {
 		return "Slightly damage opponent and try to knock her down";
 	}
+
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

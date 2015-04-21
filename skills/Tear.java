@@ -164,4 +164,8 @@ public class Tear extends Skill {
 		return null;
 	}
 
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

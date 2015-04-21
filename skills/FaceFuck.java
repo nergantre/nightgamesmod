@@ -109,4 +109,8 @@ public class FaceFuck extends Skill {
 		return m;
 	}
 
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

@@ -92,4 +92,9 @@ public class Reversal extends Skill {
 	public String describe() {
 		return "Take dominant position: 10 Mojo";
 	}
+
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

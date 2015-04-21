@@ -65,4 +65,9 @@ public class ReverseStraddle extends Skill {
 	public String describe() {
 		return "Straddle facing groin";
 	}
+
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

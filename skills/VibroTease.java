@@ -72,4 +72,8 @@ public class VibroTease extends Skill {
 				"She teasingly pokes the tip against your prostate which causes your limbs to get shaky from the pleasure.";
 	}
 
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

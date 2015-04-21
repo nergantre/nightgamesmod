@@ -142,4 +142,8 @@ public class UseTickler extends Skill {
 		return "Use your tickler on opponet, weakening and arousing her. More effective if nude";
 	}
 
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

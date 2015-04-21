@@ -107,4 +107,9 @@ public class Fly extends Fuck {
 					+ " the rythmic movements of her flying arouse you to no end";
 		}
 	}
+
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

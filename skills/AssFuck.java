@@ -144,4 +144,9 @@ public class AssFuck extends Fuck {
 	public String describe() {
 		return "Penetrate your opponent's ass.";
 	}
+
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

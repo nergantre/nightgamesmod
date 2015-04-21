@@ -72,4 +72,8 @@ public class Turnover extends Skill {
 		return self.name()+" rolls you onto your stomach. You push yourself back up, but she takes the opportunity to get behind you.";
 	}
 
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

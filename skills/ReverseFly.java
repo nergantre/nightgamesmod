@@ -79,4 +79,9 @@ public class ReverseFly extends Fly {
 					+ " the rythmic movements of her flying arouse you to no end";
 		}
 	}
+
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

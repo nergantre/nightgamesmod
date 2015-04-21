@@ -109,4 +109,8 @@ public class Carry extends Fuck {
 		return "Picks up opponent and penetrates her: Mojo 10.";
 	}
 
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

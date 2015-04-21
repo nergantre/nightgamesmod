@@ -86,4 +86,8 @@ public class LegLock extends Skill {
 	public String describe() {
 		return "A submission hold on your opponent's leg";
 	}
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

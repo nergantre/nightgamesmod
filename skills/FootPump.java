@@ -88,4 +88,9 @@ public class FootPump extends Skill {
 	public String describe() {
 		return "Pleasure your opponent with your feet";
 	}
+
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

@@ -171,4 +171,9 @@ public class Blowjob extends Skill {
 	public String describe() {
 		return "Lick and suck your opponent's dick";
 	}
+
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

@@ -89,4 +89,8 @@ public class PullOut extends Skill {
 		return "Aborts penetration";
 	}
 
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

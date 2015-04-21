@@ -143,4 +143,9 @@ public class Stomp extends Skill {
 	public String describe() {
 		return "Stomps on your opponent's groin for extreme damage: 20 mojo";
 	}
+
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

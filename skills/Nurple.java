@@ -113,4 +113,8 @@ public class Nurple extends Skill {
 	public String describe() {
 		return "Twist opponent's nipples painfully";
 	}
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

@@ -74,4 +74,8 @@ public class TailJob extends Skill {
 		return self.name()+" teases your sensitive dick and balls with her " + self.body.getRandom("tail").describe(self) + ". It wraps completely around your shaft and strokes firmly.";
 	}
 
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

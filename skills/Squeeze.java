@@ -156,4 +156,9 @@ public class Squeeze extends Skill {
 	public String describe() {
 		return "Grab opponent's groin, deals more damage if naked";
 	}
+
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

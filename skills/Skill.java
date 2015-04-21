@@ -79,4 +79,8 @@ public abstract class Skill{
 	public String getName(Combat c) {
 		return toString();
 	}
+	public boolean makesContact() {
+		return false;
+	}
+	
 }

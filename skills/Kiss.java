@@ -128,4 +128,8 @@ public class Kiss extends Skill {
 	public String describe() {
 		return "Kiss your opponent";
 	}
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

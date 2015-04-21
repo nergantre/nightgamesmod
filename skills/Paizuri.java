@@ -98,4 +98,8 @@ public class Paizuri extends Skill {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

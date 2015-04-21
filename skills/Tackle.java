@@ -125,4 +125,8 @@ public class Tackle extends Skill {
 	public String describe() {
 		return "Knock opponent to ground and get on top of her";
 	}
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

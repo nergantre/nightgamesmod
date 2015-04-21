@@ -49,4 +49,8 @@ public class CommandStripPlayer extends PlayerCommand {
 				+ " Silver Bard: CommandStripPlayer-receive>>";
 	}
 
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

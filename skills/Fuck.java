@@ -159,4 +159,9 @@ public class Fuck extends Skill {
 	public String describe() {
 		return "Penetrate your opponent, switching to a sex position";
 	}
+	
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

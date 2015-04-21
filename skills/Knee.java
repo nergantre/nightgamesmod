@@ -114,4 +114,8 @@ public class Knee extends Skill {
 	public String describe() {
 		return "Knee opponent in the groin";
 	}
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

@@ -88,4 +88,9 @@ public class Trip extends Skill {
 	public String describe() {
 		return "Attempt to trip your opponent";
 	}
+
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

@@ -92,4 +92,8 @@ public class HipThrow extends Skill {
 		return "Throw your opponent to the ground, dealing some damage: 10 Mojo";
 	}
 
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

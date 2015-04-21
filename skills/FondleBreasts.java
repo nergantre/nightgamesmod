@@ -105,4 +105,9 @@ public class FondleBreasts extends Skill {
 	public String describe() {
 		return "Grope your opponents breasts. More effective if she's topless";
 	}
+
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

@@ -115,4 +115,8 @@ public class Escape extends Skill {
 	public String describe() {
 		return "Uses Cunning to try to escape a submissive position";
 	}
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

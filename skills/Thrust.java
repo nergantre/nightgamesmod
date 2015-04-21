@@ -169,4 +169,9 @@ public class Thrust extends Skill {
 			return "Ride";
 		}
 	}
+
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

@@ -96,4 +96,8 @@ public class Piston extends Thrust {
 			return "Bounce";
 		}
 	}
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

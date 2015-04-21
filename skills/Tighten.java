@@ -72,4 +72,9 @@ public class Tighten extends Thrust {
 	public String getName(Combat c) {
 		return "Tighten";
 	}
+
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

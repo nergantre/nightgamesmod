@@ -213,4 +213,8 @@ public class Drain extends Skill {
 		}
 	}
 
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

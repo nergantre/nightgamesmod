@@ -220,4 +220,9 @@ public class Tickle extends Skill {
 	private boolean hastickler(){
 		return self.has(Item.Tickler)||self.has(Item.Tickler2);
 	}
+
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

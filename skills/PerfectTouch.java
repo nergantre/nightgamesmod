@@ -94,4 +94,8 @@ public class PerfectTouch extends Skill {
 	public String describe() {
 		return "Strips opponent completely: 25 Mojo";
 	}
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

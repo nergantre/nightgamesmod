@@ -66,4 +66,8 @@ public class FlashStep extends Skill {
 		return self.name()+" starts to move and suddenly vanishes. You hesitate for a second and feel her grab you from behind.";
 	}
 
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

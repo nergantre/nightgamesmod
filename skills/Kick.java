@@ -145,4 +145,8 @@ public class Kick extends Skill {
 	public String describe() {
 		return "Kick your opponent in the groin";
 	}
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

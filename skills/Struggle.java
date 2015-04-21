@@ -279,4 +279,8 @@ public class Struggle extends Skill {
 	public String describe() {
 		return "Attempt to escape a submissive position using Power";
 	}
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

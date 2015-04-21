@@ -73,4 +73,9 @@ public class ReverseFuck extends Fuck {
 	public String describe() {
 		return "Straddle your opponent and ride her cock";
 	}
+
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

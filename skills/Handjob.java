@@ -115,4 +115,8 @@ public class Handjob extends Skill {
 	public String describe() {
 		return "Rub your opponent's dick";
 	}
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

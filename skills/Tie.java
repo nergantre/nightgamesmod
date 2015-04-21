@@ -113,4 +113,8 @@ public class Tie extends Skill {
 		return "Tie up your opponent's hands with a ziptie";
 	}
 
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

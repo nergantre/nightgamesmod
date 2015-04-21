@@ -139,4 +139,8 @@ public class Slap extends Skill {
 	public String describe() {
 		return "Slap opponent across the face";
 	}
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

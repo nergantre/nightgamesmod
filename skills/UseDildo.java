@@ -110,4 +110,8 @@ public class UseDildo extends Skill{
 		return "Pleasure opponent with your dildo";
 	}
 
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

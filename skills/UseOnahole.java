@@ -110,4 +110,8 @@ public class UseOnahole extends Skill {
 		return "Pleasure opponent with an Onahole";
 	}
 
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

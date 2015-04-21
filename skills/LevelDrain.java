@@ -177,4 +177,8 @@ public class LevelDrain extends Skill {
 		}
 	}
 
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

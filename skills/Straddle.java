@@ -65,4 +65,9 @@ public class Straddle extends Skill {
 	public String describe() {
 		return "Straddles opponent";
 	}
+
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

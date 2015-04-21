@@ -93,4 +93,8 @@ public class LickNipples extends Skill {
 	public String describe() {
 		return "Suck your opponent's nipples";
 	}
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

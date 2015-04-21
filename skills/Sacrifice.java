@@ -65,5 +65,4 @@ public class Sacrifice extends Skill {
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return self.name()+" pinches her nipples hard while screaming in pain. You see her stagger in exhaustion, but she seems much less aroused.";
 	}
-
 }

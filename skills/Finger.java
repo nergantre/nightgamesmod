@@ -127,4 +127,9 @@ public class Finger extends Skill {
 	public String describe() {
 		return "Digitally stimulate opponent's pussy";
 	}
+
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

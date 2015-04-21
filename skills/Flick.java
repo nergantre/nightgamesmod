@@ -103,4 +103,9 @@ public class Flick extends Skill {
 	public String describe() {
 		return "Flick opponent's genitals, which is painful and embarrassing";
 	}
+
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

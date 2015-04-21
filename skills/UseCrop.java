@@ -146,4 +146,8 @@ public class UseCrop extends Skill {
 		return "Strike your opponent with riding crop. More effective if she's naked";
 	}
 
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

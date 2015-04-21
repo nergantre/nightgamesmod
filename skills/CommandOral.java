@@ -76,4 +76,8 @@ public class CommandOral extends PlayerCommand {
 				+ " Silver Bard: CommandOral-receive>>";
 	}
 
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

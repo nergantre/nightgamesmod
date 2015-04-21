@@ -89,4 +89,9 @@ public class ArmBar extends Skill {
 	public String describe() {
 		return "A judo submission hold that hyperextends the arm.";
 	}
+
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

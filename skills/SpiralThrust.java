@@ -105,4 +105,9 @@ public class SpiralThrust extends Thrust {
 			return "Spiral";
 		}
 	}
+
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

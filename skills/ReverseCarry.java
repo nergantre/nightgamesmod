@@ -91,4 +91,8 @@ public class ReverseCarry extends Carry {
 		return "Jump into your opponent's arms and impale yourself on her cock: Mojo 10.";
 	}
 
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }

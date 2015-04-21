@@ -91,4 +91,9 @@ public class Restrain extends Skill {
 	public String describe() {
 		return "Restrain opponent until she struggles free";
 	}
+
+	@Override
+	public boolean makesContact() {
+		return true;
+	}
 }
