@@ -1472,19 +1472,19 @@ public abstract class Character extends Observable implements Cloneable{
 		// Short-term: Arousal
 		fit += ushort / usum * 100.0f * (getArousal().max() - getArousal().get()) / Math.min(100, getArousal().max());
 		// Mid-term: Stamina
-		fit += umid / usum * 50.0f * ( 1 - Math.exp(- getStamina().get() / Math.min(getStamina().max(), 100)));
+		fit += umid / usum * 50.0f * ( 1 - Math.exp(-((float)getStamina().get()) / Math.min(getStamina().max(), 100.0f)));
 		// Long term: Mojo
-		fit += ulong / usum * 50.0f * ( 1 - Math.exp(- getMojo().get() / Math.min(getMojo().max(), 40)));
+		fit += ulong / usum * 50.0f * ( 1 - Math.exp(- ((float)getMojo().get()) / Math.min(getMojo().max(), 40.0f)));
 		for (Status status : this.status) {
 			fit += status.fitnessModifier();
 		}
 		return fit;
 	}
-	
+
 	public String nameOrPossessivePronoun() {
 		return name + "'s";
 	}
-	
+
 	public int getSkimpiness(){
 		int result = 2;
 		for(Clothing article: top){
