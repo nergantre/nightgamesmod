@@ -37,7 +37,7 @@ public class SpawnSlime extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(5);
+		self.spendMojo(c, 5);
 		self.consume(Item.Battery, 1);
 		int power = 3;
 		int ac = 3;

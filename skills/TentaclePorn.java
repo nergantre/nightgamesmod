@@ -40,7 +40,7 @@ public class TentaclePorn extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(10);
+		self.spendMojo(c, 10);
 		if(target.roll(this, c, accuracy()+self.tohit())){
 			if(target.nude()){
 				int m = Global.random(self.get(Attribute.Fetish)) / 2 + 1;

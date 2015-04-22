@@ -75,7 +75,7 @@ public class ShrinkRay extends Skill {
 				}
 			}
 		}
-		target.spendMojo(15);
+		target.loseMojo(c, 15);
 	}
 
 	@Override

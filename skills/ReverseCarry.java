@@ -38,25 +38,31 @@ public class ReverseCarry extends Carry {
 
 	@Override
 	public void resolve(Combat c, Character target) {
+		String premessage = "";
+		self.spendMojo(c, getMojoSpent());
+		if (self.bottom.size() == 1) {
+			premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s to the side and", self.bottom.get(0).name());
+		} else {
+			premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s and %s to the side and", self.bottom.get(0).name(), self.bottom.get(1).name());
+		}
 		if(target.roll(this, c, accuracy()+self.tohit())){
 			if(self.human()){
-				c.write(self,deal(c,0,Result.normal, target));
+				c.write(self,premessage + deal(c,0,Result.normal, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.normal, self));
+				c.write(self,premessage + receive(c,0,Result.normal, self));
 			}
 
 			c.setStance(new Jumped(self,target));
 		}
 		else{
 			if(self.human()) {
-				c.write(self,deal(c,0,Result.miss, target));
+				c.write(self,premessage + deal(c,0,Result.miss, target));
 			} else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(self,premessage + receive(c,0,Result.miss, target));
 			}
 			c.setStance(new StandingOver(target, self));
 		}
-		self.spendMojo(getMojoSpent());
 	}
 
 	@Override
@@ -67,10 +73,10 @@ public class ReverseCarry extends Carry {
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
-			return "You leap into "+target.possessivePronoun()+" arms, but she deposits you back onto the floor.";
+			return "you leap into "+target.possessivePronoun()+" arms, but she deposits you back onto the floor.";
 		}
 		else{
-			return Global.format("You leap into {other:possessive} arms, impaling yourself onto her {other:body-part:cock} "
+			return Global.format("you leap into {other:possessive} arms, impaling yourself onto her {other:body-part:cock} "
 								+ ". She lets out a noise that's equal parts surprise and delight as you bounce on her pole.", self, target);
 		}
 	}

@@ -33,7 +33,7 @@ public class HipThrow extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(10);
+		self.spendMojo(c, 10);
 		if(self.check(Attribute.Power,target.knockdownDC())){
 			int m = Global.random(6)+target.get(Attribute.Power)/2;
 			if(self.human()){

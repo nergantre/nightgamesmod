@@ -1,5 +1,7 @@
 package status;
 
+import skills.CounterBase;
+import skills.Skill;
 import combat.Combat;
 
 import characters.Attribute;
@@ -7,27 +9,31 @@ import characters.Character;
 import characters.Emotion;
 import characters.Trait;
 
-public class Energized extends Status {
+public class CounterStatus extends Status {
 	private int duration;
-	
-	public Energized(Character affected,int duration) {
-		super("Energized", affected);
-		if(affected.has(Trait.PersonalInertia)){
-			this.duration=duration;
-		}else{
-			this.duration=3*duration/2;
-		}
-		flag(Stsflag.energized);
+	private CounterBase skill;
+	private String desc;
+
+	public CounterStatus(Character affected, CounterBase skill, String description) {
+		this(affected, skill, description, 0);
+	}
+
+	public CounterStatus(Character affected, CounterBase skill, String description, int duration) {
+		super("Counter", affected);
+		this.duration=duration;
+		this.skill = skill;
+		this.desc = description;
+		flag(Stsflag.counter);
 	}
 
 	@Override
 	public String describe() {
-		return "You're brimming with energy.";
+		return desc;
 	}
 
 	@Override
 	public float fitnessModifier () {
-		return 2;
+		return .5f;
 	}
 	
 	@Override
@@ -36,77 +42,70 @@ public class Energized extends Status {
 	}
 
 	@Override
-	public int regen(Combat c) {
-		duration--;
-		if(duration<0){
+	public void eot(Combat c) {
+		if (duration <= 0) {
 			affected.removelist.add(this);
 		}
-		affected.buildMojo(c, 10);
-		affected.emote(Emotion.confident,5);
-		affected.emote(Emotion.dominant,10);
-		return 0;
+		duration--;
 	}
 
 	@Override
 	public int damage(Combat c, int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int pleasure(Combat c, int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int weakened(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int tempted(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int evade() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int escape() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int gainmojo(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int spendmojo(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int counter() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	public boolean lingering(){
-		return true;
+		return -100;
 	}
 
 	@Override
 	public int value() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
+	public void resolveSkill(Combat c, Character target) {
+		affected.removelist.add(this);
+		skill.resolveCounter(c, target);
+	}
+
+	@Override
+	public int regen(Combat c) {
+		return 0;
+	}
+
 }

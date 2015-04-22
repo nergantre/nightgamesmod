@@ -17,12 +17,9 @@ public class CommandInsult extends PlayerCommand {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if (target.canSpend(15))
-			target.spendMojo(15);
-		else
-			target.getMojo().set(0);
-		self.buildMojo(10);
+		target.loseMojo(c, 15);
 		c.write(self,deal(c, 0, Result.normal, target));
+		self.buildMojo(c, 10);
 	}
 
 	@Override

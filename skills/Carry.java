@@ -14,11 +14,11 @@ import combat.Result;
 public class Carry extends Fuck {
 
 	public Carry(String name, Character self) {
-		super(name, self);
+		super(name, self, 5);
 	}
 
 	public Carry(Character self) {
-		super("Carry", self);
+		super("Carry", self, 5);
 	}
 
 	@Override
@@ -52,24 +52,32 @@ public class Carry extends Fuck {
 
 	@Override
 	public void resolve(Combat c, Character target) {
+		String premessage = "";
+		self.spendMojo(c, getMojoSpent());
+		if(!target.bottom.empty() && getSelfOrgan().isType("cock")) {
+			if (self.bottom.size() == 1) {
+				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s halfway and", self.bottom.get(0).name());
+			} else {
+				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s and %s halfway and", self.bottom.get(0).name(), self.bottom.get(1).name());
+			}
+		}
 		if(target.roll(this, c, accuracy()+self.tohit())){
 			if(self.human()){
-				c.write(self,deal(c,0,Result.normal, target));
+				c.write(self,premessage + deal(c,0,Result.normal, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.normal, self));
+				c.write(self,premessage + receive(c,0,Result.normal, self));
 			}
 			c.setStance(new Standing(self,target));
 		}
 		else{
 			if(self.human()) {
-				c.write(self,deal(c,0,Result.miss, target));
+				c.write(self,premessage + deal(c,0,Result.miss, target));
 			} else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(self,premessage + receive(c,0,Result.miss, target));
 			}
 			c.setStance(new StandingOver(target, self));
 		}
-		self.spendMojo(getMojoSpent());
 	}
 
 	@Override
@@ -87,10 +95,10 @@ public class Carry extends Fuck {
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
-			return "You pick up "+target.name()+", but she flips out of your arms and manages to trip you.";
+			return "you pick up "+target.name()+", but she flips out of your arms and manages to trip you.";
 		}
 		else{
-			return "You scoop up "+target.name()+", lifting her into the air and simultaneously thrusting your dick into her hot depths. She lets out a noise that's " +
+			return "you scoop up "+target.name()+", lifting her into the air and simultaneously thrusting your dick into her hot depths. She lets out a noise that's " +
 				"equal parts surprise and delight as you bounce her on your pole.";
 		}
 	}

@@ -57,6 +57,8 @@ public class CreationGUI extends JPanel{
 	private JScrollPane scrollPane;
 	private JRadioButton rdbtnNormal;
 	private JRadioButton rdbtnDumb;
+	private JRadioButton rdbtnEasy;
+	private JRadioButton rdbtnHard;
 	private JSeparator separator_1;
 	private Box verticalBox;
 	private Box horizontalBox;
@@ -129,6 +131,9 @@ public class CreationGUI extends JPanel{
 					one.add((Trait)WeaknessBox.getSelectedItem());
 					if(rdbtnDumb.isSelected()){
 						Global.flag(Flag.dumbmode);
+					}
+					if(rdbtnHard.isSelected()){
+						Global.flag(Flag.hardmode);
 					}
 					Global.newGame(one);
 				}
@@ -295,6 +300,9 @@ public class CreationGUI extends JPanel{
 		
 		rdbtnDumb = new JRadioButton("Old AI");
 		panel_2.add(rdbtnDumb);
+
+		rdbtnHard = new JRadioButton("Hard Mode");
+		panel_2.add(rdbtnHard);
 		btnCunPlus.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

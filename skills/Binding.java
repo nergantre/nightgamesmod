@@ -11,7 +11,7 @@ import combat.Result;
 public class Binding extends Skill {
 
 	public Binding(Character self) {
-		super("Binding", self);
+		super("Binding", self, 4);
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class Binding extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(20);
+		self.spendMojo(c, 20);
 		if(self.human()){
 			c.write(self,deal(c,0,Result.normal, target));
 		}

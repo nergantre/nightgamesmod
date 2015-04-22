@@ -52,7 +52,7 @@ public class Paizuri extends Skill {
 		}
 		target.body.pleasure(self, self.body.getRandom("breasts"), target.body.getRandom("cock"), m, c);					
 
-		self.buildMojo(25);
+		self.buildMojo(c, 25);
 	}
 
 	@Override

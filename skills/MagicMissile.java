@@ -37,7 +37,7 @@ public class MagicMissile extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(5);
+		self.spendMojo(c, 5);
 		if(target.roll(this, c, accuracy()+self.tohit())){
 			if(target.nude()&&Global.random(3)==2){
 				if(self.human()){

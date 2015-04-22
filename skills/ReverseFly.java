@@ -38,13 +38,19 @@ public class ReverseFly extends Fly {
 
 	@Override
 	public void resolve(Combat c, Character target) {
+		String premessage = "";
+		self.spendMojo(c, getMojoSpent());
+		if (self.bottom.size() == 1) {
+			premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s to the side and", self.bottom.get(0).name());
+		} else {
+			premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s and %s to the side and", self.bottom.get(0).name(), self.bottom.get(1).name());
+		}
 		Result result = target.roll(this, c, accuracy()+self.tohit()) ? Result.normal: Result.miss;
 		if (this.self.human()) {
-			c.write(self,deal(c, 0, result, target));
+			c.write(self,premessage + deal(c, 0, result, target));
 		} else if (target.human()) {
-			c.write(self,receive(c, 0, result, this.self));
+			c.write(self,premessage + receive(c, 0, result, this.self));
 		}
-		self.spendMojo(getMojoSpent());
 		if (result == Result.normal) {
 			self.emote(Emotion.dominant,50);
 			self.emote(Emotion.horny, 30);
@@ -59,9 +65,9 @@ public class ReverseFly extends Fly {
 	@Override
 	public String deal(Combat c, int amount, Result modifier, Character target) {
 		if (modifier == Result.miss){
-			return "You grab " + target.name() + " tightly and try to take off. However " +target.pronoun() + " has other ideas. She knees your crotch as you approach and sends you sprawling to the ground.";
+			return "you grab " + target.name() + " tightly and try to take off. However " +target.pronoun() + " has other ideas. She knees your crotch as you approach and sends you sprawling to the ground.";
 		} else {
-			return "You grab " + target.name() + " tightly and take off, "
+			return "you grab " + target.name() + " tightly and take off, "
 					+ "inserting his dick into your hungry " + self.body.getRandomPussy().describe(self) + ".";
 		}
 	}
@@ -72,7 +78,7 @@ public class ReverseFly extends Fly {
 		if (modifier == Result.miss){
 			return target.name() + " lunges for you with a hungry look in her eyes. However you have other ideas. You trip her as she approaches and send her sprawling to the floor.";
 		} else {
-			return "Suddenly, " + self.name() + " leaps at you, embracing you tightly"
+			return "suddenly, " + self.name() + " leaps at you, embracing you tightly"
 					+ ". She then flaps her " + self.body.getRandomWings().describe(target) + " hard and before you know it"
 					+ " you are twenty feet in the sky held up by her arms and legs."
 					+ " Somehow, your dick ended up inside of her in the process and"

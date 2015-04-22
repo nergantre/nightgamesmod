@@ -41,7 +41,7 @@ public class SpawnImp extends Skill {
 	@Override
 	public void resolve(Combat c, Character target) {
 		self.arouse(5, c);
-		self.spendMojo(10);
+		self.spendMojo(c, 10);
 		int power = 3;
 		int ac = 2;
 		if(self.has(Trait.leadership)){

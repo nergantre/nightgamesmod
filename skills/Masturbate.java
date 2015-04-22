@@ -79,7 +79,7 @@ public class Masturbate extends Skill {
 		int mojo;
 
 		mojo = self.body.pleasure(self, withO, targetO, 25, c);
-		self.buildMojo(mojo);
+		self.buildMojo(c, mojo);
 		self.emote(Emotion.horny, mojo);
 	}
 

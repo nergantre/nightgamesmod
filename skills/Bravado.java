@@ -31,14 +31,14 @@ public class Bravado extends Skill {
 	@Override
 	public void resolve(Combat c, Character target) {
 		int x = self.getMojo().get();
+		self.spendMojo(c, x);
 		if(self.human()){
 			c.write(self,deal(c,x,Result.normal, target));
 		}
 		else if(target.human()){
 			c.write(self,receive(c,x,Result.normal, target));
 		}
-		self.spendMojo(x);
-		self.calm(x/2);
+		self.calm(c, x/2);
 		self.heal(c, x);
 		self.emote(Emotion.confident, 30);
 		self.emote(Emotion.dominant, 20);

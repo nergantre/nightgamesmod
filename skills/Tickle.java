@@ -29,13 +29,13 @@ public class Tickle extends Skill {
 			if(target.pantsless()&&c.getStance().reachBottom(self)&&!c.getStance().penetration(self)){
 				if(self.has(Item.Tickler2)&&Global.random(2)==1&&self.canSpend(10)&&(!self.human()&&!target.is(Stsflag.hypersensitive)
 						||Global.getMatch().condition!=Modifier.notoys)){
+					self.spendMojo(c, 10);
 					if(self.human()){
 						c.write(self,deal(c,0,Result.critical, target));
 					}
 					else if(target.human()){
 						c.write(self,receive(c,0,Result.critical, target));
 					}
-					self.spendMojo(10);
 					target.add(new Hypersensitive(target));
 				}
 				else if(self.has(Trait.ticklemonster)&&target.nude()){
@@ -47,7 +47,7 @@ public class Tickle extends Skill {
 					}
 					target.body.pleasure(self, self.body.getRandom("hands"), target.body.getRandom("skin"), 6 + Global.random(8), c);
 					target.weaken(c, Global.random(4));
-					self.buildMojo(15);							
+					self.buildMojo(c, 15);							
 				}	
 				else if(hastickler()&&(!self.human()||Global.getMatch().condition!=Modifier.notoys)){
 					if(self.human()){
@@ -56,7 +56,7 @@ public class Tickle extends Skill {
 					else if(target.human()){
 						c.write(self,receive(c,0,Result.strong, target));
 					}
-					self.buildMojo(10);	
+					self.buildMojo(c, 10);	
 				}
 				else{
 					if(self.human()){
@@ -126,7 +126,7 @@ public class Tickle extends Skill {
 					target.body.pleasure(self, self.body.getRandom("hands"), target.body.getRandom("skin"), m, c);
 					target.weaken(c, Global.random(3+target.get(Attribute.Perception))-(target.top.size()+target.bottom.size()));
 				}				
-				self.buildMojo(10);
+				self.buildMojo(c, 10);
 			}
 		}
 		else{

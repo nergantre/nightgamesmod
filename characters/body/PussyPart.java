@@ -145,8 +145,8 @@ public enum PussyPart implements BodyPart {
 			int strength = 10 + self.get(Attribute.Dark)/2;
 			opponent.weaken(c, strength);
 			self.heal(c, strength);
-			opponent.spendMojo(strength);
-			self.buildMojo(strength);
+			opponent.loseMojo(c, strength);
+			self.buildMojo(c, strength);
 			for (int i = 0; i < 10; i++) {
 				Attribute stolen = (Attribute) opponent.att.keySet().toArray()[Global.random(opponent.att.keySet().size())];
 				if (stolen != Attribute.Perception && opponent.get(stolen) > 0) {

@@ -11,7 +11,7 @@ import combat.Result;
 public class EyesOfTemptation extends Skill {
 
 	public EyesOfTemptation(Character self) {
-		super("Eyes of Temptation", self);
+		super("Eyes of Temptation", self, 5);
 	}
 
 	@Override
@@ -32,16 +32,16 @@ public class EyesOfTemptation extends Skill {
 	@Override
 	public void resolve(Combat c, Character target) {
 		Result result = target.roll(this, c, accuracy()+self.tohit())? Result.normal : Result.miss;
+		self.spendMojo(c, 30);
 		if(self.human()) {
-			c.write(self,deal(c,0,Result.normal, target));
+			c.write(self,deal(c,0,result, target));
 		}
 		else if(target.human()) {
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(self,receive(c,0,result, target));
 		}
 		if (result == Result.normal) {
 			target.add(new Enthralled(target, self, 5));
 			self.emote(Emotion.dominant, 50);
-			self.spendMojo(30);
 		}
 	}
 

@@ -47,7 +47,7 @@ public class StripTease extends Skill {
 		int m = 15 + Global.random(5);
 		target.tempt(c, self, m);
 		self.undress(c);
-		self.buildMojo(20);
+		self.buildMojo(c, 20);
 		self.add(new Alluring(self, 5));
 		target.emote(Emotion.horny, 30);
 		self.emote(Emotion.confident, 15);

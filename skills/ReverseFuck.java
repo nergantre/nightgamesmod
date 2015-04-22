@@ -8,12 +8,12 @@ import combat.Combat;
 import combat.Result;
 
 public class ReverseFuck extends Fuck {
-	public ReverseFuck(String name, Character self) {
-		super(name, self);
+	public ReverseFuck(String name, Character self, int cooldown) {
+		super(name, self, cooldown);
 	}
 
 	public ReverseFuck(Character self) {
-		super("ReverseFuck", self);
+		super("ReverseFuck", self, 0);
 		if(self.human()){
 			image="Fuck.jpg";
 			artist="Art by Fujin Hitokiri";

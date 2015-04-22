@@ -40,7 +40,7 @@ public class Sedate extends Skill {
 				c.write(self,receive(c,0,Result.special, target));
 			}
 			target.weaken(c, 30);
-			target.modMojo(-10);
+			target.loseMojo(c, 10);
 		}
 		else if(target.roll(this, c, accuracy()+self.tohit())){
 			if(self.human()){
@@ -50,7 +50,7 @@ public class Sedate extends Skill {
 				c.write(self,receive(c,0,Result.normal, target));
 			}
 			target.weaken(c, 30);
-			target.modMojo(-10);
+			target.loseMojo(c, 10);
 		}
 		else{
 			if(self.human()){

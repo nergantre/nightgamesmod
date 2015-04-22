@@ -35,7 +35,7 @@ public class Sacrifice extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(25);
+		self.spendMojo(c, 25);
 		if(self.human()){
 			c.write(self,deal(c,0,Result.normal, target));
 		}
@@ -43,7 +43,7 @@ public class Sacrifice extends Skill {
 			c.write(self,receive(c,0,Result.normal, target));
 		}
 		self.weaken(c, 20 + self.get(Attribute.Dark));
-		self.calm(20 + self.get(Attribute.Dark));
+		self.calm(c, 20 + self.get(Attribute.Dark));
 	}
 
 	@Override

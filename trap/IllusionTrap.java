@@ -44,7 +44,7 @@ public class IllusionTrap implements Trap {
 	@Override
 	public String setup(Character owner) {
 		this.owner=owner;
-		owner.spendMojo(15);
+		owner.spendMojo(null, 15);
 		return "You cast a simple illusion that will trigger when someone approaches and seduce them.";
 	}
 

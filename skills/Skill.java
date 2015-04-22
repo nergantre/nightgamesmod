@@ -19,13 +19,20 @@ public abstract class Skill{
 	protected Character self;
 	protected String image;
 	protected String artist;
+	private int cooldown;
 	public Skill(String name, Character self){
+		this(name, self, 0);
+	}
+	public Skill(String name, Character self, int cooldown){
 		this.name=name;
 		this.self=self;
 		this.image=null;
 		this.artist=null;
+		this.cooldown = cooldown;
 	}
-	public abstract boolean requirements();
+	public boolean requirements() {
+		return requirements(self);
+	}
 	public abstract boolean requirements(Character user);
 	public static boolean skillIsUsable(Combat c, Skill s, Character target) {
 		boolean charmRestricted = s.self.is(Stsflag.charmed) && (s.type(c) != Tactics.fucking && s.type(c) != Tactics.pleasure && s.type(c) != Tactics.misc);
@@ -82,5 +89,14 @@ public abstract class Skill{
 	public boolean makesContact() {
 		return false;
 	}
-	
+	public static void resolve(Skill skill, Combat c, Character target) {
+		skill.user().addCooldown(skill);
+		skill.resolve(c, target);
+	}
+	public int getCooldown() {
+		return cooldown;
+	}
+	public void setCooldown(int cooldown) {
+		this.cooldown = cooldown;
+	}
 }

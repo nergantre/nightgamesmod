@@ -73,7 +73,7 @@ public class Enthralled extends Status {
 	@Override
 	public int regen(Combat c) {
 		duration--;
-		affected.spendMojo(5);
+		affected.spendMojo(c, 5);
 		if (duration <= 0|| affected.check(Attribute.Cunning, master.get(Attribute.Seduction)/2 +master.get(Attribute.Arcane)/2 + master.get(Attribute.Dark)/2 + 10+10*(duration- timesRefreshed))) {
 			affected.removelist.add(this);
 			affected.addlist.add(new Cynical(affected));

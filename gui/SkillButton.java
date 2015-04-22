@@ -4,6 +4,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
+import characters.Player;
+
 import skills.Skill;
 import skills.Tactics;
 
@@ -52,6 +54,12 @@ public class SkillButton extends JButton{
 		}
 		else{
 			setBackground(new Color(200,200,200));
+		}
+		if (!action.user().cooldownAvailable(action)) {
+			setEnabled(false);
+			setToolTipText(String.format("Remaining Cooldown: %d turns", action.user().getCooldown(action)));
+			setForeground(Color.WHITE);
+			setBackground(getBackground().darker());
 		}
 		this.combat=c;
 		addActionListener(new ActionListener(){

@@ -44,7 +44,7 @@ public class FondleBreasts extends Skill {
 				}
 				target.body.pleasure(self, self.body.getRandom("hands"), target.body.getRandom("breasts"), m, c);					
 			}
-			self.buildMojo(10);
+			self.buildMojo(c, 10);
 		}
 		else{
 			if(self.human()){

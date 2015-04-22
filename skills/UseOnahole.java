@@ -44,7 +44,6 @@ public class UseOnahole extends Skill {
 					c.write(self,deal(c,0,Result.upgrade, target));
 				}
 				target.body.pleasure(self, null, target.body.getRandomCock(), m, c);
-
 			}
 			else{
 				if(target.human()){

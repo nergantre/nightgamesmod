@@ -284,11 +284,13 @@ public class Body implements Cloneable {
 			if (with == nonePart) {
 				pleasuredBy = opponent.subject();
 			}
-			String battleString = String.format("%s %s was pleasured by %s for %d (base:%d, mutlipliers: sen:%.1f/ple:%.1f/per:%.1f)\n",
-					Global.capitalizeFirstLetter(character.nameOrPossessivePronoun()), target.describe(character), pleasuredBy, result, magnitude,
+			String firstColor = character.human() ? "<font color='rgb(150,150,255)'>" : "<font color='rgb(255,150,150)'>";
+			String secondColor = opponent.human() ? "<font color='rgb(150,150,255)'>" : "<font color='rgb(255,150,150)'>";
+
+			String battleString = String.format("%s%s %s<font color='white'> was pleasured by %s%s<font color='white'> for <font color='rgb(255,50,200)'>%d<font color='white'> (base:%d, mutlipliers: sen:%.1f/ple:%.1f/per:%.1f)\n",
+					firstColor,
+					Global.capitalizeFirstLetter(character.nameOrPossessivePronoun()), target.describe(character), secondColor,pleasuredBy, result, magnitude,
 					sensitivity, pleasure, perceptionBonus);
-			if(Global.isDebugOn(DebugFlags.DEBUG_DAMAGE))
-				System.out.println(battleString);
 			if (c != null)
 				c.write(battleString);
 		}

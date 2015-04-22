@@ -40,7 +40,7 @@ public class SpawnFaerie extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(15);
+		self.spendMojo(c, 15);
 		int power = 2;
 		int ac = 4;
 		if(self.has(Trait.leadership)){

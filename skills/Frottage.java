@@ -54,7 +54,7 @@ public class Frottage extends Skill{
 			if(target.human()){
 				c.write(self,receive(c,m,Result.special, target));
 			}
-			target.buildMojo(-10);
+			target.buildMojo(c, -10);
 			dealer = null;
 		} else {
 			if(target.human()){
@@ -67,7 +67,7 @@ public class Frottage extends Skill{
 		}
 		target.body.pleasure(self, dealer, receiver, m, c);
 
-		self.buildMojo(20);
+		self.buildMojo(c, 20);
 		self.emote(Emotion.horny, 15);
 		target.emote(Emotion.horny, 15);
 	}

@@ -36,7 +36,7 @@ public class TentacleTrap implements Trap {
 						"back into the floor. She'll left shivering, sticky, and unsatisfied. In effect, she's already defeated.");
 			}
 			target.tempt(target.getArousal().max());
-			target.calm(1);
+			target.calm(null, 1);
 			target.add(new Oiled(target));
 			target.add(new Hypersensitive(target));
 			target.location().opportunity(target,this);

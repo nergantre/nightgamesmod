@@ -42,7 +42,7 @@ public class MouthPart extends GenericBodyPart {
 				c.write(opponent, "<br>" +opponent.name() + "'s mind falls into a pink colored fog from the tongue lashing.");
 			}
 			opponent.add(new Trance(opponent));
-			self.spendMojo(10);
+			self.spendMojo(c, 10);
 		}
 		return damage;
 	}

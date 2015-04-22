@@ -49,7 +49,7 @@ public class Diversion extends Skill {
 			}
 			self.strip(0, c);
 		}
-		self.buildMojo(75);	
+		self.buildMojo(c, 75);	
 		c.setStance(new Behind(self,target));
 		target.add(new Flatfooted(target,1));
 	}

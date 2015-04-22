@@ -51,6 +51,7 @@ public class TailPeg extends Skill {
 				target.add(new Shamed(target));
 				shamed = true;
 			}
+			self.spendMojo(c, 20);
 			if (target.human()) {
 				if (c.getStance().penetration(self))
 					c.write(self,receive(c, 0, Result.special, target));
@@ -77,7 +78,6 @@ public class TailPeg extends Skill {
 			}
 			target.body.pleasure(self, self.body.getRandom("tail"), target.body.getRandom("ass"), strength, c);
 			target.pain(c, strength / 2);
-			self.spendMojo(20);
 			target.emote(Emotion.nervous, 10);
 			target.emote(Emotion.desperate, 10);
 			self.emote(Emotion.confident, 15);

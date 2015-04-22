@@ -242,7 +242,7 @@ public class NPC extends Character {
 			target=c.p1;
 		}
 		for(Skill act:skills){
-			if(Skill.skillIsUsable(c, act, target)) {
+			if(Skill.skillIsUsable(c, act, target) && cooldownAvailable(act)) {
 				available.add(act);
 			}
 		}
@@ -251,6 +251,7 @@ public class NPC extends Character {
 		}
 		c.act(this, ai.act(available,c));
 	}
+	
 	public Skill actFast(Combat c) {
 		HashSet<Skill> available = new HashSet<Skill>();
 		Character target;
@@ -261,7 +262,7 @@ public class NPC extends Character {
 			target=c.p1;
 		}
 		for(Skill act:skills){
-			if(Skill.skillIsUsable(c, act, target)){
+			if(Skill.skillIsUsable(c, act, target) && cooldownAvailable(act)){
 				available.add(act);
 			}
 		}
@@ -499,7 +500,9 @@ public class NPC extends Character {
 			break;
 		case stripping:
 			Clothing clothes = target.stripRandom(c);
-			c.write(name()+" manages to catch you groping her clothing, and in a swing motion strips off your " + clothes.getName());
+			if (clothes != null) {
+				c.write(name()+" manages to catch you groping her clothing, and in a swing motion strips off your " + clothes.getName());
+			}
 			break;
 		case positioning:
 			c.write(name()+" outmanuevers you and catches you from behind when you stumble.");
@@ -564,7 +567,7 @@ public class NPC extends Character {
 	
 	@Override
 	public void eot(Combat c, Character opponent, Skill last) {
-		dropStatus();
+		super.eot(c, opponent, last);
 		if(opponent.pet!=null&&canAct()&&c.getStance().mobile(this)&&!c.getStance().prone(this)){
 			if(get(Attribute.Speed)>opponent.pet.ac()*Global.random(20)){
 				opponent.pet.caught(c,this);

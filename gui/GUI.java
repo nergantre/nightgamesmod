@@ -98,6 +98,8 @@ public class GUI extends JFrame implements Observer {
 	private JLabel img;
 	private JRadioButton rdnormal;
 	private JRadioButton rddumb;
+	private JRadioButton rdeasy;
+	private JRadioButton rdhard;
 	private JRadioButton rdautosaveon;
 	private JRadioButton rdautosaveoff;
 	private JRadioButton rdporon;
@@ -156,15 +158,26 @@ public class GUI extends JFrame implements Observer {
 		menuBar.add(mntmOptions);
 		optionspanel = new JPanel();
 		optionspanel.setLayout(new GridLayout(0,3,0,0));
-		JLabel lbldif = new JLabel("AI Mode");
-		ButtonGroup dif = new ButtonGroup();
+		JLabel lblai = new JLabel("AI Mode");
+		ButtonGroup ai = new ButtonGroup();
 		rdnormal = new JRadioButton("Normal");
 		rddumb = new JRadioButton("Old");
-		dif.add(rdnormal);
-		dif.add(rddumb);
-		optionspanel.add(lbldif);
+		ai.add(rdnormal);
+		ai.add(rddumb);
+		optionspanel.add(lblai);
 		optionspanel.add(rdnormal);
 		optionspanel.add(rddumb);
+
+		JLabel lbldiff = new JLabel("Difficulty");
+		ButtonGroup diff = new ButtonGroup();
+		rdeasy = new JRadioButton("Normal");
+		rdhard = new JRadioButton("Hard");
+		diff.add(rdeasy);
+		diff.add(rdhard);
+		optionspanel.add(lbldiff);
+		optionspanel.add(rdeasy);
+		optionspanel.add(rdhard);
+
 		JLabel lblauto = new JLabel("Autosave (saves to auto.sav)");
 		ButtonGroup auto = new ButtonGroup();
 		rdautosaveon = new JRadioButton("on");
@@ -203,6 +216,12 @@ public class GUI extends JFrame implements Observer {
 		optionspanel.add(rdnfntlrg);
 		mntmOptions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if(Global.checkFlag(Flag.hardmode)){
+					rdhard.setSelected(true);
+				}
+				else{
+					rdeasy.setSelected(true);
+				}
 				if(Global.checkFlag(Flag.dumbmode)){
 					rddumb.setSelected(true);
 				}
@@ -240,6 +259,12 @@ public class GUI extends JFrame implements Observer {
 					}
 					else{
 						Global.flag(Flag.dumbmode);
+					}
+					if(rdhard.isSelected()){
+						Global.unflag(Flag.hardmode);
+					}
+					else{
+						Global.flag(Flag.hardmode);
 					}
 					if(rdautosaveoff.isSelected()){
 						Global.unflag(Flag.autosave);
@@ -745,7 +770,7 @@ public class GUI extends JFrame implements Observer {
 				skills.get(index).add(new SkillButton(action, com));
 				placed=true;
 			}
-		}		
+		}
 	}
 	public void showSkills(int index){
 		for(SkillButton button: skills.get(index)){

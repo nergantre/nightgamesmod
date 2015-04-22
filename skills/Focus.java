@@ -32,8 +32,8 @@ public class Focus extends Skill {
 		else if(target.human()){
 			c.write(self,receive(c,0,Result.normal, target));
 		}
-		self.calm(Global.random(8));
-		self.buildMojo(20);
+		self.calm(c, Global.random(8));
+		self.buildMojo(c, 20);
 	}
 
 	@Override

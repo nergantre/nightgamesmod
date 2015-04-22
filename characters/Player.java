@@ -432,14 +432,13 @@ public class Player extends Character {
 
 	public void ding(){
 		level++;
-		availableAttributePoints+=2;
-		gui.message("You've gained a Level!<br>Select which attributes to increase.");
-		gui.ding();
 		getStamina().gain(growth.stamina);
 		getArousal().gain(growth.arousal);
 		getMojo().gain(growth.mojo);
 		availableAttributePoints += growth.attributes[rank];
 		getMojo().gain(1);
+		gui.message("You've gained a Level!<br>Select which attributes to increase.");
+		gui.ding();
 	}
 
 	public void flee(Area location2) {
@@ -673,7 +672,7 @@ public class Player extends Character {
 
 	@Override
 	public void eot(Combat c, Character opponent, Skill last) {
-		dropStatus();
+		super.eot(c, opponent, last);
 		if(opponent.pet!=null&&canAct()&&c.getStance().mobile(this)&&!c.getStance().prone(this)){
 			if(get(Attribute.Speed)>opponent.pet.ac()*Global.random(20)){
 				opponent.pet.caught(c,this);
@@ -746,5 +745,9 @@ public class Player extends Character {
 	public String getPortrait() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public String action(String firstPerson, String thirdPerson) {
+		return firstPerson;
 	}
 }

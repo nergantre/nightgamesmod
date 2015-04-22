@@ -22,6 +22,7 @@ public class Stomp extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
+		self.spendMojo(c, 20);
 		if(self.has(Trait.heeldrop)&&target.pantsless()){
 			if(self.human()){
 				c.write(self,deal(c,0,Result.special, target));
@@ -36,7 +37,7 @@ public class Stomp extends Skill {
 				target.pain(c, 20);
 			}
 			target.pain(c, 30-(Global.random(2)*target.bottom.size()));
-			target.calm(Global.random(30));
+			target.calm(c, Global.random(30));
 		}
 		else if(target.has(Trait.armored)){
 			if(self.human()){
@@ -46,7 +47,7 @@ public class Stomp extends Skill {
 				c.write(self,receive(c,0,Result.weak, target));
 			}
 			target.pain(c, 5-(Global.random(3)*target.bottom.size()));
-			target.calm(Global.random(10)+10);
+			target.calm(c, Global.random(10)+10);
 		}
 		else{
 			if(self.human()){
@@ -62,10 +63,9 @@ public class Stomp extends Skill {
 				target.pain(c, 20);
 			}
 			target.pain(c, 20-(Global.random(3)*target.bottom.size()));
-			target.calm(Global.random(30)+10);
+			target.calm(c, Global.random(30)+10);
 		}
 		target.emote(Emotion.angry,25);
-		self.spendMojo(20);
 	}
 
 	@Override

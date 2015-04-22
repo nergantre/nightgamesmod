@@ -65,8 +65,8 @@ public class FaceFuck extends Skill {
 			}
 			target.add(new Shamed(target));
 		}
-		self.buildMojo(15);
-		target.spendMojo(2*self.get(Attribute.Seduction));
+		self.buildMojo(c, 15);
+		target.loseMojo(c, 2*self.get(Attribute.Seduction));
 	}
 
 	@Override

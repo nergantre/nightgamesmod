@@ -21,7 +21,11 @@ public class Restrain extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy()+self.tohit())){
+		resolve(c, target, false);
+	}
+
+	public void resolve(Combat c, Character target, boolean nofail) {
+		if(nofail || target.roll(this, c, accuracy()+self.tohit())) {
 			if(self.human()){
 				c.write(self,deal(c,0,Result.normal, target));
 			}

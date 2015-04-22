@@ -46,8 +46,8 @@ public class Strapon extends Skill {
 		else if(target.human()){
 			c.write(self,receive(c,0,Result.normal, target));
 		}
-		self.buildMojo(10);
-		target.buildMojo(-10);
+		self.buildMojo(c, 10);
+		target.loseMojo(c, 10);
 		target.emote(Emotion.nervous, 10);
 		self.emote(Emotion.confident, 30);
 		self.emote(Emotion.dominant, 40);

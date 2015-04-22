@@ -104,11 +104,11 @@ public class Global {
 		players = new HashSet<Character>();
 		resting = new HashSet<Character>();
 		counters = new HashMap<Flag,Float>();
-//		debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
-//		debug[DebugFlags.DEBUG_DAMAGE.ordinal()] = true;
-//		debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
-//		debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
-//		debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
+		debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
+		debug[DebugFlags.DEBUG_DAMAGE.ordinal()] = true;
+		debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
+		debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
+		debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
 		current=null;
 		factory = new ContextFactory();
 		cx = factory.enterContext();
@@ -283,6 +283,9 @@ public class Global {
 		skillPool.add(new ReverseFuck(p));
 		skillPool.add(new ReverseCarry(p));
 		skillPool.add(new ReverseFly(p));
+		skillPool.add(new CounterDrain(p));
+		skillPool.add(new CounterRide(p));
+		skillPool.add(new CounterPin(p));
 		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 			skillPool.add(new SelfStun(p));	
 		}
@@ -820,12 +823,31 @@ public class Global {
 				return "";
 			}
 		});
+		matchActions.put("name", new MatchAction() {
+			@Override
+			public String replace(Character self, String first, String second, String third) {
+				if (self != null) {
+					return self.name();
+				}
+				return "";
+			}
+		});
 		matchActions.put("subject-action", new MatchAction() {
 			@Override
 			public String replace(Character self, String first, String second, String third) {
 				if (self != null && third != null) {
 					String verbs[] = third.split("\\|");
 					return self.subjectAction(verbs[0], verbs[1]);
+				}
+				return "";
+			}
+		});
+		matchActions.put("action", new MatchAction() {
+			@Override
+			public String replace(Character self, String first, String second, String third) {
+				if (self != null && third != null) {
+					String verbs[] = third.split("\\|");
+					return self.action(verbs[0], verbs[1]);
 				}
 				return "";
 			}

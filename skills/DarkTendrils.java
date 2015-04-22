@@ -14,7 +14,7 @@ import status.Bound;
 public class DarkTendrils extends Skill {
 
 	public DarkTendrils(Character self) {
-		super("Dark Tendrils", self);
+		super("Dark Tendrils", self, 4);
 	}
 
 	@Override

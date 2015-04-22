@@ -36,7 +36,7 @@ public class CommandOral extends PlayerCommand {
 			else
 				c.write(self,deal(c, 0, Result.normal, target));
 		self.body.pleasure(target, target.body.getRandom("mouth"), self.body.getRandom("cock"), m, c);					
-		self.buildMojo(30);
+		self.buildMojo(c, 30);
 	}
 
 	@Override

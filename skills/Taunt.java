@@ -29,7 +29,7 @@ public class Taunt extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(5);
+		self.spendMojo(c, 5);
 		if(self.human()){
 			c.write(self,deal(c,0,Result.normal, target));
 		}
@@ -52,7 +52,7 @@ public class Taunt extends Skill {
 		target.emote(Emotion.angry,30);
 		target.emote(Emotion.nervous,15);
 		self.emote(Emotion.dominant, 20);
-		target.modMojo(-10);
+		target.loseMojo(c, 10);
 		
 	}
 

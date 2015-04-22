@@ -12,7 +12,7 @@ import combat.Result;
 
 public class Charm extends Skill {
 	public Charm(Character self) {
-		super("Charm", self);
+		super("Charm", self, 4);
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class Charm extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(20);
+		self.spendMojo(c, 20);
 		if(self.human()){
 			c.write(self,deal(c,0,Result.normal, target));
 		}

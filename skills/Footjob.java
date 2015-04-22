@@ -56,7 +56,7 @@ public class Footjob extends Skill {
 			else
 				target.body.pleasure(self, self.body.getRandom("feet"), target.body.getRandom("pussy"), m, c);
 			if(c.getStance().dom(self)){
-				self.buildMojo(20);
+				self.buildMojo(c, 20);
 			}
 		}
 		else{

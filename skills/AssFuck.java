@@ -1,5 +1,6 @@
 package skills;
 
+import items.Clothing;
 import items.Item;
 import stance.Anal;
 import stance.AnalProne;
@@ -18,7 +19,7 @@ import combat.Result;
 
 public class AssFuck extends Fuck {
 	public AssFuck(Character self) {
-		super("Ass Fuck", self);
+		super("Ass Fuck", self, 0);
 	}
 
 	@Override
@@ -41,16 +42,34 @@ public class AssFuck extends Fuck {
 
 	@Override
 	public void resolve(Combat c, Character target) {
+		String premessage = "";
+		if(!target.bottom.empty() && getSelfOrgan().isType("cock")) {
+			if (self.bottom.size() == 1) {
+				premessage += String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s", self.bottom.get(0).name());
+			} else {
+				premessage += String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s and %s", self.bottom.get(0).name(), self.bottom.get(1).name());
+			}
+		}
 		if(!target.hasStatus(Stsflag.oiled)&&self.getArousal().percent()>50 || self.has(Trait.alwaysready)) {
 			String fluids = target.hasDick() ? "copious pre-cum" : "own juices";
-			c.write(self, Global.capitalizeFirstLetter(self.subject()) + " lubes up your ass with " + self.possessivePronoun() + " " + fluids + ".");
+			if (premessage.isEmpty()) {
+				premessage = "{self:subject-action:lube|lubes}";
+			} else {
+				premessage += " and {self:action:lube|lubes}";
+			}
+			premessage += " up {other:possessive} ass with {self:possessive} " + fluids + ".";
 			target.add(new Oiled(target));
-		}
-		if(!target.hasStatus(Stsflag.oiled)&&self.has(Item.Lubricant)) {
-			c.write(self, Global.capitalizeFirstLetter(self.subject()) + " lubes up your ass.");
+		} else if(!target.hasStatus(Stsflag.oiled)&&self.has(Item.Lubricant)) {
+			if (premessage.isEmpty()) {
+				premessage = "{self:subject-action:lube|lubes}";
+			} else {
+				premessage += " and {self:action:lube|lubes}";
+			}
+			premessage += " up {other:possessive} ass.";
 			target.add(new Oiled(target));
 			self.consume(Item.Lubricant, 1);
 		}
+		c.write(self, Global.format(premessage, self, target));
 	
 		int m = Global.random(5);
 		if(self.human()) {
@@ -75,7 +94,7 @@ public class AssFuck extends Fuck {
 		if (!self.has(Trait.strapped)) {
 			self.body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), m / 2, c);
 		}
-		self.buildMojo(25);
+		self.buildMojo(c, 25);
 		self.emote(Emotion.dominant, 100);
 		target.emote(Emotion.desperate,50);
 		if(!target.has(Trait.Unflappable)) {

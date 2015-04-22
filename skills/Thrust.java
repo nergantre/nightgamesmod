@@ -77,7 +77,9 @@ public class Thrust extends Skill {
 		BodyPart selfO = getSelfOrgan(c);
 		BodyPart targetO = getTargetOrgan(c, target);
 		Result result;
-		
+		if (getMojoSpent() > 0) {
+			self.spendMojo(c, getMojoSpent());
+		}
 		if(c.getStance().en==Stance.anal){
 			result = Result.anal;
 		} else if (selfO.isType("pussy")) {
@@ -99,11 +101,8 @@ public class Thrust extends Skill {
 			target.body.pleasure(self, selfO, targetO, m[0], c);
 		if (m[1] != 0)
 			self.body.pleasure(target, targetO, selfO, m[1], c);
-		if (getMojoSpent() > 0) {
-			self.spendMojo(getMojoSpent());
-		}
 		if (getMojoBuilt() > 0) {
-			self.buildMojo(getMojoBuilt());
+			self.buildMojo(c, getMojoBuilt());
 		}
 	}
 

@@ -11,7 +11,7 @@ import combat.Result;
 public class Dominate extends Skill {
 
 	public Dominate(Character self) {
-		super("Dominate", self);
+		super("Dominate", self, 3);
 	}
 
 	@Override

@@ -39,8 +39,8 @@ public class Flick extends Skill {
 				m+=2+Global.random(target.get(Attribute.Perception)/2);
 			}
 			target.pain(c, m);
-			target.modMojo(-15);
-			self.buildMojo(15);
+			target.loseMojo(c, 15);
+			self.buildMojo(c, 15);
 			self.emote(Emotion.dominant, 10);
 			target.emote(Emotion.angry,15);
 			target.emote(Emotion.nervous,15);

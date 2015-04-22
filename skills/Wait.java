@@ -22,13 +22,14 @@ public class Wait extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return true;
+		return self.canRespond();
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
 		if(bluff()){
 			int m = Global.random(25);
+			self.spendMojo(c, 20);
 			if(self.human()){
 				c.write(self,deal(c,m,Result.special, target));
 			}
@@ -36,8 +37,7 @@ public class Wait extends Skill {
 				c.write(self,receive(c,m,Result.special, target));
 			}
 			self.heal(c, m);
-			self.calm(25-m);
-			self.spendMojo(20);
+			self.calm(c, 25-m);
 			self.add(new Unreadable(self));
 		}
 		else if(focused()&&!c.getStance().sub(self)){
@@ -48,8 +48,8 @@ public class Wait extends Skill {
 				c.write(self,receive(c,0,Result.strong, target));
 			}
 			self.heal(c, Global.random(4));
-			self.calm(Global.random(8));
-			self.buildMojo(20);
+			self.calm(c, Global.random(8));
+			self.buildMojo(c, 20);
 		}
 		else{
 			if(self.human()){
@@ -58,7 +58,7 @@ public class Wait extends Skill {
 			else if(target.human()){
 				c.write(self,receive(c,0,Result.normal, target));
 			}
-			self.buildMojo(10);
+			self.buildMojo(c, 10);
 			self.heal(c, Global.random(4));
 		}
 	}

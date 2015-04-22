@@ -66,4 +66,5 @@ public abstract class Status implements Cloneable {
 	public String getVariant() {
 		return toString();
 	}
+	public void eot(Combat c) {}
 }

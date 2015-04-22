@@ -11,8 +11,8 @@ import combat.Result;
 
 public class Fuck extends Skill {
 
-	public Fuck(String name, Character self) {
-		super(name, self);
+	public Fuck(String name, Character self, int cooldown) {
+		super(name, self, cooldown);
 	}
 
 	public Fuck(Character self) {
@@ -58,16 +58,31 @@ public class Fuck extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
+		String premessage = "";
+		if(!target.bottom.empty() && getSelfOrgan().isType("cock")) {
+			if (self.bottom.size() == 1) {
+				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s halfway and", self.bottom.get(0).name());
+			} else {
+				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s and %s halfway and", self.bottom.get(0).name(), self.bottom.get(1).name());
+			}
+		} else if(!target.bottom.empty() && getSelfOrgan().isType("pussy")) {
+			if (self.bottom.size() == 1) {
+				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s to the side and", self.bottom.get(0).name());
+			} else {
+				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s and %s to the side and", self.bottom.get(0).name(), self.bottom.get(1).name());
+			}
+		}
+		
 		int m = 5+Global.random(5);
 		BodyPart selfO = getSelfOrgan();
 		BodyPart targetO = getTargetOrgan(target);
  		if(selfO.isReady(self) && targetO.isReady(target)){
 			if(self.human()){
 				c.offerImage("Fuck.jpg", "Art by Fujin Hitokiri");
-				c.write(self,deal(c,m,Result.normal, target));
+				c.write(self,premessage + deal(c,m,Result.normal, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,m,Result.normal, target));
+				c.write(self,premessage + receive(c,m,Result.normal, target));
 			}
 			if (selfO.isType("pussy")) {
 				c.setStance(c.getStance().insert(self, target));
@@ -76,12 +91,12 @@ public class Fuck extends Skill {
 			}
 			target.body.pleasure(self, selfO, targetO, m, c);
 			self.body.pleasure(target, targetO, selfO, m, c);
-			self.buildMojo(25);
+			self.buildMojo(c, 25);
 		} else {
 			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+				c.write(self,premessage + deal(c,0,Result.miss, target));
 			} else if(target.human()) {
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(self,premessage + receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -112,21 +127,21 @@ public class Fuck extends Skill {
 		BodyPart selfO = getSelfOrgan();
 		BodyPart targetO = getTargetOrgan(target);
 		if(modifier == Result.normal){
-			return "You rub the head of your dick around "+target.name()+"'s entrance, causing her to shiver with anticipation. Once you're sufficiently lubricated " +
+			return "you rub the head of your dick around "+target.name()+"'s entrance, causing her to shiver with anticipation. Once you're sufficiently lubricated " +
 					"with her wetness, you thrust into her " + target.body.getRandomPussy().describe(target) + ". "+target.name()+" tries to stifle her pleasured moan as you fill her in an instant.";
 		}
 		else if(modifier == Result.miss){
 			if (!selfO.isReady(self) && !targetO.isReady(target))
-				return "You're in a good position to fuck "+target.name()+", but neither of you are aroused enough to follow through.";
+				return "you're in a good position to fuck "+target.name()+", but neither of you are aroused enough to follow through.";
 			else if(!getTargetOrgan(target).isReady(target)){
-				return "You position your dick at the entrance to "+target.name()+", but find that she's not nearly wet enough to allow a comfortable insertion. You'll need " +
+				return "you position your dick at the entrance to "+target.name()+", but find that she's not nearly wet enough to allow a comfortable insertion. You'll need " +
 						"to arouse her more or you'll risk hurting her.";
 			}
 			else if (!selfO.isReady(self)){
-				return "You're ready and willing to claim "+target.name()+"'s eager " + target.body.getRandomPussy().describe(target) + ", but your shriveled dick isn't cooperating. Maybe your self-control training has become " +
+				return "you're ready and willing to claim "+target.name()+"'s eager " + target.body.getRandomPussy().describe(target) + ", but your shriveled dick isn't cooperating. Maybe your self-control training has become " +
 						"too effective.";
 			}
-			return "You managed to miss the mark.";
+			return "you managed to miss the mark.";
 		}
 		return "Bad stuff happened";
 	}

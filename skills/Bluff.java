@@ -34,6 +34,7 @@ public class Bluff extends Skill {
 	@Override
 	public void resolve(Combat c, Character target) {
 		int m = Global.random(25);
+		self.spendMojo(c, 20);
 		if(self.human()){
 			c.write(self,deal(c,m,Result.normal, target));
 		}
@@ -41,8 +42,7 @@ public class Bluff extends Skill {
 			c.write(self,receive(c,m,Result.normal, target));
 		}
 		self.heal(c, m);
-		self.calm(25-m);
-		self.spendMojo(20);
+		self.calm(c, 25-m);
 		self.add(new Unreadable(self));
 		self.emote(Emotion.confident, 30);
 		self.emote(Emotion.dominant, 20);

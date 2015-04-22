@@ -51,7 +51,7 @@ public class Blowjob extends Skill {
 				c.write(self,deal(c,m,Result.intercourse, target));
 			}
 			target.body.pleasure(self, self.body.getRandom("pussy"), target.body.getRandom("cock"), m, c);					
-			self.buildMojo(5);
+			self.buildMojo(c, 5);
 		} else if(target.roll(this, c, accuracy()+self.tohit())){
 			if(self.has(Trait.silvertongue)){
 				m += 4;
@@ -73,7 +73,7 @@ public class Blowjob extends Skill {
 
 			target.body.pleasure(self, self.body.getRandom("mouth"), target.body.getRandom("cock"), m, c);					
 
-			self.buildMojo(5);
+			self.buildMojo(c, 5);
 			if(ReverseMount.class.isInstance(c.getStance())){
 				c.setStance(new SixNine(self,target));
 			}

@@ -89,7 +89,7 @@ public class FaceSit extends Skill {
 			self.body.pleasure(target, target.body.getRandom("mouth"), self.body.getRandom("pussy"), m, c);
 		}
 		target.add(new Shamed(target));
-		self.buildMojo(50);
+		self.buildMojo(c, 50);
 	}
 
 	@Override

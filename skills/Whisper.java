@@ -38,13 +38,13 @@ public class Whisper extends Skill {
 			m += 3;
 		}
 		if(self.has(Trait.darkpromises)&& roll == 4 &&self.canSpend(15) && !target.wary()){
+			self.spendMojo(c, 15);
 			if(self.human()){
 				c.write(self,deal(c,0,Result.special, target));
 			}
 			else if(target.human()){
 				c.write(self,receive(c,0,Result.special, target));
 			}
-			self.spendMojo(15);
 			target.add(new Enthralled(target,self, 4));
 		}
 		else{
@@ -57,7 +57,7 @@ public class Whisper extends Skill {
 		}
 		target.tempt(c, self, m);
 		target.emote(Emotion.horny, 30);
-		self.buildMojo(10);
+		self.buildMojo(c, 10);
 	}
 
 	@Override

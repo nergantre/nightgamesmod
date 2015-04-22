@@ -33,7 +33,7 @@ public class Handjob extends Skill {
 					c.write(self,receive(c,m,Result.normal, target));
 				}
 				target.body.pleasure(self, self.body.getRandom("hands"), target.body.getRandom("cock"), m, c);
-				self.buildMojo(10);
+				self.buildMojo(c, 10);
 			}
 			else{
 				if(self.human()){

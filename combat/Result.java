@@ -14,4 +14,5 @@ public enum Result {
 	strapon,
 	intercourse,
 	reverse,
+	setup,
 }

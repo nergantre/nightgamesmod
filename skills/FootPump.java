@@ -60,7 +60,7 @@ public class FootPump extends Skill {
 		if (c.getStance().en != Stance.behindfootjob) {
 			c.setStance(new BehindFootjob(self, target));
 		}
-		self.buildMojo(20);
+		self.buildMojo(c, 20);
 	}
 
 	@Override

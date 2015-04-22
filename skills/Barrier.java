@@ -35,7 +35,7 @@ public class Barrier extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(3);
+		self.spendMojo(c, 3);
 		if(self.human()){
 			c.write(self,deal(c,0,Result.normal, target));
 		}

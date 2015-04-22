@@ -11,7 +11,7 @@ import combat.Result;
 public class Drain extends Skill {
 
 	public Drain(Character self) {
-		super("Drain", self);
+		super("Drain", self, 5);
 	}
 
 	@Override
@@ -50,10 +50,16 @@ public class Drain extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		int strength = Math.max(10, 1 + (self.get(Attribute.Dark) / 4));
-		self.spendMojo(20);
+		resolve(c, target, false);
+	}
 
+	public void resolve(Combat c, Character target, boolean nocost) {
+		int strength = Math.max(10, 1 + (self.get(Attribute.Dark) / 4));
+		if (!nocost) {
+			self.spendMojo(c, 20);
+		}
 		int type = Global.centeredrandom(6, self.getPure(Attribute.Dark) / 3.0 ,3);
+
 		if (this.self.human()) {
 			c.write(self,deal(c, type, Result.normal, target));
 		} else if (target.human()) {
@@ -67,29 +73,29 @@ public class Drain extends Skill {
 			this.self.heal(c, 50);
 			break;
 		case 2:
-			target.spendMojo(10);
-			this.self.modMojo(10);
+			target.loseMojo(c, 20);
+			this.self.buildMojo(c, 20);
 			break;
 		case 3:
+			steal(target, Attribute.Cunning, strength);
+			target.loseMojo(c, target.getMojo().get());
+			break;
+		case 4:
 			steal(target, Attribute.Power, strength);
 			target.weaken(c, 10);
 			break;
-		case 4:
+		case 5:
 			steal(target, Attribute.Seduction, strength);
 			target.tempt(c, self, 10);
-			break;
-		case 5:
-			steal(target, Attribute.Cunning, strength);
-			target.spendMojo(target.getMojo().get());
 			break;
 		case 6:
 			steal(target, Attribute.Power, strength);
 			steal(target, Attribute.Seduction, strength);
 			steal(target, Attribute.Cunning, strength);
 			target.mod(Attribute.Perception, 1);
-			target.weaken(c, target.getStamina().get());
-			target.spendMojo(target.getMojo().get());
-			target.tempt(c, self, target.getArousal().max());
+			target.weaken(c, 10);
+			target.spendMojo(c, 10);
+			target.tempt(c, self, 10);
 			break;
 		default:
 			break;
@@ -113,15 +119,15 @@ public class Drain extends Skill {
 			String base = "You put your powerful vaginal muscles to work whilst"
 					+ " transfixing " + target.name()
 					+ "'s gaze with your own, goading " + target.possessivePronoun() + " energy into "+ target.possessivePronoun() + " cock."
-					+ " Soon it erupts from him into your " + self.body.getRandomPussy() + ", ";
+					+ " Soon it erupts from her into your " + self.body.getRandomPussy() + ", ";
 			switch (damage) {
-			case 3:
-				return base + "and you can feel " + target.possessivePronoun() + " strength pumping into you.";
 			case 4:
+				return base + "and you can feel " + target.possessivePronoun() + " strength pumping into you.";
+			case 3:
 				return base + "and you can feel " + target.possessivePronoun() + " memories and excperiences flow"
 						+ " into you, adding to your skill.";
 			case 5:
-				return base + "taking " + target.possessivePronoun() + " fighting spirit with him and"
+				return base + "taking " + target.possessivePronoun() + " raw sexual energy and"
 						+ " adding it to your own";
 			case 1:
 				return base + "but unfortunately you made a mistake, and only feel a small"
@@ -144,11 +150,11 @@ public class Drain extends Skill {
 		else{
 			String base = "With your cock deep inside "+target.name()+", you can feel the heat from her core. You draw the energy from her, mining her depths. ";
 			switch (damage) {
-			case 3:
-				return base + "You feel yourself grow stronger as you steal her physical power.";
 			case 4:
-				return base + "You manage to steal some of her sexual experience and skill at seduction.";
+				return base + "You feel yourself grow stronger as you steal her physical power.";
 			case 5:
+				return base + "You manage to steal some of her sexual experience and skill at seduction.";
+			case 3:
 				return base + "You draw some of her wit and cunning into yourself.";
 			case 1:
 				return "You attempt to drain "+target.name()+"'s energy through your intimate connection, taking a bit of her energy.";
@@ -177,15 +183,15 @@ public class Drain extends Skill {
 				+ " something far more precious than semen into her; as more of the ethereal"
 				+ " fluid leaves you, you feel ";
 		switch (damage) {
-		case 3:
+		case 4:
 			return base + "your strength leaving you with it, "
 					+ "making you more tired than you have ever felt.";
-		case 4:
+		case 5:
 			return base
 					+ "memories of previous sexual experiences escape your mind,"
 					+ " numbing your skills, rendering you more sensitive and"
 					+ " perilously close to the edge of climax.";
-		case 5:
+		case 3:
 			return base + "your mind go numb, causing your confidence and"
 					+ "cunning to flow into her.";
 		case 1:

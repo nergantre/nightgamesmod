@@ -25,7 +25,7 @@ public class PerfectTouch extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(25);
+		self.spendMojo(c, 25);
 		if(target.roll(this, c, accuracy()+self.tohit())){
 			if(self.human()){
 				c.write(self,deal(c,0,Result.normal, target));

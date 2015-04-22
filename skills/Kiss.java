@@ -1,6 +1,5 @@
 package skills;
 
-import status.Trance;
 import global.Global;
 import characters.Attribute;
 import characters.Character;
@@ -36,7 +35,7 @@ public class Kiss extends Skill {
 			}
 			target.body.pleasure(self, self.body.getRandom("mouth"), target.body.getRandom("mouth"), m, c);
 			self.body.pleasure(target, target.body.getRandom("mouth"), self.body.getRandom("mouth"), 1, c);
-			self.buildMojo(10);
+			self.buildMojo(c, 10);
 		}
 		else if(self.get(Attribute.Seduction)>=9){
 			m += 2 + Global.random(2);
@@ -48,7 +47,7 @@ public class Kiss extends Skill {
 			}
 			target.body.pleasure(self, self.body.getRandom("mouth"), target.body.getRandom("mouth"), m, c);
 			self.body.pleasure(target, target.body.getRandom("mouth"), self.body.getRandom("mouth"), 1, c);
-			self.buildMojo(10);
+			self.buildMojo(c, 10);
 		}
 		else{
 			if(self.human()){
@@ -59,7 +58,7 @@ public class Kiss extends Skill {
 			}
 			target.body.pleasure(self, self.body.getRandom("mouth"), target.body.getRandom("mouth"), m, c);
 			self.body.pleasure(target, target.body.getRandom("mouth"), self.body.getRandom("mouth"), 1, c);
-			self.buildMojo(5);
+			self.buildMojo(c, 5);
 		}
 	}
 

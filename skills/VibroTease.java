@@ -48,7 +48,7 @@ public class VibroTease extends Skill {
 		int m = 10 + Global.random(5);
 		target.body.pleasure(self, null, target.body.getRandom("ass"), m, c);
 		self.arouse(2, c);
-		self.buildMojo(20);
+		self.buildMojo(c, 20);
 	}
 
 	@Override

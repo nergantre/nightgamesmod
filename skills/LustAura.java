@@ -38,7 +38,7 @@ public class LustAura extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(10);
+		self.spendMojo(c, 10);
 		self.arouse(10, c);
 		if(self.human()){
 			c.write(self,deal(c,0,Result.normal, target));

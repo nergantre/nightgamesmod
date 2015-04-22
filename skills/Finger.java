@@ -32,7 +32,7 @@ public class Finger extends Skill {
 					c.write(self,receive(c,0,Result.normal, target));
 				}
 				target.body.pleasure(self, self.body.getRandom("hands"), target.body.getRandom("pussy"), m, c);					
-				self.buildMojo(10);
+				self.buildMojo(c, 10);
 			}
 			else{
 				if(self.human()){

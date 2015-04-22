@@ -28,4 +28,5 @@ public enum Stsflag {
 	wary,
 	charmed,
 	alluring,
+	counter,
 }

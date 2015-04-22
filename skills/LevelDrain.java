@@ -51,7 +51,7 @@ public class LevelDrain extends Skill {
 	@Override
 	public void resolve(Combat c, Character target) {
 		int strength = Math.max(1, 1 + ((self.getPure(Attribute.Dark)) / 30));
-		self.spendMojo(25);
+		self.spendMojo(c, 25);
 		
 		int type = Global.centeredrandom(2, self.getPure(Attribute.Dark) / 20.0f, 2);
 		if (this.self.human()) {
