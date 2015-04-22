@@ -104,11 +104,11 @@ public class Global {
 		players = new HashSet<Character>();
 		resting = new HashSet<Character>();
 		counters = new HashMap<Flag,Float>();
-		debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
-		debug[DebugFlags.DEBUG_DAMAGE.ordinal()] = true;
-		debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
-		debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
-		debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
+//		debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
+//		debug[DebugFlags.DEBUG_DAMAGE.ordinal()] = true;
+//		debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
+//		debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
+//		debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
 		current=null;
 		factory = new ContextFactory();
 		cx = factory.enterContext();
