@@ -261,10 +261,10 @@ public class GUI extends JFrame implements Observer {
 						Global.flag(Flag.dumbmode);
 					}
 					if(rdhard.isSelected()){
-						Global.unflag(Flag.hardmode);
+						Global.flag(Flag.hardmode);
 					}
 					else{
-						Global.flag(Flag.hardmode);
+						Global.unflag(Flag.hardmode);
 					}
 					if(rdautosaveoff.isSelected()){
 						Global.unflag(Flag.autosave);

@@ -23,6 +23,7 @@ import java.awt.event.ActionListener;
 import java.awt.Font;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
@@ -58,7 +59,7 @@ public class CreationGUI extends JPanel{
 	private JRadioButton rdbtnNormal;
 	private JRadioButton rdbtnDumb;
 	private JRadioButton rdbtnEasy;
-	private JRadioButton rdbtnHard;
+	private JCheckBox rdbtnHard;
 	private JSeparator separator_1;
 	private Box verticalBox;
 	private Box horizontalBox;
@@ -300,8 +301,11 @@ public class CreationGUI extends JPanel{
 		
 		rdbtnDumb = new JRadioButton("Old AI");
 		panel_2.add(rdbtnDumb);
+		for (int i = 0; i < 11; i++) {
+			panel_2.add(new JPanel());
+		}
 
-		rdbtnHard = new JRadioButton("Hard Mode");
+		rdbtnHard = new JCheckBox("Hard Mode");
 		panel_2.add(rdbtnHard);
 		btnCunPlus.addActionListener(new ActionListener(){
 			@Override
