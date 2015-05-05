@@ -42,10 +42,12 @@ public class ReverseFly extends Fly {
 		self.spendMojo(c, getMojoSpent());
 		if (self.bottom.size() == 1) {
 			premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s to the side and", self.bottom.get(0).name());
-		} else {
+		} else if (self.bottom.size() == 2) {
 			premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s and %s to the side and", self.bottom.get(0).name(), self.bottom.get(1).name());
 		}
-		Result result = target.roll(this, c, accuracy()+self.tohit()) ? Result.normal: Result.miss;
+
+		premessage = Global.format(premessage, self, target);
+		Result result = target.roll(this, c, accuracy()) ? Result.normal: Result.miss;
 		if (this.self.human()) {
 			c.write(self,premessage + deal(c, 0, result, target));
 		} else if (target.human()) {

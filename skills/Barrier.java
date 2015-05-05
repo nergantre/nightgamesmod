@@ -14,13 +14,8 @@ public class Barrier extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Arcane)>=18;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Arcane)>=18;
+		return user.get(Attribute.Arcane)>=18;
 	}
 
 	@Override
@@ -42,7 +37,7 @@ public class Barrier extends Skill {
 		else if(target.human()){
 			c.write(self,receive(c,0,Result.normal, target));
 		}
-		self.add(new Shield(self));
+		self.add(new Shield(self, .5));
 	}
 
 	@Override

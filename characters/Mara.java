@@ -99,7 +99,7 @@ public class Mara extends BasePersonality  {
 			character.gain(Item.Strapon);
 			character.money-=600;
 		}
-		if(character.money>0){
+		if(character.money>0 && character.rank >= 1){
 			Global.getDay().visit("Body Shop", character, Global.random(character.money));
 		}
 		if(character.money>0 && character.rank >= 1){
@@ -227,7 +227,7 @@ public class Mara extends BasePersonality  {
 					"her nipples. She moans against your mouth and shudders in your arms as she climaxes.";
 		}
 		else{
-			target.arousal.set(target.arousal.max()/3);
+			target.arousal.set(target.arousal.max()* 2/3);
 			return "You're completely at Mara's mercy, but she refuses to finish you off. She teases and caresses you, keeping you too on-edge to fight back, but avoids your " +
 					"painfully hard cock. She brings her face close to yours with a cat-like grin and whispers, <i>\"You look so desperate. Tell me you surrender and I'll " +
 					"let you cum.\"</i> You've already lost. There's no point resisting. You practically beg Mara to finish you, causing her amusement to increase tenfold. " +
@@ -351,46 +351,7 @@ public class Mara extends BasePersonality  {
 	public double dickPreference() {
 		return 3;
 	}
-	@Override
-	public void ding() {
-		super.ding();
-		if(character.getPure(Attribute.Science)>=1){
-			character.mod(Attribute.Science, 1);
-			character.mod(Attribute.Cunning, 1);
-			int rand;
-			for(int i=0; i<Global.random(2)+1;i++){
-				rand=Global.random(4);
-				if(rand==0){
-					character.mod(Attribute.Power, 1);
-				}
-				else if(rand==1){
-					character.mod(Attribute.Seduction, 1);
-				}
-				else if(rand==2){
-					this.character.mod(Attribute.Fetish, 1);
-				}
-				else if(rand==3){
-					character.mod(Attribute.Science, 1);
-				}
-			}
-		}
-		else{
-			character.mod(Attribute.Cunning, 1);
-			int rand;
-			for(int i=0; i<Global.random(2)+1;i++){
-				rand=Global.random(3);
-				if(rand==0){
-					character.mod(Attribute.Power, 1);
-				}
-				else if(rand==1){
-					character.mod(Attribute.Seduction, 1);
-				}
-				else if(rand==2){
-					character.mod(Attribute.Cunning, 1);
-				}
-			}
-		}
-	}
+
 	@Override
 	public String victory3p(Combat c, Character target, Character assist) {
 		if(target.human()){

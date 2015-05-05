@@ -22,7 +22,7 @@ public class Tackle extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy()+self.tohit())&&self.check(Attribute.Power,target.knockdownDC()-self.get(Attribute.Animism))){
+		if(target.roll(this, c, accuracy())&&self.check(Attribute.Power,target.knockdownDC()-self.get(Attribute.Animism))){
 			if(self.get(Attribute.Animism)>=1){
 				if(self.human()){
 					c.write(self,deal(c,0,Result.special, target));
@@ -54,13 +54,8 @@ public class Tackle extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return (self.getPure(Attribute.Power)>=26 || self.getPure(Attribute.Animism)>=1)&& !self.has(Trait.petite);
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return (user.getPure(Attribute.Power)>=26|| user.getPure(Attribute.Animism)>=1) && !user.has(Trait.petite);
+		return (user.get(Attribute.Power)>=26&& !user.has(Trait.petite))|| user.get(Attribute.Animism)>=1;
 	}
 
 	@Override
@@ -87,12 +82,12 @@ public class Tackle extends Skill {
 		return Tactics.positioning;
 	}
 
-	public String toString(){
+	public String getLabel(Combat c){
 		if(self.get(Attribute.Animism)>=1){
 			return "Pounce";
 		}
 		else{
-			return name;
+			return getName();
 		}
 	}
 	@Override

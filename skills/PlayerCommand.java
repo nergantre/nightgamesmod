@@ -12,11 +12,6 @@ public abstract class PlayerCommand extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.human();
-	}
-
-	@Override
 	public boolean requirements(Character user) {
 		return user.human();
 	}

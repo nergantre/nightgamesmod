@@ -23,8 +23,8 @@ public class Slap extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy()+self.tohit())){
-			if(self.getPure(Attribute.Animism)>=8){
+		if(target.roll(this, c, accuracy())){
+			if(self.get(Attribute.Animism)>=8){
 				if(self.human()){
 					c.write(self,deal(c,0,Result.special, target));			
 				}
@@ -32,14 +32,14 @@ public class Slap extends Skill {
 					c.write(self,receive(c,0,Result.special, target));
 				}
 				if(self.has(Trait.pimphand)){
-					target.pain(c, Global.random(16*(self.getArousal().percent()/100))+self.get(Attribute.Power)/2);
+					target.pain(c, Global.random((16*self.getArousal().percent())/100)+self.get(Attribute.Power)/2);
 					target.calm(c, Global.random(4)+2);
 					target.emote(Emotion.nervous, 40);
 					target.emote(Emotion.angry, 30);
 					self.buildMojo(c, 20);
 				}
 				else{
-					target.pain(c, Global.random(12*(self.getArousal().percent()/100)+1)+self.get(Attribute.Power)/2);
+					target.pain(c, Global.random((12*self.getArousal().percent())/100+1)+self.get(Attribute.Power)/2);
 					target.calm(c, Global.random(5)+4);
 					target.emote(Emotion.nervous, 25);
 					target.emote(Emotion.angry, 30);
@@ -81,13 +81,8 @@ public class Slap extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return !self.has(Trait.softheart)&&self.getPure(Attribute.Power)>=7;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return !user.has(Trait.softheart)&&user.getPure(Attribute.Power)>=7;
+		return !user.has(Trait.softheart)&&user.get(Attribute.Power)>=7;
 	}
 
 	@Override
@@ -100,8 +95,8 @@ public class Slap extends Skill {
 	public Tactics type(Combat c) {
 		return Tactics.damage;
 	}
-	public String toString(){
-		if(self.getPure(Attribute.Animism)>=8){
+	public String getLabel(Combat c){
+		if(self.get(Attribute.Animism)>=8){
 			return "Tiger Claw";
 		}
 		else{

@@ -16,11 +16,6 @@ public class Wait extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return true;
-	}
-
-	@Override
 	public boolean usable(Combat c, Character target) {
 		return self.canRespond();
 	}
@@ -112,7 +107,8 @@ public class Wait extends Skill {
 		}
 	}
 
-	public String toString(){
+	@Override
+	public String getLabel(Combat c){
 		if(bluff()){
 			return "Bluff";
 		}
@@ -120,7 +116,7 @@ public class Wait extends Skill {
 			return "Focus";
 		}
 		else{
-			return name;
+			return getName();
 		}
 	}
 
@@ -138,10 +134,10 @@ public class Wait extends Skill {
 	}
 
 	private boolean focused(){
-		return self.getPure(Attribute.Cunning)>=15 && !self.has(Trait.undisciplined)&&self.canRespond();
+		return self.get(Attribute.Cunning)>=15 && !self.has(Trait.undisciplined)&&self.canRespond();
 	}
 
 	private boolean bluff(){
-		return self.has(Trait.pokerface)&&self.getPure(Attribute.Cunning)>=9&&self.canSpend(20)&&self.canRespond();
+		return self.has(Trait.pokerface)&&self.get(Attribute.Cunning)>=9&&self.canSpend(20)&&self.canRespond();
 	}
 }

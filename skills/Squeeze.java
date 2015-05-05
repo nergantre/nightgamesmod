@@ -23,7 +23,7 @@ public class Squeeze extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy()+self.tohit())){
+		if(target.roll(this, c, accuracy())){
 			if(target.pantsless()){
 				if(self.has(Item.ShockGlove)&&self.has(Item.Battery,2)){
 					self.consume(Item.Battery, 2);
@@ -89,13 +89,8 @@ public class Squeeze extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Power)>=9;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Power)>=9;
+		return user.get(Attribute.Power)>=9;
 	}
 
 	@Override
@@ -143,12 +138,12 @@ public class Squeeze extends Skill {
 			return self.name()+" reaches between your legs and grabs your exposed balls. You writhe in pain as she pulls and squeezes them.";
 		}
 	}
-	public String toString(){
+	public String getLabel(Combat c){
 		if(self.has(Item.ShockGlove)){
 			return "Shock Balls";
 		}
 		else{
-			return name;
+			return getName();
 		}
 	}
 

@@ -5,6 +5,7 @@ import items.Item;
 import stance.Stance;
 import characters.Attribute;
 import characters.Character;
+import characters.Trait;
 
 import combat.Combat;
 import combat.Result;
@@ -16,18 +17,13 @@ public class VibroTease extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.has(Item.Strapon2);
-	}
-
-	@Override
 	public boolean requirements(Character user) {
 		return user.has(Item.Strapon2);
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().dom(self)&&(c.getStance().en==Stance.anal)&&self.has(Item.Strapon2);
+		return self.canAct()&&c.getStance().dom(self)&&(c.getStance().en==Stance.anal)&&self.has(Trait.strapped)&&c.getStance().inserted(self)&&self.has(Item.Strapon2);
 	}
 
 	@Override

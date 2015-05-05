@@ -4,7 +4,7 @@ package stance;
 import characters.Character;
 import characters.body.PussyPart;
 
-public class Missionary extends Position {
+public class Missionary extends MaledomSexStance {
 
 	public Missionary(Character top, Character bottom) {
 		super(top, bottom,Stance.missionary);
@@ -85,15 +85,7 @@ public class Missionary extends Position {
 		return new Mount(top,bottom);
 	}
 
-	@Override
-	public float priorityMod(Character self) {
-		float priority = 0;
-		if (dom(self)) {
-			priority += 4;
-		}
-		if (sub(self)) {
-			priority += self.body.getRandomPussy().priority;
-		}
-		return priority;
+	public Position reverse() {
+		return new Cowgirl(bottom, top);
 	}
 }

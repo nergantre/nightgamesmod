@@ -11,11 +11,6 @@ public class Nothing extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return true;
-	}
-
-	@Override
 	public boolean usable(Combat c, Character target) {
 		return true;
 	}

@@ -15,11 +15,6 @@ public class ReverseStraddle extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return true;
-	}
-
-	@Override
 	public boolean usable(Combat c, Character target) {
 		return c.getStance().mobile(self)&&c.getStance().mobile(target)&&c.getStance().prone(target)&&self.canAct();
 	}

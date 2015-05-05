@@ -20,8 +20,8 @@ public class SuckNeck extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy()+self.tohit())){
-			if(self.getPure(Attribute.Dark)>=1){
+		if(target.roll(this, c, accuracy())){
+			if(self.get(Attribute.Dark)>=1){
 				if(self.human()){
 					c.write(self,deal(c,0,Result.special, target));
 				}
@@ -55,13 +55,8 @@ public class SuckNeck extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Seduction)>=12;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return self.getPure(Attribute.Seduction)>=12;
+		return self.get(Attribute.Seduction)>=12;
 	}
 
 	@Override
@@ -77,12 +72,12 @@ public class SuckNeck extends Skill {
 	public Tactics type(Combat c) {
 		return Tactics.pleasure;
 	}
-	public String toString(){
-		if(self.getPure(Attribute.Dark)>=1){
+	public String getLabel(Combat c){
+		if(self.get(Attribute.Dark)>=1){
 			return "Drain energy";
 		}
 		else{
-			return name;
+			return getName();
 		}
 	}
 

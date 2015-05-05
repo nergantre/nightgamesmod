@@ -8,7 +8,9 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.Stack;
 
 import javax.swing.Icon;
@@ -154,7 +156,6 @@ public class Player extends Character {
 		else{
 			c.p1.defeat(c,flag);
 		}
-
 	}
 
 	@Override
@@ -164,7 +165,6 @@ public class Player extends Character {
 
 	@Override
 	public void act(Combat c) {
-		gui.clearCommand();
 		Character target;
 		if(c.p1==this){
 			target=c.p2;
@@ -172,80 +172,7 @@ public class Player extends Character {
 		else{
 			target=c.p1;
 		}
-		HashSet<Skill> damage = new HashSet<Skill>();
-		HashSet<Skill> pleasure = new HashSet<Skill>();
-		HashSet<Skill> fucking = new HashSet<Skill>();
-		HashSet<Skill> position = new HashSet<Skill>();
-		HashSet<Skill> debuff = new HashSet<Skill>();
-		HashSet<Skill> recovery = new HashSet<Skill>();
-		HashSet<Skill> summoning = new HashSet<Skill>();
-		HashSet<Skill> stripping = new HashSet<Skill>();
-		HashSet<Skill> misc = new HashSet<Skill>();
-		int count = 0;
-		for(Skill a:skills){
-			if(Skill.skillIsUsable(c, a, target)){
-				if(a.type(c)==Tactics.damage){
-					damage.add(a);
-				}
-				else if(a.type(c)==Tactics.pleasure){
-					pleasure.add(a);
-				}else if(a.type(c)==Tactics.fucking){
-					fucking.add(a);
-				}
-				else if(a.type(c)==Tactics.positioning){
-					position.add(a);
-				}
-				else if(a.type(c)==Tactics.debuff){
-					debuff.add(a);
-				}
-				else if(a.type(c)==Tactics.recovery||a.type(c)==Tactics.calming){
-					recovery.add(a);
-				}
-				else if(a.type(c)==Tactics.summoning){
-					summoning.add(a);
-				}
-				else if(a.type(c)==Tactics.stripping){
-					stripping.add(a);
-				}
-				else{
-					misc.add(a);
-				}
-				count += 1;
-			}
-		}
-		if (count == 0) {
-			misc.add(new Nothing(this));
-		}
-		for(Skill a: stripping){
-			gui.addSkill(a,c);
-		}
-		for(Skill a: position){
-			gui.addSkill(a,c);
-		}
-		for(Skill a: fucking){
-			gui.addSkill(a,c);
-		}
-		for(Skill a: pleasure){
-			gui.addSkill(a,c);
-		}
-		if(Global.getMatch().condition!=Modifier.pacifist){
-			for(Skill a: damage){
-				gui.addSkill(a,c);
-			}
-		}
-		for(Skill a: debuff){
-			gui.addSkill(a,c);
-		}
-		for(Skill a: summoning){
-			gui.addSkill(a,c);
-		}
-		for(Skill a: recovery){
-			gui.addSkill(a,c);
-		}
-		for(Skill a: misc){
-			gui.addSkill(a,c);
-		}
-		gui.showSkills(0);
+		pickSkillsWithGUI(c, target);
 	}
 
 	@Override
@@ -439,6 +366,14 @@ public class Player extends Character {
 		getMojo().gain(1);
 		gui.message("You've gained a Level!<br>Select which attributes to increase.");
 		gui.ding();
+	}
+
+	private Set<Trait> featsAvailable() {
+		HashSet<Trait> feats = Global.getFeats();
+		for (Trait t : traits) {
+			feats.remove(t);
+		}
+		return feats;
 	}
 
 	public void flee(Area location2) {
@@ -649,24 +584,63 @@ public class Player extends Character {
 	public void counterattack(Character target, Tactics type, Combat c) {
 		switch(type){
 		case damage:
-			c.write("You dodge "+target.name()+"'s slow attack and hit her sensitive tit to stagger her.");
-			target.pain(c, 4+Global.random(get(Attribute.Cunning)));
+			c.write(this, "You dodge "+target.name()+"'s slow attack and hit her sensitive tit to stagger her.");
+			target.pain(c, 4+Math.min(Global.random(get(Attribute.Power)), 20));
 			break;
 		case pleasure:
 			if(!target.nude()){
-				c.write("You pull "+target.name()+" off balance and lick her sensitive ear. She trembles as you nibble on her earlobe.");
-				target.body.pleasure(this, body.getRandom("tongue"), target.body.getRandom("ear"), 4+Global.random(get(Attribute.Cunning)), c);
+				c.write(this, "You pull "+target.name()+" off balance and lick her sensitive ear. She trembles as you nibble on her earlobe.");
+				target.body.pleasure(this, body.getRandom("tongue"), target.body.getRandom("ear"), 4+Math.min(Global.random(get(Attribute.Seduction)), 20), c);
 			}
 			else{
-				c.write("You pull "+target.name()+" to you and rub your thigh against her girl parts.");
-				target.body.pleasure(this, body.getRandom("legs"), target.body.getRandomPussy(), 4+Global.random(get(Attribute.Cunning)), c);
+				c.write(this, "You pull "+target.name()+" to you and rub your thigh against her girl parts.");
+				target.body.pleasure(this, body.getRandom("feet"), target.body.getRandomPussy(), 4+Math.min(Global.random(get(Attribute.Seduction)), 20), c);
+			}
+			break;
+		case fucking:
+			if (c.getStance().sub(this)) {
+				if (c.getStance().inserted(this)) {
+					c.write(this, Global.format("{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} clitoris with {self:possessive} hands as {other:subject-action:try|tries} to ride {self:direct-object}. " +
+							"While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:rotate|rotates} {self:possessive} body around into a dominant position", this, target));
+				} else if (target.hasBalls()){
+					c.write(this, Global.format("{self:SUBJECT-ACTION:squeezes|squeezes} {other:possessive} balls with {self:possessive} hands as {other:subject-action:try|tries} to ride {self:direct-object}. " +
+							"While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:rotate|rotates} {self:possessive} body around into a dominant position", this, target));
+				} else {
+					c.write(this, Global.format("{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} nipples with {self:possessive} hands as {other:subject-action:try|tries} to ride {self:direct-object}. " +
+							"While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:rotate|rotates} {self:possessive} body around into a dominant position", this, target));
+				}
+				c.setStance(c.getStance().reverse());
+			} else {
+				if (c.getStance().inserted(this)) {
+					target.body.pleasure(this, body.getRandomInsertable(), target.body.getRandomHole(), 4+Math.min(Global.random(get(Attribute.Seduction)), 20), c);
+				} else {
+					target.body.pleasure(this, body.getRandomHole(), target.body.getRandomInsertable(), 4+Math.min(Global.random(get(Attribute.Seduction)), 20), c);
+				}
+				c.write(this, Global.format("{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} clitoris with {self:possessive} hands as {other:subject-action:try|tries} to ride {self:direct-object}. " +
+						"While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:take|takes} the chance to pleasure {other:possessive} body", this, target));				
+			}
+			break;
+		case stripping:
+			Clothing clothes = target.stripRandom(c);
+			if (clothes != null) {
+				c.write(this, "You manage to catch " +target.possessivePronoun() + " hands groping your clothing, and in a swift motion you strip off her " + clothes.getName() + " instead.");
+			} else {
+				c.write(this, "You manage to dodge " + target.possessivePronoun() + " groping hands and give a retaliating slap in return");
+				target.pain(c, 4+Math.min(Global.random(get(Attribute.Power)), 20));
 			}
 			break;
 		case positioning:
-			c.write(target.name()+" loses her balance while grappling with you. Before she can fall to the floor, you catch her from behind and hold her up.");
-			c.setStance(new Behind(this,target));
+			if (c.getStance().dom(this)) {
+				c.write(this, "You outmanuever " + target.name() + " and you exhausted her from the struggle.");
+				target.weaken(c, 10);
+			} else {
+				c.write(this, target.name()+" loses her balance while grappling with you. Before she can fall to the floor, you catch her from behind and hold her up.");
+				c.setStance(new Behind(this,target));
+			}
 			break;
 		default:
+			c.write(this, "You manage to dodge " + target.possessivePronoun() + " attack and give a retaliating slap in return");
+			target.pain(c, 4+Math.min(Global.random(get(Attribute.Power)), 20));
 		}
 	}
 

@@ -1,5 +1,6 @@
 package characters.body;
 
+import java.util.Map;
 import java.util.Scanner;
 
 import characters.Character;
@@ -12,7 +13,7 @@ public class AnalPussyPart extends GenericBodyPart {
 	public static AnalPussyPart generic = new AnalPussyPart();
 
 	public AnalPussyPart() {
-		super("anal pussy", .5, 2.5, 1.3, true, "ass");
+		super("anal pussy", "Instead of a normal sphincter, {self:possessive} round butt is crowned by a slobbering second pussy.", .5, 2.5, 1.3, true, "ass", "an ");
 	}
 	
 	@Override
@@ -24,8 +25,9 @@ public class AnalPussyPart extends GenericBodyPart {
 	public String getFluids(Character c) {
 		return "juices";
 	}
-	
-	public static BodyPart load(Scanner loader) {
+
+	@Override
+	public BodyPart loadFromDict(Map<String,Object> dict) {
 		return new AnalPussyPart();
 	}
 }

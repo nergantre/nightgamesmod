@@ -19,13 +19,8 @@ public class TentaclePorn extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Fetish)>=12;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Fetish)>=12;
+		return user.get(Attribute.Fetish)>=12;
 	}
 
 	@Override
@@ -41,7 +36,7 @@ public class TentaclePorn extends Skill {
 	@Override
 	public void resolve(Combat c, Character target) {
 		self.spendMojo(c, 10);
-		if(target.roll(this, c, accuracy()+self.tohit())){
+		if(target.roll(this, c, accuracy())){
 			if(target.nude()){
 				int m = Global.random(self.get(Attribute.Fetish)) / 2 + 1;
 				if(target.bound()){

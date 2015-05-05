@@ -6,7 +6,7 @@ import combat.Combat;
 import characters.Character;
 import characters.Trait;
 
-public class AnalProne extends Position {
+public class AnalProne extends AnalSexStance {
 
 	public AnalProne(Character top, Character bottom) {
 		super(top, bottom, Stance.anal);
@@ -28,11 +28,6 @@ public class AnalProne extends Position {
 	@Override
 	public boolean mobile(Character c) {
 		return c==top;
-	}
-
-	@Override
-	public float priorityMod(Character self) {
-		return dom(self) ? 4.0f : 0;
 	}
 
 	@Override
@@ -95,12 +90,34 @@ public class AnalProne extends Position {
 		return new Mount(top,bottom);
 	}
 
+	@Override
 	public void checkOngoing(Combat c){
-		if(!top.hasDick()&&!top.has(Trait.strapped)){
-			if(bottom.human()){
-				c.write("With "+top.name()+"'s strapon gone, your ass gets a respite.");
+		Character inserter = inserted(top) ? top : bottom;
+		Character inserted = inserted(top) ? bottom : top;
+		
+		if(!inserter.hasDick()&&!inserter.has(Trait.strapped)){
+			if(inserted.human()){
+				c.write("With "+inserter.name()+"'s pole gone, your ass gets a respite.");
+			} else {
+				c.write(inserted.name() + " sighs with relief with your dick gone.");
 			}
-			c.setStance(insert(top, top));
+			c.setStance(insert(top, bottom));
+		}
+		if (inserted.body.getRandom("ass") == null) {
+			if(inserted.human()){
+				c.write("With your asshole suddenly disappearing, " + inserter.name() + "'s dick pops out of what was once your sphincter.");
+			} else {
+				c.write("Your dick pops out of " + inserted.name() + " as her asshole shrinks and disappears.");
+			}
+			c.setStance(insert(top, bottom));
+		}
+	}
+
+	public Position reverse() {
+		if (top.has(Trait.strapped)) {
+			return new Mount(bottom, top);
+		} else {
+			return new AnalCowgirl(bottom, top);
 		}
 	}
 }

@@ -80,7 +80,7 @@ public class WaterStance extends Status {
 	@Override
 	public int evade() {
 		// TODO Auto-generated method stub
-		return 5;
+		return 10;
 	}
 
 	@Override
@@ -112,5 +112,8 @@ public class WaterStance extends Status {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	@Override
+	public Status instance(Character newAffected, Character newOther) {
+		return new WaterStance(newAffected);
+	}
 }

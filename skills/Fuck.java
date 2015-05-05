@@ -59,19 +59,20 @@ public class Fuck extends Skill {
 	@Override
 	public void resolve(Combat c, Character target) {
 		String premessage = "";
-		if(!target.bottom.empty() && getSelfOrgan().isType("cock")) {
+		if(!self.bottom.empty() && getSelfOrgan().isType("cock")) {
 			if (self.bottom.size() == 1) {
 				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s halfway and", self.bottom.get(0).name());
-			} else {
+			} else if (self.bottom.size() == 2) {
 				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s and %s halfway and", self.bottom.get(0).name(), self.bottom.get(1).name());
 			}
-		} else if(!target.bottom.empty() && getSelfOrgan().isType("pussy")) {
+		} else if(!self.bottom.empty() && getSelfOrgan().isType("pussy")) {
 			if (self.bottom.size() == 1) {
 				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s to the side and", self.bottom.get(0).name());
-			} else {
+			} else if (self.bottom.size() == 2) {
 				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s and %s to the side and", self.bottom.get(0).name(), self.bottom.get(1).name());
 			}
 		}
+		premessage = Global.format(premessage, self, target);
 		
 		int m = 5+Global.random(5);
 		BodyPart selfO = getSelfOrgan();
@@ -99,11 +100,6 @@ public class Fuck extends Skill {
 				c.write(self,premessage + receive(c,0,Result.miss, target));
 			}
 		}
-	}
-
-	@Override
-	public boolean requirements() {
-		return true;
 	}
 
 	@Override

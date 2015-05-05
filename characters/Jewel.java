@@ -47,6 +47,7 @@ public class Jewel extends BasePersonality {
 		character.mod(Attribute.Power, 2);
 		character.mod(Attribute.Speed, 1);
 		Global.gainSkills(character);
+
 		character.add(Trait.direct);
 		character.add(Trait.wrassler);
 		character.add(Trait.insatiable);
@@ -85,18 +86,20 @@ public class Jewel extends BasePersonality {
 			character.gain(Item.Strapon);
 			character.money-=600;
 		}
-		if(character.money>0){
-			Global.getDay().visit("Body Shop", character, Global.random(character.money));
-		}
+
 		if(character.rank >= 1) {
 			if(character.money>0){
 				Global.getDay().visit("Dojo", character, Global.random(character.money));
 				Global.getDay().visit("Meditation", character, Global.random(character.money));
 			}
 			if(character.money>0){
+				Global.getDay().visit("Body Shop", character, Global.random(character.money));
+			}
+			if(character.money>0){
 				Global.getDay().visit("Workshop", character, Global.random(character.money));
 			}
 		}
+		
 		if(character.money>0){
 			Global.getDay().visit("Bookstore", character, Global.random(character.money));
 		}
@@ -336,46 +339,6 @@ public class Jewel extends BasePersonality {
 
 	public double dickPreference() {
 		return 5;
-	}
-	@Override
-	public void ding() {
-		super.ding();
-		if(character.getPure(Attribute.Ki)>=1){
-			character.mod(Attribute.Ki, 1);
-			character.mod(Attribute.Power, 1);
-			int rand;
-			for(int i=0; i<Global.random(2)+1;i++){
-				rand=Global.random(4);
-				if(rand==0){
-					this.character.mod(Attribute.Fetish, 1);
-				}
-				else if(rand==1){
-					character.mod(Attribute.Seduction, 1);
-				}
-				else if(rand==2){
-					character.mod(Attribute.Cunning, 1);
-				}
-				else if(rand==3){
-					character.mod(Attribute.Ki, 1);
-				}
-			}
-		}
-		else{
-			character.mod(Attribute.Power, 1);
-			int rand;
-			for(int i=0; i<Global.random(2)+1;i++){
-				rand=Global.random(3);
-				if(rand==0){
-					character.mod(Attribute.Power, 1);
-				}
-				else if(rand==1){
-					character.mod(Attribute.Seduction, 1);
-				}
-				else if(rand==2){
-					character.mod(Attribute.Cunning, 1);
-				}
-			}
-		}
 	}
 	@Override
 	public String victory3p(Combat c, Character target, Character assist) {

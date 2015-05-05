@@ -4,7 +4,7 @@ import combat.Combat;
 
 import characters.Character;
 
-public class Jumped extends Position {
+public class Jumped extends FemdomSexStance {
 	public Jumped(Character top, Character bottom) {
 		super(top, bottom,Stance.standing);
 	}
@@ -12,7 +12,7 @@ public class Jumped extends Position {
 	@Override
 	public String describe() {
 		if(top.human()){
-			return "You are clinging to "+bottom.nameOrPossessivePronoun() + " arms while her " + bottom.body.getRandomInsertable().describe(bottom) + " buried deep in your pussy";
+			return "You are clinging to "+bottom.nameOrPossessivePronoun() + " arms while her dick is buried deep in your pussy";
 		}
 		else{
 			return top.name()+" is clinging to your shoulders and gripping your waist with her thighs while she uses the leverage to ride you.";
@@ -97,15 +97,12 @@ public class Jumped extends Position {
 				c.write(top.name()+" loses her balance and falls, pulling you down on top of her.");
 				c.setStance(new Mount(bottom,top));
 			}
+		} else {
+			super.checkOngoing(c);
 		}
 	}
-	@Override
-	public float priorityMod(Character self) {
-		float priority = 0;
-		if (dom(self)) {
-			priority += 4;
-			priority += self.body.getRandomPussy().priority;
-		}
-		return priority;
+
+	public Position reverse() {
+		return new Missionary(bottom, top);
 	}
 }

@@ -14,13 +14,8 @@ public class Tighten extends Thrust {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Seduction)>=26;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Seduction)>=26;
+		return user.get(Attribute.Seduction)>=26;
 	}
 
 	@Override

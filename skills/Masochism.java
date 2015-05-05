@@ -15,13 +15,8 @@ public class Masochism extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Fetish)>=1;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Fetish)>=1;
+		return user.get(Attribute.Fetish)>=1;
 	}
 
 	@Override

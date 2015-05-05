@@ -14,13 +14,8 @@ public class LevelDrain extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return this.self.getPure(Attribute.Dark)>=30;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Dark)>=30;
+		return user.get(Attribute.Dark)>=30;
 	}
 
 	@Override
@@ -50,10 +45,10 @@ public class LevelDrain extends Skill {
 	
 	@Override
 	public void resolve(Combat c, Character target) {
-		int strength = Math.max(1, 1 + ((self.getPure(Attribute.Dark)) / 30));
+		int strength = Math.max(1, 1 + ((self.get(Attribute.Dark)) / 30));
 		self.spendMojo(c, 25);
 		
-		int type = Global.centeredrandom(2, self.getPure(Attribute.Dark) / 20.0f, 2);
+		int type = Global.centeredrandom(2, self.get(Attribute.Dark) / 20.0f, 2);
 		if (this.self.human()) {
 			c.write(self,deal(c, type, Result.normal, target));
 		} else if (target.human()) {

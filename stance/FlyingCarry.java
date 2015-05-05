@@ -5,7 +5,7 @@ import combat.Combat;
 import characters.Character;
 import characters.Trait;
 
-public class FlyingCarry extends Position {
+public class FlyingCarry extends MaledomSexStance {
 	private static final long serialVersionUID = 1953597655795344915L;
 
 	private Character top, bottom;
@@ -104,6 +104,8 @@ public class FlyingCarry extends Position {
 				top.pain(c, 5);
 				c.setStance(new Mount(bottom,top));
 			}
+		} else {
+			super.checkOngoing(c);
 		}
 	}
 
@@ -112,15 +114,11 @@ public class FlyingCarry extends Position {
 			return new StandingOver(top, bottom);
 	}
 
-	@Override
-	public float priorityMod(Character self) {
-		float priority = 0;
-		if (dom(self)) {
-			priority += 4;
+	public Position reverse() {
+		if (bottom.body.getRandomWings() != null) {
+			return new FlyingCowgirl(bottom, top);
+		} else {
+			return new Cowgirl(bottom, top);
 		}
-		if (sub(self)) {
-			priority += self.body.getRandomPussy().priority;
-		}
-		return priority;
 	}
 }

@@ -16,13 +16,8 @@ public class MagicMissile extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Arcane)>=1;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Arcane)>=1;
+		return user.get(Attribute.Arcane)>=1;
 	}
 
 	@Override
@@ -38,7 +33,7 @@ public class MagicMissile extends Skill {
 	@Override
 	public void resolve(Combat c, Character target) {
 		self.spendMojo(c, 5);
-		if(target.roll(this, c, accuracy()+self.tohit())){
+		if(target.roll(this, c, accuracy())){
 			if(target.nude()&&Global.random(3)==2){
 				if(self.human()){
 					c.write(self,deal(c,0,Result.critical, target));

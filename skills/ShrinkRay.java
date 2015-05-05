@@ -18,13 +18,8 @@ public class ShrinkRay extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {	
-		return self.getPure(Attribute.Science)>=12;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Science)>=12;
+		return user.get(Attribute.Science)>=12;
 	}
 
 	@Override
@@ -65,13 +60,13 @@ public class ShrinkRay extends Skill {
 				CockPart part = target.body.getCockAbove(CockPart.tiny.size);
 				if (part != null) {
 					target.body.remove(part);
-					target.body.add(CockPart.downgrade(part));
+					target.body.add(part.downgrade());
 				}
 			} else {
 				BreastsPart part = target.body.getBreastsAbove(BreastsPart.flat.size);
 				if (part != null) {
 					target.body.remove(part);
-					target.body.add(BreastsPart.downgrade(part));
+					target.body.add(part.downgrade());
 				}
 			}
 		}

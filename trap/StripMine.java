@@ -45,7 +45,7 @@ public class StripMine implements Trap{
 
 	@Override
 	public boolean requirements(Character owner) {
-		return owner.getPure(Attribute.Science)>=4;
+		return owner.get(Attribute.Science)>=4;
 	}
 
 	@Override

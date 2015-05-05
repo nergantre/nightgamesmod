@@ -17,11 +17,6 @@ public class Tempt extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return requirements(self);
-	}
-
-	@Override
 	public boolean usable(Combat c, Character target) {
 		return self.canRespond();
 	}
@@ -59,7 +54,7 @@ public class Tempt extends Skill {
 
 	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Seduction) > 15;
+		return user.get(Attribute.Seduction) > 15;
 	}
 
 	@Override

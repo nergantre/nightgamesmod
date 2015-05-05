@@ -105,4 +105,8 @@ public class Charmed extends Status {
 	public int value() {
 		return 0;
 	}
+	@Override
+	public Status instance(Character newAffected, Character newOther) {
+		return new Charmed(newAffected);
+	}
 }

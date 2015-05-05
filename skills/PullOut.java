@@ -2,6 +2,7 @@ package skills;
 
 import stance.Neutral;
 import stance.Stance;
+import status.CockBound;
 import status.Stsflag;
 import characters.Attribute;
 import characters.Character;
@@ -13,11 +14,6 @@ public class PullOut extends Skill {
 
 	public PullOut(Character self) {
 		super("Pull Out", self);
-	}
-
-	@Override
-	public boolean requirements() {
-		return true;
 	}
 
 	@Override
@@ -42,7 +38,8 @@ public class PullOut extends Skill {
 		}
 		else{
 			if (self.hasStatus(Stsflag.cockbound)) {
-				c.write(self,"You try to pull out of "+target.name()+"'s " + target.body.getRandomPussy() + ", but her pussy-tongue tongue instantly react and pulls your dick back in.");
+				CockBound s = (CockBound)self.getStatus(Stsflag.cockbound);
+				c.write(self,"You try to pull out of "+target.name()+"'s " + target.body.getRandomPussy() + ", but her " + s.binding +" instantly react and pulls your dick back in.");
 				int m = 8;
 				self.body.pleasure(target, target.body.getRandom("pussy"), self.body.getRandom("cock"), m, c);					
 				return;

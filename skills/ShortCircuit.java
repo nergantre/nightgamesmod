@@ -17,13 +17,8 @@ public class ShortCircuit extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Science)>=15;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Science)>=15;
+		return user.get(Attribute.Science)>=15;
 	}
 
 	@Override

@@ -13,13 +13,8 @@ public class FlyCatcher extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Ki)>=9;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Ki)>=9;
+		return user.get(Attribute.Ki)>=9;
 	}
 
 	@Override

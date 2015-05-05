@@ -14,11 +14,6 @@ public class FondleBreasts extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return true;
-	}
-
-	@Override
 	public boolean usable(Combat c, Character target) {
 		return c.getStance().reachTop(self)&&target.hasBreasts()&&self.canAct();
 	}
@@ -26,7 +21,7 @@ public class FondleBreasts extends Skill {
 	@Override
 	public void resolve(Combat c, Character target) {
 		int m = 1 + Global.random(4);
-		if(target.roll(this, c, accuracy()+self.tohit())){
+		if(target.roll(this, c, accuracy())){
 			if(target.topless()){
 				m += 4;
 				if(self.human()){

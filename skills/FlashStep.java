@@ -15,13 +15,8 @@ public class FlashStep extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Ki)>=6;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Ki)>=6;
+		return user.get(Attribute.Ki)>=6;
 	}
 
 	@Override

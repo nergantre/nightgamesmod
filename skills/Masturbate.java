@@ -19,11 +19,6 @@ public class Masturbate extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return true;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
 		return true;
 	}

@@ -132,12 +132,6 @@ public class Yui extends BasePersonality {
 	}
 
 	@Override
-	public void ding() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public String startBattle() {
 		// TODO Auto-generated method stub
 		return null;

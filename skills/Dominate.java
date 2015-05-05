@@ -15,13 +15,8 @@ public class Dominate extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Dark)>=9;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Dark)>=9;
+		return user.get(Attribute.Dark)>=9;
 	}
 
 	@Override

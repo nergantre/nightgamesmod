@@ -16,11 +16,6 @@ public class UseDildo extends Skill{
 	}
 
 	@Override
-	public boolean requirements() {
-		return true;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
 		return true;
 	}
@@ -33,7 +28,7 @@ public class UseDildo extends Skill{
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy()+self.tohit())){
+		if(target.roll(this, c, accuracy())){
 			if(self.has(Item.Dildo2)){
 				if(self.human()){
 					c.write(self,deal(c,0,Result.upgrade, target));

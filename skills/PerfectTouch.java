@@ -14,11 +14,6 @@ public class PerfectTouch extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Cunning)>=18;
-	}
-
-	@Override
 	public boolean usable(Combat c, Character target) {
 		return c.getStance().mobile(self)&&(!target.nude())&&self.canSpend(25)&&!c.getStance().prone(self)&&self.canAct()&&!c.getStance().penetration(self);
 	}
@@ -26,7 +21,7 @@ public class PerfectTouch extends Skill {
 	@Override
 	public void resolve(Combat c, Character target) {
 		self.spendMojo(c, 25);
-		if(target.roll(this, c, accuracy()+self.tohit())){
+		if(target.roll(this, c, accuracy())){
 			if(self.human()){
 				c.write(self,deal(c,0,Result.normal, target));
 				c.write(target,target.nakedLiner());
@@ -49,7 +44,7 @@ public class PerfectTouch extends Skill {
 
 	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Cunning)>=18;
+		return user.get(Attribute.Cunning)>=18;
 	}
 
 	@Override

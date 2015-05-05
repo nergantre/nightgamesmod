@@ -15,6 +15,11 @@ public class Satiated extends Status {
 		this.value = xp + 95 + (5 * (affected.getLevel() + levels));
 		this.duration=1;
 	}
+	public Satiated(Character affected, int value) {
+		super("Satiated", affected);
+		this.value = value;
+		this.duration=1;
+	}
 
 	@Override
 	public String describe() {
@@ -102,5 +107,9 @@ public class Satiated extends Status {
 	public int value() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	@Override
+	public Status instance(Character newAffected, Character newOther) {
+		return new Satiated(newAffected, value);
 	}
 }

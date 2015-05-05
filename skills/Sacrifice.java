@@ -14,13 +14,8 @@ public class Sacrifice extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Dark)>=15;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Dark)>=15;
+		return user.get(Attribute.Dark)>=15;
 	}
 
 	@Override

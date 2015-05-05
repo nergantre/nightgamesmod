@@ -10,12 +10,12 @@ import characters.Trait;
 public class Distorted extends Status {
 	private int duration;
 	
-	public Distorted(Character affected) {
+	public Distorted(Character affected, int duration) {
 		super("Distorted", affected);
 		if(affected.has(Trait.PersonalInertia)){
-			duration = 9;
+			this.duration = duration * 3 / 2;
 		}else{
-			duration = 6;
+			this.duration = duration;
 		}
 		flag(Stsflag.distorted);
 	}
@@ -72,7 +72,7 @@ public class Distorted extends Status {
 
 	@Override
 	public int evade() {
-		return 5;
+		return 10;
 	}
 
 	@Override
@@ -100,5 +100,8 @@ public class Distorted extends Status {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	@Override
+	public Status instance(Character newAffected, Character newOther) {
+		return new Distorted(newAffected, duration);
+	}
 }

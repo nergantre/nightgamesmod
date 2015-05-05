@@ -17,12 +17,6 @@ public class Taunt extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		
-		return self.getPure(Attribute.Cunning)>=8;
-	}
-
-	@Override
 	public boolean usable(Combat c, Character target) {
 		return target.nude()&&!c.getStance().sub(self)&&self.canSpend(5)&&self.canAct()&&!self.has(Trait.shy);
 	}
@@ -58,7 +52,7 @@ public class Taunt extends Skill {
 
 	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Cunning)>=8;
+		return user.get(Attribute.Cunning)>=8;
 	}
 
 	@Override

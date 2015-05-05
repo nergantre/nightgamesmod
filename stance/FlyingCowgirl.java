@@ -5,7 +5,7 @@ import combat.Combat;
 import characters.Character;
 import characters.Trait;
 
-public class FlyingCowgirl extends Position {
+public class FlyingCowgirl extends FemdomSexStance {
 	private static final long serialVersionUID = 1953597655795344915L;
 
 	private Character top, bottom;
@@ -104,6 +104,8 @@ public class FlyingCowgirl extends Position {
 				top.pain(c, 5);
 				c.setStance(new Mount(bottom,top));
 			}
+		} else {
+			super.checkOngoing(c);
 		}
 	}
 
@@ -112,13 +114,11 @@ public class FlyingCowgirl extends Position {
 		return new Mount(top, bottom);
 	}
 
-	@Override
-	public float priorityMod(Character self) {
-		float priority = 0;
-		if (dom(self)) {
-			priority += 4;
-			priority += self.body.getRandomPussy().priority;
+	public Position reverse() {
+		if (bottom.body.getRandomWings() != null) {
+			return new FlyingCarry(bottom, top);
+		} else {
+			return new Missionary(bottom, top);
 		}
-		return priority;
 	}
 }

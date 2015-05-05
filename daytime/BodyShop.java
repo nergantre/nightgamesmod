@@ -42,10 +42,6 @@ public class BodyShop extends Activity  {
 		addBodyPartMod(name, part, normal, growPrice, removePrice, 5, false);
 	}
 
-	private void addBodyPartMod(String name, final BodyPart part, final BodyPart normal, int growPrice, int removePrice, final int priority) {
-		addBodyPartMod(name, part, normal, growPrice, removePrice, 5, false);
-	}
-
 	private void addBodyPartMod(String name, final BodyPart part, final BodyPart normal, int growPrice, int removePrice, final int priority, final boolean onlyReplace) {
 		selection.add(new ShopSelection("Body Mod: " + name, growPrice) {
 			@Override
@@ -147,7 +143,7 @@ public class BodyShop extends Activity  {
 				BreastsPart target = buyer.body.getBreastsBelow(BreastsPart.maximumSize().size);
 				assert(target != null);
 				buyer.body.remove(target);
-				buyer.body.add(BreastsPart.upgrade(target));
+				buyer.body.add(target.upgrade());
 			}
 			@Override
 			boolean available(Character buyer) {
@@ -167,7 +163,7 @@ public class BodyShop extends Activity  {
 				BreastsPart target = buyer.body.getBreastsAbove(BreastsPart.flat.size);
 				assert(target != null);
 				buyer.body.remove(target);
-				buyer.body.add(BreastsPart.downgrade(target));
+				buyer.body.add(target.downgrade());
 			}
 			@Override
 			boolean available(Character buyer) {
@@ -217,7 +213,7 @@ public class BodyShop extends Activity  {
 				CockPart target = buyer.body.getCockBelow(CockPart.maximumSize().size);
 				assert(target != null);
 				buyer.body.remove(target);
-				buyer.body.add(CockPart.upgrade(target));
+				buyer.body.add(target.upgrade());
 			}
 			@Override
 			boolean available(Character buyer) {
@@ -240,7 +236,7 @@ public class BodyShop extends Activity  {
 				CockPart target = buyer.body.getCockAbove(CockPart.tiny.size);
 				assert(target != null);
 				buyer.body.remove(target);
-				buyer.body.add(CockPart.downgrade(target));
+				buyer.body.add(target.downgrade());
 			}
 			@Override
 			boolean available(Character buyer) {
@@ -264,14 +260,15 @@ public class BodyShop extends Activity  {
 			}
 		});
 		addTraitMod("Fluids Mod: Laced Juices", "Fluids Mod: Remove Laced Juices", Trait.lacedjuices, 1000, 1000, noRequirement);
+		addTraitMod("Breast Mod: Permanent Lactation", "Breast Mod: Stop Lactating", Trait.lactating, 1000, 1000, noRequirement);
 		addTraitMod("Scent Mod: Pheromones", "Scent Mod: Remove Pheromones", Trait.augmentedPheromones, 1500, 1500, noRequirement);
 		addBodyPartMod("Wings", WingsPart.normal, null, 1500, 1500);
 		addBodyPartMod("Tail", TailPart.normal, null, 1000, 1000);
 		addBodyPartMod("Fused Boots", new GenericBodyPart(
 				"Fused Boots",
-				"{psv-pronoun} legs are wrapped in a shiny black material that look fused on.",
-				.3, 1.5, .7, true, "feet"),
-				new GenericBodyPart("feet", 0, 1, 1, "feet"), 1000, 1000);
+				"{self:name-possessive} legs are wrapped in a shiny black material that look fused on.",
+				.3, 1.5, .7, true, "feet", ""),
+				new GenericBodyPart("feet", 0, 1, 1, "feet", ""), 1000, 1000);
 		addBodyPartMod("Anal Pussy", AnalPussyPart.generic, 
 				AssPart.generic, 2000, 2000);
 		addBodyPartMod("Succubus Pussy", PussyPart.succubus, 
@@ -286,9 +283,9 @@ public class BodyShop extends Activity  {
 				PussyPart.normal, 2000, 2000, -1, true);
 		addBodyPartMod("Fused Gloves", new GenericBodyPart(
 				"Fused Gloves",
-				"{psv-pronoun} arms and hands are wrapped in a shiny black material that look fused on.",
-				.2, 1.5, .7, true, "hands"),
-				new GenericBodyPart("hands", 0, 1, 1, "hands"), 1000, 1000);
+				"{self:name-possessive} arms and hands are wrapped in a shiny black material that look fused on.",
+				.2, 1.5, .7, true, "hands", ""),
+				new GenericBodyPart("hands", 0, 1, 1, "hands", ""), 1000, 1000);
 	}
 
 	@Override
@@ -362,6 +359,7 @@ public class BodyShop extends Activity  {
 			int randomindex = Global.random(avail.size());
 			ShopSelection choice = avail.get(randomindex);
 			npc.money -= choice.price;
+			budget -= choice.price;
 			choice.buy(npc);
 			if (Global.isDebugOn(DebugFlags.DEBUG_PLANNING) && !choice.choice.contains("none")) {
 				System.out.println(npc.name() + " purchased " + choice.choice);

@@ -15,13 +15,8 @@ public class Binding extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Arcane)>=9;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Arcane)>=9;
+		return user.get(Attribute.Arcane)>=9;
 	}
 
 	@Override

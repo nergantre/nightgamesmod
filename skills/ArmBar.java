@@ -17,12 +17,12 @@ public class ArmBar extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().dom(self)&&c.getStance().reachTop(self)&&self.canAct()&&!self.has(Trait.undisciplined)&&!c.getStance().penetration(self);
+		return c.getStance().dom(self)&&c.getStance().reachTop(target)&&self.canAct()&&!self.has(Trait.undisciplined)&&!c.getStance().penetration(self);
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy()+self.tohit())){
+		if(target.roll(this, c, accuracy())){
 			int m = Global.random(10)+self.get(Attribute.Power)/2;
 			if(self.human()){
 				c.write(self,deal(c,m,Result.normal, target));
@@ -43,13 +43,9 @@ public class ArmBar extends Skill {
 		}
 	}
 
-	public boolean requirements() {
-		return self.getPure(Attribute.Power)>=20 && !self.has(Trait.undisciplined);
-	}
-
 	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Power)>=20 && !user.has(Trait.undisciplined);
+		return user.get(Attribute.Power)>=20 && !user.has(Trait.undisciplined);
 	}
 
 	@Override

@@ -13,11 +13,6 @@ public class Distracted extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return false;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
 		return false;
 	}

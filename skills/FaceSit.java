@@ -1,11 +1,14 @@
 package skills;
 
 import global.Global;
+import stance.FaceSitting;
+import stance.Stance;
 import status.Enthralled;
 import status.Shamed;
 import characters.Attribute;
 import characters.Character;
 import characters.Trait;
+import characters.body.PussyPart;
 
 import combat.Combat;
 import combat.Result;
@@ -17,23 +20,18 @@ public class FaceSit extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getLevel()>=15;
+	public boolean requirements(Character user) {
+		return user.getLevel()>=10 || user.get(Attribute.Seduction) > 30;
 	}
 
 	@Override
-	public boolean requirements(Character user) {
-		return user.getLevel()>=15;
-	}
-	
-	@Override
 	public float priorityMod(Combat c) {
-		return self.has(Trait.succubus) ? 3.0f : 0;
+		return (self.has(Trait.lacedjuices) || self.has(Trait.addictivefluids) || self.body.getRandomPussy() == PussyPart.feral) ? 3.0f : 0;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().dom(self)&&c.getStance().reachTop(self)&&
+		return self.pantsless()&&self.canAct()&&c.getStance().dom(self)&&c.getStance().reachTop(self)&&
 				!c.getStance().penetration(self)&&!c.getStance().penetration(target)&&c.getStance().prone(target)&&!self.has(Trait.shy);
 	}
 
@@ -44,34 +42,20 @@ public class FaceSit extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(self.has(Trait.succubus)){
-			if (self.taintedFluids()) {
-				if(self.get(Attribute.Dark)>=6&&Global.random(2)==0 && !target.wary()){
-					if(self.human()){
-						c.write(self,deal(c,0,Result.special, target));
-					}else if(target.human()){
-						c.write(self,receive(c,0,Result.special, target));
-					}
-					target.add(new Enthralled(target,self, 5));
-				}
-				else{
-					if(self.human()){
-						c.write(self,deal(c,0,Result.strong, target));
-					}else if(target.human()){
-						c.write(self,receive(c,0,Result.strong, target));
-					}
-				}
-				target.tempt(c, self, self.get(Attribute.Dark) / 2);
+		if(self.has(Trait.entrallingjuices)&&Global.random(4)==0 && !target.wary()){
+			if(self.human()){
+				c.write(self,deal(c,0,Result.special, target));
+			}else if(target.human()){
+				c.write(self,receive(c,0,Result.special, target));
 			}
-			else{
-				if(self.human()){
-					c.write(self,deal(c,0,Result.normal, target));
-				}else if(target.human()){
-					c.write(self,receive(c,0,Result.normal, target));
-				}
+			target.add(new Enthralled(target,self, 5));
+		} else if (self.has(Trait.lacedjuices)) {
+			if(self.human()){
+				c.write(self,deal(c,0,Result.strong, target));
+			}else if(target.human()){
+				c.write(self,receive(c,0,Result.strong, target));
 			}
-		}
-		else{
+		} else {
 			if(self.human()){
 				c.write(self,deal(c,0,Result.normal, target));
 			}else if(target.human()){
@@ -88,8 +72,21 @@ public class FaceSit extends Skill {
 		else {
 			self.body.pleasure(target, target.body.getRandom("mouth"), self.body.getRandom("pussy"), m, c);
 		}
+		double n = (int) Math.round(4+Global.random(4));
+		if (!c.getStance().behind(self)) {
+			// opponent can see self
+			n += 3 * self.body.getCharismaBonus(target);
+		}
+		if (target.has(Trait.imagination)) {
+			n *= 1.5;
+		}
+
+		target.tempt(c, self, (int) Math.round(n));
 		target.add(new Shamed(target));
 		self.buildMojo(c, 50);
+		if (c.getStance().enumerate() != Stance.facesitting) {
+			c.setStance(new FaceSitting(self, target));
+		}
 	}
 
 	@Override
@@ -99,17 +96,24 @@ public class FaceSit extends Skill {
 
 	@Override
 	public Tactics type(Combat c) {
-		return Tactics.debuff;
+		if (c.getStance().enumerate() != Stance.facesitting) {
+			return Tactics.positioning;
+		} else {
+			return Tactics.pleasure;			
+		}
 	}
 
-	public String toString(){
-		if(self.hasBalls()){
+	public String getLabel(Combat c){
+		if(self.hasBalls()&&!self.hasPussy()){
 			return "Teabag";
 		}
-		else{
+		else if (c.getStance().enumerate() != Stance.facesitting){
 			return "Facesit";
+		} else {
+			return "Ride Face";
 		}
 	}
+
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if(self.hasBalls()){
@@ -155,8 +159,7 @@ public class FaceSit extends Skill {
 			else{
 				return self.name()+" straddles your head and dominates you by putting her balls in your mouth. She gives a superior smile as you obediently suck on her nuts.";
 			}
-		}
-		else{
+		} else {
 			if(modifier==Result.special){
 				return self.name()+" straddles your face and presses her pussy against your mouth. You open your mouth and start to lick her freely offered muff, but she just smiles " +
 						"while continuing to queen you. As you swallow her juices, you feel her eyes start to bore into your mind. You can't resist her. You don't even want to.";

@@ -155,8 +155,8 @@ public class NPC extends Character {
 		else{
 			target=c.p1;
 		}
-		this.gainXP(20+lvlBonus(target));
-		target.gainXP(10+target.lvlBonus(this));
+		this.gainXP(getVictoryXP(target));
+		target.gainXP(getDefeatXP(this));
 		if(c.getStance().penetration(this)){
 			getMojo().gain(2);
 			if(has(Trait.mojoMaster)){
@@ -174,6 +174,11 @@ public class NPC extends Character {
 		}
 		target.defeated(this);
 		c.write(ai.victory(c, flag));
+		if (target.hasDick() && has(Trait.succubus)) {
+			gain(Item.semen, 3);
+			c.write("<br><b>As she leaves, you see all your scattered semen ooze out and gather into a orb in " + nameOrPossessivePronoun() + " hands. " +
+					"She carelessly drops your seed in some empty bottles that appeared out of nowhere</b>");
+		}
 		gainAttraction(target,1);
 		target.gainAttraction(this,2);
 	}
@@ -187,8 +192,8 @@ public class NPC extends Character {
 		else{
 			target=c.p1;
 		}
-		this.gainXP(10+lvlBonus(target));
-		target.gainXP(20+target.lvlBonus(this));
+		this.gainXP(getDefeatXP(target));
+		target.gainXP(getVictoryXP(this));
 		this.arousal.empty();
 		if(!target.human()||Global.getMatch().condition!=Modifier.norecovery){
 			target.arousal.empty();
@@ -210,14 +215,14 @@ public class NPC extends Character {
 		target.gainAttraction(this,1);
 	}
 	public void intervene3p(Combat c,Character target, Character assist){
-		this.gainXP(20+lvlBonus(target));
+		this.gainXP(getAssistXP(target));
 		target.defeated(this);
 		c.write(ai.intervene3p(c, target,assist));
 		assist.gainAttraction(this, 1);
 	}
 	public void victory3p(Combat c,Character target, Character assist){
-		this.gainXP(20+lvlBonus(target));
-		target.gainXP(10+target.lvlBonus(this)+target.lvlBonus(assist));
+		this.gainXP(getVictoryXP(target));
+		target.gainXP(getDefeatXP(this));
 		target.arousal.empty();
 		if(target.has(Trait.insatiable)){
 			target.arousal.restore((int) (arousal.max()*.2));
@@ -241,15 +246,20 @@ public class NPC extends Character {
 		else{
 			target=c.p1;
 		}
-		for(Skill act:skills){
-			if(Skill.skillIsUsable(c, act, target) && cooldownAvailable(act)) {
-				available.add(act);
+		if (target.human() && Global.isDebugOn(DebugFlags.DEBUG_SKILL_CHOICES)) {
+			pickSkillsWithGUI(c, target);
+		} else {
+			for(Skill act:skills){
+				if(Skill.skillIsUsable(c, act, target) && cooldownAvailable(act)) {
+					available.add(act);
+				}
 			}
+			Skill.filterAllowedSkills(c, available, this, target);
+			if (available.size() == 0) {
+				available.add(new Nothing(this));
+			}
+			c.act(this, ai.act(available,c), "");
 		}
-		if (available.size() == 0) {
-			available.add(new Nothing(this));
-		}
-		c.act(this, ai.act(available,c));
 	}
 	
 	public Skill actFast(Combat c) {
@@ -266,6 +276,7 @@ public class NPC extends Character {
 				available.add(act);
 			}
 		}
+		Skill.filterAllowedSkills(c, available, this, target);
 		if (available.size() == 0) {
 			available.add(new Nothing(this));
 		}
@@ -284,8 +295,8 @@ public class NPC extends Character {
 		else{
 			target=c.p1;
 		}
-		this.gainXP(20+lvlBonus(target));
-		target.gainXP(20+target.lvlBonus(this));
+		this.gainXP(getVictoryXP(target));
+		target.gainXP(getVictoryXP(this));
 		this.arousal.empty();
 		target.arousal.empty();
 		if(this.has(Trait.insatiable)){
@@ -481,34 +492,62 @@ public class NPC extends Character {
 	public void counterattack(Character target, Tactics type, Combat c) {
 		switch(type){
 		case damage:
-			c.write(name()+" avoids your clumsy attack and swings her fist into your nuts.");
-			target.pain(c, 4+Global.random(get(Attribute.Cunning)));
+			c.write(this, name()+" avoids your clumsy attack and swings her fist into your nuts.");
+			target.pain(c, 4+Math.min(Global.random(get(Attribute.Power)), 20));
 			break;
 		case pleasure:
 			if(target.pantsless()){
-				c.write(name()+" catches you by the penis and rubs your sensitive glans.");
-				target.body.pleasure(this, body.getRandom("hands"), target.body.getRandom("cock"), 4+Global.random(get(Attribute.Cunning)), c);
+				c.write(this, name()+" catches you by the penis and rubs your sensitive glans.");
+				target.body.pleasure(this, body.getRandom("hands"), target.body.getRandom("cock"), 4+Math.min(Global.random(get(Attribute.Seduction)), 20), c);
 			}
 			else{
-				c.write(name()+" catches you as you approach and grinds her knee into the tent in your "+target.bottom.peek());
-				target.body.pleasure(this, body.getRandom("legs"), target.body.getRandom("cock"), 4+Global.random(get(Attribute.Cunning)), c);
+				c.write(this, name()+" catches you as you approach and grinds her knee into the tent in your "+target.bottom.peek());
+				target.body.pleasure(this, body.getRandom("legs"), target.body.getRandom("cock"), 4+Math.min(Global.random(get(Attribute.Seduction)), 20), c);
 			}
 			break;
 		case fucking:
-			c.write(name()+" squeezes your dick every time you thrust into her, arousing you way more than you would expect.");
-			target.body.pleasure(this, body.getRandomPussy(), target.body.getRandomCock(), 4+Global.random(get(Attribute.Cunning)), c);
+			if (c.getStance().sub(this)) {
+				if (c.getStance().inserted(this)) {
+					c.write(this, Global.format("{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} clitoris with {self:possessive} hands as {other:subject-action:try|tries} to trust into {self:direct-object}. " +
+							"While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:rotate|rotates} {self:possessive} body around into a dominant position", this, target));
+				} else if (target.hasBalls()){
+					c.write(this, Global.format("{self:SUBJECT-ACTION:squeezes|squeezes} {other:possessive} balls with {self:possessive} hands as {other:subject-action:try|tries} to ride {self:direct-object}. " +
+							"While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:rotate|rotates} {self:possessive} body around into a dominant position", this, target));
+				} else {
+					c.write(this, Global.format("{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} nipples with {self:possessive} hands as {other:subject-action:try|tries} to ride {self:direct-object}. " +
+							"While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:rotate|rotates} {self:possessive} body around into a dominant position", this, target));
+				}
+			} else {	c.setStance(c.getStance().reverse());
+				if (c.getStance().inserted(this)) {
+					target.body.pleasure(this, body.getRandomInsertable(), target.body.getRandomHole(), 4+Math.min(Global.random(get(Attribute.Seduction)), 20), c);
+				} else {
+					target.body.pleasure(this, body.getRandomHole(), target.body.getRandomInsertable(), 4+Math.min(Global.random(get(Attribute.Seduction)), 20), c);
+				}
+				c.write(this, Global.format("{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} clitoris with {self:possessive} hands as {other:subject-action:try|tries} to ride {self:direct-object}. " +
+						"While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:take|takes} the chance to pleasure {other:possessive} body", this, target));				
+			}
 			break;
 		case stripping:
 			Clothing clothes = target.stripRandom(c);
 			if (clothes != null) {
-				c.write(name()+" manages to catch you groping her clothing, and in a swing motion strips off your " + clothes.getName());
+				c.write(this, name()+" manages to catch you groping her clothing, and in a swift motion strips off your " + clothes.getName());
+			} else {
+				c.write(this, name() + " manages to dodge your groping hands and gives a retaliating slap in return");
+				target.pain(c, 4+Math.min(Global.random(get(Attribute.Power)), 20));
 			}
 			break;
 		case positioning:
-			c.write(name()+" outmanuevers you and catches you from behind when you stumble.");
-			c.setStance(new Behind(this,target));
+			if (c.getStance().dom(this)) {
+				c.write(this, name()+" outmanuevers you and you're exhausted from the struggle.");
+				target.weaken(c, 10);
+			} else {
+				c.write(this, name()+" outmanuevers you and catches you from behind when you stumble.");
+				c.setStance(new Behind(this,target));	
+			}
 			break;
 		default:
+			c.write(this, name() + " manages to dodge your attack and gives a retaliating slap in return");
+			target.pain(c, 4+Math.min(Global.random(get(Attribute.Power)), 20));
 		}
 	}
 	public Skill prioritize(ArrayList<WeightedSkill> plist){

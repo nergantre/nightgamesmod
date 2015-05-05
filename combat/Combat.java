@@ -4,6 +4,7 @@ import global.Flag;
 import global.Global;
 
 import items.Clothing;
+import items.Item;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -100,45 +101,55 @@ public class Combat extends Observable implements Serializable, Cloneable{
 		if(!(p1.human()||p2.human())){
 			automate();
 		}
-		this.setChanged();
-		this.notifyObservers();
+		this.updateMessage();
+	}
+	
+	public void doVictory(Character victor, Character loser) {
+		if (loser.hasDick() && victor.has(Trait.succubus)) {
+			victor.gain(Item.semen, 3);
+			if (loser.human()) {
+				write("<br><b>As she leaves, you see all your scattered semen ooze out and gather into a orb in " + victor.nameOrPossessivePronoun() + " hands. " +
+						"She carelessly drops your seed in some empty bottles that appeared out of nowhere</b>");
+			} else if (victor.human()) {
+				write("<br><b>You will " + loser.nameOrPossessivePronoun() + " scattered semen into your hands and into a few bottles that you've prepared. Yum, you just got some leftovers.</b>");
+			}
+		}
 	}
 	public void turn(){
 		Result state;
-		if(p1.getArousal().isFull()&&p2.getArousal().isFull()){
+		if(p1.checkLoss()&&p2.checkLoss()){
 			state = eval();
 			p1.evalChallenges(this, null);
 			p2.evalChallenges(this, null);
 			p2.draw(this,state);
 			phase=2;
-			this.setChanged();
-			this.notifyObservers();
+			this.updateMessage();
 			if(!(p1.human()||p2.human())){
 				end();
 			}
 			return;
 		}
-		if(p1.getArousal().isFull()){
+		if(p1.checkLoss()){
 			state = eval();
 			p1.evalChallenges(this, p2);
 			p2.evalChallenges(this, p2);
 			p2.victory(this,state);
+			doVictory(p2,p1);
 			phase=2;
-			this.setChanged();
-			this.notifyObservers();
+			this.updateMessage();
 			if(!(p1.human()||p2.human())){
 				end();
 			}
 			return;
 		}
-		if(p2.getArousal().isFull()){
+		if(p2.checkLoss()){
 			state = eval();
 			p1.evalChallenges(this, p1);
 			p2.evalChallenges(this, p1);
 			p1.victory(this,state);
+			doVictory(p1,p2);
 			phase=2;
-			this.setChanged();
-			this.notifyObservers();
+			this.updateMessage();
 			if(!(p1.human()||p2.human())){
 				end();
 			}
@@ -151,9 +162,9 @@ public class Combat extends Observable implements Serializable, Cloneable{
 					System.out.println(p2.name()+" victory over "+p1.name());
 				}
 				p2.victory(this,state);
+				doVictory(p2,p1);
 				phase=2;
-				this.setChanged();
-				this.notifyObservers();
+				this.updateMessage();
 				if(!(p1.human()||p2.human())){
 					end();
 				}
@@ -165,9 +176,9 @@ public class Combat extends Observable implements Serializable, Cloneable{
 					System.out.println(p1.name()+" victory over "+p2.name());
 				}
 				p1.victory(this,state);
+				doVictory(p1,p2);
 				phase=2;
-				this.setChanged();
-				this.notifyObservers();
+				this.updateMessage();
 				if(!(p2.human()||p1.human())){
 					end();
 				}
@@ -180,8 +191,7 @@ public class Combat extends Observable implements Serializable, Cloneable{
 				}
 				p2.draw(this,state);
 				phase=2;
-				this.setChanged();
-				this.notifyObservers();
+				this.updateMessage();
 				if(!(p1.human()||p2.human())){
 					end();
 				}
@@ -203,25 +213,12 @@ public class Combat extends Observable implements Serializable, Cloneable{
 		p2.regen(this);
 		p1act=null;
 		p2act=null;
-		//if(p1.stunned()){
-		//	p1act=new Stunned(p1);
-		//}
-		//else{
-			p1.act(this);
-		//}
-		//if(p2.stunned()){
-		//	p2act=new Stunned(p2);
-		//}
-		//else{
-			
-			p2.act(this);
-		//}
-		this.setChanged();
-		this.notifyObservers();
+		p1.act(this);
+		this.updateAndClearMessage();
 	}
 	
 	private Result eval() {
-		if(getStance().bottom.human() && getStance().en == Stance.anal) {
+		if(getStance().bottom.human() && getStance().inserted(getStance().top) && getStance().en == Stance.anal) {
 			return Result.anal;
 		}
 		else if(getStance().penetration(p1)||getStance().penetration(p2)){
@@ -231,14 +228,19 @@ public class Combat extends Observable implements Serializable, Cloneable{
 			return Result.normal;
 		}
 	}
-	public void act(Character c, Skill action){
+	public void act(Character c, Skill action, String choice){
 		if(c==p1){
 			p1act=action;
 		}
 		if(c==p2){
 			p2act=action;
 		}
-		if(p1act!=null&&p2act!=null){
+		action.choice = choice;
+		if (p1act==null) {
+			p1.act(this);
+		} else if (p2act==null) {
+			p2.act(this);
+		} else if(p1act!=null&&p2act!=null){
 			clear();
 			if (p1.human() || p2.human()) {
 				Global.gui().clearText();
@@ -248,8 +250,8 @@ public class Combat extends Observable implements Serializable, Cloneable{
 			if (images != null)
 				images.clear();
 			if(Global.isDebugOn(DebugFlags.DEBUG_SCENE)){
-				System.out.println(p1.name()+" uses "+p1act.toString());
-				System.out.println(p2.name()+" uses "+p2act.toString());
+				System.out.println(p1.name()+" uses "+p1act.getLabel(this));
+				System.out.println(p2.name()+" uses "+p2act.getLabel(this));
 			}
 			if(p1.pet!=null&&p2.pet!=null){
 				petbattle(p1.pet,p2.pet);
@@ -280,14 +282,12 @@ public class Combat extends Observable implements Serializable, Cloneable{
 				timer++;
 				turn();
 			}
-			this.setChanged();
-			this.notifyObservers();
+			this.updateMessage();
 		}
-		
 	}
 	public void automate(){
 		int turn = 0;
-		while(!(p1.getArousal().isFull()||p2.getArousal().isFull())){
+		while(!(p1.checkLoss()||p2.checkLoss())){
 			// guarantee the fight finishes in a timely manner
 			if (turn > 50) {
 				p1.pleasure(turn - 50, null);
@@ -320,7 +320,7 @@ public class Combat extends Observable implements Serializable, Cloneable{
 			getStance().checkOngoing(this);
 			this.phase=0;
 		}
-		if(p1.getArousal().isFull()&&p2.getArousal().isFull()){		
+		if(p1.checkLoss()&&p2.checkLoss()){		
 			state = eval();
 			p1.evalChallenges(this, null);
 			p2.evalChallenges(this, null);
@@ -328,28 +328,37 @@ public class Combat extends Observable implements Serializable, Cloneable{
 			end();
 			return;
 		}
-		if(p1.getArousal().isFull()){
+		if(p1.checkLoss()){
 			state = eval();
 			p1.evalChallenges(this, p2);
 			p2.evalChallenges(this, p2);
 			p2.victory(this,state);
+			doVictory(p2,p1);
 			end();
 			return;
 		}
-		if(p2.getArousal().isFull()){
+		if(p2.checkLoss()){
 			state = eval();
 			p1.evalChallenges(this, p1);
 			p2.evalChallenges(this, p1);
 			p1.victory(this,state);
+			doVictory(p1,p2);
 			end();
 			return;
 		}
 	}
 
+	private boolean checkCounter(Character attacker, Character target, Skill skill) {
+		return target.counterChance(attacker, skill) > Global.random(100);
+	}
+
 	private void resolveSkill(Skill skill, Character target) {
 		if(Skill.skillIsUsable(this, skill, target)){
-			write(skill.user().subjectAction("use ", "uses ") + skill.getName(this) + ".");
-			if (target.is(Stsflag.counter) && skill.makesContact()) {
+			write(skill.user().subjectAction("use ", "uses ") + skill.getLabel(this) + ".");
+			if (skill.makesContact() && !getStance().dom(target) && target.canAct() && checkCounter(skill.user(), target, skill)) {
+				write("Countered!");
+				target.counterattack(skill.user(), skill.type(this), this);
+			} else if (target.is(Stsflag.counter) && skill.makesContact()) {
 				write("Countered!");
 				CounterStatus s = (CounterStatus)target.getStatus(Stsflag.counter);
 				s.resolveSkill(this, skill.user());
@@ -359,7 +368,7 @@ public class Combat extends Observable implements Serializable, Cloneable{
 			checkStamina(target);
 			checkStamina(skill.user());
 		} else {
-			write(skill.user().possessivePronoun() + " " + skill.getName(this) + " failed.");
+			write(skill.user().possessivePronoun() + " " + skill.getLabel(this) + " failed.");
 		}
 	}
 
@@ -383,8 +392,7 @@ public class Combat extends Observable implements Serializable, Cloneable{
 	}
 	public void clear(){
 		message="";
-		this.setChanged();
-		this.notifyObservers();
+		this.updateMessage();
 	}
 
 	public void write(String text){
@@ -395,15 +403,27 @@ public class Combat extends Observable implements Serializable, Cloneable{
 		lastTalked = null;
 	}
 
+	public void updateMessage() {
+		this.setChanged();
+		this.notifyObservers();
+	}
+
+	public void updateAndClearMessage() {
+		Global.gui().clearText();
+		this.setChanged();
+		this.notifyObservers();
+	}
+
 	public void write(Character user, String text){
 		text = Global.capitalizeFirstLetter(text);
-		assert(text.trim().length() > 0);
-		if(user.human()){
-			message=message+"<br><font color='rgb(200,200,255)'>"+text+"<font color='white'>";
-		}else{
-			message=message+"<br><font color='rgb(255,200,200)'>"+text+"<font color='white'>";
+		if (text.length() > 0) {
+			if(user.human()){
+				message=message+"<br><font color='rgb(200,200,255)'>"+text+"<font color='white'>";
+			}else{
+				message=message+"<br><font color='rgb(255,200,200)'>"+text+"<font color='white'>";
+			}
+			lastTalked = user;
 		}
-		lastTalked = user;
 	}
 	public String getMessage(){
 		return message;
@@ -470,8 +490,7 @@ public class Combat extends Observable implements Serializable, Cloneable{
 		else if(intruder.human()){
 			Global.gui().watchCombat(this);
 		}
-		this.setChanged();
-		this.notifyObservers();		
+		this.updateMessage();
 	}
 	public boolean end(){
 		clear();

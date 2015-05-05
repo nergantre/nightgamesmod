@@ -10,6 +10,7 @@ import stance.Stance;
 import stance.StandingOver;
 import status.Bound;
 import status.Braced;
+import status.CockBound;
 import status.Stsflag;
 import characters.Attribute;
 import characters.Character;
@@ -21,11 +22,6 @@ public class Struggle extends Skill {
 
 	public Struggle(Character self) {
 		super("Struggle", self);
-	}
-
-	@Override
-	public boolean requirements() {
-		return true;
 	}
 
 	@Override
@@ -125,10 +121,11 @@ public class Struggle extends Skill {
 										.get(Attribute.Power))
 								- ((10 * c.getStance().time) + self.escape()))) {
 					if (self.hasStatus(Stsflag.cockbound)) {
+						CockBound s = (CockBound)self.getStatus(Stsflag.cockbound);
 						c.write(self,
 								Global.format(
 										"With a strong pull, {self:subject} some how managed to wiggle out of {other:possessive} iron grip on {self:possessive} dick. "
-												+ "However the sensations of {other:possessive} rough tongue sliding against {self:possessive} cockskin leaves {self:direct-object} gasping.",
+												+ "However the sensations of {other:possessive} " + s.binding + " sliding against {self:possessive} cockskin leaves {self:direct-object} gasping.",
 										self, target));
 						int m = 15;
 						self.body.pleasure(target,
@@ -136,7 +133,7 @@ public class Struggle extends Skill {
 								self.body.getRandom("cock"), m, c);
 						self.removeStatus(Stsflag.cockbound);
 					}
-					if (c.getStance().behind(self) && self.hasDick() && target.hasPussy()) {
+					if (c.getStance().behind(self) && c.getStance().inserted(self)) {
 						c.write(self,
 								"You manage unbalance "
 										+ target.name()
@@ -151,14 +148,14 @@ public class Struggle extends Skill {
 										+ " the smartest move you've ever made, as the ground is quickly"
 										+ " approaching your face.");
 						c.setStance(c.getStance().insert(self, self));
-					} else if (c.getStance().prone(self) && self.hasDick() && target.hasPussy()) {
+					} else if (c.getStance().inserted(self)) {
 						c.write(self,
 								"You surpise "
 										+ target.name()
 										+ " by hugging her close to your chest, preventing her from using stabilizing her position with her arms. You "
 										+ "roll on top of her into traditional missionary position, careful not to let your cock slip out of her.");
 						c.setStance(new Missionary(self, target));
-					} else if (c.getStance().prone(self) && target.hasDick() && self.hasPussy()) {
+					} else if (c.getStance().inserted(target)) {
 						c.write(self,
 								self.name()
 										+ " wraps her legs around your waist and suddenly pulls you into a deep kiss. You're so surprised by this sneak attack that you "
@@ -183,9 +180,10 @@ public class Struggle extends Skill {
 					}
 				} else {
 					if (self.hasStatus(Stsflag.cockbound)) {
+						CockBound s = (CockBound)self.getStatus(Stsflag.cockbound);
 						c.write(self,
 								Global.format(
-										"{self:SUBJECT-ACTION:try|tries} to escape {other:possessive} iron grip on {self:possessive} dick. However, {other:possessive} pussy tongue has other ideas. {other:SUBJECT-ACTION:run|runs} {other:possessive} tongue up and down {self:possessive} cock and leaves {self:direct-object} gasping with pleasure.",
+										"{self:SUBJECT-ACTION:try|tries} to escape {other:possessive} iron grip on {self:possessive} dick. However, {other:possessive} " + s.binding + " has other ideas. {other:SUBJECT-ACTION:run|runs} {other:possessive} " + s.binding +" up and down {self:possessive} cock and leaves {self:direct-object} gasping with pleasure.",
 										self, target));
 						self.body.pleasure(target,
 								target.body.getRandom("pussy"),
@@ -231,17 +229,36 @@ public class Struggle extends Skill {
 					self.add(new Braced(self));
 				}
 			} else {
-				if (self.human()) {
-					c.write(self,
-							"You try to free yourself from "
-									+ target.name()
-									+ "'s grasp, but she has you pinned too well.");
-				} else if (target.human()) {
-					c.write(self,
-							self.name()
-									+ " struggles against you, but you maintain your position.");
+				if (c.getStance().enumerate() == Stance.facesitting) {
+					if (self.human()) {
+						c.write(self,
+								"You try to free yourself from "
+										+ target.name()
+										+ ", but she drops her ass over your face again, forcing you to service her.");
+					} else if (target.human()) {
+						c.write(self,
+								self.name()
+										+ " struggles against you, but you drop your ass over her face again, forcing her to service you.");
+					}
+					if (target.hasPussy()) {
+						(new Cunnilingus(self)).resolve(c, target);
+					} else {
+						(new Anilingus(self)).resolve(c, target);
+					}
+					target.weaken(c, 5 + Global.random(5) + self.get(Attribute.Power) / 2);
+				} else {
+					if (self.human()) {
+						c.write(self,
+								"You try to free yourself from "
+										+ target.name()
+										+ "'s grasp, but she has you pinned too well.");
+					} else if (target.human()) {
+						c.write(self,
+								self.name()
+										+ " struggles against you, but you maintain your position.");
+					}
+					target.weaken(c, 5 + Global.random(5) + self.get(Attribute.Power) / 2);
 				}
-				target.weaken(c, 5 + Global.random(5) + self.get(Attribute.Power) / 2);
 			}
 		}
 	}

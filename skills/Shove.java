@@ -26,7 +26,7 @@ public class Shove extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(self.getPure(Attribute.Ki)>=1&&!target.top.isEmpty()&&self.canSpend(5)) {
+		if(self.get(Attribute.Ki)>=1&&!target.top.isEmpty()&&self.canSpend(5)) {
 			if(self.human()){
 				c.write(self,deal(c,0,Result.special, target));
 			}
@@ -82,11 +82,6 @@ public class Shove extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return true;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
 		return true;	
 	}
@@ -101,12 +96,13 @@ public class Shove extends Skill {
 	public Tactics type(Combat c) {
 		return Tactics.damage;
 	}
-	public String toString(){
+	@Override
+	public String getLabel(Combat c){
 		if(self.get(Attribute.Ki)>=1){
 			return "Shredding Palm";
 		}
 		else{
-			return name;
+			return getName();
 		}			
 	}
 	@Override

@@ -107,5 +107,8 @@ public class CounterStatus extends Status {
 	public int regen(Combat c) {
 		return 0;
 	}
-
+	@Override
+	public Status instance(Character newAffected, Character newOther) {
+		return new CounterStatus(newAffected, skill, desc, duration);
+	}
 }

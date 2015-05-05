@@ -15,11 +15,6 @@ public class Escape extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Cunning)>=10;
-	}
-
-	@Override
 	public boolean usable(Combat c, Character target) {
 		if (target.hasStatus(Stsflag.cockbound)) { return false; }
 		return ((c.getStance().sub(self)&&!c.getStance().mobile(self))||self.bound())&&self.canRespond();
@@ -85,7 +80,7 @@ public class Escape extends Skill {
 
 	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Cunning)>=8;
+		return user.get(Attribute.Cunning)>=8;
 	}
 
 	@Override

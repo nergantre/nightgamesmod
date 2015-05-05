@@ -16,13 +16,8 @@ public class SpawnSlime extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Science)>=3;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Science)>=3;
+		return user.get(Attribute.Science)>=3;
 	}
 
 	@Override

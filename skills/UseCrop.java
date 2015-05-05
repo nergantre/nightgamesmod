@@ -18,11 +18,6 @@ public class UseCrop extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return true;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
 		return true;
 	}
@@ -35,7 +30,7 @@ public class UseCrop extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy()+self.tohit())){
+		if(target.roll(this, c, accuracy())){
 			if(target.pantsless()&&c.getStance().reachBottom(self)){
 				if(self.has(Item.Crop2)&&Global.random(10)>7){
 					if(self.human()){

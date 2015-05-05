@@ -38,6 +38,11 @@ public enum BreastsPart implements BodyPart {
 			b.append(" adorn " + c.nameOrPossessivePronoun() + " chest.");
 		}
 	}
+	
+	@Override
+	public double priority(Character c) {
+		return this.getPleasure(null);
+	}
 
 	public String describe(Character c, boolean forceAdjective) {
 		if (c.hasPussy() || size > 0) {
@@ -49,15 +54,20 @@ public enum BreastsPart implements BodyPart {
 				return Global.maybeString(desc + ' ') + Global.maybeString(name + ' ') + synonyms[Global.random(synonyms.length)];
 			}
 		} else {
-			if (c.getPure(Attribute.Power) > 15) {
+			if (c.get(Attribute.Power) > 15) {
 				return "muscular pecks";
 			}
 			return "flat chest";
 		}
 	}
-	
+
 	@Override
 	public String describe(Character c) {
+		return describe(c, true);
+	}
+
+	@Override
+	public String fullDescribe(Character c) {
 		return describe(c, true);
 	}
 
@@ -82,31 +92,32 @@ public enum BreastsPart implements BodyPart {
 
 	@Override
 	public double getHotness(Character self, Character opponent) {
-		double hotness = Math.log(size + 1) / Math.log(2) / 4;
+		double hotness = -.25 + size * .3;
 		if (!self.topless())
 			hotness /= 2;
 		if (!opponent.hasDick()) {
 			hotness /= 2;
 		}
-		return 1.0 + hotness;
+		return Math.max(0, hotness);
 	}
 
 	@Override
 	public double getPleasure(BodyPart target) {
-		return Math.log(size + 3) / Math.log(2) / 2;
+		return .25 + size * .35;
 	}
 
 	@Override
 	public double getSensitivity(BodyPart target) {
-		return Math.log(size + 2) / Math.log(2) / 2;
+		return .75 + size * .2;
 	}
 
-	public static BreastsPart upgrade(BreastsPart b) {
+	public BodyPart upgrade() {
 		BreastsPart values[] = BreastsPart.values();
-		if (b.ordinal() < values.length - 1) 
-			return values[b.ordinal() + 1];
-		else
-			return null;
+		if (ordinal() < values.length - 1) { 
+			return values[ordinal() + 1];
+		} else {
+			return this;
+		}
 	}
 
 	public static BreastsPart maximumSize() {
@@ -119,11 +130,11 @@ public enum BreastsPart implements BodyPart {
 		return max;
 	}
 
-	public static BodyPart downgrade(BreastsPart target) {
-		if (target.ordinal() > 0)
-			return BreastsPart.values()[target.ordinal() - 1];
+	public BodyPart downgrade() {
+		if (ordinal() > 0)
+			return BreastsPart.values()[ordinal() - 1];
 		else
-			return null;
+			return this;
 	}
 
 	@Override
@@ -131,14 +142,14 @@ public enum BreastsPart implements BodyPart {
 		saver.write(this.name());
 	}
 
-	public static BodyPart load(Scanner loader) {
+	public BodyPart load(Scanner loader) {
 		return BreastsPart.valueOf(loader.nextLine());
 	}
 
 	@Override
 	public double applyBonuses(Character self, Character opponent,
 			BodyPart target, double damage, Combat c) {
-		return damage;
+		return Math.max(5, size) + Global.random(Math.min(0, size - 4));
 	}
 
 	@Override
@@ -159,6 +170,42 @@ public enum BreastsPart implements BodyPart {
 	@Override
 	public double applyReceiveBonuses(Character self, Character opponent,
 			BodyPart target, double damage, Combat c) {
-		return damage;
+		return 0;
+	}
+
+	@Override
+	public String prefix() {
+		return "";
+	}
+	
+	@Override
+	public int compare(BodyPart other) {
+		if (other instanceof BreastsPart) {
+			return size - ((BreastsPart)other).size;
+		}
+		return 0;
+	}
+
+	@Override
+	public boolean isVisible(Character c) {
+		return true;
+	}
+
+	@Override
+	public double applySubBonuses(Character self, Character opponent,
+			BodyPart with, BodyPart target, double damage, Combat c) {
+		return 0;
+	}
+
+	@Override
+	public int mod(Attribute a, int total) {
+		switch (a) {
+		case Speed:
+			return -Math.max(size - 3, 0);
+		case Seduction:
+			return Math.max(size - 3, 0);
+		default:
+			return 0;
+		}
 	}
 }

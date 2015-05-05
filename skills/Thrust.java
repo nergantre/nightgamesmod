@@ -21,18 +21,13 @@ public class Thrust extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return true;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
 		return true;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().canthrust(self)&&c.getStance().penetration(self);
+		return self.canAct()&&c.getStance().canthrust(self)&&(c.getStance().penetration(self)||c.getStance().penetration(target));
 	}
 
 	public BodyPart getSelfOrgan(Combat c) {
@@ -80,10 +75,10 @@ public class Thrust extends Skill {
 		if (getMojoSpent() > 0) {
 			self.spendMojo(c, getMojoSpent());
 		}
-		if(c.getStance().en==Stance.anal){
-			result = Result.anal;
-		} else if (selfO.isType("pussy")) {
+		if(c.getStance().inserted(target)) {
 			result = Result.reverse;
+		} else if(c.getStance().en==Stance.anal){
+			result = Result.anal;
 		} else {
 			result = Result.normal;
 		}
@@ -148,7 +143,7 @@ public class Thrust extends Skill {
 				return self.name()+"'s cock slowly pumps the inside of your rectum.";
 			}
 		} else if (modifier == Result.reverse ){ 
-			return self.name()+" rocks her hips against you, riding you smoothly and deliberately. Despite the slow pace, the sensation of her hot, wet pussy surrounding " +
+			return self.name()+" rocks her hips against you, riding you smoothly and deliberately. Despite the slow pace, the sensation of her hot " + getSelfOrgan(c).fullDescribe(self) + " surrounding " +
 					"your dick is gradually driving you to your limit.";
 		} else {
 			return Global.format("{self:subject} thrusts into {other:name-possessive} {other:body-part:pussy} in a slow steady rhythm, leaving you gasping.", self, target);

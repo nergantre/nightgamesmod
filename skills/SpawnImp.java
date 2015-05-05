@@ -19,13 +19,8 @@ public class SpawnImp extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Dark)>=6;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Dark)>=6;
+		return user.get(Attribute.Dark)>=6;
 	}
 
 	@Override
@@ -73,7 +68,7 @@ public class SpawnImp extends Skill {
 	public Tactics type(Combat c) {
 		return Tactics.summoning;
 	}
-	public String toString(){
+	public String getLabel(Combat c){
 		if(gender==Ptype.impfem){
 			return "Imp (female)";
 		}

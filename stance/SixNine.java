@@ -12,16 +12,15 @@ public class SixNine extends Position {
 	@Override
 	public String describe() {
 		if(top.human()){
-			return "You and "+bottom.name()+" are on the floor in 69 position. Her pussy is right in front of your face and you can feel her breath on your dick.";
-		}
-		else{
-			return "You and "+top.name()+" are on the floor in 69 position. Her pussy is right in front of your face and you can feel her breath on your dick.";
+			return "You are on top of "+bottom.name()+" in the 69 position. Her pussy is right in front of your face and you can feel her breath on your dick.";
+		} else {
+			return "You and "+top.name()+" are on the floor in 69 position. She's sitting on top of you with her pussy right in front of your face and your dick in her mouth.";
 		}
 	}
 
 	@Override
 	public boolean mobile(Character c) {
-		return false;
+		return c==top;
 	}
 
 	@Override
@@ -36,12 +35,12 @@ public class SixNine extends Position {
 
 	@Override
 	public boolean dom(Character c) {
-		return false;
+		return c==top;
 	}
 
 	@Override
 	public boolean sub(Character c) {
-		return false;
+		return c==bottom;
 	}
 
 	@Override
@@ -78,10 +77,12 @@ public class SixNine extends Position {
 	public boolean penetration(Character c) {
 		return false;
 	}
+
 	@Override
 	public boolean inserted(Character c) {
 		return false;
 	}
+
 	@Override
 	public Position insert(Character dom, Character inserter) {
 		return this;

@@ -15,11 +15,6 @@ public class Sedate extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return true;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
 		return true;
 	}
@@ -42,7 +37,7 @@ public class Sedate extends Skill {
 			target.weaken(c, 30);
 			target.loseMojo(c, 10);
 		}
-		else if(target.roll(this, c, accuracy()+self.tohit())){
+		else if(target.roll(this, c, accuracy())){
 			if(self.human()){
 				c.write(self,deal(c,0,Result.normal, target));
 			}

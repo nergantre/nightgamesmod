@@ -45,7 +45,7 @@ public class Shamed extends Status {
 	@Override
 	public int mod(Attribute a) {
 		if(a==Attribute.Seduction || a==Attribute.Cunning){
-			return Math.max(-2, -affected.getPure(a) / 5);
+			return Math.min(-2, -affected.getPure(a) / 5);
 		}
 		else{
 			return 0;
@@ -111,5 +111,9 @@ public class Shamed extends Status {
 	public int value() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	@Override
+	public Status instance(Character newAffected, Character newOther) {
+		return new Shamed(newAffected);
 	}
 }

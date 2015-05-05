@@ -5,6 +5,7 @@ import characters.Trait;
 
 import global.DebugFlags;
 import global.Global;
+import global.Match;
 
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
@@ -17,21 +18,35 @@ import status.Stsflag;
 import combat.Combat;
 
 public class Body implements Cloneable {
+	class PartReplacement {
+		public List<BodyPart> added;
+		public List<BodyPart> removed;
+		public int duration;
+		public PartReplacement(int duration) {
+			added = new ArrayList<BodyPart>();
+			removed = new ArrayList<BodyPart>();
+			this.duration = duration;
+		}
+	}
+
 	Collection<BodyPart> bodyParts;
+	Collection<PartReplacement> replacements;
 	public double hotness;
 	public Character character;
-	public static BodyPart nonePart = new GenericBodyPart("none", 0, 1, 1, "none");
+	public static BodyPart nonePart = new GenericBodyPart("none", 0, 1, 1, "none", "");
 	// yeah i know :(
 	public Set<String> pluralParts = new HashSet<String>(Arrays.asList(
 		"hands", "feet", "wings", "breasts", "balls"
 	));
+	private Map<String, BodyPart> prototypes;
 	final static BodyPart requiredParts[] = {
-		new GenericBodyPart("hands",0,1,1,"hands"), 
-		new GenericBodyPart("feet",0,1,1,"feet"), 
-		new GenericBodyPart("skin",0,1,1,"skin"),
-		AssPart.generic, MouthPart.generic, BreastsPart.flat
+		new GenericBodyPart("hands",0,1,1,"hands", ""), 
+		new GenericBodyPart("feet",0,1,1,"feet", ""), 
+		new GenericBodyPart("skin",0,1,1,"skin", ""),
+		AssPart.generic, MouthPart.generic, BreastsPart.flat,
+		EarPart.normal
 	};
-	
+
 	public Body(Character character) {
 		this(character, 1);
 	}
@@ -39,29 +54,103 @@ public class Body implements Cloneable {
 	public Body(Character character, double hotness) {
 		this.character = character;
 		bodyParts = new LinkedHashSet<BodyPart>();
+		replacements = new ArrayList<PartReplacement>();
 		this.hotness = hotness;
+		this.prototypes = new HashMap<String, BodyPart>();
+		prototypes.put(PussyPart.class.getCanonicalName(), PussyPart.normal);
+		prototypes.put(BreastsPart.class.getCanonicalName(), BreastsPart.c);
+		prototypes.put(CockPart.class.getCanonicalName(), CockPart.average);
+		prototypes.put(WingsPart.class.getCanonicalName(), WingsPart.normal);
+		prototypes.put(TailPart.class.getCanonicalName(), TailPart.normal);
+		prototypes.put(EarPart.class.getCanonicalName(), EarPart.normal);
+		prototypes.put(StraponPart.class.getCanonicalName(), StraponPart.generic);
+		prototypes.put(TentaclePart.class.getCanonicalName(), new TentaclePart("tentacles", "back", "semen", 0, 1, 1));
+		prototypes.put(AssPart.class.getCanonicalName(), new AssPart("ass", 0, 1, 1));
+		prototypes.put(MouthPart.class.getCanonicalName(), new MouthPart("mouth", 0, 1, 1));
+		prototypes.put(AnalPussyPart.class.getCanonicalName(), new AnalPussyPart());
+		prototypes.put(GenericBodyPart.class.getCanonicalName(), new GenericBodyPart("", 0, 1, 1, "none", "none"));
+	}
+
+	public Collection<BodyPart> getCurrentParts() {
+		Set<BodyPart> parts = new HashSet<BodyPart>();
+		parts.addAll(bodyParts);
+		for (PartReplacement r : replacements) {
+			parts.removeAll(r.removed);
+			parts.addAll(r.added);
+		}
+		return parts;
+	}
+
+	public void temporaryAddPart(BodyPart part, int duration) {
+		PartReplacement replacement = new PartReplacement(duration);
+		replacement.added.add(part);
+		replacements.add(replacement);
+	}
+
+	public void temporaryRemovePart(BodyPart part, int duration) {
+		PartReplacement replacement = new PartReplacement(duration);
+		replacement.removed.add(part);
+		replacements.add(replacement);
+	}
+
+	public void temporaryAddOrReplacePartWithType(BodyPart part, int duration) {
+		temporaryAddOrReplacePartWithType(part, getRandom(part.getType()), duration);
+	}
+
+	private BodyPart getPartIn(String type, Collection<BodyPart> parts) {
+		for (BodyPart p : parts) {
+			if (p.isType(type)) {
+				return p;
+			}
+		}
+		return null;
+	}
+	public boolean temporaryAddOrReplacePartWithType(BodyPart part, BodyPart removed, int duration) {
+		PartReplacement replacement = null;
+		for (PartReplacement r : replacements) {
+			BodyPart other = null;
+			if (r.added.contains(removed)) {
+				other = removed;
+			} else {
+				other = getPartIn(removed.getType(), r.added);
+			}
+			if (other != null) {
+				replacement = r;
+				r.added.remove(other);
+				r.added.add(part);
+				replacement.duration = Math.max(duration, replacement.duration);
+				break;
+			}
+		}
+		if (replacement == null) {
+			replacement = new PartReplacement(duration);
+			replacement.removed.add(removed);
+			replacement.added.add(part);
+			replacements.add(replacement);
+		}
+		return true;
 	}
 
 	public void describe(StringBuilder b, Character c, String delimiter)
 	{
-		for (BodyPart part : bodyParts) {
-			int prevLength = b.length();
-			part.describeLong(b, c);
-			if (prevLength != b.length())
-				b.append(delimiter);
+		for (BodyPart part : getCurrentParts()) {
+			if (part.isVisible(c) && part.isNotable()) {
+				int prevLength = b.length();
+				part.describeLong(b, c);
+				if (prevLength != b.length())
+					b.append(delimiter);
+			}
 		}
 	}
-	
+
 	public void describeNotable(StringBuilder b, Character c)
-	{
+	{		
 		b.append(Global.format("{self:POSSESSIVE} body has ", c, null));
 		BodyPart previous = null;
-		for (BodyPart part : bodyParts) {
+		for (BodyPart part : getCurrentParts()) {
 			if (part.isNotable()) {
 				if (previous != null) {
-					if (!pluralParts.contains(previous.getType())) {
-						b.append("a ");
-					}
+					b.append(previous.prefix());
 					b.append(previous.describe(c));
 					b.append(", ");
 				}
@@ -86,24 +175,24 @@ public class Body implements Cloneable {
 	}
 
 	public boolean contains(BodyPart part) {
-		return bodyParts.contains(part);
+		return getCurrentParts().contains(part);
 	}
 
 	public List<BodyPart> get(String type) {
 		List<BodyPart> parts = new ArrayList<BodyPart>(); 
-		for (BodyPart part : bodyParts) {
+		for (BodyPart part : getCurrentParts()) {
 			if (part.isType(type)) {
 				parts.add(part);
 			}
 		}
 		return parts;
 	}
-	
+
 	public PussyPart getRandomPussy() {
 		return (PussyPart)getRandom("pussy");
 
 	}
-	
+
 	public WingsPart getRandomWings() {
 		return (WingsPart)getRandom("wings");
 
@@ -184,8 +273,8 @@ public class Body implements Cloneable {
 	public double getHotness(Character self, Character opponent) {
 		//represents tempt damage
 		double retval = hotness;
-		for (BodyPart part : bodyParts) {
-			retval *= part.getHotness(self, opponent);
+		for (BodyPart part : getCurrentParts()) {
+			retval += part.isVisible(self) ? part.getHotness(self, opponent) : 0;
 		}
 		int seductionDiff = Math.max(0, self.get(Attribute.Seduction) - opponent.get(Attribute.Seduction));
 		retval += seductionDiff / 10.0;
@@ -250,6 +339,13 @@ public class Body implements Cloneable {
 	}
 
 	public int pleasure(Character opponent, BodyPart with, BodyPart target, int magnitude, Combat c) {
+		return pleasure(opponent, with, target, magnitude, 0, c, false);
+	}
+	public int pleasure(Character opponent, BodyPart with, BodyPart target, int magnitude, int bonus, Combat c) {
+		return pleasure(opponent, with, target, magnitude, bonus, c, false);		
+	}
+
+	public int pleasure(Character opponent, BodyPart with, BodyPart target, int magnitude, int bonus, Combat c, boolean sub) {
 		if (target == null) {
 			target = nonePart; 
 		}
@@ -259,10 +355,10 @@ public class Body implements Cloneable {
 
 		double sensitivity = target.getSensitivity(with);
 		if(character.has(Trait.desensitized)){
-			sensitivity *= .7;
+			sensitivity -= .5;
 		}
 		if(character.has(Trait.desensitized2)){
-			sensitivity *= .7;
+			sensitivity -= .5;
 		}
 		double pleasure = with.getPleasure(target);
 		double perceptionBonus = 1.0;
@@ -272,11 +368,19 @@ public class Body implements Cloneable {
 				perceptionBonus += .5;
 			}
 		}
-		double damage = magnitude * sensitivity * pleasure * perceptionBonus;
+		double bonusDamage = bonus;
 		if (opponent != null) {
-			damage = with.applyBonuses(opponent, character, target, damage, c);
-			damage = target.applyReceiveBonuses(character, opponent, with, damage, c);
+			bonusDamage += with.applyBonuses(opponent, character, target, magnitude, c);
+			bonusDamage += target.applyReceiveBonuses(character, opponent, with, magnitude, c);
+			if (!sub) {
+				for (BodyPart p : opponent.body.getCurrentParts()) {
+					bonusDamage += p.applySubBonuses(opponent, character, with, target, magnitude, c);
+				}
+			}
 		}
+		double base = (magnitude + bonusDamage);
+		double multiplier = 1 + ((sensitivity - 1) + (pleasure - 1) + (perceptionBonus - 1));
+		double damage = base * multiplier;
 
 		int result = (int) Math.round(damage);		
 		if (opponent != null) {
@@ -286,11 +390,12 @@ public class Body implements Cloneable {
 			}
 			String firstColor = character.human() ? "<font color='rgb(150,150,255)'>" : "<font color='rgb(255,150,150)'>";
 			String secondColor = opponent.human() ? "<font color='rgb(150,150,255)'>" : "<font color='rgb(255,150,150)'>";
-
-			String battleString = String.format("%s%s %s<font color='white'> was pleasured by %s%s<font color='white'> for <font color='rgb(255,50,200)'>%d<font color='white'> (base:%d, mutlipliers: sen:%.1f/ple:%.1f/per:%.1f)\n",
+			String bonusString = bonusDamage > 0 ? String.format(" + <font color='rgb(255,100,50)'>%.1f<font color='white'>",bonusDamage) : "";
+			String battleString = String.format("%s%s %s<font color='white'> was pleasured by %s%s<font color='white'> for <font color='rgb(255,50,200)'>%d<font color='white'> " +
+					"base:%.1f (%d%s) x multiplier: %.2f (sen:%.1f + ple:%.1f + per:%.1f)\n",
 					firstColor,
-					Global.capitalizeFirstLetter(character.nameOrPossessivePronoun()), target.describe(character), secondColor,pleasuredBy, result, magnitude,
-					sensitivity, pleasure, perceptionBonus);
+					Global.capitalizeFirstLetter(character.nameOrPossessivePronoun()), target.describe(character), secondColor,pleasuredBy, result, base, magnitude, bonusString,
+					multiplier, sensitivity - 1, pleasure - 1, perceptionBonus - 1);
 			if (c != null)
 				c.write(battleString);
 		}
@@ -333,7 +438,7 @@ public class Body implements Cloneable {
 		}
 		if (sex.equals("male")) {
 			if (get("balls").size() == 0) {
-				add(new GenericBodyPart("balls", 0, 1.0, 1.5, "balls"));
+				add(new GenericBodyPart("balls", 0, 1.0, 1.5, "balls", ""));
 			}
 		}
 	}
@@ -356,36 +461,108 @@ public class Body implements Cloneable {
 		saver.write("endbody\n");
 	}
 
+	public void loadParts(Scanner scanner) {
+		String type = scanner.nextLine().trim();
+		while (!type.equals("endbody")) {
+			BodyPart prototype = prototypes.get(type);
+			if (prototype != null) {
+				BodyPart part = prototype.load(scanner);
+				if (part == null) {
+					System.err.println("Failed to load " + type);					
+				} else {
+					add(part);
+				}
+			} else {
+				System.err.println("Failed to find " + type);
+			}
+			type = scanner.nextLine().trim();
+		}
+	}
+
 	public static Body load(Scanner scanner, Character character) {
 		while (!scanner.nextLine().trim().equals("body:")) {}
 		String line = scanner.nextLine().trim();
 		double hotness = Double.valueOf(line);
 		Body body = new Body(character, hotness);
-		while (true) {
-			String type = scanner.nextLine().trim();
-			try {
-				Class<?> c = Class.forName(type);
-				Method m = c.getMethod("load", Scanner.class);
-				Object result = m.invoke(null, scanner);
-				if (!(result instanceof BodyPart)) {
-					break;
-				}
-				body.add((BodyPart) result);
-			} catch (ClassNotFoundException e) {
-				break;
-			} catch (NoSuchMethodException e) {
-				break;
-			} catch (SecurityException e) {
-				e.printStackTrace();
-				assert(false);
-			} catch (IllegalAccessException e) {
-				break;
-			} catch (IllegalArgumentException e) {
-				break;
-			} catch (InvocationTargetException e) {
-				break;
+		body.loadParts(scanner);
+		return body;
+	}
+
+	public void tick(Combat c) {
+		ArrayList<PartReplacement> expired = new ArrayList<Body.PartReplacement>();
+		for (PartReplacement r : replacements) {
+			r.duration -= 1;
+			if (r.duration <= 0) {
+				expired.add(r);
 			}
 		}
-		return body;
+		for (PartReplacement r : expired) {
+			replacements.remove(r);
+			StringBuilder sb = new StringBuilder();
+			if (r.added.size() > 0 && r.removed.size() == 0) {
+				sb.append(Global.format("{self:NAME-POSSESSIVE} ", character, character));
+				for (BodyPart p : r.added.subList(0, r.added.size() - 1)) {
+					sb.append(p.fullDescribe(character)).append(", ");
+				}
+				if (r.added.size() > 1) {
+					sb.append(" and ");
+				}
+				sb.append(r.added.get(r.added.size()-1).fullDescribe(character));
+				sb.append(" disappeared.");
+			} else if (r.removed.size() > 0 && r.added.size() == 0) {
+				sb.append(Global.format("{self:NAME-POSSESSIVE} ", character, character));
+				for (BodyPart p : r.removed.subList(0, r.removed.size() - 1)) {
+					sb.append(p.fullDescribe(character)).append(", ");
+				}
+				if (r.removed.size() > 1) {
+					sb.append(" and ");
+				}
+				sb.append(r.removed.get(r.removed.size()-1).fullDescribe(character));
+				sb.append(" reappeared.");
+			} else if (r.removed.size() > 0 && r.added.size() > 0) {
+				sb.append(Global.format("{self:NAME-POSSESSIVE} ", character, character));
+				for (BodyPart p : r.added.subList(0, r.added.size() - 1)) {
+					sb.append(p.fullDescribe(character)).append(", ");
+				}
+				if (r.added.size() > 1) {
+					sb.append(" and ");
+				}
+				sb.append(r.added.get(r.added.size()-1).fullDescribe(character));
+				sb.append(" turned back into ");
+				for (BodyPart p : r.removed.subList(0, r.removed.size() - 1)) {
+					sb.append(p.prefix() + " " + p.fullDescribe(character)).append(", ");
+				}
+				if (r.removed.size() > 1) {
+					sb.append(" and ");
+				}
+				BodyPart last = r.removed.get(r.removed.size()-1);
+				sb.append(last.prefix() + " " + last.fullDescribe(character));
+				sb.append(".");
+			}
+			if (c != null) {
+				c.write(character, sb.toString());
+			} else if (character.human()){
+				Global.gui().message(sb.toString());
+			}
+		}
+	}
+
+	public BodyPart getRandomHole() {
+		BodyPart part = getRandomPussy();
+		if (part == null )
+			part = getRandom("ass");
+		return part;
+	}
+
+	public void clearReplacements() {
+		replacements.clear();
+	}
+
+	public int mod(Attribute a, int total) {
+		int res = 0;
+		for (BodyPart p : getCurrentParts()) {
+			total += p.mod(a, total);
+		}
+		return res;
 	}
 }

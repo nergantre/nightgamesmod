@@ -15,13 +15,8 @@ public class Grind extends Thrust {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Seduction)>=14;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Seduction)>=14;
+		return user.get(Attribute.Seduction)>=14;
 	}
 
 	@Override

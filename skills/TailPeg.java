@@ -17,13 +17,8 @@ public class TailPeg extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.body.get("tail").size() > 0&&self.getPure(Attribute.Dark)>1;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.body.get("tail").size() > 0 && user.getPure(Attribute.Dark)>1;
+		return user.body.get("tail").size() > 0 && user.get(Attribute.Dark)>1;
 	}
 
 	@Override
@@ -43,9 +38,8 @@ public class TailPeg extends Skill {
 	@Override
 	public void resolve(Combat c, Character target) {
 		if (target.roll(this, c,
-				accuracy() + this.self.tohit()
-						- (c.getStance().penetration(self) ? 0 : 5))) {
-			int strength = Math.min(20, 10 + self.getPure(Attribute.Dark)/4);
+				accuracy() - (c.getStance().penetration(self) ? 0 : 5))) {
+			int strength = Math.min(20, 10 + self.get(Attribute.Dark)/4);
 			boolean shamed = false;
 			if (Global.random(4) == 2) {
 				target.add(new Shamed(target));

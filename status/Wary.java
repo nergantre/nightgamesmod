@@ -94,4 +94,8 @@ public class Wary extends Status {
 	public int value() {
 		return 0;
 	}
+	@Override
+	public Status instance(Character newAffected, Character newOther) {
+		return new Wary(newAffected, duration);
+	}
 }

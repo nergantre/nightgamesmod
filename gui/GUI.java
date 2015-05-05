@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -44,6 +46,7 @@ import javax.swing.JToggleButton;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultCaret;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
@@ -61,12 +64,13 @@ import daytime.Activity;
 import daytime.Store;
 import javax.swing.SwingConstants;
 
+
 public class GUI extends JFrame implements Observer {
 
 	protected Combat combat;
 	private Player player;
 	private ArrayList<ArrayList<SkillButton>> skills;
-	private JPanel commandPanel;
+	JPanel commandPanel;
 	private JTextPane textPane;
 	private JLabel stamina;
 	private JLabel arousal;
@@ -379,6 +383,8 @@ public class GUI extends JFrame implements Observer {
 				imgPanel.add(textScroll, BorderLayout.CENTER);
 						
 								this.textPane = new JTextPane();
+								DefaultCaret caret = (DefaultCaret)textPane.getCaret();
+								caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 								this.textPane.setForeground(new Color(240, 240, 255));
 								this.textPane.setBackground(new Color(25, 25, 50));
 								this.textPane.setPreferredSize(new Dimension(width, 400));
@@ -471,6 +477,7 @@ public class GUI extends JFrame implements Observer {
 					path));
 		}catch (IOException localIOException9) {
 		}
+		clearImage();
 		if(pic!=null){
 			img = new JLabel(new ImageIcon(pic));
 			img.setHorizontalAlignment(SwingConstants.CENTER);
@@ -484,6 +491,7 @@ public class GUI extends JFrame implements Observer {
 	public void clearImage(){
 		if(img!=null){
 			imgPanel.remove(img);
+			img = null;
 		}
 	}
 	public void resetPortrait() {
@@ -495,7 +503,7 @@ public class GUI extends JFrame implements Observer {
 	}
 
 	public void loadPortrait(Character player, Character enemy) {
-		if(!Global.checkFlag(Flag.noimage)){
+		if(!Global.checkFlag(Flag.noimage) && !Global.checkFlag(Flag.noportraits)){
 			String imagepath = null;
 			if(!player.human()){
 				imagepath = player.getPortrait();
@@ -713,6 +721,14 @@ public class GUI extends JFrame implements Observer {
 	public void clearText() {
 		this.textPane.setText("");
 	}
+	protected void clearTextIfNeeded() {
+		int pos = textPane.getCaretPosition();
+		textPane.setCaretPosition(textPane.getDocument().getLength());
+		textPane.selectAll();
+		int x = textPane.getSelectionEnd();
+		textPane.select(x,x);
+	}
+
 
 	public void message(String text) {
 		if (text.trim().length() == 0) {return;}
@@ -728,11 +744,11 @@ public class GUI extends JFrame implements Observer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+		/*javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			   public void run() { 
 			       textScroll.getVerticalScrollBar().setValue(0);
 			   }
-			});
+			});*/
 	}
 
 	public void combatMessage(String text) {
@@ -906,7 +922,7 @@ public class GUI extends JFrame implements Observer {
 			}
 			Global.getMatch().pause();
 			this.commandPanel.revalidate();
-		}else if(player.countFeats()<player.getLevel()/4){ 
+		} else if(player.countFeats()<player.getLevel()/4){ 
 			clearCommand();
 			for(Trait feat:Global.getFeats()){
 				if(!player.has(feat)){
@@ -914,7 +930,7 @@ public class GUI extends JFrame implements Observer {
 				}
 				this.commandPanel.revalidate();
 			}
-		}else {
+		} else {
 			clearCommand();
 			Global.gui().message(Global.gainSkills(this.player));
 			endCombat();
@@ -1192,6 +1208,7 @@ public class GUI extends JFrame implements Observer {
 			this.setText(att.name());
 			addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					GUI.this.clearTextIfNeeded();
 					GUI.this.player.mod(GUI.AttributeButton.this.att, 1);
 					GUI.this.player.availableAttributePoints -= 1;
 					GUI.this.ding();
@@ -1212,8 +1229,10 @@ public class GUI extends JFrame implements Observer {
 			addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					GUI.this.player.add(FeatButton.this.feat);
+					GUI.this.clearTextIfNeeded();
+					Global.gui().message("Gained feat: " + FeatButton.this.feat);
 					Global.gui().message(Global.gainSkills(GUI.this.player));
-					GUI.this.endCombat();
+					GUI.this.ding();
 				}
 			});
 		}
@@ -1319,6 +1338,7 @@ public class GUI extends JFrame implements Observer {
 		GUI.this.portraitPanel.add(GUI.this.clothesPanel, "East");
 		this.portraitPanel.revalidate();
 	}
+
 	public void removeClosetGUI(){
 		clothesPanel.removeAll();
 		this.clothesPanel.repaint();

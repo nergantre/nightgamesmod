@@ -16,6 +16,16 @@ public class BlackMarket extends Store {
 		add(Item.SPotion);
 		add(Item.DisSol);
 		add(Item.Beer);
+		add(Item.PriapusDraft);
+		add(Item.BustDraft);
+		add(Item.FemDraft);
+		add(Item.TinyDraft);
+		add(Item.SuccubusDraft);
+		add(Item.TentacleTonic);
+		add(Item.BewitchingDraught);
+		add(Item.JuggernautJuice);
+		add(Item.TinkersMix);
+		add(Item.Totem);
 	}
 
 	@Override
@@ -137,11 +147,11 @@ public class BlackMarket extends Store {
 		if(npc.getPure(Attribute.Dark)>0&&remaining>=1000*(npc.getPure(Attribute.Dark)+1)){
 			if(remaining>=2000*(npc.getPure(Attribute.Dark)+2)){
 				npc.money-=1000*(npc.getPure(Attribute.Dark)+1);
-				budget-=1000*(npc.getPure(Attribute.Dark)+1);
+				remaining-=1000*(npc.getPure(Attribute.Dark)+1);
 				npc.mod(Attribute.Dark, 1);
 			}
 			npc.money-=1000*(npc.get(Attribute.Dark)+1);
-			budget-=1000*(npc.get(Attribute.Dark)+1);
+			remaining-=1000*(npc.get(Attribute.Dark)+1);
 			npc.mod(Attribute.Dark, 1);
 		}
 		if(npc.getPure(Attribute.Fetish)>0&&remaining>=1000*(npc.getPure(Attribute.Fetish)+1)){

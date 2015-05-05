@@ -35,7 +35,10 @@ public class Alluring extends Status {
 
 	@Override
 	public String describe() {
-		return affected.name()+" looks impossibly beautiful to your eyes, you can't bear to hurt her.";	
+		if (affected.human()) {
+			return affected.name()+" looks impossibly beautiful to your eyes, you can't bear to hurt her.";
+		}
+		return "";
 	}
 
 	@Override
@@ -105,5 +108,10 @@ public class Alluring extends Status {
 	public int value() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public Status instance(Character newAffected, Character newOther) {
+		return new Alluring(newAffected, duration);
 	}
 }

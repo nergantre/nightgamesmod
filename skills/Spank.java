@@ -59,15 +59,9 @@ public class Spank extends Skill {
 		target.calm(c, 6);
 		self.buildMojo(c, 10);
 	}
-
-	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Seduction)>=8;
-	}
-
 	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Seduction)>=8;
+		return user.get(Attribute.Seduction)>=8;
 	}
 
 	@Override

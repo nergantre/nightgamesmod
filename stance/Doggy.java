@@ -3,7 +3,7 @@ package stance;
 
 import characters.Character;
 
-public class Doggy extends Position {
+public class Doggy extends MaledomSexStance {
 
 	public Doggy(Character top, Character bottom) {
 		super(top, bottom,Stance.doggy);
@@ -83,15 +83,8 @@ public class Doggy extends Position {
 	public Position insert(Character dom, Character inserter) {
 		return new Behind(top,bottom);
 	}
-	@Override
-	public float priorityMod(Character self) {
-		float priority = 0;
-		if (dom(self)) {
-			priority += 4;
-		}
-		if (sub(self)) {
-			priority += self.body.getRandomPussy().priority;
-		}
-		return priority;
+
+	public Position reverse() {
+		return new ReverseCowgirl(bottom, top);
 	}
 }

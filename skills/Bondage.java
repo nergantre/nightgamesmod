@@ -15,13 +15,8 @@ public class Bondage extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Fetish)>=6;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Fetish)>=6;
+		return user.get(Attribute.Fetish)>=6;
 	}
 
 	@Override

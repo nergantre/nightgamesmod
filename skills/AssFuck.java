@@ -37,16 +37,17 @@ public class AssFuck extends Fuck {
 				&&c.getStance().mobile(self)
 				&&(c.getStance().behind(self)||(c.getStance().prone(target)&&!c.getStance().mobile(target)))
 				&&self.canAct()&&!c.getStance().penetration(self)
+				&&!c.getStance().penetration(target)
 				&&(getTargetOrgan(target).isReady(target) || self.has(Item.Lubricant) || self.getArousal().percent()>50 || self.has(Trait.alwaysready));
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
 		String premessage = "";
-		if(!target.bottom.empty() && getSelfOrgan().isType("cock")) {
+		if(!self.bottom.empty() && getSelfOrgan().isType("cock")) {
 			if (self.bottom.size() == 1) {
 				premessage += String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s", self.bottom.get(0).name());
-			} else {
+			} else if (self.bottom.size() == 2) {
 				premessage += String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s and %s", self.bottom.get(0).name(), self.bottom.get(1).name());
 			}
 		}
@@ -103,13 +104,8 @@ public class AssFuck extends Fuck {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Seduction)>=20;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Seduction)>=20;
+		return user.get(Attribute.Seduction)>=20;
 	}
 
 	@Override

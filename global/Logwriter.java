@@ -14,26 +14,7 @@ public class Logwriter {
 				StringWriter sw = new StringWriter();
 	            e.printStackTrace(new PrintWriter(sw));
 	            String stacktrace = sw.toString();
-	            System.out.println(stacktrace);
-				Logwriter.error(stacktrace); 
+	            System.err.println(stacktrace);
 				} });
-
-	}
-	public static void error(String error){
-		FileWriter file;
-		try {
-			file = new FileWriter("nightgames.log");
-			
-			PrintWriter logger = new PrintWriter(file);
-			logger.write(error);
-			for(Character c: Global.everyone()){
-				c.save(logger);
-			}
-			logger.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.exit(0);
 	}
 }

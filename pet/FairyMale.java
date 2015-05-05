@@ -38,7 +38,7 @@ public class FairyMale extends Pet {
 				break;
 			case 2:
 				c.write(owner(),"Your faerie flies in front of you and creates a magic barrier, reducing the physical damage you take.");
-				owner().add(new Shield(owner()));
+				owner().add(new Shield(owner(), .5));
 				break;
 			case 1:
 				if(Global.random(3)==0){

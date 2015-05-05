@@ -69,13 +69,8 @@ public class Stomp extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Power)>=16 && !self.has(Trait.softheart);
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Power)>=16 && !user.has(Trait.softheart);
+		return user.get(Attribute.Power)>=16 && !user.has(Trait.softheart);
 	}
 
 	@Override
@@ -88,12 +83,12 @@ public class Stomp extends Skill {
 	public Tactics type(Combat c) {
 		return Tactics.damage;
 	}
-	public String toString(){
+	public String getLabel(Combat c){
 		if(self.has(Trait.heeldrop)){
 			return "Double Legdrop";
 		}
 		else{
-			return name;
+			return getName();
 		}
 	}
 

@@ -15,11 +15,6 @@ public class Submit extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return true;
-	}
-
-	@Override
 	public boolean usable(Combat c, Character target) {
 		return c.getStance().mobile(self)&&self.canAct()&&!c.getStance().prone(self)&&!c.getStance().sub(self);
 	}

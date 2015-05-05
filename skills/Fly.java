@@ -19,13 +19,8 @@ public class Fly extends Fuck {
 	}
 
 	@Override
-	public boolean requirements() {
-		return (this.self.body.get("wings").size() > 0) && self.getPure(Attribute.Power)>=15;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return (user.body.get("wings").size() > 0) && user.getPure(Attribute.Power)>=15;
+		return (user.body.get("wings").size() > 0) && user.get(Attribute.Power)>=15;
 	}
 
 	@Override
@@ -56,14 +51,16 @@ public class Fly extends Fuck {
 	public void resolve(Combat c, Character target) {
 		String premessage = "";
 		self.spendMojo(c, getMojoSpent());
-		if(!target.bottom.empty() && getSelfOrgan().isType("cock")) {
+		if(!self.bottom.empty() && getSelfOrgan().isType("cock")) {
 			if (self.bottom.size() == 1) {
 				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s halfway and", self.bottom.get(0).name());
-			} else {
+			} else if (self.bottom.size() == 2) {
 				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s and %s halfway and", self.bottom.get(0).name(), self.bottom.get(1).name());
 			}
 		}
-		Result result = target.roll(this, c, accuracy()+self.tohit()) ? Result.normal: Result.miss;
+
+		premessage = Global.format(premessage, self, target);
+		Result result = target.roll(this, c, accuracy()) ? Result.normal: Result.miss;
 		if (this.self.human()) {
 			c.write(self,premessage + deal(c, 0, result, target));
 		} else if (target.human()) {

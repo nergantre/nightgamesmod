@@ -16,13 +16,8 @@ public class Purr extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Animism)>=9;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Animism)>=9;
+		return user.get(Attribute.Animism)>=9;
 	}
 
 	@Override

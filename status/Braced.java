@@ -98,4 +98,8 @@ public class Braced extends Status {
 		// TODO Auto-generated method stub
 		return 30 + (30 * duration);
 	}
+	@Override
+	public Status instance(Character newAffected, Character newOther) {
+		return new Braced(newAffected);
+	}
 }

@@ -24,6 +24,7 @@ public class VideoGames extends Activity {
 		Global.gui().clearText();
 		Global.gui().clearCommand();
 		if(choice=="Start"){
+			boolean canGainSpeed = player.getPure(Attribute.Speed)<(player.getLevel()/4)+7;
 			if(player.money>=50){
 				Global.gui().message("Do you want to purchase a new game? Your old games are still good, but you're unlikely to learn as much from replaying them.");
 				Global.gui().choose(this, "Yes: $50");
@@ -45,10 +46,10 @@ public class VideoGames extends Activity {
 				paid=false;
 			}
 			showScene(pickScene());
-			if(paid&&player.getPure(Attribute.Speed)<(player.getLevel()/4)+7){
+			if(paid){
 				if(Global.random(5)==0){
-					Global.gui().message("<p><b>You feel like your reflexes have improved a bit, increasing your overall Speed.</b>");
-					player.mod(Attribute.Speed, 1);
+					Global.gui().message("<p><b>You feel like your experiences have grown from playing the game.</b>");
+					player.gainXP(50);
 				}
 			}
 		}
@@ -56,12 +57,11 @@ public class VideoGames extends Activity {
 
 	@Override
 	public void shop(Character npc, int budget) {
-		if(player.getPure(Attribute.Speed)<(player.getLevel()/4)+7){
-			if(Global.random(5)==0){
-				player.mod(Attribute.Speed, 1);
-			}
+		if(Global.random(5)==0){
+			npc.availableAttributePoints += 1;
 		}
 	}
+
 	private void showScene(Scene chosen){
 		switch(chosen){
 		case basic1:
@@ -287,7 +287,7 @@ public class VideoGames extends Activity {
 		}
 		return available.get(Global.random(available.size()));
 	}
-	
+
 	private enum Scene{
 		basic1,
 		basic2,

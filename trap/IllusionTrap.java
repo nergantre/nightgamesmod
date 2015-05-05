@@ -38,7 +38,7 @@ public class IllusionTrap implements Trap {
 
 	@Override
 	public boolean requirements(Character owner) {
-		return owner.getPure(Attribute.Arcane)>=5;
+		return owner.get(Attribute.Arcane)>=5;
 	}
 
 	@Override

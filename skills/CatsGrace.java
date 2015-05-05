@@ -12,22 +12,17 @@ public class CatsGrace extends Skill {
 	public CatsGrace(Character self) {
 		super("Cat's Grace", self);
 	}
-
-	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Animism)>=3;
-	}
-
+	
 	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Animism)>=3;
+		return user.get(Attribute.Animism)>=3;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return self.canAct()&&c.getStance().mobile(self)&&self.getArousal().percent()>=20;
 	}
-	
+
 	@Override
 	public String describe() {
 		return "Use your instinct to nimbly avoid attacks";

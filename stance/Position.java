@@ -3,6 +3,10 @@ import characters.Character;
 import characters.Trait;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
+
+import skills.Skill;
 
 import combat.Combat;
 
@@ -39,6 +43,9 @@ public abstract class Position implements Serializable, Cloneable{
 	public abstract boolean penetration(Character c);
 	public abstract boolean inserted(Character c);
 	public abstract Position insert(Character dom, Character inserter);
+	public Collection<Skill> availSkills(Character c) {
+		return Collections.emptySet();
+	}
 
 	public boolean canthrust(Character c) {
 		return this.dom(c) || c.has(Trait.powerfulhips);
@@ -76,5 +83,18 @@ public abstract class Position implements Serializable, Cloneable{
 		else if (character.name().equals(bottom.name()))
 			return top;
 		return null;
+	}
+	public Position reverse() {
+		Position newStance;
+		try {
+			newStance = this.clone();
+		} catch (CloneNotSupportedException e) {
+			newStance = this;
+		}
+		Character nbot = this.top;
+		Character ntop = this.bottom;
+		newStance.bottom = ntop;
+		newStance.top = nbot;
+		return newStance;
 	}
 }

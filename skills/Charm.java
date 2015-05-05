@@ -16,11 +16,6 @@ public class Charm extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return requirements(self);
-	}
-
-	@Override
 	public boolean usable(Combat c, Character target) {
 		return self.canSpend(20)&&self.canRespond()&&c.getStance().facing()&&!target.wary();
 	}
@@ -55,7 +50,7 @@ public class Charm extends Skill {
 
 	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Cunning)>=8 && user.getPure(Attribute.Seduction) > 16;
+		return user.get(Attribute.Cunning)>=8 && user.get(Attribute.Seduction) > 16;
 	}
 
 	@Override

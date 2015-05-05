@@ -38,6 +38,7 @@ public class Match {
 		for(Character combatant:combatants){
 			score.put(combatant, 0);
 			Global.gui().message(Global.gainSkills(combatant));
+			Global.learnSkills(combatant);
 		}
 		time=0;
 		dropOffTime = 0;
@@ -100,6 +101,7 @@ public class Match {
 		for(Character next:combatants){
 			next.finishMatch();
 		}
+		Global.gui().clearText();
 		Global.gui().message("Tonight's match is over.");
 		int cloth=0;
 		int creward=0;

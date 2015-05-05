@@ -3,7 +3,7 @@ package stance;
 
 import characters.Character;
 
-public class ReverseCowgirl extends Position {
+public class ReverseCowgirl extends FemdomSexStance {
 
 	public ReverseCowgirl(Character top, Character bottom) {
 		super(top, bottom,Stance.reversecowgirl);
@@ -82,13 +82,8 @@ public class ReverseCowgirl extends Position {
 	public Position insert(Character dom, Character inserter) {
 		return new ReverseMount(top,bottom);
 	}
-	@Override
-	public float priorityMod(Character self) {
-		float priority = 0;
-		if (dom(self)) {
-			priority += 4;
-			priority += self.body.getRandomPussy().priority;
-		}
-		return priority;
+
+	public Position reverse() {
+		return new Doggy(bottom, top);
 	}
 }

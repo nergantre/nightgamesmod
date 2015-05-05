@@ -28,16 +28,16 @@ public class CounterRide extends CounterBase {
 		}
 		if (target.hasDick() && self.hasPussy()) {
 			c.setStance(new Cowgirl(self, target));
-			target.body.pleasure(self, self.body.getRandomPussy(), target.body.getRandomCock(), 15, c);
+			(new Thrust(self)).resolve(c, target);
 		} else {
 			c.setStance(new Missionary(self, target));
-			target.body.pleasure(self, self.body.getRandomCock(), target.body.getRandomPussy(), 15, c);
+			(new Thrust(self)).resolve(c, target);
 		}
 	}
 
 	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Seduction) > 15;
+		return user.get(Attribute.Seduction) > 15;
 	}
 
 	@Override

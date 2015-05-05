@@ -18,13 +18,8 @@ public class DarkTendrils extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Dark)>=12;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Dark)>=12;
+		return user.get(Attribute.Dark)>=12;
 	}
 
 	@Override
@@ -40,7 +35,7 @@ public class DarkTendrils extends Skill {
 	@Override
 	public void resolve(Combat c, Character target) {
 		self.arouse(5, c);
-		if(target.roll(this, c, accuracy()+self.tohit())){
+		if(target.roll(this, c, accuracy())){
 			if(Global.random(2)==1){
 				if(self.human()){
 					c.write(self,deal(c,0,Result.normal, target));

@@ -64,7 +64,7 @@ public class AphrodisiacTrap implements Trap {
 
 	@Override
 	public boolean requirements(Character owner) {
-		return owner.getPure(Attribute.Cunning)>=12 && !owner.has(Trait.direct);
+		return owner.get(Attribute.Cunning)>=12 && !owner.has(Trait.direct);
 	}
 
 	@Override

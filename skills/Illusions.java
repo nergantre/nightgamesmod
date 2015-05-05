@@ -16,35 +16,30 @@ public class Illusions extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Arcane)>=12;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Arcane)>=12;
+		return user.get(Attribute.Arcane)>=15;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().mobile(self)&&!c.getStance().prone(self)&&self.canSpend(10);
+		return self.canAct()&&c.getStance().mobile(self)&&!c.getStance().prone(self)&&self.canSpend(20);
 	}
 
 	@Override
 	public String describe() {
-		return "Create illusions to act as cover: 10 Mojo";
+		return "Create illusions to act as cover: 20 Mojo";
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(c, 10);
+		self.spendMojo(c, 20);
 		if(self.human()){
 			c.write(self,deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
 			c.write(self,receive(c,0,Result.normal, target));
 		}
-		self.add(new Distorted(self));
+		self.add(new Distorted(self, 6));
 		self.add(new Alluring(self, 5));
 	}
 

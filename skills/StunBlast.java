@@ -16,13 +16,8 @@ public class StunBlast extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Science)>=9;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Science)>=9;
+		return user.get(Attribute.Science)>=9;
 	}
 
 	@Override

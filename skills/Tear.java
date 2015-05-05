@@ -15,13 +15,8 @@ public class Tear extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Power)>=32 || self.get(Attribute.Animism)>=15;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Power)>=32 || user.get(Attribute.Animism)>=15;
+		return user.get(Attribute.Power)>=32 || user.get(Attribute.Animism)>=12;
 	}
 
 	@Override
@@ -38,7 +33,7 @@ public class Tear extends Skill {
 	public void resolve(Combat c, Character target) {
 		if(c.getStance().reachTop(self)&&!target.top.empty()){
 			if(target.top.peek().attribute()!=Trait.indestructible
-			&&self.getPure(Attribute.Animism)>=12
+			&&self.get(Attribute.Animism)>=12
 			&&(self.check(Attribute.Power, target.top.peek().dc()+(target.getStamina().percent()-(target.getArousal().percent())/4)+self.get(Attribute.Animism)*self.getArousal().percent()/100)
 			||!target.canAct())){
 				if(self.human()){
@@ -77,7 +72,7 @@ public class Tear extends Skill {
 		}
 		else{
 			if(target.bottom.peek().attribute()!=Trait.indestructible
-			&&self.getPure(Attribute.Animism)>=12
+			&&self.get(Attribute.Animism)>=12
 			&&self.check(Attribute.Power, target.bottom.peek().dc()+(target.getStamina().percent()-(target.getArousal().percent())/4)+self.get(Attribute.Animism)*self.getArousal().percent()/100)
 			||!target.canAct()){
 				if(self.human()){
@@ -139,7 +134,7 @@ public class Tear extends Skill {
 		return new Tear(user);
 	}
 
-	public String toString(){
+	public String getLabel(Combat c){
 		if(self.get(Attribute.Animism)>=12){
 			return "Shred Clothes";
 		}

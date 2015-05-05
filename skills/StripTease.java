@@ -16,14 +16,10 @@ public class StripTease extends Skill {
 	}
 
 	public static boolean hasRequirements(Character user) {
-		return user.getPure(Attribute.Seduction)>=24 && !user.has(Trait.direct) && !user.has(Trait.shy);
+		return user.get(Attribute.Seduction)>=24 && !user.has(Trait.direct) && !user.has(Trait.shy);
 	}
 	public static boolean isUsable(Combat c, Character self, Character target) {
 		return self.canAct()&&c.getStance().mobile(self)&&!self.nude()&&!c.getStance().prone(self)&&!c.getStance().behind(self)&&!self.has(Trait.strapped);
-	}
-	@Override
-	public boolean requirements() {
-		return hasRequirements(self);
 	}
 
 	@Override

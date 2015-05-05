@@ -1,5 +1,6 @@
 package skills;
 
+import stance.Stance;
 import items.Clothing;
 import items.Item;
 import global.Global;
@@ -17,11 +18,6 @@ public class Strapon extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return true;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
 		return true;
 	}
@@ -29,7 +25,8 @@ public class Strapon extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return self.canAct()&&c.getStance().mobile(self)&&!c.getStance().prone(self)&&self.pantsless()&&(self.has(Item.Strapon)||self.has(Item.Strapon2))
-				&&!self.hasDick()&&!c.getStance().penetration(self)&&!c.getStance().penetration(target)&&(!self.human()||Global.getMatch().condition!=Modifier.notoys);
+				&&!self.hasDick()&&!c.getStance().penetration(self)&&!c.getStance().penetration(target)&&(!self.human()||Global.getMatch().condition!=Modifier.notoys)
+				&&c.getStance().enumerate()!=Stance.facesitting;
 	}
 
 	@Override

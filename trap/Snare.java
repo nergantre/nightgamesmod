@@ -59,7 +59,7 @@ public class Snare implements Trap {
 
 	@Override
 	public boolean requirements(Character owner) {
-		return owner.getPure(Attribute.Cunning)>=9;
+		return owner.get(Attribute.Cunning)>=9;
 	}
 
 	@Override

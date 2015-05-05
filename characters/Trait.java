@@ -23,7 +23,7 @@ public enum Trait {
 	ticklemonster("Tickle Monster","Skilled at tickling in unconventional areas"), //Mara Sex perk, increases pleasure from tickling if target is nude
 	heeldrop("Heeldrop","A wrestling move feared by men and women alike"), //Mara Sparring perk, increases damage from stomp
 	spider("Spider","Elaborate rope traps come naturally"), //Mara Gaming perk, Spiderweb
-	greatkiss("Great Kisser","Can charm with a single kiss"), //Angel Sex perk, kiss has chance to inflict Charm
+	experttongue("Expert Tonguework","Can charm with oral pleasure"), //Angel Sex perk, kiss has chance to inflict Charm
 	disciplinarian("Disciplinarian","Frighteningly skilled at spanking"), //Angel Sparring perk, spank has a chance to inflict Shame
 	pokerface("Poker Face","Bluff like a champion"), //Angel Gaming perk, Bluff
 	silvertongue("Silvertongue","Terrific tongue talent"), //Cassie Sex perk, increases pleasure from oral attacks
@@ -51,7 +51,6 @@ public enum Trait {
 	
 	//Passive Skills
 	exhibitionist("Exhibitionist","More effective without any clothes"), //Passively builds mojo while nude
-	augmentedPheromones("Augmented Pheromones", "Artificially enhanced pheromones"),
 	pheromones("Pheromones","Scent can drive people wild", new TraitDescription() {
 		public void describe(StringBuilder b, Character c, Trait t) {
 			b.append("A primal musk surrounds ");
@@ -62,10 +61,26 @@ public enum Trait {
 			b.append(" body.");
 		}
 	}), //causes horny in opponents if aroused	
-	lacedjuices("Laced Juices","Intoxicating bodily fluids"), //opponents take temptation when using oral skills
-	lactating("Lactating","Breasts produces milk"),
+	augmentedPheromones("Augmented Pheromones", "Artificially enhanced pheromones", null, pheromones),
+
+	entrallingjuices("Enthralling cum", "Enthralling juices"),
+	lacedjuices("Laced Juices", "Intoxicating bodily fluids"), //opponents take temptation when using oral skills
+	addictivefluids("Additive Fluids", "Addictive bodily fluids"), //opponents can only use oral skills if available
+	lactating("Lactating","Breasts produces milk", new TraitDescription() {
+		public void describe(StringBuilder b, Character c, Trait t) {
+			if (!c.human()) {
+				if (c.topless()) {
+					b.append("You occasionally see milk dribbling down her breasts. Is she lactating?");
+				} else {
+					b.append("You notice a damp spot on her " + c.top.lastElement().getName() + ".");
+				}
+			} else {
+				b.append("Your nipples ache from the milk building up in your mammaries.");
+			}
+		}
+	}),
 	darkpromises("Dark Promises","Can enthrall with the right words"), //whisper upgrade, can enthrall
-	
+
 	//Weaknesses
 	ticklish("Ticklish","Can be easily tickled into submission"), 	//more weaken damage and arousal from tickle
 	insatiable("Insatiable","One orgasm is never enough"), //arousal doesn't completely clear at end of match

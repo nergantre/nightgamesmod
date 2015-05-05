@@ -19,19 +19,14 @@ public class LickNipples extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Seduction)>=14;
-	}
-
-	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.topless()&&c.getStance().reachTop(self)&&!c.getStance().behind(self)&&self.canAct();
+		return target.topless()&&c.getStance().reachTop(self)&&!c.getStance().behind(self)&&self.canAct()&&c.getStance().facing();
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
 		int m = 3 + Global.random(6);
-		if(target.roll(this, c, accuracy()+self.tohit())){
+		if(target.roll(this, c, accuracy())){
 			if(self.human()){
 				c.offerImage("LickNipples.jpg", "Art by Fujin Hitokiri");
 				c.write(self,deal(c,0,Result.normal, target));
@@ -58,7 +53,7 @@ public class LickNipples extends Skill {
 
 	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Seduction)>=14;
+		return user.get(Attribute.Seduction)>=14;
 	}
 
 	@Override

@@ -8,7 +8,7 @@ import characters.Emotion;
 
 public class CockBound extends Status {
 	private int toughness;
-	private String binding;
+	public String binding;
 	
 	public CockBound(Character affected, int dc, String binding) {
 		super("Cock Bound", affected);
@@ -108,5 +108,9 @@ public class CockBound extends Status {
 	public int value() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	@Override
+	public Status instance(Character newAffected, Character newOther) {
+		return new CockBound(newAffected, toughness, binding);
 	}
 }

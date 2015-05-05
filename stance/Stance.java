@@ -17,4 +17,6 @@ public enum Stance {
 	flying,
 	trib,
 	behindfootjob,
+	nursing,
+	facesitting,
 }

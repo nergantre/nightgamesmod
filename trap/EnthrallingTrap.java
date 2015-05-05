@@ -66,7 +66,7 @@ public class EnthrallingTrap implements Trap {
 
 	@Override
 	public boolean recipe(Character owner) {
-		return owner.has(Item.Semen);
+		return owner.has(Item.semen);
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class EnthrallingTrap implements Trap {
 	@Override
 	public String setup(Character owner) {
 		this.owner = owner;
-		owner.consume(Item.Semen, 1);
+		owner.consume(Item.semen, 1);
 		return "You pop open a bottle of cum and use its contents to draw"
 				+ " a pentagram on the floor, all the while speaking"
 				+ " incantations to cause the first person to step into"

@@ -16,13 +16,8 @@ public class WaterForm extends Skill{
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Ki)>=3;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Ki)>=3;
+		return user.get(Attribute.Ki)>=3;
 	}
 
 	@Override

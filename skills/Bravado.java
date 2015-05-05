@@ -14,11 +14,6 @@ public class Bravado extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.has(Trait.fearless);
-	}
-
-	@Override
 	public boolean requirements(Character user) {
 		return user.has(Trait.fearless);
 	}

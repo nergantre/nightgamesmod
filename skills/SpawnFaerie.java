@@ -19,13 +19,8 @@ public class SpawnFaerie extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Arcane)>=3;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Arcane)>=3;
+		return user.get(Attribute.Arcane)>=3;
 	}
 
 	@Override
@@ -72,7 +67,7 @@ public class SpawnFaerie extends Skill {
 	public Tactics type(Combat c) {
 		return Tactics.summoning;
 	}
-	public String toString(){
+	public String getLabel(Combat c){
 		if(gender==Ptype.fairyfem){
 			return "Faerie (female)";
 		}

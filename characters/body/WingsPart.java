@@ -5,16 +5,21 @@ import java.util.Scanner;
 
 import combat.Combat;
 
+import characters.Attribute;
 import characters.Character;
 
 public enum WingsPart implements BodyPart {
-	demonic("demonic ", 0),
-	normal("", 0);
+	demonic("demonic ", .2, 1.3, 1.2),
+	normal("", 0, 1, 1);
 	public String desc;
-	public int hotness;
-	WingsPart(String desc, int hotness) {
+	public double hotness;
+	public double pleasure;
+	public double sensitivity;
+	WingsPart(String desc, double hotness, double pleasure, double sensitivity) {
 		this.desc = desc;
 		this.hotness = hotness;
+		this.sensitivity = sensitivity;
+		this.pleasure = pleasure;
 	}
 
 	@Override
@@ -24,6 +29,11 @@ public enum WingsPart implements BodyPart {
 
 	@Override
 	public String describe(Character c) {
+		return desc + "wings";
+	}
+
+	@Override
+	public String fullDescribe(Character c) {
 		return desc + "wings";
 	}
 	
@@ -43,17 +53,22 @@ public enum WingsPart implements BodyPart {
 
 	@Override
 	public double getHotness(Character self, Character opponent) {
-		return 1 + hotness;
+		return hotness;
+	}
+
+	@Override
+	public double priority(Character c) {
+		return this.getPleasure(null);
 	}
 
 	@Override
 	public double getPleasure(BodyPart target) {
-		return 1;
+		return pleasure;
 	}
 
 	@Override
 	public double getSensitivity(BodyPart target) {
-		return 1;
+		return sensitivity;
 	}
 	@Override
 	public boolean isReady(Character self) {
@@ -65,14 +80,15 @@ public enum WingsPart implements BodyPart {
 		saver.write(this.name());
 	}
 
-	public static BodyPart load(Scanner loader) {
+	@Override
+	public BodyPart load(Scanner loader) {
 		return WingsPart.valueOf(loader.nextLine());
 	}
 
 	@Override
 	public double applyBonuses(Character self, Character opponent,
 			BodyPart target, double damage, Combat c) {
-		return damage;
+		return 0;
 	}
 
 	@Override
@@ -92,6 +108,44 @@ public enum WingsPart implements BodyPart {
 	@Override
 	public double applyReceiveBonuses(Character self, Character opponent,
 			BodyPart target, double damage, Combat c) {
-		return damage;
+		return 0;
+	}
+
+	@Override
+	public BodyPart upgrade() {
+		return this;
+	}
+
+	@Override
+	public BodyPart downgrade() {
+		return this;
+	}
+	@Override
+	public String prefix() {
+		return "";
+	}
+	@Override
+	public int compare(BodyPart other) {
+		return 0;
+	}
+	@Override
+	public boolean isVisible(Character c) {
+		return true;
+	}
+
+	@Override
+	public double applySubBonuses(Character self, Character opponent,
+			BodyPart with, BodyPart target, double damage, Combat c) {
+		return 0;
+	}
+
+	@Override
+	public int mod(Attribute a, int total) {
+		switch (a) {
+		case Speed:
+			return 2;
+		default:
+			return 0;
+		}
 	}
 }

@@ -14,11 +14,6 @@ public class Stunned extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return false;
-	}
-
-	@Override
 	public boolean usable(Combat c, Character target) {
 		return self.stunned();
 	}

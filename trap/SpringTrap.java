@@ -71,7 +71,7 @@ public class SpringTrap implements Trap {
 
 	@Override
 	public boolean requirements(Character owner) {
-		return owner.getPure(Attribute.Cunning)>=10;
+		return owner.get(Attribute.Cunning)>=10;
 	}
 
 	@Override

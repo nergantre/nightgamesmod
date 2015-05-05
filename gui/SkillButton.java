@@ -1,4 +1,6 @@
 package gui;
+import global.Global;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,8 +20,8 @@ import java.awt.Font;
 public class SkillButton extends JButton{
 	protected Skill action;
 	protected Combat combat;
-	public SkillButton(Skill action, Combat c){
-		super(action.getName(c));
+	public SkillButton(final Skill action, Combat c){
+		super(action.getLabel(c));
 		setOpaque(true);
 		setBorderPainted(false);
 		setFont(new Font("Baskerville Old Face", Font.PLAIN, 18));
@@ -65,8 +67,17 @@ public class SkillButton extends JButton{
 		addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				SkillButton.this.combat.act(SkillButton.this.action.user(), SkillButton.this.action);
-			}			
+				if (action.subChoices().size() == 0) {
+					SkillButton.this.combat.act(SkillButton.this.action.user(), SkillButton.this.action, "");
+				} else {
+					Global.gui().commandPanel.removeAll();
+					for (String choice : action.subChoices()) {
+						Global.gui().commandPanel.add(new SubSkillButton(action, choice, SkillButton.this.combat));
+					}
+					Global.gui().commandPanel.repaint();
+					Global.gui().commandPanel.revalidate();
+				}
+			}
 		});
 	}
 }

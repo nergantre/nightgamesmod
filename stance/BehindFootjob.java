@@ -84,4 +84,8 @@ public class BehindFootjob extends Position {
 	public float priorityMod(Character self) {
 		return (dom(self) ? 4.0f : 0);
 	}
+
+	public Position reverse() {
+		return new Mount(bottom, top);
+	}
 }

@@ -13,17 +13,12 @@ import combat.Result;
 
 public class ReverseCarry extends Carry {
 	public ReverseCarry(Character self) {
-		super("ReverseCarry", self);
-	}
-
-	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Power)>=20 && self.hasPussy();
+		super("Jump", self);
 	}
 
 	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Power)>=20 && user.hasPussy();
+		return user.get(Attribute.Power)>=20 && user.hasPussy();
 	}
 
 	@Override
@@ -42,10 +37,12 @@ public class ReverseCarry extends Carry {
 		self.spendMojo(c, getMojoSpent());
 		if (self.bottom.size() == 1) {
 			premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s to the side and", self.bottom.get(0).name());
-		} else {
+		} else if (self.bottom.size() == 2) {
 			premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s and %s to the side and", self.bottom.get(0).name(), self.bottom.get(1).name());
 		}
-		if(target.roll(this, c, accuracy()+self.tohit())){
+
+		premessage = Global.format(premessage, self, target);
+		if(target.roll(this, c, accuracy())){
 			if(self.human()){
 				c.write(self,premessage + deal(c,0,Result.normal, target));
 			}

@@ -36,7 +36,7 @@ public class CounterDrain extends CounterBase {
 
 	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Dark) > 25;
+		return user.get(Attribute.Dark) > 25;
 	}
 
 	@Override

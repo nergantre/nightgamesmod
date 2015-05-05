@@ -1,11 +1,13 @@
 package stance;
 
 
+import combat.Combat;
+
 import characters.Character;
 import characters.body.AnalPussyPart;
 import characters.body.PussyPart;
 
-public class Cowgirl extends Position {
+public class Cowgirl extends FemdomSexStance {
 
 	public Cowgirl(Character top, Character bottom) {
 		super(top, bottom,Stance.cowgirl);
@@ -86,13 +88,7 @@ public class Cowgirl extends Position {
 		return new Mount(top,bottom);
 	}
 
-	@Override
-	public float priorityMod(Character self) {
-		float priority = 0;
-		if (dom(self)) {
-			priority += 4;
-			priority += self.body.getRandomPussy().priority;
-		}
-		return priority;
+	public Position reverse() {
+		return new Missionary(bottom, top);
 	}
 }

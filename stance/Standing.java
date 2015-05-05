@@ -4,7 +4,7 @@ import combat.Combat;
 
 import characters.Character;
 
-public class Standing extends Position {
+public class Standing extends MaledomSexStance {
 	public Standing(Character top, Character bottom) {
 		super(top, bottom,Stance.standing);
 	}
@@ -15,7 +15,7 @@ public class Standing extends Position {
 			return "You are holding "+bottom.name()+" in the air while buried deep in her pussy";
 		}
 		else{
-			return top.name()+" is holding you in her arms while pumping her " + top.body.getRandomInsertable().describe(top) + " into your girl parts.";
+			return top.name()+" is holding you in her arms while pumping into your girl parts.";
 		}
 	}
 
@@ -96,17 +96,12 @@ public class Standing extends Position {
 				c.write(top.name()+" loses her balance and falls, pulling you down on top of her.");
 				c.setStance(new Mount(bottom,top));
 			}
+		} else {
+			super.checkOngoing(c);
 		}
 	}
-	@Override
-	public float priorityMod(Character self) {
-		float priority = 0;
-		if (dom(self)) {
-			priority += 4;
-		}
-		if (sub(self)) {
-			priority += self.body.getRandomPussy().priority;
-		}
-		return priority;
+
+	public Position reverse() {
+		return new Cowgirl(bottom, top);
 	}
 }

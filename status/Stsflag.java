@@ -29,4 +29,8 @@ public enum Stsflag {
 	charmed,
 	alluring,
 	counter,
+	countered,
+	suckling,
+	fluidaddiction,
+	tolerance,
 }

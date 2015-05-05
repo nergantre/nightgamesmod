@@ -95,7 +95,7 @@ public class AngelTime extends Activity {
 			Global.gui().choose(this,"Leave");
 		}
 		else if(choice == "Sex"){
-			if(angel.getAffection(player)>=12&&(!player.has(Trait.greatkiss)||Global.random(2)==1)){
+			if(angel.getAffection(player)>=12&&(!player.has(Trait.experttongue)||Global.random(2)==1)){
 				Global.gui().message("You're in Angel's room, naked and feeling a little overwhelmed. She embraces your from behind and you can feel her soft, heavy breasts pressed against " +
 						"your back. She nibbles lightly on your ear while motioning toward the naked girl on her bed. <i>\"She's all yours. Show me what you can do.\"</i> As for how you got here... " +
 						"we should probably back up a bit.<p>You spent some time chatting with Angel and her friends. At this point it might be fair to call them your friends too. The conversation " +
@@ -131,10 +131,10 @@ public class AngelTime extends Activity {
 						"bed, exhausted from multiple orgasms. <i>\"Mei is straight, so even when she's seeking my affection, I have to act like it's punishment. If I neglect her for too long, she steals a boy from " +
 						"me so I have an excuse to punish her. She doesn't mean any harm, she just gets lonely.\"</i> That seems unneccessarily complicated. Still, it's very considerate of Angel to indulge Mei even when " +
 						"they're fighting over guys. <i>\"Of course,\"</i> she says. <i>\"Mei is my friend.\"</i>");
-				if(!player.has(Trait.greatkiss)){
+				if(!player.has(Trait.experttongue)){
 					Global.gui().message("<p><b>You've improved your kissing technique to the point where it may render opponents temporarily helpless.</b>");
-					player.add(Trait.greatkiss);
-					angel.add(Trait.greatkiss);
+					player.add(Trait.experttongue);
+					angel.add(Trait.experttongue);
 				}
 			}
 			else{

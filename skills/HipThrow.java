@@ -17,11 +17,6 @@ public class HipThrow extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.has(Trait.judonovice);
-	}
-
-	@Override
 	public boolean requirements(Character user) {
 		return user.has(Trait.judonovice);
 	}

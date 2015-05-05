@@ -16,13 +16,8 @@ public class Kick extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Power)>=17;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Power)>=17;
+		return user.get(Attribute.Power)>=17;
 	}
 
 	@Override
@@ -32,7 +27,7 @@ public class Kick extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(!target.bottom.isEmpty()&&self.getPure(Attribute.Ki)>=14&&Global.random(3)==2){
+		if(!target.bottom.isEmpty()&&self.get(Attribute.Ki)>=14&&Global.random(3)==2){
 			if(self.human()){
 				c.write(self,deal(c,0,Result.special, target));
 			}
@@ -41,7 +36,7 @@ public class Kick extends Skill {
 			}
 			target.shred(1);
 		}
-		if(target.roll(this, c, accuracy()+self.tohit())){
+		if(target.roll(this, c, accuracy())){
 			int m = Global.random(12)+self.get(Attribute.Power);
 			if(self.human()){
 				if(c.getStance().prone(self)){
@@ -96,8 +91,8 @@ public class Kick extends Skill {
 	public Tactics type(Combat c) {
 		return Tactics.damage;
 	}
-	public String toString(){
-		if(self.getPure(Attribute.Ki)>=14){
+	public String getLabel(Combat c){
+		if(self.get(Attribute.Ki)>=14){
 			return "Shatter Kick";
 		}
 		else{

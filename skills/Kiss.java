@@ -25,7 +25,7 @@ public class Kiss extends Skill {
 		if(self.has(Trait.romantic)){
 			m += 3;
 		}
-		if(self.has(Trait.greatkiss)){
+		if(self.has(Trait.experttongue)){
 			m += 5;
 			if(self.human()){
 				c.write(self,deal(c,m,Result.special, target));
@@ -60,11 +60,6 @@ public class Kiss extends Skill {
 			self.body.pleasure(target, target.body.getRandom("mouth"), self.body.getRandom("mouth"), 1, c);
 			self.buildMojo(c, 5);
 		}
-	}
-
-	@Override
-	public boolean requirements() {
-		return true;
 	}
 
 	@Override

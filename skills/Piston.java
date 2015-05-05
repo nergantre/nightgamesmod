@@ -15,18 +15,13 @@ public class Piston extends Thrust {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Seduction)>=18;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Seduction)>=18;
+		return user.get(Attribute.Seduction)>=18;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().canthrust(self)&&c.getStance().penetration(self);
+		return self.canAct()&&c.getStance().canthrust(self)&&(c.getStance().penetration(self)||c.getStance().penetration(target));
 	}
 
 	@Override

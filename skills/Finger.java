@@ -22,10 +22,10 @@ public class Finger extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy()+self.tohit())){
-			int m = 2 + Global.random(4);
+		if(target.roll(this, c, accuracy())){
+			int m = 4 + Global.random(4);
 			if(self.get(Attribute.Seduction)>=8){
-				m += 2;
+				m += 3;
 				if(self.human()){
 					c.write(self,deal(c,m,Result.normal, target));
 				} else {
@@ -52,10 +52,7 @@ public class Finger extends Skill {
 			}
 		}
 	}
-	@Override
-	public boolean requirements() {
-		return true;
-	}
+
 	public int accuracy(){
 		return 7;
 	}

@@ -16,18 +16,13 @@ public class Flick extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Seduction)>=17 && !self.has(Trait.softheart);
-	}
-
-	@Override
 	public boolean usable(Combat c, Character target) {
 		return target.pantsless()&&c.getStance().reachBottom(self)&&self.canAct()&&!c.getStance().penetration(target)&&!self.has(Trait.shy);
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy()+self.tohit())){
+		if(target.roll(this, c, accuracy())){
 			int m = Global.random(6)+5;
 			if(self.human()){
 				c.write(self,deal(c,m,Result.normal, target));
@@ -57,7 +52,7 @@ public class Flick extends Skill {
 
 	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Seduction)>=17 && !user.has(Trait.softheart);
+		return user.get(Attribute.Seduction)>=17 && !user.has(Trait.softheart);
 	}
 
 	@Override

@@ -9,14 +9,21 @@ import characters.Trait;
 
 public class Shield extends Status {
 	private int duration;
-	public Shield(Character affected) {
+	private double strength;
+
+	public Shield(Character affected, double strength) {
+		this(affected, strength, 4);
+	}
+		
+	public Shield(Character affected, double strength, int duration) {
 		super("Shield", affected);
 		if(affected.has(Trait.PersonalInertia)){
-			this.duration=6;
+			this.duration=duration * 3 / 2;
 		}
 		else{
-			this.duration=4;
+			this.duration=duration;
 		}
+		this.strength = strength;
 		flag(Stsflag.shielded);
 	}
 
@@ -27,9 +34,9 @@ public class Shield extends Status {
 
 	@Override
 	public float fitnessModifier () {
-		return .5f;
+		return (float)strength * 4;
 	}
-	
+
 	@Override
 	public int mod(Attribute a) {
 		return 0;
@@ -47,7 +54,7 @@ public class Shield extends Status {
 
 	@Override
 	public int damage(Combat c, int x) {
-		return -4;
+		return (int) - Math.round(x * strength);
 	}
 
 	@Override
@@ -95,5 +102,8 @@ public class Shield extends Status {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	@Override
+	public Status instance(Character newAffected, Character newOther) {
+		return new Shield(newAffected, strength, duration);
+	}
 }

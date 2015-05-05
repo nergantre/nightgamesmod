@@ -22,9 +22,10 @@ public enum PussyPart implements BodyPart {
 	normal("", 0, 1, 1, 6, 15, 0),
 	arcane("arcane patterned ", .2, 1.1, 1, 9, 5, 3),
 	fiery("fiery ", 0, 1.3, 1.2, 8, 15, 3),
-	succubus("succubus ", 1, 1.5, 1.2, 999, 0, 4),
+	succubus("succubus ", .6, 1.5, 1.2, 999, 0, 4),
 	feral("feral ", 1, 1.3, 1.2, 8, 7, 2),
-	cybernetic("cybernetic ", -.50, 1.8, .5, 200, 0, 4);
+	cybernetic("cybernetic ", -.50, 1.8, .5, 200, 0, 4),
+	tentacled("tentacled ", 0, 2, 1.2, 999, 0, 8);
 
 	public double priority;
 	public String desc;
@@ -53,24 +54,33 @@ public enum PussyPart implements BodyPart {
 
 	@Override
 	public void describeLong(StringBuilder b, Character c) {
-		if (c.pantsless()) {
-			b.append("A ");
-			if (c.getArousal().percent() > 15 && c.getArousal().percent() < 60) {
-				b.append("moist ");
-			} else if (c.getArousal().percent() >= 60) {
-				b.append("drenched ");
-			}
-			b.append(describe(c));
-			b.append(" ");
-			if (isType("pussy"))
-				b.append("is nested between " + c.nameOrPossessivePronoun() + " legs.");
-			else if (isType("ass"))
-				b.append("is nested between " + c.nameOrPossessivePronoun() + " asscrack.");
+		b.append("A ");
+		if (c.getArousal().percent() > 15 && c.getArousal().percent() < 60) {
+			b.append("moist ");
+		} else if (c.getArousal().percent() >= 60) {
+			b.append("drenched ");
 		}
+		b.append(describe(c));
+		b.append(" ");
+		if (isType("pussy"))
+			b.append("is nested between " + c.nameOrPossessivePronoun() + " legs.");
+		else if (isType("ass"))
+			b.append("is nested between " + c.nameOrPossessivePronoun() + " asscrack.");
+	}
+
+	@Override
+	public double priority(Character c) {
+		return priority;
 	}
 
 	@Override
 	public String describe(Character c) {
+		String syn = Global.pickRandom(synonyms);
+		return desc + syn;
+	}
+
+	@Override
+	public String fullDescribe(Character c) {
 		String syn = Global.pickRandom(synonyms);
 		return desc + syn;
 	}
@@ -92,11 +102,9 @@ public enum PussyPart implements BodyPart {
 	@Override
 	public double getHotness(Character self, Character opponent) {
 		double val = hotness;
-		if (self.pantsless())
-			val = 0;
 		if (!opponent.hasDick())
 			val /= 2;
-		return 1 + val;
+		return val;
 	}
 
 	@Override
@@ -118,7 +126,8 @@ public enum PussyPart implements BodyPart {
 		saver.write(this.name());
 	}
 
-	public static BodyPart load(Scanner loader) {
+	@Override
+	public BodyPart load(Scanner loader) {
 		return PussyPart.valueOf(loader.nextLine());
 	}
 
@@ -130,12 +139,12 @@ public enum PussyPart implements BodyPart {
 					self.possessivePronoun(), describe(self), opponent.directObject()));
 			opponent.add(new Horny(opponent, (int) Math.max(1, Math.floor(damage/5)), 5, self.nameOrPossessivePronoun() + " feral musk"));
 		}
-		return damage;
+		return 0;
 	}
 	@Override
 	public double applyBonuses(Character self, Character opponent,
 			BodyPart target, double damage, Combat c) {
-
+		double bonus = 0;
 		if (this==PussyPart.succubus && target.isType("cock")) {
 			c.write(self, String.format("%s hot flesh wraps around %s %s and starts squirming chaotically. "
 										+"Suddenly, %s feel%s something that is not cum shoot out of %s %s, which is greedily absorbed by %s %s",
@@ -157,12 +166,35 @@ public enum PussyPart implements BodyPart {
 				}
 			}
 		}
+		if (this==PussyPart.tentacled && target.isType("cock")) {
+			if (!opponent.is(Stsflag.cockbound)) {
+				if (!self.human()) {
+					c.write(self, Global.format("Deep inside {self:name-possessive} pussy, soft walls pulse and strain against your cock. "
+												+"You suddenly feel hundreds of thin tentacles, probing like fingers, dancing over every inch of your pole. " +
+												"A thicker tentacle wraps around your cock, preventing any escape", self, opponent));
+				} else {
+					c.write(self, Global.format("As {other:name-possessive} cock pumps into you, you focus your mind on your lower entrance. "
+												+"You mentally command the tentacles inside your womb to constrict and massage {other:possessive} cock. " +
+												"{other:name} almost starts hyperventilating from the sensations.", self, opponent));
+				}
+			opponent.add(new CockBound(opponent, 10, self.nameOrPossessivePronoun() + " vaginal tentacles"));
+			} else {
+				if (!self.human()) {
+					c.write(self, Global.format("As you thrust into {self:name-possessive} pussy, hundreds of tentacles squirms against the motions of your cock, " +
+												"making each motion feel like it will push you over the edge.", self, opponent));
+				} else {
+					c.write(self, Global.format("As {other:name-possessive} cock pumps into you, your pussy tentacles reflexively curl around the intruding object, rhythmically" +
+							"squeezing and milking it constantly.", self, opponent));
+				}
+				bonus += 5 + Global.random(4);
+			}
+		}
 		if (this==PussyPart.cybernetic && target.isType("cock") && Global.random(3) == 0) {
 			c.write(self, String.format("%s %s whirls to life and starts attempting to extract all the semen packed inside %s %s. "
 										+"At the same time, %s feel a thin filament sliding into %s urethra, filling %s with both pleasure and shame.",
 					self.possessivePronoun(), describe(self), opponent.possessivePronoun(), target.describe(opponent),
 					opponent.pronoun(), opponent.possessivePronoun(), opponent.directObject()));
-			damage *= 2;
+			bonus += 15;
 			opponent.add(new Shamed(opponent));
 		}
 		if (this==PussyPart.fiery && target.isType("cock")) {
@@ -182,7 +214,7 @@ public enum PussyPart implements BodyPart {
 			c.write(self, self.nameOrPossessivePronoun() + " long sinuous vaginal tongue wraps around "
 						+ opponent.nameOrPossessivePronoun() + " " + target.describe(opponent) + ", preventing any escape.\n");
 		}
-		return damage;
+		return bonus;
 	}
 	@Override
 	public String getFluids(Character c) {
@@ -197,5 +229,44 @@ public enum PussyPart implements BodyPart {
 	@Override
 	public boolean isNotable() {
 		return true;
+	}
+	@Override
+	public BodyPart upgrade() {
+		return this;
+	}
+	@Override
+	public BodyPart downgrade() {
+		return this;
+	}
+
+	@Override
+	public String prefix() {
+		if (desc.length() > 0)
+			return "aieou".indexOf(desc.charAt(0)) >= 0 ? "an " : "a ";
+		else 
+			return "a";
+	}
+
+	@Override
+	public int compare(BodyPart other) {
+		return 0;
+	}
+	@Override
+	public boolean isVisible(Character c) {
+		return c.pantsless();
+	}
+	@Override
+	public double applySubBonuses(Character self, Character opponent,
+			BodyPart with, BodyPart target, double damage, Combat c) {
+		return 0;
+	}
+	@Override
+	public int mod(Attribute a, int total) {
+		switch (a) {
+		case Seduction:
+			return (int) Math.round(this.hotness * 2);
+		default:
+			return 0;
+		}
 	}
 }

@@ -104,17 +104,26 @@ public class Cassie extends BasePersonality {
 			character.gain(Item.Onahole2);
 			character.money-=300;
 		}
-		if(character.money>0){
-			Global.getDay().visit("Body Shop", character, Global.random(character.money));
+		while (character.money>Item.Lactaid.getPrice() && !character.has(Trait.lactating) && character.count(Item.Lactaid) < 3) {
+			character.money-=Item.Lactaid.getPrice();
+			character.gain(Item.Lactaid);
 		}
 		if (character.rank >= 1) {
+			if (!character.has(Trait.lactating) && character.money >= 1000) {
+				character.money -= 1000;
+				character.add(Trait.lactating);
+			}
 			if(character.money>0){
 				Global.getDay().visit("Magic Training", character, Global.random(character.money));
+			}
+			if(character.money>0){
+				Global.getDay().visit("Body Shop", character, Global.random(character.money));
 			}
 			if(character.money>0){
 				Global.getDay().visit("Workshop", character, Global.random(character.money));
 			}
 		}
+
 		if(character.money>0){
 			Global.getDay().visit("XXX Store", character, Global.random(character.money));
 		}
@@ -359,44 +368,6 @@ public class Cassie extends BasePersonality {
 		return 0;
 	}
 
-	@Override
-	public void ding() {
-		super.ding();
-		if(character.getPure(Attribute.Arcane)>=1){
-			character.mod(Attribute.Arcane, 1);
-			int rand;
-			for(int i=0; i<Global.random(2)+2;i++){
-				rand=Global.random(4);
-				if(rand==0){
-					character.mod(Attribute.Power, 1);
-				}
-				else if(rand==1){
-					character.mod(Attribute.Seduction, 1);
-				}
-				else if(rand==2){
-					character.mod(Attribute.Cunning, 1);
-				}
-				else if(rand==3){
-					character.mod(Attribute.Arcane, 1);
-				}
-			}
-		}
-		else{
-			int rand;
-			for(int i=0; i<Global.random(2)+2;i++){
-				rand=Global.random(3);
-				if(rand==0){
-					character.mod(Attribute.Power, 1);
-				}
-				else if(rand==1){
-					character.mod(Attribute.Seduction, 1);
-				}
-				else if(rand==2){
-					character.mod(Attribute.Cunning, 1);
-				}
-			}
-		}
-	}
 	@Override
 	public String victory3p(Combat c, Character target, Character assist) {
 		if(target.human()){

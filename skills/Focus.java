@@ -15,11 +15,6 @@ public class Focus extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Cunning)>=15 && !self.has(Trait.undisciplined);
-	}
-
-	@Override
 	public boolean usable(Combat c, Character target) {
 		return self.canAct()&&!c.getStance().sub(self);
 	}
@@ -38,7 +33,7 @@ public class Focus extends Skill {
 
 	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Cunning)>=15 && !user.has(Trait.undisciplined);
+		return user.get(Attribute.Cunning)>=15 && !user.has(Trait.undisciplined);
 	}
 
 	@Override

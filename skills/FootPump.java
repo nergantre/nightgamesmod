@@ -17,13 +17,8 @@ public class FootPump extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Seduction)>=22;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Seduction)>=22;
+		return user.get(Attribute.Seduction)>=22;
 	}
 
 	@Override

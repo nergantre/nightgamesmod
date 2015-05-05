@@ -34,7 +34,7 @@ public class Blowjob extends Skill {
 		}
 		if (self.has(Trait.silvertongue)) {
 			priority += 1;
-		}if (self.has(Trait.greatkiss)) {
+		}if (self.has(Trait.experttongue)) {
 			priority += 1;
 		}
 		return priority;
@@ -42,7 +42,10 @@ public class Blowjob extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		int m = 2 + Global.random(6);
+		int m = 4 + Global.random(8);
+		if(self.has(Trait.silvertongue)){
+			m += 4;
+		}
 		if (c.getStance().inserted(target) && self.has(Trait.vaginaltongue)) {
 			m += 4;
 			if(target.human()){
@@ -52,9 +55,16 @@ public class Blowjob extends Skill {
 			}
 			target.body.pleasure(self, self.body.getRandom("pussy"), target.body.getRandom("cock"), m, c);					
 			self.buildMojo(c, 5);
-		} else if(target.roll(this, c, accuracy()+self.tohit())){
+		} else if(c.getStance().enumerate() == Stance.facesitting){
+			if(target.human()){
+				c.write(self,receive(c,m,Result.reverse, target));
+			} else if(self.human()){
+				c.write(self,deal(c,m,Result.reverse, target));
+			}
+			target.body.pleasure(self, self.body.getRandom("mouth"), target.body.getRandom("cock"), m, c);					
+			target.buildMojo(c, 10);
+		} else if(target.roll(this, c, accuracy())){
 			if(self.has(Trait.silvertongue)){
-				m += 4;
 				if(target.human()){
 					c.write(self,receive(c,m,Result.special, target));
 				}
@@ -89,13 +99,8 @@ public class Blowjob extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Seduction)>=10;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Seduction)>=10;
+		return user.get(Attribute.Seduction)>=10;
 	}
 	public int accuracy(){
 		return 6;
@@ -130,6 +135,8 @@ public class Blowjob extends Skill {
 		}
 		else if(modifier==Result.special){
 			return "You put your skilled tongue to good use tormenting and teasing her unnatural member.";
+		} else if (modifier==Result.reverse) {
+			return "With " +target.name() + " sitting over your face, you have no choice but to try to suck her off.";
 		} else {
 			return "You feel a bit odd, faced with "+target.name()+"'s rigid cock, but as you lick and suck on it, you discover the taste is quite palatable. Besides, " +
 					"making "+target.name()+" squirm and moan in pleasure is well worth it.";
@@ -145,6 +152,8 @@ public class Blowjob extends Skill {
 		} else if(modifier==Result.intercourse){
 			return self.name()+"'s pussy lips suddenly quiver and you feel a long sinuous object wrap around your cock. You realize she's controlling her vaginal tongue to blow you with her pussy! "
 					+"Her lower tongue runs up and down your shaft causing you to shudder with arousal.";
+		} else if(modifier == Result.reverse){
+			return "Faced with your dick sitting squarely in front of her face, " + self.name() + " obediently tongues your cock in defeat.";
 		} else if(target.getArousal().get()<15){
 			return self.name()+" takes your soft penis into her mouth and sucks on it until it hardens";
 		}

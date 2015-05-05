@@ -10,11 +10,6 @@ public class Obey extends Skill {
 	public Obey(Character self) {
 		super("Obey", self);
 	}
-	
-	@Override
-	public boolean requirements() {
-		return true;
-	}
 
 	@Override
 	public boolean requirements(Character user) {

@@ -22,13 +22,8 @@ public class Carry extends Fuck {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Power)>=25 && !self.has(Trait.petite);
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Power)>=25 && !user.has(Trait.petite);
+		return user.get(Attribute.Power)>=25 && !user.has(Trait.petite);
 	}
 
 	@Override
@@ -54,14 +49,16 @@ public class Carry extends Fuck {
 	public void resolve(Combat c, Character target) {
 		String premessage = "";
 		self.spendMojo(c, getMojoSpent());
-		if(!target.bottom.empty() && getSelfOrgan().isType("cock")) {
+		if(!self.bottom.empty() && getSelfOrgan().isType("cock")) {
 			if (self.bottom.size() == 1) {
 				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s halfway and", self.bottom.get(0).name());
-			} else {
+			} else if (self.bottom.size() == 2) {
 				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s and %s halfway and", self.bottom.get(0).name(), self.bottom.get(1).name());
 			}
 		}
-		if(target.roll(this, c, accuracy()+self.tohit())){
+
+		premessage = Global.format(premessage, self, target);
+		if(target.roll(this, c, accuracy())){
 			if(self.human()){
 				c.write(self,premessage + deal(c,0,Result.normal, target));
 			}

@@ -15,10 +15,6 @@ public class Aphrodisiac extends Skill {
 		super("Use Aphrodisiac", self);
 	}
 
-	public boolean requirements() {
-		return true;
-	}
-
 	public boolean requirements(Character user) {
 		return true;
 	}
@@ -49,7 +45,7 @@ public class Aphrodisiac extends Skill {
 			target.arouse(magnitude, c);
 			target.emote(Emotion.horny, 20);
 		}
-		else if(target.roll(this, c, accuracy()+self.tohit())){
+		else if(target.roll(this, c, accuracy())){
 			if (this.self.human()) {
 				c.write(self,deal(c, magnitude, Result.normal, target));
 			} else {
@@ -125,7 +121,6 @@ public class Aphrodisiac extends Skill {
 			return attacker.name()
 					+ " throws a strange, sweet-smelling liquid in your face. An unnatural warmth spreads through your body and gathers in your dick like a fire.";
 		}
-			
 	}
 
 	public String describe() {

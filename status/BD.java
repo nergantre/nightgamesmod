@@ -110,5 +110,8 @@ public class BD extends Status{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	@Override
+	public Status instance(Character newAffected, Character newOther) {
+		return new BD(newAffected);
+	}
 }

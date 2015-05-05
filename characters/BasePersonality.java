@@ -3,6 +3,8 @@ package characters;
 import global.Flag;
 import global.Global;
 
+import items.Item;
+
 import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayDeque;
@@ -41,6 +43,12 @@ public abstract class BasePersonality implements Personality {
 	public void setGrowth() {
 	}
 	
+	public void buyUpTo(Item item, int number) {
+		while (character.money>item.getPrice() && character.count(item) < 3) {
+			character.money-=item.getPrice();
+			character.gain(item);
+		}
+	}
 	public Skill act(HashSet<Skill> available,Combat c) {
 		HashSet<Skill> tactic = new HashSet<Skill>();	
 		Skill chosen;
@@ -106,14 +114,14 @@ public abstract class BasePersonality implements Personality {
 		}
 		distributePoints();
 	}
-	
+
 	public String describeAll() {
 		StringBuilder b = new StringBuilder();
 		b.append(describe());
 		b.append("<br><br>");
 		character.body.describe(b, character, " ");
 		b.append("<br>");
-		for (Trait t : character.traits) {
+		for (Trait t : character.getTraits()) {
 			t.describe(character, b);
 			b.append(" ");
 		}

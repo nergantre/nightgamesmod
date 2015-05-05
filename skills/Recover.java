@@ -17,12 +17,6 @@ public class Recover extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
 	public boolean usable(Combat c, Character target) {		
 		return c.getStance().prone(self)&&c.getStance().mobile(self)&&self.canAct();
 	}

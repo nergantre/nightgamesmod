@@ -1,6 +1,10 @@
 package status;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+
+import skills.Skill;
 
 import combat.Combat;
 
@@ -19,6 +23,11 @@ public abstract class Status implements Cloneable {
 	public String toString(){
 		return name;
 	}
+	
+	public Collection<Skill> allowedSkills(){
+		return Collections.emptySet();
+	}
+
 	public abstract String describe();
 	public abstract int mod(Attribute a);
 	public abstract int regen(Combat c);
@@ -63,6 +72,8 @@ public abstract class Status implements Cloneable {
 		}
 		return null;
 	}
+	
+	public abstract Status instance(Character newAffected, Character newOther);
 	public String getVariant() {
 		return toString();
 	}

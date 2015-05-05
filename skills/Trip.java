@@ -21,7 +21,7 @@ public class Trip extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy()+self.tohit()) && self.check(Attribute.Cunning, target.knockdownDC())){
+		if(target.roll(this, c, accuracy()) && self.check(Attribute.Cunning, target.knockdownDC())){
 			if(self.human()){
 				c.write(self,deal(c,0,Result.normal, target));
 			}
@@ -43,13 +43,8 @@ public class Trip extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Cunning)>=16;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Cunning)>=16;
+		return user.get(Attribute.Cunning)>=16;
 	}
 
 	@Override

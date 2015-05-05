@@ -15,13 +15,8 @@ public class Drain extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return this.self.getPure(Attribute.Dark)>=15;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Dark)>=15;
+		return user.get(Attribute.Dark)>=15;
 	}
 
 	@Override
@@ -58,7 +53,7 @@ public class Drain extends Skill {
 		if (!nocost) {
 			self.spendMojo(c, 20);
 		}
-		int type = Global.centeredrandom(6, self.getPure(Attribute.Dark) / 3.0 ,3);
+		int type = Global.centeredrandom(6, self.get(Attribute.Dark) / 3.0 ,3);
 
 		if (this.self.human()) {
 			c.write(self,deal(c, type, Result.normal, target));

@@ -3,13 +3,19 @@ package global;
 import gui.GUI;
 import items.Item;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
@@ -21,6 +27,10 @@ import javax.swing.JFileChooser;
 
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.ContextFactory;
+
+import combat.Combat;
+import combat.Encounter;
+import combat.Result;
 
 import pet.Ptype;
 
@@ -61,6 +71,7 @@ import characters.Attribute;
 import characters.BasePersonality;
 import characters.Character;
 import characters.Cassie;
+import characters.Emotion;
 import characters.Jewel;
 import characters.Kat;
 import characters.LoadablePersonality;
@@ -70,6 +81,7 @@ import characters.Personality;
 import characters.Player;
 import characters.Reyka;
 import characters.Trait;
+import characters.Yui;
 import characters.body.BodyPart;
 import characters.body.StraponPart;
 
@@ -78,7 +90,8 @@ import daytime.Daytime;
 public class Global {
 	private static Random rng;
 	private static GUI gui;
-	private static HashSet<Skill> skillPool;
+	private static HashSet<Skill> skillPool = new HashSet<Skill>();
+
 	private static HashSet<Action> actionPool;
 	private static HashSet<Trap> trapPool;
 	private static HashSet<Trait> featPool;
@@ -90,6 +103,7 @@ public class Global {
 	private static Match match;
 	private static Daytime day;
 	private static int date;
+	private Date jdate;
 	public static Scene current;
 	public static boolean debug[] = new boolean[DebugFlags.values().length];
 	public static boolean debugSimulation = false;
@@ -104,11 +118,29 @@ public class Global {
 		players = new HashSet<Character>();
 		resting = new HashSet<Character>();
 		counters = new HashMap<Flag,Float>();
+		jdate = new Date();
+		PrintStream fstream;
+		try {
+			File logfile = new File("nightgames_log.txt");
+			//append the log if it's less than 2 megs in size.
+			fstream = new PrintStream(new FileOutputStream(logfile, logfile.length() < (2L * 1024L * 1024L)));
+			OutputStream estream = new TeeStream(System.err, fstream);
+			OutputStream ostream = new TeeStream(System.out, fstream);
+			System.setErr(new PrintStream(estream));
+			System.setOut(new PrintStream(ostream));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		System.out.println("=============================================");
+		System.out.println("Night games");
+		System.out.println(new Timestamp(jdate.getTime()));
+
 //		debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_DAMAGE.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
+//		debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
 		current=null;
 		factory = new ContextFactory();
 		cx = factory.enterContext();
@@ -169,7 +201,7 @@ public class Global {
 	}
 
 	public static void buildSkillPool(Player p){
-		skillPool=new HashSet<Skill>();
+		skillPool.clear();
 		skillPool.add(new Slap(p));
 		skillPool.add(new ArmBar(p));
 		skillPool.add(new Blowjob(p));
@@ -286,6 +318,32 @@ public class Global {
 		skillPool.add(new CounterDrain(p));
 		skillPool.add(new CounterRide(p));
 		skillPool.add(new CounterPin(p));
+		skillPool.add(new ReverseAssFuck(p));
+		skillPool.add(new Nurse(p));
+		skillPool.add(new Suckle(p));
+		skillPool.add(new UseDraft(p));
+		skillPool.add(new ThrowDraft(p));
+		skillPool.add(new ReverseAssFuck(p));
+		skillPool.add(new FondleBreasts(p));
+		skillPool.add(new Fuck(p));
+		skillPool.add(new Kiss(p));
+		skillPool.add(new Struggle(p));
+		skillPool.add(new Tickle(p));
+		skillPool.add(new skills.Wait(p));
+		skillPool.add(new StripTop(p));
+		skillPool.add(new StripBottom(p));
+		skillPool.add(new Shove(p));
+		skillPool.add(new Recover(p));
+		skillPool.add(new Straddle(p));
+		skillPool.add(new ReverseStraddle(p));
+		skillPool.add(new Stunned(p));
+		skillPool.add(new Distracted(p));
+		skillPool.add(new PullOut(p));
+		skillPool.add(new ThrowDraft(p));
+		skillPool.add(new UseDraft(p));
+		skillPool.add(new TentacleRape(p));
+		skillPool.add(new Anilingus(p));
+		skillPool.add(new UseSemen(p));
 		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 			skillPool.add(new SelfStun(p));	
 		}
@@ -426,19 +484,6 @@ public class Global {
 
 	public static String gainSkills(Character c){
 		String message = "";
-		for(Skill skill:skillPool){
-			if (skill.requirements(c)&&!c.knows(skill)){
-				c.learn(skill.copy(c));
-				if(c.human()){
-					message += "You've learned "+skill.toString()+".<br>";
-				}
-			} else if (!skill.requirements(c) && c.knows(skill)) {
-				c.forget(skill);
-				if(c.human()){
-					message += "You've lost "+skill.toString()+".<br>";
-				}
-			}
-		}
 		if(c.getPure(Attribute.Dark)>=6&&!c.has(Trait.darkpromises)){
 			c.add(Trait.darkpromises);
 		} else if (!(c.getPure(Attribute.Dark)>=6)&&c.has(Trait.darkpromises)){
@@ -453,22 +498,15 @@ public class Global {
 		return message;
 	}
 
-	public static void learnSkills(Player p){
-		boolean pheromonesRequirements = (p.getPure(Attribute.Animism)>=2||p.has(Trait.augmentedPheromones));
+	public static void learnSkills(Character c){
 		for(Skill skill:skillPool){
-			if(skill.requirements()&&!p.knows(skill)){
-				p.learn(skill);
-			}
-		}
-		if(p.getPure(Attribute.Dark)>=6&&!p.has(Trait.darkpromises)){
-			p.add(Trait.darkpromises);
-		}
-		if(pheromonesRequirements && !p.has(Trait.pheromones)){
-			p.add(Trait.pheromones);
+			c.learn(skill);
 		}
 	}
 	
 	public static String capitalizeFirstLetter(String original){
+		if(original == null)
+			return "";
 	    if(original.length() == 0)
 	        return original;
 	    return original.substring(0, 1).toUpperCase() + original.substring(1);
@@ -645,7 +683,7 @@ public class Global {
 	}
 
 	public static void load(){
-		JFileChooser dialog = new JFileChooser("./");            
+		JFileChooser dialog = new JFileChooser("./");
         dialog.setMultiSelectionEnabled(false);
         int rv = dialog.showOpenDialog(gui);      
         if (rv != JFileChooser.APPROVE_OPTION)
@@ -756,7 +794,15 @@ public class Global {
 
 	public static void main(String[] args){
 		new Logwriter();
-		new Global();		
+		for (String arg : args) {
+			try {
+				DebugFlags flag = DebugFlags.valueOf(arg);
+				debug[flag.ordinal()] = true;
+			} catch (IllegalArgumentException e) {
+				//pass
+			}
+		}
+		new Global();
 	}
 
 	public static String getIntro() {
@@ -953,5 +999,14 @@ public class Global {
 		}
 		matcher.appendTail(b);
 		return b.toString();
+	}
+
+	private static Character noneCharacter = new NPC("none", 1, null);
+	public static Character noneCharacter() {
+		return noneCharacter;
+	}
+
+	public static double randomdouble() {
+		return rng.nextDouble();
 	}
 }

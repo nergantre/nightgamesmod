@@ -21,7 +21,7 @@ public class LegLock extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy()+self.tohit())){
+		if(target.roll(this, c, accuracy())){
 			if(self.human()){
 				c.write(self,deal(c,0,Result.normal, target));
 			}
@@ -42,13 +42,8 @@ public class LegLock extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Power)>=24;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Power)>=24;
+		return user.get(Attribute.Power)>=24;
 	}
 
 	@Override

@@ -14,11 +14,6 @@ public class MutualUndress extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.get(Attribute.Seduction) > 50;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
 		return user.get(Attribute.Seduction) > 50;
 	}

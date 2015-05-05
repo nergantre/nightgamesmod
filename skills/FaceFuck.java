@@ -17,13 +17,8 @@ public class FaceFuck extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Fetish)>=15;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Fetish)>=15;
+		return user.get(Attribute.Fetish)>=15;
 	}
 
 	@Override
@@ -84,7 +79,7 @@ public class FaceFuck extends Skill {
 		String m = "You grab hold of "+target.name()+"'s head and push your cock into her mouth. She flushes in shamed and anger, but still dutifully services you with her lips " +
 				"and tongue while you thrust your hips.";
 		if (modifier == Result.strong) {
-			m += "<br>Her skillful tongue works its magic on your cock though, and you find yourself on the verge of organism way quicker than you would like.";
+			m += "<br>Her skillful tongue works its magic on your cock though, and you find yourself on the verge of orgasm way quicker than you would like.";
 		}
 		return m;
 	}

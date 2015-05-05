@@ -18,11 +18,6 @@ public class Paizuri extends Skill {
 		super("Use Breasts", self);
 	}
 
-	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Seduction) >= 28
-				&& !self.has(Trait.petite) && self.hasBreasts();
-	}
 	static int MIN_REQUIRED_BREAST_SIZE = 1;
 
 	@Override
@@ -45,8 +40,7 @@ public class Paizuri extends Skill {
 			}
 		}
 
-		int sizeMod = Math.max(1, breasts.size - 2);
-		int m = sizeMod * (2 + Global.random(3));
+		int m = (4 + Global.random(3));
 		if (target.human()) {
 			c.write(self, receive(0, Result.normal, target, breasts));
 		}
@@ -57,7 +51,7 @@ public class Paizuri extends Skill {
 
 	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Seduction) >= 28
+		return user.get(Attribute.Seduction) >= 28
 				&& !user.has(Trait.petite) && user.hasBreasts();
 	}
 

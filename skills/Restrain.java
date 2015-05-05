@@ -25,7 +25,7 @@ public class Restrain extends Skill {
 	}
 
 	public void resolve(Combat c, Character target, boolean nofail) {
-		if(nofail || target.roll(this, c, accuracy()+self.tohit())) {
+		if(nofail || target.roll(this, c, accuracy())) {
 			if(self.human()){
 				c.write(self,deal(c,0,Result.normal, target));
 			}
@@ -48,13 +48,8 @@ public class Restrain extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Power)>=8;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Power)>=8;
+		return user.get(Attribute.Power)>=8;
 	}
 
 	@Override

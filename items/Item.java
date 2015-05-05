@@ -1,8 +1,33 @@
 package items;
 
-import characters.Character;
+import global.Global;
 
-public enum Item implements Loot{
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Arrays;
+import java.util.List;
+
+import combat.Combat;
+
+import status.Abuff;
+import status.Alluring;
+import status.Distorted;
+import status.Shamed;
+import status.Shield;
+import status.Status;
+
+import characters.Attribute;
+import characters.Character;
+import characters.Trait;
+import characters.body.BreastsPart;
+import characters.body.CockPart;
+import characters.body.PussyPart;
+import characters.body.TentaclePart;
+import characters.body.WingsPart;
+import characters.body.TailPart;
+
+public enum Item implements Loot {
 	
 	Tripwire	( "Trip Wire",10, "A strong wire used to trigger traps","a "	),
 	Spring		( "Spring",20,	"A component for traps","a "	),
@@ -41,12 +66,81 @@ public enum Item implements Loot{
 	ShockGlove	( "Shock Glove",800,"Delivers a safe, but painful electric shock", "a " ),
 	Aersolizer	( "Aerosolizer",500, "Turns a liquid into an unavoidable cloud of mist", "an "),
 	Battery		( "Battery",0,"Available energy to power electronic equipment","a "),
-	Semen		( "Semen",0 ,"A small bottle filled with cum. Kinda gross", "a bottle of "),
+	semen		( "Semen",100 ,"A small bottle filled with cum. Kinda gross", "a bottle of ",
+			Arrays.asList((ItemEffect)
+					new ConditionalEffect(new GroupEffect(Arrays.asList((ItemEffect)
+						new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Dark, 2, 15)),
+						new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Seduction, 2, 15)),
+						new BuffEffect("drink", "throw", new Alluring(Global.noneCharacter(), 5)),
+						new ResourceEffect("heal", 30),
+						new ResourceEffect("build", 30),
+						new ResourceEffect("arouse", 10)
+						)), new ConditionalEffect.EffectCondition() {
+							@Override
+							public boolean operation(Combat c, Character user, Character opponent,
+									Item item) {
+								return user.has(Trait.succubus);
+							}
+						}),
+					new ConditionalEffect(new GroupEffect(Arrays.asList((ItemEffect)
+						new BuffEffect("drink", "throw", new Shamed(Global.noneCharacter())),
+						new ResourceEffect("arouse", 10)
+						)), new ConditionalEffect.EffectCondition() {
+							@Override
+							public boolean operation(Combat c, Character user, Character opponent,
+									Item item) {
+								return !user.has(Trait.succubus);
+							}
+						})),
+					15),
 	Ward		( "Dark Ward",100,"","a "),
 	FaeScroll	( "Summoning Scroll",150,"","a "),
 	Totem		( "Fetish Totem",150,"A small penis shaped totem that can summon tentacles","a "),
-	Capacitor	( "Capacitor",30,"","a ");
-	
+	Capacitor	( "Capacitor",30,"","a "),
+	TinyDraft	( "Tiny Draft", 100, "Temporarily shrink a penis", "a ", Collections.singleton((ItemEffect)new BodyModEffect("drink", "throw", CockPart.average, BodyModEffect.Effect.downgrade)), 15),
+	PriapusDraft( "Priapus Draft", 150, "Temporarily grow a penis", "a ", Collections.singleton((ItemEffect)new BodyModEffect("drink", "throw", CockPart.average, BodyModEffect.Effect.growplus)), 15),
+	BustDraft	( "Bust Draft", 80, "Temporarily grow breasts", "a ", Collections.singleton((ItemEffect)new BodyModEffect("drink", "throw", BreastsPart.c, BodyModEffect.Effect.growplus)), 15),
+	FemDraft	( "Fem Draft", 150, "Temporarily grow a pussy", "a ", Collections.singleton((ItemEffect)new BodyModEffect("drink", "throw", PussyPart.normal, BodyModEffect.Effect.replace)), 15),
+	Lactaid	( "Lactaid", 100, "Temporarily start lactating", "", Arrays.asList((ItemEffect)
+			new AddTraitEffect("drink", "throw", Trait.lactating)), 15),
+	SuccubusDraft	( "Succubus Draft", 300, "Temporarily turn into a succubus", "a ", Arrays.asList((ItemEffect)
+			new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Dark, 10, 15)),
+			new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Seduction, 5, 15)),
+			new AddTraitEffect("drink", "throw", Trait.addictivefluids),
+			new AddTraitEffect("drink", "throw", Trait.succubus),
+			new BodyModEffect("drink", "throw", PussyPart.succubus, BodyModEffect.Effect.replace),
+			new BodyModEffect("drink", "throw", WingsPart.demonic, BodyModEffect.Effect.replace),
+			new BodyModEffect("drink", "throw", TailPart.demonic, BodyModEffect.Effect.replace),
+			new BodyModEffect("drink", "throw", BreastsPart.dd, BodyModEffect.Effect.growplus)
+			), 15),
+	TentacleTonic	( "Tentacle Tonic", 250, "Temporarily grow tentacles", "a ", Arrays.asList((ItemEffect)
+			new GrowTentaclesEffect("drink", "throw", 15),
+			new MaybeEffect(new GrowTentaclesEffect("drink", "throw", 15), .5),
+			new MaybeEffect(new GrowTentaclesEffect("drink", "throw", 15), .25),
+			new MaybeEffect(new GrowTentaclesEffect("drink", "throw", 15), .1),
+			new MaybeEffect(new BodyModEffect("drink", "throw", PussyPart.tentacled, BodyModEffect.Effect.replace, 15), .3)
+			), 15),
+	JuggernautJuice
+				( "Juggernaut Juice", 250, "Makes you nigh invulnerable.", "a ", Arrays.asList((ItemEffect)
+						new BuffEffect("drink", "throw", new Shield(Global.noneCharacter(), .5, 10)),
+						new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Power, 5, 10)),
+						new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Cunning, -5, 10)),
+						new RemoveTraitEffect("drink", "throw", Trait.achilles)), 10),
+	BewitchingDraught
+				( "Bewitching Draught", 250, "Makes you inhumanly alluring.", "a ", Arrays.asList((ItemEffect)
+						new BuffEffect("drink", "throw", new Alluring(Global.noneCharacter(), 10)),
+						new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Seduction, 5, 10)),
+						new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Power, -5, 10)),
+						new AddTraitEffect("drink", "throw", Trait.RawSexuality),
+						new AddTraitEffect("drink", "throw", Trait.augmentedPheromones)), 10),
+	TinkersMix
+				( "TinkersMix", 250, "Not sure if it's a good idea to drink this...", "a ", Arrays.asList((ItemEffect)
+						new BuffEffect("drink", "throw", new Distorted(Global.noneCharacter(), 10)),
+						new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Cunning, 5, 10)),
+						new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Seduction, -5, 10)),
+						new AddTraitEffect("drink", "throw", Trait.lacedjuices),
+						new AddTraitEffect("drink", "throw", Trait.aikidoNovice)), 10);
+
 	/**
 	 * The Item's display name.
 	 */
@@ -54,6 +148,9 @@ public enum Item implements Loot{
 	private String name;
 	private String prefix;
 	private int price;
+	private List<ItemEffect> effect;
+	int duration;
+
 	/**
 	 * @return the Item name
 	 */
@@ -76,9 +173,20 @@ public enum Item implements Loot{
 	}
 	private Item( String name, int price, String desc,String prefix )
 	{
+		this(name, price, desc, prefix, Collections.singleton(new ItemEffect()), 0);
+	}
+
+	private Item( String name, int price, String desc,String prefix, Collection<ItemEffect> effect, int duration)
+	{
 		this.name = name;
 		this.price = price;
 		this.desc = desc;
 		this.prefix = prefix;
+		this.effect = new ArrayList<ItemEffect>(effect);
+		this.duration = duration;
+	}
+
+	public List<ItemEffect> getEffects() {
+		return effect;
 	}
 }

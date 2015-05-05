@@ -46,12 +46,15 @@ public class Reyka extends BasePersonality {
 		this.character.getMojo().setMax(70);
 		character.add(Trait.succubus);
 		character.add(Trait.darkpromises);
-		character.add(Trait.greatkiss);
+		character.add(Trait.addictivefluids);
+		character.add(Trait.experttongue);
 		character.add(Trait.Confident);
 		character.add(Trait.powerfulhips);
 		character.add(Trait.alwaysready);
+		character.add(Trait.shameless);
 
 		Global.gainSkills(this.character);
+
 		character.plan = Tactics.hunting;
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.dd);
@@ -119,9 +122,8 @@ public class Reyka extends BasePersonality {
 				character.getMojo().gain(2);
 			}
 		}
-		if(Global.random(3)>1){
-			character.gain(Item.Semen);
-		}
+		character.gain(Item.semen, Global.random(3) + 1);
+		buyUpTo(Item.semen, 5);
 	}
 
 	@Override
@@ -178,8 +180,6 @@ public class Reyka extends BasePersonality {
 			"smiling. You shake your head; you don't think that sort of thing would really suit you. Her smile deflates some but she nods her head and " +
 			"turns to go. <i>\"Let me know if that ever changes, I'd definitely enjoy opening your mind,\"</i> she calls over her shoulder as she leaves.";
 		}
-		if (opponent.hasDick())
-			character.gain(Item.Semen);
 		character.arousal.empty();
 		return "With a final cry of defeat (and pleasure) you erupt under Reyka's"
 				+ " attentions. She immediatly pounces on you and draws your lips to hers."
@@ -263,7 +263,7 @@ public class Reyka extends BasePersonality {
 				target.name()+"'s clit.<p>"+target.name()+", at first scared, now has her eyes closed and begins moaning feverishly. Just when she has almost reached her climax, " +
 				"Reyka digs her tail deep into "+target.name()+"'s drooling pussy. This sends "+target.name()+" loudly over the edge. Her screams of pleasure are almost deafening, " +
 				"and you have to work really hard to restrain her convlusing body. After a minute or so, the orgasm subsides and "+target.name()+" falls asleep and you gently lay her " +
-				"down. When you turn to look at "+target.name()+", you are startled by the predatory look in her eyes. <i>\"I'm afraid all the excitement has left me a tad peckish. Be a " +
+				"down. When you turn to look at "+character.name()+", you are startled by the predatory look in her eyes. <i>\"I'm afraid all the excitement has left me a tad peckish. Be a " +
 				"dear and help me out with that, will you?\"</i> You ponder whether or not you made a mistake in helping her.";
 	}
 
@@ -343,21 +343,6 @@ public class Reyka extends BasePersonality {
 	}
 	public double dickPreference() {
 		return 2;
-	}
-	@Override
-	public void ding() {
-		this.character.mod(Attribute.Dark, 1);
-		this.character.mod(Attribute.Seduction, 1);
-		for (int i = 0; i < Global.random(2)+1; i++) {
-			int rand = Global.random(3);
-			if (rand == 0) {
-				this.character.mod(Attribute.Power, 1);
-			} else if (rand == 1) {
-				this.character.mod(Attribute.Fetish, 1);
-			} else if (rand == 2) {
-				this.character.mod(Attribute.Cunning, 1);
-			}
-		}
 	}
 
 	@Override

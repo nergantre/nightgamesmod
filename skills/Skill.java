@@ -1,8 +1,13 @@
 package skills;
 import java.awt.image.BufferedImage;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.Icon;
 
+import status.Status;
 import status.Stsflag;
 
 import combat.Combat;
@@ -11,15 +16,16 @@ import combat.Result;
 import characters.Character;
 
 
-public abstract class Skill{
+public abstract class Skill {
 	/**
 	 * 
 	 */
-	protected String name;
+	private String name;
 	protected Character self;
 	protected String image;
 	protected String artist;
 	private int cooldown;
+	public String choice;
 	public Skill(String name, Character self){
 		this(name, self, 0);
 	}
@@ -29,15 +35,49 @@ public abstract class Skill{
 		this.image=null;
 		this.artist=null;
 		this.cooldown = cooldown;
+		this.choice = "";
 	}
-	public boolean requirements() {
+	public final boolean requirements() {
 		return requirements(self);
 	}
 	public abstract boolean requirements(Character user);
+	
+	public static void filterAllowedSkills(Combat c, Set<Skill> skills, Character user, Character target) {
+		boolean filtered = false;
+		Set<Skill> stanceSkills = new HashSet<Skill>(c.getStance().availSkills(user));
+		
+		if (stanceSkills.size() > 0) {
+			skills.retainAll(stanceSkills);
+			filtered = true;
+		}
+		Set<Skill> availSkills = new HashSet<Skill>();
+		for (Status st : user.status) {
+			for (Skill sk : st.allowedSkills()) {
+				if (skillIsUsable(c, sk, target)) {
+					availSkills.add(sk);
+				}
+			}
+		}
+		if (availSkills.size() > 0) {
+			skills.retainAll(availSkills);
+			filtered = true;
+		}
+		Set<Skill> noReqs = new HashSet<Skill>(); 
+		if (!filtered) {
+			// if the skill is restricted by status/stance, do not check for requirements
+			for (Skill sk : skills) {
+				if (!sk.requirements()) {
+					noReqs.add(sk);
+				}
+			}
+			skills.removeAll(noReqs);
+		}
+	}
 	public static boolean skillIsUsable(Combat c, Skill s, Character target) {
 		boolean charmRestricted = s.self.is(Stsflag.charmed) && (s.type(c) != Tactics.fucking && s.type(c) != Tactics.pleasure && s.type(c) != Tactics.misc);
 		boolean allureRestricted = target.is(Stsflag.alluring) && (s.type(c) == Tactics.damage || s.type(c) == Tactics.debuff);
-		return s.usable(c, target) && !charmRestricted && !allureRestricted;
+		boolean usable = s.usable(c, target) && !charmRestricted && !allureRestricted;
+		return usable;
 	}
 
 	public abstract boolean usable(Combat c, Character target);
@@ -61,8 +101,15 @@ public abstract class Skill{
 	public int speed(){
 		return 5;
 	}
-	public String toString(){
+
+	public String getLabel(Combat c) {
+		return getName(c);
+	}
+	public String getName(){
 		return name;
+	}
+	public String toString(){
+		return getName();
 	}
 	public Character user(){
 		return self;
@@ -70,12 +117,13 @@ public abstract class Skill{
 	public void setSelf(Character self){
 		this.self=self;
 	}
-	public void setName(String name){
-		this.name=name;
-	}
 	@Override
 	public boolean equals(Object other){
 		return this.toString()==other.toString();
+	}
+	@Override
+	public int hashCode() {
+		return ("Skill:" + this.toString()).hashCode();
 	}
 	public String getImage(){
 		return image;
@@ -98,5 +146,8 @@ public abstract class Skill{
 	}
 	public void setCooldown(int cooldown) {
 		this.cooldown = cooldown;
+	}
+	public Collection<String> subChoices() {
+		return Collections.emptySet();
 	}
 }

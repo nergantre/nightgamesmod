@@ -18,13 +18,8 @@ public class Turnover extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Power)>=6;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Power)>=6;
+		return user.get(Attribute.Power)>=6;
 	}
 
 	@Override

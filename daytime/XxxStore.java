@@ -77,8 +77,9 @@ public class XxxStore extends Store{
 	@Override
 	public void shop(Character npc, int budget) {
 		if(!npc.has(Item.Lubricant, 10)){
-			int i = Math.max(budget/Item.Lubricant.getPrice(), 10 - npc.count(Item.Lubricant));
+			int i = Math.min(budget/Item.Lubricant.getPrice(), 10 - npc.count(Item.Lubricant));
 			npc.gain(Item.Lubricant, i);
+			budget -= i*Item.Lubricant.getPrice();
 			npc.money-=i*Item.Lubricant.getPrice();
 		}
 	}

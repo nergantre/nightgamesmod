@@ -16,11 +16,6 @@ public class Maneuver extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Cunning)>=20;
-	}
-
-	@Override
 	public boolean usable(Combat c, Character target) {
 		return !target.wary() && c.getStance().mobile(self)&&!c.getStance().prone(self)&&!c.getStance().prone(target)&&self.canSpend(8)&&!c.getStance().behind(self)&&self.canAct()&&!self.has(Trait.undisciplined)&&!c.getStance().penetration(self);
 	}
@@ -28,7 +23,7 @@ public class Maneuver extends Skill {
 	@Override
 	public void resolve(Combat c, Character target) {
 		self.spendMojo(c, 8);
-		if(target.roll(this, c, accuracy()+self.tohit())){
+		if(target.roll(this, c, accuracy())){
 			if(self.human()){
 				c.write(self,deal(c,0,Result.normal, target));
 			}
@@ -52,7 +47,7 @@ public class Maneuver extends Skill {
 
 	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Cunning)>=20;
+		return user.get(Attribute.Cunning)>=20;
 	}
 
 	@Override

@@ -17,13 +17,8 @@ public class LustAura extends Skill {
 	}
 
 	@Override
-	public boolean requirements() {
-		return self.getPure(Attribute.Dark)>=3;
-	}
-
-	@Override
 	public boolean requirements(Character user) {
-		return user.getPure(Attribute.Dark)>=3;
+		return user.get(Attribute.Dark)>=3;
 	}
 
 	@Override
