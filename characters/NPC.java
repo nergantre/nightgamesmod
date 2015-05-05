@@ -496,13 +496,18 @@ public class NPC extends Character {
 			target.pain(c, 4+Math.min(Global.random(get(Attribute.Power)), 20));
 			break;
 		case pleasure:
-			if(target.pantsless()){
-				c.write(this, name()+" catches you by the penis and rubs your sensitive glans.");
-				target.body.pleasure(this, body.getRandom("hands"), target.body.getRandom("cock"), 4+Math.min(Global.random(get(Attribute.Seduction)), 20), c);
-			}
-			else{
-				c.write(this, name()+" catches you as you approach and grinds her knee into the tent in your "+target.bottom.peek());
-				target.body.pleasure(this, body.getRandom("legs"), target.body.getRandom("cock"), 4+Math.min(Global.random(get(Attribute.Seduction)), 20), c);
+			if(target.hasDick()) {
+				if(target.pantsless()){
+					c.write(this, name()+" catches you by the penis and rubs your sensitive glans.");
+					target.body.pleasure(this, body.getRandom("hands"), target.body.getRandom("cock"), 4+Math.min(Global.random(get(Attribute.Seduction)), 20), c);
+				}
+				else{
+					c.write(this, name()+" catches you as you approach and grinds her knee into the tent in your "+target.bottom.peek());
+					target.body.pleasure(this, body.getRandom("legs"), target.body.getRandom("cock"), 4+Math.min(Global.random(get(Attribute.Seduction)), 20), c);
+				}
+			} else {
+				c.write(this, name()+" pulls you off balance and lick your sensitive ear. You tremble as she nibbles on your earlobe.");
+				target.body.pleasure(this, body.getRandom("tongue"), target.body.getRandom("ears"), 4+Math.min(Global.random(get(Attribute.Seduction)), 20), c);
 			}
 			break;
 		case fucking:
@@ -577,6 +582,9 @@ public class NPC extends Character {
 		return plist.get(plist.size()-1).skill;
 	}
 	public void emote(Emotion emo,int amt){
+		if (Global.isDebugOn(DebugFlags.DEBUG_MOOD)) {
+			System.out.printf("%s: %+d %s", amt, emo.name());
+		}
 		if (emo == mood) {
 			// if already this mood, cut gain by half
 			amt = Math.max(1, amt/2);

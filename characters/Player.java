@@ -588,9 +588,9 @@ public class Player extends Character {
 			target.pain(c, 4+Math.min(Global.random(get(Attribute.Power)), 20));
 			break;
 		case pleasure:
-			if(!target.nude()){
+			if(!target.pantsless() || !target.hasPussy()){
 				c.write(this, "You pull "+target.name()+" off balance and lick her sensitive ear. She trembles as you nibble on her earlobe.");
-				target.body.pleasure(this, body.getRandom("tongue"), target.body.getRandom("ear"), 4+Math.min(Global.random(get(Attribute.Seduction)), 20), c);
+				target.body.pleasure(this, body.getRandom("tongue"), target.body.getRandom("ears"), 4+Math.min(Global.random(get(Attribute.Seduction)), 20), c);
 			}
 			else{
 				c.write(this, "You pull "+target.name()+" to you and rub your thigh against her girl parts.");

@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 
 import characters.body.Body;
 import characters.body.BreastsPart;
+import characters.body.EarPart;
 import characters.body.GenericBodyPart;
 import characters.body.PussyPart;
 import characters.body.TailPart;
@@ -418,6 +419,7 @@ public class Angel extends BasePersonality {
 		character.add(Trait.addictivefluids);
 		character.body.addReplace(PussyPart.succubus, 1);
 		character.body.addReplace(TailPart.demonic, 5);
+		character.body.addReplace(EarPart.pointed, 1);
 		character.body.addReplace(WingsPart.demonic, 5);
 		character.outfit[0].removeAllElements();
 		character.outfit[1].removeAllElements();

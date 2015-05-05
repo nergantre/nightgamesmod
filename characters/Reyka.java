@@ -19,6 +19,7 @@ import actions.Move;
 import actions.Movement;
 import characters.Attribute;
 import characters.body.BreastsPart;
+import characters.body.EarPart;
 import characters.body.PussyPart;
 import characters.body.TailPart;
 import characters.body.WingsPart;
@@ -61,6 +62,7 @@ public class Reyka extends BasePersonality {
 		character.body.add(PussyPart.succubus);
 		character.body.add(TailPart.demonic);
 		character.body.add(WingsPart.demonic);
+		character.body.add(EarPart.pointed);
 		character.body.finishBody("female");
 	}
 
