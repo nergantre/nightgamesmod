@@ -63,6 +63,7 @@ public enum Trait {
 	}), //causes horny in opponents if aroused	
 	augmentedPheromones("Augmented Pheromones", "Artificially enhanced pheromones", null, pheromones),
 
+	soulsucker("Soulsucker", "Soul sucking lips"),
 	entrallingjuices("Enthralling cum", "Enthralling juices"),
 	lacedjuices("Laced Juices", "Intoxicating bodily fluids"), //opponents take temptation when using oral skills
 	addictivefluids("Additive Fluids", "Addictive bodily fluids"), //opponents can only use oral skills if available
@@ -79,8 +80,20 @@ public enum Trait {
 			}
 		}
 	}),
-	darkpromises("Dark Promises","Can enthrall with the right words"), //whisper upgrade, can enthrall
 
+	darkpromises("Dark Promises","Can enthrall with the right words"), //whisper upgrade, can enthrall
+	energydrain("Energy Drain", "Drains energy during intercourse"),
+	spiritphage("Semenphage", "Feeds on semen"),
+	tight("Tight", "Powerful musculature and exquisite tightness makes for quick orgasms."),
+	holecontrol("Control", "Dexterous internal muscle control."),
+	oiledass("Oiled Ass", "Natural oils makes her ass always ready."),
+	autonomousAss("Autonomous Ass", "Her asshole instinctively forces anything inside of it to cum."),
+	cute("Innocent Appearance", "Hard to muster the will to hurt her"),
+
+	autonomousPussy("Autonomous Pussy", "Her pussy instinctively forces anything inside of it to cum."),
+	//AI traits
+	submissive("Submissive", "Enjoys being the sub."),
+	
 	//Weaknesses
 	ticklish("Ticklish","Can be easily tickled into submission"), 	//more weaken damage and arousal from tickle
 	insatiable("Insatiable","One orgasm is never enough"), //arousal doesn't completely clear at end of match
@@ -107,7 +120,8 @@ public enum Trait {
 	witch("Witch","Learned to wield traditional arcane magic"),
 	succubus("Succubus","Embraced the dark powers that feed on mortal lust"),
 	fighter("Fighter","A combination of martial arts and ki"),
-	
+	slime("Slime","An accident in the biology labs made the body a bit more... malleable."),
+
 	//Strength
 	dexterous("Dexterous","Underwear is no obstacle for nimble fingers"), //digital stimulation through underwear
 	romantic("Romantic","Every kiss is as good as the first"), //bonus to kiss
@@ -138,6 +152,7 @@ public enum Trait {
 	expertGoogler("Expert Googler","More efficient at finding porn"),
 	mojoMaster("Mojo Master","Max Mojo increases faster"),
 	powerfulhips("Powerful Hips","Can grind from submissive positions"),
+	strongwilled("Strong Willed","Halves willpower loss"),
 	alwaysready("Always Ready","Always ready for penetration", new TraitDescription() {
 		public void describe(StringBuilder b, Character c, Trait t) {
 			if (!c.hasDick() && c.pantsless()) {

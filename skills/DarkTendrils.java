@@ -24,7 +24,7 @@ public class DarkTendrils extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && !c.getStance().sub(self)&&!c.getStance().prone(self)&&!c.getStance().prone(target)&&self.canAct();
+		return !target.wary() && !c.getStance().sub(getSelf())&&!c.getStance().prone(getSelf())&&!c.getStance().prone(target)&&getSelf().canAct();
 	}
 
 	@Override
@@ -34,39 +34,39 @@ public class DarkTendrils extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.arouse(5, c);
+		getSelf().arouse(5, c);
 		if(target.roll(this, c, accuracy())){
 			if(Global.random(2)==1){
-				if(self.human()){
-					c.write(self,deal(c,0,Result.normal, target));
+				if(getSelf().human()){
+					c.write(getSelf(),deal(c,0,Result.normal, target));
 				}
 				else if(target.human()){
-					c.write(self,receive(c,0,Result.normal, target));
+					c.write(getSelf(),receive(c,0,Result.normal, target));
 				}
-				target.add(new Bound(target,Math.min(10+3*self.get(Attribute.Dark), 40),"shadows"));
-			} else if(self.check(Attribute.Dark,target.knockdownDC()-self.getMojo().get())){
-				if(self.human()){
-					c.write(self,deal(c,0,Result.weak, target));
+				target.add(new Bound(target,Math.min(10+3*getSelf().get(Attribute.Dark), 40),"shadows"));
+			} else if(getSelf().check(Attribute.Dark,target.knockdownDC()-getSelf().getMojo().get())){
+				if(getSelf().human()){
+					c.write(getSelf(),deal(c,0,Result.weak, target));
 				}
 				else if(target.human()){
-					c.write(self,receive(c,0,Result.weak, target));
+					c.write(getSelf(),receive(c,0,Result.weak, target));
 				}
-				c.setStance(new StandingOver(self,target));
+				c.setStance(new StandingOver(getSelf(),target));
 			} else {
-				if(self.human()){
-					c.write(self,deal(c,0,Result.miss, target));
+				if(getSelf().human()){
+					c.write(getSelf(),deal(c,0,Result.miss, target));
 				}
 				else if(target.human()){
-					c.write(self,receive(c,0,Result.miss, target));
+					c.write(getSelf(),receive(c,0,Result.miss, target));
 				}
 			}
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 
@@ -101,13 +101,13 @@ public class DarkTendrils extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier == Result.miss){
-			return self.name()+" makes a gesture and evil looking tentacles pop up around you. You dive out of the way as they try to grab you.";
+			return getSelf().name()+" makes a gesture and evil looking tentacles pop up around you. You dive out of the way as they try to grab you.";
 		}
 		else  if(modifier == Result.weak){
 			return "Your shadow seems to come to life as dark tendrils wrap around your legs and bring you to the floor.";
 		}
 		else{
-			return self.name()+" summons shadowy tentacles that snare your arms and hold you in place.";
+			return getSelf().name()+" summons shadowy tentacles that snare your arms and hold you in place.";
 		}
 	}
 

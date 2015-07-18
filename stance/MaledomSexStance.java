@@ -15,9 +15,7 @@ public abstract class MaledomSexStance extends Position {
 	@Override
 	public float priorityMod(Character self) {
 		float priority = 0;
-		if (dom(self)) {
-			priority += 4;
-		}
+		priority += getSubDomBonus(self, 4.0f);
 		if (self.hasPussy()) { 
 			priority += self.body.getRandomPussy().priority(self);
 		}
@@ -38,7 +36,7 @@ public abstract class MaledomSexStance extends Position {
 			} else {
 				c.write(inserted.name() + " groans with frustration with the sudden disappearance of your dick.");
 			}
-			c.setStance(insert(top, bottom));
+			c.setStance(insert());
 		}
 		if (!inserted.hasPussy()) {
 			if(inserted.human()){
@@ -46,7 +44,7 @@ public abstract class MaledomSexStance extends Position {
 			} else {
 				c.write(inserted.name() + " groans with frustration with the sudden disappearance of her pussy.");
 			}
-			c.setStance(insert(top, bottom));
+			c.setStance(insert());
 		}
 	}
 }

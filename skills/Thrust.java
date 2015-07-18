@@ -27,16 +27,16 @@ public class Thrust extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().canthrust(self)&&(c.getStance().penetration(self)||c.getStance().penetration(target));
+		return getSelf().canAct()&&c.getStance().canthrust(getSelf())&&(c.getStance().penetration(getSelf())||c.getStance().penetration(target));
 	}
 
 	public BodyPart getSelfOrgan(Combat c) {
-		if (c.getStance().inserted(self)) {
-			return self.body.getRandomInsertable();
+		if (c.getStance().inserted(getSelf())) {
+			return getSelf().body.getRandomInsertable();
 		} else if (c.getStance().en == Stance.anal) {
-			return self.body.getRandom("ass");
+			return getSelf().body.getRandom("ass");
 		} else {
-			return self.body.getRandomPussy();
+			return getSelf().body.getRandomPussy();
 		}
 	}
 
@@ -55,7 +55,7 @@ public class Thrust extends Skill {
 
 		int m = 5 + Global.random(14);
 		int mt;
-		if(self.has(Trait.experienced)){
+		if(getSelf().has(Trait.experienced)){
 			mt = Math.max(1, m/4);
 		} else {
 			mt = Math.max(1, m/3);
@@ -73,7 +73,7 @@ public class Thrust extends Skill {
 		BodyPart targetO = getTargetOrgan(c, target);
 		Result result;
 		if (getMojoSpent() > 0) {
-			self.spendMojo(c, getMojoSpent());
+			getSelf().spendMojo(c, getMojoSpent());
 		}
 		if(c.getStance().inserted(target)) {
 			result = Result.reverse;
@@ -83,21 +83,21 @@ public class Thrust extends Skill {
 			result = Result.normal;
 		}
 
-		if(self.human()){
-			c.write(self,deal(c,0,result, target));
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,result, target));
 		} else if(target.human()) {
-			c.write(self,receive(c,0,result, target));
+			c.write(getSelf(),receive(c,0,result, target));
 		}
 
 		int[] m = getDamage(target, c.getStance());
 		assert(m.length >= 2);
 
 		if (m[0] != 0)
-			target.body.pleasure(self, selfO, targetO, m[0], c);
+			target.body.pleasure(getSelf(), selfO, targetO, m[0], c);
 		if (m[1] != 0)
-			self.body.pleasure(target, targetO, selfO, m[1], c);
+			getSelf().body.pleasure(target, targetO, selfO, m[1], c);
 		if (getMojoBuilt() > 0) {
-			self.buildMojo(c, getMojoBuilt());
+			getSelf().buildMojo(c, getMojoBuilt());
 		}
 	}
 
@@ -126,7 +126,7 @@ public class Thrust extends Skill {
 			return "You thrust steadily into " + target.name() + "'s ass, eliciting soft groans of pleasure.";
 		} else if (modifier == Result.reverse) {
 			return Global.format("You rock your hips against {other:direct-object}, riding her smoothly. "
-								+ "Despite the slow place, {other:subject} soon starts gasping and mewing with pleasure.", self, target);
+								+ "Despite the slow place, {other:subject} soon starts gasping and mewing with pleasure.", getSelf(), target);
 		} else {
 			return "You thrust into "+target.name()+" in a slow, steady rhythm. She lets out soft breathy moans in time with your lovemaking. You can't deny you're feeling " +
 					"it too, but by controlling the pace, you can hopefully last longer than she can.";
@@ -136,17 +136,17 @@ public class Thrust extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier == Result.anal){
-			if(self.has(Trait.strapped)){
-				return self.name()+" thrusts her hips, pumping her artificial cock in and out of your ass and pushing on your prostate.";
+			if(getSelf().has(Trait.strapped)){
+				return getSelf().name()+" thrusts her hips, pumping her artificial cock in and out of your ass and pushing on your prostate.";
 			}
 			else{
-				return self.name()+"'s cock slowly pumps the inside of your rectum.";
+				return getSelf().name()+"'s cock slowly pumps the inside of your rectum.";
 			}
 		} else if (modifier == Result.reverse ){ 
-			return self.name()+" rocks her hips against you, riding you smoothly and deliberately. Despite the slow pace, the sensation of her hot " + getSelfOrgan(c).fullDescribe(self) + " surrounding " +
+			return getSelf().name()+" rocks her hips against you, riding you smoothly and deliberately. Despite the slow pace, the sensation of her hot " + getSelfOrgan(c).fullDescribe(getSelf()) + " surrounding " +
 					"your dick is gradually driving you to your limit.";
 		} else {
-			return Global.format("{self:subject} thrusts into {other:name-possessive} {other:body-part:pussy} in a slow steady rhythm, leaving you gasping.", self, target);
+			return Global.format("{self:subject} thrusts into {other:name-possessive} {other:body-part:pussy} in a slow steady rhythm, leaving you gasping.", getSelf(), target);
 		}
 	}
 
@@ -157,7 +157,7 @@ public class Thrust extends Skill {
 	
 	@Override
 	public String getName(Combat c) {
-		if (c.getStance().inserted(self)) {
+		if (c.getStance().inserted(getSelf())) {
 			return "Thrust";
 		} else {
 			return "Ride";
@@ -167,5 +167,12 @@ public class Thrust extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
+	}
+
+	public String getTargetOrganType(Combat c, Character target) {
+		return getTargetOrgan(c, target).getType();
+	}
+	public String getWithOrganType(Combat c, Character target) {
+		return getSelfOrgan(c).getType();
 	}
 }

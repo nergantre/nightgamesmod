@@ -85,7 +85,7 @@ public class Spiderweb implements Trap {
 					"gratiously unties you and helps you down.");
 		}
 		if(victim.bottom.contains(victim.outfit[1].firstElement())){
-			attacker.gain(victim.getUnderwear());
+			attacker.gain(victim.getTrophy());
 		}
 		victim.nudify();
 		victim.defeated(attacker);

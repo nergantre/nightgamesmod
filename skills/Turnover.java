@@ -24,7 +24,7 @@ public class Turnover extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().enumerate()==Stance.standingover&&c.getStance().dom(self);
+		return getSelf().canAct()&&c.getStance().enumerate()==Stance.standingover&&c.getStance().dom(getSelf());
 	}
 
 	@Override
@@ -34,16 +34,16 @@ public class Turnover extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
 		if(!target.is(Stsflag.braced)){
 			target.add(new Braced(target));
 		}
-		c.setStance(new Behind(self,target));
+		c.setStance(new Behind(getSelf(),target));
 		target.emote(Emotion.dominant, 20);
 	}
 
@@ -64,7 +64,7 @@ public class Turnover extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" rolls you onto your stomach. You push yourself back up, but she takes the opportunity to get behind you.";
+		return getSelf().name()+" rolls you onto your stomach. You push yourself back up, but she takes the opportunity to get behind you.";
 	}
 
 	@Override

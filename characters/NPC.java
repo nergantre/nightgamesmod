@@ -170,7 +170,7 @@ public class NPC extends Character {
 		dress(c);
 		target.undress(c);
 		if(c.clothespile.contains(target.outfit[1].firstElement())){
-			this.gain(target.getUnderwear());
+			this.gain(target.getTrophy());
 		}
 		target.defeated(this);
 		c.write(ai.victory(c, flag));
@@ -207,7 +207,7 @@ public class NPC extends Character {
 		target.dress(c);
 		this.undress(c);
 		if(c.clothespile.contains(this.outfit[1].firstElement())){
-			target.gain(this.getUnderwear());
+			target.gain(this.getTrophy());
 		}
 		this.defeated(target);
 		c.write(ai.defeat(c,flag));
@@ -230,7 +230,7 @@ public class NPC extends Character {
 		dress(c);
 		target.undress(c);
 		if(c.clothespile.contains(target.outfit[1].firstElement())){
-			this.gain(target.getUnderwear());
+			this.gain(target.getTrophy());
 		}
 		target.defeated(this);
 		c.write(ai.victory3p(c,target,assist));
@@ -308,10 +308,10 @@ public class NPC extends Character {
 		target.undress(c);
 		this.undress(c);
 		if(c.clothespile.contains(this.outfit[1].firstElement())){
-			target.gain(this.getUnderwear());
+			target.gain(this.getTrophy());
 		}
 		if(c.clothespile.contains(target.outfit[1].firstElement())){
-			this.gain(target.getUnderwear());
+			this.gain(target.getTrophy());
 		}
 		target.defeated(this);
 		this.defeated(target);
@@ -326,6 +326,14 @@ public class NPC extends Character {
 				target.gainAffection(this,2);
 			}
 		}
+	}
+	@Override
+	public String orgasmLiner() {
+		return ai.orgasmLiner();
+	}
+	@Override
+	public String makeOrgasmLiner() {
+		return ai.makeOrgasmLiner();
 	}
 	@Override
 	public String bbLiner() {
@@ -431,9 +439,6 @@ public class NPC extends Character {
 	public void ding(){
 		level++;
 		ai.ding();
-		if(countFeats()<level/4){
-			ai.pickFeat();
-		}
 		String message = Global.gainSkills(this);
 		if (human())
 			Global.gui().message(message);

@@ -21,7 +21,7 @@ public abstract class Skill {
 	 * 
 	 */
 	private String name;
-	protected Character self;
+	private Character self;
 	protected String image;
 	protected String artist;
 	private int cooldown;
@@ -31,14 +31,14 @@ public abstract class Skill {
 	}
 	public Skill(String name, Character self, int cooldown){
 		this.name=name;
-		this.self=self;
+		this.setSelf(self);
 		this.image=null;
 		this.artist=null;
 		this.cooldown = cooldown;
 		this.choice = "";
 	}
 	public final boolean requirements() {
-		return requirements(self);
+		return requirements(getSelf());
 	}
 	public abstract boolean requirements(Character user);
 	
@@ -74,7 +74,7 @@ public abstract class Skill {
 		}
 	}
 	public static boolean skillIsUsable(Combat c, Skill s, Character target) {
-		boolean charmRestricted = s.self.is(Stsflag.charmed) && (s.type(c) != Tactics.fucking && s.type(c) != Tactics.pleasure && s.type(c) != Tactics.misc);
+		boolean charmRestricted = s.getSelf().is(Stsflag.charmed) && (s.type(c) != Tactics.fucking && s.type(c) != Tactics.pleasure && s.type(c) != Tactics.misc);
 		boolean allureRestricted = target.is(Stsflag.alluring) && (s.type(c) == Tactics.damage || s.type(c) == Tactics.debuff);
 		boolean usable = s.usable(c, target) && !charmRestricted && !allureRestricted;
 		return usable;
@@ -89,7 +89,7 @@ public abstract class Skill {
 	public abstract String receive(Combat c, int damage,Result modifier, Character target);
 	
 	public boolean isReverseFuck(Character target) {
-		return (target.hasDick() && self.hasPussy());
+		return (target.hasDick() && getSelf().hasPussy());
 	}
 
 	public float priorityMod(Combat c) {
@@ -112,7 +112,7 @@ public abstract class Skill {
 		return getName();
 	}
 	public Character user(){
-		return self;
+		return getSelf();
 	}
 	public void setSelf(Character self){
 		this.self=self;
@@ -149,5 +149,14 @@ public abstract class Skill {
 	}
 	public Collection<String> subChoices() {
 		return Collections.emptySet();
+	}
+	public String getTargetOrganType(Combat c, Character target) {
+		return "none";
+	}
+	public String getWithOrganType(Combat c, Character target) {
+		return "none";
+	}
+	public Character getSelf() {
+		return self;
 	}
 }

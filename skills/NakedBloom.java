@@ -20,7 +20,7 @@ public class NakedBloom extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().mobile(self)&&!c.getStance().prone(self)&&!target.nude()&&self.canSpend(20);
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&!target.nude()&&getSelf().canSpend(20);
 	}
 
 	@Override
@@ -30,13 +30,13 @@ public class NakedBloom extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(c, 20);
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		getSelf().spendMojo(c, 20);
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 			c.write(target,target.nakedLiner());
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
 		target.nudify();
 		target.emote(Emotion.nervous, 10);
@@ -59,7 +59,7 @@ public class NakedBloom extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" mumbles a spell and you're suddenly surrounded by an eruption of flower petals. As the petals settle, you realize you've been stripped completely " +
+		return getSelf().name()+" mumbles a spell and you're suddenly surrounded by an eruption of flower petals. As the petals settle, you realize you've been stripped completely " +
 				"naked.";
 	}
 

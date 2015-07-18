@@ -16,30 +16,30 @@ public class Reversal extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && !c.getStance().mobile(self)&&c.getStance().sub(self)&&self.canSpend(10)&&self.canAct();
+		return !target.wary() && !c.getStance().mobile(getSelf())&&c.getStance().sub(getSelf())&&getSelf().canSpend(10)&&getSelf().canAct();
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(c, 10);
+		getSelf().spendMojo(c, 10);
 		if(target.roll(this, c, accuracy())){
-			if(self.human()){
-				c.write(self,deal(c,0,Result.normal, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.normal, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.normal, target));
+				c.write(getSelf(),receive(c,0,Result.normal, target));
 			}
 			
-			c.setStance(new Pin(self,target));
+			c.setStance(new Pin(getSelf(),target));
 			target.emote(Emotion.nervous, 10);
-			self.emote(Emotion.dominant, 10);
+			getSelf().emote(Emotion.dominant, 10);
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -76,10 +76,10 @@ public class Reversal extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier == Result.miss){
-			return self.name()+" tries to reverse your hold, but you stop her.";
+			return getSelf().name()+" tries to reverse your hold, but you stop her.";
 		}
 		else{
-			return self.name()+" rolls you over and ends up on top.";
+			return getSelf().name()+" rolls you over and ends up on top.";
 		}
 	}
 

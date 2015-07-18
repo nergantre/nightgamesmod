@@ -21,7 +21,7 @@ public class Dominate extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && !c.getStance().sub(self)&&!c.getStance().prone(self)&&!c.getStance().prone(target)&&self.canAct();
+		return !target.wary() && !c.getStance().sub(getSelf())&&!c.getStance().prone(getSelf())&&!c.getStance().prone(target)&&getSelf().canAct();
 	}
 
 	@Override
@@ -31,15 +31,15 @@ public class Dominate extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.arouse(10, c);
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		getSelf().arouse(10, c);
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		c.setStance(new StandingOver(self,target));
-		self.emote(Emotion.dominant, 20);
+		c.setStance(new StandingOver(getSelf(),target));
+		getSelf().emote(Emotion.dominant, 20);
 		target.emote(Emotion.nervous,20);
 	}
 
@@ -62,7 +62,7 @@ public class Dominate extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" forcefully orders you to \"Kneel!\" Your body complies without waiting for your brain and you drop to your knees in front of her. She smiles and " +
+		return getSelf().name()+" forcefully orders you to \"Kneel!\" Your body complies without waiting for your brain and you drop to your knees in front of her. She smiles and " +
 				"pushes you onto your back. By the time you break free of her suggestion, you're flat on the floor with her foot planted on your chest.";
 	}
 

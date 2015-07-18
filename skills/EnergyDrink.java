@@ -22,7 +22,7 @@ public class EnergyDrink extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().mobile(self)&&self.canAct()&&self.has(Item.EnergyDrink)&&(!self.human()||Global.getMatch().condition!=Modifier.noitems);
+		return c.getStance().mobile(getSelf())&&getSelf().canAct()&&getSelf().has(Item.EnergyDrink)&&(!getSelf().human()||Global.getMatch().condition!=Modifier.noitems);
 	}
 
 	@Override
@@ -32,14 +32,14 @@ public class EnergyDrink extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, self));
+			c.write(getSelf(),receive(c,0,Result.normal, getSelf()));
 		}
-		self.heal(c, 10+Global.random(10));
-		self.consume(Item.EnergyDrink, 1);
+		getSelf().heal(c, 10+Global.random(10));
+		getSelf().consume(Item.EnergyDrink, 1);
 	}
 
 	@Override

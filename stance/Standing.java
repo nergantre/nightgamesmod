@@ -31,7 +31,10 @@ public class Standing extends MaledomSexStance {
 	public boolean kiss(Character c) {
 		return true;
 	}
-
+	
+	public String image() {
+		return "standing.jpg";
+	}
 	@Override
 	public boolean dom(Character c) {
 		return c==top;
@@ -78,10 +81,10 @@ public class Standing extends MaledomSexStance {
 	}
 
 	@Override
-	public Position insert(Character dom, Character inserter) {
+	public Position insert() {
 		return new Neutral(top,bottom);
 	}
-	public void decay(){
+	public void decay(Combat c){
 		time++;
 		top.weaken(null, 2);
 	}

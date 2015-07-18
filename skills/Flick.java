@@ -17,35 +17,35 @@ public class Flick extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.pantsless()&&c.getStance().reachBottom(self)&&self.canAct()&&!c.getStance().penetration(target)&&!self.has(Trait.shy);
+		return target.pantsless()&&c.getStance().reachBottom(getSelf())&&getSelf().canAct()&&!c.getStance().penetration(target)&&!getSelf().has(Trait.shy);
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
 			int m = Global.random(6)+5;
-			if(self.human()){
-				c.write(self,deal(c,m,Result.normal, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,m,Result.normal, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,m,Result.normal, target));
+				c.write(getSelf(),receive(c,m,Result.normal, target));
 			}
 			if(target.has(Trait.achilles)){
 				m+=2+Global.random(target.get(Attribute.Perception)/2);
 			}
 			target.pain(c, m);
 			target.loseMojo(c, 15);
-			self.buildMojo(c, 15);
-			self.emote(Emotion.dominant, 10);
+			getSelf().buildMojo(c, 15);
+			getSelf().emote(Emotion.dominant, 10);
 			target.emote(Emotion.angry,15);
 			target.emote(Emotion.nervous,15);
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -86,10 +86,10 @@ public class Flick extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
-			return self.name()+" flicks at your balls, but hits only air.";
+			return getSelf().name()+" flicks at your balls, but hits only air.";
 		}
 		else{
-			return self.name()+" gives you a mischievous grin and flicks each of your balls with her finger. It startles you more than anything, but it does hurt and " +
+			return getSelf().name()+" gives you a mischievous grin and flicks each of your balls with her finger. It startles you more than anything, but it does hurt and " +
 				"her seemlingly carefree abuse of your jewels destroys your confidence.";
 		}
 	}

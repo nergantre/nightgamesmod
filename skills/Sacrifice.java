@@ -20,7 +20,7 @@ public class Sacrifice extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&!c.getStance().sub(self)&&self.getArousal().percent()>=70&&self.canSpend(25);
+		return getSelf().canAct()&&!c.getStance().sub(getSelf())&&getSelf().getArousal().percent()>=70&&getSelf().canSpend(25);
 	}
 
 	@Override
@@ -30,15 +30,15 @@ public class Sacrifice extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(c, 25);
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		getSelf().spendMojo(c, 25);
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		self.weaken(c, 20 + self.get(Attribute.Dark));
-		self.calm(c, 20 + self.get(Attribute.Dark));
+		getSelf().weaken(c, 20 + getSelf().get(Attribute.Dark));
+		getSelf().calm(c, 20 + getSelf().get(Attribute.Dark));
 	}
 
 	@Override
@@ -58,6 +58,6 @@ public class Sacrifice extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" pinches her nipples hard while screaming in pain. You see her stagger in exhaustion, but she seems much less aroused.";
+		return getSelf().name()+" pinches her nipples hard while screaming in pain. You see her stagger in exhaustion, but she seems much less aroused.";
 	}
 }

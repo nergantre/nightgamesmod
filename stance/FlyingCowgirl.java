@@ -24,7 +24,9 @@ public class FlyingCowgirl extends FemdomSexStance {
 				top.possessivePronoun(), top.body.getRandomPussy().describe(top),
 				bottom.possessivePronoun(), bottom.body.getRandomInsertable().describe(bottom));
 	}
-
+	public String image() {
+		return "flying.jpg";
+	}
 	@Override
 	public boolean mobile(Character c) {
 		return top.equals(c);
@@ -88,7 +90,7 @@ public class FlyingCowgirl extends FemdomSexStance {
 	public boolean flying(Character c) {
 		return true;
 	}
-	public void decay(){
+	public void decay(Combat c){
 		time++;
 		top.weaken(null, 3);
 	}
@@ -110,7 +112,7 @@ public class FlyingCowgirl extends FemdomSexStance {
 	}
 
 	@Override
-	public Position insert(Character dom, Character inserter) {
+	public Position insert() {
 		return new Mount(top, bottom);
 	}
 

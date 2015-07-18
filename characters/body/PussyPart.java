@@ -25,6 +25,7 @@ public enum PussyPart implements BodyPart {
 	succubus("succubus ", .6, 1.5, 1.2, 999, 0, 4),
 	feral("feral ", 1, 1.3, 1.2, 8, 7, 2),
 	cybernetic("cybernetic ", -.50, 1.8, .5, 200, 0, 4),
+	gooey("gooey ", .4, 1.5, 1.2, 999, 0, 6),
 	tentacled("tentacled ", 0, 2, 1.2, 999, 0, 8);
 
 	public double priority;
@@ -70,7 +71,7 @@ public enum PussyPart implements BodyPart {
 
 	@Override
 	public double priority(Character c) {
-		return priority;
+		return priority + (c.has(Trait.tight) ? 1 : 0)+ (c.has(Trait.holecontrol) ? 1 : 0) + + (c.has(Trait.autonomousPussy) ? 4 : 0);
 	}
 
 	@Override
@@ -146,11 +147,10 @@ public enum PussyPart implements BodyPart {
 			BodyPart target, double damage, Combat c) {
 		double bonus = 0;
 		if (this==PussyPart.succubus && target.isType("cock")) {
-			c.write(self, String.format("%s hot flesh wraps around %s %s and starts squirming chaotically. "
-										+"Suddenly, %s feel%s something that is not cum shoot out of %s %s, which is greedily absorbed by %s %s",
-					self.possessivePronoun(), opponent.possessivePronoun(), target.describe(opponent),
-					opponent.pronoun(), opponent.human() ? "" : "s",  opponent.possessivePronoun(), target.describe(opponent),
-					self.possessivePronoun(), describe(self)));
+			c.write(self, String.format("%s hot flesh kneads %s %s as %s %s"
+										+", drawing gouts of life energy out of %s %s, which is greedily absorbed by %s %s",
+					self.possessivePronoun(), opponent.possessivePronoun(), target.describe(opponent), self.subjectAction("ride", "rides"), opponent.directObject(),
+					opponent.possessivePronoun(), target.describe(opponent),  self.possessivePronoun(), describe(self)));
 			int strength = 10 + self.get(Attribute.Dark)/2;
 			opponent.weaken(c, strength);
 			self.heal(c, strength);
@@ -214,6 +214,13 @@ public enum PussyPart implements BodyPart {
 			c.write(self, self.nameOrPossessivePronoun() + " long sinuous vaginal tongue wraps around "
 						+ opponent.nameOrPossessivePronoun() + " " + target.describe(opponent) + ", preventing any escape.\n");
 		}
+		if (self.has(Trait.tight) || self.has(Trait.holecontrol)) {
+			String desc = "";
+			if (self.has(Trait.tight)) {desc += "powerful ";}
+			if (self.has(Trait.holecontrol)) {desc += "well-traied ";}
+			c.write(self, Global.format("{self:SUBJECT-ACTION:use|uses} {self:possessive} "+ desc +"vaginal muscles to milk {other:name-possessive} cock, adding to the pleasure.", self, opponent));
+			bonus += (self.has(Trait.tight) && self.has(Trait.holecontrol)) ? 10 : 5;
+		}
 		return bonus;
 	}
 	@Override
@@ -267,6 +274,15 @@ public enum PussyPart implements BodyPart {
 			return (int) Math.round(this.hotness * 2);
 		default:
 			return 0;
+		}
+	}
+	
+	@Override
+	public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {
+		if (self.has(Trait.autonomousPussy)) {
+			c.write(self, Global.format("{self:NAME-POSSESSIVE} " + fullDescribe(self) + " churns against {other:name-possessive} cock, " +
+					"seemingly with a mind of its own. Warm waves of flesh rubs against {other:possessive} shaft, elliciting groans of pleasure from {other:direct-object}.", self, opponent));
+			opponent.body.pleasure(self, this, otherOrgan, 10, c);
 		}
 	}
 }

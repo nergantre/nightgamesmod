@@ -37,6 +37,7 @@ import characters.Emotion;
 import characters.NPC;
 import characters.State;
 import characters.Trait;
+import characters.body.BodyPart;
 
 
 public class Combat extends Observable implements Serializable, Cloneable{
@@ -57,7 +58,8 @@ public class Combat extends Observable implements Serializable, Cloneable{
 	private int timer;
 	public Result state;
 	private HashMap<String,String> images;
-	
+	String imagePath = "";
+
 	public Combat(Character p1, Character p2, Area loc){
 		this.p1=p1;
 		this.p2=p2;
@@ -114,7 +116,15 @@ public class Combat extends Observable implements Serializable, Cloneable{
 				write("<br><b>You will " + loser.nameOrPossessivePronoun() + " scattered semen into your hands and into a few bottles that you've prepared. Yum, you just got some leftovers.</b>");
 			}
 		}
+		if (loser.human()) {
+			write("<br>Ashamed at your loss, you resolve to win next time.");
+			write("<br><b>Gained 1 Willpower</b>.");
+			loser.getWillpower().gain(1);
+		}
+		victor.getWillpower().fill();
+		loser.getWillpower().fill();
 	}
+
 	public void turn(){
 		Result state;
 		if(p1.checkLoss()&&p2.checkLoss()){
@@ -245,10 +255,6 @@ public class Combat extends Observable implements Serializable, Cloneable{
 			if (p1.human() || p2.human()) {
 				Global.gui().clearText();
 			}
-			String imagePath = "";
-			String artist = "";
-			if (images != null)
-				images.clear();
 			if(Global.isDebugOn(DebugFlags.DEBUG_SCENE)){
 				System.out.println(p1.name()+" uses "+p1act.getLabel(this));
 				System.out.println(p2.name()+" uses "+p2act.getLabel(this));
@@ -264,18 +270,12 @@ public class Combat extends Observable implements Serializable, Cloneable{
 			}
 			useSkills();
 			if((p1.human()||p2.human())&&!Global.checkFlag(Flag.noimage)){
-				if(!images.isEmpty()){
-					imagePath = images.keySet().toArray(new String[images.size()])[Global.random(images.size())];
-				}
-				if(imagePath!=""){
-					Global.gui().displayImage(imagePath,images.get(imagePath));
-				}else{
-					Global.gui().clearImage();
-				}
+				Global.gui().clearImage();
+				Global.gui().displayImage(imagePath,images.get(imagePath));
 			}
 			p1.eot(this,p2,p2act);
 			p2.eot(this,p1,p1act);
-			getStance().decay();
+			getStance().decay(this);
 			getStance().checkOngoing(this);
 			this.phase=0;
 			if(!(p1.human()||p2.human())){
@@ -316,7 +316,7 @@ public class Combat extends Observable implements Serializable, Cloneable{
 			useSkills();
 			p1.eot(this,p2,p2act);
 			p2.eot(this,p1,p1act);
-			getStance().decay();
+			getStance().decay(this);
 			getStance().checkOngoing(this);
 			this.phase=0;
 		}
@@ -349,7 +349,7 @@ public class Combat extends Observable implements Serializable, Cloneable{
 	}
 
 	private boolean checkCounter(Character attacker, Character target, Skill skill) {
-		return target.counterChance(attacker, skill) > Global.random(100);
+		return !target.has(Trait.submissive) && target.counterChance(attacker, skill) > Global.random(100);
 	}
 
 	private void resolveSkill(Skill skill, Character target) {
@@ -367,11 +367,20 @@ public class Combat extends Observable implements Serializable, Cloneable{
 			}
 			checkStamina(target);
 			checkStamina(skill.user());
+			checkArousal(skill.user(), target, skill);
 		} else {
 			write(skill.user().possessivePronoun() + " " + skill.getLabel(this) + " failed.");
 		}
 	}
 
+	private void checkArousal(Character user, Character target, Skill skill) {
+		if (target.getArousal().isFull()) {
+			target.doOrgasm(this, user, skill);
+		}
+		if (user.getArousal().isFull()) {
+			user.doOrgasm(this, target, skill);			
+		}
+	}
 	private void useSkills() {
 		Skill firstSkill, secondSkill;
 		Character firstCharacter, secondCharacter;
@@ -390,6 +399,7 @@ public class Combat extends Observable implements Serializable, Cloneable{
 		write("<br>");
 		resolveSkill(secondSkill, firstCharacter);
 	}
+
 	public void clear(){
 		message="";
 		this.updateMessage();
@@ -560,7 +570,7 @@ public class Combat extends Observable implements Serializable, Cloneable{
 	}
 
 	public void offerImage(String path, String artist){
-		images.put(path, artist);
+		imagePath = path;
 	}
 
 	public void forfeit(Character player){
@@ -584,5 +594,6 @@ public class Combat extends Observable implements Serializable, Cloneable{
 		checkStanceStatus(p1, stance, newStance);
 		checkStanceStatus(p2, stance, newStance);
 		this.stance = newStance;
+		offerImage(stance.image(), "");
 	}
 }

@@ -6,14 +6,15 @@ import global.Global;
 import global.Modifier;
 import characters.Character;
 import characters.Emotion;
+import characters.body.Body;
 import characters.body.BodyPart;
+import characters.body.GenericBodyPart;
 import characters.body.PussyPart;
 
 import combat.Combat;
 import combat.Result;
 
 public class Masturbate extends Skill {
-
 	public Masturbate(Character self) {
 		super("Masturbate", self);
 	}
@@ -25,7 +26,7 @@ public class Masturbate extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().mobile(self)&&!c.getStance().penetration(self)&&Global.getMatch().condition!=Modifier.norecovery;
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().penetration(getSelf())&&Global.getMatch().condition!=Modifier.norecovery;
 	}
 	
 	@Override
@@ -34,7 +35,7 @@ public class Masturbate extends Skill {
 	}
 
 	public BodyPart getSelfOrgan() {
-		return self.body.getRandom("hands");
+		return getSelf().body.getRandom("hands");
 	}
 
 	public BodyPart getTargetOrgan(Character target) {
@@ -52,30 +53,30 @@ public class Masturbate extends Skill {
 		return parts.get(Global.random(parts.size()));
 	}
 
-	private BodyPart withO = null;
-	private BodyPart targetO = null;
+	private BodyPart withO = Body.nonePart;
+	private BodyPart targetO = Body.nonePart;
 
 	@Override
 	public void resolve(Combat c, Character target) {
 		withO = getSelfOrgan();
-		targetO = getTargetOrgan(self);
+		targetO = getTargetOrgan(getSelf());
 		
-		if(self.human()){
-			if(self.getArousal().get()<=15){
-				c.write(self,deal(c,0,Result.weak, target));
+		if(getSelf().human()){
+			if(getSelf().getArousal().get()<=15){
+				c.write(getSelf(),deal(c,0,Result.weak, target));
 			}
 			else{
-				c.write(self,deal(c,0,Result.normal, target));
+				c.write(getSelf(),deal(c,0,Result.normal, target));
 			}
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
 		int mojo;
 
-		mojo = self.body.pleasure(self, withO, targetO, 25, c);
-		self.buildMojo(c, mojo);
-		self.emote(Emotion.horny, mojo);
+		mojo = getSelf().body.pleasure(getSelf(), withO, targetO, 25, c);
+		getSelf().buildMojo(c, mojo);
+		getSelf().emote(Emotion.horny, mojo);
 	}
 
 	@Override
@@ -133,4 +134,10 @@ public class Masturbate extends Skill {
 		return "Raise your own arousal and boosts your mojo";
 	}
 
+	public String getTargetOrganType(Combat c, Character target) {
+		return targetO.getType();
+	}
+	public String getWithOrganType(Combat c, Character target) {
+		return "hands";
+	}
 }

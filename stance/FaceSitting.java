@@ -19,6 +19,7 @@ import combat.Combat;
 import global.Global;
 import characters.Character;
 import characters.Emotion;
+import characters.Trait;
 
 public class FaceSitting extends Position {
 
@@ -35,7 +36,9 @@ public class FaceSitting extends Position {
 	public boolean mobile(Character c) {
 		return top==c;
 	}
-
+	public String image() {
+		return "facesitting.jpg";
+	}
 	@Override
 	public boolean kiss(Character c) {
 		return false;
@@ -93,14 +96,25 @@ public class FaceSitting extends Position {
 		return false;
 	}
 	@Override
-	public Position insert(Character dom, Character inserter) {
-		return this;
+	public Position insert(Character dom) {
+		Character other = getOther(dom);
+		if(dom.hasDick() && other.hasPussy()){
+			return new Missionary(dom,other);
+		} else {
+			return new Cowgirl(dom,other);
+		}
 	}
-	public void decay(){
+	public void decay(Combat c){
 		time++;
 		bottom.weaken(null, 5);
 		top.emote(Emotion.dominant, 20);
 		top.emote(Emotion.horny, 10);
+		if (top.has(Trait.energydrain)) {
+			c.write(top, Global.format("{self:NAME-POSSESSIVE} body glows purple as {other:subject-action:feel|feels} {other:possessive} very spirit drained through your connection.", top, bottom));
+			int m = Global.random(5) + 5;
+			bottom.weaken(c, m);
+			top.heal(c, m);
+		}
 	}
 	@Override
 	public Collection<Skill> availSkills(Character c) {
@@ -117,5 +131,9 @@ public class FaceSitting extends Position {
 			avail.add(new Wait(bottom));
 			return avail;
 		}
+	}
+	@Override
+	public float priorityMod(Character self) {
+		return getSubDomBonus(self, top.has(Trait.energydrain) ? 5.0f : 3.0f);
 	}
 }

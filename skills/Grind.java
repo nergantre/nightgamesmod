@@ -21,7 +21,7 @@ public class Grind extends Thrust {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().dom(self)&&c.getStance().penetration(self)&&c.getStance().en!=Stance.anal;
+		return getSelf().canAct()&&c.getStance().dom(getSelf())&&c.getStance().penetration(getSelf())&&c.getStance().en!=Stance.anal;
 	}
 
 	public int[] getDamage(Character target, Position stance) {
@@ -30,7 +30,7 @@ public class Grind extends Thrust {
 		int ms = 10;
 
 		int mt = 6;
-		if(self.has(Trait.experienced)){
+		if(getSelf().has(Trait.experienced)){
 			mt = mt * 3 / 4;
 		}
 		mt = Math.max(1, mt);
@@ -53,9 +53,9 @@ public class Grind extends Thrust {
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.reverse) {
-			return Global.format("{self:SUBJECT-ACTION:grind|grinds} against {other:direct-object}, stimulating {other:possessive} entire manhood and bringing {other:direct-object} closer to climax.", self, target);
+			return Global.format("{self:SUBJECT-ACTION:grind|grinds} against {other:direct-object}, stimulating {other:possessive} entire manhood and bringing {other:direct-object} closer to climax.", getSelf(), target);
 		} else {
-			return Global.format("{self:SUBJECT} grind {self:possessive} hips against {other:direct-object} without thrusting. {other:SUBJECT} trembles and gasps as the movement stimulates {other:possessive} clit and the walls of {other:possessive} {other:body-part:pussy}.", self, target);
+			return Global.format("{self:SUBJECT} grind {self:possessive} hips against {other:direct-object} without thrusting. {other:SUBJECT} trembles and gasps as the movement stimulates {other:possessive} clit and the walls of {other:possessive} {other:body-part:pussy}.", getSelf(), target);
 		}
 	}
 

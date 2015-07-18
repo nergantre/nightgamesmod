@@ -42,4 +42,6 @@ public interface Personality extends Serializable{
 	public void pickFeat();
 	public String describeAll();
 	public String temptLiner(Character target);
+	public String orgasmLiner();
+	public String makeOrgasmLiner();
 }

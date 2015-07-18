@@ -16,28 +16,28 @@ public class Trip extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && c.getStance().mobile(self)&&!c.getStance().prone(target)&&!c.getStance().behind(self)&&self.canAct();
+		return !target.wary() && c.getStance().mobile(getSelf())&&!c.getStance().prone(target)&&c.getStance().front(getSelf())&&getSelf().canAct();
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy()) && self.check(Attribute.Cunning, target.knockdownDC())){
-			if(self.human()){
-				c.write(self,deal(c,0,Result.normal, target));
+		if(target.roll(this, c, accuracy()) && getSelf().check(Attribute.Cunning, target.knockdownDC())){
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.normal, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.normal, target));
+				c.write(getSelf(),receive(c,0,Result.normal, target));
 			}
-			if(c.getStance().prone(self)&&!self.is(Stsflag.braced)){
-				self.add(new Braced(self));
+			if(c.getStance().prone(getSelf())&&!getSelf().is(Stsflag.braced)){
+				getSelf().add(new Braced(getSelf()));
 			}
-			c.setStance(new StandingOver(self,target));
+			c.setStance(new StandingOver(getSelf(),target));
 		} else {
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -73,9 +73,9 @@ public class Trip extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
-			return self.name()+" hooks your ankle, but you recover without falling.";
+			return getSelf().name()+" hooks your ankle, but you recover without falling.";
 		} else {
-			return self.name()+" takes your feet out from under you and sends you sprawling to the floor.";
+			return getSelf().name()+" takes your feet out from under you and sends you sprawling to the floor.";
 		}
 	}
 

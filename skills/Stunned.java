@@ -15,20 +15,20 @@ public class Stunned extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.stunned();
+		return getSelf().stunned();
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
 			if(Global.random(3)>=2){
-				c.write(self,self.stunLiner());
+				c.write(getSelf(),getSelf().stunLiner());
 			}
 			else{
-				c.write(self,receive(c,0,Result.normal, target));
+				c.write(getSelf(),receive(c,0,Result.normal, target));
 			}
 		}
 	}
@@ -57,7 +57,7 @@ public class Stunned extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" is on the floor, trying to catch her breath.";
+		return getSelf().name()+" is on the floor, trying to catch her breath.";
 	}
 
 	@Override

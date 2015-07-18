@@ -28,7 +28,13 @@ public class StandingOver extends Position {
 	public boolean kiss(Character c) {
 		return c==top;
 	}
-
+	public String image() {
+		if (bottom.hasPussy()) {
+			return "standing_m.jpg";
+		} else {
+			return "standing_f.jpg";
+		}
+	}
 	@Override
 	public boolean dom(Character c) {
 		return c==top;
@@ -80,11 +86,21 @@ public class StandingOver extends Position {
 	}
 
 	@Override
-	public Position insert(Character dom, Character inserter) {
-		return this;
+	public Position insert(Character dom) {
+		Character other = getOther(dom);
+
+		if(dom.hasDick()&&other.hasPussy()){
+			return new Missionary(dom,other);
+		}
+		else if(dom.hasPussy()&&other.hasDick()){
+			return new Cowgirl(dom,other);
+		}
+		else{
+			return this;
+		}
 	}
 	@Override
 	public float priorityMod(Character self) {
-		return dom(self) ? 2.0f : 0;
+		return getSubDomBonus(self, 2.0f);
 	}
 }

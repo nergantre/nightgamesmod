@@ -22,18 +22,18 @@ public class Paizuri extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.hasBreasts() && self.body.getLargestBreasts().size > MIN_REQUIRED_BREAST_SIZE && target.hasDick() && self.topless()
-				&& target.pantsless() && c.getStance().reachBottom(self)
-				&& !c.getStance().behind(self) && !c.getStance().behind(target)
-				&& self.canAct() && !c.getStance().penetration(self);
+		return getSelf().hasBreasts() && getSelf().body.getLargestBreasts().size > MIN_REQUIRED_BREAST_SIZE && target.hasDick() && getSelf().topless()
+				&& target.pantsless() && c.getStance().reachBottom(getSelf())
+				&& c.getStance().front(getSelf())
+				&& getSelf().canAct() && !c.getStance().penetration(getSelf());
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		BreastsPart breasts = self.body.getLargestBreasts();
+		BreastsPart breasts = getSelf().body.getLargestBreasts();
 		//try to find a set of breasts large enough, if none, default to largest.
 		for (int i = 0 ; i < 3; i++) {
-			BreastsPart otherbreasts = self.body.getRandomBreasts();
+			BreastsPart otherbreasts = getSelf().body.getRandomBreasts();
 			if (otherbreasts.size > MIN_REQUIRED_BREAST_SIZE) {
 				breasts = otherbreasts;
 				break;
@@ -42,11 +42,11 @@ public class Paizuri extends Skill {
 
 		int m = (4 + Global.random(3));
 		if (target.human()) {
-			c.write(self, receive(0, Result.normal, target, breasts));
+			c.write(getSelf(), receive(0, Result.normal, target, breasts));
 		}
-		target.body.pleasure(self, self.body.getRandom("breasts"), target.body.getRandom("cock"), m, c);					
+		target.body.pleasure(getSelf(), getSelf().body.getRandom("breasts"), target.body.getRandom("cock"), m, c);					
 
-		self.buildMojo(c, 25);
+		getSelf().buildMojo(c, 25);
 	}
 
 	@Override
@@ -76,8 +76,8 @@ public class Paizuri extends Skill {
 
 	public String receive(int damage, Result modifier, Character target, BreastsPart breasts) {
 		StringBuilder b = new StringBuilder();
-		b.append(self.name() + " squeezes your dick between her ");
-		b.append(breasts.describe(self));
+		b.append(getSelf().name() + " squeezes your dick between her ");
+		b.append(breasts.describe(getSelf()));
 		b.append(". She rubs them up and down your shaft and teasingly licks your tip.");
 		return b.toString();
 	}
@@ -95,5 +95,12 @@ public class Paizuri extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
+	}
+
+	public String getTargetOrganType(Combat c, Character target) {
+		return "cock";
+	}
+	public String getWithOrganType(Combat c, Character target) {
+		return "breasts";
 	}
 }

@@ -13,8 +13,8 @@ public class CommandOral extends PlayerCommand {
 	}
 
 	public boolean usable(Combat c, Character target) {
-		return super.usable(c, target) && self.pantsless()
-				&& c.getStance().reachBottom(self);
+		return super.usable(c, target) && getSelf().pantsless()
+				&& c.getStance().reachBottom(getSelf());
 	}
 	
 	@Override
@@ -25,18 +25,18 @@ public class CommandOral extends PlayerCommand {
 	@Override
 	public void resolve(Combat c, Character target) {
 		boolean silvertongue = target.has(Trait.silvertongue);
-		boolean lowStart = self.getArousal().get() < 15;
+		boolean lowStart = getSelf().getArousal().get() < 15;
 		int m = (silvertongue ? 8 : 5) + Global.random(10);
-		if (self.human())
+		if (getSelf().human())
 			if (lowStart)
 				if (m < 8)
-					c.write(self,deal(c, 0, Result.weak, target));
+					c.write(getSelf(),deal(c, 0, Result.weak, target));
 				else
-					c.write(self,deal(c, 0, Result.strong, target));
+					c.write(getSelf(),deal(c, 0, Result.strong, target));
 			else
-				c.write(self,deal(c, 0, Result.normal, target));
-		self.body.pleasure(target, target.body.getRandom("mouth"), self.body.getRandom("cock"), m, c);					
-		self.buildMojo(c, 30);
+				c.write(getSelf(),deal(c, 0, Result.normal, target));
+		getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("cock"), m, c);					
+		getSelf().buildMojo(c, 30);
 	}
 
 	@Override

@@ -27,14 +27,14 @@ public class CommandMasturbate extends PlayerCommand {
 		target.body.pleasure(target, target.body.getRandom("hands"), target.body.getRandom("cock"), m, c);					
 
 		boolean lowEnd = target.getArousal().get() < 15;
-		if (self.human())
+		if (getSelf().human())
 			if (lowStart)
 				if (lowEnd)
-					c.write(self,deal(c, 0, Result.weak, target));
+					c.write(getSelf(),deal(c, 0, Result.weak, target));
 				else
-					c.write(self,deal(c, 0, Result.strong, target));
+					c.write(getSelf(),deal(c, 0, Result.strong, target));
 			else
-				c.write(self,deal(c, 0, Result.normal, target));		
+				c.write(getSelf(),deal(c, 0, Result.normal, target));		
 	}
 
 	@Override

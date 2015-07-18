@@ -71,6 +71,16 @@ public class MouthPart extends GenericBodyPart {
 			}
 			bonus += Global.random(3) + 4;
 		}
+		if (self.has(Trait.soulsucker)) {
+			if (!self.human()) {
+				c.write(opponent, "<br>You feel faint as her lips touch your body, as if your will to fight is being sucked out through your " + target.describe(opponent) + " into her mouth.");
+			} else {
+				c.write(opponent, "<br>As your lips touch " + opponent.getName() + ", you instinctively drawn in her spirit, forcing her energy through " + target.describe(opponent) + " into your mouth.");
+			}
+			bonus += Global.random(3) + 2;
+			opponent.loseWillpower(c, Global.random(3) + 2);
+			self.buildMojo(c, 5);
+		}
 		return bonus;
 	}
 

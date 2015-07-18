@@ -47,7 +47,7 @@ public class Eve extends BasePersonality {
 		character.mod(Attribute.Perception, 1);
 		Global.gainSkills(character);
 		character.add(Trait.exhibitionist);
-		character.setUnderwear(Item.EveTrophy);
+		character.setTrophy(Item.EveTrophy);
 		character.plan = Tactics.hunting;
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.d);
@@ -251,5 +251,15 @@ public class Eve extends BasePersonality {
 		default:
 			return value>=100;
 		}
+	}
+
+	@Override
+	public String orgasmLiner() {
+		return "";
+	}
+
+	@Override
+	public String makeOrgasmLiner() {
+		return "";
 	}
 }

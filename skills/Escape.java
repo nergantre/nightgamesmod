@@ -17,63 +17,63 @@ public class Escape extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		if (target.hasStatus(Stsflag.cockbound)) { return false; }
-		return ((c.getStance().sub(self)&&!c.getStance().mobile(self))||self.bound())&&self.canRespond();
+		return ((c.getStance().sub(getSelf())&&!c.getStance().mobile(getSelf()))||getSelf().bound())&&getSelf().canRespond();
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(self.bound()){
-			if(self.check(Attribute.Cunning, 5-self.escape())){
-				if(self.human()){
-					c.write(self,"You slip your hands out of your restraints.");
+		if(getSelf().bound()){
+			if(getSelf().check(Attribute.Cunning, 5-getSelf().escape())){
+				if(getSelf().human()){
+					c.write(getSelf(),"You slip your hands out of your restraints.");
 				} else if(target.human()) {
-					c.write(self,self.name()+" manages to free herself.");
+					c.write(getSelf(),getSelf().name()+" manages to free herself.");
 				}
-				self.free();
+				getSelf().free();
 			} else {
-				if(self.human()){
-					c.write(self,"You try to slip your restraints, but can't get free.");
+				if(getSelf().human()){
+					c.write(getSelf(),"You try to slip your restraints, but can't get free.");
 				}
 				else if(target.human()) {
-					c.write(self,self.name()+" squirms against her restraints fruitlessly.");
+					c.write(getSelf(),getSelf().name()+" squirms against her restraints fruitlessly.");
 				}
 			}
-		} else if(self.check(Attribute.Cunning, 20+target.get(Attribute.Cunning) - (5*c.getStance().time+self.escape()))) {
-			if(self.human()){
-				if (self.hasStatus(Stsflag.cockbound)) {
-					c.write(self,"You some how managed to wiggle out of "+target.name()+"'s iron grip on your dick.");
-					self.removeStatus(Stsflag.cockbound);
+		} else if(getSelf().check(Attribute.Cunning, 20+target.get(Attribute.Cunning) - (5*c.getStance().time+getSelf().escape()))) {
+			if(getSelf().human()){
+				if (getSelf().hasStatus(Stsflag.cockbound)) {
+					c.write(getSelf(),"You some how managed to wiggle out of "+target.name()+"'s iron grip on your dick.");
+					getSelf().removeStatus(Stsflag.cockbound);
 					return;
 				}
-				c.write(self,"Your quick wits find a gap in "+target.name()+"'s hold and you slip away.");
+				c.write(getSelf(),"Your quick wits find a gap in "+target.name()+"'s hold and you slip away.");
 			}
 			else if(target.human()){
-				if (self.hasStatus(Stsflag.cockbound)) {
-					c.write(self,"She some how managed to wiggle out ofyour iron grip on her dick.");
-					self.removeStatus(Stsflag.cockbound);
+				if (getSelf().hasStatus(Stsflag.cockbound)) {
+					c.write(getSelf(),"She some how managed to wiggle out ofyour iron grip on her dick.");
+					getSelf().removeStatus(Stsflag.cockbound);
 					return;
 				}
-				c.write(self,self.name()+" goes limp and you take the opportunity to adjust your grip on her. As soon as you move, she bolts out of your weakened hold. " +
+				c.write(getSelf(),getSelf().name()+" goes limp and you take the opportunity to adjust your grip on her. As soon as you move, she bolts out of your weakened hold. " +
 						"It was a trick!");
 			}
-			if (!self.is(Stsflag.braced)) {
-				self.add(new Braced(self));
+			if (!getSelf().is(Stsflag.braced)) {
+				getSelf().add(new Braced(getSelf()));
 			}
-			c.setStance(new Neutral(self,target));
+			c.setStance(new Neutral(getSelf(),target));
 		} else {
-			if(self.human()){
-				if (self.hasStatus(Stsflag.cockbound)) {
-					c.write(self,"You try to escape "+target.name()+"'s iron grip on your dick. However, her pussy tongue has other ideas. She runs her tongue up and down your cock and leaves you gasping with pleasure.");
+			if(getSelf().human()){
+				if (getSelf().hasStatus(Stsflag.cockbound)) {
+					c.write(getSelf(),"You try to escape "+target.name()+"'s iron grip on your dick. However, her pussy tongue has other ideas. She runs her tongue up and down your cock and leaves you gasping with pleasure.");
 					int m = 8;
-					self.body.pleasure(target, target.body.getRandom("pussy"), self.body.getRandom("cock"), m, c);					
-				} else if (self.nude()) {
-					c.write(self,"You try to take advantage of an opening in "+target.name()+"'s stance to slip away, but she catches you by your protruding penis and reasserts her position.");
+					getSelf().body.pleasure(target, target.body.getRandom("pussy"), getSelf().body.getRandom("cock"), m, c);					
+				} else if (getSelf().nude()) {
+					c.write(getSelf(),"You try to take advantage of an opening in "+target.name()+"'s stance to slip away, but she catches you by your protruding penis and reasserts her position.");
 				}
 				else{
-					c.write(self,"You think you see an opening in "+target.name()+"'s stance, but she corrects it before you can take advantage.");
+					c.write(getSelf(),"You think you see an opening in "+target.name()+"'s stance, but she corrects it before you can take advantage.");
 				}
 			} else if(target.human()) {
-				c.write(self,self.name()+" manages to slip out of your grip for a moment, but you tickle her before she can get far and regain control.");
+				c.write(getSelf(),getSelf().name()+" manages to slip out of your grip for a moment, but you tickle her before she can get far and regain control.");
 			}
 		}
 	}

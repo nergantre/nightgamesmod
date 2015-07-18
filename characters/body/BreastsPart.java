@@ -208,4 +208,9 @@ public enum BreastsPart implements BodyPart {
 			return 0;
 		}
 	}
+
+	@Override
+	public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {
+
+	}
 }

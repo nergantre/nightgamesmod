@@ -18,46 +18,46 @@ public class Whisper extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().kiss(self)&&self.canAct()&&!self.has(Trait.direct);
+		return c.getStance().kiss(getSelf())&&getSelf().canAct()&&!getSelf().has(Trait.direct);
 	}
 	
 	@Override
 	public float priorityMod(Combat c) {
-		return self.has(Trait.darkpromises) ? 1.0f : 0;
+		return getSelf().has(Trait.darkpromises) ? 1.0f : 0;
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		int roll = Global.centeredrandom(4, self.get(Attribute.Dark) / 5.0, 2);
+		int roll = Global.centeredrandom(4, getSelf().get(Attribute.Dark) / 5.0, 2);
 		int m = 4 + Global.random(6);
 
 		if(target.has(Trait.imagination)) {
 			m += 4;
 		}
-		if(self.has(Trait.darkpromises)) {
+		if(getSelf().has(Trait.darkpromises)) {
 			m += 3;
 		}
-		if(self.has(Trait.darkpromises)&& roll == 4 &&self.canSpend(15) && !target.wary()){
-			self.spendMojo(c, 15);
-			if(self.human()){
-				c.write(self,deal(c,0,Result.special, target));
+		if(getSelf().has(Trait.darkpromises)&& roll == 4 &&getSelf().canSpend(15) && !target.wary()){
+			getSelf().spendMojo(c, 15);
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.special, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.special, target));
+				c.write(getSelf(),receive(c,0,Result.special, target));
 			}
-			target.add(new Enthralled(target,self, 4));
+			target.add(new Enthralled(target,getSelf(), 4));
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.normal, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.normal, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.normal, target));
+				c.write(getSelf(),receive(c,0,Result.normal, target));
 			}
 		}
-		target.tempt(c, self, m);
+		target.tempt(c, getSelf(), m);
 		target.emote(Emotion.horny, 30);
-		self.buildMojo(c, 10);
+		getSelf().buildMojo(c, 10);
 	}
 
 	@Override
@@ -89,12 +89,12 @@ public class Whisper extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.special){
-			return this.self.name() + " whispers in your ear in some eldritch language."
+			return this.getSelf().name() + " whispers in your ear in some eldritch language."
 					+ " Her words echo through your head and you feel a"
 					+ " strong compulsion to do what she tells you";
 		}
 		else{
-			return self.name()+" whispers some deliciously seductive suggestions in your ear.";
+			return getSelf().name()+" whispers some deliciously seductive suggestions in your ear.";
 		}
 	}
 

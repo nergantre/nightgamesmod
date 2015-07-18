@@ -22,7 +22,7 @@ public class Illusions extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().mobile(self)&&!c.getStance().prone(self)&&self.canSpend(20);
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&getSelf().canSpend(20);
 	}
 
 	@Override
@@ -32,15 +32,15 @@ public class Illusions extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(c, 20);
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		getSelf().spendMojo(c, 20);
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		self.add(new Distorted(self, 6));
-		self.add(new Alluring(self, 5));
+		getSelf().add(new Distorted(getSelf(), 6));
+		getSelf().add(new Alluring(getSelf(), 5));
 	}
 
 	@Override
@@ -60,6 +60,6 @@ public class Illusions extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" casts a brief spell and your vision is filled with naked copies of her. You can still tell which "+self.name()+" is real, but it's still a distraction. At the same time, she suddnely looks irresistable.";
+		return getSelf().name()+" casts a brief spell and your vision is filled with naked copies of her. You can still tell which "+getSelf().name()+" is real, but it's still a distraction. At the same time, she suddnely looks irresistable.";
 	}
 }

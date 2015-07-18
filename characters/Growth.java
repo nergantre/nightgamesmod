@@ -1,5 +1,8 @@
 package characters;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Growth {
 	public int arousal;
 	public int stamina;
@@ -9,6 +12,8 @@ public class Growth {
 	public int bonusMojo;
 	public int attributes[];
 	public int bonusAttributes;
+	public Map<Integer, Trait> traits;
+	public Map<Integer, Runnable> actions;
 	public Growth() {
 		stamina = 2;
 		arousal = 4;
@@ -22,5 +27,7 @@ public class Growth {
 			3,
 			3,
 		};
+		traits = new HashMap<Integer, Trait>();
+		actions = new HashMap<Integer, Runnable>();
 	}
 }

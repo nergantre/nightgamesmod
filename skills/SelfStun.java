@@ -19,7 +19,7 @@ public class SelfStun extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !self.stunned() && self.canAct();
+		return !getSelf().stunned() && getSelf().canAct();
 	}
 
 	@Override
@@ -29,11 +29,11 @@ public class SelfStun extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.add(new Winded(self));
-		if (self.human()) {
-			c.write(self, deal(c, 0, Result.normal, target));
-		} else if(self.human()) {
-			c.write(self, receive(c, 0, Result.normal, target));
+		getSelf().add(new Winded(getSelf()));
+		if (getSelf().human()) {
+			c.write(getSelf(), deal(c, 0, Result.normal, target));
+		} else if(getSelf().human()) {
+			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
 	}
 

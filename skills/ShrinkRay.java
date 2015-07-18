@@ -24,7 +24,7 @@ public class ShrinkRay extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().mobile(self)&&!c.getStance().prone(self)&&target.nude()&&self.has(Item.Battery, 2);
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&target.nude()&&getSelf().has(Item.Battery, 2);
 	}
 	
 	@Override
@@ -39,19 +39,19 @@ public class ShrinkRay extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.consume(Item.Battery, 2);
+		getSelf().consume(Item.Battery, 2);
 		boolean permanent = Global.random(20) == 0;
-		if(self.human()){
+		if(getSelf().human()){
 			if(target.hasDick()){
-				c.write(self,deal(c,permanent ? 1 : 0, Result.special, target));
+				c.write(getSelf(),deal(c,permanent ? 1 : 0, Result.special, target));
 			} else {
-				c.write(self,deal(c,permanent ? 1 : 0, Result.normal, target));
+				c.write(getSelf(),deal(c,permanent ? 1 : 0, Result.normal, target));
 			}
 		} else if(target.human()) {
 			if(target.hasDick()){
-				c.write(self,receive(c,permanent ? 1 : 0, Result.special, target));
+				c.write(getSelf(),receive(c,permanent ? 1 : 0, Result.special, target));
 			} else {
-				c.write(self,receive(c,permanent ? 1 : 0, Result.normal, target));
+				c.write(getSelf(),receive(c,permanent ? 1 : 0, Result.normal, target));
 			}
 		}
 		target.add(new Shamed(target));
@@ -101,9 +101,9 @@ public class ShrinkRay extends Skill {
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		String message;
 		if(modifier==Result.special){
-			message = self.name()+" points a device at your groin and giggles as your genitals shrink. You flush in shame and cover yourself.";
+			message = getSelf().name()+" points a device at your groin and giggles as your genitals shrink. You flush in shame and cover yourself.";
 		} else {
-			message = self.name()+" points a device at your chest and giggles as your " + self.body.getRandomBreasts().describe(self)
+			message = getSelf().name()+" points a device at your chest and giggles as your " + getSelf().body.getRandomBreasts().describe(getSelf())
 					+ " shrink. You flush in shame and cover yourself.";
 		}
 		if (damage == 0)

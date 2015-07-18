@@ -27,6 +27,14 @@ public class SixNine extends Position {
 	public boolean kiss(Character c) {
 		return false;
 	}
+	
+	public String image() {
+		if (bottom.hasDick() || top.hasDick()) {
+			return "69.jpg";
+		} else {
+			return "les69.jpg";
+		}
+	}
 
 	@Override
 	public boolean facing() {
@@ -84,7 +92,7 @@ public class SixNine extends Position {
 	}
 
 	@Override
-	public Position insert(Character dom, Character inserter) {
+	public Position insert() {
 		return this;
 	}
 }

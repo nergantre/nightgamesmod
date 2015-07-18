@@ -17,20 +17,20 @@ public class Stomp extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !c.getStance().prone(self)&&c.getStance().prone(target)&&c.getStance().feet(self)&&self.canSpend(20)&&self.canAct()&&!self.has(Trait.softheart)&&!c.getStance().penetration(self);
+		return !c.getStance().prone(getSelf())&&c.getStance().prone(target)&&c.getStance().feet(getSelf())&&getSelf().canSpend(20)&&getSelf().canAct()&&!getSelf().has(Trait.softheart)&&!c.getStance().penetration(getSelf());
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(c, 20);
-		if(self.has(Trait.heeldrop)&&target.pantsless()){
-			if(self.human()){
-				c.write(self,deal(c,0,Result.special, target));
+		getSelf().spendMojo(c, 20);
+		if(getSelf().has(Trait.heeldrop)&&target.pantsless()){
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.special, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.special, target));
+				c.write(getSelf(),receive(c,0,Result.special, target));
 				if(Global.random(5)>=1){
-					c.write(self,self.bbLiner());
+					c.write(getSelf(),getSelf().bbLiner());
 				}
 			}
 			if(target.has(Trait.achilles)){
@@ -40,23 +40,23 @@ public class Stomp extends Skill {
 			target.calm(c, Global.random(30));
 		}
 		else if(target.has(Trait.armored)){
-			if(self.human()){
-				c.write(self,deal(c,0,Result.weak, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.weak, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.weak, target));
+				c.write(getSelf(),receive(c,0,Result.weak, target));
 			}
 			target.pain(c, 5-(Global.random(3)*target.bottom.size()));
 			target.calm(c, Global.random(10)+10);
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.normal, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.normal, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.normal, target));
+				c.write(getSelf(),receive(c,0,Result.normal, target));
 				if(Global.random(5)>=1){
-					c.write(self,self.bbLiner());
+					c.write(getSelf(),getSelf().bbLiner());
 				}
 			}
 			if(target.has(Trait.achilles)){
@@ -84,11 +84,11 @@ public class Stomp extends Skill {
 		return Tactics.damage;
 	}
 	public String getLabel(Combat c){
-		if(self.has(Trait.heeldrop)){
+		if(getSelf().has(Trait.heeldrop)){
 			return "Double Legdrop";
 		}
 		else{
-			return getName();
+			return getName(c);
 		}
 	}
 
@@ -122,15 +122,15 @@ public class Stomp extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.special){
-			return self.name()+" forces your legs open and begins prodding your genitals with her foot. You're slightly aroused by her attention, but she's not giving " +
+			return getSelf().name()+" forces your legs open and begins prodding your genitals with her foot. You're slightly aroused by her attention, but she's not giving " +
 					"you a proper footjob, she's mostly just playing with your balls. Too late, you realize that she's actually lining up her targets. Two torrents of pain " +
 					"erupt from your delicates as her feet crash down on them.";
 		}
 		else if(modifier==Result.weak){
-			return self.name()+" grabs your ankles and stomps down on your armored groin, doing little damage.";
+			return getSelf().name()+" grabs your ankles and stomps down on your armored groin, doing little damage.";
 		}
 		else{
-			return self.name()+" grabs your ankles and stomps down on your unprotected jewels. You curl up in the fetal position, groaning in agony.";
+			return getSelf().name()+" grabs your ankles and stomps down on your unprotected jewels. You curl up in the fetal position, groaning in agony.";
 		}		
 	}
 

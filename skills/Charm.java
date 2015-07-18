@@ -17,35 +17,35 @@ public class Charm extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canSpend(20)&&self.canRespond()&&c.getStance().facing()&&!target.wary();
+		return getSelf().canSpend(20)&&getSelf().canRespond()&&c.getStance().facing()&&!target.wary();
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(c, 20);
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		getSelf().spendMojo(c, 20);
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		int m = (int) (Math.round(2+Global.random(4) + self.body.getCharismaBonus(target)));
+		int m = (int) (Math.round(2+Global.random(4) + getSelf().body.getCharismaBonus(target)));
 		if(target.has(Trait.imagination)){
 			m += 4;
-			target.tempt(c, self, m);
+			target.tempt(c, getSelf(), m);
 			if(Global.random(4)>=1){
 				c.write(target.subjectAction("were", "was") + " charmed.");
 				target.add(new Charmed(target));
 			}
 		} else {
-			target.tempt(c, self, m);
+			target.tempt(c, getSelf(), m);
 			if(Global.random(4)>=2){
 				c.write(target.subjectAction("were", "was") + " charmed.");
 				target.add(new Charmed(target));
 			}
 		}
 		target.emote(Emotion.horny,10);
-		self.emote(Emotion.confident, 20);
+		getSelf().emote(Emotion.confident, 20);
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class Charm extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.getName() + " flashes a dazzling smile at you.";
+		return getSelf().getName() + " flashes a dazzling smile at you.";
 	}
 
 	@Override

@@ -19,7 +19,9 @@ public class Missionary extends MaledomSexStance {
 			return top.name()+"";
 		}
 	}
-
+	public String image() {
+		return "missionary.jpg";
+	}
 	@Override
 	public boolean mobile(Character c) {
 		return c==top;
@@ -81,7 +83,7 @@ public class Missionary extends MaledomSexStance {
 	}
 
 	@Override
-	public Position insert(Character dom, Character inserter) {
+	public Position insert() {
 		return new Mount(top,bottom);
 	}
 

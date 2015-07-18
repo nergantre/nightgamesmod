@@ -17,38 +17,38 @@ public class Tackle extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && c.getStance().mobile(self)&&c.getStance().mobile(target)&&!c.getStance().prone(self)&&self.canAct()&&!self.has(Trait.petite);
+		return !target.wary() && c.getStance().mobile(getSelf())&&c.getStance().mobile(target)&&!c.getStance().prone(getSelf())&&getSelf().canAct()&&!getSelf().has(Trait.petite);
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy())&&self.check(Attribute.Power,target.knockdownDC()-self.get(Attribute.Animism))){
-			if(self.get(Attribute.Animism)>=1){
-				if(self.human()){
-					c.write(self,deal(c,0,Result.special, target));
+		if(target.roll(this, c, accuracy())&&getSelf().check(Attribute.Power,target.knockdownDC()-getSelf().get(Attribute.Animism))){
+			if(getSelf().get(Attribute.Animism)>=1){
+				if(getSelf().human()){
+					c.write(getSelf(),deal(c,0,Result.special, target));
 				}
 				else if(target.human()){
-					c.write(self,receive(c,0,Result.special, target));
+					c.write(getSelf(),receive(c,0,Result.special, target));
 				}
 				target.pain(c, 4+Global.random(6));
 			}
 			else{
-				if(self.human()){
-					c.write(self,deal(c,0,Result.normal, target));
+				if(getSelf().human()){
+					c.write(getSelf(),deal(c,0,Result.normal, target));
 				}
 				else if(target.human()){
-					c.write(self,receive(c,0,Result.normal, target));
+					c.write(getSelf(),receive(c,0,Result.normal, target));
 				}
 				target.pain(c, 3+Global.random(4));
 			}
-			c.setStance(new Mount(self,target));
+			c.setStance(new Mount(getSelf(),target));
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -63,7 +63,7 @@ public class Tackle extends Skill {
 		return new Tackle(user);
 	}
 	public int speed(){
-		if(self.get(Attribute.Animism)>=1){
+		if(getSelf().get(Attribute.Animism)>=1){
 			return 3;
 		}
 		else{
@@ -71,7 +71,7 @@ public class Tackle extends Skill {
 		}
 	}
 	public int accuracy(){
-		if(self.get(Attribute.Animism)>=1){
+		if(getSelf().get(Attribute.Animism)>=1){
 			return 3;
 		}
 		else{
@@ -83,11 +83,11 @@ public class Tackle extends Skill {
 	}
 
 	public String getLabel(Combat c){
-		if(self.get(Attribute.Animism)>=1){
+		if(getSelf().get(Attribute.Animism)>=1){
 			return "Pounce";
 		}
 		else{
-			return getName();
+			return getName(c);
 		}
 	}
 	@Override
@@ -106,13 +106,13 @@ public class Tackle extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.special){
-			return self.name()+" wiggles her butt cutely before leaping at you and pinning you to the floor.";
+			return getSelf().name()+" wiggles her butt cutely before leaping at you and pinning you to the floor.";
 		}
 		if(modifier==Result.miss){
-			return self.name()+" tries to tackle you, but you sidestep out of the way.";
+			return getSelf().name()+" tries to tackle you, but you sidestep out of the way.";
 		}
 		else{
-			return self.name()+" bowls you over and sits triumphantly on your chest.";
+			return getSelf().name()+" bowls you over and sits triumphantly on your chest.";
 		}
 	}
 

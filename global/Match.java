@@ -3,6 +3,7 @@ package global;
 import items.Item;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -27,7 +28,7 @@ public class Match {
 	private boolean pause;
 	public Modifier condition;
 	
-	public Match(HashSet<Character> combatants, Modifier condition){
+	public Match(Collection<Character> combatants, Modifier condition){
 		this.combatants=new ArrayList<Character>();
 		for (Character c : combatants) {
 				this.combatants.add(c);
@@ -54,6 +55,12 @@ public class Match {
 		}
 		if(this.combatants.size()>=5){
 			this.combatants.get(4).place(map.get("Union"));
+		}
+		if(this.combatants.size()>=6){
+			this.combatants.get(5).place(map.get("Bridge"));
+		}
+		if(this.combatants.size()>=7){
+			this.combatants.get(6).place(map.get("Pool"));
 		}
 	}
 	public void round(){
@@ -153,6 +160,13 @@ public class Match {
 			}
 			while(combatant.has(Item.ReykaTrophy)){
 				combatant.consume(Item.ReykaTrophy,1);
+				combatant.gainMoney(combatant.prize());
+				if(combatant.human()){
+					cloth++;
+				}
+			}
+			while(combatant.has(Item.AiriTrophy)){
+				combatant.consume(Item.AiriTrophy,1);
 				combatant.gainMoney(combatant.prize());
 				if(combatant.human()){
 					cloth++;
@@ -284,7 +298,7 @@ public class Match {
 			}
 			human.location().endEncounter();
 		}
-		human.travel(new Area("","",Movement.retire));
+		human.travel(new Area("Retirement","",Movement.retire));
 		human.state=State.quit;
 		resume();
 	}

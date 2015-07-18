@@ -23,7 +23,7 @@ public class LustAura extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canRespond()&&c.getStance().mobile(self)&&self.canSpend(10)&&!target.is(Stsflag.horny, self.nameOrPossessivePronoun() + " aura of lust");
+		return getSelf().canRespond()&&c.getStance().mobile(getSelf())&&getSelf().canSpend(10)&&!target.is(Stsflag.horny, getSelf().nameOrPossessivePronoun() + " aura of lust");
 	}
 
 	@Override
@@ -33,15 +33,15 @@ public class LustAura extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(c, 10);
-		self.arouse(10, c);
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		getSelf().spendMojo(c, 10);
+		getSelf().arouse(10, c);
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		target.add(new Horny(target,3+2*self.getSkimpiness(),3+Global.random(3), self.nameOrPossessivePronoun() + " aura of lust"));
+		target.add(new Horny(target,3+2*getSelf().getSkimpiness(),3+Global.random(3), getSelf().nameOrPossessivePronoun() + " aura of lust"));
 		target.emote(Emotion.horny, 10);
 	}
 
@@ -62,7 +62,7 @@ public class LustAura extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" releases an aura of pure sex. You feel your body becoming hot just being near her.";
+		return getSelf().name()+" releases an aura of pure sex. You feel your body becoming hot just being near her.";
 	}
 
 }

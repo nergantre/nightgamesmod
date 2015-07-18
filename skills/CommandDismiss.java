@@ -21,7 +21,7 @@ public class CommandDismiss extends PlayerCommand {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		c.write(self,deal(c, 0, Result.normal, target));
+		c.write(getSelf(),deal(c, 0, Result.normal, target));
 		target.pet.remove();
 	}
 

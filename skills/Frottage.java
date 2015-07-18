@@ -24,7 +24,7 @@ public class Frottage extends Skill{
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().mobile(self)&&!c.getStance().sub(self)&&!c.getStance().penetration(self)&&target.pantsless()&&((self.hasDick()&&self.pantsless())||self.has(Trait.strapped));
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().sub(getSelf())&&!c.getStance().penetration(getSelf())&&target.pantsless()&&((getSelf().hasDick()&&getSelf().pantsless())||getSelf().has(Trait.strapped));
 	}
 
 	@Override
@@ -36,34 +36,34 @@ public class Frottage extends Skill{
 	public void resolve(Combat c, Character target) {
 		int m = 6 + Global.random(8);
 		BodyPart receiver = target.hasDick() ? target.body.getRandomCock() : target.body.getRandomPussy(); 
-		BodyPart dealer = self.hasDick() ? self.body.getRandomCock() : self.body.getRandomPussy(); 
-		if(self.human()){
+		BodyPart dealer = getSelf().hasDick() ? getSelf().body.getRandomCock() : getSelf().body.getRandomPussy(); 
+		if(getSelf().human()){
 			if(target.hasDick()){
-				c.write(self,deal(c,m,Result.special, target));
+				c.write(getSelf(),deal(c,m,Result.special, target));
 			}
 			else{
-				c.write(self,deal(c,m,Result.normal, target));
+				c.write(getSelf(),deal(c,m,Result.normal, target));
 			}
 		}
-		else if(self.has(Trait.strapped)){
+		else if(getSelf().has(Trait.strapped)){
 			if(target.human()){
-				c.write(self,receive(c,m,Result.special, target));
+				c.write(getSelf(),receive(c,m,Result.special, target));
 			}
 			target.buildMojo(c, -10);
 			dealer = null;
 		} else {
 			if(target.human()){
-				c.write(self,receive(c,m,Result.normal, target));
+				c.write(getSelf(),receive(c,m,Result.normal, target));
 			}
 		}
 
 		if (dealer != null) {
-			self.body.pleasure(target, receiver, dealer, m / 2, c);
+			getSelf().body.pleasure(target, receiver, dealer, m / 2, c);
 		}
-		target.body.pleasure(self, dealer, receiver, m, c);
+		target.body.pleasure(getSelf(), dealer, receiver, m, c);
 
-		self.buildMojo(c, 20);
-		self.emote(Emotion.horny, 15);
+		getSelf().buildMojo(c, 20);
+		getSelf().emote(Emotion.horny, 15);
 		target.emote(Emotion.horny, 15);
 	}
 
@@ -90,15 +90,28 @@ public class Frottage extends Skill{
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.special){
-			return self.name()+" thrusts her hips to prod your delicate jewels with her strapon dildo. As you flinch and pull your hips back, she presses the toy against your cock, teasing your sensitive parts.";
-		}
-		else{
-			return self.name()+" pushes her girl-cock against your the sensitive head of you member, dominating your manhood.";
+			return getSelf().name()+" thrusts her hips to prod your delicate jewels with her strapon dildo. As you flinch and pull your hips back, she presses the toy against your cock, teasing your sensitive parts.";
+		} else if (getSelf().hasDick()){
+			return getSelf().name()+" pushes her girl-cock against your the sensitive head of you member, dominating your manhood.";
+		} else {
+			return getSelf().name()+" pushes your cock against her soft thighs, rubbing your shaft up against her nether lips.";
 		}
 	}
 
 	@Override
 	public boolean makesContact() {
 		return true;
+	}
+	public String getTargetOrganType(Combat c, Character target) {
+		if (target.hasDick())
+			return "cock";
+		else
+			return "pussy";
+	}
+	public String getWithOrganType(Combat c, Character target) {
+		if (target.hasDick())
+			return "cock";
+		else
+			return "pussy";
 	}
 }

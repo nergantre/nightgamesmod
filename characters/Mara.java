@@ -52,7 +52,7 @@ public class Mara extends BasePersonality  {
 		character.add(Trait.petite);
 		character.add(Trait.dexterous);
 		character.add(Trait.ticklish);
-		character.setUnderwear(Item.MaraTrophy);
+		character.setTrophy(Item.MaraTrophy);
 		character.plan = Tactics.hunting;
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.b);
@@ -70,6 +70,18 @@ public class Mara extends BasePersonality  {
 		growth.bonusMojo = 2;
 		preferredAttributes.add(Attribute.Science);
 		preferredAttributes.add(Attribute.Cunning);
+		growth.traits.put(3, Trait.cautious);
+		growth.traits.put(5, Trait.Sneaky);
+		growth.traits.put(8, Trait.freeSpirit);
+		growth.traits.put(10, Trait.strongwilled);
+		growth.traits.put(12, Trait.lacedjuices);
+		growth.traits.put(15, Trait.tight);
+		growth.traits.put(17, Trait.addictivefluids);
+		growth.traits.put(20, Trait.energydrain);
+		growth.traits.put(24, Trait.entrallingjuices);
+		growth.traits.put(27, Trait.desensitized);
+		growth.traits.put(30, Trait.holecontrol);
+		growth.traits.put(35, Trait.desensitized2);
 	}
 
 	@Override
@@ -436,5 +448,15 @@ public class Mara extends BasePersonality  {
 		default:
 			return value>=100;
 		}
+	}
+
+	@Override
+	public String orgasmLiner() {
+		return "<i>\"Aw man, that one didn't count! Come on, lets go, I'll fuck your brains out!\"</i>";
+	}
+
+	@Override
+	public String makeOrgasmLiner() {
+		return "Mara lets out an impish little smirk, <i>\"Haha, all that talk, but you cum as soon as I touch you.\"</i>";
 	}
 }

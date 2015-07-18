@@ -15,48 +15,48 @@ public class SuckNeck extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().kiss(self)&&self.canAct();
+		return c.getStance().kiss(getSelf())&&getSelf().canAct();
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
-			if(self.get(Attribute.Dark)>=1){
-				if(self.human()){
-					c.write(self,deal(c,0,Result.special, target));
+			if(getSelf().get(Attribute.Dark)>=1){
+				if(getSelf().human()){
+					c.write(getSelf(),deal(c,0,Result.special, target));
 				}
 				else if(target.human()){
-					c.write(self,receive(c,0,Result.special, target));
+					c.write(getSelf(),receive(c,0,Result.special, target));
 				}
-				int m = 10 + Math.min(20, self.get(Attribute.Dark) / 2);
+				int m = 10 + Math.min(20, getSelf().get(Attribute.Dark) / 2);
 				target.weaken(c, m);
-				self.heal(c, m);
+				getSelf().heal(c, m);
 			}
 			else{
-				if(self.human()){
-					c.write(self,deal(c,0,Result.normal, target));
+				if(getSelf().human()){
+					c.write(getSelf(),deal(c,0,Result.normal, target));
 				}
 				else if(target.human()){
-					c.write(self,receive(c,0,Result.normal, target));
+					c.write(getSelf(),receive(c,0,Result.normal, target));
 				}
 			}
 			int m = 1 + Global.random(8);
-			target.body.pleasure(self, self.body.getRandom("mouth"), target.body.getRandom("skin"), m, c);					
-			self.buildMojo(c, 5);
+			target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("skin"), m, c);					
+			getSelf().buildMojo(c, 5);
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
 
 	@Override
 	public boolean requirements(Character user) {
-		return self.get(Attribute.Seduction)>=12;
+		return getSelf().get(Attribute.Seduction)>=12;
 	}
 
 	@Override
@@ -73,11 +73,11 @@ public class SuckNeck extends Skill {
 		return Tactics.pleasure;
 	}
 	public String getLabel(Combat c){
-		if(self.get(Attribute.Dark)>=1){
+		if(getSelf().get(Attribute.Dark)>=1){
 			return "Drain energy";
 		}
 		else{
-			return getName();
+			return getName(c);
 		}
 	}
 
@@ -98,14 +98,14 @@ public class SuckNeck extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier == Result.miss){
-			return self.name()+" goes after your neck, but you push her back.";
+			return getSelf().name()+" goes after your neck, but you push her back.";
 		}
 		else if(modifier == Result.special){
-			return self.name()+" presses her lips against your neck. She gives you a hickey and your knees start to go weak. It's like your strength is being sucked out through " +
+			return getSelf().name()+" presses her lips against your neck. She gives you a hickey and your knees start to go weak. It's like your strength is being sucked out through " +
 					"your skin.";
 		}
 		else{
-			return self.name()+" licks and sucks your neck, biting lightly when you aren't expecting it.";
+			return getSelf().name()+" licks and sucks your neck, biting lightly when you aren't expecting it.";
 		}
 	}
 
@@ -117,5 +117,12 @@ public class SuckNeck extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
+	}
+
+	public String getTargetOrganType(Combat c, Character target) {
+		return "skin";
+	}
+	public String getWithOrganType(Combat c, Character target) {
+		return "mouth";
 	}
 }

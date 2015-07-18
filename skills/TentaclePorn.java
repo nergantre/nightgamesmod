@@ -25,7 +25,7 @@ public class TentaclePorn extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && !c.getStance().sub(self)&&!c.getStance().prone(self)&&!c.getStance().prone(target)&&self.canAct()&&self.getArousal().get()>=20&&self.canSpend(10);
+		return !target.wary() && !c.getStance().sub(getSelf())&&!c.getStance().prone(getSelf())&&!c.getStance().prone(target)&&getSelf().canAct()&&getSelf().getArousal().get()>=20&&getSelf().canSpend(10);
 	}
 
 	@Override
@@ -35,28 +35,28 @@ public class TentaclePorn extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(c, 10);
+		getSelf().spendMojo(c, 10);
 		if(target.roll(this, c, accuracy())){
 			if(target.nude()){
-				int m = Global.random(self.get(Attribute.Fetish)) / 2 + 1;
+				int m = Global.random(getSelf().get(Attribute.Fetish)) / 2 + 1;
 				if(target.bound()){
-					if(self.human()){
-						c.write(self,deal(c,0,Result.special, target));
+					if(getSelf().human()){
+						c.write(getSelf(),deal(c,0,Result.special, target));
 					}
 					else if(target.human()){
-						c.write(self,receive(c,0,Result.special, target));
+						c.write(getSelf(),receive(c,0,Result.special, target));
 					}
 					target.body.pleasure(null, null, target.body.getRandom("cock"), m, c);
 					target.body.pleasure(null, null, target.body.getRandom("pussy"), m, c);
 					target.body.pleasure(null, null, target.body.getRandom("breasts"), m, c);
 					target.body.pleasure(null, null, target.body.getRandom("ass"), m, c);
 					target.emote(Emotion.horny, 10);
-				} else if(self.human()){
-					c.write(self,deal(c,0,Result.normal, target));
+				} else if(getSelf().human()){
+					c.write(getSelf(),deal(c,0,Result.normal, target));
 					target.body.pleasure(null, null, target.body.getRandom("skin"), m, c);
 				}
 				else if(target.human()){
-					c.write(self,receive(c,0,Result.normal, target));
+					c.write(getSelf(),receive(c,0,Result.normal, target));
 					target.body.pleasure(null, null, target.body.getRandom("skin"), m, c);
 				}
 				if(!target.is(Stsflag.oiled)){
@@ -65,21 +65,21 @@ public class TentaclePorn extends Skill {
 				target.emote(Emotion.horny, 20);
 			}
 			else{
-				if(self.human()){
-					c.write(self,deal(c,0,Result.weak, target));
+				if(getSelf().human()){
+					c.write(getSelf(),deal(c,0,Result.weak, target));
 				}
 				else if(target.human()){
-					c.write(self,receive(c,0,Result.weak, target));
+					c.write(getSelf(),receive(c,0,Result.weak, target));
 				}
 			}
-			target.add(new Bound(target,Math.min(10+3*self.get(Attribute.Fetish), 30),"tentacles"));
+			target.add(new Bound(target,Math.min(10+3*getSelf().get(Attribute.Fetish), 30),"tentacles"));
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -113,18 +113,17 @@ public class TentaclePorn extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier == Result.miss){
-			return self.name()+" stomps on the ground and a bundle of tentacles erupt from the ground. You're barely able to avoid them.";
+			return getSelf().name()+" stomps on the ground and a bundle of tentacles erupt from the ground. You're barely able to avoid them.";
 		}
 		else if(modifier == Result.weak){
-			return self.name()+" stomps on the ground and a bundle of tentacles erupt from the ground around you, entangling your arms and legs.";
+			return getSelf().name()+" stomps on the ground and a bundle of tentacles erupt from the ground around you, entangling your arms and legs.";
 		}
 		else if(modifier == Result.normal){
-			return self.name()+" stomps on the ground and a bundle of tentacles erupt from the ground around you, entangling your arms and legs. The slimy appendages " +
+			return getSelf().name()+" stomps on the ground and a bundle of tentacles erupt from the ground around you, entangling your arms and legs. The slimy appendages " +
 					"wriggle over your body and coat you in the slippery liquid.";
 		}
 		else{
-			return self.name()+" summons slimy tentacles that cover your helpless body, tease your dick, and probe your ass.";
+			return getSelf().name()+" summons slimy tentacles that cover your helpless body, tease your dick, and probe your ass.";
 		}
 	}
-
 }

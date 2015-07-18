@@ -23,20 +23,20 @@ public class Lubricate extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().mobile(self)&&self.canAct()&&self.has(Item.Lubricant)&&target.nude()&&!target.is(Stsflag.oiled)&&!c.getStance().prone(self)
-				&&(!self.human()||Global.getMatch().condition!=Modifier.noitems);
+		return c.getStance().mobile(getSelf())&&getSelf().canAct()&&getSelf().has(Item.Lubricant)&&target.nude()&&!target.is(Stsflag.oiled)&&!c.getStance().prone(getSelf())
+				&&(!getSelf().human()||Global.getMatch().condition!=Modifier.noitems);
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
 		target.add(new Oiled(target));
-		self.consume(Item.Lubricant, 1);
+		getSelf().consume(Item.Lubricant, 1);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class Lubricate extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" throws an oily liquid at you. The liquid clings to you and makes your whole body slippery.";
+		return getSelf().name()+" throws an oily liquid at you. The liquid clings to you and makes your whole body slippery.";
 	}
 
 	@Override

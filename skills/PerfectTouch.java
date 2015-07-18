@@ -15,29 +15,29 @@ public class PerfectTouch extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().mobile(self)&&(!target.nude())&&self.canSpend(25)&&!c.getStance().prone(self)&&self.canAct()&&!c.getStance().penetration(self);
+		return c.getStance().mobile(getSelf())&&(!target.nude())&&getSelf().canSpend(25)&&!c.getStance().prone(getSelf())&&getSelf().canAct()&&!c.getStance().penetration(getSelf());
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(c, 25);
+		getSelf().spendMojo(c, 25);
 		if(target.roll(this, c, accuracy())){
-			if(self.human()){
-				c.write(self,deal(c,0,Result.normal, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.normal, target));
 				c.write(target,target.nakedLiner());
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.normal, target));
+				c.write(getSelf(),receive(c,0,Result.normal, target));
 			}
 			target.undress(c);
 			target.emote(Emotion.nervous, 10);
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -76,10 +76,10 @@ public class PerfectTouch extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
-			return self.name()+" lunges toward you, but you catch her hands before she can get ahold of your clothes.";
+			return getSelf().name()+" lunges toward you, but you catch her hands before she can get ahold of your clothes.";
 		}
 		else{
-			return self.name()+" lunges towards you, but dodges away without hitting you. She tosses aside a handful of clothes, at which point you realize you're " +
+			return getSelf().name()+" lunges towards you, but dodges away without hitting you. She tosses aside a handful of clothes, at which point you realize you're " +
 					"naked. How the hell did she manage that?";
 		}
 				

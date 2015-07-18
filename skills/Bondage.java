@@ -21,7 +21,7 @@ public class Bondage extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canRespond()&&c.getStance().mobile(self)&&self.getArousal().get()>=5&&!self.is(Stsflag.bondage);
+		return getSelf().canRespond()&&c.getStance().mobile(getSelf())&&getSelf().getArousal().get()>=5&&!getSelf().is(Stsflag.bondage);
 	}
 
 	@Override
@@ -31,13 +31,13 @@ public class Bondage extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		self.add(new BD(self));
+		getSelf().add(new BD(getSelf()));
 		target.add(new BD(target));
 	}
 
@@ -58,7 +58,7 @@ public class Bondage extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" flushes and wraps her arms around herself tightly. Suddenly the thought of being tied up and dominated slips into your head.";
+		return getSelf().name()+" flushes and wraps her arms around herself tightly. Suddenly the thought of being tied up and dominated slips into your head.";
 	}
 
 }

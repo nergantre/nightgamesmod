@@ -28,7 +28,7 @@ public class ReverseFly extends Fly {
 
 	@Override
 	public BodyPart getSelfOrgan() {
-		return self.body.getRandomPussy();
+		return getSelf().body.getRandomPussy();
 	}
 
 	@Override
@@ -39,28 +39,28 @@ public class ReverseFly extends Fly {
 	@Override
 	public void resolve(Combat c, Character target) {
 		String premessage = "";
-		self.spendMojo(c, getMojoSpent());
-		if (self.bottom.size() == 1) {
-			premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s to the side and", self.bottom.get(0).name());
-		} else if (self.bottom.size() == 2) {
-			premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s and %s to the side and", self.bottom.get(0).name(), self.bottom.get(1).name());
+		getSelf().spendMojo(c, getMojoSpent());
+		if (getSelf().bottom.size() == 1) {
+			premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s to the side and", getSelf().bottom.get(0).name());
+		} else if (getSelf().bottom.size() == 2) {
+			premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s and %s to the side and", getSelf().bottom.get(0).name(), getSelf().bottom.get(1).name());
 		}
 
-		premessage = Global.format(premessage, self, target);
+		premessage = Global.format(premessage, getSelf(), target);
 		Result result = target.roll(this, c, accuracy()) ? Result.normal: Result.miss;
-		if (this.self.human()) {
-			c.write(self,premessage + deal(c, 0, result, target));
+		if (this.getSelf().human()) {
+			c.write(getSelf(),premessage + deal(c, 0, result, target));
 		} else if (target.human()) {
-			c.write(self,premessage + receive(c, 0, result, this.self));
+			c.write(getSelf(),premessage + receive(c, 0, result, this.getSelf()));
 		}
 		if (result == Result.normal) {
-			self.emote(Emotion.dominant,50);
-			self.emote(Emotion.horny, 30);
+			getSelf().emote(Emotion.dominant,50);
+			getSelf().emote(Emotion.horny, 30);
 			target.emote(Emotion.desperate, 50);
 			target.emote(Emotion.nervous, 75);
-			c.setStance(new FlyingCowgirl(this.self, target));
+			c.setStance(new FlyingCowgirl(this.getSelf(), target));
 		} else {
-			c.setStance(new StandingOver(target, self));
+			c.setStance(new StandingOver(target, getSelf()));
 		}
 	}
 
@@ -70,7 +70,7 @@ public class ReverseFly extends Fly {
 			return "you grab " + target.name() + " tightly and try to take off. However " +target.pronoun() + " has other ideas. She knees your crotch as you approach and sends you sprawling to the ground.";
 		} else {
 			return "you grab " + target.name() + " tightly and take off, "
-					+ "inserting his dick into your hungry " + self.body.getRandomPussy().describe(self) + ".";
+					+ "inserting his dick into your hungry " + getSelf().body.getRandomPussy().describe(getSelf()) + ".";
 		}
 	}
 
@@ -80,8 +80,8 @@ public class ReverseFly extends Fly {
 		if (modifier == Result.miss){
 			return target.name() + " lunges for you with a hungry look in her eyes. However you have other ideas. You trip her as she approaches and send her sprawling to the floor.";
 		} else {
-			return "suddenly, " + self.name() + " leaps at you, embracing you tightly"
-					+ ". She then flaps her " + self.body.getRandomWings().describe(target) + " hard and before you know it"
+			return "suddenly, " + getSelf().name() + " leaps at you, embracing you tightly"
+					+ ". She then flaps her " + getSelf().body.getRandomWings().describe(target) + " hard and before you know it"
 					+ " you are twenty feet in the sky held up by her arms and legs."
 					+ " Somehow, your dick ended up inside of her in the process and"
 					+ " the rythmic movements of her flying arouse you to no end";

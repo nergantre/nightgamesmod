@@ -76,7 +76,7 @@ public class Player extends Character {
 	public GUI gui;
 	public String sex;
 	private Growth growth;
-	
+
 	public Player(String name, String sex) {
 		super(name, 1);
 		outfit[0].add(Clothing.Tshirt);
@@ -85,13 +85,15 @@ public class Player extends Character {
 		closet.add(Clothing.Tshirt);
 		closet.add(Clothing.boxers);
 		closet.add(Clothing.jeans);
+		willpower.setMax(willpower.max());
 		change(Modifier.normal);
 		availableAttributePoints=0;
-		setUnderwear(Item.PlayerTrophy);
+		setTrophy(Item.PlayerTrophy);
 		body.finishBody(sex);
 		growth = new Growth();
 		setGrowth();
 	}
+
 	public Player(String name) {
 		this(name, "male");
 	}
@@ -534,7 +536,7 @@ public class Player extends Character {
 		dress(c);
 		target.undress(c);
 		if(c.clothespile.contains(target.outfit[1].firstElement())){
-			this.gain(target.getUnderwear());
+			this.gain(target.getTrophy());
 		}
 		target.defeated(this);
 		c.write(target.name()+"'s arms are firmly pinned, so she tries to kick you ineffectually. You catch her ankles and slowly begin kissing and licking your way " +
@@ -723,5 +725,9 @@ public class Player extends Character {
 	
 	public String action(String firstPerson, String thirdPerson) {
 		return firstPerson;
+	}
+	public Meter getWillpower() {
+		// TODO Auto-generated method stub
+		return willpower;
 	}
 }

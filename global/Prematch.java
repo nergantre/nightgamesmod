@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 
 import status.Hypersensitive;
-
-
+import characters.Airi;
 import characters.Player;
+import characters.Reyka;
 
 public class Prematch implements Scene{
 	private Modifier type;
@@ -56,6 +56,13 @@ public class Prematch implements Scene{
 		else{
 			message+="You arrive at the student union with about 10 minutes to spare before the start of the match. You greet each of the girls and make some idle chatter with " +
 					"them before you check in with Lilly to see if she has any custom rules for you.<p>";
+			if (player.getRank() > 0) {
+				message+= "Before you have a chance to ask though, Lilly mentions to you that there is a new competitor. However, when you ask her for details, she only mentions that her "
+						+ "name is Airi, and that she's a Biology student, while holding a visible smirk. Your instincts tells you something is wrong, but you decide to ignore it for now.<p>"
+						+ "<b>Airi has entered the games.</b><p>";
+				Global.newChallenger(new Airi());
+				Global.flag(Flag.Airi);
+			}
 			type=offer(player);
 			if(type==Modifier.normal){
 				message+="<i>\"Sorry "+player.name()+", there's no bonus money available tonight. Our Benefactor doesn't always give us the extra budget.\"<i/> She shrugs casually and " +

@@ -19,6 +19,13 @@ public class Behind extends Position {
 			return top.name()+" is holding you from behind.";
 		}
 	}
+	public String image() {
+		if (bottom.hasPussy()) {
+			return "behind_m.jpg";
+		} else {
+			return "behind_f.jpg";
+		}
+	}
 
 	@Override
 	public boolean mobile(Character c) {
@@ -83,12 +90,12 @@ public class Behind extends Position {
 	}
 
 	@Override
-	public Position insert(Character dom, Character inserter) {
-		return new Doggy(top,bottom);
+	public Position insert(Character dom) {
+		return new Doggy(dom, getOther(dom));
 	}
 
 	@Override
 	public float priorityMod(Character self) {
-		return ((self.hasDick() || self.has(Trait.strapped)) ? 2 : 1) * (dom(self) ? 1.0f : 0);
+		return ((self.hasDick() || self.has(Trait.strapped)) ? 2 : 1) * getSubDomBonus(self, 1.0f);
 	}
 }

@@ -17,7 +17,7 @@ public class Handjob extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().reachBottom(self)&&(target.pantsless()||(self.has(Trait.dexterous)&&target.bottom.size()<=1))&&target.hasDick()&&self.canAct()&&(!c.getStance().penetration(target)||c.getStance().en==Stance.anal);
+		return c.getStance().reachBottom(getSelf())&&(target.pantsless()||(getSelf().has(Trait.dexterous)&&target.bottom.size()<=1))&&target.hasDick()&&getSelf().canAct()&&(!c.getStance().penetration(target)||c.getStance().en==Stance.anal);
 	}
 
 	@Override
@@ -25,33 +25,33 @@ public class Handjob extends Skill {
 		int m = 4 + Global.random(5);
 
 		if(target.roll(this, c, accuracy())){
-			if(self.get(Attribute.Seduction)>=8){
+			if(getSelf().get(Attribute.Seduction)>=8){
 				m += 4;
-				if(self.human()){
-					c.write(self,deal(c,m,Result.normal, target));
+				if(getSelf().human()){
+					c.write(getSelf(),deal(c,m,Result.normal, target));
 				}
 				else if(target.human()){
-					c.write(self,receive(c,m,Result.normal, target));
+					c.write(getSelf(),receive(c,m,Result.normal, target));
 				}
-				target.body.pleasure(self, self.body.getRandom("hands"), target.body.getRandom("cock"), m, c);
-				self.buildMojo(c, 10);
+				target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("cock"), m, c);
+				getSelf().buildMojo(c, 10);
 			}
 			else{
-				if(self.human()){
-					c.write(self,deal(c,m,Result.normal, target));
+				if(getSelf().human()){
+					c.write(getSelf(),deal(c,m,Result.normal, target));
 				}
 				else if(target.human()){
-					c.write(self,receive(c,m,Result.weak, target));
+					c.write(getSelf(),receive(c,m,Result.weak, target));
 				}
-				target.body.pleasure(self, self.body.getRandom("hands"), target.body.getRandom("cock"), m, c);
+				target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("cock"), m, c);
 			}
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -81,28 +81,28 @@ public class Handjob extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
-			return self.name()+" grabs for your dick and misses.";
+			return getSelf().name()+" grabs for your dick and misses.";
 		}
 		int r;
 		if(!target.bottom.isEmpty()){
-			return self.name()+" slips her hand into your "+target.bottom.peek().getName()+" and strokes your dick.";
+			return getSelf().name()+" slips her hand into your "+target.bottom.peek().getName()+" and strokes your dick.";
 		}
 		else if(modifier==Result.weak){
-			return self.name()+" clumsily fondles your crotch. It's not skillful by any means, but it's also not entirely ineffective.";
+			return getSelf().name()+" clumsily fondles your crotch. It's not skillful by any means, but it's also not entirely ineffective.";
 		}
 		else{
 			if(target.getArousal().get()<15){
-				return self.name()+" grabs your soft penis and plays with the sensitive organ until it springs into readiness.";
+				return getSelf().name()+" grabs your soft penis and plays with the sensitive organ until it springs into readiness.";
 			}
 			
 			else if	((r = Global.random(3)) == 0){
-				return self.name()+" strokes and teases your dick, sending shivers of pleasure up your spine.";
+				return getSelf().name()+" strokes and teases your dick, sending shivers of pleasure up your spine.";
 			}
 			else if(r==1){
-				return self.name()+" rubs the sensitive head of your penis and fondles your balls.";
+				return getSelf().name()+" rubs the sensitive head of your penis and fondles your balls.";
 			}
 			else{
-				return self.name()+" jerks you off like she's trying to milk every drop of your cum.";
+				return getSelf().name()+" jerks you off like she's trying to milk every drop of your cum.";
 			}
 		}
 	}
@@ -114,5 +114,11 @@ public class Handjob extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
+	}
+	public String getTargetOrganType(Combat c, Character target) {
+		return "cock";
+	}
+	public String getWithOrganType(Combat c, Character target) {
+		return "hands";
 	}
 }

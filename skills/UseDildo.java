@@ -22,40 +22,40 @@ public class UseDildo extends Skill{
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (self.has(Item.Dildo)||self.has(Item.Dildo2))&&self.canAct()&&target.hasPussy()&&c.getStance().reachBottom(self)&&target.pantsless()&&!c.getStance().penetration(self)
-				&&(!self.human()||Global.getMatch().condition!=Modifier.notoys);
+		return (getSelf().has(Item.Dildo)||getSelf().has(Item.Dildo2))&&getSelf().canAct()&&target.hasPussy()&&c.getStance().reachBottom(getSelf())&&target.pantsless()&&!c.getStance().penetration(getSelf())
+				&&(!getSelf().human()||Global.getMatch().condition!=Modifier.notoys);
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
-			if(self.has(Item.Dildo2)){
-				if(self.human()){
-					c.write(self,deal(c,0,Result.upgrade, target));
+			if(getSelf().has(Item.Dildo2)){
+				if(getSelf().human()){
+					c.write(getSelf(),deal(c,0,Result.upgrade, target));
 				}
 				else if(target.human()){
-					c.write(self,receive(c,0,Result.upgrade, target));
+					c.write(getSelf(),receive(c,0,Result.upgrade, target));
 				}
 				int m = 5+Global.random(15)+target.get(Attribute.Perception);
-				target.body.pleasure(self, null, target.body.getRandom("pussy"), m, c);
+				target.body.pleasure(getSelf(), null, target.body.getRandom("pussy"), m, c);
 			}
 			else{
-				if(self.human()){
-					c.write(self,deal(c,0,Result.normal, target));
+				if(getSelf().human()){
+					c.write(getSelf(),deal(c,0,Result.normal, target));
 				}
 				else if(target.human()){
-					c.write(self,receive(c,0,Result.normal, target));
+					c.write(getSelf(),receive(c,0,Result.normal, target));
 				}
 				int m = Global.random(10)+target.get(Attribute.Perception);
-				target.body.pleasure(self, null, target.body.getRandom("pussy"), m, c);
+				target.body.pleasure(getSelf(), null, target.body.getRandom("pussy"), m, c);
 			}			
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -88,15 +88,15 @@ public class UseDildo extends Skill{
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier == Result.miss){
-			return Global.format("{self:SUBJECT-ACTION:try|tries} to slip a dildo into {other:direct-object}, but {other:subject} blocks it.", self,target);
+			return Global.format("{self:SUBJECT-ACTION:try|tries} to slip a dildo into {other:direct-object}, but {other:subject} blocks it.", getSelf(),target);
 		}
 		else if(modifier == Result.upgrade){
 			return Global.format("{self:SUBJECT-ACTION:touch|touches} the imperceptively vibrating dildo to {other:possessive} love button and {other:subject-action:jump|jumps} as if shocked. Before {other:subject} can defend {other:reflective}, {self:subject} " +
-					"slip it into {other:possessive} {other:body-part:pussy}. {other:SUBJECT-ACTION:start|starts} moaning in pleasure immediately.",self,target);
+					"slip it into {other:possessive} {other:body-part:pussy}. {other:SUBJECT-ACTION:start|starts} moaning in pleasure immediately.",getSelf(),target);
 		}
 		else{
 			return Global.format("{self:SUBJECT-ACTION:rub|rubs} the dildo against {other:possessive} lower lips to lubricate it before {self:subject-action:thrust|thrusts} it inside {self:direct-object}. "
-					+"{other:SUBJECT} can't help moaning a little as {self:subject-action:pump|pumps} the rubber toy in and out of {other:possessive} {other:body-part:pussy}.",self,target);
+					+"{other:SUBJECT} can't help moaning a little as {self:subject-action:pump|pumps} the rubber toy in and out of {other:possessive} {other:body-part:pussy}.",getSelf(),target);
 		}
 	}
 
@@ -108,5 +108,11 @@ public class UseDildo extends Skill{
 	@Override
 	public boolean makesContact() {
 		return true;
+	}
+	public String getTargetOrganType(Combat c, Character target) {
+		return "pussy";
+	}
+	public String getWithOrganType(Combat c, Character target) {
+		return "dildo";
 	}
 }

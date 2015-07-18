@@ -45,8 +45,8 @@ public class CommandGive extends PlayerCommand {
 				transfer = null;
 		} while (transfer == null);
 		target.consume(transfer, 1);
-		self.gain(transfer);
-		c.write(self,deal(c, 0, Result.normal, target));
+		getSelf().gain(transfer);
+		c.write(getSelf(),deal(c, 0, Result.normal, target));
 		transfer = null;
 	}
 

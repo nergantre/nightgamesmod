@@ -22,7 +22,7 @@ public class MagicMissile extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().mobile(self)&&!c.getStance().prone(self)&&self.canSpend(5);
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&getSelf().canSpend(5);
 	}
 
 	@Override
@@ -32,38 +32,38 @@ public class MagicMissile extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(c, 5);
+		getSelf().spendMojo(c, 5);
 		if(target.roll(this, c, accuracy())){
 			if(target.nude()&&Global.random(3)==2){
-				if(self.human()){
-					c.write(self,deal(c,0,Result.critical, target));
+				if(getSelf().human()){
+					c.write(getSelf(),deal(c,0,Result.critical, target));
 				}
 				else if(target.human()){
-					c.write(self,receive(c,0,Result.critical, target));
+					c.write(getSelf(),receive(c,0,Result.critical, target));
 				}
 				if(target.has(Trait.achilles)){
 					target.pain(c, Global.random(6));
 				}
-				target.pain(c, 9+Global.random(2*self.get(Attribute.Arcane)+1));
+				target.pain(c, 9+Global.random(2*getSelf().get(Attribute.Arcane)+1));
 				target.emote(Emotion.angry,10);
 			}
 			else{
-				if(self.human()){
-					c.write(self,deal(c,0,Result.normal, target));
+				if(getSelf().human()){
+					c.write(getSelf(),deal(c,0,Result.normal, target));
 				}
 				else if(target.human()){
-					c.write(self,receive(c,0,Result.normal, target));
+					c.write(getSelf(),receive(c,0,Result.normal, target));
 				}
-				target.pain(c, 6+Global.random(self.get(Attribute.Arcane)+2));
+				target.pain(c, 6+Global.random(getSelf().get(Attribute.Arcane)+2));
 				target.emote(Emotion.angry,5);
 			}
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -106,14 +106,14 @@ public class MagicMissile extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier == Result.miss){
-			return "You see "+self.name()+" start to cast a spell and you dive to the left, just in time to avoid the missile.";
+			return "You see "+getSelf().name()+" start to cast a spell and you dive to the left, just in time to avoid the missile.";
 		}
 		else if(modifier == Result.critical){
-			return self.name()+" casts a quick spell and fires a bolt of magic into your vulnerable groin. You cradle your injured plums as pain saps the strength from your " +
+			return getSelf().name()+" casts a quick spell and fires a bolt of magic into your vulnerable groin. You cradle your injured plums as pain saps the strength from your " +
 					"legs.";
 		}
 		else{
-			return self.name()+"'s hand glows as she casts a spell. Before you can react, you're struck with an impact like a punch in the gut.";
+			return getSelf().name()+"'s hand glows as she casts a spell. Before you can react, you're struck with an impact like a punch in the gut.";
 		}
 	}
 

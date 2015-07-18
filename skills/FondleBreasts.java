@@ -15,7 +15,7 @@ public class FondleBreasts extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().reachTop(self)&&target.hasBreasts()&&self.canAct();
+		return c.getStance().reachTop(getSelf())&&target.hasBreasts()&&getSelf().canAct();
 	}
 
 	@Override
@@ -24,29 +24,29 @@ public class FondleBreasts extends Skill {
 		if(target.roll(this, c, accuracy())){
 			if(target.topless()){
 				m += 4;
-				if(self.human()){
-					c.write(self,deal(c,m,Result.normal, target));
+				if(getSelf().human()){
+					c.write(getSelf(),deal(c,m,Result.normal, target));
 				} else {
-					c.write(self,receive(c,m,Result.normal, target));
+					c.write(getSelf(),receive(c,m,Result.normal, target));
 				}
-				target.body.pleasure(self, self.body.getRandom("hands"), target.body.getRandom("breasts"), m, c);					
+				target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("breasts"), m, c);					
 			}
 			else{
-				if(self.human()){
-					c.write(self,deal(c,m,Result.normal, target));
+				if(getSelf().human()){
+					c.write(getSelf(),deal(c,m,Result.normal, target));
 				} else {
-					c.write(self,receive(c,m,Result.normal, target));
+					c.write(getSelf(),receive(c,m,Result.normal, target));
 				}
-				target.body.pleasure(self, self.body.getRandom("hands"), target.body.getRandom("breasts"), m, c);					
+				target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("breasts"), m, c);					
 			}
-			self.buildMojo(c, 10);
+			getSelf().buildMojo(c, 10);
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -86,13 +86,13 @@ public class FondleBreasts extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier == Result.miss){
-			return self.name() + " gropes at your " + target.body.getRandomBreasts().describe(target) + ", but miss.";
+			return getSelf().name() + " gropes at your " + target.body.getRandomBreasts().describe(target) + ", but miss.";
 		}
 		else if(target.topless()){
-			return self.name() + " massages your " + target.body.getRandomBreasts().describe(target) + ", and pinch your nipples, causing you to moan with desire.";
+			return getSelf().name() + " massages your " + target.body.getRandomBreasts().describe(target) + ", and pinch your nipples, causing you to moan with desire.";
 		}
 		else{
-			return self.name() + " massages your " + target.body.getRandomBreasts().describe(target) + " over your "+target.top.peek().getName()+".";
+			return getSelf().name() + " massages your " + target.body.getRandomBreasts().describe(target) + " over your "+target.top.peek().getName()+".";
 		}
 	}
 
@@ -104,5 +104,11 @@ public class FondleBreasts extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
+	}
+	public String getTargetOrganType(Combat c, Character target) {
+		return "breasts";
+	}
+	public String getWithOrganType(Combat c, Character target) {
+		return "hands";
 	}
 }

@@ -21,7 +21,7 @@ public class ReverseAssFuck extends Fuck {
 
 	@Override
 	public float priorityMod(Combat c) {
-		return 0.0f + (self.getMood() == Emotion.dominant ? 1.0f : 0);
+		return 0.0f + (getSelf().getMood() == Emotion.dominant ? 1.0f : 0)+ (getSelf().has(Trait.autonomousAss) ? 4.0f : 0)+ (getSelf().has(Trait.oiledass) ? 2.0f : 0);
 	}
 
 	@Override
@@ -31,66 +31,66 @@ public class ReverseAssFuck extends Fuck {
 
 	@Override
 	public BodyPart getSelfOrgan() {
-		return self.body.getRandom("ass");
+		return getSelf().body.getRandom("ass");
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return fuckable(c, target)
-				&&c.getStance().mobile(self)
+				&&c.getStance().mobile(getSelf())
 				&&(c.getStance().prone(target)&&!c.getStance().mobile(target))
-				&&self.canAct()&&!c.getStance().penetration(self)
+				&&getSelf().canAct()&&!c.getStance().penetration(getSelf())
 				&&!c.getStance().penetration(target)
 				&&(getTargetOrgan(target).isReady(target))
-				&&(getSelfOrgan().isReady(target) || self.has(Item.Lubricant) || self.getArousal().percent()>50 || self.has(Trait.alwaysready));
+				&&(getSelfOrgan().isReady(getSelf()) || getSelf().has(Item.Lubricant) || getSelf().getArousal().percent()>50 || getSelf().has(Trait.alwaysready));
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
 		String premessage = "";
-		if(!self.bottom.empty() && getSelfOrgan().isType("cock")) {
-			if (self.bottom.size() == 1) {
-				premessage += String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s", self.bottom.get(0).name());
-			} else if (self.bottom.size() == 2) {
-				premessage += String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s and %s", self.bottom.get(0).name(), self.bottom.get(1).name());
+		if(!getSelf().bottom.empty() && getSelfOrgan().isType("cock")) {
+			if (getSelf().bottom.size() == 1) {
+				premessage += String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s", getSelf().bottom.get(0).name());
+			} else if (getSelf().bottom.size() == 2) {
+				premessage += String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s and %s", getSelf().bottom.get(0).name(), getSelf().bottom.get(1).name());
 			}
 		}
 
-		premessage = Global.format(premessage, self, target);
-		if(!self.hasStatus(Stsflag.oiled)&&self.getArousal().percent()>50 || self.has(Trait.alwaysready)) {
-			String fluids = self.hasDick() ? "copious pre-cum" : "own juices";
+		premessage = Global.format(premessage, getSelf(), target);
+		if(!getSelf().hasStatus(Stsflag.oiled)&&getSelf().getArousal().percent()>50 || getSelf().has(Trait.alwaysready)) {
+			String fluids = getSelf().hasDick() ? "copious pre-cum" : "own juices";
 			if (premessage.isEmpty()) {
 				premessage = "{self:subject-action:lube|lubes}";
 			} else {
 				premessage += " and {self:action:lube|lubes}";
 			}
 			premessage += " up {self:possessive} ass with {self:possessive} " + fluids + ".";
-			self.add(new Oiled(self));
-		} else if(!self.hasStatus(Stsflag.oiled)&&self.has(Item.Lubricant)) {
+			getSelf().add(new Oiled(getSelf()));
+		} else if(!getSelf().hasStatus(Stsflag.oiled)&&getSelf().has(Item.Lubricant)) {
 			if (premessage.isEmpty()) {
 				premessage = "{self:subject-action:lube|lubes}";
 			} else {
 				premessage += " and {self:action:lube|lubes}";
 			}
 			premessage += " up {self:possessive} ass.";
-			self.add(new Oiled(self));
-			self.consume(Item.Lubricant, 1);
+			getSelf().add(new Oiled(getSelf()));
+			getSelf().consume(Item.Lubricant, 1);
 		}
-		c.write(self, Global.format(premessage, self, target));
+		c.write(getSelf(), Global.format(premessage, getSelf(), target));
 	
 		int m = Global.random(5);
-		if(self.human()) {
-			c.write(self,deal(c,m,Result.normal, target));
+		if(getSelf().human()) {
+			c.write(getSelf(),deal(c,m,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,m,Result.normal, target));
+			c.write(getSelf(),receive(c,m,Result.normal, target));
 		}
 
-		c.setStance(new AnalCowgirl(self,target));
-		target.body.pleasure(self, getSelfOrgan(), getTargetOrgan(target), m, c);		
-		self.body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), m / 2, c);
-		self.buildMojo(c, 25);
-		self.emote(Emotion.dominant, 30);
+		c.setStance(new AnalCowgirl(getSelf(),target));
+		target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c);		
+		getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), m / 2, c);
+		getSelf().buildMojo(c, 25);
+		getSelf().emote(Emotion.dominant, 30);
 	}
 
 	@Override
@@ -112,13 +112,13 @@ public class ReverseAssFuck extends Fuck {
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return String.format("You make sure your %s is sufficiently lubricated and you push %s %s into your greedy hole.",
-				getSelfOrgan().describe(self), target.nameOrPossessivePronoun(), getTargetOrgan(target).describe(target));
+				getSelfOrgan().describe(getSelf()), target.nameOrPossessivePronoun(), getTargetOrgan(target).describe(target));
 	}
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return String.format("%s makes sure her %s is sufficiently lubricated and pushes %s %s into her greedy hole.",
-				self.name(), getSelfOrgan().describe(self), target.nameOrPossessivePronoun(), getTargetOrgan(target).describe(target));
+				getSelf().name(), getSelfOrgan().describe(getSelf()), target.nameOrPossessivePronoun(), getTargetOrgan(target).describe(target));
 	}
 
 	@Override

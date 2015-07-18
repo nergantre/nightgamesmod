@@ -24,7 +24,13 @@ public class ReverseMount extends Position {
 	public boolean mobile(Character c) {
 		return c==top;
 	}
-
+	public String image() {
+		if (bottom.hasPussy()) {
+			return "mount_m.jpg";
+		} else {
+			return "mount_f.jpg";
+		}
+	}
 	@Override
 	public boolean kiss(Character c) {
 		return false;
@@ -80,8 +86,8 @@ public class ReverseMount extends Position {
 	}
 
 	@Override
-	public Position insert(Character dom, Character inserter) {
-		if(dom == inserter){
+	public Position insert() {
+		if(top.hasDick() && bottom.hasPussy()){
 			return new Missionary(top,bottom);
 		}
 		else {
@@ -90,6 +96,6 @@ public class ReverseMount extends Position {
 	}
 	@Override
 	public float priorityMod(Character self) {
-		return dom(self) ? 4.0f : 0;
+		return getSubDomBonus(self, 4.0f);
 	}
 }

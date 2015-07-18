@@ -23,8 +23,8 @@ public class FaceFuck extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().dom(self)&&c.getStance().reachTop(self)&&((self.bottom.isEmpty()&&self.hasDick())||self.has(Trait.strapped))&&
-				!c.getStance().penetration(self)&&!c.getStance().penetration(target)&&!c.getStance().behind(self)&&!c.getStance().behind(target);
+		return getSelf().canAct()&&c.getStance().dom(getSelf())&&c.getStance().reachTop(getSelf())&&((getSelf().bottom.isEmpty()&&getSelf().hasDick())||getSelf().has(Trait.strapped))&&
+				!c.getStance().penetration(getSelf())&&!c.getStance().penetration(target)&&c.getStance().front(getSelf())&&!c.getStance().behind(target);
 	}
 
 	@Override
@@ -35,33 +35,33 @@ public class FaceFuck extends Skill {
 	@Override
 	public void resolve(Combat c, Character target) {
 		int strength = 4 + (target.has(Trait.silvertongue) ? 4 : 0);
-		if(self.human()){
+		if(getSelf().human()){
 			if (target.has(Trait.silvertongue)) {
-				c.write(self,deal(c, 0, Result.strong, target));
+				c.write(getSelf(),deal(c, 0, Result.strong, target));
 			} else {
-				c.write(self,deal(c, 0, Result.normal, target));
+				c.write(getSelf(),deal(c, 0, Result.normal, target));
 			}
 			target.add(new Shamed(target));
-			self.body.pleasure(target, target.body.getRandom("mouth"), self.body.getRandom("cock"), strength, c);
+			getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("cock"), strength, c);
 		} else {
-			if(self.has(Trait.strapped)){
-				if(self.has(Item.Strapon2)){
+			if(getSelf().has(Trait.strapped)){
+				if(getSelf().has(Item.Strapon2)){
 					if(target.human()){
-						c.write(self,receive(c, 0,Result.upgrade, target));
+						c.write(getSelf(),receive(c, 0,Result.upgrade, target));
 					}
-					target.tempt(c, self, Global.random(3));
+					target.tempt(c, getSelf(), Global.random(3));
 				}
 				else{
-					c.write(self,receive(c,0,Result.special, target));
+					c.write(getSelf(),receive(c,0,Result.special, target));
 				}
 			} else {
-				self.body.pleasure(target, target.body.getRandom("mouth"), self.body.getRandom("pussy"), strength, c);
+				getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("pussy"), strength, c);
 
 			}
 			target.add(new Shamed(target));
 		}
-		self.buildMojo(c, 15);
-		target.loseMojo(c, 2*self.get(Attribute.Seduction));
+		getSelf().buildMojo(c, 15);
+		target.loseMojo(c, 2*getSelf().get(Attribute.Seduction));
 	}
 
 	@Override
@@ -88,16 +88,16 @@ public class FaceFuck extends Skill {
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		String m;
 		if(modifier==Result.special){
-			m = self.name()+" forces her strapon cock into your mouth and fucks your face with it. It's only rubber, but your position is still humiliating. You stuggle not " +
-					"to gag on the artificial member while "+self.name()+" revels in her dominance.";
+			m = getSelf().name()+" forces her strapon cock into your mouth and fucks your face with it. It's only rubber, but your position is still humiliating. You stuggle not " +
+					"to gag on the artificial member while "+getSelf().name()+" revels in her dominance.";
 		}
 		else if(modifier==Result.upgrade){
-			m = self.name()+" slightly moves forward on you, pushing her Strap-On against your lips. You try to keep your mouth closed but "+self.name()+" holds your nose together, " +
+			m = getSelf().name()+" slightly moves forward on you, pushing her Strap-On against your lips. You try to keep your mouth closed but "+getSelf().name()+" holds your nose together, " +
 					"forcing you to eventually part your lips and suck on the rubbery invader. After a few sucks, you manage to push it out, although you're still shivering " +
 					"with a mix of arousal and humiliation.";
 		}
 		else{
-			m = self.name()+" forces your mouth open and shoves her sizable girl-cock into it. You're momentarily overwhelmed by the strong, musky smell and the taste, but " +
+			m = getSelf().name()+" forces your mouth open and shoves her sizable girl-cock into it. You're momentarily overwhelmed by the strong, musky smell and the taste, but " +
 					"she quickly starts moving her hips, fucking your mouth like a pussy. You feel your cheeks redden in shame, but you still do what you can to pleasure her. " +
 					"She may be using you like a sex toy, but you're going to try to scrounge whatever advantage you can get.";
 		}
@@ -107,5 +107,11 @@ public class FaceFuck extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
+	}
+	public String getTargetOrganType(Combat c, Character target) {
+		return "mouth";
+	}
+	public String getWithOrganType(Combat c, Character target) {
+		return "cock";
 	}
 }

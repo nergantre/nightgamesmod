@@ -21,7 +21,7 @@ public class FlashStep extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && c.getStance().mobile(self)&&!c.getStance().prone(self)&&!c.getStance().prone(target)&&!c.getStance().behind(self)&&self.canAct()&&!c.getStance().penetration(self)&&self.canSpend(15);
+		return !target.wary() && c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&!c.getStance().prone(target)&&!c.getStance().behind(getSelf())&&getSelf().canAct()&&!c.getStance().penetration(getSelf())&&getSelf().canSpend(15);
 	}
 
 	@Override
@@ -31,14 +31,14 @@ public class FlashStep extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		c.setStance(new Behind(self,target));
-		self.weaken(c, 10);
+		c.setStance(new Behind(getSelf(),target));
+		getSelf().weaken(c, 10);
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class FlashStep extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" starts to move and suddenly vanishes. You hesitate for a second and feel her grab you from behind.";
+		return getSelf().name()+" starts to move and suddenly vanishes. You hesitate for a second and feel her grab you from behind.";
 	}
 
 	@Override

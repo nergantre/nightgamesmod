@@ -23,7 +23,9 @@ public class Pin extends Position {
 	public boolean mobile(Character c) {
 		return c==top;
 	}
-
+	public String image() {
+		return "pin.jpg";
+	}
 	@Override
 	public boolean kiss(Character c) {
 		return c==top;
@@ -77,12 +79,14 @@ public class Pin extends Position {
 		return false;
 	}
 	@Override
-	public Position insert(Character dom, Character inserter) {
-		if(top.hasDick()&&bottom.hasPussy()){
-			return new Missionary(top,bottom);
+	public Position insert(Character dom) {
+		Character other = getOther(dom);
+
+		if(dom.hasDick()&&other.hasPussy()){
+			return new Missionary(dom,other);
 		}
-		else if(top.hasPussy()&&bottom.hasDick()){
-			return new Cowgirl(top,bottom);
+		else if(dom.hasPussy()&&bottom.hasDick()){
+			return new Cowgirl(dom,other);
 		}
 		else{
 			return this;
@@ -90,6 +94,6 @@ public class Pin extends Position {
 	}
 	@Override
 	public float priorityMod(Character self) {
-		return dom(self) ? 1.0f : 0;
+		return getSubDomBonus(self, 2.0f);
 	}
 }

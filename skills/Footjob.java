@@ -22,13 +22,13 @@ public class Footjob extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().feet(self)&&target.pantsless()&&(c.getStance().prone(self)!=c.getStance().prone(target))&&self.canAct()&&!c.getStance().penetration(target);
+		return c.getStance().feet(getSelf())&&target.pantsless()&&(c.getStance().prone(getSelf())!=c.getStance().prone(target))&&getSelf().canAct()&&!c.getStance().penetration(target);
 	}
 
 	@Override
 	public float priorityMod(Combat c) {
-		BodyPart feet = self.body.getRandom("feet");
-		Character other = c.p1 == self ? c.p2 : c.p1;
+		BodyPart feet = getSelf().body.getRandom("feet");
+		Character other = c.p1 == getSelf() ? c.p2 : c.p1;
 		BodyPart otherpart = other.hasDick() ? other.body.getRandomCock() : other.body.getRandomPussy();
 		if (feet != null) {
 			return (float) Math.max(0, (feet.getPleasure(otherpart) - 1));
@@ -40,26 +40,26 @@ public class Footjob extends Skill {
 	public void resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
 			int m = 8 + Global.random(6);
-			if(self.human()){
-				c.write(self,deal(c,m,Result.normal, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,m,Result.normal, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,m,Result.normal, target));
+				c.write(getSelf(),receive(c,m,Result.normal, target));
 			}
 			if (target.hasDick())
-				target.body.pleasure(self, self.body.getRandom("feet"), target.body.getRandom("cock"), m, c);
+				target.body.pleasure(getSelf(), getSelf().body.getRandom("feet"), target.body.getRandom("cock"), m, c);
 			else
-				target.body.pleasure(self, self.body.getRandom("feet"), target.body.getRandom("pussy"), m, c);
-			if(c.getStance().dom(self)){
-				self.buildMojo(c, 20);
+				target.body.pleasure(getSelf(), getSelf().body.getRandom("feet"), target.body.getRandom("pussy"), m, c);
+			if(c.getStance().dom(getSelf())){
+				getSelf().buildMojo(c, 20);
 			}
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -92,10 +92,10 @@ public class Footjob extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character attacker) {
 		if(modifier==Result.miss){
-			return self.name()+" swings her foot at your groin, but misses.";
+			return getSelf().name()+" swings her foot at your groin, but misses.";
 		}
 		else{
-			return self.name()+" rubs you dick with the sole of her soft foot. From time to time, she teases you by pinching the glans between her toes and jostling your balls.";
+			return getSelf().name()+" rubs you dick with the sole of her soft foot. From time to time, she teases you by pinching the glans between her toes and jostling your balls.";
 		}
 	}
 
@@ -107,5 +107,15 @@ public class Footjob extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
+	}
+	public String getTargetOrganType(Combat c, Character target) {
+		if (target.hasDick()) {
+			return "cock";
+		} else {
+			return "pussy";
+		}
+	}
+	public String getWithOrganType(Combat c, Character target) {
+		return "feet";
 	}
 }

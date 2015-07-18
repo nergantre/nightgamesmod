@@ -22,8 +22,8 @@ public class Blowjob extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (target.pantsless()&&target.hasDick()&&c.getStance().oral(self)&&!c.getStance().behind(self)&&self.canAct()&&!c.getStance().penetration(self))
-				|| (self.canRespond() && (c.getStance().inserted(target) && self.has(Trait.vaginaltongue) && c.getStance().en != Stance.anal));
+		return (target.pantsless()&&target.hasDick()&&c.getStance().oral(getSelf())&&c.getStance().front(getSelf())&&getSelf().canAct()&&!c.getStance().penetration(getSelf()))
+				|| (getSelf().canRespond() && (c.getStance().inserted(target) && getSelf().has(Trait.vaginaltongue) && c.getStance().en != Stance.anal));
 	}
 
 	@Override
@@ -32,9 +32,9 @@ public class Blowjob extends Skill {
 		if (c.getStance().penetration(c.p2) || c.getStance().penetration(c.p1)) {
 			priority += 1.0f;
 		}
-		if (self.has(Trait.silvertongue)) {
+		if (getSelf().has(Trait.silvertongue)) {
 			priority += 1;
-		}if (self.has(Trait.experttongue)) {
+		}if (getSelf().has(Trait.experttongue)) {
 			priority += 1;
 		}
 		return priority;
@@ -43,53 +43,53 @@ public class Blowjob extends Skill {
 	@Override
 	public void resolve(Combat c, Character target) {
 		int m = 4 + Global.random(8);
-		if(self.has(Trait.silvertongue)){
+		if(getSelf().has(Trait.silvertongue)){
 			m += 4;
 		}
-		if (c.getStance().inserted(target) && self.has(Trait.vaginaltongue)) {
+		if (c.getStance().inserted(target) && getSelf().has(Trait.vaginaltongue)) {
 			m += 4;
 			if(target.human()){
-				c.write(self,receive(c,m,Result.intercourse, target));
-			} else if(self.human()){
-				c.write(self,deal(c,m,Result.intercourse, target));
+				c.write(getSelf(),receive(c,m,Result.intercourse, target));
+			} else if(getSelf().human()){
+				c.write(getSelf(),deal(c,m,Result.intercourse, target));
 			}
-			target.body.pleasure(self, self.body.getRandom("pussy"), target.body.getRandom("cock"), m, c);					
-			self.buildMojo(c, 5);
+			target.body.pleasure(getSelf(), getSelf().body.getRandom("pussy"), target.body.getRandom("cock"), m, c);					
+			getSelf().buildMojo(c, 5);
 		} else if(c.getStance().enumerate() == Stance.facesitting){
 			if(target.human()){
-				c.write(self,receive(c,m,Result.reverse, target));
-			} else if(self.human()){
-				c.write(self,deal(c,m,Result.reverse, target));
+				c.write(getSelf(),receive(c,m,Result.reverse, target));
+			} else if(getSelf().human()){
+				c.write(getSelf(),deal(c,m,Result.reverse, target));
 			}
-			target.body.pleasure(self, self.body.getRandom("mouth"), target.body.getRandom("cock"), m, c);					
+			target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("cock"), m, c);					
 			target.buildMojo(c, 10);
 		} else if(target.roll(this, c, accuracy())){
-			if(self.has(Trait.silvertongue)){
+			if(getSelf().has(Trait.silvertongue)){
 				if(target.human()){
-					c.write(self,receive(c,m,Result.special, target));
+					c.write(getSelf(),receive(c,m,Result.special, target));
 				}
-				else if(self.human()){
-					c.write(self,deal(c,m,Result.special, target));
+				else if(getSelf().human()){
+					c.write(getSelf(),deal(c,m,Result.special, target));
 				}
 			}
 			else{
 				if(target.human()){
-					c.write(self,receive(c,m,Result.normal, target));
+					c.write(getSelf(),receive(c,m,Result.normal, target));
 				}
-				else if(self.human()){
-					c.write(self,deal(c,m,Result.normal, target));
+				else if(getSelf().human()){
+					c.write(getSelf(),deal(c,m,Result.normal, target));
 				}
 			}
 
-			target.body.pleasure(self, self.body.getRandom("mouth"), target.body.getRandom("cock"), m, c);					
+			target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("cock"), m, c);					
 
-			self.buildMojo(c, 5);
+			getSelf().buildMojo(c, 5);
 			if(ReverseMount.class.isInstance(c.getStance())){
-				c.setStance(new SixNine(self,target));
+				c.setStance(new SixNine(getSelf(),target));
 			}
 		}
 		else{
-			if(self.human()){
+			if(getSelf().human()){
 				c.write(deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
@@ -115,7 +115,7 @@ public class Blowjob extends Skill {
 
 	@Override
 	public Tactics type(Combat c) {
-		if ((c.getStance().penetration(c.p2) || c.getStance().penetration(c.p1)) && self.has(Trait.vaginaltongue)) {
+		if ((c.getStance().penetration(c.p2) || c.getStance().penetration(c.p1)) && getSelf().has(Trait.vaginaltongue)) {
 			return Tactics.fucking;
 		} else {
 			return Tactics.pleasure;
@@ -146,32 +146,32 @@ public class Blowjob extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
-			return self.name()+" tries to suck your cock, but you pull your hips back to avoid her.";
+			return getSelf().name()+" tries to suck your cock, but you pull your hips back to avoid her.";
 		} else if(modifier==Result.special){
-			return self.name()+"'s soft lips and talented tongue work over your dick, drawing out dangerously irresistible pleasure with each touch.";
+			return getSelf().name()+"'s soft lips and talented tongue work over your dick, drawing out dangerously irresistible pleasure with each touch.";
 		} else if(modifier==Result.intercourse){
-			return self.name()+"'s pussy lips suddenly quiver and you feel a long sinuous object wrap around your cock. You realize she's controlling her vaginal tongue to blow you with her pussy! "
+			return getSelf().name()+"'s pussy lips suddenly quiver and you feel a long sinuous object wrap around your cock. You realize she's controlling her vaginal tongue to blow you with her pussy! "
 					+"Her lower tongue runs up and down your shaft causing you to shudder with arousal.";
 		} else if(modifier == Result.reverse){
-			return "Faced with your dick sitting squarely in front of her face, " + self.name() + " obediently tongues your cock in defeat.";
+			return "Faced with your dick sitting squarely in front of her face, " + getSelf().name() + " obediently tongues your cock in defeat.";
 		} else if(target.getArousal().get()<15){
-			return self.name()+" takes your soft penis into her mouth and sucks on it until it hardens";
+			return getSelf().name()+" takes your soft penis into her mouth and sucks on it until it hardens";
 		}
 		else if(target.getArousal().percent()>=90){
-			return self.name()+" laps up the precum leaking from your cock and takes the entire length into her mouth, sucking relentlessly";
+			return getSelf().name()+" laps up the precum leaking from your cock and takes the entire length into her mouth, sucking relentlessly";
 		} else{
 			int r = Global.random(4);
 			if(r==0){
-				return self.name()+" runs her tongue up the length of your dick, sending a jolt of pleasure up your spine. She slowly wraps her lips around your dick and sucks.";
+				return getSelf().name()+" runs her tongue up the length of your dick, sending a jolt of pleasure up your spine. She slowly wraps her lips around your dick and sucks.";
 			}
 			else if(r==1){
-				return self.name()+" sucks on the head of your cock while her hand strokes the shaft.";
+				return getSelf().name()+" sucks on the head of your cock while her hand strokes the shaft.";
 			}
 			else if(r==2){
-				return self.name()+" licks her way down to the base of your cock and gently sucks on your balls.";
+				return getSelf().name()+" licks her way down to the base of your cock and gently sucks on your balls.";
 			}
 			else{
-				return self.name()+" runs her tongue around the glans of your penis and teases your urethra.";
+				return getSelf().name()+" runs her tongue around the glans of your penis and teases your urethra.";
 			}
 		}
 	}
@@ -184,5 +184,15 @@ public class Blowjob extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
+	}
+	
+	public String getTargetOrganType(Combat c, Character target) {
+		return "cock";
+	}
+	public String getWithOrganType(Combat c, Character target) {
+		if ((c.getStance().penetration(c.p2) || c.getStance().penetration(c.p1)) && getSelf().has(Trait.vaginaltongue))
+			return "pussy";
+		else 
+			return "mouth";
 	}
 }

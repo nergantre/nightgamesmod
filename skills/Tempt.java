@@ -18,21 +18,21 @@ public class Tempt extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canRespond();
+		return getSelf().canRespond();
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(self.human()) {
-			c.write(self,deal(c,0,Result.normal, target));
+		if(getSelf().human()) {
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()) {
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
 		double m = (int) Math.round(4+Global.random(4));
-		if (!c.getStance().behind(self)) {
+		if (c.getStance().front(getSelf())) {
 			// opponent can see self
-			m += 3 * self.body.getCharismaBonus(target);
+			m += 3 * getSelf().body.getCharismaBonus(target);
 		}
 		if (target.has(Trait.imagination)) {
 			m *= 1.5;
@@ -41,15 +41,15 @@ public class Tempt extends Skill {
 		int n = (int)Math.round(m);
 
 		boolean tempted = Global.random(5) == 0;
-		if(self.has(Trait.darkpromises)&& tempted && self.canSpend(15) && !target.wary()){
-			self.spendMojo(c, 15);
-			c.write(self, Global.format("{self:NAME-POSSESSIVE} words fall on fertile grounds. {other:NAME-POSSESSIVE} will to resist crumbles in light of {self:possessive} temptation.", self, target));
-			target.add(new Enthralled(target, self, 3));
+		if(getSelf().has(Trait.darkpromises)&& tempted && getSelf().canSpend(15) && !target.wary()){
+			getSelf().spendMojo(c, 15);
+			c.write(getSelf(), Global.format("{self:NAME-POSSESSIVE} words fall on fertile grounds. {other:NAME-POSSESSIVE} will to resist crumbles in light of {self:possessive} temptation.", getSelf(), target));
+			target.add(new Enthralled(target, getSelf(), 3));
 		}
 
-		target.tempt(c, self, n);
+		target.tempt(c, getSelf(), n);
 		target.emote(Emotion.horny,10);
-		self.emote(Emotion.confident, 10);
+		getSelf().emote(Emotion.confident, 10);
 	}
 
 	@Override
@@ -70,12 +70,12 @@ public class Tempt extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		return self.temptLiner(target);
+		return getSelf().temptLiner(target);
 	}
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.temptLiner(target);
+		return getSelf().temptLiner(target);
 	}
 
 	@Override

@@ -16,27 +16,27 @@ public class LegLock extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().dom(self)&&c.getStance().reachBottom(self)&&c.getStance().prone(target)&&self.canAct()&&!c.getStance().penetration(self);
+		return c.getStance().dom(getSelf())&&c.getStance().reachBottom(getSelf())&&c.getStance().prone(target)&&getSelf().canAct()&&!c.getStance().penetration(getSelf());
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
-			if(self.human()){
-				c.write(self,deal(c,0,Result.normal, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.normal, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.normal, target));
+				c.write(getSelf(),receive(c,0,Result.normal, target));
 			}
 			target.pain(c, Global.random(10)+7);
 			target.emote(Emotion.angry,15);
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -70,10 +70,10 @@ public class LegLock extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
-			return self.name()+" tries to put you in a leglock, but you slip away.";
+			return getSelf().name()+" tries to put you in a leglock, but you slip away.";
 		}
 		else{
-			return self.name()+" pulls your leg across her in a painful submission hold.";
+			return getSelf().name()+" pulls your leg across her in a painful submission hold.";
 		}
 	}
 

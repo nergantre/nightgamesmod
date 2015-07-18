@@ -22,7 +22,7 @@ public class StunBlast extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().mobile(self)&&!c.getStance().behind(self)&&self.has(Item.Battery,4);
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&c.getStance().front(getSelf())&&getSelf().has(Item.Battery,4);
 	}
 
 	@Override
@@ -32,23 +32,23 @@ public class StunBlast extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.consume(Item.Battery, 4);
+		getSelf().consume(Item.Battery, 4);
 		if(Global.random(10)>=4){
-			if(self.human()){
-				c.write(self,deal(c,0,Result.normal, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.normal, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.normal, target));
+				c.write(getSelf(),receive(c,0,Result.normal, target));
 			}
 			target.getStamina().empty();
 			target.add(new Winded(target));
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -76,10 +76,10 @@ public class StunBlast extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier == Result.miss){
-			return self.name()+" covers her face and points a device in your direction. Sensing danger, you shield you eyes just as the flashbang goes off.";
+			return getSelf().name()+" covers her face and points a device in your direction. Sensing danger, you shield you eyes just as the flashbang goes off.";
 		}
 		else{
-			return self.name()+" points a device in your direction that glows slightly. A sudden flash of light disorients you and your ears ring from the blast.";
+			return getSelf().name()+" points a device in your direction that glows slightly. A sudden flash of light disorients you and your ears ring from the blast.";
 		}
 	}
 

@@ -16,19 +16,19 @@ public class Focus extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&!c.getStance().sub(self);
+		return getSelf().canAct()&&!c.getStance().sub(getSelf());
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		self.calm(c, Global.random(8));
-		self.buildMojo(c, 20);
+		getSelf().calm(c, Global.random(8));
+		getSelf().buildMojo(c, 20);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class Focus extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" closes her eyes and takes a deep breath. When she opens her eyes, she seems more composed.";
+		return getSelf().name()+" closes her eyes and takes a deep breath. When she opens her eyes, she seems more composed.";
 	}
 
 	@Override

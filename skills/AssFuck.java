@@ -24,7 +24,7 @@ public class AssFuck extends Fuck {
 
 	@Override
 	public float priorityMod(Combat c) {
-		return 0.0f + (self.getMood() == Emotion.dominant ? 1.0f : 0);
+		return 0.0f + (getSelf().getMood() == Emotion.dominant ? 1.0f : 0);
 	}
 
 	public BodyPart getTargetOrgan(Character target) {
@@ -34,24 +34,24 @@ public class AssFuck extends Fuck {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return fuckable(c, target)
-				&&c.getStance().mobile(self)
-				&&(c.getStance().behind(self)||(c.getStance().prone(target)&&!c.getStance().mobile(target)))
-				&&self.canAct()&&!c.getStance().penetration(self)
+				&&c.getStance().mobile(getSelf())
+				&&(c.getStance().behind(getSelf())||(c.getStance().prone(target)&&!c.getStance().mobile(target)))
+				&&getSelf().canAct()&&!c.getStance().penetration(getSelf())
 				&&!c.getStance().penetration(target)
-				&&(getTargetOrgan(target).isReady(target) || self.has(Item.Lubricant) || self.getArousal().percent()>50 || self.has(Trait.alwaysready));
+				&&(getTargetOrgan(target).isReady(target) || getSelf().has(Item.Lubricant) || getSelf().getArousal().percent()>50 || getSelf().has(Trait.alwaysready));
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
 		String premessage = "";
-		if(!self.bottom.empty() && getSelfOrgan().isType("cock")) {
-			if (self.bottom.size() == 1) {
-				premessage += String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s", self.bottom.get(0).name());
-			} else if (self.bottom.size() == 2) {
-				premessage += String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s and %s", self.bottom.get(0).name(), self.bottom.get(1).name());
+		if(!getSelf().bottom.empty() && getSelfOrgan().isType("cock")) {
+			if (getSelf().bottom.size() == 1) {
+				premessage += String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s", getSelf().bottom.get(0).name());
+			} else if (getSelf().bottom.size() == 2) {
+				premessage += String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s and %s", getSelf().bottom.get(0).name(), getSelf().bottom.get(1).name());
 			}
 		}
-		if(!target.hasStatus(Stsflag.oiled)&&self.getArousal().percent()>50 || self.has(Trait.alwaysready)) {
+		if(!target.hasStatus(Stsflag.oiled)&&getSelf().getArousal().percent()>50 || getSelf().has(Trait.alwaysready)) {
 			String fluids = target.hasDick() ? "copious pre-cum" : "own juices";
 			if (premessage.isEmpty()) {
 				premessage = "{self:subject-action:lube|lubes}";
@@ -60,7 +60,7 @@ public class AssFuck extends Fuck {
 			}
 			premessage += " up {other:possessive} ass with {self:possessive} " + fluids + ".";
 			target.add(new Oiled(target));
-		} else if(!target.hasStatus(Stsflag.oiled)&&self.has(Item.Lubricant)) {
+		} else if(!target.hasStatus(Stsflag.oiled)&&getSelf().has(Item.Lubricant)) {
 			if (premessage.isEmpty()) {
 				premessage = "{self:subject-action:lube|lubes}";
 			} else {
@@ -68,35 +68,35 @@ public class AssFuck extends Fuck {
 			}
 			premessage += " up {other:possessive} ass.";
 			target.add(new Oiled(target));
-			self.consume(Item.Lubricant, 1);
+			getSelf().consume(Item.Lubricant, 1);
 		}
-		c.write(self, Global.format(premessage, self, target));
+		c.write(getSelf(), Global.format(premessage, getSelf(), target));
 	
 		int m = Global.random(5);
-		if(self.human()) {
-			c.write(self,deal(c,m,Result.normal, target));
+		if(getSelf().human()) {
+			c.write(getSelf(),deal(c,m,Result.normal, target));
 		}
 		else if(target.human()){
-			if (self.has(Trait.strapped)&&self.has(Item.Strapon2)){
+			if (getSelf().has(Trait.strapped)&&getSelf().has(Item.Strapon2)){
 				m+=3;
 			}
-			if (!c.getStance().behind(self) && self.has(Trait.strapped)){
-				c.write(self,receive(c,m,Result.upgrade, target));
+			if (!c.getStance().behind(getSelf()) && getSelf().has(Trait.strapped)){
+				c.write(getSelf(),receive(c,m,Result.upgrade, target));
 			} else {
-				c.write(self,receive(c,m,Result.normal, target));
+				c.write(getSelf(),receive(c,m,Result.normal, target));
 			}
 		}
-		if(c.getStance().behind(self)){
-			c.setStance(new Anal(self,target));				
+		if(c.getStance().behind(getSelf())){
+			c.setStance(new Anal(getSelf(),target));				
 		} else {
-			c.setStance(new AnalProne(self,target));
+			c.setStance(new AnalProne(getSelf(),target));
 		}
-		target.body.pleasure(self, getSelfOrgan(), getTargetOrgan(target), m, c);		
-		if (!self.has(Trait.strapped)) {
-			self.body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), m / 2, c);
+		target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c);		
+		if (!getSelf().has(Trait.strapped)) {
+			getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), m / 2, c);
 		}
-		self.buildMojo(c, 25);
-		self.emote(Emotion.dominant, 100);
+		getSelf().buildMojo(c, 25);
+		getSelf().emote(Emotion.dominant, 100);
 		target.emote(Emotion.desperate,50);
 		if(!target.has(Trait.Unflappable)) {
 			target.add(new Flatfooted(target,1));
@@ -123,7 +123,7 @@ public class AssFuck extends Fuck {
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if(modifier == Result.normal){
 			return String.format("You make sure %s ass is sufficiently lubricated and you push your %s into her %s.",
-					target.nameOrPossessivePronoun(), getSelfOrgan().describe(self), getTargetOrgan(target).describe(target));
+					target.nameOrPossessivePronoun(), getSelfOrgan().describe(getSelf()), getTargetOrgan(target).describe(target));
 		}
 		else {
 			return target.name()+"'s ass is oiled up and ready to go, but you're still too soft to penetrate her.";
@@ -133,25 +133,25 @@ public class AssFuck extends Fuck {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier == Result.upgrade){
-			return self.name()+" spreads your legs apart and teasingly pokes the Strap-On against your anus. Your try to struggle away but "+self.name()
+			return getSelf().name()+" spreads your legs apart and teasingly pokes the Strap-On against your anus. Your try to struggle away but "+getSelf().name()
 					+" pulls your hips closer and slowly pushes the dildo inside your ass.";
 		}
 		if(modifier == Result.normal){
-			if(self.has(Trait.strapped)){
-				if(self.has(Item.Strapon2)){
+			if(getSelf().has(Trait.strapped)){
+				if(getSelf().has(Item.Strapon2)){
 					
-					return self.name()+" aligns her Strap-On behind you and pushes it into your lubricated ass. After pushing it in completely, "
-							+self.name()+" pushes a button on a controller which causes the Dildo to vibrate in your ass, giving you a slight shiver.";
+					return getSelf().name()+" aligns her Strap-On behind you and pushes it into your lubricated ass. After pushing it in completely, "
+							+getSelf().name()+" pushes a button on a controller which causes the Dildo to vibrate in your ass, giving you a slight shiver.";
 				}
 				else{
-					return self.name()+" lubes up her strapon, positions herself behind you, and shoves it into your ass.";
+					return getSelf().name()+" lubes up her strapon, positions herself behind you, and shoves it into your ass.";
 				}
 			}
 			else{
-				return self.name()+" rubs her cock up and down your ass crack before thrusting her hips to penetrate you.";
+				return getSelf().name()+" rubs her cock up and down your ass crack before thrusting her hips to penetrate you.";
 			}
 		} else {
-			return self.name()+" rubs her dick against your ass, but she's still flacid and can't actually penetrate you.";
+			return getSelf().name()+" rubs her dick against your ass, but she's still flacid and can't actually penetrate you.";
 		}
 	}
 
@@ -163,5 +163,11 @@ public class AssFuck extends Fuck {
 	@Override
 	public boolean makesContact() {
 		return true;
+	}
+	public String getTargetOrganType(Combat c, Character target) {
+		return "ass";
+	}
+	public String getWithOrganType(Combat c, Character target) {
+		return "cock";
 	}
 }

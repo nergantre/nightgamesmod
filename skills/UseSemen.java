@@ -27,22 +27,22 @@ public class UseSemen extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		boolean hasItems = self.has(Item.semen);
-		return hasItems&&self.canAct()&&self.has(Trait.succubus)&&c.getStance().mobile(self)&&(!self.human()||Global.getMatch().condition!=Modifier.noitems);
+		boolean hasItems = getSelf().has(Item.semen);
+		return hasItems&&getSelf().canAct()&&getSelf().has(Trait.succubus)&&c.getStance().mobile(getSelf())&&(!getSelf().human()||Global.getMatch().condition!=Modifier.noitems);
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
 		Item used = Item.semen;
 		boolean eventful = false;
-		c.write(self, Global.format("{self:SUBJECT-ACTION:take|takes} out a bottle of milky white semen and {self:action:gulp:gulps} it down in one breath.", self, target));
+		c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:take|takes} out a bottle of milky white semen and {self:action:gulp|gulps} it down in one breath.", getSelf(), target));
 		for (ItemEffect e : used.getEffects()) {
-			eventful = e.use(c, self, target, used) || eventful;
+			eventful = e.use(c, getSelf(), target, used) || eventful;
 		}
 		if (!eventful) {
 			c.write("...But nothing happened.");
 		}
-		self.consume(used, 1);
+		getSelf().consume(used, 1);
 	}
 
 	@Override

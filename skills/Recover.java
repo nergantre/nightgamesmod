@@ -18,22 +18,22 @@ public class Recover extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {		
-		return c.getStance().prone(self)&&c.getStance().mobile(self)&&self.canAct();
+		return c.getStance().prone(getSelf())&&c.getStance().mobile(getSelf())&&getSelf().canAct();
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		if(!self.is(Stsflag.braced)){
-			self.add(new Braced(self));
+		if(!getSelf().is(Stsflag.braced)){
+			getSelf().add(new Braced(getSelf()));
 		}
-		c.setStance(new Neutral(self,target));
-		self.heal(c, Global.random(3));
+		c.setStance(new Neutral(getSelf(),target));
+		getSelf().heal(c, Global.random(3));
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class Recover extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" scrambles back to her feet.";
+		return getSelf().name()+" scrambles back to her feet.";
 	}
 
 	@Override

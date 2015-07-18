@@ -21,62 +21,62 @@ public class Shove extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		if (target.hasStatus(Stsflag.cockbound)) { return false; }
-		return !c.getStance().dom(self)&&!c.getStance().prone(target)&&c.getStance().reachTop(self)&&self.canAct()&&!c.getStance().penetration(self);
+		return !c.getStance().dom(getSelf())&&!c.getStance().prone(target)&&c.getStance().reachTop(getSelf())&&getSelf().canAct()&&!c.getStance().penetration(getSelf());
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(self.get(Attribute.Ki)>=1&&!target.top.isEmpty()&&self.canSpend(5)) {
-			if(self.human()){
-				c.write(self,deal(c,0,Result.special, target));
+		if(getSelf().get(Attribute.Ki)>=1&&!target.top.isEmpty()&&getSelf().canSpend(5)) {
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.special, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.special, target));
+				c.write(getSelf(),receive(c,0,Result.special, target));
 			}
 			target.shred(0);
 			target.pain(c, Global.random(6)+2);
-			if(self.check(Attribute.Power, target.knockdownDC()-self.get(Attribute.Ki))) {
-				c.setStance(new Neutral(self,target));
+			if(getSelf().check(Attribute.Power, target.knockdownDC()-getSelf().get(Attribute.Ki))) {
+				c.setStance(new Neutral(getSelf(),target));
 			}
 		} else if (c.getStance().getClass() == Mount.class || c.getStance().getClass()==ReverseMount.class) {
-			if(self.check(Attribute.Power,target.knockdownDC()+5)){
-				if(self.human()){
-					c.write(self,"You shove "+target.name()+" off of you and get to your feet before she can retaliate.");
+			if(getSelf().check(Attribute.Power,target.knockdownDC()+5)){
+				if(getSelf().human()){
+					c.write(getSelf(),"You shove "+target.name()+" off of you and get to your feet before she can retaliate.");
 				} else if(target.human()) {
-					c.write(self,self.name()+" shoves you hard enough to free herself and jump up.");
+					c.write(getSelf(),getSelf().name()+" shoves you hard enough to free herself and jump up.");
 				}
-				if(!self.is(Stsflag.braced)){
-					self.add(new Braced(self));
+				if(!getSelf().is(Stsflag.braced)){
+					getSelf().add(new Braced(getSelf()));
 				}
-				c.setStance(new Neutral(self,target));
+				c.setStance(new Neutral(getSelf(),target));
 			} else {
-				if(self.human()){
-					c.write(self,"You push "+target.name()+", but you're unable to dislodge her.");
+				if(getSelf().human()){
+					c.write(getSelf(),"You push "+target.name()+", but you're unable to dislodge her.");
 				} else if(target.human()) {
-					c.write(self,self.name()+" shoves you weakly.");
+					c.write(getSelf(),getSelf().name()+" shoves you weakly.");
 				}
 			}
 			target.pain(c, Global.random(6)+2);
 		}
 		else{ 
-			if(self.check(Attribute.Power,target.knockdownDC())){
-				if(self.human()){
-					c.write(self,"You shove "+target.name()+" hard enough to knock her flat on her back.");
+			if(getSelf().check(Attribute.Power,target.knockdownDC())){
+				if(getSelf().human()){
+					c.write(getSelf(),"You shove "+target.name()+" hard enough to knock her flat on her back.");
 				}
 				else if(target.human()){
-					c.write(self,self.name()+" knocks you off balance and you fall at her feet.");
+					c.write(getSelf(),getSelf().name()+" knocks you off balance and you fall at her feet.");
 				}
-				c.setStance(new StandingOver(self,target));
+				c.setStance(new StandingOver(getSelf(),target));
 			}
 			else{
-				if(self.human()){
-					c.write(self,"You shove "+target.name()+" back a step, but she keeps her footing.");
+				if(getSelf().human()){
+					c.write(getSelf(),"You shove "+target.name()+" back a step, but she keeps her footing.");
 				}
 				else if(target.human()){
-					c.write(self,self.name()+" pushes you back, but you're able to maintain your balance.");
+					c.write(getSelf(),getSelf().name()+" pushes you back, but you're able to maintain your balance.");
 				}
 			}
-			target.pain(c, Global.random(4)+self.get(Attribute.Power)/2);
+			target.pain(c, Global.random(4)+getSelf().get(Attribute.Power)/2);
 		}
 
 	}
@@ -98,11 +98,11 @@ public class Shove extends Skill {
 	}
 	@Override
 	public String getLabel(Combat c){
-		if(self.get(Attribute.Ki)>=1){
+		if(getSelf().get(Attribute.Ki)>=1){
 			return "Shredding Palm";
 		}
 		else{
-			return getName();
+			return getName(c);
 		}			
 	}
 	@Override
@@ -112,7 +112,7 @@ public class Shove extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" strikes you in the chest with her palm, staggering you a step. Suddenly your "+target.top.peek()+" tears and falls off you in pieces";
+		return getSelf().name()+" strikes you in the chest with her palm, staggering you a step. Suddenly your "+target.top.peek()+" tears and falls off you in pieces";
 	}
 
 	@Override

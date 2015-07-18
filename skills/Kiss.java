@@ -16,49 +16,49 @@ public class Kiss extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().kiss(self)&&self.canAct();
+		return c.getStance().kiss(getSelf())&&getSelf().canAct();
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
 		int m = 2+Global.random(2);
-		if(self.has(Trait.romantic)){
+		if(getSelf().has(Trait.romantic)){
 			m += 3;
 		}
-		if(self.has(Trait.experttongue)){
+		if(getSelf().has(Trait.experttongue)){
 			m += 5;
-			if(self.human()){
-				c.write(self,deal(c,m,Result.special, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,m,Result.special, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,m,Result.special, target));
+				c.write(getSelf(),receive(c,m,Result.special, target));
 			}
-			target.body.pleasure(self, self.body.getRandom("mouth"), target.body.getRandom("mouth"), m, c);
-			self.body.pleasure(target, target.body.getRandom("mouth"), self.body.getRandom("mouth"), 1, c);
-			self.buildMojo(c, 10);
+			target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("mouth"), m, c);
+			getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("mouth"), 1, c);
+			getSelf().buildMojo(c, 10);
 		}
-		else if(self.get(Attribute.Seduction)>=9){
+		else if(getSelf().get(Attribute.Seduction)>=9){
 			m += 2 + Global.random(2);
-			if(self.human()){
-				c.write(self,deal(c,m,Result.normal, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,m,Result.normal, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,m,Result.normal, target));
+				c.write(getSelf(),receive(c,m,Result.normal, target));
 			}
-			target.body.pleasure(self, self.body.getRandom("mouth"), target.body.getRandom("mouth"), m, c);
-			self.body.pleasure(target, target.body.getRandom("mouth"), self.body.getRandom("mouth"), 1, c);
-			self.buildMojo(c, 10);
+			target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("mouth"), m, c);
+			getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("mouth"), 1, c);
+			getSelf().buildMojo(c, 10);
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,m,Result.weak, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,m,Result.weak, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,m,Result.weak, target));
+				c.write(getSelf(),receive(c,m,Result.weak, target));
 			}
-			target.body.pleasure(self, self.body.getRandom("mouth"), target.body.getRandom("mouth"), m, c);
-			self.body.pleasure(target, target.body.getRandom("mouth"), self.body.getRandom("mouth"), 1, c);
-			self.buildMojo(c, 5);
+			target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("mouth"), m, c);
+			getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("mouth"), 1, c);
+			getSelf().buildMojo(c, 5);
 		}
 	}
 
@@ -103,17 +103,17 @@ public class Kiss extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.special){
-			return self.name()+" seductively pulls you into a deep kiss. As first you try to match her enthusiastic tongue with your own, but you're quickly overwhelmed. She draws " +
+			return getSelf().name()+" seductively pulls you into a deep kiss. As first you try to match her enthusiastic tongue with your own, but you're quickly overwhelmed. She draws " +
 					"your tongue into her mouth and sucks on it in a way that seems to fill your mind with a pleasant, but intoxicating fog.";
 		}
 		else if(modifier==Result.weak){
-			return self.name()+" presses her lips against yours in a passionate, if not particularly skillful, kiss.";
+			return getSelf().name()+" presses her lips against yours in a passionate, if not particularly skillful, kiss.";
 		}
 		else{
 			switch(Global.random(3)){
-			case 0: return self.name()+" grabs you and kisses you passionately on the mouth. As you break for air, she gently nibbles on your bottom lip.";
-			case 1: return self.name()+" peppers quick little kisses around your mouth before suddenly taking your lips forcefully and invading your mouth with her tongue.";
-			default: return self.name()+" kisses you softly and romantically, slowy drawing you into her embrace. As you part, she teasingly brushes her lips against yours.";
+			case 0: return getSelf().name()+" grabs you and kisses you passionately on the mouth. As you break for air, she gently nibbles on your bottom lip.";
+			case 1: return getSelf().name()+" peppers quick little kisses around your mouth before suddenly taking your lips forcefully and invading your mouth with her tongue.";
+			default: return getSelf().name()+" kisses you softly and romantically, slowy drawing you into her embrace. As you part, she teasingly brushes her lips against yours.";
 			}
 		}
 	}
@@ -125,5 +125,11 @@ public class Kiss extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
+	}
+	public String getTargetOrganType(Combat c, Character target) {
+		return "mouth";
+	}
+	public String getWithOrganType(Combat c, Character target) {
+		return "mouth";
 	}
 }

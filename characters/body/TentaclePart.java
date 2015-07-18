@@ -97,11 +97,11 @@ public class TentaclePart extends GenericBodyPart {
 	public Map<String,Object> saveToDict() {
 		Map<String, Object> res = new HashMap<String, Object>();
 		res.put("desc",			desc);
-		res.put("descLong",		attachpoint);
-		res.put("hotness",		fluids);
-		res.put("pleasure",		hotness);
-		res.put("sensitivity",	pleasure);
-		res.put("notable",		sensitivity);
+		res.put("attachpoint",		attachpoint);
+		res.put("hotness",		hotness);
+		res.put("pleasure",		pleasure);
+		res.put("sensitivity",	sensitivity);
+		res.put("fluids",		fluids);
 
 		return res;
 	}

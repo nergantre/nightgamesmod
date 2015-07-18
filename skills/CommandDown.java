@@ -23,11 +23,11 @@ public class CommandDown extends PlayerCommand {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		c.setStance(new Mount(self, target));
-		if (self.human())
-			c.write(self,deal(c, 0, Result.normal, target));
+		c.setStance(new Mount(getSelf(), target));
+		if (getSelf().human())
+			c.write(getSelf(),deal(c, 0, Result.normal, target));
 		else
-			c.write(self,receive(c, 0, Result.normal, target));
+			c.write(getSelf(),receive(c, 0, Result.normal, target));
 	}
 
 	@Override

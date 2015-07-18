@@ -151,4 +151,9 @@ public enum TailPart implements BodyPart {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	@Override
+	public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {
+
+	}
 }

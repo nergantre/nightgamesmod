@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 
+import combat.Combat;
+
 import skills.Escape;
 import skills.Nothing;
 import skills.Skill;
@@ -33,6 +35,9 @@ public class NursingHold extends Position {
 	@Override
 	public boolean mobile(Character c) {
 		return c==top;
+	}	
+	public String image() {
+		return "nursing.jpg";
 	}
 
 	@Override
@@ -91,16 +96,16 @@ public class NursingHold extends Position {
 	}
 
 	@Override
-	public Position insert(Character dom, Character inserter) {
-		if(dom == inserter){
-			return new Missionary(top,bottom);
-		}
-		else {
-			return new Cowgirl(top,bottom);
+	public Position insert(Character dom) {
+		Character other = getOther(dom);
+		if(dom.hasDick() && other.hasPussy()){
+			return new Missionary(dom,other);
+		} else {
+			return new Cowgirl(dom,other);
 		}
 	}
 
-	public void decay(){
+	public void decay(Combat c){
 		time++;
 		bottom.weaken(null, 5);
 		top.emote(Emotion.dominant, 10);

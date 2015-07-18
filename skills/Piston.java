@@ -21,7 +21,7 @@ public class Piston extends Thrust {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().canthrust(self)&&(c.getStance().penetration(self)||c.getStance().penetration(target));
+		return getSelf().canAct()&&c.getStance().canthrust(getSelf())&&(c.getStance().penetration(getSelf())||c.getStance().penetration(target));
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class Piston extends Thrust {
 
 		int m = 12 + Global.random(8);
 		int mt = 8 + Global.random(5);
-		if(self.has(Trait.experienced)){
+		if(getSelf().has(Trait.experienced)){
 			mt = mt * 3 / 4;
 		}
 		mt = Math.max(1, mt);
@@ -55,7 +55,7 @@ public class Piston extends Thrust {
 		if(modifier == Result.anal||modifier == Result.upgrade){
 			return "You pound "+target.name()+" in the ass. She whimpers in pleasure and can barely summon the strength to hold herself off the floor.";
 		} else if (modifier == Result.reverse) {
-			return Global.format("{self:SUBJECT-ACTION:bounce|bounces} on {other:name-possessive} cock, relentlessly driving you both towards orgasm.", self, target);
+			return Global.format("{self:SUBJECT-ACTION:bounce|bounces} on {other:name-possessive} cock, relentlessly driving you both towards orgasm.", getSelf(), target);
 		} else {
 			return "You rapidly pound your dick into "+target.name()+"'s pussy. Her pleasure filled cries are proof that you're having an effect, but you're feeling it " +
 					"as much as she is.";
@@ -65,16 +65,16 @@ public class Piston extends Thrust {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier == Result.anal){
-			return self.name()+" relentlessly pegs you in the ass as you groan and try to endure the sensation.";
+			return getSelf().name()+" relentlessly pegs you in the ass as you groan and try to endure the sensation.";
 		}
 		else if(modifier == Result.upgrade){
-			return self.name()+" pistons into you while pushing your shoulders on the ground. While her Strap-On stimulates your prostate, "
-					+self.name()+"'s tits are shaking above your head.";
+			return getSelf().name()+" pistons into you while pushing your shoulders on the ground. While her Strap-On stimulates your prostate, "
+					+getSelf().name()+"'s tits are shaking above your head.";
 		} else if (modifier == Result.reverse) {
-			return self.name()+" bounces on your cock, relentlessly driving you both toward orgasm.";
+			return getSelf().name()+" bounces on your cock, relentlessly driving you both toward orgasm.";
 		} else{
 			return Global.format("{self:SUBJECT-ACTION:rapidly pound|rapidly pounds} {self:possessive} {self:body-part:cock} into {other:possessive} {other:body-part:pussy}, "+
-								"relentlessly driving you both toward orgasm", self, target);
+								"relentlessly driving you both toward orgasm", getSelf(), target);
 		}
 	}
 
@@ -85,7 +85,7 @@ public class Piston extends Thrust {
 
 	@Override
 	public String getName(Combat c) {
-		if (c.getStance().inserted(self)) {
+		if (c.getStance().inserted(getSelf())) {
 			return "Piston";
 		} else {
 			return "Bounce";

@@ -16,7 +16,7 @@ public class StripBottom extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().reachBottom(self)&&!target.pantsless()&&self.canAct();
+		return c.getStance().reachBottom(getSelf())&&!target.pantsless()&&getSelf().canAct();
 	}
 
 	@Override
@@ -25,16 +25,16 @@ public class StripBottom extends Skill {
 				+(target.getLevel())
 				+(target.getStamina().percent() / 2
 				- target.getArousal().percent()) / 4
-				- (c.getStance().dom(self) ? 50 : 0);
-		if (self.check(Attribute.Cunning, difficulty)||!target.canAct()) {
-			if(self.human()){
-				c.write(self,deal(c,0,Result.normal, target));
+				- (c.getStance().dom(getSelf()) ? 50 : 0);
+		if (getSelf().check(Attribute.Cunning, difficulty)||!target.canAct()) {
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.normal, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.normal, target));
+				c.write(getSelf(),receive(c,0,Result.normal, target));
 			}
 			target.strip(1, c);
-			if(self.human()&&target.nude()){
+			if(getSelf().human()&&target.nude()){
 				c.write(target,target.nakedLiner());
 			}
 			if(target.human()&&target.pantsless()){
@@ -42,19 +42,19 @@ public class StripBottom extends Skill {
 					c.write("Your boner springs out, no longer restrained by your pants.");
 				}
 				else{
-					c.write(self.name()+" giggles as your flacid dick is exposed");
+					c.write(getSelf().name()+" giggles as your flacid dick is exposed");
 				}
 			}
 			target.emote(Emotion.nervous, 10);
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
-			target.weaken(c, Global.random(6)+self.get(Attribute.Power)/4);
+			target.weaken(c, Global.random(6)+getSelf().get(Attribute.Power)/4);
 		}
 	}
 
@@ -87,10 +87,10 @@ public class StripBottom extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
-			return self.name()+" tries to pull down your "+target.bottom.peek().getName()+", but you hold them up.";
+			return getSelf().name()+" tries to pull down your "+target.bottom.peek().getName()+", but you hold them up.";
 		}
 		else{
-			return self.name()+" grabs the waistband of your "+target.bottom.peek().getName()+" and pulls them down.";
+			return getSelf().name()+" grabs the waistband of your "+target.bottom.peek().getName()+" and pulls them down.";
 		}
 	}
 

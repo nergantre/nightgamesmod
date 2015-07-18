@@ -20,47 +20,47 @@ public class Aphrodisiac extends Skill {
 	}
 
 	public boolean usable(Combat c, Character target) {
-		return (c.getStance().mobile(this.self))
-				&& (this.self.canAct())
-				&& ((this.self.has(Item.Aphrodisiac)&&(!self.human()||Global.getMatch().condition!=Modifier.noitems)) || ((this.self
-						.hasPussy() && self.body.getRandomPussy() == PussyPart.succubus) && this.self.getArousal().get() >= 10))
-				&& (!c.getStance().prone(this.self));
+		return (c.getStance().mobile(this.getSelf()))
+				&& (this.getSelf().canAct())
+				&& ((this.getSelf().has(Item.Aphrodisiac)&&(!getSelf().human()||Global.getMatch().condition!=Modifier.noitems)) || ((this.getSelf()
+						.hasPussy() && getSelf().body.getRandomPussy() == PussyPart.succubus) && this.getSelf().getArousal().get() >= 10))
+				&& (!c.getStance().prone(this.getSelf()));
 	}
 
 	public void resolve(Combat c, Character target) {
 		int magnitude = Global.random(5) + 15;
 		
-		if (self.hasPussy() && self.body.getRandomPussy() == PussyPart.succubus) {
-				c.write(self,receive(c, magnitude, Result.strong, self));
+		if (getSelf().hasPussy() && getSelf().body.getRandomPussy() == PussyPart.succubus) {
+				c.write(getSelf(),receive(c, magnitude, Result.strong, getSelf()));
 				target.arouse(magnitude, c);
 				target.emote(Emotion.horny, 20);
-		} else if(self.has(Item.Aersolizer)){
-			if(self.human()){
-				c.write(self,deal(c,0,Result.special, target));
+		} else if(getSelf().has(Item.Aersolizer)){
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.special, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.special, self));
+				c.write(getSelf(),receive(c,0,Result.special, getSelf()));
 			}
-			this.self.consume(Item.Aphrodisiac, 1);
+			this.getSelf().consume(Item.Aphrodisiac, 1);
 			target.arouse(magnitude, c);
 			target.emote(Emotion.horny, 20);
 		}
 		else if(target.roll(this, c, accuracy())){
-			if (this.self.human()) {
-				c.write(self,deal(c, magnitude, Result.normal, target));
+			if (this.getSelf().human()) {
+				c.write(getSelf(),deal(c, magnitude, Result.normal, target));
 			} else {
-				c.write(self,receive(c, magnitude, Result.normal, this.self));
+				c.write(getSelf(),receive(c, magnitude, Result.normal, this.getSelf()));
 			}
 			target.emote(Emotion.horny, 20);
-			this.self.consume(Item.Aphrodisiac, 1);
+			this.getSelf().consume(Item.Aphrodisiac, 1);
 			target.arouse(magnitude, c);
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, self));
+				c.write(getSelf(),receive(c,0,Result.miss, getSelf()));
 			}
 		}
 	}
@@ -80,10 +80,10 @@ public class Aphrodisiac extends Skill {
 		else if(modifier == Result.miss){
 			return "You throw an Aphrodisiac at "+target.name()+", but she ducks out of the way and it splashes harmlessly on the ground. What a waste.";
 		} else if (modifier == Result.strong){
-			return self.name()
+			return getSelf().name()
 					+ " dip a finger "
-					+ (self.pantsless() ? "" : ("under your "
-							+ self.bottom.peek() + " and "))
+					+ (getSelf().pantsless() ? "" : ("under your "
+							+ getSelf().bottom.peek() + " and "))
 					+ "into your pussy. Once you have collected a drop of your juices"
 					+ " on your fingertip, you pull it out and flick it at " +target.name() + ","
 					+ " skillfully depositing it in her open mouth. You immediately see "
@@ -100,10 +100,10 @@ public class Aphrodisiac extends Skill {
 
 	public String receive(Combat c, int damage, Result modifier, Character attacker) {
 		if (modifier == Result.miss){
-			return self.name()+" splashes a bottle of liquid in your direction, but none of it hits you.";
+			return getSelf().name()+" splashes a bottle of liquid in your direction, but none of it hits you.";
 		}
 		else if(modifier == Result.special){
-			return self.name()+" inserts a bottle into the attachment on her arm. You're suddenly surrounded by a sweet smelling cloud of mist. You feel your blood boil " +
+			return getSelf().name()+" inserts a bottle into the attachment on her arm. You're suddenly surrounded by a sweet smelling cloud of mist. You feel your blood boil " +
 					"with desire as the unnatural gas takes effect";
 		}
 		else if (modifier == Result.strong){

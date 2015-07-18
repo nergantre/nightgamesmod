@@ -11,7 +11,7 @@ public class CommandStripPlayer extends PlayerCommand {
 	}
 
 	public boolean usable(Combat c, Character target) {
-		return super.usable(c, target) && !self.nude();
+		return super.usable(c, target) && !getSelf().nude();
 	}
 	
 	@Override
@@ -21,9 +21,9 @@ public class CommandStripPlayer extends PlayerCommand {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.undress(c);
-		if (self.human())
-			c.write(self,deal(c, 0, Result.normal, target));
+		getSelf().undress(c);
+		if (getSelf().human())
+			c.write(getSelf(),deal(c, 0, Result.normal, target));
 	}
 
 	@Override

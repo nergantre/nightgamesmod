@@ -24,8 +24,8 @@ public class Strapon extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().mobile(self)&&!c.getStance().prone(self)&&self.pantsless()&&(self.has(Item.Strapon)||self.has(Item.Strapon2))
-				&&!self.hasDick()&&!c.getStance().penetration(self)&&!c.getStance().penetration(target)&&(!self.human()||Global.getMatch().condition!=Modifier.notoys)
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&getSelf().pantsless()&&(getSelf().has(Item.Strapon)||getSelf().has(Item.Strapon2))
+				&&!getSelf().hasDick()&&!c.getStance().penetration(getSelf())&&!c.getStance().penetration(target)&&(!getSelf().human()||Global.getMatch().condition!=Modifier.notoys)
 				&&c.getStance().enumerate()!=Stance.facesitting;
 	}
 
@@ -36,18 +36,18 @@ public class Strapon extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.bottom.push(Clothing.strapon);
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		getSelf().bottom.push(Clothing.strapon);
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		self.buildMojo(c, 10);
+		getSelf().buildMojo(c, 10);
 		target.loseMojo(c, 10);
 		target.emote(Emotion.nervous, 10);
-		self.emote(Emotion.confident, 30);
-		self.emote(Emotion.dominant, 40);
+		getSelf().emote(Emotion.confident, 30);
+		getSelf().emote(Emotion.dominant, 40);
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class Strapon extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" straps on a thick rubber cock and grins at you in a way that makes you feel a bit nervous.";
+		return getSelf().name()+" straps on a thick rubber cock and grins at you in a way that makes you feel a bit nervous.";
 	}
 
 }

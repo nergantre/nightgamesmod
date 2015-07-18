@@ -22,7 +22,7 @@ public class WaterForm extends Skill{
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&!c.getStance().sub(self)&&!self.is(Stsflag.form);
+		return getSelf().canAct()&&!c.getStance().sub(getSelf())&&!getSelf().is(Stsflag.form);
 	}
 
 	@Override
@@ -32,13 +32,13 @@ public class WaterForm extends Skill{
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		self.add(new WaterStance(self));
+		getSelf().add(new WaterStance(getSelf()));
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class WaterForm extends Skill{
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" takes a deep breath and her movements become much more fluid.";
+		return getSelf().name()+" takes a deep breath and her movements become much more fluid.";
 	}
 
 }

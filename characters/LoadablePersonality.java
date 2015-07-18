@@ -186,4 +186,13 @@ public class LoadablePersonality extends BasePersonality {
         ScriptableObject.putProperty(scope, "valueVar", Context.javaToJS(value, scope));
 		return Boolean.valueOf(execute("checkMood(moodVar, valueVar)", "checkMood"));
 	}
+	@Override
+	public String orgasmLiner() {
+		return "";
+	}
+
+	@Override
+	public String makeOrgasmLiner() {
+		return "";
+	}
 }

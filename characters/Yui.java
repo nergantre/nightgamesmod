@@ -30,7 +30,7 @@ public class Yui extends BasePersonality {
 		character.closet.add(Clothing.panties);
 		character.closet.add(Clothing.skirt);
 		character.change(Modifier.normal);
-		character.setUnderwear(Item.YuiTrophy);
+		character.setTrophy(Item.YuiTrophy);
 		character.plan = Tactics.hunting;
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.c);
@@ -164,5 +164,14 @@ public class Yui extends BasePersonality {
 	public String temptLiner(Character target) {
 		// TODO Auto-generated method stub
 		return "";
+	}
+	@Override
+	public String orgasmLiner() {
+		return "Reyka shudders, <i>\"Mmm it's been a while since I've felt that. Here, I'll return the favor\"</i>";
+	}
+
+	@Override
+	public String makeOrgasmLiner() {
+		return "With a devilish smile, Reyka brings her face close to yours <i>\"Mmmmm that smells great! Too bad I'm still pretty hungry.\"</i>";
 	}
 }

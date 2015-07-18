@@ -23,11 +23,11 @@ public class TailPeg extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.getArousal().get() >= 30 && self.canAct()
-				&& self.canSpend(20) && target.pantsless()
+		return getSelf().getArousal().get() >= 30 && getSelf().canAct()
+				&& getSelf().canSpend(20) && target.pantsless()
 				&& c.getStance().en != Stance.standing
 				&& c.getStance().en != Stance.standingover
-				&& !(c.getStance().en == Stance.anal && c.getStance().dom(self));
+				&& !(c.getStance().en == Stance.anal && c.getStance().dom(getSelf()));
 	}
 
 	@Override
@@ -38,49 +38,49 @@ public class TailPeg extends Skill {
 	@Override
 	public void resolve(Combat c, Character target) {
 		if (target.roll(this, c,
-				accuracy() - (c.getStance().penetration(self) ? 0 : 5))) {
-			int strength = Math.min(20, 10 + self.get(Attribute.Dark)/4);
+				accuracy() - (c.getStance().penetration(getSelf()) ? 0 : 5))) {
+			int strength = Math.min(20, 10 + getSelf().get(Attribute.Dark)/4);
 			boolean shamed = false;
 			if (Global.random(4) == 2) {
 				target.add(new Shamed(target));
 				shamed = true;
 			}
-			self.spendMojo(c, 20);
+			getSelf().spendMojo(c, 20);
 			if (target.human()) {
-				if (c.getStance().penetration(self))
-					c.write(self,receive(c, 0, Result.special, target));
+				if (c.getStance().penetration(getSelf()))
+					c.write(getSelf(),receive(c, 0, Result.special, target));
 				else if (c.getStance().dom(target))
-					c.write(self,receive(c, 0, Result.critical, target));
-				else if (c.getStance().behind(self))
-					c.write(self,receive(c, 0, Result.strong, target));
+					c.write(getSelf(),receive(c, 0, Result.critical, target));
+				else if (c.getStance().behind(getSelf()))
+					c.write(getSelf(),receive(c, 0, Result.strong, target));
 				else
-					c.write(self,receive(c, 0, Result.normal, target));
+					c.write(getSelf(),receive(c, 0, Result.normal, target));
 				if (shamed)
-					c.write(self,"The shame of having your ass violated by "
-							+ self.name() + " has destroyed your confidence.");
-			} else if (self.human()) {
-				if (c.getStance().penetration(self))
-					c.write(self,deal(c, 0, Result.special, target));
+					c.write(getSelf(),"The shame of having your ass violated by "
+							+ getSelf().name() + " has destroyed your confidence.");
+			} else if (getSelf().human()) {
+				if (c.getStance().penetration(getSelf()))
+					c.write(getSelf(),deal(c, 0, Result.special, target));
 				else if (c.getStance().dom(target))
-					c.write(self,deal(c, 0, Result.critical, target));
-				else if (c.getStance().behind(self))
-					c.write(self,deal(c, 0, Result.strong, target));
+					c.write(getSelf(),deal(c, 0, Result.critical, target));
+				else if (c.getStance().behind(getSelf()))
+					c.write(getSelf(),deal(c, 0, Result.strong, target));
 				else
-					c.write(self,deal(c, 0, Result.normal, target));
+					c.write(getSelf(),deal(c, 0, Result.normal, target));
 				if (shamed)
-					c.write(self,"[npc shamed]");
+					c.write(getSelf(),"[npc shamed]");
 			}
-			target.body.pleasure(self, self.body.getRandom("tail"), target.body.getRandom("ass"), strength, c);
+			target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom("ass"), strength, c);
 			target.pain(c, strength / 2);
 			target.emote(Emotion.nervous, 10);
 			target.emote(Emotion.desperate, 10);
-			self.emote(Emotion.confident, 15);
-			self.emote(Emotion.dominant, 25);
+			getSelf().emote(Emotion.confident, 15);
+			getSelf().emote(Emotion.dominant, 25);
 		} else {
 			if (target.human())
-				c.write(self,receive(c, 0, Result.miss, target));
+				c.write(getSelf(),receive(c, 0, Result.miss, target));
 			else
-				c.write(self,deal(c, 0, Result.miss, target));
+				c.write(getSelf(),deal(c, 0, Result.miss, target));
 		}
 	}
 
@@ -117,32 +117,32 @@ public class TailPeg extends Skill {
 		switch (modifier) {
 		case critical:
 			return "Smiling down on you, "
-					+ self.name()
+					+ getSelf().name()
 					+ " spreads your legs and tickles your butt with her tail."
 					+ " You notice how the tail itself was slick and wet as it"
 					+ " slowly pushes through your anus, spreading your cheeks a part. "
-					+ self.name()
+					+ getSelf().name()
 					+ " pumps it in and out a for a few times before taking "
 					+ "it out again.";
 		case miss:
-			return self.name()
+			return getSelf().name()
 					+ " tries to peg you with her tail but you manage to push"
 					+ " your butt cheeks together in time to keep it out.";
 		case normal:
-			return self.name()
+			return getSelf().name()
 					+ " suddenly moves very close to you. You expect an attack from the front"
 					+ " and try to move back, but end up shoving her tail right up your ass.";
 		case special:
-			return self.name()
+			return getSelf().name()
 					+ " smirks and wiggles her tail behind her back. You briefly look "
 					+ "at it and the see the appendage move behind you. You try to keep it"
 					+ " out by clenching your butt together, but a squeeze of "
-					+ self.name()
+					+ getSelf().name()
 					+ "'s vagina breaks your concentration, so the tail slides up your ass"
 					+ " and you almost lose it as your cock and ass are stimulated so thoroughly"
 					+ " at the same time.";
 		case strong:
-			return self.name()
+			return getSelf().name()
 					+ " hugs you from behind and rubs her chest against your back."
 					+ " Distracted by that, she managed to push her tail between your"
 					+ " ass cheeks and started tickling your prostrate with the tip.";
@@ -154,5 +154,11 @@ public class TailPeg extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
+	}
+	public String getTargetOrganType(Combat c, Character target) {
+		return "ass";
+	}
+	public String getWithOrganType(Combat c, Character target) {
+		return "tail";
 	}
 }

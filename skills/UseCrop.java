@@ -24,20 +24,20 @@ public class UseCrop extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (self.has(Item.Crop)||self.has(Item.Crop2))&&self.canAct()&&c.getStance().mobile(self)&&(c.getStance().reachTop(self)||c.getStance().reachBottom(self))
-				&&(!self.human()||Global.getMatch().condition!=Modifier.notoys);
+		return (getSelf().has(Item.Crop)||getSelf().has(Item.Crop2))&&getSelf().canAct()&&c.getStance().mobile(getSelf())&&(c.getStance().reachTop(getSelf())||c.getStance().reachBottom(getSelf()))
+				&&(!getSelf().human()||Global.getMatch().condition!=Modifier.notoys);
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
-			if(target.pantsless()&&c.getStance().reachBottom(self)){
-				if(self.has(Item.Crop2)&&Global.random(10)>7){
-					if(self.human()){
-						c.write(self,deal(c,0,Result.critical, target));
+			if(target.pantsless()&&c.getStance().reachBottom(getSelf())){
+				if(getSelf().has(Item.Crop2)&&Global.random(10)>7){
+					if(getSelf().human()){
+						c.write(getSelf(),deal(c,0,Result.critical, target));
 					}
 					else if(target.human()){
-						c.write(self,receive(c,0,Result.critical, target));
+						c.write(getSelf(),receive(c,0,Result.critical, target));
 					}
 					if(target.has(Trait.achilles)){
 						target.pain(c, 6);
@@ -46,32 +46,32 @@ public class UseCrop extends Skill {
 					target.pain(c, 8+Global.random(14)+target.get(Attribute.Perception));					
 				}
 				else{		
-					if(self.human()){
-						c.write(self,deal(c,0,Result.normal, target));
+					if(getSelf().human()){
+						c.write(getSelf(),deal(c,0,Result.normal, target));
 					}
 					else if(target.human()){
-						c.write(self,receive(c,0,Result.normal, target));
+						c.write(getSelf(),receive(c,0,Result.normal, target));
 					}
 					target.pain(c, 5+Global.random(12)+target.get(Attribute.Perception)/2);
 				}
 			}
 			else{
-				if(self.human()){
-					c.write(self,deal(c,0,Result.weak, target));
+				if(getSelf().human()){
+					c.write(getSelf(),deal(c,0,Result.weak, target));
 				}
 				else if(target.human()){
-					c.write(self,receive(c,0,Result.weak, target));
+					c.write(getSelf(),receive(c,0,Result.weak, target));
 				}
 				target.pain(c, 5+Global.random(12));
 			}
 			target.emote(Emotion.angry,15);
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -118,21 +118,21 @@ public class UseCrop extends Skill {
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
 			if(!target.has(Item.Crop)){
-				return "You duck out of the way, as "+self.name()+" swings her riding crop at you.";
+				return "You duck out of the way, as "+getSelf().name()+" swings her riding crop at you.";
 			}
 			else{
-				return self.name()+" swings her riding crop, but you draw your own crop and parry it.";
+				return getSelf().name()+" swings her riding crop, but you draw your own crop and parry it.";
 			}
 		}
 		else if(modifier==Result.critical){
-			return self.name()+" hits you on the ass with her riding crop. The attachment on the end delivers a painful sting to your jewels. You groan in pain and fight the urge to " +
+			return getSelf().name()+" hits you on the ass with her riding crop. The attachment on the end delivers a painful sting to your jewels. You groan in pain and fight the urge to " +
 					"curl up in the fetal position.";
 		}
 		else if(modifier==Result.weak){
-			return self.name()+" strikes you with a riding crop.";
+			return getSelf().name()+" strikes you with a riding crop.";
 		}
 		else{
-			return self.name()+" hits your bare ass with a riding crop hard enough to leave a painful welt.";
+			return getSelf().name()+" hits your bare ass with a riding crop hard enough to leave a painful welt.";
 		}
 	}
 

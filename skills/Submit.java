@@ -1,9 +1,9 @@
 package skills;
 
-import stance.Mount;
+import stance.Stance;
 import stance.StandingOver;
 import characters.Character;
-
+import characters.Trait;
 import combat.Combat;
 import combat.Result;
 
@@ -16,23 +16,23 @@ public class Submit extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().mobile(self)&&self.canAct()&&!c.getStance().prone(self)&&!c.getStance().sub(self);
+		return (c.getStance().en == Stance.neutral) &&getSelf().canAct();
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		c.setStance(new StandingOver(target, self));
+		c.setStance(new StandingOver(target, getSelf()));
 	}
 
 	@Override
 	public boolean requirements(Character user) {
-		return true;
+		return user.has(Trait.submissive) || user.human();
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class Submit extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" with a nervous glance, lies down on the floor.";
+		return getSelf().name()+" with a nervous glance, lies down on the floor.";
 	}
 
 	@Override

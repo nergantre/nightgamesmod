@@ -86,7 +86,7 @@ public class AnalProne extends AnalSexStance {
 	}
 
 	@Override
-	public Position insert(Character dom, Character inserter) {
+	public Position insert() {
 		return new Mount(top,bottom);
 	}
 
@@ -101,7 +101,7 @@ public class AnalProne extends AnalSexStance {
 			} else {
 				c.write(inserted.name() + " sighs with relief with your dick gone.");
 			}
-			c.setStance(insert(top, bottom));
+			c.setStance(insert());
 		}
 		if (inserted.body.getRandom("ass") == null) {
 			if(inserted.human()){
@@ -109,7 +109,7 @@ public class AnalProne extends AnalSexStance {
 			} else {
 				c.write("Your dick pops out of " + inserted.name() + " as her asshole shrinks and disappears.");
 			}
-			c.setStance(insert(top, bottom));
+			c.setStance(insert());
 		}
 	}
 
@@ -118,6 +118,14 @@ public class AnalProne extends AnalSexStance {
 			return new Mount(bottom, top);
 		} else {
 			return new AnalCowgirl(bottom, top);
+		}
+	}
+	
+	public String image() {
+		if (bottom.hasPussy()) {
+			return "analf.jpg";
+		} else {
+			return "pegging.jpg";
 		}
 	}
 }

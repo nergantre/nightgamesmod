@@ -24,7 +24,9 @@ public class ReverseCowgirl extends FemdomSexStance {
 	public boolean mobile(Character c) {
 		return c==top;
 	}
-
+	public String image() {
+		return "reverse_cowgirl.jpg";
+	}
 	@Override
 	public boolean kiss(Character c) {
 		return false;
@@ -79,7 +81,7 @@ public class ReverseCowgirl extends FemdomSexStance {
 		return c==bottom;
 	}
 	@Override
-	public Position insert(Character dom, Character inserter) {
+	public Position insert() {
 		return new ReverseMount(top,bottom);
 	}
 

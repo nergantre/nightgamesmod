@@ -26,13 +26,13 @@ public class FaceSit extends Skill {
 
 	@Override
 	public float priorityMod(Combat c) {
-		return (self.has(Trait.lacedjuices) || self.has(Trait.addictivefluids) || self.body.getRandomPussy() == PussyPart.feral) ? 3.0f : 0;
+		return (getSelf().has(Trait.lacedjuices) || getSelf().has(Trait.addictivefluids) || getSelf().body.getRandomPussy() == PussyPart.feral) ? 3.0f : 0;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.pantsless()&&self.canAct()&&c.getStance().dom(self)&&c.getStance().reachTop(self)&&
-				!c.getStance().penetration(self)&&!c.getStance().penetration(target)&&c.getStance().prone(target)&&!self.has(Trait.shy);
+		return getSelf().pantsless()&&getSelf().canAct()&&c.getStance().dom(getSelf())&&c.getStance().reachTop(getSelf())&&
+				!c.getStance().penetration(getSelf())&&!c.getStance().penetration(target)&&c.getStance().prone(target)&&!getSelf().has(Trait.shy);
 	}
 
 	@Override
@@ -42,24 +42,24 @@ public class FaceSit extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(self.has(Trait.entrallingjuices)&&Global.random(4)==0 && !target.wary()){
-			if(self.human()){
-				c.write(self,deal(c,0,Result.special, target));
+		if(getSelf().has(Trait.entrallingjuices)&&Global.random(4)==0 && !target.wary()){
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.special, target));
 			}else if(target.human()){
-				c.write(self,receive(c,0,Result.special, target));
+				c.write(getSelf(),receive(c,0,Result.special, target));
 			}
-			target.add(new Enthralled(target,self, 5));
-		} else if (self.has(Trait.lacedjuices)) {
-			if(self.human()){
-				c.write(self,deal(c,0,Result.strong, target));
+			target.add(new Enthralled(target,getSelf(), 5));
+		} else if (getSelf().has(Trait.lacedjuices)) {
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.strong, target));
 			}else if(target.human()){
-				c.write(self,receive(c,0,Result.strong, target));
+				c.write(getSelf(),receive(c,0,Result.strong, target));
 			}
 		} else {
-			if(self.human()){
-				c.write(self,deal(c,0,Result.normal, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.normal, target));
 			}else if(target.human()){
-				c.write(self,receive(c,0,Result.normal, target));
+				c.write(getSelf(),receive(c,0,Result.normal, target));
 			}
 		}
 
@@ -67,25 +67,25 @@ public class FaceSit extends Skill {
 		if (target.has(Trait.silvertongue)) {
 			m = m * 3 / 2;
 		}
-		if (self.hasBalls())
-			self.body.pleasure(target, target.body.getRandom("mouth"), self.body.getRandom("balls"), m, c);					
+		if (getSelf().hasBalls())
+			getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("balls"), m, c);					
 		else {
-			self.body.pleasure(target, target.body.getRandom("mouth"), self.body.getRandom("pussy"), m, c);
+			getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("pussy"), m, c);
 		}
 		double n = (int) Math.round(4+Global.random(4));
-		if (!c.getStance().behind(self)) {
+		if (c.getStance().front(getSelf())) {
 			// opponent can see self
-			n += 3 * self.body.getCharismaBonus(target);
+			n += 3 * getSelf().body.getCharismaBonus(target);
 		}
 		if (target.has(Trait.imagination)) {
 			n *= 1.5;
 		}
 
-		target.tempt(c, self, (int) Math.round(n));
+		target.tempt(c, getSelf(), (int) Math.round(n));
 		target.add(new Shamed(target));
-		self.buildMojo(c, 50);
+		getSelf().buildMojo(c, 50);
 		if (c.getStance().enumerate() != Stance.facesitting) {
-			c.setStance(new FaceSitting(self, target));
+			c.setStance(new FaceSitting(getSelf(), target));
 		}
 	}
 
@@ -104,7 +104,7 @@ public class FaceSit extends Skill {
 	}
 
 	public String getLabel(Combat c){
-		if(self.hasBalls()&&!self.hasPussy()){
+		if(getSelf().hasBalls()&&!getSelf().hasPussy()){
 			return "Teabag";
 		}
 		else if (c.getStance().enumerate() != Stance.facesitting){
@@ -116,7 +116,7 @@ public class FaceSit extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		if(self.hasBalls()){
+		if(getSelf().hasBalls()){
 			if(modifier==Result.special){
 				return "You crouch over "+target.nameOrPossessivePronoun()+" face and dunk your balls into her mouth. She can do little except lick them submissively, which does feel " +
 						"pretty good. She's so affected by your manliness that her eyes glaze over and she falls under your control. Oh yeah. You're awesome.";
@@ -147,30 +147,30 @@ public class FaceSit extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		if(self.hasBalls()){
+		if(getSelf().hasBalls()){
 			if(modifier==Result.special){
-				return self.name()+" straddles your head and dominates you by putting her balls in your mouth. For some reason, your mind seems to cloud over and you're " +
+				return getSelf().name()+" straddles your head and dominates you by putting her balls in your mouth. For some reason, your mind seems to cloud over and you're " +
 						"desperate to please her. She gives a superior smile as you obediently suck on her nuts.";
 			}
 			else if(modifier==Result.strong){
-				return self.name()+" straddles your head and dominates you by putting her balls in your mouth. Despite the humiliation, her scent is turning you on incredibly. " +
+				return getSelf().name()+" straddles your head and dominates you by putting her balls in your mouth. Despite the humiliation, her scent is turning you on incredibly. " +
 						"She gives a superior smile as you obediently suck on her nuts.";
 			}
 			else{
-				return self.name()+" straddles your head and dominates you by putting her balls in your mouth. She gives a superior smile as you obediently suck on her nuts.";
+				return getSelf().name()+" straddles your head and dominates you by putting her balls in your mouth. She gives a superior smile as you obediently suck on her nuts.";
 			}
 		} else {
 			if(modifier==Result.special){
-				return self.name()+" straddles your face and presses her pussy against your mouth. You open your mouth and start to lick her freely offered muff, but she just smiles " +
+				return getSelf().name()+" straddles your face and presses her pussy against your mouth. You open your mouth and start to lick her freely offered muff, but she just smiles " +
 						"while continuing to queen you. As you swallow her juices, you feel her eyes start to bore into your mind. You can't resist her. You don't even want to.";
 			}
 			else if(modifier==Result.strong){
-				return self.name()+" straddles your face and presses her pussy against your mouth. You open your mouth and start to lick her freely offered muff, but she just smiles " +
+				return getSelf().name()+" straddles your face and presses her pussy against your mouth. You open your mouth and start to lick her freely offered muff, but she just smiles " +
 						"while continuing to queen you. You feel your body start to heat up as her juices flow into your mouth. She's giving you a mouthful of aphrodisiac straight from " +
 						"the source.";
 			}
 			else{
-				return self.name()+" straddles your face and presses her pussy against your mouth. You open your mouth and start to lick her freely offered muff, but she just smiles " +
+				return getSelf().name()+" straddles your face and presses her pussy against your mouth. You open your mouth and start to lick her freely offered muff, but she just smiles " +
 						"while continuing to queen you. She clearly doesn't mind accepting some pleasure to demonstrate her superiority.";
 			}
 		}
@@ -179,5 +179,12 @@ public class FaceSit extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
+	}
+	
+	public String getTargetOrganType(Combat c, Character target) {
+		return "mouth";
+	}
+	public String getWithOrganType(Combat c, Character target) {
+		return "pussy";
 	}
 }

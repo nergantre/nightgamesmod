@@ -21,38 +21,38 @@ public class Sedate extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().mobile(self)&&self.canAct()&&self.has(Item.Sedative)&&!c.getStance().prone(self)&&(!self.human()||Global.getMatch().condition!=Modifier.noitems);
+		return c.getStance().mobile(getSelf())&&getSelf().canAct()&&getSelf().has(Item.Sedative)&&!c.getStance().prone(getSelf())&&(!getSelf().human()||Global.getMatch().condition!=Modifier.noitems);
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.consume(Item.Sedative, 1);
-		if(self.has(Item.Aersolizer)){
-			if(self.human()){
-				c.write(self,deal(c,0,Result.special, target));
+		getSelf().consume(Item.Sedative, 1);
+		if(getSelf().has(Item.Aersolizer)){
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.special, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.special, target));
+				c.write(getSelf(),receive(c,0,Result.special, target));
 			}
 			target.weaken(c, 30);
 			target.loseMojo(c, 10);
 		}
 		else if(target.roll(this, c, accuracy())){
-			if(self.human()){
-				c.write(self,deal(c,0,Result.normal, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.normal, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.normal, target));
+				c.write(getSelf(),receive(c,0,Result.normal, target));
 			}
 			target.weaken(c, 30);
 			target.loseMojo(c, 10);
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -83,13 +83,13 @@ public class Sedate extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier == Result.special){
-			return self.name()+" inserts a bottle into the attachment on her arm. You're suddenly surrounded by a cloud of dense fog. The fog seems to fill your head and your body feels heavy.";
+			return getSelf().name()+" inserts a bottle into the attachment on her arm. You're suddenly surrounded by a cloud of dense fog. The fog seems to fill your head and your body feels heavy.";
 		}
 		else if(modifier == Result.miss){
-			return self.name()+" splashes a bottle of liquid in your direction, but none of it hits you.";
+			return getSelf().name()+" splashes a bottle of liquid in your direction, but none of it hits you.";
 		}
 		else{
-			return self.name()+" hits you with a flask of liquid. Even the fumes make you feel sluggish and your limbs become heavy.";
+			return getSelf().name()+" hits you with a flask of liquid. Even the fumes make you feel sluggish and your limbs become heavy.";
 		}
 	}
 

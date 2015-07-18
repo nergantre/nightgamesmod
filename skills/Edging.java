@@ -21,18 +21,18 @@ public class Edging extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct();
+		return getSelf().canAct();
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		self.tempt(c, self.getArousal().max());
+		getSelf().tempt(c, getSelf().getArousal().max());
 	}
 
 	@Override
@@ -49,13 +49,13 @@ public class Edging extends Skill {
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return String.format("After giving up on the fight, %s start fantasizing about %s body. %s quickly find %s at the edge.",
-				self.subject(), target.possessivePronoun(), Global.capitalizeFirstLetter(self.pronoun()), self.reflectivePronoun());
+				getSelf().subject(), target.possessivePronoun(), Global.capitalizeFirstLetter(getSelf().pronoun()), getSelf().reflectivePronoun());
 	}
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return String.format("After giving up on the fight, %s start fantasizing about %s body. %s quickly find %s at the edge.",
-				self.subject(), target.possessivePronoun(), Global.capitalizeFirstLetter(self.pronoun()), self.reflectivePronoun());
+				getSelf().subject(), target.possessivePronoun(), Global.capitalizeFirstLetter(getSelf().pronoun()), getSelf().reflectivePronoun());
 	}
 
 	@Override

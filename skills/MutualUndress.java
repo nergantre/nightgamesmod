@@ -20,7 +20,7 @@ public class MutualUndress extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		if(self.canAct()&&!self.nude()&&!target.nude()) {
+		if(getSelf().canAct()&&!getSelf().nude()&&!target.nude()) {
 			return true;
 		}
 		return false;
@@ -28,7 +28,7 @@ public class MutualUndress extends Skill {
 	
 	@Override
 	public float priorityMod(Combat c) {
-		return c.getStance().dom(self) ? 2.0f : 0.0f;
+		return c.getStance().dom(getSelf()) ? 2.0f : 0.0f;
 	}
 	
 	@Override
@@ -38,13 +38,13 @@ public class MutualUndress extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {	
-		if(self.human()){
-			c.write(self,deal(c,0,Result.strong, target));
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.strong, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.strong, target));
+			c.write(getSelf(),receive(c,0,Result.strong, target));
 		}
-		self.undress(c);
+		getSelf().undress(c);
 		target.undress(c);
 	}
 
@@ -67,7 +67,7 @@ public class MutualUndress extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" asks for a quick time out and starts sexily slipping her her clothes off. Although there are no time outs in the rules, you can't help staring " +
+		return getSelf().name()+" asks for a quick time out and starts sexily slipping her her clothes off. Although there are no time outs in the rules, you can't help staring " +
 				"at the seductive display until she finishes with a cute wiggle of her naked ass. She asks you if you want to join her in feeling good, and before you realize it " +
 				"she's got you naked as well.";
 	}

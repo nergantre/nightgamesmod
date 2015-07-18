@@ -11,7 +11,8 @@ public enum Attribute {
 	Dark,
 	Fetish,
 	Animism,
-	Ki;
+	Ki,
+	Bio;
 
 	public static boolean isBasic(Attribute a) {
 		return a == Power || a == Seduction || a == Perception;

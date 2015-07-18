@@ -17,44 +17,44 @@ public class Wait extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canRespond();
+		return getSelf().canRespond();
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
 		if(bluff()){
 			int m = Global.random(25);
-			self.spendMojo(c, 20);
-			if(self.human()){
-				c.write(self,deal(c,m,Result.special, target));
+			getSelf().spendMojo(c, 20);
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,m,Result.special, target));
 			}
 			else{
-				c.write(self,receive(c,m,Result.special, target));
+				c.write(getSelf(),receive(c,m,Result.special, target));
 			}
-			self.heal(c, m);
-			self.calm(c, 25-m);
-			self.add(new Unreadable(self));
+			getSelf().heal(c, m);
+			getSelf().calm(c, 25-m);
+			getSelf().add(new Unreadable(getSelf()));
 		}
-		else if(focused()&&!c.getStance().sub(self)){
-			if(self.human()){
-				c.write(self,deal(c,0,Result.strong, target));
+		else if(focused()&&!c.getStance().sub(getSelf())){
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.strong, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.strong, target));
+				c.write(getSelf(),receive(c,0,Result.strong, target));
 			}
-			self.heal(c, Global.random(4));
-			self.calm(c, Global.random(8));
-			self.buildMojo(c, 20);
+			getSelf().heal(c, Global.random(4));
+			getSelf().calm(c, Global.random(8));
+			getSelf().buildMojo(c, 20);
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.normal, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.normal, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.normal, target));
+				c.write(getSelf(),receive(c,0,Result.normal, target));
 			}
-			self.buildMojo(c, 10);
-			self.heal(c, Global.random(4));
+			getSelf().buildMojo(c, 10);
+			getSelf().heal(c, Global.random(4));
 		}
 	}
 
@@ -97,13 +97,13 @@ public class Wait extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.special){
-			return "Despite your best efforts, "+self.name()+" is still looking as calm and composed as ever. Either you aren't getting to her at all, or she's good at hiding it.";
+			return "Despite your best efforts, "+getSelf().name()+" is still looking as calm and composed as ever. Either you aren't getting to her at all, or she's good at hiding it.";
 		}
 		else if(modifier==Result.strong){
-			return self.name()+" closes her eyes and takes a deep breath. When she opens her eyes, she seems more composed.";
+			return getSelf().name()+" closes her eyes and takes a deep breath. When she opens her eyes, she seems more composed.";
 		}
 		else{
-			return self.name()+" hesitates, watching you closely.";
+			return getSelf().name()+" hesitates, watching you closely.";
 		}
 	}
 
@@ -116,7 +116,7 @@ public class Wait extends Skill {
 			return "Focus";
 		}
 		else{
-			return getName();
+			return getName(c);
 		}
 	}
 
@@ -134,10 +134,10 @@ public class Wait extends Skill {
 	}
 
 	private boolean focused(){
-		return self.get(Attribute.Cunning)>=15 && !self.has(Trait.undisciplined)&&self.canRespond();
+		return getSelf().get(Attribute.Cunning)>=15 && !getSelf().has(Trait.undisciplined)&&getSelf().canRespond();
 	}
 
 	private boolean bluff(){
-		return self.has(Trait.pokerface)&&self.get(Attribute.Cunning)>=9&&self.canSpend(20)&&self.canRespond();
+		return getSelf().has(Trait.pokerface)&&getSelf().get(Attribute.Cunning)>=9&&getSelf().canSpend(20)&&getSelf().canRespond();
 	}
 }

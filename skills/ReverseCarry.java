@@ -23,7 +23,7 @@ public class ReverseCarry extends Carry {
 
 	@Override
 	public BodyPart getSelfOrgan() {
-		return self.body.getRandomPussy();
+		return getSelf().body.getRandomPussy();
 	}
 
 	@Override
@@ -34,31 +34,31 @@ public class ReverseCarry extends Carry {
 	@Override
 	public void resolve(Combat c, Character target) {
 		String premessage = "";
-		self.spendMojo(c, getMojoSpent());
-		if (self.bottom.size() == 1) {
-			premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s to the side and", self.bottom.get(0).name());
-		} else if (self.bottom.size() == 2) {
-			premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s and %s to the side and", self.bottom.get(0).name(), self.bottom.get(1).name());
+		getSelf().spendMojo(c, getMojoSpent());
+		if (getSelf().bottom.size() == 1) {
+			premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s to the side and", getSelf().bottom.get(0).name());
+		} else if (getSelf().bottom.size() == 2) {
+			premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s and %s to the side and", getSelf().bottom.get(0).name(), getSelf().bottom.get(1).name());
 		}
 
-		premessage = Global.format(premessage, self, target);
+		premessage = Global.format(premessage, getSelf(), target);
 		if(target.roll(this, c, accuracy())){
-			if(self.human()){
-				c.write(self,premessage + deal(c,0,Result.normal, target));
+			if(getSelf().human()){
+				c.write(getSelf(),premessage + deal(c,0,Result.normal, target));
 			}
 			else if(target.human()){
-				c.write(self,premessage + receive(c,0,Result.normal, self));
+				c.write(getSelf(),premessage + receive(c,0,Result.normal, getSelf()));
 			}
 
-			c.setStance(new Jumped(self,target));
+			c.setStance(new Jumped(getSelf(),target));
 		}
 		else{
-			if(self.human()) {
-				c.write(self,premessage + deal(c,0,Result.miss, target));
+			if(getSelf().human()) {
+				c.write(getSelf(),premessage + deal(c,0,Result.miss, target));
 			} else if(target.human()){
-				c.write(self,premessage + receive(c,0,Result.miss, target));
+				c.write(getSelf(),premessage + receive(c,0,Result.miss, target));
 			}
-			c.setStance(new StandingOver(target, self));
+			c.setStance(new StandingOver(target, getSelf()));
 		}
 	}
 
@@ -74,17 +74,17 @@ public class ReverseCarry extends Carry {
 		}
 		else{
 			return Global.format("you leap into {other:possessive} arms, impaling yourself onto her {other:body-part:cock} "
-								+ ". She lets out a noise that's equal parts surprise and delight as you bounce on her pole.", self, target);
+								+ ". She lets out a noise that's equal parts surprise and delight as you bounce on her pole.", getSelf(), target);
 		}
 	}
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
-			return self.name()+" jumps onto you, but you deposit her back on the floor.";
+			return getSelf().name()+" jumps onto you, but you deposit her back on the floor.";
 		}
 		else{
-			return self.name()+" leaps into your arms and impales herself on your cock. She wraps her legs around your torso and you quickly support her so she doesn't " +
+			return getSelf().name()+" leaps into your arms and impales herself on your cock. She wraps her legs around your torso and you quickly support her so she doesn't " +
 				"fall and injure herself or you.";
 		}
 	}

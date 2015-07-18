@@ -59,6 +59,8 @@ public class Locate extends Action {
 				gui.choose(this, "Mara", self);
 			if (Global.checkFlag(Flag.Reyka) && self.has(Item.ReykaTrophy))
 				gui.choose(this, "Reyka", self);
+			if (self.has(Item.AiriTrophy))
+				gui.choose(this, "Airi", self);
 		} else if ((target = Global.getNPC(choice)) != null) {
 			Item sought = Item.valueOf(target.name() + "Trophy");
 

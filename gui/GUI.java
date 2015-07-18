@@ -75,11 +75,13 @@ public class GUI extends JFrame implements Observer {
 	private JLabel stamina;
 	private JLabel arousal;
 	private JLabel mojo;
+	private JLabel willpower;
 	private JLabel lvl;
 	private JLabel xp;
 	private JProgressBar staminaBar;
 	private JProgressBar arousalBar;
 	private JProgressBar mojoBar;
+	private JProgressBar willpowerBar;
 	private JPanel topPanel;
 	private JLabel loclbl;
 	private JLabel timelbl;
@@ -476,6 +478,7 @@ public class GUI extends JFrame implements Observer {
 			pic = ImageIO.read(getClass().getResource(
 					path));
 		}catch (IOException localIOException9) {
+		}catch (IllegalArgumentException e) {
 		}
 		clearImage();
 		if(pic!=null){
@@ -565,7 +568,7 @@ public class GUI extends JFrame implements Observer {
 		JPanel meter = new JPanel();
 		meter.setBackground(new Color(200, 200, 200));
 		this.topPanel.add(meter);
-		meter.setLayout(new GridLayout(0, 3, 0, 0));
+		meter.setLayout(new GridLayout(0, 4, 0, 0));
 
 		this.stamina = new JLabel("Stamina: " + player.getStamina().get() + "/"
 				+ player.getStamina().max());
@@ -591,7 +594,15 @@ public class GUI extends JFrame implements Observer {
 		this.mojo
 				.setToolTipText("Mojo is the abstract representation of your momentum and style. It increases with normal techniques and is used to power special moves");
 		meter.add(this.mojo);
-
+		this.willpower = new JLabel("Willpower: " + player.getWillpower().get() + "/"
+				+ player.getWillpower().max());
+		this.willpower.setFont(new Font("Sylfaen", 1, 15));
+		this.willpower.setHorizontalAlignment(0);
+		this.willpower.setForeground(new Color(0,0,100));
+		this.willpower
+				.setToolTipText("Willpower is a representation of your will to fight. When this reaches 0, you lose.");
+		meter.add(this.willpower);
+		
 		this.staminaBar = new JProgressBar();
 		this.staminaBar
 				.setBorder(new SoftBevelBorder(1, null, null, null, null));
@@ -618,6 +629,14 @@ public class GUI extends JFrame implements Observer {
 		this.mojoBar.setMaximum(player.getMojo().max());
 		this.mojoBar.setValue(player.getMojo().get());
 
+		this.willpowerBar = new JProgressBar();
+		this.willpowerBar.setBorder(new SoftBevelBorder(1, null, null, null, null));
+		this.willpowerBar.setForeground(Color.GREEN);
+		this.willpowerBar.setBackground(new Color(105, 105, 105));
+		meter.add(this.willpowerBar);
+		this.willpowerBar.setMaximum(player.getWillpower().max());
+		this.willpowerBar.setValue(player.getWillpower().get());
+		
 		JPanel bio = new JPanel();
 		this.topPanel.add(bio);
 		bio.setLayout(new GridLayout(2, 0, 0, 0));
@@ -980,6 +999,8 @@ public class GUI extends JFrame implements Observer {
 				+ this.player.getArousal().max());
 		this.mojo.setText("Mojo: " + this.player.getMojo().get() + "/"
 				+ this.player.getMojo().max());
+		this.willpower.setText("Willpower: " + this.player.getWillpower().get() + "/"
+				+ this.player.getWillpower().max());
 //		this.power.setText("Power: " + this.player.get(Attribute.Power));
 //		this.cunning.setText("Cunning: " + this.player.get(Attribute.Cunning));
 //		this.seduction.setText("Seduction: "+ this.player.get(Attribute.Seduction));
@@ -991,6 +1012,8 @@ public class GUI extends JFrame implements Observer {
 		this.arousalBar.setValue(this.player.getArousal().get());
 		this.mojoBar.setMaximum(this.player.getMojo().max());
 		this.mojoBar.setValue(this.player.getMojo().get());
+		this.willpowerBar.setMaximum(this.player.getWillpower().max());
+		this.willpowerBar.setValue(this.player.getWillpower().get());
 		this.loclbl.setText(this.player.location().name);
 		this.cashlbl.setText("$" + this.player.money);
 		if (Global.getMatch() != null) {

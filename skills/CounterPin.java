@@ -19,7 +19,7 @@ public class CounterPin extends CounterBase {
 	
 	@Override
 	public void resolveCounter(Combat c, Character target) {
-		Restrain skill = new Restrain(self);
+		Restrain skill = new Restrain(getSelf());
 		skill.resolve(c, target, true);
 	}
 
@@ -30,8 +30,8 @@ public class CounterPin extends CounterBase {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !c.getStance().dom(self) && !c.getStance().dom(target) && self.canAct()
-				&&self.canSpend(getMojoCost());
+		return !c.getStance().dom(getSelf()) && !c.getStance().dom(target) && getSelf().canAct()
+				&&getSelf().canSpend(getMojoCost());
 	}
 
 	public int getMojoCost() {
@@ -55,8 +55,8 @@ public class CounterPin extends CounterBase {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		if (modifier == Result.setup && self.hasPussy()) {
-			return Global.format("You shift into a low stance, beckoning her inside your reach.", self, target);
+		if (modifier == Result.setup && getSelf().hasPussy()) {
+			return Global.format("You shift into a low stance, beckoning her inside your reach.", getSelf(), target);
 		} else {
 			return "";
 		}
@@ -65,8 +65,8 @@ public class CounterPin extends CounterBase {
 	@Override
 	public String receive(Combat c, int damage, Result modifier,
 			Character target) {
-		if (modifier == Result.setup && self.hasPussy()) {
-			return Global.format("Eyeing you carefully, {self:SUBJECT} shifts to a low stance.", self, target);
+		if (modifier == Result.setup && getSelf().hasPussy()) {
+			return Global.format("Eyeing you carefully, {self:SUBJECT} shifts to a low stance.", getSelf(), target);
 		} else {
 			return "";
 		}

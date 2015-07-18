@@ -21,22 +21,22 @@ public class EyesOfTemptation extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canRespond() && c.getStance().facing() && self.canSpend(30) && !target.wary();
+		return getSelf().canRespond() && c.getStance().facing() && getSelf().canSpend(30) && !target.wary();
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
 		Result result = target.roll(this, c, accuracy())? Result.normal : Result.miss;
-		self.spendMojo(c, 30);
-		if(self.human()) {
-			c.write(self,deal(c,0,result, target));
+		getSelf().spendMojo(c, 30);
+		if(getSelf().human()) {
+			c.write(getSelf(),deal(c,0,result, target));
 		}
 		else if(target.human()) {
-			c.write(self,receive(c,0,result, target));
+			c.write(getSelf(),receive(c,0,result, target));
 		}
 		if (result == Result.normal) {
-			target.add(new Enthralled(target, self, 5));
-			self.emote(Emotion.dominant, 50);
+			target.add(new Enthralled(target, getSelf(), 5));
+			getSelf().emote(Emotion.dominant, 50);
 		}
 	}
 
@@ -54,9 +54,9 @@ public class EyesOfTemptation extends Skill {
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.normal)
-			return Global.format("As {other:subject-action:gaze|gazes} into {self:name-possessive} eyes, {other:subject-action:feel|feels} {other:possessive} will slipping into the abyss.", self, target);
+			return Global.format("As {other:subject-action:gaze|gazes} into {self:name-possessive} eyes, {other:subject-action:feel|feels} {other:possessive} will slipping into the abyss.", getSelf(), target);
 		else
-			return Global.format("{other:SUBJECT-ACTION:look|looks} away as soon as {self:subject-action:focus|focuses} {self:possessive} eyes on {other:direct-object}", self, target);
+			return Global.format("{other:SUBJECT-ACTION:look|looks} away as soon as {self:subject-action:focus|focuses} {self:possessive} eyes on {other:direct-object}", getSelf(), target);
 	}
 
 	@Override

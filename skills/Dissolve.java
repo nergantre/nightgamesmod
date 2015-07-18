@@ -21,19 +21,19 @@ public class Dissolve extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().mobile(self)&&self.canAct()&&self.has(Item.DisSol)&&!target.nude()&&!c.getStance().prone(self)
-				&&(!self.human()||Global.getMatch().condition!=Modifier.noitems);
+		return c.getStance().mobile(getSelf())&&getSelf().canAct()&&getSelf().has(Item.DisSol)&&!target.nude()&&!c.getStance().prone(getSelf())
+				&&(!getSelf().human()||Global.getMatch().condition!=Modifier.noitems);
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.consume(Item.DisSol, 1);
-		if(self.has(Item.Aersolizer)){
-			if(self.human()){
-				c.write(self,deal(c,0,Result.special, target));
+		getSelf().consume(Item.DisSol, 1);
+		if(getSelf().has(Item.Aersolizer)){
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.special, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.special, self));
+				c.write(getSelf(),receive(c,0,Result.special, getSelf()));
 			}
 			if(!target.top.isEmpty()){
 				target.shred(0);
@@ -43,11 +43,11 @@ public class Dissolve extends Skill {
 			}
 		}
 		else if(target.roll(this, c, accuracy())){
-			if(self.human()){
-				c.write(self,deal(c,0,Result.normal, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.normal, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.normal, self));
+				c.write(getSelf(),receive(c,0,Result.normal, getSelf()));
 			}
 			if(!target.top.isEmpty()){
 				target.shred(0);
@@ -57,11 +57,11 @@ public class Dissolve extends Skill {
 			}
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -93,13 +93,13 @@ public class Dissolve extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character attacker) {
 		if(modifier == Result.special){
-			return self.name()+" inserts a bottle into the attachment on her arm. You're suddenly surrounded by a cloud of mist. Your clothes begin to disintegrate immediately.";
+			return getSelf().name()+" inserts a bottle into the attachment on her arm. You're suddenly surrounded by a cloud of mist. Your clothes begin to disintegrate immediately.";
 		}
 		else if(modifier == Result.miss){
-			return self.name()+" splashes a bottle of liquid in your direction, but none of it hits you.";
+			return getSelf().name()+" splashes a bottle of liquid in your direction, but none of it hits you.";
 		}
 		else{
-			return self.name()+" covers you with a clear liquid. Your clothes dissolve away, but it doesn't do anything to your skin.";
+			return getSelf().name()+" covers you with a clear liquid. Your clothes dissolve away, but it doesn't do anything to your skin.";
 		}
 	}
 

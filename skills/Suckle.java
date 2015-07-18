@@ -16,29 +16,29 @@ public class Suckle extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.topless()&&c.getStance().reachTop(self)&&!c.getStance().behind(self)&&(self.canAct()||(c.getStance().enumerate()==Stance.nursing&&self.canRespond()))&&c.getStance().facing();
+		return target.topless()&&c.getStance().reachTop(getSelf())&&c.getStance().front(getSelf())&&(getSelf().canAct()||(c.getStance().enumerate()==Stance.nursing&&getSelf().canRespond()))&&c.getStance().facing();
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
 		Result results = target.has(Trait.lactating) ? Result.special : Result.normal;
 		int m = 5 + Global.random(6);
-		if(self.human()){
-			c.offerImage("LickNipples.jpg", "Art by Fujin Hitokiri");
-			c.write(self,deal(c,0,results, target));
+		if(getSelf().human()){
+			//c.offerImage("LickNipples.jpg", "Art by Fujin Hitokiri");
+			c.write(getSelf(),deal(c,0,results, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,results, target));
+			c.write(getSelf(),receive(c,0,results, target));
 		}
-		if (self.has(Trait.silvertongue)) {
+		if (getSelf().has(Trait.silvertongue)) {
 			m += 4;
 		}
-		target.body.pleasure(self, self.body.getRandom("mouth"), target.body.getRandom("breasts"), m, c);
+		target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("breasts"), m, c);
 		if (results == Result.special) {
-			self.tempt(c, target, (3 + target.body.getRandomBreasts().size) * 2);
+			getSelf().tempt(c, target, (3 + target.body.getRandomBreasts().size) * 2);
 			target.buildMojo(c, 10);
 		} else {
-			self.buildMojo(c, 10);
+			getSelf().buildMojo(c, 10);
 		}
 	}
 
@@ -68,9 +68,9 @@ public class Suckle extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.normal){
-			return self.name()+" licks and sucks your nipples, sending a surge of excitement straight to your groin.";
+			return getSelf().name()+" licks and sucks your nipples, sending a surge of excitement straight to your groin.";
 		} else {
-			return self.name()+" licks and sucks your nipples, drawing forth a gust of breast milk from your teats. " +
+			return getSelf().name()+" licks and sucks your nipples, drawing forth a gust of breast milk from your teats. " +
 					"She drinks deeply of your milk, gurggling happily as more of the smooth liquid flows down her throat.";
 		}
 	}
@@ -82,5 +82,12 @@ public class Suckle extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
+	}
+
+	public String getTargetOrganType(Combat c, Character target) {
+		return "breasts";
+	}
+	public String getWithOrganType(Combat c, Character target) {
+		return "mouth";
 	}
 }

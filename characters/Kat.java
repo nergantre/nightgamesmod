@@ -49,7 +49,7 @@ public class Kat extends BasePersonality {
 		character.closet.add(Clothing.panties);
 		character.closet.add(Clothing.skirt);
 		character.change(Modifier.normal);
-		character.setUnderwear(Item.KatTrophy);
+		character.setTrophy(Item.KatTrophy);
 		this.character.set(Attribute.Power, 10);
 		this.character.set(Attribute.Animism, 14);
 		this.character.set(Attribute.Cunning, 8);
@@ -62,8 +62,6 @@ public class Kat extends BasePersonality {
 		character.add(Trait.pheromones);
 		character.add(Trait.shy);
 		character.add(Trait.petite);
-		character.add(Trait.sympathetic);
-		character.add(Trait.powerfulhips);
 		character.plan = Tactics.retreating;
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.a);
@@ -82,6 +80,17 @@ public class Kat extends BasePersonality {
 		growth.bonusArousal = 2;
 		growth.bonusMojo = 2;
 		preferredAttributes.add(Attribute.Animism);
+		growth.traits.put(3, Trait.sympathetic);
+		growth.traits.put(5, Trait.QuickRecovery);
+		growth.traits.put(8, Trait.powerfulhips);
+		growth.traits.put(10, Trait.alwaysready);
+		growth.traits.put(12, Trait.cute);
+		growth.traits.put(15, Trait.tight);
+		growth.traits.put(17, Trait.lacedjuices);
+		growth.traits.put(20, Trait.experttongue);
+		growth.traits.put(24, Trait.BoundlessEnergy);
+		growth.traits.put(27, Trait.strongwilled);
+		growth.traits.put(30, Trait.holecontrol);
 	}
 
 	@Override
@@ -426,5 +435,15 @@ public class Kat extends BasePersonality {
 				return value>=100;
 			}
 		}
+	}
+
+	@Override
+	public String orgasmLiner() {
+		return "<i>\"NYAAAH! uuu...\"</i> Kat glares at your reproachfully as she comes down from her high.";
+	}
+
+	@Override
+	public String makeOrgasmLiner() {
+		return "<i>\"Mroewer, I gotcha! Hey hey, do you think you can cum again-nyaa? Let's try it out!\"</i>";
 	}
 }

@@ -31,6 +31,7 @@ public enum Flag {
 	Eve,
 	Kat,
 	Reyka,
+	Airi,
 	rank1,
 	darkness,
 	fetishism,
@@ -48,4 +49,10 @@ public enum Flag {
 	threesome,
 	bodyShop,
 	hardmode,
+	AngelDisabled,
+	CassieDisabled,
+	MaraDisabled,
+	ReykaDisabled,
+	KatDisabled,
+	JewelDisabled,
 }

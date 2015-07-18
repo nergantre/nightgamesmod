@@ -19,16 +19,16 @@ public class Distracted extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.distracted()&&!self.is(Stsflag.enthralled);
+		return getSelf().distracted()&&!getSelf().is(Stsflag.enthralled);
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, self));
+			c.write(getSelf(),receive(c,0,Result.normal, getSelf()));
 		}
 	}
 

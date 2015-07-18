@@ -25,14 +25,14 @@ public class ThrowDraft extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		boolean hasItems = subChoices().size() > 0;
-		return hasItems&&self.canAct()&&c.getStance().mobile(self)&&(c.getStance().reachTop(self)||c.getStance().reachBottom(self))
-				&&(!self.human()||Global.getMatch().condition!=Modifier.noitems);
+		return hasItems&&getSelf().canAct()&&c.getStance().mobile(getSelf())&&(c.getStance().reachTop(getSelf())||c.getStance().reachBottom(getSelf()))
+				&&(!getSelf().human()||Global.getMatch().condition!=Modifier.noitems);
 	}
 
 	@Override
 	public Collection<String> subChoices() {
 		ArrayList<String> usables = new ArrayList<String>();
-		for (Item i : self.getInventory().keySet()) {
+		for (Item i : getSelf().getInventory().keySet()) {
 			if (i.getEffects().get(0).throwable()) {
 				usables.add(i.getName());
 			}
@@ -43,8 +43,8 @@ public class ThrowDraft extends Skill {
 	@Override
 	public void resolve(Combat c, Character target) {
 		Item used = null;
-		if (self.human()) {
-			for (Item i : self.getInventory().keySet()) {
+		if (getSelf().human()) {
+			for (Item i : getSelf().getInventory().keySet()) {
 				if (i.getName().equals(choice)) {
 					used = i;
 					break;
@@ -52,7 +52,7 @@ public class ThrowDraft extends Skill {
 			}
 		} else {
 			ArrayList<Item> usables = new ArrayList<Item>();
-			for (Item i : self.getInventory().keySet()) {
+			for (Item i : getSelf().getInventory().keySet()) {
 				if (i.getEffects().get(0).throwable()) {
 					usables.add(i);
 				}
@@ -62,17 +62,17 @@ public class ThrowDraft extends Skill {
 			}
 		}
 		if (used == null) {
-			c.write(self, "Skill failed...");
+			c.write(getSelf(), "Skill failed...");
 		} else {
-			c.write(self, Global.format(String.format("{self:SUBJECT-ACTION:%s|%ss} %s%s",used.getEffects().get(0).getOtherVerb(),used.getEffects().get(0).getOtherVerb(), used.pre(), used.name()), self, target));
+			c.write(getSelf(), Global.format(String.format("{self:SUBJECT-ACTION:%s|%ss} %s%s",used.getEffects().get(0).getOtherVerb(),used.getEffects().get(0).getOtherVerb(), used.pre(), used.name()), getSelf(), target));
 			boolean eventful = false;
 			for (ItemEffect e : used.getEffects()) {
-				eventful = e.use(c, target, self, used) || eventful;
+				eventful = e.use(c, target, getSelf(), used) || eventful;
 			}
 			if (!eventful) {
 				c.write("...But nothing happened.");
 			}
-			self.consume(used, 1);
+			getSelf().consume(used, 1);
 		}
 	}
 

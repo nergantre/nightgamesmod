@@ -18,34 +18,34 @@ public class Taunt extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.nude()&&!c.getStance().sub(self)&&self.canSpend(5)&&self.canAct()&&!self.has(Trait.shy);
+		return target.nude()&&!c.getStance().sub(getSelf())&&getSelf().canSpend(5)&&getSelf().canAct()&&!getSelf().has(Trait.shy);
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(c, 5);
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		getSelf().spendMojo(c, 5);
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		int m = (6+Global.random(4)) * Math.min(2, (1 + self.getSkimpiness()));
+		int m = (6+Global.random(4)) * Math.min(2, (1 + getSelf().getSkimpiness()));
 		if(target.has(Trait.imagination)){
 			m += 4;
-			target.tempt(c, self, m);
+			target.tempt(c, getSelf(), m);
 			if(Global.random(4)>=1){
 				target.add(new Shamed(target));
 			}
 		} else {
-			target.tempt(c, self, m);
+			target.tempt(c, getSelf(), m);
 			if(Global.random(4)>=2){
 				target.add(new Shamed(target));
 			}
 		}
 		target.emote(Emotion.angry,30);
 		target.emote(Emotion.nervous,15);
-		self.emote(Emotion.dominant, 20);
+		getSelf().emote(Emotion.dominant, 20);
 		target.loseMojo(c, 10);
 		
 	}
@@ -73,7 +73,7 @@ public class Taunt extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.taunt();
+		return getSelf().taunt();
 	}
 
 	@Override

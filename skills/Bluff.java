@@ -23,25 +23,25 @@ public class Bluff extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().mobile(self)&&self.canSpend(20);
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&getSelf().canSpend(20);
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
 		int m = Global.random(25);
-		self.spendMojo(c, 20);
-		if(self.human()){
-			c.write(self,deal(c,m,Result.normal, target));
+		getSelf().spendMojo(c, 20);
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,m,Result.normal, target));
 		}
 		else{
-			c.write(self,receive(c,m,Result.normal, target));
+			c.write(getSelf(),receive(c,m,Result.normal, target));
 		}
-		self.heal(c, m);
-		self.calm(c, 25-m);
-		self.add(new Unreadable(self));
-		self.emote(Emotion.confident, 30);
-		self.emote(Emotion.dominant, 20);
-		self.emote(Emotion.nervous,-20);
+		getSelf().heal(c, m);
+		getSelf().calm(c, 25-m);
+		getSelf().add(new Unreadable(getSelf()));
+		getSelf().emote(Emotion.confident, 30);
+		getSelf().emote(Emotion.dominant, 20);
+		getSelf().emote(Emotion.nervous,-20);
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class Bluff extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return "Despite your best efforts, "+self.name()+" is still looking as calm and composed as ever. Either you aren't getting to her at all, or she's good at hiding it.";
+		return "Despite your best efforts, "+getSelf().name()+" is still looking as calm and composed as ever. Either you aren't getting to her at all, or she's good at hiding it.";
 	}
 
 	@Override

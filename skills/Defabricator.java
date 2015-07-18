@@ -20,7 +20,7 @@ public class Defabricator extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().mobile(self)&&!c.getStance().prone(self)&&!target.nude()&&self.has(Item.Battery,8);
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&!target.nude()&&getSelf().has(Item.Battery,8);
 	}
 
 	@Override
@@ -31,12 +31,12 @@ public class Defabricator extends Skill {
 	@Override
 	public void resolve(Combat c, Character target) {
 		target.nudify();
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 			c.write(target,target.nakedLiner());
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
 		target.nudify();
 	}
@@ -58,7 +58,7 @@ public class Defabricator extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" points a device at you and light shines from it like it's a simple flashlight. The device's function is immediately revealed as your clothes just vanish " +
+		return getSelf().name()+" points a device at you and light shines from it like it's a simple flashlight. The device's function is immediately revealed as your clothes just vanish " +
 				"in the light. You're left naked in seconds.";
 	}
 

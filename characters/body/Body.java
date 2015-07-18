@@ -12,6 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
+import status.Abuff;
 import status.CockBound;
 import status.Stsflag;
 
@@ -378,6 +379,10 @@ public class Body implements Cloneable {
 				}
 			}
 		}
+		// double the base damage if the opponent is submissive and in a submissive stance
+		if (c.getStance().sub(opponent) && opponent.has(Trait.submissive)) {
+			bonusDamage += bonusDamage + magnitude;
+		}
 		double base = (magnitude + bonusDamage);
 		double multiplier = 1 + ((sensitivity - 1) + (pleasure - 1) + (perceptionBonus - 1));
 		double damage = base * multiplier;
@@ -564,5 +569,23 @@ public class Body implements Cloneable {
 			total += p.mod(a, total);
 		}
 		return res;
+	}
+
+	public void receiveCum(Combat c, Character opponent, BodyPart part) {
+		if (part == null) {
+			part = character.body.getRandom("skin");
+		}
+		if (character.has(Trait.spiritphage)) {
+			c.write("<br><b>"+character.subjectAction("glow", "glows") + " with power as the cum is absorbed by " + character.possessivePronoun() + " " + part.describe(character)+"</b>");
+			character.add(new Abuff(character, Attribute.Power, 5, 10));
+			character.add(new Abuff(character, Attribute.Seduction, 5, 10));
+			character.add(new Abuff(character, Attribute.Cunning, 5, 10));
+			character.gainXP(opponent.getLevel() * 20);
+		}
+	}
+
+	public void tickHolding(Combat c, Character opponent, BodyPart selfOrgan,
+			BodyPart otherOrgan) {
+		selfOrgan.tickHolding(c, character, opponent, otherOrgan);
 	}
 }

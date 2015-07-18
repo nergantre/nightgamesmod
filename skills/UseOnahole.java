@@ -22,8 +22,8 @@ public class UseOnahole extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (self.has(Item.Onahole)||self.has(Item.Onahole2))&&self.canAct()&&target.hasDick()&&c.getStance().reachBottom(self)&&target.pantsless()&&!c.getStance().penetration(self)
-				&&(!self.human()||Global.getMatch().condition!=Modifier.notoys);
+		return (getSelf().has(Item.Onahole)||getSelf().has(Item.Onahole2))&&getSelf().canAct()&&target.hasDick()&&c.getStance().reachBottom(getSelf())&&target.pantsless()&&!c.getStance().penetration(getSelf())
+				&&(!getSelf().human()||Global.getMatch().condition!=Modifier.notoys);
 	}
 
 	@Override
@@ -31,30 +31,30 @@ public class UseOnahole extends Skill {
 		int m = 5+Global.random(5);
 
 		if(target.roll(this, c, accuracy())){
-			if(self.has(Item.Onahole2)){
+			if(getSelf().has(Item.Onahole2)){
 				m += 5;
 				if(target.human()){
-					c.write(self,receive(c,0,Result.upgrade, target));
+					c.write(getSelf(),receive(c,0,Result.upgrade, target));
 				} else { 
-					c.write(self,deal(c,0,Result.upgrade, target));
+					c.write(getSelf(),deal(c,0,Result.upgrade, target));
 				}
-				target.body.pleasure(self, null, target.body.getRandomCock(), m, c);
+				target.body.pleasure(getSelf(), null, target.body.getRandomCock(), m, c);
 			}
 			else{
 				if(target.human()){
-					c.write(self,receive(c,0,Result.normal, target));
+					c.write(getSelf(),receive(c,0,Result.normal, target));
 				} else { 
-					c.write(self,deal(c,0,Result.upgrade, target));
+					c.write(getSelf(),deal(c,0,Result.upgrade, target));
 				}
-				target.body.pleasure(self, null, target.body.getRandomCock(), m, c);
+				target.body.pleasure(getSelf(), null, target.body.getRandomCock(), m, c);
 			}			
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -86,14 +86,14 @@ public class UseOnahole extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier == Result.miss){
-			return self.name()+" tries to stick a cocksleeve on your dick, but you manage to avoid it.";
+			return getSelf().name()+" tries to stick a cocksleeve on your dick, but you manage to avoid it.";
 		}
 		else if(modifier == Result.upgrade){
-			return self.name()+" slides her cocksleeve over your dick and starts pumping it. The sensation is the same as if she was riding you, but you're the only " +
+			return getSelf().name()+" slides her cocksleeve over your dick and starts pumping it. The sensation is the same as if she was riding you, but you're the only " +
 					"one who's feeling anything.";
 		}
 		else{
-			return self.name()+" forces a cocksleeve over your erection and begins to pump it. At first the feeling is strange and a little bit uncomfortable, but the " +
+			return getSelf().name()+" forces a cocksleeve over your erection and begins to pump it. At first the feeling is strange and a little bit uncomfortable, but the " +
 					"discomfort gradually becomes pleasure.";
 		}
 				
@@ -107,5 +107,11 @@ public class UseOnahole extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
+	}
+	public String getTargetOrganType(Combat c, Character target) {
+		return "cock";
+	}
+	public String getWithOrganType(Combat c, Character target) {
+		return "onahole";
 	}
 }

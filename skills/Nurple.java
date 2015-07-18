@@ -22,40 +22,40 @@ public class Nurple extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.topless()&&c.getStance().reachTop(self)&&self.canAct();
+		return target.topless()&&c.getStance().reachTop(getSelf())&&getSelf().canAct();
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
-			if(self.has(Item.ShockGlove)&&self.has(Item.Battery,2)){
-				if(self.human()){
-					c.write(self,deal(c,0,Result.special, target));
+			if(getSelf().has(Item.ShockGlove)&&getSelf().has(Item.Battery,2)){
+				if(getSelf().human()){
+					c.write(getSelf(),deal(c,0,Result.special, target));
 				}
 				else if(target.human()){
-					c.write(self,receive(c,0,Result.special, target));
+					c.write(getSelf(),receive(c,0,Result.special, target));
 				}
 				target.pain(c, Global.random(9)+target.get(Attribute.Perception));
 			}
 			else{
-				if(self.human()){
-					c.write(self,deal(c,0,Result.normal, target));
+				if(getSelf().human()){
+					c.write(getSelf(),deal(c,0,Result.normal, target));
 				}
 				else if(target.human()){
-					c.write(self,receive(c,0,Result.normal, target));
+					c.write(getSelf(),receive(c,0,Result.normal, target));
 				}
 				target.pain(c, Global.random(9)+target.get(Attribute.Perception)/2);
 			}
 			target.calm(c, Global.random(5));
-			self.buildMojo(c, 10);
+			getSelf().buildMojo(c, 10);
 			target.emote(Emotion.angry,15);
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -72,11 +72,11 @@ public class Nurple extends Skill {
 	}
 	@Override
 	public String getLabel(Combat c){
-		if(self.has(Item.ShockGlove)){
+		if(getSelf().has(Item.ShockGlove)){
 			return "Shock breasts";
 		}
 		else{
-			return getName();
+			return getName(c);
 		}
 	}
 	@Override
@@ -95,13 +95,13 @@ public class Nurple extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier == Result.miss){
-			return self.name()+" tries to grab your nipples, but misses.";
+			return getSelf().name()+" tries to grab your nipples, but misses.";
 		}
 		else if(modifier == Result.special){
-			return self.name()+" touches your nipple with her glove and a jolt of electricity hits you.";
+			return getSelf().name()+" touches your nipple with her glove and a jolt of electricity hits you.";
 		}
 		else{
-			return self.name()+" twists your sensitive nipples, giving you a jolt of pain.";
+			return getSelf().name()+" twists your sensitive nipples, giving you a jolt of pain.";
 		}
 	}
 

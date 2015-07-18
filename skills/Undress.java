@@ -21,7 +21,7 @@ public class Undress extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&!c.getStance().sub(self)&&!self.nude()&&!c.getStance().prone(self)&&!self.has(Trait.strapped);
+		return getSelf().canAct()&&!c.getStance().sub(getSelf())&&!getSelf().nude()&&!c.getStance().prone(getSelf())&&!getSelf().has(Trait.strapped);
 	}
 
 	@Override
@@ -31,13 +31,13 @@ public class Undress extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {	
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		self.undress(c);
+		getSelf().undress(c);
 	}
 
 	@Override
@@ -57,6 +57,6 @@ public class Undress extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" puts some space between you and strips naked.";
+		return getSelf().name()+" puts some space between you and strips naked.";
 	}
 }

@@ -3,6 +3,7 @@ package stance;
 import combat.Combat;
 
 import characters.Character;
+import characters.Trait;
 
 public class Jumped extends FemdomSexStance {
 	public Jumped(Character top, Character bottom) {
@@ -18,7 +19,9 @@ public class Jumped extends FemdomSexStance {
 			return top.name()+" is clinging to your shoulders and gripping your waist with her thighs while she uses the leverage to ride you.";
 		}
 	}
-
+	public String image() {
+		return "standing.jpg";
+	}
 	@Override
 	public boolean mobile(Character c) {
 		return false;
@@ -79,23 +82,23 @@ public class Jumped extends FemdomSexStance {
 	}
 
 	@Override
-	public Position insert(Character dom, Character inserter) {
+	public Position insert() {
 		return new Neutral(top,bottom);
 	}
-	public void decay(){
+	public void decay(Combat c){
 		time++;
 		top.weaken(null, 2);
 	}
 
 	public void checkOngoing(Combat c){
-		if(top.getStamina().get()<10){
-			if(top.human()){
-				c.write("Your legs give out and you fall on the floor. "+bottom.name()+" lands heavily on your lap.");
-				c.setStance(new Mount(bottom,top));
+		if(bottom.getStamina().get()<2 && !top.has(Trait.petite)){
+			if(bottom.human()){
+				c.write("Your legs give out and you fall on the floor. "+top.name()+" lands heavily on your lap.");
+				c.setStance(new Mount(top, bottom));
 			}
 			else{
-				c.write(top.name()+" loses her balance and falls, pulling you down on top of her.");
-				c.setStance(new Mount(bottom,top));
+				c.write(bottom.name()+" loses her balance and falls, pulling you down on top of her.");
+				c.setStance(new Mount(top,bottom));
 			}
 		} else {
 			super.checkOngoing(c);

@@ -21,12 +21,12 @@ public class Cunnilingus extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.pantsless()&&target.hasPussy()&&c.getStance().oral(self)&&self.canAct()&&!c.getStance().penetration(self);
+		return target.pantsless()&&target.hasPussy()&&c.getStance().oral(getSelf())&&getSelf().canAct()&&!c.getStance().penetration(getSelf());
 	}
 
 	@Override
 	public float priorityMod(Combat c) {
-		return (self.has(Trait.silvertongue) ? 1 : 0);
+		return (getSelf().has(Trait.silvertongue) ? 1 : 0);
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class Cunnilingus extends Skill {
 		PussyPart targetPussy = target.body.getRandomPussy();
 		Result results = Result.normal;
 		int m = 4 + Global.random(8);
-		if(self.has(Trait.silvertongue)) {
+		if(getSelf().has(Trait.silvertongue)) {
 			m += 4;
 		}
 		int i = 0;
@@ -43,31 +43,31 @@ public class Cunnilingus extends Skill {
 		} else { 
 			if (target.has(Trait.entrallingjuices) && Global.random(4) == 0 && !target.wary()) {
 				i = -2;
-				this.self.add(new Enthralled(self,target, 3));
+				this.getSelf().add(new Enthralled(getSelf(),target, 3));
 			} else if (target.has(Trait.lacedjuices)){
 				i = -1;
-				this.self.tempt(c, target, 5);
+				this.getSelf().tempt(c, target, 5);
 			}
 			if (c.getStance().enumerate()== Stance.facesitting) {
 				results = Result.reverse;
 			}
 		}
-		if(self.human()){
-			c.write(self,deal(c,i,results, target));
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,i,results, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,i,results, target));
+			c.write(getSelf(),receive(c,i,results, target));
 		}
 		if (results != Result.miss) {
 			if (results == Result.reverse) {
-				self.buildMojo(c, 5);
+				getSelf().buildMojo(c, 5);
 			} else {
 				target.buildMojo(c, 10);
 			}
 			if(ReverseMount.class.isInstance(c.getStance())){
-				c.setStance(new SixNine(self,target));
+				c.setStance(new SixNine(getSelf(),target));
 			}
-			target.body.pleasure(self, self.body.getRandom("mouth"), target.body.getRandom("pussy"), m, c);
+			target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("pussy"), m, c);
 		}
 	}
 
@@ -169,20 +169,20 @@ public class Cunnilingus extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character attacker) {
 		if (modifier == Result.miss) {
-			return self.name() + " tries to tease your cunt with her mouth, but you push her face away from your box.";
+			return getSelf().name() + " tries to tease your cunt with her mouth, but you push her face away from your box.";
 		} else if (modifier == Result.special) {
-			return self.nameOrPossessivePronoun() + " skilled tongue explores your pussy, finding and pleasuring your more sensitive areas. " +
+			return getSelf().nameOrPossessivePronoun() + " skilled tongue explores your pussy, finding and pleasuring your more sensitive areas. " +
 					"She repeatedly attacks your clitoris until you can't surpress your pleasured moans."
 					+ (damage == -1 ? " Your aphrodisiac juices manages to arouse her as much as she aroused you." : "")
 					+ (damage == -2 ? " Your tainted juices quickly reduces her into a willing thrall."
 							: "");
 		} else if (modifier == Result.reverse) {
-			return self.name() + " obediently laps at your pussy as you sit on her face."
+			return getSelf().name() + " obediently laps at your pussy as you sit on her face."
 					+ (damage == -1 ? " Your aphrodisiac juices manages to arouse her as much as she aroused you." : "")
 					+ (damage == -2 ? " Your tainted juices quickly reduces her into a willing thrall."
 							: "");
 		}
-		return self.name() + " locates and captures your clit between her lips and attacks it with her tongue."
+		return getSelf().name() + " locates and captures your clit between her lips and attacks it with her tongue."
 				+ (damage == -1 ? " Your aphrodisiac juices manages to arouse her as much as she aroused you." : "")
 				+ (damage == -2 ? " Your tainted juices quickly reduces her into a willing thrall."
 						: "");
@@ -191,5 +191,11 @@ public class Cunnilingus extends Skill {
 	@Override
 	public String describe() {
 		return "Perfom cunnilingus on opponent";
+	}
+	public String getTargetOrganType(Combat c, Character target) {
+		return "pussy";
+	}
+	public String getWithOrganType(Combat c, Character target) {
+		return "mouth";
 	}
 }

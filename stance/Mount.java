@@ -19,6 +19,13 @@ public class Mount extends Position {
 		}
 	}
 
+	public String image() {
+		if (bottom.hasPussy()) {
+			return "mount_m.jpg";
+		} else {
+			return "mount_f.jpg";
+		}
+	}
 	@Override
 	public boolean mobile(Character c) {
 		return c==top;
@@ -80,16 +87,16 @@ public class Mount extends Position {
 	}
 
 	@Override
-	public Position insert(Character dom, Character inserter) {
-		if(dom == inserter){
-			return new Missionary(top,bottom);
-		}
-		else {
-			return new Cowgirl(top,bottom);
+	public Position insert(Character dom) {
+		Character other = getOther(dom);
+		if(dom.hasDick() && other.hasPussy()){
+			return new Missionary(dom,other);
+		} else {
+			return new Cowgirl(dom,other);
 		}
 	}
 	@Override
 	public float priorityMod(Character self) {
-		return dom(self) ? 4.0f : 0;
+		return getSubDomBonus(self, 4.0f);
 	}
 }

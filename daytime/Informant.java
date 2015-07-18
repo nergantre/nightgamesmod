@@ -405,20 +405,14 @@ public class Informant extends Activity {
 				Global.gui().message("You don't have enough money<p>");
 			}
 		}*/
-		if (choice == "Competition: $100") {
-			if (player.money >= 100) {
-				player.money -= 100;
-				String message = "<i>\"You want to know how the competition is doing? I can give you a breakdown on each of your opponents:\"</i><p>";
-				for (Character npc : Global.everyone()) {
-					if (!npc.human()) {
-						message = message + npc.dumpstats() + "<p>";
-					}
+		if (choice == "Competition Info") {
+			String message = "<i>\"You want to know how the competition is doing? I can give you a breakdown on each of your opponents:\"</i><p>";
+			for (Character npc : Global.everyone()) {
+				if (!npc.human()) {
+					message = message + npc.dumpstats() + "<p>";
 				}
-				Global.gui().message(message);
-				acted = true;
-			} else {
-				Global.gui().message("You don't have enough money<p>");
 			}
+			Global.gui().message(message);
 		}
 		if (!Global.checkFlag(Flag.basicStores)) {
 			Global.gui().choose(this, "Purchasing supplies: Free");
@@ -471,11 +465,8 @@ public class Informant extends Activity {
 				Global.gui().choose(this, "More Competitors");
 			}
 		}
-		if (Global.checkFlag(Flag.CassieKnown)
-				&& Global.checkFlag(Flag.AngelKnown)
-				&& Global.checkFlag(Flag.MaraKnown)
-				&& Global.checkFlag(Flag.JewelKnown)) {
-			Global.gui().choose(this, "Competition: $100");
+		if (Global.checkFlag(Flag.girlAdvice)) {
+			Global.gui().choose(this, "Competition Info");
 		}
 		Global.gui().choose(this, "Leave");
 	}

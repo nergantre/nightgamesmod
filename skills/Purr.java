@@ -22,7 +22,7 @@ public class Purr extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().mobile(self)&&self.getArousal().percent()>=20;
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&getSelf().getArousal().percent()>=20;
 	}
 
 	@Override
@@ -32,18 +32,18 @@ public class Purr extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(Global.random(target.getLevel())<=self.get(Attribute.Animism)*self.getArousal().percent()/100 && !target.wary()){
-			if(self.human()){
-				c.write(self,deal(c,0,Result.normal, target));
+		if(Global.random(target.getLevel())<=getSelf().get(Attribute.Animism)*getSelf().getArousal().percent()/100 && !target.wary()){
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.normal, target));
 			}else if(target.human()){
-				c.write(self,receive(c,0,Result.normal, target));
+				c.write(getSelf(),receive(c,0,Result.normal, target));
 			}
 			target.add(new Charmed(target));
 		} else {
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -73,10 +73,10 @@ public class Purr extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
-			return self.name()+" slumps submissively and purrs. It's cute, but she's not going to get the better of you.";
+			return getSelf().name()+" slumps submissively and purrs. It's cute, but she's not going to get the better of you.";
 		}
 		else{
-			return self.name()+" purrs cutely, and looks up at you with sad eyes. Oh God, she's so adorable! It'd be mean to beat her too quickly. Maybe you should let her get some " +
+			return getSelf().name()+" purrs cutely, and looks up at you with sad eyes. Oh God, she's so adorable! It'd be mean to beat her too quickly. Maybe you should let her get some " +
 					"attacks in while you enjoy watching her earnest efforts.";
 		}
 	}

@@ -16,18 +16,18 @@ public class Straddle extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		
-		return c.getStance().mobile(self)&&c.getStance().mobile(target)&&c.getStance().prone(target)&&self.canAct();
+		return c.getStance().mobile(getSelf())&&c.getStance().mobile(target)&&c.getStance().prone(target)&&getSelf().canAct();
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		c.setStance(new Mount(self,target));
+		c.setStance(new Mount(getSelf(),target));
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class Straddle extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" plops herself down on top of your stomach.";
+		return getSelf().name()+" plops herself down on top of your stomach.";
 	}
 
 	@Override

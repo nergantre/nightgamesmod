@@ -5,13 +5,16 @@ import java.util.Scanner;
 
 import status.Stsflag;
 import characters.Character;
+import characters.Trait;
+import combat.Combat;
+import global.Global;
 
 public class AssPart extends GenericBodyPart {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1767949507600318064L;
-	public static AssPart generic = new AssPart("ass", "", 0, 1, 1);
+	public static AssPart generic = new AssPart("ass", "", 0, 1.5, 1);
 
 	public AssPart(String desc, String longDesc, double hotness,
 			double pleasure, double sensitivity) {
@@ -25,13 +28,47 @@ public class AssPart extends GenericBodyPart {
 	}
 
 	@Override
+	public double applyBonuses(Character self, Character opponent,
+			BodyPart target, double damage, Combat c) {
+		double bonus = 0;
+		if (self.has(Trait.oiledass)) {
+			c.write(self, Global.format("{self:SUBJECT-ACTION:use|uses} {self:possessive} naturally oiled asshole swallows {other:name-possessive} cock with ease.", self, opponent));
+			bonus += 5;
+		}
+
+		if (self.has(Trait.tight) || self.has(Trait.holecontrol)) {
+			String desc = "";
+			if (self.has(Trait.tight)) {desc += "powerful ";}
+			if (self.has(Trait.holecontrol)) {desc += "well-traied ";}
+			c.write(self, Global.format("{self:SUBJECT-ACTION:use|uses} {self:possessive} " + desc + "sphincter muscles to milk {other:name-possessive} cock, adding to the pleasure.", self, opponent));
+			bonus += (self.has(Trait.tight) && self.has(Trait.holecontrol)) ? 10 : 5;
+			if (self.has(Trait.tight))
+				opponent.pain(c, 5);
+		}
+		return bonus;
+	}
+
+	@Override
+	public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {
+		if (self.has(Trait.autonomousPussy)) {
+			c.write(self, Global.format("{self:NAME-POSSESSIVE} " + fullDescribe(self) + " churns against {other:name-possessive} cock, " +
+					"seemingly with a mind of its own. Her internal muscles feel like a hot fleshy hand inside her asshole, jerking {other:possessive} shaft.", self, opponent));
+			opponent.body.pleasure(self, this, otherOrgan, 10, c);
+		}
+	}
+
+	@Override
 	public boolean isReady(Character c) {
-		return true;
+		return c.has(Trait.oiledass) || c.is(Stsflag.oiled);
 	}
 
 	@Override
 	public String getFluids(Character c) {
-		return "";
+		if (c.has(Trait.oiledass)) {
+			return "oils";
+		} else {
+			return "";
+		}
 	}
 
 	@Override
@@ -53,5 +90,11 @@ public class AssPart extends GenericBodyPart {
 			System.err.println(e.getMessage());
 		}
 		return null;
+	}
+	
+
+	@Override
+	public double priority(Character c) {
+		return (c.has(Trait.tight) ? 1 : 0)+ (c.has(Trait.holecontrol) ? 1 : 0) + (c.has(Trait.oiledass) ? 1 : 0) + (c.has(Trait.autonomousAss) ? 4 : 0);
 	}
 }

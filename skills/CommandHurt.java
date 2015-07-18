@@ -20,7 +20,7 @@ public class CommandHurt extends PlayerCommand {
 	@Override
 	public void resolve(Combat c, Character target) {
 		target.pain(c, Global.random(10) + target.get(Attribute.Speed));
-		c.write(self,deal(c, 0, Result.normal, target));
+		c.write(getSelf(),deal(c, 0, Result.normal, target));
 	}
 
 	@Override

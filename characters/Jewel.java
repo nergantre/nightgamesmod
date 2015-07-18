@@ -10,6 +10,7 @@ import items.Item;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import characters.body.AnalPussyPart;
 import characters.body.BreastsPart;
 import characters.body.GenericBodyPart;
 import characters.body.PussyPart;
@@ -51,7 +52,7 @@ public class Jewel extends BasePersonality {
 		character.add(Trait.direct);
 		character.add(Trait.wrassler);
 		character.add(Trait.insatiable);
-		character.setUnderwear(Item.JewelTrophy);
+		character.setTrophy(Item.JewelTrophy);
 		character.plan = Tactics.hunting;
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.c);
@@ -69,6 +70,18 @@ public class Jewel extends BasePersonality {
 		growth.bonusMojo = 1;
 		preferredAttributes.add(Attribute.Ki);
 		preferredAttributes.add(Attribute.Power);
+		growth.traits.put(3, Trait.fitnessNut);
+		growth.traits.put(5, Trait.QuickRecovery);
+		growth.traits.put(8, Trait.powerfulhips);
+		growth.traits.put(10, Trait.oiledass);
+		growth.traits.put(12, Trait.alwaysready);
+		growth.traits.put(15, Trait.tight);
+		growth.traits.put(17, Trait.exhibitionist);
+		growth.traits.put(20, Trait.autonomousAss);
+		growth.actions.put(20, () -> {character.body.addReplace(new AnalPussyPart(), 1);});
+		growth.traits.put(24, Trait.BoundlessEnergy);
+		growth.traits.put(27, Trait.strongwilled);
+		growth.traits.put(30, Trait.smqueen);
 	}
 
 	@Override
@@ -395,8 +408,6 @@ public class Jewel extends BasePersonality {
 	}
 	public void advance(){
 		character.add(Trait.fighter);
-		character.add(Trait.powerfulhips);
-		character.add(Trait.smqueen);
 		character.body.addReplace(PussyPart.fiery, 100);
 		character.outfit[0].removeAllElements();
 		character.outfit[1].removeAllElements();
@@ -419,5 +430,15 @@ public class Jewel extends BasePersonality {
 		default:
 			return value>=100;
 		}
+	}
+
+	@Override
+	public String orgasmLiner() {
+		return "Jewel glares at you after calming down, <i>\"That one doesn't count... Come on, let's have a rematch!\"</i>";
+	}
+
+	@Override
+	public String makeOrgasmLiner() {
+		return "<i>\"Heh, no matter what, you're just a horny boy aren'tcha? Come on, no time for rest, let's see how many times in a row you can cum\"</i>";
 	}
 }

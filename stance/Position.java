@@ -23,11 +23,22 @@ public abstract class Position implements Serializable, Cloneable{
 		this.en=stance;
 		time=0;
 	}
-	public void decay(){
+	public void decay(Combat c){
 		time++;
 	}
 	public void checkOngoing(Combat c){
 		return;
+	}
+	public float getSubDomBonus(Character self, float bonus) {
+		if (!self.human()) {
+			if (self.has(Trait.submissive) && sub(self)) {
+				return bonus;
+			}
+			if (!self.has(Trait.submissive) && dom(self)) {
+				return bonus;
+			}
+		}
+		return 0;
 	}
 	public abstract String describe();
 	public abstract boolean mobile(Character c);
@@ -40,9 +51,21 @@ public abstract class Position implements Serializable, Cloneable{
 	public abstract boolean feet(Character c);
 	public abstract boolean oral(Character c);
 	public abstract boolean behind(Character c);
+	public boolean front(Character c) {
+		return !behind(c);
+	}
 	public abstract boolean penetration(Character c);
 	public abstract boolean inserted(Character c);
-	public abstract Position insert(Character dom, Character inserter);
+	public abstract String image();
+
+	public boolean inserted() {
+		return inserted(top) || inserted(bottom);
+	}
+
+	public Position insert() {
+		return insert(top);
+	}
+
 	public Collection<Skill> availSkills(Character c) {
 		return Collections.emptySet();
 	}
@@ -96,5 +119,18 @@ public abstract class Position implements Serializable, Cloneable{
 		newStance.bottom = ntop;
 		newStance.top = nbot;
 		return newStance;
+	}
+	public boolean analinserted() {
+		return en == Stance.anal;
+	}
+	public Position insert(Character target) {
+		return this;
+	}
+	public Character getOther(Character c) {
+		if (c == top) {
+			return bottom;
+		} else {
+			return top;
+		}
 	}
 }

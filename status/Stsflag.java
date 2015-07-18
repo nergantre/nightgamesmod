@@ -32,5 +32,6 @@ public enum Stsflag {
 	countered,
 	suckling,
 	fluidaddiction,
-	tolerance,
+	tolerance, 
+	leglocked, armlocked,
 }

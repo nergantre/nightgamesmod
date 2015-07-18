@@ -23,7 +23,7 @@ public class ShortCircuit extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().mobile(self)&&!c.getStance().prone(self)&&target.nude()&&self.has(Item.Battery, 3);
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&target.nude()&&getSelf().has(Item.Battery, 3);
 	}
 
 	@Override
@@ -33,12 +33,12 @@ public class ShortCircuit extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.consume(Item.Battery, 3);
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		getSelf().consume(Item.Battery, 3);
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
 		target.add(new Rewired(target,4+Global.random(3)));
 	}
@@ -60,7 +60,7 @@ public class ShortCircuit extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" aims a devices at you and you feel a strange shiver run across your skin. You feel indescribably weird. She's done something to your sense of touch.";
+		return getSelf().name()+" aims a devices at you and you feel a strange shiver run across your skin. You feel indescribably weird. She's done something to your sense of touch.";
 	}
 
 }

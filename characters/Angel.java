@@ -58,11 +58,8 @@ public class Angel extends BasePersonality {
 		Global.gainSkills(character);
 
 		character.add(Trait.undisciplined);
-		character.add(Trait.experienced);
-		character.add(Trait.powerfulhips);
-		character.add(Trait.alwaysready);
 		character.add(Trait.lickable);
-		character.setUnderwear(Item.AngelTrophy);
+		character.setTrophy(Item.AngelTrophy);
 		character.plan = Tactics.hunting;
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.dd);
@@ -78,6 +75,21 @@ public class Angel extends BasePersonality {
 		growth.bonusStamina = 1;
 		growth.bonusArousal = 4;
 		growth.bonusMojo = 1;
+		growth.traits.put(3, Trait.alwaysready);
+		growth.traits.put(5, Trait.Confident);
+		growth.traits.put(8, Trait.expertGoogler);
+		growth.traits.put(10, Trait.experienced);
+		growth.traits.put(10, Trait.spiritphage);
+		growth.traits.put(12, Trait.holecontrol);
+		growth.traits.put(15, Trait.lacedjuices);
+		growth.traits.put(15, Trait.energydrain);
+		growth.traits.put(17, Trait.RawSexuality);
+		growth.traits.put(20, Trait.tight);
+		growth.traits.put(24, Trait.desensitized);
+		growth.traits.put(27, Trait.entrallingjuices);
+		growth.traits.put(30, Trait.vaginaltongue);
+		growth.traits.put(35, Trait.desensitized2);
+
 		preferredAttributes.add(Attribute.Dark);
 		preferredAttributes.add(Attribute.Seduction);
 	}
@@ -416,7 +428,6 @@ public class Angel extends BasePersonality {
 	}
 	public void advance(){
 		character.add(Trait.succubus);
-		character.add(Trait.addictivefluids);
 		character.body.addReplace(PussyPart.succubus, 1);
 		character.body.addReplace(TailPart.demonic, 5);
 		character.body.addReplace(EarPart.pointed, 1);
@@ -437,5 +448,15 @@ public class Angel extends BasePersonality {
 		default:
 			return value>=100;
 		}
+	}
+
+	@Override
+	public String orgasmLiner() {
+		return "<i>\"Mmm maybe you do have promise. Care to try that again?\"</i>";
+	}
+
+	@Override
+	public String makeOrgasmLiner() {
+		return "Angel stares you in the eye as your consciousness return from the precipice <i>\"Once isn't enough. I need more. You can do that for me right?\"</i>";
 	}
 }

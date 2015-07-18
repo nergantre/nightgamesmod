@@ -18,8 +18,8 @@ public class CommandInsult extends PlayerCommand {
 	@Override
 	public void resolve(Combat c, Character target) {
 		target.loseMojo(c, 15);
-		c.write(self,deal(c, 0, Result.normal, target));
-		self.buildMojo(c, 10);
+		c.write(getSelf(),deal(c, 0, Result.normal, target));
+		getSelf().buildMojo(c, 10);
 	}
 
 	@Override

@@ -16,18 +16,18 @@ public class ReverseStraddle extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().mobile(self)&&c.getStance().mobile(target)&&c.getStance().prone(target)&&self.canAct();
+		return c.getStance().mobile(getSelf())&&c.getStance().mobile(target)&&c.getStance().prone(target)&&getSelf().canAct();
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		c.setStance(new ReverseMount(self,target));
+		c.setStance(new ReverseMount(getSelf(),target));
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class ReverseStraddle extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" sits on your chest, facing your crotch.";
+		return getSelf().name()+" sits on your chest, facing your crotch.";
 	}
 
 	@Override

@@ -31,14 +31,14 @@ public class Carry extends Fuck {
 		return fuckable(c, target)
 				&& !target.wary()
 				&& getTargetOrgan(target).isReady(target)
-				&& self.canAct()
-				&& c.getStance().mobile(self)
-				&& !c.getStance().prone(self)
+				&& getSelf().canAct()
+				&& c.getStance().mobile(getSelf())
+				&& !c.getStance().prone(getSelf())
 				&& !c.getStance().prone(target)
 				&& !c.getStance().facing()
-				&& self.getStamina().get()>=15
-				&& self.canSpend(getMojoSpent())
-				&& !c.getStance().penetration(self);
+				&& getSelf().getStamina().get()>=15
+				&& getSelf().canSpend(getMojoSpent())
+				&& !c.getStance().penetration(getSelf());
 	}
 	
 	public int getMojoSpent() {
@@ -48,32 +48,32 @@ public class Carry extends Fuck {
 	@Override
 	public void resolve(Combat c, Character target) {
 		String premessage = "";
-		self.spendMojo(c, getMojoSpent());
-		if(!self.bottom.empty() && getSelfOrgan().isType("cock")) {
-			if (self.bottom.size() == 1) {
-				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s halfway and", self.bottom.get(0).name());
-			} else if (self.bottom.size() == 2) {
-				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s and %s halfway and", self.bottom.get(0).name(), self.bottom.get(1).name());
+		getSelf().spendMojo(c, getMojoSpent());
+		if(!getSelf().bottom.empty() && getSelfOrgan().isType("cock")) {
+			if (getSelf().bottom.size() == 1) {
+				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s halfway and", getSelf().bottom.get(0).name());
+			} else if (getSelf().bottom.size() == 2) {
+				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s and %s halfway and", getSelf().bottom.get(0).name(), getSelf().bottom.get(1).name());
 			}
 		}
 
-		premessage = Global.format(premessage, self, target);
+		premessage = Global.format(premessage, getSelf(), target);
 		if(target.roll(this, c, accuracy())){
-			if(self.human()){
-				c.write(self,premessage + deal(c,0,Result.normal, target));
+			if(getSelf().human()){
+				c.write(getSelf(),premessage + deal(c,0,Result.normal, target));
 			}
 			else if(target.human()){
-				c.write(self,premessage + receive(c,0,Result.normal, self));
+				c.write(getSelf(),premessage + receive(c,0,Result.normal, getSelf()));
 			}
-			c.setStance(new Standing(self,target));
+			c.setStance(new Standing(getSelf(),target));
 		}
 		else{
-			if(self.human()) {
-				c.write(self,premessage + deal(c,0,Result.miss, target));
+			if(getSelf().human()) {
+				c.write(getSelf(),premessage + deal(c,0,Result.miss, target));
 			} else if(target.human()){
-				c.write(self,premessage + receive(c,0,Result.miss, target));
+				c.write(getSelf(),premessage + receive(c,0,Result.miss, target));
 			}
-			c.setStance(new StandingOver(target, self));
+			c.setStance(new StandingOver(target, getSelf()));
 		}
 	}
 
@@ -103,9 +103,9 @@ public class Carry extends Fuck {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
-			return Global.format("{self:subject} picks you up, but you scramble out of {self:posessive} grip before {self:pronoun} could do anything. Moreover, you manage to trip her while she's distracted.", self, target);
+			return Global.format("{self:subject} picks you up, but you scramble out of {self:posessive} grip before {self:pronoun} could do anything. Moreover, you manage to trip her while she's distracted.", getSelf(), target);
 		} else {
-			return Global.format("{self:subject} scoops you up in {self:possessive} powerful arms and simultaneously thrusts {self:posessive} {self:body-part:cock} into your {other:body-part:pussy}.", self, target);
+			return Global.format("{self:subject} scoops you up in {self:possessive} powerful arms and simultaneously thrusts {self:posessive} {self:body-part:cock} into your {other:body-part:pussy}.", getSelf(), target);
 		}
 	}
 
@@ -117,5 +117,11 @@ public class Carry extends Fuck {
 	@Override
 	public boolean makesContact() {
 		return true;
+	}
+	public String getTargetOrganType(Combat c, Character target) {
+		return "pussy";
+	}
+	public String getWithOrganType(Combat c, Character target) {
+		return "cock";
 	}
 }

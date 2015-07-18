@@ -17,38 +17,38 @@ public class Finger extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().reachBottom(self)&&(target.pantsless()||(self.has(Trait.dexterous)&&target.bottom.size()<=1))&&target.hasPussy()&&self.canAct()&&(!c.getStance().penetration(target)||c.getStance().en==Stance.anal);
+		return c.getStance().reachBottom(getSelf())&&(target.pantsless()||(getSelf().has(Trait.dexterous)&&target.bottom.size()<=1))&&target.hasPussy()&&getSelf().canAct()&&(!c.getStance().penetration(target)||c.getStance().en==Stance.anal);
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
 			int m = 4 + Global.random(4);
-			if(self.get(Attribute.Seduction)>=8){
+			if(getSelf().get(Attribute.Seduction)>=8){
 				m += 3;
-				if(self.human()){
-					c.write(self,deal(c,m,Result.normal, target));
+				if(getSelf().human()){
+					c.write(getSelf(),deal(c,m,Result.normal, target));
 				} else {
-					c.write(self,receive(c,0,Result.normal, target));
+					c.write(getSelf(),receive(c,0,Result.normal, target));
 				}
-				target.body.pleasure(self, self.body.getRandom("hands"), target.body.getRandom("pussy"), m, c);					
-				self.buildMojo(c, 10);
+				target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("pussy"), m, c);					
+				getSelf().buildMojo(c, 10);
 			}
 			else{
-				if(self.human()){
-					c.write(self,deal(c,m,Result.weak, target));
+				if(getSelf().human()){
+					c.write(getSelf(),deal(c,m,Result.weak, target));
 				}else {
-					c.write(self,receive(c,0,Result.weak, target));
+					c.write(getSelf(),receive(c,0,Result.weak, target));
 				}
-				target.body.pleasure(self, self.body.getRandom("hands"), target.body.getRandom("pussy"), m, c);					
+				target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("pussy"), m, c);					
 			}
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -128,5 +128,11 @@ public class Finger extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
+	}
+	public String getTargetOrganType(Combat c, Character target) {
+		return "pussy";
+	}
+	public String getWithOrganType(Combat c, Character target) {
+		return "hands";
 	}
 }

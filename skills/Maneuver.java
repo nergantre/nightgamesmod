@@ -17,30 +17,30 @@ public class Maneuver extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && c.getStance().mobile(self)&&!c.getStance().prone(self)&&!c.getStance().prone(target)&&self.canSpend(8)&&!c.getStance().behind(self)&&self.canAct()&&!self.has(Trait.undisciplined)&&!c.getStance().penetration(self);
+		return !target.wary() && c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&!c.getStance().prone(target)&&getSelf().canSpend(8)&&!c.getStance().behind(getSelf())&&getSelf().canAct()&&!getSelf().has(Trait.undisciplined)&&!c.getStance().penetration(getSelf());
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(c, 8);
+		getSelf().spendMojo(c, 8);
 		if(target.roll(this, c, accuracy())){
-			if(self.human()){
-				c.write(self,deal(c,0,Result.normal, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.normal, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.normal, target));
+				c.write(getSelf(),receive(c,0,Result.normal, target));
 			}	
-			c.setStance(new Behind(self,target));
-			self.emote(Emotion.confident, 15);
-			self.emote(Emotion.dominant, 15);
+			c.setStance(new Behind(getSelf(),target));
+			getSelf().emote(Emotion.confident, 15);
+			getSelf().emote(Emotion.dominant, 15);
 			target.emote(Emotion.nervous,10);
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -77,10 +77,10 @@ public class Maneuver extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
-			return self.name()+" tries to slip behind you, but you're able to keep her in sight.";
+			return getSelf().name()+" tries to slip behind you, but you're able to keep her in sight.";
 		}
 		else{
-			return self.name()+" lunges at you, but when you try to grab her, she ducks out of sight. Suddenly her arms are wrapped around you. How did she get behind you?";
+			return getSelf().name()+" lunges at you, but when you try to grab her, she ducks out of sight. Suddenly her arms are wrapped around you. How did she get behind you?";
 		}
 	}
 

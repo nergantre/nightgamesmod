@@ -35,4 +35,5 @@ public interface BodyPart extends Serializable {
 	double priority(Character c);
 	public int mod(Attribute a, int total);
 	public BodyPart load(Scanner scanner);
+	public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan);
 }

@@ -55,7 +55,7 @@ public class Cassie extends BasePersonality {
 		character.add(Trait.romantic);
 		character.add(Trait.imagination);
 
-		character.setUnderwear(Item.CassieTrophy);
+		character.setTrophy(Item.CassieTrophy);
 		character.plan = Tactics.hunting;
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.c);
@@ -72,6 +72,19 @@ public class Cassie extends BasePersonality {
 		growth.bonusArousal = 3;
 		growth.bonusMojo = 1;
 		preferredAttributes.add(Attribute.Arcane);
+		growth.traits.put(3, Trait.silvertongue);
+		growth.traits.put(5, Trait.mojoMaster);
+		growth.traits.put(8, Trait.SexualGroove);
+		growth.traits.put(10, Trait.submissive);
+		growth.traits.put(12, Trait.cute);
+		growth.traits.put(15, Trait.lacedjuices);
+		growth.traits.put(17, Trait.experttongue);
+		growth.traits.put(19, Trait.entrallingjuices);
+		growth.traits.put(20, Trait.energydrain);
+		growth.traits.put(24, Trait.autonomousPussy);
+		growth.traits.put(27, Trait.desensitized);
+		growth.traits.put(30, Trait.vaginaltongue);
+		growth.traits.put(35, Trait.desensitized2);
 	}
 
 	@Override
@@ -443,5 +456,15 @@ public class Cassie extends BasePersonality {
 		default:
 			return value>=100;
 		}
+	}
+
+	@Override
+	public String orgasmLiner() {
+		return "<i>\"Aaah please let me rest a bit... That was far too intense!\"</i>";
+	}
+
+	@Override
+	public String makeOrgasmLiner() {
+		return "Cassie grins at you <i>\"Did you feel good? Come on, no time for rest now, I bet I can make you feel even better!\"</i>";
 	}
 }

@@ -21,7 +21,7 @@ public class Binding extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && !c.getStance().sub(self)&&!c.getStance().prone(self)&&!c.getStance().prone(target)&&self.canAct()&&self.canSpend(20);
+		return !target.wary() && !c.getStance().sub(getSelf())&&!c.getStance().prone(getSelf())&&!c.getStance().prone(target)&&getSelf().canAct()&&getSelf().canSpend(20);
 	}
 
 	@Override
@@ -31,17 +31,17 @@ public class Binding extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(c, 20);
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		getSelf().spendMojo(c, 20);
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		target.add(new Bound(target,Math.min(10+3*self.get(Attribute.Arcane), 50),"seal"));
+		target.add(new Bound(target,Math.min(10+3*getSelf().get(Attribute.Arcane), 50),"seal"));
 		target.emote(Emotion.nervous, 5);
-		self.emote(Emotion.confident, 20);
-		self.emote(Emotion.dominant, 10);
+		getSelf().emote(Emotion.confident, 20);
+		getSelf().emote(Emotion.dominant, 10);
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class Binding extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" gestures at you and casts a spell. A ribbon of light wraps around your wrists and holds them in place.";
+		return getSelf().name()+" gestures at you and casts a spell. A ribbon of light wraps around your wrists and holds them in place.";
 	}
 
 }

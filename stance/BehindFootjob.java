@@ -20,6 +20,9 @@ public class BehindFootjob extends Position {
 		return c==top;
 	}
 
+	public String image() {
+		return "behind_footjob.jpg";
+	}
 	@Override
 	public boolean kiss(Character c) {
 		return false;
@@ -76,13 +79,13 @@ public class BehindFootjob extends Position {
 	}
 
 	@Override
-	public Position insert(Character dom, Character inserter) {
-		return new Doggy(top, bottom);
+	public Position insert(Character dom) {
+		return new Doggy(dom, getOther(dom));
 	}
 
 	@Override
 	public float priorityMod(Character self) {
-		return (dom(self) ? 4.0f : 0);
+		return getSubDomBonus(self, 4.0f);
 	}
 
 	public Position reverse() {

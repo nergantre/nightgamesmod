@@ -27,7 +27,9 @@ public class Tribadism extends Position {
 	public boolean inserted(Character c) {
 		return false;
 	}
-
+	public String image() {
+		return "trib.jpg";
+	}
 	@Override
 	public boolean dom(Character c) {
 		return c==top;
@@ -74,7 +76,7 @@ public class Tribadism extends Position {
 	}
 
 	@Override
-	public Position insert(Character dom, Character inserter) {
+	public Position insert() {
 		return new Tribadism(bottom,top);
 	}
 

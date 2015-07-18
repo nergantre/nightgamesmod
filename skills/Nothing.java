@@ -17,7 +17,7 @@ public class Nothing extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if (self.human()) {
+		if (getSelf().human()) {
 			deal(c, 0, Result.normal, target);
 		} else {
 			receive(c, 0, Result.normal, target);
@@ -50,7 +50,7 @@ public class Nothing extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-			return self.subject() + "is unable to do anything.";
+			return getSelf().subject() + "is unable to do anything.";
 	}
 
 	@Override

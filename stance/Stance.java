@@ -19,4 +19,5 @@ public enum Stance {
 	behindfootjob,
 	nursing,
 	facesitting,
+	engulfed,
 }

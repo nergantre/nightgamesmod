@@ -20,7 +20,7 @@ public class Barrier extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !c.getStance().sub(self)&&!c.getStance().prone(self)&&!c.getStance().prone(target)&&self.canAct()&&self.canSpend(3);
+		return !c.getStance().sub(getSelf())&&!c.getStance().prone(getSelf())&&!c.getStance().prone(target)&&getSelf().canAct()&&getSelf().canSpend(3);
 	}
 
 	@Override
@@ -30,14 +30,14 @@ public class Barrier extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(c, 3);
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		getSelf().spendMojo(c, 3);
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		self.add(new Shield(self, .5));
+		getSelf().add(new Shield(getSelf(), .5));
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class Barrier extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" holds a hand in front of her and you see a magical barrier appear briefly, before it becomes invisible.";
+		return getSelf().name()+" holds a hand in front of her and you see a magical barrier appear briefly, before it becomes invisible.";
 	}
 
 }

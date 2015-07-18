@@ -18,7 +18,10 @@ public class Doggy extends MaledomSexStance {
 			return "Things aren't going well for you. You're down on your hands and knees, while "+top.name()+" has free access to your manhood.";
 		}
 	}
-
+	
+	public String image() {
+		return "doggy.jpg";
+	}
 	@Override
 	public boolean mobile(Character c) {
 		return c==top;
@@ -80,7 +83,7 @@ public class Doggy extends MaledomSexStance {
 	}
 
 	@Override
-	public Position insert(Character dom, Character inserter) {
+	public Position insert() {
 		return new Behind(top,bottom);
 	}
 

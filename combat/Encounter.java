@@ -336,7 +336,7 @@ public class Encounter implements Serializable{
 			}
 		}
 		if(!target.nude()){
-			attacker.gain(target.getUnderwear());
+			attacker.gain(target.getTrophy());
 		}
 		target.nudify();
 		target.defeated(attacker);
@@ -364,7 +364,7 @@ public class Encounter implements Serializable{
 					"she has no chance of winning even if she fights back. You help her along by licking her neck and fondling her breasts as she hits her climax.");
 		}
 		if(!target.nude()){
-			attacker.gain(target.getUnderwear());
+			attacker.gain(target.getTrophy());
 		}
 		target.nudify();
 		target.defeated(attacker);
@@ -396,7 +396,7 @@ public class Encounter implements Serializable{
 					"gratiously unties you and helps you down.");
 		}
 		if(!target.nude()){
-			attacker.gain(target.getUnderwear());
+			attacker.gain(target.getTrophy());
 		}
 		target.nudify();
 		target.defeated(attacker);
@@ -442,7 +442,7 @@ public class Encounter implements Serializable{
 		if(thief.human()){
 			Global.gui().message("You quietly swipe "+target.name()+"'s clothes while she's occupied. It's a little underhanded, but you can still turn them in for cash just as if you defeated her.");
 		}
-		thief.gain(target.getUnderwear());
+		thief.gain(target.getTrophy());
 		target.nudify();
 		target.state=State.lostclothes;
 		location.endEncounter();

@@ -28,13 +28,13 @@ public class UseDraft extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		boolean hasItems = subChoices().size() > 0;
-		return hasItems&&self.canAct()&&c.getStance().mobile(self)&&(!self.human()||Global.getMatch().condition!=Modifier.noitems);
+		return hasItems&&getSelf().canAct()&&c.getStance().mobile(getSelf())&&(!getSelf().human()||Global.getMatch().condition!=Modifier.noitems);
 	}
 
 	@Override
 	public Collection<String> subChoices() {
 		ArrayList<String> usables = new ArrayList<String>();
-		for (Item i : self.getInventory().keySet()) {
+		for (Item i : getSelf().getInventory().keySet()) {
 			if (i.getEffects().get(0).drinkable()) {
 				usables.add(i.getName());
 			}
@@ -45,8 +45,8 @@ public class UseDraft extends Skill {
 	@Override
 	public void resolve(Combat c, Character target) {
 		Item used = null;
-		if (self.human()) {
-			for (Item i : self.getInventory().keySet()) {
+		if (getSelf().human()) {
+			for (Item i : getSelf().getInventory().keySet()) {
 				if (i.getName().equals(choice)) {
 					used = i;
 					break;
@@ -54,7 +54,7 @@ public class UseDraft extends Skill {
 			}
 		} else {
 			ArrayList<Item> usables = new ArrayList<Item>();
-			for (Item i : self.getInventory().keySet()) {
+			for (Item i : getSelf().getInventory().keySet()) {
 				if (i.getEffects().get(0).drinkable()) {
 					usables.add(i);
 				}
@@ -64,17 +64,17 @@ public class UseDraft extends Skill {
 			}
 		}
 		if (used == null) {
-			c.write(self, "Skill failed...");
+			c.write(getSelf(), "Skill failed...");
 		} else {
 			boolean eventful = false;
-			c.write(self, Global.format(String.format("{self:SUBJECT-ACTION:%s|%ss} %s%s",used.getEffects().get(0).getSelfVerb(),used.getEffects().get(0).getSelfVerb(), used.pre(), used.name()), self, target));
+			c.write(getSelf(), Global.format(String.format("{self:SUBJECT-ACTION:%s|%ss} %s%s",used.getEffects().get(0).getSelfVerb(),used.getEffects().get(0).getSelfVerb(), used.pre(), used.name()), getSelf(), target));
 			for (ItemEffect e : used.getEffects()) {
-				eventful = e.use(c, self, target, used) || eventful;
+				eventful = e.use(c, getSelf(), target, used) || eventful;
 			}
 			if (!eventful) {
 				c.write("...But nothing happened.");
 			}
-			self.consume(used, 1);
+			getSelf().consume(used, 1);
 		}
 	}
 

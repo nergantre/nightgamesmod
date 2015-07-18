@@ -7,7 +7,7 @@ import characters.Attribute;
 import combat.Combat;
 import combat.Result;
 
-public class LevelDrain extends Skill {
+public class LevelDrain extends Drain {
 
 	public LevelDrain(Character self) {
 		super("Level Drain", self);
@@ -20,9 +20,9 @@ public class LevelDrain extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (this.self.canAct()) && (c.getStance().canthrust(self))
-				&& (c.getStance().penetration(this.self))
-				&& (this.self.canSpend(25));
+		return (this.getSelf().canAct()) && (c.getStance().canthrust(getSelf()))
+				&& (c.getStance().penetration(this.getSelf()))
+				&& (this.getSelf().canSpend(25));
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class LevelDrain extends Skill {
 		int xpStolen = target.getXP();
 		if (xpStolen <= 0) { return 0; }
 		target.loseXP(xpStolen);
-		self.gainXP(xpStolen);
+		getSelf().gainXP(xpStolen);
 		return xpStolen;
 	}
 
@@ -45,47 +45,47 @@ public class LevelDrain extends Skill {
 	
 	@Override
 	public void resolve(Combat c, Character target) {
-		int strength = Math.max(1, 1 + ((self.get(Attribute.Dark)) / 30));
-		self.spendMojo(c, 25);
+		int strength = Math.max(1, 1 + ((getSelf().get(Attribute.Dark)) / 30));
+		getSelf().spendMojo(c, 25);
 		
-		int type = Global.centeredrandom(2, self.get(Attribute.Dark) / 20.0f, 2);
-		if (this.self.human()) {
-			c.write(self,deal(c, type, Result.normal, target));
+		int type = Global.centeredrandom(2, getSelf().get(Attribute.Dark) / 20.0f, 2);
+		if (this.getSelf().human()) {
+			c.write(getSelf(),deal(c, type, Result.normal, target));
 		} else if (target.human()) {
-			c.write(self,receive(c, type, Result.normal, target));
+			c.write(getSelf(),receive(c, type, Result.normal, target));
 		}
 		switch (type) {
 		case 0:
-			self.arouse(self.getArousal().max(), c);
+			getSelf().arouse(getSelf().getArousal().max(), c);
 			break;
 		case 1:
 			int stolen = stealXP(target);
 			if (stolen > 0) {
-				self.add(new Satiated(target, stolen, 0));
-				if (self.human())
+				getSelf().add(new Satiated(target, stolen, 0));
+				if (getSelf().human())
 					c.write("You have absorbed " + stolen + " XP from " + target.name() + "!\n");
 				else
-					c.write(self.name() + " has absorbed " + stolen + " XP from you!\n");
+					c.write(getSelf().name() + " has absorbed " + stolen + " XP from you!\n");
 			}
 			break;
 		case 2:
-			self.add(new Satiated(target, 0, strength));
+			getSelf().add(new Satiated(target, 0, strength));
 			int xpStolen = 0;
 			for(int i = 0; i < strength; i++) {
 				xpStolen += 95 + (5 * (target.getLevel()));
 				c.write(target.dong());
 			}
-			if (self.human())
+			if (getSelf().human())
 				c.write("You have stolen " + strength + " of " + target.name() + "'s levels and absorbed it as " + xpStolen + " XP!\n");
 			else
-				c.write(self.name() + " has stolen " + strength + " of your levels and absorbed it as " + xpStolen + " XP!\n");
-			self.gainXP(xpStolen);
-			target.tempt(c, self, target.getArousal().max());
+				c.write(getSelf().name() + " has stolen " + strength + " of your levels and absorbed it as " + xpStolen + " XP!\n");
+			getSelf().gainXP(xpStolen);
+			target.tempt(c, getSelf(), target.getArousal().max());
 			break;
 		default:
 			break;
 		}
-		self.getMojo().gain(1);
+		getSelf().getMojo().gain(1);
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public class LevelDrain extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		if(self.hasPussy()){
+		if(getSelf().hasPussy()){
 			String base = "You put your powerful vaginal muscles to work whilst"
 					+ " transfixing " + target.name()
 					+ "'s gaze with your own, goading his energy into his cock."
@@ -153,7 +153,7 @@ public class LevelDrain extends Skill {
 				+ " fluid leaves you, you feel ";
 		switch (damage) {
 		case 0:
-			return self.name()+" squeezes you with her pussy and starts to milk you, but you suddenly feel her shudder and moan loudly. Looks like her plan backfired.";
+			return getSelf().name()+" squeezes you with her pussy and starts to milk you, but you suddenly feel her shudder and moan loudly. Looks like her plan backfired.";
 		case 1:
 			return base
 					+ "your experiences and memories escape your mind and flowing into her.";
@@ -161,7 +161,7 @@ public class LevelDrain extends Skill {
 			return base
 					+ "your very being snap loose inside of you and it seems to flow right "
 					+ "through your dick and into her. When it is over you feel... empty "
-					+ "somehow. At the same time, "+self.name()+" seems radiant, looking more powerful,"
+					+ "somehow. At the same time, "+getSelf().name()+" seems radiant, looking more powerful,"
 					+ " smarter and even more seductive than before. Through all of this,"
 					+ " she has kept on thrusting and you are right on the edge of climax."
 					+ " Your defeat appears imminent, but you have already lost something"
@@ -175,5 +175,12 @@ public class LevelDrain extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
+	}
+
+	public String getTargetOrganType(Combat c, Character target) {
+		return "cock";
+	}
+	public String getWithOrganType(Combat c, Character target) {
+		return "pussy";
 	}
 }

@@ -18,7 +18,7 @@ public class Obey extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.is(Stsflag.enthralled) && !self.is(Stsflag.stunned);
+		return getSelf().is(Stsflag.enthralled) && !getSelf().is(Stsflag.stunned);
 	}
 
 	@Override
@@ -28,10 +28,10 @@ public class Obey extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-        if (self.human())
-            c.write(self,"You patiently await your mistress' command");
+        if (getSelf().human())
+            c.write(getSelf(),"You patiently await your mistress' command");
         else if (target.human())
-            c.write(self,self.name() + " stares ahead blankly, waiting for her orders.");
+            c.write(getSelf(),getSelf().name() + " stares ahead blankly, waiting for her orders.");
     }
 
 	@Override

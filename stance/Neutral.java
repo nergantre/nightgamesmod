@@ -18,6 +18,11 @@ public class Neutral extends Position {
 			return "You and "+top.name()+" circle each other cautiously";
 		}
 	}
+	
+	public String image() {
+			return "neutral.jpg";
+	}
+	
 	@Override
 	public boolean inserted(Character c) {
 		return false;
@@ -78,7 +83,14 @@ public class Neutral extends Position {
 	}
 
 	@Override
-	public Position insert(Character dom, Character inserter) {
-		return this;
+	public Position insert(Character dom) {
+		Character other = getOther(dom);
+		if(dom.hasDick() && other.hasPussy()){
+			return new Standing(dom,other);
+		} else if(other.hasDick() && dom.hasPussy()) {
+			return new Jumped(dom,other);
+		} else {
+			return this;
+		}
 	}
 }

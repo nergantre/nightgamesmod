@@ -20,7 +20,7 @@ public class CatsGrace extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().mobile(self)&&self.getArousal().percent()>=20;
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&getSelf().getArousal().percent()>=20;
 	}
 
 	@Override
@@ -30,12 +30,12 @@ public class CatsGrace extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		self.add(new Nimble(self,4));
+		getSelf().add(new Nimble(getSelf(),4));
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class CatsGrace extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" focuses for a moment and her movements start to speed up and become more animalistic.";
+		return getSelf().name()+" focuses for a moment and her movements start to speed up and become more animalistic.";
 	}
 
 }

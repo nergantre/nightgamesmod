@@ -70,11 +70,11 @@ public class CommandUse extends PlayerCommand {
 		switch (used) {
 		case Lubricant:
 			target.add(new Oiled(target));
-			c.write(self,deal(c, 0, Result.normal, target));
+			c.write(getSelf(),deal(c, 0, Result.normal, target));
 			break;
 		case SPotion:
 			target.add(new Hypersensitive(target));
-			c.write(self,deal(c, 0, Result.special, target));
+			c.write(getSelf(),deal(c, 0, Result.special, target));
 			break;
 		default:
 			c.write("<<This should not be displayed, please inform The"

@@ -22,6 +22,7 @@ import characters.Character;
 import characters.Trait;
 import characters.body.BreastsPart;
 import characters.body.CockPart;
+import characters.body.EarPart;
 import characters.body.PussyPart;
 import characters.body.TentaclePart;
 import characters.body.WingsPart;
@@ -54,6 +55,7 @@ public enum Item implements Loot {
 	PlayerTrophy("Your Boxers",0,"How did you end up with these?",""),
 	EveTrophy	("Eve's 'Panties'",0,"Crotchless and of no practical use",""),
 	KatTrophy	("Kat's Panties",0,"Cute pink panties",""),
+	AiriTrophy	("A piece of hardened gel",0,"Not sure what else to take",""),
 	YuiTrophy	("Yui's Panties",0,"",""),
 	Sprayer		( "Sprayer",30,	"Necessary for making traps that use liquids","a "	),
 	SPotion		( "Sensitivity Potion",25,"Who knows whats in this stuff, but it makes any skin it touches tingle","a "),
@@ -109,6 +111,7 @@ public enum Item implements Loot {
 			new AddTraitEffect("drink", "throw", Trait.addictivefluids),
 			new AddTraitEffect("drink", "throw", Trait.succubus),
 			new BodyModEffect("drink", "throw", PussyPart.succubus, BodyModEffect.Effect.replace),
+			new BodyModEffect("drink", "throw", EarPart.pointed, BodyModEffect.Effect.replace),
 			new BodyModEffect("drink", "throw", WingsPart.demonic, BodyModEffect.Effect.replace),
 			new BodyModEffect("drink", "throw", TailPart.demonic, BodyModEffect.Effect.replace),
 			new BodyModEffect("drink", "throw", BreastsPart.dd, BodyModEffect.Effect.growplus)

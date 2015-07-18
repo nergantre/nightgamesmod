@@ -21,7 +21,7 @@ public class Masochism extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().mobile(self)&&self.getArousal().get()>=15&&!self.is(Stsflag.masochism);
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&getSelf().getArousal().get()>=15&&!getSelf().is(Stsflag.masochism);
 	}
 
 	@Override
@@ -31,13 +31,13 @@ public class Masochism extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		self.add(new Masochistic(self));
+		getSelf().add(new Masochistic(getSelf()));
 		target.add(new Masochistic(target));
 	}
 
@@ -58,7 +58,7 @@ public class Masochism extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" shivers in arousal. You're suddenly bombarded with thoughts of letting her hurt you in wonderful ways.";
+		return getSelf().name()+" shivers in arousal. You're suddenly bombarded with thoughts of letting her hurt you in wonderful ways.";
 	}
 
 }

@@ -17,28 +17,28 @@ public class ArmBar extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().dom(self)&&c.getStance().reachTop(target)&&self.canAct()&&!self.has(Trait.undisciplined)&&!c.getStance().penetration(self);
+		return c.getStance().dom(getSelf())&&c.getStance().reachTop(target)&&getSelf().canAct()&&!getSelf().has(Trait.undisciplined)&&!c.getStance().penetration(getSelf());
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
-			int m = Global.random(10)+self.get(Attribute.Power)/2;
-			if(self.human()){
-				c.write(self,deal(c,m,Result.normal, target));
+			int m = Global.random(10)+getSelf().get(Attribute.Power)/2;
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,m,Result.normal, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,m,Result.normal, target));
+				c.write(getSelf(),receive(c,m,Result.normal, target));
 			}
 			target.pain(c, m);
 			target.emote(Emotion.angry,15);
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -73,10 +73,10 @@ public class ArmBar extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
-			return self.name()+" grabs your wrist, but you pry it out of her grasp.";
+			return getSelf().name()+" grabs your wrist, but you pry it out of her grasp.";
 		}
 		else{
-			return self.name()+" pulls your arm between her legs, forceably overextending your elbow. The pain almost makes you tap out, but you manage to yank your arm " +
+			return getSelf().name()+" pulls your arm between her legs, forceably overextending your elbow. The pain almost makes you tap out, but you manage to yank your arm " +
 				"out of her grip.";
 		}
 	}

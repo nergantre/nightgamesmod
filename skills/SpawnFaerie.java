@@ -25,7 +25,7 @@ public class SpawnFaerie extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().mobile(self)&&!c.getStance().prone(self)&&self.pet==null&&self.canSpend(15);
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&getSelf().pet==null&&getSelf().canSpend(15);
 	}
 
 	@Override
@@ -35,26 +35,26 @@ public class SpawnFaerie extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(c, 15);
+		getSelf().spendMojo(c, 15);
 		int power = 2;
 		int ac = 4;
-		if(self.has(Trait.leadership)){
+		if(getSelf().has(Trait.leadership)){
 			power++;
 		}
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 			if(gender==Ptype.fairyfem){	
-				self.pet=new FairyFem(self,power,ac);
+				getSelf().pet=new FairyFem(getSelf(),power,ac);
 			}
 			else{
-				self.pet=new FairyMale(self,power,ac);
+				getSelf().pet=new FairyMale(getSelf(),power,ac);
 			}
 		}
 		else{
 			if(target.human()){
-				c.write(self,receive(c,0,Result.normal, target));
+				c.write(getSelf(),receive(c,0,Result.normal, target));
 			}
-			self.pet=new FairyFem(self,power,ac);
+			getSelf().pet=new FairyFem(getSelf(),power,ac);
 		}
 	}
 
@@ -89,7 +89,7 @@ public class SpawnFaerie extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" casts a spell as she extends her hand. In a flash of magic, a small, naked girl with butterfly wings appears in her palm.";
+		return getSelf().name()+" casts a spell as she extends her hand. In a flash of magic, a small, naked girl with butterfly wings appears in her palm.";
 	}
 
 }

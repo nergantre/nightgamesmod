@@ -22,7 +22,7 @@ public class Sensitize extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().mobile(self)&&self.canAct()&&self.has(Item.SPotion)&&target.nude()&&!c.getStance().prone(self)&&(!self.human()||Global.getMatch().condition!=Modifier.noitems);
+		return c.getStance().mobile(getSelf())&&getSelf().canAct()&&getSelf().has(Item.SPotion)&&target.nude()&&!c.getStance().prone(getSelf())&&(!getSelf().human()||Global.getMatch().condition!=Modifier.noitems);
 	}
 
 	@Override
@@ -32,31 +32,31 @@ public class Sensitize extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.consume(Item.SPotion, 1);
-		if(self.has(Item.Aersolizer)){
-			if(self.human()){
-				c.write(self,deal(c,0,Result.special, target));
+		getSelf().consume(Item.SPotion, 1);
+		if(getSelf().has(Item.Aersolizer)){
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.special, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.special, self));
+				c.write(getSelf(),receive(c,0,Result.special, getSelf()));
 			}
 			target.add(new Hypersensitive(target));
 		}
 		else if(target.roll(this, c, accuracy())){
-			if(self.human()){
-				c.write(self,deal(c,0,Result.normal, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.normal, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.normal, self));
+				c.write(getSelf(),receive(c,0,Result.normal, getSelf()));
 			}
 			target.add(new Hypersensitive(target));
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -88,14 +88,14 @@ public class Sensitize extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier == Result.special){
-			return self.name()+" inserts a bottle into the attachment on her arm. You're suddenly surrounded by a cloud of minty gas. Your skin becomes hot, but goosebumps appear anyway. " +
+			return getSelf().name()+" inserts a bottle into the attachment on her arm. You're suddenly surrounded by a cloud of minty gas. Your skin becomes hot, but goosebumps appear anyway. " +
 					"Even the air touching your skin makes you shiver.";
 		}
 		else if(modifier == Result.miss){
-			return self.name()+" splashes a bottle of liquid in your direction, but none of it hits you.";
+			return getSelf().name()+" splashes a bottle of liquid in your direction, but none of it hits you.";
 		}
 		else{
-			return self.name()+" throws a bottle of strange liquid at you. The skin it touches grows hot and oversensitive.";
+			return getSelf().name()+" throws a bottle of strange liquid at you. The skin it touches grows hot and oversensitive.";
 		}
 	}
 

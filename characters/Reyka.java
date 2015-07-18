@@ -41,17 +41,13 @@ public class Reyka extends BasePersonality {
 		this.character.set(Attribute.Seduction, 14);
 		this.character.set(Attribute.Cunning, 7);
 		this.character.set(Attribute.Speed, 7);
-		this.character.setUnderwear(Item.ReykaTrophy);
+		this.character.setTrophy(Item.ReykaTrophy);
 		this.character.getStamina().setMax(40);
 		this.character.getArousal().setMax(200);
 		this.character.getMojo().setMax(70);
 		character.add(Trait.succubus);
 		character.add(Trait.darkpromises);
-		character.add(Trait.addictivefluids);
-		character.add(Trait.experttongue);
 		character.add(Trait.Confident);
-		character.add(Trait.powerfulhips);
-		character.add(Trait.alwaysready);
 		character.add(Trait.shameless);
 
 		Global.gainSkills(this.character);
@@ -76,6 +72,20 @@ public class Reyka extends BasePersonality {
 		growth.bonusMojo = 2;
 		preferredAttributes.add(Attribute.Dark);
 		preferredAttributes.add(Attribute.Seduction);
+		growth.traits.put(3, Trait.shameless);
+		growth.traits.put(5, Trait.Confident);
+		growth.traits.put(8, Trait.expertGoogler);
+		growth.traits.put(10, Trait.addictivefluids);
+		growth.traits.put(10, Trait.spiritphage);
+		growth.traits.put(12, Trait.silvertongue);
+		growth.traits.put(15, Trait.lacedjuices);
+		growth.traits.put(15, Trait.energydrain);
+		growth.traits.put(17, Trait.experttongue);
+		growth.traits.put(20, Trait.soulsucker);
+		growth.traits.put(24, Trait.desensitized);
+		growth.traits.put(27, Trait.entrallingjuices);
+		growth.traits.put(30, Trait.vaginaltongue);
+		growth.traits.put(35, Trait.desensitized2);
 	}
 
 	@Override
@@ -397,5 +407,15 @@ public class Reyka extends BasePersonality {
 		default:
 			return value>=100;
 		}
+	}
+
+	@Override
+	public String orgasmLiner() {
+		return "Reyka shudders, <i>\"Mmm it's been a while since I've felt that. Here, I'll return the favor\"</i>";
+	}
+
+	@Override
+	public String makeOrgasmLiner() {
+		return "With a devilish smile, Reyka brings her face close to yours <i>\"Mmmmm that smells great! Too bad I'm still pretty hungry.\"</i>";
 	}
 }

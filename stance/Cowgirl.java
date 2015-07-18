@@ -23,6 +23,9 @@ public class Cowgirl extends FemdomSexStance {
 		}
 	}
 
+	public String image() {
+		return "cowgirl.jpg";
+	}
 	@Override
 	public boolean mobile(Character c) {
 		return c==top;
@@ -84,7 +87,7 @@ public class Cowgirl extends FemdomSexStance {
 	}
 
 	@Override
-	public Position insert(Character dom, Character inserter) {
+	public Position insert() {
 		return new Mount(top,bottom);
 	}
 

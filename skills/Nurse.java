@@ -24,41 +24,41 @@ public class Nurse extends Skill {
 
 	@Override
 	public boolean requirements(Character user) {
-		return self.get(Attribute.Seduction) > 10;
+		return getSelf().get(Attribute.Seduction) > 10;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.topless()&&c.getStance().reachTop(self)&&!c.getStance().behind(self)
-				&& self.body.getLargestBreasts().size >= BreastsPart.c.size
-				&&c.getStance().mobile(self)
+		return getSelf().topless()&&c.getStance().reachTop(getSelf())&&c.getStance().front(getSelf())
+				&& getSelf().body.getLargestBreasts().size >= BreastsPart.c.size
+				&&c.getStance().mobile(getSelf())
 				&&(!c.getStance().mobile(target)||c.getStance().prone(target))
-				&&self.canAct();
+				&&getSelf().canAct();
 	}
 	
 	@Override
 	public float priorityMod(Combat c){
-		return self.has(Trait.lactating) ? 3 : 0;
+		return getSelf().has(Trait.lactating) ? 3 : 0;
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		if (self.has(Trait.lactating)&&!target.is(Stsflag.suckling)&&!target.is(Stsflag.wary)) {
-			c.write(target, Global.format("{other:SUBJECT-ACTION:are|is} a little confused at the sudden turn of events, but after milk starts flowing into {other:possessive} mouth, {other:pronoun} can't help but continue to suck on {self:possessive} teats.", self, target));
-			target.add(new Suckling(target, self, 4));
+		if (getSelf().has(Trait.lactating)&&!target.is(Stsflag.suckling)&&!target.is(Stsflag.wary)) {
+			c.write(target, Global.format("{other:SUBJECT-ACTION:are|is} a little confused at the sudden turn of events, but after milk starts flowing into {other:possessive} mouth, {other:pronoun} can't help but continue to suck on {self:possessive} teats.", getSelf(), target));
+			target.add(new Suckling(target, getSelf(), 4));
 		}
-		if (c.getStance().en != Stance.nursing &&!c.getStance().penetration(self) &&!c.getStance().penetration(target)) {
-			c.setStance(new NursingHold(self,target));
-			self.emote(Emotion.dominant, 20);
+		if (c.getStance().en != Stance.nursing &&!c.getStance().penetration(getSelf()) &&!c.getStance().penetration(target)) {
+			c.setStance(new NursingHold(getSelf(),target));
+			getSelf().emote(Emotion.dominant, 20);
 		} else {
-			(new Suckle(target)).resolve(c, self);
-			self.emote(Emotion.dominant, 10);
+			(new Suckle(target)).resolve(c, getSelf());
+			getSelf().emote(Emotion.dominant, 10);
 		}
 	}
 
@@ -80,7 +80,7 @@ public class Nurse extends Skill {
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.special) {
-		return "You cradle "+target.name()+"'s head in your lap and press your " + self.body.getRandomBreasts().fullDescribe(self)
+		return "You cradle "+target.name()+"'s head in your lap and press your " + getSelf().body.getRandomBreasts().fullDescribe(getSelf())
 				+ " over her face. " + target.name() + " vocalizes a confused little yelp, and you take advantage of it to force your nipples between her lips.";
 		} else {
 			return "You gently stroke " + target.nameOrPossessivePronoun() + " hair as you feed your nipples to " + target.directObject() + ". " +
@@ -91,10 +91,10 @@ public class Nurse extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.special) {
-			return self.name()+" plops her " + self.body.getRandomBreasts().fullDescribe(self) +" in front of your face. You vision suddenly consists of only swaying titflesh." +
-					" Giggling a bit, " + self.name() + " pokes your sides and slides her nipples in your mouth when you let out a yelp.";
+			return getSelf().name()+" plops her " + getSelf().body.getRandomBreasts().fullDescribe(getSelf()) +" in front of your face. You vision suddenly consists of only swaying titflesh." +
+					" Giggling a bit, " + getSelf().name() + " pokes your sides and slides her nipples in your mouth when you let out a yelp.";
 		} else {
-			return self.name() + " gently strokes your hair as she presents her nipples to your mouth. " +
+			return getSelf().name() + " gently strokes your hair as she presents her nipples to your mouth. " +
 					"Present with the opportunity, you happily suck on her breasts.";
 		}
 	}
@@ -107,5 +107,12 @@ public class Nurse extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
+	}
+	
+	public String getTargetOrganType(Combat c, Character target) {
+		return "mouth";
+	}
+	public String getWithOrganType(Combat c, Character target) {
+		return "breasts";
 	}
 }

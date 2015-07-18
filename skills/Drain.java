@@ -14,16 +14,20 @@ public class Drain extends Skill {
 		super("Drain", self, 5);
 	}
 
+	public Drain(String name, Character self) {
+		super(name, self, 5);
+	}
+
 	@Override
 	public boolean requirements(Character user) {
-		return user.get(Attribute.Dark)>=15;
+		return user.get(Attribute.Dark)>=15 || user.has(Trait.energydrain);
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (this.self.canAct()) && (c.getStance().canthrust(this.self))
-				&& (c.getStance().penetration(this.self))
-				&& (this.self.canSpend(20));
+		return (this.getSelf().canAct())
+				&& (c.getStance().penetration(this.getSelf()))
+				&& (this.getSelf().canSpend(10));
 	}
 	
 	@Override
@@ -40,7 +44,7 @@ public class Drain extends Skill {
 		amount = Math.min(target.get(att), amount);
 		if (amount <= 0) { return; }
 		target.add(new Abuff(target,att, -amount,20));
-		self.add(new Abuff(self,att, amount,20));
+		getSelf().add(new Abuff(getSelf(),att, amount,20));
 	}
 
 	@Override
@@ -49,27 +53,27 @@ public class Drain extends Skill {
 	}
 
 	public void resolve(Combat c, Character target, boolean nocost) {
-		int strength = Math.max(10, 1 + (self.get(Attribute.Dark) / 4));
+		int strength = Math.max(10, 1 + (getSelf().get(Attribute.Dark) / 4));
 		if (!nocost) {
-			self.spendMojo(c, 20);
+			getSelf().spendMojo(c, 10);
 		}
-		int type = Global.centeredrandom(6, self.get(Attribute.Dark) / 3.0 ,3);
+		int type = Math.max(1, Global.centeredrandom(6, getSelf().get(Attribute.Dark) / 3.0 ,3));
 
-		if (this.self.human()) {
-			c.write(self,deal(c, type, Result.normal, target));
+		if (this.getSelf().human()) {
+			c.write(getSelf(),deal(c, type, Result.normal, target));
 		} else if (target.human()) {
-			c.write(self,receive(c, type, Result.normal, target));
+			c.write(getSelf(),receive(c, type, Result.normal, target));
 		}
 		switch (type) {
 		case 0:
-			self.arouse(self.getArousal().max(), c);
+			getSelf().arouse(getSelf().getArousal().max(), c);
 		case 1:
 			target.weaken(c, 50);
-			this.self.heal(c, 50);
+			this.getSelf().heal(c, 50);
 			break;
 		case 2:
 			target.loseMojo(c, 20);
-			this.self.buildMojo(c, 20);
+			this.getSelf().buildMojo(c, 20);
 			break;
 		case 3:
 			steal(target, Attribute.Cunning, strength);
@@ -81,7 +85,7 @@ public class Drain extends Skill {
 			break;
 		case 5:
 			steal(target, Attribute.Seduction, strength);
-			target.tempt(c, self, 10);
+			target.tempt(c, getSelf(), 10);
 			break;
 		case 6:
 			steal(target, Attribute.Power, strength);
@@ -90,12 +94,12 @@ public class Drain extends Skill {
 			target.mod(Attribute.Perception, 1);
 			target.weaken(c, 10);
 			target.spendMojo(c, 10);
-			target.tempt(c, self, 10);
+			target.tempt(c, getSelf(), 10);
 			break;
 		default:
 			break;
 		}
-		self.getMojo().gain(1);
+		getSelf().getMojo().gain(1);
 	}
 
 	@Override
@@ -111,10 +115,12 @@ public class Drain extends Skill {
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if(c.getStance().inserted(target)){
-			String base = "You put your powerful vaginal muscles to work whilst"
+			String muscDesc = c.getStance().analinserted() ? "anal" : "vaginal";
+			String partDesc = c.getStance().analinserted() ? getSelf().body.getRandom("ass").describe(getSelf()) : getSelf().body.getRandomPussy().describe(getSelf());
+			String base = "You put your powerful " + muscDesc + " muscles to work whilst"
 					+ " transfixing " + target.name()
 					+ "'s gaze with your own, goading " + target.possessivePronoun() + " energy into "+ target.possessivePronoun() + " cock."
-					+ " Soon it erupts from her into your " + self.body.getRandomPussy() + ", ";
+					+ " Soon it erupts from her into your " + partDesc + ", ";
 			switch (damage) {
 			case 4:
 				return base + "and you can feel " + target.possessivePronoun() + " strength pumping into you.";
@@ -172,10 +178,13 @@ public class Drain extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		String base = "You feel the succubus' pussy suddenly tighten around you. "
+		String muscDesc = c.getStance().analinserted() ? "anal" : "vaginal";
+		String partDesc = c.getStance().analinserted() ? getSelf().body.getRandom("ass").describe(getSelf()) : getSelf().body.getRandomPussy().describe(getSelf());
+		
+		String base = "You feel " + getSelf().nameOrPossessivePronoun() + " powerful" + muscDesc+ " muscles suddenly tighten around you. "
 				+ "She starts kneading your dick bringing you immense pleasure and soon"
 				+ " you feel yourself erupt into her, but you realize your are shooting"
-				+ " something far more precious than semen into her; as more of the ethereal"
+				+ " something far more precious than semen into her " + partDesc + "; as more of the ethereal"
 				+ " fluid leaves you, you feel ";
 		switch (damage) {
 		case 4:
@@ -191,19 +200,19 @@ public class Drain extends Skill {
 					+ "cunning to flow into her.";
 		case 1:
 			return "Clearly the succubus is trying to do something really special to you, "
-					+ "as you can feel the walls of her vagina squirm against you in a way "
+					+ "as you can feel the walls of her " + partDesc + " squirm against you in a way "
 					+ "no human could manage, but all you feel is some drowsiness";
 		case 2:
 			return "Clearly the succubus is trying to do something really special to you, "
-					+ "as you can feel the walls of her vagina squirm against you in a way "
+					+ "as you can feel the walls of her " + partDesc + " squirm against you in a way "
 					+ "no human could manage, but all you feel is your focus waning some";
 		case 0:
-			return self.name()+" squeezes you with her pussy and starts to milk you, but you suddenly feel her shudder and moan loudly. Looks like her plan backfired.";
+			return getSelf().name()+" squeezes you with her " + partDesc + " and starts to milk you, but you suddenly feel her shudder and moan loudly. Looks like her plan backfired.";
 		case 6:
 			return base
 					+ "something snap loose inside of you and it seems to flow right "
 					+ "through your dick and into her. When it is over you feel... empty "
-					+ "somehow. At the same time, "+self.name()+" seems radiant, looking more powerful,"
+					+ "somehow. At the same time, "+getSelf().name()+" seems radiant, looking more powerful,"
 					+ " smarter and even more seductive than before. Through all of this,"
 					+ " she has kept on thrusting and you are right on the edge of climax."
 					+ " Your defeat appears imminent, but you have already lost something"
@@ -217,5 +226,19 @@ public class Drain extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
+	}
+	public String getTargetOrganType(Combat c, Character target) {
+		if (c.getStance().inserted(getSelf())) {
+			return "pussy";
+		} else {
+			return "cock";
+		}
+	}
+	public String getWithOrganType(Combat c, Character target) {
+		if (c.getStance().inserted(getSelf())) {
+			return "cock";
+		} else {
+			return "pussy";
+		}
 	}
 }

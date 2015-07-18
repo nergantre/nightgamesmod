@@ -18,8 +18,10 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,7 +67,7 @@ import actions.SetTrap;
 import actions.Use;
 import actions.Wait;
 import areas.Area;
-
+import characters.Airi;
 import characters.Angel;
 import characters.Attribute;
 import characters.BasePersonality;
@@ -119,6 +121,9 @@ public class Global {
 		resting = new HashSet<Character>();
 		counters = new HashMap<Flag,Float>();
 		jdate = new Date();
+		flag(Flag.MaraDisabled);
+		flag(Flag.JewelDisabled);
+		
 		PrintStream fstream;
 		try {
 			File logfile = new File("nightgames_log.txt");
@@ -135,9 +140,9 @@ public class Global {
 		System.out.println("Night games");
 		System.out.println(new Timestamp(jdate.getTime()));
 
-//		debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
+		debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_DAMAGE.ordinal()] = true;
-//		debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
+		debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
@@ -165,10 +170,12 @@ public class Global {
 		Jewel ai2 = new Jewel();
 		Mara ai3 = new Mara();
 		BasePersonality ai4 = new Angel();
+		BasePersonality ai5 = new Airi();
 		players.add(ai1.character);
 		players.add(ai2.character);
 		players.add(ai3.character);
 		players.add(ai4.character);
+		players.add(ai5.character);
 		match = new Match(players,Modifier.normal);
 		match.round();
 	}
@@ -208,6 +215,7 @@ public class Global {
 		skillPool.add(new Cunnilingus(p));
 		skillPool.add(new Escape(p));
 		skillPool.add(new Flick(p));
+		skillPool.add(new Engulf(p));
 		skillPool.add(new Knee(p));
 		skillPool.add(new LegLock(p));
 		skillPool.add(new LickNipples(p));
@@ -344,6 +352,8 @@ public class Global {
 		skillPool.add(new TentacleRape(p));
 		skillPool.add(new Anilingus(p));
 		skillPool.add(new UseSemen(p));
+		skillPool.add(new Invitation(p));
+		skillPool.add(new SubmissiveHold(p));
 		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 			skillPool.add(new SelfStun(p));	
 		}
@@ -441,6 +451,7 @@ public class Global {
 			player.getStamina().fill();
 			player.getArousal().empty();
 			player.getMojo().empty();
+			player.getWillpower().fill();
 			if(player.getPure(Attribute.Science)>0){
 				player.chargeBattery();
 			}
@@ -458,13 +469,24 @@ public class Global {
 //			}
 //			match=new Match(lineup,matchmod);
 //		} else
-		if(players.size()>5){
+		List<Character> participants = new ArrayList<Character>();
+		for (Character c : players) {
+			Flag disabledFlag = null;
+			try {
+				disabledFlag = Flag.valueOf(c.getName() + "Disabled");
+			}
+			catch (IllegalArgumentException e) {}
+			if (disabledFlag == null || !Global.checkFlag(disabledFlag)) {
+				participants.add(c);
+			}
+		}
+		if(participants.size()>5){
 			ArrayList<Character> randomizer = new ArrayList<Character>();
 			if(lover!=null){
 				lineup.add(lover);
 			}
 			lineup.add(human);
-			randomizer.addAll(players);
+			randomizer.addAll(participants);
 			Collections.shuffle(randomizer);
 			for(Character player: randomizer){
 				if(!lineup.contains(player)&&!player.human()&&lineup.size()<5){
@@ -475,9 +497,8 @@ public class Global {
 				}
 			}
 			match=new Match(lineup,matchmod);
-		}
-		else{
-			match=new Match(players,matchmod);
+		} else {
+			match=new Match(participants,matchmod);
 		}
 		match.round();
 	}
@@ -704,6 +725,7 @@ public class Global {
 		players.add(new Jewel().character);
 		players.add(new Mara().character);
 		players.add(new Angel().character);
+		players.add(new Airi().character);
 		players.add(reyka);
 		players.add(kat);
 		boolean dawn = false;

@@ -18,64 +18,64 @@ public class Slap extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().reachTop(self)&&self.canAct()&&!self.has(Trait.softheart)&&!c.getStance().behind(self);
+		return c.getStance().reachTop(getSelf())&&getSelf().canAct()&&!getSelf().has(Trait.softheart)&&c.getStance().front(getSelf());
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
-			if(self.get(Attribute.Animism)>=8){
-				if(self.human()){
-					c.write(self,deal(c,0,Result.special, target));			
+			if(getSelf().get(Attribute.Animism)>=8){
+				if(getSelf().human()){
+					c.write(getSelf(),deal(c,0,Result.special, target));			
 				}
 				else if(target.human()){
-					c.write(self,receive(c,0,Result.special, target));
+					c.write(getSelf(),receive(c,0,Result.special, target));
 				}
-				if(self.has(Trait.pimphand)){
-					target.pain(c, Global.random((16*self.getArousal().percent())/100)+self.get(Attribute.Power)/2);
+				if(getSelf().has(Trait.pimphand)){
+					target.pain(c, Global.random((16*getSelf().getArousal().percent())/100)+getSelf().get(Attribute.Power)/2);
 					target.calm(c, Global.random(4)+2);
 					target.emote(Emotion.nervous, 40);
 					target.emote(Emotion.angry, 30);
-					self.buildMojo(c, 20);
+					getSelf().buildMojo(c, 20);
 				}
 				else{
-					target.pain(c, Global.random((12*self.getArousal().percent())/100+1)+self.get(Attribute.Power)/2);
+					target.pain(c, Global.random((12*getSelf().getArousal().percent())/100+1)+getSelf().get(Attribute.Power)/2);
 					target.calm(c, Global.random(5)+4);
 					target.emote(Emotion.nervous, 25);
 					target.emote(Emotion.angry, 30);
-					self.buildMojo(c, 10);
+					getSelf().buildMojo(c, 10);
 				}
 			}
 			else{
-				if(self.human()){
-					c.write(self,deal(c,0,Result.normal, target));			
+				if(getSelf().human()){
+					c.write(getSelf(),deal(c,0,Result.normal, target));			
 				}
 				else if(target.human()){
-					c.write(self,receive(c,0,Result.normal, target));
+					c.write(getSelf(),receive(c,0,Result.normal, target));
 				}
-				if(self.has(Trait.pimphand)){
+				if(getSelf().has(Trait.pimphand)){
 					target.pain(c, Global.random(8)+5+target.get(Attribute.Perception));
 					target.calm(c, Global.random(4)+2);
 					target.emote(Emotion.nervous, 20);
 					target.emote(Emotion.angry, 30);
-					self.buildMojo(c, 20);
+					getSelf().buildMojo(c, 20);
 				}
 				else{
 					target.pain(c, Global.random(5)+4);
 					target.calm(c, Global.random(5)+4);
 					target.emote(Emotion.nervous, 10);
 					target.emote(Emotion.angry, 30);
-					self.buildMojo(c, 10);
+					getSelf().buildMojo(c, 10);
 				}
 			}
 			
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -96,7 +96,7 @@ public class Slap extends Skill {
 		return Tactics.damage;
 	}
 	public String getLabel(Combat c){
-		if(self.get(Attribute.Animism)>=8){
+		if(getSelf().get(Attribute.Animism)>=8){
 			return "Tiger Claw";
 		}
 		else{
@@ -120,13 +120,13 @@ public class Slap extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
-			return self.name()+" tries to slap you but you catch her wrist.";
+			return getSelf().name()+" tries to slap you but you catch her wrist.";
 		}
 		else if(modifier==Result.special){
-			return self.name()+"'s palm hits you in a savage strike that makes your head ring.";
+			return getSelf().name()+"'s palm hits you in a savage strike that makes your head ring.";
 		}
 		else{
-			return self.name()+" slaps you across the face, leaving a stinging heat on your cheek.";
+			return getSelf().name()+" slaps you across the face, leaving a stinging heat on your cheek.";
 		}
 	}
 

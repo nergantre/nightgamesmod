@@ -5,25 +5,15 @@ import global.Global;
 
 import items.Item;
 
-import java.io.File;
-import java.net.URISyntaxException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-
-import characters.body.Body;
-
 import skills.Skill;
 import actions.Action;
 import actions.Movement;
 
 import combat.Combat;
-import combat.Result;
 
 public abstract class BasePersonality implements Personality {
 	/**
@@ -108,6 +98,11 @@ public abstract class BasePersonality implements Personality {
 		character.getStamina().gain(growth.stamina);
 		character.getArousal().gain(growth.arousal);
 		character.getMojo().gain(growth.mojo);
+		// get all the traits for the level up
+		growth.traits.keySet().stream().filter(i -> i <= character.level).forEach(i -> character.add(growth.traits.get(i)));;
+		growth.actions.keySet().stream().filter(i -> i <= character.level).forEach(i -> {
+			growth.actions.get(i).run();
+		});
 		character.availableAttributePoints += growth.attributes[character.rank];
 		if (Global.checkFlag(Flag.hardmode)) {
 			hardmodeBonus();

@@ -22,37 +22,37 @@ public class Kick extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().feet(self)&&self.canAct()&&(!c.getStance().prone(self)||self.has(Trait.dirtyfighter)&&!c.getStance().penetration(self));
+		return c.getStance().feet(getSelf())&&getSelf().canAct()&&(!c.getStance().prone(getSelf())||getSelf().has(Trait.dirtyfighter)&&!c.getStance().penetration(getSelf()));
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if(!target.bottom.isEmpty()&&self.get(Attribute.Ki)>=14&&Global.random(3)==2){
-			if(self.human()){
-				c.write(self,deal(c,0,Result.special, target));
+		if(!target.bottom.isEmpty()&&getSelf().get(Attribute.Ki)>=14&&Global.random(3)==2){
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.special, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.special, target));
+				c.write(getSelf(),receive(c,0,Result.special, target));
 			}
 			target.shred(1);
 		}
 		if(target.roll(this, c, accuracy())){
-			int m = Global.random(12)+self.get(Attribute.Power);
-			if(self.human()){
-				if(c.getStance().prone(self)){
-					c.write(self,deal(c,m,Result.strong, target));
+			int m = Global.random(12)+getSelf().get(Attribute.Power);
+			if(getSelf().human()){
+				if(c.getStance().prone(getSelf())){
+					c.write(getSelf(),deal(c,m,Result.strong, target));
 				}
 				else{
-					c.write(self,deal(c,m,Result.normal, target));
+					c.write(getSelf(),deal(c,m,Result.normal, target));
 	
 				}
 			}
 			else if(target.human()){
-				if(c.getStance().prone(self)){
-					c.write(self,receive(c,m,Result.strong, target));
+				if(c.getStance().prone(getSelf())){
+					c.write(getSelf(),receive(c,m,Result.strong, target));
 				}
 				else{
-					c.write(self,receive(c,m,Result.normal, target));
+					c.write(getSelf(),receive(c,m,Result.normal, target));
 				}
 			}
 			if(target.has(Trait.achilles)){
@@ -62,21 +62,21 @@ public class Kick extends Skill {
 				m = m/2;
 			}
 			target.pain(c, m);
-			if(self.has(Trait.wrassler)){
+			if(getSelf().has(Trait.wrassler)){
 				target.calm(c, Global.random(5));
 			}
 			else{
 				target.calm(c, Global.random(8));
 			}
-			self.buildMojo(c, 10);
+			getSelf().buildMojo(c, 10);
 			target.emote(Emotion.angry,20);
 		}
 		else{
-			if(self.human()){
-				c.write(self,deal(c,0,Result.miss, target));
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(self,receive(c,0,Result.miss, target));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 		}
 	}
@@ -92,7 +92,7 @@ public class Kick extends Skill {
 		return Tactics.damage;
 	}
 	public String getLabel(Combat c){
-		if(self.get(Attribute.Ki)>=14){
+		if(getSelf().get(Attribute.Ki)>=14){
 			return "Shatter Kick";
 		}
 		else{
@@ -121,18 +121,18 @@ public class Kick extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
-			return self.name()+"'s kick hits nothing but air.";
+			return getSelf().name()+"'s kick hits nothing but air.";
 		}
 		if(modifier==Result.special){
-			return self.name()+" launches a powerful kick straight at your groin, but pulls it back just before impact. You feel a chill run down your spine and your testicles " +
+			return getSelf().name()+" launches a powerful kick straight at your groin, but pulls it back just before impact. You feel a chill run down your spine and your testicles " +
 					"are grateful for the last second reprieve. Your "+target.bottom.peek()+" crumble off your body, practically disintegrating.... Still somewhat grateful.";
 		}
 		if(modifier==Result.strong){
-			return "With "+self.name()+" flat on her back, you quickly move in to press your advantage. Faster than you can react, her foot shoots up between " +
+			return "With "+getSelf().name()+" flat on her back, you quickly move in to press your advantage. Faster than you can react, her foot shoots up between " +
 					"your legs, dealing a critical hit on your unprotected balls.";
 		}
 		else{
-			return self.name()+"'s foot lashes out into your delicate testicles with devastating force. ";
+			return getSelf().name()+"'s foot lashes out into your delicate testicles with devastating force. ";
 		}
 	}
 

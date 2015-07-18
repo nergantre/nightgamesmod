@@ -63,7 +63,7 @@ public class FluidAddiction extends Status {
 	}
 
 	public boolean isActive() {
-		return stacks > 3;
+		return stacks >= 2;
 	}
 
 	@Override

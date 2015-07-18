@@ -22,7 +22,7 @@ public class SpawnSlime extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return self.canAct()&&c.getStance().mobile(self)&&!c.getStance().prone(self)&&self.pet==null&&self.has(Item.Battery)&&self.canSpend(5);
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&getSelf().pet==null&&getSelf().has(Item.Battery)&&getSelf().canSpend(5);
 	}
 
 	@Override
@@ -32,20 +32,20 @@ public class SpawnSlime extends Skill {
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		self.spendMojo(c, 5);
-		self.consume(Item.Battery, 1);
+		getSelf().spendMojo(c, 5);
+		getSelf().consume(Item.Battery, 1);
 		int power = 3;
 		int ac = 3;
-		if(self.has(Trait.leadership)){
+		if(getSelf().has(Trait.leadership)){
 			power++;
 		}
-		if(self.human()){
-			c.write(self,deal(c,0,Result.normal, target));
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
-			c.write(self,receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		self.pet=new Slime(self,power,ac);
+		getSelf().pet=new Slime(getSelf(),power,ac);
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class SpawnSlime extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return self.name()+" points a device at the floor and releases a blob of blue slime. The blob starts to move like a living thing and briefly takes on a vaguely humanoid shape " +
+		return getSelf().name()+" points a device at the floor and releases a blob of blue slime. The blob starts to move like a living thing and briefly takes on a vaguely humanoid shape " +
 				"and smiles at you.";
 	}
 

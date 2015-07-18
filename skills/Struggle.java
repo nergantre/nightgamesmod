@@ -29,235 +29,235 @@ public class Struggle extends Skill {
 		if (target.hasStatus(Stsflag.cockbound)) {
 			return false;
 		}
-		if (self.hasStatus(Stsflag.cockbound)) {
+		if (getSelf().hasStatus(Stsflag.cockbound)) {
 			return true;
 		}
-		return ((!c.getStance().mobile(self) && !c.getStance().dom(self)) || self.bound())
-				&& self.canRespond();
+		return ((!c.getStance().mobile(getSelf()) && !c.getStance().dom(getSelf())) || getSelf().bound())
+				&& getSelf().canRespond();
 	}
 
 	@Override
 	public void resolve(Combat c, Character target) {
-		if (self.bound()) {
+		if (getSelf().bound()) {
 			Bound status = (Bound) target.getStatus(Stsflag.bound);
-			if (self.check(Attribute.Power, 10 - self.escape())) {
-				if (self.human()) {
+			if (getSelf().check(Attribute.Power, 10 - getSelf().escape())) {
+				if (getSelf().human()) {
 					if (status != null) {
-						c.write(self, "You manage to break free from the "
+						c.write(getSelf(), "You manage to break free from the "
 								+ status + ".");
 					} else {
-						c.write(self,
+						c.write(getSelf(),
 								"You manage to snap the restraints that are binding your hands.");
 					}
 				} else if (target.human()) {
 					if (status != null) {
-						c.write(self, self.name() + " slips free from the "
+						c.write(getSelf(), getSelf().name() + " slips free from the "
 								+ status + ".");
 					} else {
-						c.write(self, self.name() + " breaks free.");
+						c.write(getSelf(), getSelf().name() + " breaks free.");
 					}
 				}
-				self.free();
+				getSelf().free();
 			} else {
-				if (self.human()) {
+				if (getSelf().human()) {
 					if (status != null) {
-						c.write(self, "You struggle against the " + status
+						c.write(getSelf(), "You struggle against the " + status
 								+ ", but can't get free.");
 					} else {
-						c.write(self,
+						c.write(getSelf(),
 								"You struggle against your restraints, but can't get free.");
 					}
 				} else if (target.human()) {
 					if (status != null) {
-						c.write(self, self.name() + " struggles against the "
+						c.write(getSelf(), getSelf().name() + " struggles against the "
 								+ status + ", but can't free her hands.");
 					} else {
-						c.write(self, self.name()
+						c.write(getSelf(), getSelf().name()
 								+ " struggles, but can't free her hands.");
 					}
 				}
 			}
-		} else if (c.getStance().penetration(self) || c.getStance().penetration(target)) {
+		} else if (c.getStance().penetration(getSelf()) || c.getStance().penetration(target)) {
 			if (c.getStance().enumerate() == Stance.anal) {
-				if (self.check(
+				if (getSelf().check(
 						Attribute.Power,
 						20
-								+ (target.getStamina().get() / 2 - self
+								+ (target.getStamina().get() / 2 - getSelf()
 										.getStamina().get() / 2)
-								+ (target.get(Attribute.Power) - self
+								+ (target.get(Attribute.Power) - getSelf()
 										.get(Attribute.Power))
-								- ((10 * c.getStance().time) + self.escape()))) {
-					if (self.human()) {
-						c.write(self,
+								- ((10 * c.getStance().time) + getSelf().escape()))) {
+					if (getSelf().human()) {
+						c.write(getSelf(),
 								"You manage to break away from "
 										+ target.name() + ".");
 					} else if (target.human()) {
-						c.write(self,
-								self.name()
+						c.write(getSelf(),
+								getSelf().name()
 										+ " pulls away from you and your dick slides out of her butt.");
 					}
-					if (!self.is(Stsflag.braced)) {
-						self.add(new Braced(self));
+					if (!getSelf().is(Stsflag.braced)) {
+						getSelf().add(new Braced(getSelf()));
 					}
-					c.setStance(new Neutral(self, target));
+					c.setStance(new Neutral(getSelf(), target));
 				} else {
-					if (self.human()) {
-						c.write(self,
+					if (getSelf().human()) {
+						c.write(getSelf(),
 								"You try to pull free, but " + target.name()
 										+ " has a good grip on your waist.");
 					} else if (target.human()) {
-						c.write(self,
-								self.name()
+						c.write(getSelf(),
+								getSelf().name()
 										+ " tries to squirm away, but you have better leverage.");
 					}
 				}
 			} else {
-				if (self.check(
+				if (getSelf().check(
 						Attribute.Power,
 						20
-								+ (target.getStamina().get() / 2 - self
+								+ (target.getStamina().get() / 2 - getSelf()
 										.getStamina().get() / 2)
-								+ (target.get(Attribute.Power) - self
+								+ (target.get(Attribute.Power) - getSelf()
 										.get(Attribute.Power))
-								- ((10 * c.getStance().time) + self.escape()))) {
-					if (self.hasStatus(Stsflag.cockbound)) {
-						CockBound s = (CockBound)self.getStatus(Stsflag.cockbound);
-						c.write(self,
+								- ((10 * c.getStance().time) + getSelf().escape()))) {
+					if (getSelf().hasStatus(Stsflag.cockbound)) {
+						CockBound s = (CockBound)getSelf().getStatus(Stsflag.cockbound);
+						c.write(getSelf(),
 								Global.format(
 										"With a strong pull, {self:subject} some how managed to wiggle out of {other:possessive} iron grip on {self:possessive} dick. "
 												+ "However the sensations of {other:possessive} " + s.binding + " sliding against {self:possessive} cockskin leaves {self:direct-object} gasping.",
-										self, target));
+										getSelf(), target));
 						int m = 15;
-						self.body.pleasure(target,
+						getSelf().body.pleasure(target,
 								target.body.getRandom("pussy"),
-								self.body.getRandom("cock"), m, c);
-						self.removeStatus(Stsflag.cockbound);
+								getSelf().body.getRandom("cock"), m, c);
+						getSelf().removeStatus(Stsflag.cockbound);
 					}
-					if (c.getStance().behind(self) && c.getStance().inserted(self)) {
-						c.write(self,
+					if ((c.getStance().behind(getSelf()) || c.getStance().en == Stance.reversecowgirl) && c.getStance().inserted(getSelf())) {
+						c.write(getSelf(),
 								"You manage unbalance "
 										+ target.name()
 										+ " and push her forward onto her hands and knees. You follow her, still inside her tight wetness, and continue "
 										+ "to fuck her from behind.");
-						c.setStance(new Doggy(self, target));
+						c.setStance(new Doggy(getSelf(), target));
 					} else if (c.getStance().en == Stance.flying) {
-						c.write(self,
+						c.write(getSelf(),
 								"You manage to shake yourself loose from the demoness.\n"
 										+ "Immediatly afterwards you realize letting go of the person"
 										+ " holding you a good distance up from the ground may not have been"
 										+ " the smartest move you've ever made, as the ground is quickly"
 										+ " approaching your face.");
-						c.setStance(c.getStance().insert(self, self));
-					} else if (c.getStance().inserted(self)) {
-						c.write(self,
+						c.setStance(c.getStance().insert());
+					} else if (c.getStance().inserted(getSelf())) {
+						c.write(getSelf(),
 								"You surpise "
 										+ target.name()
 										+ " by hugging her close to your chest, preventing her from using stabilizing her position with her arms. You "
 										+ "roll on top of her into traditional missionary position, careful not to let your cock slip out of her.");
-						c.setStance(new Missionary(self, target));
-					} else if (c.getStance().inserted(target)) {
-						c.write(self,
-								self.name()
-										+ " wraps her legs around your waist and suddenly pulls you into a deep kiss. You're so surprised by this sneak attack that you "
-										+ "don't even notice her roll you onto your back until you feel her weight on your hips. She moves her hips experimentally, enjoying the control "
-										+ "she has in cowgirl position.");
-						c.setStance(new Cowgirl(self, target));
-					} else if (c.getStance().inserted(target)) {
-						c.write(self,
+						c.setStance(new Missionary(getSelf(), target));
+					} else if (c.getStance().inserted(target) && c.getStance().en == Stance.doggy) {
+						c.write(getSelf(),
 								Global.format(
 										"{self:SUBJECT-ACTION:manage|manages} to reach between {self:possessive} legs and grab hold of {other:possessive} ballsack, stopping {other:direct-object} in mid thrust. {self:SUBJECT-ACTION:smirk|smirks} at {other:direct-object} over {self:possessive} shoulder "
 										+ "and pushes {self:possessive} butt against {other:direct-object}, using the leverage of "
 										+ "{other:possessive} testicles to keep {other:direct-object} from backing away to maintain {self:possessive} balance. {self:SUBJECT-ACTION:force|forces} {other:direct-object} onto {other:possessive} back, while never breaking {other:possessive} connection. After "
-										+ "some complex maneuvering, {other:subject-action:end|ends} up on the floor while {self:subject-action:straddle|straddles} {other:possessive} hips in a reverse cowgirl position.", self, target));
-						c.setStance(new ReverseCowgirl(self, target));
-					} else {
-						c.write(self,
-								Global.format("{self:SUBJECT-ACTION:manage|manages} to shake {other:direct-object} off." ,self,target));
-						if (!self.is(Stsflag.braced)) {
-							self.add(new Braced(self));
+										+ "some complex maneuvering, {other:subject-action:end|ends} up on the floor while {self:subject-action:straddle|straddles} {other:possessive} hips in a reverse cowgirl position.", getSelf(), target));
+						c.setStance(new ReverseCowgirl(getSelf(), target));
+					} else if (c.getStance().inserted(target)) {
+						c.write(getSelf(),
+								getSelf().name()
+										+ " wraps her legs around your waist and suddenly pulls you into a deep kiss. You're so surprised by this sneak attack that you "
+										+ "don't even notice her roll you onto your back until you feel her weight on your hips. She moves her hips experimentally, enjoying the control "
+										+ "she has in cowgirl position.");
+						c.setStance(new Cowgirl(getSelf(), target));
+					}  else {
+						c.write(getSelf(),
+								Global.format("{self:SUBJECT-ACTION:manage|manages} to shake {other:direct-object} off." ,getSelf(),target));
+						if (!getSelf().is(Stsflag.braced)) {
+							getSelf().add(new Braced(getSelf()));
 						}
-						c.setStance(new Neutral(self, target));
+						c.setStance(new Neutral(getSelf(), target));
 					}
 				} else {
-					if (self.hasStatus(Stsflag.cockbound)) {
-						CockBound s = (CockBound)self.getStatus(Stsflag.cockbound);
-						c.write(self,
+					if (getSelf().hasStatus(Stsflag.cockbound)) {
+						CockBound s = (CockBound)getSelf().getStatus(Stsflag.cockbound);
+						c.write(getSelf(),
 								Global.format(
 										"{self:SUBJECT-ACTION:try|tries} to escape {other:possessive} iron grip on {self:possessive} dick. However, {other:possessive} " + s.binding + " has other ideas. {other:SUBJECT-ACTION:run|runs} {other:possessive} " + s.binding +" up and down {self:possessive} cock and leaves {self:direct-object} gasping with pleasure.",
-										self, target));
-						self.body.pleasure(target,
+										getSelf(), target));
+						getSelf().body.pleasure(target,
 								target.body.getRandom("pussy"),
-								self.body.getRandom("cock"), 8, c);
-					} else if (self.human()) {
-						c.write(self,
+								getSelf().body.getRandom("cock"), 8, c);
+					} else if (getSelf().human()) {
+						c.write(getSelf(),
 								"You try to tip "
 										+ target.name()
 										+ " off balance, but she drops her hips firmly, pushing your cock deep inside her and pinning you to the floor.");
 					} else if (target.human()) {
 						if (c.getStance().behind(target)) {
-							c.write(self,
-									self.name()
+							c.write(getSelf(),
+									getSelf().name()
 											+ " struggles to gain a more dominant position, but with you behind her, holding her waist firmly, there is nothing she can do.");
 						} else {
-							c.write(self,
-									self.name()
+							c.write(getSelf(),
+									getSelf().name()
 											+ " tries to roll on top of you, but you use you superior upper body strength to maintain your position.");
 						}
 					}
 				}
 			}
 		} else {
-			if (self.check(
+			if (getSelf().check(
 					Attribute.Power,
 					25
-							+ (target.getStamina().get() / 2 - self
+							+ (target.getStamina().get() / 2 - getSelf()
 									.getStamina().get() / 2)
-							+ (target.get(Attribute.Power) - self
+							+ (target.get(Attribute.Power) - getSelf()
 									.get(Attribute.Power))
-							- (10 * c.getStance().time + self.escape()))) {
-				if (self.human()) {
-					c.write(self,
+							- (10 * c.getStance().time + getSelf().escape()))) {
+				if (getSelf().human()) {
+					c.write(getSelf(),
 							"You manage to scrabble out of " + target.name()
 									+ "'s grip.");
 				} else if (target.human()) {
-					c.write(self, self.name() + " squirms out from under you.");
-				} if (c.getStance().prone(self)) {
-					c.setStance(new StandingOver(target, self));
+					c.write(getSelf(), getSelf().name() + " squirms out from under you.");
+				} if (c.getStance().prone(getSelf())) {
+					c.setStance(new StandingOver(target, getSelf()));
 				}
-				c.setStance(new Neutral(self, target));
-				if (!self.is(Stsflag.braced)) {
-					self.add(new Braced(self));
+				c.setStance(new Neutral(getSelf(), target));
+				if (!getSelf().is(Stsflag.braced)) {
+					getSelf().add(new Braced(getSelf()));
 				}
 			} else {
 				if (c.getStance().enumerate() == Stance.facesitting) {
-					if (self.human()) {
-						c.write(self,
+					if (getSelf().human()) {
+						c.write(getSelf(),
 								"You try to free yourself from "
 										+ target.name()
 										+ ", but she drops her ass over your face again, forcing you to service her.");
 					} else if (target.human()) {
-						c.write(self,
-								self.name()
+						c.write(getSelf(),
+								getSelf().name()
 										+ " struggles against you, but you drop your ass over her face again, forcing her to service you.");
 					}
 					if (target.hasPussy()) {
-						(new Cunnilingus(self)).resolve(c, target);
+						(new Cunnilingus(getSelf())).resolve(c, target);
 					} else {
-						(new Anilingus(self)).resolve(c, target);
+						(new Anilingus(getSelf())).resolve(c, target);
 					}
-					target.weaken(c, 5 + Global.random(5) + self.get(Attribute.Power) / 2);
+					target.weaken(c, 5 + Global.random(5) + getSelf().get(Attribute.Power) / 2);
 				} else {
-					if (self.human()) {
-						c.write(self,
+					if (getSelf().human()) {
+						c.write(getSelf(),
 								"You try to free yourself from "
 										+ target.name()
 										+ "'s grasp, but she has you pinned too well.");
 					} else if (target.human()) {
-						c.write(self,
-								self.name()
+						c.write(getSelf(),
+								getSelf().name()
 										+ " struggles against you, but you maintain your position.");
 					}
-					target.weaken(c, 5 + Global.random(5) + self.get(Attribute.Power) / 2);
+					target.weaken(c, 5 + Global.random(5) + getSelf().get(Attribute.Power) / 2);
 				}
 			}
 		}
