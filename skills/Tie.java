@@ -28,7 +28,7 @@ public class Tie extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().has(Item.Handcuffs,1)){
 			getSelf().consume(Item.Handcuffs,1);
 			if(getSelf().human()){
@@ -37,7 +37,7 @@ public class Tie extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.special, target));
 			}
-			target.add(new Bound(target,40,"handcuffs"));		
+			target.add(c, new Bound(target,40,"handcuffs"));		
 		}
 		else{
 			getSelf().consume(Item.ZipTie, 1);
@@ -48,7 +48,7 @@ public class Tie extends Skill {
 				else if(target.human()){
 					c.write(getSelf(),receive(c,0,Result.normal, target));
 				}
-				target.add(new Bound(target,20,"ziptie"));		
+				target.add(c, new Bound(target,20,"ziptie"));		
 			}
 			else{
 				if(getSelf().human()){
@@ -57,8 +57,10 @@ public class Tie extends Skill {
 				else if(target.human()){
 					c.write(getSelf(),receive(c,0,Result.miss, target));
 				}
+				return false;
 			}
 		}
+		return true;
 	}
 
 	@Override

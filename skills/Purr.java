@@ -31,21 +31,23 @@ public class Purr extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(Global.random(target.getLevel())<=getSelf().get(Attribute.Animism)*getSelf().getArousal().percent()/100 && !target.wary()){
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.normal, target));
 			}else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.normal, target));
 			}
-			target.add(new Charmed(target));
+			target.add(c, new Charmed(target));
 		} else {
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

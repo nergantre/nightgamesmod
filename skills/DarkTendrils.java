@@ -10,6 +10,7 @@ import combat.Result;
 import skills.Skill;
 import stance.StandingOver;
 import status.Bound;
+import status.Falling;
 
 public class DarkTendrils extends Skill {
 
@@ -33,7 +34,7 @@ public class DarkTendrils extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		getSelf().arouse(5, c);
 		if(target.roll(this, c, accuracy())){
 			if(Global.random(2)==1){
@@ -43,7 +44,7 @@ public class DarkTendrils extends Skill {
 				else if(target.human()){
 					c.write(getSelf(),receive(c,0,Result.normal, target));
 				}
-				target.add(new Bound(target,Math.min(10+3*getSelf().get(Attribute.Dark), 40),"shadows"));
+				target.add(c, new Bound(target,Math.min(10+3*getSelf().get(Attribute.Dark), 40),"shadows"));
 			} else if(getSelf().check(Attribute.Dark,target.knockdownDC()-getSelf().getMojo().get())){
 				if(getSelf().human()){
 					c.write(getSelf(),deal(c,0,Result.weak, target));
@@ -51,7 +52,7 @@ public class DarkTendrils extends Skill {
 				else if(target.human()){
 					c.write(getSelf(),receive(c,0,Result.weak, target));
 				}
-				c.setStance(new StandingOver(getSelf(),target));
+				target.add(c, new Falling(target));
 			} else {
 				if(getSelf().human()){
 					c.write(getSelf(),deal(c,0,Result.miss, target));
@@ -68,8 +69,9 @@ public class DarkTendrils extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
-
+		return true;
 	}
 
 	@Override

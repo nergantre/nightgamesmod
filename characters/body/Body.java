@@ -361,7 +361,7 @@ public class Body implements Cloneable {
 		if(character.has(Trait.desensitized2)){
 			sensitivity -= .5;
 		}
-		double pleasure = with.getPleasure(target);
+		double pleasure = with.getPleasure(opponent, target);
 		double perceptionBonus = 1.0;
 		if (opponent != null) {
 			perceptionBonus *= getCharismaBonus(opponent);
@@ -382,6 +382,8 @@ public class Body implements Cloneable {
 		// double the base damage if the opponent is submissive and in a submissive stance
 		if (c.getStance().sub(opponent) && opponent.has(Trait.submissive)) {
 			bonusDamage += bonusDamage + magnitude;
+		} else if (c.getStance().dom(opponent) && opponent.has(Trait.submissive)) {
+			bonusDamage += bonusDamage - (magnitude * 2. / 3.);
 		}
 		double base = (magnitude + bonusDamage);
 		double multiplier = 1 + ((sensitivity - 1) + (pleasure - 1) + (perceptionBonus - 1));
@@ -577,10 +579,13 @@ public class Body implements Cloneable {
 		}
 		if (character.has(Trait.spiritphage)) {
 			c.write("<br><b>"+character.subjectAction("glow", "glows") + " with power as the cum is absorbed by " + character.possessivePronoun() + " " + part.describe(character)+"</b>");
-			character.add(new Abuff(character, Attribute.Power, 5, 10));
-			character.add(new Abuff(character, Attribute.Seduction, 5, 10));
-			character.add(new Abuff(character, Attribute.Cunning, 5, 10));
-			character.gainXP(opponent.getLevel() * 20);
+			character.add(c, new Abuff(character, Attribute.Power, 5, 10));
+			character.add(c, new Abuff(character, Attribute.Seduction, 5, 10));
+			character.add(c, new Abuff(character, Attribute.Cunning, 5, 10));
+		}
+		if (opponent.has(Trait.hypnoticsemen)) {
+			c.write(Global.format("<br><b>{other:NAME-POSSESSIVE} hypnotic semen takes its toll on {self:name-possessive} willpower, rendering {self:direct-object} doe-eyed and compliant.</b>",character, opponent));
+			character.loseWillpower(c, 10 + Global.random(10));
 		}
 	}
 

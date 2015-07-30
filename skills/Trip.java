@@ -2,6 +2,7 @@ package skills;
 
 import stance.StandingOver;
 import status.Braced;
+import status.Falling;
 import status.Stsflag;
 import characters.Attribute;
 import characters.Character;
@@ -20,7 +21,7 @@ public class Trip extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy()) && getSelf().check(Attribute.Cunning, target.knockdownDC())){
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.normal, target));
@@ -29,9 +30,9 @@ public class Trip extends Skill {
 				c.write(getSelf(),receive(c,0,Result.normal, target));
 			}
 			if(c.getStance().prone(getSelf())&&!getSelf().is(Stsflag.braced)){
-				getSelf().add(new Braced(getSelf()));
+				getSelf().add(c, new Braced(getSelf()));
 			}
-			c.setStance(new StandingOver(getSelf(),target));
+			target.add(c, new Falling(target));
 		} else {
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.miss, target));
@@ -39,7 +40,14 @@ public class Trip extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
+	}
+
+	@Override
+	public int getMojoCost(Combat c) {
+		return 10;
 	}
 
 	@Override

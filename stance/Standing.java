@@ -93,11 +93,11 @@ public class Standing extends MaledomSexStance {
 		if(top.getStamina().get()<10){
 			if(top.human()){
 				c.write("Your legs give out and you fall on the floor. "+bottom.name()+" lands heavily on your lap.");
-				c.setStance(new Mount(bottom,top));
+				c.setStance(new Cowgirl(bottom,top));
 			}
 			else{
 				c.write(top.name()+" loses her balance and falls, pulling you down on top of her.");
-				c.setStance(new Mount(bottom,top));
+				c.setStance(new Cowgirl(bottom,top));
 			}
 		} else {
 			super.checkOngoing(c);

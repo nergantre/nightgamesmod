@@ -58,11 +58,11 @@ public enum WingsPart implements BodyPart {
 
 	@Override
 	public double priority(Character c) {
-		return this.getPleasure(null);
+		return this.getPleasure(c, null);
 	}
 
 	@Override
-	public double getPleasure(BodyPart target) {
+	public double getPleasure(Character self, BodyPart target) {
 		return pleasure;
 	}
 

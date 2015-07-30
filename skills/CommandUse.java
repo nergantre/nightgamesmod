@@ -50,7 +50,7 @@ public class CommandUse extends PlayerCommand {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		do {
 			used = Item.values()[Global.random(Item.values().length)];
 			boolean hasStatus = false;
@@ -69,20 +69,21 @@ public class CommandUse extends PlayerCommand {
 		} while (used == null);
 		switch (used) {
 		case Lubricant:
-			target.add(new Oiled(target));
+			target.add(c, new Oiled(target));
 			c.write(getSelf(),deal(c, 0, Result.normal, target));
 			break;
 		case SPotion:
-			target.add(new Hypersensitive(target));
+			target.add(c, new Hypersensitive(target));
 			c.write(getSelf(),deal(c, 0, Result.special, target));
 			break;
 		default:
 			c.write("<<This should not be displayed, please inform The"
 					+ " Silver Bard: CommandUse-resolve>>");
-			return;
+			return false;
 		}
 		target.consume(used, 1);
 		used = null;
+		return true;
 	}
 
 	@Override

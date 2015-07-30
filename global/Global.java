@@ -21,6 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -83,6 +84,7 @@ import characters.Personality;
 import characters.Player;
 import characters.Reyka;
 import characters.Trait;
+import characters.TraitTree;
 import characters.Yui;
 import characters.body.BodyPart;
 import characters.body.StraponPart;
@@ -106,6 +108,7 @@ public class Global {
 	private static Daytime day;
 	private static int date;
 	private Date jdate;
+	private static TraitTree traitRequirements;
 	public static Scene current;
 	public static boolean debug[] = new boolean[DebugFlags.values().length];
 	public static boolean debugSimulation = false;
@@ -121,8 +124,6 @@ public class Global {
 		resting = new HashSet<Character>();
 		counters = new HashMap<Flag,Float>();
 		jdate = new Date();
-		flag(Flag.MaraDisabled);
-		flag(Flag.JewelDisabled);
 		
 		PrintStream fstream;
 		try {
@@ -146,6 +147,8 @@ public class Global {
 //		debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
+		ClassLoader classLoader = getClass().getClassLoader();
+		traitRequirements = new TraitTree(classLoader.getResourceAsStream("Resources/TraitRequirements.xml"));
 		current=null;
 		factory = new ContextFactory();
 		cx = factory.enterContext();
@@ -155,6 +158,11 @@ public class Global {
 		buildParser();
 	}
 
+	public static boolean meetsRequirements(Character c, Trait t)
+	{
+		return traitRequirements.meetsRequirements(c, t);
+	}
+	
 	public static boolean isDebugOn(DebugFlags flag) {
 		return debug[flag.ordinal()] && !debugSimulation;
 	}
@@ -170,12 +178,10 @@ public class Global {
 		Jewel ai2 = new Jewel();
 		Mara ai3 = new Mara();
 		BasePersonality ai4 = new Angel();
-		BasePersonality ai5 = new Airi();
 		players.add(ai1.character);
 		players.add(ai2.character);
 		players.add(ai3.character);
 		players.add(ai4.character);
-		players.add(ai5.character);
 		match = new Match(players,Modifier.normal);
 		match.round();
 	}
@@ -354,6 +360,9 @@ public class Global {
 		skillPool.add(new UseSemen(p));
 		skillPool.add(new Invitation(p));
 		skillPool.add(new SubmissiveHold(p));
+		skillPool.add(new BreastGrowth(p));
+		skillPool.add(new CockGrowth(p));
+		skillPool.add(new BreastRay(p));
 		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 			skillPool.add(new SelfStun(p));	
 		}
@@ -407,8 +416,8 @@ public class Global {
 	public static HashSet<Action> getActions(){
 		return actionPool;
 	}
-	public static HashSet<Trait> getFeats(){
-		return featPool;
+	public static Set<Trait> getFeats(Character c) {
+		return traitRequirements.availTraits(c);
 	}
 	public static Character lookup(String name){
 		for(Character player:players){
@@ -429,14 +438,17 @@ public class Global {
 
 	public static void dawn(){
 		match=null;
-		for(Character rested: resting){
-			rested.gainXP(100+Math.max(0, 10*(human.getLevel()-rested.getLevel())));
-		}
+		double level = 0;
 		for(Character player: players){
 			player.getStamina().fill();
 			player.getArousal().empty();
 			player.getMojo().empty();
 			player.change(Modifier.normal);
+			level += player.getLevel();
+		}
+		level /= players.size();
+		for(Character rested: resting){
+			rested.gainXP(100+Math.max(0, (int)Math.round(10*(level-rested.getLevel()))));
 		}
 		date++;
 		day=new Daytime(human);

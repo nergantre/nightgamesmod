@@ -26,6 +26,12 @@ public class MutualUndress extends Skill {
 		return false;
 	}
 	
+
+	@Override
+	public int getMojoCost(Combat c) {
+		return 30;
+	}
+
 	@Override
 	public float priorityMod(Combat c) {
 		return c.getStance().dom(getSelf()) ? 2.0f : 0.0f;
@@ -37,7 +43,7 @@ public class MutualUndress extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {	
+	public boolean resolve(Combat c, Character target) {	
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.strong, target));
 		}
@@ -46,6 +52,7 @@ public class MutualUndress extends Skill {
 		}
 		getSelf().undress(c);
 		target.undress(c);
+		return true;
 	}
 
 	@Override

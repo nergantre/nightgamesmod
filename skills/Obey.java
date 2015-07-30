@@ -27,11 +27,12 @@ public class Obey extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
         if (getSelf().human())
             c.write(getSelf(),"You patiently await your mistress' command");
         else if (target.human())
             c.write(getSelf(),getSelf().name() + " stares ahead blankly, waiting for her orders.");
+		return true;
     }
 
 	@Override

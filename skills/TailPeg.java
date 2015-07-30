@@ -24,10 +24,15 @@ public class TailPeg extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return getSelf().getArousal().get() >= 30 && getSelf().canAct()
-				&& getSelf().canSpend(20) && target.pantsless()
+				&& target.pantsless()
 				&& c.getStance().en != Stance.standing
 				&& c.getStance().en != Stance.standingover
 				&& !(c.getStance().en == Stance.anal && c.getStance().dom(getSelf()));
+	}
+
+	@Override
+	public int getMojoCost(Combat c) {
+		return 20;
 	}
 
 	@Override
@@ -36,16 +41,15 @@ public class TailPeg extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if (target.roll(this, c,
 				accuracy() - (c.getStance().penetration(getSelf()) ? 0 : 5))) {
 			int strength = Math.min(20, 10 + getSelf().get(Attribute.Dark)/4);
 			boolean shamed = false;
 			if (Global.random(4) == 2) {
-				target.add(new Shamed(target));
+				target.add(c, new Shamed(target));
 				shamed = true;
 			}
-			getSelf().spendMojo(c, 20);
 			if (target.human()) {
 				if (c.getStance().penetration(getSelf()))
 					c.write(getSelf(),receive(c, 0, Result.special, target));
@@ -81,7 +85,9 @@ public class TailPeg extends Skill {
 				c.write(getSelf(),receive(c, 0, Result.miss, target));
 			else
 				c.write(getSelf(),deal(c, 0, Result.miss, target));
+			return false;
 		}
+		return true;
 	}
 
 	@Override

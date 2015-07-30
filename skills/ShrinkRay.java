@@ -38,7 +38,7 @@ public class ShrinkRay extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		getSelf().consume(Item.Battery, 2);
 		boolean permanent = Global.random(20) == 0;
 		if(getSelf().human()){
@@ -54,7 +54,7 @@ public class ShrinkRay extends Skill {
 				c.write(getSelf(),receive(c,permanent ? 1 : 0, Result.normal, target));
 			}
 		}
-		target.add(new Shamed(target));
+		target.add(c, new Shamed(target));
 		if (permanent) {
 			if (target.hasDick()) {
 				CockPart part = target.body.getCockAbove(CockPart.tiny.size);
@@ -70,7 +70,8 @@ public class ShrinkRay extends Skill {
 				}
 			}
 		}
-		target.loseMojo(c, 15);
+		target.loseMojo(c, 50);
+		return true;
 	}
 
 	@Override

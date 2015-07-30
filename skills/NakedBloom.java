@@ -20,7 +20,12 @@ public class NakedBloom extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&!target.nude()&&getSelf().canSpend(20);
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&!target.nude();
+	}
+
+	@Override
+	public int getMojoCost(Combat c) {
+		return 30;
 	}
 
 	@Override
@@ -29,8 +34,7 @@ public class NakedBloom extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
-		getSelf().spendMojo(c, 20);
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
 			c.write(target,target.nakedLiner());
@@ -40,6 +44,7 @@ public class NakedBloom extends Skill {
 		}
 		target.nudify();
 		target.emote(Emotion.nervous, 10);
+		return true;
 	}
 
 	@Override

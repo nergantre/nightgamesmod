@@ -4,7 +4,10 @@ import global.Global;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
 
 import characters.Player;
 
@@ -13,58 +16,86 @@ import skills.Tactics;
 
 import combat.Combat;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Insets;
 
 
-public class SkillButton extends JButton{
+public class SkillButton extends JPanel {
 	protected Skill action;
 	protected Combat combat;
+	private JButton button;
+	private int tint(int s, int t, float a) {
+		return Math.max(Math.min(Math.round(s + (t - s) * a), 255), 0);
+	}
+	private Color tint(Color source, Color tint, float alpha)
+	{
+		return new Color(tint(source.getRed(), tint.getRed(), alpha),
+				tint(source.getGreen(), tint.getGreen(), alpha),
+				tint(source.getBlue(), tint.getBlue(), alpha));
+	}
+	
 	public SkillButton(final Skill action, Combat c){
-		super(action.getLabel(c));
-		setOpaque(true);
-		setBorderPainted(false);
-		setFont(new Font("Baskerville Old Face", Font.PLAIN, 18));
+		super();
+		button = new JButton(action.getLabel(c));
+		button.setBorderPainted(false);
+		button.setOpaque(true);
+		button.setFont(new Font("Baskerville Old Face", Font.PLAIN, 18));
 		this.action=action;
-		setToolTipText(action.describe());
+		String text = "<html>" + action.describe();
 		if(action.type(c)==Tactics.damage){
-			setBackground(new Color(150,0,0));
-			setForeground(Color.WHITE);
+			button.setBackground(new Color(150,0,0));
+			button.setForeground(Color.WHITE);
 		}
 		else if(action.type(c)==Tactics.pleasure){
-			setBackground(Color.PINK);
+			button.setBackground(Color.PINK);
 		}
 		else if(action.type(c)==Tactics.fucking){
-			setBackground(new Color(255,100,200));
+			button.setBackground(new Color(255,100,200));
 		}
 		else if(action.type(c)==Tactics.positioning){
-			setBackground(new Color(0,100,0));
-			setForeground(Color.WHITE);
+			button.setBackground(new Color(0,100,0));
+			button.setForeground(Color.WHITE);
 		}
 		else if(action.type(c)==Tactics.stripping){
-			setBackground(new Color(0,100,0));
-			setForeground(Color.WHITE);
+			button.setBackground(new Color(0,100,0));
+			button.setForeground(Color.WHITE);
 		}
 		else if(action.type(c)==Tactics.debuff){
-			setBackground(Color.CYAN);
+			button.setBackground(Color.CYAN);
 		}
 		else if(action.type(c)==Tactics.recovery||action.type(c)==Tactics.calming){
-			setBackground(Color.WHITE);
+			button.setBackground(Color.WHITE);
 		}
 		else if(action.type(c)==Tactics.summoning){
-			setBackground(Color.YELLOW);
+			button.setBackground(Color.YELLOW);
 		}
 		else{
-			setBackground(new Color(200,200,200));
+			button.setBackground(new Color(200,200,200));
+		}
+
+		if (action.getMojoCost(c) > 0) {
+			setBorder(new LineBorder(Color.RED, 3));
+			text += "<br>Mojo cost: " + action.getMojoCost(c);
+		} else if (action.getMojoBuilt(c) > 0){
+			setBorder(new LineBorder(new Color(53,201,255), 3));
+			text += "<br>Mojo generated: " + action.getMojoBuilt(c) + "%";
+		} else {
+			setBorder(new LineBorder(button.getBackground(), 3));
 		}
 		if (!action.user().cooldownAvailable(action)) {
-			setEnabled(false);
-			setToolTipText(String.format("Remaining Cooldown: %d turns", action.user().getCooldown(action)));
-			setForeground(Color.WHITE);
-			setBackground(getBackground().darker());
+			button.setEnabled(false);
+			text += String.format("<br>Remaining Cooldown: %d turns", action.user().getCooldown(action));
+			button.setForeground(Color.WHITE);
+			button.setBackground(getBackground().darker());
 		}
+
+		text += "</html>";
+		button.setToolTipText(text);
 		this.combat=c;
-		addActionListener(new ActionListener(){
+		button.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (action.subChoices().size() == 0) {
@@ -79,5 +110,7 @@ public class SkillButton extends JButton{
 				}
 			}
 		});
+		setLayout(new BorderLayout());
+		add(button);
 	}
 }

@@ -25,7 +25,7 @@ public class Edging extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
@@ -33,6 +33,7 @@ public class Edging extends Skill {
 			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
 		getSelf().tempt(c, getSelf().getArousal().max());
+		return true;
 	}
 
 	@Override

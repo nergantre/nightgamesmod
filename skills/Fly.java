@@ -7,6 +7,7 @@ import characters.Emotion;
 import combat.Combat;
 import stance.FlyingCarry;
 import stance.StandingOver;
+import status.Falling;
 import combat.Result;
 
 public class Fly extends Fuck {
@@ -32,14 +33,13 @@ public class Fly extends Fuck {
 				&& (!c.getStance().prone(this.getSelf()))
 				&& c.getStance().facing()
 				&& (this.getSelf().getStamina().get() >= 15)
-				&& (this.getSelf().canSpend(getMojoSpent()))
 				&& (!c.getStance().penetration(this.getSelf()));
 	}
 
-	public int getMojoSpent() {
+	@Override
+	public int getMojoCost(Combat c) {
 		return 50;
 	}
-
 	@Override
 	public String describe() {
 		return "Take off and fuck your opponent's pussy in the air.";
@@ -48,9 +48,8 @@ public class Fly extends Fuck {
 		return 0;
 	}
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		String premessage = "";
-		getSelf().spendMojo(c, getMojoSpent());
 		if(!getSelf().bottom.empty() && getSelfOrgan().isType("cock")) {
 			if (getSelf().bottom.size() == 1) {
 				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s halfway and", getSelf().bottom.get(0).name());
@@ -73,8 +72,9 @@ public class Fly extends Fuck {
 			target.emote(Emotion.nervous, 75);
 			c.setStance(new FlyingCarry(this.getSelf(), target));
 		} else {
-			c.setStance(new StandingOver(target, getSelf()));
+			target.add(c, new Falling(target));
 		}
+		return result != Result.miss;
 	}
 
 	@Override

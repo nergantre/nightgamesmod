@@ -21,13 +21,17 @@ public class EyesOfTemptation extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canRespond() && c.getStance().facing() && getSelf().canSpend(30) && !target.wary();
+		return getSelf().canRespond() && c.getStance().facing() && !target.wary();
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoCost(Combat c) {
+		return 40;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		Result result = target.roll(this, c, accuracy())? Result.normal : Result.miss;
-		getSelf().spendMojo(c, 30);
 		if(getSelf().human()) {
 			c.write(getSelf(),deal(c,0,result, target));
 		}
@@ -35,9 +39,10 @@ public class EyesOfTemptation extends Skill {
 			c.write(getSelf(),receive(c,0,result, target));
 		}
 		if (result == Result.normal) {
-			target.add(new Enthralled(target, getSelf(), 5));
+			target.add(c, new Enthralled(target, getSelf(), 5));
 			getSelf().emote(Emotion.dominant, 50);
 		}
+		return result != Result.miss;
 	}
 
 	@Override

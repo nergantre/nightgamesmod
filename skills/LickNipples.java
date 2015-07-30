@@ -24,7 +24,12 @@ public class LickNipples extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoBuilt(Combat c) {
+		return 7;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		int m = 3 + Global.random(6);
 		if(target.roll(this, c, accuracy())){
 			if(getSelf().human()){
@@ -39,7 +44,6 @@ public class LickNipples extends Skill {
 			}
 			target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("breasts"), m, c);
 
-			getSelf().buildMojo(c, 10);
 		}
 		else{
 			if(getSelf().human()){
@@ -48,7 +52,9 @@ public class LickNipples extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

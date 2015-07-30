@@ -33,7 +33,12 @@ public class Frottage extends Skill{
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoBuilt(Combat c) {
+		return 15;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		int m = 6 + Global.random(8);
 		BodyPart receiver = target.hasDick() ? target.body.getRandomCock() : target.body.getRandomPussy(); 
 		BodyPart dealer = getSelf().hasDick() ? getSelf().body.getRandomCock() : getSelf().body.getRandomPussy(); 
@@ -49,7 +54,7 @@ public class Frottage extends Skill{
 			if(target.human()){
 				c.write(getSelf(),receive(c,m,Result.special, target));
 			}
-			target.buildMojo(c, -10);
+			target.loseMojo(c, 10);
 			dealer = null;
 		} else {
 			if(target.human()){
@@ -62,9 +67,9 @@ public class Frottage extends Skill{
 		}
 		target.body.pleasure(getSelf(), dealer, receiver, m, c);
 
-		getSelf().buildMojo(c, 20);
 		getSelf().emote(Emotion.horny, 15);
 		target.emote(Emotion.horny, 15);
+		return true;
 	}
 
 	@Override

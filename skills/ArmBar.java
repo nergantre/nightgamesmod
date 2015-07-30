@@ -21,7 +21,7 @@ public class ArmBar extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
 			int m = Global.random(10)+getSelf().get(Attribute.Power)/2;
 			if(getSelf().human()){
@@ -40,7 +40,9 @@ public class ArmBar extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

@@ -12,9 +12,10 @@ import combat.Combat;
 import combat.Result;
 
 public class SpiralThrust extends Thrust {
-
+	int cost;
 	public SpiralThrust(Character self) {
 		super("Spiral Thrust", self);
+		cost = 0;
 	}
 
 	@Override
@@ -24,14 +25,19 @@ public class SpiralThrust extends Thrust {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().canthrust(getSelf())&&(c.getStance().penetration(getSelf())||c.getStance().penetration(target))&&getSelf().canSpend(10);
+		return getSelf().canAct()&&c.getStance().canthrust(getSelf())&&(c.getStance().penetration(getSelf())||c.getStance().penetration(target));
+	}
+
+	@Override
+	public int getMojoCost(Combat c) {
+		cost = Math.max(20, getSelf().getMojo().get());
+		return cost;
 	}
 
 	@Override
 	public int[] getDamage(Character target, Position stance) {
 		int[] result = new int[2];
-
-		int x = getSelf().getMojo().get();
+		int x = cost;
 		int mt = x / 2;
 		if(getSelf().has(Trait.experienced)){
 			mt = mt * 3 / 4;
@@ -43,13 +49,8 @@ public class SpiralThrust extends Thrust {
 	}
 
 	@Override
-	public int getMojoBuilt() {
+	public int getMojoBuilt(Combat c) {
 		return 0;
-	}
-
-	@Override
-	public int getMojoSpent() {
-		return getSelf().getMojo().get();
 	}
 
 	@Override

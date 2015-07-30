@@ -23,7 +23,7 @@ public class Spank extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().has(Trait.disciplinarian)){
 			boolean shamed = Global.random(10)>=5||!target.is(Stsflag.shamed)&&getSelf().canSpend(5);
 			if(shamed){
@@ -36,7 +36,7 @@ public class Spank extends Skill {
 				c.write(getSelf(),receive(c,0,Result.special, target));
 			}
 			if(shamed){
-				target.add(new Shamed(target));
+				target.add(c, new Shamed(target));
 				target.emote(Emotion.angry,10);
 				target.emote(Emotion.nervous,15);
 			}
@@ -57,7 +57,8 @@ public class Spank extends Skill {
 		target.emote(Emotion.angry,25);
 		target.emote(Emotion.nervous,15);
 		target.calm(c, 6);
-		getSelf().buildMojo(c, 10);
+		target.loseMojo(c, 10);
+		return true;
 	}
 	@Override
 	public boolean requirements(Character user) {

@@ -1,6 +1,7 @@
 package characters.body;
 
 import global.Global;
+import status.Horny;
 
 import java.io.PrintWriter;
 import java.util.Scanner;
@@ -45,7 +46,7 @@ public enum CockPart implements BodyPart {
 
 	@Override
 	public double priority(Character c) {
-		return this.getPleasure(null);
+		return this.getPleasure(c, null);
 	}
 	
 	@Override
@@ -77,9 +78,17 @@ public enum CockPart implements BodyPart {
 		return hotness;
 	}
 
-	@Override
-	public double getPleasure(BodyPart target) {
+	public double getPleasureBase() {
 		return Math.log(size + 2.5) / Math.log(2) - 1.8;
+	}
+
+	@Override
+	public double getPleasure(Character self, BodyPart target) {
+		double pleasureMod = getPleasureBase();
+		pleasureMod += self.has(Trait.cockTraining1) ? .5 : 0;
+		pleasureMod += self.has(Trait.cockTraining2) ? .7 : 0;
+		pleasureMod += self.has(Trait.cockTraining3) ? .7 : 0;
+		return pleasureMod;
 	}
 
 	@Override
@@ -129,7 +138,14 @@ public enum CockPart implements BodyPart {
 	@Override
 	public double applyBonuses(Character self, Character opponent,
 			BodyPart target, double damage, Combat c) {
-		return 0;
+		double bonus = 0;
+		if (self.has(Trait.polecontrol)) {
+			String desc = "";
+			if (self.has(Trait.polecontrol)) {desc += "expert ";}
+			c.write(self, Global.format("{self:SUBJECT-ACTION:use|uses} {self:possessive} "+ desc +"cock control to grind against {other:name-possessive} inner walls, making {other:possessive} knuckles whiten as {other:subject-action:moan|moans} uncontrollably.", self, opponent));
+			bonus += (self.has(Trait.polecontrol)) ? 8 : 0;
+		}
+		return bonus;
 	}
 
 	@Override
@@ -149,7 +165,13 @@ public enum CockPart implements BodyPart {
 	@Override
 	public double applyReceiveBonuses(Character self, Character opponent,
 			BodyPart target, double damage, Combat c) {
-		return 0;
+		double bonus = 0;
+		if (opponent.has(Trait.dickhandler)) {
+			c.write(opponent, Global.format("{other:NAME-POSSESSIVE} expert handling of {self:name-possessive} cock causes {self:subject} to shudder uncontrollably.",
+					self, opponent));
+			bonus += 5;
+		}
+		return bonus;
 	}
 	
 	@Override

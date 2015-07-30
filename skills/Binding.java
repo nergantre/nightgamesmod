@@ -21,27 +21,32 @@ public class Binding extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && !c.getStance().sub(getSelf())&&!c.getStance().prone(getSelf())&&!c.getStance().prone(target)&&getSelf().canAct()&&getSelf().canSpend(20);
+		return !target.wary() && !c.getStance().sub(getSelf())&&!c.getStance().prone(getSelf())&&!c.getStance().prone(target)&&getSelf().canAct();
 	}
-
+	
+	@Override
+	public int getMojoCost(Combat c) {
+		return 20;
+	}
+	
 	@Override
 	public String describe() {
 		return "Bind your opponent's hands with a magic seal: 20 Mojo";
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
-		getSelf().spendMojo(c, 20);
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
 			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		target.add(new Bound(target,Math.min(10+3*getSelf().get(Attribute.Arcane), 50),"seal"));
+		target.add(c, new Bound(target,Math.min(10+3*getSelf().get(Attribute.Arcane), 50),"seal"));
 		target.emote(Emotion.nervous, 5);
 		getSelf().emote(Emotion.confident, 20);
 		getSelf().emote(Emotion.dominant, 10);
+		return true;
 	}
 
 	@Override

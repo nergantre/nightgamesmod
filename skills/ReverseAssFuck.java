@@ -46,7 +46,7 @@ public class ReverseAssFuck extends Fuck {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		String premessage = "";
 		if(!getSelf().bottom.empty() && getSelfOrgan().isType("cock")) {
 			if (getSelf().bottom.size() == 1) {
@@ -65,7 +65,7 @@ public class ReverseAssFuck extends Fuck {
 				premessage += " and {self:action:lube|lubes}";
 			}
 			premessage += " up {self:possessive} ass with {self:possessive} " + fluids + ".";
-			getSelf().add(new Oiled(getSelf()));
+			getSelf().add(c, new Oiled(getSelf()));
 		} else if(!getSelf().hasStatus(Stsflag.oiled)&&getSelf().has(Item.Lubricant)) {
 			if (premessage.isEmpty()) {
 				premessage = "{self:subject-action:lube|lubes}";
@@ -73,7 +73,7 @@ public class ReverseAssFuck extends Fuck {
 				premessage += " and {self:action:lube|lubes}";
 			}
 			premessage += " up {self:possessive} ass.";
-			getSelf().add(new Oiled(getSelf()));
+			getSelf().add(c, new Oiled(getSelf()));
 			getSelf().consume(Item.Lubricant, 1);
 		}
 		c.write(getSelf(), Global.format(premessage, getSelf(), target));
@@ -89,8 +89,8 @@ public class ReverseAssFuck extends Fuck {
 		c.setStance(new AnalCowgirl(getSelf(),target));
 		target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c);		
 		getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), m / 2, c);
-		getSelf().buildMojo(c, 25);
 		getSelf().emote(Emotion.dominant, 30);
+		return true;
 	}
 
 	@Override

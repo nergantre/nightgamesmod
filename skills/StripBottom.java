@@ -20,11 +20,16 @@ public class StripBottom extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoCost(Combat c) {
+		return 10;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		int difficulty = target.bottom.peek().dc()
 				+(target.getLevel())
-				+(target.getStamina().percent() / 2
-				- target.getArousal().percent()) / 4
+				+(target.getStamina().percent() / 4
+				- target.getArousal().percent()) / 5
 				- (c.getStance().dom(getSelf()) ? 50 : 0);
 		if (getSelf().check(Attribute.Cunning, difficulty)||!target.canAct()) {
 			if(getSelf().human()){
@@ -55,7 +60,9 @@ public class StripBottom extends Skill {
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
 			target.weaken(c, Global.random(6)+getSelf().get(Attribute.Power)/4);
+			return false;
 		}
+		return true;
 	}
 
 	@Override

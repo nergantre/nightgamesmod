@@ -13,17 +13,17 @@ public abstract class CounterBase extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
-		getSelf().spendMojo(c, getMojoCost());
+	public boolean resolve(Combat c, Character target) {
 		if (getSelf().human()) {
 			c.write(getSelf(), deal(c, 0, Result.setup, target));
 		} else {
 			c.write(getSelf(), receive(c, 0, Result.setup, target));
 		}
-		getSelf().add(new CounterStatus(getSelf(), this, description));
+		getSelf().add(c, new CounterStatus(getSelf(), this, description));
+		return true;
 	}
 
-	public int getMojoCost() {
+	public int getMojoCost(Combat c) {
 		return 0;
 	}
 

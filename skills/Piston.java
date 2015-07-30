@@ -25,8 +25,8 @@ public class Piston extends Thrust {
 	}
 
 	@Override
-	public int getMojoBuilt() {
-		return 20;
+	public int getMojoBuilt(Combat c) {
+		return 0;
 	}
 
 	@Override

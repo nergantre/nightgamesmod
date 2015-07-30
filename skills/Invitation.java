@@ -16,7 +16,7 @@ import characters.Trait;
 
 public class Invitation extends Skill {
 	public Invitation(Character self) {
-		super("Invitation", self, 4);
+		super("Invitation", self, 6);
 	}
 
 	@Override
@@ -35,12 +35,12 @@ public class Invitation extends Skill {
 		boolean insertable = (p.insert() != p) && !p.inserted();
 		return insertable && getSelf().canRespond()
 				&& getSelf().pantsless() && target.pantsless()
-				&&((getSelf().hasDick() && target.hasPussy()) || (getSelf().hasPussy() && target.hasDick()))
-				&&getSelf().canSpend(getMojoCost());
+				&&((getSelf().hasDick() && target.hasPussy()) || (getSelf().hasPussy() && target.hasDick()));
 	}
 
-	public int getMojoCost() {
-		return 5;
+	@Override
+	public int getMojoCost(Combat c) {
+		return 50;
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class Invitation extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		int difficulty = target.getLevel() - (target.getArousal().get() * 10 / target.getArousal().max()) + target.get(Attribute.Seduction);
 		int strength = getSelf().getLevel() + getSelf().get(Attribute.Seduction) * (getSelf().has(Trait.submissive) ? 2 : 1);
 
@@ -106,11 +106,12 @@ public class Invitation extends Skill {
 		if (success) {
 			c.setStance(c.getStance().insert(target));
 			if (c.getStance().en == Stance.missionary) {
-				target.add(new LegLocked(target, getSelf().get(Attribute.Power)));
+				target.add(c, new LegLocked(target, getSelf().get(Attribute.Power)));
 			} else {
-				target.add(new ArmLocked(target, getSelf().get(Attribute.Power)));
+				target.add(c, new ArmLocked(target, getSelf().get(Attribute.Power)));
 			}
 			(new Thrust(target)).resolve(c, getSelf());
 		}
+		return success;
 	}
 }

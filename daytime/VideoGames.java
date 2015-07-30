@@ -24,7 +24,6 @@ public class VideoGames extends Activity {
 		Global.gui().clearText();
 		Global.gui().clearCommand();
 		if(choice=="Start"){
-			boolean canGainSpeed = player.getPure(Attribute.Speed)<(player.getLevel()/4)+7;
 			if(player.money>=50){
 				Global.gui().message("Do you want to purchase a new game? Your old games are still good, but you're unlikely to learn as much from replaying them.");
 				Global.gui().choose(this, "Yes: $50");

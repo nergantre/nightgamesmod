@@ -48,7 +48,7 @@ public class ImpFem extends Pet {
 					c.write(owner(),own()+"imp gets a running start and jumps higher than you thought possible, wrapping her legs around your head and pushing her soaked cunt into your " +
 							"face. Her musky scent affects you more than it should, there must be a high concentration of pheromones in her juices.");
 				}
-				target.add(new Horny(target,3,3, "imp juices"));
+				target.add(c, new Horny(target,3,3, "imp juices"));
 				break;
 			default:
 				if(!target.topless()){

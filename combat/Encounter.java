@@ -299,7 +299,8 @@ public class Encounter implements Serializable{
 	}
 	public void aphrodisiactrick(Character attacker, Character target){
 		attacker.consume(Item.Aphrodisiac, 1);
-		attacker.gainXP(attacker.lvlBonus(target));
+		attacker.gainXP(attacker.getVictoryXP(target));
+		target.gainXP(target.getDefeatXP(attacker));
 		if(target.human()){
 			if(location.id()==Movement.shower){
 				Global.gui().message("The hot shower takes your fatigue away, but you can't seem to calm down. Your cock is almost painfully hard. You need to deal with this while " +
@@ -348,7 +349,8 @@ public class Encounter implements Serializable{
 		location.endEncounter();
 	}
 	public void caught(Character attacker, Character target){
-		attacker.gainXP(attacker.lvlBonus(target));
+		attacker.gainXP(attacker.getVictoryXP(target));
+		target.gainXP(target.getDefeatXP(attacker));
 		if(target.human()){
 			Global.gui().message("You jerk off frantically, trying to finish as fast as possible. Just as you feel the familiar sensation of imminent orgasm, you're grabbed from behind. " +
 					"You freeze, cock still in hand. As you turn your head to look at your attacker, "+attacker.name()+" kisses you on the lips and rubs the head of your penis with her " +
@@ -376,7 +378,8 @@ public class Encounter implements Serializable{
 		location.endEncounter();
 	}
 	public void spider(Character attacker, Character target){
-		attacker.gainXP(attacker.lvlBonus(target));
+		attacker.gainXP(attacker.getVictoryXP(target));
+		target.gainXP(target.getDefeatXP(attacker));
 		if(attacker.human()){
 			Global.gui().message(target.name()+" is naked and helpless in the giant rope web. You approach slowly, taking in the lovely view of her body. You trail your fingers " +
 					"down her front, settling between her legs to tease her sensitive pussy lips. She moans and squirms, but is completely unable to do anything in her own defense. " +

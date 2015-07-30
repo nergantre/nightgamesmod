@@ -118,6 +118,7 @@ public class GUI extends JFrame implements Observer {
 	private int height = 700;
 	public int fontsize;
 	private JMenuItem mntmQuitMatch;
+	private boolean skippedFeat;
 	
 	
 	public GUI() {
@@ -941,15 +942,18 @@ public class GUI extends JFrame implements Observer {
 			}
 			Global.getMatch().pause();
 			this.commandPanel.revalidate();
-		} else if(player.countFeats()<player.getLevel()/4){ 
+		} else if(player.traitPoints > 0 && !skippedFeat){ 
 			clearCommand();
-			for(Trait feat:Global.getFeats()){
+			for(Trait feat:Global.getFeats(this.player)){
 				if(!player.has(feat)){
 					this.commandPanel.add(new FeatButton(feat));
 				}
 				this.commandPanel.revalidate();
 			}
+			this.commandPanel.add(new SkipFeatButton(null));
+			this.commandPanel.revalidate();
 		} else {
+			skippedFeat = false;
 			clearCommand();
 			Global.gui().message(Global.gainSkills(this.player));
 			endCombat();
@@ -1234,6 +1238,7 @@ public class GUI extends JFrame implements Observer {
 					GUI.this.clearTextIfNeeded();
 					GUI.this.player.mod(GUI.AttributeButton.this.att, 1);
 					GUI.this.player.availableAttributePoints -= 1;
+					GUI.this.refresh();
 					GUI.this.ding();
 				}
 			});
@@ -1255,12 +1260,29 @@ public class GUI extends JFrame implements Observer {
 					GUI.this.clearTextIfNeeded();
 					Global.gui().message("Gained feat: " + FeatButton.this.feat);
 					Global.gui().message(Global.gainSkills(GUI.this.player));
+					GUI.this.player.traitPoints -= 1;
+					GUI.this.refresh();
 					GUI.this.ding();
 				}
 			});
 		}
 	}
 
+	private class SkipFeatButton extends JButton {
+		public SkipFeatButton(Trait feat) {
+			super();
+			setFont(new Font("Baskerville Old Face", 0, 18));
+			this.setText("Skip");
+			setToolTipText("Save the trait point for later.");
+			addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					GUI.this.skippedFeat = true;
+					GUI.this.clearTextIfNeeded();
+					GUI.this.ding();
+				}
+			});
+		}
+	}
 	
 	private class InterveneButton extends JButton {
 		private Encounter enc;

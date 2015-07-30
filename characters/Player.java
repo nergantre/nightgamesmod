@@ -76,6 +76,7 @@ public class Player extends Character {
 	public GUI gui;
 	public String sex;
 	private Growth growth;
+	public int traitPoints;
 
 	public Player(String name, String sex) {
 		super(name, 1);
@@ -367,15 +368,10 @@ public class Player extends Character {
 		availableAttributePoints += growth.attributes[rank];
 		getMojo().gain(1);
 		gui.message("You've gained a Level!<br>Select which attributes to increase.");
-		gui.ding();
-	}
-
-	private Set<Trait> featsAvailable() {
-		HashSet<Trait> feats = Global.getFeats();
-		for (Trait t : traits) {
-			feats.remove(t);
+		if ((getLevel() % 3 == 0 && level < 10) || ((getLevel() + 1) % 2 == 0 && level > 10)) {
+			traitPoints += 1;
 		}
-		return feats;
+		gui.ding();
 	}
 
 	public void flee(Area location2) {
@@ -516,7 +512,7 @@ public class Player extends Character {
 
 	@Override
 	public void intervene3p(Combat c, Character target, Character assist) {
-		this.gainXP(20+lvlBonus(target));
+		this.gainXP(getAssistXP(target));
 		target.defeated(this);
 		assist.gainAttraction(this, 1);
 		c.write("You take your time, approaching "+target.name()+" and "+assist.name()+" stealthily. "+assist.name()+" notices you first and before her reaction " +
@@ -527,15 +523,15 @@ public class Player extends Character {
 
 	@Override
 	public void victory3p(Combat c, Character target, Character assist) {
-		this.gainXP(20+lvlBonus(target));
-		target.gainXP(10+target.lvlBonus(this)+target.lvlBonus(assist));
+		this.gainXP(getVictoryXP(target));
+		target.gainXP(getDefeatXP(this));
 		target.arousal.empty();
 		if(target.has(Trait.insatiable)){
 			target.arousal.restore((int) (arousal.max()*.2));
 		}
 		dress(c);
 		target.undress(c);
-		if(c.clothespile.contains(target.outfit[1].firstElement())){
+		if(target.outfit[1].isEmpty() || c.clothespile.contains(target.outfit[1].firstElement())){
 			this.gain(target.getTrophy());
 		}
 		target.defeated(this);
@@ -657,11 +653,11 @@ public class Player extends Character {
 		int pheromoneChance = opponent.top.size() + opponent.bottom.size();
 		if(opponent.has(Trait.pheromones)&&opponent.getArousal().percent()>=20&&Global.random(2 + pheromoneChance)==0){
 			c.write(opponent,"<br>Whenever you're near "+opponent.name()+", you feel your body heat up. Something in her scent is making you extremely horny.");
-			add(new Horny(this,opponent.has(Trait.augmentedPheromones) ? 2 : 1,10,opponent.nameOrPossessivePronoun() + " pheromones"));
+			add(c, new Horny(this,opponent.has(Trait.augmentedPheromones) ? 2 : 1,10,opponent.nameOrPossessivePronoun() + " pheromones"));
 		}
 		if(opponent.has(Trait.smqueen)&&!is(Stsflag.masochism)){
 			c.write(String.format("<br>%s seem to shudder in arousal at the thought of pain.", subject()));
-			add(new Masochistic(this));
+			add(c, new Masochistic(this));
 		}
 		if(has(Trait.RawSexuality)){
 			tempt(c, opponent, arousal.max()/25);

@@ -17,12 +17,16 @@ public class Stomp extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !c.getStance().prone(getSelf())&&c.getStance().prone(target)&&c.getStance().feet(getSelf())&&getSelf().canSpend(20)&&getSelf().canAct()&&!getSelf().has(Trait.softheart)&&!c.getStance().penetration(getSelf());
+		return !c.getStance().prone(getSelf())&&c.getStance().prone(target)&&c.getStance().feet(getSelf())&&getSelf().canAct()&&!getSelf().has(Trait.softheart)&&!c.getStance().penetration(getSelf());
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
-		getSelf().spendMojo(c, 20);
+	public int getMojoCost(Combat c) {
+		return 20;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().has(Trait.heeldrop)&&target.pantsless()){
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.special, target));
@@ -66,6 +70,7 @@ public class Stomp extends Skill {
 			target.calm(c, Global.random(30)+10);
 		}
 		target.emote(Emotion.angry,25);
+		return true;
 	}
 
 	@Override

@@ -29,7 +29,7 @@ public class UseCrop extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
 			if(target.pantsless()&&c.getStance().reachBottom(getSelf())){
 				if(getSelf().has(Item.Crop2)&&Global.random(10)>7){
@@ -73,7 +73,9 @@ public class UseCrop extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

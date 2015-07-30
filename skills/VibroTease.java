@@ -32,7 +32,7 @@ public class VibroTease extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
@@ -44,9 +44,13 @@ public class VibroTease extends Skill {
 		int m = 10 + Global.random(5);
 		target.body.pleasure(getSelf(), null, target.body.getRandom("ass"), m, c);
 		getSelf().arouse(2, c);
-		getSelf().buildMojo(c, 20);
+		return true;
 	}
 
+	@Override
+	public int getMojoBuilt(Combat c) {
+		return 15;
+	}
 	@Override
 	public Skill copy(Character user) {
 		return new VibroTease(user);

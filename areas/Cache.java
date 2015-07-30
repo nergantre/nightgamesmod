@@ -47,7 +47,7 @@ public class Cache implements Deployable {
 	public void resolve(Character active) {
 		if(active.state==State.ready){
 			if(active.has(Trait.treasureSeeker)){
-				dc-=3;
+				dc-=5;
 			}
 			if(active.check(test, dc)){
 				if(active.human()){
@@ -75,6 +75,7 @@ public class Cache implements Deployable {
 				for(Loot i:reward){
 					i.pickup(active);
 				}
+				active.gainMoney(Global.random(500) + 500);
 			}
 			else if(active.check(secondary, dc-5)){
 				if(active.human()){
@@ -103,6 +104,7 @@ public class Cache implements Deployable {
 				for(Loot i:reward){
 					i.pickup(active);
 				}
+				active.gainMoney(Global.random(500) + 500);
 			}
 			else{
 				switch(test){

@@ -42,7 +42,7 @@ public class Nurse extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
@@ -51,7 +51,7 @@ public class Nurse extends Skill {
 		}
 		if (getSelf().has(Trait.lactating)&&!target.is(Stsflag.suckling)&&!target.is(Stsflag.wary)) {
 			c.write(target, Global.format("{other:SUBJECT-ACTION:are|is} a little confused at the sudden turn of events, but after milk starts flowing into {other:possessive} mouth, {other:pronoun} can't help but continue to suck on {self:possessive} teats.", getSelf(), target));
-			target.add(new Suckling(target, getSelf(), 4));
+			target.add(c, new Suckling(target, getSelf(), 4));
 		}
 		if (c.getStance().en != Stance.nursing &&!c.getStance().penetration(getSelf()) &&!c.getStance().penetration(target)) {
 			c.setStance(new NursingHold(getSelf(),target));
@@ -60,6 +60,23 @@ public class Nurse extends Skill {
 			(new Suckle(target)).resolve(c, getSelf());
 			getSelf().emote(Emotion.dominant, 10);
 		}
+		return true;
+	}
+
+	@Override
+	public int getMojoCost(Combat c) {
+		if (c.getStance().en != Stance.nursing)
+			return 20;
+		else
+			return 0;
+	}
+
+	@Override
+	public int getMojoBuilt(Combat c) {
+		if (c.getStance().en != Stance.nursing)
+			return 0;
+		else
+			return 10;
 	}
 
 	@Override

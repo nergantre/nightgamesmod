@@ -1,6 +1,7 @@
 package skills;
 
 import global.Global;
+import status.Stsflag;
 import status.Unreadable;
 import characters.Attribute;
 import characters.Character;
@@ -21,7 +22,25 @@ public class Wait extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoBuilt(Combat c) {
+		if(bluff()){
+			return 0;
+		} else if(focused()&&!c.getStance().sub(getSelf())){
+			return 20;
+		} else {
+			return 10;
+		}
+	}
+	@Override
+	public int getMojoCost(Combat c) {
+		if(bluff()){
+			return 20;
+		} else {
+			return 0;
+		}
+	}
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		if(bluff()){
 			int m = Global.random(25);
 			getSelf().spendMojo(c, 20);
@@ -32,8 +51,8 @@ public class Wait extends Skill {
 				c.write(getSelf(),receive(c,m,Result.special, target));
 			}
 			getSelf().heal(c, m);
-			getSelf().calm(c, 25-m);
-			getSelf().add(new Unreadable(getSelf()));
+			getSelf().calm(c, 50 - m);
+			getSelf().add(c, new Unreadable(getSelf()));
 		}
 		else if(focused()&&!c.getStance().sub(getSelf())){
 			if(getSelf().human()){
@@ -44,7 +63,6 @@ public class Wait extends Skill {
 			}
 			getSelf().heal(c, Global.random(4));
 			getSelf().calm(c, Global.random(8));
-			getSelf().buildMojo(c, 20);
 		}
 		else{
 			if(getSelf().human()){
@@ -53,9 +71,9 @@ public class Wait extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.normal, target));
 			}
-			getSelf().buildMojo(c, 10);
 			getSelf().heal(c, Global.random(4));
 		}
+		return true;
 	}
 
 	@Override
@@ -138,6 +156,6 @@ public class Wait extends Skill {
 	}
 
 	private boolean bluff(){
-		return getSelf().has(Trait.pokerface)&&getSelf().get(Attribute.Cunning)>=9&&getSelf().canSpend(20)&&getSelf().canRespond();
+		return !getSelf().is(Stsflag.unreadable) && getSelf().has(Trait.pokerface)&&getSelf().get(Attribute.Cunning)>=9&&getSelf().canSpend(20)&&getSelf().canRespond();
 	}
 }

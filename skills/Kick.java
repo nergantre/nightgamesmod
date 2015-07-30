@@ -24,9 +24,14 @@ public class Kick extends Skill {
 	public boolean usable(Combat c, Character target) {
 		return c.getStance().feet(getSelf())&&getSelf().canAct()&&(!c.getStance().prone(getSelf())||getSelf().has(Trait.dirtyfighter)&&!c.getStance().penetration(getSelf()));
 	}
+	
+	@Override
+	public int getMojoCost(Combat c) {
+		return 5;
+	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(!target.bottom.isEmpty()&&getSelf().get(Attribute.Ki)>=14&&Global.random(3)==2){
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.special, target));
@@ -68,7 +73,6 @@ public class Kick extends Skill {
 			else{
 				target.calm(c, Global.random(8));
 			}
-			getSelf().buildMojo(c, 10);
 			target.emote(Emotion.angry,20);
 		}
 		else{
@@ -78,7 +82,9 @@ public class Kick extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

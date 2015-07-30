@@ -25,22 +25,26 @@ public class SpawnImp extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&getSelf().pet==null&&getSelf().canSpend(10);
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&getSelf().pet==null;
+	}
+
+	@Override
+	public int getMojoCost(Combat c) {
+		return 10;
 	}
 
 	@Override
 	public String describe() {
-		return "Summon a demonic Imp: 5 arousal, 10 mojo";
+		return "Summon a demonic Imp: 5 arousal";
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		getSelf().arouse(5, c);
-		getSelf().spendMojo(c, 10);
-		int power = 3;
+		int power = 8;
 		int ac = 2;
 		if(getSelf().has(Trait.leadership)){
-			power++;
+			power+=5;
 		}
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
@@ -57,6 +61,7 @@ public class SpawnImp extends Skill {
 			}
 			getSelf().pet=new ImpFem(getSelf(),power,ac);
 		}
+		return true;
 	}
 
 	@Override

@@ -22,22 +22,26 @@ public class SpawnSlime extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&getSelf().pet==null&&getSelf().has(Item.Battery)&&getSelf().canSpend(5);
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&getSelf().pet==null&&getSelf().has(Item.Battery, 5);
+	}
+
+	@Override
+	public int getMojoCost(Combat c) {
+		return 5;
 	}
 
 	@Override
 	public String describe() {
-		return "Creates a mindless, but living slime to attack your opponent: 1 Battery";
+		return "Creates a mindless, but living slime to attack your opponent: 5 Battery";
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
-		getSelf().spendMojo(c, 5);
-		getSelf().consume(Item.Battery, 1);
-		int power = 3;
+	public boolean resolve(Combat c, Character target) {
+		getSelf().consume(Item.Battery, 5);
+		int power = 8;
 		int ac = 3;
 		if(getSelf().has(Trait.leadership)){
-			power++;
+			power+=5;
 		}
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
@@ -46,6 +50,7 @@ public class SpawnSlime extends Skill {
 			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
 		getSelf().pet=new Slime(getSelf(),power,ac);
+		return true;
 	}
 
 	@Override

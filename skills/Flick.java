@@ -21,7 +21,17 @@ public class Flick extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoCost(Combat c) {
+		return 10;
+	}
+
+	@Override
+	public int getMojoBuilt(Combat c) {
+		return 5;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
 			int m = Global.random(6)+5;
 			if(getSelf().human()){
@@ -34,8 +44,7 @@ public class Flick extends Skill {
 				m+=2+Global.random(target.get(Attribute.Perception)/2);
 			}
 			target.pain(c, m);
-			target.loseMojo(c, 15);
-			getSelf().buildMojo(c, 15);
+			target.loseMojo(c, 10);
 			getSelf().emote(Emotion.dominant, 10);
 			target.emote(Emotion.angry,15);
 			target.emote(Emotion.nervous,15);
@@ -47,7 +56,9 @@ public class Flick extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

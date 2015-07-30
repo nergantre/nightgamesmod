@@ -41,7 +41,7 @@ public class ThrowDraft extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		Item used = null;
 		if (getSelf().human()) {
 			for (Item i : getSelf().getInventory().keySet()) {
@@ -74,6 +74,7 @@ public class ThrowDraft extends Skill {
 			}
 			getSelf().consume(used, 1);
 		}
+		return true;
 	}
 
 	@Override

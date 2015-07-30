@@ -1,6 +1,7 @@
 package pet;
 
 import stance.StandingOver;
+import status.Falling;
 import status.Oiled;
 import global.Global;
 import characters.Character;
@@ -49,14 +50,14 @@ public class Slime extends Pet {
 					c.write(owner(),own()+"slime forms into a shape that's vaguely human and clearly female. Somehow it manages to look cute and innocent while still being an animated blob of slime. " +
 							"The slime suddenly pounces on you and wraps itself around you. It doesn't seem to be attacking you as much as giving you a hug, but it leaves you covered in slimy " +
 							"residue.");
-					target.add(new Oiled(target));
+					target.add(c, new Oiled(target));
 				}
 				break;
 			case 1:
 				if(!c.getStance().prone(target)){
 					if(power*Global.random(20)>=target.knockdownDC()){
 						c.write(owner(),own()+"slime wraps around your ankles and you are unable to keep your footing.");
-						c.setStance(new StandingOver(owner(),target));
+						target.add(c, new Falling(target));
 					}
 					else{
 						c.write(owner(),own()+"slime glomps onto your ankles. You almost lose your balance, but manage to recover.");
@@ -93,14 +94,14 @@ public class Slime extends Pet {
 				}			
 				else{
 					c.write(owner(),"You slime hugs "+target.name()+" affectionately, covering her in slimy liquid.");
-					target.add(new Oiled(target));
+					target.add(c, new Oiled(target));
 				}
 				break;
 			case 1:
 				if(!c.getStance().prone(target)){
 					if(power*Global.random(20)>=target.knockdownDC()){
-						c.write(owner(),target.name()+" slips on your slime as it clings to her feet. She falls on her butt and extracts her feet from the ooze.");
-						c.setStance(new StandingOver(owner(),target));
+						c.write(owner(),target.name()+" slips on your slime as it clings to her feet, losing her balance.");
+						target.add(new Falling(target));
 					}
 					else{
 						c.write(owner(),target.name()+" stumbles as your slime clings to her leg. She manages to catch herself and scrapes off the clingly blob.");

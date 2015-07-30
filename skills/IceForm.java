@@ -31,14 +31,15 @@ public class IceForm extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
 			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		getSelf().add(new IceStance(getSelf()));
+		getSelf().add(c, new IceStance(getSelf()));
+		return true;
 	}
 
 	@Override

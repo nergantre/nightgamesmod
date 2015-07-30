@@ -55,4 +55,5 @@ public enum Flag {
 	ReykaDisabled,
 	KatDisabled,
 	JewelDisabled,
+	AiriEnabled,
 }

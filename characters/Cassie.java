@@ -67,24 +67,28 @@ public class Cassie extends BasePersonality {
 	public void setGrowth() {
 		growth.stamina = 2;
 		growth.arousal = 4;
-		growth.mojo = 2;
+		growth.mojo = 3;
 		growth.bonusStamina = 1;
 		growth.bonusArousal = 3;
 		growth.bonusMojo = 1;
 		preferredAttributes.add(Attribute.Arcane);
-		growth.traits.put(3, Trait.silvertongue);
+		growth.traits.put(2, Trait.silvertongue);
 		growth.traits.put(5, Trait.mojoMaster);
-		growth.traits.put(8, Trait.SexualGroove);
-		growth.traits.put(10, Trait.submissive);
-		growth.traits.put(12, Trait.cute);
-		growth.traits.put(15, Trait.lacedjuices);
-		growth.traits.put(17, Trait.experttongue);
-		growth.traits.put(19, Trait.entrallingjuices);
-		growth.traits.put(20, Trait.energydrain);
-		growth.traits.put(24, Trait.autonomousPussy);
-		growth.traits.put(27, Trait.desensitized);
-		growth.traits.put(30, Trait.vaginaltongue);
-		growth.traits.put(35, Trait.desensitized2);
+		growth.traits.put(8, Trait.tongueTraining1);
+		growth.traits.put(11, Trait.pussyTraining1);
+		growth.traits.put(14, Trait.submissive);
+		growth.traits.put(17, Trait.cute);
+		growth.traits.put(20, Trait.addictivefluids);
+		growth.traits.put(23, Trait.experttongue);
+		growth.traits.put(26, Trait.calm);
+		growth.traits.put(29, Trait.tongueTraining2);
+		growth.traits.put(32, Trait.autonomousPussy);
+		growth.traits.put(35, Trait.desensitized);
+		growth.traits.put(38, Trait.tongueTraining3);
+		growth.traits.put(41, Trait.magicEyeEnthrall);
+		growth.traits.put(44, Trait.entrallingjuices);
+		growth.traits.put(47, Trait.pussyTraining2);
+		growth.traits.put(50, Trait.desensitized2);
 	}
 
 	@Override
@@ -277,7 +281,7 @@ public class Cassie extends BasePersonality {
 			opponent=c.p1;
 		}
 		if(character.has(Trait.witch) && Global.random(3) == 0){
-			opponent.add(new Energized(opponent,10));
+			opponent.add(c, new Energized(opponent,10));
 			return "You capture Cassie's lips and slip your hand between her legs to facilitate her imminent orgasm. You rub her soaked pussy lips and she moans against your lips. Her body " +
 					"tenses as she clings to you, letting you know she's reached her climax. You keep rubbing her petals as she starts to relax. She shows no sign of breaking the kiss or " +
 					"letting you go, so you decide to see if you can give her consecutive orgams.<p>You dig your fingers into Cassie's sensitive pussy and rub her insides. She eyes open " +

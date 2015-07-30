@@ -1,6 +1,7 @@
 package skills;
 
 import stance.StandingOver;
+import status.Falling;
 import global.Global;
 import characters.Attribute;
 import characters.Character;
@@ -23,12 +24,16 @@ public class HipThrow extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && c.getStance().mobile(getSelf())&&c.getStance().mobile(target)&&!c.getStance().prone(getSelf())&&!c.getStance().prone(target)&&getSelf().canAct()&&!c.getStance().penetration(getSelf())&&getSelf().canSpend(10);
+		return !target.wary() && c.getStance().mobile(getSelf())&&c.getStance().mobile(target)&&!c.getStance().prone(getSelf())&&!c.getStance().prone(target)&&getSelf().canAct()&&!c.getStance().penetration(getSelf());
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
-		getSelf().spendMojo(c, 10);
+	public int getMojoCost(Combat c) {
+		return 10;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().check(Attribute.Power,target.knockdownDC())){
 			int m = Global.random(6)+target.get(Attribute.Power)/2;
 			if(getSelf().human()){
@@ -38,7 +43,7 @@ public class HipThrow extends Skill {
 				c.write(getSelf(),receive(c,m,Result.normal, target));
 			}
 			target.pain(c, m);
-			c.setStance(new StandingOver(getSelf(),target));
+			target.add(c, new Falling(target));
 			target.emote(Emotion.angry,5);
 		}
 		else{
@@ -48,7 +53,9 @@ public class HipThrow extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

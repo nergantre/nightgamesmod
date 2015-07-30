@@ -76,13 +76,21 @@ public abstract class Skill {
 	public static boolean skillIsUsable(Combat c, Skill s, Character target) {
 		boolean charmRestricted = s.getSelf().is(Stsflag.charmed) && (s.type(c) != Tactics.fucking && s.type(c) != Tactics.pleasure && s.type(c) != Tactics.misc);
 		boolean allureRestricted = target.is(Stsflag.alluring) && (s.type(c) == Tactics.damage || s.type(c) == Tactics.debuff);
-		boolean usable = s.usable(c, target) && !charmRestricted && !allureRestricted;
+		boolean usable = s.usable(c, target) && s.getSelf().canSpend(s.getMojoCost(c)) && !charmRestricted && !allureRestricted;
 		return usable;
+	}
+
+	public int getMojoBuilt(Combat c) {
+		return 0;
+	}
+
+	public int getMojoCost(Combat c) {
+		return 0;
 	}
 
 	public abstract boolean usable(Combat c, Character target);
 	public abstract String describe();
-	public abstract void resolve(Combat c, Character target);
+	public abstract boolean resolve(Combat c, Character target);
 	public abstract Skill copy(Character user);
 	public abstract Tactics type(Combat c);
 	public abstract String deal(Combat c,int damage,Result modifier, Character target);
@@ -134,12 +142,20 @@ public abstract class Skill {
 	public String getName(Combat c) {
 		return toString();
 	}
+
 	public boolean makesContact() {
 		return false;
 	}
+
 	public static void resolve(Skill skill, Combat c, Character target) {
 		skill.user().addCooldown(skill);
-		skill.resolve(c, target);
+		skill.user().spendMojo(c, skill.getMojoCost(c));
+		//save the mojo built of the skill before resolving it (or the status may change)
+		int generated = skill.getMojoBuilt(c);
+		
+		if (skill.resolve(c, target)) {
+			skill.user().buildMojo(c, generated);
+		}
 	}
 	public int getCooldown() {
 		return cooldown;

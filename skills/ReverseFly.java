@@ -4,6 +4,7 @@ import global.Global;
 import stance.FlyingCarry;
 import stance.FlyingCowgirl;
 import stance.StandingOver;
+import status.Falling;
 import characters.Attribute;
 import characters.Character;
 import characters.Emotion;
@@ -37,9 +38,8 @@ public class ReverseFly extends Fly {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		String premessage = "";
-		getSelf().spendMojo(c, getMojoSpent());
 		if (getSelf().bottom.size() == 1) {
 			premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s to the side and", getSelf().bottom.get(0).name());
 		} else if (getSelf().bottom.size() == 2) {
@@ -60,8 +60,10 @@ public class ReverseFly extends Fly {
 			target.emote(Emotion.nervous, 75);
 			c.setStance(new FlyingCowgirl(this.getSelf(), target));
 		} else {
-			c.setStance(new StandingOver(target, getSelf()));
+			target.add(c, new Falling(target));
+			return false;
 		}
+		return true;
 	}
 
 	@Override

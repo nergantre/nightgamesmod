@@ -25,7 +25,12 @@ public class SpawnFaerie extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&getSelf().pet==null&&getSelf().canSpend(15);
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&getSelf().pet==null;
+	}
+
+	@Override
+	public int getMojoCost(Combat c) {
+		return 25;
 	}
 
 	@Override
@@ -34,12 +39,11 @@ public class SpawnFaerie extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
-		getSelf().spendMojo(c, 15);
-		int power = 2;
+	public boolean resolve(Combat c, Character target) {
+		int power = 7;
 		int ac = 4;
 		if(getSelf().has(Trait.leadership)){
-			power++;
+			power+=5;
 		}
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
@@ -56,6 +60,7 @@ public class SpawnFaerie extends Skill {
 			}
 			getSelf().pet=new FairyFem(getSelf(),power,ac);
 		}
+		return true;
 	}
 
 	@Override

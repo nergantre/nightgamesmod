@@ -25,7 +25,12 @@ public class TentaclePorn extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && !c.getStance().sub(getSelf())&&!c.getStance().prone(getSelf())&&!c.getStance().prone(target)&&getSelf().canAct()&&getSelf().getArousal().get()>=20&&getSelf().canSpend(10);
+		return !target.wary() && !c.getStance().sub(getSelf())&&!c.getStance().prone(getSelf())&&!c.getStance().prone(target)&&getSelf().canAct()&&getSelf().getArousal().get()>=20;
+	}
+
+	@Override
+	public int getMojoCost(Combat c) {
+		return 10;
 	}
 
 	@Override
@@ -34,8 +39,7 @@ public class TentaclePorn extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
-		getSelf().spendMojo(c, 10);
+	public boolean resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
 			if(target.nude()){
 				int m = Global.random(getSelf().get(Attribute.Fetish)) / 2 + 1;
@@ -60,7 +64,7 @@ public class TentaclePorn extends Skill {
 					target.body.pleasure(null, null, target.body.getRandom("skin"), m, c);
 				}
 				if(!target.is(Stsflag.oiled)){
-					target.add(new Oiled(target));
+					target.add(c, new Oiled(target));
 				}
 				target.emote(Emotion.horny, 20);
 			}
@@ -72,7 +76,7 @@ public class TentaclePorn extends Skill {
 					c.write(getSelf(),receive(c,0,Result.weak, target));
 				}
 			}
-			target.add(new Bound(target,Math.min(10+3*getSelf().get(Attribute.Fetish), 30),"tentacles"));
+			target.add(c, new Bound(target,Math.min(10+3*getSelf().get(Attribute.Fetish), 30),"tentacles"));
 		}
 		else{
 			if(getSelf().human()){
@@ -81,7 +85,9 @@ public class TentaclePorn extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

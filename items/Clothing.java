@@ -4,7 +4,7 @@ import characters.Trait;
 import characters.Character;
 
 public enum Clothing implements Loot{
-	shirt		("shirt",ClothingType.TOP,5,"a ",Trait.none,Trait.none,75),
+	shirt		("shirt",ClothingType.TOP,5,"a ",Trait.none,Trait.flexible,75),
 	jacket		("jacket",ClothingType.TOPOUTER,2,"a ",Trait.none,Trait.none,400),
 	blouse		("blouse",ClothingType.TOP,5,"a ",Trait.none,Trait.none,60),
 	bra			("bra",ClothingType.TOPUNDER,5,"a ",Trait.none,Trait.none,200),

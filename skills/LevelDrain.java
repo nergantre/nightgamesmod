@@ -21,13 +21,17 @@ public class LevelDrain extends Drain {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return (this.getSelf().canAct()) && (c.getStance().canthrust(getSelf()))
-				&& (c.getStance().penetration(this.getSelf()))
-				&& (this.getSelf().canSpend(25));
+				&& (c.getStance().penetration(this.getSelf()));
 	}
 
 	@Override
 	public String describe() {
 		return "Drain your opponent of their levels";
+	}
+
+	@Override
+	public int getMojoCost(Combat c) {
+		return 60;
 	}
 
 	private int stealXP(Character target) {
@@ -44,9 +48,8 @@ public class LevelDrain extends Drain {
 	}
 	
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		int strength = Math.max(1, 1 + ((getSelf().get(Attribute.Dark)) / 30));
-		getSelf().spendMojo(c, 25);
 		
 		int type = Global.centeredrandom(2, getSelf().get(Attribute.Dark) / 20.0f, 2);
 		if (this.getSelf().human()) {
@@ -61,7 +64,7 @@ public class LevelDrain extends Drain {
 		case 1:
 			int stolen = stealXP(target);
 			if (stolen > 0) {
-				getSelf().add(new Satiated(target, stolen, 0));
+				getSelf().add(c, new Satiated(target, stolen, 0));
 				if (getSelf().human())
 					c.write("You have absorbed " + stolen + " XP from " + target.name() + "!\n");
 				else
@@ -69,7 +72,7 @@ public class LevelDrain extends Drain {
 			}
 			break;
 		case 2:
-			getSelf().add(new Satiated(target, 0, strength));
+			getSelf().add(c, new Satiated(target, 0, strength));
 			int xpStolen = 0;
 			for(int i = 0; i < strength; i++) {
 				xpStolen += 95 + (5 * (target.getLevel()));
@@ -85,7 +88,7 @@ public class LevelDrain extends Drain {
 		default:
 			break;
 		}
-		getSelf().getMojo().gain(1);
+		return type != 0;
 	}
 
 	@Override

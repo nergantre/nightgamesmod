@@ -33,7 +33,7 @@ public class ImpMale extends Pet {
 						"of semen. The imp blinks out of existence, but the damage is done. "+target.name()+" flushes bright red and looks stunned as the aphrodisiac laden fluid " +
 						"overwhelms her senses.");
 				target.arouse(4+4*Global.random(power), c);
-				target.add(new Horny(target,5,5, "imp cum"));
+				target.add(c, new Horny(target,5,5, "imp cum"));
 				remove();
 				break;
 			case 2:

@@ -44,11 +44,11 @@ public class CounterRide extends CounterBase {
 	public boolean usable(Combat c, Character target) {
 		return !c.getStance().dom(getSelf()) && !c.getStance().dom(target) && getSelf().canAct()
 				&& getSelf().pantsless() && target.pantsless()
-				&&((getSelf().hasDick() && target.hasPussy()) || (getSelf().hasPussy() && target.hasDick()))
-				&&getSelf().canSpend(getMojoCost());
+				&&((getSelf().hasDick() && target.hasPussy()) || (getSelf().hasPussy() && target.hasDick()));
 	}
 
-	public int getMojoCost() {
+	@Override
+	public int getMojoCost(Combat c) {
 		return 15;
 	}
 

@@ -70,18 +70,23 @@ public class Jewel extends BasePersonality {
 		growth.bonusMojo = 1;
 		preferredAttributes.add(Attribute.Ki);
 		preferredAttributes.add(Attribute.Power);
-		growth.traits.put(3, Trait.fitnessNut);
-		growth.traits.put(5, Trait.QuickRecovery);
-		growth.traits.put(8, Trait.powerfulhips);
-		growth.traits.put(10, Trait.oiledass);
-		growth.traits.put(12, Trait.alwaysready);
-		growth.traits.put(15, Trait.tight);
-		growth.traits.put(17, Trait.exhibitionist);
-		growth.traits.put(20, Trait.autonomousAss);
-		growth.actions.put(20, () -> {character.body.addReplace(new AnalPussyPart(), 1);});
-		growth.traits.put(24, Trait.BoundlessEnergy);
-		growth.traits.put(27, Trait.strongwilled);
-		growth.traits.put(30, Trait.smqueen);
+		growth.traits.put(1, Trait.fitnessNut);
+		growth.traits.put(4, Trait.QuickRecovery);
+		growth.traits.put(7, Trait.analTraining1);
+		growth.traits.put(10, Trait.powerfulhips);
+		growth.traits.put(13, Trait.shameless);
+		growth.traits.put(16, Trait.limbTraining1);
+		growth.traits.put(19, Trait.oiledass);
+		growth.traits.put(22, Trait.alwaysready);
+		growth.traits.put(25, Trait.tight);
+		growth.traits.put(28, Trait.limbTraining2);
+		growth.traits.put(31, Trait.analTraining2);
+		growth.traits.put(34, Trait.exhibitionist);
+		growth.traits.put(37, Trait.autonomousAss);
+		growth.actions.put(40, () -> {character.body.addReplace(new AnalPussyPart(), 1);});
+		growth.traits.put(43, Trait.analTraining3);
+		growth.traits.put(46, Trait.strongwilled);
+		growth.traits.put(49, Trait.smqueen);
 	}
 
 	@Override

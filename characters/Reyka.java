@@ -66,26 +66,31 @@ public class Reyka extends BasePersonality {
 	public void setGrowth() {
 		growth.stamina = 1;
 		growth.arousal = 6;
-		growth.mojo = 3;
+		growth.mojo = 2;
 		growth.bonusStamina = 1;
 		growth.bonusArousal = 3;
 		growth.bonusMojo = 2;
 		preferredAttributes.add(Attribute.Dark);
 		preferredAttributes.add(Attribute.Seduction);
-		growth.traits.put(3, Trait.shameless);
-		growth.traits.put(5, Trait.Confident);
+		growth.traits.put(2, Trait.pussyTraining1);
+		growth.traits.put(5, Trait.tongueTraining1);
 		growth.traits.put(8, Trait.expertGoogler);
-		growth.traits.put(10, Trait.addictivefluids);
-		growth.traits.put(10, Trait.spiritphage);
-		growth.traits.put(12, Trait.silvertongue);
-		growth.traits.put(15, Trait.lacedjuices);
-		growth.traits.put(15, Trait.energydrain);
-		growth.traits.put(17, Trait.experttongue);
-		growth.traits.put(20, Trait.soulsucker);
-		growth.traits.put(24, Trait.desensitized);
-		growth.traits.put(27, Trait.entrallingjuices);
-		growth.traits.put(30, Trait.vaginaltongue);
-		growth.traits.put(35, Trait.desensitized2);
+		growth.traits.put(11, Trait.addictivefluids);
+		growth.traits.put(14, Trait.graceful);
+		growth.traits.put(17, Trait.analTraining1);
+		growth.traits.put(20, Trait.spiritphage);
+		growth.traits.put(23, Trait.tongueTraining2);
+		growth.traits.put(26, Trait.magicEyeTrance);
+		growth.traits.put(29, Trait.dickhandler);
+		growth.traits.put(32, Trait.lacedjuices);
+		growth.traits.put(35, Trait.energydrain);
+		growth.traits.put(38, Trait.experttongue);
+		growth.traits.put(41, Trait.soulsucker);
+		growth.traits.put(44, Trait.analTraining2);
+		growth.traits.put(47, Trait.desensitized);
+		growth.traits.put(50, Trait.pussyTraining2);
+		growth.traits.put(53, Trait.vaginaltongue);
+		growth.traits.put(56, Trait.desensitized2);
 	}
 
 	@Override

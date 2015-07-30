@@ -21,7 +21,7 @@ public class Escape extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().bound()){
 			if(getSelf().check(Attribute.Cunning, 5-getSelf().escape())){
 				if(getSelf().human()){
@@ -37,13 +37,14 @@ public class Escape extends Skill {
 				else if(target.human()) {
 					c.write(getSelf(),getSelf().name()+" squirms against her restraints fruitlessly.");
 				}
+				return false;
 			}
 		} else if(getSelf().check(Attribute.Cunning, 20+target.get(Attribute.Cunning) - (5*c.getStance().time+getSelf().escape()))) {
 			if(getSelf().human()){
 				if (getSelf().hasStatus(Stsflag.cockbound)) {
 					c.write(getSelf(),"You some how managed to wiggle out of "+target.name()+"'s iron grip on your dick.");
 					getSelf().removeStatus(Stsflag.cockbound);
-					return;
+					return true;
 				}
 				c.write(getSelf(),"Your quick wits find a gap in "+target.name()+"'s hold and you slip away.");
 			}
@@ -51,13 +52,13 @@ public class Escape extends Skill {
 				if (getSelf().hasStatus(Stsflag.cockbound)) {
 					c.write(getSelf(),"She some how managed to wiggle out ofyour iron grip on her dick.");
 					getSelf().removeStatus(Stsflag.cockbound);
-					return;
+					return true;
 				}
 				c.write(getSelf(),getSelf().name()+" goes limp and you take the opportunity to adjust your grip on her. As soon as you move, she bolts out of your weakened hold. " +
 						"It was a trick!");
 			}
 			if (!getSelf().is(Stsflag.braced)) {
-				getSelf().add(new Braced(getSelf()));
+				getSelf().add(c, new Braced(getSelf()));
 			}
 			c.setStance(new Neutral(getSelf(),target));
 		} else {
@@ -75,7 +76,9 @@ public class Escape extends Skill {
 			} else if(target.human()) {
 				c.write(getSelf(),getSelf().name()+" manages to slip out of your grip for a moment, but you tickle her before she can get far and regain control.");
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

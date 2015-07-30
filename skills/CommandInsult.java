@@ -1,8 +1,10 @@
 package skills;
 
 import characters.Character;
+import characters.Trait;
 import combat.Combat;
 import combat.Result;
+import stance.Stance;
 
 public class CommandInsult extends PlayerCommand {
 
@@ -16,10 +18,15 @@ public class CommandInsult extends PlayerCommand {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoBuilt(Combat c) {
+		return 10;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		target.loseMojo(c, 15);
 		c.write(getSelf(),deal(c, 0, Result.normal, target));
-		getSelf().buildMojo(c, 10);
+		return true;
 	}
 
 	@Override

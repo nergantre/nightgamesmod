@@ -94,11 +94,11 @@ public class Jumped extends FemdomSexStance {
 		if(bottom.getStamina().get()<2 && !top.has(Trait.petite)){
 			if(bottom.human()){
 				c.write("Your legs give out and you fall on the floor. "+top.name()+" lands heavily on your lap.");
-				c.setStance(new Mount(top, bottom));
+				c.setStance(new Cowgirl(top, bottom));
 			}
 			else{
 				c.write(bottom.name()+" loses her balance and falls, pulling you down on top of her.");
-				c.setStance(new Mount(top,bottom));
+				c.setStance(new Cowgirl(top,bottom));
 			}
 		} else {
 			super.checkOngoing(c);

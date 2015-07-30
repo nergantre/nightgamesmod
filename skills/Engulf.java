@@ -30,8 +30,8 @@ public class Engulf extends Skill {
 		return getSelf().canAct() && c.getStance().en != Stance.engulfed && target.nude();
 	}
 
-	public int getMojoCost() {
-		return 5;
+	public int getMojoCost(Combat c) {
+		return 30;
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class Engulf extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		int difficulty = target.getLevel() - (target.getStamina().get() * 10 / target.getStamina().max()) + target.get(Attribute.Cunning) / 2;
 		int strength = getSelf().getLevel() + getSelf().get(Attribute.Cunning) + getSelf().get(Attribute.Bio);
 
@@ -92,7 +92,8 @@ public class Engulf extends Skill {
 		}
 		if (success) {
 			c.setStance(new Engulfed(getSelf(), target));
-			target.add(new Bound(target, 40, getSelf().name() + "'s slime"));
+			target.add(c, new Bound(target, 40, getSelf().name() + "'s slime"));
 		}
+		return success;
 	}
 }

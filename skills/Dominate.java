@@ -28,9 +28,14 @@ public class Dominate extends Skill {
 	public String describe() {
 		return "Overwhelm your opponent to force her to lie down: 10 Arousal";
 	}
+	
+	@Override
+	public int getMojoCost(Combat c) {
+		return 15;
+	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		getSelf().arouse(10, c);
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
@@ -41,6 +46,7 @@ public class Dominate extends Skill {
 		c.setStance(new StandingOver(getSelf(),target));
 		getSelf().emote(Emotion.dominant, 20);
 		target.emote(Emotion.nervous,20);
+		return true;
 	}
 
 	@Override

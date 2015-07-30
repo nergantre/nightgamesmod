@@ -19,7 +19,12 @@ public class FlyCatcher extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.pet!=null&&getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&getSelf().canSpend(15);
+		return target.pet!=null&&getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf());
+	}
+
+	@Override
+	public int getMojoCost(Combat c) {
+		return 15;
 	}
 
 	@Override
@@ -28,11 +33,13 @@ public class FlyCatcher extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(target.pet!=null){
 			target.pet.caught(c, getSelf());
 		}
 		getSelf().weaken(c, 5);
+
+		return true;
 	}
 
 	@Override

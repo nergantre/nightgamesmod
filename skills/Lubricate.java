@@ -28,15 +28,16 @@ public class Lubricate extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
 			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		target.add(new Oiled(target));
+		target.add(c, new Oiled(target));
 		getSelf().consume(Item.Lubricant, 1);
+		return true;
 	}
 
 	@Override

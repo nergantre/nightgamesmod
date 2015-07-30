@@ -30,7 +30,7 @@ public class Tear extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(c.getStance().reachTop(getSelf())&&!target.top.empty()){
 			if(target.top.peek().attribute()!=Trait.indestructible
 			&&getSelf().get(Attribute.Animism)>=12
@@ -125,8 +125,10 @@ public class Tear extends Skill {
 				else if(target.human()){
 					c.write(getSelf(),getSelf().name()+" yanks on your "+target.bottom.peek().getName()+", but fails to remove them.");
 				}
+				return false;
 			}
 		}
+		return true;
 	}
 
 	@Override

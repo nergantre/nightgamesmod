@@ -273,6 +273,7 @@ public class Combat extends Observable implements Serializable, Cloneable{
 				Global.gui().clearImage();
 				Global.gui().displayImage(imagePath,images.get(imagePath));
 			}
+			this.write("<br>");
 			p1.eot(this,p2,p2act);
 			p2.eot(this,p1,p1act);
 			getStance().decay(this);
@@ -301,8 +302,8 @@ public class Combat extends Observable implements Serializable, Cloneable{
 			p2act=((NPC)p2).actFast(this);
 			clear();
 			if(Global.isDebugOn(DebugFlags.DEBUG_SCENE)){
-				System.out.println(p1.name()+" uses "+p1act.toString());
-				System.out.println(p2.name()+" uses "+p2act.toString());
+				System.out.println(p1.name()+" uses "+p1act.getLabel(this));
+				System.out.println(p2.name()+" uses "+p2act.getLabel(this));
 			}
 			if(p1.pet!=null&&p2.pet!=null){
 				petbattle(p1.pet,p2.pet);
@@ -352,7 +353,8 @@ public class Combat extends Observable implements Serializable, Cloneable{
 		return !target.has(Trait.submissive) && target.counterChance(attacker, skill) > Global.random(100);
 	}
 
-	private void resolveSkill(Skill skill, Character target) {
+	private boolean resolveSkill(Skill skill, Character target) {
+		boolean orgasmed = false;
 		if(Skill.skillIsUsable(this, skill, target)){
 			write(skill.user().subjectAction("use ", "uses ") + skill.getLabel(this) + ".");
 			if (skill.makesContact() && !getStance().dom(target) && target.canAct() && checkCounter(skill.user(), target, skill)) {
@@ -367,19 +369,23 @@ public class Combat extends Observable implements Serializable, Cloneable{
 			}
 			checkStamina(target);
 			checkStamina(skill.user());
-			checkArousal(skill.user(), target, skill);
+			orgasmed = checkArousal(skill.user(), target, skill);
 		} else {
 			write(skill.user().possessivePronoun() + " " + skill.getLabel(this) + " failed.");
 		}
+		return orgasmed;
 	}
 
-	private void checkArousal(Character user, Character target, Skill skill) {
+	private boolean checkArousal(Character user, Character target, Skill skill) {
 		if (target.getArousal().isFull()) {
 			target.doOrgasm(this, user, skill);
+			return true;
 		}
 		if (user.getArousal().isFull()) {
-			user.doOrgasm(this, target, skill);			
+			user.doOrgasm(this, target, skill);
+			return true;
 		}
+		return false;
 	}
 	private void useSkills() {
 		Skill firstSkill, secondSkill;
@@ -395,9 +401,11 @@ public class Combat extends Observable implements Serializable, Cloneable{
 			firstCharacter = p2;
 			secondCharacter = p1;
 		}
-		resolveSkill(firstSkill, secondCharacter);
-		write("<br>");
-		resolveSkill(secondSkill, firstCharacter);
+		if (!resolveSkill(firstSkill, secondCharacter)) {
+			// only use second skill if an orgasm didn't happen
+			write("<br>");
+			resolveSkill(secondSkill, firstCharacter);
+		}
 	}
 
 	public void clear(){
@@ -445,7 +453,7 @@ public class Combat extends Observable implements Serializable, Cloneable{
 	}
 	public void checkStamina(Character p){
 		if(p.getStamina().isEmpty()){
-			p.add(new Winded(p,1));
+			p.add(this, new Winded(p,1));
 			if(!getStance().prone(p)){
 				Character other;
 				if(p==p1){
@@ -510,15 +518,15 @@ public class Combat extends Observable implements Serializable, Cloneable{
 		p2.endofbattle();
 		location.endEncounter();
 		boolean ding=false;
-		while (p1.getXP()>=95+(5*p1.getLevel())){
-			p1.loseXP(95+(p1.getLevel()*5));
+		while (p1.getXP()>=p1.getXPReqToNextLevel()){
+			p1.loseXP(p1.getXPReqToNextLevel());
 			p1.ding();
 			if(p1.human()){
 				ding=true;
 			}
 		}
-		while (p2.getXP()>=95 +(5*p2.getLevel())){
-			p2.loseXP(95+(p2.getLevel()*5));
+		while (p2.getXP()>=p2.getXPReqToNextLevel()){
+			p2.loseXP(p2.getXPReqToNextLevel());
 			p2.ding();
 			if(p2.human()){
 				ding=true;
@@ -583,10 +591,10 @@ public class Combat extends Observable implements Serializable, Cloneable{
 	
 	public void checkStanceStatus(Character c, Position oldStance, Position newStance) {
 		if (oldStance.prone(c) && !newStance.prone(c)) {
-			c.add(new Braced(c));
-			c.add(new Wary(c, 3));
+			c.add(this, new Braced(c));
+			c.add(this, new Wary(c, 3));
 		} else if (!oldStance.mobile(c) && newStance.mobile(c)) {
-			c.add(new Wary(c, 3));
+			c.add(this, new Wary(c, 3));
 		}
 	}
 
@@ -595,5 +603,8 @@ public class Combat extends Observable implements Serializable, Cloneable{
 		checkStanceStatus(p2, stance, newStance);
 		this.stance = newStance;
 		offerImage(stance.image(), "");
+	}
+	public Character getOther(Character affected) {
+		return affected == p1 ? p2: p1;
 	}
 }

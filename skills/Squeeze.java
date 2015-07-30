@@ -22,7 +22,11 @@ public class Squeeze extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoBuilt(Combat c) {
+		return 5;
+	}
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
 			if(target.pantsless()){
 				if(getSelf().has(Item.ShockGlove)&&getSelf().has(Item.Battery,2)){
@@ -75,7 +79,6 @@ public class Squeeze extends Skill {
 			else{
 				target.calm(c, 8);
 			}
-			getSelf().buildMojo(c, 10);
 			target.emote(Emotion.angry,15);
 		}
 		else{
@@ -85,7 +88,9 @@ public class Squeeze extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

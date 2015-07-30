@@ -60,7 +60,7 @@ public class Eve extends BasePersonality {
 	public void setGrowth() {
 		growth.stamina = 2;
 		growth.arousal = 3;
-		growth.mojo = 3;
+		growth.mojo = 2;
 		growth.bonusStamina = 1;
 		growth.bonusArousal = 3;
 		growth.bonusMojo = 2;

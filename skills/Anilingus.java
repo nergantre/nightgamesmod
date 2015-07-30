@@ -30,7 +30,7 @@ public class Anilingus extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		AssPart targetAss = (AssPart) target.body.getRandom("ass");
 		Result result = Result.normal;
 		int m = 0; int n = 0;
@@ -58,6 +58,7 @@ public class Anilingus extends Skill {
 		if (n > 0) {
 			target.buildMojo(c, n);
 		}
+		return result != Result.miss;
 	}
 
 	@Override

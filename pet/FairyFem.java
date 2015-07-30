@@ -52,7 +52,7 @@ public class FairyFem extends Pet {
 				break;
 			case 1:
 				c.write(owner(),own()+"faerie flies around "+owner().name()+", channelling energy into her.");
-				owner().buildMojo(c, 20);
+				owner().buildMojo(c, 20 + power);
 				break;
 			default:
 				c.write(owner(),own()+"faerie rains magic energy on "+owner().name()+", restoring her strength");

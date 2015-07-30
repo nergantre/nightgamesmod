@@ -17,12 +17,16 @@ public class Charm extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canSpend(20)&&getSelf().canRespond()&&c.getStance().facing()&&!target.wary();
+		return getSelf().canRespond()&&c.getStance().facing()&&!target.wary();
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
-		getSelf().spendMojo(c, 20);
+	public int getMojoCost(Combat c) {
+		return 20;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
@@ -35,17 +39,18 @@ public class Charm extends Skill {
 			target.tempt(c, getSelf(), m);
 			if(Global.random(4)>=1){
 				c.write(target.subjectAction("were", "was") + " charmed.");
-				target.add(new Charmed(target));
+				target.add(c, new Charmed(target));
 			}
 		} else {
 			target.tempt(c, getSelf(), m);
 			if(Global.random(4)>=2){
 				c.write(target.subjectAction("were", "was") + " charmed.");
-				target.add(new Charmed(target));
+				target.add(c, new Charmed(target));
 			}
 		}
 		target.emote(Emotion.horny,10);
 		getSelf().emote(Emotion.confident, 20);
+		return true;
 	}
 
 	@Override

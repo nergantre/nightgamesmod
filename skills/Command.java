@@ -40,7 +40,7 @@ public class Command extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if (getSelf().bound()) { // Undress self
 			c.write(getSelf(),"You feel a compulsion to loosen " + getSelf().nameOrPossessivePronoun()
 					+ " bondage. She quickly hops to her feet and grins at you like a predator while rubbing her wrists.");
@@ -60,13 +60,11 @@ public class Command extends Skill {
 			c.write(getSelf(),receive(c, 0, Result.normal, target));
 			new Masturbate(target).resolve(c, getSelf());
 		} else if (!c.getStance().penetration(getSelf())
-				&& c.getStance().dom(target)
 				&& getSelf().hasPussy() && target.hasDick()) { // Fuck me
 			c.setStance(new Mount(target, getSelf()));
 			c.write(getSelf(),receive(c, 0, Result.special, target));
 			new Fuck(target).resolve(c, getSelf());
 		} else if (!c.getStance().penetration(getSelf())
-				&& c.getStance().dom(target)
 				&& target.hasPussy() && getSelf().hasDick()) { // Fuck me
 			c.setStance(new Mount(target, getSelf()));
 			c.write(getSelf(),receive(c, 0, Result.special, target));
@@ -93,10 +91,10 @@ public class Command extends Skill {
 				new LickNipples(target).resolve(c, getSelf());
 			}
 		} else { // Confused
-			c.write(getSelf(),receive(c, 0, null, target));
-			target.removelist.add(target.getStatus(Stsflag.enthralled));
-			target.add(new Flatfooted(target, 1));
+			c.write(getSelf(),receive(c, 0, Result.normal, target));
+			new Masturbate(target).resolve(c, getSelf());
 		}
+		return true;
 	}
 
 	@Override

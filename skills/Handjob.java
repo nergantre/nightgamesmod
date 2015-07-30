@@ -21,7 +21,12 @@ public class Handjob extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoBuilt(Combat c) {
+		return 7;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		int m = 4 + Global.random(5);
 
 		if(target.roll(this, c, accuracy())){
@@ -34,7 +39,6 @@ public class Handjob extends Skill {
 					c.write(getSelf(),receive(c,m,Result.normal, target));
 				}
 				target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("cock"), m, c);
-				getSelf().buildMojo(c, 10);
 			}
 			else{
 				if(getSelf().human()){
@@ -53,7 +57,9 @@ public class Handjob extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

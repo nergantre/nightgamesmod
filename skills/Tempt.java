@@ -22,7 +22,7 @@ public class Tempt extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().human()) {
 			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
@@ -41,15 +41,16 @@ public class Tempt extends Skill {
 		int n = (int)Math.round(m);
 
 		boolean tempted = Global.random(5) == 0;
-		if(getSelf().has(Trait.darkpromises)&& tempted && getSelf().canSpend(15) && !target.wary()){
+		if(getSelf().has(Trait.darkpromises)&& tempted && !target.wary() && getSelf().canSpend(15)) {
 			getSelf().spendMojo(c, 15);
 			c.write(getSelf(), Global.format("{self:NAME-POSSESSIVE} words fall on fertile grounds. {other:NAME-POSSESSIVE} will to resist crumbles in light of {self:possessive} temptation.", getSelf(), target));
-			target.add(new Enthralled(target, getSelf(), 3));
+			target.add(c, new Enthralled(target, getSelf(), 3));
 		}
 
 		target.tempt(c, getSelf(), n);
 		target.emote(Emotion.horny,10);
 		getSelf().emote(Emotion.confident, 10);
+		return true;
 	}
 
 	@Override

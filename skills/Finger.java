@@ -21,7 +21,7 @@ public class Finger extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
 			int m = 4 + Global.random(4);
 			if(getSelf().get(Attribute.Seduction)>=8){
@@ -32,7 +32,6 @@ public class Finger extends Skill {
 					c.write(getSelf(),receive(c,0,Result.normal, target));
 				}
 				target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("pussy"), m, c);					
-				getSelf().buildMojo(c, 10);
 			}
 			else{
 				if(getSelf().human()){
@@ -42,17 +41,22 @@ public class Finger extends Skill {
 				}
 				target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("pussy"), m, c);					
 			}
-		}
-		else{
+		} else {
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
+	@Override
+	public int getMojoBuilt(Combat c) {
+		return 7;
+	}
 	public int accuracy(){
 		return 7;
 	}

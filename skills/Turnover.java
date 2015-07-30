@@ -33,7 +33,7 @@ public class Turnover extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
@@ -41,10 +41,11 @@ public class Turnover extends Skill {
 			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
 		if(!target.is(Stsflag.braced)){
-			target.add(new Braced(target));
+			target.add(c, new Braced(target));
 		}
 		c.setStance(new Behind(getSelf(),target));
 		target.emote(Emotion.dominant, 20);
+		return true;
 	}
 
 	@Override

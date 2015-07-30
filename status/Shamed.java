@@ -60,6 +60,7 @@ public class Shamed extends Status {
 			affected.addlist.add(new Cynical(affected));
 		}
 		affected.emote(Emotion.nervous,20);
+		affected.spendMojo(c, 5);
 		return 0;
 	}
 
@@ -95,7 +96,7 @@ public class Shamed extends Status {
 
 	@Override
 	public int gainmojo(int x) {
-		return 0;
+		return -x/2;
 	}
 
 	@Override

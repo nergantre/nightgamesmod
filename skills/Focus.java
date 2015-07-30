@@ -20,7 +20,12 @@ public class Focus extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoBuilt(Combat c) {
+		return 20;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
@@ -28,7 +33,7 @@ public class Focus extends Skill {
 			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
 		getSelf().calm(c, Global.random(8));
-		getSelf().buildMojo(c, 20);
+		return true;
 	}
 
 	@Override

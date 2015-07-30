@@ -68,13 +68,10 @@ public class Thrust extends Skill {
 	}
 	
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		BodyPart selfO = getSelfOrgan(c);
 		BodyPart targetO = getTargetOrgan(c, target);
 		Result result;
-		if (getMojoSpent() > 0) {
-			getSelf().spendMojo(c, getMojoSpent());
-		}
 		if(c.getStance().inserted(target)) {
 			result = Result.reverse;
 		} else if(c.getStance().en==Stance.anal){
@@ -96,19 +93,13 @@ public class Thrust extends Skill {
 			target.body.pleasure(getSelf(), selfO, targetO, m[0], c);
 		if (m[1] != 0)
 			getSelf().body.pleasure(target, targetO, selfO, m[1], c);
-		if (getMojoBuilt() > 0) {
-			getSelf().buildMojo(c, getMojoBuilt());
-		}
+
+		return true;
 	}
 
-	public int getMojoBuilt() {
-		return 10;
-	}
-	
-	public int getMojoSpent() {
+	public int getMojoBuilt(Combat c) {
 		return 0;
 	}
-
 
 	@Override
 	public Skill copy(Character user) {

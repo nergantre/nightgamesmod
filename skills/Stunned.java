@@ -19,7 +19,7 @@ public class Stunned extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
@@ -31,6 +31,7 @@ public class Stunned extends Skill {
 				c.write(getSelf(),receive(c,0,Result.normal, target));
 			}
 		}
+		return true;
 	}
 
 	@Override

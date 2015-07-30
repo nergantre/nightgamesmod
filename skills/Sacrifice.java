@@ -20,17 +20,21 @@ public class Sacrifice extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&!c.getStance().sub(getSelf())&&getSelf().getArousal().percent()>=70&&getSelf().canSpend(25);
+		return getSelf().canAct()&&!c.getStance().sub(getSelf())&&getSelf().getArousal().percent()>=70;
+	}
+
+	@Override
+	public int getMojoCost(Combat c) {
+		return 40;
 	}
 
 	@Override
 	public String describe() {
-		return "Damage yourself to reduce arousal: 25 Mojo";
+		return "Damage yourself to reduce arousal";
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
-		getSelf().spendMojo(c, 25);
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
@@ -38,7 +42,8 @@ public class Sacrifice extends Skill {
 			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
 		getSelf().weaken(c, 20 + getSelf().get(Attribute.Dark));
-		getSelf().calm(c, 20 + getSelf().get(Attribute.Dark));
+		getSelf().calm(c, getSelf().getArousal().max() / 3 + 20 + getSelf().get(Attribute.Dark));
+		return true;
 	}
 
 	@Override

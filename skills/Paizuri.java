@@ -3,6 +3,7 @@ package skills;
 import java.util.List;
 
 import global.Global;
+import stance.Stance;
 import characters.Attribute;
 import characters.Character;
 import characters.Trait;
@@ -29,7 +30,11 @@ public class Paizuri extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoBuilt(Combat c) {
+		return 15;
+	}
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		BreastsPart breasts = getSelf().body.getLargestBreasts();
 		//try to find a set of breasts large enough, if none, default to largest.
 		for (int i = 0 ; i < 3; i++) {
@@ -46,7 +51,7 @@ public class Paizuri extends Skill {
 		}
 		target.body.pleasure(getSelf(), getSelf().body.getRandom("breasts"), target.body.getRandom("cock"), m, c);					
 
-		getSelf().buildMojo(c, 25);
+		return true;
 	}
 
 	@Override

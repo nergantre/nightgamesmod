@@ -20,11 +20,11 @@ public class Restrain extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
-		resolve(c, target, false);
+	public boolean resolve(Combat c, Character target) {
+		return resolve(c, target, false);
 	}
 
-	public void resolve(Combat c, Character target, boolean nofail) {
+	public boolean resolve(Combat c, Character target, boolean nofail) {
 		if(nofail || target.roll(this, c, accuracy())) {
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.normal, target));
@@ -44,7 +44,9 @@ public class Restrain extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

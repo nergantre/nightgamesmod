@@ -40,7 +40,7 @@ public class MouthPart extends GenericBodyPart {
 			self.arouse(Math.max(opponent.getArousal().get() / 10, 5), c);
 		}
 		if (!fluid.isEmpty() && opponent.has(Trait.addictivefluids) && !self.is(Stsflag.tolerance)) {
-			self.add(new FluidAddiction(self, opponent, 5));
+			self.add(c, new FluidAddiction(self, opponent, 5));
 			FluidAddiction st = (FluidAddiction) self.getStatus(Stsflag.fluidaddiction);
 			if (st.activated()) {
 				if (self.human()) {
@@ -66,7 +66,7 @@ public class MouthPart extends GenericBodyPart {
 				} else {
 					c.write(opponent, "<br>" +opponent.name() + "'s mind falls into a pink colored fog from the tongue lashing.");
 				}
-				opponent.add(new Trance(opponent));
+				opponent.add(c, new Trance(opponent));
 				self.spendMojo(c, 10);
 			}
 			bonus += Global.random(3) + 4;
@@ -82,6 +82,15 @@ public class MouthPart extends GenericBodyPart {
 			self.buildMojo(c, 5);
 		}
 		return bonus;
+	}
+
+	@Override
+	public double getPleasure(Character self, BodyPart target) {
+		double pleasureMod = pleasure;
+		pleasureMod += self.has(Trait.tongueTraining1) ? .5 : 0;
+		pleasureMod += self.has(Trait.tongueTraining2) ? .7 : 0;
+		pleasureMod += self.has(Trait.tongueTraining3) ? .7 : 0;
+		return pleasureMod;
 	}
 
 	@Override

@@ -57,7 +57,7 @@ public class Fuck extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		String premessage = "";
 		if(!getSelf().bottom.empty() && getSelfOrgan().isType("cock")) {
 			if (getSelf().bottom.size() == 1) {
@@ -92,14 +92,15 @@ public class Fuck extends Skill {
 			}
 			target.body.pleasure(getSelf(), selfO, targetO, m, c);
 			getSelf().body.pleasure(target, targetO, selfO, m, c);
-			getSelf().buildMojo(c, 25);
 		} else {
 			if(getSelf().human()){
 				c.write(getSelf(),premessage + deal(c,0,Result.miss, target));
 			} else if(target.human()) {
 				c.write(getSelf(),premessage + receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

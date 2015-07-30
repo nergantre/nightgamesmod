@@ -19,7 +19,12 @@ public class SuckNeck extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoBuilt(Combat c) {
+		return 7;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
 			if(getSelf().get(Attribute.Dark)>=1){
 				if(getSelf().human()){
@@ -42,7 +47,6 @@ public class SuckNeck extends Skill {
 			}
 			int m = 1 + Global.random(8);
 			target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("skin"), m, c);					
-			getSelf().buildMojo(c, 5);
 		}
 		else{
 			if(getSelf().human()){
@@ -51,7 +55,9 @@ public class SuckNeck extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

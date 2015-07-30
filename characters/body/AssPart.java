@@ -14,7 +14,7 @@ public class AssPart extends GenericBodyPart {
 	 * 
 	 */
 	private static final long serialVersionUID = -1767949507600318064L;
-	public static AssPart generic = new AssPart("ass", "", 0, 1.5, 1);
+	public static AssPart generic = new AssPart("ass", "", 0, 1.2, 1);
 
 	public AssPart(String desc, String longDesc, double hotness,
 			double pleasure, double sensitivity) {
@@ -25,6 +25,15 @@ public class AssPart extends GenericBodyPart {
 	public AssPart(String desc, double hotness, double pleasure,
 			double sensitivity) {
 		super(desc, "", hotness, pleasure, sensitivity, false, "ass", "an ");
+	}
+
+	@Override
+	public double getPleasure(Character self, BodyPart target) {
+		double pleasureMod = super.getPleasure(self, target);
+		pleasureMod += self.has(Trait.analTraining1) ? .5 : 0;
+		pleasureMod += self.has(Trait.analTraining2) ? .7 : 0;
+		pleasureMod += self.has(Trait.analTraining3) ? .7 : 0;
+		return pleasureMod;
 	}
 
 	@Override
@@ -50,7 +59,7 @@ public class AssPart extends GenericBodyPart {
 
 	@Override
 	public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {
-		if (self.has(Trait.autonomousPussy)) {
+		if (self.has(Trait.autonomousAss)) {
 			c.write(self, Global.format("{self:NAME-POSSESSIVE} " + fullDescribe(self) + " churns against {other:name-possessive} cock, " +
 					"seemingly with a mind of its own. Her internal muscles feel like a hot fleshy hand inside her asshole, jerking {other:possessive} shaft.", self, opponent));
 			opponent.body.pleasure(self, this, otherOrgan, 10, c);
@@ -91,7 +100,6 @@ public class AssPart extends GenericBodyPart {
 		}
 		return null;
 	}
-	
 
 	@Override
 	public double priority(Character c) {

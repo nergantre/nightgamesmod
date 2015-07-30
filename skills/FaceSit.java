@@ -41,14 +41,14 @@ public class FaceSit extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().has(Trait.entrallingjuices)&&Global.random(4)==0 && !target.wary()){
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.special, target));
 			}else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.special, target));
 			}
-			target.add(new Enthralled(target,getSelf(), 5));
+			target.add(c, new Enthralled(target,getSelf(), 5));
 		} else if (getSelf().has(Trait.lacedjuices)) {
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.strong, target));
@@ -82,10 +82,20 @@ public class FaceSit extends Skill {
 		}
 
 		target.tempt(c, getSelf(), (int) Math.round(n));
-		target.add(new Shamed(target));
-		getSelf().buildMojo(c, 50);
+		target.loseWillpower(c, 5);
+		target.add(c, new Shamed(target));
 		if (c.getStance().enumerate() != Stance.facesitting) {
 			c.setStance(new FaceSitting(getSelf(), target));
+		}
+		return true;
+	}
+
+	@Override
+	public int getMojoBuilt(Combat c) {
+		if (c.getStance().enumerate() != Stance.facesitting) {
+			return 50;
+		} else {
+			return 25;
 		}
 	}
 

@@ -21,7 +21,7 @@ public class Tackle extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())&&getSelf().check(Attribute.Power,target.knockdownDC()-getSelf().get(Attribute.Animism))){
 			if(getSelf().get(Attribute.Animism)>=1){
 				if(getSelf().human()){
@@ -50,7 +50,14 @@ public class Tackle extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
+	}
+
+	@Override
+	public int getMojoCost(Combat c) {
+		return 15;
 	}
 
 	@Override

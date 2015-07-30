@@ -169,7 +169,7 @@ public class NPC extends Character {
 		}
 		dress(c);
 		target.undress(c);
-		if(c.clothespile.contains(target.outfit[1].firstElement())){
+		if(target.outfit[1].isEmpty() || c.clothespile.contains(target.outfit[1].firstElement())){
 			this.gain(target.getTrophy());
 		}
 		target.defeated(this);
@@ -206,7 +206,7 @@ public class NPC extends Character {
 		}
 		target.dress(c);
 		this.undress(c);
-		if(c.clothespile.contains(this.outfit[1].firstElement())){
+		if(this.outfit[1].isEmpty() || c.clothespile.contains(this.outfit[1].firstElement())){
 			target.gain(this.getTrophy());
 		}
 		this.defeated(target);
@@ -229,7 +229,7 @@ public class NPC extends Character {
 		}
 		dress(c);
 		target.undress(c);
-		if(c.clothespile.contains(target.outfit[1].firstElement())){
+		if(target.outfit[1].isEmpty() || c.clothespile.contains(target.outfit[1].firstElement())){
 			this.gain(target.getTrophy());
 		}
 		target.defeated(this);
@@ -307,10 +307,10 @@ public class NPC extends Character {
 		}
 		target.undress(c);
 		this.undress(c);
-		if(c.clothespile.contains(this.outfit[1].firstElement())){
+		if(this.outfit[1].isEmpty() || c.clothespile.contains(this.outfit[1].firstElement())){
 			target.gain(this.getTrophy());
 		}
-		if(c.clothespile.contains(target.outfit[1].firstElement())){
+		if(target.outfit[1].isEmpty() || c.clothespile.contains(target.outfit[1].firstElement())){
 			this.gain(target.getTrophy());
 		}
 		target.defeated(this);
@@ -628,11 +628,11 @@ public class NPC extends Character {
 		int pheromoneChance = opponent.top.size() + opponent.bottom.size();
 		if(opponent.has(Trait.pheromones)&&opponent.getArousal().percent()>=20&&Global.random(2 + pheromoneChance)==0){
 			c.write(opponent,"<br>You see "+name()+" swoon slightly as she gets close to you. Seems like she's starting to feel the effects of your musk.");
-			add(new Horny(this, opponent.has(Trait.augmentedPheromones) ? 2 : 1, 10, opponent.nameOrPossessivePronoun() + " pheromones"));
+			add(c, new Horny(this, opponent.has(Trait.augmentedPheromones) ? 2 : 1, 10, opponent.nameOrPossessivePronoun() + " pheromones"));
 		}
 		if(opponent.has(Trait.smqueen)&&!is(Stsflag.masochism)){
 			c.write(String.format("<br>%s seems to shudder in arousal at the thought of pain.", subject()));
-			add(new Masochistic(this));
+			add(c, new Masochistic(this));
 		}
 		if(has(Trait.RawSexuality)){
 			tempt(c, opponent, getArousal().max() / 25);
@@ -766,7 +766,7 @@ public class NPC extends Character {
 	    if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 	       String s = "AI choices: ";
 	       for (WeightedSkill entry : moveList) {
-	               s += String.format("\n(%.1f\t\t%.1f\t\tculm: %.1f\t\t/ %.1f)\t\t-> %s", entry.raw_rating, entry.rating, entry.weight, entry.rating * 100.0f /sum, entry.skill.toString());
+	               s += String.format("\n(%.1f\t\t%.1f\t\tculm: %.1f\t\t/ %.1f)\t\t-> %s", entry.raw_rating, entry.rating, entry.weight, entry.rating * 100.0f /sum, entry.skill.getLabel(c));
 	       }
 	       System.out.println(s);
 	    }

@@ -26,10 +26,12 @@ public class Drain extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return (this.getSelf().canAct())
-				&& (c.getStance().penetration(this.getSelf()))
-				&& (this.getSelf().canSpend(10));
+				&& (c.getStance().penetration(this.getSelf()));
 	}
-	
+	@Override
+	public int getMojoCost(Combat c) {
+		return 30;
+	}
 	@Override
 	public float priorityMod(Combat c) {
 		return 2.0f;
@@ -40,23 +42,20 @@ public class Drain extends Skill {
 		return "Drain your opponent of their energy";
 	}
 
-	private void steal(Character target, Attribute att, int amount) {
+	private void steal(Combat c, Character target, Attribute att, int amount) {
 		amount = Math.min(target.get(att), amount);
 		if (amount <= 0) { return; }
-		target.add(new Abuff(target,att, -amount,20));
-		getSelf().add(new Abuff(getSelf(),att, amount,20));
+		target.add(c, new Abuff(target,att, -amount,20));
+		getSelf().add(c, new Abuff(getSelf(),att, amount,20));
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
-		resolve(c, target, false);
+	public boolean resolve(Combat c, Character target) {
+		return resolve(c, target, false);
 	}
 
-	public void resolve(Combat c, Character target, boolean nocost) {
+	public boolean resolve(Combat c, Character target, boolean nocost) {
 		int strength = Math.max(10, 1 + (getSelf().get(Attribute.Dark) / 4));
-		if (!nocost) {
-			getSelf().spendMojo(c, 10);
-		}
 		int type = Math.max(1, Global.centeredrandom(6, getSelf().get(Attribute.Dark) / 3.0 ,3));
 
 		if (this.getSelf().human()) {
@@ -76,30 +75,30 @@ public class Drain extends Skill {
 			this.getSelf().buildMojo(c, 20);
 			break;
 		case 3:
-			steal(target, Attribute.Cunning, strength);
+			steal(c, target, Attribute.Cunning, strength);
 			target.loseMojo(c, target.getMojo().get());
 			break;
 		case 4:
-			steal(target, Attribute.Power, strength);
+			steal(c, target, Attribute.Power, strength);
 			target.weaken(c, 10);
 			break;
 		case 5:
-			steal(target, Attribute.Seduction, strength);
+			steal(c, target, Attribute.Seduction, strength);
 			target.tempt(c, getSelf(), 10);
 			break;
 		case 6:
-			steal(target, Attribute.Power, strength);
-			steal(target, Attribute.Seduction, strength);
-			steal(target, Attribute.Cunning, strength);
+			steal(c, target, Attribute.Power, strength);
+			steal(c, target, Attribute.Seduction, strength);
+			steal(c, target, Attribute.Cunning, strength);
 			target.mod(Attribute.Perception, 1);
 			target.weaken(c, 10);
-			target.spendMojo(c, 10);
+			target.loseMojo(c, 10);
 			target.tempt(c, getSelf(), 10);
 			break;
 		default:
 			break;
 		}
-		getSelf().getMojo().gain(1);
+		return type != 0;
 	}
 
 	@Override

@@ -14,7 +14,7 @@ public interface BodyPart extends Serializable {
 	public String getType();
 	public String describe(Character c);
 	public double getHotness(Character self, Character opponent);
-	public double getPleasure(BodyPart target);
+	public double getPleasure(Character self, BodyPart target);
 	public double getSensitivity(BodyPart target);
 	public String toString();
 	public boolean isReady(Character self);

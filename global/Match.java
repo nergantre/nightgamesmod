@@ -67,7 +67,7 @@ public class Match {
 		while(time<36){
 			if(index>=combatants.size()){
 				index=0;
-				if(meanLvl()>5&&Global.random(20)+dropOffTime>=22){
+				if(meanLvl()>3&&Global.random(10)+dropOffTime>=12){
 					dropPackage();
 					dropOffTime = 0;
 				}
@@ -277,9 +277,13 @@ public class Match {
 	public void dropPackage(){
 		ArrayList<Area> areas = new ArrayList<Area>();
 		areas.addAll(map.values());
-		Area target = areas.get(Global.random(areas.size()));
-		if(!target.corridor()&&!target.open()&&target.env.size()<5){
-			target.place(new Cache(meanLvl()+Global.random(11)-4));
+		for (int i = 0 ; i < 10; i++) {
+			Area target = areas.get(Global.random(areas.size()));
+			if(!target.corridor()&&!target.open()&&target.env.size()<5){
+				target.place(new Cache(meanLvl()+Global.random(11)-4));
+				Global.gui().message("<br><b>A new cache has been dropped off at " + target.name +"!</b>");
+				break;
+			}
 		}
 	}
 	public void dropChallenge(){

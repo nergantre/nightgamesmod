@@ -1,6 +1,8 @@
 package skills;
 
 import global.Global;
+import stance.Neutral;
+import stance.Stance;
 import characters.Attribute;
 import characters.Character;
 import characters.Trait;
@@ -30,7 +32,7 @@ public class Undress extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {	
+	public boolean resolve(Combat c, Character target) {	
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
@@ -38,6 +40,7 @@ public class Undress extends Skill {
 			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
 		getSelf().undress(c);
+		return true;
 	}
 
 	@Override
@@ -52,11 +55,17 @@ public class Undress extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
+		if (c.getStance().en != Stance.neutral) {
+			return "You wiggle out of your clothes and toss them aside";
+		}
 		return "You quickly strip off your clothes and toss them aside.";
 	}
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
+		if (c.getStance().en != Stance.neutral) {
+			return getSelf().name() + " wiggles out of her clothes and toss them aside";
+		}
 		return getSelf().name()+" puts some space between you and strips naked.";
 	}
 }

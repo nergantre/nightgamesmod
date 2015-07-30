@@ -18,12 +18,15 @@ public class Taunt extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.nude()&&!c.getStance().sub(getSelf())&&getSelf().canSpend(5)&&getSelf().canAct()&&!getSelf().has(Trait.shy);
+		return target.nude()&&!c.getStance().sub(getSelf())&&getSelf().canAct()&&!getSelf().has(Trait.shy);
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
-		getSelf().spendMojo(c, 5);
+	public int getMojoBuilt(Combat c) {
+		return 10;
+	}
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
@@ -35,19 +38,19 @@ public class Taunt extends Skill {
 			m += 4;
 			target.tempt(c, getSelf(), m);
 			if(Global.random(4)>=1){
-				target.add(new Shamed(target));
+				target.add(c, new Shamed(target));
 			}
 		} else {
 			target.tempt(c, getSelf(), m);
 			if(Global.random(4)>=2){
-				target.add(new Shamed(target));
+				target.add(c, new Shamed(target));
 			}
 		}
 		target.emote(Emotion.angry,30);
 		target.emote(Emotion.nervous,15);
 		getSelf().emote(Emotion.dominant, 20);
-		target.loseMojo(c, 10);
-		
+		target.loseMojo(c, 5);
+		return true;
 	}
 
 	@Override

@@ -38,7 +38,7 @@ public class CommandGive extends PlayerCommand {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		do {
 			transfer = Item.values()[Global.random(Item.values().length)];
 			if (!(target.has(transfer) && TRANSFERABLES.contains(transfer)))
@@ -48,6 +48,7 @@ public class CommandGive extends PlayerCommand {
 		getSelf().gain(transfer);
 		c.write(getSelf(),deal(c, 0, Result.normal, target));
 		transfer = null;
+		return true;
 	}
 
 	@Override

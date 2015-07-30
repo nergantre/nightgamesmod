@@ -20,7 +20,7 @@ public class ReverseStraddle extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
@@ -28,6 +28,7 @@ public class ReverseStraddle extends Skill {
 			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
 		c.setStance(new ReverseMount(getSelf(),target));
+		return true;
 	}
 
 	@Override

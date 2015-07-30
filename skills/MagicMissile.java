@@ -22,7 +22,12 @@ public class MagicMissile extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&getSelf().canSpend(5);
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf());
+	}
+
+	@Override
+	public int getMojoCost(Combat c) {
+		return 5;
 	}
 
 	@Override
@@ -31,8 +36,7 @@ public class MagicMissile extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
-		getSelf().spendMojo(c, 5);
+	public boolean resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
 			if(target.nude()&&Global.random(3)==2){
 				if(getSelf().human()){
@@ -65,7 +69,9 @@ public class MagicMissile extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

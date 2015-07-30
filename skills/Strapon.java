@@ -35,7 +35,11 @@ public class Strapon extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoBuilt(Combat c) {
+		return 15;
+	}
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		getSelf().bottom.push(Clothing.strapon);
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
@@ -43,11 +47,11 @@ public class Strapon extends Skill {
 		else if(target.human()){
 			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		getSelf().buildMojo(c, 10);
 		target.loseMojo(c, 10);
 		target.emote(Emotion.nervous, 10);
 		getSelf().emote(Emotion.confident, 30);
 		getSelf().emote(Emotion.dominant, 40);
+		return true;
 	}
 
 	@Override

@@ -29,7 +29,7 @@ public class Defabricator extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		target.nudify();
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
@@ -39,6 +39,7 @@ public class Defabricator extends Skill {
 			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
 		target.nudify();
+		return true;
 	}
 
 	@Override

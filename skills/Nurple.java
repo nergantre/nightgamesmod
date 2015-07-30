@@ -26,7 +26,7 @@ public class Nurple extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
 			if(getSelf().has(Item.ShockGlove)&&getSelf().has(Item.Battery,2)){
 				if(getSelf().human()){
@@ -47,7 +47,7 @@ public class Nurple extends Skill {
 				target.pain(c, Global.random(9)+target.get(Attribute.Perception)/2);
 			}
 			target.calm(c, Global.random(5));
-			getSelf().buildMojo(c, 10);
+			target.loseMojo(c, 5);
 			target.emote(Emotion.angry,15);
 		}
 		else{
@@ -57,7 +57,9 @@ public class Nurple extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

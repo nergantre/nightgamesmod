@@ -64,24 +64,28 @@ public class Mara extends BasePersonality  {
 	public void setGrowth() {
 		growth.stamina = 2;
 		growth.arousal = 2;
-		growth.mojo = 5;
+		growth.mojo = 3;
 		growth.bonusStamina = 1;
 		growth.bonusArousal = 2;
 		growth.bonusMojo = 2;
 		preferredAttributes.add(Attribute.Science);
 		preferredAttributes.add(Attribute.Cunning);
 		growth.traits.put(3, Trait.cautious);
-		growth.traits.put(5, Trait.Sneaky);
-		growth.traits.put(8, Trait.freeSpirit);
-		growth.traits.put(10, Trait.strongwilled);
-		growth.traits.put(12, Trait.lacedjuices);
-		growth.traits.put(15, Trait.tight);
-		growth.traits.put(17, Trait.addictivefluids);
-		growth.traits.put(20, Trait.energydrain);
-		growth.traits.put(24, Trait.entrallingjuices);
-		growth.traits.put(27, Trait.desensitized);
-		growth.traits.put(30, Trait.holecontrol);
-		growth.traits.put(35, Trait.desensitized2);
+		growth.traits.put(6, Trait.freeSpirit);
+		growth.traits.put(9, Trait.limbTraining1);
+		growth.traits.put(12, Trait.strongwilled);
+		growth.traits.put(15, Trait.pussyTraining1);
+		growth.traits.put(18, Trait.tight);
+		growth.traits.put(21, Trait.tongueTraining1);
+		growth.traits.put(24, Trait.limbTraining2);
+		growth.traits.put(27, Trait.skeptical);
+		growth.traits.put(30, Trait.limbTraining3);
+		growth.traits.put(33, Trait.pussyTraining2);
+		growth.traits.put(36, Trait.tongueTraining2);
+		growth.traits.put(39, Trait.calm);
+		growth.traits.put(42, Trait.pussyTraining3);
+		growth.traits.put(45, Trait.holecontrol);
+		growth.traits.put(48, Trait.desensitized2);
 	}
 
 	@Override
@@ -207,7 +211,7 @@ public class Mara extends BasePersonality  {
 					"earnestly, intent on showing just how well you can 'give'. Soon Mara is collapsed on top of you breathing hard and her eyes unfocused. You stand and take your leave. You may have lost the battle but the war is far from over.";
 		}
 		if(character.has(Trait.madscientist)&&character.has(Item.Lubricant)){
-			target.add(new Oiled(target));
+			target.add(c, new Oiled(target));
 			return "You've fallen completely into Mara's hands now. Her nimble fingers dance over your dick and balls, playing you like an instrument. You grit your teeth and "+
 				"try to endure her touch until your can finger her to orgasm. It's a lost cause though, groan as you inevitably feel your pleasure building to a peak. Just before "+
 				"you hit the point of no return, her wonderful fingers release you. Mara grins impishly as your dick twitches in frustration at being left on edge. As soon as you've "+
@@ -253,7 +257,7 @@ public class Mara extends BasePersonality  {
 	@Override
 	public String defeat(Combat c,Result flag) {
 		if(character.has(Trait.madscientist)&&character.has(Item.SPotion)){
-			character.add(new Hypersensitive(character));
+			character.add(c, new Hypersensitive(character));
 			return "Mara begins to panic as she realizes she's on the verge of defeat. She grabs a small bottle of liquid from pouch on her belt, but it slips from her fingers " +
 					"as she shudders in orgasm. You finger her pussy until she goes limp. While you're waiting for her to recover, you take a look at the bottle she dropped. " +
 					"You recognize this stuff, it greatly heightens sensitivity when absorbed into skin. It seems like a shame not to use it.<p>Mara sits up, looking at you " +

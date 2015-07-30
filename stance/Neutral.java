@@ -69,7 +69,7 @@ public class Neutral extends Position {
 
 	@Override
 	public boolean oral(Character c) {
-		return false;
+		return true;
 	}
 
 	@Override

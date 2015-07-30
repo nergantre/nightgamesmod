@@ -17,7 +17,7 @@ public class BuffEffect extends ItemEffect {
 		} else if (user.human()) {
 			Global.gui().message(Global.format(String.format("{self:SUBJECT-ACTION:are|is} now %s", applied.name), user, opponent));
 		}
-		user.add(applied.instance(user, opponent));
+		user.add(c, applied.instance(user, opponent));
 		return true;
 	}
 }

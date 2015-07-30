@@ -20,10 +20,11 @@ public class CommandStripPlayer extends PlayerCommand {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		getSelf().undress(c);
 		if (getSelf().human())
 			c.write(getSelf(),deal(c, 0, Result.normal, target));
+		return true;
 	}
 
 	@Override

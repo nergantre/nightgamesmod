@@ -73,23 +73,23 @@ public class Airi extends BasePersonality {
 	public void setGrowth() {
 		growth.stamina = 1;
 		growth.arousal = 2;
-		growth.mojo = 3;
+		growth.mojo = 2;
 		growth.bonusStamina = 1;
 		growth.bonusArousal = 1;
 		growth.bonusMojo = 2;
-
-		growth.traits.put(5, Trait.lacedjuices);
-		growth.traits.put(7, Trait.QuickRecovery);
-		growth.traits.put(9, Trait.BoundlessEnergy);
-		growth.traits.put(11, Trait.shameless);
-		growth.traits.put(13, Trait.Sneaky);
-		growth.traits.put(15, Trait.lactating);
-		growth.traits.put(17, Trait.addictivefluids);
-		growth.traits.put(20, Trait.autonomousPussy);
-		growth.traits.put(20, Trait.entrallingjuices);
-		growth.traits.put(24, Trait.energydrain);
-		growth.traits.put(27, Trait.desensitized);
-		growth.traits.put(30, Trait.vaginaltongue);
+		growth.traits.put(9, Trait.steady);
+		growth.traits.put(12, Trait.lacedjuices);
+		growth.traits.put(15, Trait.QuickRecovery);
+		growth.traits.put(18, Trait.BoundlessEnergy);
+		growth.traits.put(21, Trait.shameless);
+		growth.traits.put(24, Trait.Sneaky);
+		growth.traits.put(27, Trait.lactating);
+		growth.traits.put(30, Trait.addictivefluids);
+		growth.traits.put(33, Trait.autonomousPussy);
+		growth.traits.put(36, Trait.entrallingjuices);
+		growth.traits.put(39, Trait.energydrain);
+		growth.traits.put(42, Trait.desensitized);
+		growth.traits.put(45, Trait.vaginaltongue);
 	}
 
 	@Override
@@ -148,7 +148,7 @@ public class Airi extends BasePersonality {
 
 	@Override
 	public String temptLiner(Character target) {
-		return "<i>\"Fill me with you... You'll soon forget all else...\"</i>";
+		return "<i>\"Fill me with yourself... You will forget about everything...\"</i>";
 	}
 
 	@Override

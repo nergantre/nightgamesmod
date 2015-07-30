@@ -23,7 +23,12 @@ public class CommandOral extends PlayerCommand {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoBuilt(Combat c) {
+		return 30;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		boolean silvertongue = target.has(Trait.silvertongue);
 		boolean lowStart = getSelf().getArousal().get() < 15;
 		int m = (silvertongue ? 8 : 5) + Global.random(10);
@@ -35,8 +40,8 @@ public class CommandOral extends PlayerCommand {
 					c.write(getSelf(),deal(c, 0, Result.strong, target));
 			else
 				c.write(getSelf(),deal(c, 0, Result.normal, target));
-		getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("cock"), m, c);					
-		getSelf().buildMojo(c, 30);
+		getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("cock"), m, c);	
+		return true;
 	}
 
 	@Override

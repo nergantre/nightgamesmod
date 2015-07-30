@@ -20,46 +20,42 @@ public class Kiss extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoBuilt(Combat c) {
+		return 10;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		int m = 2+Global.random(2);
 		if(getSelf().has(Trait.romantic)){
 			m += 3;
 		}
+		Result res = Result.normal;
+		if(getSelf().get(Attribute.Seduction)>=9){
+			m += 2 + Global.random(2);
+			res = Result.normal;
+		} else{
+			res = Result.weak;
+		}
 		if(getSelf().has(Trait.experttongue)){
 			m += 5;
-			if(getSelf().human()){
-				c.write(getSelf(),deal(c,m,Result.special, target));
-			}
-			else if(target.human()){
-				c.write(getSelf(),receive(c,m,Result.special, target));
-			}
-			target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("mouth"), m, c);
-			getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("mouth"), 1, c);
-			getSelf().buildMojo(c, 10);
+			res = Result.special;
 		}
-		else if(getSelf().get(Attribute.Seduction)>=9){
-			m += 2 + Global.random(2);
-			if(getSelf().human()){
-				c.write(getSelf(),deal(c,m,Result.normal, target));
-			}
-			else if(target.human()){
-				c.write(getSelf(),receive(c,m,Result.normal, target));
-			}
-			target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("mouth"), m, c);
-			getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("mouth"), 1, c);
-			getSelf().buildMojo(c, 10);
+		if(getSelf().has(Trait.energydrain)){
+			res = Result.upgrade;
 		}
-		else{
-			if(getSelf().human()){
-				c.write(getSelf(),deal(c,m,Result.weak, target));
-			}
-			else if(target.human()){
-				c.write(getSelf(),receive(c,m,Result.weak, target));
-			}
-			target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("mouth"), m, c);
-			getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("mouth"), 1, c);
-			getSelf().buildMojo(c, 5);
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,m,res, target));
 		}
+		else if(target.human()){
+			c.write(getSelf(),receive(c,m,res, target));
+		}
+		if (res == Result.upgrade) {
+			target.loseWillpower(c, Global.random(3) + 2);
+		}
+		target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("mouth"), m, c);
+		getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("mouth"), 1, c);
+		return true;
 	}
 
 	@Override
@@ -80,9 +76,13 @@ public class Kiss extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		if(modifier==Result.special){
+		if(modifier==Result.upgrade){
 			return "You pull "+target.name()+" to you and kiss her passionately. You run your tongue over her lips until her opens them and immediately invade her mouth. " +
 					"You tangle your tongue around hers and probe the sensitive insides her mouth. As you finally break the kiss, she leans against you, looking kiss-drunk and needy.";
+		}
+		if(modifier==Result.special){
+			return "You pull "+target.name()+" to you and kiss her passionately. You run your tongue over her lips until her opens them and immediately invade her mouth. " +
+					"You focus on her lifeforce inside her and draw it out through the kiss while overwhelming her defenses with heady pleasure. As you finally break the kiss, she leans against you, looking kiss-drunk and needy.";
 		}
 		else if(modifier==Result.weak){
 			return "You aggressively kiss "+target.name()+" on the lips. It catches her off guard for a moment, but she soon responds approvingly.";
@@ -102,6 +102,11 @@ public class Kiss extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
+		if(modifier==Result.upgrade){
+			return getSelf().name()+" seductively pulls you into a deep kiss. As first you try to match her enthusiastic tongue with your own, but you're quickly overwhelmed. "
+					+ "You start to feel weak as the kiss continues, and you realize she's draining you; her kiss is sapping your will to fight through your connection! "
+					+ "You try to resist, but her splendid tonguework prevents you from mounting much of a defense.";
+		}
 		if(modifier==Result.special){
 			return getSelf().name()+" seductively pulls you into a deep kiss. As first you try to match her enthusiastic tongue with your own, but you're quickly overwhelmed. She draws " +
 					"your tongue into her mouth and sucks on it in a way that seems to fill your mind with a pleasant, but intoxicating fog.";
@@ -122,6 +127,7 @@ public class Kiss extends Skill {
 	public String describe() {
 		return "Kiss your opponent";
 	}
+
 	@Override
 	public boolean makesContact() {
 		return true;
@@ -132,4 +138,10 @@ public class Kiss extends Skill {
 	public String getWithOrganType(Combat c, Character target) {
 		return "mouth";
 	}
+
+	@Override
+	public String getLabel(Combat c){
+		return getSelf().has(Trait.energydrain) ? "Drain Kiss" : "Kiss";
+	}
+
 }

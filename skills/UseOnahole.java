@@ -27,7 +27,7 @@ public class UseOnahole extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		int m = 5+Global.random(5);
 
 		if(target.roll(this, c, accuracy())){
@@ -56,7 +56,9 @@ public class UseOnahole extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

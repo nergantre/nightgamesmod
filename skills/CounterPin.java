@@ -30,11 +30,11 @@ public class CounterPin extends CounterBase {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !c.getStance().dom(getSelf()) && !c.getStance().dom(target) && getSelf().canAct()
-				&&getSelf().canSpend(getMojoCost());
+		return !c.getStance().dom(getSelf()) && !c.getStance().dom(target) && getSelf().canAct();
 	}
 
-	public int getMojoCost() {
+	@Override
+	public int getMojoCost(Combat c) {
 		return 10;
 	}
 

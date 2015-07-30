@@ -25,7 +25,7 @@ public class Sedate extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		getSelf().consume(Item.Sedative, 1);
 		if(getSelf().has(Item.Aersolizer)){
 			if(getSelf().human()){
@@ -35,7 +35,7 @@ public class Sedate extends Skill {
 				c.write(getSelf(),receive(c,0,Result.special, target));
 			}
 			target.weaken(c, 30);
-			target.loseMojo(c, 10);
+			target.loseMojo(c, 25);
 		}
 		else if(target.roll(this, c, accuracy())){
 			if(getSelf().human()){
@@ -45,7 +45,7 @@ public class Sedate extends Skill {
 				c.write(getSelf(),receive(c,0,Result.normal, target));
 			}
 			target.weaken(c, 30);
-			target.loseMojo(c, 10);
+			target.loseMojo(c, 25);
 		}
 		else{
 			if(getSelf().human()){
@@ -54,7 +54,9 @@ public class Sedate extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

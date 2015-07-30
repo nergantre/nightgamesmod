@@ -27,7 +27,7 @@ public class Aphrodisiac extends Skill {
 				&& (!c.getStance().prone(this.getSelf()));
 	}
 
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		int magnitude = Global.random(5) + 15;
 		
 		if (getSelf().hasPussy() && getSelf().body.getRandomPussy() == PussyPart.succubus) {
@@ -60,9 +60,11 @@ public class Aphrodisiac extends Skill {
 				c.write(getSelf(),deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(getSelf(),receive(c,0,Result.miss, getSelf()));
+				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	public Skill copy(Character user) {
@@ -80,14 +82,16 @@ public class Aphrodisiac extends Skill {
 		else if(modifier == Result.miss){
 			return "You throw an Aphrodisiac at "+target.name()+", but she ducks out of the way and it splashes harmlessly on the ground. What a waste.";
 		} else if (modifier == Result.strong){
-			return getSelf().name()
-					+ " dip a finger "
-					+ (getSelf().pantsless() ? "" : ("under your "
+			return getSelf().subjectAction("dip", "dips")
+					+ " a finger "
+					+ (getSelf().pantsless() ? "" : ("under " + getSelf().possessivePronoun()
 							+ getSelf().bottom.peek() + " and "))
-					+ "into your pussy. Once you have collected a drop of your juices"
-					+ " on your fingertip, you pull it out and flick it at " +target.name() + ","
-					+ " skillfully depositing it in her open mouth. You immediately see "
-					+ " a flash of heat spread through her";
+					+ "into " +getSelf().possessivePronoun()+ " pussy. Once " +getSelf().subjectAction("have", "has") + " collected a drop of "
+							+ getSelf().possessivePronoun() + " juices"
+					+ " on " + getSelf().possessivePronoun() + " fingertip, " + getSelf().subjectAction("pull", "pulls") + " it out and flicks it at " + target.directObject() +","
+					+ " skillfully depositing it in " + target.possessivePronoun() +" open mouth. " +Global.capitalizeFirstLetter(target.subject()) +" immediately feel"
+					+ " a flash of heat spread through " + target.directObject() + " and only a small part of it"
+					+ " results from the anger caused by " + getSelf().possessivePronoun() +" dirty move.";
 		}
 		else{
 			return "You uncap a small bottle of Aphrodisiac and splash it in "
@@ -98,27 +102,28 @@ public class Aphrodisiac extends Skill {
 			
 	}
 
-	public String receive(Combat c, int damage, Result modifier, Character attacker) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss){
-			return getSelf().name()+" splashes a bottle of liquid in your direction, but none of it hits you.";
+			return getSelf().subjectAction("splash", "splashes")+" a bottle of liquid in " + target.nameOrPossessivePronoun() + " direction, but none of it hits you.";
 		}
 		else if(modifier == Result.special){
 			return getSelf().name()+" inserts a bottle into the attachment on her arm. You're suddenly surrounded by a sweet smelling cloud of mist. You feel your blood boil " +
 					"with desire as the unnatural gas takes effect";
 		}
 		else if (modifier == Result.strong){
-			return attacker.name()
-					+ " dips a finger "
-					+ (attacker.pantsless() ? "" : ("under her "
-							+ attacker.bottom.peek() + " and "))
-					+ "into her pussy. Once she has collected a drop of her juices"
-					+ " on her fingertip, she pulls it out and flicks it at you,"
-					+ " skillfully depositing it in your open mouth. You immediately feel"
-					+ " a flash of heat spread through you and only a small part of it"
-					+ " results from the anger caused by her dirty move.";
+			return getSelf().subjectAction("dip", "dips")
+					+ " a finger "
+					+ (getSelf().pantsless() ? "" : ("under " + getSelf().possessivePronoun()
+							+ getSelf().bottom.peek() + " and "))
+					+ "into " +getSelf().possessivePronoun()+ " pussy. Once " +getSelf().subjectAction("have", "has") + " collected a drop of "
+							+ getSelf().possessivePronoun() + " juices"
+					+ " on " + getSelf().possessivePronoun() + " fingertip, " + getSelf().subjectAction("pull", "pulls") + " it out and flicks it at " + target.directObject() +","
+					+ " skillfully depositing it in " + target.possessivePronoun() +" open mouth. " +Global.capitalizeFirstLetter(target.subject()) +" immediately feel"
+					+ " a flash of heat spread through " + target.directObject() + " and only a small part of it"
+					+ " results from the anger caused by " + getSelf().possessivePronoun() +" dirty move.";
 		}
 		else{
-			return attacker.name()
+			return getSelf().name()
 					+ " throws a strange, sweet-smelling liquid in your face. An unnatural warmth spreads through your body and gathers in your dick like a fire.";
 		}
 	}

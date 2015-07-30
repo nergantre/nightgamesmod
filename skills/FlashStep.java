@@ -21,16 +21,19 @@ public class FlashStep extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&!c.getStance().prone(target)&&!c.getStance().behind(getSelf())&&getSelf().canAct()&&!c.getStance().penetration(getSelf())&&getSelf().canSpend(15);
+		return !target.wary() && c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&!c.getStance().prone(target)&&!c.getStance().behind(getSelf())&&getSelf().canAct()&&!c.getStance().penetration(getSelf());
 	}
-
+	@Override
+	public int getMojoCost(Combat c) {
+		return 15;
+	}
 	@Override
 	public String describe() {
 		return "Use lightning speed to get behind your opponent before she can react: 10 stamina";
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
@@ -39,6 +42,8 @@ public class FlashStep extends Skill {
 		}
 		c.setStance(new Behind(getSelf(),target));
 		getSelf().weaken(c, 10);
+
+		return true;
 	}
 
 	@Override

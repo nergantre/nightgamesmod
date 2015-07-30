@@ -67,7 +67,7 @@ public abstract class BasePersonality implements Personality {
 	@Override
 	public void pickFeat() {
 		ArrayList<Trait> available = new ArrayList<Trait>();
-		for(Trait feat: Global.getFeats()){
+		for(Trait feat: Global.getFeats(character)){
 			if(!character.has(feat)){
 				available.add(feat);
 			}

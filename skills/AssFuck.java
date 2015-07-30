@@ -42,7 +42,7 @@ public class AssFuck extends Fuck {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		String premessage = "";
 		if(!getSelf().bottom.empty() && getSelfOrgan().isType("cock")) {
 			if (getSelf().bottom.size() == 1) {
@@ -59,7 +59,7 @@ public class AssFuck extends Fuck {
 				premessage += " and {self:action:lube|lubes}";
 			}
 			premessage += " up {other:possessive} ass with {self:possessive} " + fluids + ".";
-			target.add(new Oiled(target));
+			target.add(c, new Oiled(target));
 		} else if(!target.hasStatus(Stsflag.oiled)&&getSelf().has(Item.Lubricant)) {
 			if (premessage.isEmpty()) {
 				premessage = "{self:subject-action:lube|lubes}";
@@ -67,7 +67,7 @@ public class AssFuck extends Fuck {
 				premessage += " and {self:action:lube|lubes}";
 			}
 			premessage += " up {other:possessive} ass.";
-			target.add(new Oiled(target));
+			target.add(c, new Oiled(target));
 			getSelf().consume(Item.Lubricant, 1);
 		}
 		c.write(getSelf(), Global.format(premessage, getSelf(), target));
@@ -95,12 +95,12 @@ public class AssFuck extends Fuck {
 		if (!getSelf().has(Trait.strapped)) {
 			getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), m / 2, c);
 		}
-		getSelf().buildMojo(c, 25);
 		getSelf().emote(Emotion.dominant, 100);
 		target.emote(Emotion.desperate,50);
 		if(!target.has(Trait.Unflappable)) {
-			target.add(new Flatfooted(target,1));
+			target.add(c, new Flatfooted(target,1));
 		}
+		return true;
 	}
 
 	@Override

@@ -24,12 +24,17 @@ public class Grind extends Thrust {
 		return getSelf().canAct()&&c.getStance().dom(getSelf())&&c.getStance().penetration(getSelf())&&c.getStance().en!=Stance.anal;
 	}
 
+	@Override
+	public int getMojoBuilt(Combat c) {
+		return 5;
+	}
+
 	public int[] getDamage(Character target, Position stance) {
 		int results[] = new int[2];
 
-		int ms = 10;
+		int ms = 6;
 
-		int mt = 6;
+		int mt = 4;
 		if(getSelf().has(Trait.experienced)){
 			mt = mt * 3 / 4;
 		}
@@ -66,7 +71,7 @@ public class Grind extends Thrust {
 
 	@Override
 	public String describe() {
-		return "Grind against your opponent with minimal thrusting. Extremely consistent pleasure";
+		return "Grind against your opponent with minimal thrusting. Extremely consistent pleasure and builds some mojo";
 	}
 
 	@Override

@@ -16,12 +16,16 @@ public class Reversal extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && !c.getStance().mobile(getSelf())&&c.getStance().sub(getSelf())&&getSelf().canSpend(10)&&getSelf().canAct();
+		return !target.wary() && !c.getStance().mobile(getSelf())&&c.getStance().sub(getSelf())&&getSelf().canAct();
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
-		getSelf().spendMojo(c, 10);
+	public int getMojoCost(Combat c) {
+		return 20;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.normal, target));
@@ -41,7 +45,9 @@ public class Reversal extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

@@ -20,11 +20,10 @@ public class Suckle extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		Result results = target.has(Trait.lactating) ? Result.special : Result.normal;
-		int m = 5 + Global.random(6);
+		int m = (getSelf().get(Attribute.Seduction) > 10 ? 5 : 0) + Global.random(6);
 		if(getSelf().human()){
-			//c.offerImage("LickNipples.jpg", "Art by Fujin Hitokiri");
 			c.write(getSelf(),deal(c,0,results, target));
 		}
 		else if(target.human()){
@@ -36,10 +35,9 @@ public class Suckle extends Skill {
 		target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("breasts"), m, c);
 		if (results == Result.special) {
 			getSelf().tempt(c, target, (3 + target.body.getRandomBreasts().size) * 2);
-			target.buildMojo(c, 10);
-		} else {
-			getSelf().buildMojo(c, 10);
+			target.buildMojo(c, 8);
 		}
+		return true;
 	}
 
 	@Override

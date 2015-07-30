@@ -53,6 +53,9 @@ import skills.Struggle;
 import skills.Stunned;
 import skills.Tactics;
 import skills.Tickle;
+import status.Enthralled;
+import status.Horny;
+import status.Resistance;
 import status.Status;
 import status.Stsflag;
 import trap.Trap;
@@ -180,6 +183,19 @@ public abstract class Character extends Observable implements Cloneable{
 	public String name(){
 		return name;
 	}
+
+	public List<Resistance> getResistances() {
+		List<Resistance> resists = new ArrayList<>();
+		for (Trait t : traits) {
+			Trait.getResistance(t);
+		}
+		return resists;
+	}
+
+	public int getXPReqToNextLevel() {
+		return Math.min(45+(5*getLevel()), 100);
+	}
+
 	public int get(Attribute a){
 		int total =0;
 		if(att.containsKey(a)){
@@ -209,7 +225,12 @@ public abstract class Character extends Observable implements Cloneable{
 			if(has(Trait.kinky)){
 				total+=2;
 			}
-			break;
+			break;		
+		case Power:
+				if(has(Trait.testosterone) && hasDick()){
+					total+=Math.max(10, 2 + getLevel() / 2);
+				}
+				break;
 		case Science:
 			if(has(Trait.geeky)){
 				total+=2;
@@ -319,7 +340,7 @@ public abstract class Character extends Observable implements Cloneable{
 	public String loseFeat() {
 		String string = "";
 		ArrayList<Trait> available = new ArrayList<Trait>();
-		for(Trait feat: Global.getFeats()){
+		for(Trait feat: Global.getFeats(this)){
 			if(has(feat)){
 				available.add(feat);
 			}
@@ -336,9 +357,9 @@ public abstract class Character extends Observable implements Cloneable{
 	}
 	public void pain(Combat c, int i){
 		int pain = i;
-		Character other = this == c.p1 ? c.p2 : c.p1;
+		Character other = c == null ? null : (this == c.p1 ? c.p2 : c.p1);
 
-		if (has(Trait.cute)) {
+		if (has(Trait.cute) && other != null) {
 			i = Math.max(i - get(Attribute.Seduction), i/4 + 1);
 			c.write(this, Global.format("{self:NAME-POSSESSIVE} innocent appearance throws {other:direct-object} off and {other:subject-action:use|uses} much less strength than intended.", this, other));
 		}
@@ -472,13 +493,15 @@ public abstract class Character extends Observable implements Cloneable{
 		return willpower;
 	}
 	public void buildMojo(Combat c, int percent){
-		int x = (percent*mojo.max())/100;
+		int x = (percent*Math.min(mojo.max(), 200))/100;
 		for(Status s: status){
 			x+=s.gainmojo(x);
 		}
-		mojo.restore(x);
-		if (c != null) {
-			c.write(Global.capitalizeFirstLetter(String.format("%s <font color='rgb(100,200,255)'>%d<font color='white'> mojo.",this.subjectAction("built", "built"), x)));
+		if (x > 0) {
+			mojo.restore(x);
+			if (c != null) {
+				c.write(Global.capitalizeFirstLetter(String.format("%s <font color='rgb(100,200,255)'>%d<font color='white'> mojo.",this.subjectAction("built", "built"), x)));
+			}
 		}
 	}
 	public void spendMojo(Combat c, int i){
@@ -490,7 +513,7 @@ public abstract class Character extends Observable implements Cloneable{
 		if(mojo.get()<0){
 			mojo.set(0);
 		}
-		if (c != null) {
+		if (c != null && i != 0) {
 			c.write(Global.capitalizeFirstLetter(String.format("%s <font color='rgb(150,150,250)'>%d<font color='white'> mojo.",this.subjectAction("spent", "spent"), cost)));
 		}
 	}
@@ -734,12 +757,15 @@ public abstract class Character extends Observable implements Cloneable{
 		}
 		return count;
 	}
+
 	public void regen() {
 		regen(null, false);
 	}
+
 	public void regen(Combat c) {
 		regen(c, true);
 	}
+
 	public void regen(Combat c, boolean combat){
 		int regen = 1;
 		for(Status s: status){
@@ -764,24 +790,37 @@ public abstract class Character extends Observable implements Cloneable{
 			}
 		}
 	}
+
 	public void add(Status status){
+		add(null, status);
+	}
+
+	public void add(Combat c, Status status){
 		boolean cynical = false;
+		String message = "";
 		for(Status s:this.status){
 			if(s.flags().contains(Stsflag.cynical)){
 				cynical = true;
 			}
 		}
 		if(cynical && status.mindgames()){
-			return;
+			message = subjectAction("resist", "resists") + " " + status.describe() + " (Cynical).";
+		} else {
+			for (Resistance r : getResistances()) {
+				String resistReason = "";
+				resistReason = r.resisted(this, status);
+				if (!resistReason .isEmpty()) { 
+					message = subjectAction("resist", "resists") + " " + status.describe() + " (" + resistReason + ").";
+					break;
+				}
+			}
 		}
-		if(has(Trait.shameless)&&status.flags().contains(Stsflag.shamed)){
-			return;
-		}
-		else{
+		if (message.isEmpty()){
 			boolean unique = true;
 			for (Status s : this.status) {
 				if (s.getVariant().equals(status.getVariant())) {
 					s.replace(status);
+					message = subjectAction("are", "is") + " " + s.describe() + " again!";
 					return;
 				}
 				if (s.overrides(status)) {
@@ -790,6 +829,7 @@ public abstract class Character extends Observable implements Cloneable{
 			}
 			if (unique) {
 				this.status.add(status);
+				message = subjectAction("are", "is") + " now " + status.describe() + "!";
 			}
 		}
 	}
@@ -1106,7 +1146,12 @@ public abstract class Character extends Observable implements Cloneable{
 				opponent.weaken(c, m);
 				heal(c, m);
 			}
+			//TODO this works weirdly when both have both organs.
 			body.tickHolding(c, opponent, selfOrgan, otherOrgan);
+		}
+		if(opponent.has(Trait.magicEyeEnthrall)&&getArousal().percent()>=50&& c.getStance().facing() &&Global.random(20)==0){
+			c.write(opponent,Global.format("<br>{other:NAME-POSSESSIVE} eyes start glowing and captures both {self:name-possessive} gaze and consciousness.", this, opponent));
+			add(c, new Enthralled(this, opponent, 2));
 		}
 	}
 
@@ -1173,9 +1218,6 @@ public abstract class Character extends Observable implements Cloneable{
 		dropStatus();
 		if(has(Trait.QuickRecovery)){
 			heal(null, 4);
-		}
-		if(has(Trait.exhibitionist)&&nude()){
-			buildMojo(null, 3);
 		}
 		setChanged();
 		notifyObservers();
@@ -1295,6 +1337,7 @@ public abstract class Character extends Observable implements Cloneable{
 		for(Character victor: mercy){
 			victor.bounty();
 		}
+		Global.gui().clearImage();
 		mercy.clear();
 		change(Global.getMatch().condition);
 		clearStatus();
@@ -1427,15 +1470,15 @@ public abstract class Character extends Observable implements Cloneable{
 	}
 
 	public int getVictoryXP(Character opponent) {
-		return 20 + opponent.getLevel() * 2 + lvlBonus(opponent);
+		return 20 + lvlBonus(opponent);
 	}
 
 	public int getAssistXP(Character opponent) {
-		return 10 + opponent.getLevel() + lvlBonus(opponent);
+		return 10 + lvlBonus(opponent);
 	}
 
 	public int getDefeatXP(Character opponent) {
-		return 20 + opponent.getLevel() + lvlBonus(opponent);
+		return 20 + lvlBonus(opponent);
 	}
 
 	public int getAttraction(Character other){
@@ -1804,6 +1847,7 @@ public abstract class Character extends Observable implements Cloneable{
 		// Extreme situations
 		if (arousal.isFull()) fit -= 100;
 		if (stamina.isEmpty()) fit -= umid * 3;
+		fit += 100.0f * (getWillpower().max() - getWillpower().get()) / Math.min(100, getWillpower().max());
 		// Short-term: Arousal
 		fit += ushort / usum * 100.0f * (getArousal().max() - getArousal().get()) / Math.min(100, getArousal().max());
 		// Mid-term: Stamina

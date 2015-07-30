@@ -32,13 +32,18 @@ public class FootPump extends Skill {
 		Character other = c.p1 == getSelf() ? c.p2 : c.p1;
 		BodyPart otherpart = other.hasDick() ? other.body.getRandomCock() : other.body.getRandomPussy();
 		if (feet != null) {
-			return (float) Math.max(0, (feet.getPleasure(otherpart) - 1));
+			return (float) Math.max(0, (feet.getPleasure(getSelf(), otherpart) - 1));
 		}
 		return 0;
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoBuilt(Combat c) {
+		return 20;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		int m = 12 + Global.random(6);
 		int m2 = m / 2;
 		if(getSelf().human()){
@@ -55,7 +60,7 @@ public class FootPump extends Skill {
 		if (c.getStance().en != Stance.behindfootjob) {
 			c.setStance(new BehindFootjob(getSelf(), target));
 		}
-		getSelf().buildMojo(c, 20);
+		return true;
 	}
 
 	@Override

@@ -20,7 +20,7 @@ public class LegLock extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.normal, target));
@@ -38,7 +38,9 @@ public class LegLock extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

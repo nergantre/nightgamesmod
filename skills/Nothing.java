@@ -16,12 +16,13 @@ public class Nothing extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if (getSelf().human()) {
 			deal(c, 0, Result.normal, target);
 		} else {
 			receive(c, 0, Result.normal, target);
 		}
+		return true;
 	}
 
 	@Override

@@ -1,6 +1,12 @@
 package characters;
 
 import items.Clothing;
+import status.Resistance;
+import status.Stsflag;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import global.Global;
 
 public enum Trait {
@@ -14,7 +20,7 @@ public enum Trait {
 	}),
 
 	//Perks
-	smqueen("Tickle Monster","Skilled at providing pleasure alongside pain", new TraitDescription() {
+	smqueen("SM Queen","Skilled at providing pleasure alongside pain", new TraitDescription() {
 		public void describe(StringBuilder b, Character c, Trait t) {
 			b.append(Global.capitalizeFirstLetter(
 					String.format("%s sneers in a way like an SM queen.", c.subject())));
@@ -36,7 +42,6 @@ public enum Trait {
 	locator("Locator","Like a bloodhound"), //Reyka Gaming perk out of combat action
 	desensitized("Desensitized","Sex is old hat now"), //Reyka Sex perk slight pleasure reduction
 	desensitized2("Desensitized 2","Only the strongest stimulation gets you off"), //Reyka Sex perk slight pleasure reduction
-	shameless("Shameless","Impossible to embarrass"), //Eve
 	RawSexuality("Raw Sexuality","Constant lust boost for you and your opponent in battle", new TraitDescription() {
 		public void describe(StringBuilder b, Character c, Trait t) {
 			if (c.human())
@@ -62,7 +67,10 @@ public enum Trait {
 		}
 	}), //causes horny in opponents if aroused	
 	augmentedPheromones("Augmented Pheromones", "Artificially enhanced pheromones", null, pheromones),
-
+	
+	magicEyeArousal("Magic Eyes: Arouse", "Eyes have a chance to arouse"),
+	magicEyeEnthrall("Magic Eyes: Enthrall", "Eyes have a chance to enthrall"),
+	magicEyeTrance("Magic Eyes: Trance", "Eyes have a chance to entrance"),
 	soulsucker("Soulsucker", "Soul sucking lips"),
 	entrallingjuices("Enthralling cum", "Enthralling juices"),
 	lacedjuices("Laced Juices", "Intoxicating bodily fluids"), //opponents take temptation when using oral skills
@@ -81,14 +89,46 @@ public enum Trait {
 		}
 	}),
 
+	polecontrol("Pole Control","Always hit the right spots"), //Dick damage upgrade
+	hypnoticsemen("Hypnotic Semen","Cum drains willpower"), //Semen willpower damage trait
+	testosterone("Testosterone","More powerful muscles"), //Having a cock gives + to power
+	pussyhandler("Pussy Handler","Expert at pleasing the pussy"), //Bonus damage to pussies
+	dickhandler("Dick Handler","Expert at pleasing cocks"), //Bonus damage to cocks
+	
 	darkpromises("Dark Promises","Can enthrall with the right words"), //whisper upgrade, can enthrall
 	energydrain("Energy Drain", "Drains energy during intercourse"),
 	spiritphage("Semenphage", "Feeds on semen"),
 	tight("Tight", "Powerful musculature and exquisite tightness makes for quick orgasms."),
-	holecontrol("Control", "Dexterous internal muscle control."),
+	holecontrol("Pussy Control", "Dexterous internal muscle control."),
 	oiledass("Oiled Ass", "Natural oils makes her ass always ready."),
 	autonomousAss("Autonomous Ass", "Her asshole instinctively forces anything inside of it to cum."),
-	cute("Innocent Appearance", "Hard to muster the will to hurt her"),
+	
+	//training perks
+	analTraining1("Anal Training 1", "Refined ass control."),
+	analTraining2("Anal Training 2", "Perfected ass control."),
+	analTraining3("Anal Training 3", "Godly ass control."),
+	pussyTraining1("Pussy Training 1", "Refined vaginal control."),
+	pussyTraining2("Pussy Training 2", "Perfected vaginal control."),
+	pussyTraining3("Pussy Training 3", "Godly vaginal control."),
+	cockTraining1("Cock Training 1", "Refined cock control."),
+	cockTraining2("Cock Training 2", "Perfected cock control."),
+	cockTraining3("Cock Training 3", "Godly cock control."),	
+	tongueTraining1("Tongue Training 1", "Refined tongue control."),
+	tongueTraining2("Tongue Training 2", "Perfected tongue control."),
+	tongueTraining3("Tongue Training 3", "Godly tongue control."),
+	limbTraining1("Hands&Feet Training 1", "Refined hands and feet control."),
+	limbTraining2("Hands&Feet Training 2", "Perfected hands and feet control."),
+	limbTraining3("Hands&Feet Training 3", "Godly hands and feet control."),
+
+	//resistances
+	freeSpirit("Free Spirit","Better at escaping pins and resisting mind control"),
+	calm("Calm","Chance at resisting arousal over time"),
+	skeptical("Skeptical","Chance at resisting mental statuses"),
+	graceful("Graceful","Chance at resisting knockdowns"),
+	steady("Steady","Cannot be knocked down"),
+	shameless("Shameless","Impossible to embarrass"), //Eve
+
+	cute("Innocent Appearance", "Reduction to opponent's power"),
 
 	autonomousPussy("Autonomous Pussy", "Her pussy instinctively forces anything inside of it to cum."),
 	//AI traits
@@ -100,12 +140,14 @@ public enum Trait {
 	lickable("Lickable","Weak against oral sex"), 	//more arousal from oral attacks
 	imagination("Active Imagination","More easily swayed by pillow talk"),//more temptation damage from indirect skills
 	achilles("Achilles Jewels","Delicate parts are somehow even more delicate"),	//more pain from groin attacks
-	
+	naive("Naive", "Chance to not get cynical after mindgames"), //Chance to not get cynical after recovering from mindgames
+
 	//Restrictions
 	softheart("Soft Hearted","Incapable of being mean"), //restricts slap, stomp, flick
 	petite("Petite","Small body, small breasts"), //restricts carry, tackle, paizuri
 	undisciplined("Undisciplined","Lover, not a fighter"), //restricts manuever, focus, armbar
 	direct("Direct","Patience is overrated"), //restricts whisper, dissolving trap, aphrodisiac trap, decoy, strip tease
+	
 	shy("Shy", "", new TraitDescription() {
 		public void describe(StringBuilder b, Character c, Trait t) {
 			if (c.human())
@@ -114,7 +156,7 @@ public enum Trait {
 				b.append(c.name + " quickly avoids your gaze.");
 		}
 	}), //restricts striptease, flick, facesit, taunt, squeeze
-	
+
 	//Class
 	madscientist("Mad Scientist","May have gone overboard with her projects"),
 	witch("Witch","Learned to wield traditional arcane magic"),
@@ -142,7 +184,6 @@ public enum Trait {
 	SexualGroove("Sexual Groove","Passive mojo gain every turn in combat"),
 	BoundlessEnergy("Boundless Energy","Increased passive stamina gain in battle"),
 	Unflappable("Unflappable","Not distracted by being fucked from behind"),
-	freeSpirit("Free Spirit","Better as escaping pins"),
 	resourceful("Resourceful","Chance to not consume an item on use"),
 	treasureSeeker("Treasure Seeker","Improved chance of opening item caches"),
 	sympathetic("Sympathetic","Intervening opponents are more likely to side with you"),
@@ -225,6 +266,67 @@ public enum Trait {
 		if (longDesc != null) {
 			longDesc.describe(b, c, this);
 			b.append(" ");
+		}
+	}
+	public static Map<Trait, Resistance> resistances;
+	public static Resistance nullResistance;
+	static {
+		nullResistance = (c, s) -> "";
+		resistances = new HashMap<>();
+		resistances.put(shameless, (c, s) -> {
+			if (s.flags().contains(Stsflag.shamed)) {
+				return "Shameless";
+			}
+			return "";
+		});
+		resistances.put(Trait.freeSpirit, (c, s) -> {
+			// 30% to resist enthrall and bound
+			if ((s.flags().contains(Stsflag.enthralled) || s.flags().contains(Stsflag.bound)) && Global.random(100) < 30) {
+				return "Free Spirit";
+			}
+			return "";
+		});
+		resistances.put(Trait.calm, (c, s) -> {
+			// 50% to resist horny and hypersensitive
+			if ((s.flags().contains(Stsflag.horny) || s.flags().contains(Stsflag.hypersensitive)) && Global.random(100) < 50) {
+				return "Calm";
+			}
+			return "";
+		});
+		resistances.put(Trait.skeptical, (c, s) -> {
+			// 30% to resist mindgames
+			if (s.mindgames() && Global.random(100) < 30) {
+				return "Skeptical";
+			}
+			return "";
+		});
+		resistances.put(Trait.graceful, (c, s) -> {
+			// 25% to resist falling
+			if (s.flags().contains(Stsflag.falling) && Global.random(100) < 25) {
+				return "Graceful";
+			}
+			return "";
+		});
+		resistances.put(Trait.steady, (c, s) -> {
+			// 25% to resist falling
+			if (s.flags().contains(Stsflag.falling)) {
+				return "Graceful";
+			}
+			return "";
+		});
+		resistances.put(Trait.naive, (c, s) -> {
+			// 50% to resist Cynical
+			if (s.flags().contains(Stsflag.cynical) && Global.random(100) < 50) {
+				return "Graceful";
+			}
+			return "";
+		});
+	}
+	public static Resistance getResistance(Trait t) {
+		if (resistances.containsKey(t)) {
+			return resistances.get(t);
+		} else {
+			return nullResistance;
 		}
 	}
 }

@@ -31,13 +31,18 @@ public class Footjob extends Skill {
 		Character other = c.p1 == getSelf() ? c.p2 : c.p1;
 		BodyPart otherpart = other.hasDick() ? other.body.getRandomCock() : other.body.getRandomPussy();
 		if (feet != null) {
-			return (float) Math.max(0, (feet.getPleasure(otherpart) - 1));
+			return (float) Math.max(0, (feet.getPleasure(getSelf(), otherpart) - 1));
 		}
 		return 0;
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoBuilt(Combat c) {
+		return 15;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
 			int m = 8 + Global.random(6);
 			if(getSelf().human()){
@@ -51,7 +56,6 @@ public class Footjob extends Skill {
 			else
 				target.body.pleasure(getSelf(), getSelf().body.getRandom("feet"), target.body.getRandom("pussy"), m, c);
 			if(c.getStance().dom(getSelf())){
-				getSelf().buildMojo(c, 20);
 			}
 		}
 		else{
@@ -61,7 +65,9 @@ public class Footjob extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

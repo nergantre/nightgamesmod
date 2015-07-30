@@ -23,7 +23,12 @@ public class LustAura extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canRespond()&&c.getStance().mobile(getSelf())&&getSelf().canSpend(10)&&!target.is(Stsflag.horny, getSelf().nameOrPossessivePronoun() + " aura of lust");
+		return getSelf().canRespond()&&c.getStance().mobile(getSelf())&&!target.is(Stsflag.horny, getSelf().nameOrPossessivePronoun() + " aura of lust");
+	}
+
+	@Override
+	public int getMojoCost(Combat c) {
+		return 10;
 	}
 
 	@Override
@@ -32,8 +37,7 @@ public class LustAura extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
-		getSelf().spendMojo(c, 10);
+	public boolean resolve(Combat c, Character target) {
 		getSelf().arouse(10, c);
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
@@ -41,8 +45,9 @@ public class LustAura extends Skill {
 		else if(target.human()){
 			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		target.add(new Horny(target,3+2*getSelf().getSkimpiness(),3+Global.random(3), getSelf().nameOrPossessivePronoun() + " aura of lust"));
+		target.add(c, new Horny(target,3+2*getSelf().getSkimpiness(),3+Global.random(3), getSelf().nameOrPossessivePronoun() + " aura of lust"));
 		target.emote(Emotion.horny, 10);
+		return true;
 	}
 
 	@Override

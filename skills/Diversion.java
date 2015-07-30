@@ -3,6 +3,7 @@ package skills;
 import characters.Character;
 import characters.Trait;
 import stance.Behind;
+import stance.Stance;
 import status.Flatfooted;
 
 import combat.Combat;
@@ -25,7 +26,12 @@ public class Diversion extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoBuilt(Combat c) {
+		return 25;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().topless()){
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.special, target));
@@ -44,9 +50,9 @@ public class Diversion extends Skill {
 			}
 			getSelf().strip(0, c);
 		}
-		getSelf().buildMojo(c, 75);	
 		c.setStance(new Behind(getSelf(),target));
-		target.add(new Flatfooted(target,1));
+		target.add(c, new Flatfooted(target,1));
+		return true;
 	}
 
 	@Override

@@ -15,12 +15,16 @@ public class PerfectTouch extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().mobile(getSelf())&&(!target.nude())&&getSelf().canSpend(25)&&!c.getStance().prone(getSelf())&&getSelf().canAct()&&!c.getStance().penetration(getSelf());
+		return c.getStance().mobile(getSelf())&&(!target.nude())&&!c.getStance().prone(getSelf())&&getSelf().canAct()&&!c.getStance().penetration(getSelf());
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
-		getSelf().spendMojo(c, 25);
+	public int getMojoCost(Combat c) {
+		return 25;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.normal, target));
@@ -39,7 +43,9 @@ public class PerfectTouch extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

@@ -23,11 +23,11 @@ public class PullOut extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().penetration(getSelf())&&c.getStance().dom(getSelf());
+		return getSelf().canAct()&&(c.getStance().en == Stance.facesitting || c.getStance().penetration(getSelf()))&&c.getStance().dom(getSelf());
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(c.getStance().en ==Stance.anal){
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.anal, target));
@@ -72,14 +72,14 @@ public class PullOut extends Skill {
 						String partString = part.describe(target);
 						getSelf().body.pleasure(target, part, getSelf().body.getRandomInsertable(), m, c);
 					}
-					return;
+					return false;
 				}
 			} else if (getSelf().hasStatus(Stsflag.cockbound)) {
 				CockBound s = (CockBound)getSelf().getStatus(Stsflag.cockbound);
 				c.write(getSelf(),"You try to pull out of "+target.name()+"'s " + target.body.getRandomPussy() + ", but her " + s.binding +" instantly react and pulls your dick back in.");
 				int m = 8;
 				getSelf().body.pleasure(target, target.body.getRandom("pussy"), getSelf().body.getRandom("cock"), m, c);					
-				return;
+				return false;
 			} else if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.normal, target));
 			} else if(target.human()){
@@ -87,6 +87,7 @@ public class PullOut extends Skill {
 			}
 		}
 		c.setStance(c.getStance().insert());
+		return true;
 	}
 
 	@Override

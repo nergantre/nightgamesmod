@@ -4,6 +4,7 @@ import global.Global;
 import stance.Standing;
 import stance.StandingOver;
 import status.CockBound;
+import status.Falling;
 import characters.Attribute;
 import characters.Character;
 import characters.Trait;
@@ -37,18 +38,16 @@ public class Carry extends Fuck {
 				&& !c.getStance().prone(target)
 				&& !c.getStance().facing()
 				&& getSelf().getStamina().get()>=15
-				&& getSelf().canSpend(getMojoSpent())
 				&& !c.getStance().penetration(getSelf());
 	}
 	
-	public int getMojoSpent() {
+	public int getMojoCost(Combat c) {
 		return 40;
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		String premessage = "";
-		getSelf().spendMojo(c, getMojoSpent());
 		if(!getSelf().bottom.empty() && getSelfOrgan().isType("cock")) {
 			if (getSelf().bottom.size() == 1) {
 				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s halfway and", getSelf().bottom.get(0).name());
@@ -73,8 +72,10 @@ public class Carry extends Fuck {
 			} else if(target.human()){
 				c.write(getSelf(),premessage + receive(c,0,Result.miss, target));
 			}
-			c.setStance(new StandingOver(target, getSelf()));
+			target.add(c, new Falling(target));
+			return false;
 		}
+		return true;
 	}
 
 	@Override

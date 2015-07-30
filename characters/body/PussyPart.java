@@ -109,8 +109,12 @@ public enum PussyPart implements BodyPart {
 	}
 
 	@Override
-	public double getPleasure(BodyPart target) {
-		return pleasure;
+	public double getPleasure(Character self, BodyPart target) {
+		double pleasureMod = pleasure;
+		pleasureMod += self.has(Trait.pussyTraining1) ? .5 : 0;
+		pleasureMod += self.has(Trait.pussyTraining2) ? .7 : 0;
+		pleasureMod += self.has(Trait.pussyTraining3) ? .7 : 0;
+		return pleasureMod;
 	}
 
 	@Override
@@ -135,12 +139,18 @@ public enum PussyPart implements BodyPart {
 	@Override
 	public double applyReceiveBonuses(Character self, Character opponent,
 			BodyPart target, double damage, Combat c) {
+		double bonus = 0;
 		if (this==PussyPart.feral) {
 			c.write(self, String.format("Musk emanating from %s %s leaves %s reeling.",
 					self.possessivePronoun(), describe(self), opponent.directObject()));
-			opponent.add(new Horny(opponent, (int) Math.max(1, Math.floor(damage/5)), 5, self.nameOrPossessivePronoun() + " feral musk"));
+			opponent.add(c, new Horny(opponent, (int) Math.max(1, Math.floor(damage/5)), 5, self.nameOrPossessivePronoun() + " feral musk"));
 		}
-		return 0;
+		if (opponent.has(Trait.pussyhandler)) {
+			c.write(opponent, Global.format("{other:NAME-POSSESSIVE} expert handling of {self:name-possessive} pussy causes {self:subject} to shudder uncontrollably.",
+					self, opponent));
+			bonus += 5;
+		}
+		return bonus;
 	}
 	@Override
 	public double applyBonuses(Character self, Character opponent,
@@ -154,14 +164,12 @@ public enum PussyPart implements BodyPart {
 			int strength = 10 + self.get(Attribute.Dark)/2;
 			opponent.weaken(c, strength);
 			self.heal(c, strength);
-			opponent.loseMojo(c, strength);
-			self.buildMojo(c, strength);
 			for (int i = 0; i < 10; i++) {
 				Attribute stolen = (Attribute) opponent.att.keySet().toArray()[Global.random(opponent.att.keySet().size())];
 				if (stolen != Attribute.Perception && opponent.get(stolen) > 0) {
 					int stolenStrength = Math.min(strength / 10, opponent.get(stolen));
-					opponent.add(new Abuff(opponent, stolen, -stolenStrength, 20));
-					self.add(new Abuff(self, stolen, stolenStrength, 20));
+					opponent.add(c, new Abuff(opponent, stolen, -stolenStrength, 20));
+					self.add(c, new Abuff(self, stolen, stolenStrength, 20));
 					break;
 				}
 			}
@@ -177,7 +185,7 @@ public enum PussyPart implements BodyPart {
 												+"You mentally command the tentacles inside your womb to constrict and massage {other:possessive} cock. " +
 												"{other:name} almost starts hyperventilating from the sensations.", self, opponent));
 				}
-			opponent.add(new CockBound(opponent, 10, self.nameOrPossessivePronoun() + " vaginal tentacles"));
+			opponent.add(c, new CockBound(opponent, 10, self.nameOrPossessivePronoun() + " vaginal tentacles"));
 			} else {
 				if (!self.human()) {
 					c.write(self, Global.format("As you thrust into {self:name-possessive} pussy, hundreds of tentacles squirms against the motions of your cock, " +
@@ -195,7 +203,7 @@ public enum PussyPart implements BodyPart {
 					self.possessivePronoun(), describe(self), opponent.possessivePronoun(), target.describe(opponent),
 					opponent.pronoun(), opponent.possessivePronoun(), opponent.directObject()));
 			bonus += 15;
-			opponent.add(new Shamed(opponent));
+			opponent.add(c, new Shamed(opponent));
 		}
 		if (this==PussyPart.fiery && target.isType("cock")) {
 			c.write(self, String.format("Pluging %s %s into %s %s leaves %s gasping from the heat.",
@@ -203,14 +211,21 @@ public enum PussyPart implements BodyPart {
 					opponent.directObject()));
 			opponent.pain(c, 20 + self.get(Attribute.Ki)/2);
 		}
-		if (this==PussyPart.arcane && Global.random(4) == 0 && !opponent.wary()) {
-			opponent.add(new Enthralled(opponent, self, 3));
-			c.write(self, self.nameOrPossessivePronoun() + " tattoos surrounding " + self.possessivePronoun() + " vagina suddenly light up with arcane energy. " 
-						+ "The light seems to seep into " + opponent.possessivePronoun() + " " + target.describe(opponent)
-						+ ", leaving " + opponent.directObject() + " enthralled to " + self.possessivePronoun() + " will.");
+		if (this==PussyPart.arcane) {
+			String message = self.nameOrPossessivePronoun() + " tattoos surrounding " + self.possessivePronoun() + " vagina lights up with arcane energy as " + opponent.subjectAction("are", "is") + " inside " + opponent.directObject() +", channeling some of " + opponent.possessivePronoun() + " energies back to its master.";
+			int strength = 5 + self.get(Attribute.Arcane)/6;
+			opponent.loseMojo(c, strength);
+			self.buildMojo(c, strength);
+			if (Global.random(8) == 0 && !opponent.wary()) {
+				opponent.add(c, new Enthralled(opponent, self, 3));
+				message += " The light seems to seep into " + opponent.possessivePronoun() + " " + target.describe(opponent)
+				+ ", leaving " + opponent.directObject() + " enthralled to " + self.possessivePronoun() + " will.";
+				
+			}
+			c.write(self, message);
 		}
 		if (this.isType("pussy") && self.has(Trait.vaginaltongue) && target.isType("cock") && !opponent.hasStatus(Stsflag.cockbound)) {
-			opponent.add(new CockBound(opponent, 5, self.name() + "'s pussy-tongue"));
+			opponent.add(c, new CockBound(opponent, 5, self.name() + "'s pussy-tongue"));
 			c.write(self, self.nameOrPossessivePronoun() + " long sinuous vaginal tongue wraps around "
 						+ opponent.nameOrPossessivePronoun() + " " + target.describe(opponent) + ", preventing any escape.\n");
 		}

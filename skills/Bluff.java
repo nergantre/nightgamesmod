@@ -23,13 +23,17 @@ public class Bluff extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&getSelf().canSpend(20);
+		return getSelf().canAct()&&c.getStance().mobile(getSelf());
+	}
+	
+	@Override
+	public int getMojoCost(Combat c) {
+		return 20;
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		int m = Global.random(25);
-		getSelf().spendMojo(c, 20);
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,m,Result.normal, target));
 		}
@@ -38,10 +42,11 @@ public class Bluff extends Skill {
 		}
 		getSelf().heal(c, m);
 		getSelf().calm(c, 25-m);
-		getSelf().add(new Unreadable(getSelf()));
+		getSelf().add(c, new Unreadable(getSelf()));
 		getSelf().emote(Emotion.confident, 30);
 		getSelf().emote(Emotion.dominant, 20);
 		getSelf().emote(Emotion.nervous,-20);
+		return true;
 	}
 
 	@Override

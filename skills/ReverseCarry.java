@@ -3,6 +3,7 @@ package skills;
 import stance.Jumped;
 import stance.Standing;
 import stance.StandingOver;
+import status.Falling;
 import global.Global;
 import characters.Attribute;
 import characters.Character;
@@ -32,9 +33,8 @@ public class ReverseCarry extends Carry {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		String premessage = "";
-		getSelf().spendMojo(c, getMojoSpent());
 		if (getSelf().bottom.size() == 1) {
 			premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s to the side and", getSelf().bottom.get(0).name());
 		} else if (getSelf().bottom.size() == 2) {
@@ -58,8 +58,10 @@ public class ReverseCarry extends Carry {
 			} else if(target.human()){
 				c.write(getSelf(),premessage + receive(c,0,Result.miss, target));
 			}
-			c.setStance(new StandingOver(target, getSelf()));
+			target.add(c, new Falling(target));
+			return false;
 		}
+		return true;
 	}
 
 	@Override

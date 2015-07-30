@@ -11,6 +11,7 @@ import stance.StandingOver;
 import status.Bound;
 import status.Braced;
 import status.CockBound;
+import status.Falling;
 import status.Stsflag;
 import characters.Attribute;
 import characters.Character;
@@ -37,7 +38,7 @@ public class Struggle extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if (getSelf().bound()) {
 			Bound status = (Bound) target.getStatus(Stsflag.bound);
 			if (getSelf().check(Attribute.Power, 10 - getSelf().escape())) {
@@ -76,6 +77,7 @@ public class Struggle extends Skill {
 								+ " struggles, but can't free her hands.");
 					}
 				}
+				return false;
 			}
 		} else if (c.getStance().penetration(getSelf()) || c.getStance().penetration(target)) {
 			if (c.getStance().enumerate() == Stance.anal) {
@@ -97,7 +99,7 @@ public class Struggle extends Skill {
 										+ " pulls away from you and your dick slides out of her butt.");
 					}
 					if (!getSelf().is(Stsflag.braced)) {
-						getSelf().add(new Braced(getSelf()));
+						getSelf().add(c, new Braced(getSelf()));
 					}
 					c.setStance(new Neutral(getSelf(), target));
 				} else {
@@ -110,6 +112,7 @@ public class Struggle extends Skill {
 								getSelf().name()
 										+ " tries to squirm away, but you have better leverage.");
 					}
+					return false;
 				}
 			} else {
 				if (getSelf().check(
@@ -174,7 +177,7 @@ public class Struggle extends Skill {
 						c.write(getSelf(),
 								Global.format("{self:SUBJECT-ACTION:manage|manages} to shake {other:direct-object} off." ,getSelf(),target));
 						if (!getSelf().is(Stsflag.braced)) {
-							getSelf().add(new Braced(getSelf()));
+							getSelf().add(c, new Braced(getSelf()));
 						}
 						c.setStance(new Neutral(getSelf(), target));
 					}
@@ -204,6 +207,7 @@ public class Struggle extends Skill {
 											+ " tries to roll on top of you, but you use you superior upper body strength to maintain your position.");
 						}
 					}
+					return false;
 				}
 			}
 		} else {
@@ -221,12 +225,10 @@ public class Struggle extends Skill {
 									+ "'s grip.");
 				} else if (target.human()) {
 					c.write(getSelf(), getSelf().name() + " squirms out from under you.");
-				} if (c.getStance().prone(getSelf())) {
-					c.setStance(new StandingOver(target, getSelf()));
 				}
 				c.setStance(new Neutral(getSelf(), target));
 				if (!getSelf().is(Stsflag.braced)) {
-					getSelf().add(new Braced(getSelf()));
+					getSelf().add(c, new Braced(getSelf()));
 				}
 			} else {
 				if (c.getStance().enumerate() == Stance.facesitting) {
@@ -246,6 +248,7 @@ public class Struggle extends Skill {
 						(new Anilingus(getSelf())).resolve(c, target);
 					}
 					target.weaken(c, 5 + Global.random(5) + getSelf().get(Attribute.Power) / 2);
+					return false;
 				} else {
 					if (getSelf().human()) {
 						c.write(getSelf(),
@@ -258,9 +261,11 @@ public class Struggle extends Skill {
 										+ " struggles against you, but you maintain your position.");
 					}
 					target.weaken(c, 5 + Global.random(5) + getSelf().get(Attribute.Power) / 2);
+					return false;
 				}
 			}
 		}
+		return true;
 	}
 
 	@Override

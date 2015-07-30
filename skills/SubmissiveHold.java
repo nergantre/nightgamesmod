@@ -31,11 +31,11 @@ public class SubmissiveHold extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return getSelf().canRespond() && c.getStance().sub(getSelf()) && (c.getStance().inserted(getSelf()) || c.getStance().inserted(target))
-				&& getSelf().canSpend(getMojoCost()) && !target.is(Stsflag.armlocked)&& !target.is(Stsflag.leglocked);
+				&& getSelf().canSpend(getMojoCost(c)) && !target.is(Stsflag.armlocked)&& !target.is(Stsflag.leglocked);
 	}
 
-	public int getMojoCost() {
-		return 0;
+	public int getMojoCost(Combat c) {
+		return 10;
 	}
 
 	@Override
@@ -97,16 +97,17 @@ public class SubmissiveHold extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if (getSelf().human()) {
 			c.write(getSelf(), deal(c, 0, Result.normal, target));
 		} else {
 			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
 		if (isArmLock(c.getStance())) {
-			target.add(new ArmLocked(target, getSelf().get(Attribute.Power)));
+			target.add(c, new ArmLocked(target, getSelf().get(Attribute.Power)));
 		} else {
-			target.add(new LegLocked(target, getSelf().get(Attribute.Power)));
+			target.add(c, new LegLocked(target, getSelf().get(Attribute.Power)));
 		}
+		return true;
 	}
 }

@@ -6,6 +6,7 @@ import global.Global;
 import global.Modifier;
 import characters.Character;
 import characters.Emotion;
+import characters.Trait;
 import characters.body.Body;
 import characters.body.BodyPart;
 import characters.body.GenericBodyPart;
@@ -57,7 +58,12 @@ public class Masturbate extends Skill {
 	private BodyPart targetO = Body.nonePart;
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoBuilt(Combat c) {
+		return 25;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		withO = getSelfOrgan();
 		targetO = getTargetOrgan(getSelf());
 		
@@ -72,11 +78,11 @@ public class Masturbate extends Skill {
 		else if(target.human()){
 			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		int mojo;
+		int pleasure;
 
-		mojo = getSelf().body.pleasure(getSelf(), withO, targetO, 25, c);
-		getSelf().buildMojo(c, mojo);
-		getSelf().emote(Emotion.horny, mojo);
+		pleasure = getSelf().body.pleasure(getSelf(), withO, targetO, 25, c);
+		getSelf().emote(Emotion.horny, pleasure);
+		return true;
 	}
 
 	@Override

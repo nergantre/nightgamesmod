@@ -23,11 +23,14 @@ public class Whisper extends Skill {
 	
 	@Override
 	public float priorityMod(Combat c) {
-		return getSelf().has(Trait.darkpromises) ? 1.0f : 0;
+		return getSelf().has(Trait.darkpromises) ? .2f : 0;
 	}
-
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoBuilt(Combat c) {
+		return 10;
+	}
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		int roll = Global.centeredrandom(4, getSelf().get(Attribute.Dark) / 5.0, 2);
 		int m = 4 + Global.random(6);
 
@@ -45,7 +48,7 @@ public class Whisper extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.special, target));
 			}
-			target.add(new Enthralled(target,getSelf(), 4));
+			target.add(c, new Enthralled(target,getSelf(), 4));
 		}
 		else{
 			if(getSelf().human()){
@@ -57,7 +60,7 @@ public class Whisper extends Skill {
 		}
 		target.tempt(c, getSelf(), m);
 		target.emote(Emotion.horny, 30);
-		getSelf().buildMojo(c, 10);
+		return true;
 	}
 
 	@Override

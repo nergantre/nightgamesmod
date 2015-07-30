@@ -26,7 +26,7 @@ public class Dissolve extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		getSelf().consume(Item.DisSol, 1);
 		if(getSelf().has(Item.Aersolizer)){
 			if(getSelf().human()){
@@ -63,7 +63,9 @@ public class Dissolve extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

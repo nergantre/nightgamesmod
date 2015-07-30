@@ -22,7 +22,12 @@ public class Knee extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoCost(Combat c) {
+		return 15;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.normal, target));
@@ -53,7 +58,6 @@ public class Knee extends Skill {
 			else{
 				target.calm(c, Global.random(10));
 			}
-			getSelf().buildMojo(c, 10);
 			target.emote(Emotion.angry,20);
 		}
 		else{
@@ -63,7 +67,9 @@ public class Knee extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

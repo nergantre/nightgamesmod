@@ -35,7 +35,7 @@ public class Tighten extends Thrust {
 	}
 	
 	@Override
-	public int getMojoBuilt() {
+	public int getMojoBuilt(Combat c) {
 		return 0;
 	}
 

@@ -30,15 +30,16 @@ public class Masochism extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
 			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		getSelf().add(new Masochistic(getSelf()));
-		target.add(new Masochistic(target));
+		getSelf().add(c, new Masochistic(getSelf()));
+		target.add(c, new Masochistic(target));
+		return true;
 	}
 
 	@Override

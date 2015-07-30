@@ -33,7 +33,12 @@ public class StripTease extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoBuilt(Combat c) {
+		return 50;
+	}
+	
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
@@ -43,11 +48,11 @@ public class StripTease extends Skill {
 		int m = 15 + Global.random(5);
 		target.tempt(c, getSelf(), m);
 		getSelf().undress(c);
-		getSelf().buildMojo(c, 20);
-		getSelf().add(new Alluring(getSelf(), 5));
+		getSelf().add(c, new Alluring(getSelf(), 5));
 		target.emote(Emotion.horny, 30);
 		getSelf().emote(Emotion.confident, 15);
 		getSelf().emote(Emotion.dominant, 15);
+		return true;
 	}
 
 	@Override

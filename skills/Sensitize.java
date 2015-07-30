@@ -31,7 +31,7 @@ public class Sensitize extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		getSelf().consume(Item.SPotion, 1);
 		if(getSelf().has(Item.Aersolizer)){
 			if(getSelf().human()){
@@ -40,7 +40,7 @@ public class Sensitize extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.special, getSelf()));
 			}
-			target.add(new Hypersensitive(target));
+			target.add(c, new Hypersensitive(target));
 		}
 		else if(target.roll(this, c, accuracy())){
 			if(getSelf().human()){
@@ -49,7 +49,7 @@ public class Sensitize extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.normal, getSelf()));
 			}
-			target.add(new Hypersensitive(target));
+			target.add(c, new Hypersensitive(target));
 		}
 		else{
 			if(getSelf().human()){
@@ -58,7 +58,9 @@ public class Sensitize extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

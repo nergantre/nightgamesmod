@@ -22,7 +22,12 @@ public class Slap extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoBuilt(Combat c) {
+		return getSelf().has(Trait.pimphand) ? 15 : 5;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
 			if(getSelf().get(Attribute.Animism)>=8){
 				if(getSelf().human()){
@@ -36,14 +41,12 @@ public class Slap extends Skill {
 					target.calm(c, Global.random(4)+2);
 					target.emote(Emotion.nervous, 40);
 					target.emote(Emotion.angry, 30);
-					getSelf().buildMojo(c, 20);
 				}
 				else{
 					target.pain(c, Global.random((12*getSelf().getArousal().percent())/100+1)+getSelf().get(Attribute.Power)/2);
 					target.calm(c, Global.random(5)+4);
 					target.emote(Emotion.nervous, 25);
 					target.emote(Emotion.angry, 30);
-					getSelf().buildMojo(c, 10);
 				}
 			}
 			else{
@@ -58,14 +61,12 @@ public class Slap extends Skill {
 					target.calm(c, Global.random(4)+2);
 					target.emote(Emotion.nervous, 20);
 					target.emote(Emotion.angry, 30);
-					getSelf().buildMojo(c, 20);
 				}
 				else{
 					target.pain(c, Global.random(5)+4);
 					target.calm(c, Global.random(5)+4);
 					target.emote(Emotion.nervous, 10);
 					target.emote(Emotion.angry, 30);
-					getSelf().buildMojo(c, 10);
 				}
 			}
 			
@@ -77,7 +78,9 @@ public class Slap extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

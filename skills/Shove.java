@@ -5,6 +5,7 @@ import stance.Neutral;
 import stance.ReverseMount;
 import stance.StandingOver;
 import status.Braced;
+import status.Falling;
 import status.Stsflag;
 import global.Global;
 import characters.Attribute;
@@ -25,7 +26,13 @@ public class Shove extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoCost(Combat c) {
+		return 10;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
+		boolean success = true;
 		if(getSelf().get(Attribute.Ki)>=1&&!target.top.isEmpty()&&getSelf().canSpend(5)) {
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.special, target));
@@ -46,7 +53,7 @@ public class Shove extends Skill {
 					c.write(getSelf(),getSelf().name()+" shoves you hard enough to free herself and jump up.");
 				}
 				if(!getSelf().is(Stsflag.braced)){
-					getSelf().add(new Braced(getSelf()));
+					getSelf().add(c, new Braced(getSelf()));
 				}
 				c.setStance(new Neutral(getSelf(),target));
 			} else {
@@ -55,6 +62,7 @@ public class Shove extends Skill {
 				} else if(target.human()) {
 					c.write(getSelf(),getSelf().name()+" shoves you weakly.");
 				}
+				success = false;
 			}
 			target.pain(c, Global.random(6)+2);
 		}
@@ -66,7 +74,7 @@ public class Shove extends Skill {
 				else if(target.human()){
 					c.write(getSelf(),getSelf().name()+" knocks you off balance and you fall at her feet.");
 				}
-				c.setStance(new StandingOver(getSelf(),target));
+				target.add(c, new Falling(target));
 			}
 			else{
 				if(getSelf().human()){
@@ -75,10 +83,11 @@ public class Shove extends Skill {
 				else if(target.human()){
 					c.write(getSelf(),getSelf().name()+" pushes you back, but you're able to maintain your balance.");
 				}
+				success = false;
 			}
 			target.pain(c, Global.random(4)+getSelf().get(Attribute.Power)/2);
 		}
-
+		return success;
 	}
 
 	@Override

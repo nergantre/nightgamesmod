@@ -32,7 +32,7 @@ public class ShortCircuit extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		getSelf().consume(Item.Battery, 3);
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
@@ -40,7 +40,8 @@ public class ShortCircuit extends Skill {
 		else if(target.human()){
 			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		target.add(new Rewired(target,4+Global.random(3)));
+		target.add(c, new Rewired(target,4+Global.random(3)));
+		return true;
 	}
 
 	@Override

@@ -30,7 +30,16 @@ public class Cunnilingus extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoBuilt(Combat c) {
+		if (c.getStance().enumerate()== Stance.facesitting) {
+			return 0;
+		} else {
+			return 5;
+		}
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		PussyPart targetPussy = target.body.getRandomPussy();
 		Result results = Result.normal;
 		int m = 4 + Global.random(8);
@@ -43,7 +52,7 @@ public class Cunnilingus extends Skill {
 		} else { 
 			if (target.has(Trait.entrallingjuices) && Global.random(4) == 0 && !target.wary()) {
 				i = -2;
-				this.getSelf().add(new Enthralled(getSelf(),target, 3));
+				this.getSelf().add(c, new Enthralled(getSelf(),target, 3));
 			} else if (target.has(Trait.lacedjuices)){
 				i = -1;
 				this.getSelf().tempt(c, target, 5);
@@ -60,8 +69,6 @@ public class Cunnilingus extends Skill {
 		}
 		if (results != Result.miss) {
 			if (results == Result.reverse) {
-				getSelf().buildMojo(c, 5);
-			} else {
 				target.buildMojo(c, 10);
 			}
 			if(ReverseMount.class.isInstance(c.getStance())){
@@ -69,6 +76,7 @@ public class Cunnilingus extends Skill {
 			}
 			target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("pussy"), m, c);
 		}
+		return results != Result.miss;
 	}
 
 	@Override

@@ -15,6 +15,7 @@ import combat.Combat;
 
 import characters.Attribute;
 import characters.Character;
+import characters.Trait;
 
 public class GenericBodyPart implements BodyPart {
 	/**
@@ -72,7 +73,7 @@ public class GenericBodyPart implements BodyPart {
 
 	@Override
 	public double priority(Character c) {
-		return (this.getPleasure(null) - 1) * 3;
+		return (this.getPleasure(c, null) - 1) * 3;
 	}
 
 	@Override
@@ -91,8 +92,13 @@ public class GenericBodyPart implements BodyPart {
 	}
 
 	@Override
-	public double getPleasure(BodyPart target) {
-		return pleasure;
+	public double getPleasure(Character self, BodyPart target) {
+		double pleasureMod = pleasure;
+		if (type.equals("hands") || type.equals("feet"))
+		pleasureMod += self.has(Trait.limbTraining1) ? .5 : 0;
+		pleasureMod += self.has(Trait.limbTraining2) ? .7 : 0;
+		pleasureMod += self.has(Trait.limbTraining3) ? .7 : 0;
+		return pleasureMod;
 	}
 
 	@Override

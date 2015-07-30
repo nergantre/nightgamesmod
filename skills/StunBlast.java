@@ -31,7 +31,7 @@ public class StunBlast extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		getSelf().consume(Item.Battery, 4);
 		if(Global.random(10)>=4){
 			if(getSelf().human()){
@@ -41,7 +41,7 @@ public class StunBlast extends Skill {
 				c.write(getSelf(),receive(c,0,Result.normal, target));
 			}
 			target.getStamina().empty();
-			target.add(new Winded(target));
+			target.add(c, new Winded(target));
 		}
 		else{
 			if(getSelf().human()){
@@ -50,7 +50,9 @@ public class StunBlast extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override

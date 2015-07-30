@@ -20,7 +20,12 @@ public class Barrier extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !c.getStance().sub(getSelf())&&!c.getStance().prone(getSelf())&&!c.getStance().prone(target)&&getSelf().canAct()&&getSelf().canSpend(3);
+		return !c.getStance().sub(getSelf())&&!c.getStance().prone(getSelf())&&!c.getStance().prone(target)&&getSelf().canAct();
+	}
+	
+	@Override
+	public int getMojoCost(Combat c) {
+		return 10;
 	}
 
 	@Override
@@ -29,15 +34,15 @@ public class Barrier extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
-		getSelf().spendMojo(c, 3);
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
 		else if(target.human()){
 			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		getSelf().add(new Shield(getSelf(), .5));
+		getSelf().add(c, new Shield(getSelf(), .5));
+		return true;
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package skills;
 
 import items.Item;
+import stance.Stance;
 import global.Global;
 import status.Shamed;
 import characters.Attribute;
@@ -33,7 +34,7 @@ public class FaceFuck extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		int strength = 4 + (target.has(Trait.silvertongue) ? 4 : 0);
 		if(getSelf().human()){
 			if (target.has(Trait.silvertongue)) {
@@ -41,7 +42,7 @@ public class FaceFuck extends Skill {
 			} else {
 				c.write(getSelf(),deal(c, 0, Result.normal, target));
 			}
-			target.add(new Shamed(target));
+			target.add(c, new Shamed(target));
 			getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("cock"), strength, c);
 		} else {
 			if(getSelf().has(Trait.strapped)){
@@ -58,10 +59,11 @@ public class FaceFuck extends Skill {
 				getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("pussy"), strength, c);
 
 			}
-			target.add(new Shamed(target));
+			target.add(c, new Shamed(target));
 		}
-		getSelf().buildMojo(c, 15);
 		target.loseMojo(c, 2*getSelf().get(Attribute.Seduction));
+		target.loseWillpower(c, 5);
+		return true;
 	}
 
 	@Override
@@ -85,6 +87,11 @@ public class FaceFuck extends Skill {
 	}
 
 	@Override
+	public int getMojoBuilt(Combat c) {
+		return 25;
+	}
+
+	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		String m;
 		if(modifier==Result.special){
@@ -102,6 +109,7 @@ public class FaceFuck extends Skill {
 					"She may be using you like a sex toy, but you're going to try to scrounge whatever advantage you can get.";
 		}
 		return m;
+		
 	}
 
 	@Override

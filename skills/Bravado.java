@@ -8,9 +8,10 @@ import combat.Combat;
 import combat.Result;
 
 public class Bravado extends Skill {
-
+	int cost;
 	public Bravado(Character self) {
 		super("Determination", self);
+		cost = 0;
 	}
 
 	@Override
@@ -20,13 +21,18 @@ public class Bravado extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canRespond()&&c.getStance().mobile(getSelf())&&getSelf().canSpend(20);
+		return getSelf().canRespond()&&c.getStance().mobile(getSelf());
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
-		int x = getSelf().getMojo().get();
-		getSelf().spendMojo(c, x);
+	public int getMojoCost(Combat c) {
+		cost = Math.max(20, getSelf().getMojo().get());
+		return cost;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
+		int x = cost;
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,x,Result.normal, target));
 		}
@@ -39,6 +45,7 @@ public class Bravado extends Skill {
 		getSelf().emote(Emotion.dominant, 20);
 		getSelf().emote(Emotion.nervous,-20);
 		getSelf().emote(Emotion.desperate, -30);
+		return true;
 	}
 
 	@Override

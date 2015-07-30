@@ -41,7 +41,7 @@ public enum BreastsPart implements BodyPart {
 	
 	@Override
 	public double priority(Character c) {
-		return this.getPleasure(null);
+		return this.getPleasure(c, null);
 	}
 
 	public String describe(Character c, boolean forceAdjective) {
@@ -102,7 +102,7 @@ public enum BreastsPart implements BodyPart {
 	}
 
 	@Override
-	public double getPleasure(BodyPart target) {
+	public double getPleasure(Character self, BodyPart target) {
 		return .25 + size * .35;
 	}
 

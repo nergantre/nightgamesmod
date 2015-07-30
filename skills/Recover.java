@@ -22,7 +22,7 @@ public class Recover extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}
@@ -30,10 +30,11 @@ public class Recover extends Skill {
 			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
 		if(!getSelf().is(Stsflag.braced)){
-			getSelf().add(new Braced(getSelf()));
+			getSelf().add(c, new Braced(getSelf()));
 		}
 		c.setStance(new Neutral(getSelf(),target));
 		getSelf().heal(c, Global.random(3));
+		return true;
 	}
 
 	@Override

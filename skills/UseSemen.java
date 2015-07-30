@@ -32,7 +32,7 @@ public class UseSemen extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public boolean resolve(Combat c, Character target) {
 		Item used = Item.semen;
 		boolean eventful = false;
 		c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:take|takes} out a bottle of milky white semen and {self:action:gulp|gulps} it down in one breath.", getSelf(), target));
@@ -43,6 +43,7 @@ public class UseSemen extends Skill {
 			c.write("...But nothing happened.");
 		}
 		getSelf().consume(used, 1);
+		return true;
 	}
 
 	@Override

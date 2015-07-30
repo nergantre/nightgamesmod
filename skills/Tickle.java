@@ -24,7 +24,12 @@ public class Tickle extends Skill {
 	}
 
 	@Override
-	public void resolve(Combat c, Character target) {
+	public int getMojoBuilt(Combat c) {
+		return 7;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
 			if(target.pantsless()&&c.getStance().reachBottom(getSelf())&&!c.getStance().penetration(getSelf())){
 				if(getSelf().has(Item.Tickler2)&&Global.random(2)==1&&getSelf().canSpend(10)&&(!getSelf().human()&&!target.is(Stsflag.hypersensitive)
@@ -36,7 +41,7 @@ public class Tickle extends Skill {
 					else if(target.human()){
 						c.write(getSelf(),receive(c,0,Result.critical, target));
 					}
-					target.add(new Hypersensitive(target));
+					target.add(c, new Hypersensitive(target));
 				}
 				else if(getSelf().has(Trait.ticklemonster)&&target.nude()){
 					if(getSelf().human()){
@@ -47,7 +52,6 @@ public class Tickle extends Skill {
 					}
 					target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("skin"), 6 + Global.random(8), c);
 					target.weaken(c, Global.random(4));
-					getSelf().buildMojo(c, 15);							
 				}	
 				else if(hastickler()&&(!getSelf().human()||Global.getMatch().condition!=Modifier.notoys)){
 					if(getSelf().human()){
@@ -56,7 +60,6 @@ public class Tickle extends Skill {
 					else if(target.human()){
 						c.write(getSelf(),receive(c,0,Result.strong, target));
 					}
-					getSelf().buildMojo(c, 10);	
 				}
 				else{
 					if(getSelf().human()){
@@ -121,7 +124,6 @@ public class Tickle extends Skill {
 				int m = 4+Global.random(3)-(target.top.size()+target.bottom.size());
 				target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("skin"), m, bonus, c);
 				target.weaken(c, bonus / 2 + Global.random(3+target.get(Attribute.Perception))-(target.top.size()+target.bottom.size()));
-				getSelf().buildMojo(c, 10);
 			}
 		}
 		else{
@@ -131,7 +133,9 @@ public class Tickle extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.miss, target));
 			}
+			return false;
 		}
+		return true;
 	}
 
 	@Override
