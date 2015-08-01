@@ -52,7 +52,7 @@ public class Bound extends Status {
 	}
 
 	@Override
-	public int pleasure(Combat c, int x) {
+	public double pleasure(Combat c, double x) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -82,7 +82,10 @@ public class Bound extends Status {
 	
 	@Override
 	public void struggle(Character self) {
-		toughness = Math.round(toughness * 2.0f / 3.0f);
+		if (toughness > 50) 
+			toughness = Math.max(Math.round(toughness * .33f), 25);
+		else
+			toughness = Math.round(toughness * .5f);
 	}
 
 	@Override

@@ -40,11 +40,11 @@ public class BD extends Status{
 	@Override
 	public int regen(Combat c) {
 		if(affected.bound()){
-			affected.tempt(7);
+			affected.arouse(affected.getArousal().max()/20, c);
 		}
 		duration--;
 		if(duration<0){
-			affected.removelist.remove(this);
+			affected.removelist.add(this);
 		}
 		return 0;
 		
@@ -57,9 +57,8 @@ public class BD extends Status{
 	}
 
 	@Override
-	public int pleasure(Combat c, int x) {
-		// TODO Auto-generated method stub
-		return 0;
+	public double pleasure(Combat c, double x) {
+		return affected.is(Stsflag.bound) ? x / 2 : 0;
 	}
 
 	@Override
@@ -71,7 +70,7 @@ public class BD extends Status{
 	@Override
 	public int tempted(int x) {
 		// TODO Auto-generated method stub
-		return 0;
+		return affected.is(Stsflag.bound) ? x / 2 : 0;
 	}
 
 	@Override
@@ -83,7 +82,7 @@ public class BD extends Status{
 	@Override
 	public int escape() {
 		// TODO Auto-generated method stub
-		return 0;
+		return -15;
 	}
 
 	@Override

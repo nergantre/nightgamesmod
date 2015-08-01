@@ -53,7 +53,7 @@ public class Mara extends BasePersonality  {
 		character.body.add(BreastsPart.b);
 		character.body.add(PussyPart.normal);
 		character.body.finishBody("female");
-		}
+	}
 
 	@Override
 	public void setGrowth() {

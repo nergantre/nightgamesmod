@@ -30,7 +30,7 @@ public abstract class Status implements Cloneable {
 	public abstract int mod(Attribute a);
 	public abstract int regen(Combat c);
 	public abstract int damage(Combat c, int x);
-	public abstract int pleasure(Combat c, int x);
+	public abstract double pleasure(Combat c, double x);
 	public abstract int weakened(int x);
 	public abstract int tempted(int x);
 	public abstract int evade();

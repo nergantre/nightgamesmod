@@ -57,7 +57,7 @@ public class Hypersensitive extends Status {
 	}
 
 	@Override
-	public int pleasure(Combat c, int x) {
+	public double pleasure(Combat c, double x) {
 		return x/3;
 	}
 

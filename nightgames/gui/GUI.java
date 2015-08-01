@@ -455,6 +455,7 @@ public class GUI extends JFrame implements Observer {
 		this.commandPanel = new JPanel();
 		this.commandPanel.setBackground(Color.DARK_GRAY);
 		this.commandPanel.setPreferredSize(new Dimension(this.width, this.height/6));
+		this.commandPanel.setMinimumSize(new Dimension(0, 200));
 		//this.commandPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		this.commandPanel.setBorder(new CompoundBorder());
 		this.mainpanel.add(commandPanel);

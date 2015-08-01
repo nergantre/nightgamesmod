@@ -92,7 +92,7 @@ public class Enthralled extends Status {
 	}
 
 	@Override
-	public int pleasure(Combat c, int paramInt) {
+	public double pleasure(Combat c, double paramInt) {
 		return paramInt/4;
 	}
 

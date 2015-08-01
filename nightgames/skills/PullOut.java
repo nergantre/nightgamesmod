@@ -7,6 +7,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.stance.Stance;
+import nightgames.stance.StandingOver;
 import nightgames.status.CockBound;
 import nightgames.status.Stsflag;
 
@@ -23,27 +24,44 @@ public class PullOut extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&(c.getStance().en == Stance.facesitting || c.getStance().penetration(getSelf()))&&c.getStance().dom(getSelf());
+		return getSelf().canAct()&&(c.getStance().en == Stance.facesitting || c.getStance().inserted(c.getOther(getSelf())))&&c.getStance().dom(getSelf());
 	}
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
+		Result result = Result.normal;
+		if (c.getStance().inserted(getSelf())) {
+			if (c.getStance().en == Stance.anal)
+				result = Result.anal;
+		} else if (c.getStance().inserted(target)) {
+			result = Result.reverse;
+		} else {
+			result = Result.special;
+		}
 		if(c.getStance().en ==Stance.anal){
 			if(getSelf().human()){
-				c.write(getSelf(),deal(c,0,Result.anal, target));
+				c.write(getSelf(),deal(c,0,result, target));
 			}
 			else if(target.human()){
-				c.write(getSelf(),receive(c,0,Result.anal, target));
+				c.write(getSelf(),receive(c,0,result, target));
 			}
-		}
-		else{
+			c.setStance(c.getStance().insert());
+		} else if (result == Result.special) {
+			if(getSelf().human()){
+				c.write(getSelf(),deal(c,0,result, target));
+			}
+			else if(target.human()){
+				c.write(getSelf(),receive(c,0,result, target));
+			}
+			c.setStance(new StandingOver(getSelf(), target));
+		} else {
 			if (getSelf().hasStatus(Stsflag.leglocked) || getSelf().hasStatus(Stsflag.armlocked) || (target.has(Trait.tight) && c.getStance().inserted(getSelf()))) {
 				boolean escaped = getSelf().check(Attribute.Power, 10 + getSelf().escape() + target.get(Attribute.Power));
 				if (escaped) {
 					if(getSelf().human()) {
-						c.write(getSelf(),deal(c,0,Result.normal, target));
+						c.write(getSelf(),deal(c,0,result, target));
 					} else if(target.human()) {
-						c.write(getSelf(),receive(c,0,Result.normal, target));
+						c.write(getSelf(),receive(c,0,result, target));
 					}
 				} else {
 					if (getSelf().hasStatus(Stsflag.leglocked)) {
@@ -82,12 +100,12 @@ public class PullOut extends Skill {
 				getSelf().body.pleasure(target, target.body.getRandom("pussy"), getSelf().body.getRandom("cock"), m, c);					
 				return false;
 			} else if(getSelf().human()){
-				c.write(getSelf(),deal(c,0,Result.normal, target));
+				c.write(getSelf(),deal(c,0,result, target));
 			} else if(target.human()){
-				c.write(getSelf(),receive(c,0,Result.normal, target));
+				c.write(getSelf(),receive(c,0,result, target));
 			}
+			c.setStance(c.getStance().insert());
 		}
-		c.setStance(c.getStance().insert());
 		return true;
 	}
 
@@ -103,10 +121,15 @@ public class PullOut extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		if(modifier==Result.anal){
+		if(modifier==Result.reverse){
+			return "You rise up and let "+ target.nameOrPossessivePronoun() + "girl-cock slip out of your " + (c.getStance().en == Stance.anal ? "ass." : "pussy");
+		} else if(modifier==Result.anal){
 			return "You pull your dick completely out of "+target.name()+"'s ass.";
+		} else if(modifier==Result.normal) {
+			return "You pull completely out of "+target.name()+"'s pussy, causing her to let out a disappointed little whimper.";
+		} else {
+			return "You pull yourself off "+target.name()+"'s face, causing her to gasp lungfuls of the new fresh air offer to her.";
 		}
-		return "You pull completely out of "+target.name()+"'s pussy, causing her to let out a disappointed little whimper.";
 	}
 
 	@Override
@@ -114,8 +137,12 @@ public class PullOut extends Skill {
 		if(modifier==Result.anal){
 			return "You feel the pressure in your anus recede as "+getSelf().name()+" pulls out.";
 		}
-		else{
+		else if(modifier==Result.reverse){
 			return getSelf().name()+" lifts her hips more than normal, letting your dick slip completely out of her.";
+		} else if(modifier==Result.normal){
+			return getSelf().name()+" pulls her dick completely out of your pussy, leaving you feeling empty.";
+		} else {
+			return getSelf().name()+" lifts herself off your face, giving you a brief respite.";
 		}
 	}
 

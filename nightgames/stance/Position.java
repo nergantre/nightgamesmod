@@ -114,8 +114,8 @@ public abstract class Position implements Serializable, Cloneable{
 		}
 		Character nbot = this.top;
 		Character ntop = this.bottom;
-		newStance.bottom = ntop;
-		newStance.top = nbot;
+		newStance.bottom = nbot;
+		newStance.top = ntop;
 		return newStance;
 	}
 	public boolean analinserted() {

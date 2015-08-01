@@ -17,7 +17,9 @@ public class MouthPart extends GenericBodyPart {
 	 */
 	private static final long serialVersionUID = 8842280103329414804L;
 	public static MouthPart generic = new MouthPart("mouth", 0, 1, 1);
-
+	public MouthPart(String desc, String descLong, double hotness, double pleasure, double sensitivity, boolean notable, String prefix) {
+		super(desc, descLong, hotness, pleasure, sensitivity, notable, "mouth", prefix);
+	}
 	public MouthPart(String desc, double hotness, double pleasure,
 			double sensitivity) {
 		super(desc, hotness, pleasure, sensitivity, "mouth", "a ");
@@ -75,8 +77,8 @@ public class MouthPart extends GenericBodyPart {
 				c.write(opponent, "<br>As your lips touch " + opponent.getName() + ", you instinctively drawn in her spirit, forcing her energy through " + target.describe(opponent) + " into your mouth.");
 			}
 			bonus += Global.random(3) + 2;
-			opponent.loseWillpower(c, Global.random(3) + 2);
-			self.buildMojo(c, 5);
+			opponent.loseWillpower(c, Global.random(5) + 2);
+			self.buildMojo(c, 15);
 		}
 		return bonus;
 	}

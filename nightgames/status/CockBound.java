@@ -55,7 +55,7 @@ public class CockBound extends Status {
 	}
 
 	@Override
-	public int pleasure(Combat c, int x) {
+	public double pleasure(Combat c, double x) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -81,8 +81,12 @@ public class CockBound extends Status {
 	@Override
 	public int escape() {
 		int dc = toughness;
-		toughness-=2;
 		return -dc * 10;
+	}
+
+	@Override
+	public void struggle(Character self) {
+		toughness = Math.round(toughness * .5f);
 	}
 
 	@Override

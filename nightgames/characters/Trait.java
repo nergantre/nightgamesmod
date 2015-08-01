@@ -100,7 +100,8 @@ public enum Trait {
 	tight("Tight", "Powerful musculature and exquisite tightness makes for quick orgasms."),
 	holecontrol("Pussy Control", "Dexterous internal muscle control."),
 	oiledass("Oiled Ass", "Natural oils makes her ass always ready."),
-	autonomousAss("Autonomous Ass", "Her asshole instinctively forces anything inside of it to cum."),
+	autonomousAss("Autonomous Ass", "Asshole instinctively forces anything inside of it to cum."),
+	fetishTrainer("Fetish Trainer", "Capable of developing other's fetishes."),
 	
 	//training perks
 	analTraining1("Anal Training 1", "Refined ass control."),

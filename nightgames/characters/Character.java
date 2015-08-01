@@ -399,9 +399,6 @@ public abstract class Character extends Observable implements Cloneable{
 		int pleasure = i;
 
 		emote(Emotion.horny, i / 4 + 1);
-		for(Status s: status){
-			pleasure+=s.pleasure(null, i);
-		}
 		if(pleasure<1){
 			pleasure=1;
 		}
@@ -412,6 +409,21 @@ public abstract class Character extends Observable implements Cloneable{
 		tempt(c, null, i);
 	}
 
+	public void tempt(Combat c, Character tempter, BodyPart with, int i) {
+		if (tempter != null && with != null) {
+			//triple multiplier for the body part
+			double temptMultiplier = body.getCharismaBonus(tempter) + with.getHotness(tempter, this) * 2;
+			int dmg = (int) Math.round(i * temptMultiplier);
+			tempt(dmg);
+			String message = String.format("%s were tempted by %s %s for <font color='rgb(240,100,100)'>%d<font color='white'> (base:%d, charisma:%.1f)\n",
+					Global.capitalizeFirstLetter(this.subject()), tempter.nameOrPossessivePronoun(), with.describe(tempter), dmg, i, temptMultiplier);
+			if (Global.isDebugOn(DebugFlags.DEBUG_DAMAGE))
+				System.out.printf(message);
+			if (c != null) {
+				c.write(message);
+			}
+		}
+	}
 	public void tempt(Combat c, Character tempter, int i) {
 		if (tempter != null) {
 			double temptMultiplier = body.getCharismaBonus(tempter);
@@ -909,6 +921,7 @@ public abstract class Character extends Observable implements Cloneable{
 		if(has(Trait.freeSpirit)){
 			total+=5;
 		}
+		System.out.println("escape = " + total);
 		return total;
 	}
 	public boolean canAct(){

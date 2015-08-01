@@ -33,7 +33,7 @@ public class Suckle extends Skill {
 		}
 		target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("breasts"), m, c);
 		if (results == Result.special) {
-			getSelf().tempt(c, target, (3 + target.body.getRandomBreasts().size) * 2);
+			getSelf().tempt(c, target, target.body.getRandomBreasts(), (3 + target.body.getRandomBreasts().size) * 2);
 			target.buildMojo(c, 8);
 		}
 		return true;

@@ -33,5 +33,5 @@ public enum Stsflag {
 	suckling,
 	fluidaddiction,
 	tolerance, 
-	leglocked, armlocked, falling,
+	leglocked, armlocked, falling, bodyfetish,
 }

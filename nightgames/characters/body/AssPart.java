@@ -3,6 +3,7 @@ package nightgames.characters.body;
 import java.util.Map;
 import java.util.Scanner;
 
+import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
@@ -41,7 +42,7 @@ public class AssPart extends GenericBodyPart {
 			BodyPart target, double damage, Combat c) {
 		double bonus = 0;
 		if (self.has(Trait.oiledass)) {
-			c.write(self, Global.format("{self:SUBJECT-ACTION:use|uses} {self:possessive} naturally oiled asshole swallows {other:name-possessive} cock with ease.", self, opponent));
+			c.write(self, Global.format("{self:NAME-POSSESSIVE} naturally oiled asshole swallows {other:name-possessive} cock with ease.", self, opponent));
 			bonus += 5;
 		}
 
@@ -52,7 +53,7 @@ public class AssPart extends GenericBodyPart {
 			c.write(self, Global.format("{self:SUBJECT-ACTION:use|uses} {self:possessive} " + desc + "sphincter muscles to milk {other:name-possessive} cock, adding to the pleasure.", self, opponent));
 			bonus += (self.has(Trait.tight) && self.has(Trait.holecontrol)) ? 10 : 5;
 			if (self.has(Trait.tight))
-				opponent.pain(c, 5);
+				opponent.pain(c, Math.max(30, self.get(Attribute.Power)));
 		}
 		return bonus;
 	}

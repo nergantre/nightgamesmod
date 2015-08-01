@@ -7,6 +7,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.stance.Stance;
 
 public class Nurple extends Skill {
 
@@ -22,6 +23,11 @@ public class Nurple extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return target.topless()&&c.getStance().reachTop(getSelf())&&getSelf().canAct();
+	}
+
+	@Override
+	public int getMojoBuilt(Combat c) {
+		return 10;
 	}
 
 	@Override

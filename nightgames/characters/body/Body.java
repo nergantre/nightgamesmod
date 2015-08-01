@@ -7,7 +7,9 @@ import nightgames.global.DebugFlags;
 import nightgames.global.Global;
 import nightgames.global.Match;
 import nightgames.status.Abuff;
+import nightgames.status.BodyFetish;
 import nightgames.status.CockBound;
+import nightgames.status.Status;
 import nightgames.status.Stsflag;
 
 import java.io.PrintWriter;
@@ -44,7 +46,9 @@ public class Body implements Cloneable {
 		AssPart.generic, MouthPart.generic, BreastsPart.flat,
 		EarPart.normal
 	};
-
+	final static String fetishParts[] = {
+			"ass", "feet", "cock", "wings", "tail", "tentacles", "breasts"
+	};
 	public Body(Character character) {
 		this(character, 1);
 	}
@@ -267,12 +271,28 @@ public class Body implements Cloneable {
 
 		return upgradable.get(Global.random(upgradable.size()));
 	}
+	
+	public Optional<BodyFetish> getFetish(String part) {
+		Optional<Status> fs = character.status.stream().filter(status -> {
+			if (status.flags().contains(Stsflag.bodyfetish)) {
+				BodyFetish fetish = ((BodyFetish)status);
+				if (fetish.part.equalsIgnoreCase(part))
+					return true;
+			}
+			return false;
+		}).findFirst();
+		if (fs.isPresent()) {
+			return Optional.of((BodyFetish)fs.get());
+		} else {
+			return Optional.empty();
+		}
+	}
 
 	public double getHotness(Character self, Character opponent) {
 		//represents tempt damage
 		double retval = hotness;
 		for (BodyPart part : getCurrentParts()) {
-			retval += part.isVisible(self) ? part.getHotness(self, opponent) : 0;
+			retval += part.isVisible(self) ? part.getHotness(self, opponent) * (getFetish(part.getType()).isPresent() ? 2 : 0) : 0;
 		}
 		int seductionDiff = Math.max(0, self.get(Attribute.Seduction) - opponent.get(Attribute.Seduction));
 		retval += seductionDiff / 10.0;
@@ -378,16 +398,26 @@ public class Body implements Cloneable {
 					bonusDamage += p.applySubBonuses(opponent, character, with, target, magnitude, c);
 				}
 			}
+			// double the base damage if the opponent is submissive and in a submissive stance
+			if (c.getStance().sub(opponent) && opponent.has(Trait.submissive)) {
+				bonusDamage += bonusDamage + magnitude;
+			} else if (c.getStance().dom(opponent) && opponent.has(Trait.submissive)) {
+				bonusDamage += bonusDamage - (magnitude * 2. / 3.);
+			}
 		}
-		// double the base damage if the opponent is submissive and in a submissive stance
-		if (c.getStance().sub(opponent) && opponent.has(Trait.submissive)) {
-			bonusDamage += bonusDamage + magnitude;
-		} else if (c.getStance().dom(opponent) && opponent.has(Trait.submissive)) {
-			bonusDamage += bonusDamage - (magnitude * 2. / 3.);
+		Optional<BodyFetish> fetish = getFetish(with.getType());
+		if (fetish.isPresent()) {
+			bonusDamage += magnitude * (1 + (fetish.get()).magnitude);
+		}
+		double origBase = bonusDamage+magnitude;
+
+		for(Status s: character.status){
+			bonusDamage+=s.pleasure(c, origBase);
 		}
 		double base = (magnitude + bonusDamage);
 		double multiplier = 1 + ((sensitivity - 1) + (pleasure - 1) + (perceptionBonus - 1));
 		double damage = base * multiplier;
+		double perceptionlessDamage = base * (multiplier - (perceptionBonus - 1));
 
 		int result = (int) Math.round(damage);		
 		if (opponent != null) {
@@ -405,6 +435,10 @@ public class Body implements Cloneable {
 					multiplier, sensitivity - 1, pleasure - 1, perceptionBonus - 1);
 			if (c != null)
 				c.write(battleString);
+			Optional<BodyFetish> otherFetish = opponent.body.getFetish(target.getType());
+			if (otherFetish.isPresent()) {
+				opponent.tempt(c, character, target, (int)Math.round(perceptionlessDamage));
+			}
 		} else {
 			String firstColor = character.human() ? "<font color='rgb(150,150,255)'>" : "<font color='rgb(255,150,150)'>";
 			String bonusString = bonusDamage > 0 ? String.format(" + <font color='rgb(255,100,50)'>%.1f<font color='white'>",bonusDamage) : "";
@@ -417,6 +451,12 @@ public class Body implements Cloneable {
 				c.write(battleString);
 		}
 		character.pleasure(result, c);
+
+		if (opponent.has(Trait.fetishTrainer) && Arrays.asList(fetishParts).contains(with.getType())) {
+			if (Global.random(100) < Math.min(opponent.get(Attribute.Fetish), 25)) {
+				character.add(new BodyFetish(character, opponent, with.getType(), .25, 10));
+			}
+		}
 		return result;
 	}
 
@@ -601,6 +641,7 @@ public class Body implements Cloneable {
 
 	public void tickHolding(Combat c, Character opponent, BodyPart selfOrgan,
 			BodyPart otherOrgan) {
-		selfOrgan.tickHolding(c, character, opponent, otherOrgan);
+		if (selfOrgan != null)
+			selfOrgan.tickHolding(c, character, opponent, otherOrgan);
 	}
 }

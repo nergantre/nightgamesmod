@@ -57,7 +57,7 @@ public class FireStance extends Status {
 	}
 
 	@Override
-	public int pleasure(Combat c, int x) {
+	public double pleasure(Combat c, double x) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

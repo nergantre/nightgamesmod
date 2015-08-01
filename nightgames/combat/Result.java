@@ -15,4 +15,5 @@ public enum Result {
 	intercourse,
 	reverse,
 	setup,
+	sub,
 }

@@ -25,7 +25,7 @@ public class Invitation extends Skill {
 
 	@Override
 	public boolean requirements(Character user) {
-		return user.get(Attribute.Seduction) > 10 || user.has(Trait.submissive);
+		return user.get(Attribute.Seduction) > 15 || user.has(Trait.submissive);
 	}
 
 	@Override

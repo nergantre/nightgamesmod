@@ -40,7 +40,7 @@ public class Kiss extends Skill {
 			m += 5;
 			res = Result.special;
 		}
-		if(getSelf().has(Trait.energydrain)){
+		if(getSelf().has(Trait.soulsucker)){
 			res = Result.upgrade;
 		}
 		if(getSelf().human()){
@@ -140,7 +140,7 @@ public class Kiss extends Skill {
 
 	@Override
 	public String getLabel(Combat c){
-		return getSelf().has(Trait.energydrain) ? "Drain Kiss" : "Kiss";
+		return getSelf().has(Trait.soulsucker) ? "Drain Kiss" : "Kiss";
 	}
 
 }

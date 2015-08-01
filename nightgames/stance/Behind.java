@@ -91,7 +91,13 @@ public class Behind extends Position {
 
 	@Override
 	public Position insert(Character dom) {
-		return new Doggy(dom, getOther(dom));
+		if (dom.hasDick() && dom(dom)) {
+			return new Doggy(dom, getOther(dom));
+		} else if (!dom.hasDick()){
+			return new ReverseCowgirl(dom, getOther(dom));
+		} else {
+			return new Missionary(dom, getOther(dom));
+		}
 	}
 
 	@Override

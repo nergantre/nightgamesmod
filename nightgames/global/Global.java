@@ -140,7 +140,7 @@ public class Global {
 		debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
-		debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
+//		debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
 		ClassLoader classLoader = getClass().getClassLoader();
 		traitRequirements = new TraitTree(classLoader.getResourceAsStream("nightgames/Resources/TraitRequirements.xml"));
 		current=null;
@@ -357,6 +357,7 @@ public class Global {
 		skillPool.add(new BreastGrowth(p));
 		skillPool.add(new CockGrowth(p));
 		skillPool.add(new BreastRay(p));
+		skillPool.add(new FootWorship(p));
 		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 			skillPool.add(new SelfStun(p));	
 		}

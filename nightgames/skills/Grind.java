@@ -58,7 +58,7 @@ public class Grind extends Thrust {
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.reverse) {
-			return Global.format("{self:SUBJECT-ACTION:grind|grinds} against {other:direct-object}, stimulating {other:possessive} entire manhood and bringing {other:direct-object} closer to climax.", getSelf(), target);
+			return Global.format("{self:SUBJECT-ACTION:grind|grinds} against {other:direct-object} with {self:possessive} " + getSelfOrgan(c).fullDescribe(getSelf()) + ", stimulating {other:possessive} entire manhood and bringing {other:direct-object} closer to climax.", getSelf(), target);
 		} else {
 			return Global.format("{self:SUBJECT} grind {self:possessive} hips against {other:direct-object} without thrusting. {other:SUBJECT} trembles and gasps as the movement stimulates {other:possessive} clit and the walls of {other:possessive} {other:body-part:pussy}.", getSelf(), target);
 		}

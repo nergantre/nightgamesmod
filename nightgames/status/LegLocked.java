@@ -51,7 +51,7 @@ public class LegLocked extends Status {
 	}
 
 	@Override
-	public int pleasure(Combat c, int x) {
+	public double pleasure(Combat c, double x) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -76,9 +76,12 @@ public class LegLocked extends Status {
 
 	@Override
 	public int escape() {
-		return 0;
+		return -toughness;
 	}
-
+	@Override
+	public void struggle(Character self) {
+		toughness = Math.round(toughness * .5f);
+	}
 	@Override
 	public int gainmojo(int x) {
 		return 0;

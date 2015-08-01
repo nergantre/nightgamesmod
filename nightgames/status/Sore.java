@@ -50,7 +50,7 @@ public class Sore extends Status {
 	}
 
 	@Override
-	public int pleasure(Combat c, int x) {
+	public double pleasure(Combat c, double x) {
 		return 0;
 	}
 

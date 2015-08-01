@@ -18,6 +18,7 @@
 		<Requirements>
 			<TraitReq>shameless</TraitReq>
 			<TraitReq>alwaysready</TraitReq>
+			<LevelReq>10</LevelReq>
 		</Requirements>
 	</Trait>
 	<Trait>
@@ -27,14 +28,23 @@
 		</Requirements>
 	</Trait>
 	<Trait>
+		<Name>fetishTrainer</Name>
+		<Requirements>
+			<AttributeReq type="Fetish">5</AttributeReq>
+			<LevelReq>15</LevelReq>
+		</Requirements>
+	</Trait>
+	<Trait>
 		<Name>entrallingjuices</Name>
 		<Requirements>
 			<TraitReq>lacedjuices</TraitReq>
+			<LevelReq>20</LevelReq>
 		</Requirements>
 	</Trait>
 	<Trait>
 		<Name>addictivefluids</Name>
 		<Requirements>
+			<LevelReq>15</LevelReq>
 			<TraitReq>lacedjuices</TraitReq>
 		</Requirements>
 	</Trait>
@@ -68,12 +78,15 @@
 	<Trait>
 		<Name>energydrain</Name>
 		<Requirements>
+			<LevelReq>25</LevelReq>
 			<TraitReq>soulsucker</TraitReq>
 		</Requirements>
 	</Trait>
 	<Trait>
 		<Name>spiritphage</Name>
 		<Requirements>
+			<LevelReq>20</LevelReq>
+			<BodypartReq>pussy</BodypartReq>
 			<TraitReq>soulsucker</TraitReq>
 		</Requirements>
 	</Trait>
@@ -116,7 +129,7 @@
 	<Trait>
 		<Name>cute</Name>
 		<Requirements>
-			<AttributeReq type="Seduction">20</AttributeReq>
+			<AttributeReq type="Seduction">30</AttributeReq>
 		</Requirements>
 	</Trait>
 	<Trait>
@@ -136,12 +149,37 @@
 	<Trait>
 		<Name>sprinter</Name>
 		<Requirements>
-				<AttributeReq type="Speed">6</AttributeReq>
+				<AttributeReq type="Cunning">10</AttributeReq>
 		</Requirements>
 	</Trait>
 	<Trait>
 		<Name>QuickRecovery</Name>
 		<Requirements>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>calm</Name>
+		<Requirements>
+				<AttributeReq type="Seduction">25</AttributeReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>shameless</Name>
+		<Requirements>
+				<AttributeReq type="Seduction">15</AttributeReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>graceful</Name>
+		<Requirements>
+			<TraitReq>soulsucker</TraitReq>
+			<AttributeReq type="Cunning">25</AttributeReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>skeptical</Name>
+		<Requirements>
+			<AttributeReq type="Cunning">25</AttributeReq>
 		</Requirements>
 	</Trait>
 	<Trait>
@@ -251,6 +289,7 @@
 		<Name>pussyTraining1</Name>
 		<Requirements>
 				<BodypartReq>pussy</BodypartReq>
+				<LevelReq>5</LevelReq>
 		</Requirements>
 	</Trait>
 	<Trait>
@@ -258,6 +297,7 @@
 		<Requirements>
 				<BodypartReq>pussy</BodypartReq>
 				<TraitReq>pussyTraining1</TraitReq>
+				<LevelReq>15</LevelReq>
 		</Requirements>
 	</Trait>
 	<Trait>
@@ -265,12 +305,14 @@
 		<Requirements>
 				<BodypartReq>pussy</BodypartReq>
 				<TraitReq>pussyTraining2</TraitReq>
+				<LevelReq>25</LevelReq>
 		</Requirements>
 	</Trait>
 	<Trait>
 		<Name>analTraining1</Name>
 		<Requirements>
 				<BodypartReq>ass</BodypartReq>
+				<LevelReq>5</LevelReq>
 		</Requirements>
 	</Trait>
 	<Trait>
@@ -278,6 +320,7 @@
 		<Requirements>
 				<BodypartReq>ass</BodypartReq>
 				<TraitReq>analTraining1</TraitReq>
+				<LevelReq>15</LevelReq>
 		</Requirements>
 	</Trait>
 	<Trait>
@@ -285,12 +328,14 @@
 		<Requirements>
 				<BodypartReq>ass</BodypartReq>
 				<TraitReq>analTraining2</TraitReq>
+				<LevelReq>25</LevelReq>
 		</Requirements>
 	</Trait>
 	<Trait>
 		<Name>cockTraining1</Name>
 		<Requirements>
 				<BodypartReq>cock</BodypartReq>
+				<LevelReq>5</LevelReq>
 		</Requirements>
 	</Trait>
 	<Trait>
@@ -298,6 +343,7 @@
 		<Requirements>
 				<BodypartReq>cock</BodypartReq>
 				<TraitReq>cockTraining1</TraitReq>
+				<LevelReq>15</LevelReq>
 		</Requirements>
 	</Trait>
 	<Trait>
@@ -305,12 +351,14 @@
 		<Requirements>
 				<BodypartReq>cock</BodypartReq>
 				<TraitReq>cockTraining2</TraitReq>
+				<LevelReq>25</LevelReq>
 		</Requirements>
 	</Trait>
 	<Trait>
 		<Name>tongueTraining1</Name>
 		<Requirements>
 				<BodypartReq>mouth</BodypartReq>
+				<LevelReq>5</LevelReq>
 		</Requirements>
 	</Trait>
 	<Trait>
@@ -318,6 +366,7 @@
 		<Requirements>
 				<BodypartReq>mouth</BodypartReq>
 				<TraitReq>tongueTraining1</TraitReq>
+				<LevelReq>15</LevelReq>
 		</Requirements>
 	</Trait>
 	<Trait>
@@ -325,23 +374,27 @@
 		<Requirements>
 				<BodypartReq>mouth</BodypartReq>
 				<TraitReq>tongueTraining2</TraitReq>
+				<LevelReq>25</LevelReq>
 		</Requirements>
 	</Trait>
 	<Trait>
 		<Name>limbTraining1</Name>
 		<Requirements>
+				<LevelReq>2</LevelReq>
 		</Requirements>
 	</Trait>
 	<Trait>
 		<Name>limbTraining2</Name>
 		<Requirements>
 				<TraitReq>limbTraining1</TraitReq>
+				<LevelReq>12</LevelReq>
 		</Requirements>
 	</Trait>
 	<Trait>
 		<Name>limbTraining3</Name>
 		<Requirements>
 				<TraitReq>limbTraining2</TraitReq>
+				<LevelReq>22</LevelReq>
 		</Requirements>
 	</Trait>
 </RequirementList>

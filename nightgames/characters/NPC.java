@@ -169,11 +169,6 @@ public class NPC extends Character {
 		}
 		target.defeated(this);
 		c.write(ai.victory(c, flag));
-		if (target.hasDick() && has(Trait.succubus)) {
-			gain(Item.semen, 3);
-			c.write("<br><b>As she leaves, you see all your scattered semen ooze out and gather into a orb in " + nameOrPossessivePronoun() + " hands. " +
-					"She carelessly drops your seed in some empty bottles that appeared out of nowhere</b>");
-		}
 		gainAttraction(target,1);
 		target.gainAttraction(this,2);
 	}

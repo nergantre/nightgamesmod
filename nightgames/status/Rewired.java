@@ -50,8 +50,8 @@ public class Rewired extends Status {
 	}
 
 	@Override
-	public int pleasure(Combat c, int x) {
-		affected.getStamina().reduce(x);
+	public double pleasure(Combat c, double x) {
+		affected.getStamina().reduce((int)Math.round(x));
 		return -x;
 	}
 

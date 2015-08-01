@@ -2,10 +2,12 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.Position;
+import nightgames.stance.Stance;
 
 public class Tighten extends Thrust {
 
@@ -15,7 +17,7 @@ public class Tighten extends Thrust {
 
 	@Override
 	public boolean requirements(Character user) {
-		return user.get(Attribute.Seduction)>=26;
+		return user.get(Attribute.Seduction)>=26 || user.has(Trait.tight);
 	}
 
 	@Override
@@ -46,7 +48,7 @@ public class Tighten extends Thrust {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		if (modifier == Result.anal) {
+		if (c.getStance().en == Stance.anal) {
 			return Global.format("{self:SUBJECT} rhythmically squeezes {self:possessive} {self:body-part:ass} around {other:possessive} dick, milking {other:direct-object} for all that {self:subject-action:are|is} worth.", getSelf(), target);
 		} else {
 			return Global.format("{self:SUBJECT} gives {other:direct-object} a seductive wink and suddenly {self:possessive} {self:body-part:pussy} squeezes around {other:possessive} {other:body-part:cock} as though it's trying to milk {other:direct-object}.", getSelf(), target);

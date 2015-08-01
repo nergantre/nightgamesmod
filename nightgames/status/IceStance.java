@@ -57,7 +57,7 @@ public class IceStance extends Status {
 	}
 
 	@Override
-	public int pleasure(Combat c, int x) {
+	public double pleasure(Combat c, double x) {
 		// TODO Auto-generated method stub
 		return -x/5;
 	}

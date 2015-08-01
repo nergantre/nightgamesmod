@@ -92,6 +92,7 @@ public class Pin extends Position {
 			return this;
 		}
 	}
+	
 	@Override
 	public float priorityMod(Character self) {
 		return getSubDomBonus(self, 2.0f);

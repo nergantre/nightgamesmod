@@ -28,6 +28,11 @@ public class UseCrop extends Skill {
 	}
 
 	@Override
+	public int getMojoBuilt(Combat c) {
+		return 10;
+	}
+
+	@Override
 	public boolean resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy())){
 			if(target.pantsless()&&c.getStance().reachBottom(getSelf())){

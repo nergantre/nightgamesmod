@@ -5,8 +5,10 @@ import nightgames.actions.Move;
 import nightgames.actions.Movement;
 import nightgames.actions.Resupply;
 import nightgames.areas.Area;
+import nightgames.characters.body.AnalPussyPart;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.GenericBodyPart;
+import nightgames.characters.body.MouthPussyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.combat.Combat;
@@ -82,9 +84,10 @@ public class Cassie extends BasePersonality {
 		growth.traits.put(35, Trait.desensitized);
 		growth.traits.put(38, Trait.tongueTraining3);
 		growth.traits.put(41, Trait.magicEyeEnthrall);
-		growth.traits.put(44, Trait.entrallingjuices);
+		growth.traits.put(44, Trait.soulsucker);
 		growth.traits.put(47, Trait.pussyTraining2);
 		growth.traits.put(50, Trait.desensitized2);
+		growth.actions.put(53, () -> {character.body.addReplace(new MouthPussyPart(), 1);});
 	}
 
 	@Override
