@@ -29,16 +29,16 @@ public class StoneStance extends Status {
 		// TODO Auto-generated method stub
 		return "";
 	}
-	
+
 	@Override
 	public float fitnessModifier () {
 		return 1.0f;
 	}
-	
+
 	@Override
 	public int mod(Attribute a) {
 		if(a==Attribute.Speed){
-			return -2;
+			return -1;
 		}
 		return 0;
 	}
