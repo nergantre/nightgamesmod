@@ -47,7 +47,7 @@ public class MouthPart extends GenericBodyPart {
 							"You forget where you are, why you're here, and what you're doing. " +
 							"The only thing left in you is an primal need to obtain more of {other:possessive} fluids.", self, opponent)));
 				} else {
-					c.write(self, Global.capitalizeFirstLetter(Global.format("As your " + fluid + " slides down {self:name-possessive} throat, see a shadow pass over {self:possessive} face. " +
+					c.write(self, Global.capitalizeFirstLetter(Global.format("As your " + fluid + " slides down {self:name-possessive} throat, you see a shadow pass over {self:possessive} face. " +
 							"Whereas {self:name} was playfully teasing you just a few seconds ago, you can now only see a desperate need that {self:pronoun} did not possess before.", self, opponent)));
 				}
 			} else if (!st.isActive()) {
@@ -74,7 +74,7 @@ public class MouthPart extends GenericBodyPart {
 			if (!self.human()) {
 				c.write(opponent, "<br>You feel faint as her lips touch your body, as if your will to fight is being sucked out through your " + target.describe(opponent) + " into her mouth.");
 			} else {
-				c.write(opponent, "<br>As your lips touch " + opponent.getName() + ", you instinctively drawn in her spirit, forcing her energy through " + target.describe(opponent) + " into your mouth.");
+				c.write(opponent, "<br>As your lips touch " + opponent.getName() + ", you instinctively draw in her spirit, forcing her energy through " + target.describe(opponent) + " into your mouth.");
 			}
 			bonus += Global.random(3) + 2;
 			opponent.loseWillpower(c, Global.random(5) + 2);
@@ -88,7 +88,7 @@ public class MouthPart extends GenericBodyPart {
 		double pleasureMod = pleasure;
 		pleasureMod += self.has(Trait.tongueTraining1) ? .5 : 0;
 		pleasureMod += self.has(Trait.tongueTraining2) ? .7 : 0;
-		pleasureMod += self.has(Trait.tongueTraining3) ? .7 : 0;
+		pleasureMod += self.has(Trait.tongueTraining3) ? .9 : 0;
 		return pleasureMod;
 	}
 

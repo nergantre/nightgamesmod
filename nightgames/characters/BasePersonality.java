@@ -10,8 +10,11 @@ import nightgames.skills.Skill;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public abstract class BasePersonality implements Personality {
 	/**
@@ -20,11 +23,15 @@ public abstract class BasePersonality implements Personality {
 	private static final long serialVersionUID = 2279220186754458082L;
 	public NPC character;
 	protected Growth growth;
-	protected List<Attribute> preferredAttributes;
+	protected List<PreferredAttribute> preferredAttributes;
+
+	public interface PreferredAttribute {
+		Optional<Attribute> getPreferred(Character c);
+	}
 
 	public BasePersonality() {
 		growth = new Growth();
-		preferredAttributes = new ArrayList<Attribute>();
+		preferredAttributes = new ArrayList<PreferredAttribute>();
 		setGrowth();
 	}
 
@@ -96,6 +103,7 @@ public abstract class BasePersonality implements Personality {
 		character.getStamina().gain(growth.stamina);
 		character.getArousal().gain(growth.arousal);
 		character.getMojo().gain(growth.mojo);
+		character.getWillpower().gain(growth.willpower);
 		// get all the traits for the level up
 		growth.traits.keySet().stream().filter(i -> i <= character.level).forEach(i -> character.add(growth.traits.get(i)));;
 		growth.actions.keySet().stream().filter(i -> i <= character.level).forEach(i -> {
@@ -137,7 +145,7 @@ public abstract class BasePersonality implements Personality {
 	public void distributePoints() {
 		if (character.availableAttributePoints <= 0) { return; }
 		ArrayList<Attribute> avail = new ArrayList<Attribute>();
-		ArrayDeque<Attribute> preferred = new ArrayDeque<Attribute>(preferredAttributes);
+		Deque<PreferredAttribute> preferred = new ArrayDeque<PreferredAttribute>(preferredAttributes);
 		for (Attribute a : character.att.keySet()) {
 			if (Attribute.isTrainable(a) && (character.getPure(a) > 0 || Attribute.isBasic(a))) {
 				avail.add(a);
@@ -149,16 +157,24 @@ public abstract class BasePersonality implements Personality {
 			avail.add(Attribute.Seduction);
 		}
 		for (; character.availableAttributePoints > 0; character.availableAttributePoints--) {
-			Attribute selected;
-			while (preferred.size() > 0 && !avail.contains(preferred.peekFirst())) {
-				preferred.removeFirst();
-			}
+			Attribute selected = null;
+			//remove all the attributes that isn't in avail
+			preferred = new ArrayDeque<>(preferred.stream().filter(p -> {
+				Optional<Attribute> att = p.getPreferred(character);
+				return att.isPresent() && avail.contains(att.get());
+			}).collect(Collectors.toList()));
 			if (preferred.size() > 0) {
-				selected = preferred.removeFirst();
-			} else {
+				Optional<Attribute> pref = preferred.removeFirst().getPreferred(character);
+				if (pref.isPresent()) {
+					selected = pref.get();
+				}
+			}
+
+			if (selected == null) {
 				selected = avail.get(Global.random(avail.size()));
 			}
 			character.mod(selected, 1);
+			selected = null;
 		}
 	}
 }

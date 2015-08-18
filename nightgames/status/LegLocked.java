@@ -25,6 +25,11 @@ public class LegLocked extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s being held down.\n", affected.subjectAction("are", "is"));
+	}
+
+	@Override
 	public float fitnessModifier () {
 		return -toughness / 10.0f;
 	}

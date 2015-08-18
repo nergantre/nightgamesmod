@@ -103,9 +103,9 @@ public class SubmissiveHold extends Skill {
 			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
 		if (isArmLock(c.getStance())) {
-			target.add(c, new ArmLocked(target, getSelf().get(Attribute.Power)));
+			target.add(c, new ArmLocked(target, 4 * getSelf().get(Attribute.Power)));
 		} else {
-			target.add(c, new LegLocked(target, getSelf().get(Attribute.Power)));
+			target.add(c, new LegLocked(target, 4 * getSelf().get(Attribute.Power)));
 		}
 		return true;
 	}

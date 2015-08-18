@@ -169,6 +169,7 @@ public class NPC extends Character {
 		}
 		target.defeated(this);
 		c.write(ai.victory(c, flag));
+		int a = 0;
 		gainAttraction(target,1);
 		target.gainAttraction(this,2);
 	}
@@ -501,7 +502,7 @@ public class NPC extends Character {
 					target.body.pleasure(this, body.getRandom("legs"), target.body.getRandom("cock"), 4+Math.min(Global.random(get(Attribute.Seduction)), 20), c);
 				}
 			} else {
-				c.write(this, name()+" pulls you off balance and lick your sensitive ear. You tremble as she nibbles on your earlobe.");
+				c.write(this, name()+" pulls you off balance and licks your sensitive ear. You tremble as she nibbles on your earlobe.");
 				target.body.pleasure(this, body.getRandom("tongue"), target.body.getRandom("ears"), 4+Math.min(Global.random(get(Attribute.Seduction)), 20), c);
 			}
 			break;
@@ -622,7 +623,7 @@ public class NPC extends Character {
 			add(c, new Horny(this, opponent.has(Trait.augmentedPheromones) ? 2 : 1, 10, opponent.nameOrPossessivePronoun() + " pheromones"));
 		}
 		if(opponent.has(Trait.smqueen)&&!is(Stsflag.masochism)){
-			c.write(String.format("<br>%s seems to shudder in arousal at the thought of pain.", subject()));
+			c.write(Global.capitalizeFirstLetter(String.format("<br>%s seems to shudder in arousal at the thought of pain.", subject())));
 			add(c, new Masochistic(this));
 		}
 		if(has(Trait.RawSexuality)){
@@ -707,8 +708,8 @@ public class NPC extends Character {
 		Global.debugSimulation = false;
 		// How close is the fight to finishing?
        float urgency = Math.min(c2.p1.getUrgency(), c2.p2.getUrgency());
-       float dfit1 = c2.p1.getFitness(urgency, c2.getStance()) - fit1;
-       float dfit2 = c2.p2.getFitness(urgency, c2.getStance()) - fit2;
+       float dfit1 = c2.p1.getFitness(c, urgency, c2.getStance()) - fit1;
+       float dfit2 = c2.p2.getFitness(c, urgency, c2.getStance()) - fit2;
        if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS_RATING) && (c2.p1.human() || c2.p2.human())) {
 			System.out.println("After:\n" + c2.debugMessage());
 		}
@@ -729,8 +730,8 @@ public class NPC extends Character {
 
 	    // Starting fitness
 	    float urgency0 = Math.min(c.p1.getUrgency(), c.p2.getUrgency());
-	    float fit1 = c.p1.getFitness(urgency0, c.getStance());
-	    float fit2 = c.p2.getFitness(urgency0, c.getStance());
+	    float fit1 = c.p1.getFitness(c, urgency0, c.getStance());
+	    float fit2 = c.p2.getFitness(c, urgency0, c.getStance());
 	    
 	    // Now simulate the result of all actions
 	    ArrayList<WeightedSkill> moveList = new ArrayList<WeightedSkill>();

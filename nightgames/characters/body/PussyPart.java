@@ -159,8 +159,7 @@ public enum PussyPart implements BodyPart {
 					self.possessivePronoun(), opponent.possessivePronoun(), target.describe(opponent), self.subjectAction("ride", "rides"), opponent.directObject(),
 					opponent.possessivePronoun(), target.describe(opponent),  self.possessivePronoun(), describe(self)));
 			int strength = 10 + self.get(Attribute.Dark)/2;
-			opponent.weaken(c, strength);
-			self.heal(c, strength);
+			opponent.drain(c, self, strength);
 			for (int i = 0; i < 10; i++) {
 				Attribute stolen = (Attribute) opponent.att.keySet().toArray()[Global.random(opponent.att.keySet().size())];
 				if (stolen != Attribute.Perception && opponent.get(stolen) > 0) {
@@ -214,10 +213,9 @@ public enum PussyPart implements BodyPart {
 			opponent.loseMojo(c, strength);
 			self.buildMojo(c, strength);
 			if (Global.random(8) == 0 && !opponent.wary()) {
-				opponent.add(c, new Enthralled(opponent, self, 3));
 				message += " The light seems to seep into " + opponent.possessivePronoun() + " " + target.describe(opponent)
 				+ ", leaving " + opponent.directObject() + " enthralled to " + self.possessivePronoun() + " will.";
-				
+				opponent.add(c, new Enthralled(opponent, self, 3));
 			}
 			c.write(self, message);
 		}
@@ -260,10 +258,7 @@ public enum PussyPart implements BodyPart {
 
 	@Override
 	public String prefix() {
-		if (desc.length() > 0)
-			return "aieou".indexOf(desc.charAt(0)) >= 0 ? "an " : "a ";
-		else 
-			return "a";
+		return "a ";
 	}
 
 	@Override

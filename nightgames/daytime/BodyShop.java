@@ -167,7 +167,7 @@ public class BodyShop extends Activity  {
 			}
 			@Override
 			boolean available(Character buyer) {
-				BreastsPart target = buyer.body.getBreastsAbove(BreastsPart.maximumSize().size);
+				BreastsPart target = buyer.body.getBreastsAbove(BreastsPart.flat.size);
 				return target != null;
 			}
 			
@@ -189,6 +189,51 @@ public class BodyShop extends Activity  {
 			@Override
 			double priority(Character buyer) {
 				return buyer.dickPreference();
+			}
+		});
+
+		selection.add(new ShopSelection("Remove Cock", 2500) {
+			@Override
+			void buy(Character buyer) {
+				buyer.body.removeAll("cock");
+			}
+			@Override
+			boolean available(Character buyer) {
+				return buyer.hasDick();
+			}
+			@Override
+			double priority(Character buyer) {
+				return 0;
+			}
+		});
+
+		selection.add(new ShopSelection("Grow Balls", 1000) {
+			@Override
+			void buy(Character buyer) {
+				buyer.body.add(new GenericBodyPart("balls", 0, 1.0, 1.5, "balls", ""));
+			}
+			@Override
+			boolean available(Character buyer) {
+				return !buyer.hasBalls();
+			}
+			@Override
+			double priority(Character buyer) {
+				return 0;
+			}
+		});
+
+		selection.add(new ShopSelection("Remove Balls", 1000) {
+			@Override
+			void buy(Character buyer) {
+				buyer.body.removeAll("balls");
+			}
+			@Override
+			boolean available(Character buyer) {
+				return buyer.hasBalls();
+			}
+			@Override
+			double priority(Character buyer) {
+				return 0;
 			}
 		});
 
@@ -286,6 +331,11 @@ public class BodyShop extends Activity  {
 				"{self:name-possessive} arms and hands are wrapped in a shiny black material that look fused on.",
 				.2, 1.5, .7, true, "hands", ""),
 				new GenericBodyPart("hands", 0, 1, 1, "hands", ""), 1000, 1000);
+		addBodyPartMod("Cat ears", EarPart.cat, EarPart.normal, 1000, 1000);
+		addBodyPartMod("Cat tail", TailPart.cat, TailPart.normal, 2500, 2500);
+		addBodyPartMod("Pointed ears", EarPart.pointed, EarPart.normal, 1000, 1000);
+		addBodyPartMod("Demonic Wings", WingsPart.demonic, WingsPart.normal, 2500, 2500);
+		addBodyPartMod("Demonic tail", TailPart.demonic, TailPart.normal, 2500, 2500);
 	}
 
 	@Override
@@ -309,7 +359,7 @@ public class BodyShop extends Activity  {
 		if (choice.equals("Start")) {
 			Global.gui().clearText();
 			Global.gui().clearCommand();
-			Global.gui().message("While ondering why you're even here, you walk into the rundown shack named \"The Body Shop\". The proprietor looks at you strangely then mutely points to the sign.");
+			Global.gui().message("While wondering why you're even here, you walk into the rundown shack named \"The Body Shop\". The proprietor looks at you strangely then mutely points to the sign.");
 			displaySelection();
 			return;
 		}

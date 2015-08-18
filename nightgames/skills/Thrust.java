@@ -9,6 +9,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.Position;
 import nightgames.stance.Stance;
+import nightgames.status.BodyFetish;
 
 public class Thrust extends Skill {
 	public Thrust(String name, Character self) {
@@ -92,7 +93,9 @@ public class Thrust extends Skill {
 			target.body.pleasure(getSelf(), selfO, targetO, m[0], c);
 		if (m[1] != 0)
 			getSelf().body.pleasure(target, targetO, selfO, m[1], c);
-
+		if (selfO.isType("ass") && Global.random(100) < 2 + getSelf().get(Attribute.Fetish)) {
+			target.add(c, new BodyFetish(target, getSelf(), "ass", .25, 10));
+		}
 		return true;
 	}
 

@@ -1,0 +1,409 @@
+=============================================
+Night games
+2015-08-17 12:09:51.56
+=============================================
+Night games
+2015-08-18 15:21:50.194
+Jewel is in Dorm
+Mara is in Quad
+Checked Cunning = 7 against 8, rolled 17
+Cassie is in Liberal Arts Building
+Checked Cunning = 7 against 21, rolled 4
+Ren is in Dining Hall
+Checked Cunning = 7 against 17, rolled 10
+Angel is in Quad
+Checked Cunning = 7 against 16, rolled 15
+Jewel is in Quad
+Mara is in Quad
+Cassie is in Liberal Arts Building
+Checked Cunning = 6 against 13, rolled 2
+Ren is in Quad
+Mara gained affection for Ren
+Mara gained affection for Jewel
+Angel is in Quad
+Jewel is in Quad
+Jewel gained affection for Mara
+Jewel gained affection for Angel
+Checked Cunning = 6 against 12, rolled 0
+Mara is in Student Union
+Checked Cunning = 5 against 7, rolled 3
+Cassie is in Quad
+Checked Cunning = 7 against 12, rolled 6
+Ren is in Quad
+Checked Cunning = 5 against 17, rolled 0
+Checked Cunning = 7 against 8, rolled 13
+Angel is in Dorm
+Jewel is in Quad
+Mara is in Student Union
+Cassie is in Quad
+Ren is in Dorm
+Checked Speed = 5 against 15, rolled 14
+Checked Cunning = 5 against 11, rolled 4
+Angel is in Showers
+Jewel uses Tickle
+Cassie uses Suckle
+Jewel uses Fondle Breasts
+Cassie uses Fondle Breasts
+Jewel uses Fondle Breasts
+Cassie uses Fondle Breasts
+Jewel uses Kiss
+Cassie uses Suckle
+Jewel uses Tickle
+Cassie uses Fondle Breasts
+Jewel uses Kiss
+Cassie uses Fondle Breasts
+Jewel uses Fondle Breasts
+Cassie uses Fondle Breasts
+Jewel uses Kiss
+Cassie uses Finger
+Jewel uses Fondle Breasts
+Cassie uses Fondle Breasts
+Jewel uses Slap
+Cassie uses Fondle Breasts
+will power reduced from 25 to 0
+Cassie gained affection for Jewel
+Jewel gained affection for Cassie
+Jewel is in Quad
+Checked Cunning = 5 against 23, rolled 11
+Mara is in Quad
+Checked Cunning = 5 against 11, rolled 8
+Cassie is in Quad
+Checked Cunning = 5 against 19, rolled 19
+Checked Cunning = 5 against 18, rolled 16
+Ren is in Dorm
+Checked Cunning = 5 against 6, rolled 0
+Angel is in Dorm
+Checked Cunning = 5 against 12, rolled 16
+Checked Cunning = 5 against 15, rolled 6
+Jewel is in Student Union
+Mara is in Quad
+Cassie is in Quad
+Ren is in Laundry Room
+Checked Cunning = 5 against 22, rolled 15
+Checked Cunning = 6 against 13, rolled 11
+Angel is in Dorm
+Checked Cunning = 6 against 20, rolled 8
+Jewel is in Student Union
+Checked Cunning = 5 against 16, rolled 1
+Checked Cunning = 5 against 16, rolled 3
+Mara is in Dining Hall
+Checked Cunning = 5 against 11, rolled 0
+Checked Cunning = 7 against 14, rolled 11
+Checked Cunning = 5 against 24, rolled 5
+Cassie is in Dorm
+Checked Cunning = 5 against 19, rolled 14
+Checked Cunning = 6 against 7, rolled 7
+Ren is in Laundry Room
+Angel is in Quad
+Jewel is in Student Union
+Checked Cunning = 5 against 11, rolled 8
+Mara is in Dining Hall
+Cassie is in Dorm
+Checked Speed = 5 against 15, rolled 13
+Checked Cunning = 6 against 19, rolled 15
+Checked Cunning = 5 against 5, rolled 17
+Ren is in Dorm
+Angel is in Quad
+Jewel is in Student Union
+Mara is in Dining Hall
+Cassie is in Dorm
+Ren is in Quad
+Angel is in Quad
+Angel uses Tickle
+Ren uses Fondle Breasts
+Angel uses Kiss
+Ren uses Tickle
+Angel uses Tickle
+Ren uses Fondle Breasts
+Angel uses Tickle
+Ren uses Fondle Breasts
+Angel uses Tickle
+Ren uses Fondle Breasts
+Angel uses Kiss
+Ren uses Strip Top
+Checked Cunning = 5 against 6, rolled 17
+Angel uses Undress
+Ren uses Fondle Breasts
+Angel uses Wait
+Ren uses Suckle
+Angel uses Kiss
+Ren uses Suckle
+Angel uses Tease Chest
+Ren uses Tickle
+Angel uses Tease Chest
+Ren uses Tickle
+Angel uses Strip Top
+Ren uses Tickle
+Stance Change: nightgames.stance.Neutral -> nightgames.stance.StandingOver
+will power reduced from 50 to 40
+Angel uses Nothing
+Ren uses Mount
+Stance Change: nightgames.stance.StandingOver -> nightgames.stance.Mount
+Angel uses Nothing
+Ren uses Finger
+Angel uses Wait
+Ren uses Fondle Breasts
+will power reduced from 40 to 0
+Angel gained affection for Ren
+Ren gained affection for Angel
+Checked Cunning = 5 against 13, rolled 17
+Jewel is in Quad
+Checked Cunning = 5 against 25, rolled 11
+Mara is in Quad
+Checked Cunning = 5 against 17, rolled 9
+Cassie is in Dorm
+Checked Cunning = 6 against 21, rolled 5
+Ren is in Quad
+Ren gained affection for Angel
+Ren gained affection for Jewel
+Jewel gained affection for Ren
+Checked Cunning = 6 against 24, rolled 3
+Angel is in Student Union
+Jewel is in Quad
+Mara is in Quad
+Cassie is in Dorm
+Checked Cunning = 6 against 19, rolled 0
+Checked Cunning = 5 against 14, rolled 10
+Ren is in Quad
+Jewel gained affection for Ren
+Jewel gained affection for Mara
+Checked Cunning = 5 against 16, rolled 14
+Angel is in Student Union
+Checked Cunning = 6 against 13, rolled 17
+Checked Cunning = 5 against 20, rolled 10
+Jewel is in Dorm
+Checked Cunning = 6 against 7, rolled 2
+Checked Cunning = 5 against 8, rolled 14
+Checked Cunning = 5 against 17, rolled 13
+Mara is in Student Union
+Cassie is in Dorm
+Checked Cunning = 5 against 11, rolled 12
+Checked Cunning = 8 against 14, rolled 3
+Ren is in Quad
+Angel is in Quad
+Jewel is in Dorm
+Checked Cunning = 5 against 24, rolled 6
+Mara is in Student Union
+Cassie uses Undress
+Jewel uses Slap
+Cassie uses Finger
+Jewel uses Tickle
+Cassie uses Suckle
+Jewel uses Tickle
+Cassie uses Finger
+Jewel uses Kiss
+Cassie uses Kiss
+Jewel uses Tickle
+Cassie uses Suckle
+Jewel uses Finger
+Cassie uses Finger
+Jewel uses Kiss
+Cassie uses Suckle
+Jewel uses Fondle Breasts
+Cassie uses Kiss
+Jewel uses Kiss
+Cassie uses Wait
+Jewel uses Finger
+Cassie uses Fondle Breasts
+Jewel uses Finger
+Cassie uses Fondle Breasts
+Jewel uses Fondle Breasts
+Cassie uses Fondle Breasts
+Jewel uses Fondle Breasts
+will power reduced from 50 to 0
+Cassie gained affection for Jewel
+Jewel gained affection for Cassie
+Cassie is in Dorm
+Checked Cunning = 5 against 13, rolled 15
+Ren is in Student Union
+Checked Cunning = 7 against 21, rolled 9
+Checked Cunning = 8 against 12, rolled 4
+Angel is in Dorm
+Jewel is in Dorm
+Mara is in Student Union
+Cassie is in Dorm
+Checked Cunning = 8 against 22, rolled 2
+Ren is in Pool
+Angel is in Dorm
+Jewel is in Quad
+Checked Cunning = 5 against 19, rolled 19
+Checked Cunning = 5 against 8, rolled 14
+Mara is in Quad
+Cassie is in Dorm
+Ren is in Pool
+Angel is in Dorm
+Jewel is in Quad
+Mara is in Quad
+Cassie is in Dorm
+Ren is in Pool
+Angel is in Dorm
+Jewel uses Kiss
+Mara uses Fondle Breasts
+Jewel uses Kiss
+Mara uses Fondle Breasts
+Jewel uses Fondle Breasts
+Mara uses Kiss
+Jewel uses Kiss
+Mara uses Wait
+Jewel uses Tickle
+Mara uses Fondle Breasts
+Jewel uses Strip Bottoms
+Mara uses Tickle
+Checked Cunning = 5 against 17, rolled 11
+Jewel uses Slap
+Mara uses Kiss
+Jewel uses Masturbate
+Mara uses Tickle
+Jewel uses Shove
+Mara uses Masturbate
+Checked Power = 10 against 19, rolled 3
+Jewel uses Tickle
+Mara uses Tickle
+Jewel uses Slap
+Mara uses Strip Bottoms
+Checked Cunning = 8 against 13, rolled 4
+Stance Change: nightgames.stance.Neutral -> nightgames.stance.StandingOver
+will power reduced from 50 to 40
+Jewel uses Mount(Reverse)
+Mara uses Nothing
+Stance Change: nightgames.stance.StandingOver -> nightgames.stance.ReverseMount
+Jewel uses Tickle
+Mara uses Nothing
+Jewel uses Tickle
+Mara uses Struggle
+Escape: -32
+Checked Power = 5 against 47, rolled 8
+Jewel uses Tickle
+Mara uses Escape
+Escape: -20
+Checked Cunning = 8 against 45, rolled 6
+Jewel uses Strip Bottoms
+Mara uses Struggle
+Checked Cunning = 5 against -42, rolled 13
+Escape: -8
+Checked Power = 5 against 20, rolled 2
+Jewel uses Tickle
+Mara uses Struggle
+Escape: 0
+Checked Power = 5 against 8, rolled 14
+Stance Change: nightgames.stance.ReverseMount -> nightgames.stance.Neutral
+Jewel uses Wait
+Mara uses Wait
+Jewel uses Fondle Breasts
+Mara uses Tickle
+Jewel uses Strip Bottoms
+Mara uses Strip Bottoms
+Checked Cunning = 5 against 7, rolled 13
+Checked Cunning = 8 against 11, rolled 19
+Jewel uses Fondle Breasts
+Mara uses Shove
+Checked Power = 5 against 20, rolled 9
+Jewel uses Slap
+Mara uses Kiss
+Jewel uses Tickle
+Mara uses Finger
+Stance Change: nightgames.stance.Neutral -> nightgames.stance.StandingOver
+will power reduced from 40 to 30
+Jewel uses Mount
+Mara uses Nothing
+Stance Change: nightgames.stance.StandingOver -> nightgames.stance.Mount
+Jewel uses Fondle Breasts
+Mara uses Nothing
+Jewel uses Pin
+Mara uses Shove
+Checked Power = 5 against 21, rolled 14
+Stance Change: nightgames.stance.Mount -> nightgames.stance.StandingOver
+will power reduced from 51 to 41
+Jewel uses Nothing
+Mara uses Mount(Reverse)
+Stance Change: nightgames.stance.StandingOver -> nightgames.stance.ReverseMount
+Jewel uses Nothing
+Mara uses Undress
+Jewel uses Struggle
+Mara uses Finger
+Escape: -32
+Checked Power = 10 against 27, rolled 5
+Jewel uses Struggle
+Mara uses Finger
+Escape: -20
+Checked Power = 10 against 11, rolled 12
+Stance Change: nightgames.stance.ReverseMount -> nightgames.stance.Neutral
+Jewel uses Fondle Breasts
+Mara uses Kiss
+Jewel uses Tickle
+Mara uses Finger
+Jewel uses Tickle
+Mara uses Shove
+Stance Change: nightgames.stance.Neutral -> nightgames.stance.StandingOver
+will power reduced from 30 to 20
+Jewel uses Fondle Breasts
+Mara uses Nothing
+will power reduced from 20 to 0
+Jewel gained affection for Mara
+Mara gained affection for Jewel
+Jewel is in Quad
+Checked Cunning = 7 against 12, rolled 16
+Checked Cunning = 5 against 9, rolled 10
+Mara is in Dorm
+Cassie is in Laundry Room
+Ren is in Pool
+Checked Cunning = 5 against 17, rolled 10
+Angel is in Dorm
+Checked Cunning = 5 against 10, rolled 4
+Jewel is in Dining Hall
+Mara is in Dorm
+Cassie is in Laundry Room
+Ren is in Liberal Arts Building
+Angel uses Fondle Breasts
+Mara uses Nothing
+Angel uses Tickle
+Mara uses Nothing
+Stance Change: nightgames.stance.Neutral -> nightgames.stance.StandingOver
+will power reduced from 50 to 40
+Angel uses Mount
+Mara uses Nothing
+Stance Change: nightgames.stance.StandingOver -> nightgames.stance.Mount
+Angel uses Fondle Breasts
+Mara uses Nothing
+Angel uses Suckle
+Mara uses Struggle
+Escape: -32
+Checked Power = 5 against 37, rolled 18
+Angel uses Fondle Breasts
+Mara uses Kiss
+Angel uses Suckle
+Mara uses Struggle
+Escape: -16
+Checked Power = 5 against 18, rolled 17
+Stance Change: nightgames.stance.Mount -> nightgames.stance.Neutral
+Angel uses Tickle
+Mara uses Kiss
+Angel uses Fondle Breasts
+Mara uses Fondle Breasts
+Angel uses Tickle
+Mara uses Fondle Breasts
+Angel uses Tickle
+Mara uses Kiss
+Stance Change: nightgames.stance.Neutral -> nightgames.stance.StandingOver
+will power reduced from 40 to 30
+Angel uses Mount(Reverse)
+Mara uses Nothing
+Stance Change: nightgames.stance.StandingOver -> nightgames.stance.ReverseMount
+Angel uses Tickle
+Mara uses Nothing
+Angel uses Finger
+Mara uses Struggle
+will power reduced from 30 to 0
+Angel gained affection for Mara
+Mara gained affection for Angel
+Angel is in Dorm
+Checked Cunning = 5 against 22, rolled 13
+Jewel is in Dining Hall
+Checked Cunning = 7 against 20, rolled 3
+Checked Cunning = 5 against 9, rolled 8
+Mara is in Dorm
+Checked Cunning = 5 against 18, rolled 8
+Cassie is in Laundry Room
+Checked Cunning = 5 against 23, rolled 16
+Checked Cunning = 5 against 8, rolled 10
+Ren is in Quad

@@ -9,6 +9,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.BehindFootjob;
 import nightgames.stance.Stance;
+import nightgames.status.BodyFetish;
 
 public class FootPump extends Skill {
 	public FootPump(Character self) {
@@ -58,6 +59,9 @@ public class FootPump extends Skill {
 		target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("breasts"), m2, c);
 		if (c.getStance().en != Stance.behindfootjob) {
 			c.setStance(new BehindFootjob(getSelf(), target));
+		}
+		if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
+			target.add(c, new BodyFetish(target, getSelf(), "feet", .25, 10));
 		}
 		return true;
 	}

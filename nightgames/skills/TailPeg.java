@@ -8,6 +8,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.Stance;
+import nightgames.status.BodyFetish;
 import nightgames.status.Shamed;
 
 public class TailPeg extends Skill {
@@ -80,6 +81,9 @@ public class TailPeg extends Skill {
 			target.emote(Emotion.desperate, 10);
 			getSelf().emote(Emotion.confident, 15);
 			getSelf().emote(Emotion.dominant, 25);
+			if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
+				target.add(c, new BodyFetish(target, getSelf(), "tail", .25, 10));
+			}
 		} else {
 			if (target.human())
 				c.write(getSelf(),receive(c, 0, Result.miss, target));

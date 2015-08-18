@@ -10,12 +10,24 @@ public class SixNine extends Position {
 	}
 
 	@Override
+	public float priorityMod(Character self) {
+		float priority = 0;
+		priority += self.body.getRandom("mouth").priority(self) * 2;
+		return priority;
+	}
+
+	@Override
 	public String describe() {
 		if(top.human()){
 			return "You are on top of "+bottom.name()+" in the 69 position. Her pussy is right in front of your face and you can feel her breath on your dick.";
 		} else {
 			return "You and "+top.name()+" are on the floor in 69 position. She's sitting on top of you with her pussy right in front of your face and your dick in her mouth.";
 		}
+	}
+
+	@Override
+	public Position insert(Character target) {
+		return new ReverseMount(top, bottom).insert(target);
 	}
 
 	@Override

@@ -56,7 +56,6 @@ public class EnthrallingTrap implements Trap {
 			target.add(new Enthralled(target,owner, 5));
 			target.location().opportunity(target,this);
 		}
-
 	}
 
 	@Override

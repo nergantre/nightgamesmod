@@ -274,7 +274,7 @@ public enum Trait {
 		nullResistance = (c, s) -> "";
 		resistances = new HashMap<>();
 		resistances.put(shameless, (c, s) -> {
-			if (s.flags().contains(Stsflag.shamed)) {
+			if (s.flags().contains(Stsflag.shamed) || s.flags().contains(Stsflag.distracted)) {
 				return "Shameless";
 			}
 			return "";
@@ -308,16 +308,16 @@ public enum Trait {
 			return "";
 		});
 		resistances.put(Trait.steady, (c, s) -> {
-			// 25% to resist falling
+			// 100% to resist falling
 			if (s.flags().contains(Stsflag.falling)) {
-				return "Graceful";
+				return "Steady";
 			}
 			return "";
 		});
 		resistances.put(Trait.naive, (c, s) -> {
 			// 50% to resist Cynical
 			if (s.flags().contains(Stsflag.cynical) && Global.random(100) < 50) {
-				return "Graceful";
+				return "Naive";
 			}
 			return "";
 		});

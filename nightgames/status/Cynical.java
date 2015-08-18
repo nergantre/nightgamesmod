@@ -29,6 +29,11 @@ public class Cynical extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s now cynical towards future mind games.\n", affected.subjectAction("are", "is"));
+	}
+
+	@Override
 	public float fitnessModifier () {
 		return 1;
 	}

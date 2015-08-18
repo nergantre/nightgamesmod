@@ -30,6 +30,11 @@ public class Distorted extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s image is now distorted.\n", affected.nameOrPossessivePronoun());
+	}
+
+	@Override
 	public float fitnessModifier () {
 		return 1;
 	}

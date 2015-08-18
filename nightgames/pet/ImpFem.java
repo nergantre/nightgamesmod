@@ -35,9 +35,9 @@ public class ImpFem extends Pet {
 			case 2:
 				c.write(owner(),"While your attention is focused on "+owner().name()+", her imp creeps close to you and uppercuts you in the balls.");
 				if(target.has(Trait.achilles)&&!target.has(Trait.armored)){
-					target.pain(c, 3+Global.random(5));
+					target.pain(c, 3+Global.random(5), false);
 				}
-				target.pain(c, 4+3*Global.random(power));
+				target.pain(c, 4+3*Global.random(power), false);
 				break;
 			case 1:
 				if(c.getStance().prone(target)){

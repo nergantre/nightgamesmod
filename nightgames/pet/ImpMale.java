@@ -47,7 +47,7 @@ public class ImpMale extends Pet {
 			case 1:
 				if(target.topless()){
 					c.write(owner(),"Your imp jumps onto "+target.name()+" and grabs her nipples. Unable to fight the law of gravity, the imp falls back to the floor, pulling painfully on her nipples.");
-					target.pain(c, 3+2*Global.random(power));
+					target.pain(c, 3+2*Global.random(power), false);
 				}
 				else{
 					c.write(owner(),own()+"imps strokes himself while watching the fight.");

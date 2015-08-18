@@ -24,6 +24,12 @@ public class Oiled extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s now lubricated.\n", affected.subjectAction("are", "is"));
+	}
+
+
+	@Override
 	public int mod(Attribute a) {
 		return 0;
 	}

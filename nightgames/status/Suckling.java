@@ -34,6 +34,11 @@ public class Suckling extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s fighting an urge to drink from %s nipples.\n", affected.subjectAction("are", "is"), skill.getSelf().nameOrPossessivePronoun());
+	}
+
+	@Override
 	public String describe() {
 		if(affected.human()){
 			return "You feel an irresistable urge to suck on her nipples.";
@@ -120,6 +125,6 @@ public class Suckling extends Status {
 
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new Suckling(newAffected, skill.user(), duration);
+		return new Suckling(newAffected, newOther, duration);
 	}
 }

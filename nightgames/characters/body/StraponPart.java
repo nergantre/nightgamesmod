@@ -8,6 +8,6 @@ public class StraponPart extends GenericBodyPart {
 	
 	public static StraponPart generic = new StraponPart();
 	public StraponPart() {
-		super("strap-on", 1, 1, 0, "strapon", "a ");
+		super("strap-on", 1, 1, -999, "strapon", "a ");
 	}
 }

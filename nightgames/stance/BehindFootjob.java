@@ -3,6 +3,7 @@ package nightgames.stance;
 
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.combat.Combat;
 import nightgames.global.Global;
 
 public class BehindFootjob extends Position {
@@ -13,6 +14,11 @@ public class BehindFootjob extends Position {
 	@Override
 	public String describe() {
 		return Global.format("{self:SUBJECT-ACTION:are|is} holding {other:name-do} from behind with {self:possessive} legs wrapped around {other:direct-object}", top, bottom);
+	}
+
+	@Override
+	public int pinDifficulty(Combat c, Character self) {
+		return 6;
 	}
 
 	@Override

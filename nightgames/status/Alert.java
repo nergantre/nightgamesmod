@@ -25,6 +25,11 @@ public class Alert extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s now more alert\n", affected.subjectAction("are", "is"));
+	}
+
+	@Override
 	public String describe() {
 		return "";
 	}
@@ -66,7 +71,7 @@ public class Alert extends Status {
 
 	@Override
 	public int evade() {
-		return 5;
+		return 15;
 	}
 
 	@Override

@@ -66,12 +66,6 @@ public class Kick extends Skill {
 				m = m/2;
 			}
 			target.pain(c, m);
-			if(getSelf().has(Trait.wrassler)){
-				target.calm(c, Global.random(5));
-			}
-			else{
-				target.calm(c, Global.random(8));
-			}
 			target.emote(Emotion.angry,20);
 		}
 		else{

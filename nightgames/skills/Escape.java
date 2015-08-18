@@ -22,7 +22,7 @@ public class Escape extends Skill {
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		if(getSelf().bound()){
-			if(getSelf().check(Attribute.Cunning, 5-getSelf().escape())){
+			if(getSelf().check(Attribute.Cunning, 5-getSelf().escape(c))){
 				if(getSelf().human()){
 					c.write(getSelf(),"You slip your hands out of your restraints.");
 				} else if(target.human()) {
@@ -39,7 +39,7 @@ public class Escape extends Skill {
 				getSelf().struggle();
 				return false;
 			}
-		} else if(getSelf().check(Attribute.Cunning, 20+target.get(Attribute.Cunning) - (5*c.getStance().time+getSelf().escape()))) {
+		} else if(getSelf().check(Attribute.Cunning, 20+target.get(Attribute.Cunning) - getSelf().escape(c))) {
 			if(getSelf().human()){
 				if (getSelf().hasStatus(Stsflag.cockbound)) {
 					c.write(getSelf(),"You some how managed to wiggle out of "+target.name()+"'s iron grip on your dick.");
@@ -56,9 +56,6 @@ public class Escape extends Skill {
 				}
 				c.write(getSelf(),getSelf().name()+" goes limp and you take the opportunity to adjust your grip on her. As soon as you move, she bolts out of your weakened hold. " +
 						"It was a trick!");
-			}
-			if (!getSelf().is(Stsflag.braced)) {
-				getSelf().add(c, new Braced(getSelf()));
 			}
 			c.setStance(new Neutral(getSelf(),target));
 		} else {

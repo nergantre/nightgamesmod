@@ -40,7 +40,7 @@ public class Struggle extends Skill {
 	public boolean resolve(Combat c, Character target) {
 		if (getSelf().bound()) {
 			Bound status = (Bound) target.getStatus(Stsflag.bound);
-			if (getSelf().check(Attribute.Power, 10 - getSelf().escape())) {
+			if (getSelf().check(Attribute.Power, -getSelf().escape(c))) {
 				if (getSelf().human()) {
 					if (status != null) {
 						c.write(getSelf(), "You manage to break free from the "
@@ -83,12 +83,11 @@ public class Struggle extends Skill {
 			if (c.getStance().enumerate() == Stance.anal) {
 				if (getSelf().check(
 						Attribute.Power,
-						20
-								+ (target.getStamina().get() / 2 - getSelf()
+								(target.getStamina().get() / 2 - getSelf()
 										.getStamina().get() / 2)
 								+ (target.get(Attribute.Power) - getSelf()
 										.get(Attribute.Power))
-								- ((10 * c.getStance().time) + getSelf().escape()))) {
+								- (getSelf().escape(c)))) {
 					if (getSelf().human()) {
 						c.write(getSelf(),
 								"You manage to break away from "
@@ -97,9 +96,6 @@ public class Struggle extends Skill {
 						c.write(getSelf(),
 								getSelf().name()
 										+ " pulls away from you and your dick slides out of her butt.");
-					}
-					if (!getSelf().is(Stsflag.braced)) {
-						getSelf().add(c, new Braced(getSelf()));
 					}
 					c.setStance(new Neutral(getSelf(), target));
 				} else {
@@ -118,18 +114,17 @@ public class Struggle extends Skill {
 			} else {
 				if (getSelf().check(
 						Attribute.Power,
-						20
-								+ (target.getStamina().get() / 2 - getSelf()
+								(target.getStamina().get() / 2 - getSelf()
 										.getStamina().get() / 2)
 								+ (target.get(Attribute.Power) - getSelf()
 										.get(Attribute.Power))
-								- ((10 * c.getStance().time) + getSelf().escape()))) {
+								- (getSelf().escape(c)))) {
 					if (getSelf().hasStatus(Stsflag.cockbound)) {
 						CockBound s = (CockBound)getSelf().getStatus(Stsflag.cockbound);
 						c.write(getSelf(),
 								Global.format(
 										"With a strong pull, {self:subject} some how managed to wiggle out of {other:possessive} iron grip on {self:possessive} dick. "
-												+ "However the sensations of {other:possessive} " + s.binding + " sliding against {self:possessive} cockskin leaves {self:direct-object} gasping.",
+												+ "However the sensations of " + s.binding + " sliding against {self:possessive} cockskin leaves {self:direct-object} gasping.",
 										getSelf(), target));
 						int m = 15;
 						getSelf().body.pleasure(target,
@@ -147,7 +142,7 @@ public class Struggle extends Skill {
 					} else if (c.getStance().en == Stance.flying) {
 						c.write(getSelf(),
 								"You manage to shake yourself loose from the demoness.\n"
-										+ "Immediatly afterwards you realize letting go of the person"
+										+ "Immediately afterwards you realize letting go of the person"
 										+ " holding you a good distance up from the ground may not have been"
 										+ " the smartest move you've ever made, as the ground is quickly"
 										+ " approaching your face.");
@@ -177,9 +172,6 @@ public class Struggle extends Skill {
 					}  else {
 						c.write(getSelf(),
 								Global.format("{self:SUBJECT-ACTION:manage|manages} to shake {other:direct-object} off." ,getSelf(),target));
-						if (!getSelf().is(Stsflag.braced)) {
-							getSelf().add(c, new Braced(getSelf()));
-						}
 						c.setStance(new Neutral(getSelf(), target));
 					}
 				} else {
@@ -215,12 +207,11 @@ public class Struggle extends Skill {
 		} else {
 			if (getSelf().check(
 					Attribute.Power,
-					25
-							+ (target.getStamina().get() / 2 - getSelf()
+							(target.getStamina().get() / 2 - getSelf()
 									.getStamina().get() / 2)
 							+ (target.get(Attribute.Power) - getSelf()
 									.get(Attribute.Power))
-							- (10 * c.getStance().time + getSelf().escape()))) {
+							- (getSelf().escape(c)))) {
 				if (getSelf().human()) {
 					c.write(getSelf(),
 							"You manage to scrabble out of " + target.name()
@@ -229,9 +220,6 @@ public class Struggle extends Skill {
 					c.write(getSelf(), getSelf().name() + " squirms out from under you.");
 				}
 				c.setStance(new Neutral(getSelf(), target));
-				if (!getSelf().is(Stsflag.braced)) {
-					getSelf().add(c, new Braced(getSelf()));
-				}
 			} else {
 				if (c.getStance().enumerate() == Stance.facesitting) {
 					if (getSelf().human()) {

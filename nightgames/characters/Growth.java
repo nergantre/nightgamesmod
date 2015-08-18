@@ -4,14 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Growth {
-	public int arousal;
-	public int stamina;
-	public int mojo;
+	public float arousal;
+	public float stamina;
+	public float mojo;
 	public int bonusArousal;
 	public int bonusStamina;
 	public int bonusMojo;
 	public int attributes[];
 	public int bonusAttributes;
+	public float willpower;
 	public Map<Integer, Trait> traits;
 	public Map<Integer, Runnable> actions;
 	public Growth() {
@@ -22,6 +23,7 @@ public class Growth {
 		bonusArousal = 3;
 		bonusMojo = 1;
 		bonusAttributes = 1;
+		willpower = .5f;
 		attributes = new int[] {
 			2,
 			3,

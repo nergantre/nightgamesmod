@@ -5,6 +5,7 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.status.BodyFetish;
 
 
 
@@ -43,6 +44,9 @@ public class TailJob extends Skill {
 			receiver = "cock";
 		} else {
 			receiver = "pussy";
+		}
+		if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
+			target.add(c, new BodyFetish(target, getSelf(), "tail", .25, 10));
 		}
 		target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom(receiver), m, c);
 		return true;

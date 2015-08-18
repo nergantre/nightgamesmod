@@ -26,6 +26,11 @@ public class CounterStatus extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s ready for a counter.\n", affected.subjectAction("get", "gets"));
+	}
+
+	@Override
 	public String describe() {
 		return desc;
 	}

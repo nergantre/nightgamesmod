@@ -26,6 +26,11 @@ public class Enthralled extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s now enthralled by %s.\n", affected.subjectAction("are", "is"), master.subject());
+	}
+
+	@Override
 	public String describe() {
 		if(affected.human())
 		  return "You feel a constant pull on your mind, forcing you to obey " + master.possessivePronoun() + " every command.";
@@ -80,8 +85,9 @@ public class Enthralled extends Status {
 				Global.gui().message("Everything around you suddenly seems much clearer,"
 						+ " like a lens snapped into focus. You don't really remember why"
 						+ " you were heading in the direction you where...");
-				
+				return 0;
 		}
+		affected.loseWillpower(c, 1);
 		affected.emote(Emotion.horny,15);
 		return 0;
 	}

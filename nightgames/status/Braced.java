@@ -14,6 +14,11 @@ public class Braced extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s now braced against falls.\n", affected.subjectAction("are", "is"));
+	}
+
+	@Override
 	public String describe() {
 		return "";
 	}
@@ -41,7 +46,7 @@ public class Braced extends Status {
 	@Override
 	public int damage(Combat c, int x) {
 		// TODO Auto-generated method stub
-		return 0;
+		return -x/2;
 	}
 
 	@Override
@@ -53,7 +58,7 @@ public class Braced extends Status {
 	@Override
 	public int weakened(int x) {
 		// TODO Auto-generated method stub
-		return 0;
+		return -x/2;
 	}
 
 	@Override

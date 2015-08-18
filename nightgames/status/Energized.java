@@ -65,6 +65,11 @@ public class Energized extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s with energy.\n", affected.subjectAction("now pulse", "now pulses"));
+	}
+
+	@Override
 	public int tempted(int x) {
 		// TODO Auto-generated method stub
 		return 0;

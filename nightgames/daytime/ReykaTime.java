@@ -405,7 +405,7 @@ public class ReykaTime extends Activity {
 							"your crotch for those last few words, but you quickly back away muttering something about studying and "+
 							"running off to your room. For once, you arrived back from a visit to Reyka fully intact, just the raging "+
 							"boner to worry about. Ah, well. You did voluntarily visit a succubus, what did you expect?");
-			} else
+			} else {
 				Global.gui().message("Seeing Reyka confused is certainly a change, she is usually the very image of confidence. "+
 					"<i>\"A game? You want to play a game? An actual, no-sex game?\"</i> You nod affirmatively, "+
 					"wary of what she might do next. <i>\"Well... I don't know any games. At least, none that do "+
@@ -445,6 +445,7 @@ public class ReykaTime extends Activity {
 					"with her feeding if she beats you at night, since she knows that it'll make it more fun should you run into "+
 					"her again. She didn't do so just now. Still, after a quick meal and a hot shower, you are ready to go back "+
 					"out.");
+			}
 			Global.gui().choose(this, "Leave");
 			Daytime.train(player, reyka, Attribute.Cunning);
 			reyka.gainAffection(player, 1);

@@ -26,7 +26,7 @@ public class FootWorship extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.body.has("feet")&&c.getStance().reachBottom(getSelf())&&getSelf().canAct();
+		return target.body.has("feet")&&c.getStance().reachBottom(getSelf())&&getSelf().canAct()&&!c.getStance().behind(getSelf());
 	}
 
 	@Override

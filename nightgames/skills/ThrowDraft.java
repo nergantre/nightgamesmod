@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -64,7 +65,12 @@ public class ThrowDraft extends Skill {
 		if (used == null) {
 			c.write(getSelf(), "Skill failed...");
 		} else {
-			c.write(getSelf(), Global.format(String.format("{self:SUBJECT-ACTION:%s|%ss} %s%s",used.getEffects().get(0).getOtherVerb(),used.getEffects().get(0).getOtherVerb(), used.pre(), used.name()), getSelf(), target));
+			String verb = used.getEffects().get(0).getOtherVerb();
+			if (verb.isEmpty()) {
+				verb = "throw";
+			}
+			c.write(getSelf(), Global.format(String.format("{self:SUBJECT-ACTION:%s|%ss} %s%s",
+					verb, verb, used.pre(), used.name()), getSelf(), target));
 			boolean eventful = false;
 			for (ItemEffect e : used.getEffects()) {
 				eventful = e.use(c, target, getSelf(), used) || eventful;

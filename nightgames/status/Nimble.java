@@ -31,6 +31,11 @@ public class Nimble extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s now more nimble.\n", affected.subjectAction("are", "is"));
+	}
+
+	@Override
 	public float fitnessModifier () {
 		return affected.get(Attribute.Animism) / 10.0f;
 	}

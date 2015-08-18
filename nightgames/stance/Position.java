@@ -21,6 +21,18 @@ public abstract class Position implements Serializable, Cloneable{
 		this.en=stance;
 		time=0;
 	}
+	public int pinDifficulty(Combat c, Character self) {
+		return 4;
+	}
+	public int escape(Combat c, Character self) {
+		if (sub(self) && !mobile(self)) {
+			return -pinDifficulty(c, self) * (Math.max(-5, 10 - time));
+		}
+		return 0;
+	}
+	public void struggle() {
+		time += 2;
+	}
 	public void decay(Combat c){
 		time++;
 	}
@@ -49,6 +61,9 @@ public abstract class Position implements Serializable, Cloneable{
 	public abstract boolean feet(Character c);
 	public abstract boolean oral(Character c);
 	public abstract boolean behind(Character c);
+	public boolean getUp(Character c) {
+		return mobile(c);
+	}
 	public boolean front(Character c) {
 		return !behind(c);
 	}

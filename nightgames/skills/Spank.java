@@ -55,7 +55,6 @@ public class Spank extends Skill {
 		}
 		target.emote(Emotion.angry,25);
 		target.emote(Emotion.nervous,15);
-		target.calm(c, 6);
 		target.loseMojo(c, 10);
 		return true;
 	}

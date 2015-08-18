@@ -22,6 +22,7 @@ import nightgames.stance.Stance;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Optional;
 
 public class Jewel extends BasePersonality {
 	/**
@@ -63,8 +64,11 @@ public class Jewel extends BasePersonality {
 		growth.bonusStamina = 3;
 		growth.bonusArousal = 1;
 		growth.bonusMojo = 1;
-		preferredAttributes.add(Attribute.Ki);
-		preferredAttributes.add(Attribute.Power);
+		growth.willpower = .7f;
+		preferredAttributes.add(c -> c.get(Attribute.Ki) < 15 ? Optional.of(Attribute.Ki) : Optional.empty());
+		preferredAttributes.add(c -> c.get(Attribute.Ki) >= 15
+				&& c.get(Attribute.Fetish) < 100 ? Optional.of(Attribute.Fetish) : Optional.empty());
+		preferredAttributes.add(c -> c.get(Attribute.Power) < 80 ? Optional.of(Attribute.Power) : Optional.empty());
 		growth.traits.put(1, Trait.fitnessNut);
 		growth.traits.put(4, Trait.QuickRecovery);
 		growth.traits.put(7, Trait.analTraining1);

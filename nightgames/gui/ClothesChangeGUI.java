@@ -48,6 +48,9 @@ public class ClothesChangeGUI extends JPanel {
 		BotIn = new ArrayList<Clothing>();
 		
 		for(Clothing article: player.closet){
+			if (!player.hasPussy() && Clothing.femaleOnlyClothing.contains(article)) {
+				continue;
+			}
 			switch(article.getType()){
 			case TOPOUTER:
 				TopOut.add(article);
@@ -63,6 +66,8 @@ public class ClothesChangeGUI extends JPanel {
 				break;
 			case UNDERWEAR:
 				BotIn.add(article);
+				break;
+			default:
 				break;
 			}
 		}

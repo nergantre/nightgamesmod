@@ -11,6 +11,7 @@ import nightgames.global.Global;
 import nightgames.stance.Mount;
 import nightgames.stance.NursingHold;
 import nightgames.stance.Stance;
+import nightgames.status.BodyFetish;
 import nightgames.status.Stsflag;
 import nightgames.status.Suckling;
 
@@ -58,6 +59,9 @@ public class Nurse extends Skill {
 		} else {
 			(new Suckle(target)).resolve(c, getSelf());
 			getSelf().emote(Emotion.dominant, 10);
+		}
+		if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
+			target.add(c, new BodyFetish(target, getSelf(), BreastsPart.a.getType(), .25, 10));
 		}
 		return true;
 	}

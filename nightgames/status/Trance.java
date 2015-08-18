@@ -1,5 +1,8 @@
 package nightgames.status;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 
 import nightgames.characters.Attribute;
@@ -7,6 +10,11 @@ import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
+import nightgames.skills.Masturbate;
+import nightgames.skills.Piston;
+import nightgames.skills.Skill;
+import nightgames.skills.Suckle;
+import nightgames.skills.Thrust;
 
 public class Trance extends Status {
 	private int duration;
@@ -31,6 +39,11 @@ public class Trance extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s now entranced.\n", affected.subjectAction("are", "is"));
+	}
+
+	@Override
 	public boolean mindgames(){
 		return true;
 	}
@@ -52,8 +65,17 @@ public class Trance extends Status {
 			affected.removelist.add(this);
 			affected.addlist.add(new Cynical(affected));
 		}
+		affected.loseWillpower(c, 1);
 		affected.emote(Emotion.horny,15);
 		return 0;
+	}
+
+
+	@Override
+	public Collection<Skill> allowedSkills(){
+		return Arrays.asList((Skill)new Masturbate(affected),
+				new Thrust(affected),
+				new Piston(affected));
 	}
 
 	@Override

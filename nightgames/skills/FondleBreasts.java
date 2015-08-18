@@ -93,7 +93,7 @@ public class FondleBreasts extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier == Result.miss){
-			return getSelf().name() + " gropes at your " + target.body.getRandomBreasts().describe(target) + ", but miss.";
+			return getSelf().name() + " gropes at your " + target.body.getRandomBreasts().describe(target) + ", but misses the mark.";
 		}
 		else if(target.topless()){
 			return getSelf().name() + " massages your " + target.body.getRandomBreasts().describe(target) + ", and pinch your nipples, causing you to moan with desire.";

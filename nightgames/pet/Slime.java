@@ -100,7 +100,7 @@ public class Slime extends Pet {
 				if(!c.getStance().prone(target)){
 					if(power*Global.random(20)>=target.knockdownDC()){
 						c.write(owner(),target.name()+" slips on your slime as it clings to her feet, losing her balance.");
-						target.add(new Falling(target));
+						target.add(c, new Falling(target));
 					}
 					else{
 						c.write(owner(),target.name()+" stumbles as your slime clings to her leg. She manages to catch herself and scrapes off the clingly blob.");

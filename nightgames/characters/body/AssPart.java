@@ -15,17 +15,17 @@ public class AssPart extends GenericBodyPart {
 	 * 
 	 */
 	private static final long serialVersionUID = -1767949507600318064L;
-	public static AssPart generic = new AssPart("ass", "", 0, 1.2, 1);
+	public static AssPart generic = new AssPart("ass", 0, 1.2, 1);
 
 	public AssPart(String desc, String longDesc, double hotness,
-			double pleasure, double sensitivity) {
-		super(desc, longDesc, hotness, pleasure, sensitivity, true, "ass",
-				"an ");
+			double pleasure, double sensitivity, boolean notable) {
+		super(desc, longDesc, hotness, pleasure, sensitivity, notable, "ass",
+				"a ");
 	}
 
 	public AssPart(String desc, double hotness, double pleasure,
 			double sensitivity) {
-		super(desc, "", hotness, pleasure, sensitivity, false, "ass", "an ");
+		super(desc, "", hotness, pleasure, sensitivity, false, "ass", "a ");
 	}
 
 	@Override
@@ -49,11 +49,11 @@ public class AssPart extends GenericBodyPart {
 		if (self.has(Trait.tight) || self.has(Trait.holecontrol)) {
 			String desc = "";
 			if (self.has(Trait.tight)) {desc += "powerful ";}
-			if (self.has(Trait.holecontrol)) {desc += "well-traied ";}
+			if (self.has(Trait.holecontrol)) {desc += "well-trained ";}
 			c.write(self, Global.format("{self:SUBJECT-ACTION:use|uses} {self:possessive} " + desc + "sphincter muscles to milk {other:name-possessive} cock, adding to the pleasure.", self, opponent));
 			bonus += (self.has(Trait.tight) && self.has(Trait.holecontrol)) ? 10 : 5;
 			if (self.has(Trait.tight))
-				opponent.pain(c, Math.max(30, self.get(Attribute.Power)));
+				opponent.pain(c, Math.min(30, self.get(Attribute.Power)));
 		}
 		return bonus;
 	}
@@ -94,7 +94,7 @@ public class AssPart extends GenericBodyPart {
 					(String) dict.get("descLong"),
 					(Double) dict.get("hotness"),
 					(Double) dict.get("pleasure"),
-					(Double) dict.get("sensitivity"));
+					(Double) dict.get("sensitivity"), false);
 			return part;
 		} catch (ClassCastException e) {
 			System.err.println(e.getMessage());

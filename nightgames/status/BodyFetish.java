@@ -1,10 +1,30 @@
 package nightgames.status;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.skills.Anilingus;
+import nightgames.skills.Blowjob;
+import nightgames.skills.Cunnilingus;
+import nightgames.skills.FootWorship;
+import nightgames.skills.Grind;
+import nightgames.skills.Invitation;
+import nightgames.skills.Kiss;
+import nightgames.skills.LickNipples;
+import nightgames.skills.Piston;
+import nightgames.skills.ReverseAssFuck;
+import nightgames.skills.ReverseCarry;
+import nightgames.skills.ReverseFly;
+import nightgames.skills.Skill;
+import nightgames.skills.SpiralThrust;
+import nightgames.skills.Suckle;
+import nightgames.skills.Thrust;
 
 public class BodyFetish extends Status{
 	private int duration;
@@ -26,6 +46,11 @@ public class BodyFetish extends Status{
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s now affected by a %s fetish.\n", affected.subjectAction("are", "is"), part);
+	}
+
+	@Override
 	public String describe() {
 		String desc = "";
 		if (magnitude < .24) {
@@ -42,6 +67,32 @@ public class BodyFetish extends Status{
 		}
 		else{
 			return affected.name()+" is affected by a " + desc + part + " fetish (" + magnitude +").";
+		}
+	}
+
+	@Override
+	public Collection<Skill> allowedSkills(){
+		if (magnitude <= .99) {
+			return Collections.emptySet();
+		} else if (part.equals("feet")) {
+			return Arrays.asList((Skill)
+					new FootWorship(affected));
+		} else if (part.equals("ass")) {
+			return Arrays.asList((Skill)
+					new Anilingus(affected));
+		} else if (part.equals("cock")) {
+			return Arrays.asList((Skill)
+					new Blowjob(affected),
+					new ReverseAssFuck(affected),
+					new ReverseFly(affected),
+					new ReverseCarry(affected),
+					new Invitation(affected),
+					new Thrust(affected),
+					new Piston(affected),
+					new Grind(affected),
+					new SpiralThrust(affected));	
+		} else {
+			return Collections.emptySet();
 		}
 	}
 
@@ -75,7 +126,7 @@ public class BodyFetish extends Status{
 		BodyFetish other = (BodyFetish)s;
 		assert (other.part.equals(part));
 		this.duration = Math.max(other.duration, this.duration);
-		this.magnitude += other.magnitude;
+		this.magnitude = Math.min(2.5, this.magnitude + other.magnitude);
 	}
 
 	@Override

@@ -61,7 +61,6 @@ public class Locate extends Action {
 				gui.choose(this, "Airi", self);
 		} else if ((target = Global.getNPC(choice)) != null) {
 			Item sought = Item.valueOf(target.name() + "Trophy");
-
 			if (sought == null) {
 				StringWriter writer = new StringWriter();
 				new UnsupportedOperationException()
@@ -84,16 +83,22 @@ public class Locate extends Action {
 			}
 			String desc = sought.getName().split("\'s ")[1].toLowerCase();
 			if (self.has(sought)) {
-				Area area = Global.getPlayer().findPath(target.location())
-						.getDestination();
+				Area area = target.location();
 				gui.clearText();
-				gui.message("Focusing on the essence contained in the "
-						+ desc
-						+ ". In your mind, an image of the "
-						+ area.name
-						+ " appears. It falls apart as quickly as it came to be, but you know where "
-						+target.name()+" currently is. Your hard-earned trophy is already burning up in those creepy "
-						+"purple flames, the smoke flowing from your nose straight to your crotch and setting another fire there.");
+				if (area != null) {
+					gui.message("Focusing on the essence contained in the "
+							+ desc
+							+ ", you attempt to scry for its owner's location. In your mind, an image of the "
+							+ area.name
+							+ " appears. It falls apart as quickly as it came to be, but you know where "
+							+target.name()+" currently is. Your hard-earned trophy is already burning up in those creepy "
+							+"purple flames, the smoke flowing from your nose straight to your crotch and setting another fire there.");
+				} else {
+					gui.message("Focusing on the essence contained in the "
+							+ desc
+							+ ", you attempt to scry for its owner's location. However, you draw a blank. Your hard-earned trophy is already burning up in those creepy "
+							+"purple flames, the smoke flowing from your nose straight to your crotch and setting another fire there.");
+				}
 				self.tempt(15);
 				self.consume(sought, 1);
 				gui.clearCommand();

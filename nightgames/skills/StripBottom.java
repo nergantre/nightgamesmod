@@ -15,7 +15,7 @@ public class StripBottom extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().reachBottom(getSelf())&&!target.pantsless()&&getSelf().canAct();
+		return (c.getStance().oral(getSelf()) || c.getStance().reachBottom(getSelf()))&&!target.pantsless()&&getSelf().canAct();
 	}
 
 	@Override

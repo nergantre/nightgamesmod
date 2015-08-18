@@ -101,7 +101,7 @@ public class Finger extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier == Result.miss){
-			return "She gropes at your pussy, but miss.";
+			return "She gropes at your pussy, but misses the mark.";
 		}
 		if(modifier == Result.weak){
 			return "She gropes between your's legs, not really knowing what she's doing. She doesn't know where you're the most sensitive, so she rubs and " +

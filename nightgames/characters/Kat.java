@@ -26,6 +26,7 @@ import nightgames.status.Stsflag;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Optional;
 
 public class Kat extends BasePersonality {
 	/**
@@ -46,7 +47,7 @@ public class Kat extends BasePersonality {
 		character.change(Modifier.normal);
 		character.setTrophy(Item.KatTrophy);
 		this.character.set(Attribute.Power, 10);
-		this.character.set(Attribute.Animism, 14);
+		this.character.set(Attribute.Animism, 2);
 		this.character.set(Attribute.Cunning, 8);
 		this.character.set(Attribute.Speed, 8);
 		this.character.set(Attribute.Seduction, 7);
@@ -74,7 +75,8 @@ public class Kat extends BasePersonality {
 		growth.bonusStamina = 1;
 		growth.bonusArousal = 2;
 		growth.bonusMojo = 2;
-		preferredAttributes.add(Attribute.Animism);
+		preferredAttributes.add(c -> c.get(Attribute.Animism) < 20 ? Optional.of(Attribute.Animism) : Optional.empty());
+
 		growth.traits.put(10, Trait.sympathetic);
 		growth.traits.put(13, Trait.analTraining1);
 		growth.traits.put(16, Trait.powerfulhips);
@@ -438,7 +440,7 @@ public class Kat extends BasePersonality {
 
 	@Override
 	public String orgasmLiner() {
-		return "<i>\"NYAAAH! uuu...\"</i> Kat glares at your reproachfully as she comes down from her high.";
+		return "<i>\"NYAAAH! uuu...\"</i> Kat glares at you reproachfully as she comes down from her high.";
 	}
 
 	@Override

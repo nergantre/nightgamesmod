@@ -51,7 +51,6 @@ public class Cunnilingus extends Skill {
 		} else { 
 			if (target.has(Trait.entrallingjuices) && Global.random(4) == 0 && !target.wary()) {
 				i = -2;
-				this.getSelf().add(c, new Enthralled(getSelf(),target, 3));
 			} else if (target.has(Trait.lacedjuices)){
 				i = -1;
 				this.getSelf().tempt(c, target, 5);
@@ -65,6 +64,9 @@ public class Cunnilingus extends Skill {
 		}
 		else if(target.human()){
 			c.write(getSelf(),receive(c,i,results, target));
+		}
+		if (i == -2) {
+			getSelf().add(c, new Enthralled(getSelf(),target, 3));
 		}
 		if (results != Result.miss) {
 			if (results == Result.reverse) {

@@ -72,7 +72,7 @@ public class Fly extends Fuck {
 			target.emote(Emotion.nervous, 75);
 			c.setStance(new FlyingCarry(this.getSelf(), target));
 		} else {
-			target.add(c, new Falling(target));
+			getSelf().add(c, new Falling(getSelf()));
 		}
 		return result != Result.miss;
 	}

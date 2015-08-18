@@ -19,6 +19,11 @@ public class Bound extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s now bound by %s.\n", affected.subjectAction("are", "is"), binding);
+	}
+
+	@Override
 	public String describe() {
 		if(affected.human()){
 			return "Your hands are bound by "+binding+".";

@@ -89,15 +89,15 @@ public class UseDildo extends Skill{
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier == Result.miss){
-			return Global.format("{self:SUBJECT-ACTION:try|tries} to slip a dildo into {other:direct-object}, but {other:subject} blocks it.", getSelf(),target);
+			return Global.format("{self:SUBJECT-ACTION:try|tries} to slip a dildo into {other:direct-object}, but {other:subject} block it.", getSelf(),target);
 		}
 		else if(modifier == Result.upgrade){
 			return Global.format("{self:SUBJECT-ACTION:touch|touches} the imperceptively vibrating dildo to {other:possessive} love button and {other:subject-action:jump|jumps} as if shocked. Before {other:subject} can defend {other:reflective}, {self:subject} " +
 					"slip it into {other:possessive} {other:body-part:pussy}. {other:SUBJECT-ACTION:start|starts} moaning in pleasure immediately.",getSelf(),target);
 		}
 		else{
-			return Global.format("{self:SUBJECT-ACTION:rub|rubs} the dildo against {other:possessive} lower lips to lubricate it before {self:subject-action:thrust|thrusts} it inside {self:direct-object}. "
-					+"{other:SUBJECT} can't help moaning a little as {self:subject-action:pump|pumps} the rubber toy in and out of {other:possessive} {other:body-part:pussy}.",getSelf(),target);
+			return Global.format("{self:SUBJECT-ACTION:rub|rubs} the dildo against {other:possessive} lower lips to lubricate it before {self:subject-action:thrust|thrusts} it inside {other:direct-object}. "
+					+"{other:SUBJECT} can't help but moan a little as {self:subject-action:pump|pumps} the rubber toy in and out of {other:possessive} {other:body-part:pussy}.",getSelf(),target);
 		}
 	}
 

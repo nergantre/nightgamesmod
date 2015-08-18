@@ -25,10 +25,15 @@ public class Satiated extends Status {
 		if (affected.human()) {
 			return "You feel immensely powerful after feeding on your opponent's essence\n";
 		} else {
-			return affected.name() + " feels immensely satisfied after feeding on you essence\n";
+			return affected.name() + " feels immensely satisfied after feeding on your essence\n";
 		}
 	}
-	
+
+	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s now satiated.\n", affected.subjectAction("are", "is"));
+	}
+
 	@Override
 	public float fitnessModifier () {
 		return value / 10;

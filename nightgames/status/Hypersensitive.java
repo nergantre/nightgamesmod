@@ -29,6 +29,11 @@ public class Hypersensitive extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s now hypersensitive.\n", affected.subjectAction("are", "is"));
+	}
+
+	@Override
 	public float fitnessModifier () {
 		return -1;
 	}

@@ -39,9 +39,6 @@ public class Turnover extends Skill {
 		else if(target.human()){
 			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		if(!target.is(Stsflag.braced)){
-			target.add(c, new Braced(target));
-		}
 		c.setStance(new Behind(getSelf(),target));
 		target.emote(Emotion.dominant, 20);
 		return true;

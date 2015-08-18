@@ -51,7 +51,6 @@ public class Nurple extends Skill {
 				}
 				target.pain(c, Global.random(9)+target.get(Attribute.Perception)/2);
 			}
-			target.calm(c, Global.random(5));
 			target.loseMojo(c, 5);
 			target.emote(Emotion.angry,15);
 		}

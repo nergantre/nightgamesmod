@@ -56,4 +56,5 @@ public enum Flag {
 	KatDisabled,
 	JewelDisabled,
 	AiriEnabled,
+	systemMessages,
 }

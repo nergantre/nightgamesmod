@@ -29,9 +29,8 @@ public class Aphrodisiac extends Skill {
 
 	public boolean resolve(Combat c, Character target) {
 		int magnitude = Global.random(5) + 15;
-		
 		if (getSelf().hasPussy() && getSelf().body.getRandomPussy() == PussyPart.succubus) {
-				c.write(getSelf(),receive(c, magnitude, Result.strong, getSelf()));
+				c.write(getSelf(),receive(c, magnitude, Result.strong, target));
 				target.arouse(magnitude, c);
 				target.emote(Emotion.horny, 20);
 		} else if(getSelf().has(Item.Aersolizer)){
@@ -85,7 +84,7 @@ public class Aphrodisiac extends Skill {
 			return getSelf().subjectAction("dip", "dips")
 					+ " a finger "
 					+ (getSelf().pantsless() ? "" : ("under " + getSelf().possessivePronoun()
-							+ getSelf().bottom.peek() + " and "))
+							+ " " + getSelf().bottom.peek().getName() + " and "))
 					+ "into " +getSelf().possessivePronoun()+ " pussy. Once " +getSelf().subjectAction("have", "has") + " collected a drop of "
 							+ getSelf().possessivePronoun() + " juices"
 					+ " on " + getSelf().possessivePronoun() + " fingertip, " + getSelf().subjectAction("pull", "pulls") + " it out and flicks it at " + target.directObject() +","
@@ -114,7 +113,7 @@ public class Aphrodisiac extends Skill {
 			return getSelf().subjectAction("dip", "dips")
 					+ " a finger "
 					+ (getSelf().pantsless() ? "" : ("under " + getSelf().possessivePronoun()
-							+ getSelf().bottom.peek() + " and "))
+							+ " " + getSelf().bottom.peek().getName() + " and "))
 					+ "into " +getSelf().possessivePronoun()+ " pussy. Once " +getSelf().subjectAction("have", "has") + " collected a drop of "
 							+ getSelf().possessivePronoun() + " juices"
 					+ " on " + getSelf().possessivePronoun() + " fingertip, " + getSelf().subjectAction("pull", "pulls") + " it out and flicks it at " + target.directObject() +","

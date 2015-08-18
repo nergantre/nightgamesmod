@@ -50,6 +50,7 @@ public class Kiss extends Skill {
 			c.write(getSelf(),receive(c,m,res, target));
 		}
 		if (res == Result.upgrade) {
+			target.drain(c, getSelf(), 10);
 			target.loseWillpower(c, Global.random(3) + 2);
 		}
 		target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("mouth"), m, c);

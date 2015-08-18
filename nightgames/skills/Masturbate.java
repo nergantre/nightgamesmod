@@ -108,7 +108,7 @@ public class Masturbate extends Skill {
 		} else if (targetO.isType("pussy")) {
 			return "You tease your own labia and finger yourself.";
 		} else if (targetO.isType("ass")) {
-			return "You tease your own asshole and rim yourself.";
+			return "You tease your own asshole.";
 		} else {
 			return "You play with yourself, building up your own arousal.";
 		}

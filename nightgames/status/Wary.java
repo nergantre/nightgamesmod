@@ -26,6 +26,11 @@ public class Wary extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s now wary.\n", affected.subjectAction("are", "is"));
+	}
+
+	@Override
 	public float fitnessModifier () {
 		return 5;
 	}

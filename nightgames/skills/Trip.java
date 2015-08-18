@@ -28,9 +28,6 @@ public class Trip extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.normal, target));
 			}
-			if(c.getStance().prone(getSelf())&&!getSelf().is(Stsflag.braced)){
-				getSelf().add(c, new Braced(getSelf()));
-			}
 			target.add(c, new Falling(target));
 		} else {
 			if(getSelf().human()){

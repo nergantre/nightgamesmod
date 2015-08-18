@@ -20,6 +20,10 @@ public class Sore extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s now sore.\n", affected.subjectAction("are", "is"));
+	}
+	@Override
 	public String describe() {
 		return "";
 	}

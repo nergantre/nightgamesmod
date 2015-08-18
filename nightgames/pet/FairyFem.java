@@ -28,9 +28,9 @@ public class FairyFem extends Pet {
 				if(target.nude()){
 					c.write(owner(),own()+"faerie flies at you and kicks you in the balls. She doesn't have a lot of weight to put behind it, but it still hurts like hell");
 					if(target.has(Trait.achilles)){
-						target.pain(c, 4+Global.random(4));
+						target.pain(c, 4+Global.random(4), false);
 					}
-					target.pain(c, 3+2*Global.random(power));
+					target.pain(c, 3+2*Global.random(power), false);
 				}
 				else{
 					c.write(owner(),own()+"faerie flies around the edge of the fight looking for an opening");

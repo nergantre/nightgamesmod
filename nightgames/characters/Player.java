@@ -1,48 +1,25 @@
 package nightgames.characters;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Stack;
+import java.util.stream.Collectors;
+
 import nightgames.actions.Action;
 import nightgames.actions.Move;
 import nightgames.areas.Area;
 import nightgames.areas.Deployable;
-import nightgames.characters.body.BreastsPart;
-import nightgames.characters.body.CockPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Encounter;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.global.Modifier;
-import nightgames.gui.ActionButton;
 import nightgames.gui.GUI;
 import nightgames.items.Clothing;
 import nightgames.items.Item;
-import nightgames.skills.Cunnilingus;
-import nightgames.skills.Escape;
-import nightgames.skills.Finger;
-import nightgames.skills.Flick;
-import nightgames.skills.Focus;
-import nightgames.skills.FondleBreasts;
-import nightgames.skills.Fuck;
-import nightgames.skills.Kiss;
-import nightgames.skills.Knee;
-import nightgames.skills.LickNipples;
-import nightgames.skills.Maneuver;
-import nightgames.skills.Nothing;
-import nightgames.skills.PerfectTouch;
-import nightgames.skills.Recover;
-import nightgames.skills.Restrain;
-import nightgames.skills.Shove;
 import nightgames.skills.Skill;
-import nightgames.skills.Slap;
-import nightgames.skills.Spank;
-import nightgames.skills.Straddle;
-import nightgames.skills.StripBottom;
-import nightgames.skills.StripTop;
-import nightgames.skills.Struggle;
-import nightgames.skills.SuckNeck;
-import nightgames.skills.Tackle;
 import nightgames.skills.Tactics;
-import nightgames.skills.Tickle;
-import nightgames.skills.Trip;
-import nightgames.skills.Wait;
 import nightgames.stance.Behind;
 import nightgames.status.Enthralled;
 import nightgames.status.Horny;
@@ -50,19 +27,6 @@ import nightgames.status.Masochistic;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
 import nightgames.trap.Trap;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.Stack;
-
-import javax.swing.Icon;
 
 
 public class Player extends Character {
@@ -103,6 +67,24 @@ public class Player extends Character {
 		growth.bonusStamina = 1;
 		growth.bonusArousal = 2;
 		growth.bonusMojo = 1;
+	}
+
+	public String describeStatus() {
+		StringBuilder b = new StringBuilder();
+		body.describeBodyText(b, this, false);
+		if (getTraits().size() > 0) {
+			b.append("<br>Traits:<br>");
+			List<Trait> traits = new ArrayList<>(getTraits());
+			traits.sort((first, second) -> first.toString().compareTo(second.toString()));
+			b.append(traits.stream().map(Object::toString).collect(Collectors.joining(", ")));
+		}
+		if (status.size() > 0) {
+			b.append("<br><br>Statuses:<br>");
+			List<Status> statuses= new ArrayList<>(status);
+			statuses.sort((first, second) -> first.name.compareTo(second.name));
+			b.append(statuses.stream().map(s -> s.name).collect(Collectors.joining(", ")));
+		}
+		return b.toString();	
 	}
 
 	@Override
@@ -194,6 +176,7 @@ public class Player extends Character {
 		}
 
 	}
+
 	public void change(Modifier rule){
 		if(rule==Modifier.nudist){
 			top.clear();
@@ -202,7 +185,7 @@ public class Player extends Character {
 		else if(rule==Modifier.pantsman){
 			top.clear();
 			bottom.clear();
-			bottom.add(Clothing.boxers);
+			bottom.add(outfit[1].get(0));
 		}
 		else{
 			top=(Stack<Clothing>) outfit[0].clone();
@@ -653,7 +636,7 @@ public class Player extends Character {
 			add(c, new Horny(this,opponent.has(Trait.augmentedPheromones) ? 2 : 1,10,opponent.nameOrPossessivePronoun() + " pheromones"));
 		}
 		if(opponent.has(Trait.smqueen)&&!is(Stsflag.masochism)){
-			c.write(String.format("<br>%s seem to shudder in arousal at the thought of pain.", subject()));
+			c.write(Global.capitalizeFirstLetter(String.format("<br>%s seem to shudder in arousal at the thought of pain.", subject())));
 			add(c, new Masochistic(this));
 		}
 		if(has(Trait.RawSexuality)){

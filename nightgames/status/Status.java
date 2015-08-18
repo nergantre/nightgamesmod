@@ -26,6 +26,7 @@ public abstract class Status implements Cloneable {
 		return Collections.emptySet();
 	}
 
+	public abstract String initialMessage(Combat c, boolean replaced);
 	public abstract String describe();
 	public abstract int mod(Attribute a);
 	public abstract int regen(Combat c);

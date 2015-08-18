@@ -40,7 +40,7 @@ public class Shove extends Skill {
 				c.write(getSelf(),receive(c,0,Result.special, target));
 			}
 			target.shred(0);
-			target.pain(c, Global.random(6)+2);
+			target.pain(c, Global.random(10)+15 + (getSelf().get(Attribute.Power)+  getSelf().get(Attribute.Ki)) / 4);
 			if(getSelf().check(Attribute.Power, target.knockdownDC()-getSelf().get(Attribute.Ki))) {
 				c.setStance(new Neutral(getSelf(),target));
 			}
@@ -51,9 +51,6 @@ public class Shove extends Skill {
 				} else if(target.human()) {
 					c.write(getSelf(),getSelf().name()+" shoves you hard enough to free herself and jump up.");
 				}
-				if(!getSelf().is(Stsflag.braced)){
-					getSelf().add(c, new Braced(getSelf()));
-				}
 				c.setStance(new Neutral(getSelf(),target));
 			} else {
 				if(getSelf().human()){
@@ -63,7 +60,7 @@ public class Shove extends Skill {
 				}
 				success = false;
 			}
-			target.pain(c, Global.random(6)+2);
+			target.pain(c, Global.random(10)+10 + (getSelf().get(Attribute.Power)+  getSelf().get(Attribute.Ki)) / 4);
 		}
 		else{ 
 			if(getSelf().check(Attribute.Power,target.knockdownDC())){
@@ -84,7 +81,7 @@ public class Shove extends Skill {
 				}
 				success = false;
 			}
-			target.pain(c, Global.random(4)+getSelf().get(Attribute.Power)/2);
+			target.pain(c, Global.random(10)+10 + (getSelf().get(Attribute.Power)+  getSelf().get(Attribute.Ki)) / 4);
 		}
 		return success;
 	}

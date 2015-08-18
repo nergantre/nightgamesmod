@@ -61,6 +61,11 @@ public class CockBound extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s cock is now bound by %s.\n", affected.nameOrPossessivePronoun(), binding);
+	}
+
+	@Override
 	public int weakened(int x) {
 		// TODO Auto-generated method stub
 		return 0;

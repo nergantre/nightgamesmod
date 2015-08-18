@@ -27,6 +27,10 @@ public class Shield extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s now shielded.\n", affected.subjectAction("are", "is"));
+	}
+	@Override
 	public String describe() {
 		return "";
 	}

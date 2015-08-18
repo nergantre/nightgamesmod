@@ -60,7 +60,7 @@ public class ReverseFly extends Fly {
 			target.emote(Emotion.nervous, 75);
 			c.setStance(new FlyingCowgirl(this.getSelf(), target));
 		} else {
-			target.add(c, new Falling(target));
+			getSelf().add(c, new Falling(getSelf()));
 			return false;
 		}
 		return true;

@@ -22,6 +22,11 @@ public class Feral extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s turned feral.\n", affected.subjectAction("have", "has"));
+	}
+
+	@Override
 	public int mod(Attribute a) {
 		switch(a){
 		case Power:

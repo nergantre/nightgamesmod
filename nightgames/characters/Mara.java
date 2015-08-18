@@ -23,6 +23,7 @@ import nightgames.status.Oiled;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Optional;
 
 public class Mara extends BasePersonality  {
 	/**
@@ -63,8 +64,10 @@ public class Mara extends BasePersonality  {
 		growth.bonusStamina = 1;
 		growth.bonusArousal = 2;
 		growth.bonusMojo = 2;
-		preferredAttributes.add(Attribute.Science);
-		preferredAttributes.add(Attribute.Cunning);
+		preferredAttributes.add(c -> c.get(Attribute.Science) < 15 ? Optional.of(Attribute.Science) : Optional.empty());
+		preferredAttributes.add(c -> c.get(Attribute.Science) >= 15 && c.get(Attribute.Fetish) < 50 ? Optional.of(Attribute.Fetish) : Optional.empty());
+		preferredAttributes.add(c -> c.get(Attribute.Cunning) < 100 ? Optional.of(Attribute.Cunning) : Optional.empty());
+
 		growth.traits.put(3, Trait.cautious);
 		growth.traits.put(6, Trait.freeSpirit);
 		growth.traits.put(9, Trait.limbTraining1);

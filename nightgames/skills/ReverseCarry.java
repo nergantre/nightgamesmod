@@ -57,7 +57,7 @@ public class ReverseCarry extends Carry {
 			} else if(target.human()){
 				c.write(getSelf(),premessage + receive(c,0,Result.miss, target));
 			}
-			target.add(c, new Falling(target));
+			getSelf().add(c, new Falling(getSelf()));
 			return false;
 		}
 		return true;
@@ -82,7 +82,7 @@ public class ReverseCarry extends Carry {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
-			return getSelf().name()+" jumps onto you, but you deposit her back on the floor.";
+			return getSelf().name()+" jumps onto you, but you deposit her back onto the floor.";
 		}
 		else{
 			return getSelf().name()+" leaps into your arms and impales herself on your cock. She wraps her legs around your torso and you quickly support her so she doesn't " +

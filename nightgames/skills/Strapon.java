@@ -23,8 +23,14 @@ public class Strapon extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&getSelf().pantsless()&&(getSelf().has(Item.Strapon)||getSelf().has(Item.Strapon2))
-				&&!getSelf().hasDick()&&!c.getStance().penetration(getSelf())&&!c.getStance().penetration(target)&&(!getSelf().human()||Global.getMatch().condition!=Modifier.notoys)
+		return getSelf().canAct()
+				&&c.getStance().mobile(getSelf())
+				&&!c.getStance().prone(getSelf())
+				&&getSelf().pantsless()
+				&&(getSelf().has(Item.Strapon)||getSelf().has(Item.Strapon2))
+				&&!getSelf().hasDick()&&!c.getStance().penetration(getSelf())
+				&&!c.getStance().penetration(target)
+				&&(!getSelf().human()||Global.getMatch().condition!=Modifier.notoys)
 				&&c.getStance().enumerate()!=Stance.facesitting;
 	}
 

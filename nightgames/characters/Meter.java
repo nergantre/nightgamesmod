@@ -8,16 +8,26 @@ public class Meter implements Serializable, Cloneable {
 	 */
 	private static final long serialVersionUID = 2L;
 	private int current;
-	private int max;
-	
+	private float max;
+
 	public Meter(int max){
 		this.max=max;
 		this.current=0;
 	}
 	public int get(){
-		return current;
+		if (current > max()) {
+			return max();
+		} else {
+			return current;
+		}
+	}
+	public int getOverflow(){
+		return Math.max(0, current - max());
 	}
 	public int max(){
+		return (int)max;
+	}
+	public float maxFull(){
 		return max;
 	}
 	public void reduce(int i){
@@ -28,42 +38,44 @@ public class Meter implements Serializable, Cloneable {
 			current=0;
 		}
 	}
-	public void restore(int i){
-		current+=i;
-		if(current>max){
-			current=max;
+	public void restore(int i) {
+		if (current < max()) {
+			current = Math.min(max(), current+i);
 		}
+	}
+	public void restoreNoLimit(int i){
+		current+=i;
 	}
 	public boolean isEmpty(){
 		return current<=0;
 	}
 	public boolean isFull(){
-		return current==max;
+		return current>=max;
 	}
 	public void empty(){
 		current=0;
 	}
 	public void fill(){
-		current=max;
+		current= Math.max(max(), current);
 	}
 	public void set(int i){
 		current=i;
-		if(current>max){
-			current=max;
+		if(current<0){
+			current=0;
 		}
 	}
-	public void gain(int i){
+	public void gain(float i){
 		max+=i;
-		if(current>max){
-			current=max;
+		if(current>max()){
+			current=max();
 		}
 	}
-	public void setMax(int i){
+	public void setMax(float i){
 		max=i;
-		current=max;
+		current=max();
 	}
 	public int percent(){
-		return 100*current/max;
+		return Math.min(100, 100*current/max());
 	}
 	public Meter clone() throws CloneNotSupportedException {
 		return (Meter) super.clone();

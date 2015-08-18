@@ -1,5 +1,8 @@
 package nightgames.items;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 
@@ -38,6 +41,7 @@ public enum Clothing implements Loot{
 	gothshirt	("goth shirt",ClothingType.TOP,5,"a ",Trait.broody,Trait.none,700),
 	gothpants	("goth pants",ClothingType.BOTOUTER,15,"",Trait.broody,Trait.none,800),
 	crotchlesspanties("crotchless panties",ClothingType.UNDERWEAR,15,"",Trait.kinky,Trait.ineffective,1200),
+	opencupbra("open cup bra",ClothingType.TOPUNDER,15,"",Trait.kinky,Trait.ineffective,1200),
 	latextop	("latex top",ClothingType.TOPUNDER,4,"",Trait.kinky,Trait.skimpy,1000),
 	latexpants	("latex pants",ClothingType.BOTOUTER,15,"",Trait.kinky,Trait.skimpy,1100),
 	silkShirt	("silk shirt",ClothingType.TOP,4,"a ",Trait.stylish,Trait.none,1200),
@@ -96,5 +100,23 @@ public enum Clothing implements Loot{
 		if(!owner.has(this)){
 			owner.gain(this);
 		}
+	}
+	
+	public static Set<Clothing> femaleOnlyClothing; 
+	static {
+		femaleOnlyClothing = new HashSet<>();
+		femaleOnlyClothing.add(Clothing.blouse);
+		femaleOnlyClothing.add(Clothing.bra);
+		femaleOnlyClothing.add(Clothing.skirt);
+		femaleOnlyClothing.add(Clothing.panties);
+		femaleOnlyClothing.add(Clothing.thong);
+		femaleOnlyClothing.add(Clothing.tanktop);
+		femaleOnlyClothing.add(Clothing.miniskirt);
+		femaleOnlyClothing.add(Clothing.bikinitop);
+		femaleOnlyClothing.add(Clothing.bikinibottoms);
+		femaleOnlyClothing.add(Clothing.opencupbra);
+		femaleOnlyClothing.add(Clothing.crotchlesspanties);
+		femaleOnlyClothing.add(Clothing.latextop);
+		femaleOnlyClothing.add(Clothing.latexpants);
 	}
 }

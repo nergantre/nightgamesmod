@@ -72,12 +72,7 @@ public class Squeeze extends Skill {
 				}
 				target.pain(c, Global.random(7)+5-(2*target.bottom.size()));
 			}
-			if(getSelf().has(Trait.wrassler)){
-				target.calm(c, 3);
-			}
-			else{
-				target.calm(c, 8);
-			}
+
 			target.emote(Emotion.angry,15);
 		}
 		else{

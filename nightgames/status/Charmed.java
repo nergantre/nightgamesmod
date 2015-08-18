@@ -53,6 +53,7 @@ public class Charmed extends Status {
 			affected.addlist.add(new Cynical(affected));
 		}
 		affected.emote(Emotion.horny,15);
+		affected.loseWillpower(c, 1);
 		return 0;
 	}
 
@@ -64,6 +65,11 @@ public class Charmed extends Status {
 	@Override
 	public double pleasure(Combat c, double x) {
 		return 0;
+	}
+
+	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s now charmed.\n", affected.subjectAction("are", "is"));
 	}
 
 	@Override

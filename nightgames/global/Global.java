@@ -5,7 +5,7 @@ import nightgames.actions.Bathe;
 import nightgames.actions.Craft;
 import nightgames.actions.Energize;
 import nightgames.actions.Hide;
-import nightgames.actions.JerkOff;
+import nightgames.actions.MasturbateAction;
 import nightgames.actions.Locate;
 import nightgames.actions.Movement;
 import nightgames.actions.Recharge;
@@ -137,7 +137,7 @@ public class Global {
 
 		debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_DAMAGE.ordinal()] = true;
-		debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
+//		debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
@@ -172,6 +172,7 @@ public class Global {
 		Jewel ai2 = new Jewel();
 		Mara ai3 = new Mara();
 		BasePersonality ai4 = new Angel();
+		flag(Flag.systemMessages);
 		players.add(ai1.character);
 		players.add(ai2.character);
 		players.add(ai3.character);
@@ -226,12 +227,14 @@ public class Global {
 		skillPool.add(new Reversal(p));
 		skillPool.add(new Spank(p));
 		skillPool.add(new Stomp(p));
+		skillPool.add(new StandUp(p));
 		skillPool.add(new SuckNeck(p));
 		skillPool.add(new Tackle(p));
 		skillPool.add(new Taunt(p));
 		skillPool.add(new Trip(p));
 		skillPool.add(new Whisper(p));
 		skillPool.add(new Kick(p));
+		skillPool.add(new PinAndBlow(p));
 		skillPool.add(new Footjob(p));
 		skillPool.add(new FootPump(p));
 		skillPool.add(new Handjob(p));
@@ -286,6 +289,8 @@ public class Global {
 		skillPool.add(new Fly(p));
 		skillPool.add(new Command(p));
 		skillPool.add(new Obey(p));
+		skillPool.add(new OrgasmSeal(p));
+		skillPool.add(new DenyOrgasm(p));
 		skillPool.add(new Drain(p));
 		skillPool.add(new LevelDrain(p));
 		skillPool.add(new StoneForm(p));
@@ -376,7 +381,7 @@ public class Global {
 		actionPool.add(new Use(Item.Beer));
 		actionPool.add(new Recharge());
 		actionPool.add(new Locate());
-		actionPool.add(new JerkOff());
+		actionPool.add(new MasturbateAction());
 		actionPool.add(new Energize());
 		buildTrapPool();
 		for(Trap t:trapPool){
@@ -1043,5 +1048,11 @@ public class Global {
 
 	public static double randomdouble() {
 		return rng.nextDouble();
+	}
+
+	public static String prependPrefix(String prefix, String fullDescribe) {
+		if (prefix.equals("a ") && "aeiou".contains(fullDescribe.substring(0,1).toLowerCase()))
+			return "an " + fullDescribe;
+		return prefix + fullDescribe;
 	}
 }

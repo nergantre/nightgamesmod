@@ -28,7 +28,12 @@ public class WaterStance extends Status {
 			return affected.name()+" continues her flowing movements.";
 		}
 	}
-	
+
+	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s now in a water stance.\n", affected.subjectAction("are", "is"));
+	}
+
 	@Override
 	public float fitnessModifier () {
 		return 1.0f;

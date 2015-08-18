@@ -22,7 +22,12 @@ public class FireStance extends Status {
 	public float fitnessModifier () {
 		return 1;
 	}
-	
+
+	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s now in a fire stance.\n", affected.subjectAction("are", "is"));
+	}
+
 	@Override
 	public String describe() {
 		if(affected.human()){

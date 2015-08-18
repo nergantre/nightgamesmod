@@ -28,6 +28,7 @@ import nightgames.stance.Stance;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Optional;
 
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
@@ -88,8 +89,8 @@ public class Angel extends BasePersonality {
 		growth.traits.put(48, Trait.pussyTraining3);
 		growth.traits.put(51, Trait.desensitized2);
 
-		preferredAttributes.add(Attribute.Dark);
-		preferredAttributes.add(Attribute.Seduction);
+		preferredAttributes.add(c -> c.get(Attribute.Dark) < 50 ? Optional.of(Attribute.Dark) : Optional.empty());
+		preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
 	}
 
 	@Override
@@ -214,7 +215,7 @@ public class Angel extends BasePersonality {
 		character.arousal.empty();
 		Character opponent = (this.character.equals(c.p1) ? c.p2 : c.p1);
 		String message = "";
-		if(flag==Result.anal){
+		if(flag==Result.anal && c.getStance().inserted(character)){
 			message = "Angel leans over you as she grinds her hips against yours. <i>\"You're going to come for me, aren't you?\"</i> she purrs into your ear. You shake your head; " +
 					"no way could you live it down if you came while you had something in your ass. Angel frowns and gives your ass a firm slap. <i>\"No reach around for you " +
 					"then,\"</i> she snaps. <i>\"We'll just do this the old fashion way.\"</i> She renews her assault on your poor ass and you feel your will slipping. Another solid slap " +
@@ -228,11 +229,11 @@ public class Angel extends BasePersonality {
 					"she could have been disappointed with that performance.  You can only gape as you look up to see Angel is gone along with your clothes. You sigh as you " +
 					"stand and ready yourself to move on. You wouldn't put past Angel to tell her girlfriends regardless of how well you performed, you just hope that's as " +
 					"far as that information goes.";
-		}
-/*		if(character.has(Trait.succubus)){
-			return "";
-		}*/
-		else if(flag==Result.intercourse){
+		} else if (c.getStance().inserted(character)) {
+			message = "Angel stares at you in the eye, while expertly thrusting in and out of your slobbering pussy. Your needy cunt quivers as she leans close and gives you a long steamy kiss, tongue and all. You try to get away from her, but she holds you down and merciless pounds away at your overused pussy. You can tell sheÅfs turned on as well, but itÅfll do you no good, as youÅfre already feeling yourself slip over the edge. "
+					+ "<br><br>Finally it becomes too much, and you cum hard. You wrap your arms and legs unconsciously cling to AngelÅfs body and you seek out a needy kiss from her. Angel takes note of your convulsing body, and smirks, <i>ÅhI think you need some more training. I could make anyone cum instantly while theyÅfre in me.Åh</i> After a small pausing, Angel grins devilishly and resumes pumping in and out of pussy in long leisurely strokes. <i>ÅhHmmÅc in fact, why donÅft I practice with you a bit? You know what they say, practice makes perfect!Åh You groan in frustration as your oversensitive cunt receives her cocks again. "
+					+ "<br><br>This could be a long night.";
+		} else if(c.getStance().inserted(opponent)) {
 			message = "Angel rides your cock passionately, pushing you inevitably closer to ejaculation. Her hot pussy is wrapped around your shaft like... well, exactly " +
 					"what it is. More importantly, she's a master with her hip movements and you've held out against her as long as you can. You can only hope her own orgasm is equally " +
 					"imminent. <i>\"Not even close,\"</i> She practically growls. <i>\"Don't give up now.\"</i> That's an impossible command. How can she expect you not to cum when " +

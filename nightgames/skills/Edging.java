@@ -32,6 +32,7 @@ public class Edging extends Skill {
 			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
 		getSelf().tempt(c, getSelf().getArousal().max());
+		getSelf().loseWillpower(c, getSelf().getWillpower().max());
 		return true;
 	}
 

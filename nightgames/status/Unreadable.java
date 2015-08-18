@@ -22,6 +22,10 @@ public class Unreadable extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s now unreadable.\n", affected.subjectAction("are", "is"));
+	}
+	@Override
 	public String describe() {
 		return null;
 	}

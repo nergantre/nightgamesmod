@@ -33,8 +33,7 @@ public class SuckNeck extends Skill {
 					c.write(getSelf(),receive(c,0,Result.special, target));
 				}
 				int m = 10 + Math.min(20, getSelf().get(Attribute.Dark) / 2);
-				target.weaken(c, m);
-				getSelf().heal(c, m);
+				target.drain(c,getSelf(), m);
 			}
 			else{
 				if(getSelf().human()){

@@ -48,6 +48,7 @@ public class Fuck extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return fuckable(c, target)
+				&&c.getStance().insert() != c.getStance()
 				&&c.getStance().mobile(getSelf())
 				&&!c.getStance().mobile(target)
 				&&getSelf().canAct()

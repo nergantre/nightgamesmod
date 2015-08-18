@@ -37,13 +37,11 @@ public class Slap extends Skill {
 				}
 				if(getSelf().has(Trait.pimphand)){
 					target.pain(c, Global.random((16*getSelf().getArousal().percent())/100)+getSelf().get(Attribute.Power)/2);
-					target.calm(c, Global.random(4)+2);
 					target.emote(Emotion.nervous, 40);
 					target.emote(Emotion.angry, 30);
 				}
 				else{
 					target.pain(c, Global.random((12*getSelf().getArousal().percent())/100+1)+getSelf().get(Attribute.Power)/2);
-					target.calm(c, Global.random(5)+4);
 					target.emote(Emotion.nervous, 25);
 					target.emote(Emotion.angry, 30);
 				}
@@ -57,13 +55,11 @@ public class Slap extends Skill {
 				}
 				if(getSelf().has(Trait.pimphand)){
 					target.pain(c, Global.random(8)+5+target.get(Attribute.Perception));
-					target.calm(c, Global.random(4)+2);
 					target.emote(Emotion.nervous, 20);
 					target.emote(Emotion.angry, 30);
 				}
 				else{
 					target.pain(c, Global.random(5)+4);
-					target.calm(c, Global.random(5)+4);
 					target.emote(Emotion.nervous, 10);
 					target.emote(Emotion.angry, 30);
 				}

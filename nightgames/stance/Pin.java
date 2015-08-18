@@ -2,6 +2,7 @@ package nightgames.stance;
 
 
 import nightgames.characters.Character;
+import nightgames.combat.Combat;
 
 public class Pin extends Position {
 
@@ -17,6 +18,11 @@ public class Pin extends Position {
 		else{
 			return top.name()+" is pinning you down, leaving you helpless.";
 		}		
+	}
+
+	@Override
+	public int pinDifficulty(Combat c, Character self) {
+		return 10;
 	}
 
 	@Override
@@ -78,6 +84,7 @@ public class Pin extends Position {
 	public boolean penetration(Character c) {
 		return false;
 	}
+
 	@Override
 	public Position insert(Character dom) {
 		Character other = getOther(dom);

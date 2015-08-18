@@ -20,6 +20,11 @@ public class StoneStance extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s now in a Stone stance.\n", affected.subjectAction("are", "is"));
+	}
+
+	@Override
 	public String describe() {
 		// TODO Auto-generated method stub
 		return "";

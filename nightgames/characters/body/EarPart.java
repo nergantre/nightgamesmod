@@ -12,7 +12,7 @@ import java.util.Scanner;
 public enum EarPart implements BodyPart {
 	pointed("pointed ", .2, 1.2, 1),
 	cat("cat ", .4, 1.5, 1.5), 
-	normal("", 0, 1, 1);
+	normal("normal ", 0, 1, 1);
 
 	public String desc;
 	public double hotness;
@@ -38,7 +38,9 @@ public enum EarPart implements BodyPart {
 
 	@Override
 	public String describe(Character c) {
-		return desc + "ears";
+		if (this != normal)
+			return desc + "ears";
+		return "ears";
 	}
 
 	@Override

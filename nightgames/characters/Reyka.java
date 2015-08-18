@@ -23,6 +23,7 @@ import nightgames.stance.Stance;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Optional;
 
 public class Reyka extends BasePersonality {
 	private static final long serialVersionUID = 8553663088141308399L;
@@ -68,8 +69,14 @@ public class Reyka extends BasePersonality {
 		growth.bonusStamina = 1;
 		growth.bonusArousal = 3;
 		growth.bonusMojo = 2;
-		preferredAttributes.add(Attribute.Dark);
-		preferredAttributes.add(Attribute.Seduction);
+		preferredAttributes.add(c -> c.get(Attribute.Dark) < 50 
+				&& c.get(Attribute.Dark) <= c.get(Attribute.Fetish) + 10
+						? Optional.of(Attribute.Dark) : Optional.empty());
+		preferredAttributes.add(c -> 
+				c.get(Attribute.Dark) > c.get(Attribute.Fetish) + 10
+				&& c.get(Attribute.Fetish) < 50
+						? Optional.of(Attribute.Fetish) : Optional.empty());
+		preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
 		growth.traits.put(2, Trait.pussyTraining1);
 		growth.traits.put(5, Trait.tongueTraining1);
 		growth.traits.put(8, Trait.expertGoogler);
@@ -170,7 +177,7 @@ public class Reyka extends BasePersonality {
 	@Override
 	public String taunt() {
 		return "\"You look like you will taste nice. Maybe if let me have "
-				+ "a taste, I will be nice to you too";
+				+ "a taste, I will be nice to you too.\"";
 	}
 
 	@Override

@@ -104,10 +104,13 @@ public class Invitation extends Skill {
 		}
 		if (success) {
 			c.setStance(c.getStance().insert(target));
+			if (c.getStance().inserted()) {
+				
+			}
 			if (c.getStance().en == Stance.missionary) {
-				target.add(c, new LegLocked(target, getSelf().get(Attribute.Power)));
+				target.add(c, new LegLocked(target, 4 * getSelf().get(Attribute.Power)));
 			} else {
-				target.add(c, new ArmLocked(target, getSelf().get(Attribute.Power)));
+				target.add(c, new ArmLocked(target, 4 * getSelf().get(Attribute.Power)));
 			}
 			(new Thrust(target)).resolve(c, getSelf());
 		}

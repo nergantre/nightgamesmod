@@ -64,6 +64,11 @@ public class Horny extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s now aroused by %s.\n", affected.subjectAction("are", "is"), source + " ("+ magnitude +" x "+ duration+ ")");
+	}
+
+	@Override
 	public boolean overrides(Status s) {
 		return false;
 	}

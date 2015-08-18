@@ -25,6 +25,7 @@ import nightgames.status.Energized;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Optional;
 
 public class Cassie extends BasePersonality {
 	/**
@@ -66,10 +67,11 @@ public class Cassie extends BasePersonality {
 		growth.stamina = 2;
 		growth.arousal = 4;
 		growth.mojo = 3;
+		growth.willpower = .4f;
 		growth.bonusStamina = 1;
 		growth.bonusArousal = 3;
 		growth.bonusMojo = 1;
-		preferredAttributes.add(Attribute.Arcane);
+		preferredAttributes.add(c -> c.get(Attribute.Arcane) < 80 ? Optional.of(Attribute.Arcane) : Optional.empty());
 		growth.traits.put(2, Trait.silvertongue);
 		growth.traits.put(5, Trait.mojoMaster);
 		growth.traits.put(8, Trait.tongueTraining1);
@@ -84,10 +86,14 @@ public class Cassie extends BasePersonality {
 		growth.traits.put(35, Trait.desensitized);
 		growth.traits.put(38, Trait.tongueTraining3);
 		growth.traits.put(41, Trait.magicEyeEnthrall);
+		growth.traits.put(41, Trait.magicEyeTrance);
+		growth.traits.put(41, Trait.magicEyeArousal);
 		growth.traits.put(44, Trait.soulsucker);
 		growth.traits.put(47, Trait.pussyTraining2);
 		growth.traits.put(50, Trait.desensitized2);
-		growth.actions.put(53, () -> {character.body.addReplace(new MouthPussyPart(), 1);});
+		growth.actions.put(53, () -> {
+			character.body.addReplace(new MouthPussyPart(), 1);
+		});
 	}
 
 	@Override

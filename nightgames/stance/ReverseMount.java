@@ -19,7 +19,14 @@ public class ReverseMount extends Position {
 			return top.name()+" is sitting on your chest, facing your groin.";
 		}
 	}
-
+	@Override
+	public Position insert(Character target) {
+		if (target == top) {
+			return insert();
+		} else {
+			return reverse().insert();
+		}
+	}
 	@Override
 	public boolean mobile(Character c) {
 		return c==top;
@@ -48,7 +55,7 @@ public class ReverseMount extends Position {
 
 	@Override
 	public boolean reachTop(Character c) {
-		return c==bottom;
+		return false;
 	}
 
 	@Override

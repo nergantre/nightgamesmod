@@ -8,6 +8,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.stance.Stance;
+import nightgames.status.BodyFetish;
 import nightgames.status.Shamed;
 
 public class FaceFuck extends Skill {
@@ -60,6 +61,9 @@ public class FaceFuck extends Skill {
 			}
 			target.add(c, new Shamed(target));
 		}
+		if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
+			target.add(c, new BodyFetish(target, getSelf(), "cock", .25, 10));
+		}
 		target.loseMojo(c, 2*getSelf().get(Attribute.Seduction));
 		target.loseWillpower(c, 5);
 		return true;
@@ -77,7 +81,7 @@ public class FaceFuck extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		String m = "You grab hold of "+target.name()+"'s head and push your cock into her mouth. She flushes in shamed and anger, but still dutifully services you with her lips " +
+		String m = "You grab hold of "+target.name()+"'s head and push your cock into her mouth. She flushes in shame and anger, but still dutifully services you with her lips " +
 				"and tongue while you thrust your hips.";
 		if (modifier == Result.strong) {
 			m += "<br>Her skillful tongue works its magic on your cock though, and you find yourself on the verge of orgasm way quicker than you would like.";

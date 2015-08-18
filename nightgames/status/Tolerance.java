@@ -26,6 +26,11 @@ public class Tolerance extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s built a tolerance to addictive fluids.\n", affected.subjectAction("have", "has"));
+	}
+
+	@Override
 	public float fitnessModifier () {
 		return 1;
 	}

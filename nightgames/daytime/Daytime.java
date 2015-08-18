@@ -96,6 +96,7 @@ public class Daytime {
 		}
 		activities.add(new Closet(player));
 		activities.add(new ClothingStore(player));
+		activities.add(new Boutique(player));
 		if(Global.checkFlag(Flag.Reyka)){
 			activities.add(new ReykaTime(player));
 		}

@@ -48,7 +48,7 @@ public class CounterRide extends CounterBase {
 
 	@Override
 	public int getMojoCost(Combat c) {
-		return 15;
+		return 40;
 	}
 
 	@Override

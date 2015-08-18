@@ -20,7 +20,9 @@ public class Mount extends Position {
 	}
 
 	public String image() {
-		if (bottom.hasPussy()) {
+		if (top.hasPussy() && bottom.hasPussy()) {
+			return "mount_ff.jpg";
+		} else if (bottom.hasPussy()) {
 			return "mount_m.jpg";
 		} else {
 			return "mount_f.jpg";

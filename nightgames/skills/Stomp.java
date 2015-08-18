@@ -40,7 +40,6 @@ public class Stomp extends Skill {
 				target.pain(c, 20);
 			}
 			target.pain(c, 30-(Global.random(2)*target.bottom.size()));
-			target.calm(c, Global.random(30));
 		}
 		else if(target.has(Trait.armored)){
 			if(getSelf().human()){
@@ -50,7 +49,6 @@ public class Stomp extends Skill {
 				c.write(getSelf(),receive(c,0,Result.weak, target));
 			}
 			target.pain(c, 5-(Global.random(3)*target.bottom.size()));
-			target.calm(c, Global.random(10)+10);
 		}
 		else{
 			if(getSelf().human()){
@@ -66,7 +64,6 @@ public class Stomp extends Skill {
 				target.pain(c, 20);
 			}
 			target.pain(c, 20-(Global.random(3)*target.bottom.size()));
-			target.calm(c, Global.random(30)+10);
 		}
 		target.emote(Emotion.angry,25);
 		return true;

@@ -171,15 +171,12 @@ public enum CockPart implements BodyPart {
 		}
 		return bonus;
 	}
-	
+
 	@Override
 	public String prefix() {
-		if (desc.length() > 0)
-			return "aieou".indexOf(desc.charAt(0)) >= 0 ? "an " : "a ";
-		else 
-			return "a";
+		return "a ";
 	}
-	
+
 	@Override
 	public int compare(BodyPart other) {
 		if (other instanceof CockPart) {

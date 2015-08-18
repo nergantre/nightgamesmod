@@ -76,7 +76,10 @@ public class GenericBodyPart implements BodyPart {
 
 	@Override
 	public String fullDescribe(Character c) {
-		return desc;
+		if (notable)
+			return desc;
+		else
+			return "normal " +desc;
 	}
 	
 	@Override

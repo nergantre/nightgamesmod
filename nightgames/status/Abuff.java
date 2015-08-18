@@ -20,6 +20,25 @@ public class Abuff extends Status {
 		}
 		this.value=value;
 	}
+	
+	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		String person, adjective, modification;
+		person = affected.nameOrPossessivePronoun();
+
+		if (Math.abs(value) > 5){
+			adjective = "greatly";
+		} else {
+			adjective = "";
+		}
+		if (value > 0) {
+			modification = "augmented.";
+		} else {
+			modification = "sapped.";
+		}
+		
+		return String.format("%s %s is now %s %s\n", person, modded, adjective, modification);
+	}
 
 	@Override
 	public float fitnessModifier () {

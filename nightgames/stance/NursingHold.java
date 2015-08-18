@@ -107,6 +107,7 @@ public class NursingHold extends Position {
 	public void decay(Combat c){
 		time++;
 		bottom.weaken(null, 5);
+		bottom.loseWillpower(c, 3);
 		top.emote(Emotion.dominant, 10);
 	}
 

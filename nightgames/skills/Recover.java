@@ -28,9 +28,6 @@ public class Recover extends Skill {
 		else if(target.human()){
 			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		if(!getSelf().is(Stsflag.braced)){
-			getSelf().add(c, new Braced(getSelf()));
-		}
 		c.setStance(new Neutral(getSelf(),target));
 		getSelf().heal(c, Global.random(3));
 		return true;

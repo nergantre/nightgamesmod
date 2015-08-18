@@ -42,17 +42,20 @@ public class Rewired extends Status {
 		}
 		return 0;
 	}
+	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s senses is now rewired.\n", affected.nameOrPossessivePronoun());
+	}
 
 	@Override
 	public int damage(Combat c, int x) {
-		affected.getArousal().restore(x);
-		return -x;
+		return 0;
 	}
 
 	@Override
 	public double pleasure(Combat c, double x) {
 		affected.getStamina().reduce((int)Math.round(x));
-		return -x;
+		return 0;
 	}
 
 	@Override

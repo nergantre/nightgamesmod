@@ -6,7 +6,7 @@ import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 
 public class ArmLocked extends Status {
-	private int toughness;
+	private float toughness;
 	
 	public ArmLocked(Character affected, int dc) {
 		super("Arm Locked", affected);
@@ -25,6 +25,11 @@ public class ArmLocked extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s being held down.\n", affected.subjectAction("are", "is"));
+	}
+
+	@Override
 	public float fitnessModifier () {
 		return -toughness / 10.0f;
 	}
@@ -37,11 +42,10 @@ public class ArmLocked extends Status {
 
 	@Override
 	public int regen(Combat c) {
-		if (!c.getStance().inserted(affected) || toughness <= 0.01) {
+		if (!c.getStance().inserted() || toughness <= 0.01) {
 			affected.removelist.add(this);
 		}
 		affected.emote(Emotion.horny, 10);
-		toughness -= 2;
 		return 0;
 	}
 	@Override
@@ -76,7 +80,7 @@ public class ArmLocked extends Status {
 
 	@Override
 	public int escape() {
-		return -toughness;
+		return -Math.round(toughness);
 	}
 
 	@Override
@@ -108,6 +112,6 @@ public class ArmLocked extends Status {
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new ArmLocked(newAffected, toughness);
+		return new ArmLocked(newAffected, Math.round(toughness));
 	}
 }

@@ -27,6 +27,10 @@ public class Masochistic extends Status {
 			return affected.name()+" is still flushed with arousal at the idea of being struck.";
 		}
 	}
+	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s now affected by masochistic tendencies.\n", affected.subjectAction("are", "is"));
+	}
 
 	@Override
 	public float fitnessModifier () {
@@ -51,7 +55,6 @@ public class Masochistic extends Status {
 
 	@Override
 	public int damage(Combat c, int x) {
-		affected.arouse(x / 2, c);
 		return 0;
 	}
 

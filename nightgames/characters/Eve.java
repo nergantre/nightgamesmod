@@ -22,6 +22,7 @@ import nightgames.stance.Stance;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Optional;
 
 public class Eve extends BasePersonality {
 	/**
@@ -59,8 +60,8 @@ public class Eve extends BasePersonality {
 		growth.bonusStamina = 1;
 		growth.bonusArousal = 3;
 		growth.bonusMojo = 2;
-		preferredAttributes.add(Attribute.Fetish);
-		preferredAttributes.add(Attribute.Seduction);
+		preferredAttributes.add(c -> c.get(Attribute.Fetish) < 80 ? Optional.of(Attribute.Fetish) : Optional.empty());
+		preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
 	}
 
 	public double dickPreference() {

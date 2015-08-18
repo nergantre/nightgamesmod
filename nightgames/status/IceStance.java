@@ -27,7 +27,12 @@ public class IceStance extends Status {
 			return affected.name()+" is cool as ice.";
 		}
 	}
-	
+
+	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s now in a ice stance.\n", affected.subjectAction("are", "is"));
+	}
+
 	@Override
 	public float fitnessModifier () {
 		return 1;

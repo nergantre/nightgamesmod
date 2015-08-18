@@ -4,6 +4,7 @@ import nightgames.actions.Action;
 import nightgames.actions.Locate;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Meter;
 import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
@@ -42,6 +43,7 @@ import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -53,6 +55,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
 import javax.swing.border.CompoundBorder;
@@ -91,7 +94,6 @@ public class GUI extends JFrame implements Observer {
 	private JPanel mainpanel;
 	private JToggleButton invbtn;
 	private JToggleButton stsbtn;
-	private JPanel inventoryPanel;
 	private JPanel statusPanel;
 	private JPanel centerPanel;
 	private JPanel clothesPanel;
@@ -105,6 +107,8 @@ public class GUI extends JFrame implements Observer {
 	private JRadioButton rddumb;
 	private JRadioButton rdeasy;
 	private JRadioButton rdhard;
+	private JRadioButton rdMsgOn;
+	private JRadioButton rdMsgOff;
 	private JRadioButton rdautosaveon;
 	private JRadioButton rdautosaveoff;
 	private JRadioButton rdporon;
@@ -183,7 +187,17 @@ public class GUI extends JFrame implements Observer {
 		optionspanel.add(lbldiff);
 		optionspanel.add(rdeasy);
 		optionspanel.add(rdhard);
-
+		
+		JLabel lblSystemMessage = new JLabel("System Messages");
+		ButtonGroup sysMsgG = new ButtonGroup();
+		rdMsgOn = new JRadioButton("On");
+		rdMsgOff = new JRadioButton("Off");
+		sysMsgG.add(rdMsgOn);
+		sysMsgG.add(rdMsgOff);
+		optionspanel.add(lblSystemMessage);
+		optionspanel.add(rdMsgOn);
+		optionspanel.add(rdMsgOff);
+		
 		JLabel lblauto = new JLabel("Autosave (saves to auto.sav)");
 		ButtonGroup auto = new ButtonGroup();
 		rdautosaveon = new JRadioButton("on");
@@ -222,12 +236,20 @@ public class GUI extends JFrame implements Observer {
 		optionspanel.add(rdnfntlrg);
 		mntmOptions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if(Global.checkFlag(Flag.systemMessages)){
+					rdMsgOn.setSelected(true);
+				}
+				else{
+					rdMsgOff.setSelected(true);
+				}
+
 				if(Global.checkFlag(Flag.hardmode)){
 					rdhard.setSelected(true);
 				}
 				else{
 					rdeasy.setSelected(true);
 				}
+
 				if(Global.checkFlag(Flag.dumbmode)){
 					rddumb.setSelected(true);
 				}
@@ -260,6 +282,12 @@ public class GUI extends JFrame implements Observer {
 				}
 				int result = JOptionPane.showConfirmDialog(GUI.this,optionspanel,"Options",JOptionPane.OK_CANCEL_OPTION,JOptionPane.INFORMATION_MESSAGE);
 				if(result==JOptionPane.OK_OPTION){
+					if(rdMsgOn.isSelected()){
+						Global.flag(Flag.systemMessages);
+					}
+					else{
+						Global.unflag(Flag.systemMessages);
+					}
 					if(rdnormal.isSelected()){
 						Global.unflag(Flag.dumbmode);
 					}
@@ -360,9 +388,6 @@ public class GUI extends JFrame implements Observer {
 		this.centerPanel = new JPanel();
 		this.mainpanel.add(this.centerPanel);
 		this.centerPanel.setLayout(new BorderLayout(0, 0));
-		this.inventoryPanel = new JPanel();
-		this.inventoryPanel.setLayout(new BoxLayout(this.inventoryPanel, 1));
-		this.inventoryPanel.setBackground(new Color(200, 200, 200));
 		this.statusPanel = new JPanel();
 		this.statusPanel.setLayout(new BoxLayout(this.statusPanel, 1));
 		this.statusPanel.setBackground(new Color(200, 200, 200));
@@ -383,7 +408,7 @@ public class GUI extends JFrame implements Observer {
 				portraitPanel.add(imgPanel, BorderLayout.CENTER);
 				this.textScroll = new JScrollPane();
 				imgPanel.add(textScroll, BorderLayout.CENTER);
-						
+	
 								this.textPane = new JTextPane();
 								DefaultCaret caret = (DefaultCaret)textPane.getCaret();
 								caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
@@ -454,7 +479,7 @@ public class GUI extends JFrame implements Observer {
 		//this.mainpanel.add(commandScroll);
 		this.commandPanel = new JPanel();
 		this.commandPanel.setBackground(Color.DARK_GRAY);
-		this.commandPanel.setPreferredSize(new Dimension(this.width, this.height/6));
+		this.commandPanel.setPreferredSize(new Dimension(this.width, this.height/5));
 		this.commandPanel.setMinimumSize(new Dimension(0, 200));
 		//this.commandPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		this.commandPanel.setBorder(new CompoundBorder());
@@ -553,6 +578,13 @@ public class GUI extends JFrame implements Observer {
 		loadPortrait(c.p1, c.p2);
 	}
 
+	public String getLabelString(Meter meter) {
+		if (meter.getOverflow() > 0) {
+			return "(" + Integer.toString(meter.get() + meter.getOverflow()) + ")/" + meter.max();
+		}
+		return Integer.toString(meter.get()) + "/" + meter.max();
+	}
+
 	public void populatePlayer(Player player) {
 		if(Global.checkFlag(Flag.largefonts)){
 			fontsize=6;
@@ -571,32 +603,29 @@ public class GUI extends JFrame implements Observer {
 		this.topPanel.add(meter);
 		meter.setLayout(new GridLayout(0, 4, 0, 0));
 
-		this.stamina = new JLabel("Stamina: " + player.getStamina().get() + "/"
-				+ player.getStamina().max());
+		this.stamina = new JLabel("Stamina: " + getLabelString(player.getStamina()));
 		this.stamina.setFont(new Font("Sylfaen", 1, 15));
 		this.stamina.setHorizontalAlignment(0);
 		this.stamina.setForeground(new Color(100,0,00));
 		this.stamina
 				.setToolTipText("Stamina represents your endurance and ability to keep fighting. If it drops to zero, you'll be temporarily stunned.");
 		meter.add(this.stamina);
-		this.arousal = new JLabel("Arousal: " + player.getArousal().get() + "/"
-				+ player.getArousal().max());
+		this.arousal = new JLabel("Arousal: " + getLabelString(player.getArousal()));
 		this.arousal.setFont(new Font("Sylfaen", 1, 15));
 		this.arousal.setHorizontalAlignment(0);
 		this.arousal.setForeground(new Color(100,0,50));
 		this.arousal
 				.setToolTipText("Arousal is raised when your opponent pleasures or seduces you. If it hits your max, you'll orgasm and lose the fight.");
 		meter.add(this.arousal);
-		this.mojo = new JLabel("Mojo: " + player.getMojo().get() + "/"
-				+ player.getMojo().max());
+
+		this.mojo = new JLabel("Mojo: " + getLabelString(player.getMojo()));
 		this.mojo.setFont(new Font("Sylfaen", 1, 15));
 		this.mojo.setHorizontalAlignment(0);
 		this.mojo.setForeground(new Color(0,0,100));
 		this.mojo
 				.setToolTipText("Mojo is the abstract representation of your momentum and style. It increases with normal techniques and is used to power special moves");
 		meter.add(this.mojo);
-		this.willpower = new JLabel("Willpower: " + player.getWillpower().get() + "/"
-				+ player.getWillpower().max());
+		this.willpower = new JLabel("Willpower: " + getLabelString(player.getWillpower()));
 		this.willpower.setFont(new Font("Sylfaen", 1, 15));
 		this.willpower.setHorizontalAlignment(0);
 		this.willpower.setForeground(new Color(0,0,100));
@@ -681,7 +710,7 @@ public class GUI extends JFrame implements Observer {
 		this.stsbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (GUI.this.stsbtn.isSelected()) {
-					GUI.this.centerPanel.add(GUI.this.statusPanel, "West");
+					GUI.this.centerPanel.add(GUI.this.statusPanel, "East");
 				} else {
 					GUI.this.centerPanel.remove(GUI.this.statusPanel);
 				}
@@ -703,19 +732,6 @@ public class GUI extends JFrame implements Observer {
 		this.cashlbl.setFont(new Font("Sylfaen", 1, 16));
 		this.cashlbl.setForeground(new Color(0, 0, 5));
 		bio.add(this.cashlbl);
-		this.invbtn = new JToggleButton("Inventory");
-		this.invbtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if (GUI.this.invbtn.isSelected()) {
-					GUI.this.centerPanel.add(GUI.this.inventoryPanel, "East");
-				} else {
-					GUI.this.centerPanel.remove(GUI.this.inventoryPanel);
-				}
-				GUI.this.refresh();
-				GUI.this.centerPanel.validate();
-			}
-		});
-		bio.add(this.invbtn);
 		
 		this.topPanel.validate();
 	}
@@ -936,10 +952,11 @@ public class GUI extends JFrame implements Observer {
 			message(this.player.availableAttributePoints + " Attribute Points remain.\n");
 			clearCommand();
 			for (Attribute att : this.player.att.keySet()) {
-				if (att != Attribute.Perception && att !=Attribute.Speed) {
+				if (Attribute.isTrainable(att) && this.player.getPure(att) > 0) {
 					this.commandPanel.add(new AttributeButton(att));
 				}
 			}
+			this.commandPanel.add(new AttributeButton(Attribute.Willpower));
 			Global.getMatch().pause();
 			this.commandPanel.revalidate();
 		} else if(player.traitPoints > 0 && !skippedFeat){ 
@@ -997,14 +1014,10 @@ public class GUI extends JFrame implements Observer {
 	}
 */
 	public void refresh() {
-		this.stamina.setText("Stamina: " + this.player.getStamina().get() + "/"
-				+ this.player.getStamina().max());
-		this.arousal.setText("Arousal: " + this.player.getArousal().get() + "/"
-				+ this.player.getArousal().max());
-		this.mojo.setText("Mojo: " + this.player.getMojo().get() + "/"
-				+ this.player.getMojo().max());
-		this.willpower.setText("Willpower: " + this.player.getWillpower().get() + "/"
-				+ this.player.getWillpower().max());
+		this.stamina.setText("Stamina: " + getLabelString(player.getStamina()));
+		this.arousal.setText(("Arousal: " + getLabelString(player.getArousal())));
+		this.mojo.setText("Mojo: " + getLabelString(player.getMojo()));
+		this.willpower.setText("Willpower: " + getLabelString(player.getWillpower()));
 //		this.power.setText("Power: " + this.player.get(Attribute.Power));
 //		this.cunning.setText("Cunning: " + this.player.get(Attribute.Cunning));
 //		this.seduction.setText("Seduction: "+ this.player.get(Attribute.Seduction));
@@ -1026,22 +1039,10 @@ public class GUI extends JFrame implements Observer {
 		if (Global.getDay() != null) {
 			this.timelbl.setText(Global.getDay().getTime());
 		}
-		displayInventory();
 		displayStatus();
 	}
-
-	public void displayInventory() {
-		this.inventoryPanel.removeAll();
-		this.inventoryPanel.repaint();
-		Map<Item, Integer> items = this.player.getInventory();
-		int count = 0;
-		ArrayList<JLabel> itmlbls = new ArrayList<JLabel>();
-		for (Item i : items.keySet()) {
-			itmlbls.add(count, new JLabel(i.getName() + ": " + items.get(i)));
-			itmlbls.get(count).setToolTipText(i.getDesc());
-			this.inventoryPanel.add(itmlbls.get(count));
-			count++;
-		}
+	
+	public JLabel getClothing() {
 		BufferedImage clothesicon = null;
 		if (this.player.top.isEmpty()) {
 			if (this.player.bottom.isEmpty()) {
@@ -1106,40 +1107,73 @@ public class GUI extends JFrame implements Observer {
 			}
 		}
 		if (clothesicon != null) {
-			this.clothesdisplay = new JLabel(new ImageIcon(clothesicon));
-			this.inventoryPanel.add(this.clothesdisplay);
+			return new JLabel(new ImageIcon(clothesicon));
+		} else {
+			return new JLabel();
 		}
-		this.centerPanel.revalidate();
-		this.inventoryPanel.revalidate();
-		this.inventoryPanel.repaint();
 	}
 	
 	public void displayStatus(){
 		this.statusPanel.removeAll();
 		this.statusPanel.repaint();
+		this.statusPanel.setPreferredSize(new Dimension(400, centerPanel.getHeight()));;
+
+		JPanel inventoryPanel = new JPanel();
+		JPanel statsPanel = new JPanel();
+		JPanel currentStatusPanel = new JPanel();
+		statusPanel.add(inventoryPanel);
+		JSeparator sep = new JSeparator();
+		sep.setMaximumSize(new Dimension(statusPanel.getWidth(), 2));
+		statusPanel.add(sep);
+		statusPanel.add(statsPanel);
+		sep = new JSeparator();
+		sep.setMaximumSize(new Dimension(statusPanel.getWidth(), 2));
+		statusPanel.add(sep);
+		statusPanel.add(currentStatusPanel);
+		
+		Map<Item, Integer> items = this.player.getInventory();
 		int count = 0;
+		this.clothesdisplay = getClothing();
+		inventoryPanel.add(this.clothesdisplay);
+
+		ArrayList<JLabel> itmlbls = new ArrayList<JLabel>();
+		for (Item i : items.keySet()) {
+			itmlbls.add(count, new JLabel(i.getName() + ": " + items.get(i)+"\n"));
+			itmlbls.get(count).setToolTipText(i.getDesc());
+			inventoryPanel.add(itmlbls.get(count));
+			count++;
+		}
+		
+		
+		count = 0;
 		ArrayList<JLabel> attlbls = new ArrayList<JLabel>();
 		for (Attribute a : player.att.keySet()){
 			attlbls.add(count, new JLabel(a.name() + ": " + player.get(a)));
-			this.statusPanel.add(attlbls.get(count));
+			statsPanel.add(attlbls.get(count));
 			count++;
 		}
-		count = 0;
-		//StringBuilder b = new StringBuilder();
-		//player.body.describe(b, player, "\n");
-		//this.statusPanel.add(new JLabel(b.toString()));
-		if (player.listStatus().size() > 0) {
-			statusPanel.add(new JLabel("\nCurrent Status Effects:"));
-			ArrayList<JLabel> stslbls = new ArrayList<JLabel>();
-			if (player.listStatus().size() > 0) {
-				for (String status: player.listStatus()){
-					stslbls.add(count,new JLabel(status));
-					this.statusPanel.add(stslbls.get(count));
-					count++;
-				}
-			}
+		
+		JTextPane statusText = new JTextPane();
+		DefaultCaret caret = (DefaultCaret)statusText.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		statusText.setForeground(new Color(240, 240, 255));
+		statusText.setBackground(new Color(25, 25, 50));
+		statusText.setEditable(false);
+		statusText.setContentType("text/html");
+		statusText.setPreferredSize(new Dimension(400, centerPanel.getHeight()/2));
+		statusText.setMaximumSize(new Dimension(400, centerPanel.getHeight()/2));
+		HTMLDocument doc = (HTMLDocument)statusText.getDocument();
+		HTMLEditorKit editorKit = (HTMLEditorKit)statusText.getEditorKit();
+		try {
+			editorKit.insertHTML(doc, doc.getLength(), "<font face='Georgia'><font color='white'><font size='3'>"+player.describeStatus()+"<br>", 0, 0, null);
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
+		currentStatusPanel.add(statusText);
 		this.centerPanel.revalidate();
 		this.statusPanel.revalidate();
 		this.statusPanel.repaint();
@@ -1376,6 +1410,7 @@ public class GUI extends JFrame implements Observer {
 			});
 		}
 	}
+
 	public void changeClothes(Character player, Activity event) {
 		clothesPanel.removeAll();
 		clothesPanel.add(new ClothesChangeGUI(player, event), BorderLayout.CENTER);
@@ -1391,5 +1426,11 @@ public class GUI extends JFrame implements Observer {
 		this.portraitPanel.repaint();
 		this.portraitPanel.revalidate();
 		displayStatus();
+	}
+
+	public void systemMessage(String string) {
+		if (Global.checkFlag(Flag.systemMessages)) {
+			message(string);
+		}
 	}
 }

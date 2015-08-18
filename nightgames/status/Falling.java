@@ -27,6 +27,11 @@ public class Falling extends Status {
 	}
 
 	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s knocked off balance.\n", affected.subjectAction("are", "is"));
+	}
+
+	@Override
 	public int regen(Combat c) {
 		affected.removelist.add(this);
 		c.setStance(new StandingOver(c.getOther(affected), affected));

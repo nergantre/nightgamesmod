@@ -19,12 +19,11 @@ public class MutualUndress extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		if(getSelf().canAct()&&!getSelf().nude()&&!target.nude()) {
+		if(getSelf().canAct()&&c.getStance().mobile(getSelf())&&!getSelf().nude()&&!target.nude()) {
 			return true;
 		}
 		return false;
 	}
-	
 
 	@Override
 	public int getMojoCost(Combat c) {

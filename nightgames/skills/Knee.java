@@ -51,12 +51,7 @@ public class Knee extends Skill {
 			else{
 				target.pain(c, 4+Global.random(11)+getSelf().get(Attribute.Power));
 			}
-			if(getSelf().has(Trait.wrassler)){
-				target.calm(c, Global.random(6));
-			}
-			else{
-				target.calm(c, Global.random(10));
-			}
+
 			target.emote(Emotion.angry,20);
 		}
 		else{

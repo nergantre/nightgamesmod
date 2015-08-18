@@ -24,7 +24,7 @@ public class PullOut extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&(c.getStance().en == Stance.facesitting || c.getStance().inserted(c.getOther(getSelf())))&&c.getStance().dom(getSelf());
+		return getSelf().canAct()&&(c.getStance().en == Stance.facesitting || (c.getStance().inserted()&&c.getStance().dom(getSelf())));
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class PullOut extends Skill {
 			c.setStance(new StandingOver(getSelf(), target));
 		} else {
 			if (getSelf().hasStatus(Stsflag.leglocked) || getSelf().hasStatus(Stsflag.armlocked) || (target.has(Trait.tight) && c.getStance().inserted(getSelf()))) {
-				boolean escaped = getSelf().check(Attribute.Power, 10 + getSelf().escape() + target.get(Attribute.Power));
+				boolean escaped = getSelf().check(Attribute.Power, 10 - getSelf().escape(c) + target.get(Attribute.Power));
 				if (escaped) {
 					if(getSelf().human()) {
 						c.write(getSelf(),deal(c,0,result, target));
@@ -95,7 +95,7 @@ public class PullOut extends Skill {
 				}
 			} else if (getSelf().hasStatus(Stsflag.cockbound)) {
 				CockBound s = (CockBound)getSelf().getStatus(Stsflag.cockbound);
-				c.write(getSelf(),"You try to pull out of "+target.name()+"'s " + target.body.getRandomPussy() + ", but her " + s.binding +" instantly react and pulls your dick back in.");
+				c.write(getSelf(),"You try to pull out of "+target.name()+"'s " + target.body.getRandomPussy() + ", but " + s.binding +" instantly react and pulls your dick back in.");
 				int m = 8;
 				getSelf().body.pleasure(target, target.body.getRandom("pussy"), getSelf().body.getRandom("cock"), m, c);					
 				return false;
@@ -122,7 +122,7 @@ public class PullOut extends Skill {
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.reverse){
-			return "You rise up and let "+ target.nameOrPossessivePronoun() + "girl-cock slip out of your " + (c.getStance().en == Stance.anal ? "ass." : "pussy");
+			return "You rise up and let "+ target.nameOrPossessivePronoun() + " girl-cock slip out of your " + (c.getStance().en == Stance.anal ? "ass." : "pussy");
 		} else if(modifier==Result.anal){
 			return "You pull your dick completely out of "+target.name()+"'s ass.";
 		} else if(modifier==Result.normal) {

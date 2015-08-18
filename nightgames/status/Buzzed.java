@@ -26,7 +26,12 @@ public class Buzzed extends Status {
 			return affected.name()+" looks mildly buzzed, probably trying to dull her senses.";
 		}
 	}
-	
+
+	@Override
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s now buzzed.\n", affected.subjectAction("are", "is"));
+	}
+
 	@Override
 	public float fitnessModifier () {
 		return 0.0f;

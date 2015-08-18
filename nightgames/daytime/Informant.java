@@ -409,7 +409,7 @@ public class Informant extends Activity {
 			String message = "<i>\"You want to know how the competition is doing? I can give you a breakdown on each of your opponents:\"</i><p>";
 			for (Character npc : Global.everyone()) {
 				if (!npc.human()) {
-					message = message + npc.dumpstats() + "<p>";
+					message = message + npc.dumpstats(false) + "<p>";
 				}
 			}
 			Global.gui().message(message);

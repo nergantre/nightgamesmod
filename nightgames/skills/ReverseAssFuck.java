@@ -10,6 +10,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.stance.AnalCowgirl;
+import nightgames.status.BodyFetish;
 import nightgames.status.Oiled;
 import nightgames.status.Stsflag;
 
@@ -89,6 +90,9 @@ public class ReverseAssFuck extends Fuck {
 		target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c);		
 		getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), m / 2, c);
 		getSelf().emote(Emotion.dominant, 30);
+		if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
+			target.add(c, new BodyFetish(target, getSelf(), "ass", .25, 10));
+		}
 		return true;
 	}
 

@@ -9,6 +9,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.FaceSitting;
 import nightgames.stance.Stance;
+import nightgames.status.BodyFetish;
 import nightgames.status.Enthralled;
 import nightgames.status.Shamed;
 
@@ -87,6 +88,9 @@ public class FaceSit extends Skill {
 		target.add(c, new Shamed(target));
 		if (c.getStance().enumerate() != Stance.facesitting) {
 			c.setStance(new FaceSitting(getSelf(), target));
+		}
+		if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
+			target.add(c, new BodyFetish(target, getSelf(), "ass", .25, 10));
 		}
 		return true;
 	}
