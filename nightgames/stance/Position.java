@@ -146,4 +146,8 @@ public abstract class Position implements Serializable, Cloneable{
 			return top;
 		}
 	}
+	public boolean paizuri(Character self) {
+		// TODO Auto-generated method stub
+		return oral(self);
+	}
 }
