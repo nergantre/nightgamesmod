@@ -93,10 +93,6 @@ public class OrgasmSeal extends Status {
 	public int escape() {
 		return 0;
 	}
-	
-	@Override
-	public void struggle(Character self) {
-	}
 
 	@Override
 	public int gainmojo(int x) {

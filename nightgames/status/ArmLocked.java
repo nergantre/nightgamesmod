@@ -102,6 +102,7 @@ public class ArmLocked extends Status {
 	public int counter() {
 		return -10;
 	}
+
 	public String toString(){
 		return "Bound by hands";
 	}

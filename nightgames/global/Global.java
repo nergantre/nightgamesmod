@@ -324,7 +324,7 @@ public class Global {
 		skillPool.add(new Purr(p));
 		skillPool.add(new MutualUndress(p));
 		skillPool.add(new Submit(p));
-		skillPool.add(new Edging(p));
+		skillPool.add(new Surrender(p));
 		skillPool.add(new ReverseFuck(p));
 		skillPool.add(new ReverseCarry(p));
 		skillPool.add(new ReverseFly(p));

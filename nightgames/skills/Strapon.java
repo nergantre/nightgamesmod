@@ -28,7 +28,8 @@ public class Strapon extends Skill {
 				&&!c.getStance().prone(getSelf())
 				&&getSelf().pantsless()
 				&&(getSelf().has(Item.Strapon)||getSelf().has(Item.Strapon2))
-				&&!getSelf().hasDick()&&!c.getStance().penetration(getSelf())
+				&&!getSelf().hasDick()
+				&&!c.getStance().penetration(getSelf())
 				&&!c.getStance().penetration(target)
 				&&(!getSelf().human()||Global.getMatch().condition!=Modifier.notoys)
 				&&c.getStance().enumerate()!=Stance.facesitting;

@@ -91,10 +91,6 @@ public class CockChoked extends Status {
 	}
 	
 	@Override
-	public void struggle(Character self) {
-	}
-
-	@Override
 	public int gainmojo(int x) {
 		return 0;
 	}
