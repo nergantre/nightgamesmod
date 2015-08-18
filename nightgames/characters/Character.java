@@ -367,41 +367,43 @@ public abstract class Character extends Observable implements Cloneable{
 	}
 	public void pain(Combat c, int i, boolean primary, boolean physical){
 		int pain = i;
+		int bonus = 0;
 		if (is(Stsflag.rewired) && physical) {
 			String message = String.format("%s pleasured for <font color='rgb(255,50,200)'>%d<font color='white'>\n",
-					Global.capitalizeFirstLetter(subjectWas()), i);
+					Global.capitalizeFirstLetter(subjectWas()), pain);
 			if (c != null)
 				c.writeSystemMessage(message);
-			pleasure(i, c);
+			pleasure(pain, c);
 			return;
 		}
 		if (has(Trait.slime)) {
-			i = i/2;
+			bonus -= pain/2;
 			if (c != null)
 				c.write(this, "The blow glances off " + nameOrPossessivePronoun() + " slimy body.");
 		}
 		if (c != null) {
 			Character other = c.getOther(this);
 			if (has(Trait.cute) && other != null && primary && physical) {
-				i = Math.max(i - get(Attribute.Seduction), i/4 + 1);
+				bonus -= Math.min(get(Attribute.Seduction), 50) * pain / 100;
 				c.write(this, Global.format("{self:NAME-POSSESSIVE} innocent appearance throws {other:direct-object} off and {other:subject-action:use|uses} much less strength than intended.", this, other));
 			}
 
 			for(Status s: status){
-				pain+=s.damage(c, i);
+				bonus+=s.damage(c, pain);
 			}
 		}
-		i = Math.max(1, i);
-		emote(Emotion.angry, i / 3);
+		pain += bonus;
+		pain = Math.max(1, pain);
+		emote(Emotion.angry, pain / 3);
 		
 		//threshold at which pain calms you down
 		int painAllowance = Math.max(10, getStamina().max() / 25);
-		int difference = i - painAllowance;
+		int difference = pain - painAllowance;
 		//if the pain exceeds the threshold and you aren't a masochist
 		//calm down by the overflow
 
 		if (c!=null) {
-			c.writeSystemMessage(String.format("%s hurt for <font color='rgb(250,10,10)'>%d<font color='white'>", this.subjectWas(), i));
+			c.writeSystemMessage(String.format("%s hurt for <font color='rgb(250,10,10)'>%d<font color='white'>", this.subjectWas(), pain));
 		}
 		if (difference > 0 && !is(Stsflag.masochism)) {
 			if(c!= null && c.getOther(this).has(Trait.wrassler)){
@@ -418,26 +420,26 @@ public abstract class Character extends Observable implements Cloneable{
 	}
 
 	public void drain(Combat c, Character drainer, int i) {
-		int weak = i;
-		for(Status s: status){
-			weak+=s.weakened(i);
-		}
-		if(weak>=stamina.get()){
-			weak = stamina.get();
+		int drained = i;
+
+		if(drained>=stamina.get()){
+			drained = stamina.get();
 		}
 		i = Math.max(1, i);
 		if (c!=null) {
 			c.writeSystemMessage(String.format("%s drained of <font color='rgb(200,200,200)'>%d<font color='white'> stamina by %s", this.subjectWas(), i, drainer.subject()));
 		}
-		stamina.reduce(weak);
-		drainer.stamina.restore(weak);
+		stamina.reduce(drained);
+		drainer.stamina.restore(drained);
 	}
 
 	public void weaken(Combat c, int i){
 		int weak = i;
+		int bonus = 0;
 		for(Status s: status){
-			weak+=s.weakened(i);
+			bonus+=s.weakened(i);
 		}
+		weak += bonus;
 		if(weak>=stamina.get()){
 			weak = stamina.get();
 		}
@@ -524,14 +526,16 @@ public abstract class Character extends Observable implements Cloneable{
 
 	public void tempt(int i){
 		int temptation = i;
-
-		emote(Emotion.horny, i/4);
+		int bonus = 0;
+		
 		for(Status s: status){
-			temptation+=s.tempted(i);
+			bonus+=s.tempted(i);
 		}
+		temptation += bonus;
 		if(has(Trait.desensitized2)){
 			temptation /= 2;
 		}
+		emote(Emotion.horny, i/4);
 		arousal.restoreNoLimit(temptation);
 	}
 	public void calm(Combat c, int i){
@@ -556,9 +560,11 @@ public abstract class Character extends Observable implements Cloneable{
 	}
 	public void buildMojo(Combat c, int percent){
 		int x = (percent*Math.min(mojo.max(), 200))/100;
+		int bonus = 0;
 		for(Status s: status){
-			x+=s.gainmojo(x);
+			bonus+=s.gainmojo(x);
 		}
+		x += bonus;
 		if (x > 0) {
 			mojo.restore(x);
 			if (c != null) {
@@ -568,9 +574,11 @@ public abstract class Character extends Observable implements Cloneable{
 	}
 	public void spendMojo(Combat c, int i){
 		int cost = i;
+		int bonus = 0;
 		for(Status s: status){
-			cost+=s.spendmojo(i);
+			bonus+=s.spendmojo(i);
 		}
+		cost += bonus;
 		mojo.reduce(cost);
 		if(mojo.get()<0){
 			mojo.set(0);
