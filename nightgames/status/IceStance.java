@@ -64,7 +64,7 @@ public class IceStance extends Status {
 	@Override
 	public double pleasure(Combat c, double x) {
 		// TODO Auto-generated method stub
-		return -x/5;
+		return -x/2;
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class IceStance extends Status {
 	@Override
 	public int tempted(int x) {
 		// TODO Auto-generated method stub
-		return 0;
+		return -x/2;
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class IceStance extends Status {
 	@Override
 	public int gainmojo(int x) {
 		// TODO Auto-generated method stub
-		return -x;
+		return -x*3/4;
 	}
 
 	@Override
