@@ -47,10 +47,9 @@ public class BodyShop extends Activity  {
 			@Override
 			void buy(Character buyer) {
 				if (normal == null)
-					buyer.body.add(part);
+					buyer.body.addReplace(part, 1);
 				else {
-					buyer.body.removeOne(part.getType());
-					buyer.body.add(part);
+					buyer.body.addReplace(part, 1);
 				}
 			}
 
@@ -79,7 +78,7 @@ public class BodyShop extends Activity  {
 					buyer.body.removeOne(part.getType());
 				} else {
 					buyer.body.remove(part);
-					buyer.body.add(normal);
+					buyer.body.addReplace(normal, 1);
 				}
 			}
 
@@ -143,7 +142,7 @@ public class BodyShop extends Activity  {
 				BreastsPart target = buyer.body.getBreastsBelow(BreastsPart.maximumSize().size);
 				assert(target != null);
 				buyer.body.remove(target);
-				buyer.body.add(target.upgrade());
+				buyer.body.addReplace(target.upgrade(), 1);
 			}
 			@Override
 			boolean available(Character buyer) {
@@ -163,7 +162,7 @@ public class BodyShop extends Activity  {
 				BreastsPart target = buyer.body.getBreastsAbove(BreastsPart.flat.size);
 				assert(target != null);
 				buyer.body.remove(target);
-				buyer.body.add(target.downgrade());
+				buyer.body.addReplace(target.downgrade(), 1);
 			}
 			@Override
 			boolean available(Character buyer) {
@@ -180,7 +179,7 @@ public class BodyShop extends Activity  {
 		selection.add(new ShopSelection("Grow Cock", 2500) {
 			@Override
 			void buy(Character buyer) {
-				buyer.body.add(CockPart.tiny);
+				buyer.body.addReplace(CockPart.tiny, 1);
 			}
 			@Override
 			boolean available(Character buyer) {
@@ -210,7 +209,7 @@ public class BodyShop extends Activity  {
 		selection.add(new ShopSelection("Grow Balls", 1000) {
 			@Override
 			void buy(Character buyer) {
-				buyer.body.add(new GenericBodyPart("balls", 0, 1.0, 1.5, "balls", ""));
+				buyer.body.addReplace(new GenericBodyPart("balls", 0, 1.0, 1.5, "balls", ""), 1);
 			}
 			@Override
 			boolean available(Character buyer) {
@@ -240,7 +239,7 @@ public class BodyShop extends Activity  {
 		selection.add(new ShopSelection("Grow Pussy", 2500) {
 			@Override
 			void buy(Character buyer) {
-				buyer.body.add(PussyPart.normal);
+				buyer.body.addReplace(PussyPart.normal, 1);
 			}
 			@Override
 			boolean available(Character buyer) {
@@ -258,7 +257,7 @@ public class BodyShop extends Activity  {
 				CockPart target = buyer.body.getCockBelow(CockPart.maximumSize().size);
 				assert(target != null);
 				buyer.body.remove(target);
-				buyer.body.add(target.upgrade());
+				buyer.body.addReplace(target.upgrade(), 1);
 			}
 			@Override
 			boolean available(Character buyer) {
@@ -281,7 +280,7 @@ public class BodyShop extends Activity  {
 				CockPart target = buyer.body.getCockAbove(CockPart.tiny.size);
 				assert(target != null);
 				buyer.body.remove(target);
-				buyer.body.add(target.downgrade());
+				buyer.body.addReplace(target.downgrade(), 1);
 			}
 			@Override
 			boolean available(Character buyer) {

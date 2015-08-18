@@ -59,10 +59,9 @@ public class CockGrowth extends Skill {
 			CockPart part = target.body.getCockBelow(CockPart.massive.size);
 			if (permanent) {
 				if (part != null) {
-					target.body.remove(part);
-					target.body.add(part.upgrade());
+					target.body.addReplace(part.upgrade(), 1);
 				} else {
-					target.body.add(CockPart.small);
+					target.body.addReplace(CockPart.small, 1);
 				}
 			} else {
 				if (part != null) {

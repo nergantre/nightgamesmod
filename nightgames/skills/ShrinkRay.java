@@ -58,14 +58,12 @@ public class ShrinkRay extends Skill {
 			if (target.hasDick()) {
 				CockPart part = target.body.getCockAbove(CockPart.tiny.size);
 				if (part != null) {
-					target.body.remove(part);
-					target.body.add(part.downgrade());
+					target.body.addReplace(part.downgrade(), 1);
 				}
 			} else {
 				BreastsPart part = target.body.getBreastsAbove(BreastsPart.flat.size);
 				if (part != null) {
-					target.body.remove(part);
-					target.body.add(part.downgrade());
+					target.body.addReplace(part.downgrade(), 1);
 				}
 			}
 		}
