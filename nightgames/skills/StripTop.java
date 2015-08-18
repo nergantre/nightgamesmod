@@ -29,7 +29,7 @@ public class StripTop extends Skill {
 				+(target.getLevel())
 				+(target.getStamina().percent() / 5
 				- target.getArousal().percent()) / 4
-				- (!target.canAct()||c.getStance().sub(target) ? 50 : 0);
+				- (!target.canAct()||c.getStance().sub(target) ? 20 : 0);
 		if (getSelf().check(Attribute.Cunning, difficulty)||!target.canAct()) {
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.normal, target));
