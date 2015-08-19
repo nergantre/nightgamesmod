@@ -48,6 +48,9 @@ public enum Clothing implements Loot{
 	blazer		("blazer",ClothingType.TOPOUTER,3,"a ",Trait.none,Trait.none,750),
 	dresspants	("dress pants",ClothingType.BOTOUTER,15,"",Trait.stylish,Trait.none,900),
 	windbreaker	("windbreaker",ClothingType.TOPOUTER,0,"a ",Trait.none,Trait.none,500),
+	vinedress	("vine dress",ClothingType.TOPOUTER,5,"",Trait.graceful,Trait.skimpy,1900),
+	leafbra		("leaf bra",ClothingType.TOPUNDER,0,"a ",Trait.none,Trait.skimpy,1500),
+	vinethong	("vine thong",ClothingType.UNDERWEAR,0,"a ",Trait.none,Trait.skimpy,1500),
 	slimebottom	("slime",ClothingType.UNDERWEAR,0,"",Trait.none,Trait.ineffective,1200),
 	slimetop	("slime",ClothingType.TOP,0,"",Trait.none,Trait.ineffective,1200)
 	;
@@ -118,5 +121,8 @@ public enum Clothing implements Loot{
 		femaleOnlyClothing.add(Clothing.crotchlesspanties);
 		femaleOnlyClothing.add(Clothing.latextop);
 		femaleOnlyClothing.add(Clothing.latexpants);
+		femaleOnlyClothing.add(Clothing.vinedress);
+		femaleOnlyClothing.add(Clothing.vinethong);
+		femaleOnlyClothing.add(Clothing.leafbra);
 	}
 }

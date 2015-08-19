@@ -139,6 +139,7 @@ public abstract class BasePersonality implements Personality {
 		character.getStamina().gain(growth.bonusStamina);
 		character.getArousal().gain(growth.bonusArousal);
 		character.getMojo().gain(growth.bonusMojo);
+		character.getWillpower().gain(growth.bonusWillpower);
 		character.availableAttributePoints += growth.bonusAttributes;
 	}
 

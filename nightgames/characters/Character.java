@@ -1026,7 +1026,6 @@ public abstract class Character extends Observable implements Cloneable{
 	public abstract String bbLiner();
 	public abstract String nakedLiner();
 	public abstract String stunLiner();
-	public abstract String winningLiner();
 	public abstract String taunt();
 	public abstract void intervene(Encounter enc, Character p1,Character p2);
 	public abstract void showerScene(Character target, Encounter encounter);

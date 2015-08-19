@@ -132,12 +132,6 @@ public class Airi extends BasePersonality {
 	}
 
 	@Override
-	public String winningLiner() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public String taunt() {
 		return "Airi coos at you <i>\"About to cum..? ...even trying..?\"</i>";
 	}

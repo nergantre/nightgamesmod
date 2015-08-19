@@ -89,11 +89,6 @@ public class LoadablePersonality extends BasePersonality {
 	}
 
 	@Override
-	public String winningLiner() {
-		return execute("winningLiner()", "winningLiner");
-	}
-
-	@Override
 	public String taunt() {
 		return execute("taunt()", "taunt");
 	}

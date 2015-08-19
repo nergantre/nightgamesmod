@@ -209,11 +209,6 @@ public class Player extends Character {
 	}
 
 	@Override
-	public String winningLiner() {
-		return null;
-	}
-
-	@Override
 	public String taunt() {
 		return null;
 	}

@@ -141,6 +141,7 @@ public enum Trait {
 	imagination("Active Imagination","More easily swayed by pillow talk"),//more temptation damage from indirect skills
 	achilles("Achilles Jewels","Delicate parts are somehow even more delicate"),	//more pain from groin attacks
 	naive("Naive", "Chance to not get cynical after mindgames"), //Chance to not get cynical after recovering from mindgames
+	immobile("Immobile", "Unable to move"), //Cannot move
 
 	//Restrictions
 	softheart("Soft Hearted","Incapable of being mean"), //restricts slap, stomp, flick
@@ -163,6 +164,7 @@ public enum Trait {
 	succubus("Succubus","Embraced the dark powers that feed on mortal lust"),
 	fighter("Fighter","A combination of martial arts and ki"),
 	slime("Slime","An accident in the biology labs made the body a bit more... malleable."),
+	dryad("Dryad","Part girl, part tree."),
 
 	//Strength
 	dexterous("Dexterous","Underwear is no obstacle for nimble fingers"), //digital stimulation through underwear

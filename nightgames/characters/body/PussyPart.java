@@ -23,7 +23,8 @@ public enum PussyPart implements BodyPart {
 	feral("feral ", 1, 1.3, 1.2, 8, 7, 2),
 	cybernetic("cybernetic ", -.50, 1.8, .5, 200, 0, 4),
 	gooey("gooey ", .4, 1.5, 1.2, 999, 0, 6),
-	tentacled("tentacled ", 0, 2, 1.2, 999, 0, 8);
+	tentacled("tentacled ", 0, 2, 1.2, 999, 0, 8),
+	plant("plant ", 1, 1.5, .9, 999, 0, 8);
 
 	public double priority;
 	public String desc;

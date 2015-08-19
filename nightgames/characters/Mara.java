@@ -173,12 +173,6 @@ public class Mara extends BasePersonality  {
 	}
 
 	@Override
-	public String winningLiner() {
-		// TODO Auto-generated method stub
-		return "";
-	}
-
-	@Override
 	public String taunt() {
 		return "<i>\"If you want me to get you off so badly,\"</i> Mara teases coyly. <i>\"You should have just said so from the start. You don't need to put up this token resistance.\"</i>";
 	}

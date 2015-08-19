@@ -136,12 +136,6 @@ public class Eve extends BasePersonality {
 	}
 
 	@Override
-	public String winningLiner() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public String taunt() {
 		return "Eve grins sadistically. <i>\"If you're intimidated by my cock, don't worry. Size isn't everything.\"</i>";
 	}

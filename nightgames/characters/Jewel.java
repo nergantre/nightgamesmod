@@ -168,12 +168,6 @@ public class Jewel extends BasePersonality {
 	}
 
 	@Override
-	public String winningLiner() {
-		// TODO Auto-generated method stub
-		return "";
-	}
-
-	@Override
 	public String taunt() {
 		return "Jewel glares at you and squeezes your dick tightly. <i>\"No matter how horny you are, you better give me your best fight. I don't like fucking weaklings.\"</i>";
 	}

@@ -195,12 +195,6 @@ public class Angel extends BasePersonality {
 	}
 
 	@Override
-	public String winningLiner() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public String taunt() {
 		return "Angel pushes the head of your dick with her finger and watches it spring back into place. <i>\"You obviously can't help yourself. If only you were a little bigger, we could have a lot of fun.\"</i>";
 	}
@@ -230,8 +224,8 @@ public class Angel extends BasePersonality {
 					"stand and ready yourself to move on. You wouldn't put past Angel to tell her girlfriends regardless of how well you performed, you just hope that's as " +
 					"far as that information goes.";
 		} else if (c.getStance().inserted(character)) {
-			message = "Angel stares at you in the eye, while expertly thrusting in and out of your slobbering pussy. Your needy cunt quivers as she leans close and gives you a long steamy kiss, tongue and all. You try to get away from her, but she holds you down and merciless pounds away at your overused pussy. You can tell sheÅfs turned on as well, but itÅfll do you no good, as youÅfre already feeling yourself slip over the edge. "
-					+ "<br><br>Finally it becomes too much, and you cum hard. You wrap your arms and legs unconsciously cling to AngelÅfs body and you seek out a needy kiss from her. Angel takes note of your convulsing body, and smirks, <i>ÅhI think you need some more training. I could make anyone cum instantly while theyÅfre in me.Åh</i> After a small pausing, Angel grins devilishly and resumes pumping in and out of pussy in long leisurely strokes. <i>ÅhHmmÅc in fact, why donÅft I practice with you a bit? You know what they say, practice makes perfect!Åh You groan in frustration as your oversensitive cunt receives her cocks again. "
+			message = "Angel stares at you in the eye, while expertly thrusting in and out of your slobbering pussy. Your needy cunt quivers as she leans close and gives you a long steamy kiss, tongue and all. You try to get away from her, but she holds you down and merciless pounds away at your overused pussy. You can tell she is turned on as well, but it'll do you no good, as you're already feeling yourself slip over the edge. "
+					+ "<br><br>Finally it becomes too much, and you cum hard. You wrap your arms and legs unconsciously cling to Angel's body and you seek out a needy kiss from her. Angel takes note of your convulsing body, and smirks, <i>\"I think you need some more training. I could make anyone cum instantly while they're in me.\"</i> After a small pausing, Angel grins devilishly and resumes pumping in and out of pussy in long leisurely strokes. <i>\"Hmm\" in fact, why don't I practice with you a bit? You know what they say, practice makes perfect!\" You groan in frustration as your oversensitive cunt receives her cocks again. "
 					+ "<br><br>This could be a long night.";
 		} else if(c.getStance().inserted(opponent)) {
 			message = "Angel rides your cock passionately, pushing you inevitably closer to ejaculation. Her hot pussy is wrapped around your shaft like... well, exactly " +

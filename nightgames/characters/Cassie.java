@@ -365,11 +365,6 @@ public class Cassie extends BasePersonality {
 		return "Cassie groans softly as she tends her bruises, <i>\"Come on, you don't have to be so rough.\"</i> she complains.";
 	}
 	@Override
-	public String winningLiner() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
 	public String taunt() {
 		return "Cassie giggles and taps the head of your dick. <i>\"Your penis is so eager and cooperative,\"</i> she jokes. <i>\"Are you sure you're not just letting me win?\"</i>";
 	}

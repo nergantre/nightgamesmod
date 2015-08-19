@@ -71,12 +71,6 @@ public class Yui extends BasePersonality {
 	}
 
 	@Override
-	public String winningLiner() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public String taunt() {
 		// TODO Auto-generated method stub
 		return null;

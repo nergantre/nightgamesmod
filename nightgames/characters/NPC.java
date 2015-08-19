@@ -355,10 +355,6 @@ public class NPC extends Character {
 		return ai.stunLiner();
 	}
 	@Override
-	public String winningLiner() {
-		return ai.winningLiner();
-	}
-	@Override
 	public String taunt() {
 		return ai.taunt();
 	}

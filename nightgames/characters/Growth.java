@@ -7,12 +7,13 @@ public class Growth {
 	public float arousal;
 	public float stamina;
 	public float mojo;
-	public int bonusArousal;
-	public int bonusStamina;
-	public int bonusMojo;
+	public float bonusArousal;
+	public float bonusStamina;
+	public float bonusMojo;
 	public int attributes[];
 	public int bonusAttributes;
 	public float willpower;
+	public float bonusWillpower;
 	public Map<Integer, Trait> traits;
 	public Map<Integer, Runnable> actions;
 	public Growth() {
@@ -24,6 +25,7 @@ public class Growth {
 		bonusMojo = 1;
 		bonusAttributes = 1;
 		willpower = .5f;
+		bonusWillpower = .25f;
 		attributes = new int[] {
 			2,
 			3,

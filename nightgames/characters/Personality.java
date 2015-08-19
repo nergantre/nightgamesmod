@@ -20,7 +20,6 @@ public interface Personality extends Serializable{
 	public String bbLiner();
 	public String nakedLiner();
 	public String stunLiner();
-	public String winningLiner();
 	public String taunt();
 	public String victory(Combat c,Result flag);
 	public String defeat(Combat c,Result flag);

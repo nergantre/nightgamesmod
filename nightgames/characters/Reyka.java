@@ -170,11 +170,6 @@ public class Reyka extends BasePersonality {
 	}
 
 	@Override
-	public String winningLiner() {
-		return "<i>\"Hurry up and come already, I'm getting hungry!\"</i>";
-	}
-
-	@Override
 	public String taunt() {
 		return "\"You look like you will taste nice. Maybe if let me have "
 				+ "a taste, I will be nice to you too.\"";
