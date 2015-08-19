@@ -22,7 +22,7 @@ public class Tighten extends Thrust {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().inserted(target);	
+		return getSelf().canAct()&&c.getStance().inserted(target)&&target.hasDick();	
 	}
 
 	@Override
