@@ -71,7 +71,7 @@ public class Tickle extends Skill {
 				int bonus = 0;
 				if(target.has(Trait.ticklish)) {
 					bonus = 4 + Global.random(3);
-					c.write(target, Global.format("{other:SUBJECT-ACTION:squirm|squirms} uncontrollably from {self:name-possessive} actions. Yup definitely ticklish.", getSelf(), target));
+					c.write(target, Global.format("{other:SUBJECT-ACTION:squirm|squirms} uncontrollably from {self:name-possessive} actions. Yup, definitely ticklish.", getSelf(), target));
 				}
 				target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("skin"), 2 + Global.random(4), bonus, c);
 				target.weaken(c, bonus / 2 + 2+target.get(Attribute.Perception)+Global.random(6));

@@ -124,7 +124,7 @@ public class TentacleRape extends Skill {
 			return "You use your " +tentacles.describe(getSelf()) + " to wrap around "+target.name()+"'s naked body. They squirm against her and squirt slimy fluids on her body.";
 		}
 		else{
-			return "You use your " +tentacles.describe(getSelf()) + " to toy with "+target.name()+"'s helpless form. The tentacles toy with her breasts and pentrate her genitals and ass.";
+			return "You use your " +tentacles.describe(getSelf()) + " to toy with "+target.name()+"'s helpless form. The tentacles toy with her breasts and penetrate her genitals and ass.";
 		}
 	}
 

@@ -123,7 +123,7 @@ public class Struggle extends Skill {
 						CockBound s = (CockBound)getSelf().getStatus(Stsflag.cockbound);
 						c.write(getSelf(),
 								Global.format(
-										"With a strong pull, {self:subject} some how managed to wiggle out of {other:possessive} iron grip on {self:possessive} dick. "
+										"With a strong pull, {self:subject} somehow managed to wiggle out of {other:possessive} iron grip on {self:possessive} dick. "
 												+ "However the sensations of " + s.binding + " sliding against {self:possessive} cockskin leaves {self:direct-object} gasping.",
 										getSelf(), target));
 						int m = 15;

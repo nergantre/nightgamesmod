@@ -104,11 +104,11 @@ public class UseCrop extends Skill {
 		}
 		else if(modifier==Result.critical){
 			if(target.hasBalls()){
-				return "You strike "+target.name()+"'s bare ass with your crop and the  'Treasure Hunter' attachment slips between her legs, hitting one of her hanging testicles " +
+				return "You strike "+target.name()+"'s bare ass with your crop and the 'Treasure Hunter' attachment slips between her legs, hitting one of her hanging testicles " +
 						"squarely. She lets out a shriek and clutches her sore nut";
 			}
 			else{
-				return "You strike "+target.name()+"'s bare ass with your crop and the  'Treasure Hunter' attachment slips between her legs, impacting on her sensitive pearl. She " +
+				return "You strike "+target.name()+"'s bare ass with your crop and the 'Treasure Hunter' attachment slips between her legs, impacting on her sensitive pearl. She " +
 					"lets out a high pitched yelp and clutches her injured anatomy.";
 			}
 		}

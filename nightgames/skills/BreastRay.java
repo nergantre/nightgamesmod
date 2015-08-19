@@ -73,7 +73,7 @@ public class BreastRay extends Skill {
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		String message;
-		message = "You use your growth ray at "+target.name()+"'s breasts and fire. Her breasts balloon up and the new sensitivity causes her to moan.";
+		message = "You point your growth ray at "+target.name()+"'s breasts and fire. Her breasts balloon up and the new sensitivity causes her to moan.";
 		if (damage > 0)
 			message += " You realize the effects are permanent!";
 		return message;

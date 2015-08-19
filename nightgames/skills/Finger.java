@@ -104,7 +104,7 @@ public class Finger extends Skill {
 			return "She gropes at your pussy, but misses the mark.";
 		}
 		if(modifier == Result.weak){
-			return "She gropes between your's legs, not really knowing what she's doing. She doesn't know where you're the most sensitive, so she rubs and " +
+			return "She gropes between your legs, not really knowing what she's doing. She doesn't know where you're the most sensitive, so she rubs and " +
 					"strokes every bit of your moist flesh under her fingers.";
 		}
 		else{

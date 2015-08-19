@@ -42,7 +42,7 @@ public class Escape extends Skill {
 		} else if(getSelf().check(Attribute.Cunning, 20+target.get(Attribute.Cunning) - getSelf().escape(c))) {
 			if(getSelf().human()){
 				if (getSelf().hasStatus(Stsflag.cockbound)) {
-					c.write(getSelf(),"You some how managed to wiggle out of "+target.name()+"'s iron grip on your dick.");
+					c.write(getSelf(),"You somehow managed to wiggle out of "+target.name()+"'s iron grip on your dick.");
 					getSelf().removeStatus(Stsflag.cockbound);
 					return true;
 				}
@@ -50,7 +50,7 @@ public class Escape extends Skill {
 			}
 			else if(target.human()){
 				if (getSelf().hasStatus(Stsflag.cockbound)) {
-					c.write(getSelf(),"She some how managed to wiggle out ofyour iron grip on her dick.");
+					c.write(getSelf(),"She somehow managed to wiggle out of your iron grip on her dick.");
 					getSelf().removeStatus(Stsflag.cockbound);
 					return true;
 				}

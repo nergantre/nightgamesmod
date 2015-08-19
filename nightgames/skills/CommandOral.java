@@ -67,7 +67,7 @@ public class CommandOral extends PlayerCommand {
 					+ "nice and hard.";
 		case weak:
 			return target.name() + " tries her very best to get you ready by running"
-					+ " her tounge all over your groin, but even"
+					+ " her tongue all over your groin, but even"
 					+ " her psychically induced enthusiasm can't get you hard.";
 		default:
 			return "<<This should not be displayed, please inform The"

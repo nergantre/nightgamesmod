@@ -126,7 +126,7 @@ public class Command extends Skill {
 			case 1:
 				return "Her scent overwhelms you and you feel a compulsion to pleasure her.";
 			case 2:
-				return "You feel an irresistible comuplsion to lay down on your back";
+				return "You feel an irresistible complusion to lie down on your back";
 			default:
 				break;
 			}

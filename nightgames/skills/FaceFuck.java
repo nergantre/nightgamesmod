@@ -98,7 +98,7 @@ public class FaceFuck extends Skill {
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		String m;
 		if(modifier==Result.special){
-			m = getSelf().name()+" forces her strapon cock into your mouth and fucks your face with it. It's only rubber, but your position is still humiliating. You stuggle not " +
+			m = getSelf().name()+" forces her strapon cock into your mouth and fucks your face with it. It's only rubber, but your position is still humiliating. You struggle not " +
 					"to gag on the artificial member while "+getSelf().name()+" revels in her dominance.";
 		}
 		else if(modifier==Result.upgrade){

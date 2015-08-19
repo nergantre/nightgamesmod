@@ -103,7 +103,7 @@ public class Carry extends Fuck {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
-			return Global.format("{self:subject} picks you up, but you scramble out of {self:posessive} grip before {self:pronoun} could do anything. Moreover, you manage to trip her while she's distracted.", getSelf(), target);
+			return Global.format("{self:subject} picks you up, but you scramble out of {self:posessive} grip before {self:pronoun} can do anything. Moreover, you manage to trip her while she's distracted.", getSelf(), target);
 		} else {
 			return Global.format("{self:subject} scoops you up in {self:possessive} powerful arms and simultaneously thrusts {self:posessive} {self:body-part:cock} into your {other:body-part:pussy}.", getSelf(), target);
 		}

@@ -57,11 +57,11 @@ public class Illusions extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		return "You cast an illusion spell to create seveal images of yourself. At the same time, you add a charm to make yourself irresistable.";
+		return "You cast an illusion spell to create several images of yourself. At the same time, you add a charm to make yourself irresistible.";
 	}
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return getSelf().name()+" casts a brief spell and your vision is filled with naked copies of her. You can still tell which "+getSelf().name()+" is real, but it's still a distraction. At the same time, she suddnely looks irresistable.";
+		return getSelf().name()+" casts a brief spell and your vision is filled with naked copies of her. You can still tell which "+getSelf().name()+" is real, but it's still a distraction. At the same time, she suddenly looks irresistible.";
 	}
 }

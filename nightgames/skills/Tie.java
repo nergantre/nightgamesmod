@@ -81,7 +81,7 @@ public class Tie extends Skill {
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if(modifier == Result.miss){
-			return "You try to catch "+target.name()+"'s hands, but she squirms to much to keep your grip on her.";
+			return "You try to catch "+target.name()+"'s hands, but she squirms too much to keep your grip on her.";
 		}
 		else if(modifier == Result.special){
 			return "You catch "+target.name()+"'s wrists and slap a pair of cuffs on her.";

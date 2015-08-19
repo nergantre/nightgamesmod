@@ -77,7 +77,7 @@ public class UseDildo extends Skill{
 			return "You try to slip a dildo into "+target.name()+", but she blocks it.";
 		}
 		else if(modifier == Result.upgrade){
-			return "You touch the imperceptively vibrating dildo to "+target.name()+"'s love button and she jumps as if shocked. Before she can defend herself, you " +
+			return "You touch the imperceptibly vibrating dildo to "+target.name()+"'s love button and she jumps as if shocked. Before she can defend herself, you " +
 					"slip it into her " + target.body.getRandomPussy().describe(target) + ". She starts moaning in pleasure immediately.";
 		}
 		else{
@@ -92,7 +92,7 @@ public class UseDildo extends Skill{
 			return Global.format("{self:SUBJECT-ACTION:try|tries} to slip a dildo into {other:direct-object}, but {other:subject} block it.", getSelf(),target);
 		}
 		else if(modifier == Result.upgrade){
-			return Global.format("{self:SUBJECT-ACTION:touch|touches} the imperceptively vibrating dildo to {other:possessive} love button and {other:subject-action:jump|jumps} as if shocked. Before {other:subject} can defend {other:reflective}, {self:subject} " +
+			return Global.format("{self:SUBJECT-ACTION:touch|touches} the imperceptibly vibrating dildo to {other:possessive} love button and {other:subject-action:jump|jumps} as if shocked. Before {other:subject} can defend {other:reflective}, {self:subject} " +
 					"slip it into {other:possessive} {other:body-part:pussy}. {other:SUBJECT-ACTION:start|starts} moaning in pleasure immediately.",getSelf(),target);
 		}
 		else{

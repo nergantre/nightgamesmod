@@ -103,7 +103,7 @@ public class Footjob extends Skill {
 			return getSelf().name()+" swings her foot at your groin, but misses.";
 		}
 		else{
-			return getSelf().name()+" rubs you dick with the sole of her soft foot. From time to time, she teases you by pinching the glans between her toes and jostling your balls.";
+			return getSelf().name()+" rubs your dick with the sole of her soft foot. From time to time, she teases you by pinching the glans between her toes and jostling your balls.";
 		}
 	}
 

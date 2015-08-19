@@ -56,7 +56,7 @@ public class Turnover extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		return "You turn "+target.name()+" onto her hands and knees. You moved behind her while she slowly gets up.";
+		return "You turn "+target.name()+" onto her hands and knees. You move behind her while she slowly gets up.";
 	}
 
 	@Override

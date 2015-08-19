@@ -95,7 +95,7 @@ public class PullOut extends Skill {
 				}
 			} else if (getSelf().hasStatus(Stsflag.cockbound)) {
 				CockBound s = (CockBound)getSelf().getStatus(Stsflag.cockbound);
-				c.write(getSelf(),"You try to pull out of "+target.name()+"'s " + target.body.getRandomPussy() + ", but " + s.binding +" instantly react and pulls your dick back in.");
+				c.write(getSelf(),"You try to pull out of "+target.name()+"'s " + target.body.getRandomPussy() + ", but " + s.binding +" instantly reacts and pulls your dick back in.");
 				int m = 8;
 				getSelf().body.pleasure(target, target.body.getRandom("pussy"), getSelf().body.getRandom("cock"), m, c);					
 				return false;

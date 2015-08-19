@@ -111,8 +111,8 @@ public class Cunnilingus extends Skill {
 			return "Your skilled tongue explores "
 					+ target.name()
 					+ "'s pussy, finding and pleasuring her more sensitive areas. You frequently tease her clitoris until she "
-					+ "can't surpress her pleasured moans."
-					+ (damage == -1 ? " Under your skilled minestrations, her juices flow freely, and they unmistakably"
+					+ "can't suppress her pleasured moans."
+					+ (damage == -1 ? " Under your skilled ministrations, her juices flow freely, and they unmistakably"
 							+ " have their effect on you"
 							: "")
 					+ (damage == -2 ? " You feel a strange pull on you mind,"
@@ -123,7 +123,7 @@ public class Cunnilingus extends Skill {
 			return "Your resign yourself to lapping at "
 					+ target.nameOrPossessivePronoun()
 					+ " pussy, as she dominates your face with her ass."
-					+ (damage == -1 ? " Under your skilled minestrations, her juices flow freely, and they unmistakably"
+					+ (damage == -1 ? " Under your skilled ministrations, her juices flow freely, and they unmistakably"
 							+ " have their effect on you"
 							: "")
 					+ (damage == -2 ? " You feel a strange pull on you mind,"
@@ -181,7 +181,7 @@ public class Cunnilingus extends Skill {
 			return getSelf().name() + " tries to tease your cunt with her mouth, but you push her face away from your box.";
 		} else if (modifier == Result.special) {
 			return getSelf().nameOrPossessivePronoun() + " skilled tongue explores your pussy, finding and pleasuring your more sensitive areas. " +
-					"She repeatedly attacks your clitoris until you can't surpress your pleasured moans."
+					"She repeatedly attacks your clitoris until you can't suppress your pleasured moans."
 					+ (damage == -1 ? " Your aphrodisiac juices manages to arouse her as much as she aroused you." : "")
 					+ (damage == -2 ? " Your tainted juices quickly reduces her into a willing thrall."
 							: "");

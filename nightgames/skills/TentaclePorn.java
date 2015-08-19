@@ -111,7 +111,7 @@ public class TentaclePorn extends Skill {
 			return "You summon a mass of phallic tentacles that wrap around "+target.name()+"'s naked body. They squirm against her and squirt slimy fluids on her body.";
 		}
 		else{
-			return "You summon tentacles to toy with "+target.name()+"'s helpless form. The tentacles toy with her breasts and pentrate her pussy and ass.";
+			return "You summon tentacles to toy with "+target.name()+"'s helpless form. The tentacles toy with her breasts and penetrate her pussy and ass.";
 		}
 	}
 

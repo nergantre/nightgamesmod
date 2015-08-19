@@ -84,7 +84,7 @@ public class Flick extends Skill {
 		else{
 			if(target.hasBalls()){
 				return "You use two fingers to simultaneously flick both of "+target.name()+" dangling balls. She tries to stifle a yelp and jerks her hips away reflexively. " +
-						"You feel a twing of empathy, but she's done far worse.";
+						"You feel a twinge of empathy, but she's done far worse.";
 			}
 			else{
 				return "You flick your finger sharply across "+target.name()+"'s sensitive clit, causing her to yelp in surprise and pain. She quickly covers her girl parts " +
@@ -100,7 +100,7 @@ public class Flick extends Skill {
 		}
 		else{
 			return getSelf().name()+" gives you a mischievous grin and flicks each of your balls with her finger. It startles you more than anything, but it does hurt and " +
-				"her seemlingly carefree abuse of your jewels destroys your confidence.";
+				"her seemingly carefree abuse of your jewels destroys your confidence.";
 		}
 	}
 

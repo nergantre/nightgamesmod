@@ -88,7 +88,7 @@ public class ShrinkRay extends Skill {
 			message = "You aim your shrink ray at "+target.name()+"'s cock, shrinking her male anatomy. She turns red and glares at you in humiliation.";
 		}
 		else{
-			message = "You use your shrink ray to turn "+target.name()+"'s breasts. She whimpers and covers her chest in shame.";
+			message = "You point your shrink ray to turn "+target.name()+"'s breasts. She whimpers and covers her chest in shame.";
 		}
 		if (damage > 0)
 			message += " She glares at you angrily when she realizes the effects are permanent!";

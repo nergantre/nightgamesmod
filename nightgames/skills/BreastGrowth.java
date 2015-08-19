@@ -96,7 +96,7 @@ public class BreastGrowth extends Skill {
 		if (modifier != Result.miss) {
 			message = getSelf().name() + " stops moving and begins chanting. You feel your breasts grow hot, and start expanding! "
 					+ "You try to hold them back with your hands, but the growth continues until you're a full cup size bigger than before. "
-					+ "The new sensations from your substantially larger breasts makes you tremble.";
+					+ "The new sensations from your substantially larger breasts make you tremble.";
 			if (damage > 0)
 				message += " You realize the effects are permanent!";
 		} else {

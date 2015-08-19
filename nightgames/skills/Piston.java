@@ -67,8 +67,8 @@ public class Piston extends Thrust {
 			return getSelf().name()+" relentlessly pegs you in the ass as you groan and try to endure the sensation.";
 		}
 		else if(modifier == Result.upgrade){
-			return getSelf().name()+" pistons into you while pushing your shoulders on the ground. While her Strap-On stimulates your prostate, "
-					+getSelf().name()+"'s tits are shaking above your head.";
+			return getSelf().name()+" pistons into you while pushing your shoulders on the ground; "
+					+getSelf().name()+"'s tits are shaking above your head while her strapon stimulates your prostate.";
 		} else if (modifier == Result.reverse) {
 			return getSelf().name()+" bounces on your cock, relentlessly driving you both toward orgasm.";
 		} else{

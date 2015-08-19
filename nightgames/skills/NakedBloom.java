@@ -29,7 +29,7 @@ public class NakedBloom extends Skill {
 
 	@Override
 	public String describe() {
-		return "Cast a spell to transform your opponents clothes into flower petals: 20 Mojo";
+		return "Cast a spell to transform your opponent's clothes into flower petals: 20 Mojo";
 	}
 
 	@Override

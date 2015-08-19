@@ -63,7 +63,7 @@ public class Undress extends Skill {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (c.getStance().en != Stance.neutral) {
-			return getSelf().name() + " wiggles out of her clothes and toss them aside";
+			return getSelf().name() + " wiggles out of her clothes and tosses them aside";
 		}
 		return getSelf().name()+" puts some space between you and strips naked.";
 	}

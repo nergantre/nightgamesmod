@@ -108,7 +108,7 @@ public class Slap extends Skill {
 			return target.name()+" avoids your slap.";
 		}
 		else if(modifier==Result.special){
-			return "You channel your beastial power and strike"+target.name()+" with a solid open hand strike.";
+			return "You channel your bestial power and strike"+target.name()+" with a solid open hand strike.";
 		}
 		else{
 			return "You slap "+target.name()+"'s cheek; not hard enough to really hurt her, but enough to break her concentration.";

@@ -148,7 +148,7 @@ public class Squeeze extends Skill {
 
 	@Override
 	public String describe() {
-		return "Grab opponent's groin, deals more damage if naked";
+		return "Grab opponent's groin; deals more damage if she's naked";
 	}
 
 	@Override

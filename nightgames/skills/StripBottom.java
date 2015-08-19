@@ -46,7 +46,7 @@ public class StripBottom extends Skill {
 					c.write("Your boner springs out, no longer restrained by your pants.");
 				}
 				else{
-					c.write(getSelf().name()+" giggles as your flacid dick is exposed");
+					c.write(getSelf().name()+" giggles as your flaccid dick is exposed");
 				}
 			}
 			target.emote(Emotion.nervous, 10);

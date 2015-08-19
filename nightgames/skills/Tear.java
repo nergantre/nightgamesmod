@@ -25,7 +25,7 @@ public class Tear extends Skill {
 
 	@Override
 	public String describe() {
-		return "Rip off your opponents clothes";
+		return "Rip off your opponent's clothes";
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class Tear extends Skill {
 					c.write(getSelf(),"You channel your animal spirit and shred "+target.name()+"'s "+target.top.peek().getName()+" with claws you don't actually have.");
 				}
 				else if(target.human()){
-					c.write(getSelf(),getSelf().name()+" lunges toward you and rakes her nails across your "+target.top.peek().getName()+", shredding the garment. That shouldn't be possible. Her " +
+					c.write(getSelf(),getSelf().name()+" lunges towards you and rakes her nails across your "+target.top.peek().getName()+", shredding the garment. That shouldn't be possible. Her " +
 							"nails are not that sharp, and if they were, you surely wouldn't have gotten away unscathed.");
 				}
 				target.shred(0);
@@ -78,7 +78,7 @@ public class Tear extends Skill {
 					c.write(getSelf(),"You channel your animal spirit and shred "+target.name()+"'s "+target.bottom.peek().getName()+" with claws you don't actually have.");
 				}
 				else if(target.human()){
-					c.write(getSelf(),getSelf().name()+" lunges toward you and rakes her nails across your "+target.bottom.peek().getName()+", shredding the garment. That shouldn't be possible. Her " +
+					c.write(getSelf(),getSelf().name()+" lunges towards you and rakes her nails across your "+target.bottom.peek().getName()+", shredding the garment. That shouldn't be possible. Her " +
 							"nails are not that sharp, and if they were, you surely wouldn't have gotten away unscathed.");
 				}
 				target.shred(1);
@@ -90,7 +90,7 @@ public class Tear extends Skill {
 						c.write("Your boner springs out, no longer restrained by your pants.");
 					}
 					else{
-						c.write(getSelf().name()+" giggles as your flacid dick is exposed");
+						c.write(getSelf().name()+" giggles as your flaccid dick is exposed");
 					}
 				}
 				target.emote(Emotion.nervous, 10);
@@ -112,7 +112,7 @@ public class Tear extends Skill {
 						c.write("Your boner springs out, no longer restrained by your pants.");
 					}
 					else{
-						c.write(getSelf().name()+" giggles as your flacid dick is exposed");
+						c.write(getSelf().name()+" giggles as your flaccid dick is exposed");
 					}
 				}
 				target.emote(Emotion.nervous, 10);

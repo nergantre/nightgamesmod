@@ -129,7 +129,7 @@ public class TailPeg extends Skill {
 			return "Smiling down on you, "
 					+ getSelf().name()
 					+ " spreads your legs and tickles your butt with her tail."
-					+ " You notice how the tail itself was slick and wet as it"
+					+ " You notice how the tail itself is slick and wet as it"
 					+ " slowly pushes through your anus, spreading your cheeks a part. "
 					+ getSelf().name()
 					+ " pumps it in and out a for a few times before taking "
@@ -155,7 +155,7 @@ public class TailPeg extends Skill {
 			return getSelf().name()
 					+ " hugs you from behind and rubs her chest against your back."
 					+ " Distracted by that, she managed to push her tail between your"
-					+ " ass cheeks and started tickling your prostrate with the tip.";
+					+ " ass cheeks and started tickling your prostate with the tip.";
 		default:
 			return "<<This should not be displayed, please inform The Silver Bard: TailPeg-receive>>";
 		}

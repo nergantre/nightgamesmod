@@ -65,13 +65,13 @@ public class FootWorship extends Skill {
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You throw yourself at " + target.nameOrPossessivePronoun()
 			+ " dainty feet and start sucking on her toes. " + target.subject() + " seems surprised at first, "
-					+ "but then grins and rubs her soles against your face, elliciting a moan from you.";
+					+ "but then grins and rubs her soles against your face, eliciting a moan from you.";
 	}
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().name() + " throws herself at your feet. She worshipfully grasps your feet "
-				+ "and start licking between your toes, all while her face a mask of ecstasy.";
+				+ "and start licking between your toes, all while her face displays a mask of ecstasy.";
 	}
 
 	@Override

@@ -151,7 +151,7 @@ public class AssFuck extends Fuck {
 				return getSelf().name()+" rubs her cock up and down your ass crack before thrusting her hips to penetrate you.";
 			}
 		} else {
-			return getSelf().name()+" rubs her dick against your ass, but she's still flacid and can't actually penetrate you.";
+			return getSelf().name()+" rubs her dick against your ass, but she's still flaccid and can't actually penetrate you.";
 		}
 	}
 

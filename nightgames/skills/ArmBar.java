@@ -77,7 +77,7 @@ public class ArmBar extends Skill {
 			return getSelf().name()+" grabs your wrist, but you pry it out of her grasp.";
 		}
 		else{
-			return getSelf().name()+" pulls your arm between her legs, forceably overextending your elbow. The pain almost makes you tap out, but you manage to yank your arm " +
+			return getSelf().name()+" pulls your arm between her legs, forcibly overextending your elbow. The pain almost makes you tap out, but you manage to yank your arm " +
 				"out of her grip.";
 		}
 	}

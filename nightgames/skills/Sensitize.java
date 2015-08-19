@@ -79,10 +79,10 @@ public class Sensitize extends Skill {
 					"sense of touch.";
 		}
 		else if(modifier == Result.miss){
-			return "You throw a bottle of sensitivity elixer at "+target.name()+", but she ducks out of the way and it splashes harmlessly on the ground. What a waste.";
+			return "You throw a bottle of sensitivity elixir at "+target.name()+", but she ducks out of the way and it splashes harmlessly on the ground. What a waste.";
 		}
 		else{
-			return "You thow a sensitivity potion at "+target.name()+". You see her skin flush as it takes effect.";
+			return "You throw a sensitivity potion at "+target.name()+". You see her skin flush as it takes effect.";
 		}
 	}
 

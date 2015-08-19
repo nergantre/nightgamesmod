@@ -165,7 +165,7 @@ public class Drain extends Skill {
 						"climax.";
 			case 6:
 				return base
-						+ "You succeed in siphoning off a portion of her soul, stealing both her physical and mental strength. This energy will eventaully " +
+						+ "You succeed in siphoning off a portion of her soul, stealing both her physical and mental strength. This energy will eventually " +
 						"return to its owner, but for now, you're very powerful!";
 			default:
 				// Should never happen

@@ -81,7 +81,7 @@ public class SpiralThrust extends Thrust {
 		if(modifier == Result.anal){
 			return getSelf().name()+" drills into your ass with extraordinary power. Your head seems to go blank and you fall face down to the ground as your arms turn to jelly and give out.";
 		} else if (modifier != Result.reverse) {
-			return Global.format("The movements of {self:name-possessive} cock suddenly change. She suddenly begins drilling to your poor pussy with an unprecedently passion. "
+			return Global.format("The movements of {self:name-possessive} cock suddenly change. She suddenly begins drilling to your poor pussy with an unprecedented passion. "
 					+ "The only thing you can do is bite your lips and try to not instantly cum.", getSelf(), target);
 		} else {
 			return getSelf().name()+" begins to move her hips wildly in circles, rubbing every inch of your cock with her hot, " + (selfO.isType("pussy") ? "slippery pussy walls" : " steaming asshole") + ", bringing you more pleasure " +

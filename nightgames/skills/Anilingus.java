@@ -100,7 +100,7 @@ public class Anilingus extends Skill {
 		}
 		return "You thrust your tongue into "
 				+ target.name()
-				+ "'s ass and lick it, making her yelp in suprise.";
+				+ "'s ass and lick it, making her yelp in surprise.";
 	}
 
 	@Override
@@ -119,7 +119,7 @@ public class Anilingus extends Skill {
 
 	@Override
 	public String describe() {
-		return "Perfom anilingus on opponent";
+		return "Perform anilingus on opponent";
 	}
 	public String getTargetOrganType(Combat c, Character target) {
 		return "ass";

@@ -109,7 +109,7 @@ public class Fly extends Fuck {
 					+ ". She then flaps her " + getSelf().body.getRandomWings().describe(target) + " hard and before you know it"
 					+ " you are twenty feet in the sky held up by her arms and legs."
 					+ " Somehow, her dick ended up inside of you in the process and"
-					+ " the rythmic movements of her flying arouse you to no end";
+					+ " the rhythmic movements of her flying arouse you to no end";
 		}
 	}
 

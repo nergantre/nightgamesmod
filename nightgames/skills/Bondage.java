@@ -53,7 +53,7 @@ public class Bondage extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		return "You imagine the exhilerating feeling of ropes digging into your skin and binding you. You push this feeling into "+target.name()+"'s libido.";
+		return "You imagine the exhilarating feeling of ropes digging into your skin and binding you. You push this feeling into "+target.name()+"'s libido.";
 	}
 
 	@Override

@@ -71,6 +71,6 @@ public class EyesOfTemptation extends Skill {
 
 	@Override
 	public String describe() {
-		return "Entralls your opponent with a single gaze.";
+		return "Enthralls your opponent with a single gaze.";
 	}
 }

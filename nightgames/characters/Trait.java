@@ -73,7 +73,7 @@ public enum Trait {
 	soulsucker("Soulsucker", "Soul sucking lips"),
 	entrallingjuices("Enthralling cum", "Enthralling juices"),
 	lacedjuices("Laced Juices", "Intoxicating bodily fluids"), //opponents take temptation when using oral skills
-	addictivefluids("Additive Fluids", "Addictive bodily fluids"), //opponents can only use oral skills if available
+	addictivefluids("Addictive Fluids", "Addictive bodily fluids"), //opponents can only use oral skills if available
 	lactating("Lactating","Breasts produces milk", new TraitDescription() {
 		public void describe(StringBuilder b, Character c, Trait t) {
 			if (!c.human()) {

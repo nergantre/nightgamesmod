@@ -118,7 +118,7 @@ public class Kiss extends Skill {
 			switch(Global.random(3)){
 			case 0: return getSelf().name()+" grabs you and kisses you passionately on the mouth. As you break for air, she gently nibbles on your bottom lip.";
 			case 1: return getSelf().name()+" peppers quick little kisses around your mouth before suddenly taking your lips forcefully and invading your mouth with her tongue.";
-			default: return getSelf().name()+" kisses you softly and romantically, slowy drawing you into her embrace. As you part, she teasingly brushes her lips against yours.";
+			default: return getSelf().name()+" kisses you softly and romantically, slowly drawing you into her embrace. As you part, she teasingly brushes her lips against yours.";
 			}
 		}
 	}

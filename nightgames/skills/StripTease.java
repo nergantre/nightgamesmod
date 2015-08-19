@@ -67,7 +67,7 @@ public class StripTease extends Skill {
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "During a brief respite in the fight as "+target.name()+" is catching her breath, you make a show of seductively removing your clothes. " +
-				"By the time you finish, she's staring with undisguise arousal, pressing a hand unconsciously against her groin.";
+				"By the time you finish, she's staring with undisguised arousal, pressing a hand unconsciously against her groin.";
 	}
 
 	@Override

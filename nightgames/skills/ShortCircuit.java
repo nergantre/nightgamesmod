@@ -27,7 +27,7 @@ public class ShortCircuit extends Skill {
 
 	@Override
 	public String describe() {
-		return "A blast of energy with confused your opponent's nerves so she can't tell pleasure from pain: 3 Batteries.";
+		return "Fire a  blast of energy to confuse your opponent's nerves so she can't tell pleasure from pain: 3 Batteries.";
 	}
 
 	@Override
