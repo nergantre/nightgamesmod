@@ -21,7 +21,7 @@ public class LevelDrain extends Drain {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return (this.getSelf().canAct()) && (c.getStance().canthrust(getSelf()))
-				&& (c.getStance().penetration(this.getSelf()));
+				&& (c.getStance().penetration(this.getSelf())) && getSelf().getLevel() < 100 && getSelf().getLevel() < target.getLevel();
 	}
 
 	@Override
@@ -49,8 +49,7 @@ public class LevelDrain extends Drain {
 	
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		int strength = Math.max(1, 1 + ((getSelf().get(Attribute.Dark)) / 30));
-		
+
 		int type = Global.centeredrandom(2, getSelf().get(Attribute.Dark) / 20.0f, 2);
 		if (this.getSelf().human()) {
 			c.write(getSelf(),deal(c, type, Result.normal, target));
@@ -72,16 +71,13 @@ public class LevelDrain extends Drain {
 			}
 			break;
 		case 2:
-			getSelf().add(c, new Satiated(target, 0, strength));
-			int xpStolen = 0;
-			for(int i = 0; i < strength; i++) {
-				xpStolen += 95 + (5 * (target.getLevel()));
-				c.write(target.dong());
-			}
+			int xpStolen = 95 + (5 * (target.getLevel()));
+			getSelf().add(c, new Satiated(target, xpStolen, 0));
+			c.write(target.dong());
 			if (getSelf().human())
-				c.write("You have stolen " + strength + " of " + target.name() + "'s levels and absorbed it as " + xpStolen + " XP!\n");
+				c.write("You have stolen a level from " + target.name() + "'s levels and absorbed it as " + xpStolen + " XP!\n");
 			else
-				c.write(getSelf().name() + " has stolen " + strength + " of your levels and absorbed it as " + xpStolen + " XP!\n");
+				c.write(getSelf().name() + " has stolen a level from you and absorbed it as " + xpStolen + " XP!\n");
 			getSelf().gainXP(xpStolen);
 			target.tempt(c, getSelf(), target.getArousal().max());
 			break;
