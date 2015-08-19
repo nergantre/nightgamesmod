@@ -2071,7 +2071,7 @@ public abstract class Character extends Observable implements Cloneable{
 		} else if (part.isType("pussy") || part.isType("ass")) {
 			for(Clothing article: bottom){
 				Trait attribute = article.attribute();
-				if(attribute != Trait.skimpy || attribute != Trait.ineffective || attribute != Trait.flexible){
+				if(attribute != Trait.skimpy && attribute != Trait.ineffective && attribute != Trait.flexible){
 					return false;
 				}
 			}
