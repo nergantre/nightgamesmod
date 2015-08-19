@@ -98,6 +98,9 @@ public class NPC extends Character {
 		if(per>=8){
 			visible = visible+"Her stamina is at "+stamina.percent()+"%<br>";
 		}
+		if(per>=9){
+			visible = visible+"Her willpower is at "+willpower.percent()+"%<br>";
+		}
 		if(per>=7){
 			visible = visible+"She looks " + mood.name() + "<br>";
 		}
@@ -111,6 +114,15 @@ public class NPC extends Character {
 			else if(arousal.percent()>=25){
 				visible = visible+"She's starting to look noticeably arousal, maybe a quarter of her limit<br>";
 			}
+			if(willpower.percent()<=75){
+				visible = visible+"She still seems ready to fight.<br>";
+			}
+			else if(willpower.percent()<=50){
+				visible = visible+"She seems a bit unsettled, but she still has some spirit left in her.<br>";
+			}
+			else if(willpower.percent()<=25){
+				visible = visible+"Her eyes seem glazed over and ready to give in.<br>";
+			}
 		}
 		if(per>=6 && per<8){
 			if(stamina.percent()<=66){
@@ -123,6 +135,10 @@ public class NPC extends Character {
 		if(per>=3 && per<7){
 			if(arousal.percent()>=50){
 				visible = visible+"She's showing clear sign of arousal. You're definitely getting to her.<br>";
+			}
+			if (willpower.percent()<= 50) {
+				visible = visible+"She seems a bit distracted and unable to look you in the eye.<br>";
+
 			}
 		}
 		if(per>=4 && per<6){
