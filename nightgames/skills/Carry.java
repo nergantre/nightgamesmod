@@ -71,7 +71,7 @@ public class Carry extends Fuck {
 			} else if(target.human()){
 				c.write(getSelf(),premessage + receive(c,0,Result.miss, target));
 			}
-			target.add(c, new Falling(target));
+			getSelf().add(c, new Falling(getSelf()));
 			return false;
 		}
 		return true;
