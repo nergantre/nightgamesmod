@@ -34,7 +34,7 @@ public class FireStance extends Status {
 			return "Your spirit burns in you, feeding your power";
 		}
 		else{
-			return affected.name()+" is still all fired up.";
+			return affected.name()+" is all fired up.";
 		}
 	}
 
