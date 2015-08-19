@@ -1,0 +1,20 @@
+1.7.6 changelog
+
+Bug fix:
+- Fixed a bug where you could grow multiple breasts/cocks if you had them temporarily changed.
+- Use Breasts is no longer usable while mounted facing chest/behind/in other weird situations.
+- Tighten can no longer be used when the opponent has a strapon
+- Fixed a bug where ineffective panties would still obstruct reverse fucking
+
+Balance changes:
+- Strip top and Strip bottom now only gives a pseudo 20 cunning bonus when in a dominant position (rather than 50)
+- Level Drain now can only drain 1 level maximum
+- Level Drain now can only be used when the user's level does not exceed 100 and is lower than the opponent's level
+
+Other changes:
+- Changed how statuses's resource modifiers stacked
+	- Multiple statuses used to stack multiplicatively
+		(if you had 50% pain reduction from one status, and 50% from another, it would be 25%)
+	- Now stacks additively (50% + 50% = 100% reduction)
+- Changed Edging to Surrender to better reflect what it does
+- Added willpower to the perception stats
