@@ -51,7 +51,7 @@ public class Reyka extends BasePersonality {
 
 		Global.gainSkills(this.character);
 
-		character.plan = Tactics.hunting;
+		character.plan = Plan.hunting;
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.dd);
 		character.body.add(PussyPart.succubus);

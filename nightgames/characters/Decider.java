@@ -238,7 +238,7 @@ public class Decider {
 		if(!character.location().humanPresent()){
 			tactic.addAll(utility);
 		}
-		if(character.plan == Tactics.hunting&&!enemy.isEmpty()){
+		if(character.plan == Plan.hunting&&!enemy.isEmpty()){
 			tactic.addAll(enemy);
 		}
 

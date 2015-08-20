@@ -28,7 +28,7 @@ public class Yui extends BasePersonality {
 		character.closet.add(Clothing.skirt);
 		character.change(Modifier.normal);
 		character.setTrophy(Item.YuiTrophy);
-		character.plan = Tactics.hunting;
+		character.plan = Plan.hunting;
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.c);
 		character.body.add(PussyPart.normal);

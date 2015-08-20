@@ -1,11 +1,17 @@
-package nightgames.characters;
+package nightgames.characters.custom;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import nightgames.characters.Attribute;
+import nightgames.characters.BasePersonality;
+import nightgames.characters.Character;
+import nightgames.characters.Emotion;
+import nightgames.characters.NPC;
+import nightgames.characters.Trait;
+import nightgames.characters.BasePersonality.PreferredAttribute;
 import nightgames.characters.body.BodyPart;
-import nightgames.characters.custom.NPCData;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -20,6 +26,9 @@ public class CustomNPC extends BasePersonality {
 	private static final long serialVersionUID = -8169646189131720872L;
 	public CustomNPC(NPCData data){
 		super();
+		this.data = data;
+		growth = data.getGrowth();
+		preferredAttributes = new ArrayList<PreferredAttribute>(data.getPreferredAttributes());
 		character = new NPC(data.getName(),data.getStats().level,this);
 		character.outfit[0].addAll(data.getTopOutfit());
 		character.outfit[1].addAll(data.getBottomOutfit());
@@ -28,8 +37,12 @@ public class CustomNPC extends BasePersonality {
 		character.change(Modifier.normal);
 		character.att = new HashMap<Attribute, Integer>(data.getStats().attributes);
 		character.traits = new HashSet<Trait>(data.getStats().traits);
+		character.getArousal().setMax(data.getStats().arousal);
+		character.getStamina().setMax(data.getStats().stamina);
+		character.getMojo().setMax(data.getStats().mojo);
+		character.getWillpower().setMax(data.getStats().willpower);
 		character.setTrophy(data.getTrophy());
-		character.plan = Tactics.hunting;
+		character.plan = data.getPlan();
 		character.mood = Emotion.confident;
 		for (BodyPart part : data.getBodyParts()) {
 			character.body.add(part);
@@ -39,12 +52,6 @@ public class CustomNPC extends BasePersonality {
 			character.gain(i.item, i.amount);;
 		}
 		Global.gainSkills(character);
-	}
-
-	@Override
-	public void setGrowth() {
-		growth = data.getGrowth();
-		preferredAttributes = new ArrayList<PreferredAttribute>(data.getPreferredAttributes());
 	}
 
 	@Override
@@ -81,7 +88,7 @@ public class CustomNPC extends BasePersonality {
 
 	@Override
 	public String victory(Combat c,Result flag) {
-		character.arousal.empty();
+		character.getArousal().empty();
 		return data.getLine("victory", c, this.character, c.getOther(character));
 	}
 

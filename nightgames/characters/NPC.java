@@ -44,7 +44,7 @@ public class NPC extends Character {
 	Personality ai;
 	public HashMap<Emotion,Integer> emotes;
 	public Emotion mood;
-	public Tactics plan;
+	public Plan plan;
 	
 
 	public NPC(String name, int level,Personality ai){

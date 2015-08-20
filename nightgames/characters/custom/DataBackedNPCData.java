@@ -6,12 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
-import org.json.simple.JSONValue;
-
 import nightgames.characters.BasePersonality.PreferredAttribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.Growth;
+import nightgames.characters.Plan;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.items.Clothing;
@@ -34,6 +33,7 @@ public class DataBackedNPCData implements NPCData {
 	String name;
 	String gender;
 	String defaultPortraitName;
+	Plan plan;
 
 	public DataBackedNPCData() {
 		preferredAttributes = new ArrayList<>();
@@ -48,7 +48,7 @@ public class DataBackedNPCData implements NPCData {
 		stats = new Stats();
 		growth = new Growth();
 		trophy = Item.MiscTrophy;
-		name = "none";
+		name = "Anonymous";
 		gender = "female";
 		defaultPortraitName = "";
 	}
@@ -95,6 +95,7 @@ public class DataBackedNPCData implements NPCData {
 
 	@Override
 	public String getLine(String type, Combat c, Character self, Character other) {
+		if (!characterLines.containsKey(type)) {return "";}
 		List<CustomStringEntry> lines = characterLines.get(type);
 		for (CustomStringEntry line : lines) {
 			if (line.meetsRequirements(c, self, other))
@@ -110,7 +111,9 @@ public class DataBackedNPCData implements NPCData {
 
 	@Override
 	public boolean checkMood(Character self, Emotion mood, int value) {
-		return value >= moodThresholds.get(mood) ;
+		if (moodThresholds.containsKey(mood))
+			return value >= moodThresholds.get(mood);
+		return value >= 100;
 	}
 
 	@Override
@@ -135,5 +138,10 @@ public class DataBackedNPCData implements NPCData {
 	@Override
 	public String getDefaultPortraitName() {
 		return defaultPortraitName;
+	}
+
+	@Override
+	public Plan getPlan() {
+		return plan;
 	}
 }

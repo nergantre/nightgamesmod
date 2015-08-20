@@ -56,7 +56,7 @@ public class Angel extends BasePersonality {
 		character.add(Trait.undisciplined);
 		character.add(Trait.lickable);
 		character.setTrophy(Item.AngelTrophy);
-		character.plan = Tactics.hunting;
+		character.plan = Plan.hunting;
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.dd);
 		character.body.add(PussyPart.normal);

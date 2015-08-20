@@ -11,6 +11,4 @@ public enum Tactics {
 	summoning,
 	debuff,
 	misc,
-	hunting,
-	retreating
 }

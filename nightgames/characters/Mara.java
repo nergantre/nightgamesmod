@@ -49,7 +49,7 @@ public class Mara extends BasePersonality  {
 		character.add(Trait.dexterous);
 		character.add(Trait.ticklish);
 		character.setTrophy(Item.MaraTrophy);
-		character.plan = Tactics.hunting;
+		character.plan = Plan.hunting;
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.b);
 		character.body.add(PussyPart.normal);

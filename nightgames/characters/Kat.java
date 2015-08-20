@@ -58,7 +58,7 @@ public class Kat extends BasePersonality {
 		character.add(Trait.pheromones);
 		character.add(Trait.shy);
 		character.add(Trait.petite);
-		character.plan = Tactics.retreating;
+		character.plan = Plan.retreating;
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.a);
 		character.body.add(PussyPart.feral);

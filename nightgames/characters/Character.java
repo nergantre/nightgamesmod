@@ -83,7 +83,7 @@ public abstract class Character extends Observable implements Cloneable{
 	public Stack<Clothing>[] outfit;
 	protected HashSet<Skill> skills;
 	public HashSet<Status> status;
-	protected Set<Trait> traits;
+	public Set<Trait> traits;
 	protected HashMap<Trait, Integer> temporaryAddedTraits;
 	protected HashMap<Trait, Integer> temporaryRemovedTraits;
 	public HashSet<Status> removelist;

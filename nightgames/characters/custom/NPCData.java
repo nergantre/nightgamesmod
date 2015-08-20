@@ -7,6 +7,7 @@ import nightgames.characters.BasePersonality.PreferredAttribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.Growth;
+import nightgames.characters.Plan;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.items.Clothing;
@@ -29,4 +30,5 @@ public interface NPCData {
 	String getGender();
 	String getPortraitName(Combat c, Character self, Character other);
 	String getDefaultPortraitName();
+	Plan getPlan();
 }

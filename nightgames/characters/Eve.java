@@ -44,7 +44,7 @@ public class Eve extends BasePersonality {
 		Global.gainSkills(character);
 		character.add(Trait.exhibitionist);
 		character.setTrophy(Item.EveTrophy);
-		character.plan = Tactics.hunting;
+		character.plan = Plan.hunting;
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.d);
 		character.body.add(CockPart.big);
