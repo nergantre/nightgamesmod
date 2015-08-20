@@ -33,7 +33,7 @@ public class Stomp extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.special, target));
 				if(Global.random(5)>=1){
-					c.write(getSelf(),getSelf().bbLiner());
+					c.write(getSelf(),getSelf().bbLiner(c));
 				}
 			}
 			if(target.has(Trait.achilles)){
@@ -57,7 +57,7 @@ public class Stomp extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.normal, target));
 				if(Global.random(5)>=1){
-					c.write(getSelf(),getSelf().bbLiner());
+					c.write(getSelf(),getSelf().bbLiner(c));
 				}
 			}
 			if(target.has(Trait.achilles)){

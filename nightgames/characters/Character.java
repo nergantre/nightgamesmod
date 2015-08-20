@@ -1014,7 +1014,7 @@ public abstract class Character extends Observable implements Cloneable{
 	public abstract void detect();
 	public abstract void faceOff(Character opponent,Encounter enc);
 	public abstract void spy(Character opponent,Encounter enc);
-	public abstract String describe(int per);
+	public abstract String describe(int per, Combat c);
 	public abstract void victory(Combat c, Result flag);
 	public abstract void defeat(Combat c, Result flag);
 	public abstract void intervene3p(Combat c,Character target, Character assist);
@@ -1023,10 +1023,10 @@ public abstract class Character extends Observable implements Cloneable{
 	public abstract void move();
 	public abstract void draw(Combat c, Result flag);
 	public abstract boolean human();
-	public abstract String bbLiner();
-	public abstract String nakedLiner();
-	public abstract String stunLiner();
-	public abstract String taunt();
+	public abstract String bbLiner(Combat c);
+	public abstract String nakedLiner(Combat c);
+	public abstract String stunLiner(Combat c);
+	public abstract String taunt(Combat c);
 	public abstract void intervene(Encounter enc, Character p1,Character p2);
 	public abstract void showerScene(Character target, Encounter encounter);
 	public void save(PrintWriter saver) {
@@ -1168,8 +1168,8 @@ public abstract class Character extends Observable implements Cloneable{
 		} else {
 			c.write(this, Global.format("<b>{self:SUBJECT-ACTION:shudder|shudders} as {other:subject-action:bring|brings} {self:direct-object} to a toe-curling climax.</b>", this, opponent));
 		}
-		c.write(this, "<b>" + orgasmLiner() + "</b>");
-		c.write(opponent, opponent.makeOrgasmLiner());
+		c.write(this, "<b>" + orgasmLiner(c) + "</b>");
+		c.write(opponent, opponent.makeOrgasmLiner(c));
 		int overflow = arousal.getOverflow();
 		c.write(this, String.format("<br><font color='rgb(255,50,200)'>%s<font color='white'> arousal overflow", overflow));
 		getArousal().empty();
@@ -1284,10 +1284,10 @@ public abstract class Character extends Observable implements Cloneable{
 		}
 	}
 
-	public String orgasmLiner() {
+	public String orgasmLiner(Combat c) {
 		return "";
 	}
-	public String makeOrgasmLiner() {
+	public String makeOrgasmLiner(Combat c) {
 		return "";
 	}
 
@@ -1584,7 +1584,7 @@ public abstract class Character extends Observable implements Cloneable{
 		}
 		state=State.ready;
 	}
-	public abstract String challenge();
+	public abstract String challenge(Character other);
 	public void delay(int i){
 		busy+=i;
 	}
@@ -2094,8 +2094,8 @@ public abstract class Character extends Observable implements Cloneable{
 			c.write(Global.format("<b>{self:subject-action:have|has} gained "+item.pre()+item.getName()+"</b>", this, this));
 		gain(item, 1);
 	}
-	public String temptLiner(Character target) {
-		//placeholder
+	public String temptLiner(Combat c) {
+		Character target = c.getOther(this);
 		return Global.format("{self:SUBJECT-ACTION:tempt|tempts} {other:direct-object}.", this, target);
 	}
 	public String action(String firstPerson, String thirdPerson) {

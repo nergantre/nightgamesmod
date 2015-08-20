@@ -88,7 +88,7 @@ public class Player extends Character {
 	}
 
 	@Override
-	public String describe(int per) {
+	public String describe(int per, Combat c) {
 		String description="<i>";
 		for(Status s:status){
 			description = description+s.describe()+"<br>";
@@ -194,22 +194,22 @@ public class Player extends Character {
 	}
 
 	@Override
-	public String bbLiner() {
+	public String bbLiner(Combat c) {
 		return null;
 	}
 
 	@Override
-	public String nakedLiner() {
+	public String nakedLiner(Combat c) {
 		return null;
 	}
 
 	@Override
-	public String stunLiner() {
+	public String stunLiner(Combat c) {
 		return null;
 	}
 
 	@Override
-	public String taunt() {
+	public String taunt(Combat c) {
 		return null;
 	}
 
@@ -537,7 +537,7 @@ public class Player extends Character {
 	}
 
 	@Override
-	public String challenge() {
+	public String challenge(Character other) {
 		return null;
 	}
 

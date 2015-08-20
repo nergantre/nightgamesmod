@@ -39,7 +39,7 @@ public class StripBottom extends Skill {
 			}
 			target.strip(1, c);
 			if(getSelf().human()&&target.nude()){
-				c.write(target,target.nakedLiner());
+				c.write(target,target.nakedLiner(c));
 			}
 			if(target.human()&&target.pantsless()){
 				if(target.getArousal().get()>=15){

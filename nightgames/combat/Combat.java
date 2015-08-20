@@ -216,7 +216,7 @@ public class Combat extends Observable implements Serializable, Cloneable{
 		phase=1;
 		p1.regen(this);
 		p2.regen(this);
-		message = other.describe(player.get(Attribute.Perception))+"<p>"+getStance().describe()+"<p>"+player.describe(other.get(Attribute.Perception))+"<p>";
+		message = other.describe(player.get(Attribute.Perception), this)+"<p>"+getStance().describe()+"<p>"+player.describe(other.get(Attribute.Perception), this)+"<p>";
 		if((p1.human()||p2.human())&&!Global.checkFlag(Flag.noimage)){
 			Global.gui().clearImage();
 			Global.gui().displayImage(imagePath,images.get(imagePath));

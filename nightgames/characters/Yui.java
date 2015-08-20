@@ -53,25 +53,25 @@ public class Yui extends BasePersonality {
 	}
 
 	@Override
-	public String bbLiner() {
+	public String bbLiner(Combat c) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String nakedLiner() {
+	public String nakedLiner(Combat c) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String stunLiner() {
+	public String stunLiner(Combat c) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String taunt() {
+	public String taunt(Combat c) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -101,7 +101,7 @@ public class Yui extends BasePersonality {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -123,7 +123,7 @@ public class Yui extends BasePersonality {
 	}
 
 	@Override
-	public String startBattle() {
+	public String startBattle(Character other) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -141,28 +141,23 @@ public class Yui extends BasePersonality {
 	}
 
 	@Override
-	public void advance() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
 	public boolean checkMood(Emotion mood, int value) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public String temptLiner(Character target) {
+	public String temptLiner(Combat c) {
 		// TODO Auto-generated method stub
 		return "";
 	}
 	@Override
-	public String orgasmLiner() {
+	public String orgasmLiner(Combat c) {
 		return "Reyka shudders, <i>\"Mmm it's been a while since I've felt that. Here, I'll return the favor\"</i>";
 	}
 
 	@Override
-	public String makeOrgasmLiner() {
+	public String makeOrgasmLiner(Combat c) {
 		return "With a devilish smile, Reyka brings her face close to yours <i>\"Mmmmm that smells great! Too bad I'm still pretty hungry.\"</i>";
 	}
 }

@@ -116,9 +116,9 @@ public abstract class BasePersonality implements Personality {
 		distributePoints();
 	}
 
-	public String describeAll() {
+	public String describeAll(Combat c) {
 		StringBuilder b = new StringBuilder();
-		b.append(describe());
+		b.append(describe(c));
 		b.append("<br><br>");
 		character.body.describe(b, character, " ");
 		b.append("<br>");

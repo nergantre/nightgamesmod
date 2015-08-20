@@ -121,27 +121,27 @@ public class Eve extends BasePersonality {
 	}
 
 	@Override
-	public String bbLiner() {
+	public String bbLiner(Combat c) {
 		return "Eve grins at you and pats her own groin. <i>\"Better you than me, boy.\"</i>";
 	}
 
 	@Override
-	public String nakedLiner() {
+	public String nakedLiner(Combat c) {
 		return "Eve seems more comfortable with her cock and balls hanging out than she was with her clothes on. <i>\"Like what you see? We're just getting started.\"</i>";
 	}
 
 	@Override
-	public String stunLiner() {
+	public String stunLiner(Combat c) {
 		return "Eve lets out a soft growl as she lays flat on the floor. <i>\"Enjoy it while you can, boy. As soon as I catch my breath, your ass is mine.\"</i>";
 	}
 
 	@Override
-	public String taunt() {
+	public String taunt(Combat c) {
 		return "Eve grins sadistically. <i>\"If you're intimidated by my cock, don't worry. Size isn't everything.\"</i>";
 	}
 
 	@Override
-	public String temptLiner(Character target) {
+	public String temptLiner(Combat c) {
 		return "Eve grins sadistically. <i>\"I'm an expert at making people like you squeal.\"</i>";
 	}
 
@@ -179,7 +179,7 @@ public class Eve extends BasePersonality {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 			return "If there's one word to describe Eve's appearance, it would have to be 'wild'. Her face is quite pretty, though her eyes are an unnerving silver color. " +
 					"She has bright purple hair gathered in a messy ponytail, a variety of tattoos decorating her extremely shapely body, and of couse it's " +
 					"impossible to miss the larger than average cock and balls hanging between between her legs.";
@@ -217,7 +217,7 @@ public class Eve extends BasePersonality {
 		}
 	}
 	@Override
-	public String startBattle() {
+	public String startBattle(Character other) {
 		return "Eve gives you a dominant grin and cracks her knuckles. <i>\"Come on boy, let's play.\"</i>";
 	}
 	@Override
@@ -244,12 +244,12 @@ public class Eve extends BasePersonality {
 	}
 
 	@Override
-	public String orgasmLiner() {
+	public String orgasmLiner(Combat c) {
 		return "";
 	}
 
 	@Override
-	public String makeOrgasmLiner() {
+	public String makeOrgasmLiner(Combat c) {
 		return "";
 	}
 }

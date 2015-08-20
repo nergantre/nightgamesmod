@@ -171,10 +171,10 @@ public class Encounter implements Serializable{
 				fightTime=2;
 				if(p1.human()||p2.human()){
 					if(p1.human()){
-						Global.gui().message(p2.challenge());
+						Global.gui().message(p2.challenge(p1));
 					}
 					else{
-						Global.gui().message(p1.challenge());
+						Global.gui().message(p1.challenge(p2));
 					}
 					this.fight=Global.gui().beginCombat(p1, p2);
 				}

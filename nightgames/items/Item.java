@@ -26,7 +26,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Item implements Loot {
-	
 	Tripwire	( "Trip Wire",10, "A strong wire used to trigger traps","a "	),
 	Spring		( "Spring",20,	"A component for traps","a "	),
 	Rope		( "Rope",15,"A component for traps","a "	),
@@ -54,6 +53,7 @@ public enum Item implements Loot {
 	KatTrophy	("Kat's Panties",0,"Cute pink panties",""),
 	AiriTrophy	("A piece of hardened gel",0,"Not sure what else to take",""),
 	YuiTrophy	("Yui's Panties",0,"",""),
+	RoseaTrophy	("Rosea's vine thong",0,"",""),
 	Sprayer		( "Sprayer",30,	"Necessary for making traps that use liquids","a "	),
 	SPotion		( "Sensitivity Potion",25,"Who knows whats in this stuff, but it makes any skin it touches tingle","a "),
 	Strapon		( "Strap-on Dildo",600,"Penis envy much?","a "),
@@ -91,6 +91,14 @@ public enum Item implements Loot {
 								return !user.has(Trait.succubus);
 							}
 						})),
+					15),
+	nectar		( "Nectar",100 ,"A glob of amber nectar", "a glob of ",
+			Arrays.asList((ItemEffect)
+					new GroupEffect(Arrays.asList((ItemEffect)
+						new ResourceEffect("heal", 100),
+						new ResourceEffect("build", 50),
+						new ResourceEffect("arouse", 10)
+						))),
 					15),
 	Ward		( "Dark Ward",100,"","a "),
 	FaeScroll	( "Summoning Scroll",150,"","a "),

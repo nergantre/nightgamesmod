@@ -116,28 +116,28 @@ public class Airi extends BasePersonality {
 	}
 
 	@Override
-	public String bbLiner() {
+	public String bbLiner(Combat c) {
 		return "Airi grimaces as you fall. <i>\"Apologies... but necessary.... Please understand...\"</i>";
 	}
 
 	@Override
-	public String nakedLiner() {
+	public String nakedLiner(Combat c) {
 		//always naked
 		return "";
 	}
 
 	@Override
-	public String stunLiner() {
+	public String stunLiner(Combat c) {
 		return "Airi glares at you from the puddle she formed on the floor. <i>\"Unforgivable...\"</i>";
 	}
 
 	@Override
-	public String taunt() {
+	public String taunt(Combat c) {
 		return "Airi coos at you <i>\"About to cum..? ...even trying..?\"</i>";
 	}
 
 	@Override
-	public String temptLiner(Character target) {
+	public String temptLiner(Combat c) {
 		return "<i>\"Fill me with yourself... You will forget about everything...\"</i>";
 	}
 
@@ -170,7 +170,7 @@ public class Airi extends BasePersonality {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "A crystal blue figure stands in front of you. Well, \"stands\" might be an exaggeration. Airi sports a cute face, and a tight body, but her thighs end in a giant" +
 					"ball of slime. Indeed, while her body might look human at a distance, she seems to be composed of a soft translucent gel.";
 	}
@@ -212,7 +212,7 @@ public class Airi extends BasePersonality {
 		}
 	}
 	@Override
-	public String startBattle() {
+	public String startBattle(Character other) {
 		return "Airi's main body rises up from her slime blob and forms the demure beauty you're used to seeing. <i>\"Delicious... Quickly... Give me your seed...\"</i>";
 	}
 	@Override
@@ -241,12 +241,12 @@ public class Airi extends BasePersonality {
 	}
 
 	@Override
-	public String orgasmLiner() {
+	public String orgasmLiner(Combat c) {
 		return "<i>\"Ahhnn... forgot how good... feels... Will return favor...\"</i>.";
 	}
 
 	@Override
-	public String makeOrgasmLiner() {
+	public String makeOrgasmLiner(Combat c) {
 		return "<i>\"...Feels good..? I'll suck more out... I'll drain you dry...\"</i>";
 	}
 }

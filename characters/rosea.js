@@ -5,6 +5,7 @@
 		"top" : ["vinedress", "leafbra"],
 		"bottom" : ["vinethong"]
 	},
+	"trophy" : "RoseaTrophy",
 	"stats" : {
 		"base" : {
 			"level" : 10,
@@ -19,7 +20,11 @@
 				"mojo" : 100,
 				"arousal" : 150,
 				"willpower" : 100
-			}
+			},
+			"traits" : [
+				"dryad",
+				"immobile"
+			],
 		},
 		"growth" : {
 			"resources" : {
@@ -46,10 +51,6 @@
 			]
 		}
 	},
-	"traits" : [
-		"dryad",
-		"immobile"
-	],
 	"tactics" : "hunting",
 	"body" : {
 		"gender" : "female",
@@ -64,12 +65,12 @@
 	},
 	"items" : {
 		"initial" : [{
-				"item" : "semen",
+				"item" : "nectar",
 				"amount" : 10
 			}
 		],
 		"purchase" : [{
-				"item" : "semen",
+				"item" : "nectar",
 				"amount" : 10
 			}, {
 				"item" : "dildo",

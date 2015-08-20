@@ -157,28 +157,28 @@ public class Mara extends BasePersonality  {
 	}
 
 	@Override
-	public String bbLiner() {
+	public String bbLiner(Combat c) {
 		return "Mara gives you a look of not quite genuine concern. <i>\"That must have really hurt. Sorry for scrambling your eggs. I feel really bad about that. Also for " +
 				"lying just now. I'm not actually that sorry.\"</i>";
 	}
 
 	@Override
-	public String nakedLiner() {
+	public String nakedLiner(Combat c) {
 		return "Mara gives an exaggerated squeal and covers herself. <i>\"You brute! You rapist! What are you trying to do to a helpless, innocent girl?\"</i>";
 	}
 
 	@Override
-	public String stunLiner() {
+	public String stunLiner(Combat c) {
 		return "Mara lets out a slightly pained whimper. <i>\"Go easy on me. I'm not really the masochistic type.\"</i>";
 	}
 
 	@Override
-	public String taunt() {
+	public String taunt(Combat c) {
 		return "<i>\"If you want me to get you off so badly,\"</i> Mara teases coyly. <i>\"You should have just said so from the start. You don't need to put up this token resistance.\"</i>";
 	}
 
 	@Override
-	public String temptLiner(Character target) {
+	public String temptLiner(Combat c) {
 		return "<i>\"If you want me to get you off so badly,\"</i> Mara teases coyly. <i>\"You should have just said so from the start. You don't need to put up this token resistance.\"</i>";
 	}
 
@@ -303,7 +303,7 @@ public class Mara extends BasePersonality  {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(character.has(Trait.madscientist)){
 			return "Mara has gone high tech. She has a rig of equipment on harnesses that seem carefully placed so as not to interfere with clothing removal. The glasses she's wearing appear to be " +
 					"computerized rather than perscription. She also has a device of unknown purpose strapped to her arm. Underneath all of that, she has the same cute, mischevious expression she " +
@@ -399,7 +399,7 @@ public class Mara extends BasePersonality  {
 		}
 	}
 	@Override
-	public String startBattle() {
+	public String startBattle(Character other) {
 		return "Mara smiles and faces you, practically daring you to attack.";
 	}
 	@Override
@@ -447,12 +447,12 @@ public class Mara extends BasePersonality  {
 	}
 
 	@Override
-	public String orgasmLiner() {
+	public String orgasmLiner(Combat c) {
 		return "<i>\"Aw man, that one didn't count! Come on, lets go, I'll fuck your brains out!\"</i>";
 	}
 
 	@Override
-	public String makeOrgasmLiner() {
+	public String makeOrgasmLiner(Combat c) {
 		return "Mara lets out an impish little smirk, <i>\"Haha, all that talk, but you cum as soon as I touch you.\"</i>";
 	}
 }

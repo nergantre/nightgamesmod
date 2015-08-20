@@ -24,7 +24,7 @@ public class Stunned extends Skill {
 		}
 		else if(target.human()){
 			if(Global.random(3)>=2){
-				c.write(getSelf(),getSelf().stunLiner());
+				c.write(getSelf(),getSelf().stunLiner(c));
 			}
 			else{
 				c.write(getSelf(),receive(c,0,Result.normal, target));

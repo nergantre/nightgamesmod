@@ -70,12 +70,12 @@ public class Tempt extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		return getSelf().temptLiner(target);
+		return getSelf().temptLiner(c);
 	}
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return getSelf().temptLiner(target);
+		return getSelf().temptLiner(c);
 	}
 
 	@Override

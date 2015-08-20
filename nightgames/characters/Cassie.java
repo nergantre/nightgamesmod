@@ -188,7 +188,7 @@ public class Cassie extends BasePersonality {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(character.has(Trait.witch)){
 			return "Cassie has changed a lot since you started the Game. Maybe she isn't that different physically. She has the same bright blue eyes and the same sweet smile. " +
 					"The magic spellbook and cloak are both new. She's been dabbling in the arcane, and it may be your imagination, but you feel like you can perceive the power " +
@@ -353,23 +353,23 @@ public class Cassie extends BasePersonality {
 				"mutual respect and friendship. There's not reason they couldn't be lovers too. Besides, you're the rival character here. I'm totally the protagonist.\"</i>";
 	}
 	@Override
-	public String bbLiner() {
+	public String bbLiner(Combat c) {
 		return "Cassie winces apologetically. <i>\"That looks really painful. Sorry, but I can't afford to go easy on you.\"</i>";
 	}
 	@Override
-	public String nakedLiner() {
+	public String nakedLiner(Combat c) {
 		return "Cassie blushes noticeably and covers herself. <i>\"No matter how much time I spend naked, it doesn't get any less embarrassing.\"</i>";
 	}
 	@Override
-	public String stunLiner() {
+	public String stunLiner(Combat c) {
 		return "Cassie groans softly as she tends her bruises, <i>\"Come on, you don't have to be so rough.\"</i> she complains.";
 	}
 	@Override
-	public String taunt() {
+	public String taunt(Combat c) {
 		return "Cassie giggles and taps the head of your dick. <i>\"Your penis is so eager and cooperative,\"</i> she jokes. <i>\"Are you sure you're not just letting me win?\"</i>";
 	}
 	@Override
-	public String temptLiner(Character t) {
+	public String temptLiner(Combat c) {
 		return "Cassie catches you glancing at her body, and blows you a kiss. <i>\"Why don't you just stop resisting and let me make you cum?\"</i>";
 	}
 	@Override
@@ -417,7 +417,7 @@ public class Cassie extends BasePersonality {
 		}
 	}
 	@Override
-	public String startBattle() {
+	public String startBattle(Character other) {
 		return "Cassie looks hesitant for just a moment, but can't contain a curious little smile as she prepares to face you.";
 	}
 	@Override
@@ -463,12 +463,12 @@ public class Cassie extends BasePersonality {
 	}
 
 	@Override
-	public String orgasmLiner() {
+	public String orgasmLiner(Combat c) {
 		return "<i>\"Aaah please let me rest a bit... That was far too intense!\"</i>";
 	}
 
 	@Override
-	public String makeOrgasmLiner() {
+	public String makeOrgasmLiner(Combat c) {
 		return "Cassie grins at you <i>\"Did you feel good? Come on, no time for rest now, I bet I can make you feel even better!\"</i>";
 	}
 }

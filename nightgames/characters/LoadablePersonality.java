@@ -74,27 +74,28 @@ public class LoadablePersonality extends BasePersonality {
 	}
 
 	@Override
-	public String bbLiner() {
+	public String bbLiner(Combat c) {
 		return execute("bbLiner()", "bbliner");
 	}
 
 	@Override
-	public String nakedLiner() {
+	public String nakedLiner(Combat c) {
 		return execute("nakedLiner()", "nakedLiner");
 	}
 
 	@Override
-	public String stunLiner() {
+	public String stunLiner(Combat c) {
 		return execute("stunLiner()", "stunLiner");
 	}
 
 	@Override
-	public String taunt() {
+	public String taunt(Combat c) {
 		return execute("taunt()", "taunt");
 	}
 
 	@Override
-	public String temptLiner(Character target) {
+	public String temptLiner(Combat c) {
+		Character target = c.getOther(character);
         ScriptableObject.putProperty(scope, "target", Context.javaToJS(target, scope));
 		return execute("taunt(target)", "taunt");
 	}
@@ -131,7 +132,7 @@ public class LoadablePersonality extends BasePersonality {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return execute("describe()", "describe");
 	}
 
@@ -155,7 +156,7 @@ public class LoadablePersonality extends BasePersonality {
 	}
 
 	@Override
-	public String startBattle() {
+	public String startBattle(Character other) {
 		return execute("startBattle()", "startBattle");
 	}
 
@@ -170,23 +171,18 @@ public class LoadablePersonality extends BasePersonality {
 	}
 
 	@Override
-	public void advance() {
-		execute("advance()", "advance");
-	}
-
-	@Override
 	public boolean checkMood(Emotion mood, int value) {
         ScriptableObject.putProperty(scope, "moodVar", Context.javaToJS(mood, scope));
         ScriptableObject.putProperty(scope, "valueVar", Context.javaToJS(value, scope));
 		return Boolean.valueOf(execute("checkMood(moodVar, valueVar)", "checkMood"));
 	}
 	@Override
-	public String orgasmLiner() {
+	public String orgasmLiner(Combat c) {
 		return "";
 	}
 
 	@Override
-	public String makeOrgasmLiner() {
+	public String makeOrgasmLiner(Combat c) {
 		return "";
 	}
 }

@@ -32,7 +32,7 @@ public class Defabricator extends Skill {
 		target.nudify();
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
-			c.write(target,target.nakedLiner());
+			c.write(target,target.nakedLiner(c));
 		}
 		else if(target.human()){
 			c.write(getSelf(),receive(c,0,Result.normal, target));

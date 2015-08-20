@@ -180,27 +180,27 @@ public class Angel extends BasePersonality {
 	}
 
 	@Override
-	public String bbLiner() {
+	public String bbLiner(Combat c) {
 		return "Angel seems to enjoy your anguish in a way that makes you more than a little nervous. <i>\"That's a great look for you, I'd like to see it more often.\"</i>";
 	}
 
 	@Override
-	public String nakedLiner() {
+	public String nakedLiner(Combat c) {
 		return "Angel gives you a haughty look, practically showing off her body. <i>\"I can't blame you for wanting to see me naked, everyone does.\"</i>";
 	}
 
 	@Override
-	public String stunLiner() {
+	public String stunLiner(Combat c) {
 		return "Angel groans on the floor. <i>\"You really are a beast. It takes a gentle touch to please a lady.\"</i>";
 	}
 
 	@Override
-	public String taunt() {
+	public String taunt(Combat c) {
 		return "Angel pushes the head of your dick with her finger and watches it spring back into place. <i>\"You obviously can't help yourself. If only you were a little bigger, we could have a lot of fun.\"</i>";
 	}
 
 	@Override
-	public String temptLiner(Character t) {
+	public String temptLiner(Combat c) {
 		return "Angel looks at you with a grin, <i>\"You're almost drooling. Is staring at my body that much fun? If you want me that much, why don't you just sit there and let me make you feel good.\"</i>";
 	}
 
@@ -314,7 +314,7 @@ public class Angel extends BasePersonality {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(character.has(Trait.succubus)){
 			return "Angel seems to have taken the path opposite her namesake. She has wings, but they're black as midnight and short horns peak out of her long hair. " +
 					"Her appearance should be frightening, but she's more beautiful and seductive than ever. Her entire being seems to " +
@@ -402,7 +402,7 @@ public class Angel extends BasePersonality {
 		}
 	}
 	@Override
-	public String startBattle() {
+	public String startBattle(Character other) {
 		return "Angel licks her lips and stalks you like a predator.";
 	}
 	@Override
@@ -444,12 +444,12 @@ public class Angel extends BasePersonality {
 	}
 
 	@Override
-	public String orgasmLiner() {
+	public String orgasmLiner(Combat c) {
 		return "<i>\"Mmm maybe you do have promise. Care to try that again?\"</i>";
 	}
 
 	@Override
-	public String makeOrgasmLiner() {
+	public String makeOrgasmLiner(Combat c) {
 		return "Angel stares you in the eye as your consciousness return from the precipice <i>\"Once isn't enough. I need more. You can do that for me right?\"</i>";
 	}
 }

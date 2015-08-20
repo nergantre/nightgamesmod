@@ -44,7 +44,7 @@ public class Tear extends Skill {
 				}
 				target.shred(0);
 				if(getSelf().human()&&target.nude()){
-					c.write(target.nakedLiner());
+					c.write(target.nakedLiner(c));
 				}
 			}
 			else if(target.top.peek().attribute()!=Trait.indestructible
@@ -57,7 +57,7 @@ public class Tear extends Skill {
 				}
 				target.shred(0);
 				if(getSelf().human()&&target.nude()){
-					c.write(target,target.nakedLiner());
+					c.write(target,target.nakedLiner(c));
 				}
 			}
 			else{
@@ -83,7 +83,7 @@ public class Tear extends Skill {
 				}
 				target.shred(1);
 				if(getSelf().human()&&target.nude()){
-					c.write(target,target.nakedLiner());
+					c.write(target,target.nakedLiner(c));
 				}
 				if(target.human()&&target.pantsless()){
 					if(target.getArousal().get()>=15){
@@ -105,7 +105,7 @@ public class Tear extends Skill {
 				}
 				target.shred(1);
 				if(getSelf().human()&&target.nude()){
-					c.write(target,target.nakedLiner());
+					c.write(target,target.nakedLiner(c));
 				}
 				if(target.human()&&target.pantsless()){
 					if(target.getArousal().get()>=15){

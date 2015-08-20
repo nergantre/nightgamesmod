@@ -149,13 +149,13 @@ public class Reyka extends BasePersonality {
 	}
 
 	@Override
-	public String bbLiner() {
+	public String bbLiner(Combat c) {
 		return "Reyka looks at you with a pang of regret: <i>\"In hindsight, damaging"
 				+ " the source of my meal might not have been the best idea...\"</i>";
 	}
 
 	@Override
-	public String nakedLiner() {
+	public String nakedLiner(Combat c) {
 		return "<i>\"You could have just asked, you know.\"</i> As you gaze upon her naked form,"
 				+ " noticing the radiant ruby ardorning her bellybutton, you feel"
 				+ " sorely tempted to just give in to your desires. The hungry look"
@@ -164,19 +164,19 @@ public class Reyka extends BasePersonality {
 	}
 
 	@Override
-	public String stunLiner() {
+	public String stunLiner(Combat c) {
 		return "Reyka is laying on the floor, her wings spread out behind her,"
 				+ " panting for breath";
 	}
 
 	@Override
-	public String taunt() {
+	public String taunt(Combat c) {
 		return "\"You look like you will taste nice. Maybe if let me have "
 				+ "a taste, I will be nice to you too.\"";
 	}
 
 	@Override
-	public String temptLiner(Character target) {
+	public String temptLiner(Combat c) {
 		return "\"Why keep fighting? Wouldn't it just feel SO much better just to let me do what I do best?\"";
 	}
 
@@ -317,7 +317,7 @@ public class Reyka extends BasePersonality {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Reyka the succubus stands before you, six feet tall with"
 				+ " the most stunningly beautiful body you have ever seen."
 				+ " Her long black hair enshrines her perfect face like a priceless"
@@ -363,7 +363,7 @@ public class Reyka extends BasePersonality {
 	}
 
 	@Override
-	public String startBattle() {
+	public String startBattle(Character other) {
 		return "<i>\"Yum, I was just looking for a tasty little morsel.\"</i><p>"
 				+ "Reyka strikes a seductive pose and the devilish smile"
 				+ " on her face reveals just what, or more specifically,"
@@ -397,11 +397,6 @@ public class Reyka extends BasePersonality {
 				"You don't even have sex when you get there, you just both lay down in your single bed, close to "+
 				"each other, and enjoy a peaceful sleep together with your arms around her and her head on your shoulder.";
 	}
-
-	@Override
-	public void advance() {
-		// TODO Auto-generated method stub
-	}
 	
 	public boolean checkMood(Emotion mood, int value) {
 		switch(mood){
@@ -415,12 +410,12 @@ public class Reyka extends BasePersonality {
 	}
 
 	@Override
-	public String orgasmLiner() {
+	public String orgasmLiner(Combat c) {
 		return "Reyka shudders, <i>\"Mmm it's been a while since I've felt that. Here, I'll return the favor\"</i>";
 	}
 
 	@Override
-	public String makeOrgasmLiner() {
+	public String makeOrgasmLiner(Combat c) {
 		return "With a devilish smile, Reyka brings her face close to yours <i>\"Mmmmm that smells great! Too bad I'm still pretty hungry.\"</i>";
 	}
 }

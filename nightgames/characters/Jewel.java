@@ -152,28 +152,28 @@ public class Jewel extends BasePersonality {
 	}
 
 	@Override
-	public String bbLiner() {
+	public String bbLiner(Combat c) {
 		return "Jewel gently pats your injured testicles. <br><i>\"These things are the reason I'm glad I was born a girl. If I had a pair of big dangling targets between my legs, " +
 				"I could never concentrate on fighting.\"</i>";
 	}
 
 	@Override
-	public String nakedLiner() {
+	public String nakedLiner(Combat c) {
 		return "Jewel smiles and makes no effort to hide her nakedness. <i>\"Feel free to enjoy the view. I love fighting naked, it gives me so much freedom of movement.\"</i>";
 	}
 
 	@Override
-	public String stunLiner() {
+	public String stunLiner(Combat c) {
 		return "Jewel takes several heaving breaths, looking beaten and exhausted. She suddenly grins ear to ear. <i>\"OK, I'm impressed.\"</i>";
 	}
 
 	@Override
-	public String taunt() {
+	public String taunt(Combat c) {
 		return "Jewel glares at you and squeezes your dick tightly. <i>\"No matter how horny you are, you better give me your best fight. I don't like fucking weaklings.\"</i>";
 	}
 
 	@Override
-	public String temptLiner(Character target) {
+	public String temptLiner(Combat c) {
 		return "Jewel licks her lips, <i>\"Soon, I'll have you wailing like a whore.\"</i>";
 	}
 
@@ -303,7 +303,7 @@ public class Jewel extends BasePersonality {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(character.has(Trait.fighter)){
 			return "Something has changed about Jewel's demeanor, though it's hard to put your finger on it. Her body has always been toned, but now she seems like a weapon " +
 					"in human shape. She carries a calm composure subtly different from her normal arrogance. Her movements are deliberate and fluid, like you imagine a " +
@@ -385,7 +385,7 @@ public class Jewel extends BasePersonality {
 		}
 	}
 	@Override
-	public String startBattle() {
+	public String startBattle(Character other) {
 		return "Jewel approaches, looking confident and ready to fight.";
 	}
 	@Override
@@ -431,12 +431,12 @@ public class Jewel extends BasePersonality {
 	}
 
 	@Override
-	public String orgasmLiner() {
+	public String orgasmLiner(Combat c) {
 		return "Jewel glares at you after calming down, <i>\"That one doesn't count... Come on, let's have a rematch!\"</i>";
 	}
 
 	@Override
-	public String makeOrgasmLiner() {
+	public String makeOrgasmLiner(Combat c) {
 		return "<i>\"Heh, no matter what, you're just a horny boy aren'tcha? Come on, no time for rest, let's see how many times in a row you can cum\"</i>";
 	}
 }

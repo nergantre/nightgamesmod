@@ -39,7 +39,7 @@ public class StripTop extends Skill {
 			}
 			target.strip(0, c);
 			if(getSelf().human()&&target.nude()){
-				c.write(target,target.nakedLiner());
+				c.write(target,target.nakedLiner(c));
 			}
 			target.emote(Emotion.nervous, 10);
 		}

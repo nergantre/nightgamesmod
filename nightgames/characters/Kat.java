@@ -145,12 +145,12 @@ public class Kat extends BasePersonality {
 	}
 
 	@Override
-	public String bbLiner() {
+	public String bbLiner(Combat c) {
 		return "Kat gives you a look of concern and sympathy. <i>\"Nya... Are you ok? I didn't mean to hit you that hard.\"</i>";
 	}
 
 	@Override
-	public String nakedLiner() {
+	public String nakedLiner(Combat c) {
 		if(character.getArousal().percent()>=50){
 			return "Kat makes no effort to hide the moisture streaming down her thighs. <i>\"You want my pussy? I'm nyot going to myake it easy for you.\"</i>";
 		}
@@ -160,17 +160,17 @@ public class Kat extends BasePersonality {
 	}
 
 	@Override
-	public String stunLiner() {
+	public String stunLiner(Combat c) {
 		return "Kat mews pitifully on the floor. <i>\"Don't be so meaNya.\"</i>";
 	}
 
 	@Override
-	public String taunt() {
+	public String taunt(Combat c) {
 		return "Kat smiles excitedly and bats at your cock. <i>\"Are you already close to cumming? Nya! I want to play with you more!\"</i>";
 	}
 
 	@Override
-	public String temptLiner(Character target) {
+	public String temptLiner(Combat c) {
 		return "Kat winks at you and looks at your crotch, <i>\"MmM! That looks tasty nya!\"</i>";
 	}
 
@@ -284,7 +284,7 @@ public class Kat extends BasePersonality {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "It's easy to forget that Kat's older than you when she looks like she's about to start high school. She's a very short and slim, though you know she's " +
 				"stronger than she looks. Adorable cat ears poke through her short, strawberry blonde hair. She " +
 				"looks a bit timid, but there's a gleam of desire in her eyes.";
@@ -375,7 +375,7 @@ public class Kat extends BasePersonality {
 		}
 	}
 	@Override
-	public String startBattle() {
+	public String startBattle(Character other) {
 		return "Kat looks a bit nervous, but her tail wags slowly in anticipation. <i>\"Let's have some funNya.\"</i>";
 	}
 	@Override
@@ -433,12 +433,12 @@ public class Kat extends BasePersonality {
 	}
 
 	@Override
-	public String orgasmLiner() {
+	public String orgasmLiner(Combat c) {
 		return "<i>\"NYAAAH! uuu...\"</i> Kat glares at you reproachfully as she comes down from her high.";
 	}
 
 	@Override
-	public String makeOrgasmLiner() {
+	public String makeOrgasmLiner(Combat c) {
 		return "<i>\"Mroewer, I gotcha! Hey hey, do you think you can cum again-nyaa? Let's try it out!\"</i>";
 	}
 }

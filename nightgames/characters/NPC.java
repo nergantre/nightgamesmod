@@ -56,8 +56,8 @@ public class NPC extends Character {
 		}
 	}
 	@Override
-	public String describe(int per) {
-		String description=ai.describeAll();
+	public String describe(int per, Combat c) {
+		String description=ai.describeAll(c);
 		for(Status s:status){
 			description = description+"<br>"+s.describe();
 		}
@@ -335,32 +335,32 @@ public class NPC extends Character {
 		}
 	}
 	@Override
-	public String orgasmLiner() {
-		return ai.orgasmLiner();
+	public String orgasmLiner(Combat c) {
+		return ai.orgasmLiner(c);
 	}
 	@Override
-	public String makeOrgasmLiner() {
-		return ai.makeOrgasmLiner();
+	public String makeOrgasmLiner(Combat c) {
+		return ai.makeOrgasmLiner(c);
 	}
 	@Override
-	public String bbLiner() {
-		return ai.bbLiner();
+	public String bbLiner(Combat c) {
+		return ai.bbLiner(c);
 	}
 	@Override
-	public String nakedLiner() {
-		return ai.nakedLiner();
+	public String nakedLiner(Combat c) {
+		return ai.nakedLiner(c);
 	}
 	@Override
-	public String stunLiner() {
-		return ai.stunLiner();
+	public String stunLiner(Combat c) {
+		return ai.stunLiner(c);
 	}
 	@Override
-	public String taunt() {
-		return ai.taunt();
+	public String taunt(Combat c) {
+		return ai.taunt(c);
 	}
 	@Override
-	public String temptLiner(Character target) {
-		return ai.temptLiner(target);
+	public String temptLiner(Combat c) {
+		return ai.temptLiner(c);
 	}
 	@Override
 	public void detect() {
@@ -474,8 +474,8 @@ public class NPC extends Character {
 	}
 
 	@Override
-	public String challenge() {
-		return ai.startBattle();
+	public String challenge(Character other) {
+		return ai.startBattle(other);
 	}
 	@Override
 	public void promptTrap(Encounter enc,Character target,Trap trap) {
