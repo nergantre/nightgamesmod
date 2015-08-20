@@ -3,6 +3,7 @@ package nightgames.global;
 import nightgames.actions.Movement;
 import nightgames.areas.Area;
 import nightgames.areas.Cache;
+import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.State;
 import nightgames.items.Item;
@@ -57,6 +58,15 @@ public class Match {
 		}
 		if(this.combatants.size()>=7){
 			this.combatants.get(6).place(map.get("Pool"));
+		}
+		for (Character player : combatants) {
+			player.getStamina().fill();
+			player.getArousal().empty();
+			player.getMojo().empty();
+			player.getWillpower().fill();
+			if(player.getPure(Attribute.Science)>0){
+				player.chargeBattery();
+			}
 		}
 	}
 	public void round(){
