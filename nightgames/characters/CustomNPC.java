@@ -56,48 +56,48 @@ public class CustomNPC extends BasePersonality {
 
 	@Override
 	public String bbLiner(Combat c) {
-		return data.getLine("hurt", c, c.getOther(character));
+		return data.getLine("hurt", c, this.character, c.getOther(character));
 	}
 
 	@Override
 	public String nakedLiner(Combat c) {
-		return data.getLine("naked", c, c.getOther(character));
+		return data.getLine("naked", c, this.character, c.getOther(character));
 	}
 
 	@Override
 	public String stunLiner(Combat c) {
-		return data.getLine("stunned", c, c.getOther(character));
+		return data.getLine("stunned", c, this.character, c.getOther(character));
 	}
 
 	@Override
 	public String taunt(Combat c) {
-		return data.getLine("taunt", c, c.getOther(character));
+		return data.getLine("taunt", c, this.character, c.getOther(character));
 	}
 
 	@Override
 	public String temptLiner(Combat c) {
-		return data.getLine("tempt", c, c.getOther(character));
+		return data.getLine("tempt", c, this.character, c.getOther(character));
 	}
 
 	@Override
 	public String victory(Combat c,Result flag) {
 		character.arousal.empty();
-		return data.getLine("victory", c, c.getOther(character));
+		return data.getLine("victory", c, this.character, c.getOther(character));
 	}
 
 	@Override
 	public String defeat(Combat c, Result flag) {
-		return data.getLine("defeat", c, c.getOther(character));
+		return data.getLine("defeat", c, this.character, c.getOther(character));
 	}
 
 	@Override
 	public String describe(Combat c) {
-		return data.getLine("describe", c, c.getOther(character));
+		return data.getLine("describe", c, this.character, c.getOther(character));
 	}
 
 	@Override
 	public String draw(Combat c,Result flag) {
-		return data.getLine("draw", c, c.getOther(character));
+		return data.getLine("draw", c, this.character, c.getOther(character));
 	}
 
 	@Override
@@ -113,22 +113,22 @@ public class CustomNPC extends BasePersonality {
 	@Override
 	public String victory3p(Combat c, Character target, Character assist) {
 		if (target.human())
-			return data.getLine("victory3p", c, assist);
+			return data.getLine("victory3p", c, this.character, assist);
 		else
-			return data.getLine("victory3p", c, target);
+			return data.getLine("victory3p", c, this.character, target);
 	}
 
 	@Override
 	public String intervene3p(Combat c, Character target, Character assist) {
 		if (target.human())
-			return data.getLine("intervene3p", c, assist);
+			return data.getLine("intervene3p", c, this.character, assist);
 		else
-			return data.getLine("intervene3p", c, target);
+			return data.getLine("intervene3p", c, this.character, target);
 	}
 
 	@Override
 	public String startBattle(Character other) {
-		return data.getLine("startBattle", null, other);
+		return data.getLine("startBattle", null, this.character, other);
 	}
 	@Override
 	public boolean fit() {
@@ -136,26 +136,27 @@ public class CustomNPC extends BasePersonality {
 	}
 	@Override
 	public String night() {
-		return data.getLine("startBattle", null, Global.getPlayer());
+		return data.getLine("startBattle", null, this.character, Global.getPlayer());
 	}
 
 	public boolean checkMood(Emotion mood, int value) {
-		return data.checkMood(this, mood, value);
+		return data.checkMood(this.character, mood, value);
 	}
 
 	@Override
 	public String orgasmLiner(Combat c) {
-		return data.getLine("orgasm", c, c.getOther(character));
+		return data.getLine("orgasm", c, this.character, c.getOther(character));
 	}
 
 	@Override
 	public String makeOrgasmLiner(Combat c) {
-		return data.getLine("makeOrgasm", c, c.getOther(character));
+		return data.getLine("makeOrgasm", c, this.character, c.getOther(character));
 	}
 	
 	@Override
-	public String image() {
-		String fname = "assets/" + data.getPortraitName(this);
+	public String image(Combat c) {
+		Character other = c.getOther(character);
+		String fname = "assets/" + data.getPortraitName(c, character, other);
 		String fname_default = "assets/" + data.getDefaultPortraitName();
 		if (Global.gui().getClass().getResource(fname) != null) {
 			return fname;

@@ -494,10 +494,10 @@ public class GUI extends JFrame implements Observer {
 	public Combat beginCombat(Character player, Character enemy) {
 		this.combat = new Combat(player, enemy, player.location());
 		this.combat.addObserver(this);
-		loadPortrait(player, enemy);
+		loadPortrait(combat, player, enemy);
 		return this.combat;
-		
 	}
+
 	public void displayImage(String path,String artist){
 		BufferedImage pic = null;
 		try {
@@ -531,14 +531,14 @@ public class GUI extends JFrame implements Observer {
 		portraitPanel.remove(portrait);
 	}
 
-	public void loadPortrait(Character player, Character enemy) {
+	public void loadPortrait(Combat c, Character player, Character enemy) {
 		if(!Global.checkFlag(Flag.noimage) && !Global.checkFlag(Flag.noportraits)){
 			String imagepath = null;
 			if(!player.human()){
-				imagepath = player.getPortrait();
+				imagepath = player.getPortrait(c);
 			}
 			else if(!enemy.human()){
-				imagepath = enemy.getPortrait();
+				imagepath = enemy.getPortrait(c);
 			}
 			if(imagepath!=null){
 				BufferedImage face = null;
@@ -568,14 +568,14 @@ public class GUI extends JFrame implements Observer {
 		this.combat = new Combat(player, enemy, player.location(), code);
 		this.combat.addObserver(this);
 		message(this.combat.getMessage());
-		loadPortrait(player, enemy);
+		loadPortrait(combat, player, enemy);
 		return this.combat;
 	}
 
 	public void watchCombat(Combat c) {
 		this.combat = c;
 		this.combat.addObserver(this);
-		loadPortrait(c.p1, c.p2);
+		loadPortrait(c, c.p1, c.p2);
 	}
 
 	public String getLabelString(Meter meter) {

@@ -82,7 +82,7 @@ public abstract class BasePersonality implements Personality {
 	}
 
 	@Override
-	public String image() {
+	public String image(Combat c) {
 		String fname = "assets/" + character.name().toLowerCase() + "_" + character.mood.name()+".jpg";
 		String fname_default = "assets/" + character.name().toLowerCase() + "_confident.jpg";
 		if (Global.gui().getClass().getResource(fname) != null) {

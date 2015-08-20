@@ -2013,7 +2013,7 @@ public abstract class Character extends Observable implements Cloneable{
 		}
 		return result;
 	}
-	public abstract String getPortrait();
+	public abstract String getPortrait(Combat c);
 
 	public void gainMoney(int i) {
 		if (human())

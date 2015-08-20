@@ -614,7 +614,7 @@ public class NPC extends Character {
 					System.out.printf("Moodswing: %s is now %s\n", name, mood.name());
 				}
 				if (c.p1.human() || c.p2.human())
-					Global.gui().loadPortrait(c.p1, c.p2);
+					Global.gui().loadPortrait(c, c.p1, c.p2);
 				return e;
 			}
 		}
@@ -786,7 +786,7 @@ public class NPC extends Character {
 	    return moveList.get(moveList.size()-1).skill;
 	}
 	@Override
-	public String getPortrait() {
-		return ai.image();
+	public String getPortrait(Combat c) {
+		return ai.image(c);
 	}
 }

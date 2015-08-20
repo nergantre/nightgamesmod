@@ -689,7 +689,7 @@ public class Player extends Character {
 		return;
 	}
 	@Override
-	public String getPortrait() {
+	public String getPortrait(Combat c) {
 		// TODO Auto-generated method stub
 		return null;
 	}
