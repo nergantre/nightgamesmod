@@ -2,7 +2,7 @@
 	"type" : "NPC",
 	"name" : "Rosea",
 	"outfit" : {
-		"top" : ["vinedress", "leafbra"],
+		"top" : ["leafbra", "vinedress"],
 		"bottom" : ["vinethong"]
 	},
 	"trophy" : "RoseaTrophy",
@@ -51,7 +51,7 @@
 			]
 		}
 	},
-	"tactics" : "hunting",
+	"plan" : "hunting",
 	"body" : {
 		"gender" : "female",
 		"parts" : [{
@@ -193,53 +193,53 @@
 			}, {
 				"text" : "While the fight is happening, Rosea sneaks behind {other:name-do} and holds {other:direct-object} down."
 			}
-		],
-		"mood" : {
-			"dominant" : 100,
-			"nervous" : 100,
-			"angry" : 100,
-			"confident" : 100,
-			"horny" : 100,
-			"desperate" : 100
-		},
-		"portraits" : [{
-				"requirement" : [{
-						"mood" : "dominant"
-					}
-				],
-				"file" : "rosea_dominant.png"
-			}, {
-				"requirement" : [{
-						"mood" : "nervous"
-					}
-				],
-				"file" : "rosea_nervous.png"
-			}, {
-				"requirement" : [{
-						"mood" : "angry"
-					}
-				],
-				"file" : "rosea_angry.png"
-			}, {
-				"requirement" : [{
-						"mood" : "confident"
-					}
-				],
-				"file" : "rosea_confident.png"
-			}, {
-				"requirement" : [{
-						"mood" : "horny"
-					}
-				],
-				"file" : "rosea_horny.png"
-			}, {
-				"requirement" : [{
-						"mood" : "desperate"
-					}
-				],
-				"file" : "rosea_desperate.png"
-			}
-		],
-		"defaultPortrait" : "rosea_desperate.png"
-	}
+		]
+	},
+	"mood" : {
+		"dominant" : 100,
+		"nervous" : 100,
+		"angry" : 100,
+		"confident" : 100,
+		"horny" : 100,
+		"desperate" : 100
+	},
+	"portraits" : [{
+			"requirement" : [{
+					"mood" : "dominant"
+				}
+			],
+			"file" : "rosea_dominant.png"
+		}, {
+			"requirement" : [{
+					"mood" : "nervous"
+				}
+			],
+			"file" : "rosea_nervous.png"
+		}, {
+			"requirement" : [{
+					"mood" : "angry"
+				}
+			],
+			"file" : "rosea_angry.png"
+		}, {
+			"requirement" : [{
+					"mood" : "confident"
+				}
+			],
+			"file" : "rosea_confident.png"
+		}, {
+			"requirement" : [{
+					"mood" : "horny"
+				}
+			],
+			"file" : "rosea_horny.png"
+		}, {
+			"requirement" : [{
+					"mood" : "desperate"
+				}
+			],
+			"file" : "rosea_desperate.png"
+		}
+	],
+	"defaultPortrait" : "rosea_desperate.png"
 }
