@@ -24,9 +24,9 @@ public class RemoveTraitEffect extends ItemEffect {
 		int duration = selfDuration >= 0 ? selfDuration : item.duration;
 		if (user.removeTemporaryTrait(trait, duration)) {
 			if (c != null) {
-				c.write(user, user.subjectAction("temporarily lost", "temporarily lost") + " the trait " + trait.name() + ".");
+				c.write(user, user.subjectAction("temporarily lost", "temporarily lost") + " the trait " + trait.toString() + ".");
 			} else if (user.human()) {
-				Global.gui().message(user.subjectAction("temporarily lost", "temporarily lost") + " the trait " + trait.name() + ".");
+				Global.gui().message(user.subjectAction("temporarily lost", "temporarily lost") + " the trait " + trait.toString() + ".");
 			}
 			return true;
 		}

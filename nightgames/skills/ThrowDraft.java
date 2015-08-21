@@ -70,7 +70,7 @@ public class ThrowDraft extends Skill {
 				verb = "throw";
 			}
 			c.write(getSelf(), Global.format(String.format("{self:SUBJECT-ACTION:%s|%ss} %s%s",
-					verb, verb, used.pre(), used.name()), getSelf(), target));
+					verb, verb, used.pre(), used.getName()), getSelf(), target));
 			boolean eventful = false;
 			for (ItemEffect e : used.getEffects()) {
 				eventful = e.use(c, target, getSelf(), used) || eventful;

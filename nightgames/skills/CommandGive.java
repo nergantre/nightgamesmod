@@ -61,7 +61,7 @@ public class CommandGive extends PlayerCommand {
 
 	@Override
 	public String deal(Combat c, int magnitude, Result modifier, Character target) {
-		return target.name() + " takes out " + transfer.pre() + transfer.name()
+		return target.name() + " takes out " + transfer.pre() + transfer.getName()
 				+ " and hands it to you.";
 	}
 
