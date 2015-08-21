@@ -68,22 +68,22 @@ public class Mara extends BasePersonality  {
 		preferredAttributes.add(c -> c.get(Attribute.Science) >= 15 && c.get(Attribute.Fetish) < 50 ? Optional.of(Attribute.Fetish) : Optional.empty());
 		preferredAttributes.add(c -> c.get(Attribute.Cunning) < 100 ? Optional.of(Attribute.Cunning) : Optional.empty());
 
-		growth.traits.put(3, Trait.cautious);
-		growth.traits.put(6, Trait.freeSpirit);
-		growth.traits.put(9, Trait.limbTraining1);
-		growth.traits.put(12, Trait.strongwilled);
-		growth.traits.put(15, Trait.pussyTraining1);
-		growth.traits.put(18, Trait.tight);
-		growth.traits.put(21, Trait.tongueTraining1);
-		growth.traits.put(24, Trait.limbTraining2);
-		growth.traits.put(27, Trait.skeptical);
-		growth.traits.put(30, Trait.limbTraining3);
-		growth.traits.put(33, Trait.pussyTraining2);
-		growth.traits.put(36, Trait.tongueTraining2);
-		growth.traits.put(39, Trait.calm);
-		growth.traits.put(42, Trait.pussyTraining3);
-		growth.traits.put(45, Trait.holecontrol);
-		growth.traits.put(48, Trait.desensitized2);
+		growth.addTrait(3, Trait.cautious);
+		growth.addTrait(6, Trait.freeSpirit);
+		growth.addTrait(9, Trait.limbTraining1);
+		growth.addTrait(12, Trait.strongwilled);
+		growth.addTrait(15, Trait.pussyTraining1);
+		growth.addTrait(18, Trait.tight);
+		growth.addTrait(21, Trait.tongueTraining1);
+		growth.addTrait(24, Trait.limbTraining2);
+		growth.addTrait(27, Trait.skeptical);
+		growth.addTrait(30, Trait.limbTraining3);
+		growth.addTrait(33, Trait.pussyTraining2);
+		growth.addTrait(36, Trait.tongueTraining2);
+		growth.addTrait(39, Trait.calm);
+		growth.addTrait(42, Trait.pussyTraining3);
+		growth.addTrait(45, Trait.holecontrol);
+		growth.addTrait(48, Trait.desensitized2);
 	}
 
 	@Override

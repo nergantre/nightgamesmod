@@ -100,19 +100,7 @@ public abstract class BasePersonality implements Personality {
 
 	@Override
 	public void ding() {
-		character.getStamina().gain(growth.stamina);
-		character.getArousal().gain(growth.arousal);
-		character.getMojo().gain(growth.mojo);
-		character.getWillpower().gain(growth.willpower);
-		// get all the traits for the level up
-		growth.traits.keySet().stream().filter(i -> i <= character.level).forEach(i -> character.add(growth.traits.get(i)));;
-		growth.actions.keySet().stream().filter(i -> i <= character.level).forEach(i -> {
-			growth.actions.get(i).run();
-		});
-		character.availableAttributePoints += growth.attributes[character.rank];
-		if (Global.checkFlag(Flag.hardmode)) {
-			hardmodeBonus();
-		}
+		growth.levelUp(character);
 		distributePoints();
 	}
 
@@ -133,14 +121,6 @@ public abstract class BasePersonality implements Personality {
 	@Override
 	public NPC getCharacter() {
 		return character;
-	}
-
-	public void hardmodeBonus() {
-		character.getStamina().gain(growth.bonusStamina);
-		character.getArousal().gain(growth.bonusArousal);
-		character.getMojo().gain(growth.bonusMojo);
-		character.getWillpower().gain(growth.bonusWillpower);
-		character.availableAttributePoints += growth.bonusAttributes;
 	}
 
 	public void distributePoints() {
