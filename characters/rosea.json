@@ -35,7 +35,9 @@
 				"arousal" : 2,
 				"bonusArousal" : 1,
 				"willpower" : 1.5,
-				"bonusWillpower" : 0.5
+				"bonusWillpower" : 0.5,
+				"points" : [2, 3, 3],
+				"bonusPoints" : 1
 			},
 			"traits" : [{
 					"level" : 12,
