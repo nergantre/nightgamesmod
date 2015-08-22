@@ -34,6 +34,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
@@ -56,10 +57,13 @@ import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JSlider;
 import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.SoftBevelBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultCaret;
 import javax.swing.text.html.HTMLDocument;
@@ -117,6 +121,7 @@ public class GUI extends JFrame implements Observer {
 	private JRadioButton rdimgoff;
 	private JRadioButton rdfntnorm;
 	private JRadioButton rdnfntlrg;
+	private JSlider sldMalePref;
 	private int width = 1024;
 	private int height = 700;
 	public int fontsize;
@@ -234,6 +239,30 @@ public class GUI extends JFrame implements Observer {
 		optionspanel.add(lblfnt);
 		optionspanel.add(rdfntnorm);
 		optionspanel.add(rdnfntlrg);
+		
+		JLabel lblMalePref = new JLabel("Female vs. Male Preference");
+		optionspanel.add(lblMalePref);
+		sldMalePref = new JSlider(JSlider.HORIZONTAL, 0, 10, 1);
+		sldMalePref.setMajorTickSpacing(5);
+		sldMalePref.setMinorTickSpacing(1);
+		sldMalePref.setPaintTicks(true);
+		sldMalePref.setPaintLabels(true);
+		sldMalePref.setLabelTable(new Hashtable<Integer, JLabel>(){
+			{
+				put(0, new JLabel("Female"));
+				put(5, new JLabel("Mixed"));
+				put(10, new JLabel("Male"));
+			}
+		});
+		sldMalePref.setToolTipText("This setting affects the gender your opponents will gravitate towards once that"
+				+ " option becomes available.");
+		sldMalePref.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				Character.malePref = sldMalePref.getValue();
+				Global.setCounter(Flag.malePref, sldMalePref.getValue());
+			}
+		});
+		optionspanel.add(sldMalePref);
 		mntmOptions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(Global.checkFlag(Flag.systemMessages)){

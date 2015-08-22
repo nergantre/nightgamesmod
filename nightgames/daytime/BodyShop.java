@@ -5,6 +5,7 @@ import java.util.*;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.*;
+import nightgames.daytime.BodyShop.ShopSelection;
 import nightgames.global.DebugFlags;
 import nightgames.global.Flag;
 import nightgames.global.Global;
@@ -93,6 +94,44 @@ public class BodyShop extends Activity  {
 			@Override
 			double priority(Character buyer) {
 				return 1;
+			}
+		});
+	}
+	
+	private void addCockMod(String name, CockPart part) {
+		selection.add(new ShopSelection("Body Mod: " + name, 2000) {
+
+			@Override
+			void buy(Character buyer) {
+				buyer.body.addReplace(part, 1);
+			}
+
+			@Override
+			boolean available(Character buyer) {
+				return buyer.body.has("cock") && buyer.body.getRandomCock().isGeneric();
+			}
+			
+			@Override
+			double priority(Character buyer) {
+				return buyer.dickPreference();
+			}
+			
+		});
+		
+		selection.add(new ShopSelection("Body Mod: Remove " + name, 2000) {
+			@Override
+			void buy(Character buyer) {
+				buyer.body.addReplace(CockPart.big, 1);
+			}
+
+			@Override
+			boolean available(Character buyer) {
+				return buyer.body.getRandomCock() == part;
+			}
+			
+			@Override
+			double priority(Character buyer) {
+				return Math.max(0, buyer.pussyPreference() - 7);
 			}
 		});
 	}
@@ -202,7 +241,7 @@ public class BodyShop extends Activity  {
 			}
 			@Override
 			double priority(Character buyer) {
-				return 0;
+				return Math.max(0, buyer.pussyPreference() - 7);
 			}
 		});
 
@@ -325,6 +364,11 @@ public class BodyShop extends Activity  {
 				PussyPart.normal, 2000, 2000, -1, true);
 		addBodyPartMod("Arcane Pussy", PussyPart.arcane,
 				PussyPart.normal, 2000, 2000, -1, true);
+		addCockMod("Incubus Cock", CockPart.incubus);
+		addCockMod("Primal Cock", CockPart.primal);
+		addCockMod("Bionic Cock", CockPart.bionic);
+		addCockMod("Blessed Cock", CockPart.blessed);
+		addCockMod("Enlightened Cock", CockPart.enlightened);
 		addBodyPartMod("Fused Gloves", new GenericBodyPart(
 				"Fused Gloves",
 				"{self:name-possessive} arms and hands are wrapped in a shiny black material that look fused on.",

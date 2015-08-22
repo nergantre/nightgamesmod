@@ -2,6 +2,7 @@ package nightgames.stance;
 
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 
 public class FlyingCowgirl extends FemdomSexStance {
@@ -121,5 +122,15 @@ public class FlyingCowgirl extends FemdomSexStance {
 		} else {
 			return new Missionary(bottom, top);
 		}
+	}
+
+	@Override
+	public BodyPart topPart() {
+		return top.body.getRandomPussy();
+	}
+	
+	@Override
+	public BodyPart bottomPart() {
+		return bottom.body.getRandomInsertable();
 	}
 }

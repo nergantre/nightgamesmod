@@ -197,6 +197,11 @@ public class Body implements Cloneable {
 		return (WingsPart)getRandom("wings");
 
 	}
+	
+
+	public AssPart getRandomAss() {
+		return (AssPart)getRandom("ass");
+	}
 
 	public BreastsPart getRandomBreasts() {
 		return (BreastsPart)getRandom("breasts");
@@ -659,4 +664,28 @@ public class Body implements Cloneable {
 			}
 		}
 	}
+	
+	public float penetrationFitnessModifier(boolean pitcher, boolean anal, Body other) {
+		int totalCounterValue = 0;
+
+		if (anal) {
+			if (!pitcher)
+				totalCounterValue += get("ass").stream()
+						.flatMapToInt(ass -> other.get("cock").stream().mapToInt(cock -> ass.counterValue(cock))).sum();
+			else
+				totalCounterValue += get("cock").stream()
+						.flatMapToInt(cock -> other.get("ass").stream().mapToInt(ass -> cock.counterValue(ass))).sum();
+		} else {
+			if (!pitcher)
+				totalCounterValue += get("pussy").stream()
+						.flatMapToInt(pussy -> other.get("cock").stream().mapToInt(cock -> pussy.counterValue(cock)))
+						.sum();
+			else
+				totalCounterValue += get("cock").stream()
+						.flatMapToInt(cock -> other.get("pussy").stream().mapToInt(pussy -> cock.counterValue(pussy)))
+						.sum();
+		}
+		return 20 * totalCounterValue;
+	}
+
 }

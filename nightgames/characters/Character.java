@@ -102,6 +102,8 @@ public abstract class Character extends Observable implements Cloneable{
 	public Body body;
 	public int availableAttributePoints;
 	public boolean orgasmed;
+	
+	public static int malePref = 1;
 
 	public Character(String name, int level){
 		this.name=name;
@@ -1172,6 +1174,15 @@ public abstract class Character extends Observable implements Cloneable{
 		c.write(opponent, opponent.makeOrgasmLiner(c));
 		int overflow = arousal.getOverflow();
 		c.write(this, String.format("<br><font color='rgb(255,50,200)'>%s<font color='white'> arousal overflow", overflow));
+		
+		if (selfPart != null && opponentPart != null) {
+			selfPart.onOrgasm(c, this, opponent, opponentPart, true);
+			opponentPart.onOrgasm(c, opponent, this, selfPart, false);
+		} else if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+			System.out.printf("Could not process %s's orgasm against %s: self=%s, opp=%s, pos=%s", this, opponent,
+					selfPart, opponentPart, c.getStance());
+		}
+		
 		getArousal().empty();
 		if (has(Trait.insatiable)) {
 			arousal.restore((int) (arousal.max()*.2));
@@ -1973,6 +1984,12 @@ public abstract class Character extends Observable implements Cloneable{
 		}
 		fit += top.size() * topMultiplier + bottom.size() * botMultiplier;
 		fit += this.body.getCharismaBonus(other) * (other.getArousal().percent()) / 2;
+		
+		if (p.inserted()) { // If we are fucking...
+			// ...we need to see if that's beneficial to us.
+			fit += this.body.penetrationFitnessModifier(p.inserted(this), p.analinserted(), other.body);
+		}
+		
 		// Also somewhat of a factor: Inventory (so we don't
 		// just use it without thinking)
 		for(Item item : inventory.keySet())
@@ -2080,10 +2097,10 @@ public abstract class Character extends Observable implements Cloneable{
 		}
 	}
 	public double pussyPreference() {
-		return 10;
+		return 11 - malePref;
 	}
 	public double dickPreference() {
-		return 1;
+		return malePref;
 	}
 	public boolean wary() {
 		return hasStatus(Stsflag.wary);

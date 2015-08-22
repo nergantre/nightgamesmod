@@ -602,6 +602,25 @@ public class Combat extends Observable implements Serializable, Cloneable{
 		}
 		checkStanceStatus(p1, stance, newStance);
 		checkStanceStatus(p2, stance, newStance);
+		
+		if (stance.inserted() && !newStance.inserted()) {
+			BodyPart part1 = stance.partFor(p1);
+			BodyPart part2 = stance.partFor(p2);
+
+			if (part1 != null)
+				part1.onEndPenetration(this, p1, p2, part2);
+			if (part2 != null)
+				part2.onEndPenetration(this, p2, p1, part1);
+		} else if (!stance.inserted() && newStance.inserted()) {
+			BodyPart part1 = newStance.partFor(p1);
+			BodyPart part2 = newStance.partFor(p2);
+
+			if (part1 != null)
+				part1.onStartPenetration(this, p1, p2, part2);
+			if (part2 != null)
+				part2.onStartPenetration(this, p2, p1, part1);
+		}
+		
 		this.stance = newStance;
 		offerImage(stance.image(), "");
 	}

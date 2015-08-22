@@ -119,6 +119,8 @@ public class Global {
 		counters = new HashMap<Flag,Float>();
 		jdate = new Date();
 		
+		counters.put(Flag.malePref, (float) Character.malePref);
+		
 		PrintStream fstream;
 		try {
 			File logfile = new File("nightgames_log.txt");
@@ -780,6 +782,8 @@ public class Global {
 					while(loader.hasNext()){
 						setCounter(Flag.valueOf(loader.next()),Float.parseFloat(loader.next()));
 					}
+					if (counters.containsKey(Flag.malePref))
+						Character.malePref = counters.get(Flag.malePref).intValue();
 				}
 			}
 			loader.close();

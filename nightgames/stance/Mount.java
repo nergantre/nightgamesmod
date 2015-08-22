@@ -82,14 +82,9 @@ public class Mount extends Position {
 	public boolean penetration(Character c) {
 		return false;
 	}
-
+	
 	@Override
 	public boolean inserted(Character c) {
-		return false;
-	}
-
-	@Override
-	public boolean paizuri(Character c) {
 		return false;
 	}
 
