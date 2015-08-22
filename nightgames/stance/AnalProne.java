@@ -3,6 +3,7 @@ package nightgames.stance;
 
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 
 public class AnalProne extends AnalSexStance {
@@ -126,5 +127,15 @@ public class AnalProne extends AnalSexStance {
 		} else {
 			return "pegging.jpg";
 		}
+	}
+	
+	@Override
+	public BodyPart topPart() {
+		return top.body.getRandomInsertable();
+	}
+	
+	@Override
+	public BodyPart bottomPart() {
+		return bottom.body.getRandomAss();
 	}
 }

@@ -3,6 +3,7 @@ package nightgames.stance;
 
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.characters.body.BodyPart;
 
 public class Behind extends Position {
 
@@ -103,5 +104,15 @@ public class Behind extends Position {
 	@Override
 	public float priorityMod(Character self) {
 		return ((self.hasDick() || self.has(Trait.strapped)) ? 2 : 1) * getSubDomBonus(self, 1.0f);
+	}
+	
+	@Override
+	public BodyPart topPart() {
+		return top.body.getRandomInsertable();
+	}
+	
+	@Override
+	public BodyPart bottomPart() {
+		return bottom.body.getRandomPussy();
 	}
 }

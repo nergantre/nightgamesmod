@@ -2,6 +2,7 @@ package nightgames.stance;
 
 
 import nightgames.characters.Character;
+import nightgames.characters.body.BodyPart;
 
 public class Doggy extends MaledomSexStance {
 
@@ -89,5 +90,16 @@ public class Doggy extends MaledomSexStance {
 
 	public Position reverse() {
 		return new ReverseCowgirl(bottom, top);
+	}
+	
+
+	@Override
+	public BodyPart topPart() {
+		return top.body.getRandomInsertable();
+	}
+	
+	@Override
+	public BodyPart bottomPart() {
+		return bottom.body.getRandomPussy();
 	}
 }

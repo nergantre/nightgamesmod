@@ -283,4 +283,9 @@ public class GenericBodyPart implements BodyPart {
 	public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {
 
 	}
+
+	@Override
+	public int counterValue(BodyPart other) {
+		return 0;
+	}
 }

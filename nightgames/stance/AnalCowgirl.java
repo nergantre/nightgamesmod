@@ -4,6 +4,7 @@ package nightgames.stance;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.AnalPussyPart;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 
 public class AnalCowgirl extends AnalSexStance {
@@ -116,5 +117,15 @@ public class AnalCowgirl extends AnalSexStance {
 			}
 			c.setStance(insert());
 		}
+	}
+	
+	@Override
+	public BodyPart topPart() {
+		return top.body.getRandomAss();
+	}
+	
+	@Override
+	public BodyPart bottomPart() {
+		return bottom.body.getRandomInsertable();
 	}
 }

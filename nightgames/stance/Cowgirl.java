@@ -3,6 +3,7 @@ package nightgames.stance;
 
 import nightgames.characters.Character;
 import nightgames.characters.body.AnalPussyPart;
+import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 
@@ -92,5 +93,16 @@ public class Cowgirl extends FemdomSexStance {
 
 	public Position reverse() {
 		return new Missionary(bottom, top);
+	}
+	
+
+	@Override
+	public BodyPart topPart() {
+		return top.body.getRandomPussy();
+	}
+	
+	@Override
+	public BodyPart bottomPart() {
+		return bottom.body.getRandomInsertable();
 	}
 }
