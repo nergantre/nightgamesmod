@@ -16,6 +16,7 @@ import nightgames.status.Winded;
 
 import java.io.PrintWriter;
 import java.util.Scanner;
+import org.json.simple.JSONObject;
 
 public enum CockPart implements BodyPart {
 	tiny("tiny", 3), small("smallish", 4), average("average", 6), big("big", 8), huge("huge", 9), massive("massive",
@@ -152,14 +153,17 @@ public enum CockPart implements BodyPart {
 			return this;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void save(PrintWriter saver) {
-		saver.write(this.name());
+	public JSONObject save() {
+		JSONObject obj = new JSONObject();
+		obj.put("enum", this.name());
+		return obj;
 	}
 
 	@Override
-	public BodyPart load(Scanner loader) {
-		return CockPart.valueOf(loader.nextLine());
+	public BodyPart load(JSONObject obj) {
+		return CockPart.valueOf((String)obj.get("enum"));
 	}
 
 	@Override

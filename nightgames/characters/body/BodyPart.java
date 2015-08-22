@@ -1,7 +1,5 @@
 package nightgames.characters.body;
-import java.io.PrintWriter;
-import java.io.Serializable;
-import java.util.Scanner;
+import org.json.simple.JSONObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -9,7 +7,7 @@ import nightgames.combat.Combat;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
 
-public interface BodyPart extends Serializable {
+public interface BodyPart {
 	public void describeLong(StringBuilder b, Character c);
 	public boolean isType(String type);
 	public String getType();
@@ -19,7 +17,7 @@ public interface BodyPart extends Serializable {
 	public double getSensitivity(BodyPart target);
 	public String toString();
 	public boolean isReady(Character self);
-	public void save(PrintWriter saver);
+	public JSONObject save();
 	public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c);
 	public double applySubBonuses(Character self, Character opponent, BodyPart with, BodyPart target, double damage, Combat c);
 	public String getFluids(Character c);
@@ -35,7 +33,7 @@ public interface BodyPart extends Serializable {
 	public String fullDescribe(Character c);
 	double priority(Character c);
 	public int mod(Attribute a, int total);
-	public BodyPart load(Scanner scanner);
+	public BodyPart load(JSONObject obj);
 	public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan);
 	
 	/**-1 is weak, 0 is none, 1 is strong<br>

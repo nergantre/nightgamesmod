@@ -73,19 +73,19 @@ public class Airi extends BasePersonality {
 		growth.bonusStamina = 1;
 		growth.bonusArousal = 1;
 		growth.bonusMojo = 2;
-		growth.traits.put(9, Trait.steady);
-		growth.traits.put(12, Trait.lacedjuices);
-		growth.traits.put(15, Trait.QuickRecovery);
-		growth.traits.put(18, Trait.BoundlessEnergy);
-		growth.traits.put(21, Trait.shameless);
-		growth.traits.put(24, Trait.Sneaky);
-		growth.traits.put(27, Trait.lactating);
-		growth.traits.put(30, Trait.addictivefluids);
-		growth.traits.put(33, Trait.autonomousPussy);
-		growth.traits.put(36, Trait.entrallingjuices);
-		growth.traits.put(39, Trait.energydrain);
-		growth.traits.put(42, Trait.desensitized);
-		growth.traits.put(45, Trait.vaginaltongue);
+		growth.addTrait(9, Trait.steady);
+		growth.addTrait(12, Trait.lacedjuices);
+		growth.addTrait(15, Trait.QuickRecovery);
+		growth.addTrait(18, Trait.BoundlessEnergy);
+		growth.addTrait(21, Trait.shameless);
+		growth.addTrait(24, Trait.Sneaky);
+		growth.addTrait(27, Trait.lactating);
+		growth.addTrait(30, Trait.addictivefluids);
+		growth.addTrait(33, Trait.autonomousPussy);
+		growth.addTrait(36, Trait.entrallingjuices);
+		growth.addTrait(39, Trait.energydrain);
+		growth.addTrait(42, Trait.desensitized);
+		growth.addTrait(45, Trait.vaginaltongue);
 	}
 
 	@Override

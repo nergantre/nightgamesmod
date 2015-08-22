@@ -44,6 +44,11 @@ public abstract class BasePersonality implements Personality {
 			character.gain(item);
 		}
 	}
+
+	public String getType() {
+		return getClass().getSimpleName();
+	}
+
 	public Skill act(HashSet<Skill> available,Combat c) {
 		HashSet<Skill> tactic = new HashSet<Skill>();	
 		Skill chosen;
@@ -83,15 +88,12 @@ public abstract class BasePersonality implements Personality {
 
 	@Override
 	public String image(Combat c) {
-		String fname = "assets/" + character.name().toLowerCase() + "_" + character.mood.name()+".jpg";
-		String fname_default = "assets/" + character.name().toLowerCase() + "_confident.jpg";
-		if (Global.gui().getClass().getResource(fname) != null) {
-			return fname;
-		}
-		if (Global.gui().getClass().getResource(fname_default) != null) {
-			return fname_default;
-		}
-		return null;
+		String fname = character.name().toLowerCase() + "_" + character.mood.name()+".jpg";
+		return fname;
+	}
+
+	public String defaultImage(Combat c) {
+		return character.name().toLowerCase() + "_confident.jpg";
 	}
 
 	public Growth getGrowth() {
@@ -100,19 +102,7 @@ public abstract class BasePersonality implements Personality {
 
 	@Override
 	public void ding() {
-		character.getStamina().gain(growth.stamina);
-		character.getArousal().gain(growth.arousal);
-		character.getMojo().gain(growth.mojo);
-		character.getWillpower().gain(growth.willpower);
-		// get all the traits for the level up
-		growth.traits.keySet().stream().filter(i -> i <= character.level).forEach(i -> character.add(growth.traits.get(i)));;
-		growth.actions.keySet().stream().filter(i -> i <= character.level).forEach(i -> {
-			growth.actions.get(i).run();
-		});
-		character.availableAttributePoints += growth.attributes[character.rank];
-		if (Global.checkFlag(Flag.hardmode)) {
-			hardmodeBonus();
-		}
+		growth.levelUp(character);
 		distributePoints();
 	}
 
@@ -133,14 +123,6 @@ public abstract class BasePersonality implements Personality {
 	@Override
 	public NPC getCharacter() {
 		return character;
-	}
-
-	public void hardmodeBonus() {
-		character.getStamina().gain(growth.bonusStamina);
-		character.getArousal().gain(growth.bonusArousal);
-		character.getMojo().gain(growth.bonusMojo);
-		character.getWillpower().gain(growth.bonusWillpower);
-		character.availableAttributePoints += growth.bonusAttributes;
 	}
 
 	public void distributePoints() {

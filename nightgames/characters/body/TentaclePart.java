@@ -3,19 +3,13 @@ package nightgames.characters.body;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.status.Stsflag;
-
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.Set;
+
+import org.json.simple.JSONObject;
 
 public class TentaclePart extends GenericBodyPart {
 	public String attachpoint;
@@ -92,8 +86,10 @@ public class TentaclePart extends GenericBodyPart {
 		return fluids;
 	}
 
-	public Map<String,Object> saveToDict() {
-		Map<String, Object> res = new HashMap<String, Object>();
+	@SuppressWarnings("unchecked")
+	@Override
+	public JSONObject saveToDict() {
+		JSONObject res = new JSONObject();
 		res.put("desc",			desc);
 		res.put("attachpoint",		attachpoint);
 		res.put("hotness",		hotness);

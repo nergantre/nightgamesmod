@@ -1,7 +1,6 @@
 package nightgames.characters.body;
 
-import java.util.Map;
-import java.util.Scanner;
+import org.json.simple.JSONObject;
 
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
@@ -10,7 +9,6 @@ public class AnalPussyPart extends AssPart {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7999826317978553116L;
 	public static AnalPussyPart generic = new AnalPussyPart();
 
 	public AnalPussyPart() {
@@ -31,7 +29,7 @@ public class AnalPussyPart extends AssPart {
 	}
 
 	@Override
-	public BodyPart loadFromDict(Map<String,Object> dict) {
+	public BodyPart loadFromDict(JSONObject dict) {
 		return new AnalPussyPart();
 	}
 }

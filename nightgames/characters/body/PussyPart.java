@@ -13,8 +13,7 @@ import nightgames.status.Horny;
 import nightgames.status.Shamed;
 import nightgames.status.Stsflag;
 
-import java.io.PrintWriter;
-import java.util.Scanner;
+import org.json.simple.JSONObject;
 
 public enum PussyPart implements BodyPart {
 	normal("", 0, 1, 1, 6, 15, 0), arcane("arcane patterned ", .2, 1.1, 1, 9, 5, 3), fiery("fiery ", 0, 1.3, 1.2, 8, 15,
@@ -123,14 +122,17 @@ public enum PussyPart implements BodyPart {
 		return self.has(Trait.alwaysready) || self.getArousal().percent() >= wetThreshold;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void save(PrintWriter saver) {
-		saver.write(this.name());
+	public JSONObject save() {
+		JSONObject obj = new JSONObject();
+		obj.put("enum", this.name());
+		return obj;
 	}
 
 	@Override
-	public BodyPart load(Scanner loader) {
-		return PussyPart.valueOf(loader.nextLine());
+	public BodyPart load(JSONObject obj) {
+		return PussyPart.valueOf((String)obj.get("enum"));
 	}
 
 	@Override

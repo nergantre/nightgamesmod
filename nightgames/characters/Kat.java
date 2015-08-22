@@ -77,21 +77,21 @@ public class Kat extends BasePersonality {
 		growth.bonusMojo = 2;
 		preferredAttributes.add(c -> c.get(Attribute.Animism) < 20 ? Optional.of(Attribute.Animism) : Optional.empty());
 
-		growth.traits.put(10, Trait.sympathetic);
-		growth.traits.put(13, Trait.analTraining1);
-		growth.traits.put(16, Trait.powerfulhips);
-		growth.traits.put(19, Trait.alwaysready);
-		growth.traits.put(22, Trait.cute);
-		growth.traits.put(25, Trait.tongueTraining1);
-		growth.traits.put(28, Trait.tight);
-		growth.traits.put(31, Trait.lacedjuices);
-		growth.traits.put(34, Trait.analTraining2);
-		growth.traits.put(37, Trait.experttongue);
-		growth.traits.put(40, Trait.graceful);
-		growth.traits.put(43, Trait.tongueTraining2);
-		growth.traits.put(46, Trait.strongwilled);
-		growth.traits.put(49, Trait.holecontrol);
-		growth.traits.put(52, Trait.analTraining3);
+		growth.addTrait(10, Trait.sympathetic);
+		growth.addTrait(13, Trait.analTraining1);
+		growth.addTrait(16, Trait.powerfulhips);
+		growth.addTrait(19, Trait.alwaysready);
+		growth.addTrait(22, Trait.cute);
+		growth.addTrait(25, Trait.tongueTraining1);
+		growth.addTrait(28, Trait.tight);
+		growth.addTrait(31, Trait.lacedjuices);
+		growth.addTrait(34, Trait.analTraining2);
+		growth.addTrait(37, Trait.experttongue);
+		growth.addTrait(40, Trait.graceful);
+		growth.addTrait(43, Trait.tongueTraining2);
+		growth.addTrait(46, Trait.strongwilled);
+		growth.addTrait(49, Trait.holecontrol);
+		growth.addTrait(52, Trait.analTraining3);
 	}
 
 	@Override

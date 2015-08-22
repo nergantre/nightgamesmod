@@ -4,10 +4,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.skills.Sedate;
-
-import java.io.PrintWriter;
-import java.util.Scanner;
+import org.json.simple.JSONObject;
 
 public enum EarPart implements BodyPart {
 	pointed("pointed ", .2, 1.2, 1),
@@ -87,14 +84,17 @@ public enum EarPart implements BodyPart {
 		return true;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void save(PrintWriter saver) {
-		saver.write(this.name());
+	public JSONObject save() {
+		JSONObject obj = new JSONObject();
+		obj.put("enum", this.name());
+		return obj;
 	}
 
 	@Override
-	public BodyPart load(Scanner loader) {
-		return EarPart.valueOf(loader.nextLine());
+	public BodyPart load(JSONObject obj) {
+		return EarPart.valueOf((String)obj.get("enum"));
 	}
 
 	@Override

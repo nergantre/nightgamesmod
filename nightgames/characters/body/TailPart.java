@@ -1,7 +1,6 @@
 package nightgames.characters.body;
 
-import java.io.PrintWriter;
-import java.util.Scanner;
+import org.json.simple.JSONObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -77,14 +76,17 @@ public enum TailPart implements BodyPart {
 		return true;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void save(PrintWriter saver) {
-		saver.write(this.name());
+	public JSONObject save() {
+		JSONObject obj = new JSONObject();
+		obj.put("enum", this.name());
+		return obj;
 	}
 
 	@Override
-	public BodyPart load(Scanner loader) {
-		return TailPart.valueOf(loader.nextLine());
+	public BodyPart load(JSONObject obj) {
+		return TailPart.valueOf((String)obj.get("enum"));
 	}
 
 	@Override

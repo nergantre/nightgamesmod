@@ -1,52 +1,5 @@
 package nightgames.characters;
 
-import nightgames.actions.Move;
-import nightgames.actions.Movement;
-import nightgames.areas.Area;
-import nightgames.characters.body.Body;
-import nightgames.characters.body.BodyPart;
-import nightgames.combat.Combat;
-import nightgames.combat.Encounter;
-import nightgames.combat.Result;
-import nightgames.global.Challenge;
-import nightgames.global.DebugFlags;
-import nightgames.global.Global;
-import nightgames.global.Modifier;
-import nightgames.items.Clothing;
-import nightgames.items.Item;
-import nightgames.pet.Pet;
-import nightgames.skills.CounterDrain;
-import nightgames.skills.CounterRide;
-import nightgames.skills.Distracted;
-import nightgames.skills.FondleBreasts;
-import nightgames.skills.Fuck;
-import nightgames.skills.Kiss;
-import nightgames.skills.Nothing;
-import nightgames.skills.PullOut;
-import nightgames.skills.Recover;
-import nightgames.skills.ReverseStraddle;
-import nightgames.skills.Shove;
-import nightgames.skills.Skill;
-import nightgames.skills.Straddle;
-import nightgames.skills.StripBottom;
-import nightgames.skills.StripTop;
-import nightgames.skills.Struggle;
-import nightgames.skills.Stunned;
-import nightgames.skills.Tactics;
-import nightgames.skills.ThrowDraft;
-import nightgames.skills.Tickle;
-import nightgames.skills.UseDraft;
-import nightgames.skills.Wait;
-import nightgames.stance.Position;
-import nightgames.stance.Stance;
-import nightgames.status.Enthralled;
-import nightgames.status.Horny;
-import nightgames.status.Resistance;
-import nightgames.status.Status;
-import nightgames.status.Stsflag;
-import nightgames.status.Trance;
-import nightgames.trap.Trap;
-
 import java.io.PrintWriter;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -61,7 +14,41 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.TreeSet;
 import java.util.Vector;
-import java.util.SortedSet;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
+import com.cedarsoftware.util.io.JsonWriter;
+
+import nightgames.actions.Move;
+import nightgames.actions.Movement;
+import nightgames.areas.Area;
+import nightgames.characters.body.Body;
+import nightgames.characters.body.BodyPart;
+import nightgames.characters.custom.JSONSourceNPCDataLoader;
+import nightgames.combat.Combat;
+import nightgames.combat.Encounter;
+import nightgames.combat.Result;
+import nightgames.global.Challenge;
+import nightgames.global.DebugFlags;
+import nightgames.global.Global;
+import nightgames.global.JSONUtils;
+import nightgames.global.Modifier;
+import nightgames.items.Clothing;
+import nightgames.items.Item;
+import nightgames.pet.Pet;
+import nightgames.skills.Nothing;
+import nightgames.skills.Skill;
+import nightgames.skills.Tactics;
+import nightgames.stance.Position;
+import nightgames.stance.Stance;
+import nightgames.status.Enthralled;
+import nightgames.status.Resistance;
+import nightgames.status.Status;
+import nightgames.status.Stsflag;
+import nightgames.status.Trance;
+import nightgames.trap.Trap;
 
 public abstract class Character extends Observable implements Cloneable{
 	/**
@@ -105,6 +92,7 @@ public abstract class Character extends Observable implements Cloneable{
 	
 	public static int malePref = 1;
 
+	@SuppressWarnings("unchecked")
 	public Character(String name, int level){
 		this.name=name;
 		this.level=level;
@@ -148,33 +136,34 @@ public abstract class Character extends Observable implements Cloneable{
 		this.pet=null;
 		Global.learnSkills(this);
 	}
+	@SuppressWarnings({ "unchecked" })
 	public Character clone() throws CloneNotSupportedException {
 	    Character c = (Character) super.clone();
-	    c.att = (HashMap) att.clone();
+	    c.att = (HashMap<Attribute, Integer>) att.clone();
 		c.stamina = (Meter) stamina.clone();
 		c.arousal = (Meter) arousal.clone();
 		c.mojo = (Meter) mojo.clone();
 		c.willpower = (Meter) willpower.clone();
-		c.top = (Stack) top.clone();
-		c.bottom = (Stack) bottom.clone();
+		c.top = (Stack<Clothing>) top.clone();
+		c.bottom = (Stack<Clothing>) bottom.clone();
 		c.outfit = (Stack[]) outfit.clone();
-		c.skills = (HashSet) skills.clone();
+		c.skills = (HashSet<Skill>) skills.clone();
 		c.status = new HashSet<Status>();
 		for (Status s: status) {
 			Status clone = (Status) s.clone();
 			clone.affected = c;
 			c.status.add(clone);
 		}
-		c.traits = (Set) new TreeSet(traits);
+		c.traits = (Set<Trait>) new TreeSet<Trait>(traits);
 		c.temporaryAddedTraits = new HashMap<Trait, Integer>(temporaryAddedTraits);
 		c.temporaryRemovedTraits = new HashMap<Trait, Integer>(temporaryRemovedTraits);
-		c.removelist = (HashSet) removelist.clone();
-		c.addlist = (HashSet) addlist.clone();
-		c.mercy = (HashSet) mercy.clone();
+		c.removelist = (HashSet<Status>) removelist.clone();
+		c.addlist = (HashSet<Status>) addlist.clone();
+		c.mercy = (HashSet<Character>) mercy.clone();
 		c.inventory = (Map<Item, Integer>) ((HashMap<Item, Integer>) inventory).clone();
-		c.attractions = (HashMap) attractions.clone();
-		c.affections = (HashMap) affections.clone();
-		c.skills = (HashSet) skills.clone();
+		c.attractions = (HashMap<Character, Integer>) attractions.clone();
+		c.affections = (HashMap<Character, Integer>) affections.clone();
+		c.skills = (HashSet<Skill>) skills.clone();
 		c.body = (Body) body.clone();
 		c.body.character = c;
 		c.orgasmed = orgasmed;
@@ -1031,118 +1020,132 @@ public abstract class Character extends Observable implements Cloneable{
 	public abstract String taunt(Combat c);
 	public abstract void intervene(Encounter enc, Character p1,Character p2);
 	public abstract void showerScene(Character target, Encounter encounter);
-	public void save(PrintWriter saver) {
-		saver.write(name+"\n");
-		saver.write(level+"\n");
-		saver.write(getRank()+"\n");
-		saver.write(xp+"\n");
-		saver.write(money+"\n");
-		for(Attribute a: att.keySet()){
-			saver.write(a+" "+getPure(a)+"\n");
-		}
-		saver.write("@\n");
-		saver.write(stamina.maxFull()+"\n");
-		saver.write(arousal.maxFull()+"\n");
-		saver.write(mojo.maxFull()+"\n");
-		saver.write(willpower.maxFull()+"\n");
-		for(Character player:affections.keySet()){
-			saver.write(player.name()+" "+getAffection(player)+"\n");
-		}
-		saver.write("*\n");
-		for(Character player2:attractions.keySet()){
-			saver.write(player2.name()+" "+getAttraction(player2)+"\n");
-		}
-		saver.write("*\n");
-		for(Clothing c:outfit[0]){
-			saver.write(c.toString()+"\n");
-		}
-		saver.write("!\n");
-		for(Clothing c:outfit[1]){
-			saver.write(c.toString()+"\n");
-		}
-		saver.write("!!\n");
-		for(Clothing c:closet){
-			saver.write(c.toString()+"\n");
-		}
-		saver.write("!!!\n");
-		for(Trait t: traits){
-			saver.write(t.name()+"\n");
-		}
-		saver.write("!!!!\n");
-		body.save(saver);
-		saver.write("@\n");
-		for(Item item: inventory.keySet()){
-			saver.write(item.toString() + ":" + count(item) + "\n");
-		}
-		saver.write("$\n");
-	}
-	public void load(Scanner loader) {
-		level=Integer.parseInt(loader.next());
-		setRank(Integer.parseInt(loader.next()));
-		xp=Integer.parseInt(loader.next());
-		money=Integer.parseInt(loader.next());
-		String e = loader.next();
-		while(!e.equals("@")){
-			set(Attribute.valueOf(e),Integer.parseInt(loader.next()));
-			e = loader.next();
-		}
-		stamina.setMax(Float.parseFloat(loader.next()));
-		arousal.setMax(Float.parseFloat(loader.next()));
-		mojo.setMax(Float.parseFloat(loader.next()));
-		willpower.setMax(Float.parseFloat(loader.next()));
-		e = loader.next();
-		while(!e.equals("*")){
-			gainAffection(Global.lookup(e),Integer.parseInt(loader.next()));
-			e = loader.next();
-		}
-		e = loader.next();
-		while(!e.equals("*")){
-			gainAttraction(Global.lookup(e),Integer.parseInt(loader.next()));
-			e = loader.next();
-		}
-		e = loader.next();
-		outfit[0].clear();
-		while(!e.equals("!")){
-			outfit[0].add(Clothing.valueOf(e));
-			e = loader.next();
-		}
-		e=loader.next();
-		outfit[1].clear();
-		while(!e.equals("!")&&!e.equals("!!")){
-			outfit[1].add(Clothing.valueOf(e));
-			e = loader.next();
-		}
-		if(e.equals("!!")){
-			e=loader.next();
-			closet.clear();
-			while(!e.equals("!!!")){
-				closet.add(Clothing.valueOf(e));
-				e = loader.next();
-			}
-		}
-		e=loader.next();
-		while(!e.equals("!!!!")){
-			traits.add(Trait.valueOf(e));
-			e = loader.next();
-		}
-		this.body = Body.load(loader, this);
 
-		e = loader.next();
-		int tries = 0;
-		while(!e.equals("@")){
-			if (tries > 50) {
-				change(Modifier.normal);
-				Global.gainSkills(this);
-				return;
-			}
-			e = loader.next();
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private static void saveArr(JSONObject obj, Collection<? extends Enum> arr, String name) {
+		JSONArray array = new JSONArray();
+		for (Enum e : arr) {
+			array.add(e.name());
 		}
-		e=loader.next();
-		while(!e.equals("$")){
-			String itemString[] = e.split(":");
-			int amt = itemString.length > 1 ? Integer.valueOf(itemString[1]) : 1;
-			gain(Item.valueOf(itemString[0]), amt);
-			e = loader.next();
+		obj.put(name, array);
+	}
+
+	@SuppressWarnings("unchecked")
+	private static void saveCharIntMap(JSONObject obj, Map<Character, Integer> map, String name) {
+		JSONObject objMap = new JSONObject();
+		for(Character key:map.keySet()) {
+			objMap.put(key.getType(), map.get(key));
+		}
+		obj.put(name, objMap);
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private static void saveEnumIntMap(JSONObject obj, Map<? extends Enum, Integer> map, String name) {
+		JSONObject objMap = new JSONObject();
+		for(Enum key:map.keySet()) {
+			objMap.put(key.name(), map.get(key));
+		}
+		obj.put(name, objMap);
+	}
+
+	private static HashMap<Character, Integer> loadCharIntMap(JSONObject parentObj, String name) {
+		JSONObject obj = (JSONObject) parentObj.get(name);
+		HashMap<Character, Integer> map = new HashMap<>();
+		for(Object key:obj.keySet()){
+			String keyString = (String) key;
+			Character character = Global.characterPool.get(keyString);
+			map.put(character, JSONUtils.readInteger(obj, keyString));
+		}
+		return map;
+	}
+
+	private static void loadClothingFromArr(JSONObject obj, Collection<Clothing> arr, String name) {
+		arr.clear();
+		JSONArray savedArr = (JSONArray) obj.get(name);
+		for (Object elem : savedArr) {
+			String key = (String)elem;
+			arr.add(Clothing.valueOf(key));
+		}
+	}
+
+	private static void loadTraitsFromArr(JSONObject obj, Collection<Trait> arr, String name) {
+		arr.clear();
+		JSONArray savedArr = (JSONArray) obj.get(name);
+		for (Object elem : savedArr) {
+			String key = (String)elem;
+			arr.add(Trait.valueOf(key));
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject save() {
+		JSONObject saveObj = new JSONObject();
+		saveObj.put("name", name);
+		saveObj.put("type", getType());
+		saveObj.put("level", level);
+		saveObj.put("rank", getRank());
+		saveObj.put("xp", xp);
+		saveObj.put("money", money);
+		{
+			JSONObject resources = new JSONObject();
+			resources.put("stamina", stamina.maxFull());
+			resources.put("arousal", arousal.maxFull());
+			resources.put("mojo", mojo.maxFull());
+			resources.put("willpower", willpower.maxFull());
+			saveObj.put("resources", resources);
+		}
+		saveCharIntMap(saveObj, affections, "affections");
+		saveCharIntMap(saveObj, attractions, "attractions");
+		saveEnumIntMap(saveObj, att, "attributes");
+		saveArr(saveObj, outfit[0], "top");
+		saveArr(saveObj, outfit[1], "bottom");
+		saveArr(saveObj, closet, "closet");
+		saveArr(saveObj, traits, "traits");
+		saveObj.put("body", body.save());
+		saveEnumIntMap(saveObj, inventory, "inventory");
+		saveObj.put("human", human());
+		return saveObj;
+	}
+
+	public abstract String getType();
+
+	public void load(JSONObject obj) {
+		name = JSONUtils.readString(obj, "name");
+		level = JSONUtils.readInteger(obj, "level");
+		rank = JSONUtils.readInteger(obj, "rank");
+		xp = JSONUtils.readInteger(obj, "xp");
+		money = JSONUtils.readInteger(obj, "money");
+		{
+			JSONObject resources = (JSONObject) obj.get("resources");
+			stamina.setMax(JSONUtils.readFloat(resources, "stamina"));
+			arousal.setMax(JSONUtils.readFloat(resources, "arousal"));
+			mojo.setMax(JSONUtils.readFloat(resources, "mojo"));
+			willpower.setMax(JSONUtils.readFloat(resources, "willpower"));
+		}
+		affections = loadCharIntMap(obj, "affections");
+		attractions = loadCharIntMap(obj, "attractions");
+		loadClothingFromArr(obj, outfit[0], "top");
+		loadClothingFromArr(obj, outfit[1], "bottom");
+		loadClothingFromArr(obj, closet, "closet");
+		loadTraitsFromArr(obj, traits, "traits");
+		body = Body.load((JSONObject) obj.get("body"), this);
+		{
+			JSONObject attObj = (JSONObject) obj.get("attributes");
+			att = new HashMap<>();
+			for(Object key:attObj.keySet()){
+				String keyString = (String) key;
+				Attribute attribute = Attribute.valueOf(keyString);
+				att.put(attribute, JSONUtils.readInteger(attObj, keyString));
+			}
+		}
+		{
+			JSONObject invenObj = (JSONObject) obj.get("inventory");
+			inventory = new HashMap<>();
+			for(Object key:invenObj.keySet()){
+				String keyString = (String) key;
+				Item item = Item.valueOf(keyString);
+				inventory.put(item, JSONUtils.readInteger(invenObj, keyString));
+			}
 		}
 		change(Modifier.normal);
 		Global.gainSkills(this);
@@ -1825,6 +1828,9 @@ public abstract class Character extends Observable implements Cloneable{
 		for(Challenge chal: challenges){
 			chal.check(c, victor);
 		}
+	}
+	public String toString() {
+		return name;
 	}
 	public float getUrgency() {
 

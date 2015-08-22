@@ -1,7 +1,6 @@
 package nightgames.characters.body;
 
-import java.util.Map;
-import java.util.Scanner;
+import org.json.simple.JSONObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -14,7 +13,6 @@ public class AssPart extends GenericBodyPart {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1767949507600318064L;
 	public static AssPart generic = new AssPart("ass", 0, 1.2, 1);
 
 	public AssPart(String desc, String longDesc, double hotness,
@@ -87,14 +85,14 @@ public class AssPart extends GenericBodyPart {
 	}
 
 	@Override
-	public BodyPart loadFromDict(Map<String, Object> dict) {
+	public BodyPart loadFromDict(JSONObject dict) {
 		try {
 			GenericBodyPart part = new AssPart(
 					(String) dict.get("desc"),
 					(String) dict.get("descLong"),
-					(Double) dict.get("hotness"),
-					(Double) dict.get("pleasure"),
-					(Double) dict.get("sensitivity"), false);
+					((Number) dict.get("hotness")).doubleValue(),
+					((Number) dict.get("pleasure")).doubleValue(),
+					((Number) dict.get("sensitivity")).doubleValue(), false);
 			return part;
 		} catch (ClassCastException e) {
 			System.err.println(e.getMessage());

@@ -67,11 +67,11 @@ public class Diversion extends Skill {
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.normal){
-			return "You quickly strip off your "+getSelf().top.peek().name()+" and throw it to the right, while you jump to the left. "+target.name()+" catches your discarded clothing, " +
+			return "You quickly strip off your "+getSelf().top.peek().getName()+" and throw it to the right, while you jump to the left. "+target.getName()+" catches your discarded clothing, " +
 					"losing sight of you in the process.";
 		}
 		else{
-			return "You quickly strip off your "+getSelf().bottom.peek().name()+" and throw it to the right, while you jump to the left. "+target.name()+" catches your discarded clothing, " +
+			return "You quickly strip off your "+getSelf().bottom.peek().getName()+" and throw it to the right, while you jump to the left. "+target.getName()+" catches your discarded clothing, " +
 					"losing sight of you in the process.";
 		}
 	}

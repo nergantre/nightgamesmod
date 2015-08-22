@@ -66,7 +66,7 @@ public class UseDraft extends Skill {
 			c.write(getSelf(), "Skill failed...");
 		} else {
 			boolean eventful = false;
-			c.write(getSelf(), Global.format(String.format("{self:SUBJECT-ACTION:%s|%ss} %s%s",used.getEffects().get(0).getSelfVerb(),used.getEffects().get(0).getSelfVerb(), used.pre(), used.name()), getSelf(), target));
+			c.write(getSelf(), Global.format(String.format("{self:SUBJECT-ACTION:%s|%ss} %s%s",used.getEffects().get(0).getSelfVerb(),used.getEffects().get(0).getSelfVerb(), used.pre(), used.getName()), getSelf(), target));
 			for (ItemEffect e : used.getEffects()) {
 				eventful = e.use(c, getSelf(), target, used) || eventful;
 			}

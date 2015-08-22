@@ -1,5 +1,6 @@
 package nightgames.global;
 
+import nightgames.Resources.ResourceLoader;
 import nightgames.actions.Action;
 import nightgames.actions.Bathe;
 import nightgames.actions.Craft;
@@ -35,6 +36,8 @@ import nightgames.characters.TraitTree;
 import nightgames.characters.Yui;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.StraponPart;
+import nightgames.characters.custom.CustomNPC;
+import nightgames.characters.custom.JSONSourceNPCDataLoader;
 import nightgames.combat.Combat;
 import nightgames.combat.Encounter;
 import nightgames.combat.Result;
@@ -57,22 +60,28 @@ import nightgames.trap.TentacleTrap;
 import nightgames.trap.Trap;
 import nightgames.trap.Tripline;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
@@ -82,8 +91,13 @@ import java.util.regex.Pattern;
 
 import javax.swing.JFileChooser;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.ContextFactory;
+
+import com.cedarsoftware.util.io.JsonWriter;
 
 public class Global {
 	private static Random rng;
@@ -143,8 +157,7 @@ public class Global {
 //		debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
-		ClassLoader classLoader = getClass().getClassLoader();
-		traitRequirements = new TraitTree(classLoader.getResourceAsStream("nightgames/Resources/TraitRequirements.xml"));
+		traitRequirements = new TraitTree(ResourceLoader.getFileResourceAsStream("data/TraitRequirements.xml"));
 		current=null;
 		factory = new ContextFactory();
 		cx = factory.enterContext();
@@ -169,16 +182,13 @@ public class Global {
 		gui.populatePlayer(human);
 		buildSkillPool(human);
 		Global.learnSkills(human);
+		rebuildCharacterPool();
 		date=0;
-		BasePersonality ai1 = new Cassie();
-		Jewel ai2 = new Jewel();
-		Mara ai3 = new Mara();
-		BasePersonality ai4 = new Angel();
 		flag(Flag.systemMessages);
-		players.add(ai1.character);
-		players.add(ai2.character);
-		players.add(ai3.character);
-		players.add(ai4.character);
+		players.add(getNPC("Jewel"));
+		players.add(getNPC("Cassie"));
+		players.add(getNPC("Angel"));
+		players.add(getNPC("Mara"));
 		match = new Match(players,Modifier.normal);
 		match.round();
 	}
@@ -420,7 +430,7 @@ public class Global {
 	}
 	public static List<Trait> getFeats(Character c) {
 		List<Trait> a = traitRequirements.availTraits(c);
-		a.sort((first,second) -> first.name().compareTo(second.name()));
+		a.sort((first,second) -> first.toString().compareTo(second.toString()));
 		return a;
 	}
 	public static Character lookup(String name){
@@ -474,7 +484,7 @@ public class Global {
 			if(human.getAffection(player)>maxaffection){
 				maxaffection=human.getAffection(player);
 				lover=player;
-			}			
+			}
 		}
 //		if (true) {
 //			lineup.add(human);
@@ -549,6 +559,8 @@ public class Global {
 	    return original.substring(0, 1).toUpperCase() + original.substring(1);
 	}
 
+	public static Map<String, Character> characterPool;
+	
 	public static HashMap<String,Area> buildMap(){
 		Area quad = new Area("Quad","You are in the <b>Quad</b> that sits in the center of the Dorm, the Dining Hall, the Engineering Building, and the Liberal Arts Building. There's " +
 				"no one around at this time of night, but the Quad is well-lit and has no real cover. You can probably be spotted from any of the surrounding buildings, it may " +
@@ -674,7 +686,27 @@ public class Global {
 		counters.put(f,val);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static void save(boolean auto){
+		JSONObject obj = new JSONObject();
+		JSONArray characterArr = new JSONArray();
+		for(Character c: players) {
+			characterArr.add(c.save());
+		}
+		obj.put("characters", characterArr);
+		JSONArray flagsArr = new JSONArray();
+		for(Flag flag : flags) {
+			flagsArr.add(flag.name());
+		}
+		obj.put("flags", flagsArr);
+		JSONObject countersObj = new JSONObject();
+		for(Flag counter: counters.keySet()){
+			countersObj.put(counter.name(), counters.get(counter));
+		}
+		obj.put("counters", countersObj);
+		obj.put("time", match == null ? "dusk" : "dawn");
+		obj.put("date", date);
+
 		try {
 			FileWriter file;
 			if(auto){
@@ -683,7 +715,7 @@ public class Global {
 			else{
 				JFileChooser dialog = new JFileChooser("./");            
 	            dialog.setMultiSelectionEnabled(false);
-	            int rv = dialog.showOpenDialog(gui);
+	            int rv = dialog.showSaveDialog(gui);
 	            
 	            if (rv != JFileChooser.APPROVE_OPTION)
 	            {
@@ -692,33 +724,44 @@ public class Global {
 				file = new FileWriter(dialog.getSelectedFile());
 			}
 			PrintWriter saver = new PrintWriter(file);
-			human.save(saver);
-			for(Character c: players){
-				if(!c.human()){
-					c.save(saver);
-				}
-			}
-			saver.write("Flags\n");
-			for(Flag f: flags){
-				saver.write(f.toString());
-				saver.write("\n");
-			}
-			saver.write("#\n");
-			if(match!=null){
-				saver.write("dawn "+date+"\n");
-			}
-			else{
-				saver.write("dusk "+date+"\n");
-			}
-			for(Flag counter: counters.keySet()){
-				saver.write(counter+" "+counters.get(counter)+"\n");
-			}
+			saver.write(JsonWriter.formatJson(obj.toJSONString()));
 			saver.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
+	public static void rebuildCharacterPool() {
+		characterPool = new HashMap<>();
+
+		JSONArray characterSet = (JSONArray) JSONValue.parse(new InputStreamReader(ResourceLoader.getFileResourceAsStream("characters/included.json")));
+		for (Object obj : characterSet) {
+			String name = (String) obj;
+			try {
+				Personality npc = new CustomNPC(JSONSourceNPCDataLoader.load(ResourceLoader.getFileResourceAsStream("characters/" + name)));
+				characterPool.put(npc.getCharacter().getType(), npc.getCharacter());
+			} catch (ParseException | IOException e1) {
+				System.err.println("Failed to load NPC");
+				e1.printStackTrace();
+			}
+		}
+
+		Personality cassie = new Cassie();
+		Personality angel = new Angel();
+		Personality reyka = new Reyka();
+		Personality kat = new Kat();
+		Personality mara = new Mara();
+		Personality jewel = new Jewel();
+		Personality airi = new Airi();
+		characterPool.put(cassie.getCharacter().getType(), cassie.getCharacter());
+		characterPool.put(angel.getCharacter().getType(), angel.getCharacter());
+		characterPool.put(reyka.getCharacter().getType(), reyka.getCharacter());
+		characterPool.put(kat.getCharacter().getType(), kat.getCharacter());
+		characterPool.put(mara.getCharacter().getType(), mara.getCharacter());
+		characterPool.put(jewel.getCharacter().getType(), jewel.getCharacter());
+		characterPool.put(airi.getCharacter().getType(), airi.getCharacter());
+	}
+	
 	public static void load(){
 		JFileChooser dialog = new JFileChooser("./");
         dialog.setMultiSelectionEnabled(false);
@@ -728,85 +771,55 @@ public class Global {
         	return;
         }
 		FileInputStream file;
-		String header;
 		players.clear();
 		flags.clear();
 		gui.clearText();
 		human=new Player("Dummy");
 		gui.purgePlayer();
 		buildSkillPool(human);
-		NPC reyka = new Reyka().character;
-		NPC kat = new Kat().character;
-		NPC airi = new Airi().character;
-		players.add(new Cassie().character);
-		players.add(new Jewel().character);
-		players.add(new Mara().character);
-		players.add(new Angel().character);
-		players.add(airi);
-		players.add(reyka);
-		players.add(kat);
+		rebuildCharacterPool();
+
 		boolean dawn = false;
 		try {
 			file = new FileInputStream(dialog.getSelectedFile());
-			Scanner loader = new Scanner(file);
-			while(loader.hasNext()){
-				header=loader.next();				
-				if(header.equalsIgnoreCase("P")){
-					human.load(loader);
+			Reader loader = new InputStreamReader(file);
+			JSONObject object = (JSONObject) JSONValue.parse(loader);
+			loader.close();
+
+			JSONArray characters = (JSONArray) object.get("characters");
+			for (Object obj : characters) {
+				JSONObject character = (JSONObject) obj;
+				String type = JSONUtils.readString(character, "type");
+				if (Boolean.TRUE.equals(character.get("human"))) {
+					human.load(character);
 					players.add(human);
-				}
-				else if(header.equalsIgnoreCase("NPC")){
-					String name = loader.next();
-					Character c = lookup(name);
-					if (c != null)
-						c.load(loader);
-				}
-				else if(header.equalsIgnoreCase("Flags")){
-					String next = loader.next();
-					while(!next.equals("#")){
-						flags.add(Flag.valueOf(next));
-						next = loader.next();
-					}
-					if(loader.next().equalsIgnoreCase("Dawn")){
-						dawn=true;
-					}
-					else{
-						dawn=false;
-					}
-					if(loader.hasNext()){
-						date = loader.nextInt();
-					}
-					else{
-						date = 1;
-					}
-					while(loader.hasNext()){
-						setCounter(Flag.valueOf(loader.next()),Float.parseFloat(loader.next()));
-					}
-					if (counters.containsKey(Flag.malePref))
-						Character.malePref = counters.get(Flag.malePref).intValue();
+				} else if (characterPool.containsKey(type)) {
+					characterPool.get(type).load(character);
+					players.add(characterPool.get(type));
 				}
 			}
-			loader.close();
+			
+			JSONArray flagsArr = (JSONArray) object.get("flags");
+			for(Object flag : flagsArr) {
+				flags.add(Flag.valueOf((String)flag));
+			}
+			
+			JSONObject countersObj = (JSONObject) object.get("counters");
+			for(Object counter : countersObj.keySet()) {
+				counters.put(Flag.valueOf((String)counter), JSONUtils.readFloat(countersObj, (String) counter));
+			}
+			date = JSONUtils.readInteger(object, "date");
+			String time = JSONUtils.readString(object, "time");
+			dawn = time.equals("dawn");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(!checkFlag(Flag.Reyka)){
-			players.remove(reyka);
-		}
-		if(!checkFlag(Flag.Kat)){
-			players.remove(kat);
-		}
-		if(!checkFlag(Flag.Airi)){
-			players.remove(airi);
-		}
 		gui.populatePlayer(human);
-		if(dawn){
+		if (dawn) {
 			dawn();
-		}
-		else{
+		} else {
 			new Prematch(human);
 		}
 	}
@@ -828,11 +841,12 @@ public class Global {
 	}
 
 	public static NPC getNPC(String name){
-		for( Character c : players){
-			if(c.name().equalsIgnoreCase(name)){
+		for(Character c : characterPool.values()) {
+			if(c.getType().equalsIgnoreCase(name)){
 				return (NPC)c;
 			}
 		}
+		System.err.println("NPC \""+ name + "\" is not loaded.");
 		return null;
 	}
 

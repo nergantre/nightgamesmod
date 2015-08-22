@@ -6,20 +6,12 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 
-import java.io.PrintWriter;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Scanner;
+import org.json.simple.JSONObject;
 
 public class GenericBodyPart implements BodyPart {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 6412667696235300087L;
 	public String type;
 	public String desc;
 	public String prefix;
@@ -124,8 +116,9 @@ public class GenericBodyPart implements BodyPart {
 		return (this.type + ":" +this.toString()).hashCode();
 	}
 
-	public Map<String,Object> saveToDict() {
-		Map<String, Object> res = new HashMap<String, Object>();
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToDict() {
+		JSONObject res = new JSONObject();
 		res.put("desc",			desc);
 		res.put("descLong",		descLong);
 		res.put("hotness",		hotness);
@@ -138,14 +131,14 @@ public class GenericBodyPart implements BodyPart {
 		return res;
 	}
 
-	public BodyPart loadFromDict(Map<String,Object> dict) {
+	public BodyPart loadFromDict(JSONObject dict) {
 		try {
 		GenericBodyPart part = new GenericBodyPart(
 									(String)dict.get("desc"),
 									(String)dict.get("descLong"),
-									(Double)dict.get("hotness"),
-									(Double)dict.get("pleasure"),
-									(Double)dict.get("sensitivity"),
+									((Number)dict.get("hotness")).doubleValue(),
+									((Number)dict.get("pleasure")).doubleValue(),
+									((Number)dict.get("sensitivity")).doubleValue(),
 									(Boolean)dict.get("notable"),
 									(String)dict.get("type"),
 									(String)dict.get("prefix"));
@@ -157,63 +150,12 @@ public class GenericBodyPart implements BodyPart {
 	}
 
 	@Override
-	public void save(PrintWriter saver) {
-		Map<String, Object> dict = saveToDict();
-		saver.write("{\n");
-		for (String key: dict.keySet()) {
-			Object value = dict.get(key);
-			if (value instanceof String) {
-
-				saver.write(value.getClass().getCanonicalName()+":" + key + ":\"" + value.toString()+"\"\n");
-			} else {
-				saver.write(value.getClass().getCanonicalName()+":" + key + ":" + value.toString()+"\n");
-			}
-		}
-		saver.write("}");
+	public JSONObject save() {
+		return saveToDict();
 	}
 
-	public BodyPart load(Scanner loader) {
-		Map<String, Object> dict = new HashMap<String, Object>();
-		String line = loader.nextLine(); //trash the first line because it's a '{'
-		do {
-			line = loader.nextLine().trim();
-			String[] params = line.split(":");
-			if (params.length < 3) {
-				continue;
-			}
-			String value = line.substring(line.indexOf(":", line.indexOf(":") + 1)+1);
-			String key = params[1];
-			String type = params[0];
-			if (type.equals(String.class.getCanonicalName())) {
-				dict.put(key, value.substring(value.indexOf('"')+1, value.lastIndexOf('"')));
-			} else {
-				try {
-					Class<?> c = Class.forName(type);
-					Method m = c.getMethod("valueOf", String.class);
-					Object result = m.invoke(null, value);
-					dict.put(key, result);
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				} catch (NoSuchMethodException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (SecurityException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InvocationTargetException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-		while (!line.equals("}"));
-		return loadFromDict(dict);
+	public BodyPart load(JSONObject obj) {
+		return loadFromDict(obj);
 	}
 
 	@Override

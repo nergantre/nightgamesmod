@@ -40,4 +40,5 @@ public interface Personality extends Serializable{
 	public String temptLiner(Combat c);
 	public String orgasmLiner(Combat c);
 	public String makeOrgasmLiner(Combat c);
+	public String getType();
 }

@@ -50,9 +50,9 @@ public class ReverseAssFuck extends Fuck {
 		String premessage = "";
 		if(!getSelf().bottom.empty() && getSelfOrgan().isType("cock")) {
 			if (getSelf().bottom.size() == 1) {
-				premessage += String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s", getSelf().bottom.get(0).name());
+				premessage += String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s", getSelf().bottom.get(0).getName());
 			} else if (getSelf().bottom.size() == 2) {
-				premessage += String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s and %s", getSelf().bottom.get(0).name(), getSelf().bottom.get(1).name());
+				premessage += String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s and %s", getSelf().bottom.get(0).getName(), getSelf().bottom.get(1).getName());
 			}
 		}
 

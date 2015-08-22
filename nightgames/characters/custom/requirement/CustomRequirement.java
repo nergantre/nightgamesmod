@@ -1,4 +1,4 @@
-package nightgames.characters.custom;
+package nightgames.characters.custom.requirement;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 
