@@ -525,18 +525,6 @@ public class Player extends Character {
 	}
 
 	@Override
-	public void save(PrintWriter saver) {
-		saver.write("P\n");
-		super.save(saver);
-	}
-
-	@Override
-	public void load(Scanner loader) {
-		name=loader.next();
-		super.load(loader);
-	}
-
-	@Override
 	public String challenge(Character other) {
 		return null;
 	}
@@ -690,7 +678,6 @@ public class Player extends Character {
 	}
 	@Override
 	public String getPortrait(Combat c) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
@@ -698,7 +685,10 @@ public class Player extends Character {
 		return firstPerson;
 	}
 	public Meter getWillpower() {
-		// TODO Auto-generated method stub
 		return willpower;
+	}
+	@Override
+	public String getType() {
+		return getClass().getSimpleName();
 	}
 }

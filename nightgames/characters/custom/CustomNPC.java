@@ -122,7 +122,7 @@ public class CustomNPC extends BasePersonality {
 		if (target.human())
 			return data.getLine("victory3p", c, this.character, assist);
 		else
-			return data.getLine("victory3p", c, this.character, target);
+			return data.getLine("victory3pAssist", c, this.character, target);
 	}
 
 	@Override
@@ -130,7 +130,7 @@ public class CustomNPC extends BasePersonality {
 		if (target.human())
 			return data.getLine("intervene3p", c, this.character, assist);
 		else
-			return data.getLine("intervene3p", c, this.character, target);
+			return data.getLine("intervene3pAssist", c, this.character, target);
 	}
 
 	@Override
@@ -159,18 +159,19 @@ public class CustomNPC extends BasePersonality {
 	public String makeOrgasmLiner(Combat c) {
 		return data.getLine("makeOrgasm", c, this.character, c.getOther(character));
 	}
+
+	@Override
+	public String getType() {
+		return "CUSTOM_" + data.getType();
+	}
 	
 	@Override
 	public String image(Combat c) {
 		Character other = c.getOther(character);
-		String fname = "assets/" + data.getPortraitName(c, character, other);
-		String fname_default = "assets/" + data.getDefaultPortraitName();
-		if (Global.gui().getClass().getResource(fname) != null) {
-			return fname;
-		}
-		if (Global.gui().getClass().getResource(fname_default) != null) {
-			return fname_default;
-		}
-		return null;
+		return data.getPortraitName(c, character, other);
+	}
+	
+	public String defaultImage() {
+		return data.getDefaultPortraitName();
 	}
 }

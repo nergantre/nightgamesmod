@@ -34,6 +34,7 @@ public class DataBackedNPCData implements NPCData {
 	String gender;
 	String defaultPortraitName;
 	Plan plan;
+	String type;
 
 	public DataBackedNPCData() {
 		preferredAttributes = new ArrayList<>();
@@ -143,5 +144,10 @@ public class DataBackedNPCData implements NPCData {
 	@Override
 	public Plan getPlan() {
 		return plan;
+	}
+
+	@Override
+	public String getType() {
+		return type;
 	}
 }

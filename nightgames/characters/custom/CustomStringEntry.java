@@ -6,6 +6,7 @@ import java.util.List;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.characters.Character;
+import nightgames.characters.custom.requirement.CustomRequirement;
 
 public class CustomStringEntry {
 	/**

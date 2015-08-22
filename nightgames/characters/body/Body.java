@@ -3,23 +3,19 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
-import nightgames.global.DebugFlags;
 import nightgames.global.Global;
-import nightgames.global.Match;
-import nightgames.skills.Skill;
 import nightgames.status.Abuff;
 import nightgames.status.BodyFetish;
-import nightgames.status.CockBound;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
 
-import java.io.PrintWriter;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.*;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 public class Body implements Cloneable {
-	class PartReplacement {
+	static class PartReplacement {
 		public List<BodyPart> added;
 		public List<BodyPart> removed;
 		public int duration;
@@ -29,37 +25,9 @@ public class Body implements Cloneable {
 			this.duration = duration;
 		}
 	}
-
-	Collection<BodyPart> bodyParts;
-	Collection<PartReplacement> replacements;
-	public double hotness;
-	public Character character;
-	public static BodyPart nonePart = new GenericBodyPart("none", 0, 1, 1, "none", "");
-	// yeah i know :(
-	public Set<String> pluralParts = new HashSet<String>(Arrays.asList(
-		"hands", "feet", "wings", "breasts", "balls"
-	));
-	private Map<String, BodyPart> prototypes;
-	final static BodyPart requiredParts[] = {
-		new GenericBodyPart("hands",0,1,1,"hands", ""), 
-		new GenericBodyPart("feet",0,1,1,"feet", ""), 
-		new GenericBodyPart("skin",0,1,1,"skin", ""),
-		AssPart.generic, MouthPart.generic, BreastsPart.flat,
-		EarPart.normal
-	};
-	final static String fetishParts[] = {
-			"ass", "feet", "cock", "wings", "tail", "tentacles", "breasts"
-	};
-	public Body(Character character) {
-		this(character, 1);
-	}
-
-	public Body(Character character, double hotness) {
-		this.character = character;
-		bodyParts = new LinkedHashSet<BodyPart>();
-		replacements = new ArrayList<PartReplacement>();
-		this.hotness = hotness;
-		this.prototypes = new HashMap<String, BodyPart>();
+	static private Map<String, BodyPart> prototypes;
+	static {
+		prototypes = new HashMap<String, BodyPart>();
 		prototypes.put(PussyPart.class.getCanonicalName(), PussyPart.normal);
 		prototypes.put(BreastsPart.class.getCanonicalName(), BreastsPart.c);
 		prototypes.put(CockPart.class.getCanonicalName(), CockPart.average);
@@ -73,6 +41,44 @@ public class Body implements Cloneable {
 		prototypes.put(AnalPussyPart.class.getCanonicalName(), new AnalPussyPart());
 		prototypes.put(MouthPussyPart.class.getCanonicalName(), new MouthPussyPart());
 		prototypes.put(GenericBodyPart.class.getCanonicalName(), new GenericBodyPart("", 0, 1, 1, "none", "none"));
+	}
+
+	// yeah i know :(
+	public static BodyPart nonePart = new GenericBodyPart("none", 0, 1, 1, "none", "");
+	public static Set<String> pluralParts = new HashSet<String>(Arrays.asList(
+		"hands", "feet", "wings", "breasts", "balls"
+	));
+	final static BodyPart requiredParts[] = {
+		new GenericBodyPart("hands",0,1,1,"hands", ""), 
+		new GenericBodyPart("feet",0,1,1,"feet", ""), 
+		new GenericBodyPart("skin",0,1,1,"skin", ""),
+		AssPart.generic, MouthPart.generic, BreastsPart.flat,
+		EarPart.normal
+	};
+	final static String fetishParts[] = {
+			"ass", "feet", "cock", "wings", "tail", "tentacles", "breasts"
+	};
+
+	Collection<BodyPart> bodyParts;
+	public double hotness;
+	transient Collection<PartReplacement> replacements;
+	transient public Character character;
+
+	public Body() {
+		bodyParts = new LinkedHashSet<BodyPart>();
+		replacements = new ArrayList<PartReplacement>();
+		hotness = 1.0;
+	}
+
+	public Body(Character character) {
+		this(character, 1);
+	}
+
+	public Body(Character character, double hotness) {
+		this();
+		this.character = character;
+		this.hotness = hotness;
+
 	}
 
 	public Collection<BodyPart> getCurrentParts() {
@@ -511,43 +517,32 @@ public class Body implements Cloneable {
 		return newBody;
 	}
 
-	public void save(PrintWriter saver) {
-		saver.write("body:\n");
-		saver.write(Double.toString(hotness));
-		saver.write('\n');
+	@SuppressWarnings("unchecked")
+	public JSONObject save() {
+		JSONObject bodyObj = new JSONObject();
+		bodyObj.put("hotness", hotness);
+		JSONArray partsArr = new JSONArray();
 		for (BodyPart part : bodyParts) {
-			saver.write(part.getClass().getName());
-			saver.write('\n');
-			part.save(saver);
-			saver.write('\n');
+			JSONObject obj = part.save();
+			obj.put("class", part.getClass().getCanonicalName());
+			partsArr.add(obj);
 		}
-		saver.write("endbody\n");
+		bodyObj.put("parts", partsArr);
+		return bodyObj;
 	}
 
-	public void loadParts(Scanner scanner) {
-		String type = scanner.nextLine().trim();
-		while (!type.equals("endbody")) {
-			BodyPart prototype = prototypes.get(type);
-			if (prototype != null) {
-				BodyPart part = prototype.load(scanner);
-				if (part == null) {
-					System.err.println("Failed to load " + type);					
-				} else {
-					add(part);
-				}
-			} else {
-				System.err.println("Failed to find " + type);
-			}
-			type = scanner.nextLine().trim();
+	public void loadParts(JSONArray partsArr) {
+		for (Object part : partsArr) {
+			JSONObject obj = (JSONObject) part;
+			String classType = (String) obj.get("class");
+			this.add(prototypes.get(classType).load(obj));
 		}
 	}
 
-	public static Body load(Scanner scanner, Character character) {
-		while (!scanner.nextLine().trim().equals("body:")) {}
-		String line = scanner.nextLine().trim();
-		double hotness = Double.valueOf(line);
+	public static Body load(JSONObject bodyObj, Character character) {
+		double hotness = ((Number)bodyObj.get("hotness")).doubleValue();
 		Body body = new Body(character, hotness);
-		body.loadParts(scanner);
+		body.loadParts((JSONArray) bodyObj.get("parts"));
 		return body;
 	}
 

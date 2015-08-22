@@ -1,9 +1,12 @@
 package nightgames.characters;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+
 import nightgames.actions.Action;
 import nightgames.actions.Move;
 import nightgames.actions.Movement;
 import nightgames.areas.Area;
-import nightgames.characters.body.Body;
 import nightgames.combat.Combat;
 import nightgames.combat.Encounter;
 import nightgames.combat.Result;
@@ -22,17 +25,6 @@ import nightgames.status.Masochistic;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
 import nightgames.trap.Trap;
-
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.NavigableMap;
-import java.util.Scanner;
-import java.util.TreeMap;
-
-import javax.swing.Icon;
 
 
 public class NPC extends Character {
@@ -468,10 +460,6 @@ public class NPC extends Character {
 			enc.intrude(this, p2);
 		}
 	}
-	public void save(PrintWriter saver) {
-		saver.write("NPC\n");
-		super.save(saver);
-	}
 
 	@Override
 	public String challenge(Character other) {
@@ -788,5 +776,9 @@ public class NPC extends Character {
 	@Override
 	public String getPortrait(Combat c) {
 		return ai.image(c);
+	}
+	@Override
+	public String getType() {
+		return ai.getType();
 	}
 }

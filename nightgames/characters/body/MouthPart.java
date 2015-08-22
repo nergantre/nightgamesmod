@@ -8,14 +8,12 @@ import nightgames.status.FluidAddiction;
 import nightgames.status.Stsflag;
 import nightgames.status.Trance;
 
-import java.util.Map;
-import java.util.Scanner;
+import org.json.simple.JSONObject;
 
 public class MouthPart extends GenericBodyPart {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 8842280103329414804L;
 	public static MouthPart generic = new MouthPart("mouth", 0, 1, 1);
 	public MouthPart(String desc, String descLong, double hotness, double pleasure, double sensitivity, boolean notable, String prefix) {
 		super(desc, descLong, hotness, pleasure, sensitivity, notable, "mouth", prefix);
@@ -98,7 +96,7 @@ public class MouthPart extends GenericBodyPart {
 	}
 
 	@Override
-	public BodyPart loadFromDict(Map<String,Object> dict) {
+	public BodyPart loadFromDict(JSONObject dict) {
 		try {
 		GenericBodyPart part = new MouthPart(
 									(String)dict.get("desc"),

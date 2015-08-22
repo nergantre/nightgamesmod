@@ -1,5 +1,5 @@
 {
-	"type" : "NPC",
+	"type" : "NPCRosea",
 	"name" : "Rosea",
 	"outfit" : {
 		"top" : ["leafbra", "vinedress"],
@@ -75,7 +75,7 @@
 				"item" : "nectar",
 				"amount" : 10
 			}, {
-				"item" : "dildo",
+				"item" : "Dildo",
 				"amount" : 1
 			}
 		]
@@ -83,17 +83,16 @@
 	"lines" : {
 		"hurt" : [{
 				"requirements" :
-				[{
+				{
 						"trait" : "succubus"
-					}
-				],
+					},
 				"text" : "<b>\"imma drain ya\"</b>"
 			}, {
 				"requirements" :
-				[{
+				{
 						"level" : 20
 					}
-				],
+				,
 				"text" : "<b>\"imma hurt ya\"</b>"
 			}, {
 				"text" : "<b>\"u wot m8\"</b>"
@@ -137,29 +136,54 @@
 		],
 		"victory" : [{
 				"requirements" :
-				[{
-						"result" : "anal"
-					}, {
-						"inserted" : "self"
-					}
-				],
+				{
+					"result" : "anal",
+					"inserted" : ""
+				},
 				"text" : "She wins by fucking your ass"
 			}, {
 				"requirements" :
-				[{
-						"result" : "anal"
-					}, {
-						"inserted" : "other"
-					}
-				],
+				{
+					"result" : "anal",
+					"reverse" : {"inserted" : ""}
+				},
 				"text" : "She wins by you fucking her ass"
 			}, {
 				"requirements" :
-				[{
+				{
 						"result" : "intercourse"
 					}
-				],
+				,
 				"text" : "She wins by fucking you"
+			}, {
+				"requirements" :
+				{
+					"and" : [
+							{"bodypart" : "pussy"},
+							{"bodypart" : "tail"}
+						]
+				}
+				,
+				"text" : "She wins by... having a pussy and a tail?"
+			}, {
+				"requirements" :
+				{
+					"or": [
+						{"dom" : ""},
+						{"item" : {
+								"item" : "Dildo",
+								"amount" : 1
+							}
+						}
+					]
+				},
+				"text" : "She wins by... either being in a dominant position OR having a dildo?"
+			}, {
+				"requirements" :
+				{
+					"not": {"stance" : "Neutral"}
+				},
+				"text" : "She wins while not being in the neutral stance."
 			}, {
 				"text" : "Default NPC victory scene"
 			}
@@ -172,27 +196,18 @@
 				"text" : "Default draw scene"
 			}
 		],
-		"defeat" : [{
-				"text" : "Default player victory scene"
-			}
-		],
 		"victory3p" : [{
-				"requirement" : [{
-						"human" : "target"
-					}
-				],
 				"text" : "Rosea brings you to an orgasm while {other:subject} holds you down."
-			}, {
+			}],
+		"victory3pAssist" :[{
 				"text" : "Rosea brings {other:name-do} to an orgasm while you hold {other:direct-object} down."
 			}
 		],
 		"intervene3p" : [{
-				"requirement" : [{
-						"human" : "target"
-					}
-				],
 				"text" : "While the fight is happening between you and {other:subject}, Rosea sneaks up behind you and holds you down."
-			}, {
+			}
+		],
+		"intervene3pAssist": [{
 				"text" : "While the fight is happening, Rosea sneaks behind {other:name-do} and holds {other:direct-object} down."
 			}
 		]
@@ -206,42 +221,42 @@
 		"desperate" : 100
 	},
 	"portraits" : [{
-			"requirement" : [{
+			"requirement" : {
 					"mood" : "dominant"
 				}
-			],
-			"file" : "rosea_dominant.png"
+			,
+			"text" : "rosea_dominant.png"
 		}, {
-			"requirement" : [{
+			"requirement" : {
 					"mood" : "nervous"
 				}
-			],
-			"file" : "rosea_nervous.png"
+			,
+			"text" : "rosea_nervous.png"
 		}, {
-			"requirement" : [{
+			"requirement" : {
 					"mood" : "angry"
 				}
-			],
-			"file" : "rosea_angry.png"
+			,
+			"text" : "rosea_angry.png"
 		}, {
-			"requirement" : [{
+			"requirement" : {
 					"mood" : "confident"
 				}
-			],
-			"file" : "rosea_confident.png"
+			,
+			"text" : "rosea_confident.png"
 		}, {
-			"requirement" : [{
+			"requirement" : {
 					"mood" : "horny"
 				}
-			],
-			"file" : "rosea_horny.png"
+			,
+			"text" : "rosea_horny.png"
 		}, {
-			"requirement" : [{
+			"requirement" : {
 					"mood" : "desperate"
 				}
-			],
-			"file" : "rosea_desperate.png"
+			,
+			"text" : "rosea_desperate.png"
 		}
 	],
-	"defaultPortrait" : "rosea_desperate.png"
+	"defaultPortrait" : "rosea_confident.png"
 }

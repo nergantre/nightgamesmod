@@ -44,6 +44,11 @@ public abstract class BasePersonality implements Personality {
 			character.gain(item);
 		}
 	}
+
+	public String getType() {
+		return getClass().getSimpleName();
+	}
+
 	public Skill act(HashSet<Skill> available,Combat c) {
 		HashSet<Skill> tactic = new HashSet<Skill>();	
 		Skill chosen;
@@ -83,15 +88,12 @@ public abstract class BasePersonality implements Personality {
 
 	@Override
 	public String image(Combat c) {
-		String fname = "assets/" + character.name().toLowerCase() + "_" + character.mood.name()+".jpg";
-		String fname_default = "assets/" + character.name().toLowerCase() + "_confident.jpg";
-		if (Global.gui().getClass().getResource(fname) != null) {
-			return fname;
-		}
-		if (Global.gui().getClass().getResource(fname_default) != null) {
-			return fname_default;
-		}
-		return null;
+		String fname = character.name().toLowerCase() + "_" + character.mood.name()+".jpg";
+		return fname;
+	}
+
+	public String defaultImage(Combat c) {
+		return character.name().toLowerCase() + "_confident.jpg";
 	}
 
 	public Growth getGrowth() {

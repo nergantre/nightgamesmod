@@ -5,10 +5,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.status.Horny;
-
-import java.io.PrintWriter;
-import java.util.Scanner;
+import org.json.simple.JSONObject;
 
 public enum CockPart implements BodyPart {
 	tiny("tiny", 3),
@@ -123,14 +120,17 @@ public enum CockPart implements BodyPart {
 			return this;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void save(PrintWriter saver) {
-		saver.write(this.name());
+	public JSONObject save() {
+		JSONObject obj = new JSONObject();
+		obj.put("enum", this.name());
+		return obj;
 	}
 
 	@Override
-	public BodyPart load(Scanner loader) {
-		return CockPart.valueOf(loader.nextLine());
+	public BodyPart load(JSONObject obj) {
+		return CockPart.valueOf((String)obj.get("enum"));
 	}
 
 	@Override

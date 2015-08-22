@@ -122,7 +122,6 @@ public class Combat extends Observable implements Serializable, Cloneable{
 	}
 
 	public void turn(){
-		Result state;
 		if(p1.checkLoss()&&p2.checkLoss()){
 			state = eval();
 			p1.evalChallenges(this, null);
@@ -557,6 +556,7 @@ public class Combat extends Observable implements Serializable, Cloneable{
          c.p2 = (Character) p2.clone();
          c.clothespile = (ArrayList) clothespile.clone();
          c.stance = (Position) getStance().clone();
+         c.state = state;
          if (c.getStance().top == p1) c.getStance().top = c.p1;
          if (c.getStance().top == p2) c.getStance().top = c.p2;
          if (c.getStance().bottom == p1) c.getStance().bottom = c.p1;

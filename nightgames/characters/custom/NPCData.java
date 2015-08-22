@@ -31,4 +31,5 @@ public interface NPCData {
 	String getPortraitName(Combat c, Character self, Character other);
 	String getDefaultPortraitName();
 	Plan getPlan();
+	String getType();
 }

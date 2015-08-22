@@ -1,5 +1,6 @@
 package nightgames.gui;
 
+import nightgames.Resources.ResourceLoader;
 import nightgames.actions.Action;
 import nightgames.actions.Locate;
 import nightgames.characters.Attribute;
@@ -501,7 +502,7 @@ public class GUI extends JFrame implements Observer {
 	public void displayImage(String path,String artist){
 		BufferedImage pic = null;
 		try {
-			pic = ImageIO.read(getClass().getResource(
+			pic = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" +
 					path));
 		}catch (IOException localIOException9) {
 		}catch (IllegalArgumentException e) {
@@ -543,9 +544,10 @@ public class GUI extends JFrame implements Observer {
 			if(imagepath!=null){
 				BufferedImage face = null;
 				try {
-					face = ImageIO.read(getClass().getResource(
-							imagepath));
+					face = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" +imagepath));
 				}catch (IOException localIOException9) {
+				} catch (IllegalArgumentException badArg) {
+					
 				}
 				if(face!=null){
 					if (Global.isDebugOn(DebugFlags.DEBUG_IMAGES)) {
@@ -1047,19 +1049,19 @@ public class GUI extends JFrame implements Observer {
 		if (this.player.top.isEmpty()) {
 			if (this.player.bottom.isEmpty()) {
 				try {
-					clothesicon = ImageIO.read(getClass().getResource(
+					clothesicon = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" +
 							"clothes0.png"));
 				} catch (IOException localIOException6) {
 				}
 			} else if (this.player.bottom.peek().getType() ==ClothingType.BOTOUTER) {
 				try {
-					clothesicon = ImageIO.read(getClass().getResource(
+					clothesicon = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" +
 							"clothes4.png"));
 				} catch (IOException localIOException7) {
 				}
 			} else {
 				try {
-					clothesicon = ImageIO.read(getClass().getResource(
+					clothesicon = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" +
 							"clothes2.png"));
 				} catch (IOException localIOException8) {
 				}
@@ -1067,19 +1069,19 @@ public class GUI extends JFrame implements Observer {
 		}else if(this.player.top.peek().getType()==ClothingType.TOPOUTER){
 			if (this.player.bottom.isEmpty()) {
 				try {
-					clothesicon = ImageIO.read(getClass().getResource(
+					clothesicon = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" +
 							"clothes6.png"));
 				} catch (IOException localIOException9) {
 				}
 			} else if (this.player.bottom.peek().getType() ==ClothingType.BOTOUTER) {
 				try {
-					clothesicon = ImageIO.read(getClass().getResource(
+					clothesicon = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" +
 							"clothes8.png"));
 				} catch (IOException localIOException10) {
 				}
 			} else {
 				try {
-					clothesicon = ImageIO.read(getClass().getResource(
+					clothesicon = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" +
 							"clothes7.png"));
 				} catch (IOException localIOException11) {
 				}
@@ -1088,19 +1090,19 @@ public class GUI extends JFrame implements Observer {
 		else{
 			if (this.player.bottom.isEmpty()) {
 				try {
-					clothesicon = ImageIO.read(getClass().getResource(
+					clothesicon = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" +
 							"clothes1.png"));
 				} catch (IOException localIOException9) {
 				}
 			} else if (this.player.bottom.peek().getType() ==ClothingType.BOTOUTER) {
 				try {
-					clothesicon = ImageIO.read(getClass().getResource(
+					clothesicon = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" +
 							"clothes5.png"));
 				} catch (IOException localIOException10) {
 				}
 			} else {
 				try {
-					clothesicon = ImageIO.read(getClass().getResource(
+					clothesicon = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" +
 							"clothes3.png"));
 				} catch (IOException localIOException11) {
 				}
