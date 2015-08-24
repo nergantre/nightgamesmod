@@ -1216,14 +1216,14 @@ public abstract class Character extends Observable implements Cloneable{
 		loseWillpower(c, i, 0, false);
 	}
 
-	public void loseWillpower(Combat c, int i, boolean orgasm) {
-		loseWillpower(c, i, 0, orgasm);
+	public void loseWillpower(Combat c, int i, boolean primary) {
+		loseWillpower(c, i, 0, primary);
 	}
 
-	public void loseWillpower(Combat c, int i, int extra, boolean orgasm) {
+	public void loseWillpower(Combat c, int i, int extra, boolean primary) {
 		int amt = i + extra;
 		boolean reduced = false;
-		if (has(Trait.strongwilled) && orgasm) {
+		if (has(Trait.strongwilled) && primary) {
 			amt = amt * 2 / 3 + 1;
 			reduced = true;
 		}

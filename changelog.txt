@@ -21,6 +21,7 @@ Balance changes:
 - Finger and handjob now does more pleasure damage.
 - Everyone now starts with 40 willpower
 - Knockdowns now causes the target to lose either 1/8th of their willpower, up to a maximum of 15
+- Knockdown willpower loss is now affected by strongwilled.
 
 Other changes:
 - Status panel now hides items that you have 0 of.
