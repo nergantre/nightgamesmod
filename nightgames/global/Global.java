@@ -216,6 +216,8 @@ public class Global {
 		skillPool.add(new Cunnilingus(p));
 		skillPool.add(new Escape(p));
 		skillPool.add(new Flick(p));
+		skillPool.add(new LivingClothing(p));
+		skillPool.add(new LivingClothingOther(p));
 		skillPool.add(new Engulf(p));
 		skillPool.add(new Knee(p));
 		skillPool.add(new LegLock(p));
@@ -837,7 +839,7 @@ public class Global {
 	}
 
 	public static boolean newChallenger(Personality challenger){
-		if(getNPC(challenger.getCharacter().name())==null){
+		if(!players.contains(challenger.getCharacter())){
 			while(challenger.getCharacter().getLevel()<=human.getLevel()){
 				challenger.getCharacter().ding();
 			}
@@ -850,7 +852,7 @@ public class Global {
 
 	public static NPC getNPC(String name){
 		for(Character c : allNPCs()) {
-			if(c.getType().equalsIgnoreCase(name)){
+			if(c.getName().equalsIgnoreCase(name)){
 				return (NPC)c;
 			}
 		}

@@ -512,10 +512,6 @@ public class Informant extends Activity {
 	}
 
 	public boolean newCharacters() {
-		return Global.checkFlag(Flag.rank1)
-				&& ((!Global.checkFlag(Flag.Reyka) && Global
-						.checkFlag(Flag.blackMarketPlus)) || (!Global
-						.checkFlag(Flag.Kat) && Global
-						.checkFlag(Flag.magicstore)));
+		return Global.checkFlag(Flag.rank1);
 	}
 }
