@@ -48,6 +48,11 @@ public class StandUp extends Skill {
 	public Tactics type(Combat c) {
 		return Tactics.positioning;
 	}
+	
+	@Override
+	public float priorityMod(Combat c) {
+		return -2;
+	}
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
