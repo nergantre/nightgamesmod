@@ -21,6 +21,7 @@ Balance changes:
 - Finger and handjob now does more pleasure damage.
 
 Other changes:
+- Characters now have to be pleasured before they orgasm. Temptation damage is no longer sufficient
 - lowered AI priority of stand up
 - Changed how statuses's resource modifiers stacked
 	- Multiple statuses used to stack multiplicatively
