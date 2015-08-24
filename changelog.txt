@@ -18,6 +18,7 @@ Balance changes:
 - Experienced lover now decreases self damage from fucking by 33% instead of 25%
 - Exhibitionist I find is good enough as is.
 - Suckle now does more damage, but builds mojo for the opponent (5%, or 10% if lactating)
+- Finger and handjob now does more pleasure damage.
 
 Other changes:
 - Changed how statuses's resource modifiers stacked
