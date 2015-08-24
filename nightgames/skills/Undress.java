@@ -22,7 +22,9 @@ public class Undress extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&!c.getStance().sub(getSelf())&&!getSelf().nude()&&!c.getStance().prone(getSelf())&&!getSelf().has(Trait.strapped);
+		return getSelf().canAct()&&!c.getStance().sub(getSelf())
+				&&(!getSelf().nude() || (!getSelf().reallyNude() && getSelf().stripDifficulty(target) > 0))
+				&&!c.getStance().prone(getSelf())&&!getSelf().has(Trait.strapped);
 	}
 
 	@Override
@@ -31,14 +33,24 @@ public class Undress extends Skill {
 	}
 
 	@Override
-	public boolean resolve(Combat c, Character target) {	
+	public boolean resolve(Combat c, Character target) {
+		Result res = Result.normal;
+		int difficulty = getSelf().stripDifficulty(target);
+		if (difficulty > 0) {
+			res = Global.random(50) > difficulty ? Result.weak : Result.miss;
+		}
+		
 		if(getSelf().human()){
-			c.write(getSelf(),deal(c,0,Result.normal, target));
+			c.write(getSelf(),deal(c,0,res, target));
 		}
 		else if(target.human()){
-			c.write(getSelf(),receive(c,0,Result.normal, target));
+			c.write(getSelf(),receive(c,0,res, target));
 		}
-		getSelf().undress(c);
+		if (res == Result.normal) {
+			getSelf().undress(c);
+		} else if (res == Result.weak) {
+			getSelf().stripRandom(c, true);
+		}
 		return true;
 	}
 
@@ -54,6 +66,11 @@ public class Undress extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
+		if (modifier == Result.miss) {
+			return "You try to struggle out of your clothing, but it stubbornly clings onto you.";
+		} else if (modifier == Result.weak) {
+			return "You manage to struggle out of some of your clothing.";
+		}
 		if (c.getStance().en != Stance.neutral) {
 			return "You wiggle out of your clothes and toss them aside";
 		}
@@ -62,6 +79,11 @@ public class Undress extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
+		if (modifier == Result.miss) {
+			return getSelf().subject() + " tries to struggle out of your clothing, but it stubbornly clings onto her.";
+		} else if (modifier == Result.weak) {
+			return getSelf().subject() + " manages to struggle out of some of her clothing.";
+		}
 		if (c.getStance().en != Stance.neutral) {
 			return getSelf().name() + " wiggles out of her clothes and tosses them aside";
 		}

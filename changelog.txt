@@ -6,7 +6,8 @@ Bug fix:
 - Tighten can no longer be used when the opponent has a strapon
 - Fixed a bug where ineffective panties would still obstruct reverse fucking
 - Fixed a bug where drain kiss and upgraded kiss texts were switched.
- 
+- Fixed a bug where stun blast would not actually make the opponent fall
+
 Balance changes:
 - Strip top and Strip bottom now only gives a pseudo 20 cunning bonus when in a dominant position (rather than 50)
 - Level Drain now can only drain 1 level maximum
@@ -28,6 +29,11 @@ New:
 	- Increases base pleasure damage of fucking (but not thrusting/grinding/etc) by min(seduction / 4, 40)
 	- Angel gets this trait at 24 and Reyka at 17
 	- Players can get it after getting the Powerful hips trait
+- Added skills LivingClothing: Self and LivingClothing: Other
+	- This skill is usable with 15 science, and clothes either yourself or the opponent with tentacles.
+	- The only difference between the two other than the target is that the ones for the opponent is ineffective (does not block fucking etc)
+	- Tentacle clothing does arousal damage every turn.
+	- LivingClothing: Other can only be done while holding the opponent down
 
 Other changes:
 - Status panel now hides items that you have 0 of.

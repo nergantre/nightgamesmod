@@ -52,7 +52,10 @@ public enum Clothing implements Loot{
 	leafbra		("leaf bra",ClothingType.TOPUNDER,0,"a ",Trait.none,Trait.skimpy,1500),
 	vinethong	("vine thong",ClothingType.UNDERWEAR,0,"a ",Trait.none,Trait.skimpy,1500),
 	slimebottom	("slime",ClothingType.UNDERWEAR,0,"",Trait.none,Trait.ineffective,1200),
-	slimetop	("slime",ClothingType.TOP,0,"",Trait.none,Trait.ineffective,1200)
+	slimetop	("slime",ClothingType.TOP,0,"",Trait.none,Trait.ineffective,1200),
+	opententaclebottom	("open tentacle undies",ClothingType.UNDERWEAR,25,"",Trait.tentacleUnderwear,Trait.ineffective,0),
+	tentaclebottom	("tentacle underwear",ClothingType.UNDERWEAR,25,"",Trait.tentacleUnderwear,Trait.skimpy,0),
+	tentacletop ("tentacle suit",ClothingType.TOP,25,"",Trait.tentacleSuit,Trait.skimpy,0)
 	;
 	private String name;
 	private int dc;

@@ -18,7 +18,7 @@ public class StripTease extends Skill {
 		return user.get(Attribute.Seduction)>=24 && !user.has(Trait.direct) && !user.has(Trait.shy);
 	}
 	public static boolean isUsable(Combat c, Character self, Character target) {
-		return self.canAct()&&c.getStance().mobile(self)&&!self.nude()&&!c.getStance().prone(self)&&c.getStance().front(self)&&!self.has(Trait.strapped);
+		return self.stripDifficulty(target) == 0 && self.canAct()&&c.getStance().mobile(self)&&!self.nude()&&!c.getStance().prone(self)&&c.getStance().front(self)&&!self.has(Trait.strapped);
 	}
 
 	@Override

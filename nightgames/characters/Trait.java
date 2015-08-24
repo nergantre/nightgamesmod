@@ -231,7 +231,8 @@ public enum Trait {
 	martial("Martial","Ki bonus"),
 	broody("Broody","Dark bonus"),
 	kinky("Kinky","Fetish bonus"),
-	
+	tentacleUnderwear("Tentacle Underwear","Wearing tentacle underwear"),
+	tentacleSuit("Tentacle Suit","Wearing a tentacle suit"),
 	none("",""),
 	;
 	private String desc;

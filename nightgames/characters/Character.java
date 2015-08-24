@@ -386,7 +386,7 @@ public abstract class Character extends Observable implements Cloneable{
 		
 		//threshold at which pain calms you down
 		int painAllowance = Math.max(10, getStamina().max() / 25);
-		if (c.getOther(this).has(Trait.wrassler)) {
+		if (c != null && c.getOther(this).has(Trait.wrassler)) {
 			painAllowance *= 1.5;
 		}
 		int difference = pain - painAllowance;
@@ -596,6 +596,9 @@ public abstract class Character extends Observable implements Cloneable{
 	public int init(){
 		return att.get(Attribute.Speed)+Global.random(10);
 	}
+	public boolean reallyNude(){
+		return reallyTopless() && reallyPantsless();
+	}
 	public boolean nude(){
 		return topless()&&pantsless();
 	}
@@ -676,18 +679,30 @@ public abstract class Character extends Observable implements Cloneable{
 		}
 	}
 	public Clothing stripRandom(Combat c){
+		return stripRandom(c, false);
+	}
+	public boolean reallyTopless() {
+		return top.isEmpty();
+	}
+	public boolean reallyPantsless() {
+		return bottom.isEmpty();
+	}
+	public Clothing stripRandom(Combat c, boolean force){
 		int half;
-		if (topless() && !pantsless()) {
+		boolean topless = force ? reallyTopless() : topless();
+		boolean pantsless = force ? reallyPantsless() : pantsless();
+		
+		if (topless && !pantsless) {
 			half = 1;
-		} else if (topless() && !pantsless()) {
+		} else if (!topless && pantsless) {
 			half = 0;
-		} else if (!topless() && !pantsless()) {
+		} else if (!topless && !pantsless) {
 			half = Global.random(2);
 		} else {
 			return null;
 		}
 		if(half==0){
-			if(topless()){
+			if(topless){
 				return null;
 			}
 			else{
@@ -696,7 +711,7 @@ public abstract class Character extends Observable implements Cloneable{
 			}
 		}
 		else{
-			if(pantsless()){
+			if(pantsless){
 				return null;
 			}
 			else{
@@ -1287,6 +1302,32 @@ public abstract class Character extends Observable implements Cloneable{
 			}
 			//TODO this works weirdly when both have both organs.
 			body.tickHolding(c, opponent, selfOrgan, otherOrgan);
+		}
+		if (has(Trait.tentacleSuit)) {
+			c.write(this, Global.format("The tentacle suit squirms against {self:name-possessive} body.", this, opponent));
+			if (hasBreasts())
+				body.pleasure(null, null, body.getRandom("breasts"), 5, c);
+			body.pleasure(null, null, body.getRandom("skin"), 5, c);
+		}
+		if (has(Trait.tentacleUnderwear)) {
+			String undieName = "underwear";
+			if (hasPussy()) {
+				undieName = "panties";
+			}
+			c.write(this, Global.format("The tentacle " + undieName + " squirms against {self:name-possessive} crotch.", this, opponent));
+			if (hasDick())
+				body.pleasure(null, null, body.getRandom("cock"), 5, c);
+			if (hasBalls())
+				body.pleasure(null, null, body.getRandom("balls"), 5, c);
+			if (hasPussy())
+				body.pleasure(null, null, body.getRandom("pussy"), 5, c);
+			body.pleasure(null, null, body.getRandom("ass"), 5, c);
+		}
+		if (checkOrgasm()) {
+			doOrgasm(c, opponent, null, null);
+		}
+		if (opponent.checkOrgasm()) {
+			opponent.doOrgasm(c, this, null, null);
 		}
 		if(opponent.has(Trait.magicEyeEnthrall)&&getArousal().percent()>=50&& c.getStance().facing() &&Global.random(20)==0){
 			c.write(opponent,Global.format("<br>{other:NAME-POSSESSIVE} eyes start glowing and captures both {self:name-possessive} gaze and consciousness.", this, opponent));
@@ -2162,5 +2203,12 @@ public abstract class Character extends Observable implements Cloneable{
 	}
 	public String recruitLiner() {
 		return "";
+	}
+
+	public int stripDifficulty(Character other) {
+		if (has(Trait.tentacleSuit) || has(Trait.tentacleUnderwear)) { 
+			return other.get(Attribute.Science) + 20;
+		}
+		return 0;
 	}
 }
