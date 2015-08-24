@@ -90,8 +90,12 @@ public class Fuck extends Skill {
 			} else {
 				c.setStance(c.getStance().insert());
 			}
+			int otherm = m;
+			if (getSelf().has(Trait.insertion)) {
+				otherm += 10;
+			}
 			target.body.pleasure(getSelf(), selfO, targetO, m, c);
-			getSelf().body.pleasure(target, targetO, selfO, m, c);
+			getSelf().body.pleasure(target, targetO, selfO, otherm, c);
 		} else {
 			if(getSelf().human()){
 				c.write(getSelf(),premessage + deal(c,0,Result.miss, target));

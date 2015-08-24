@@ -54,7 +54,6 @@ public class Carry extends Fuck {
 				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s and %s halfway and", getSelf().bottom.get(0).getName(), getSelf().bottom.get(1).getName());
 			}
 		}
-
 		premessage = Global.format(premessage, getSelf(), target);
 		if(target.roll(this, c, accuracy())){
 			if(getSelf().human()){
@@ -63,6 +62,13 @@ public class Carry extends Fuck {
 			else if(target.human()){
 				c.write(getSelf(),premessage + receive(c,0,Result.normal, getSelf()));
 			}
+			int m = 5 + Global.random(5);
+			int otherm = m;
+			if (getSelf().has(Trait.insertion)) {
+				otherm += 10;
+			}
+			target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c);
+			getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c);
 			c.setStance(new Standing(getSelf(),target));
 		}
 		else{

@@ -102,7 +102,8 @@ public enum Trait {
 	oiledass("Oiled Ass", "Natural oils makes her ass always ready."),
 	autonomousAss("Autonomous Ass", "Asshole instinctively forces anything inside of it to cum."),
 	fetishTrainer("Fetish Trainer", "Capable of developing other's fetishes."),
-	
+	insertion("Insertion","More pleasure on insertion"), //more damage on insertion.
+
 	//training perks
 	analTraining1("Anal Training 1", "Refined ass control."),
 	analTraining2("Anal Training 2", "Perfected ass control."),

@@ -21,6 +21,7 @@ Balance changes:
 - Finger and handjob now does more pleasure damage.
 
 Other changes:
+- lowered AI priority of stand up
 - Changed how statuses's resource modifiers stacked
 	- Multiple statuses used to stack multiplicatively
 		(if you had 50% pain reduction from one status, and 50% from another, it would be 25%)

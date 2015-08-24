@@ -2,6 +2,7 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -48,7 +49,13 @@ public class ReverseCarry extends Carry {
 			else if(target.human()){
 				c.write(getSelf(),premessage + receive(c,0,Result.normal, getSelf()));
 			}
-
+			int m = 5 + Global.random(5);
+			int otherm = m;
+			if (getSelf().has(Trait.insertion)) {
+				otherm += 10;
+			}
+			target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c);
+			getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c);
 			c.setStance(new Jumped(getSelf(),target));
 		}
 		else{

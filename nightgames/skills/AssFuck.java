@@ -91,7 +91,11 @@ public class AssFuck extends Fuck {
 		} else {
 			c.setStance(new AnalProne(getSelf(),target));
 		}
-		target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c);		
+		int otherm = m;
+		if (getSelf().has(Trait.insertion)) {
+			otherm += 10;
+		}
+		target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), otherm, c);		
 		if (!getSelf().has(Trait.strapped)) {
 			getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), m / 2, c);
 		}

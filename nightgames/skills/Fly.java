@@ -3,6 +3,7 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -70,6 +71,13 @@ public class Fly extends Fuck {
 			getSelf().emote(Emotion.horny, 30);
 			target.emote(Emotion.desperate, 50);
 			target.emote(Emotion.nervous, 75);
+			int m = 5 + Global.random(5);
+			int otherm = m;
+			if (getSelf().has(Trait.insertion)) {
+				otherm += 10;
+			}
+			target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c);
+			getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c);
 			c.setStance(new FlyingCarry(this.getSelf(), target));
 		} else {
 			getSelf().add(c, new Falling(getSelf()));
