@@ -170,13 +170,6 @@
 		</Requirements>
 	</Trait>
 	<Trait>
-		<Name>insertion</Name>
-		<Requirements>
-				<TraitReq>powerfulhips</TraitReq>
-				<AttributeReq type="Seduction">15</AttributeReq>
-		</Requirements>
-	</Trait>
-	<Trait>
 		<Name>graceful</Name>
 		<Requirements>
 			<TraitReq>soulsucker</TraitReq>

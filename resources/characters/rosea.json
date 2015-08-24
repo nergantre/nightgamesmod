@@ -1,6 +1,6 @@
 {
 	"type" : "NPCRosea",
-	"name" : "Rosea234",
+	"name" : "Rosea",
 	"outfit" : {
 		"top" : ["leafbra", "vinedress"],
 		"bottom" : ["vinethong"]
