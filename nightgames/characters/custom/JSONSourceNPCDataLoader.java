@@ -105,8 +105,10 @@ public class JSONSourceNPCDataLoader {
 			loadLines((JSONArray)object.get("portraits"), data.portraits);
 			loadRecruitment((JSONObject)object.get("recruitment"), data.recruitment);
 		} catch (ClassCastException e) {
+			e.printStackTrace();
 			throw new ParseException("Badly formatted JSON character: " + e.getMessage(), 0);
 		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
 			throw new ParseException("Nonexistent value: " + e.getMessage(), 0);
 		}
 		return data;
@@ -117,12 +119,15 @@ public class JSONSourceNPCDataLoader {
 		recruitment.action = JSONUtils.readString(obj, "action");
 		recruitment.confirm = JSONUtils.readString(obj, "confirm");
 		loadRequirement((JSONObject) obj.get("requirements"), recruitment.requirement);
-		loadEffects((JSONObject) obj.get("cost"), recruitment.effects);
+		loadEffects((JSONArray) obj.get("cost"), recruitment.effects);
 	}
 
-	private static void loadEffects(JSONObject obj, List<CustomEffect> effects) {
-		if (obj.containsKey("modMoney")) {
-			effects.add(new MoneyModEffect(JSONUtils.readInteger(obj, "modMoney")));
+	private static void loadEffects(JSONArray jsonArray, List<CustomEffect> effects) {
+		for (Object obj : jsonArray) {
+			JSONObject jsonObj = (JSONObject) obj;
+			if (jsonObj.containsKey("modMoney")) {
+				effects.add(new MoneyModEffect(JSONUtils.readInteger(jsonObj, "modMoney")));
+			}
 		}
 	}
 
