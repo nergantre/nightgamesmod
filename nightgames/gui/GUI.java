@@ -1169,10 +1169,12 @@ public class GUI extends JFrame implements Observer {
 
 		ArrayList<JLabel> itmlbls = new ArrayList<JLabel>();
 		for (Item i : items.keySet()) {
-			itmlbls.add(count, new JLabel(i.getName() + ": " + items.get(i)+"\n"));
-			itmlbls.get(count).setToolTipText(i.getDesc());
-			inventoryPanel.add(itmlbls.get(count));
-			count++;
+			if (items.get(i) > 0) {
+				itmlbls.add(count, new JLabel(i.getName() + ": " + items.get(i)+"\n"));
+				itmlbls.get(count).setToolTipText(i.getDesc());
+				inventoryPanel.add(itmlbls.get(count));
+				count++;
+			}
 		}
 		
 		
