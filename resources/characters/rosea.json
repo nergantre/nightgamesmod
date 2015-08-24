@@ -1,6 +1,6 @@
 {
 	"type" : "NPCRosea",
-	"name" : "Rosea",
+	"name" : "Rosea234",
 	"outfit" : {
 		"top" : ["leafbra", "vinedress"],
 		"bottom" : ["vinethong"]
@@ -134,6 +134,10 @@
 				"text" : "Rosea sees you after the fight cuz she wubs u. (highest affection)"
 			}
 		],
+		"night" : [{
+				"text" : "Rosea sees you after the fight cuz she wubs u. (highest affection)"
+			}
+		],
 		"victory" : [{
 				"requirements" :
 				{
@@ -220,38 +224,49 @@
 		"horny" : 100,
 		"desperate" : 100
 	},
+	"recruitment" : {
+		"action" : "Rosea: $1000",
+		"requirements" : {
+			"level" : 10,
+		},
+		"cost" : [
+			{"modMoney" : -1000}
+		],
+		"introduction" : "Rosea's a tree. If you want, I can plant her in the middle of the front lawn.",
+		"confirm" : "Alright, you'll see her tomorrow at dusk"
+	}
 	"portraits" : [{
-			"requirement" : {
+			"requirements" : {
 					"mood" : "dominant"
 				}
 			,
 			"text" : "rosea_dominant.png"
 		}, {
-			"requirement" : {
+			"requirements" : {
 					"mood" : "nervous"
 				}
 			,
 			"text" : "rosea_nervous.png"
 		}, {
-			"requirement" : {
+			"requirements" : {
 					"mood" : "angry"
 				}
 			,
 			"text" : "rosea_angry.png"
 		}, {
-			"requirement" : {
+			"requirements" : {
 					"mood" : "confident"
 				}
 			,
 			"text" : "rosea_confident.png"
 		}, {
-			"requirement" : {
+			"requirements" : {
 					"mood" : "horny"
 				}
 			,
 			"text" : "rosea_horny.png"
 		}, {
-			"requirement" : {
+			"requirements" : {
 					"mood" : "desperate"
 				}
 			,
