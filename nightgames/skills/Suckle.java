@@ -21,7 +21,7 @@ public class Suckle extends Skill {
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		Result results = target.has(Trait.lactating) ? Result.special : Result.normal;
-		int m = (getSelf().get(Attribute.Seduction) > 10 ? 5 : 0) + Global.random(6);
+		int m = (getSelf().get(Attribute.Seduction) > 10 ? 8 : 4) + Global.random(6);
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,results, target));
 		}
@@ -34,7 +34,9 @@ public class Suckle extends Skill {
 		target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("breasts"), m, c);
 		if (results == Result.special) {
 			getSelf().tempt(c, target, target.body.getRandomBreasts(), (3 + target.body.getRandomBreasts().size) * 2);
-			target.buildMojo(c, 8);
+			target.buildMojo(c, 10);
+		} else {
+			target.buildMojo(c, 5);
 		}
 		return true;
 	}
@@ -74,7 +76,7 @@ public class Suckle extends Skill {
 
 	@Override
 	public String describe() {
-		return "Suck your opponent's nipples";
+		return "Suck your opponent's nipples. Builds mojo for the opponent.";
 	}
 	@Override
 	public boolean makesContact() {

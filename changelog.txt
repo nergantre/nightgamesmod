@@ -17,6 +17,7 @@ Balance changes:
 - Wrassler now also increases the opponent's pain tolerance by 50% as well.
 - Experienced lover now decreases self damage from fucking by 33% instead of 25%
 - Exhibitionist I find is good enough as is.
+- Suckle now does more damage, but builds mojo for the opponent (5%, or 10% if lactating)
 
 Other changes:
 - Changed how statuses's resource modifiers stacked
