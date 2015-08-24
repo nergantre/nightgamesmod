@@ -90,6 +90,7 @@ public abstract class Character extends Observable implements Cloneable{
 	public int availableAttributePoints;
 	public boolean orgasmed;
 	public boolean custom;
+	private boolean pleasured;
 	public static int malePref = 1;
 
 	@SuppressWarnings("unchecked")
@@ -112,6 +113,7 @@ public abstract class Character extends Observable implements Cloneable{
 		mojo = new Meter(33+2*level);
 		willpower = new Meter(50);
 		orgasmed = false;
+		pleasured = false;
 		top = new Stack<Clothing>();
 		bottom = new Stack<Clothing>();
 		outfit = new Stack[2];
@@ -461,6 +463,7 @@ public abstract class Character extends Observable implements Cloneable{
 		if(pleasure<1){
 			pleasure=1;
 		}
+		pleasured = true;
 		//pleasure = 0;
 		arousal.restoreNoLimit(Math.round(pleasure));
 	}
@@ -1158,7 +1161,7 @@ public abstract class Character extends Observable implements Cloneable{
 
 	public abstract void afterParty();
 	public boolean checkOrgasm() {
-		return getArousal().isFull() && !is(Stsflag.orgasmseal);
+		return getArousal().isFull() && !is(Stsflag.orgasmseal) && pleasured;
 	}
 	public void doOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart) {
 		orgasmed = true;
@@ -1300,6 +1303,7 @@ public abstract class Character extends Observable implements Cloneable{
 			c.write(opponent,Global.format("<br>{other:NAME-POSSESSIVE} eyes start glowing and {self:subject-action:feel|feels} a strong pleasure wherever {other:possessive} gaze lands. {self:SUBJECT-ACTION:are|is} literally being raped by {other:name-possessive} eyes!", this, opponent));
 			tempt(c, opponent, opponent.get(Attribute.Seduction) / 2);
 		}
+		pleasured = false;
 	}
 
 	public String orgasmLiner(Combat c) {
