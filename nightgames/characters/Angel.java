@@ -1,38 +1,18 @@
 package nightgames.characters;
 
-import nightgames.actions.Action;
-import nightgames.actions.Move;
-import nightgames.actions.Movement;
-import nightgames.actions.Resupply;
-import nightgames.areas.Area;
-import nightgames.characters.body.Body;
+import java.util.Optional;
+
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.EarPart;
-import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.daytime.Daytime;
-import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.global.Modifier;
 import nightgames.items.Clothing;
-import nightgames.items.ConditionalEffect;
 import nightgames.items.Item;
-import nightgames.skills.Skill;
-import nightgames.skills.Tactics;
-import nightgames.stance.Stance;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Optional;
-
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 
 public class Angel extends BasePersonality {
 	/**
