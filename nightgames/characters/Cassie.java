@@ -251,7 +251,7 @@ public class Cassie extends BasePersonality {
 					"face lights up in a broad smile. <i>\"It feels like you released a lot. Did you feel good?\"</i> You groan and slump flat on the ground in defeat. She gives you a light kiss on the tip of your nose " +
 					"and starts to grind her clit against your pelvis. <i>\"Come on, don't be mean. Tell me I made you feel good,\"</i> she whispers in a needy voice. <i>\"It'll help me finish faster.\"</i> Is she really " +
 					"getting off on praise, or on the knowledge that her technique gave you pleasure? Either way, there's no reason to lie, she definitely made you feel amazing. She shudders and starts to breathe " +
-					"harder as you whisper to her how good her pussy felt. She leans forward to present her modest breasts to you. <i>\"Can you touch my nipples more? I really like that.\"</i> You reach up and play with " +
+					"harder as you whisper to her how good her pussy felt. She leans forward to present her " + character.body.getLargestBreasts().describe(character) + " to you. <i>\"Can you touch my nipples more? I really like that.\"</i> You reach up and play with " +
 					"her breasts as she continues to grind against you. She stops your pillow talk by kissing you desperately just before you feel her body tense up in orgasm. She collapses on top of you and kisses " +
 					"you cheek contently. <i>\"I'll keep practicing and make you feel even better next time, \"</I> she tells you happily. <i>\"I promise.\"</i> ";
 		}
