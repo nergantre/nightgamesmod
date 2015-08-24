@@ -122,72 +122,25 @@ public class Match {
 		Character winner=null;
 		for(Character combatant:score.keySet()){
 			Global.gui().message(combatant.name()+" scored "+score.get(combatant)+" victories.");
-			combatant.gainMoney(score.get(combatant)*combatant.prize());
+			combatant.modMoney(score.get(combatant)*combatant.prize());
 			if(winner==null||score.get(combatant)>=score.get(winner)){
 				winner=combatant;
 			}
 			if(combatant.human()){
 				player=combatant;
 			}
-			while(combatant.has(Item.CassieTrophy)){
-				combatant.consume(Item.CassieTrophy,1);
-				combatant.gainMoney(combatant.prize());
-				if(combatant.human()){
-					cloth++;
-				}
-			}
-			while(combatant.has(Item.MaraTrophy)){
-				combatant.consume(Item.MaraTrophy,1);
-				combatant.gainMoney(combatant.prize());
-				if(combatant.human()){
-					cloth++;
-				}
-			}
-			while(combatant.has(Item.JewelTrophy)){
-				combatant.consume(Item.JewelTrophy,1);
-				combatant.gainMoney(combatant.prize());
-				if(combatant.human()){
-					cloth++;
-				}
-			}
-			while(combatant.has(Item.AngelTrophy)){
-				combatant.consume(Item.AngelTrophy,1);
-				combatant.gainMoney(combatant.prize());
-				if(combatant.human()){
-					cloth++;
-				}
-			}
-			while(combatant.has(Item.PlayerTrophy)){
-				combatant.consume(Item.PlayerTrophy,1);
-				combatant.gainMoney(combatant.prize());
-				if(combatant.human()){
-					cloth++;
-				}
-			}
-			while(combatant.has(Item.ReykaTrophy)){
-				combatant.consume(Item.ReykaTrophy,1);
-				combatant.gainMoney(combatant.prize());
-				if(combatant.human()){
-					cloth++;
-				}
-			}
-			while(combatant.has(Item.AiriTrophy)){
-				combatant.consume(Item.AiriTrophy,1);
-				combatant.gainMoney(combatant.prize());
-				if(combatant.human()){
-					cloth++;
-				}
-			}
-			while(combatant.has(Item.KatTrophy)){
-				combatant.consume(Item.KatTrophy,1);
-				combatant.gainMoney(combatant.prize());
-				if(combatant.human()){
-					cloth++;
+			for (Character other : combatants) {
+				while(combatant.has(other.getTrophy())){
+					combatant.consume(other.getTrophy(),1);
+					combatant.modMoney(other.prize());
+					if(combatant.human()){
+						cloth++;
+					}
 				}
 			}
 			for(Challenge c: combatant.challenges){
 				if(c.done){
-					combatant.gainMoney(c.reward());
+					combatant.modMoney(c.reward());
 					if(combatant.human()){
 						creward += c.reward();
 					}
@@ -199,14 +152,14 @@ public class Match {
 		}
 		Global.gui().message("You made $"+score.get(player)*player.prize()+" for defeating opponents.");
 		int bonus = score.get(player)*condition.bonus();
-		winner.gainMoney(bonus);
+		winner.modMoney(bonus);
 		if(bonus>0){
 			Global.gui().message("You earned an additional $"+bonus+" for accepting the handicap.");
 		}
 		if(winner==player){
 			Global.gui().message("You also earned a bonus of $"+5*player.prize()+" for placing first.");
 		}
-		winner.gainMoney(5*winner.prize());
+		winner.modMoney(5*winner.prize());
 		Global.gui().message("You traded in "+cloth+" sets of clothes for a total of $"+cloth*player.prize()+".");
 		if(creward>0){
 			Global.gui().message("You also discover an envelope with $"+creward+" slipped under the door to your room. Presumably it's payment for completed challenges.");

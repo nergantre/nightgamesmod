@@ -109,8 +109,8 @@ public class Global {
 	private static HashSet<Trait> featPool;
 	private static HashSet<Character> players;
 	private static HashSet<Character> resting;
-	private static HashSet<Flag> flags;
-	private static HashMap<Flag,Float> counters;
+	private static HashSet<String> flags;
+	private static HashMap<String,Float> counters;
 	private static Player human;
 	private static Match match;
 	private static Daytime day;
@@ -127,10 +127,10 @@ public class Global {
 
 	public Global(){
 		rng=new Random();
-		flags = new HashSet<Flag>();
+		flags = new HashSet<String>();
 		players = new HashSet<Character>();
 		resting = new HashSet<Character>();
-		counters = new HashMap<Flag,Float>();
+		counters = new HashMap<String,Float>();
 		jdate = new Date();
 		counters.put(Flag.malePref.name(), (float) Character.malePref);
 		
@@ -558,7 +558,7 @@ public class Global {
 	    return original.substring(0, 1).toUpperCase() + original.substring(1);
 	}
 
-	public static Map<String, Character> characterPool;
+	public static Map<String, NPC> characterPool;
 	
 	public static HashMap<String,Area> buildMap(){
 		Area quad = new Area("Quad","You are in the <b>Quad</b> that sits in the center of the Dorm, the Dining Hall, the Engineering Building, and the Liberal Arts Building. There's " +
@@ -658,31 +658,39 @@ public class Global {
 		return map;
 	}
 
-	public static void flag(Flag f){
+	public static void flag(String f){
 		flags.add(f);
 	}
 
-	public static void unflag(Flag f){
+	public static void unflag(String f){
 		flags.remove(f);
 	}
 
+	public static void flag(Flag f){
+		flags.add(f.name());
+	}
+
+	public static void unflag(Flag f){
+		flags.remove(f.name());
+	}
+
 	public static boolean checkFlag(Flag f){
-		return flags.contains(f);
+		return flags.contains(f.name());
 	}
 
 	public static float getValue(Flag f){
-		if(!counters.containsKey(f)){
+		if(!counters.containsKey(f.name())){
 			return 0;
 		}
 		else{
-			return counters.get(f);
+			return counters.get(f.name());
 		}
 	}
 	public static void modCounter(Flag f, float inc){
-		counters.put(f, getValue(f)+inc);
+		counters.put(f.name(), getValue(f)+inc);
 	}
 	public static void setCounter(Flag f, float val){
-		counters.put(f,val);
+		counters.put(f.name(),val);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -694,13 +702,13 @@ public class Global {
 		}
 		obj.put("characters", characterArr);
 		JSONArray flagsArr = new JSONArray();
-		for(Flag flag : flags) {
-			flagsArr.add(flag.name());
+		for(String flag : flags) {
+			flagsArr.add(flag);
 		}
 		obj.put("flags", flagsArr);
 		JSONObject countersObj = new JSONObject();
-		for(Flag counter: counters.keySet()){
-			countersObj.put(counter.name(), counters.get(counter));
+		for(String counter: counters.keySet()){
+			countersObj.put(counter, counters.get(counter));
 		}
 		obj.put("counters", countersObj);
 		obj.put("time", match == null ? "dusk" : "dawn");
@@ -800,12 +808,12 @@ public class Global {
 			
 			JSONArray flagsArr = (JSONArray) object.get("flags");
 			for(Object flag : flagsArr) {
-				flags.add(Flag.valueOf((String)flag));
+				flags.add((String)flag);
 			}
 			
 			JSONObject countersObj = (JSONObject) object.get("counters");
 			for(Object counter : countersObj.keySet()) {
-				counters.put(Flag.valueOf((String)counter), JSONUtils.readFloat(countersObj, (String) counter));
+				counters.put((String)counter, JSONUtils.readFloat(countersObj, (String) counter));
 			}
 			date = JSONUtils.readInteger(object, "date");
 			String time = JSONUtils.readString(object, "time");

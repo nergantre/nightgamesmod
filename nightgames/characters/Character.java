@@ -89,13 +89,14 @@ public abstract class Character extends Observable implements Cloneable{
 	public Body body;
 	public int availableAttributePoints;
 	public boolean orgasmed;
-	
+	public boolean custom;
 	public static int malePref = 1;
 
 	@SuppressWarnings("unchecked")
 	public Character(String name, int level){
 		this.name=name;
 		this.level=level;
+		custom = false;
 		body = new Body(this);
 		att = new HashMap<Attribute,Integer>();
 		cooldowns = new HashMap<String, Integer>();
@@ -389,6 +390,9 @@ public abstract class Character extends Observable implements Cloneable{
 		
 		//threshold at which pain calms you down
 		int painAllowance = Math.max(10, getStamina().max() / 25);
+		if (c.getOther(this).has(Trait.wrassler)) {
+			painAllowance *= 1.5;
+		}
 		int difference = pain - painAllowance;
 		//if the pain exceeds the threshold and you aren't a masochist
 		//calm down by the overflow
@@ -2038,11 +2042,12 @@ public abstract class Character extends Observable implements Cloneable{
 	}
 	public abstract String getPortrait(Combat c);
 
-	public void gainMoney(int i) {
-		if (human())
+	public void modMoney(int i) {
+		if (human() && i > 0)
 			Global.gui().message("You've gained $" + Math.round(i * Global.moneyRate) +".");;
 		money += Math.round(i * Global.moneyRate);
 	}
+
 	public void loseXP(int i) {
 		assert(i >= 0);
 		xp -= i;
@@ -2150,5 +2155,11 @@ public abstract class Character extends Observable implements Cloneable{
 	}
 	public boolean checkLoss() {
 		return orgasmed && willpower.isEmpty();
+	}
+	public boolean isCustomNPC() {
+		return custom;
+	}
+	public String recruitLiner() {
+		return "";
 	}
 }

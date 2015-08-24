@@ -44,6 +44,7 @@ public class CustomNPC extends BasePersonality {
 		character.setTrophy(data.getTrophy());
 		character.plan = data.getPlan();
 		character.mood = Emotion.confident;
+		character.custom = true;
 		for (BodyPart part : data.getBodyParts()) {
 			character.body.add(part);
 		}
@@ -173,5 +174,9 @@ public class CustomNPC extends BasePersonality {
 	
 	public String defaultImage() {
 		return data.getDefaultPortraitName();
+	}
+
+	public RecruitmentData getRecruitmentData() {
+		return data.getRecruitment();
 	}
 }

@@ -7,6 +7,7 @@ import nightgames.actions.Action;
 import nightgames.actions.Move;
 import nightgames.actions.Movement;
 import nightgames.areas.Area;
+import nightgames.characters.custom.RecruitmentData;
 import nightgames.combat.Combat;
 import nightgames.combat.Encounter;
 import nightgames.combat.Result;
@@ -33,7 +34,7 @@ public class NPC extends Character {
 	 */
 	@SuppressWarnings("unused")
 	private static final long serialVersionUID = -7213318631528080442L;
-	Personality ai;
+	public Personality ai;
 	public HashMap<Emotion,Integer> emotes;
 	public Emotion mood;
 	public Plan plan;
@@ -780,5 +781,9 @@ public class NPC extends Character {
 	@Override
 	public String getType() {
 		return ai.getType();
+	}
+	
+	public RecruitmentData getRecruitmentData() {
+		return ai.getRecruitmentData();
 	}
 }

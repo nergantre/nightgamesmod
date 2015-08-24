@@ -32,4 +32,5 @@ public interface NPCData {
 	String getDefaultPortraitName();
 	Plan getPlan();
 	String getType();
+	RecruitmentData getRecruitment();
 }

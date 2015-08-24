@@ -72,7 +72,7 @@ public class Cache implements Deployable {
 				for(Loot i:reward){
 					i.pickup(active);
 				}
-				active.gainMoney(Global.random(500) + 500);
+				active.modMoney(Global.random(500) + 500);
 			}
 			else if(active.check(secondary, dc-5)){
 				if(active.human()){
@@ -101,7 +101,7 @@ public class Cache implements Deployable {
 				for(Loot i:reward){
 					i.pickup(active);
 				}
-				active.gainMoney(Global.random(500) + 500);
+				active.modMoney(Global.random(500) + 500);
 			}
 			else{
 				switch(test){

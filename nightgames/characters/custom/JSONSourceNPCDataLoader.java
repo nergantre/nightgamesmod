@@ -16,6 +16,8 @@ import org.json.simple.JSONValue;
 
 import nightgames.characters.Plan;
 import nightgames.characters.Trait;
+import nightgames.characters.custom.effect.CustomEffect;
+import nightgames.characters.custom.effect.MoneyModEffect;
 import nightgames.characters.custom.requirement.AndRequirement;
 import nightgames.characters.custom.requirement.BodyPartRequirement;
 import nightgames.characters.custom.requirement.CustomRequirement;
@@ -101,12 +103,27 @@ public class JSONSourceNPCDataLoader {
 			loadItems((JSONObject)object.get("items"), data);
 			loadAllLines((JSONObject)object.get("lines"), data.characterLines);
 			loadLines((JSONArray)object.get("portraits"), data.portraits);
+			loadRecruitment((JSONObject)object.get("recruitment"), data.recruitment);
 		} catch (ClassCastException e) {
 			throw new ParseException("Badly formatted JSON character: " + e.getMessage(), 0);
 		} catch (IllegalArgumentException e) {
 			throw new ParseException("Nonexistent value: " + e.getMessage(), 0);
 		}
 		return data;
+	}
+
+	private static void loadRecruitment(JSONObject obj, RecruitmentData recruitment) {
+		recruitment.introduction = JSONUtils.readString(obj, "introduction");
+		recruitment.action = JSONUtils.readString(obj, "action");
+		recruitment.confirm = JSONUtils.readString(obj, "confirm");
+		loadRequirement((JSONObject) obj.get("requirements"), recruitment.requirement);
+		loadEffects((JSONObject) obj.get("cost"), recruitment.effects);
+	}
+
+	private static void loadEffects(JSONObject obj, List<CustomEffect> effects) {
+		if (obj.containsKey("modMoney")) {
+			effects.add(new MoneyModEffect(JSONUtils.readInteger(obj, "modMoney")));
+		}
 	}
 
 	private static void loadLines(JSONArray linesArr, List<CustomStringEntry> entries) {

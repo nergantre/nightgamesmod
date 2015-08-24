@@ -389,15 +389,15 @@ public class GUI extends JFrame implements Observer {
 								"Reyka created by DNDW\n" +
 								"Upgraded Strapon created by ElfBoyEni\n" +
 								"Strapon victory scenes created by Legion\n" +
-								"Hardmode AI by Jos\n" +
-								"Character portraits by B.R. Chen\n" +
+								"Advanced AI by Jos\n" +
 								"Magic Training scenes by Legion\n" +
 								"Jewel 2nd Victory scene by Legion\n" +
-								"Art by Fujin Hitokiri\n" +
 								"Video Games scenes 1-9 by Onyxdime\n" +
 								"Kat Penetration Victory and Defeat scenes by Onyxdime\n" +
 								"Kat Non-Penetration Draw scene by Onyxdime\n" +
-								"Mara/Angel threesome scene by Onyxdime\n");
+								"Mara/Angel threesome scene by Onyxdime\n" + 
+								"Mod by Nergantre\n" +
+								"A ton of testing by Bronzechair");
 			}
 		});
 		

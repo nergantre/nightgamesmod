@@ -2,6 +2,7 @@ package nightgames.characters;
 
 import nightgames.actions.Action;
 import nightgames.actions.Movement;
+import nightgames.characters.custom.RecruitmentData;
 import nightgames.combat.Combat;
 import nightgames.global.Flag;
 import nightgames.global.Global;
@@ -159,5 +160,9 @@ public abstract class BasePersonality implements Personality {
 			character.mod(selected, 1);
 			selected = null;
 		}
+	}
+
+	public RecruitmentData getRecruitmentData() {
+		return null;
 	}
 }
