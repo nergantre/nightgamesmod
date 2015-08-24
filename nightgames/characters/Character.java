@@ -1,6 +1,5 @@
 package nightgames.characters;
 
-import java.io.PrintWriter;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,7 +8,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
-import java.util.Scanner;
 import java.util.Set;
 import java.util.Stack;
 import java.util.TreeSet;
@@ -17,16 +15,12 @@ import java.util.Vector;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
-
-import com.cedarsoftware.util.io.JsonWriter;
 
 import nightgames.actions.Move;
 import nightgames.actions.Movement;
 import nightgames.areas.Area;
 import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
-import nightgames.characters.custom.JSONSourceNPCDataLoader;
 import nightgames.combat.Combat;
 import nightgames.combat.Encounter;
 import nightgames.combat.Result;
@@ -111,7 +105,7 @@ public abstract class Character extends Observable implements Cloneable{
 		stamina.fill();
 		arousal = new Meter(90+10*level);
 		mojo = new Meter(33+2*level);
-		willpower = new Meter(50);
+		willpower = new Meter(40);
 		orgasmed = false;
 		pleasured = false;
 		top = new Stack<Clothing>();
@@ -1317,7 +1311,7 @@ public abstract class Character extends Observable implements Cloneable{
 	}
 
 	private int getOrgasmWillpowerLoss() {
-		return 25 + Global.random(25);
+		return 25;
 	}
 
 	public abstract void emote(Emotion emo,int amt);

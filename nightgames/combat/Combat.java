@@ -475,7 +475,7 @@ public class Combat extends Observable implements Serializable, Cloneable{
 						write(p.name()+" drops to the floor, exhausted.");
 					}
 				}
-				p.loseWillpower(this, 10);
+				p.loseWillpower(this, Math.min(p.getWillpower().max() / 8, 15));
 			}
 		}
 	}

@@ -19,6 +19,8 @@ Balance changes:
 - Exhibitionist I find is good enough as is.
 - Suckle now does more damage, but builds mojo for the opponent (5%, or 10% if lactating)
 - Finger and handjob now does more pleasure damage.
+- Everyone now starts with 40 willpower
+- Knockdowns now causes the target to lose either 1/8th of their willpower, up to a maximum of 15
 
 Other changes:
 - Status panel now hides items that you have 0 of.
