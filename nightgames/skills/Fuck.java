@@ -1,5 +1,6 @@
 package nightgames.skills;
 
+import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
@@ -92,7 +93,7 @@ public class Fuck extends Skill {
 			}
 			int otherm = m;
 			if (getSelf().has(Trait.insertion)) {
-				otherm += 10;
+				otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
 			}
 			target.body.pleasure(getSelf(), selfO, targetO, m, c);
 			getSelf().body.pleasure(target, targetO, selfO, otherm, c);

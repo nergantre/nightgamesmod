@@ -93,7 +93,7 @@ public class AssFuck extends Fuck {
 		}
 		int otherm = m;
 		if (getSelf().has(Trait.insertion)) {
-			otherm += 10;
+			otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
 		}
 		target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), otherm, c);		
 		if (!getSelf().has(Trait.strapped)) {

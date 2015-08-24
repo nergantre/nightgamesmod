@@ -82,7 +82,7 @@ public class Reyka extends BasePersonality {
 		growth.addTrait(8, Trait.expertGoogler);
 		growth.addTrait(11, Trait.addictivefluids);
 		growth.addTrait(14, Trait.graceful);
-		growth.addTrait(17, Trait.analTraining1);
+		growth.addTrait(17, Trait.insertion);
 		growth.addTrait(20, Trait.spiritphage);
 		growth.addTrait(23, Trait.tongueTraining2);
 		growth.addTrait(26, Trait.magicEyeTrance);
@@ -91,7 +91,7 @@ public class Reyka extends BasePersonality {
 		growth.addTrait(35, Trait.energydrain);
 		growth.addTrait(38, Trait.experttongue);
 		growth.addTrait(41, Trait.soulsucker);
-		growth.addTrait(44, Trait.analTraining2);
+		growth.addTrait(44, Trait.analTraining1);
 		growth.addTrait(47, Trait.desensitized);
 		growth.addTrait(50, Trait.pussyTraining2);
 		growth.addTrait(53, Trait.vaginaltongue);

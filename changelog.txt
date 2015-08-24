@@ -23,6 +23,12 @@ Balance changes:
 - Knockdowns now causes the target to lose either 1/8th of their willpower, up to a maximum of 15
 - Knockdown willpower loss is now affected by strongwilled.
 
+New:
+- Added the Trait Insertion Master (better name needed)
+	- Increases base pleasure damage of fucking (but not thrusting/grinding/etc) by min(seduction / 4, 40)
+	- Angel gets this trait at 24 and Reyka at 17
+	- Players can get it after getting the Powerful hips trait
+
 Other changes:
 - Status panel now hides items that you have 0 of.
 - Characters now have to be pleasured before they orgasm. Temptation damage is no longer sufficient

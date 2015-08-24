@@ -78,16 +78,17 @@ public class Angel extends BasePersonality {
 		growth.addTrait(18, Trait.spiritphage);
 		growth.addTrait(20, Trait.skeptical);
 		growth.addTrait(21, Trait.holecontrol);
-		growth.addTrait(24, Trait.pussyTraining2);
+		growth.addTrait(24, Trait.insertion);
 		growth.addTrait(27, Trait.lacedjuices);
-		growth.addTrait(30, Trait.magicEyeArousal);
+		growth.addTrait(30, Trait.pussyTraining2);
 		growth.addTrait(33, Trait.energydrain);
 		growth.addTrait(36, Trait.RawSexuality);
 		growth.addTrait(39, Trait.tight);
 		growth.addTrait(42, Trait.desensitized);
 		growth.addTrait(45, Trait.entrallingjuices);
-		growth.addTrait(48, Trait.pussyTraining3);
-		growth.addTrait(51, Trait.desensitized2);
+		growth.addTrait(48, Trait.magicEyeArousal);
+		growth.addTrait(51, Trait.pussyTraining3);
+		growth.addTrait(54, Trait.desensitized2);
 
 		preferredAttributes.add(c -> c.get(Attribute.Dark) < 50 ? Optional.of(Attribute.Dark) : Optional.empty());
 		preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
