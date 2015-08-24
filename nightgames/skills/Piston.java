@@ -35,7 +35,7 @@ public class Piston extends Thrust {
 		int m = 12 + Global.random(8);
 		int mt = 8 + Global.random(5);
 		if(getSelf().has(Trait.experienced)){
-			mt = mt * 3 / 4;
+			mt = mt * 2 / 3;
 		}
 		mt = Math.max(1, mt);
 		results[0] = m;

@@ -167,11 +167,11 @@ public enum Trait {
 	dryad("Dryad","Part girl, part tree."),
 
 	//Strength
-	dexterous("Dexterous","Underwear is no obstacle for nimble fingers"), //digital stimulation through underwear
+	dexterous("Dexterous","Limbs and fingers. Underwear is not an obstacle."), //digital stimulation through underwear
 	romantic("Romantic","Every kiss is as good as the first"), //bonus to kiss
 	experienced("Experienced Lover","Skilled at pacing yourself when thrusting"), //reduced recoil from penetration
 	wrassler("Wrassler","A talent for fighting dirty"), //squeeze, knee, kick reduce arousal less
-	pimphand("Pimp Hand","A devastating slap"),
+	pimphand("Pimp Hand","A devastating slap and a bonus to hands"),
 
 	//unimplemented
 	Clingy("Clingy","can do the 'glomp' attack - weak standing grapple hug, probably something Cassie would take right away"),

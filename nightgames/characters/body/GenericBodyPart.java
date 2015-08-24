@@ -91,6 +91,10 @@ public class GenericBodyPart implements BodyPart {
 			pleasureMod += self.has(Trait.limbTraining1) ? .5 : 0;
 			pleasureMod += self.has(Trait.limbTraining2) ? .7 : 0;
 			pleasureMod += self.has(Trait.limbTraining3) ? .7 : 0;
+			pleasureMod += self.has(Trait.dexterous) ? .4 : 0;
+		}
+		if (type.equals("hands")) {
+			pleasureMod += self.has(Trait.pimphand) ? .5 : 0;
 		}
 		return pleasureMod;
 	}

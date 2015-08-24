@@ -20,14 +20,18 @@ public class Kiss extends Skill {
 
 	@Override
 	public int getMojoBuilt(Combat c) {
-		return 10;
+		return 10 + (getSelf().has(Trait.romantic) ? 5 : 0);
 	}
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		int m = 2+Global.random(2);
+		boolean deep = getLabel(c).equals("Deep Kiss");
 		if(getSelf().has(Trait.romantic)){
 			m += 3;
+			if (deep) {
+				m += 7;
+			}
 		}
 		Result res = Result.normal;
 		if(getSelf().get(Attribute.Seduction)>=9){
@@ -36,12 +40,16 @@ public class Kiss extends Skill {
 		} else{
 			res = Result.weak;
 		}
+		if (deep) {
+			m += 5;
+			res = Result.upgrade;
+		}
 		if(getSelf().has(Trait.experttongue)){
 			m += 5;
-			res = Result.special;
+			res = Result.upgrade;
 		}
 		if(getSelf().has(Trait.soulsucker)){
-			res = Result.upgrade;
+			res = Result.special;
 		}
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,m,res, target));
@@ -49,7 +57,7 @@ public class Kiss extends Skill {
 		else if(target.human()){
 			c.write(getSelf(),receive(c,m,res, target));
 		}
-		if (res == Result.upgrade) {
+		if (res == Result.special) {
 			target.drain(c, getSelf(), 10);
 			target.loseWillpower(c, Global.random(3) + 2);
 		}
@@ -141,7 +149,13 @@ public class Kiss extends Skill {
 
 	@Override
 	public String getLabel(Combat c){
-		return getSelf().has(Trait.soulsucker) ? "Drain Kiss" : "Kiss";
+		if (getSelf().has(Trait.soulsucker)) {
+			return "Drain Kiss";
+		} else if (getSelf().get(Attribute.Seduction) > 20) {
+			return "Deep Kiss";
+		} else {
+			return "Kiss";
+		}
 	}
 
 }

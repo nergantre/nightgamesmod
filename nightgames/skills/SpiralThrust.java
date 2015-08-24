@@ -39,7 +39,7 @@ public class SpiralThrust extends Thrust {
 		int x = cost;
 		int mt = x / 2;
 		if(getSelf().has(Trait.experienced)){
-			mt = mt * 3 / 4;
+			mt = mt * 2 / 3;
 		}
 		result[0] = x;
 		result[1] = mt;

@@ -54,15 +54,14 @@ public class Thrust extends Skill {
 		int results[] = new int[2];
 
 		int m = 5 + Global.random(14);
-		int mt;
+		float mt = Math.max(1, m/3.f);
+
 		if(getSelf().has(Trait.experienced)){
-			mt = Math.max(1, m/4);
-		} else {
-			mt = Math.max(1, m/3);
+			mt = Math.max(1, m * .66f);
 		}
 
 		results[0] = m;
-		results[1] = mt;
+		results[1] = (int) mt;
 
 		return results;
 	}
