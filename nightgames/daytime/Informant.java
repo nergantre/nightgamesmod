@@ -359,7 +359,7 @@ public class Informant extends Activity {
 										+ "than you.\"</i><p>");
 				Global.gui().choose(this, "Kat: $1000");
 			}
-			for (Character c : Global.characterPool.values()) {
+			for (Character c : Global.allNPCs()) {
 				if (c.isCustomNPC() && !Global.everyone().contains(c)) {
 					NPC npc = (NPC) c;
 					RecruitmentData data = npc.getRecruitmentData();
@@ -407,7 +407,7 @@ public class Informant extends Activity {
 						.message(
 								"<i>\"Ok, I'll talk to Reyka. She spends a lot of nights surfing the internet, but I'm sure she wouldn't mind an opportunity for some free prey.\"</i>");
 				acted = true;
-				Global.newChallenger(Global.characterPool.get(Reyka.class.getSimpleName()).ai);
+				Global.newChallenger(Global.getNPCByType(new Reyka().getType()).ai);
 				Global.flag(Flag.Reyka);
 			} else {
 				Global.gui().message("You don't have enough money<p>");
@@ -421,7 +421,7 @@ public class Informant extends Activity {
 								"<i>\"Pleasure doing business with you. Just be nice to Kat. She's very catlike and confident when she's turned on, but during the day or after climax, she's "
 										+ "just an ordinary girl. Besides, if her fans hear that you've been mean to her, they'll probably kick your ass. That includes me, by the way.\"</i>");
 				acted = true;
-				Global.newChallenger(Global.characterPool.get(Kat.class.getSimpleName()).ai);
+				Global.newChallenger(Global.getNPCByType(new Kat().getType()).ai);
 				Global.flag(Flag.Kat);
 			} else {
 				Global.gui().message("You don't have enough money<p>");

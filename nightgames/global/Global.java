@@ -1,13 +1,48 @@
 package nightgames.global;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.swing.JFileChooser;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.ContextFactory;
+
+import com.cedarsoftware.util.io.JsonWriter;
+
 import nightgames.Resources.ResourceLoader;
 import nightgames.actions.Action;
 import nightgames.actions.Bathe;
 import nightgames.actions.Craft;
 import nightgames.actions.Energize;
 import nightgames.actions.Hide;
-import nightgames.actions.MasturbateAction;
 import nightgames.actions.Locate;
+import nightgames.actions.MasturbateAction;
 import nightgames.actions.Movement;
 import nightgames.actions.Recharge;
 import nightgames.actions.Resupply;
@@ -19,13 +54,10 @@ import nightgames.areas.Area;
 import nightgames.characters.Airi;
 import nightgames.characters.Angel;
 import nightgames.characters.Attribute;
-import nightgames.characters.BasePersonality;
 import nightgames.characters.Cassie;
 import nightgames.characters.Character;
-import nightgames.characters.Emotion;
 import nightgames.characters.Jewel;
 import nightgames.characters.Kat;
-import nightgames.characters.LoadablePersonality;
 import nightgames.characters.Mara;
 import nightgames.characters.NPC;
 import nightgames.characters.Personality;
@@ -33,14 +65,10 @@ import nightgames.characters.Player;
 import nightgames.characters.Reyka;
 import nightgames.characters.Trait;
 import nightgames.characters.TraitTree;
-import nightgames.characters.Yui;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.StraponPart;
 import nightgames.characters.custom.CustomNPC;
 import nightgames.characters.custom.JSONSourceNPCDataLoader;
-import nightgames.combat.Combat;
-import nightgames.combat.Encounter;
-import nightgames.combat.Result;
 import nightgames.daytime.Daytime;
 import nightgames.gui.GUI;
 import nightgames.items.Item;
@@ -59,45 +87,6 @@ import nightgames.trap.StripMine;
 import nightgames.trap.TentacleTrap;
 import nightgames.trap.Trap;
 import nightgames.trap.Tripline;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.Reader;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.function.Predicate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.swing.JFileChooser;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
-import org.mozilla.javascript.Context;
-import org.mozilla.javascript.ContextFactory;
-
-import com.cedarsoftware.util.io.JsonWriter;
 
 public class Global {
 	private static Random rng;
@@ -558,8 +547,20 @@ public class Global {
 	    return original.substring(0, 1).toUpperCase() + original.substring(1);
 	}
 
-	public static Map<String, NPC> characterPool;
-	
+	private static Map<String, NPC> characterPool;
+	public static NPC getNPCByType (String type) {
+		NPC results = characterPool.get(type);
+		if (results == null) {
+			System.err.println("failed to find NPC for type " + type);
+		}
+		return results;
+	}
+	public static Character getCharacterByType (String type) {
+		if (type.equals(human.getType())) {
+			return human;
+		}
+		return getNPCByType(type);
+	}
 	public static HashMap<String,Area> buildMap(){
 		Area quad = new Area("Quad","You are in the <b>Quad</b> that sits in the center of the Dorm, the Dining Hall, the Engineering Building, and the Liberal Arts Building. There's " +
 				"no one around at this time of night, but the Quad is well-lit and has no real cover. You can probably be spotted from any of the surrounding buildings, it may " +
@@ -848,7 +849,7 @@ public class Global {
 	}
 
 	public static NPC getNPC(String name){
-		for(Character c : characterPool.values()) {
+		for(Character c : allNPCs()) {
 			if(c.getType().equalsIgnoreCase(name)){
 				return (NPC)c;
 			}
@@ -1079,5 +1080,9 @@ public class Global {
 		if (prefix.equals("a ") && "aeiou".contains(fullDescribe.substring(0,1).toLowerCase()))
 			return "an " + fullDescribe;
 		return prefix + fullDescribe;
+	}
+
+	public static Collection<NPC> allNPCs() {
+		return characterPool.values();
 	}
 }

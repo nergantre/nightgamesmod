@@ -1060,7 +1060,10 @@ public abstract class Character extends Observable implements Cloneable{
 		HashMap<Character, Integer> map = new HashMap<>();
 		for(Object key:obj.keySet()){
 			String keyString = (String) key;
-			Character character = Global.characterPool.get(keyString);
+			Character character = Global.getCharacterByType(keyString);
+			if (character == null) {
+				System.err.println("Failed loading character: " + keyString);
+			}
 			map.put(character, JSONUtils.readInteger(obj, keyString));
 		}
 		return map;
