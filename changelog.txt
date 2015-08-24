@@ -5,11 +5,18 @@ Bug fix:
 - Use Breasts is no longer usable while mounted facing chest/behind/in other weird situations.
 - Tighten can no longer be used when the opponent has a strapon
 - Fixed a bug where ineffective panties would still obstruct reverse fucking
-
+- Fixed a bug where drain kiss and upgraded kiss texts were switched.
+ 
 Balance changes:
 - Strip top and Strip bottom now only gives a pseudo 20 cunning bonus when in a dominant position (rather than 50)
 - Level Drain now can only drain 1 level maximum
 - Level Drain now can only be used when the user's level does not exceed 100 and is lower than the opponent's level
+- Romantic now gives +5% mojo built for kiss as well as increasing pleasure damage by 3. At 20 seduction, pleasure bonus becomes 10.
+- Dexterous now gives +40% hand and feet pleasure damage as well as being able to finger/handjob with underwear on.
+- Pimphand now gives +40% hand pleasure damage as well as better slaps.
+- Wrassler now also increases the opponent's pain tolerance by 50% as well.
+- Experienced lover now decreases self damage from fucking by 33% instead of 25%
+- Exhibitionist I find is good enough as is.
 
 Other changes:
 - Changed how statuses's resource modifiers stacked
