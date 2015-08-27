@@ -102,6 +102,7 @@ public class CounterStatus extends Status {
 	public int value() {
 		return 0;
 	}
+
 	public void resolveSkill(Combat c, Character target) {
 		affected.removelist.add(this);
 		skill.resolveCounter(c, target);

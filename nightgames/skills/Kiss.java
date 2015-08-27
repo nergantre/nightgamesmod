@@ -42,14 +42,14 @@ public class Kiss extends Skill {
 		}
 		if (deep) {
 			m += 5;
-			res = Result.upgrade;
+			res = Result.special;
 		}
 		if(getSelf().has(Trait.experttongue)){
 			m += 5;
-			res = Result.upgrade;
+			res = Result.special;
 		}
 		if(getSelf().has(Trait.soulsucker)){
-			res = Result.special;
+			res = Result.upgrade;
 		}
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,m,res, target));
@@ -57,7 +57,7 @@ public class Kiss extends Skill {
 		else if(target.human()){
 			c.write(getSelf(),receive(c,m,res, target));
 		}
-		if (res == Result.special) {
+		if (res == Result.upgrade) {
 			target.drain(c, getSelf(), 10);
 			target.loseWillpower(c, Global.random(3) + 2);
 		}

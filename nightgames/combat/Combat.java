@@ -59,6 +59,8 @@ public class Combat extends Observable implements Serializable, Cloneable{
 	public Combat(Character p1, Character p2, Area loc){
 		this.p1=p1;
 		this.p2=p2;
+		p1.startBattle(this);
+		p2.startBattle(this);
 		location=loc;
 		stance = new Neutral(p1,p2);
 		message = "";
@@ -271,6 +273,8 @@ public class Combat extends Observable implements Serializable, Cloneable{
 			this.write("<br>");
 			p1.eot(this,p2,p2act);
 			p2.eot(this,p1,p1act);
+			checkStamina(p1);
+			checkStamina(p2);
 			getStance().decay(this);
 			getStance().checkOngoing(this);
 			this.phase=0;
@@ -312,6 +316,8 @@ public class Combat extends Observable implements Serializable, Cloneable{
 			useSkills();
 			p1.eot(this,p2,p2act);
 			p2.eot(this,p1,p1act);
+			checkStamina(p1);
+			checkStamina(p2);
 			getStance().decay(this);
 			getStance().checkOngoing(this);
 			this.phase=0;

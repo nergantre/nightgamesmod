@@ -74,6 +74,7 @@ import nightgames.gui.GUI;
 import nightgames.items.Item;
 import nightgames.pet.Ptype;
 import nightgames.skills.*;
+import nightgames.stance.FlowerSex;
 import nightgames.trap.Alarm;
 import nightgames.trap.AphrodisiacTrap;
 import nightgames.trap.Decoy;
@@ -144,7 +145,7 @@ public class Global {
 //		debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
-//		debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
+		debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
 		traitRequirements = new TraitTree(ResourceLoader.getFileResourceAsStream("data/TraitRequirements.xml"));
 		current=null;
 		factory = new ContextFactory();
@@ -219,6 +220,7 @@ public class Global {
 		skillPool.add(new LivingClothing(p));
 		skillPool.add(new LivingClothingOther(p));
 		skillPool.add(new Engulf(p));
+		skillPool.add(new CounterFlower(p));
 		skillPool.add(new Knee(p));
 		skillPool.add(new LegLock(p));
 		skillPool.add(new LickNipples(p));
@@ -227,9 +229,12 @@ public class Global {
 		skillPool.add(new PerfectTouch(p));
 		skillPool.add(new Restrain(p));
 		skillPool.add(new Reversal(p));
+		skillPool.add(new LeechEnergy(p));
+		skillPool.add(new SweetScent(p));
 		skillPool.add(new Spank(p));
 		skillPool.add(new Stomp(p));
 		skillPool.add(new StandUp(p));
+		skillPool.add(new WildThrust(p));
 		skillPool.add(new SuckNeck(p));
 		skillPool.add(new Tackle(p));
 		skillPool.add(new Taunt(p));
@@ -535,7 +540,7 @@ public class Global {
 		return message;
 	}
 
-	public static void learnSkills(Character c){
+	public static void learnSkills(Character c) {
 		for(Skill skill:skillPool){
 			c.learn(skill);
 		}
@@ -605,6 +610,8 @@ public class Global {
 				"corridor, so there's no place for anyone to hide.",Movement.bridge);
 		Area sau = new Area("Student Union","You are in the <b>Student Union</b>, which doubles as base of operations during match hours. You and the other competitors can pick up " +
 				"a change of clothing here.",Movement.union);
+		Area courtyard = new Area("Courtyard","You are in the <b>Courtyard</b>. "
+				+ "It's a small opening between four buildings. There's not much to see here except a tidy garden maintained by the botany department.",Movement.courtyard);
 		quad.link(dorm);
 		quad.link(engineering);
 		quad.link(libarts);
@@ -627,6 +634,8 @@ public class Global {
 		libarts.link(pool);
 		pool.link(libarts);
 		pool.link(sau);
+		pool.link(courtyard);
+		courtyard.link(pool);
 		library.link(libarts);
 		library.link(bridge);
 		dining.link(quad);
@@ -658,6 +667,7 @@ public class Global {
 		map.put("Tunnel",tunnel);
 		map.put("Bridge",bridge);
 		map.put("Union", sau);
+		map.put("Courtyard", courtyard);
 		return map;
 	}
 

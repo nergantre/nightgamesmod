@@ -26,12 +26,20 @@ import nightgames.skills.ReverseAssFuck;
 import nightgames.skills.ReverseCarry;
 import nightgames.skills.ReverseFly;
 import nightgames.skills.ReverseFuck;
+import nightgames.skills.Shove;
 import nightgames.skills.Skill;
 import nightgames.skills.SpiralThrust;
+import nightgames.skills.Straddle;
+import nightgames.skills.StripBottom;
+import nightgames.skills.StripTop;
 import nightgames.skills.SubmissiveHold;
+import nightgames.skills.Tackle;
+import nightgames.skills.Tear;
 import nightgames.skills.Thrust;
 import nightgames.skills.Tighten;
 import nightgames.skills.ToggleKnot;
+import nightgames.skills.Undress;
+import nightgames.skills.WildThrust;
 
 public class Frenzied extends Status {
 
@@ -44,15 +52,19 @@ public class Frenzied extends Status {
 		FUCK_SKILLS.add(new Carry(p));
 		FUCK_SKILLS.add(new CounterDrain(p));
 		FUCK_SKILLS.add(new CounterRide(p));
-		FUCK_SKILLS.add(new Drain(p));
+		FUCK_SKILLS.add(new Shove(p));
+		FUCK_SKILLS.add(new Tackle(p));
+		FUCK_SKILLS.add(new Straddle(p));
+		FUCK_SKILLS.add(new Tear(p));
+		FUCK_SKILLS.add(new Undress(p));
 		FUCK_SKILLS.add(new Engulf(p)); // Probably?
 		FUCK_SKILLS.add(new Fly(p));
 		FUCK_SKILLS.add(new Fuck(p));
 		FUCK_SKILLS.add(new Grind(p));
 		FUCK_SKILLS.add(new Invitation(p));
 		FUCK_SKILLS.add(new LegLock(p));
-		FUCK_SKILLS.add(new LevelDrain(p));
 		FUCK_SKILLS.add(new Piston(p));
+		FUCK_SKILLS.add(new WildThrust(p));
 		FUCK_SKILLS.add(new ReverseAssFuck(p));
 		FUCK_SKILLS.add(new ReverseCarry(p));
 		FUCK_SKILLS.add(new ReverseFly(p));
@@ -105,10 +117,11 @@ public class Frenzied extends Status {
 
 	@Override
 	public int regen(Combat c) {
-		if (--duration == 0 || (!c.getStance().inserted() && !c.getStance().analinserted())) {
+		if (--duration == 0) {
 			affected.removelist.add(this);
 			affected.addlist.add(new Cynical(affected));
 		}
+		affected.buildMojo(c, 25);
 		affected.emote(Emotion.horny, 15);
 		return 0;
 	}

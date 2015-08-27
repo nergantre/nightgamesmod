@@ -2,7 +2,9 @@ package nightgames.characters;
 
 import nightgames.global.Global;
 import nightgames.items.Clothing;
+import nightgames.status.Lethargic;
 import nightgames.status.Resistance;
+import nightgames.status.Status;
 import nightgames.status.Stsflag;
 
 import java.util.HashMap;
@@ -143,13 +145,14 @@ public enum Trait {
 	achilles("Achilles Jewels","Delicate parts are somehow even more delicate"),	//more pain from groin attacks
 	naive("Naive", "Chance to not get cynical after mindgames"), //Chance to not get cynical after recovering from mindgames
 	immobile("Immobile", "Unable to move"), //Cannot move
+	lethargic("Lethargic", "Very low mojo gain from normal methods.", new Lethargic(null)), //25% mojo gain
 
 	//Restrictions
 	softheart("Soft Hearted","Incapable of being mean"), //restricts slap, stomp, flick
 	petite("Petite","Small body, small breasts"), //restricts carry, tackle, paizuri
 	undisciplined("Undisciplined","Lover, not a fighter"), //restricts manuever, focus, armbar
 	direct("Direct","Patience is overrated"), //restricts whisper, dissolving trap, aphrodisiac trap, decoy, strip tease
-	
+
 	shy("Shy", "", new TraitDescription() {
 		public void describe(StringBuilder b, Character c, Trait t) {
 			if (c.human())
@@ -239,6 +242,8 @@ public enum Trait {
 	private TraitDescription longDesc;
 	private String name;
 	public Trait parent;
+	public Status status;
+
 	public String getDesc()
 	{
 		return desc;
@@ -262,6 +267,12 @@ public enum Trait {
 		this.parent = parent;
 	}
 
+	private Trait(String name, String description, Status status) {
+		this.name=name;
+		this.desc=description;
+		this.longDesc = longDesc;
+		this.status = status;
+	}
 	public boolean isFeat(){
 		return this.compareTo(sprinter)>=0 && this.compareTo(strapped)<0;
 	}

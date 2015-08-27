@@ -368,7 +368,7 @@ public class NPC extends Character {
 		else if(busy>0){
 			busy--;
 		}
-		else if (this.is(Stsflag.enthralled)) {
+		else if (this.is(Stsflag.enthralled) && !has(Trait.immobile)) {
 			Character master;
 			master = ((Enthralled)getStatus(Stsflag.enthralled)).master;
 			Move compelled = findPath(master.location);
@@ -399,10 +399,12 @@ public class NPC extends Character {
 			if(!location.encounter(this)){
 				HashSet<Action> available = new HashSet<Action>();
 				HashSet<Movement> radar = new HashSet<Movement>();
-				for(Area path:location.adjacent){
-					available.add(new Move(path));
-					if(path.ping(get(Attribute.Perception))){
-						radar.add(path.id());
+				if (!has(Trait.immobile)) {
+					for(Area path:location.adjacent){
+						available.add(new Move(path));
+						if(path.ping(get(Attribute.Perception))){
+							radar.add(path.id());
+						}
 					}
 				}
 				for(Action act:Global.getActions()){
@@ -508,7 +510,7 @@ public class NPC extends Character {
 			}
 			break;
 		case fucking:
-			if (c.getStance().sub(this)) {
+			if (c.getStance().sub(this) && c.getStance().reverse() != c.getStance()) {
 				if (c.getStance().inserted(this)) {
 					c.write(this, Global.format("{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} clitoris with {self:possessive} hands as {other:subject-action:try|tries} to trust into {self:direct-object}. " +
 							"While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:rotate|rotates} {self:possessive} body around into a dominant position", this, target));

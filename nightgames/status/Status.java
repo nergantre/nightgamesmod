@@ -40,6 +40,10 @@ public abstract class Status implements Cloneable {
 	public abstract int spendmojo(int x);
 	public abstract int counter();
 	public abstract int value();
+
+	public int drained(int x) {
+		return 0;
+	}
 	public float fitnessModifier () {
 		return 0;
 	}

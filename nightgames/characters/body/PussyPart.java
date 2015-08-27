@@ -19,7 +19,8 @@ public enum PussyPart implements BodyPart {
 	normal("", 0, 1, 1, 6, 15, 0), arcane("arcane patterned ", .2, 1.1, 1, 9, 5, 3), fiery("fiery ", 0, 1.3, 1.2, 8, 15,
 			3), succubus("succubus ", .6, 1.5, 1.2, 999, 0, 4), feral("feral ", 1, 1.3, 1.2, 8, 7, 2), cybernetic(
 					"cybernetic ", -.50, 1.8, .5, 200, 0,
-					4), gooey("gooey ", .4, 1.5, 1.2, 999, 0, 6), tentacled("tentacled ", 0, 2, 1.2, 999, 0, 8);
+					4), gooey("gooey ", .4, 1.5, 1.2, 999, 0, 6), tentacled("tentacled ", 0, 2, 1.2, 999, 0, 8)
+	, plant("flower ", .5, 2, 1.2, 999, 0, 8);
 
 	public double priority;
 	public String desc;
@@ -50,6 +51,12 @@ public enum PussyPart implements BodyPart {
 
 	@Override
 	public void describeLong(StringBuilder b, Character c) {
+		if (this == plant) {
+			b.append("A larger fleshy red flower is situated between ");
+			b.append(c.nameOrPossessivePronoun());
+			b.append(" legs, spreading a intoxicatingly sweet scent in the vicinity.");
+			return;
+		}
 		b.append("A ");
 		if (c.getArousal().percent() > 15 && c.getArousal().percent() < 60) {
 			b.append("moist ");
@@ -138,6 +145,10 @@ public enum PussyPart implements BodyPart {
 	@Override
 	public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		double bonus = 0;
+		if (this == PussyPart.plant && damage > opponent.getArousal().max() / 5 && Global.random(4) == 0) {
+			c.write(self, String.format("An intoxicating scent emanating from %s %s leaves %s in a trance!.", self.possessivePronoun(),
+					describe(self), opponent.directObject()));
+		}
 		if (this == PussyPart.feral) {
 			c.write(self, String.format("Musk emanating from %s %s leaves %s reeling.", self.possessivePronoun(),
 					describe(self), opponent.directObject()));
@@ -315,6 +326,7 @@ public enum PussyPart implements BodyPart {
 			}
 			c.write(self, message);
 		}
+
 		if (this == feral) {
 			if (target.isType("cock") && Global.random(10) == 0) {
 				c.write(self,
@@ -415,6 +427,12 @@ public enum PussyPart implements BodyPart {
 							+ "seemingly with a mind of its own. Warm waves of flesh rubs against {other:possessive} shaft, elliciting groans of pleasure from {other:direct-object}.",
 					self, opponent));
 			opponent.body.pleasure(self, this, otherOrgan, 10, c);
+		}
+		if (this == plant) {
+			c.write(self, Global.format("The small rough fibery filaments inside {self:name-possessive} flower pussy wraps around {other:name-possessive} cock. "
+					+ "A profound exhaustion settles on {other:direct-object}, as {other:subject-action:feel|feels} {self:name-possessive} insidious flower leeching {other:possessive} strength.", self, opponent));
+			opponent.drainStaminaAsMojo(c, self, 20, 1.25f);
+			opponent.loseWillpower(c, 5);
 		}
 	}
 

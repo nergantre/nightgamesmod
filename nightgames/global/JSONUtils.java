@@ -13,4 +13,8 @@ public class JSONUtils {
 	public static String readString(JSONObject struct, String key) {
 		return (String)struct.get(key);
 	}
+
+	public static boolean readBoolean(JSONObject struct, String key) {
+		return ((Boolean)struct.get(key)).booleanValue();
+	}
 }

@@ -10,6 +10,7 @@ import nightgames.global.Global;
 import nightgames.stance.Position;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
+import nightgames.status.Stsflag;
 
 public class Thrust extends Skill {
 	public Thrust(String name, Character self) {

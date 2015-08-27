@@ -50,11 +50,13 @@ public class Winded extends Status {
 	public int regen(Combat c) {
 		if(duration<=0){
 			affected.removelist.add(this);
+			affected.addlist.add(new Braced(affected));
+			return affected.getStamina().max();
 		}
 		affected.emote(Emotion.nervous,15);
 		affected.emote(Emotion.angry,10);
 		duration--;
-		return affected.getStamina().max()/4;
+		return 0;
 	}
 
 	@Override

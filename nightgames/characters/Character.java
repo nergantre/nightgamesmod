@@ -85,6 +85,7 @@ public abstract class Character extends Observable implements Cloneable{
 	public boolean orgasmed;
 	public boolean custom;
 	private boolean pleasured;
+	public int orgasms;
 	public static int malePref = 1;
 
 	@SuppressWarnings("unchecked")
@@ -184,7 +185,7 @@ public abstract class Character extends Observable implements Cloneable{
 
 	public int get(Attribute a){
 		int total = getPure(a);
-		for(Status s:status){
+		for(Status s:getStatuses()){
 			total+=s.mod(a);
 		}
 		total += body.mod(a, total);
@@ -376,7 +377,7 @@ public abstract class Character extends Observable implements Cloneable{
 				c.write(this, Global.format("{self:NAME-POSSESSIVE} innocent appearance throws {other:direct-object} off and {other:subject-action:use|uses} much less strength than intended.", this, other));
 			}
 
-			for(Status s: status){
+			for(Status s: getStatuses()){
 				bonus+=s.damage(c, pain);
 			}
 		}
@@ -412,13 +413,18 @@ public abstract class Character extends Observable implements Cloneable{
 
 	public void drain(Combat c, Character drainer, int i) {
 		int drained = i;
+		int bonus = 0;
 
+		for(Status s: getStatuses()){
+			bonus+=s.drained(drained);
+		}
+		drained += bonus;
 		if(drained>=stamina.get()){
 			drained = stamina.get();
 		}
-		i = Math.max(1, i);
+		drained = Math.max(drained, i);
 		if (c!=null) {
-			c.writeSystemMessage(String.format("%s drained of <font color='rgb(200,200,200)'>%d<font color='white'> stamina by %s", this.subjectWas(), i, drainer.subject()));
+			c.writeSystemMessage(String.format("%s drained of <font color='rgb(200,200,200)'>%d<font color='white'> stamina by %s", this.subjectWas(), drained, drainer.subject()));
 		}
 		stamina.reduce(drained);
 		drainer.stamina.restore(drained);
@@ -427,7 +433,7 @@ public abstract class Character extends Observable implements Cloneable{
 	public void weaken(Combat c, int i){
 		int weak = i;
 		int bonus = 0;
-		for(Status s: status){
+		for(Status s: getStatuses()){
 			bonus+=s.weakened(i);
 		}
 		weak += bonus;
@@ -520,7 +526,7 @@ public abstract class Character extends Observable implements Cloneable{
 		int temptation = i;
 		int bonus = 0;
 		
-		for(Status s: status){
+		for(Status s: getStatuses()){
 			bonus+=s.tempted(i);
 		}
 		temptation += bonus;
@@ -553,7 +559,7 @@ public abstract class Character extends Observable implements Cloneable{
 	public void buildMojo(Combat c, int percent){
 		int x = (percent*Math.min(mojo.max(), 200))/100;
 		int bonus = 0;
-		for(Status s: status){
+		for(Status s: getStatuses()){
 			bonus+=s.gainmojo(x);
 		}
 		x += bonus;
@@ -567,7 +573,7 @@ public abstract class Character extends Observable implements Cloneable{
 	public void spendMojo(Combat c, int i){
 		int cost = i;
 		int bonus = 0;
-		for(Status s: status){
+		for(Status s: getStatuses()){
 			bonus+=s.spendmojo(i);
 		}
 		cost += bonus;
@@ -846,7 +852,7 @@ public abstract class Character extends Observable implements Cloneable{
 	public void regen(Combat c, boolean combat){
 		int regen = 1;
 		// TODO can't find the concurrent modification error, just use a copy for now I guess...
-		for(Status s: new HashSet<Status>(status)){
+		for(Status s: new HashSet<Status>(getStatuses())){
 			regen+=s.regen(c);
 		}
 		if(has(Trait.BoundlessEnergy)){
@@ -873,11 +879,17 @@ public abstract class Character extends Observable implements Cloneable{
 	public void add(Status status){
 		add(null, status);
 	}
+	
+	public boolean has(Status status) {
+		return this.status.stream().anyMatch(s -> {
+			return s.flags().containsAll(status.flags()) && status.flags().containsAll(status.flags()) && s.getVariant().equals(status.getVariant());
+		});
+	}
 
 	public void add(Combat c, Status status){
 		boolean cynical = false;
 		String message = "";
-		for(Status s:this.status){
+		for(Status s:this.getStatuses()){
 			if(s.flags().contains(Stsflag.cynical)){
 				cynical = true;
 			}
@@ -927,7 +939,7 @@ public abstract class Character extends Observable implements Cloneable{
 		addlist.clear();
 	}
 	public boolean is(Stsflag sts){
-		for(Status s: status){
+		for(Status s: getStatuses()){
 			if(s.flags().contains(sts)){
 				return true;
 			}
@@ -935,7 +947,7 @@ public abstract class Character extends Observable implements Cloneable{
 		return false;
 	}
 	public boolean is(Stsflag sts, String variant){
-		for(Status s: status){
+		for(Status s: getStatuses()){
 			if(s.flags().contains(sts) && s.getVariant().equals(variant)){
 				return true;
 			}
@@ -943,7 +955,7 @@ public abstract class Character extends Observable implements Cloneable{
 		return false;
 	}
 	public boolean stunned(){
-		for(Status s: status){
+		for(Status s: getStatuses()){
 			if(s.flags().contains(Stsflag.stunned)){
 				return true;
 			}
@@ -951,7 +963,7 @@ public abstract class Character extends Observable implements Cloneable{
 		return false;
 	}
 	public boolean distracted(){
-		for(Status s: status){
+		for(Status s: getStatuses()){
 			if(s.flags().contains(Stsflag.distracted)||s.flags().contains(Stsflag.trance)){
 				return true;
 			}
@@ -959,7 +971,7 @@ public abstract class Character extends Observable implements Cloneable{
 		return false;
 	}
 	public boolean hasStatus(Stsflag flag){
-		for(Status s: status){
+		for(Status s: getStatuses()){
 			if(s.flags().contains(flag)){
 				return true;
 			}
@@ -967,14 +979,14 @@ public abstract class Character extends Observable implements Cloneable{
 		return false;
 	}
 	public void removeStatus(Stsflag flag){
-		for(Status s:status){
+		for(Status s:getStatuses()){
 			if(s.flags().contains(flag)){
 				removelist.add(s);
 			}
 		}
 	}
 	public boolean bound(){
-		for(Status s: status){
+		for(Status s: getStatuses()){
 			if(s.flags().contains(Stsflag.bound)){
 				return true;
 			}
@@ -982,7 +994,7 @@ public abstract class Character extends Observable implements Cloneable{
 		return false;
 	}
 	public void free(){
-		for(Status s:status){
+		for(Status s:getStatuses()){
 			if(s.flags().contains(Stsflag.bound)){
 				removelist.add(s);
 			}
@@ -990,13 +1002,13 @@ public abstract class Character extends Observable implements Cloneable{
 	}
 	
 	public void struggle() {
-		for(Status s: status){
+		for(Status s: getStatuses()){
 			s.struggle(this);
 		}
 	}
 	public int escape(Combat c) {
 		int total=0;
-		for(Status s: status){
+		for(Status s: getStatuses()){
 			total+=s.escape();
 		}
 		if(has(Trait.freeSpirit)){
@@ -1212,6 +1224,7 @@ public abstract class Character extends Observable implements Cloneable{
 		float extra = 25.0f * overflow / (arousal.max()/2.0f);
 
 		loseWillpower(c, getOrgasmWillpowerLoss(), Math.round(extra), true);
+		orgasms += 1;
 	}
 
 	public void doOrgasm(Combat c, Character opponent, Skill last) {
@@ -1261,7 +1274,7 @@ public abstract class Character extends Observable implements Cloneable{
 
 
 	public void eot(Combat c, Character opponent, Skill last) {
-		for(Status s: status){
+		for(Status s: getStatuses()){
 			s.eot(c);
 		}
 		dropStatus(c);
@@ -1392,6 +1405,14 @@ public abstract class Character extends Observable implements Cloneable{
 		location2.endEncounter();
 	}
 	public void upkeep() {
+		getTraits().forEach(trait -> {
+			if (trait.status != null) {
+				Status newStatus = trait.status.instance(this, null);
+				if (!has(newStatus)) {
+					add(newStatus);
+				}
+			}
+		});
 		regen();
 		tick(null);
 		if(has(Trait.Confident)){
@@ -1710,7 +1731,7 @@ public abstract class Character extends Observable implements Cloneable{
 	}
 	public int ac(){
 		int ac = getLevel()+get(Attribute.Perception)+get(Attribute.Speed);
-		for(Status s: status){
+		for(Status s: getStatuses()){
 			ac += s.evade();
 		}
 		if(has(Trait.clairvoyance)){
@@ -1719,13 +1740,17 @@ public abstract class Character extends Observable implements Cloneable{
 		return ac;
 	}
 
+	private Collection<Status> getStatuses() {
+		return status;
+	}
+
 	public int counterChance(Character opponent, Skill skill){
 		int counter = 0;
 		counter += Math.max(0,get(Attribute.Cunning) - opponent.get(Attribute.Cunning)) / 2;
 		counter += get(Attribute.Perception);
 		counter += (get(Attribute.Speed) - opponent.get(Attribute.Speed))/2;
 		counter += 5 - skill.accuracy();
-		for(Status s: status){
+		for(Status s: getStatuses()){
 			counter += s.counter();
 		}
 		if(has(Trait.clairvoyance)){
@@ -1763,7 +1788,7 @@ public abstract class Character extends Observable implements Cloneable{
 		status.clear();
 	}
 	public Status getStatus(Stsflag flag){
-		for(Status s: status){
+		for(Status s: getStatuses()){
 			if(s.flags().contains(flag)){
 				return s;
 			}
@@ -1824,10 +1849,11 @@ public abstract class Character extends Observable implements Cloneable{
 		}
 		cooldowns.clear();
 		dropStatus(null);
+		orgasms = 0;
 	}
 	public boolean canSpend(int mojo){
 		int cost=mojo;
-		for(Status s:status){
+		for(Status s:getStatuses()){
 			cost+=s.spendmojo(mojo);
 		}
 		return getMojo().get()>=cost;
@@ -1837,7 +1863,7 @@ public abstract class Character extends Observable implements Cloneable{
 	}
 	public ArrayList<String> listStatus() {
 		ArrayList<String> result = new ArrayList<String>();
-		for(Status s: status){
+		for(Status s: getStatuses()){
 			result.add(s.toString());
 		}
 		return result;
@@ -2056,7 +2082,7 @@ public abstract class Character extends Observable implements Cloneable{
 		fit += umid / usum * 50.0f * ( 1 - Math.exp(-((float)getStamina().get()) / Math.min(getStamina().max(), 100.0f)));
 		// Long term: Mojo
 		fit += ulong / usum * 50.0f * ( 1 - Math.exp(- ((float)getMojo().get()) / Math.min(getMojo().max(), 40.0f)));
-		for (Status status : this.status) {
+		for (Status status : getStatuses()) {
 			fit += status.fitnessModifier();
 		}
 		return fit;
@@ -2210,5 +2236,47 @@ public abstract class Character extends Observable implements Cloneable{
 			return other.get(Attribute.Science) + 20;
 		}
 		return 0;
+	}
+	public void startBattle(Combat combat) {
+		orgasms = 0;
+	}
+
+	public void drainStaminaAsMojo(Combat c, Character drainer, int i, float efficiency) {
+		int drained = i;
+		int bonus = 0;
+
+		for(Status s: getStatuses()){
+			bonus+=s.drained(drained);
+		}
+		drained += bonus;
+		if(drained>=stamina.get()){
+			drained = stamina.get();
+		}
+		drained = Math.max(1, drained);
+		int restored = Math.round(drained * efficiency);
+		if (c!=null) {
+			c.writeSystemMessage(String.format("%s drained of <font color='rgb(240,162,100)'>%d<font color='white'> stamina as <font color='rgb(100,162,240)'>%d<font color='white'> mojo by %s", this.subjectWas(), drained, restored, drainer.subject()));
+		}
+		stamina.reduce(drained);
+		drainer.mojo.restore(restored);
+	}
+
+	public void drainMojo(Combat c, Character drainer, int i) {
+		int drained = i;
+		int bonus = 0;
+
+		for(Status s: getStatuses()){
+			bonus+=s.drained(drained);
+		}
+		drained += bonus;
+		if(drained>=mojo.get()){
+			drained = mojo.get();
+		}
+		drained = Math.max(1, drained);
+		if (c!=null) {
+			c.writeSystemMessage(String.format("%s drained of <font color='rgb(0,162,240)'>%d<font color='white'> mojo by %s", this.subjectWas(), drained, drainer.subject()));
+		}
+		mojo.reduce(drained);
+		drainer.mojo.restore(drained);
 	}
 }

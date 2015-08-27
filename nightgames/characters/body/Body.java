@@ -1,6 +1,7 @@
 package nightgames.characters.body;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.NPC;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
@@ -681,6 +682,12 @@ public class Body implements Cloneable {
 						.sum();
 		}
 		return 20 * totalCounterValue;
+	}
+
+	public Body clone(Character other) throws CloneNotSupportedException {
+		Body res = clone();
+		res.character = other;
+		return res;
 	}
 
 }
