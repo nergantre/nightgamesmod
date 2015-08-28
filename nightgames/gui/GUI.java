@@ -1179,10 +1179,13 @@ public class GUI extends JFrame implements Observer {
 		
 		count = 0;
 		ArrayList<JLabel> attlbls = new ArrayList<JLabel>();
-		for (Attribute a : player.att.keySet()){
-			attlbls.add(count, new JLabel(a.name() + ": " + player.get(a)));
-			statsPanel.add(attlbls.get(count));
-			count++;
+		for (Attribute a : Attribute.values()){
+			int amt = player.get(a);
+			if (amt > 0) {
+				attlbls.add(count, new JLabel(a.name() + ": " + amt));
+				statsPanel.add(attlbls.get(count));
+				count++;
+			}
 		}
 		
 		JTextPane statusText = new JTextPane();
