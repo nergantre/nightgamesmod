@@ -39,7 +39,7 @@ public class SweetScent extends Skill {
 		if ( res != Result.miss) {
 			target.arouse(25, c);
 			target.emote(Emotion.horny, 100);
-			target.add(c, new Frenzied(target, c, 8));
+			target.add(c, new Frenzied(target, 8));
 		}
 		return res != Result.miss;
 	}

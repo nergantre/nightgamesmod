@@ -4,11 +4,14 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.global.JSONUtils;
 import nightgames.skills.AssFuck;
 import nightgames.skills.Carry;
 import nightgames.skills.CounterDrain;
@@ -72,11 +75,8 @@ public class Frenzied extends DurationStatus {
 		FUCK_SKILLS.add(new ToggleKnot(p));
 	}
 
-	private final Combat c;
-
-	public Frenzied(Character affected, Combat c, int duration) {
+	public Frenzied(Character affected, int duration) {
 		super("Frenzied", affected, duration);
-		this.c = c;
 		flag(Stsflag.frenzied);
 	}
 
@@ -177,7 +177,7 @@ public class Frenzied extends DurationStatus {
 
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new Frenzied(newAffected, c, getDuration());
+		return new Frenzied(newAffected, getDuration());
 	}
 
 	@Override
@@ -186,5 +186,17 @@ public class Frenzied extends DurationStatus {
 		// requirements
 		return FUCK_SKILLS.stream().filter(s -> s.requirements(affected)).map(s -> s.copy(affected))
 				.collect(Collectors.toSet());
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		obj.put("duration", getDuration());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new Frenzied(null, JSONUtils.readInteger(obj, "duration"));
 	}
 }

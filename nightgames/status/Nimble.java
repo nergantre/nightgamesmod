@@ -1,9 +1,12 @@
 package nightgames.status;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
+import nightgames.global.JSONUtils;
 
 public class Nimble extends DurationStatus {
 	public Nimble(Character affected, int duration) {
@@ -51,31 +54,26 @@ public class Nimble extends DurationStatus {
 
 	@Override
 	public int damage(Combat c, int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public double pleasure(Combat c, double x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int weakened(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int tempted(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int evade() {
-		// TODO Auto-generated method stub
 		return affected.get(Attribute.Animism)*affected.getArousal().percent()/100;
 	}
 
@@ -86,13 +84,11 @@ public class Nimble extends DurationStatus {
 
 	@Override
 	public int gainmojo(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int spendmojo(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -103,11 +99,22 @@ public class Nimble extends DurationStatus {
 
 	@Override
 	public int value() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Nimble(newAffected, getDuration());
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		obj.put("duration", getDuration());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new Nimble(null, JSONUtils.readInteger(obj, "duration"));
 	}
 }

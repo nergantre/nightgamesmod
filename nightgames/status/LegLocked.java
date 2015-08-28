@@ -1,15 +1,18 @@
 package nightgames.status;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.custom.requirement.InsertedRequirement;
 import nightgames.combat.Combat;
+import nightgames.global.JSONUtils;
 
 public class LegLocked extends Status {
-	private int toughness;
+	private float toughness;
 	
-	public LegLocked(Character affected, int dc) {
+	public LegLocked(Character affected, float dc) {
 		super("Leg Locked", affected);
 		requirements.add(new InsertedRequirement(true));
 		requirements.add((c, self, other) -> toughness > .01);
@@ -38,7 +41,6 @@ public class LegLocked extends Status {
 
 	@Override
 	public int mod(Attribute a) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -50,37 +52,32 @@ public class LegLocked extends Status {
 	}
 	@Override
 	public int damage(Combat c, int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public double pleasure(Combat c, double x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int weakened(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int tempted(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int evade() {
-		// TODO Auto-generated method stub
 		return -15;
 	}
 
 	@Override
 	public int escape() {
-		return -toughness;
+		return Math.round(-toughness);
 	}
 	@Override
 	public void struggle(Character self) {
@@ -111,5 +108,16 @@ public class LegLocked extends Status {
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new LegLocked(newAffected, toughness);
+	}
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		obj.put("toughness", toughness);
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new LegLocked(null, JSONUtils.readFloat(obj, "toughness"));
 	}
 }

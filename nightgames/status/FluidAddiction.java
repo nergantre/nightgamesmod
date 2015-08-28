@@ -4,11 +4,14 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
+import nightgames.global.JSONUtils;
 import nightgames.skills.Blowjob;
 import nightgames.skills.Cunnilingus;
 import nightgames.skills.Kiss;
@@ -199,5 +202,17 @@ public class FluidAddiction extends DurationStatus {
 		} else {
 			return false;
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		obj.put("duration", getDuration());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new FluidAddiction(null, null, JSONUtils.readInteger(obj, "duration"));
 	}
 }

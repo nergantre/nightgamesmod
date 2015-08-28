@@ -1,9 +1,12 @@
 package nightgames.status;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
+import nightgames.global.JSONUtils;
 
 public class Shield extends DurationStatus {
 	private double strength;
@@ -91,11 +94,23 @@ public class Shield extends DurationStatus {
 
 	@Override
 	public int value() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Shield(newAffected, strength, getDuration());
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		obj.put("strength", strength);
+		obj.put("duration", getDuration());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new Shield(null, JSONUtils.readInteger(obj, "strength"), JSONUtils.readInteger(obj, "duration"));
 	}
 }

@@ -1,8 +1,11 @@
 package nightgames.status;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
+import nightgames.global.JSONUtils;
 
 public class Satiated extends DurationStatus {
 	int value;
@@ -91,5 +94,17 @@ public class Satiated extends DurationStatus {
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Satiated(newAffected, value);
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		obj.put("value", value);
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new Satiated(null, JSONUtils.readInteger(obj, "value"));
 	}
 }

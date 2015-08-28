@@ -1,5 +1,7 @@
 package nightgames.status;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
@@ -33,7 +35,6 @@ public class FireStance extends DurationStatus {
 
 	@Override
 	public int mod(Attribute a) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -47,37 +48,31 @@ public class FireStance extends DurationStatus {
 
 	@Override
 	public int damage(Combat c, int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public double pleasure(Combat c, double x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int weakened(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int tempted(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int evade() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int escape() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -93,17 +88,26 @@ public class FireStance extends DurationStatus {
 
 	@Override
 	public int counter() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int value() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new FireStance(newAffected);
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new FireStance(null);
 	}
 }

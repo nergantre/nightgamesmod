@@ -1,5 +1,7 @@
 package nightgames.status;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
@@ -85,11 +87,21 @@ public class Oiled extends Status {
 
 	@Override
 	public int value() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Oiled(newAffected);
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new Oiled(null);
 	}
 }

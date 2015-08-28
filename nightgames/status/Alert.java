@@ -1,5 +1,7 @@
 package nightgames.status;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
@@ -91,5 +93,16 @@ public class Alert extends DurationStatus {
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Alert(newAffected);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new Alert(null);
 	}
 }

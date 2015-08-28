@@ -1,15 +1,18 @@
 package nightgames.status;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
+import nightgames.global.JSONUtils;
 
 public class CockBound extends Status {
-	private int toughness;
+	private float toughness;
 	public String binding;
 	
-	public CockBound(Character affected, int dc, String binding) {
+	public CockBound(Character affected, float dc, String binding) {
 		super("Cock Bound", affected);
 		toughness = dc;
 		this.binding = binding;
@@ -33,7 +36,6 @@ public class CockBound extends Status {
 
 	@Override
 	public int mod(Attribute a) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -50,13 +52,11 @@ public class CockBound extends Status {
 	}
 	@Override
 	public int damage(Combat c, int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public double pleasure(Combat c, double x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -67,26 +67,23 @@ public class CockBound extends Status {
 
 	@Override
 	public int weakened(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int tempted(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int evade() {
-		// TODO Auto-generated method stub
 		return -15;
 	}
 
 	@Override
 	public int escape() {
-		int dc = toughness;
-		return -dc * 10;
+		float dc = toughness;
+		return Math.round(dc * 10);
 	}
 
 	@Override
@@ -114,11 +111,23 @@ public class CockBound extends Status {
 
 	@Override
 	public int value() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new CockBound(newAffected, toughness, binding);
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		obj.put("toughness", toughness);
+		obj.put("binding", binding);
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new CockBound(null, JSONUtils.readFloat(obj, "toughness"), JSONUtils.readString(obj, "binding"));
 	}
 }

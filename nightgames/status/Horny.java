@@ -1,15 +1,18 @@
 package nightgames.status;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
+import nightgames.global.JSONUtils;
 
 public class Horny extends DurationStatus {
-	private int magnitude;
+	private float magnitude;
 	private String source;
 
-	public Horny(Character affected, int magnitude, int duration, String source) {
+	public Horny(Character affected, float magnitude, int duration, String source) {
 		super("Horny", affected, duration);
 		this.source = source;
 		this.magnitude = magnitude;
@@ -43,7 +46,7 @@ public class Horny extends DurationStatus {
 	@Override
 	public int regen(Combat c) {
 		super.regen(c);
-		affected.arouse(magnitude, c);
+		affected.arouse(Math.round(magnitude), c);
 		affected.emote(Emotion.horny,20);
 		return 0;
 	}
@@ -128,5 +131,22 @@ public class Horny extends DurationStatus {
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Horny(newAffected, magnitude, getDuration(), source);
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		obj.put("source", source);
+		obj.put("magnitude", magnitude);
+		obj.put("duration", getDuration());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new Horny(null, 
+				JSONUtils.readFloat(obj, "magnitude"),
+				JSONUtils.readInteger(obj, "duration"),
+				JSONUtils.readString(obj, "source"));
 	}
 }

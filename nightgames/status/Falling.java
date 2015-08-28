@@ -1,8 +1,11 @@
 package nightgames.status;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
+import nightgames.global.JSONUtils;
 import nightgames.stance.StandingOver;
 
 public class Falling extends Status {
@@ -90,5 +93,16 @@ public class Falling extends Status {
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Falling(newAffected);
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new Falling(null);
 	}
 }

@@ -4,10 +4,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.global.JSONUtils;
 import nightgames.skills.Anilingus;
 import nightgames.skills.Blowjob;
 import nightgames.skills.FootWorship;
@@ -111,31 +114,26 @@ public class BodyFetish extends DurationStatus {
 
 	@Override
 	public int damage(Combat c, int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public double pleasure(Combat c, double x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int weakened(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int tempted(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int evade() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -146,29 +144,42 @@ public class BodyFetish extends DurationStatus {
 
 	@Override
 	public int gainmojo(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int spendmojo(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int counter() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int value() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new BodyFetish(newAffected, newOther, part, magnitude, getDuration());
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		obj.put("part", part);
+		obj.put("magnitude", magnitude);
+		obj.put("duration", getDuration());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new BodyFetish(null, null,
+						JSONUtils.readString(obj, "part"),
+						JSONUtils.readFloat(obj, "magnitude"),
+						JSONUtils.readInteger(obj, "duration"));
 	}
 }
