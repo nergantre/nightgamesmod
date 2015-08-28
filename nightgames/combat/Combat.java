@@ -351,7 +351,7 @@ public class Combat extends Observable implements Serializable, Cloneable{
 	}
 
 	private boolean checkCounter(Character attacker, Character target, Skill skill) {
-		return !target.has(Trait.submissive)&& getStance().mobile(target) && target.counterChance(attacker, skill) > Global.random(100);
+		return !target.has(Trait.submissive)&& getStance().mobile(target) && target.counterChance(this, attacker, skill) > Global.random(100);
 	}
 
 	private boolean resolveSkill(Skill skill, Character target) {

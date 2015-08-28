@@ -16,7 +16,7 @@ public class Tighten extends Thrust {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Seduction)>=26 || user.has(Trait.tight);
 	}
 

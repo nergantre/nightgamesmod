@@ -15,7 +15,7 @@ public class Sensitize extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return true;
 	}
 
@@ -41,7 +41,7 @@ public class Sensitize extends Skill {
 			}
 			target.add(c, new Hypersensitive(target));
 		}
-		else if(target.roll(this, c, accuracy())){
+		else if(target.roll(this, c, accuracy(c))){
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.normal, target));
 			}

@@ -21,7 +21,7 @@ public class Tackle extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy())&&getSelf().check(Attribute.Power,target.knockdownDC()-getSelf().get(Attribute.Animism))){
+		if(target.roll(this, c, accuracy(c))&&getSelf().check(Attribute.Power,target.knockdownDC()-getSelf().get(Attribute.Animism))){
 			if(getSelf().get(Attribute.Animism)>=1){
 				if(getSelf().human()){
 					c.write(getSelf(),deal(c,0,Result.special, target));
@@ -60,7 +60,7 @@ public class Tackle extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return (user.get(Attribute.Power)>=26&& !user.has(Trait.petite))|| user.get(Attribute.Animism)>=1;
 	}
 
@@ -76,13 +76,13 @@ public class Tackle extends Skill {
 			return 1;
 		}
 	}
-	public int accuracy(){
+	public int accuracy(Combat c){
+		int base = 80;
 		if(getSelf().get(Attribute.Animism)>=1){
-			return 3;
+			base = 120;
 		}
-		else{
-			return 1;
-		}
+		return Math.round(Math.max(Math.min(150, 2.5f * (getSelf().get(Attribute.Power)
+				- c.getOther(getSelf()).get(Attribute.Power)) + base), 40));
 	}
 	public Tactics type(Combat c) {
 		return Tactics.positioning;

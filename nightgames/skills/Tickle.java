@@ -29,7 +29,7 @@ public class Tickle extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy())){
+		if(target.roll(this, c, accuracy(c))){
 			if(target.pantsless()&&c.getStance().reachBottom(getSelf())&&!c.getStance().penetration(getSelf())){
 				if(getSelf().has(Item.Tickler2)&&Global.random(2)==1&&getSelf().canSpend(10)&&(!getSelf().human()&&!target.is(Stsflag.hypersensitive)
 						||Global.getMatch().condition!=Modifier.notoys)){
@@ -138,7 +138,7 @@ public class Tickle extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return true;
 	}
 

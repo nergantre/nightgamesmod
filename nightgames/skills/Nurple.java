@@ -16,7 +16,7 @@ public class Nurple extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Power)>=13;
 	}
 
@@ -32,7 +32,7 @@ public class Nurple extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy())){
+		if(target.roll(this, c, accuracy(c))){
 			if(getSelf().has(Item.ShockGlove)&&getSelf().has(Item.Battery,2)){
 				if(getSelf().human()){
 					c.write(getSelf(),deal(c,0,Result.special, target));

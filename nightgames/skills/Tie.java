@@ -16,7 +16,7 @@ public class Tie extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return true;
 	}
 
@@ -40,7 +40,7 @@ public class Tie extends Skill {
 		}
 		else{
 			getSelf().consume(Item.ZipTie, 1);
-			if(target.roll(this, c, accuracy())){
+			if(target.roll(this, c, accuracy(c))){
 				if(getSelf().human()){
 					c.write(getSelf(),deal(c,0,Result.normal, target));
 				}
@@ -74,8 +74,8 @@ public class Tie extends Skill {
 	public int speed(){
 		return 2;
 	}
-	public int accuracy(){
-		return 1;
+	public int accuracy(Combat c){
+		return 80;
 	}
 
 	@Override

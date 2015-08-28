@@ -21,7 +21,7 @@ public class Fly extends Fuck {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return (user.body.get("wings").size() > 0) && user.get(Attribute.Power)>=15;
 	}
 
@@ -45,9 +45,11 @@ public class Fly extends Fuck {
 	public String describe() {
 		return "Take off and fuck your opponent's pussy in the air.";
 	}
-	public int accuracy(){
-		return 0;
+
+	public int accuracy(Combat c){
+		return 65;
 	}
+
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		String premessage = "";
@@ -60,7 +62,7 @@ public class Fly extends Fuck {
 		}
 
 		premessage = Global.format(premessage, getSelf(), target);
-		Result result = target.roll(this, c, accuracy()) ? Result.normal: Result.miss;
+		Result result = target.roll(this, c, accuracy(c)) ? Result.normal: Result.miss;
 		if (this.getSelf().human()) {
 			c.write(getSelf(),premessage + deal(c, 0, result, target));
 		} else if (target.human()) {

@@ -14,7 +14,7 @@ public class Dissolve extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return true;
 	}
 
@@ -41,7 +41,7 @@ public class Dissolve extends Skill {
 				target.shred(1);
 			}
 		}
-		else if(target.roll(this, c, accuracy())){
+		else if(target.roll(this, c, accuracy(c))){
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.normal, target));
 			}

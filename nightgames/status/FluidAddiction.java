@@ -172,7 +172,7 @@ public class FluidAddiction extends DurationStatus {
 	}
 
 	@Override
-	public Collection<Skill> allowedSkills(){
+	public Collection<Skill> allowedSkills(Combat c){
 		if (!isActive()) {
 			return Collections.emptySet();
 		} else if (target.has(Trait.lactating)) {

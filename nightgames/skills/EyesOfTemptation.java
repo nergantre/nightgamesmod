@@ -15,7 +15,7 @@ public class EyesOfTemptation extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Seduction) > 45 || user.get(Attribute.Dark) > 20 || user.get(Attribute.Arcane) > 10;
 	}
 
@@ -31,7 +31,7 @@ public class EyesOfTemptation extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		Result result = target.roll(this, c, accuracy())? Result.normal : Result.miss;
+		Result result = target.roll(this, c, accuracy(c))? Result.normal : Result.miss;
 		if(getSelf().human()) {
 			c.write(getSelf(),deal(c,0,result, target));
 		}

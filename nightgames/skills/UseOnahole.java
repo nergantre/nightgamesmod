@@ -15,7 +15,7 @@ public class UseOnahole extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return true;
 	}
 
@@ -29,7 +29,7 @@ public class UseOnahole extends Skill {
 	public boolean resolve(Combat c, Character target) {
 		int m = 5+Global.random(5);
 
-		if(target.roll(this, c, accuracy())){
+		if(target.roll(this, c, accuracy(c))){
 			if(getSelf().has(Item.Onahole2)){
 				m += 5;
 				if(target.human()){

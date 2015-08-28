@@ -19,7 +19,7 @@ public class FootWorship extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		Optional<BodyFetish> fetish = getSelf().body.getFetish("feet");
 		return fetish.isPresent() && fetish.get().magnitude >= .5;
 	}
@@ -53,9 +53,6 @@ public class FootWorship extends Skill {
 	}
 	public int speed(){
 		return 2;
-	}
-	public int accuracy(){
-		return 6;
 	}
 	public Tactics type(Combat c) {
 		return Tactics.pleasure;

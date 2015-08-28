@@ -15,7 +15,7 @@ public class Kick extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Power)>=17;
 	}
 
@@ -40,7 +40,7 @@ public class Kick extends Skill {
 			}
 			target.shred(1);
 		}
-		if(target.roll(this, c, accuracy())){
+		if(target.roll(this, c, accuracy(c))){
 			int m = Global.random(12)+getSelf().get(Attribute.Power);
 			if(getSelf().human()){
 				if(c.getStance().prone(getSelf())){

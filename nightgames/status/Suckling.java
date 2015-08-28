@@ -23,7 +23,7 @@ public class Suckling extends DurationStatus {
 	}
 
 	@Override
-	public Collection<Skill> allowedSkills(){
+	public Collection<Skill> allowedSkills(Combat c){
 		return Collections.singleton((Skill)new Suckle(affected));
 	}
 

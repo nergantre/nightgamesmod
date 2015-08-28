@@ -1735,8 +1735,8 @@ public abstract class Character extends Observable implements Cloneable{
 			affections.put(other, x);
 		}
 	}
-	public int ac(){
-		int ac = getLevel()+get(Attribute.Perception)+get(Attribute.Speed);
+	public int evasionBonus(){
+		int ac = 0;
 		for(Status s: getStatuses()){
 			ac += s.evade();
 		}
@@ -1750,12 +1750,12 @@ public abstract class Character extends Observable implements Cloneable{
 		return status;
 	}
 
-	public int counterChance(Character opponent, Skill skill){
+	public int counterChance(Combat c, Character opponent, Skill skill){
 		int counter = 0;
 		counter += Math.max(0,get(Attribute.Cunning) - opponent.get(Attribute.Cunning)) / 2;
 		counter += get(Attribute.Perception);
 		counter += (get(Attribute.Speed) - opponent.get(Attribute.Speed))/2;
-		counter += 5 - skill.accuracy();
+		counter += 5 - skill.accuracy(c);
 		for(Status s: getStatuses()){
 			counter += s.counter();
 		}
@@ -1771,13 +1771,20 @@ public abstract class Character extends Observable implements Cloneable{
 		return Math.max(0, counter);
 	}
 
-	public int tohit(){
-		int hit = get(Attribute.Speed)+getLevel();
-		return hit;
-	}
 	public boolean roll(Skill attack, Combat c, int accuracy){
-		int attackroll = attack.user().tohit() + accuracy + 2 + Global.random(8) + Global.random(8);
-		return attackroll > ac();
+		int hitDiff = (attack.user().get(Attribute.Speed) + attack.user().get(Attribute.Perception))
+				- (get(Attribute.Perception)+get(Attribute.Speed));
+		int levelDiff = Math.min(attack.user().level - level, 5);
+		levelDiff = Math.max(attack.user().level - level, -5);
+		int attackroll = Global.random(100);
+
+		// with no level or hit differences and an default accuracy of 80, 80% hit rate
+		// each level the attacker is below the target will reduce this by 5%, to a maximum of 25%
+		// each point in accuracy of skill affects changes the hit chance by 1%
+		// each point in speed and perception will increase hit by 10%
+		int chanceToHit = 5 * levelDiff + accuracy + 10 * (hitDiff - evasionBonus());
+
+		return attackroll < chanceToHit;
 	}
 
 	public int knockdownDC() {

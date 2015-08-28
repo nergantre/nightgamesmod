@@ -35,10 +35,10 @@ public abstract class Skill {
 		this.cooldown = cooldown;
 		this.choice = "";
 	}
-	public final boolean requirements() {
-		return requirements(getSelf());
+	public final boolean requirements(Combat c, Character target) {
+		return requirements(c, getSelf(), target);
 	}
-	public abstract boolean requirements(Character user);
+	public abstract boolean requirements(Combat c, Character user, Character target);
 	
 	public static void filterAllowedSkills(Combat c, Set<Skill> skills, Character user, Character target) {
 		boolean filtered = false;
@@ -50,7 +50,7 @@ public abstract class Skill {
 		}
 		Set<Skill> availSkills = new HashSet<Skill>();
 		for (Status st : user.status) {
-			for (Skill sk : st.allowedSkills()) {
+			for (Skill sk : st.allowedSkills(c)) {
 				if (skillIsUsable(c, sk, target)) {
 					availSkills.add(sk);
 				}
@@ -64,7 +64,7 @@ public abstract class Skill {
 		if (!filtered) {
 			// if the skill is restricted by status/stance, do not check for requirements
 			for (Skill sk : skills) {
-				if (!sk.requirements()) {
+				if (!sk.requirements(c, target)) {
 					noReqs.add(sk);
 				}
 			}
@@ -101,8 +101,8 @@ public abstract class Skill {
 	public float priorityMod(Combat c) {
 		return 0.0f;
 	}
-	public int accuracy(){
-		return 5;
+	public int accuracy(Combat c){
+		return 90;
 	}
 	public int speed(){
 		return 5;

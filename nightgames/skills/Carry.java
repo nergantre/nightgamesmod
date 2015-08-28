@@ -22,7 +22,7 @@ public class Carry extends Fuck {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Power)>=25 && !user.has(Trait.petite);
 	}
 
@@ -55,7 +55,7 @@ public class Carry extends Fuck {
 			}
 		}
 		premessage = Global.format(premessage, getSelf(), target);
-		if(target.roll(this, c, accuracy())){
+		if(target.roll(this, c, accuracy(c))){
 			if(getSelf().human()){
 				c.write(getSelf(),premessage + deal(c,0,Result.normal, target));
 			}
@@ -87,8 +87,8 @@ public class Carry extends Fuck {
 	public Skill copy(Character user) {
 		return new Carry(user);
 	}
-	public int accuracy(){
-		return 0;
+	public int accuracy(Combat c){
+		return 60;
 	}
 	@Override
 	public Tactics type(Combat c) {

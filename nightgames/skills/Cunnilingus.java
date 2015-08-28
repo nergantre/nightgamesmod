@@ -39,14 +39,13 @@ public class Cunnilingus extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		PussyPart targetPussy = target.body.getRandomPussy();
 		Result results = Result.normal;
-		int m = 4 + Global.random(8);
+		int m = 10 + Global.random(8);
 		if(getSelf().has(Trait.silvertongue)) {
 			m += 4;
 		}
 		int i = 0;
-		if(c.getStance().enumerate()!= Stance.facesitting && !target.roll(this, c, accuracy())) {
+		if(c.getStance().enumerate()!= Stance.facesitting && !target.roll(this, c, accuracy(c))) {
 			results = Result.miss;
 		} else { 
 			if (target.has(Trait.entrallingjuices) && Global.random(4) == 0 && !target.wary()) {
@@ -81,7 +80,7 @@ public class Cunnilingus extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Seduction)>=10;
 	}
 
@@ -92,8 +91,8 @@ public class Cunnilingus extends Skill {
 	public int speed(){
 		return 2;
 	}
-	public int accuracy(){
-		return 6;
+	public int accuracy(Combat c){
+		return 75;
 	}
 	public Tactics type(Combat c) {
 		return Tactics.pleasure;

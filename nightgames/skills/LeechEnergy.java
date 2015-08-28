@@ -32,7 +32,7 @@ public class LeechEnergy extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy())){
+		if(target.roll(this, c, accuracy(c))){
 			BodyPart part = null;
 			BodyPart selfPart = getSelf().body.getRandom("tentacles");
 			List<String> targets = new ArrayList<String>(Arrays.asList("hands", "feet", "skin", "mouth", "cock", "pussy", "balls"));
@@ -95,7 +95,7 @@ public class LeechEnergy extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return getSelf().get(Attribute.Bio)>=1;
 	}
 
@@ -106,7 +106,7 @@ public class LeechEnergy extends Skill {
 	public int speed(){
 		return 5;
 	}
-	public int accuracy(){
+	public int accuracy(Combat c){
 		return 7;
 	}
 	public Tactics type(Combat c) {

@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.custom.requirement.CustomRequirement;
@@ -28,7 +30,7 @@ public abstract class Status implements Cloneable {
 		return name;
 	}
 	
-	public Collection<Skill> allowedSkills(){
+	public Collection<Skill> allowedSkills(Combat c){
 		return Collections.emptySet();
 	}
 	
@@ -92,4 +94,6 @@ public abstract class Status implements Cloneable {
 	}
 	public void struggle(Character character) {}
 	public void onRemove(Combat c, Character other) {}
+	public abstract JSONObject saveToJSON();
+	public abstract Status loadFromJSON(JSONObject obj);
 }

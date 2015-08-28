@@ -16,7 +16,7 @@ public class Footjob extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Seduction)>=22;
 	}
 
@@ -43,7 +43,7 @@ public class Footjob extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy())){
+		if(target.roll(this, c, accuracy(c))){
 			int m = 8 + Global.random(6);
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,m,Result.normal, target));

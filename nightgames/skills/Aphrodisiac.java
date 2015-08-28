@@ -15,7 +15,7 @@ public class Aphrodisiac extends Skill {
 		super("Use Aphrodisiac", self);
 	}
 
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return true;
 	}
 
@@ -44,7 +44,7 @@ public class Aphrodisiac extends Skill {
 			target.arouse(magnitude, c);
 			target.emote(Emotion.horny, 20);
 		}
-		else if(target.roll(this, c, accuracy())){
+		else if(target.roll(this, c, accuracy(c))){
 			if (this.getSelf().human()) {
 				c.write(getSelf(),deal(c, magnitude, Result.normal, target));
 			} else {

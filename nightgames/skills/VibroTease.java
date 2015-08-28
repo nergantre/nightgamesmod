@@ -16,7 +16,7 @@ public class VibroTease extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.has(Item.Strapon2);
 	}
 

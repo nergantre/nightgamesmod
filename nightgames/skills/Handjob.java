@@ -28,7 +28,7 @@ public class Handjob extends Skill {
 	public boolean resolve(Combat c, Character target) {
 		int m = 6 + Global.random(5);
 
-		if(target.roll(this, c, accuracy())){
+		if(target.roll(this, c, accuracy(c))){
 			if(getSelf().get(Attribute.Seduction)>=8){
 				m += 6;
 				if(getSelf().human()){
@@ -62,7 +62,7 @@ public class Handjob extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return true;
 	}
 

@@ -48,7 +48,7 @@ public class ReverseFly extends Fly {
 		}
 
 		premessage = Global.format(premessage, getSelf(), target);
-		Result result = target.roll(this, c, accuracy()) ? Result.normal: Result.miss;
+		Result result = target.roll(this, c, accuracy(c)) ? Result.normal: Result.miss;
 		if (this.getSelf().human()) {
 			c.write(getSelf(),premessage + deal(c, 0, result, target));
 		} else if (target.human()) {

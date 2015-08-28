@@ -52,7 +52,7 @@ public class Blowjob extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		int m = 4 + Global.random(8);
+		int m = 10 + Global.random(8);
 		if(getSelf().has(Trait.silvertongue)){
 			m += 4;
 		}
@@ -72,7 +72,7 @@ public class Blowjob extends Skill {
 			}
 			target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("cock"), m, c);					
 			target.buildMojo(c, 10);
-		} else if(target.roll(this, c, accuracy())){
+		} else if(target.roll(this, c, accuracy(c))){
 			if(getSelf().has(Trait.silvertongue)){
 				if(target.human()){
 					c.write(getSelf(),receive(c,m,Result.special, target));
@@ -109,11 +109,11 @@ public class Blowjob extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Seduction)>=10;
 	}
-	public int accuracy(){
-		return 6;
+	public int accuracy(Combat c){
+		return 75;
 	}
 	@Override
 	public Skill copy(Character user) {
