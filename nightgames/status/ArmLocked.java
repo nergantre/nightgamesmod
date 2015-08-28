@@ -3,6 +3,7 @@ package nightgames.status;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.custom.requirement.InsertedRequirement;
 import nightgames.combat.Combat;
 
 public class ArmLocked extends Status {
@@ -11,6 +12,8 @@ public class ArmLocked extends Status {
 	public ArmLocked(Character affected, int dc) {
 		super("Arm Locked", affected);
 		toughness = dc;
+		requirements.add(new InsertedRequirement(true));
+		requirements.add((c, self, other) -> toughness > .01);
 		flag(Stsflag.armlocked);
 	}
 
@@ -42,12 +45,10 @@ public class ArmLocked extends Status {
 
 	@Override
 	public int regen(Combat c) {
-		if (!c.getStance().inserted() || toughness <= 0.01) {
-			affected.removelist.add(this);
-		}
 		affected.emote(Emotion.horny, 10);
 		return 0;
 	}
+
 	@Override
 	public int damage(Combat c, int x) {
 		// TODO Auto-generated method stub

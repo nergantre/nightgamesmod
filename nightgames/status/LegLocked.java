@@ -3,6 +3,7 @@ package nightgames.status;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.custom.requirement.InsertedRequirement;
 import nightgames.combat.Combat;
 
 public class LegLocked extends Status {
@@ -10,6 +11,8 @@ public class LegLocked extends Status {
 	
 	public LegLocked(Character affected, int dc) {
 		super("Leg Locked", affected);
+		requirements.add(new InsertedRequirement(true));
+		requirements.add((c, self, other) -> toughness > .01);
 		toughness = dc;
 		flag(Stsflag.leglocked);
 	}
@@ -18,8 +21,7 @@ public class LegLocked extends Status {
 	public String describe() {
 		if(affected.human()){
 			return "Her legs are locked around your waist, preventing you from pulling out.";
-		}
-		else{
+		} else {
 			return "Your legs are wrapped around her waist, preventing her from pulling out.";
 		}
 	}
@@ -42,9 +44,6 @@ public class LegLocked extends Status {
 
 	@Override
 	public int regen(Combat c) {
-		if (!c.getStance().inserted(affected) || toughness <= 0.01) {
-			affected.removelist.add(this);
-		}
 		affected.emote(Emotion.horny, 10);
 		toughness -= 2;
 		return 0;
