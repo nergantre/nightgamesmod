@@ -52,7 +52,7 @@ public class MouthPart extends GenericBodyPart {
 				if (self.human()) {
 					c.write(self, Global.capitalizeFirstLetter(Global.format("You feel a strange desire to drink down more of {other:name-possessive} " + fluid + ".", self, opponent)));
 				} else {
-					c.write(self, Global.capitalizeFirstLetter(Global.format("{other:name} drinks down your " + fluid + " and seems to want more.", self, opponent)));
+					c.write(self, Global.capitalizeFirstLetter(Global.format("{self:name} drinks down your " + fluid + " and seems to want more.", self, opponent)));
 				}
 			}
 		}
