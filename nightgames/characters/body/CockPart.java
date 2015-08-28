@@ -207,12 +207,12 @@ public enum CockPart implements BodyPart {
 			c.write(self, message);
 		} else if (this == incubus) {
 			String message = String.format("%s demonic appendage latches onto %s will, trying to draw it into %s.",
-					self.nameOrPossessivePronoun(), opponent.nameOrPossessivePronoun(), self.directObject());
+					self.nameOrPossessivePronoun(), opponent.nameOrPossessivePronoun(), self.reflectivePronoun());
 			int amtDrained;
 			if (target == PussyPart.feral) {
 				message += String.format(" %s %s gladly gives it up, eager for more pleasure.",
 						opponent.possessivePronoun(), target.describe(opponent));
-				amtDrained = 3;
+				amtDrained = 5;
 				bonus += 2;
 			} else if (target == PussyPart.cybernetic) {
 				message += String.format(
@@ -224,7 +224,7 @@ public enum CockPart implements BodyPart {
 			} else {
 				message += String.format("Despite %s best efforts, some of the elusive energy passes into %s.",
 						opponent.nameOrPossessivePronoun(), self.nameDirectObject());
-				amtDrained = 1;
+				amtDrained = 3;
 			}
 			if (amtDrained != 0) {
 				opponent.loseWillpower(c, amtDrained);
