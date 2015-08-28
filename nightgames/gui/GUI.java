@@ -71,7 +71,6 @@ import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.SwingConstants;
 
-
 public class GUI extends JFrame implements Observer {
 
 	protected Combat combat;
