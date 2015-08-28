@@ -1,3 +1,13 @@
+1.8.1 changelog
+
+Bug fix:
+- Refracted Status duration, hopefully this will solve issues where statuses were not being cleared in the right order
+
+Balance:
+- Fire form now weakens by 5 a turn instead of 1 a turn. Should still be really good.
+- Flatfooted now gives you Wary after it ends instead of Cynical. (seems to make more sense)
+- Nimble now gives you 2 bonus speed as well as some bonus evade based on Animism
+
 1.7.6 changelog
 
 Bug fix:

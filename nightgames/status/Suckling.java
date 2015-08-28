@@ -1,30 +1,21 @@
 package nightgames.status;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
-import nightgames.global.Global;
 import nightgames.skills.Skill;
 import nightgames.skills.Suckle;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-
-public class Suckling extends Status {
-	private int duration;
+public class Suckling extends DurationStatus {
 	private Suckle skill;
 
 	public Suckling(Character affected, Character opponent, int duration) {
-		super("Suckling", affected);
+		super("Suckling", affected, duration);
 		skill = new Suckle(opponent);
-		if(affected.has(Trait.PersonalInertia)){
-			this.duration = duration * 3 / 2;
-		}else{
-			this.duration = duration;
-		}
 		flag(Stsflag.suckling);
 	}
 
@@ -55,7 +46,7 @@ public class Suckling extends Status {
 	
 	@Override
 	public float fitnessModifier () {
-		return - (2 + duration / 2.0f);
+		return - (2 + getDuration() / 2.0f);
 	}
 
 	@Override
@@ -65,11 +56,7 @@ public class Suckling extends Status {
 
 	@Override
 	public int regen(Combat c) {
-		duration--;
-		if(duration<=0){
-			affected.removelist.add(this);
-			affected.addlist.add(new Cynical(affected));
-		}
+		super.regen(c);
 		affected.emote(Emotion.horny,15);
 		return 0;
 	}
@@ -124,7 +111,12 @@ public class Suckling extends Status {
 	}
 
 	@Override
+	public void onRemove(Combat c, Character other) {
+		affected.addlist.add(new Cynical(affected));
+	}
+
+	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new Suckling(newAffected, newOther, duration);
+		return new Suckling(newAffected, newOther, getDuration());
 	}
 }

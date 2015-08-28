@@ -2,29 +2,19 @@ package nightgames.status;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.skills.Masturbate;
 import nightgames.skills.Piston;
 import nightgames.skills.Skill;
-import nightgames.skills.Suckle;
 import nightgames.skills.Thrust;
 
-public class Trance extends Status {
-	private int duration;
+public class Trance extends DurationStatus {
 	public Trance(Character affected) {
-		super("Trance", affected);
-		if(affected.has(Trait.PersonalInertia)){
-			duration = 3;
-		}else{
-			duration = 2;
-		}
+		super("Trance", affected, 3);
 		flag(Stsflag.trance);
 	}
 
@@ -50,7 +40,7 @@ public class Trance extends Status {
 	
 	@Override
 	public float fitnessModifier () {
-		return - (2 + duration / 2.0f);
+		return - (2 + getDuration() / 2.0f);
 	}
 
 	@Override
@@ -60,16 +50,16 @@ public class Trance extends Status {
 
 	@Override
 	public int regen(Combat c) {
-		duration--;
-		if(duration<=0){
-			affected.removelist.add(this);
-			affected.addlist.add(new Cynical(affected));
-		}
+		super.regen(c);
 		affected.loseWillpower(c, 1);
 		affected.emote(Emotion.horny,15);
 		return 0;
 	}
 
+	@Override
+	public void onRemove(Combat c, Character other) {
+		affected.addlist.add(new Cynical(affected));
+	}
 
 	@Override
 	public Collection<Skill> allowedSkills(){

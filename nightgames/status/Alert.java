@@ -3,19 +3,11 @@ package nightgames.status;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 
-public class Alert extends Status {
-	private int duration;
-	
+public class Alert extends DurationStatus {
 	public Alert(Character affected) {
-		super("Alert", affected);
-		if(affected.has(Trait.PersonalInertia)){
-			duration = 5;
-		}else{
-			duration = 3;
-		}
+		super("Alert", affected, 3);
 		flag(Stsflag.alert);
 	}
 	
@@ -41,10 +33,7 @@ public class Alert extends Status {
 
 	@Override
 	public int regen(Combat c) {
-		duration--;
-		if(duration<0){
-			affected.removelist.add(this);
-		}
+		super.regen(c);
 		affected.emote(Emotion.confident,5);
 		return 0;
 	}
@@ -96,7 +85,6 @@ public class Alert extends Status {
 
 	@Override
 	public int value() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

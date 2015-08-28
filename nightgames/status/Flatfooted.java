@@ -1,18 +1,14 @@
 package nightgames.status;
 
-import java.util.HashSet;
-
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 
-public class Flatfooted extends Status {
-	private int duration;
+public class Flatfooted extends DurationStatus {
 	public Flatfooted(Character affected, int duration) {
-		super("Flat-Footed", affected);
+		super("Flat-Footed", affected, duration);
 		flag(Stsflag.distracted);
-		this.duration = duration;
 	}
 
 	@Override
@@ -46,12 +42,13 @@ public class Flatfooted extends Status {
 	}
 
 	@Override
+	public void onRemove(Combat c, Character other) {
+		affected.addlist.add(new Wary(affected, 3));
+	}
+
+	@Override
 	public int regen(Combat c) {
-		duration--;
-		if(duration<=0){
-			affected.removelist.add(this);
-			affected.addlist.add(new Cynical(affected));
-		}
+		super.regen(c);
 		affected.emote(Emotion.nervous,5);
 		return 0;
 	}
@@ -107,6 +104,6 @@ public class Flatfooted extends Status {
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new Flatfooted(newAffected, duration);
+		return new Flatfooted(newAffected, getDuration());
 	}
 }

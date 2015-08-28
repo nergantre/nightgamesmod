@@ -3,19 +3,11 @@ package nightgames.status;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 
-public class Distorted extends Status {
-	private int duration;
-	
+public class Distorted extends DurationStatus {
 	public Distorted(Character affected, int duration) {
-		super("Distorted", affected);
-		if(affected.has(Trait.PersonalInertia)){
-			this.duration = duration * 3 / 2;
-		}else{
-			this.duration = duration;
-		}
+		super("Distorted", affected, duration);
 		flag(Stsflag.distorted);
 	}
 
@@ -46,10 +38,7 @@ public class Distorted extends Status {
 
 	@Override
 	public int regen(Combat c) {
-		duration--;
-		if(duration<0){
-			affected.removelist.add(this);
-		}
+		super.regen(c);
 		affected.emote(Emotion.confident,5);
 		return 0;
 	}
@@ -106,6 +95,6 @@ public class Distorted extends Status {
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new Distorted(newAffected, duration);
+		return new Distorted(newAffected, getDuration());
 	}
 }

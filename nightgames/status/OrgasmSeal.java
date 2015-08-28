@@ -6,11 +6,9 @@ import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 
-public class OrgasmSeal extends Status {
-	int duration;
+public class OrgasmSeal extends DurationStatus {
 	public OrgasmSeal(Character affected, int duration) {
-		super("Orgasm Sealed", affected);
-		this.duration = duration;
+		super("Orgasm Sealed", affected, duration);
 		flag(Stsflag.orgasmseal);
 	}
 
@@ -44,14 +42,9 @@ public class OrgasmSeal extends Status {
 
 	@Override
 	public int regen(Combat c) {
+		super.regen(c);
 		if (affected.getArousal().isFull()) {
-			duration -= 5;
-		} else {
-			duration -= 1;
-		}
-		if(duration<=0){
-			affected.removelist.add(this);
-			affected.addlist.add(new Wary(affected, 2));
+			tick(4);
 		}
 		if (affected.getArousal().percent() > 80) {
 			affected.emote(Emotion.desperate, 10);
@@ -61,31 +54,26 @@ public class OrgasmSeal extends Status {
 	}
 	@Override
 	public int damage(Combat c, int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public double pleasure(Combat c, double x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int weakened(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int tempted(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int evade() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -114,11 +102,10 @@ public class OrgasmSeal extends Status {
 
 	@Override
 	public int value() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new OrgasmSeal(newAffected, duration);
+		return new OrgasmSeal(newAffected, getDuration());
 	}
 }

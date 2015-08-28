@@ -4,15 +4,12 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
-import nightgames.global.Global;
 
-public class CockChoked extends Status {
-	int duration;
+public class CockChoked extends DurationStatus {
 	Character other;
 	
 	public CockChoked(Character affected, Character other, int duration) {
-		super("Cock Choked", affected);
-		this.duration = duration;
+		super("Cock Choked", affected, duration);
 		this.other = other;
 		flag(Stsflag.orgasmseal);
 	}
@@ -42,16 +39,16 @@ public class CockChoked extends Status {
 	}
 
 	@Override
+	public void onRemove(Combat c, Character other) {
+		affected.addlist.add(new Wary(affected, 2));
+	}
+
+	@Override
 	public int regen(Combat c) {
-		duration -= 1;
-		if(duration<=0 || !c.getStance().inserted(affected)){
-			affected.removelist.add(this);
-			affected.addlist.add(new Wary(affected, 2));
-		} else {
-			if (affected.getArousal().percent() > 80) {
-				affected.emote(Emotion.desperate, 10);
-				affected.emote(Emotion.horny, 10);
-			}
+		super.regen(c);
+		if (affected.getArousal().percent() > 80) {
+			affected.emote(Emotion.desperate, 10);
+			affected.emote(Emotion.horny, 10);
 		}
 		return 0;
 	}
@@ -116,6 +113,6 @@ public class CockChoked extends Status {
 
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new CockChoked(newAffected, newOther, duration);
+		return new CockChoked(newAffected, newOther, getDuration());
 	}
 }

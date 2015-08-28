@@ -6,40 +6,29 @@ import java.util.Collections;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.skills.Anilingus;
 import nightgames.skills.Blowjob;
-import nightgames.skills.Cunnilingus;
 import nightgames.skills.FootWorship;
 import nightgames.skills.Grind;
 import nightgames.skills.Invitation;
-import nightgames.skills.Kiss;
-import nightgames.skills.LickNipples;
 import nightgames.skills.Piston;
 import nightgames.skills.ReverseAssFuck;
 import nightgames.skills.ReverseCarry;
 import nightgames.skills.ReverseFly;
 import nightgames.skills.Skill;
 import nightgames.skills.SpiralThrust;
-import nightgames.skills.Suckle;
 import nightgames.skills.Thrust;
 
-public class BodyFetish extends Status{
-	private int duration;
+public class BodyFetish extends DurationStatus {
 	Character origin;
 	public String part;
 	public double magnitude;
 
 	public BodyFetish(Character affected, Character origin, String part, double magnitude, int duration) {
-		super(Global.capitalizeFirstLetter(part) + " Fetish", affected);
+		super(Global.capitalizeFirstLetter(part) + " Fetish", affected, duration);
 		flag(Stsflag.bodyfetish);
-		if(affected.has(Trait.PersonalInertia)){
-			this.duration = duration * 3 / 2;
-		}else{
-			this.duration = duration;
-		}
 		this.origin = origin;
 		this.part = part;
 		this.magnitude = magnitude;
@@ -107,15 +96,6 @@ public class BodyFetish extends Status{
 	}
 
 	@Override
-	public int regen(Combat c) {
-		if(duration<=0){
-			affected.removelist.add(this);
-		}
-		duration--;
-		return 0;
-	}
-
-	@Override
 	public boolean overrides(Status s) {
 		return false;
 	}
@@ -125,7 +105,7 @@ public class BodyFetish extends Status{
 		assert (s instanceof BodyFetish);
 		BodyFetish other = (BodyFetish)s;
 		assert (other.part.equals(part));
-		this.duration = Math.max(other.duration, this.duration);
+		setDuration(Math.max(other.getDuration(), this.getDuration()));
 		this.magnitude = Math.min(2.5, this.magnitude + other.magnitude);
 	}
 
@@ -189,6 +169,6 @@ public class BodyFetish extends Status{
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new BodyFetish(newAffected, newOther, part, magnitude, duration);
+		return new BodyFetish(newAffected, newOther, part, magnitude, getDuration());
 	}
 }

@@ -39,6 +39,8 @@ public class Feral extends Status {
 			return 2;
 		case Speed:
 			return 1;
+		default:
+			break;
 		}
 		return 0;
 	}

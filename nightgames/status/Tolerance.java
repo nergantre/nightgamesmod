@@ -2,16 +2,11 @@ package nightgames.status;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 
-public class Tolerance extends Status {
-	private int duration;
-
+public class Tolerance extends DurationStatus {
 	public Tolerance(Character affected, int duration) {
-		super("Tolerance", affected);
-		this.duration=duration;
+		super("Tolerance", affected, duration);
 		flag(Stsflag.tolerance);
 	}
 
@@ -37,15 +32,6 @@ public class Tolerance extends Status {
 	
 	@Override
 	public int mod(Attribute a) {
-		return 0;
-	}
-
-	@Override
-	public int regen(Combat c) {
-		duration--;
-		if(duration<0){
-			affected.removelist.add(this);
-		}
 		return 0;
 	}
 
@@ -100,6 +86,6 @@ public class Tolerance extends Status {
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new Tolerance(newAffected, duration);
+		return new Tolerance(newAffected, getDuration());
 	}
 }

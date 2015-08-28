@@ -3,18 +3,11 @@ package nightgames.status;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 
-public class FireStance extends Status {
-	private int duration;
+public class FireStance extends DurationStatus {
 	public FireStance(Character affected) {
-		super("Fire Form", affected);
-		if(affected.has(Trait.PersonalInertia)){
-			duration = 15;
-		}else{
-			duration = 10;
-		}
+		super("Fire Form", affected, 10);
 		flag(Stsflag.form);
 	}
 
@@ -46,13 +39,10 @@ public class FireStance extends Status {
 
 	@Override
 	public int regen(Combat c) {
-		duration--;
-		if(duration<0){
-			affected.removelist.add(this);
-		}
+		super.regen(c);
 		affected.emote(Emotion.confident,5);
 		affected.emote(Emotion.dominant,5);
-		return -1;
+		return -5;
 	}
 
 	@Override

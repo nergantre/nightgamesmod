@@ -13,14 +13,12 @@ import nightgames.skills.AssFuck;
 import nightgames.skills.Carry;
 import nightgames.skills.CounterDrain;
 import nightgames.skills.CounterRide;
-import nightgames.skills.Drain;
 import nightgames.skills.Engulf;
 import nightgames.skills.Fly;
 import nightgames.skills.Fuck;
 import nightgames.skills.Grind;
 import nightgames.skills.Invitation;
 import nightgames.skills.LegLock;
-import nightgames.skills.LevelDrain;
 import nightgames.skills.Piston;
 import nightgames.skills.ReverseAssFuck;
 import nightgames.skills.ReverseCarry;
@@ -30,8 +28,6 @@ import nightgames.skills.Shove;
 import nightgames.skills.Skill;
 import nightgames.skills.SpiralThrust;
 import nightgames.skills.Straddle;
-import nightgames.skills.StripBottom;
-import nightgames.skills.StripTop;
 import nightgames.skills.SubmissiveHold;
 import nightgames.skills.Tackle;
 import nightgames.skills.Tear;
@@ -41,7 +37,7 @@ import nightgames.skills.ToggleKnot;
 import nightgames.skills.Undress;
 import nightgames.skills.WildThrust;
 
-public class Frenzied extends Status {
+public class Frenzied extends DurationStatus {
 
 	private static final Collection<Skill> FUCK_SKILLS = new HashSet<>();
 
@@ -76,15 +72,11 @@ public class Frenzied extends Status {
 		FUCK_SKILLS.add(new ToggleKnot(p));
 	}
 
-	private int duration;
-	private final int startDuration;
 	private final Combat c;
 
 	public Frenzied(Character affected, Combat c, int duration) {
-		super("Frenzied", affected);
+		super("Frenzied", affected, duration);
 		this.c = c;
-		this.duration = duration;
-		this.startDuration = duration;
 		flag(Stsflag.frenzied);
 	}
 
@@ -116,11 +108,18 @@ public class Frenzied extends Status {
 	}
 
 	@Override
+	public void onRemove(Combat c, Character other) {
+		affected.addlist.add(new Cynical(affected));
+	}
+
+	@Override
+	public boolean mindgames() {
+		return true;
+	}
+
+	@Override
 	public int regen(Combat c) {
-		if (--duration == 0) {
-			affected.removelist.add(this);
-			affected.addlist.add(new Cynical(affected));
-		}
+		super.regen(c);
 		affected.buildMojo(c, 25);
 		affected.emote(Emotion.horny, 15);
 		return 0;
@@ -178,7 +177,7 @@ public class Frenzied extends Status {
 
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new Frenzied(newAffected, c, startDuration);
+		return new Frenzied(newAffected, c, getDuration());
 	}
 
 	@Override

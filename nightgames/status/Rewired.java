@@ -2,20 +2,11 @@ package nightgames.status;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 
-public class Rewired extends Status {
-	private int duration;
-	
+public class Rewired extends DurationStatus {
 	public Rewired(Character affected, int duration) {
-		super("Rewired", affected);
-		if(affected.has(Trait.PersonalInertia)){
-			this.duration=3*duration/2;
-		}
-		else{
-			this.duration=duration;
-		}
+		super("Rewired", affected, duration);
 		flag(Stsflag.rewired);
 	}
 
@@ -34,14 +25,6 @@ public class Rewired extends Status {
 		return 0;
 	}
 
-	@Override
-	public int regen(Combat c) {
-		duration--;
-		if(duration<0){
-			affected.removelist.add(this);
-		}
-		return 0;
-	}
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
 		return String.format("%s senses is now rewired.\n", affected.nameOrPossessivePronoun());
@@ -110,6 +93,6 @@ public class Rewired extends Status {
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new Rewired(newAffected, duration);
+		return new Rewired(newAffected, getDuration());
 	}
 }

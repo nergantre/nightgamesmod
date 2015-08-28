@@ -3,23 +3,15 @@ package nightgames.status;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.State;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 
-public class Enthralled extends Status {
-
-	private int duration;
+public class Enthralled extends DurationStatus {
 	private int timesRefreshed;
 	public Character master;
 	
 	public Enthralled(Character self,Character master, int duration) {
-		super("Enthralled", self);
-		if (self.has(Trait.PersonalInertia)) {
-			duration = duration * 3 / 2;
-		}
-		this.duration = duration;
+		super("Enthralled", self, duration);
 		timesRefreshed = 0;
 		this.master = master;
 		flag(Stsflag.enthralled);
@@ -53,7 +45,7 @@ public class Enthralled extends Status {
 	public void replace(Status s) {
 		assert (s instanceof Enthralled);
 		Enthralled other = (Enthralled)s;
-		this.duration += Math.max(1, other.duration - timesRefreshed);
+		setDuration(getDuration() + Math.max(1, other.getDuration() - timesRefreshed));
 		timesRefreshed += 1;
 	}
 
@@ -64,7 +56,7 @@ public class Enthralled extends Status {
 	
 	@Override
 	public float fitnessModifier () {
-		return -duration * 5;
+		return -getDuration() * 5;
 	}
 	
 	@Override
@@ -74,19 +66,22 @@ public class Enthralled extends Status {
 		return -2;
 	}
 
+
+	@Override
+	public void onRemove(Combat c, Character other) {
+		affected.addlist.add(new Cynical(affected));
+		Global.gui().message("Everything around you suddenly seems much clearer,"
+				+ " like a lens snapped into focus. You don't really remember why"
+				+ " you were heading in the direction you where...");
+	}
+
 	@Override
 	public int regen(Combat c) {
-		duration--;
-		affected.spendMojo(c, 5);
-		if (duration <= 0|| affected.check(Attribute.Cunning, master.get(Attribute.Seduction)/2 +master.get(Attribute.Arcane)/2 + master.get(Attribute.Dark)/2 + 10+10*(duration- timesRefreshed))) {
-			affected.removelist.add(this);
-			affected.addlist.add(new Cynical(affected));
-			if (affected.human() && affected.state != State.combat)
-				Global.gui().message("Everything around you suddenly seems much clearer,"
-						+ " like a lens snapped into focus. You don't really remember why"
-						+ " you were heading in the direction you where...");
-				return 0;
+		super.regen(c);
+		if (affected.check(Attribute.Cunning, master.get(Attribute.Seduction)/2 +master.get(Attribute.Arcane)/2 + master.get(Attribute.Dark)/2 + 10+10*(getDuration() - timesRefreshed))) {
+			setDuration(0);
 		}
+		affected.spendMojo(c, 5);
 		affected.loseWillpower(c, 1);
 		affected.emote(Emotion.horny,15);
 		return 0;
@@ -145,6 +140,6 @@ public class Enthralled extends Status {
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new Enthralled(newAffected, newOther, duration);
+		return new Enthralled(newAffected, newOther, getDuration());
 	}
 }

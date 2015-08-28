@@ -3,11 +3,9 @@ package nightgames.status;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 
-public class Shield extends Status {
-	private int duration;
+public class Shield extends DurationStatus {
 	private double strength;
 
 	public Shield(Character affected, double strength) {
@@ -15,13 +13,7 @@ public class Shield extends Status {
 	}
 		
 	public Shield(Character affected, double strength, int duration) {
-		super("Shield", affected);
-		if(affected.has(Trait.PersonalInertia)){
-			this.duration=duration * 3 / 2;
-		}
-		else{
-			this.duration=duration;
-		}
+		super("Shield", affected, duration);
 		this.strength = strength;
 		flag(Stsflag.shielded);
 	}
@@ -47,10 +39,7 @@ public class Shield extends Status {
 
 	@Override
 	public int regen(Combat c) {
-		duration--;
-		if(duration<0){
-			affected.removelist.add(this);
-		}
+		super.regen(c);
 		affected.emote(Emotion.confident,5);
 		return 0;		
 	}
@@ -107,6 +96,6 @@ public class Shield extends Status {
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new Shield(newAffected, strength, duration);
+		return new Shield(newAffected, strength, getDuration());
 	}
 }

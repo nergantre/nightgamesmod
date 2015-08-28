@@ -3,6 +3,7 @@ package nightgames.characters;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.TreeSet;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -858,7 +860,11 @@ public abstract class Character extends Observable implements Cloneable{
 		if(has(Trait.BoundlessEnergy)){
 			regen+=1;
 		}
-		heal(null, regen);
+		if (regen > 0) {
+			heal(c, regen);
+		} else {
+			weaken(c, regen);
+		}
 		if(combat){
 			if(has(Trait.exhibitionist)&&nude()){
 				buildMojo(c, 5);
@@ -930,7 +936,10 @@ public abstract class Character extends Observable implements Cloneable{
 			Global.gui().message("<b>"+ message+"</b>");
 		}
 	}
-	public void dropStatus(Combat c){
+	public void dropStatus(Combat c, Character opponent){
+		Set<Status> removedStatuses = status.stream().filter(s -> !s.meetsRequirements(c, this, opponent)).collect(Collectors.toSet()); 
+		removedStatuses.stream().forEach(s -> s.onRemove(c, opponent));
+		status.removeAll(removedStatuses);
 		status.removeAll(removelist);
 		for(Status s: addlist){
 			add(c, s);
@@ -1274,10 +1283,7 @@ public abstract class Character extends Observable implements Cloneable{
 
 
 	public void eot(Combat c, Character opponent, Skill last) {
-		for(Status s: getStatuses()){
-			s.eot(c);
-		}
-		dropStatus(c);
+		dropStatus(c, opponent);
 		tick(c);
 		List<String> removed = new ArrayList<String>();
 		for (String s : cooldowns.keySet()) {
@@ -1425,7 +1431,7 @@ public abstract class Character extends Observable implements Cloneable{
 		if(bound()){
 			free();
 		}
-		dropStatus(null);
+		dropStatus(null, null);
 		if(has(Trait.QuickRecovery)){
 			heal(null, 4);
 		}
@@ -1848,7 +1854,7 @@ public abstract class Character extends Observable implements Cloneable{
 			pet.remove();
 		}
 		cooldowns.clear();
-		dropStatus(null);
+		dropStatus(null, null);
 		orgasms = 0;
 	}
 	public boolean canSpend(int mojo){

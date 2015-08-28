@@ -3,19 +3,11 @@ package nightgames.status;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 
-public class Energized extends Status {
-	private int duration;
-	
+public class Energized extends DurationStatus{
 	public Energized(Character affected,int duration) {
-		super("Energized", affected);
-		if(affected.has(Trait.PersonalInertia)){
-			this.duration=duration;
-		}else{
-			this.duration=3*duration/2;
-		}
+		super("Energized", affected, duration);
 		flag(Stsflag.energized);
 	}
 
@@ -36,10 +28,7 @@ public class Energized extends Status {
 
 	@Override
 	public int regen(Combat c) {
-		duration--;
-		if(duration<0){
-			affected.removelist.add(this);
-		}
+		super.regen(c);
 		affected.buildMojo(c, 10);
 		affected.emote(Emotion.confident,5);
 		affected.emote(Emotion.dominant,10);
@@ -115,6 +104,6 @@ public class Energized extends Status {
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new Energized(newAffected, duration);
+		return new Energized(newAffected, getDuration());
 	}
 }

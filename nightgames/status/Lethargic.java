@@ -2,8 +2,6 @@ package nightgames.status;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 
 public class Lethargic extends Status {

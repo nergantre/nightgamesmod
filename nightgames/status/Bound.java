@@ -1,7 +1,5 @@
 package nightgames.status;
 
-import java.util.HashSet;
-
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;

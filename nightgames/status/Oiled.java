@@ -1,13 +1,10 @@
 package nightgames.status;
 
-import java.util.HashSet;
-
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 
 public class Oiled extends Status {
-
 	public Oiled(Character affected) {
 		super("Oiled", affected);
 		flag(Stsflag.oiled);

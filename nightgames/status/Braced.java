@@ -4,12 +4,10 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 
-public class Braced extends Status {
-	private int duration;
+public class Braced extends DurationStatus {
 
 	public Braced(Character affected) {
-		super("Braced", affected);
-		duration=3;
+		super("Braced", affected, 3);
 		flag(Stsflag.braced);
 	}
 
@@ -25,21 +23,12 @@ public class Braced extends Status {
 
 	@Override
 	public float fitnessModifier () {
-		return (10.0f + (10.0f*duration)) / 40.f;
+		return (10.0f + (10.0f*getDuration())) / 40.f;
 	}
 	
 	@Override
 	public int mod(Attribute a) {
 		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int regen(Combat c) {
-		if(duration<=0){
-			affected.removelist.add(this);
-		}
-		duration--;
 		return 0;
 	}
 
@@ -106,8 +95,9 @@ public class Braced extends Status {
 	@Override
 	public int value() {
 		// TODO Auto-generated method stub
-		return 30 + (30 * duration);
+		return 30 + (30 * getDuration());
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Braced(newAffected);

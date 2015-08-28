@@ -2,14 +2,10 @@ package nightgames.status;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.skills.CounterBase;
-import nightgames.skills.Skill;
 
-public class CounterStatus extends Status {
-	private int duration;
+public class CounterStatus extends DurationStatus {
 	private CounterBase skill;
 	private String desc;
 
@@ -18,8 +14,7 @@ public class CounterStatus extends Status {
 	}
 
 	public CounterStatus(Character affected, CounterBase skill, String description, int duration) {
-		super("Counter", affected);
-		this.duration=duration;
+		super("Counter", affected, duration);
 		this.skill = skill;
 		this.desc = description;
 		flag(Stsflag.counter);
@@ -43,14 +38,6 @@ public class CounterStatus extends Status {
 	@Override
 	public int mod(Attribute a) {
 		return 0;
-	}
-
-	@Override
-	public void eot(Combat c) {
-		if (duration <= 0) {
-			affected.removelist.add(this);
-		}
-		duration--;
 	}
 
 	@Override
@@ -112,8 +99,9 @@ public class CounterStatus extends Status {
 	public int regen(Combat c) {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new CounterStatus(newAffected, skill, desc, duration);
+		return new CounterStatus(newAffected, skill, desc, getDuration());
 	}
 }

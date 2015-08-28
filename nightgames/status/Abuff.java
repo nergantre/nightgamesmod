@@ -2,25 +2,17 @@ package nightgames.status;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 
-public class Abuff extends Status {
+public class Abuff extends DurationStatus {
 	private Attribute modded;
-	private int duration;
 	private int value;
 	public Abuff(Character affected, Attribute att, int value, int duration) {
-		super(String.format("%s %+d", att.toString(), value), affected);
+		super(String.format("%s %+d", att.toString(), value), affected, duration);
 		this.modded=att;
-		if(affected.has(Trait.PersonalInertia)){
-			this.duration=3*duration/2;
-		}
-		else {
-			this.duration=duration;
-		}
 		this.value=value;
 	}
-	
+
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
 		String person, adjective, modification;
@@ -93,17 +85,14 @@ public class Abuff extends Status {
 		assert (s instanceof Abuff);
 		Abuff other = (Abuff)s;
 		assert (other.modded == modded);
-		this.duration = Math.max(other.duration, this.duration);
+		setDuration(Math.max(other.getDuration(), getDuration()));
 		this.value += other.value;
 		this.name = String.format("%s %+d", modded.toString(), value);
 	}
 
 	@Override
 	public int regen(Combat c) {
-		duration--;
-		if(duration<0){
-			affected.removelist.add(this);
-		}
+		super.regen(c);
 		return 0;
 	}
 
@@ -172,6 +161,6 @@ public class Abuff extends Status {
 
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new Abuff(newAffected, modded, value, duration);
+		return new Abuff(newAffected, modded, value, getDuration());
 	}
 }

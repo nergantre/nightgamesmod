@@ -1,24 +1,14 @@
 package nightgames.status;
 
-import java.util.HashSet;
-
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 
 
-public class Unreadable extends Status {
-	protected int duration;
+public class Unreadable extends DurationStatus {
 	public Unreadable(Character affected) {
-		super("Unreadable", affected);
+		super("Unreadable", affected, 3);
 		flag(Stsflag.unreadable);
-		if(affected.has(Trait.PersonalInertia)){
-			this.duration=5;
-		}
-		else{
-			this.duration=3;
-		}
 	}
 
 	@Override
@@ -37,15 +27,12 @@ public class Unreadable extends Status {
 
 	@Override
 	public float fitnessModifier () {
-		return .2f;
+		return 1f;
 	}
 	
 	@Override
 	public int regen(Combat c) {
-		duration--;
-		if(duration<=0){
-			affected.removelist.add(this);
-		}
+		super.regen(c);
 		return 0;
 	}
 
@@ -95,7 +82,6 @@ public class Unreadable extends Status {
 
 	@Override
 	public int value() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	@Override
