@@ -90,7 +90,7 @@ public class Reversal extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Take dominant position: 10 Mojo";
 	}
 

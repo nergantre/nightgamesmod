@@ -32,7 +32,7 @@ public class CockGrowth extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Grows or enlarges your opponent's cock.";
 	}
 	

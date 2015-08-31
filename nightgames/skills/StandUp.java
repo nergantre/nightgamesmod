@@ -65,7 +65,7 @@ public class StandUp extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Stand up";
 	}
 }

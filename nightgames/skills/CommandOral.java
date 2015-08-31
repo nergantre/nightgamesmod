@@ -18,7 +18,7 @@ public class CommandOral extends PlayerCommand {
 	}
 	
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Force your opponent to go down on you.";
 	}
 

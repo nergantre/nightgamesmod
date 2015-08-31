@@ -33,7 +33,7 @@ public class TentaclePorn extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Create a bunch of hentai tentacles.";
 	}
 

@@ -79,7 +79,7 @@ public class LegLock extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "A submission hold on your opponent's leg";
 	}
 	@Override

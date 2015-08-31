@@ -68,7 +68,7 @@ public class Bravado extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Consume mojo to restore stamina and reduce arousal";
 	}
 

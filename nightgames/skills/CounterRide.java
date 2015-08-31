@@ -36,7 +36,7 @@ public class CounterRide extends CounterBase {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Seduction) > 15;
+		return user.get(Attribute.Seduction) >= 25;
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class CounterRide extends CounterBase {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Invites opponent into your embrace";
 	}
 

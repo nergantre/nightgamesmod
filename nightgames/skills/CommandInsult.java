@@ -13,7 +13,7 @@ public class CommandInsult extends PlayerCommand {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Temporarily destroy your thrall's self-image, draining their mojo.";
 	}
 

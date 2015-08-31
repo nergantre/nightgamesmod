@@ -36,7 +36,7 @@ public class MutualUndress extends Skill {
 	}
 	
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Tempt opponent to remove clothes by removing your own";
 	}
 

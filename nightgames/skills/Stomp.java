@@ -136,8 +136,8 @@ public class Stomp extends Skill {
 	}
 
 	@Override
-	public String describe() {
-		return "Stomps on your opponent's groin for extreme damage: 20 mojo";
+	public String describe(Combat c) {
+		return "Stomps on your opponent's groin for extreme damage";
 	}
 
 	@Override

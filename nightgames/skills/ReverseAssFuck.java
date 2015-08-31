@@ -102,7 +102,7 @@ public class ReverseAssFuck extends Fuck {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Seduction)>=20;
+		return user.get(Attribute.Seduction)>=15;
 	}
 
 	@Override
@@ -129,7 +129,7 @@ public class ReverseAssFuck extends Fuck {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Fuck your opponent with your ass.";
 	}
 

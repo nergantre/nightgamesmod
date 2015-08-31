@@ -28,7 +28,7 @@ public class Barrier extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Creates a magical barrier to protect you from physical damage: 3 Mojo";
 	}
 

@@ -35,7 +35,7 @@ public class Command extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Order your thrall around";
 	}
 

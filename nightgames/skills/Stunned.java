@@ -61,7 +61,7 @@ public class Stunned extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "You're stunned";
 	}
 }

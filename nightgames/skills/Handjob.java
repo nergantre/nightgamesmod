@@ -113,7 +113,7 @@ public class Handjob extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Rub your opponent's dick";
 	}
 	@Override

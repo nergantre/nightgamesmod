@@ -1,122 +1,129 @@
-=========Power===================
-Shove	: 0
-Slap	: 7				
-Knee	: 10
-Turnover: 6
-Kick	: 17			-	usable prone	: Jewel
-Tackle	: 26
-Squeeze	: 9
-Nurple	: 13
-*Stomp	: 16			-	Damage+	: Mara
-Restrain : 8
-Armbar	: 20
-Leglock	: 24
-Hip Throw : Cassie
-*Carry	: 30
-Tear	: 32
+Seduction:
+   - Kiss -> Upgrades into Deep Kiss with Seduction:20 -> Upgrades into Drain Kiss with Trait:soulsucker
+08 - Spank
+10 - Blowjob, Cunnilingus
+12 - Suck Neck -> Upgrades into Drain Energy at Dark:1
+14 - Grind
+14 - Lick Nipples
+15 - Assfuck
+15 - Tempt
+16 - Charm (AND have Cunning:8)
+17 - Flick (CANNOT have Trait:softheart)
+18 - Piston
+20 - Sex Counter
+22 - Footjob, Foot Pump
+22 - Oral Pin (AND have Power:15)
+24 - Strip Tease (CANNOT have Trait:direct AND CANNOT have Trait:shy)
+25 - Invitation (OR have Trait:submissive)
+26 - Frottage
+26 - Tighten (OR have Trait:tight)
+28 - Use Breasts
+30 - Anilingus (OR have Trait:shameless)
+30 - Facesit (OR have Level:10)
+32 - Whisper (CANNOT have Trait:direct)
+45 - Eyes of Temptation (OR have Dark:20, OR have Arcane:10)
+50 - Tempt Undress
 
-==========Seduction==============
-Kiss	: 0		-	pleasure+	: 9	-	Inflict Charmed	: Angel
-Tickle	: 0			-	Tempt+	: Mara
-Suck Neck	: 12
-Finger	: 0		-	pleasure+	: 8
-Handjob	: 0		-	pleasure+	: 8
-Blowjob	: 10		-	Pleasure+	: Cassie
-Cunnilingus	: 10		-	Pleasure+	: Cassie
-Fondle Breasts	: 0
-Lick Nipples	: 14
-Paizuri	: 28
-Footjob	: 22
-Flick	: 17
-Spank	: 8		-	Shamed	: Angel
-Fuck	: 0
-Thrust	: 0
-Piston	: 18
-Grind	: 14
-*Spiral	: Jewel
-Tighten : 28
-Whisper	: 32
-Frottage	: 26
-Masturbate	: 0
-Strip Tease	: 24
-AssFuck : 20
+Power:
+   - Shove -> Upgrades into Shredding Palm at Ki:1
+06 - Turn Over
+07 - Slap (CANNOT have Trait:softheart) -> Upgrades into Tiger Claw at Animism:8
+08 - Restrain
+09 - Squeeze -> Upgrades into Shock Balls with ShockGlove
+10 - Knee
+12 - Counter
+13 - Twist Nipples -> Upgrades into Shock Breasts with Shock Gloves
+15 - Fly (AND have BodyPart:wings)
+15 - Submissive Hold (AND have Seduction:15)
+16 - Stomp -> Upgrades into Double Legdrop with Trait:heeldrop, from Mara - Sparring
+17 - Kick -> Upgrades into Shatter Kick with Ki:14
+20 - Armbar (CANNOT have Trait:undisciplined)
+20 - Deny Orgasm (AND have Trait:tight)
+20 - Jump
+24 - LegLock
+25 - Carry (CANNOT HAVE Trait:petite)
+26 - Tackle (CANNOT HAVE Trait:petite)
+32 - Shred Clothes
 
-===========Cunning================
-Strip	: 0
-Taunt	: 8
-Trip	: 16
-*Reversal	: 24
-*Perfect Touch	: 18
-Escape	: 10
-*Maneuver	: 20
-Focus	: 15
-Counter	: 		- Proc+, Damage+
-Bluff	: Angel
-Bravado	: Jewel
-Diversion	: Cassie
-Tripline	: 0
-Alarm	: 6
-Snare	: 11
-Decoy	: 7
-Spiderweb	: Mara
-Spring trap	: 15
-Aphrodisiac trap	: 14
-Dissolving trap	: 17
+Cunning:
+06 - Tickle
+08 - Escape, Taunt
+09 - Bluff (AND have Trait:pokerface)
+12 - Shrink Ray
+15 - Focus (CANNOT have Trait:undisciplined)
+16 - Trip
+18 - Perfect Touch
+20 - Maneuver
+24 - Reversal
 
-===========Arcane=================
-Fairy Familiar	: 3 Pet (male/female)
-Binding			: 9 Binds, duh
-Illusions		: 12 Reduces accuracy
-Illusion Trap	: 6 Temptation
-Naked Bloom		: 15 Destroys clothes
-Magic Missile	: 1 Damage
-Barrier			: 18 grants Shielded
+Fetish:
+01 - Masochism
+06 - Bondage
+12 - Tentacle Porn
+15 - Face Fuck
 
-==========Dark================
-Imp				: 6 Pet (male/female)
-Lust Aura		: 3 Tempt over time
-Dark Tendrils	: 12 Immobilizes or trips
-Energy Drain	: 1 Weakens target and heals self - replaces suck neck
-Sacrifice		: 15 Damage self to reduce arousal
-Domination		: 9 Makes target lie down
-Drain			: 20 Sex skill, temporarily steals stats
-Fly				: 18 special sex position
+Arcane:
+01 - Magic Missile
+03 - Summon Faerie
+09 - Binding
+12 - Breast Growth, Cock Growth
+15 - Illusions
+15 - Naked Bloom
+18 - Barrier
 
-==========Science!===============
-Slime			: 3 Pet (asexual)
-Shrink Ray		: 12 Shames if nude
-Short Circuit	: 15 inflicts Rewired
-Stun blast		: 9 Stuns
-Shock Glove		: 1 Damage Weapon - boosts squeeze, twist nipples
-Aerosolizer		: 6 Potions can't miss
-Defabricator	: 18
+Bio:
+05 - Sweet Scent
+10 - Leech Energy
+15 - Flower Counter (AND have Trait:dryad)
 
-===========Ki====================
-Water Form		: 3 Buffs counter rate
-Shredding Palm	: 1 Damages and destroys top - replaces shove
-Fly Catcher		: 9 Removes enemy pet
-Flash Step		: 6 Gets behind target
-Stone Form		: 12 Reduces pain damage
-Fire Form		: 15 Increases Mojo gain and reduces cost
-Ice Form		: 18 Reduces pleasure damage
-Shatter Kick	: 21 Kick with chance to strip instead of dealing damage
+Dark:
+01 - Tail Peg (OR have Seduction:20)
+03 - Lust Aura
+05 - Orgasm Seal (OR have Arcane: 15)
+06 - Summon Imp
+09 - Dominate
+12 - Dark Tendrils
+15 - Drain (OR have Trait:energydrain)
+15 - Sacrifice
+25 - Counter Vortex
+50 - Level Drain
 
-===========Animism=================
-Pounce			: 1 Tackle Upgrade
-Purr			: 9 Charms
-Tail Job		: 6
-Tiger Claw		: 12 Slap Upgrade
-Cat's Grace		: 3 Evasion Bonus
-Shred			: 15 Tear Upgrade Destroys clothes
-Beastform		: 18 
+Science:
+03 - Spawn Slime
+09 - Stun Blast
+12 - Science
+15 - Living Clothing: Self, Living Clothing: Other
+15 - Short Circuit
+18 - Defabricator
 
-===========Fetishism===============
-Exhibitionism	: 3 Builds Mojo when nude
-Masochism		: 1 Target and self gain arousal when damaged
-Bondage			: 6 Target and self gain arousal when bound
-Tentacle Porn	: 12 Binds and Lubricates
-Fetish Goblin	: 9 Pet(Hermaphrodite)
-Face Fuck		: 15 Shames
+Animism:
+01 - Wild Thrust
+01 - Tail Job (OR have Seduction:20)
+01 - Pounce (Replaces Tackle)
+03 - Cat's Grace
+09 - Purr
+12 - Shred Clothes (Replaces Tear Clothes)
 
-============Misc======================
-Teabag/Facesit	: lvl 15, shames and reduces mojo
+Ki:
+03 - Water Form
+06 - Flash Step
+09 - Fly Catcher
+12 - Ice Form
+12 - Stone Form
+15 - Fire Form
+
+Other
+   - Bravado (have Trait:fearless, from Jewel - Games)
+   - Spiral Thrust (have Trait:spiral, from Jewel - Sex)
+   - Diversion (have Trait:misdirection, from Cassie - Games)
+   - Hip Throw (have Trait:judonovice, from Cassie - Sparring)
+   - Engulf (have Trait:slime, currently unavailable)
+   - Foot Worship (have Status:Foot Fetish with magnitude >= .5)
+   - Tentacle Rape (have BodyPart:tentacles)
+   - Toggle Knot (have BodyPart:primalcock)
+   - Suckle
+   - Finger
+   - Handjob
+   - Fondle Breasts
+   - Thrust
+   - Suckle

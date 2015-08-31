@@ -24,7 +24,7 @@ public class Masochism extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "You and your opponent become aroused by pain: Arousal at least 15";
 	}
 

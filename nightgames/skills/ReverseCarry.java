@@ -98,7 +98,7 @@ public class ReverseCarry extends Carry {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Jump into your opponent's arms and impale yourself on her cock: Mojo 10.";
 	}
 

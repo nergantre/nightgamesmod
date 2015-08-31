@@ -118,7 +118,11 @@ public class AnalCowgirl extends AnalSexStance {
 			c.setStance(insert());
 		}
 	}
-	
+
+	public boolean analinserted(Character self) {
+		return self == bottom;
+	}
+
 	@Override
 	public BodyPart topPart() {
 		return top.body.getRandomAss();

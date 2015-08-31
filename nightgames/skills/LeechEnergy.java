@@ -96,7 +96,7 @@ public class LeechEnergy extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return getSelf().get(Attribute.Bio)>=1;
+		return getSelf().get(Attribute.Bio)>=10;
 	}
 
 	@Override
@@ -141,7 +141,7 @@ public class LeechEnergy extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Drains your opponent of energy with your tentacles";
 	}
 

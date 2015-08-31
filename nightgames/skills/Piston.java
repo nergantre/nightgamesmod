@@ -78,7 +78,7 @@ public class Piston extends Thrust {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Fucks opponent without holding back. Very effective, but dangerous";
 	}
 

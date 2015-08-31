@@ -19,7 +19,7 @@ public class Anilingus extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return (getSelf().has(Trait.shameless) || getSelf().has(Trait.Unflappable) || getSelf().get(Attribute.Seduction) > 30);
+		return (getSelf().has(Trait.shameless) || getSelf().get(Attribute.Seduction) >= 30);
 	}
 
 	@Override
@@ -118,7 +118,7 @@ public class Anilingus extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Perform anilingus on opponent";
 	}
 	public String getTargetOrganType(Combat c, Character target) {

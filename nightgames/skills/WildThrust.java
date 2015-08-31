@@ -75,7 +75,7 @@ public class WildThrust extends Thrust {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Fucks opponent without holding back. Extremely random large damage.";
 	}
 

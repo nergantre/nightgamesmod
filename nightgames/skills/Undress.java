@@ -28,7 +28,7 @@ public class Undress extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Removes your own clothes";
 	}
 

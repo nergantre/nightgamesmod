@@ -124,7 +124,7 @@ public class Finger extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Digitally stimulate opponent's pussy";
 	}
 

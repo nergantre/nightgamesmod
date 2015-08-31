@@ -120,7 +120,7 @@ public class Nurse extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Feed your nipples to your opponent";
 	}
 

@@ -173,7 +173,7 @@ public class Fuck extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Penetrate your opponent, switching to a sex position";
 	}
 	

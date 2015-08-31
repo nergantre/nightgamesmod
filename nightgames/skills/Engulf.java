@@ -35,7 +35,7 @@ public class Engulf extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Engulfs the opponent in your slime";
 	}
 

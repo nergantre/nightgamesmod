@@ -55,7 +55,7 @@ public class Nothing extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Do nothing";
 	}
 }

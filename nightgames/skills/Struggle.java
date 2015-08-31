@@ -303,7 +303,7 @@ public class Struggle extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Attempt to escape a submissive position using Power";
 	}
 

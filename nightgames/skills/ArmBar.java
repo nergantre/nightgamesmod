@@ -83,7 +83,7 @@ public class ArmBar extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "A judo submission hold that hyperextends the arm.";
 	}
 

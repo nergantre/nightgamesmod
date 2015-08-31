@@ -28,7 +28,7 @@ public class Illusions extends Skill {
 		return 20;
 	}
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Create illusions to act as cover: 20 Mojo";
 	}
 

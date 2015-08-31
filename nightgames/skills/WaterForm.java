@@ -25,7 +25,7 @@ public class WaterForm extends Skill{
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Improves evasion and counterattack rate at expense of Power";
 	}
 

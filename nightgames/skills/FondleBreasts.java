@@ -104,7 +104,7 @@ public class FondleBreasts extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Grope your opponents breasts. More effective if she's topless";
 	}
 

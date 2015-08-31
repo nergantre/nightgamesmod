@@ -25,7 +25,7 @@ public class Purr extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Purr cutely to try to charm your opponent";
 	}
 

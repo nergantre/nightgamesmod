@@ -89,7 +89,7 @@ public class Diversion extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Throws your clothes as a distraction";
 	}
 

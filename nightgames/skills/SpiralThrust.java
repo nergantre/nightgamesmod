@@ -90,7 +90,7 @@ public class SpiralThrust extends Thrust {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 			return "Converts your mojo into fucking: All Mojo";
 	}
 

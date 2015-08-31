@@ -101,7 +101,7 @@ public class Whisper extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Arouse opponent by whispering in her ear";
 	}
 }

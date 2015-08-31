@@ -102,7 +102,7 @@ public class UseDildo extends Skill{
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Pleasure opponent with your dildo";
 	}
 

@@ -112,7 +112,7 @@ public class Nurple extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Twist opponent's nipples painfully";
 	}
 	@Override

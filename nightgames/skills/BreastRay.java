@@ -32,7 +32,7 @@ public class BreastRay extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Grow your opponent's boobs to make her more sensitive: 2 Batteries";
 	}
 

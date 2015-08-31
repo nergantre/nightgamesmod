@@ -95,7 +95,7 @@ public class Sedate extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Throw sedative at opponent, weakening her";
 	}
 }

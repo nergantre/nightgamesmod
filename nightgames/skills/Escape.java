@@ -108,7 +108,7 @@ public class Escape extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Uses Cunning to try to escape a submissive position";
 	}
 	@Override

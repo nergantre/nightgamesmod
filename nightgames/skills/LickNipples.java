@@ -90,7 +90,7 @@ public class LickNipples extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Suck your opponent's nipples";
 	}
 	@Override

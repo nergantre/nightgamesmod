@@ -143,7 +143,7 @@ public class UseCrop extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Strike your opponent with riding crop. More effective if she's naked";
 	}
 

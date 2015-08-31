@@ -138,7 +138,7 @@ public class Wait extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(bluff()){
 			return "Regain some stamina and lower arousal. Hides current status from opponent.";
 		}

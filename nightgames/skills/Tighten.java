@@ -61,7 +61,7 @@ public class Tighten extends Thrust {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Squeeze opponent's dick, no pleasure to self";
 	}
 	

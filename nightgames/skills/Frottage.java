@@ -28,7 +28,7 @@ public class Frottage extends Skill{
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Rub yourself against your opponent";
 	}
 
@@ -66,7 +66,7 @@ public class Frottage extends Skill{
 			getSelf().body.pleasure(target, receiver, dealer, m / 2, c);
 		}
 		target.body.pleasure(getSelf(), dealer, receiver, m, c);
-		if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
+		if (Global.random(100) < 15 + 2 * getSelf().get(Attribute.Fetish)) {
 			target.add(c, new BodyFetish(target, getSelf(), "cock", .25, 10));
 		}
 		getSelf().emote(Emotion.horny, 15);

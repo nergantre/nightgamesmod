@@ -63,7 +63,7 @@ public class Surrender extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Give up";
 	}
 }

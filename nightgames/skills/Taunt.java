@@ -79,7 +79,7 @@ public class Taunt extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Embarrass your opponent, may inflict Shamed";
 	}
 }

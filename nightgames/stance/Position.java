@@ -137,6 +137,11 @@ public abstract class Position implements Serializable, Cloneable{
 	public boolean analinserted() {
 		return en == Stance.anal;
 	}
+
+	public boolean analinserted(Character self) {
+		return en == Stance.anal && top == self;
+	}
+
 	public Position insert(Character target) {
 		return this;
 	}

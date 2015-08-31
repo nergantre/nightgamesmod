@@ -43,13 +43,13 @@ public class Knee extends Skill {
 				}
 			}
 			if(target.has(Trait.achilles)&&!target.has(Trait.armored)){
-				target.pain(c, 4+Global.random(6));
+				target.pain(c, 20+Global.random(6)+Math.min(getSelf().get(Attribute.Power), 50));
 			}
 			if(target.has(Trait.armored)){
-				target.pain(c, Global.random(6)+getSelf().get(Attribute.Power)/2);
+				target.pain(c, Global.random(6)+Math.min(getSelf().get(Attribute.Power)/2, 50));
 			}
 			else{
-				target.pain(c, 4+Global.random(11)+getSelf().get(Attribute.Power));
+				target.pain(c, 4+Global.random(11)+Math.min(getSelf().get(Attribute.Power), 50));
 			}
 
 			target.emote(Emotion.angry,20);
@@ -106,7 +106,7 @@ public class Knee extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Knee opponent in the groin";
 	}
 	@Override

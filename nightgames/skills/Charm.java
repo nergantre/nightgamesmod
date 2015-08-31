@@ -77,7 +77,7 @@ public class Charm extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Charms your opponent into not hurting you.";
 	}
 }

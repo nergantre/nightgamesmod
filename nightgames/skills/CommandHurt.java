@@ -13,7 +13,7 @@ public class CommandHurt extends PlayerCommand {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Convince your thrall that running into the nearest wall is a good idea.";
 	}
 

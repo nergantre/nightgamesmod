@@ -15,7 +15,7 @@ public class LevelDrain extends Drain {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Dark)>=30;
+		return user.get(Attribute.Dark)>=50;
 	}
 
 	@Override
@@ -25,7 +25,7 @@ public class LevelDrain extends Drain {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Drain your opponent of their levels";
 	}
 

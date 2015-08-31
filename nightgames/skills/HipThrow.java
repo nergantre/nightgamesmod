@@ -13,7 +13,7 @@ import nightgames.status.Falling;
 public class HipThrow extends Skill {
 
 	public HipThrow(Character self) {
-		super("HipThrow", self);
+		super("Hip Throw", self);
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class HipThrow extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Throw your opponent to the ground, dealing some damage: 10 Mojo";
 	}
 

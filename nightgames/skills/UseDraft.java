@@ -99,7 +99,7 @@ public class UseDraft extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Drink a draft";
 	}
 

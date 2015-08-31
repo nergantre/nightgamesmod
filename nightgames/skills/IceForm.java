@@ -25,7 +25,7 @@ public class IceForm extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Improves resistance to pleasure, reduces mojo gain to zero.";
 	}
 

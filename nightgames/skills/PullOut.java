@@ -64,7 +64,7 @@ public class PullOut extends Skill {
 					}
 				} else {
 					if (getSelf().hasStatus(Stsflag.leglocked)) {
-						BodyPart part = c.getStance().analinserted() ? target.body.getRandom("ass") : target.body.getRandomPussy();
+						BodyPart part = c.getStance().analinserted(getSelf()) ? target.body.getRandom("ass") : target.body.getRandomPussy();
 						String partString = part.describe(target);
 						if (getSelf().human())
 							c.write(getSelf(),"You try to pull out of "+target.name()+"'s " + partString + ", but her legs immediately tighten against your waist, holding you inside her. The mere friction from her action sends a shiver down your spine.");
@@ -147,7 +147,7 @@ public class PullOut extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Aborts penetration";
 	}
 

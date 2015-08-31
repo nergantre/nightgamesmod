@@ -22,7 +22,7 @@ public class SelfStun extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Stun yourself. For Debugging!";
 	}
 

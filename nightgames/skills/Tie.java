@@ -105,7 +105,7 @@ public class Tie extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Tie up your opponent's hands with a ziptie";
 	}
 

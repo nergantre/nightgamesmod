@@ -53,7 +53,7 @@ public class Distracted extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Caught off guard";
 	}
 

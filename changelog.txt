@@ -7,6 +7,28 @@ Balance:
 - Fire form now weakens by 5 a turn instead of 1 a turn. Should still be really good.
 - Flatfooted now gives you Wary after it ends instead of Cynical. (seems to make more sense)
 - Nimble now gives you 2 bonus speed as well as some bonus evade based on Animism
+- Flick now has a 3 turn cooldown, but causes opponent to lose 25 mojo
+- Focus now reduces arousal by 20% of the cap or 20, whatever is more. It also now builds 25% Mojo. However now it has a 2 turn cooldown.
+- Footjob and Foot Pump now have a base 15% chance to cause a Foot Fetish (up from 5%). This is still increased by 2% per Fetish attribute.
+- Frottage now has a base 15% chance to cause a Cock Fetish (up from 5%). This is still increased by 2% per Fetish attribute.
+- Assfuck now only requires 15 Seduction (down from 20)
+- Sex Counter now requires 20 Seduction (up from 15)
+- Grind now builds 10% Mojo (up from 5%)
+- Invitation now requires 25 Seduction (up from 15), but now costs 30 Mojo (down from 50)
+- Capped Kick damage at Random[0-12] + min(100, Power)
+- Capped Knee damage at 4 + Random[0-11] + min(50, Power), fixed a bug where having achilles would not add bonus power.
+- Capped Magic Missile damage at 100.
+- Level Drain now requires 50 Dark (I see why SilverBard disabled this now...)
+- Use Breasts now requires at least C cup breasts, but does not exclude Petite
+- Sacrifice now costs 20 Mojo (down from 40)
+- Submissive Hold now requires 15 Seduction and 15 Power (Up from 10 Seduction only)
+- Tail Peg now requires 1 Dark OR 20 Seduction (changed from 2 Dark only)
+- Tail Peg now continuously fucks your opponent with your tail if done while already in a sex stance
+- Tail Peg now has text for players using it
+- Tickle now requires 6 Cunning
+
+Other:
+- Fixed a few skills' requirements requiring one more than the intended amount of Attributes (>= instead of >)
 
 1.7.6 changelog
 

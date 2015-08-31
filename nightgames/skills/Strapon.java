@@ -36,7 +36,7 @@ public class Strapon extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Put on the strapon dildo";
 	}
 

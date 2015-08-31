@@ -33,7 +33,7 @@ public class SpawnImp extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Summon a demonic Imp: 5 arousal";
 	}
 

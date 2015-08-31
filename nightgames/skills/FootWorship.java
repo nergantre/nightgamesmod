@@ -72,7 +72,7 @@ public class FootWorship extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Worship opponent's feet: builds mojo for opponent";
 	}
 	public String getTargetOrganType(Combat c, Character target) {

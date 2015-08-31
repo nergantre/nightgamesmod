@@ -27,7 +27,7 @@ public class Turnover extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Turn your opponent over and get behind her";
 	}
 

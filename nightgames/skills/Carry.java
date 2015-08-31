@@ -116,7 +116,7 @@ public class Carry extends Fuck {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Picks up opponent and penetrates her: Mojo 10.";
 	}
 

@@ -88,7 +88,7 @@ public class Maneuver extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Get behind opponent: 8 Mojo";
 	}
 	@Override

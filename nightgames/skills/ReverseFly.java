@@ -19,7 +19,7 @@ public class ReverseFly extends Fly {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Take off and fuck your opponent's cock in the air.";
 	}
 

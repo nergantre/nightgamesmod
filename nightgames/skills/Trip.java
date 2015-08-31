@@ -85,7 +85,7 @@ public class Trip extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Attempt to trip your opponent";
 	}
 

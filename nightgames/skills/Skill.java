@@ -87,7 +87,7 @@ public abstract class Skill {
 	}
 
 	public abstract boolean usable(Combat c, Character target);
-	public abstract String describe();
+	public abstract String describe(Combat c);
 	public abstract boolean resolve(Combat c, Character target);
 	public abstract Skill copy(Character user);
 	public abstract Tactics type(Combat c);

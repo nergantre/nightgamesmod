@@ -23,7 +23,7 @@ public class Defabricator extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Does what it says on the tin.";
 	}
 

@@ -31,7 +31,7 @@ public class CommandGive extends PlayerCommand {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Make your opponent give you an item.";
 	}
 

@@ -144,7 +144,7 @@ public class Thrust extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Slow fuck, minimizes own pleasure";
 	}
 	

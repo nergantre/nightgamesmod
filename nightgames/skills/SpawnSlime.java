@@ -30,7 +30,7 @@ public class SpawnSlime extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Creates a mindless, but living slime to attack your opponent: 5 Battery";
 	}
 

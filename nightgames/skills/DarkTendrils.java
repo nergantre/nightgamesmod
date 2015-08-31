@@ -27,7 +27,7 @@ public class DarkTendrils extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Summon shadowy tentacles to grab or trip your opponent: 5 Arousal";
 	}
 

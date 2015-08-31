@@ -28,7 +28,7 @@ public class ToggleKnot extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Inflate or deflate your knot.";
 	}
 

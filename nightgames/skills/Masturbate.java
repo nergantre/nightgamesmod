@@ -135,7 +135,7 @@ public class Masturbate extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Raise your own arousal and boosts your mojo";
 	}
 

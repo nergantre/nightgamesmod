@@ -23,7 +23,7 @@ public class CatsGrace extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Use your instinct to nimbly avoid attacks";
 	}
 

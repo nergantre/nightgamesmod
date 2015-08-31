@@ -32,7 +32,7 @@ public class DenyOrgasm extends Skill {
 	}
 	
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Prevents your opponents from cumming by tightening around their cock";
 	}
 

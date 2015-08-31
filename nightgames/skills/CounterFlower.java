@@ -20,6 +20,10 @@ public class CounterFlower extends CounterBase {
 		return Global.randomfloat() * 2;
 	}
 
+	public int speed(){
+		return -20;
+	}
+
 	@Override
 	public void resolveCounter(Combat c, Character target) {
 		target.nudify();
@@ -42,7 +46,7 @@ public class CounterFlower extends CounterBase {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.has(Trait.dryad);
+		return user.has(Trait.dryad) && user.get(Attribute.Bio) >= 15;
 	}
 
 	@Override
@@ -56,7 +60,7 @@ public class CounterFlower extends CounterBase {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Counters with vines, trapping them in your flower.";
 	}
 

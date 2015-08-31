@@ -42,7 +42,7 @@ public class Fly extends Fuck {
 		return 50;
 	}
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Take off and fuck your opponent's pussy in the air.";
 	}
 

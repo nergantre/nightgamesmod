@@ -66,7 +66,7 @@ public class UseSemen extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Drink a bottle of semen";
 	}
 

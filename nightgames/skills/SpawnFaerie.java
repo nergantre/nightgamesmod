@@ -33,7 +33,7 @@ public class SpawnFaerie extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Summon a Faerie familiar to support you: 15 Mojo";
 	}
 

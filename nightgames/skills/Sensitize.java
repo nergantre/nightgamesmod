@@ -25,7 +25,7 @@ public class Sensitize extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Makes your opponent hypersensitive";
 	}
 

@@ -27,7 +27,7 @@ public class FlyCatcher extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Focus on eliminating the enemy pet: 5 Stamina";
 	}
 

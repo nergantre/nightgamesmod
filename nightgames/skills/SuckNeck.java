@@ -114,7 +114,7 @@ public class SuckNeck extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Suck on opponent's neck. Highly variable effectiveness";
 	}
 

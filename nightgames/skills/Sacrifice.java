@@ -24,11 +24,11 @@ public class Sacrifice extends Skill {
 
 	@Override
 	public int getMojoCost(Combat c) {
-		return 40;
+		return 20;
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Damage yourself to reduce arousal";
 	}
 

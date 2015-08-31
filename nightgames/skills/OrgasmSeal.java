@@ -30,7 +30,7 @@ public class OrgasmSeal extends Skill {
 	}
 	
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Prevents your opponent from cumming with a mystical seal";
 	}
 

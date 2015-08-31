@@ -127,7 +127,7 @@ public class Aphrodisiac extends Skill {
 		}
 	}
 
-	public String describe() {
+	public String describe(Combat c) {
 		return "Throws a bottle of Aphrodisiac at the opponent";
 	}
 }

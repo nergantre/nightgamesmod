@@ -57,7 +57,7 @@ public class Straddle extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Straddles opponent";
 	}
 

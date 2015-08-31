@@ -104,7 +104,7 @@ public class ThrowDraft extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Throw a draft at your opponent";
 	}
 

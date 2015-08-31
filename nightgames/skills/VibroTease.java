@@ -26,7 +26,7 @@ public class VibroTease extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Turn up the strapon vibration";
 	}
 

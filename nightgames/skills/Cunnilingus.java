@@ -197,7 +197,7 @@ public class Cunnilingus extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Perfom cunnilingus on opponent";
 	}
 	public String getTargetOrganType(Combat c, Character target) {

@@ -30,7 +30,7 @@ public class CustomSkill extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return data.description;
 	}
 

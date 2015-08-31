@@ -55,7 +55,7 @@ public class Footjob extends Skill {
 				target.body.pleasure(getSelf(), getSelf().body.getRandom("feet"), target.body.getRandom("cock"), m, c);
 			else
 				target.body.pleasure(getSelf(), getSelf().body.getRandom("feet"), target.body.getRandom("pussy"), m, c);
-			if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
+			if (Global.random(100) < 15 + 2 * getSelf().get(Attribute.Fetish)) {
 				target.add(c, new BodyFetish(target, getSelf(), "feet", .25, 10));
 			}
 		}
@@ -108,7 +108,7 @@ public class Footjob extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Pleasure your opponent with your feet";
 	}
 

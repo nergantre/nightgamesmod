@@ -17,7 +17,7 @@ public class CommandDown extends PlayerCommand {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Command your opponent to lie down on the ground.";
 	}
 

@@ -34,7 +34,7 @@ public class TentacleRape extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Violate your opponent with your tentacles.";
 	}
 	BodyPart tentacles = null;

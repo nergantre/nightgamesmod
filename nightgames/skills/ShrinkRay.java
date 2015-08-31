@@ -32,7 +32,7 @@ public class ShrinkRay extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Shrink your opponent's 'assets' to damage her ego: 2 Batteries";
 	}
 

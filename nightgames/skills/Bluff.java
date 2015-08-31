@@ -69,7 +69,7 @@ public class Bluff extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Regain some stamina and lower arousal. Hides current status from opponent.";
 	}
 

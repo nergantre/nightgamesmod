@@ -24,7 +24,7 @@ public class Tear extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Rip off your opponent's clothes";
 	}
 

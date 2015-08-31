@@ -25,7 +25,7 @@ public class Invitation extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Seduction) > 15 || user.has(Trait.submissive);
+		return user.get(Attribute.Seduction) > 25 || user.has(Trait.submissive);
 	}
 
 	@Override
@@ -39,11 +39,11 @@ public class Invitation extends Skill {
 
 	@Override
 	public int getMojoCost(Combat c) {
-		return 50;
+		return 30;
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Invites opponent into your embrace";
 	}
 

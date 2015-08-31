@@ -75,7 +75,7 @@ public class Suckle extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Suck your opponent's nipples. Builds mojo for the opponent.";
 	}
 	@Override

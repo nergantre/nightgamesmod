@@ -129,7 +129,7 @@ public class Slap extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Slap opponent across the face";
 	}
 	@Override

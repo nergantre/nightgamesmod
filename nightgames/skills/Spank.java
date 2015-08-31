@@ -109,7 +109,7 @@ public class Spank extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Slap opponent on the ass";
 	}
 

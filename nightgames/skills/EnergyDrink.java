@@ -25,7 +25,7 @@ public class EnergyDrink extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Terrible stuff, but will make you less tired";
 	}
 

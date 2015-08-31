@@ -77,7 +77,7 @@ public class StripTease extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Tempt opponent by removing your clothes";
 	}
 

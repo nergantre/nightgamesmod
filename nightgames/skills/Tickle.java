@@ -139,7 +139,7 @@ public class Tickle extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return true;
+		return user.get(Attribute.Cunning) >= 6;
 	}
 
 	@Override
@@ -207,7 +207,7 @@ public class Tickle extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Tickles opponent, weakening and arousing her. More effective if she's nude";
 	}
 	private boolean hastickler(){

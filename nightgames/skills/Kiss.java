@@ -132,7 +132,7 @@ public class Kiss extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Kiss your opponent";
 	}
 

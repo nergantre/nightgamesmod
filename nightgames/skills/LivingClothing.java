@@ -28,7 +28,7 @@ public class LivingClothing extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Fabricate a living suit of tentacles to wear: 3 Batteries";
 	}
 

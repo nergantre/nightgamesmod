@@ -27,7 +27,7 @@ public class FlashStep extends Skill {
 		return 15;
 	}
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Use lightning speed to get behind your opponent before she can react: 10 stamina";
 	}
 

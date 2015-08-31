@@ -58,7 +58,7 @@ public class Submit extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Submits to your opponent by lying down.";
 	}
 }

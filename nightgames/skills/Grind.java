@@ -26,7 +26,7 @@ public class Grind extends Thrust {
 
 	@Override
 	public int getMojoBuilt(Combat c) {
-		return 5;
+		return 10;
 	}
 
 	public int[] getDamage(Character target, Position stance) {
@@ -70,7 +70,7 @@ public class Grind extends Thrust {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Grind against your opponent with minimal thrusting. Extremely consistent pleasure and builds some mojo";
 	}
 

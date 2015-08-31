@@ -91,7 +91,7 @@ public class StripTop extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Attempt to remove opponent's top. More likely to succeed if she's weakened and aroused";
 	}
 

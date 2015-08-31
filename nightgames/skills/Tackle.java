@@ -123,7 +123,7 @@ public class Tackle extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Knock opponent to ground and get on top of her";
 	}
 	@Override

@@ -26,7 +26,7 @@ public class StunBlast extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "A blast of light and sound with a chance to stun: 4 Battery";
 	}
 

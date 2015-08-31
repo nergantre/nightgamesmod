@@ -27,7 +27,7 @@ public class FireForm extends Skill{
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Boost Mojo gain at the expense of Stamina regeneration.";
 	}
 

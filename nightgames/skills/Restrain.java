@@ -88,7 +88,7 @@ public class Restrain extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Restrain opponent until she struggles free";
 	}
 

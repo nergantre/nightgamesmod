@@ -94,7 +94,7 @@ public class PerfectTouch extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Strips opponent completely: 25 Mojo";
 	}
 	@Override

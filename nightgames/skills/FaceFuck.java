@@ -29,7 +29,7 @@ public class FaceFuck extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Force your opponent to orally pleasure you.";
 	}
 
@@ -91,7 +91,7 @@ public class FaceFuck extends Skill {
 
 	@Override
 	public int getMojoBuilt(Combat c) {
-		return 25;
+		return 60;
 	}
 
 	@Override

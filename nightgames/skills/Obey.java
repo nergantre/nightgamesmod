@@ -22,7 +22,7 @@ public class Obey extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Obey the succubus' every command";
 	}
 

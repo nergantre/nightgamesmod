@@ -79,7 +79,7 @@ public class SweetScent extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Breathe out a sweet scent to send your opponent into a frenzy.";
 	}
 }

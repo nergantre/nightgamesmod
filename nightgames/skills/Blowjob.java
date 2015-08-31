@@ -187,7 +187,7 @@ public class Blowjob extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Lick and suck your opponent's dick";
 	}
 

@@ -26,7 +26,7 @@ public class StoneForm extends Skill{
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Improves Pain Resistance rate at expense of Speed";
 	}
 

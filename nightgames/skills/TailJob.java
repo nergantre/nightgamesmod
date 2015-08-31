@@ -17,7 +17,7 @@ public class TailJob extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		boolean enough = getSelf().get(Attribute.Seduction)>=20 || getSelf().get(Attribute.Animism)>=0;
+		boolean enough = getSelf().get(Attribute.Seduction)>=20 || getSelf().get(Attribute.Animism)>=1;
 		return enough && user.body.get("tail").size() > 0;
 	}
 
@@ -27,7 +27,7 @@ public class TailJob extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Use your tail to tease your opponent";
 	}
 
