@@ -1,12 +1,29 @@
 package nightgames.daytime;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.NPC;
 import nightgames.characters.Trait;
+import nightgames.characters.body.CockPart;
+import nightgames.characters.body.EarPart;
+import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.TailPart;
+import nightgames.characters.body.WingsPart;
+import nightgames.characters.custom.effect.CustomEffect;
+import nightgames.characters.custom.requirement.BodyPartRequirement;
+import nightgames.characters.custom.requirement.CustomRequirement;
+import nightgames.characters.custom.requirement.NotRequirement;
 import nightgames.global.Flag;
 import nightgames.global.Global;
+import nightgames.items.Item;
 
 public class ReykaTime extends Activity {
 
@@ -15,24 +32,163 @@ public class ReykaTime extends Activity {
 	public ReykaTime(Character player) {
 		super("Reyka", player);
 		reyka = Global.getNPC("Reyka");
+		buildTransformationPool();
 	}
 
 	@Override
 	public boolean known() {
 		return Global.checkFlag(Flag.Reyka);
 	}
+	List<TransformationOption> options;
+	
+	public void buildTransformationPool() {
+		options = new ArrayList<>();
+		TransformationOption incubusCock = new TransformationOption();
+		incubusCock.ingredients.put(Item.PriapusDraft, 10);
+		incubusCock.ingredients.put(Item.SuccubusDraft, 20);
+		incubusCock.ingredients.put(Item.semen, 10);
+		incubusCock.requirements.add(new BodyPartRequirement("cock"));
+		incubusCock.option = "Incubus Cock";
+		incubusCock.scene = "{self:subject} smiles when she sees that you have brought her the ingredients. "
+				+ "<i>\"{other:name}, honey, just lie down on the couch over there and I'll fix you right up.\"</i> "
+				+ "To be completely honest, you're kind of worried that this may go completely and horribly wrong "
+				+ "now that you've decided to do this. However it's a bit too late in the game to back out now. "
+				+ "Nervously, you lie down on the couch in the demoness' chapel. A few minutes later, Reyka returns, "
+				+ "completely naked. Reyka glances at you, and coos <i>\"Aww, don't be nervous! I promise this wont "
+				+ "hurt... too much.\"</i> The succubus saunters over to you and fetches the bottles you prepared with "
+				+ "her tail. She pours the thick liquids on her hands and mixes them together. She applies half of the "
+				+ "mixture on your cock (which almost makes you cum due to her ministrations), and massages the rest "
+				+ "into her cunt. Finally, she draws a familiar rune on your lower belly that you recognize as the orgasm "
+				+ "seal she uses in the night games.<br><br>"
+				+ "As Reyka finishes with her preparations, you finally realize what she's about to do. Remembing the last "
+				+ "time she fucked you within an inch of your life, you start to scramble out of her couch, in an mad attempt "
+				+ "to escape. As if she read your mind, Reyka unfurls her wings and jumps on you as you almost reach the stairs "
+				+ "back up to the main chapel area. The temptress flaps her wings once and uses the upwards force to swiftly "
+				+ "mount you. Grinning devilishly, she purrs <i>\"Oh no {other:name}, we'll be having none "
+				+ "of that. You paid for this yourself, and it would be SUCH a waste for us to stop now. Don't you agree "
+				+ "{other:name}?\"</i> Resigned to your fate, you can only nod obediently as she rubs her goopy slit against "
+				+ "your rock hard erection<br><br>"
+				+ "After 6 hours of messy sex in which Reyka fucked you unconscious 17 times, you wake up cuddled in Reyka's "
+				+ "bountiful bosoms. You quickly notice that Reyka has been awake and smiling at your groggy expression while you wake up."
+				+ "As you somehow start to get hard again when you smell Reyka's intoxicating scent, you realize that your penis feels very different. "
+				+ "Reyka sees you glancing at your own crotch and tells you, <i>\"So if you haven't noticed yet, your cock has been transformed into "
+				+ "that of an incubus. You'll find that you have a bit more staying power than usual, and you will be able to drain some"
+				+ "of your partner's strengths whil you're fucking. Finally, you'll find that your cum has some... special properties. "
+				+ "If you cum inside a girl, she'll be temporarily enthralled to your will. These effects are stronger the more instinctive "
+				+ "your opponent is. However, it wont work much against that high tech gizmo that you human have now. Anyways, now that "
+				+ "we're done, I have to get some rest. Even if it doesn't look like it, that ritual took a lot out of me.\" "
+				+ "Recognizing that you are being shooed away, you profusely thank Reyka and leave her chapel with your new incubus cock.</i>";
+		incubusCock.effect = (c, self, other) -> {
+			self.body.addReplace(CockPart.incubus, 1);
+			return true;
+		};
+		options.add(incubusCock);
+		TransformationOption demonWings = new TransformationOption();
+		demonWings.ingredients.put(Item.SuccubusDraft, 20);
+		demonWings.ingredients.put(Item.semen, 10);
+		demonWings.requirements.add(new NotRequirement(Arrays.asList(new BodyPartRequirement("wings"))));
+		demonWings.option = "Demonic Wings";
+		demonWings.scene = "Reyka smiles and crushes the ingredients together and draws a magic formation on your back and shoulders. "
+				+ "After telling you to sit down across from her, she starts masturbating. Dumbfounded at her sudden action, you start getting up from your chair. "
+				+ "You quick fall off balance though when the markings on your back grow hot. Black demonic wings tears through your back and settles behind you. "
+				+ "Engrossed with exploring your new wings, you don't even notice when Reyka approaches you and pushes you down. You realize that the ritual must have "
+				+ "taken a lot out of her, and she looks particularly famished now. You resign yourself to be the demoness' partner and dinner as payment for your new wings.";
+		demonWings.effect = (c, self, other) -> {
+			self.body.addReplace(WingsPart.demonic, 1);
+			return true;
+		};
+		options.add(demonWings);
+		TransformationOption demonTail = new TransformationOption();
+		demonTail.ingredients.put(Item.SuccubusDraft, 20);
+		demonTail.ingredients.put(Item.semen, 10);
+		demonTail.requirements.add(new NotRequirement(Arrays.asList(new BodyPartRequirement("tail"))));
+		demonTail.option = "Pointed Ears";
+		demonTail.scene = "[Placeholder]<br>Reyka marks the top of you ass with a magic symbol and fingers your ass until you grow a demonic tail.";
+		demonTail.effect = (c, self, other) -> {
+			self.body.addReplace(TailPart.demonic, 1);
+			return true;
+		};
+		options.add(demonTail);
+		TransformationOption pointedEars = new TransformationOption();
+		pointedEars.ingredients.put(Item.SuccubusDraft, 20);
+		pointedEars.ingredients.put(Item.semen, 10);
+		pointedEars.requirements.add(new BodyPartRequirement("ears"));
+		pointedEars.option = "Pointed Ears";
+		pointedEars.scene = "Reyka fetches the ingredients from your pockets with her tail and mixes them together with her palm. She mutters something under her breath and suddenly a "
+				+ "comfortable massage table appears in front of you. She motions for you to lie down, to which you promptly comply. She hovers above you and uses her mixture coated hands to "
+				+ "massage your ears. You feel a burning sensation in them, as if your ears are melting. Reyka tells you to not worry, and continues massaging and pulling at your ears. After a "
+				+ "good twenty minutes of pinching and pulling on them, Reyka lets you know that they're done and gives you a mirrow. You confirm that yes, you are now a proud owner of a set of "
+				+ "pointed fey-looking ears!";
+		pointedEars.effect = (c, self, other) -> {
+			self.body.addReplace(EarPart.pointed, 1);
+			return true;
+		};
+		options.add(pointedEars);
+		TransformationOption succubusPussy = new TransformationOption();
+		succubusPussy.ingredients.put(Item.SuccubusDraft, 20);
+		succubusPussy.ingredients.put(Item.BewitchingDraught, 20);
+		succubusPussy.ingredients.put(Item.FemDraft, 20);
+		succubusPussy.ingredients.put(Item.semen, 10);
+		succubusPussy.requirements.add(new BodyPartRequirement("pussy"));
+		succubusPussy.option = "Pointed Ears";
+		succubusPussy.scene = "Reyka fetches the ingredients from your pockets with her tail and mixes them together with her palm. She mutters something under her breath and suddenly a "
+				+ "comfortable massage table appears in front of you. She motions for you to lie down, to which you promptly comply. She hovers above you and uses her mixture coated hands to "
+				+ "massage your ears. You feel a burning sensation in them, as if your ears are melting. Reyka tells you to not worry, and continues massaging and pulling at your ears. After a "
+				+ "good twenty minutes of pinching and pulling on them, Reyka lets you know that they're done and gives you a mirrow. You confirm that yes, you are now a proud owner of a set of "
+				+ "pointed fey-looking ears!";
+		succubusPussy.effect = (c, self, other) -> {
+			self.body.addReplace(PussyPart.succubus, 1);
+			return true;
+		};
+		options.add(pointedEars);
+	}
 
 	@Override
 	public void visit(String choice) {
 		Global.gui().clearText();
 		Global.gui().clearCommand();
-		if (choice.equals("Start")) {
-			if (reyka.getAffection(player) > 25
-					&& reyka.has(Trait.clairvoyance) && reyka.has(Trait.desensitized) && false) {
-				Global.gui().message("[Love Intro]");
+		
+		Optional<TransformationOption> optionalOption = options.stream().filter(opt -> choice.equals(opt.option)).findFirst();
+		if (optionalOption.isPresent()) {
+			TransformationOption option = optionalOption.get();
+			boolean hasAll = option.ingredients.entrySet().stream().allMatch(entry -> player.has(entry.getKey(), entry.getValue()));
+			if (hasAll) {
+				Global.gui().message(Global.format(option.scene, reyka, player));
+				option.ingredients.entrySet().stream().forEach(entry -> player.consume(entry.getKey(), entry.getValue(), false));
+				option.effect.execute(null, player, reyka);
+			} else {
+				Global.gui().message("Reyka frowns when she sees that you don't have the requested items.");
+			}
+			Global.gui().choose(this, "Back");
+		} else if (choice.equals("Demonic Rituals")) {
+			Global.gui().message("<br>Reyka seems a bit shocked at your request. <i>You want to become a demon?</i> "
+					+ "She looks a bit worried when she responds. You quickly reassure her that you don't necessarily want the whole package, corrupted soul and all. "
+					+ "You just want some of the fun bits that she had made such good use of. Seeing the conversation directed back to sex, Reyka quickly recovers her saucy grin, "
+					+ "<i>\"You've been having some fun I see? Alright, I can do that for you, but you have to bring me some ingredients. I can't do everything myself! "
+					+ "I'll write down what I can do for you. One thing though, you'll have to provide me a lot of semen as power for the rituals. I'll give you these magic bottles, so make sure "
+					+ "you catch it in here the next time you jack off\"</i>");
+			Global.flag(Flag.masturbationSemen);
+			Global.gui().message("<br>");
+			options.forEach(opt -> {
+				Global.gui().message(opt.option + ":");
+				opt.ingredients.entrySet().forEach((entry) -> {
+					Global.gui().message(entry.getValue() + " " + entry.getKey().getName());					
+				});
+				Global.gui().message("<br>");
+			});
+			options.forEach(opt -> {
+				if (opt.requirements.stream().allMatch(req -> req.meets(null, player, reyka))) {
+					Global.gui().choose(this, opt.option);
+				}
+			});
+			Global.gui().choose(this, "Back");
+		} else if (choice.equals("Start") || choice.equals("Back")) {
+			if (reyka.getAffection(player) > 25) {
+				Global.gui().message("[Placeholder]<br>You head down to the chapel basement. Reyka shows you a cute smile when she realizes that you've come to visit.");
 				Global.gui().choose(this, "Games");
 				Global.gui().choose(this, "Sparring");
 				Global.gui().choose(this, "Sex");
+				Global.gui().choose(this, "Demonic Rituals");
 			} else if (reyka.getAffection(player) > 0) {
 				Global.gui().message("You go over to the chapel, wondering if Her Demonic Highness would deign to "+
 						"see you. As you enter, the priest sees you and quickly shuffles away, apparently "+

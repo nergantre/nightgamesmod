@@ -1489,7 +1489,10 @@ public abstract class Character extends Observable implements Cloneable{
 	}
 
 	public void consume(Item item, int quantity){
-		if(has(Trait.resourceful)&&Global.random(5)==0){
+		consume(item, quantity, true);
+	}
+	public void consume(Item item, int quantity, boolean canBeResourceful){
+		if(canBeResourceful && has(Trait.resourceful)&&Global.random(5)==0){
 			quantity--;
 		}
 		if (inventory.containsKey(item)) {

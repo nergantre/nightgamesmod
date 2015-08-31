@@ -275,6 +275,51 @@ public class BodyShop extends Activity  {
 			}
 		});
 
+		selection.add(new ShopSelection("Remove Wings", 1000) {
+			@Override
+			void buy(Character buyer) {
+				buyer.body.removeAll("wings");
+			}
+			@Override
+			boolean available(Character buyer) {
+				return buyer.body.has("wings");
+			}
+			@Override
+			double priority(Character buyer) {
+				return 0;
+			}
+		});
+
+		selection.add(new ShopSelection("Remove Tail", 1000) {
+			@Override
+			void buy(Character buyer) {
+				buyer.body.removeAll("tail");
+			}
+			@Override
+			boolean available(Character buyer) {
+				return buyer.body.has("tail");
+			}
+			@Override
+			double priority(Character buyer) {
+				return 0;
+			}
+		});
+
+		selection.add(new ShopSelection("Restore Ears", 1000) {
+			@Override
+			void buy(Character buyer) {
+				buyer.body.removeAll("ears");
+				buyer.body.add(EarPart.normal);
+			}
+			@Override
+			boolean available(Character buyer) {
+				return buyer.body.getRandom("ears") != EarPart.normal;
+			}
+			@Override
+			double priority(Character buyer) {
+				return 0;
+			}
+		});
 		selection.add(new ShopSelection("Grow Pussy", 2500) {
 			@Override
 			void buy(Character buyer) {
@@ -354,31 +399,11 @@ public class BodyShop extends Activity  {
 				new GenericBodyPart("feet", 0, 1, 1, "feet", ""), 1000, 1000);
 		addBodyPartMod("Anal Pussy", AnalPussyPart.generic, 
 				AssPart.generic, 2000, 2000);
-		addBodyPartMod("Succubus Pussy", PussyPart.succubus, 
-				PussyPart.normal, 2000, 2000, -1, true);
-		addBodyPartMod("Cybernetic Pussy", PussyPart.cybernetic, 
-				PussyPart.normal, 2000, 2000, -1, true);
-		addBodyPartMod("Feral Pussy", PussyPart.feral,
-				PussyPart.normal, 2000, 2000, -1, true);
-		addBodyPartMod("Fiery Pussy", PussyPart.fiery,
-				PussyPart.normal, 2000, 2000, -1, true);
-		addBodyPartMod("Arcane Pussy", PussyPart.arcane,
-				PussyPart.normal, 2000, 2000, -1, true);
-		addCockMod("Incubus Cock", CockPart.incubus);
-		addCockMod("Primal Cock", CockPart.primal);
-		addCockMod("Bionic Cock", CockPart.bionic);
-		addCockMod("Blessed Cock", CockPart.blessed);
-		addCockMod("Enlightened Cock", CockPart.enlightened);
 		addBodyPartMod("Fused Gloves", new GenericBodyPart(
 				"Fused Gloves",
 				"{self:name-possessive} arms and hands are wrapped in a shiny black material that look fused on.",
 				.2, 1.5, .7, true, "hands", ""),
 				new GenericBodyPart("hands", 0, 1, 1, "hands", ""), 1000, 1000);
-		addBodyPartMod("Cat ears", EarPart.cat, EarPart.normal, 1000, 1000);
-		addBodyPartMod("Cat tail", TailPart.cat, TailPart.normal, 2500, 2500);
-		addBodyPartMod("Pointed ears", EarPart.pointed, EarPart.normal, 1000, 1000);
-		addBodyPartMod("Demonic Wings", WingsPart.demonic, WingsPart.normal, 2500, 2500);
-		addBodyPartMod("Demonic tail", TailPart.demonic, TailPart.normal, 2500, 2500);
 	}
 
 	@Override

@@ -56,5 +56,7 @@ public enum Flag {
 	KatDisabled,
 	JewelDisabled,
 	AiriEnabled,
-	systemMessages, malePref,
+	systemMessages,
+	malePref,
+	masturbationSemen,
 }

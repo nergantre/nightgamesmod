@@ -1,12 +1,20 @@
 package nightgames.daytime;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.NPC;
 import nightgames.characters.Trait;
+import nightgames.characters.body.CockPart;
+import nightgames.characters.body.PussyPart;
+import nightgames.characters.custom.requirement.BodyPartRequirement;
 import nightgames.global.Flag;
 import nightgames.global.Global;
+import nightgames.items.Item;
 
 public class MaraTime extends Activity {
 	private NPC mara;
@@ -14,6 +22,7 @@ public class MaraTime extends Activity {
 	public MaraTime(Character player) {
 		super("Mara", player);
 		mara = Global.getNPC("Mara");
+		buildTransformationPool();
 	}
 
 	@Override
@@ -21,11 +30,72 @@ public class MaraTime extends Activity {
 		return Global.checkFlag(Flag.MaraKnown);
 	}
 
+	List<TransformationOption> options;
+	
+	public void buildTransformationPool() {
+		options = new ArrayList<>();
+		TransformationOption bionicCock = new TransformationOption();
+		bionicCock.ingredients.put(Item.PriapusDraft, 10);
+		bionicCock.ingredients.put(Item.TinkersMix, 20);
+		bionicCock.ingredients.put(Item.Lubricant, 5);
+		bionicCock.ingredients.put(Item.Spring, 5);
+		bionicCock.ingredients.put(Item.Dildo, 1);
+		bionicCock.requirements.add(new BodyPartRequirement("cock"));
+		bionicCock.option = "Bionic Cock";
+		bionicCock.scene = "[Placeholder]<br>Mara installs a bionic cock on you";
+		bionicCock.effect = (c, self, other) -> {
+			self.body.addReplace(CockPart.bionic, 1);
+			return true;
+		};
+		options.add(bionicCock);
+		TransformationOption cyberneticPussy = new TransformationOption();
+		bionicCock.ingredients.put(Item.TinkersMix, 20);
+		bionicCock.ingredients.put(Item.Lubricant, 5);
+		bionicCock.ingredients.put(Item.Spring, 5);
+		bionicCock.ingredients.put(Item.Onahole, 1);
+		cyberneticPussy.requirements.add(new BodyPartRequirement("pussy"));
+		cyberneticPussy.option = "Cybernetic Pussy";
+		cyberneticPussy.scene = "[Placeholder]<br>Mara installs a cybernetic pussy on you";
+		cyberneticPussy.effect = (c, self, other) -> {
+			self.body.addReplace(PussyPart.cybernetic, 1);
+			return true;
+		};
+		options.add(cyberneticPussy);
+	}
+
 	@Override
 	public void visit(String choice) {
 		Global.gui().clearText();
 		Global.gui().clearCommand();
-		if(choice == "Start"){
+		Optional<TransformationOption> optionalOption = options.stream().filter(opt -> choice.equals(opt.option)).findFirst();
+		if (optionalOption.isPresent()) {
+			TransformationOption option = optionalOption.get();
+			boolean hasAll = option.ingredients.entrySet().stream().allMatch(entry -> player.has(entry.getKey(), entry.getValue()));
+			if (hasAll) {
+				Global.gui().message(Global.format(option.scene, mara, player));
+				option.ingredients.entrySet().stream().forEach(entry -> player.consume(entry.getKey(), entry.getValue(), false));
+				option.effect.execute(null, player, mara);
+			} else {
+				Global.gui().message("Mara frowns when she sees that you don't have the requested items.");
+			}
+			Global.gui().choose(this, "Back");
+		} else if (choice.equals("Modifications")) {
+			Global.gui().message("[Placeholder]Mara explains to you how she modifies her own body.");
+			Global.gui().message("<br>");
+			options.forEach(opt -> {
+				Global.gui().message(opt.option + ":");
+				opt.ingredients.entrySet().forEach((entry) -> {
+					Global.gui().message(entry.getValue() + " " + entry.getKey().getName());					
+				});
+				Global.gui().message("<br>");
+			});
+			options.forEach(opt -> {
+				if (opt.requirements.stream().allMatch(req -> req.meets(null, player, mara))) {
+					Global.gui().choose(this, opt.option);
+				}
+			});
+			Global.gui().choose(this, "Back");
+		} else if (choice.equals("Start") || choice.equals("Back")) {
 			if(mara.getAffection(player)>25&&mara.has(Trait.madscientist)){
 				Global.gui().message("Mara's computer lab has once again become a clusterfuck of electronics equipment. Not just electronics either. The back corner houses a " +
 						"small chemical lab, and there are welding and metal cutting tools probably borrowed from the mechanical engineering building. You can only identify " +
@@ -42,6 +112,7 @@ public class MaraTime extends Activity {
 					Global.gui().choose(this,"Games");
 					Global.gui().choose(this,"Sparring");
 					Global.gui().choose(this,"Sex");
+					Global.gui().choose(this,"Modifications");
 			}
 			else if(mara.getAffection(player)>0){
 				Global.gui().message("You go to the computer lab to find Mara for some quality time. She immediately breaks into a smile when she sees you enter. You can tell " +

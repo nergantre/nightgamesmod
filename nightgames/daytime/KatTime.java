@@ -1,11 +1,24 @@
 package nightgames.daytime;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.NPC;
 import nightgames.characters.Trait;
+import nightgames.characters.body.CockPart;
+import nightgames.characters.body.EarPart;
+import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.TailPart;
+import nightgames.characters.body.WingsPart;
+import nightgames.characters.custom.requirement.BodyPartRequirement;
+import nightgames.characters.custom.requirement.NotRequirement;
 import nightgames.global.Flag;
 import nightgames.global.Global;
+import nightgames.items.Item;
 
 public class KatTime extends Activity {
 	private NPC kat;
@@ -13,6 +26,7 @@ public class KatTime extends Activity {
 	public KatTime(Character player) {
 		super("Kat", player);
 		kat = Global.getNPC("Kat");
+		buildTransformationPool();
 	}
 
 	@Override
@@ -20,11 +34,89 @@ public class KatTime extends Activity {
 		return Global.checkFlag(Flag.Kat);
 	}
 
+	List<TransformationOption> options;
+	
+	public void buildTransformationPool() {
+		options = new ArrayList<>();
+		TransformationOption primalCock = new TransformationOption();
+		primalCock.ingredients.put(Item.PriapusDraft, 10);
+		primalCock.ingredients.put(Item.Rope, 10);
+		primalCock.ingredients.put(Item.Aphrodisiac, 50);
+		primalCock.requirements.add(new BodyPartRequirement("cock"));
+		primalCock.option = "Primal Cock";
+		primalCock.scene = "[Placeholder]<br>Kat uses her totemic magic to convert your penis into a primal cock.";
+		primalCock.effect = (c, self, other) -> {
+			self.body.addReplace(CockPart.primal, 1);
+			return true;
+		};
+		options.add(primalCock);
+		TransformationOption feralPussy = new TransformationOption();
+		feralPussy.ingredients.put(Item.Rope, 10);
+		feralPussy.ingredients.put(Item.Aphrodisiac, 50);
+		feralPussy.ingredients.put(Item.FemDraft, 10);
+		feralPussy.requirements.add(new NotRequirement(Arrays.asList(new BodyPartRequirement("wings"))));
+		feralPussy.option = "Feral Pussy";
+		feralPussy.scene = "[Placeholder]<br>Kat uses her totemic magic to convert your pussy into a feral one.";
+		feralPussy.effect = (c, self, other) -> {
+			self.body.addReplace(PussyPart.feral, 1);
+			return true;
+		};
+		TransformationOption catTail = new TransformationOption();
+		catTail.ingredients.put(Item.Rope, 10);
+		catTail.ingredients.put(Item.Aphrodisiac, 50);
+		catTail.requirements.add(new NotRequirement(Arrays.asList(new BodyPartRequirement("tail"))));
+		catTail.option = "Cat Tail";
+		catTail.scene = "[Placeholder]<br>Kat uses her totemic magic to grow you a cat tail.";
+		catTail.effect = (c, self, other) -> {
+			self.body.addReplace(TailPart.cat, 1);
+			return true;
+		};
+		options.add(catTail);
+		TransformationOption catEars = new TransformationOption();
+		catEars.ingredients.put(Item.Rope, 10);
+		catEars.ingredients.put(Item.Aphrodisiac, 50);
+		catEars.requirements.add(new BodyPartRequirement("ears"));
+		catEars.option = "Cat Ears";
+		catEars.scene = "[Placeholder]<br>Kat uses her totemic magic to grow you cat ears.";
+		catEars.effect = (c, self, other) -> {
+			self.body.addReplace(EarPart.cat, 1);
+			return true;
+		};
+		options.add(feralPussy);
+	}
 	@Override
 	public void visit(String choice) {
 		Global.gui().clearText();
 		Global.gui().clearCommand();
-		if(choice == "Start"){
+		Optional<TransformationOption> optionalOption = options.stream().filter(opt -> choice.equals(opt.option)).findFirst();
+		if (optionalOption.isPresent()) {
+			TransformationOption option = optionalOption.get();
+			boolean hasAll = option.ingredients.entrySet().stream().allMatch(entry -> player.has(entry.getKey(), entry.getValue()));
+			if (hasAll) {
+				Global.gui().message(Global.format(option.scene, kat, player));
+				option.ingredients.entrySet().stream().forEach(entry -> player.consume(entry.getKey(), entry.getValue(), false));
+				option.effect.execute(null, player, kat);
+			} else {
+				Global.gui().message("Kat frowns when she sees that you don't have the requested items.");
+			}
+			Global.gui().choose(this, "Back");
+		} else if (choice.equals("Transformations")) {
+			Global.gui().message("[Placeholder]Kat explains to you how she became a cat girl through totemic magic.");
+			Global.gui().message("<br><br>");
+			options.forEach(opt -> {
+				Global.gui().message(opt.option + ":");
+				opt.ingredients.entrySet().forEach((entry) -> {
+					Global.gui().message(entry.getValue() + " " + entry.getKey().getName());					
+				});
+				Global.gui().message("<br>");
+			});
+			options.forEach(opt -> {
+				if (opt.requirements.stream().allMatch(req -> req.meets(null, player, kat))) {
+					Global.gui().choose(this, opt.option);
+				}
+			});
+			Global.gui().choose(this, "Back");
+		} else if (choice.equals("Start") || choice.equals("Back")) {
 			if(kat.getAffection(player)>0){
 				Global.gui().message("You send Kat a text to see if she's free. Since exchanging numbers with her, you've discovered that she's much more outgoing " +
 						"when texting than she is in person. The two of you have chatted quite a bit, you just hope she'll eventually get more used to talking with you in " +
@@ -37,8 +129,10 @@ public class KatTime extends Activity {
 				Global.gui().choose(this,"Games");
 				Global.gui().choose(this,"Sparring");
 				Global.gui().choose(this,"Sex");
-			}
-			else if(kat.getAttraction(player)<10){
+				if (kat.getAffection(player) > 25) {
+					Global.gui().choose(this,"Transformations");
+				}
+		} else if(kat.getAttraction(player)<10){
 				Global.gui().message("You decide to look for Kat and see if she's interested in spending some time together. You don't have any way to contact her directly, " +
 						"but she apparently spends a lot of time in the campus gardens. That's probably your best hope for running into her.<p>You eventually spot Kat walking " +
 						"through the gardens, but you almost don't recognize her. Instead of the light, casual clothes she usually wears during a match, she's currently dressed " +

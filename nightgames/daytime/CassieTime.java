@@ -1,12 +1,20 @@
 package nightgames.daytime;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.NPC;
 import nightgames.characters.Trait;
+import nightgames.characters.body.CockPart;
+import nightgames.characters.body.PussyPart;
+import nightgames.characters.custom.requirement.BodyPartRequirement;
 import nightgames.global.Flag;
 import nightgames.global.Global;
+import nightgames.items.Item;
 
 public class CassieTime extends Activity {
 	private NPC cassie;
@@ -14,6 +22,7 @@ public class CassieTime extends Activity {
 	public CassieTime(Character player) {
 		super("Cassie", player);
 		cassie = Global.getNPC("Cassie");
+		buildTransformationPool();
 	}
 
 	@Override
@@ -21,11 +30,69 @@ public class CassieTime extends Activity {
 		return Global.checkFlag(Flag.CassieKnown);
 	}
 
+	List<TransformationOption> options;
+	
+	public void buildTransformationPool() {
+		options = new ArrayList<>();
+		TransformationOption blessedCock = new TransformationOption();
+		blessedCock.ingredients.put(Item.PriapusDraft, 10);
+		blessedCock.ingredients.put(Item.BewitchingDraught, 20);
+		blessedCock.ingredients.put(Item.FaeScroll, 1);
+		blessedCock.requirements.add(new BodyPartRequirement("cock"));
+		blessedCock.option = "Blessed Cock";
+		blessedCock.scene = "[Placeholder]<br>Cassie blesses your cock with the power of the fairies.";
+		blessedCock.effect = (c, self, other) -> {
+			self.body.addReplace(CockPart.blessed, 1);
+			return true;
+		};
+		options.add(blessedCock);
+		TransformationOption arcanePussy = new TransformationOption();
+		arcanePussy.ingredients.put(Item.BewitchingDraught, 20);
+		arcanePussy.ingredients.put(Item.FemDraft, 10);
+		arcanePussy.ingredients.put(Item.FaeScroll, 1);
+		arcanePussy.requirements.add(new BodyPartRequirement("pussy"));
+		arcanePussy.option = "Arcane Pussy";
+		arcanePussy.scene = "[Placeholder]<br>Cassie draws intricate arcane tattoos on your pussy";
+		arcanePussy.effect = (c, self, other) -> {
+			self.body.addReplace(PussyPart.arcane, 1);
+			return true;
+		};
+		options.add(arcanePussy);
+	}
+
 	@Override
 	public void visit(String choice) {
 		Global.gui().clearText();
 		Global.gui().clearCommand();
-		if(choice == "Start"){
+		Optional<TransformationOption> optionalOption = options.stream().filter(opt -> choice.equals(opt.option)).findFirst();
+		if (optionalOption.isPresent()) {
+			TransformationOption option = optionalOption.get();
+			boolean hasAll = option.ingredients.entrySet().stream().allMatch(entry -> player.has(entry.getKey(), entry.getValue()));
+			if (hasAll) {
+				Global.gui().message(Global.format(option.scene, cassie, player));
+				option.ingredients.entrySet().stream().forEach(entry -> player.consume(entry.getKey(), entry.getValue(), false));
+				option.effect.execute(null, player, cassie);
+			} else {
+				Global.gui().message("Cassie frowns when she sees that you don't have the requested items.");
+			}
+			Global.gui().choose(this, "Back");
+		} else if (choice.equals("Enchantments")) {
+			Global.gui().message("[Placeholder]Cassie tells you she could perhaps enchant some of your body.");
+			Global.gui().message("<br><br>");
+			options.forEach(opt -> {
+				Global.gui().message(opt.option + ":");
+				opt.ingredients.entrySet().forEach((entry) -> {
+					Global.gui().message(entry.getValue() + " " + entry.getKey().getName());					
+				});
+				Global.gui().message("<br>");
+			});
+			options.forEach(opt -> {
+				if (opt.requirements.stream().allMatch(req -> req.meets(null, player, cassie))) {
+					Global.gui().choose(this, opt.option);
+				}
+			});
+			Global.gui().choose(this, "Back");
+		} else if (choice.equals("Start") || choice.equals("Back")) {
 			if(cassie.getAffection(player)>25&&cassie.has(Trait.witch)){
 				Global.gui().message("You and Cassie lay together in her bed while she casts spells above you. Every twitch of her fingers brings a new burst of light and color. She weaves " +
 						"the colors into abstract pictures, but sometimes you can make out figures and familiar places in the patterns. There's no clear narrative or purpose emerging, Cassie " +
@@ -41,6 +108,7 @@ public class CassieTime extends Activity {
 					Global.gui().choose(this,"Games");
 					Global.gui().choose(this,"Sparring");
 					Global.gui().choose(this,"Sex");
+					Global.gui().choose(this,"Enchantments");
 			}
 			else if(cassie.getAffection(player)>0){
 				Global.gui().message("You text Cassie and suggest meeting up to spend some time together. You get to the meeting place first and settle down on a bench to wait for her. " +

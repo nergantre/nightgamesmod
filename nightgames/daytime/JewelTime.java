@@ -1,12 +1,22 @@
 package nightgames.daytime;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.NPC;
 import nightgames.characters.Trait;
+import nightgames.characters.body.CockPart;
+import nightgames.characters.body.PussyPart;
+import nightgames.characters.custom.requirement.BodyPartRequirement;
+import nightgames.characters.custom.requirement.NotRequirement;
 import nightgames.global.Flag;
 import nightgames.global.Global;
+import nightgames.items.Item;
 
 public class JewelTime extends Activity {
 	private NPC jewel;
@@ -14,6 +24,7 @@ public class JewelTime extends Activity {
 	public JewelTime(Character player) {
 		super("Jewel", player);
 		jewel = Global.getNPC("Jewel");
+		buildTransformationPool();
 	}
 
 	@Override
@@ -21,11 +32,68 @@ public class JewelTime extends Activity {
 		return Global.checkFlag(Flag.JewelKnown);
 	}
 
+	List<TransformationOption> options;
+	
+	public void buildTransformationPool() {
+		options = new ArrayList<>();
+		TransformationOption enlightenedCock = new TransformationOption();
+		enlightenedCock.ingredients.put(Item.PriapusDraft, 10);
+		enlightenedCock.ingredients.put(Item.EnergyDrink, 40);
+		enlightenedCock.ingredients.put(Item.JuggernautJuice, 10);
+		enlightenedCock.requirements.add(new BodyPartRequirement("cock"));
+		enlightenedCock.option = "Enlightened Cock";
+		enlightenedCock.scene = "[Placeholder]<br>Jewel trains your cock to be enlightened.";
+		enlightenedCock.effect = (c, self, other) -> {
+			self.body.addReplace(CockPart.enlightened, 1);
+			return true;
+		};
+		options.add(enlightenedCock);
+		TransformationOption fieryPussy = new TransformationOption();
+		fieryPussy.ingredients.put(Item.EnergyDrink, 40);
+		fieryPussy.ingredients.put(Item.JuggernautJuice, 10);
+		fieryPussy.ingredients.put(Item.FemDraft, 10);
+		fieryPussy.requirements.add(new NotRequirement(Arrays.asList(new BodyPartRequirement("wings"))));
+		fieryPussy.option = "Fiery Pussy";
+		fieryPussy.scene = "[Placeholder]<br>Jewel trains your pussy to be fiery";
+		fieryPussy.effect = (c, self, other) -> {
+			self.body.addReplace(PussyPart.fiery, 1);
+			return true;
+		};
+		options.add(fieryPussy);
+	}
 	@Override
 	public void visit(String choice) {
 		Global.gui().clearText();
 		Global.gui().clearCommand();
-		if(choice == "Start"){
+		Optional<TransformationOption> optionalOption = options.stream().filter(opt -> choice.equals(opt.option)).findFirst();
+		if (optionalOption.isPresent()) {
+			TransformationOption option = optionalOption.get();
+			boolean hasAll = option.ingredients.entrySet().stream().allMatch(entry -> player.has(entry.getKey(), entry.getValue()));
+			if (hasAll) {
+				Global.gui().message(Global.format(option.scene, jewel, player));
+				option.ingredients.entrySet().stream().forEach(entry -> player.consume(entry.getKey(), entry.getValue(), false));
+				option.effect.execute(null, player, jewel);
+			} else {
+				Global.gui().message("Jewel frowns when she sees that you don't have the requested items.");
+			}
+			Global.gui().choose(this, "Back");
+		} else if (choice.equals("Training")) {
+			Global.gui().message("[Placeholder]Jewel explains her training to you and how you can too train yourself.");
+			Global.gui().message("<br><br>");
+			options.forEach(opt -> {
+				Global.gui().message(opt.option + ":");
+				opt.ingredients.entrySet().forEach((entry) -> {
+					Global.gui().message(entry.getValue() + " " + entry.getKey().getName());					
+				});
+				Global.gui().message("<br>");
+			});
+			options.forEach(opt -> {
+				if (opt.requirements.stream().allMatch(req -> req.meets(null, player, jewel))) {
+					Global.gui().choose(this, opt.option);
+				}
+			});
+			Global.gui().choose(this, "Back");
+		} else if (choice.equals("Start") || choice.equals("Back")) {
 			if(jewel.getAffection(player)>25&&jewel.has(Trait.fighter)){
 				Global.gui().message("You're about to go see Jewel, but she shows up at your dorm room first. You invite her inside and she sits on your bed with her legs crossed. <i>\"I need " +
 						"some advice and you're my best friend, but I'm not sure if I should ask you. It's probably something I should talk to another girl about, but there aren't any girls " +
@@ -45,6 +113,7 @@ public class JewelTime extends Activity {
 					Global.gui().choose(this,"Games");
 					Global.gui().choose(this,"Sparring");
 					Global.gui().choose(this,"Sex");
+					Global.gui().choose(this,"Training");
 			}
 			else if(jewel.getAffection(player)>0){
 				Global.gui().message("You plan to intercept Jewel on her run again, but when you get to the gardens, you find her already there, sitting on a low stone wall. She smiles "+
