@@ -2,7 +2,8 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.body.CockPart;
+import nightgames.characters.body.BasicCockPart;
+import nightgames.characters.body.CockMod;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -124,9 +125,9 @@ public class Struggle extends Skill {
 				}
 			} else {
 				int diffMod = 0;
-				if (c.getStance().partFor(target) == CockPart.enlightened) {
+				if (c.getStance().partFor(target).getMod() == CockMod.enlightened) {
 					diffMod = 15;
-				} else if (c.getStance().partFor(getSelf()) == CockPart.enlightened) {
+				} else if (c.getStance().partFor(getSelf()).getMod() == CockMod.enlightened) {
 					diffMod = -15;
 				}
 				if (getSelf().check(Attribute.Power, (target.getStamina().get() / 2 - getSelf().getStamina().get() / 2)

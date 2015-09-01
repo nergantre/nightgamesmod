@@ -12,8 +12,12 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.NPC;
 import nightgames.characters.Trait;
+import nightgames.characters.body.BasicCockPart;
+import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.body.EarPart;
+import nightgames.characters.body.ModdedCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
@@ -48,6 +52,10 @@ public class ReykaTime extends Activity {
 		incubusCock.ingredients.put(Item.SuccubusDraft, 20);
 		incubusCock.ingredients.put(Item.semen, 10);
 		incubusCock.requirements.add(new BodyPartRequirement("cock"));
+		incubusCock.requirements.add((c, self, other) -> {
+			return self.body.get("cock").stream().anyMatch(cock -> ((CockPart)cock).isGeneric());
+		});
+		incubusCock.additionalRequirements = "A normal cock";
 		incubusCock.option = "Incubus Cock";
 		incubusCock.scene = "{self:subject} smiles when she sees that you have brought her the ingredients. "
 				+ "<i>\"{other:name}, honey, just lie down on the couch over there and I'll fix you right up.\"</i> "
@@ -79,7 +87,10 @@ public class ReykaTime extends Activity {
 				+ "we're done, I have to get some rest. Even if it doesn't look like it, that ritual took a lot out of me.\" "
 				+ "Recognizing that you are being shooed away, you profusely thank Reyka and leave her chapel with your new incubus cock.</i>";
 		incubusCock.effect = (c, self, other) -> {
-			self.body.addReplace(CockPart.incubus, 1);
+			Optional<BodyPart> optPart = self.body.get("cock").stream().filter(cock -> ((CockPart)cock).isGeneric()).findAny();
+			BasicCockPart target = (BasicCockPart) optPart.get();
+			self.body.remove(target);
+			self.body.add(new ModdedCockPart(target, CockMod.incubus));
 			return true;
 		};
 		options.add(incubusCock);
@@ -102,6 +113,9 @@ public class ReykaTime extends Activity {
 		demonTail.ingredients.put(Item.SuccubusDraft, 20);
 		demonTail.ingredients.put(Item.semen, 10);
 		demonTail.requirements.add(new NotRequirement(Arrays.asList(new BodyPartRequirement("tail"))));
+		demonTail.requirements.add((c, self, other) -> {
+			return self.body.get("tail").stream().anyMatch(part -> part != TailPart.demonic) || !self.body.has("tail");
+		});
 		demonTail.option = "Pointed Ears";
 		demonTail.scene = "[Placeholder]<br>Reyka marks the top of you ass with a magic symbol and fingers your ass until you grow a demonic tail.";
 		demonTail.effect = (c, self, other) -> {
@@ -113,11 +127,15 @@ public class ReykaTime extends Activity {
 		pointedEars.ingredients.put(Item.SuccubusDraft, 20);
 		pointedEars.ingredients.put(Item.semen, 10);
 		pointedEars.requirements.add(new BodyPartRequirement("ears"));
+		pointedEars.requirements.add((c, self, other) -> {
+			return self.body.get("ears").stream().anyMatch(part -> part != EarPart.cat) || !self.body.has("ears");
+		});
 		pointedEars.option = "Pointed Ears";
-		pointedEars.scene = "Reyka fetches the ingredients from your pockets with her tail and mixes them together with her palm. She mutters something under her breath and suddenly a "
-				+ "comfortable massage table appears in front of you. She motions for you to lie down, to which you promptly comply. She hovers above you and uses her mixture coated hands to "
-				+ "massage your ears. You feel a burning sensation in them, as if your ears are melting. Reyka tells you to not worry, and continues massaging and pulling at your ears. After a "
-				+ "good twenty minutes of pinching and pulling on them, Reyka lets you know that they're done and gives you a mirrow. You confirm that yes, you are now a proud owner of a set of "
+		pointedEars.scene = "Reyka fetches the ingredients from your pockets with her tail and mixes them together with her palm. She mutters something unintelligible under her breath and suddenly a "
+				+ "comfortable-looking massage table appears in front of you. She motions for you to lie down, to which you promptly comply. She hovers above you and uses her mixture coated hands to "
+				+ "massage your ears. As her hands make contact with your sensitive ears, you feel a burning sensation in them as if they're are melting. "
+				+ "Reyka notices your fearful expression and coos, <i>\"Don't worry honey, just bear with it for now.\"</i> while continuing to massage and pull at your ears. After a "
+				+ "good twenty minutes of pinching and pulling on them, Reyka lets you know that she's done and gives you a mirror. You confirm that yes, you are now a proud owner of a set of "
 				+ "pointed fey-looking ears!";
 		pointedEars.effect = (c, self, other) -> {
 			self.body.addReplace(EarPart.pointed, 1);
@@ -130,12 +148,12 @@ public class ReykaTime extends Activity {
 		succubusPussy.ingredients.put(Item.FemDraft, 20);
 		succubusPussy.ingredients.put(Item.semen, 10);
 		succubusPussy.requirements.add(new BodyPartRequirement("pussy"));
-		succubusPussy.option = "Pointed Ears";
-		succubusPussy.scene = "Reyka fetches the ingredients from your pockets with her tail and mixes them together with her palm. She mutters something under her breath and suddenly a "
-				+ "comfortable massage table appears in front of you. She motions for you to lie down, to which you promptly comply. She hovers above you and uses her mixture coated hands to "
-				+ "massage your ears. You feel a burning sensation in them, as if your ears are melting. Reyka tells you to not worry, and continues massaging and pulling at your ears. After a "
-				+ "good twenty minutes of pinching and pulling on them, Reyka lets you know that they're done and gives you a mirrow. You confirm that yes, you are now a proud owner of a set of "
-				+ "pointed fey-looking ears!";
+		succubusPussy.requirements.add((c, self, other) -> {
+			return self.body.get("pussy").stream().anyMatch(pussy -> pussy == PussyPart.normal);
+		});
+		succubusPussy.additionalRequirements = "A normal pussy";
+		succubusPussy.option = "Succubus Pussy";
+		succubusPussy.scene = "[Placeholder]<br>Reyka mixes the potions together with her tail and fucks you thoroughly with it, turning your once-human slit into a pulsating cock-hungry succubus pussy.";
 		succubusPussy.effect = (c, self, other) -> {
 			self.body.addReplace(PussyPart.succubus, 1);
 			return true;
@@ -174,6 +192,9 @@ public class ReykaTime extends Activity {
 				opt.ingredients.entrySet().forEach((entry) -> {
 					Global.gui().message(entry.getValue() + " " + entry.getKey().getName());					
 				});
+				if (!opt.additionalRequirements.isEmpty()) {
+					Global.gui().message(opt.additionalRequirements);
+				}
 				Global.gui().message("<br>");
 			});
 			options.forEach(opt -> {

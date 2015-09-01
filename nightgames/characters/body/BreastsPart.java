@@ -220,4 +220,9 @@ public enum BreastsPart implements BodyPart {
 	public int counterValue(BodyPart other) {
 		return 0;
 	}
+
+	@Override
+	public BodyPartMod getMod() {
+		return BodyPartMod.noMod;
+	}
 }

@@ -9,7 +9,11 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.NPC;
 import nightgames.characters.Trait;
+import nightgames.characters.body.BasicCockPart;
+import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
+import nightgames.characters.body.ModdedCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.custom.requirement.BodyPartRequirement;
 import nightgames.global.Flag;
@@ -41,19 +45,30 @@ public class MaraTime extends Activity {
 		bionicCock.ingredients.put(Item.Spring, 5);
 		bionicCock.ingredients.put(Item.Dildo, 1);
 		bionicCock.requirements.add(new BodyPartRequirement("cock"));
+		bionicCock.requirements.add((c, self, other) -> {
+			return self.body.get("cock").stream().anyMatch(cock -> ((CockPart)cock).isGeneric());
+		});
+		bionicCock.additionalRequirements = "A normal cock";
 		bionicCock.option = "Bionic Cock";
 		bionicCock.scene = "[Placeholder]<br>Mara installs a bionic cock on you";
 		bionicCock.effect = (c, self, other) -> {
-			self.body.addReplace(CockPart.bionic, 1);
+			Optional<BodyPart> optPart = self.body.get("cock").stream().filter(cock -> ((CockPart)cock).isGeneric()).findAny();
+			BasicCockPart target = (BasicCockPart) optPart.get();
+			self.body.remove(target);
+			self.body.add(new ModdedCockPart(target, CockMod.bionic));
 			return true;
 		};
 		options.add(bionicCock);
 		TransformationOption cyberneticPussy = new TransformationOption();
-		bionicCock.ingredients.put(Item.TinkersMix, 20);
-		bionicCock.ingredients.put(Item.Lubricant, 5);
-		bionicCock.ingredients.put(Item.Spring, 5);
-		bionicCock.ingredients.put(Item.Onahole, 1);
+		cyberneticPussy.ingredients.put(Item.TinkersMix, 20);
+		cyberneticPussy.ingredients.put(Item.Lubricant, 5);
+		cyberneticPussy.ingredients.put(Item.Spring, 5);
+		cyberneticPussy.ingredients.put(Item.Onahole, 1);
 		cyberneticPussy.requirements.add(new BodyPartRequirement("pussy"));
+		cyberneticPussy.requirements.add((c, self, other) -> {
+			return self.body.get("pussy").stream().anyMatch(part -> part == PussyPart.normal);
+		});
+		cyberneticPussy.additionalRequirements = "A normal pussy";
 		cyberneticPussy.option = "Cybernetic Pussy";
 		cyberneticPussy.scene = "[Placeholder]<br>Mara installs a cybernetic pussy on you";
 		cyberneticPussy.effect = (c, self, other) -> {
@@ -87,6 +102,9 @@ public class MaraTime extends Activity {
 				opt.ingredients.entrySet().forEach((entry) -> {
 					Global.gui().message(entry.getValue() + " " + entry.getKey().getName());					
 				});
+				if (!opt.additionalRequirements.isEmpty()) {
+					Global.gui().message(opt.additionalRequirements);
+				}
 				Global.gui().message("<br>");
 			});
 			options.forEach(opt -> {

@@ -10,6 +10,7 @@ public class AnalPussyPart extends AssPart {
 	 * 
 	 */
 	public static AnalPussyPart generic = new AnalPussyPart();
+	public static final BodyPartMod AnalPussyMod = () -> "AnalPussy";
 
 	public AnalPussyPart() {
 		super("anal pussy", "Instead of a normal sphincter, {self:possessive} round butt is crowned by a slobbering second pussy.", .5, 2.2, 1.3, true);
@@ -31,5 +32,10 @@ public class AnalPussyPart extends AssPart {
 	@Override
 	public BodyPart loadFromDict(JSONObject dict) {
 		return new AnalPussyPart();
+	}
+	
+	@Override
+	public BodyPartMod getMod() {
+		return AnalPussyMod;
 	}
 }

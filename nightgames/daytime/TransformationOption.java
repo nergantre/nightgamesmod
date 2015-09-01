@@ -14,11 +14,13 @@ public class TransformationOption {
 	Map<Item, Integer> ingredients;
 	List<CustomRequirement> requirements;
 	String scene;
+	String additionalRequirements;
 	CustomEffect effect;
 	public TransformationOption() {
 		option = "";
 		ingredients = new HashMap<Item, Integer>();
 		scene = "";
+		additionalRequirements = "";
 		requirements = new ArrayList<>();
 		effect = (c, self, other) -> {
 			return true;

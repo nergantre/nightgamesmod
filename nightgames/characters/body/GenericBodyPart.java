@@ -135,17 +135,22 @@ public class GenericBodyPart implements BodyPart {
 		return res;
 	}
 
+	@SuppressWarnings("unchecked")
 	public BodyPart loadFromDict(JSONObject dict) {
 		try {
-		GenericBodyPart part = new GenericBodyPart(
-									(String)dict.get("desc"),
-									(String)dict.get("descLong"),
-									((Number)dict.get("hotness")).doubleValue(),
-									((Number)dict.get("pleasure")).doubleValue(),
-									((Number)dict.get("sensitivity")).doubleValue(),
-									(Boolean)dict.get("notable"),
-									(String)dict.get("type"),
-									(String)dict.get("prefix"));
+			// newly added field
+			if (!dict.containsKey("generic")) {
+				dict.put("generic", true);
+			}
+			GenericBodyPart part = new GenericBodyPart(
+										(String)dict.get("desc"),
+										(String)dict.get("descLong"),
+										((Number)dict.get("hotness")).doubleValue(),
+										((Number)dict.get("pleasure")).doubleValue(),
+										((Number)dict.get("sensitivity")).doubleValue(),
+										(Boolean)dict.get("notable"),
+										(String)dict.get("type"),
+										(String)dict.get("prefix"));
 			return part;
 		} catch (ClassCastException e) {
 			System.err.println(e.getMessage());
@@ -221,7 +226,6 @@ public class GenericBodyPart implements BodyPart {
 
 	@Override
 	public int mod(Attribute a, int total) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -233,5 +237,10 @@ public class GenericBodyPart implements BodyPart {
 	@Override
 	public int counterValue(BodyPart other) {
 		return 0;
+	}
+
+	@Override
+	public BodyPartMod getMod() {
+		return BodyPartMod.noMod;
 	}
 }

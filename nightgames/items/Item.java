@@ -4,7 +4,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BreastsPart;
-import nightgames.characters.body.CockPart;
+import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.EarPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
@@ -105,8 +105,8 @@ public enum Item implements Loot {
 	FaeScroll	( "Summoning Scroll",150,"","a "),
 	Totem		( "Fetish Totem",150,"A small penis shaped totem that can summon tentacles","a "),
 	Capacitor	( "Capacitor",30,"","a "),
-	TinyDraft	( "Tiny Draft", 100, "Temporarily shrink a penis", "a ", Collections.singleton((ItemEffect)new BodyModEffect("drink", "throw", CockPart.average, BodyModEffect.Effect.downgrade)), 15),
-	PriapusDraft( "Priapus Draft", 150, "Temporarily grow a penis", "a ", Collections.singleton((ItemEffect)new BodyModEffect("drink", "throw", CockPart.average, BodyModEffect.Effect.growplus)), 15),
+	TinyDraft	( "Tiny Draft", 100, "Temporarily shrink a penis", "a ", Collections.singleton((ItemEffect)new BodyModEffect("drink", "throw", BasicCockPart.average, BodyModEffect.Effect.downgrade)), 15),
+	PriapusDraft( "Priapus Draft", 150, "Temporarily grow a penis", "a ", Collections.singleton((ItemEffect)new BodyModEffect("drink", "throw", BasicCockPart.average, BodyModEffect.Effect.growplus)), 15),
 	BustDraft	( "Bust Draft", 80, "Temporarily grow breasts", "a ", Collections.singleton((ItemEffect)new BodyModEffect("drink", "throw", BreastsPart.c, BodyModEffect.Effect.growplus)), 15),
 	FemDraft	( "Fem Draft", 150, "Temporarily grow a pussy", "a ", Collections.singleton((ItemEffect)new BodyModEffect("drink", "throw", PussyPart.normal, BodyModEffect.Effect.replace)), 15),
 	Lactaid	( "Lactaid", 100, "Temporarily start lactating", "", Arrays.asList((ItemEffect)

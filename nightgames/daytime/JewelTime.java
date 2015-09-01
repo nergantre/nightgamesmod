@@ -10,8 +10,13 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.NPC;
 import nightgames.characters.Trait;
+import nightgames.characters.body.BasicCockPart;
+import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
+import nightgames.characters.body.ModdedCockPart;
 import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.TailPart;
 import nightgames.characters.custom.requirement.BodyPartRequirement;
 import nightgames.characters.custom.requirement.NotRequirement;
 import nightgames.global.Flag;
@@ -41,10 +46,17 @@ public class JewelTime extends Activity {
 		enlightenedCock.ingredients.put(Item.EnergyDrink, 40);
 		enlightenedCock.ingredients.put(Item.JuggernautJuice, 10);
 		enlightenedCock.requirements.add(new BodyPartRequirement("cock"));
+		enlightenedCock.requirements.add((c, self, other) -> {
+			return self.body.get("cock").stream().anyMatch(cock -> ((CockPart)cock).isGeneric());
+		});
+		enlightenedCock.additionalRequirements = "A normal cock";
 		enlightenedCock.option = "Enlightened Cock";
 		enlightenedCock.scene = "[Placeholder]<br>Jewel trains your cock to be enlightened.";
 		enlightenedCock.effect = (c, self, other) -> {
-			self.body.addReplace(CockPart.enlightened, 1);
+			Optional<BodyPart> optPart = self.body.get("cock").stream().filter(cock -> ((CockPart)cock).isGeneric()).findAny();
+			BasicCockPart target = (BasicCockPart) optPart.get();
+			self.body.remove(target);
+			self.body.add(new ModdedCockPart(target, CockMod.blessed));
 			return true;
 		};
 		options.add(enlightenedCock);
@@ -52,7 +64,11 @@ public class JewelTime extends Activity {
 		fieryPussy.ingredients.put(Item.EnergyDrink, 40);
 		fieryPussy.ingredients.put(Item.JuggernautJuice, 10);
 		fieryPussy.ingredients.put(Item.FemDraft, 10);
-		fieryPussy.requirements.add(new NotRequirement(Arrays.asList(new BodyPartRequirement("wings"))));
+		fieryPussy.requirements.add(new BodyPartRequirement("pussy"));
+		fieryPussy.requirements.add((c, self, other) -> {
+			return self.body.get("pussy").stream().anyMatch(part -> part == PussyPart.normal);
+		});
+		fieryPussy.additionalRequirements = "A normal pussy";
 		fieryPussy.option = "Fiery Pussy";
 		fieryPussy.scene = "[Placeholder]<br>Jewel trains your pussy to be fiery";
 		fieryPussy.effect = (c, self, other) -> {
@@ -85,6 +101,9 @@ public class JewelTime extends Activity {
 				opt.ingredients.entrySet().forEach((entry) -> {
 					Global.gui().message(entry.getValue() + " " + entry.getKey().getName());					
 				});
+				if (!opt.additionalRequirements.isEmpty()) {
+					Global.gui().message(opt.additionalRequirements);
+				}
 				Global.gui().message("<br>");
 			});
 			options.forEach(opt -> {

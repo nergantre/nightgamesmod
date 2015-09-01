@@ -31,9 +31,10 @@ public class Body implements Cloneable {
 		prototypes = new HashMap<String, BodyPart>();
 		prototypes.put(PussyPart.class.getCanonicalName(), PussyPart.normal);
 		prototypes.put(BreastsPart.class.getCanonicalName(), BreastsPart.c);
-		prototypes.put(CockPart.class.getCanonicalName(), CockPart.average);
-		prototypes.put(WingsPart.class.getCanonicalName(), WingsPart.normal);
-		prototypes.put(TailPart.class.getCanonicalName(), TailPart.normal);
+		prototypes.put(BasicCockPart.class.getCanonicalName(), BasicCockPart.average);
+		prototypes.put(ModdedCockPart.class.getCanonicalName(), new ModdedCockPart(BasicCockPart.average, CockMod.bionic));
+		prototypes.put(WingsPart.class.getCanonicalName(), WingsPart.demonic);
+		prototypes.put(TailPart.class.getCanonicalName(), TailPart.cat);
 		prototypes.put(EarPart.class.getCanonicalName(), EarPart.normal);
 		prototypes.put(StraponPart.class.getCanonicalName(), StraponPart.generic);
 		prototypes.put(TentaclePart.class.getCanonicalName(), new TentaclePart("tentacles", "back", "semen", 0, 1, 1));
@@ -231,7 +232,7 @@ public class Body implements Cloneable {
 		List<CockPart> upgradable = new ArrayList<CockPart>();
 		for (BodyPart part : parts) {
 			CockPart b = (CockPart) part;
-			if (b.size < size) {
+			if (b.getSize() < size) {
 				upgradable.add(b);
 			}
 		}
@@ -245,7 +246,7 @@ public class Body implements Cloneable {
 		List<CockPart> upgradable = new ArrayList<CockPart>();
 		for (BodyPart part : parts) {
 			CockPart b = (CockPart) part;
-			if (b.size > size) {
+			if (b.getSize() > size) {
 				upgradable.add(b);
 			}
 		}
@@ -507,7 +508,7 @@ public class Body implements Cloneable {
 		}
 		if (sex.equals("male") || sex.equals("herm")) {
 			if (get("cock").size() == 0) {
-				add(CockPart.average);
+				add(BasicCockPart.average);
 			}
 		}
 		if (sex.equals("male")) {

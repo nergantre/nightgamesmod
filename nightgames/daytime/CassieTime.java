@@ -9,7 +9,11 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.NPC;
 import nightgames.characters.Trait;
+import nightgames.characters.body.BasicCockPart;
+import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
+import nightgames.characters.body.ModdedCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.custom.requirement.BodyPartRequirement;
 import nightgames.global.Flag;
@@ -31,7 +35,7 @@ public class CassieTime extends Activity {
 	}
 
 	List<TransformationOption> options;
-	
+
 	public void buildTransformationPool() {
 		options = new ArrayList<>();
 		TransformationOption blessedCock = new TransformationOption();
@@ -39,10 +43,17 @@ public class CassieTime extends Activity {
 		blessedCock.ingredients.put(Item.BewitchingDraught, 20);
 		blessedCock.ingredients.put(Item.FaeScroll, 1);
 		blessedCock.requirements.add(new BodyPartRequirement("cock"));
+		blessedCock.requirements.add((c, self, other) -> {
+			return self.body.get("cock").stream().anyMatch(cock -> ((CockPart)cock).isGeneric());
+		});
+		blessedCock.additionalRequirements = "A normal cock";
 		blessedCock.option = "Blessed Cock";
 		blessedCock.scene = "[Placeholder]<br>Cassie blesses your cock with the power of the fairies.";
 		blessedCock.effect = (c, self, other) -> {
-			self.body.addReplace(CockPart.blessed, 1);
+			Optional<BodyPart> optPart = self.body.get("cock").stream().filter(cock -> ((CockPart)cock).isGeneric()).findAny();
+			BasicCockPart target = (BasicCockPart) optPart.get();
+			self.body.remove(target);
+			self.body.add(new ModdedCockPart(target, CockMod.blessed));
 			return true;
 		};
 		options.add(blessedCock);
@@ -51,6 +62,10 @@ public class CassieTime extends Activity {
 		arcanePussy.ingredients.put(Item.FemDraft, 10);
 		arcanePussy.ingredients.put(Item.FaeScroll, 1);
 		arcanePussy.requirements.add(new BodyPartRequirement("pussy"));
+		arcanePussy.requirements.add((c, self, other) -> {
+			return self.body.get("pussy").stream().anyMatch(pussy -> pussy == PussyPart.normal);
+		});
+		arcanePussy.additionalRequirements = "A normal pussy";
 		arcanePussy.option = "Arcane Pussy";
 		arcanePussy.scene = "[Placeholder]<br>Cassie draws intricate arcane tattoos on your pussy";
 		arcanePussy.effect = (c, self, other) -> {
@@ -84,6 +99,9 @@ public class CassieTime extends Activity {
 				opt.ingredients.entrySet().forEach((entry) -> {
 					Global.gui().message(entry.getValue() + " " + entry.getKey().getName());					
 				});
+				if (!opt.additionalRequirements.isEmpty()) {
+					Global.gui().message(opt.additionalRequirements);
+				}
 				Global.gui().message("<br>");
 			});
 			options.forEach(opt -> {

@@ -12,6 +12,7 @@ import java.util.Set;
 import org.json.simple.JSONObject;
 
 public class TentaclePart extends GenericBodyPart {
+	private static final BodyPartMod TentacleMod = () -> "TentacleMod";
 	public String attachpoint;
 	String fluids;
 	static String allowedAttachTypes[] = {"ass", "mouth", "pussy", "hands", "feet", "tail", "cock"};
@@ -115,5 +116,11 @@ public class TentaclePart extends GenericBodyPart {
 			System.err.println(e.getMessage());
 		}
 		return null;
+	}
+	
+
+	@Override
+	public BodyPartMod getMod() {
+		return TentacleMod;
 	}
 }

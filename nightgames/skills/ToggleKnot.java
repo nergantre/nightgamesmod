@@ -1,7 +1,7 @@
 package nightgames.skills;
 
 import nightgames.characters.Character;
-import nightgames.characters.body.CockPart;
+import nightgames.characters.body.CockMod;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.status.Knotted;
@@ -19,7 +19,7 @@ public class ToggleKnot extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.body.get("cock").contains(CockPart.primal);
+		return user.body.get("cock").stream().anyMatch(cock -> cock.getMod() == CockMod.primal);
 	}
 
 	@Override

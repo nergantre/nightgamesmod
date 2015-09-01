@@ -68,4 +68,9 @@ public interface BodyPart {
 		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE))
 			System.out.printf("Processing Orgasm for %s -> (%s, %s, %s, %s)\n", this, self, opponent, other, selfCame+"");
 	}
+	// whether the part is modded
+	public default boolean isGeneric() {
+		return getMod().getModType().equals("none");
+	}
+	public BodyPartMod getMod();
 }
