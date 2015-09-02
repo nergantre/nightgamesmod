@@ -89,7 +89,7 @@ public class AnalCowgirl extends AnalSexStance {
 	}
 
 	@Override
-	public Position insert() {
+	public Position insertRandom() {
 		return new Mount(top,bottom);
 	}
 
@@ -107,7 +107,7 @@ public class AnalCowgirl extends AnalSexStance {
 			} else {
 				c.write(inserted.name() + " groans with frustration with the sudden disappearance of your dick.");
 			}
-			c.setStance(insert());
+			c.setStance(insertRandom());
 		}
 		if (inserted.body.getRandom("ass") == null) {
 			if(inserted.human()){
@@ -115,7 +115,7 @@ public class AnalCowgirl extends AnalSexStance {
 			} else {
 				c.write(inserted.name() + " groans with frustration with the sudden disappearance of her asshole.");
 			}
-			c.setStance(insert());
+			c.setStance(insertRandom());
 		}
 	}
 

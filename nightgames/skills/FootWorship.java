@@ -29,6 +29,9 @@ public class FootWorship extends Skill {
 		return target.body.has("feet")&&c.getStance().reachBottom(getSelf())&&getSelf().canAct()&&!c.getStance().behind(getSelf());
 	}
 
+	public int accuracy(Combat c){
+		return 150;
+	}
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		Result result = Result.normal;

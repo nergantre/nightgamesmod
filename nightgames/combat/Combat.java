@@ -13,6 +13,10 @@ import nightgames.global.Global;
 import nightgames.items.Clothing;
 import nightgames.items.Item;
 import nightgames.pet.Pet;
+import nightgames.skills.BreastWorship;
+import nightgames.skills.CockWorship;
+import nightgames.skills.FootWorship;
+import nightgames.skills.PussyWorship;
 import nightgames.skills.Skill;
 import nightgames.skills.Stunned;
 import nightgames.stance.Mount;
@@ -32,7 +36,10 @@ import nightgames.status.Winded;
 import java.awt.GraphicsDevice.WindowTranslucency;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Observable;
 
 
@@ -239,6 +246,31 @@ public class Combat extends Observable implements Serializable, Cloneable{
 			return Result.normal;
 		}
 	}
+	
+	Skill worshipSkills[] = {
+		new BreastWorship(null),
+		new CockWorship(null),
+		new FootWorship(null),
+		new PussyWorship(null),
+	};
+	
+	private Skill checkWorship(Character self, Character other, Skill def) {
+		if (other.has(Trait.objectOfWorship) && (other.topless() || other.pantsless())) {
+			int chance = Math.min(20, Math.max(5, other.get(Attribute.Divinity) + 10 - self.getLevel()));
+			if (Global.random(100) < chance) {
+				List<Skill> avail = new ArrayList<Skill>(Arrays.asList(worshipSkills));
+				Collections.shuffle(avail);
+				while (!avail.isEmpty()) {
+					Skill skill = avail.remove(avail.size() - 1).copy(self);
+					if (Skill.skillIsUsable(this, skill, other)) {
+						write(other, Global.format("{other:NAME-POSSESSIVE} divine aura forces {self:subject} to get on {self:possessive} knees and crawl to {other:direct-object}.", self, other));
+						return skill;
+					}
+				}
+			}
+		}
+		return def;
+	}
 	public void act(Character c, Skill action, String choice){
 		if(c==p1){
 			p1act=action;
@@ -256,6 +288,8 @@ public class Combat extends Observable implements Serializable, Cloneable{
 			if (p1.human() || p2.human()) {
 				Global.gui().clearText();
 			}
+			p1act = checkWorship(p1, p2, p1act);
+			p2act = checkWorship(p2, p1, p2act);
 			if(Global.isDebugOn(DebugFlags.DEBUG_SCENE)){
 				System.out.println(p1.name()+" uses "+p1act.getLabel(this));
 				System.out.println(p2.name()+" uses "+p2act.getLabel(this));

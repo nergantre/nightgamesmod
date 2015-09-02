@@ -49,7 +49,7 @@ public class Fuck extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return fuckable(c, target)
-				&&c.getStance().insert() != c.getStance()
+				&& (c.getStance().insert(getSelf(), getSelf()) != c.getStance() || c.getStance().insert(target, getSelf()) != c.getStance())
 				&&c.getStance().mobile(getSelf())
 				&&!c.getStance().mobile(target)
 				&&getSelf().canAct()
@@ -87,9 +87,9 @@ public class Fuck extends Skill {
 				c.write(getSelf(),premessage + receive(c,m,Result.normal, target));
 			}
 			if (selfO.isType("pussy")) {
-				c.setStance(c.getStance().insert());
+				c.setStance(c.getStance().insert(target, getSelf()));
 			} else {
-				c.setStance(c.getStance().insert());
+				c.setStance(c.getStance().insert(getSelf(), target));
 			}
 			int otherm = m;
 			if (getSelf().has(Trait.insertion)) {

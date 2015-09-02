@@ -14,6 +14,9 @@ import nightgames.status.ArmLocked;
 import nightgames.status.LegLocked;
 
 public class Invitation extends Skill {
+	private static final String divineStringFemale = "Goddess's Invitation";
+	private static final String divineStringMale = "Goddess's Invitation";
+
 	public Invitation(Character self) {
 		super("Invitation", self, 6);
 	}
@@ -31,7 +34,7 @@ public class Invitation extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		Position p = c.getStance();
-		boolean insertable = (p.insert() != p) && !p.inserted();
+		boolean insertable = (c.getStance().insert(getSelf(), getSelf()) != c.getStance() || c.getStance().insert(target, getSelf()) != c.getStance());
 		return insertable && getSelf().canRespond()
 				&& getSelf().pantsless() && target.pantsless()
 				&&((getSelf().hasDick() && target.hasPussy()) || (getSelf().hasPussy() && target.hasDick()));
@@ -90,23 +93,23 @@ public class Invitation extends Skill {
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		int difficulty = target.getLevel() - (target.getArousal().get() * 10 / target.getArousal().max()) + target.get(Attribute.Seduction);
-		int strength = getSelf().getLevel() + getSelf().get(Attribute.Seduction) * (getSelf().has(Trait.submissive) ? 2 : 1);
+		int strength = getSelf().getLevel() + getSelf().get(Attribute.Seduction) * (getSelf().has(Trait.submissive) ? 2 : 1) * (hasDivinity() ? 2 : 1);
 
 		boolean success = Global.random(Math.min(Math.max(difficulty - strength, 1), 10)) == 0;
 		Result result = Result.normal;
 		if (!success) {
 			result = Result.miss;
+		} else if (hasDivinity()) {
+			result = Result.divine;
 		}
+
 		if (getSelf().human()) {
 			c.write(getSelf(), deal(c, 0, result, target));
 		} else {
 			c.write(getSelf(), receive(c, 0, result, target));
 		}
 		if (success) {
-			c.setStance(c.getStance().insert(target));
-			if (c.getStance().inserted()) {
-				
-			}
+			c.setStance(c.getStance().insertRandomDom(target));
 			if (c.getStance().en == Stance.missionary) {
 				target.add(c, new LegLocked(target, 4 * getSelf().get(Attribute.Power)));
 			} else {
@@ -115,5 +118,18 @@ public class Invitation extends Skill {
 			(new Thrust(target)).resolve(c, getSelf());
 		}
 		return success;
+	}
+	
+	public boolean hasDivinity() {
+		return getSelf().get(Attribute.Divinity) >= 25;
+	}
+
+	@Override
+	public String getLabel(Combat c){
+		if (hasDivinity()) {
+			return getSelf().hasPussy() ? divineStringFemale : divineStringMale;
+		} else {
+			return "Invitation";
+		}
 	}
 }

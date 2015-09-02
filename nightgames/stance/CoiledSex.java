@@ -7,28 +7,27 @@ import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 
-public class FlowerSex extends FemdomSexStance {
+public class CoiledSex extends FemdomSexStance {
 
-	public FlowerSex(Character top, Character bottom) {
+	public CoiledSex(Character top, Character bottom) {
 		super(top, bottom,Stance.flowertrap);
 	}
 
 	public int pinDifficulty(Combat c, Character self) {
-		return 12;
+		return 8;
 	}
 
 	@Override
 	public String describe() {
 		if(top.human()){
-			return "You're coiled around "+bottom.nameOrPossessivePronoun() + " body with his cock inside you and the petals of your flower wrapped around both of you like a cocoon.";
-		}
-		else{
-			return "You're trapped in a giant flower bulb surrounding you and "+top.name()+". Inside, you're on top of " + top.nameDirectObject() + " with your cock trapped in her pussy and your face smothered in her cleavage.";
+			return "Your limbs are coiled around "+bottom.nameOrPossessivePronoun() + " body and " + bottom.possessivePronoun() + " cock is inside you.";
+		} else {
+			return "You're on top of " + top.nameDirectObject() + " with your cock trapped in her pussy and your face smothered in her cleavage.";
 		}
 	}
 
 	public String image() {
-		return "flower.png";
+		return "coiledsex.png";
 	}
 
 	@Override

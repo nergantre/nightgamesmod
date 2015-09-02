@@ -98,7 +98,13 @@ public enum Trait {
 	
 	darkpromises("Dark Promises","Can enthrall with the right words"), //whisper upgrade, can enthrall
 	energydrain("Energy Drain", "Drains energy during intercourse"),
+	objectOfWorship("Object Of Worship", "Opponents is periodically forced to worship your body.", new TraitDescription() {
+		public void describe(StringBuilder b, Character c, Trait t) {
+				b.append("A divine aura surrounds " + c.nameDirectObject() + ".");
+		}
+	}),
 	spiritphage("Semenphage", "Feeds on semen"),
+	erophage("Erophage", "Feeds on sexuality"),
 	tight("Tight", "Powerful musculature and exquisite tightness makes for quick orgasms."),
 	holecontrol("Pussy Control", "Dexterous internal muscle control."),
 	oiledass("Oiled Ass", "Natural oils makes her ass always ready."),
@@ -166,6 +172,7 @@ public enum Trait {
 	madscientist("Mad Scientist","May have gone overboard with her projects"),
 	witch("Witch","Learned to wield traditional arcane magic"),
 	succubus("Succubus","Embraced the dark powers that feed on mortal lust"),
+	demigoddess("Demigoddess","Blessed by a deity of sexual pleasure, and on the road to ascension herself."),
 	fighter("Fighter","A combination of martial arts and ki"),
 	slime("Slime","An accident in the biology labs made the body a bit more... malleable."),
 	dryad("Dryad","Part girl, part tree."),

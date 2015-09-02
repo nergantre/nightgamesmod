@@ -1,8 +1,12 @@
 package nightgames.stance;
 
-import nightgames.characters.Character;
+import java.util.ArrayList;
+import java.util.List;
 
-public class StandingOver extends Position {
+import nightgames.characters.Character;
+import nightgames.global.Global;
+
+public class StandingOver extends AbstractFacingStance {
 
 	public StandingOver(Character top, Character bottom) {
 		super(top, bottom,Stance.standingover);
@@ -85,20 +89,6 @@ public class StandingOver extends Position {
 		return false;
 	}
 
-	@Override
-	public Position insert(Character dom) {
-		Character other = getOther(dom);
-
-		if(dom.hasDick()&&other.hasPussy()){
-			return new Missionary(dom,other);
-		}
-		else if(dom.hasPussy()&&other.hasDick()){
-			return new Cowgirl(dom,other);
-		}
-		else{
-			return this;
-		}
-	}
 	@Override
 	public float priorityMod(Character self) {
 		return getSubDomBonus(self, 2.0f);

@@ -32,6 +32,8 @@ public class Body implements Cloneable {
 		prototypes.put(PussyPart.class.getCanonicalName(), PussyPart.normal);
 		prototypes.put(BreastsPart.class.getCanonicalName(), BreastsPart.c);
 		prototypes.put(BasicCockPart.class.getCanonicalName(), BasicCockPart.average);
+		// for compatibility with < v1.8.1
+		prototypes.put(CockPart.class.getCanonicalName(), BasicCockPart.average);
 		prototypes.put(ModdedCockPart.class.getCanonicalName(), new ModdedCockPart(BasicCockPart.average, CockMod.bionic));
 		prototypes.put(WingsPart.class.getCanonicalName(), WingsPart.demonic);
 		prototypes.put(TailPart.class.getCanonicalName(), TailPart.cat);
@@ -401,6 +403,9 @@ public class Body implements Cloneable {
 			perceptionBonus *= getCharismaBonus(opponent);
 			if (opponent.is(Stsflag.alluring)) {
 				perceptionBonus += .5;
+			}
+			if (character.is(Stsflag.lovestruck)) {
+				perceptionBonus += 1;
 			}
 		}
 		double bonusDamage = bonus;

@@ -39,6 +39,8 @@ import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 import nightgames.stance.Position;
 import nightgames.stance.Stance;
+import nightgames.status.Abuff;
+import nightgames.status.Alluring;
 import nightgames.status.Enthralled;
 import nightgames.status.Resistance;
 import nightgames.status.Status;
@@ -1225,7 +1227,13 @@ public abstract class Character extends Observable implements Cloneable{
 			System.out.printf("Could not process %s's orgasm against %s: self=%s, opp=%s, pos=%s", this, opponent,
 					selfPart, opponentPart, c.getStance());
 		}
-		
+
+		if (opponent.has(Trait.erophage)) {
+			c.write(Global.capitalizeFirstLetter("<br><b>"+opponent.subjectAction("flush", "flushes") + " as the feedback from " + nameOrPossessivePronoun() + " orgasm feeds " + opponent.possessivePronoun() + " divine power.</b>"));
+			opponent.add(c, new Alluring(opponent, 5));
+			opponent.buildMojo(c, 100);
+		}
+
 		getArousal().empty();
 		if (has(Trait.insatiable)) {
 			arousal.restore((int) (arousal.max()*.2));

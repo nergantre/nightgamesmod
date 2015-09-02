@@ -81,7 +81,7 @@ public class Standing extends MaledomSexStance {
 	}
 
 	@Override
-	public Position insert() {
+	public Position insertRandom() {
 		return new Neutral(top,bottom);
 	}
 	public void decay(Combat c){

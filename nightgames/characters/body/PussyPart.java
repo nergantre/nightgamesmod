@@ -7,20 +7,27 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.status.Abuff;
 import nightgames.status.CockBound;
+import nightgames.status.DivineCharge;
 import nightgames.status.Enthralled;
 import nightgames.status.Frenzied;
 import nightgames.status.Horny;
 import nightgames.status.Shamed;
+import nightgames.status.Status;
 import nightgames.status.Stsflag;
 
 import org.json.simple.JSONObject;
 
 public enum PussyPart implements BodyPart, BodyPartMod {
-	normal("", 0, 1, 1, 6, 15, 0), arcane("arcane patterned ", .2, 1.1, 1, 9, 5, 3), fiery("fiery ", 0, 1.3, 1.2, 8, 15,
-			3), succubus("succubus ", .6, 1.5, 1.2, 999, 0, 4), feral("feral ", 1, 1.3, 1.2, 8, 7, 2), cybernetic(
-					"cybernetic ", -.50, 1.8, .5, 200, 0,
-					4), gooey("gooey ", .4, 1.5, 1.2, 999, 0, 6), tentacled("tentacled ", 0, 2, 1.2, 999, 0, 8)
-	, plant("flower ", .5, 2, 1.2, 999, 0, 8);
+	normal("", 0, 1, 1, 6, 15, 0),
+	arcane("arcane patterned ", .2, 1.1, 1, 9, 5, 3),
+	fiery("fiery ", 0, 1.3, 1.2, 8, 15, 3),
+	succubus("succubus ", .6, 1.5, 1.2, 999, 0, 4),
+	feral("feral ", 1, 1.3, 1.2, 8, 7, 2),
+	cybernetic("cybernetic ", -.50, 1.8, .5, 200, 0, 4),
+	gooey("gooey ", .4, 1.5, 1.2, 999, 0, 6),
+	tentacled("tentacled ", 0, 2, 1.2, 999, 0, 8),
+	plant("flower ", .5, 2, 1.2, 999, 0, 8),
+	divine("divine ", 0, 1.0, 1.0, 999, 0, 8);
 
 	public double priority;
 	public String desc;
@@ -117,6 +124,8 @@ public enum PussyPart implements BodyPart, BodyPartMod {
 		pleasureMod += self.has(Trait.pussyTraining1) ? .5 : 0;
 		pleasureMod += self.has(Trait.pussyTraining2) ? .7 : 0;
 		pleasureMod += self.has(Trait.pussyTraining3) ? .7 : 0;
+		DivineCharge charge = (DivineCharge) self.getStatus(Stsflag.divinecharge);
+		pleasureMod += charge.magnitude;
 		return pleasureMod;
 	}
 
@@ -145,6 +154,17 @@ public enum PussyPart implements BodyPart, BodyPartMod {
 	@Override
 	public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		double bonus = 0;
+		if (this == divine && c.getStance().pussyinserted()) {
+			if (self.getStatus(Stsflag.divinecharge) == null) {
+				c.write(self, Global.format(
+						"{self:NAME-POSSESSIVE} " + fullDescribe(self) + " radiates a golden glow when {self:subject-action:moan|moans}. "
+								+ "{other:SUBJECT-ACTION:realize|realizes} {self:subject-action:are|is} feeding on {self:possessive} own pleasure to charge up {self:possessive} divine energy.", self, opponent));
+			} else {
+				c.write(self, Global.format(
+						"{self:SUBJECT-ACTION:continue|continues} feeding on {self:possessive} pleasure to charge up {self:possessive} divine energy.", self, opponent));
+			}
+			self.add(new DivineCharge(self, .25));
+		}
 		if (this == PussyPart.plant && damage > opponent.getArousal().max() / 5 && Global.random(4) == 0) {
 			c.write(self, String.format("An intoxicating scent emanating from %s %s leaves %s in a trance!.", self.possessivePronoun(),
 					describe(self), opponent.directObject()));
@@ -180,6 +200,13 @@ public enum PussyPart implements BodyPart, BodyPartMod {
 	@Override
 	public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		double bonus = 0;
+		if (this == divine && target.isType("cock")) {
+			if (self.getStatus(Stsflag.divinecharge) != null) {
+				c.write(self, Global.format(
+						"{self:NAME-POSSESSIVE} concentrated divine energy in {self:possessive} pussy seeps into {other:name-possessive} cock, sending unimaginable pleasure directly into {other:possessive} soul.", self, opponent));
+			}
+			// no need for any effects, the bonus is in the pleasure mod
+		}
 		if (this == PussyPart.succubus && target.isType("cock")) {
 			if (target.getMod() == CockMod.blessed) {
 				c.write(self, String.format(

@@ -112,7 +112,7 @@ public class FlyingCarry extends MaledomSexStance {
 	}
 
 	@Override
-	public Position insert() {
+	public Position insertRandom() {
 			return new StandingOver(top, bottom);
 	}
 

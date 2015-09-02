@@ -2,33 +2,26 @@ package nightgames.stance;
 
 
 import nightgames.characters.Character;
-import nightgames.characters.body.AnalPussyPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.PussyPart;
-import nightgames.combat.Combat;
 
-public class FlowerSex extends FemdomSexStance {
-
-	public FlowerSex(Character top, Character bottom) {
-		super(top, bottom,Stance.flowertrap);
-	}
-
-	public int pinDifficulty(Combat c, Character self) {
-		return 12;
+public class UpsideDownFemdom extends FemdomSexStance {
+	public UpsideDownFemdom(Character top, Character bottom) {
+		super(top, bottom,Stance.upsidedownfemdom);
 	}
 
 	@Override
 	public String describe() {
 		if(top.human()){
-			return "You're coiled around "+bottom.nameOrPossessivePronoun() + " body with his cock inside you and the petals of your flower wrapped around both of you like a cocoon.";
+			return "You are holding "+bottom.name()+" upsidedown by her legs while fucking her cock with your slit.";
 		}
 		else{
-			return "You're trapped in a giant flower bulb surrounding you and "+top.name()+". Inside, you're on top of " + top.nameDirectObject() + " with your cock trapped in her pussy and your face smothered in her cleavage.";
+			return top.name()+" is holding you upsidedown by your legs while fucking your cock with her slit.";
 		}
 	}
 
 	public String image() {
-		return "flower.png";
+		return "upsidedownfemdom.jpg";
 	}
 
 	@Override
@@ -38,7 +31,7 @@ public class FlowerSex extends FemdomSexStance {
 
 	@Override
 	public boolean kiss(Character c) {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -53,12 +46,12 @@ public class FlowerSex extends FemdomSexStance {
 
 	@Override
 	public boolean reachTop(Character c) {
-		return c==top;
+		return false;
 	}
 
 	@Override
 	public boolean reachBottom(Character c) {
-		return c==top;
+		return true;
 	}
 
 	@Override
@@ -85,28 +78,29 @@ public class FlowerSex extends FemdomSexStance {
 	public boolean penetration(Character c) {
 		return true;
 	}
-
+	
 	@Override
 	public boolean inserted(Character c) {
-		return c==bottom;
+		return c==top;
 	}
 
 	@Override
 	public Position insertRandom() {
-		return new Mount(top,bottom);
+		return new StandingOver(top,bottom);
 	}
 
 	public Position reverse() {
-		return this;
+		return new UpsideDownMaledom(bottom, top);
 	}
+	
 
 	@Override
 	public BodyPart topPart() {
-		return top.body.getRandomPussy();
+		return bottom.body.getRandomPussy();
 	}
 	
 	@Override
 	public BodyPart bottomPart() {
-		return bottom.body.getRandomInsertable();
+		return top.body.getRandomInsertable();
 	}
 }

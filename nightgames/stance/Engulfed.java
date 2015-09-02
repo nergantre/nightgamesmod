@@ -105,7 +105,7 @@ public class Engulfed extends Position {
 	}
 
 	@Override
-	public Position insert() {
+	public Position insertRandom() {
 		return new Neutral(top, bottom);
 	}
 

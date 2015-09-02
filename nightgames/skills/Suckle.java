@@ -69,7 +69,7 @@ public class Suckle extends Skill {
 		if(modifier==Result.normal){
 			return getSelf().name()+" licks and sucks your nipples, sending a surge of excitement straight to your groin.";
 		} else {
-			return getSelf().name()+" licks and sucks your nipples, drawing forth a gust of breast milk from your teats. " +
+			return getSelf().name()+" licks and sucks your nipples, drawing forth a gush of breast milk from your teats. " +
 					"She drinks deeply of your milk, gurgling happily as more of the smooth liquid flows down her throat.";
 		}
 	}

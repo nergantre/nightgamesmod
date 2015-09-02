@@ -1,7 +1,29 @@
 1.8.1 changelog
 
+Major changes:
+- A lot of different body modifications have been moved to specific characters. The player must build a relationship with them in order to get the mods.
+	- Example: to get a succubus pussy or an incubus cock, you must have enough affection with Reyka in order to obtain it.
+	There are new transformation scenes for getting each body part modification, but a lot of them are placeholds right now (Only Reyka has some finished scenes at the moment)
+- Cock mods that dndw added has been refactored so that they count as modifications and not cock types. This means that you can grow and shrink them like normal.
+	- Note: This was a lot more work than I originally thought, and I had to change how the BodyPart systems worked.
+		Don't be too surprised to see some bugs until thing stabilize again.
+		On the bright side though, it will be MUCH easier to add new types of BodyPart modifications in the future.
+- Angel has been somewhat rewritten. Her upgraded class and attribute (Succubus/Dark) overlaps with Reyka too much.
+	- Angel's upgraded class is now Demigoddess and preferred attribute is Divinity
+		- Her level up traits have been updated to reflect this.
+			- level 18 Semenphage -> Erophage (Feeds on sexuality, gains mojo/Alluring status when opponent orgasms)
+			- level 33 Energydrain -> level 36 Object of Worship (Opponents is periodically forced to worship her body)
+			- level 36 RawSexuality -> level 33
+		- Her pussy mod has been changed from succubus to divine
+			- Every time her pussy is pleasured while fucking, gain a stacking pleasure bonus. This resets when you pull out.
+				Example: base divine pussy pleasureMod is 1.0
+					1. You use thrust, pleasureMod bonus of +.25 = 1.25
+					2. She uses ride, pleasureMod bonus of +.25 = 1.5
+
+
 Bug fix:
 - Refracted Status duration, hopefully this will solve issues where statuses were not being cleared in the right order
+- Fixed a bug where if both combatants had both male and female genitalia, pussy would always take priority when fucking. (It will be random for now)
 
 Balance:
 - Fire form now weakens by 5 a turn instead of 1 a turn. Should still be really good.

@@ -1,11 +1,15 @@
 package nightgames.stance;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
+import nightgames.global.Global;
 
-public class Behind extends Position {
+public class Behind extends AbstractBehindStance {
 
 	public Behind(Character top, Character bottom) {
 		super(top, bottom,Stance.behind);
@@ -88,17 +92,6 @@ public class Behind extends Position {
 	@Override
 	public boolean inserted(Character c) {
 		return false;
-	}
-
-	@Override
-	public Position insert(Character dom) {
-		if (dom.hasDick() && dom(dom)) {
-			return new Doggy(dom, getOther(dom));
-		} else if (!dom.hasDick()){
-			return new ReverseCowgirl(dom, getOther(dom));
-		} else {
-			return new Missionary(dom, getOther(dom));
-		}
 	}
 
 	@Override

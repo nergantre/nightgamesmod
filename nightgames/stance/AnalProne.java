@@ -86,7 +86,7 @@ public class AnalProne extends AnalSexStance {
 	}
 
 	@Override
-	public Position insert() {
+	public Position insertRandom() {
 		return new Mount(top,bottom);
 	}
 
@@ -101,7 +101,7 @@ public class AnalProne extends AnalSexStance {
 			} else {
 				c.write(inserted.name() + " sighs with relief with your dick gone.");
 			}
-			c.setStance(insert());
+			c.setStance(insertRandom());
 		}
 		if (inserted.body.getRandom("ass") == null) {
 			if(inserted.human()){
@@ -109,7 +109,7 @@ public class AnalProne extends AnalSexStance {
 			} else {
 				c.write("Your dick pops out of " + inserted.name() + " as her asshole shrinks and disappears.");
 			}
-			c.setStance(insert());
+			c.setStance(insertRandom());
 		}
 	}
 

@@ -71,8 +71,9 @@ public abstract class Skill {
 			skills.removeAll(noReqs);
 		}
 	}
+
 	public static boolean skillIsUsable(Combat c, Skill s, Character target) {
-		boolean charmRestricted = s.getSelf().is(Stsflag.charmed) && (s.type(c) != Tactics.fucking && s.type(c) != Tactics.pleasure && s.type(c) != Tactics.misc);
+		boolean charmRestricted = (s.getSelf().is(Stsflag.charmed) || s.getSelf().is(Stsflag.lovestruck)) && (s.type(c) != Tactics.fucking && s.type(c) != Tactics.pleasure && s.type(c) != Tactics.misc);
 		boolean allureRestricted = target.is(Stsflag.alluring) && (s.type(c) == Tactics.damage || s.type(c) == Tactics.debuff);
 		boolean usable = s.usable(c, target) && s.getSelf().canSpend(s.getMojoCost(c)) && !charmRestricted && !allureRestricted;
 		return usable;

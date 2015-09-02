@@ -7,7 +7,8 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 
 public enum WingsPart implements BodyPart, BodyPartMod {
-	demonic("demonic ", .2, 1.3, 1.2);
+	demonic("demonic ", .2, 1.3, 1.2),
+	angelic("angelic ", .3, 1.4, 1.3);
 	public String desc;
 	public double hotness;
 	public double pleasure;

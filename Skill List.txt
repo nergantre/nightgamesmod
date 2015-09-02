@@ -14,7 +14,7 @@ Seduction:
 22 - Footjob, Foot Pump
 22 - Oral Pin (AND have Power:15)
 24 - Strip Tease (CANNOT have Trait:direct AND CANNOT have Trait:shy)
-25 - Invitation (OR have Trait:submissive)
+25 - Invitation (OR have Trait:submissive) -> Upgrades to Goddess's Invitation at Divinity:25
 26 - Frottage
 26 - Tighten (OR have Trait:tight)
 28 - Use Breasts
@@ -49,7 +49,6 @@ Cunning:
 06 - Tickle
 08 - Escape, Taunt
 09 - Bluff (AND have Trait:pokerface)
-12 - Shrink Ray
 15 - Focus (CANNOT have Trait:undisciplined)
 16 - Trip
 18 - Perfect Touch
@@ -91,7 +90,7 @@ Dark:
 Science:
 03 - Spawn Slime
 09 - Stun Blast
-12 - Science
+12 - Shrink Ray, Breast Ray
 15 - Living Clothing: Self, Living Clothing: Other
 15 - Short Circuit
 18 - Defabricator

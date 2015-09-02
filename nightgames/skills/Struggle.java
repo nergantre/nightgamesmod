@@ -166,7 +166,7 @@ public class Struggle extends Skill {
 										+ " holding you a good distance up from the ground may not have been"
 										+ " the smartest move you've ever made, as the ground is quickly"
 										+ " approaching your face.");
-						c.setStance(c.getStance().insert());
+						c.setStance(c.getStance().insertRandom());
 					} else if (c.getStance().inserted(getSelf())) {
 						c.write(getSelf(), "You surpise " + target.name()
 								+ " by hugging her close to your chest, preventing her from using stabilizing her position with her arms. You "

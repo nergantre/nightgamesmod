@@ -45,7 +45,7 @@ public class PullOut extends Skill {
 			} else if (target.human()) {
 				c.write(getSelf(), receive(c, 0, result, target));
 			}
-			c.setStance(c.getStance().insert());
+			c.setStance(c.getStance().insertRandom());
 		} else if (result == Result.special) {
 			if (getSelf().human()) {
 				c.write(getSelf(), deal(c, 0, result, target));
@@ -103,7 +103,7 @@ public class PullOut extends Skill {
 			} else if (target.human()) {
 				c.write(getSelf(), receive(c, 0, result, target));
 			}
-			c.setStance(c.getStance().insert());
+			c.setStance(c.getStance().insertRandom());
 		}
 		return true;
 	}

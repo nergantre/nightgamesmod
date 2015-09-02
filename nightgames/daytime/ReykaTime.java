@@ -116,7 +116,7 @@ public class ReykaTime extends Activity {
 		demonTail.requirements.add((c, self, other) -> {
 			return self.body.get("tail").stream().anyMatch(part -> part != TailPart.demonic) || !self.body.has("tail");
 		});
-		demonTail.option = "Pointed Ears";
+		demonTail.option = "Spade Tail";
 		demonTail.scene = "[Placeholder]<br>Reyka marks the top of you ass with a magic symbol and fingers your ass until you grow a demonic tail.";
 		demonTail.effect = (c, self, other) -> {
 			self.body.addReplace(TailPart.demonic, 1);
@@ -158,7 +158,7 @@ public class ReykaTime extends Activity {
 			self.body.addReplace(PussyPart.succubus, 1);
 			return true;
 		};
-		options.add(pointedEars);
+		options.add(succubusPussy);
 	}
 
 	@Override

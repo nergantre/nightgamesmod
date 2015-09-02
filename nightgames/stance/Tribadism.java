@@ -76,7 +76,7 @@ public class Tribadism extends Position {
 	}
 
 	@Override
-	public Position insert() {
+	public Position insertRandom() {
 		return new Tribadism(bottom,top);
 	}
 

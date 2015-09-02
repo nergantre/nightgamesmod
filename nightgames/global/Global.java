@@ -370,6 +370,9 @@ public class Global {
 		skillPool.add(new CockGrowth(p));
 		skillPool.add(new BreastRay(p));
 		skillPool.add(new FootWorship(p));
+		skillPool.add(new BreastWorship(p));
+		skillPool.add(new CockWorship(p));
+		skillPool.add(new PussyWorship(p));
 		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 			skillPool.add(new SelfStun(p));	
 		}
