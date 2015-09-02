@@ -1218,7 +1218,6 @@ public class GUI extends JFrame implements Observer {
 
 	public void update(Observable arg0, Object arg1) {
 		refresh();
-		System.out.println("GUI updated");
 		if (this.combat != null) {
 			if (combat.combatMessageChanged) {
 				combatMessage(this.combat.getMessage());
