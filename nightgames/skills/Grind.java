@@ -98,7 +98,7 @@ public class Grind extends Thrust {
 
 	@Override
 	public String getLabel(Combat c) {
-		if (getSelf().get(Attribute.Divinity) > 10) {
+		if (getSelf().get(Attribute.Divinity) >= 10) {
 			return divineName;
 		} else {
 			return "Grind";

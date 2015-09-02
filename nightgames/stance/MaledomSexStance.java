@@ -47,7 +47,6 @@ public abstract class MaledomSexStance extends Position {
 			c.setStance(insertRandom());
 		}
 	}
-	
 
 	@Override
 	public abstract BodyPart topPart();

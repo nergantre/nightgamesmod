@@ -172,11 +172,11 @@ public class Kiss extends Skill {
 
 	@Override
 	public String getLabel(Combat c){
-		if (getSelf().get(Attribute.Divinity) > 1) {
+		if (getSelf().get(Attribute.Divinity) >= 1) {
 			return divineString;
 		} else if (getSelf().has(Trait.soulsucker)) {
 			return "Drain Kiss";
-		} else if (getSelf().get(Attribute.Seduction) > 20) {
+		} else if (getSelf().get(Attribute.Seduction) >= 20) {
 			return "Deep Kiss";
 		} else {
 			return "Kiss";
