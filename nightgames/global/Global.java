@@ -122,7 +122,7 @@ public class Global {
 		resting = new HashSet<Character>();
 		counters = new HashMap<String,Float>();
 		jdate = new Date();
-		counters.put(Flag.malePref.name(), (float) Character.malePref);
+		counters.put(Flag.malePref.name(), 0.f);
 		
 		PrintStream fstream;
 		try {

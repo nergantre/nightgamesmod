@@ -99,12 +99,16 @@ public class Body implements Cloneable {
 		PartReplacement replacement = new PartReplacement(duration);
 		replacement.added.add(part);
 		replacements.add(replacement);
+		if (character != null)
+			updateCharacter();
 	}
 
 	public void temporaryRemovePart(BodyPart part, int duration) {
 		PartReplacement replacement = new PartReplacement(duration);
 		replacement.removed.add(part);
 		replacements.add(replacement);
+		if (character != null)
+			updateCharacter();
 	}
 
 	public void temporaryAddOrReplacePartWithType(BodyPart part, int duration) {
@@ -142,6 +146,8 @@ public class Body implements Cloneable {
 			replacement.added.add(part);
 			replacements.add(replacement);
 		}
+		if (character != null)
+			updateCharacter();
 		return true;
 	}
 
@@ -182,6 +188,13 @@ public class Body implements Cloneable {
 	public void add(BodyPart part) {
 		assert(part!=null);
 		bodyParts.add(part);
+		updateCharacter();
+	}
+	
+	public void updateCharacter() {
+		if (character != null) {
+			character.update();
+		}
 	}
 
 	public boolean contains(BodyPart part) {
@@ -314,6 +327,9 @@ public class Body implements Cloneable {
 
 	public void remove(BodyPart part) {
 		bodyParts.remove(part);
+
+		if (character != null)
+			updateCharacter();
 	}
 
 	public void removeOne(String type) {
@@ -326,6 +342,8 @@ public class Body implements Cloneable {
 		}
 		if (removed != null) {
 			bodyParts.remove(removed);
+			if (character != null)
+				updateCharacter();
 		}
 	}
 
@@ -341,6 +359,9 @@ public class Body implements Cloneable {
 		for (BodyPart part : removed) {
 			bodyParts.remove(part);
 		}
+
+		if (character != null)
+			updateCharacter();
 		return removed.size();
 	}
 
@@ -496,7 +517,7 @@ public class Body implements Cloneable {
 	public void addReplace(BodyPart part, int max) {
 		int n = Math.min(Math.max(1, removeAll(part.getType())), max);
 		for (int i = 0; i < n; i++) {
-			character.body.add(part);
+			add(part);
 		}
 	}
 
@@ -616,6 +637,8 @@ public class Body implements Cloneable {
 				Global.gui().message(sb.toString());
 			}
 		}
+		if (character != null)
+			updateCharacter();
 	}
 
 	public BodyPart getRandomHole() {
@@ -627,6 +650,8 @@ public class Body implements Cloneable {
 
 	public void clearReplacements() {
 		replacements.clear();
+		if (character != null)
+			updateCharacter();
 	}
 
 	public int mod(Attribute a, int total) {

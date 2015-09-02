@@ -254,11 +254,11 @@ public class GUI extends JFrame implements Observer {
 				put(10, new JLabel("Male"));
 			}
 		});
+		sldMalePref.setValue(Math.round(Global.getValue(Flag.malePref)));
 		sldMalePref.setToolTipText("This setting affects the gender your opponents will gravitate towards once that"
 				+ " option becomes available.");
 		sldMalePref.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				Character.malePref = sldMalePref.getValue();
 				Global.setCounter(Flag.malePref, sldMalePref.getValue());
 			}
 		});
@@ -309,6 +309,7 @@ public class GUI extends JFrame implements Observer {
 				else{
 					rdfntnorm.setSelected(true);
 				}
+				sldMalePref.setValue(Math.round(Global.getValue(Flag.malePref)));
 				int result = JOptionPane.showConfirmDialog(GUI.this,optionspanel,"Options",JOptionPane.OK_CANCEL_OPTION,JOptionPane.INFORMATION_MESSAGE);
 				if(result==JOptionPane.OK_OPTION){
 					if(rdMsgOn.isSelected()){
@@ -348,7 +349,8 @@ public class GUI extends JFrame implements Observer {
 					}
 					else{
 						Global.flag(Flag.noimage);
-						imgPanel.remove(img);
+						if (img!=null)
+							imgPanel.remove(img);
 						imgPanel.repaint();
 					}
 					if(rdnfntlrg.isSelected()){

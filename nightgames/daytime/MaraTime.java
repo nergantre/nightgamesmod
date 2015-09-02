@@ -90,13 +90,13 @@ public class MaraTime extends Activity {
 				Global.gui().message(Global.format(option.scene, mara, player));
 				option.ingredients.entrySet().stream().forEach(entry -> player.consume(entry.getKey(), entry.getValue(), false));
 				option.effect.execute(null, player, mara);
+				Global.gui().choose(this, "Leave");
 			} else {
 				Global.gui().message("Mara frowns when she sees that you don't have the requested items.");
+				Global.gui().choose(this, "Back");
 			}
-			Global.gui().choose(this, "Back");
 		} else if (choice.equals("Modifications")) {
-			Global.gui().message("[Placeholder]Mara explains to you how she modifies her own body.");
-			Global.gui().message("<br>");
+			Global.gui().message("[Placeholder]<br>Mara explains to you how she modifies her own body.");
 			options.forEach(opt -> {
 				Global.gui().message(opt.option + ":");
 				opt.ingredients.entrySet().forEach((entry) -> {

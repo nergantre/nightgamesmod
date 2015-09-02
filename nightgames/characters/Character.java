@@ -28,6 +28,7 @@ import nightgames.combat.Encounter;
 import nightgames.combat.Result;
 import nightgames.global.Challenge;
 import nightgames.global.DebugFlags;
+import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.global.JSONUtils;
 import nightgames.global.Modifier;
@@ -48,7 +49,7 @@ import nightgames.status.Stsflag;
 import nightgames.status.Trance;
 import nightgames.trap.Trap;
 
-public abstract class Character extends Observable implements Cloneable{
+public abstract class Character extends Observable implements Cloneable {
 	/**
 	 * 
 	 */
@@ -90,7 +91,6 @@ public abstract class Character extends Observable implements Cloneable{
 	public boolean custom;
 	private boolean pleasured;
 	public int orgasms;
-	public static int malePref = 1;
 
 	@SuppressWarnings("unchecked")
 	public Character(String name, int level){
@@ -1443,7 +1443,7 @@ public abstract class Character extends Observable implements Cloneable{
 		if(has(Trait.QuickRecovery)){
 			heal(null, 4);
 		}
-		setChanged();
+		update();
 		notifyObservers();
 	}
 	public String debugMessage(Combat c, Position p) {
@@ -1471,6 +1471,7 @@ public abstract class Character extends Observable implements Cloneable{
 
 	public void gain(Clothing item) {
 		closet.add(item);
+		setChanged();
 	}
 
 	public void gain(Item item, int q){
@@ -1479,6 +1480,7 @@ public abstract class Character extends Observable implements Cloneable{
 			amt = count(item);
 		}
 		inventory.put(item, Math.max(0, amt + q));
+		setChanged();
 	}
 
 	public boolean has(Item item){
@@ -1598,10 +1600,12 @@ public abstract class Character extends Observable implements Cloneable{
 		status.clear();
 		stamina.fill();
 		state=State.ready;
+		setChanged();
 	}
 	public void masturbate(){
 		arousal.empty();
 		state=State.ready;
+		setChanged();
 	}
 	public void craft(){
 		int roll = Global.random(15);
@@ -1658,6 +1662,7 @@ public abstract class Character extends Observable implements Cloneable{
 			}
 		}
 		state=State.ready;
+		setChanged();
 	}
 	public void search(){
 		int roll = Global.random(15);
@@ -1681,6 +1686,7 @@ public abstract class Character extends Observable implements Cloneable{
 			gain(Item.Spring);
 		}
 		state=State.ready;
+		
 	}
 	public abstract String challenge(Character other);
 	public void delay(int i){
@@ -1874,6 +1880,7 @@ public abstract class Character extends Observable implements Cloneable{
 		cooldowns.clear();
 		dropStatus(null, null);
 		orgasms = 0;
+		setChanged();
 	}
 	public boolean canSpend(int mojo){
 		int cost=mojo;
@@ -2200,10 +2207,10 @@ public abstract class Character extends Observable implements Cloneable{
 		}
 	}
 	public double pussyPreference() {
-		return 11 - malePref;
+		return 11 - Global.getValue(Flag.malePref);
 	}
 	public double dickPreference() {
-		return malePref;
+		return Global.getValue(Flag.malePref);
 	}
 	public boolean wary() {
 		return hasStatus(Stsflag.wary);
@@ -2302,5 +2309,10 @@ public abstract class Character extends Observable implements Cloneable{
 		}
 		mojo.reduce(drained);
 		drainer.mojo.restore(drained);
+	}
+	
+	public void update() {
+		setChanged();
+		notifyObservers();
 	}
 }

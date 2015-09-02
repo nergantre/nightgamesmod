@@ -174,10 +174,11 @@ public class ReykaTime extends Activity {
 				Global.gui().message(Global.format(option.scene, reyka, player));
 				option.ingredients.entrySet().stream().forEach(entry -> player.consume(entry.getKey(), entry.getValue(), false));
 				option.effect.execute(null, player, reyka);
+				Global.gui().choose(this, "Leave");
 			} else {
 				Global.gui().message("Reyka frowns when she sees that you don't have the requested items.");
+				Global.gui().choose(this, "Back");
 			}
-			Global.gui().choose(this, "Back");
 		} else if (choice.equals("Demonic Rituals")) {
 			Global.gui().message("<br>Reyka seems a bit shocked at your request. <i>You want to become a demon?</i> "
 					+ "She looks a bit worried when she responds. You quickly reassure her that you don't necessarily want the whole package, corrupted soul and all. "
@@ -186,7 +187,6 @@ public class ReykaTime extends Activity {
 					+ "I'll write down what I can do for you. One thing though, you'll have to provide me a lot of semen as power for the rituals. I'll give you these magic bottles, so make sure "
 					+ "you catch it in here the next time you jack off\"</i>");
 			Global.flag(Flag.masturbationSemen);
-			Global.gui().message("<br>");
 			options.forEach(opt -> {
 				Global.gui().message(opt.option + ":");
 				opt.ingredients.entrySet().forEach((entry) -> {

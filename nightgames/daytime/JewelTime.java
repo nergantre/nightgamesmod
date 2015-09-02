@@ -56,7 +56,7 @@ public class JewelTime extends Activity {
 			Optional<BodyPart> optPart = self.body.get("cock").stream().filter(cock -> ((CockPart)cock).isGeneric()).findAny();
 			BasicCockPart target = (BasicCockPart) optPart.get();
 			self.body.remove(target);
-			self.body.add(new ModdedCockPart(target, CockMod.blessed));
+			self.body.add(new ModdedCockPart(target, CockMod.enlightened));
 			return true;
 		};
 		options.add(enlightenedCock);
@@ -89,13 +89,13 @@ public class JewelTime extends Activity {
 				Global.gui().message(Global.format(option.scene, jewel, player));
 				option.ingredients.entrySet().stream().forEach(entry -> player.consume(entry.getKey(), entry.getValue(), false));
 				option.effect.execute(null, player, jewel);
+				Global.gui().choose(this, "Leave");
 			} else {
 				Global.gui().message("Jewel frowns when she sees that you don't have the requested items.");
+				Global.gui().choose(this, "Back");
 			}
-			Global.gui().choose(this, "Back");
 		} else if (choice.equals("Training")) {
-			Global.gui().message("[Placeholder]Jewel explains her training to you and how you can too train yourself.");
-			Global.gui().message("<br><br>");
+			Global.gui().message("[Placeholder]<br>Jewel explains her training to you and how you can too train yourself.");
 			options.forEach(opt -> {
 				Global.gui().message(opt.option + ":");
 				opt.ingredients.entrySet().forEach((entry) -> {

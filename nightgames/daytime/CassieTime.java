@@ -87,13 +87,13 @@ public class CassieTime extends Activity {
 				Global.gui().message(Global.format(option.scene, cassie, player));
 				option.ingredients.entrySet().stream().forEach(entry -> player.consume(entry.getKey(), entry.getValue(), false));
 				option.effect.execute(null, player, cassie);
+				Global.gui().choose(this, "Leave");
 			} else {
 				Global.gui().message("Cassie frowns when she sees that you don't have the requested items.");
+				Global.gui().choose(this, "Back");
 			}
-			Global.gui().choose(this, "Back");
 		} else if (choice.equals("Enchantments")) {
-			Global.gui().message("[Placeholder]Cassie tells you she could perhaps enchant some of your body.");
-			Global.gui().message("<br><br>");
+			Global.gui().message("[Placeholder]<br>Cassie tells you she could perhaps enchant some of your body.");
 			options.forEach(opt -> {
 				Global.gui().message(opt.option + ":");
 				opt.ingredients.entrySet().forEach((entry) -> {

@@ -118,13 +118,13 @@ public class KatTime extends Activity {
 				Global.gui().message(Global.format(option.scene, kat, player));
 				option.ingredients.entrySet().stream().forEach(entry -> player.consume(entry.getKey(), entry.getValue(), false));
 				option.effect.execute(null, player, kat);
+				Global.gui().choose(this, "Leave");
 			} else {
 				Global.gui().message("Kat frowns when she sees that you don't have the requested items.");
+				Global.gui().choose(this, "Back");
 			}
-			Global.gui().choose(this, "Back");
 		} else if (choice.equals("Transformations")) {
-			Global.gui().message("[Placeholder]Kat explains to you how she became a cat girl through totemic magic.");
-			Global.gui().message("<br><br>");
+			Global.gui().message("[Placeholder]<br>Kat explains to you how she became a cat girl through totemic magic.");
 			options.forEach(opt -> {
 				Global.gui().message(opt.option + ":");
 				opt.ingredients.entrySet().forEach((entry) -> {

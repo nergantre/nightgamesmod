@@ -196,6 +196,7 @@ public class BodyShop extends Activity  {
 			@Override
 			void buy(Character buyer) {
 				buyer.body.removeAll("cock");
+				buyer.body.removeAll("balls");
 			}
 			@Override
 			boolean available(Character buyer) {
@@ -214,11 +215,11 @@ public class BodyShop extends Activity  {
 			}
 			@Override
 			boolean available(Character buyer) {
-				return !buyer.hasBalls();
+				return !buyer.hasBalls() && buyer.hasDick();
 			}
 			@Override
 			double priority(Character buyer) {
-				return 0;
+				return Math.max(0, 4 - buyer.dickPreference());
 			}
 		});
 
@@ -233,7 +234,7 @@ public class BodyShop extends Activity  {
 			}
 			@Override
 			double priority(Character buyer) {
-				return 0;
+				return Math.max(0, buyer.pussyPreference() - 5);
 			}
 		});
 

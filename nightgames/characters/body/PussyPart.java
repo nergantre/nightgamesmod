@@ -125,7 +125,9 @@ public enum PussyPart implements BodyPart, BodyPartMod {
 		pleasureMod += self.has(Trait.pussyTraining2) ? .7 : 0;
 		pleasureMod += self.has(Trait.pussyTraining3) ? .7 : 0;
 		DivineCharge charge = (DivineCharge) self.getStatus(Stsflag.divinecharge);
-		pleasureMod += charge.magnitude;
+		if (charge != null) {
+			pleasureMod += charge.magnitude;
+		}
 		return pleasureMod;
 	}
 
