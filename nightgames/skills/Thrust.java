@@ -7,7 +7,6 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.stance.Position;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
 import nightgames.status.Stsflag;
@@ -51,7 +50,7 @@ public class Thrust extends Skill {
 		}
 	}
 
-	public int[] getDamage(Character target, Position stance) {
+	public int[] getDamage(Combat c, Character target) {
 		int results[] = new int[2];
 
 		int m = 5 + Global.random(14);
@@ -86,7 +85,7 @@ public class Thrust extends Skill {
 			c.write(getSelf(),receive(c,0,result, target));
 		}
 
-		int[] m = getDamage(target, c.getStance());
+		int[] m = getDamage(c, target);
 		assert(m.length >= 2);
 
 		if (m[0] != 0)

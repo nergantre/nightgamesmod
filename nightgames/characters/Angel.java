@@ -2,9 +2,13 @@ package nightgames.characters;
 
 import java.util.Optional;
 
+import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.BodyPartMod;
 import nightgames.characters.body.BreastsPart;
+import nightgames.characters.body.CockMod;
 import nightgames.characters.body.EarPart;
 import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.CockPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
 import nightgames.combat.Combat;
@@ -22,6 +26,7 @@ public class Angel extends BasePersonality {
 	public Angel(){
 		super();
 		character = new NPC("Angel",1,this);
+		preferredCockMod = CockMod.blessed;
 		character.outfit[0].add(Clothing.Tshirt);
 		character.outfit[1].add(Clothing.thong);
 		character.outfit[1].add(Clothing.miniskirt);
@@ -81,6 +86,7 @@ public class Angel extends BasePersonality {
 				advance();
 			}
 		}
+		super.rest();
 		if(!(character.has(Item.Dildo)||character.has(Item.Dildo2))&&character.money>=250){
 			character.gain(Item.Dildo);
 			character.money-=250;
@@ -268,7 +274,7 @@ public class Angel extends BasePersonality {
 	@Override
 	public String describe(Combat c) {
 		if(character.has(Trait.demigoddess)){
-			return "Angel seems to have taken the path of her namesake. She has large angelic wings behind her, which combined with her long blonde hair and perfect unblemished "
+			return "Angel's transformation seems to be inspired by her namesake. She has large angelic wings behind her, which combined with her long blonde hair and perfect unblemished "
 					+ "skin gives her a positively divine appearance. Her appearance should be emanating holy purity, but instead her eyes and expression seems lewder than ever. "
 					+ "You're not sure what happened exactly, but it's clear to you that she's somehow become a goddess of sexuality. "
 					+ "Angel's entire being seems to radiate sex and you struggle to ignore an overwhelming urge to prostrate yourself and beg to worship her body.";

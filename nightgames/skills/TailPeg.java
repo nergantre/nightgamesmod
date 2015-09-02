@@ -100,10 +100,10 @@ public class TailPeg extends Skill {
 			}
 			if (vaginal) {
 				target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom("pussy"), strength, c);
-				target.add(new TailFucked(target, getSelf(), "pussy"));
+				target.add(c, new TailFucked(target, getSelf(), "pussy"));
 			} else {
 				target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom("ass"), strength, c);
-				target.add(new TailFucked(target, getSelf(), "ass"));
+				target.add(c, new TailFucked(target, getSelf(), "ass"));
 			}
 			target.pain(c, strength / 2);
 			target.emote(Emotion.nervous, 10);

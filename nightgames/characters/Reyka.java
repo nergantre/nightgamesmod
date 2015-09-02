@@ -5,6 +5,7 @@ import nightgames.actions.Move;
 import nightgames.actions.Movement;
 import nightgames.characters.Attribute;
 import nightgames.characters.body.BreastsPart;
+import nightgames.characters.body.CockMod;
 import nightgames.characters.body.EarPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
@@ -31,6 +32,7 @@ public class Reyka extends BasePersonality {
 	public Reyka() {
 		super();
 		this.character = new NPC("Reyka", 10, this);
+		preferredCockMod = CockMod.incubus;
 		this.character.outfit[0].add(Clothing.tanktop);
 		this.character.outfit[1].add(Clothing.miniskirt);
 		character.closet.add(Clothing.tanktop);
@@ -100,6 +102,7 @@ public class Reyka extends BasePersonality {
 
 	@Override
 	public void rest() {
+		super.rest();
 		if(!(character.has(Item.Dildo)||character.has(Item.Dildo2))&&character.money>=250){
 			character.gain(Item.Dildo);
 			character.money-=250;

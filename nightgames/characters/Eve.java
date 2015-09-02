@@ -70,6 +70,7 @@ public class Eve extends BasePersonality {
 
 	@Override
 	public void rest() {
+		super.rest();
 		if(!(character.has(Item.Dildo)||character.has(Item.Dildo2))&&character.money>=250){
 			character.gain(Item.Dildo);
 			character.money-=250;

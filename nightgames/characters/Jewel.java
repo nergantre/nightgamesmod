@@ -7,6 +7,7 @@ import nightgames.actions.Resupply;
 import nightgames.areas.Area;
 import nightgames.characters.body.AnalPussyPart;
 import nightgames.characters.body.BreastsPart;
+import nightgames.characters.body.CockMod;
 import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
@@ -32,6 +33,7 @@ public class Jewel extends BasePersonality {
 	public Jewel(){
 		super();
 		character = new NPC("Jewel",1,this);
+		preferredCockMod = CockMod.runic;
 		character.outfit[0].add(Clothing.bra);
 		character.outfit[0].add(Clothing.tanktop);
 		character.outfit[1].add(Clothing.panties);
@@ -95,6 +97,7 @@ public class Jewel extends BasePersonality {
 				advance();
 			}
 		}
+		super.rest();
 		if(!(character.has(Item.Crop)||character.has(Item.Crop2))&&character.money>=200){
 			character.gain(Item.Crop);
 			character.money-=200;

@@ -7,6 +7,7 @@ import nightgames.actions.Resupply;
 import nightgames.areas.Area;
 import nightgames.characters.body.AnalPussyPart;
 import nightgames.characters.body.BreastsPart;
+import nightgames.characters.body.CockMod;
 import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.MouthPussyPart;
 import nightgames.characters.body.PussyPart;
@@ -35,6 +36,7 @@ public class Cassie extends BasePersonality {
 	public Cassie(){
 		super();
 		character = new NPC("Cassie",1,this);
+		preferredCockMod = CockMod.runic;
 		character.outfit[0].add(Clothing.bra);
 		character.outfit[0].add(Clothing.blouse);
 		character.outfit[1].add(Clothing.panties);
@@ -113,6 +115,7 @@ public class Cassie extends BasePersonality {
 				advance();
 			}
 		}
+		super.rest();
 		if(!(character.has(Item.Tickler)||character.has(Item.Tickler2))&&character.money>=300){
 			character.gain(Item.Tickler);
 			character.money-=300;

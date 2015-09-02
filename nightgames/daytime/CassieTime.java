@@ -53,7 +53,7 @@ public class CassieTime extends Activity {
 			Optional<BodyPart> optPart = self.body.get("cock").stream().filter(cock -> ((CockPart)cock).isGeneric()).findAny();
 			BasicCockPart target = (BasicCockPart) optPart.get();
 			self.body.remove(target);
-			self.body.add(new ModdedCockPart(target, CockMod.blessed));
+			self.body.add(target.applyMod(CockMod.runic));
 			return true;
 		};
 		options.add(blessedCock);

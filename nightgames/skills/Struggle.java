@@ -155,9 +155,10 @@ public class Struggle extends Skill {
 					if ((c.getStance().behind(getSelf()) || c.getStance().en == Stance.reversecowgirl)
 							&& c.getStance().inserted(getSelf())) {
 						c.write(getSelf(),
-								"You manage unbalance " + target.name()
-										+ " and push her forward onto her hands and knees. You follow her, still inside her tight wetness, and continue "
-										+ "to fuck her from behind.");
+								Global.format(
+										"{self:SUBJECT-ACTION:manage|manages} to unbalance {other:name-do} and push {other:direct-object} forward onto {other:possessive} hands and knees. {self:SUBJECT-ACTION:follow|follows} {other:direct-object}, still inside {other:possessive} tight wetness, and continue "
+										+ "to fuck {other:direct-object} from behind.",
+										getSelf(), target));
 						c.setStance(new Doggy(getSelf(), target));
 					} else if (c.getStance().en == Stance.flying) {
 						c.write(getSelf(),
@@ -183,9 +184,9 @@ public class Struggle extends Skill {
 					} else if (c.getStance().inserted(target)) {
 						c.write(getSelf(),
 								getSelf().name()
-										+ " wraps her legs around your waist and suddenly pulls you into a deep kiss. You're so surprised by this sneak attack that you "
-										+ "don't even notice her roll you onto your back until you feel her weight on your hips. She moves her hips experimentally, enjoying the control "
-										+ "she has in cowgirl position.");
+										+ "{self:SUBJECT-ACTION:wrap|wraps} {self:possessive} legs around {other:name-possessive} waist and suddenly {self:action:pull|pulls} {other:direct-object} into a deep kiss. {other:SUBJECT-ACTION:are|is} so surprised by this sneak attack that {other:subject-action:don't|doesn't} "
+												+ "even notice {self:pronoun} {self:action:rolling|rolling} {other:direct-object} onto {other:possessive} back until {other:subject-action:feel|feels} {self:possessive} weight on {other:possessive} hips. {self:PRONOUN} {self:action:move|moves} {self:possessive} hips experimentally, enjoying the control "
+												+ "{self:pronoun} {self:action:have|has} in cowgirl position.");
 						c.setStance(new Cowgirl(getSelf(), target));
 					} else {
 						c.write(getSelf(),

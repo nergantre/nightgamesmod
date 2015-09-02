@@ -55,7 +55,7 @@ public class Kiss extends Skill {
 		}
 		if(getLabel(c).equals(divineString)){
 			res = Result.divine;
-			m += 20;
+			m += 10;
 		}
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,m,res, target));
@@ -72,11 +72,11 @@ public class Kiss extends Skill {
 			target.heal(c, 30);
 			target.loseWillpower(c, Global.random(3) + 2, false);
 			if (Global.random(4) == 0) {
-				target.add(new Lovestruck(target, getSelf(), 5));
+				target.add(c, new Lovestruck(target, getSelf(), 5));
 			}
 		}
 		target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("mouth"), m, c);
-		getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("mouth"), 1, c);
+		getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("mouth"), Math.max(1, m / 4), c);
 		return true;
 	}
 
@@ -129,7 +129,7 @@ public class Kiss extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		if(modifier==Result.special){
+		if(modifier==Result.divine){
 			return getSelf().name()+" seductively pulls you into a deep kiss. As first you try to match her enthusiastic tongue with your own, but she starts using her divine energy to directly attack your soul. "
 					+ "Golden waves of ecstacy flow through your body, completely shattering every single thought you hold and replacing them with " +getSelf().getName() + ".";
 		}

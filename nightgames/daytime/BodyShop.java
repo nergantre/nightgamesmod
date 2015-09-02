@@ -170,7 +170,7 @@ public class BodyShop extends Activity  {
 				BreastsPart target = buyer.body.getBreastsAbove(BreastsPart.flat.size);
 				return target != null;
 			}
-			
+
 			@Override
 			double priority(Character buyer) {
 				return 5;

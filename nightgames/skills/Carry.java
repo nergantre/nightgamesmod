@@ -35,7 +35,7 @@ public class Carry extends Fuck {
 				&& c.getStance().mobile(getSelf())
 				&& !c.getStance().prone(getSelf())
 				&& !c.getStance().prone(target)
-				&& !c.getStance().facing()
+				&& c.getStance().facing()
 				&& getSelf().getStamina().get()>=15
 				&& !c.getStance().penetration(getSelf());
 	}

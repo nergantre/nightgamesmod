@@ -8,6 +8,7 @@ Major changes:
 	- Note: This was a lot more work than I originally thought, and I had to change how the BodyPart systems worked.
 		Don't be too surprised to see some bugs until thing stabilize again.
 		On the bright side though, it will be MUCH easier to add new types of BodyPart modifications in the future.
+	- NPCs will also mod their cocks when they get one (note that it may take them a day to do it)
 - Angel has been somewhat rewritten. Her upgraded class and attribute (Succubus/Dark) overlaps with Reyka too much.
 	- Angel's upgraded class is now Demigoddess and preferred attribute is Divinity
 		- Her level up traits have been updated to reflect this.
@@ -19,11 +20,14 @@ Major changes:
 				Example: base divine pussy pleasureMod is 1.0
 					1. You use thrust, pleasureMod bonus of +.25 = 1.25
 					2. She uses ride, pleasureMod bonus of +.25 = 1.5
-
+	- Changed the blessed cock mod to align with the Divinity Attribute and Angel. Cassie now offers the Runic cock mod instead.
 
 Bug fix:
 - Refracted Status duration, hopefully this will solve issues where statuses were not being cleared in the right order
 - Fixed a bug where if both combatants had both male and female genitalia, pussy would always take priority when fucking. (It will be random for now)
+	- Note that this opens up a lot more stances that weren't working before, so you may see a lot of missing/incorrect text when an unexpected situation comes up.
+	- I suspect that you'll see a lot of weirdness with struggle. The effect should still work, but you might see text that wont make sense.
+- Fixed a bug where loading the game could clear the malepref slider value
 
 Balance:
 - Fire form now weakens by 5 a turn instead of 1 a turn. Should still be really good.
@@ -51,6 +55,10 @@ Balance:
 
 Other:
 - Fixed a few skills' requirements requiring one more than the intended amount of Attributes (>= instead of >)
+- Update the status window instantly if your body changes.
+- AI will now also grow balls if the malePref is way to the right ( > 7ish)
+- Removing your dick will also remove the balls.
+- Growing balls is unavailabe without growing a cock.
 
 1.7.6 changelog
 

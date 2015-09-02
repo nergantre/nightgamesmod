@@ -16,6 +16,9 @@ import nightgames.status.Stsflag;
 import nightgames.status.Winded;
 
 public enum CockMod implements BodyPartMod {
+	error(1.0, 1.0, 1.0),
+	slimy(.5, 1.5, .7),
+	runic(2.0, 1.0, 1.0),
 	blessed(1.0, 1.0, .75),
 	incubus(1.25, 1.3, .9),
 	primal(1.0, 1.4, 1.2),

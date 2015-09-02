@@ -1218,8 +1218,12 @@ public class GUI extends JFrame implements Observer {
 
 	public void update(Observable arg0, Object arg1) {
 		refresh();
+		System.out.println("GUI updated");
 		if (this.combat != null) {
-			combatMessage(this.combat.getMessage());
+			if (combat.combatMessageChanged) {
+				combatMessage(this.combat.getMessage());
+				combat.combatMessageChanged = false;
+			}
 			if ((this.combat.phase == 0) || (this.combat.phase == 2)) {
 				next(this.combat);
 			}

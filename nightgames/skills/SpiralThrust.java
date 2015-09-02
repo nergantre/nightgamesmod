@@ -7,7 +7,6 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.stance.Position;
 import nightgames.stance.Stance;
 
 public class SpiralThrust extends Thrust {
@@ -34,7 +33,7 @@ public class SpiralThrust extends Thrust {
 	}
 
 	@Override
-	public int[] getDamage(Character target, Position stance) {
+	public int[] getDamage(Combat c, Character target) {
 		int[] result = new int[2];
 		int x = cost;
 		int mt = x / 2;

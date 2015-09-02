@@ -157,7 +157,7 @@ public enum BasicCockPart implements CockPart {
 			c.write(self,
 					Global.format(
 							"{self:SUBJECT-ACTION:use|uses} {self:possessive} " + desc
-									+ "cock control to grind against {other:name-possessive} inner walls, making {other:possessive} knuckles whiten as {other:subject-action:moan|moans} uncontrollably.",
+									+ "cock control to grind against {other:name-possessive} inner walls, making {other:possessive} knuckles whiten as {other:pronoun} {other:action:moan|moans} uncontrollably.",
 							self, opponent));
 			bonus += (self.has(Trait.polecontrol)) ? 8 : 0;
 		}
@@ -246,5 +246,10 @@ public enum BasicCockPart implements CockPart {
 	@Override
 	public BodyPartMod getMod() {
 		return BodyPartMod.noMod;
+	}
+
+	@Override
+	public BodyPart applyMod(CockMod mod) {
+		return new ModdedCockPart(this, mod);
 	}
 }

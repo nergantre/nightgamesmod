@@ -253,7 +253,9 @@ public class Combat extends Observable implements Serializable, Cloneable{
 		new FootWorship(null),
 		new PussyWorship(null),
 	};
-	
+
+	public boolean combatMessageChanged;
+
 	private Skill checkWorship(Character self, Character other, Skill def) {
 		if (other.has(Trait.objectOfWorship) && (other.topless() || other.pantsless())) {
 			int chance = Math.min(20, Math.max(5, other.get(Attribute.Divinity) + 10 - self.getLevel()));
@@ -263,7 +265,7 @@ public class Combat extends Observable implements Serializable, Cloneable{
 				while (!avail.isEmpty()) {
 					Skill skill = avail.remove(avail.size() - 1).copy(self);
 					if (Skill.skillIsUsable(this, skill, other)) {
-						write(other, Global.format("{other:NAME-POSSESSIVE} divine aura forces {self:subject} to get on {self:possessive} knees and crawl to {other:direct-object}.", self, other));
+						write(other, Global.format("<b>{other:NAME-POSSESSIVE} divine aura forces {self:subject} to forget what {self:pronoun} {self:action:were|was} doing and crawl to {other:direct-object} on {self:possessive} knees.</b>", self, other));
 						return skill;
 					}
 				}
@@ -271,6 +273,7 @@ public class Combat extends Observable implements Serializable, Cloneable{
 		}
 		return def;
 	}
+
 	public void act(Character c, Skill action, String choice){
 		if(c==p1){
 			p1act=action;
@@ -458,17 +461,20 @@ public class Combat extends Observable implements Serializable, Cloneable{
 	}
 
 	public void updateMessage() {
+		combatMessageChanged = true;
 		this.setChanged();
 		this.notifyObservers();
+		this.setChanged();
 	}
 
 	public void updateAndClearMessage() {
 		Global.gui().clearText();
+		combatMessageChanged = true;
 		this.setChanged();
 		this.notifyObservers();
 	}
 
-	public void write(Character user, String text){
+	public void write(Character user, String text) {
 		text = Global.capitalizeFirstLetter(text);
 		if (text.length() > 0) {
 			if(user.human()){

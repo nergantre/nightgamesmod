@@ -205,4 +205,9 @@ public class ModdedCockPart implements CockPart {
 	public void setBase(BasicCockPart base) {
 		this.base = base;
 	}
+
+	@Override
+	public BodyPart applyMod(CockMod mod) {
+		return base.applyMod(mod);
+	}
 }

@@ -63,7 +63,7 @@ public class Lovestruck extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now charmed.\n", affected.subjectAction("are", "is"));
+		return String.format("%s now lovestruck.\n", affected.subjectAction("are", "is"));
 	}
 
 	@Override

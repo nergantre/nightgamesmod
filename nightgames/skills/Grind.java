@@ -6,7 +6,6 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.stance.Position;
 import nightgames.stance.Stance;
 
 public class Grind extends Thrust {
@@ -30,11 +29,15 @@ public class Grind extends Thrust {
 		return 10;
 	}
 
-	public int[] getDamage(Character target, Position stance) {
+	public int[] getDamage(Combat c, Character target) {
 		int results[] = new int[2];
 
-		int ms = 20;
-		int mt = 12;
+		int ms = 8;
+		int mt = 5;
+		if (getLabel(c).equals(divineName)) {
+			ms = 16;
+			mt = 10;
+		}
 
 		if(getSelf().has(Trait.experienced)){
 			mt = mt * 2 / 3;

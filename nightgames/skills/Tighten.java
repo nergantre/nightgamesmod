@@ -6,7 +6,6 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.stance.Position;
 import nightgames.stance.Stance;
 
 public class Tighten extends Thrust {
@@ -26,7 +25,7 @@ public class Tighten extends Thrust {
 	}
 
 	@Override
-	public int[] getDamage(Character target, Position stance) {
+	public int[] getDamage(Combat c, Character target) {
 		int[] result = new int[2];
 
 		int m = 5 + Global.random(10) + Math.min(getSelf().get(Attribute.Power)/3, 20);

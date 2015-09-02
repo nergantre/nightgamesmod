@@ -89,7 +89,7 @@ public class Fuck extends Skill {
 			if (selfO.isType("pussy")) {
 				c.setStance(c.getStance().insert(target, getSelf()));
 			} else {
-				c.setStance(c.getStance().insert(getSelf(), target));
+				c.setStance(c.getStance().insert(getSelf(), getSelf()));
 			}
 			int otherm = m;
 			if (getSelf().has(Trait.insertion)) {
