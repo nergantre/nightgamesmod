@@ -335,6 +335,7 @@ public class CreationGUI extends JPanel{
 		StrengthBox.addItem(Trait.experienced);
 		StrengthBox.addItem(Trait.wrassler);
 		StrengthBox.addItem(Trait.pimphand);
+		StrengthBox.addItem(Trait.stableform);
 		StrengthBox.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -362,6 +363,8 @@ public class CreationGUI extends JPanel{
 		WeaknessBox.addItem(Trait.achilles);
 		WeaknessBox.addItem(Trait.ticklish);
 		WeaknessBox.addItem(Trait.lickable);
+		WeaknessBox.addItem(Trait.naive);
+		WeaknessBox.addItem(Trait.footfetishist);
 		WeaknessBox.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

@@ -42,6 +42,7 @@ import nightgames.stance.Position;
 import nightgames.stance.Stance;
 import nightgames.status.Abuff;
 import nightgames.status.Alluring;
+import nightgames.status.DivineCharge;
 import nightgames.status.Enthralled;
 import nightgames.status.Resistance;
 import nightgames.status.Status;
@@ -937,12 +938,20 @@ public abstract class Character extends Observable implements Cloneable {
 		} else if (human() || (location() != null && location().humanPresent())){
 			Global.gui().message("<b>"+ message+"</b>");
 		}
+		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+			System.out.println(message);
+		}
 	}
 	public void dropStatus(Combat c, Character opponent){
 		Set<Status> removedStatuses = status.stream().filter(s -> !s.meetsRequirements(c, this, opponent)).collect(Collectors.toSet()); 
-		removedStatuses.stream().forEach(s -> s.onRemove(c, opponent));
+		removedStatuses.addAll(removelist);
+		removedStatuses.stream().forEach(s -> {
+			if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+				System.out.println(s.name + " removed from " + name());
+			}
+			s.onRemove(c, opponent);
+		});
 		status.removeAll(removedStatuses);
-		status.removeAll(removelist);
 		for(Status s: addlist){
 			add(c, s);
 		}
@@ -1232,6 +1241,9 @@ public abstract class Character extends Observable implements Cloneable {
 			c.write(Global.capitalizeFirstLetter("<br><b>"+opponent.subjectAction("flush", "flushes") + " as the feedback from " + nameOrPossessivePronoun() + " orgasm feeds " + opponent.possessivePronoun() + " divine power.</b>"));
 			opponent.add(c, new Alluring(opponent, 5));
 			opponent.buildMojo(c, 100);
+			if (c.getStance().inserted(this) && opponent.has(Trait.demigoddess)) {
+				opponent.add(c, new DivineCharge(opponent, 1));
+			}
 		}
 
 		getArousal().empty();

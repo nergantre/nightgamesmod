@@ -13,6 +13,7 @@ import nightgames.global.Global;
 import nightgames.items.Clothing;
 import nightgames.items.Item;
 import nightgames.pet.Pet;
+import nightgames.skills.Anilingus;
 import nightgames.skills.BreastWorship;
 import nightgames.skills.CockWorship;
 import nightgames.skills.FootWorship;
@@ -252,6 +253,7 @@ public class Combat extends Observable implements Serializable, Cloneable{
 		new CockWorship(null),
 		new FootWorship(null),
 		new PussyWorship(null),
+		new Anilingus(null),
 	};
 
 	public boolean combatMessageChanged;

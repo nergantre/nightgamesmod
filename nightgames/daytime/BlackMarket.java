@@ -166,14 +166,28 @@ public class BlackMarket extends Store {
 		int bored = 0;
 		while(remaining>25&&bored<5){
 			for(Item i:stock.keySet()){
-				if(remaining>i.getPrice()&&!npc.has(i,10)){
+				int max = 10;
+				if (i.equals(Item.PriapusDraft)) {
+					if (Global.random(10) > Global.getValue(Flag.malePref)) {
+						bored++;
+						continue;
+					}
+					max = 1;
+				}
+				if (i.equals(Item.FemDraft)) {
+					if (Global.random(10) < Global.getValue(Flag.malePref)) {
+						bored++;
+						continue;
+					}
+					max = 1;
+				}
+				if(remaining>i.getPrice()&&!npc.has(i,max)){
 					npc.gain(i);
 					npc.money-=i.getPrice();
 					remaining-=i.getPrice();
+					continue;
 				}
-				else{
-					bored++;
-				}
+				bored++;
 			}
 		}
 	}

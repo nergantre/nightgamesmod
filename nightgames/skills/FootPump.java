@@ -61,7 +61,7 @@ public class FootPump extends Skill {
 			c.setStance(new BehindFootjob(getSelf(), target));
 		}
 		if (Global.random(100) < 15 + 2 * getSelf().get(Attribute.Fetish)) {
-			target.add(c, new BodyFetish(target, getSelf(), "feet", .25, 10));
+			target.add(c, new BodyFetish(target, getSelf(), "feet", .25));
 		}
 		return true;
 	}

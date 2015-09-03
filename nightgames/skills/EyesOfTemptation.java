@@ -52,6 +52,12 @@ public class EyesOfTemptation extends Skill {
 	public int speed(){
 		return 9;
 	}
+
+	@Override
+	public int accuracy(Combat c) {
+		return 100;
+	}
+
 	public Tactics type(Combat c) {
 		return Tactics.pleasure;
 	}

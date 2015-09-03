@@ -11,8 +11,11 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
+import nightgames.status.Stsflag;
 
 public class Anilingus extends Skill {
+	private static final String worshipString = "Ass Worship";
+
 	public Anilingus(Character self) {
 		super("Lick Ass", self);
 	}
@@ -37,8 +40,7 @@ public class Anilingus extends Skill {
 		AssPart targetAss = (AssPart) target.body.getRandom("ass");
 		Result result = Result.normal;
 		int m = 10; int n = 0;
-		Optional<BodyFetish> fetish = getSelf().body.getFetish("ass");
-		if (fetish.isPresent() && fetish.get().magnitude >= 1) {
+		if (getLabel(c).equals(worshipString)) {
 			result = Result.sub;
 			m += 4 + Global.random(6);
 			n = 20;
@@ -129,8 +131,10 @@ public class Anilingus extends Skill {
 	}
 
 	@Override
-	public String getLabel(Combat c){
+	public String getLabel(Combat c) {
 		Optional<BodyFetish> fetish = getSelf().body.getFetish("ass");
-		return fetish.isPresent() && fetish.get().magnitude >= 1 ? "Ass Worship" : "Lick Ass";
+		boolean worship = c.getOther(getSelf()).has(Trait.objectOfWorship);
+		boolean enthralled = getSelf().is(Stsflag.enthralled);
+		return fetish.isPresent() || worship || enthralled ? worshipString : "Lick Ass";
 	}
 }

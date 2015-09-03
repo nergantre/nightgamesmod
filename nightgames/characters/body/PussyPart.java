@@ -4,6 +4,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
+import nightgames.global.DebugFlags;
 import nightgames.global.Global;
 import nightgames.status.Abuff;
 import nightgames.status.CockBound;
@@ -27,7 +28,7 @@ public enum PussyPart implements BodyPart, BodyPartMod {
 	gooey("gooey ", .4, 1.5, 1.2, 999, 0, 6),
 	tentacled("tentacled ", 0, 2, 1.2, 999, 0, 8),
 	plant("flower ", .5, 2, 1.2, 999, 0, 8),
-	divine("divine ", 0, 1.0, 1.0, 999, 0, 8);
+	divine("divine ", 0, 2.0, 1.0, 999, 0, 8);
 
 	public double priority;
 	public String desc;
@@ -154,18 +155,33 @@ public enum PussyPart implements BodyPart, BodyPartMod {
 	}
 
 	@Override
+	public void onStartPenetration(Combat c, Character self, Character opponent, BodyPart target) {
+		if (this == divine && target.isErogenous()) {
+			if (!self.human()) {
+				c.write(self, Global.format(
+						"As soon as you penetrate {self:name-do}, you realize it was a bad idea. While it looks innocuous enough, {self:name-possessive} {self:body-part:pussy} "
+						+ "feels like pure ecstasy. You're not sure why you thought fucking a bonafide sex goddess was a good idea. "
+						+ "{self:SUBJECT} isn't even moving yet, but warm walls of flesh kneeds your cock ceaselessly while her perfectly trained vaginal muscles constrict and "
+						+ "relax around your dick bringing you waves of pleasure.", self, opponent));
+			}
+		}
+	}
+
+	@Override
 	public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		double bonus = 0;
 		if (this == divine && c.getStance().pussyinserted()) {
-			if (self.getStatus(Stsflag.divinecharge) == null) {
+			DivineCharge charge = (DivineCharge) self.getStatus(Stsflag.divinecharge);
+			if (charge == null) {
 				c.write(self, Global.format(
 						"{self:NAME-POSSESSIVE} " + fullDescribe(self) + " radiates a golden glow when {self:subject-action:moan|moans}. "
 								+ "{other:SUBJECT-ACTION:realize|realizes} {self:subject-action:are|is} feeding on {self:possessive} own pleasure to charge up {self:possessive} divine energy.", self, opponent));
+				self.add(c, new DivineCharge(self, .25));
 			} else {
 				c.write(self, Global.format(
 						"{self:SUBJECT-ACTION:continue|continues} feeding on {self:possessive} pleasure to charge up {self:possessive} divine energy.", self, opponent));
+				self.add(c, new DivineCharge(self, charge.magnitude));
 			}
-			self.add(new DivineCharge(self, .25));
 		}
 		if (this == PussyPart.plant && damage > opponent.getArousal().max() / 5 && Global.random(4) == 0) {
 			c.write(self, String.format("An intoxicating scent emanating from %s %s leaves %s in a trance!.", self.possessivePronoun(),
@@ -467,11 +483,11 @@ public enum PussyPart implements BodyPart, BodyPartMod {
 
 	@Override
 	public int counterValue(BodyPart other) {
-		if (this == normal && other.getType().equals("cock") && !((BasicCockPart) other).isGeneric()) {
+		if (this == normal && other.getType().equals("cock") && !((CockPart) other).isGeneric()) {
 			// If opponent has a modded cock, that's dangerous
 			return -1;
 		}
-		if (this != normal && other.getType().equals("cock") && ((BasicCockPart) other).isGeneric()) {
+		if (this != normal && other.getType().equals("cock") && ((CockPart) other).isGeneric()) {
 			// On the other hand, if we have a mod, but he doesn't, that's good
 			// for us
 			return 1;

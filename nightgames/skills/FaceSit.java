@@ -90,7 +90,7 @@ public class FaceSit extends Skill {
 			c.setStance(new FaceSitting(getSelf(), target));
 		}
 		if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
-			target.add(c, new BodyFetish(target, getSelf(), "ass", .25, 10));
+			target.add(c, new BodyFetish(target, getSelf(), "ass", .25));
 		}
 		return true;
 	}

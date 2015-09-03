@@ -1,3 +1,38 @@
+1.8.2 changelog
+
+Features:
+- Added a new character initial strength Trait:
+	- "Stable Form"
+		- Prevents the effects of Priapus Draft, FemDraft, Tiny Draft, Bust Draft, Succubus Draft and Tentacle Tonic from applying when thrown at you.
+- Added two new character initial weakness Traits:
+	- "Naive"
+		- 50% to not get cynical after recovering from a mindgame status (enthralled, trance, flatfooted, etc)
+	- "Foot Fetishist"
+		- Starts each match with a foot fetish at the minimum magnitude
+
+Balance:
+- Made divine pussy's divine charge stack double every time she takes pleasure damage instead of increasing it by .25
+	- Makes getting out of vaginal penetration very important versus Angel
+- Made enthrall stack less.
+	- When enthralled status is added on to a already enthralled opponent, the final duration will be whatever is more:
+		- Original duration + 1
+		- New duration - number of times this enthralled status has been refreshed
+- Fetishes now last throughout a match, but decrease in magnitude as time passes to a minimum magnitude of .25
+	- Being pleasured by the fetish part will increase magnitude by .05
+
+Bug fix:
+- Deep kiss and drain kiss' text was swapped around
+- Fixed invitation text
+- Fixed some bugs with insertion requirements requiring the wrong person to be inserted.
+- Fixed a text bug with alluring
+- Fixed a bug where sometimes on insertion, the game would bug out
+- Fixed a bug that was causing the game to bug out when transformations changed outside a match
+- Fixed a bug where struggle has unformatted text
+
+Other changes:
+- NPCs now buy priapus drafts & femdrafts based on the male pref slider. They also buy them much less than before.
+- Logs now also show status effects being added and removed
+
 1.8.1 changelog
 
 Major changes:

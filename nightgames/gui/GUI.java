@@ -1018,8 +1018,8 @@ public class GUI extends JFrame implements Observer {
 		this.portraitPanel.revalidate();
 		this.portraitPanel.repaint();	
 		Global.getMatch().resume();
-		
 	}
+
 	public void startMatch(){
 		this.mntmQuitMatch.setEnabled(true);
 	}
@@ -1223,7 +1223,8 @@ public class GUI extends JFrame implements Observer {
 				combatMessage(this.combat.getMessage());
 				combat.combatMessageChanged = false;
 			}
-			if ((this.combat.phase == 0) || (this.combat.phase == 2)) {
+			if (Global.getMatch() != null
+					&& (this.combat.phase == 0) || (this.combat.phase == 2)) {
 				next(this.combat);
 			}
 		}

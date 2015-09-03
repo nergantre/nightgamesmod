@@ -448,6 +448,7 @@ public class Body implements Cloneable {
 		Optional<BodyFetish> fetish = getFetish(with.getType());
 		if (fetish.isPresent()) {
 			bonusDamage += magnitude * (1 + (fetish.get()).magnitude);
+			character.add(new BodyFetish(character, opponent, with.getType(), .05));
 		}
 		double origBase = bonusDamage+magnitude;
 
@@ -496,9 +497,9 @@ public class Body implements Cloneable {
 		}
 		character.pleasure(result, c);
 
-		if (opponent != null && opponent.has(Trait.fetishTrainer) && Arrays.asList(fetishParts).contains(with.getType())) {
-			if (Global.random(100) < Math.min(opponent.get(Attribute.Fetish), 25)) {
-				character.add(c, new BodyFetish(character, opponent, with.getType(), .25, 10));
+		if (opponent != null && Arrays.asList(fetishParts).contains(with.getType())) {
+			if (opponent.has(Trait.fetishTrainer) && Global.random(100) < Math.min(opponent.get(Attribute.Fetish), 25)) {
+				character.add(c, new BodyFetish(character, opponent, with.getType(), .25));
 			}
 		}
 		return result;

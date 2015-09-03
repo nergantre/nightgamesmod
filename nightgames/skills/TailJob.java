@@ -46,7 +46,7 @@ public class TailJob extends Skill {
 			receiver = "pussy";
 		}
 		if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
-			target.add(c, new BodyFetish(target, getSelf(), "tail", .25, 10));
+			target.add(c, new BodyFetish(target, getSelf(), "tail", .25));
 		}
 		target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom(receiver), m, c);
 		return true;

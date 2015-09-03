@@ -75,6 +75,7 @@ import nightgames.items.Item;
 import nightgames.pet.Ptype;
 import nightgames.skills.*;
 import nightgames.stance.FlowerSex;
+import nightgames.status.BodyFetish;
 import nightgames.trap.Alarm;
 import nightgames.trap.AphrodisiacTrap;
 import nightgames.trap.Decoy;
@@ -145,7 +146,7 @@ public class Global {
 //		debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
-//		debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
+		debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
 		traitRequirements = new TraitTree(ResourceLoader.getFileResourceAsStream("data/TraitRequirements.xml"));
 		current=null;
 		factory = new ContextFactory();
@@ -482,6 +483,9 @@ public class Global {
 			if(human.getAffection(player)>maxaffection){
 				maxaffection=human.getAffection(player);
 				lover=player;
+			}
+			if (player.has(Trait.footfetishist)) {
+				player.add(new BodyFetish(player, null, "feet", .25));
 			}
 		}
 //		if (true) {

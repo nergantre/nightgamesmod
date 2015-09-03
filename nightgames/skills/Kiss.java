@@ -103,11 +103,11 @@ public class Kiss extends Skill {
 					"You tangle your tongue around hers and probe the sensitive insides her mouth while mirroring the action in the space of her soul, sending quakes of pleasure through her physical and astral body. "
 					+ "As you finally break the kiss, she looks energized but desperate for more.";
 		}
-		if(modifier==Result.upgrade){
+		if(modifier==Result.special){
 			return "You pull "+target.name()+" to you and kiss her passionately. You run your tongue over her lips until her opens them and immediately invade her mouth. " +
 					"You tangle your tongue around hers and probe the sensitive insides her mouth. As you finally break the kiss, she leans against you, looking kiss-drunk and needy.";
 		}
-		if(modifier==Result.special){
+		if(modifier==Result.upgrade){
 			return "You pull "+target.name()+" to you and kiss her passionately. You run your tongue over her lips until her opens them and immediately invade her mouth. " +
 					"You focus on her lifeforce inside her and draw it out through the kiss while overwhelming her defenses with heady pleasure. As you finally break the kiss, she leans against you, looking kiss-drunk and needy.";
 		}

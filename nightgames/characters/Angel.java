@@ -274,7 +274,7 @@ public class Angel extends BasePersonality {
 	@Override
 	public String describe(Combat c) {
 		if(character.has(Trait.demigoddess)){
-			return "Angel's transformation seems to be inspired by her namesake. She has large angelic wings behind her, which combined with her long blonde hair and perfect unblemished "
+			return "Angel's transformation seems to have taken inspiration from her own name. She has large angelic wings behind her, which combined with her long blonde hair and perfect unblemished "
 					+ "skin gives her a positively divine appearance. Her appearance should be emanating holy purity, but instead her eyes and expression seems lewder than ever. "
 					+ "You're not sure what happened exactly, but it's clear to you that she's somehow become a goddess of sexuality. "
 					+ "Angel's entire being seems to radiate sex and you struggle to ignore an overwhelming urge to prostrate yourself and beg to worship her body.";

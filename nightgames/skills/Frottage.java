@@ -67,7 +67,7 @@ public class Frottage extends Skill{
 		}
 		target.body.pleasure(getSelf(), dealer, receiver, m, c);
 		if (Global.random(100) < 15 + 2 * getSelf().get(Attribute.Fetish)) {
-			target.add(c, new BodyFetish(target, getSelf(), "cock", .25, 10));
+			target.add(c, new BodyFetish(target, getSelf(), "cock", .25));
 		}
 		getSelf().emote(Emotion.horny, 15);
 		target.emote(Emotion.horny, 15);

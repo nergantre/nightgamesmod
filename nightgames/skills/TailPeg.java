@@ -111,7 +111,7 @@ public class TailPeg extends Skill {
 			getSelf().emote(Emotion.confident, 15);
 			getSelf().emote(Emotion.dominant, 25);
 			if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
-				target.add(c, new BodyFetish(target, getSelf(), "tail", .25, 10));
+				target.add(c, new BodyFetish(target, getSelf(), "tail", .25));
 			}
 		} else {
 			if (target.human())

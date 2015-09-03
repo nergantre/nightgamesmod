@@ -150,6 +150,7 @@ public enum Trait {
 	imagination("Active Imagination","More easily swayed by pillow talk"),//more temptation damage from indirect skills
 	achilles("Achilles Jewels","Delicate parts are somehow even more delicate"),	//more pain from groin attacks
 	naive("Naive", "Chance to not get cynical after mindgames"), //Chance to not get cynical after recovering from mindgames
+	footfetishist("Foot Fetishist", "Loves those feet"), //Starts off each match with a foot fetish
 	immobile("Immobile", "Unable to move"), //Cannot move
 	lethargic("Lethargic", "Very low mojo gain from normal methods.", new Lethargic(null)), //25% mojo gain
 
@@ -183,6 +184,7 @@ public enum Trait {
 	experienced("Experienced Lover","Skilled at pacing yourself when thrusting"), //reduced recoil from penetration
 	wrassler("Wrassler","A talent for fighting dirty"), //squeeze, knee, kick reduce arousal less
 	pimphand("Pimp Hand","A devastating slap and a bonus to hands"),
+	stableform("Stable Form","Cannot be affected by unexpected transformations"), //ignores thrown transformative drafts from the opponent
 
 	//unimplemented
 	Clingy("Clingy","can do the 'glomp' attack - weak standing grapple hug, probably something Cassie would take right away"),

@@ -1,10 +1,13 @@
 package nightgames.status;
 
+import java.util.Arrays;
+
 import org.json.simple.JSONObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.custom.requirement.InsertedRequirement;
+import nightgames.characters.custom.requirement.ReverseRequirement;
 import nightgames.combat.Combat;
 import nightgames.global.JSONUtils;
 
@@ -15,7 +18,7 @@ public class DivineCharge extends Status {
 		super("Divine Charge", affected);
 		flag(Stsflag.divinecharge);
 		this.magnitude = magnitude;
-		requirements.add(new InsertedRequirement(true));
+		requirements.add(new ReverseRequirement(Arrays.asList(new InsertedRequirement(true))));
 	}
 
 	@Override

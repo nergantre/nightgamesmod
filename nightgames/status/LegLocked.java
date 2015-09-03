@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.custom.requirement.EitherInsertedRequirement;
 import nightgames.characters.custom.requirement.InsertedRequirement;
 import nightgames.combat.Combat;
 import nightgames.global.JSONUtils;
@@ -14,7 +15,7 @@ public class LegLocked extends Status {
 	
 	public LegLocked(Character affected, float dc) {
 		super("Leg Locked", affected);
-		requirements.add(new InsertedRequirement(true));
+		requirements.add(new EitherInsertedRequirement(true));
 		requirements.add((c, self, other) -> toughness > .01);
 		toughness = dc;
 		flag(Stsflag.leglocked);
