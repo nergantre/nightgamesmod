@@ -19,6 +19,12 @@ Balance:
 		- New duration - number of times this enthralled status has been refreshed
 - Fetishes now last throughout a match, but decrease in magnitude as time passes to a minimum magnitude of .25
 	- Being pleasured by the fetish part will increase magnitude by .05
+- Kiss of Baptism has been rebalanced a bit.
+	- It now costs 30 mojo instead of building 10 mojo.
+	- Now always applies Love Struck, but only for 2 turns
+	- Now builds you 50% mojo
+	- Now fully heals you
+	- Buffed base damage bonus to 20
 
 Bug fix:
 - Deep kiss and drain kiss' text was swapped around
