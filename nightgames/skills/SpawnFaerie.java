@@ -18,7 +18,7 @@ public class SpawnFaerie extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Arcane)>=3;
 	}
 
@@ -33,7 +33,7 @@ public class SpawnFaerie extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Summon a Faerie familiar to support you: 15 Mojo";
 	}
 

@@ -53,7 +53,7 @@ public class Taunt extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Cunning)>=8;
 	}
 
@@ -79,7 +79,7 @@ public class Taunt extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Embarrass your opponent, may inflict Shamed";
 	}
 }

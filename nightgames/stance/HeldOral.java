@@ -1,11 +1,14 @@
 package nightgames.stance;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.global.Global;
 
-public class HeldOral extends Position {
+public class HeldOral extends AbstractFacingStance {
 	public HeldOral(Character top, Character bottom) {
 		super(top, bottom,Stance.oralpin);
 	}
@@ -86,16 +89,6 @@ public class HeldOral extends Position {
 	@Override
 	public boolean inserted(Character c) {
 		return false;
-	}
-
-	@Override
-	public Position insert(Character dom) {
-		Character other = getOther(dom);
-		if(dom.hasDick() && other.hasPussy()){
-			return new Missionary(dom,other);
-		} else {
-			return new Cowgirl(dom,other);
-		}
 	}
 
 	@Override

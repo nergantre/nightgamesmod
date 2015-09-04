@@ -66,6 +66,11 @@ public interface BodyPart {
 	// Should be called when either combatant orgasms
 	public default void onOrgasm(Combat c, Character self, Character opponent, BodyPart other, boolean selfCame) {
 		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE))
-			System.out.printf("Processing Orgasm for %s -> (%s, %s, %s, %s)", this, self, opponent, other, selfCame+"");
+			System.out.printf("Processing Orgasm for %s -> (%s, %s, %s, %s)\n", this, self, opponent, other, selfCame+"");
 	}
+	// whether the part is modded
+	public default boolean isGeneric() {
+		return getMod().getModType().equals("none");
+	}
+	public BodyPartMod getMod();
 }

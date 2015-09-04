@@ -1,23 +1,15 @@
 package nightgames.status;
 
-import java.util.HashSet;
+import org.json.simple.JSONObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 
-public class Shamed extends Status {
-	private int duration;
+public class Shamed extends DurationStatus {
 	public Shamed(Character affected) {
-		super("Shamed", affected);
-		if(affected.has(Trait.PersonalInertia)){
-			this.duration=6;
-		}
-		else{
-			this.duration=4;
-		}
+		super("Shamed", affected, 4);
 		flag(Stsflag.shamed);
 	}
 
@@ -57,11 +49,7 @@ public class Shamed extends Status {
 
 	@Override
 	public int regen(Combat c) {
-		duration--;
-		if(duration<=0){
-			affected.removelist.add(this);
-			affected.addlist.add(new Cynical(affected));
-		}
+		super.regen(c);
 		affected.emote(Emotion.nervous,20);
 		affected.spendMojo(c, 5);
 		return 0;
@@ -113,11 +101,21 @@ public class Shamed extends Status {
 
 	@Override
 	public int value() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Shamed(newAffected);
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new Shamed(null);
 	}
 }

@@ -1,5 +1,4 @@
 package nightgames.stance;
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -9,9 +8,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.skills.Skill;
 
-
-
-public abstract class Position implements Serializable, Cloneable{
+public abstract class Position implements Cloneable{
 	public Character top;
 	public Character bottom;
 	public int time;
@@ -75,9 +72,13 @@ public abstract class Position implements Serializable, Cloneable{
 	public boolean inserted() {
 		return inserted(top) || inserted(bottom);
 	}
+	
+	public Position insert(Character pitcher, Character dom) {
+		return this;
+	}
 
-	public Position insert() {
-		return insert(top);
+	public Position insertRandom() {
+		return insertRandomDom(top);
 	}
 
 	public Collection<Skill> availSkills(Character c) {
@@ -137,9 +138,15 @@ public abstract class Position implements Serializable, Cloneable{
 	public boolean analinserted() {
 		return en == Stance.anal;
 	}
-	public Position insert(Character target) {
+
+	public boolean analinserted(Character self) {
+		return en == Stance.anal && top == self;
+	}
+
+	public Position insertRandomDom(Character target) {
 		return this;
 	}
+
 	public Character getOther(Character c) {
 		if (c == top) {
 			return bottom;
@@ -168,5 +175,8 @@ public abstract class Position implements Serializable, Cloneable{
 	
 	public BodyPart partFor(Character c) {
 		return c.equals(top) ? topPart() : bottomPart();
+	}
+	public boolean pussyinserted() {
+		return inserted() && !analinserted();
 	}
 }

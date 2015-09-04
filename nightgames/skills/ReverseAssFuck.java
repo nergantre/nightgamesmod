@@ -78,7 +78,7 @@ public class ReverseAssFuck extends Fuck {
 		}
 		c.write(getSelf(), Global.format(premessage, getSelf(), target));
 	
-		int m = Global.random(5);
+		int m = 5 + Global.random(5);
 		if(getSelf().human()) {
 			c.write(getSelf(),deal(c,m,Result.normal, target));
 		}
@@ -86,9 +86,13 @@ public class ReverseAssFuck extends Fuck {
 			c.write(getSelf(),receive(c,m,Result.normal, target));
 		}
 
+		int otherm = m;
+		if (getSelf().has(Trait.insertion)) {
+			otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
+		}
+		target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c);
+		getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c);
 		c.setStance(new AnalCowgirl(getSelf(),target));
-		target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c);		
-		getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), m / 2, c);
 		getSelf().emote(Emotion.dominant, 30);
 		if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
 			target.add(c, new BodyFetish(target, getSelf(), "ass", .25, 10));
@@ -97,8 +101,8 @@ public class ReverseAssFuck extends Fuck {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
-		return user.get(Attribute.Seduction)>=20;
+	public boolean requirements(Combat c, Character user, Character target) {
+		return user.get(Attribute.Seduction)>=15;
 	}
 
 	@Override
@@ -125,7 +129,7 @@ public class ReverseAssFuck extends Fuck {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Fuck your opponent with your ass.";
 	}
 

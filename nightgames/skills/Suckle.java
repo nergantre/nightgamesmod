@@ -21,7 +21,7 @@ public class Suckle extends Skill {
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		Result results = target.has(Trait.lactating) ? Result.special : Result.normal;
-		int m = (getSelf().get(Attribute.Seduction) > 10 ? 5 : 0) + Global.random(6);
+		int m = (getSelf().get(Attribute.Seduction) > 10 ? 8 : 4) + Global.random(6);
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,results, target));
 		}
@@ -34,13 +34,15 @@ public class Suckle extends Skill {
 		target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("breasts"), m, c);
 		if (results == Result.special) {
 			getSelf().tempt(c, target, target.body.getRandomBreasts(), (3 + target.body.getRandomBreasts().size) * 2);
-			target.buildMojo(c, 8);
+			target.buildMojo(c, 10);
+		} else {
+			target.buildMojo(c, 5);
 		}
 		return true;
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return true;
 	}
 
@@ -67,14 +69,14 @@ public class Suckle extends Skill {
 		if(modifier==Result.normal){
 			return getSelf().name()+" licks and sucks your nipples, sending a surge of excitement straight to your groin.";
 		} else {
-			return getSelf().name()+" licks and sucks your nipples, drawing forth a gust of breast milk from your teats. " +
+			return getSelf().name()+" licks and sucks your nipples, drawing forth a gush of breast milk from your teats. " +
 					"She drinks deeply of your milk, gurgling happily as more of the smooth liquid flows down her throat.";
 		}
 	}
 
 	@Override
-	public String describe() {
-		return "Suck your opponent's nipples";
+	public String describe(Combat c) {
+		return "Suck your opponent's nipples. Builds mojo for the opponent.";
 	}
 	@Override
 	public boolean makesContact() {

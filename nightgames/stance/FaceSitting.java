@@ -1,9 +1,11 @@
 package nightgames.stance;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
@@ -20,7 +22,7 @@ import nightgames.skills.Struggle;
 import nightgames.skills.Suckle;
 import nightgames.skills.Wait;
 
-public class FaceSitting extends Position {
+public class FaceSitting extends AbstractBehindStance {
 
 	public FaceSitting(Character top, Character bottom) {
 		super(top, bottom,Stance.facesitting);
@@ -99,15 +101,34 @@ public class FaceSitting extends Position {
 	public boolean inserted(Character c) {
 		return false;
 	}
+
 	@Override
-	public Position insert(Character dom) {
-		Character other = getOther(dom);
-		if(dom.hasDick() && other.hasPussy()){
-			return new Missionary(dom,other);
-		} else {
-			return new Cowgirl(dom,other);
+	public Position insert(Character pitcher, Character dom) {
+		Character catcher = getOther(pitcher);
+		Character sub = getOther(pitcher);
+		if (pitcher.body.getRandomInsertable() == null || !catcher.hasPussy()) {
+			// invalid
+			return this;
 		}
+		if (pitcher == dom && pitcher == top) {
+			// guy is sitting on girl's face facing her feet, and is the dominant one in the new stance
+			return new UpsideDownMaledom(pitcher, catcher);
+		}
+		if (pitcher == sub && pitcher == top) {
+			// guy is sitting on girl's face facing her feet, and is the submissive one in the new stance
+			return new Cowgirl(catcher, pitcher);
+		}
+		if (pitcher == dom && pitcher == bottom) {
+			// girl is sitting on guy's face facing his feet, and is the submissive one in the new stance
+			return new Doggy(pitcher, catcher);			
+		}
+		if (pitcher == sub && pitcher == bottom) {
+			// girl is sitting on guy's face facing his feet, and is the dominant one in the new stance
+			return new ReverseCowgirl(catcher, pitcher);
+		}
+		return this;
 	}
+
 	public void decay(Combat c){
 		time++;
 		bottom.weaken(null, 5);

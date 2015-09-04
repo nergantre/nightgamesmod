@@ -15,7 +15,7 @@ public class CommandDismiss extends PlayerCommand {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Have your thrall dismiss their pet.";
 	}
 

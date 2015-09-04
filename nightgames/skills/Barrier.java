@@ -13,7 +13,7 @@ public class Barrier extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Arcane)>=18;
 	}
 
@@ -28,7 +28,7 @@ public class Barrier extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Creates a magical barrier to protect you from physical damage: 3 Mojo";
 	}
 

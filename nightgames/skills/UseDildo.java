@@ -15,7 +15,7 @@ public class UseDildo extends Skill{
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return true;
 	}
 
@@ -27,7 +27,7 @@ public class UseDildo extends Skill{
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy())){
+		if(target.roll(this, c, accuracy(c))){
 			if(getSelf().has(Item.Dildo2)){
 				if(getSelf().human()){
 					c.write(getSelf(),deal(c,0,Result.upgrade, target));
@@ -102,7 +102,7 @@ public class UseDildo extends Skill{
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Pleasure opponent with your dildo";
 	}
 

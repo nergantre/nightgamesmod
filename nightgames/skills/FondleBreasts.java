@@ -27,7 +27,7 @@ public class FondleBreasts extends Skill {
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		int m = 1 + Global.random(4);
-		if(target.roll(this, c, accuracy())){
+		if(target.roll(this, c, accuracy(c))){
 			if(target.topless()){
 				m += 4;
 				if(getSelf().human()){
@@ -59,7 +59,7 @@ public class FondleBreasts extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return true;
 	}
 
@@ -70,8 +70,8 @@ public class FondleBreasts extends Skill {
 	public int speed(){
 		return 6;
 	}
-	public int accuracy(){
-		return 7;
+	public int accuracy(Combat c){
+		return 95;
 	}
 	public Tactics type(Combat c) {
 		return Tactics.pleasure;
@@ -104,7 +104,7 @@ public class FondleBreasts extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Grope your opponents breasts. More effective if she's topless";
 	}
 

@@ -14,7 +14,7 @@ public class Sedate extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return true;
 	}
 
@@ -36,7 +36,7 @@ public class Sedate extends Skill {
 			target.weaken(c, 30);
 			target.loseMojo(c, 25);
 		}
-		else if(target.roll(this, c, accuracy())){
+		else if(target.roll(this, c, accuracy(c))){
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.normal, target));
 			}
@@ -95,7 +95,7 @@ public class Sedate extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Throw sedative at opponent, weakening her";
 	}
 }

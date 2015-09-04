@@ -26,7 +26,7 @@ public class Squeeze extends Skill {
 	}
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy())){
+		if(target.roll(this, c, accuracy(c))){
 			if(target.pantsless()){
 				if(getSelf().has(Item.ShockGlove)&&getSelf().has(Item.Battery,2)){
 					getSelf().consume(Item.Battery, 2);
@@ -88,7 +88,7 @@ public class Squeeze extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Power)>=9;
 	}
 
@@ -147,7 +147,7 @@ public class Squeeze extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Grab opponent's groin; deals more damage if she's naked";
 	}
 

@@ -13,7 +13,7 @@ public class NakedBloom extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Arcane)>=15;
 	}
 
@@ -28,7 +28,7 @@ public class NakedBloom extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Cast a spell to transform your opponent's clothes into flower petals: 20 Mojo";
 	}
 

@@ -1,17 +1,15 @@
 package nightgames.status;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
+import nightgames.global.JSONUtils;
 
-public class Wary extends Status {
-	private int duration;
-
+public class Wary extends DurationStatus {
 	public Wary(Character affected, int duration) {
-		super("Wary", affected);
-		this.duration=duration;
+		super("Wary", affected, duration);
 		flag(Stsflag.wary);
 	}
 
@@ -37,15 +35,6 @@ public class Wary extends Status {
 	
 	@Override
 	public int mod(Attribute a) {
-		return 0;
-	}
-
-	@Override
-	public int regen(Combat c) {
-		duration--;
-		if(duration<0){
-			affected.removelist.add(this);
-		}
 		return 0;
 	}
 
@@ -100,6 +89,18 @@ public class Wary extends Status {
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new Wary(newAffected, duration);
+		return new Wary(newAffected, getDuration());
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		obj.put("duration", getDuration());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new Wary(null, JSONUtils.readInteger(obj, "duration"));
 	}
 }

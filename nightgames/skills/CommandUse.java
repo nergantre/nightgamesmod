@@ -43,7 +43,7 @@ public class CommandUse extends PlayerCommand {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Force your thrall to use a harmful item on themselves";
 	}
 

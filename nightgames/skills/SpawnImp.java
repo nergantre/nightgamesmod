@@ -18,7 +18,7 @@ public class SpawnImp extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Dark)>=6;
 	}
 
@@ -33,7 +33,7 @@ public class SpawnImp extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Summon a demonic Imp: 5 arousal";
 	}
 

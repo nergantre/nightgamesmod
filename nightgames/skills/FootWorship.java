@@ -19,7 +19,7 @@ public class FootWorship extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		Optional<BodyFetish> fetish = getSelf().body.getFetish("feet");
 		return fetish.isPresent() && fetish.get().magnitude >= .5;
 	}
@@ -29,6 +29,9 @@ public class FootWorship extends Skill {
 		return target.body.has("feet")&&c.getStance().reachBottom(getSelf())&&getSelf().canAct()&&!c.getStance().behind(getSelf());
 	}
 
+	public int accuracy(Combat c){
+		return 150;
+	}
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		Result result = Result.normal;
@@ -54,9 +57,6 @@ public class FootWorship extends Skill {
 	public int speed(){
 		return 2;
 	}
-	public int accuracy(){
-		return 6;
-	}
 	public Tactics type(Combat c) {
 		return Tactics.pleasure;
 	}
@@ -75,7 +75,7 @@ public class FootWorship extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Worship opponent's feet: builds mojo for opponent";
 	}
 	public String getTargetOrganType(Combat c, Character target) {

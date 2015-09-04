@@ -70,7 +70,7 @@ public class ReverseFuck extends Fuck {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Straddle your opponent and ride her cock";
 	}
 

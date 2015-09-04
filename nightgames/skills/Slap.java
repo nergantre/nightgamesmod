@@ -27,7 +27,7 @@ public class Slap extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy())){
+		if(target.roll(this, c, accuracy(c))){
 			if(getSelf().get(Attribute.Animism)>=8){
 				if(getSelf().human()){
 					c.write(getSelf(),deal(c,0,Result.special, target));			
@@ -79,7 +79,7 @@ public class Slap extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return !user.has(Trait.softheart)&&user.get(Attribute.Power)>=7;
 	}
 
@@ -129,7 +129,7 @@ public class Slap extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Slap opponent across the face";
 	}
 	@Override

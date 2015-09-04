@@ -15,7 +15,7 @@ public class MagicMissile extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Arcane)>=1;
 	}
 
@@ -30,13 +30,13 @@ public class MagicMissile extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Fires a small magic projectile: 5 Mojo";
 	}
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy())){
+		if(target.roll(this, c, accuracy(c))){
 			if(target.nude()&&Global.random(3)==2){
 				if(getSelf().human()){
 					c.write(getSelf(),deal(c,0,Result.critical, target));
@@ -47,7 +47,7 @@ public class MagicMissile extends Skill {
 				if(target.has(Trait.achilles)){
 					target.pain(c, Global.random(6));
 				}
-				target.pain(c, 9+Global.random(2*getSelf().get(Attribute.Arcane)+1));
+				target.pain(c, Math.min(9+Global.random(2*getSelf().get(Attribute.Arcane)+1), 100));
 				target.emote(Emotion.angry,10);
 			}
 			else{
@@ -57,7 +57,7 @@ public class MagicMissile extends Skill {
 				else if(target.human()){
 					c.write(getSelf(),receive(c,0,Result.normal, target));
 				}
-				target.pain(c, 6+Global.random(getSelf().get(Attribute.Arcane)+2));
+				target.pain(c, Math.min(100, 6+Global.random(getSelf().get(Attribute.Arcane)+2)));
 				target.emote(Emotion.angry,5);
 			}
 		}
@@ -83,8 +83,8 @@ public class MagicMissile extends Skill {
 		return Tactics.damage;
 	}
 
-	public int accuracy(){
-		return 7;
+	public int accuracy(Combat c){
+		return 80;
 	}
 	public int speed(){
 		return 8;

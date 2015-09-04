@@ -1,5 +1,6 @@
 package nightgames.skills;
 
+import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
@@ -48,7 +49,7 @@ public class Fuck extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return fuckable(c, target)
-				&&c.getStance().insert() != c.getStance()
+				&& (c.getStance().insert(getSelf(), getSelf()) != c.getStance() || c.getStance().insert(target, getSelf()) != c.getStance())
 				&&c.getStance().mobile(getSelf())
 				&&!c.getStance().mobile(target)
 				&&getSelf().canAct()
@@ -86,12 +87,16 @@ public class Fuck extends Skill {
 				c.write(getSelf(),premessage + receive(c,m,Result.normal, target));
 			}
 			if (selfO.isType("pussy")) {
-				c.setStance(c.getStance().insert());
+				c.setStance(c.getStance().insert(target, getSelf()));
 			} else {
-				c.setStance(c.getStance().insert());
+				c.setStance(c.getStance().insert(getSelf(), getSelf()));
+			}
+			int otherm = m;
+			if (getSelf().has(Trait.insertion)) {
+				otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
 			}
 			target.body.pleasure(getSelf(), selfO, targetO, m, c);
-			getSelf().body.pleasure(target, targetO, selfO, m, c);
+			getSelf().body.pleasure(target, targetO, selfO, otherm, c);
 		} else {
 			if(getSelf().human()){
 				c.write(getSelf(),premessage + deal(c,0,Result.miss, target));
@@ -104,7 +109,7 @@ public class Fuck extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return true;
 	}
 
@@ -168,7 +173,7 @@ public class Fuck extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Penetrate your opponent, switching to a sex position";
 	}
 	

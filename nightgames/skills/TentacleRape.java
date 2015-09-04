@@ -19,7 +19,7 @@ public class TentacleRape extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return true;
 	}
 
@@ -34,14 +34,14 @@ public class TentacleRape extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Violate your opponent with your tentacles.";
 	}
 	BodyPart tentacles = null;
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		tentacles = getSelf().body.getRandom("tentacles");
-		if(target.roll(this, c, accuracy())){
+		if(target.roll(this, c, accuracy(c))){
 			if(target.nude()){
 				int m = 2 + Global.random(4);
 				if(target.bound()){

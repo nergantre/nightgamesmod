@@ -15,7 +15,7 @@ public class Diversion extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.has(Trait.misdirection);
 	}
 
@@ -89,7 +89,7 @@ public class Diversion extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Throws your clothes as a distraction";
 	}
 

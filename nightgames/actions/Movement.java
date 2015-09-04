@@ -17,6 +17,7 @@ public enum Movement {
 	library(" enter the library."),
 	pool(" move to the indoor pool."),
 	union(" head toward the student union."),
+	courtyard(" head toward the courtyard."),
 	hide(" disappear into a hiding place."),
 	trap(" start rigging up something weird, probably a trap."),
 	bathe(" start bathing in the nude, not bothered by your presence."),

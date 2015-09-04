@@ -21,10 +21,10 @@ public class Finger extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy())){
-			int m = 4 + Global.random(4);
+		if(target.roll(this, c, accuracy(c))){
+			int m = 6 + Global.random(4);
 			if(getSelf().get(Attribute.Seduction)>=8){
-				m += 3;
+				m += 6;
 				if(getSelf().human()){
 					c.write(getSelf(),deal(c,m,Result.normal, target));
 				} else {
@@ -56,12 +56,12 @@ public class Finger extends Skill {
 	public int getMojoBuilt(Combat c) {
 		return 7;
 	}
-	public int accuracy(){
-		return 7;
+	public int accuracy(Combat c){
+		return 95;
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return true;
 	}
 
@@ -124,7 +124,7 @@ public class Finger extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Digitally stimulate opponent's pussy";
 	}
 

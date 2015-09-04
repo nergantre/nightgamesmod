@@ -24,7 +24,7 @@ public class PerfectTouch extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy())){
+		if(target.roll(this, c, accuracy(c))){
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.normal, target));
 				c.write(target,target.nakedLiner(c));
@@ -48,7 +48,7 @@ public class PerfectTouch extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Cunning)>=18;
 	}
 
@@ -59,9 +59,12 @@ public class PerfectTouch extends Skill {
 	public int speed(){
 		return 2;
 	}
-	public int accuracy(){
-		return 3;
+
+	public int accuracy(Combat c){
+		return Math.round(Math.max(Math.min(150, 2.5f * (getSelf().get(Attribute.Cunning)
+				- c.getOther(getSelf()).get(Attribute.Cunning)) + 65), 40));
 	}
+
 	public Tactics type(Combat c) {
 		return Tactics.positioning;
 	}
@@ -91,7 +94,7 @@ public class PerfectTouch extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Strips opponent completely: 25 Mojo";
 	}
 	@Override

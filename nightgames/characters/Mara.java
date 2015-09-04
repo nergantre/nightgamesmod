@@ -6,6 +6,7 @@ import nightgames.actions.Movement;
 import nightgames.actions.Resupply;
 import nightgames.areas.Area;
 import nightgames.characters.body.BreastsPart;
+import nightgames.characters.body.CockMod;
 import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
@@ -33,6 +34,7 @@ public class Mara extends BasePersonality  {
 	public Mara(){
 		super();
 		character = new NPC("Mara",1,this);
+		preferredCockMod = CockMod.bionic;
 		character.outfit[0].add(Clothing.bra);
 		character.outfit[0].add(Clothing.Tshirt);
 		character.outfit[1].add(Clothing.underwear);
@@ -93,6 +95,7 @@ public class Mara extends BasePersonality  {
 				advance();
 			}
 		}
+		super.rest();
 		if(!(character.has(Item.Onahole)||character.has(Item.Onahole2))&&character.money>=300){
 			character.gain(Item.Onahole);
 			character.money-=300;

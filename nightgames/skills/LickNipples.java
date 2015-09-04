@@ -30,7 +30,7 @@ public class LickNipples extends Skill {
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		int m = 3 + Global.random(6);
-		if(target.roll(this, c, accuracy())){
+		if(target.roll(this, c, accuracy(c))){
 			if(getSelf().human()){
 				//c.offerImage("LickNipples.jpg", "Art by Fujin Hitokiri");
 				c.write(getSelf(),deal(c,0,Result.normal, target));
@@ -57,7 +57,7 @@ public class LickNipples extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Seduction)>=14;
 	}
 
@@ -90,7 +90,7 @@ public class LickNipples extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Suck your opponent's nipples";
 	}
 	@Override

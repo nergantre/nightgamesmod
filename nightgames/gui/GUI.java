@@ -71,7 +71,6 @@ import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.SwingConstants;
 
-
 public class GUI extends JFrame implements Observer {
 
 	protected Combat combat;
@@ -255,11 +254,11 @@ public class GUI extends JFrame implements Observer {
 				put(10, new JLabel("Male"));
 			}
 		});
+		sldMalePref.setValue(Math.round(Global.getValue(Flag.malePref)));
 		sldMalePref.setToolTipText("This setting affects the gender your opponents will gravitate towards once that"
 				+ " option becomes available.");
 		sldMalePref.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				Character.malePref = sldMalePref.getValue();
 				Global.setCounter(Flag.malePref, sldMalePref.getValue());
 			}
 		});
@@ -310,6 +309,7 @@ public class GUI extends JFrame implements Observer {
 				else{
 					rdfntnorm.setSelected(true);
 				}
+				sldMalePref.setValue(Math.round(Global.getValue(Flag.malePref)));
 				int result = JOptionPane.showConfirmDialog(GUI.this,optionspanel,"Options",JOptionPane.OK_CANCEL_OPTION,JOptionPane.INFORMATION_MESSAGE);
 				if(result==JOptionPane.OK_OPTION){
 					if(rdMsgOn.isSelected()){
@@ -349,7 +349,8 @@ public class GUI extends JFrame implements Observer {
 					}
 					else{
 						Global.flag(Flag.noimage);
-						imgPanel.remove(img);
+						if (img!=null)
+							imgPanel.remove(img);
 						imgPanel.repaint();
 					}
 					if(rdnfntlrg.isSelected()){
@@ -389,15 +390,15 @@ public class GUI extends JFrame implements Observer {
 								"Reyka created by DNDW\n" +
 								"Upgraded Strapon created by ElfBoyEni\n" +
 								"Strapon victory scenes created by Legion\n" +
-								"Hardmode AI by Jos\n" +
-								"Character portraits by B.R. Chen\n" +
+								"Advanced AI by Jos\n" +
 								"Magic Training scenes by Legion\n" +
 								"Jewel 2nd Victory scene by Legion\n" +
-								"Art by Fujin Hitokiri\n" +
 								"Video Games scenes 1-9 by Onyxdime\n" +
 								"Kat Penetration Victory and Defeat scenes by Onyxdime\n" +
 								"Kat Non-Penetration Draw scene by Onyxdime\n" +
-								"Mara/Angel threesome scene by Onyxdime\n");
+								"Mara/Angel threesome scene by Onyxdime\n" + 
+								"Mod by Nergantre\n" +
+								"A ton of testing by Bronzechair");
 			}
 		});
 		
@@ -1169,19 +1170,24 @@ public class GUI extends JFrame implements Observer {
 
 		ArrayList<JLabel> itmlbls = new ArrayList<JLabel>();
 		for (Item i : items.keySet()) {
-			itmlbls.add(count, new JLabel(i.getName() + ": " + items.get(i)+"\n"));
-			itmlbls.get(count).setToolTipText(i.getDesc());
-			inventoryPanel.add(itmlbls.get(count));
-			count++;
+			if (items.get(i) > 0) {
+				itmlbls.add(count, new JLabel(i.getName() + ": " + items.get(i)+"\n"));
+				itmlbls.get(count).setToolTipText(i.getDesc());
+				inventoryPanel.add(itmlbls.get(count));
+				count++;
+			}
 		}
 		
 		
 		count = 0;
 		ArrayList<JLabel> attlbls = new ArrayList<JLabel>();
-		for (Attribute a : player.att.keySet()){
-			attlbls.add(count, new JLabel(a.name() + ": " + player.get(a)));
-			statsPanel.add(attlbls.get(count));
-			count++;
+		for (Attribute a : Attribute.values()){
+			int amt = player.get(a);
+			if (amt > 0) {
+				attlbls.add(count, new JLabel(a.name() + ": " + amt));
+				statsPanel.add(attlbls.get(count));
+				count++;
+			}
 		}
 		
 		JTextPane statusText = new JTextPane();
@@ -1213,7 +1219,10 @@ public class GUI extends JFrame implements Observer {
 	public void update(Observable arg0, Object arg1) {
 		refresh();
 		if (this.combat != null) {
-			combatMessage(this.combat.getMessage());
+			if (combat.combatMessageChanged) {
+				combatMessage(this.combat.getMessage());
+				combat.combatMessageChanged = false;
+			}
 			if ((this.combat.phase == 0) || (this.combat.phase == 2)) {
 				next(this.combat);
 			}

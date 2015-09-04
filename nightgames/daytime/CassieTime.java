@@ -1,12 +1,24 @@
 package nightgames.daytime;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.NPC;
 import nightgames.characters.Trait;
+import nightgames.characters.body.BasicCockPart;
+import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.CockMod;
+import nightgames.characters.body.CockPart;
+import nightgames.characters.body.ModdedCockPart;
+import nightgames.characters.body.PussyPart;
+import nightgames.characters.custom.requirement.BodyPartRequirement;
 import nightgames.global.Flag;
 import nightgames.global.Global;
+import nightgames.items.Item;
 
 public class CassieTime extends Activity {
 	private NPC cassie;
@@ -14,6 +26,7 @@ public class CassieTime extends Activity {
 	public CassieTime(Character player) {
 		super("Cassie", player);
 		cassie = Global.getNPC("Cassie");
+		buildTransformationPool();
 	}
 
 	@Override
@@ -21,16 +34,88 @@ public class CassieTime extends Activity {
 		return Global.checkFlag(Flag.CassieKnown);
 	}
 
+	List<TransformationOption> options;
+
+	public void buildTransformationPool() {
+		options = new ArrayList<>();
+		TransformationOption blessedCock = new TransformationOption();
+		blessedCock.ingredients.put(Item.PriapusDraft, 10);
+		blessedCock.ingredients.put(Item.BewitchingDraught, 20);
+		blessedCock.ingredients.put(Item.FaeScroll, 1);
+		blessedCock.requirements.add(new BodyPartRequirement("cock"));
+		blessedCock.requirements.add((c, self, other) -> {
+			return self.body.get("cock").stream().anyMatch(cock -> ((CockPart)cock).isGeneric());
+		});
+		blessedCock.additionalRequirements = "A normal cock";
+		blessedCock.option = "Blessed Cock";
+		blessedCock.scene = "[Placeholder]<br>Cassie blesses your cock with the power of the fairies.";
+		blessedCock.effect = (c, self, other) -> {
+			Optional<BodyPart> optPart = self.body.get("cock").stream().filter(cock -> ((CockPart)cock).isGeneric()).findAny();
+			BasicCockPart target = (BasicCockPart) optPart.get();
+			self.body.remove(target);
+			self.body.add(target.applyMod(CockMod.runic));
+			return true;
+		};
+		options.add(blessedCock);
+		TransformationOption arcanePussy = new TransformationOption();
+		arcanePussy.ingredients.put(Item.BewitchingDraught, 20);
+		arcanePussy.ingredients.put(Item.FemDraft, 10);
+		arcanePussy.ingredients.put(Item.FaeScroll, 1);
+		arcanePussy.requirements.add(new BodyPartRequirement("pussy"));
+		arcanePussy.requirements.add((c, self, other) -> {
+			return self.body.get("pussy").stream().anyMatch(pussy -> pussy == PussyPart.normal);
+		});
+		arcanePussy.additionalRequirements = "A normal pussy";
+		arcanePussy.option = "Arcane Pussy";
+		arcanePussy.scene = "[Placeholder]<br>Cassie draws intricate arcane tattoos on your pussy";
+		arcanePussy.effect = (c, self, other) -> {
+			self.body.addReplace(PussyPart.arcane, 1);
+			return true;
+		};
+		options.add(arcanePussy);
+	}
+
 	@Override
 	public void visit(String choice) {
 		Global.gui().clearText();
 		Global.gui().clearCommand();
-		if(choice == "Start"){
+		Optional<TransformationOption> optionalOption = options.stream().filter(opt -> choice.equals(opt.option)).findFirst();
+		if (optionalOption.isPresent()) {
+			TransformationOption option = optionalOption.get();
+			boolean hasAll = option.ingredients.entrySet().stream().allMatch(entry -> player.has(entry.getKey(), entry.getValue()));
+			if (hasAll) {
+				Global.gui().message(Global.format(option.scene, cassie, player));
+				option.ingredients.entrySet().stream().forEach(entry -> player.consume(entry.getKey(), entry.getValue(), false));
+				option.effect.execute(null, player, cassie);
+				Global.gui().choose(this, "Leave");
+			} else {
+				Global.gui().message("Cassie frowns when she sees that you don't have the requested items.");
+				Global.gui().choose(this, "Back");
+			}
+		} else if (choice.equals("Enchantments")) {
+			Global.gui().message("[Placeholder]<br>Cassie tells you she could perhaps enchant some of your body.");
+			options.forEach(opt -> {
+				Global.gui().message(opt.option + ":");
+				opt.ingredients.entrySet().forEach((entry) -> {
+					Global.gui().message(entry.getValue() + " " + entry.getKey().getName());					
+				});
+				if (!opt.additionalRequirements.isEmpty()) {
+					Global.gui().message(opt.additionalRequirements);
+				}
+				Global.gui().message("<br>");
+			});
+			options.forEach(opt -> {
+				if (opt.requirements.stream().allMatch(req -> req.meets(null, player, cassie))) {
+					Global.gui().choose(this, opt.option);
+				}
+			});
+			Global.gui().choose(this, "Back");
+		} else if (choice.equals("Start") || choice.equals("Back")) {
 			if(cassie.getAffection(player)>25&&cassie.has(Trait.witch)){
 				Global.gui().message("You and Cassie lay together in her bed while she casts spells above you. Every twitch of her fingers brings a new burst of light and color. She weaves " +
-						"the colors into abstract pictures, but sometimes you can make out figures and familiar places in the patterns. There's no clear narritive or purpose emerging, Cassie " +
+						"the colors into abstract pictures, but sometimes you can make out figures and familiar places in the patterns. There's no clear narrative or purpose emerging, Cassie " +
 						"probably just likes practicing her witchcraft. <i>\"Not everything I learned has practical applications,\"</i> she says quietly. <i>\"But it's pretty isn't it?\"</i> It is pretty. " +
-						"For a moment you're tempted to say that it's not as pretty as she is, but the line is so cliche that you can't manage it. Cassie rests her head on your chest in silence, " +
+						"For a moment you're tempted to say that it's not as pretty as she is, but the line is so cliché that you can't manage it. Cassie rests her head on your chest in silence, " +
 						"but you can tell it's a silence caused by her hesitating to speak rather than having nothing to say.<p><i>\"I had a crush on you almost as long as we've known each other,\"</i> " +
 						"she says without looking at you. <i>\"You're cute, funny, and we got along so well whenever we talked. I tried to think of ways to flirt with you so you'd see me as more than " +
 						"a friend, but I don't think I'd have ever worked up the courage to try. When I saw that we had both joined the games, I can't properly describe what I felt. Embarrassed" +
@@ -41,6 +126,7 @@ public class CassieTime extends Activity {
 					Global.gui().choose(this,"Games");
 					Global.gui().choose(this,"Sparring");
 					Global.gui().choose(this,"Sex");
+					Global.gui().choose(this,"Enchantments");
 			}
 			else if(cassie.getAffection(player)>0){
 				Global.gui().message("You text Cassie and suggest meeting up to spend some time together. You get to the meeting place first and settle down on a bench to wait for her. " +
@@ -104,7 +190,7 @@ public class CassieTime extends Activity {
 						"her complete control today. You grab her hips, pull her into 69 position, and start licking her soaked pussy. She makes a cute noise of surprise that melts into a soft moan. " +
 						"<i>\"O-ok tha-mmm... I don't mind if you do that for a while.\"</i> She takes your cock into her mouth again and continues pleasuring you. Fair enough. If she's going to become better " +
 						"acquainted with your manhood, you might as well learn the ins and outs of her most sensitive area.<p>The two of you keep up your oral activities until your tongues are too " +
-						"tired to continue and both of you have orgrasmed more times than you can count.");
+						"tired to continue and both of you have orgasmed more times than you can count.");
 				if(!player.has(Trait.silvertongue)){
 					Global.gui().message("<p><b>Through diligent practice, you and Cassie have gotten more skilled at oral sex.</b>");
 					player.add(Trait.silvertongue);
@@ -151,11 +237,11 @@ public class CassieTime extends Activity {
 						"card she installed last turn. You forgot about it because you were dealing with the three advance card, but the agenda she needs to win may already be on the table.<p>" +
 						"Sure enough, next turn Cassie plays a Trick of Light to move two of the advancement tokens to the unknown card from the Psychic Field (You probably should have paid to trash " +
 						"it last turn, but hindsight is 20/20). She scores the agenda this turn, gaining the last two points she needs to win the game. While you're cleaning up the cards, she tries " +
-						"valiently, but fails to hide her smile from completely outplaying you. She deserves a bit of gloating. You congratulate her on a well-played game and she beams at you.<p><i>\"" +
+						"valiantly, but fails to hide her smile from completely outplaying you. She deserves a bit of gloating. You congratulate her on a well-played game and she beams at you.<p><i>\"" +
 						"Misdirection is the key to most magic tricks and it works equally well in most games. It's also how I got your pants off with out you noticing.\"</i> You glance down at your pants, " +
 						"which are clearly still on. Cassie suddenly closes the distance between you and kisses you passionately. She presses her body against yours and you embrace her gently. <i>\"Ok, so " +
 						"I admit your pants are still on,\"</i> she whispers as you break for air. <i>\"Neither of us wants that. Maybe we should work together to remove the pants?\"</i> Perhaps some of her clothes need " +
-						"to be removed too? <i>\"I agree, we're both wearing far to much clothing for the bedroom.\"</i> She's already got your belt off as you kiss her again and lead her to the bed.");
+						"to be removed too? <i>\"I agree, we're both wearing far too much clothing for the bedroom.\"</i> She's already got your belt off as you kiss her again and lead her to the bed.");
 				if(!player.has(Trait.misdirection)){
 					Global.gui().message("<p><b>You've learned the art of using a diversion to distract your opponent.</b>");
 					player.add(Trait.misdirection);
@@ -189,7 +275,7 @@ public class CassieTime extends Activity {
 				Global.gui().message("You and Cassie manage to procure an actual fitness room with actual wrestling mats for your sparring practice. No more rolling around in couch cushions and pillows. " +
 						"the downside it that you don't have the same level of privacy as in your dorm room, so today you'll need to stick with just sparring. Cassie seems a lot more confident than usual " +
 						"and the two of you complete your warm ups in good spirits. You start the match with some simple lunges and takedowns. You notice that she's gotten much better at maintaining her " +
-						"balance and avoiding getting caught in your holds. You decide it's ok to come at her more seriously. You grab her by the shoulders and try to use your superior upper body stength " +
+						"balance and avoiding getting caught in your holds. You decide it's ok to come at her more seriously. You grab her by the shoulders and try to use your superior upper body strength " +
 						"to force her to the mat. There's a sudden whirl of movement, an impact on your back, and you find yourself looking at the ceiling.<p>Cassie bends over you, looking concerned. \"Are " +
 						"you ok? Can you still move?\" You seem to be fine, you just don't know what happened there. She gives you relieved smile. <i>\"That was a harai goshi, a hip throw, or " +
 						"it should have been at least. It was still a little rough.\"</i> That seemed plenty effective. You'd hate to have to face the refined version. Cassie giggle a bit. \"I've been learning " +
@@ -213,7 +299,7 @@ public class CassieTime extends Activity {
 						"practicing simple takedowns and pins on each other. Cassie's technique is a bit rough but she is able to successfully execute the moves you show her. When you actually start "+
 						"competing however, the match is woefully one sided. You're able to completely control her while she can only flail vainly to try to escape. You know she's better than this " +
 						"so you ask her why she's holding back. <i>\"If this is just for practice, I don't want to actually hurt you. You've been pretty gentle with me too.\"</i> You have been careful " +
-						"to avoid unnecessary pain, but you've only been able to do so because you were winning so easily. Compassion is the luxury of the strong.<p>After reseting to neutral position " +
+						"to avoid unnecessary pain, but you've only been able to do so because you were winning so easily. Compassion is the luxury of the strong.<p>After resetting to neutral position " +
 						"again, you're quickly able to take her down and pin her on her back. In response, she tilts her head up and kisses you. You point out that kissing is not actually considered " +
 						"a wrestling technique. <i>\"It should be. It's very satisfying.\"</i> She kisses you again. At this rate you're just going to end up having sex. <i>\"Sounds good. I like sex.\"</i> She's obviously " +
 						"not taking sparring seriously, so you decide to punish her a bit.<p>You slip your hands under her shirt and start tickling her bare skin. She shrieks in surprise and tries desperately " +

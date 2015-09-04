@@ -16,4 +16,5 @@ public enum Result {
 	reverse,
 	setup,
 	sub,
+	divine,
 }

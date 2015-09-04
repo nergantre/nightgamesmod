@@ -13,6 +13,10 @@ import nightgames.global.Global;
 import nightgames.items.Clothing;
 import nightgames.items.Item;
 import nightgames.pet.Pet;
+import nightgames.skills.BreastWorship;
+import nightgames.skills.CockWorship;
+import nightgames.skills.FootWorship;
+import nightgames.skills.PussyWorship;
 import nightgames.skills.Skill;
 import nightgames.skills.Stunned;
 import nightgames.stance.Mount;
@@ -32,7 +36,10 @@ import nightgames.status.Winded;
 import java.awt.GraphicsDevice.WindowTranslucency;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Observable;
 
 
@@ -59,6 +66,8 @@ public class Combat extends Observable implements Serializable, Cloneable{
 	public Combat(Character p1, Character p2, Area loc){
 		this.p1=p1;
 		this.p2=p2;
+		p1.startBattle(this);
+		p2.startBattle(this);
 		location=loc;
 		stance = new Neutral(p1,p2);
 		message = "";
@@ -237,6 +246,34 @@ public class Combat extends Observable implements Serializable, Cloneable{
 			return Result.normal;
 		}
 	}
+	
+	Skill worshipSkills[] = {
+		new BreastWorship(null),
+		new CockWorship(null),
+		new FootWorship(null),
+		new PussyWorship(null),
+	};
+
+	public boolean combatMessageChanged;
+
+	private Skill checkWorship(Character self, Character other, Skill def) {
+		if (other.has(Trait.objectOfWorship) && (other.topless() || other.pantsless())) {
+			int chance = Math.min(20, Math.max(5, other.get(Attribute.Divinity) + 10 - self.getLevel()));
+			if (Global.random(100) < chance) {
+				List<Skill> avail = new ArrayList<Skill>(Arrays.asList(worshipSkills));
+				Collections.shuffle(avail);
+				while (!avail.isEmpty()) {
+					Skill skill = avail.remove(avail.size() - 1).copy(self);
+					if (Skill.skillIsUsable(this, skill, other)) {
+						write(other, Global.format("<b>{other:NAME-POSSESSIVE} divine aura forces {self:subject} to forget what {self:pronoun} {self:action:were|was} doing and crawl to {other:direct-object} on {self:possessive} knees.</b>", self, other));
+						return skill;
+					}
+				}
+			}
+		}
+		return def;
+	}
+
 	public void act(Character c, Skill action, String choice){
 		if(c==p1){
 			p1act=action;
@@ -254,6 +291,8 @@ public class Combat extends Observable implements Serializable, Cloneable{
 			if (p1.human() || p2.human()) {
 				Global.gui().clearText();
 			}
+			p1act = checkWorship(p1, p2, p1act);
+			p2act = checkWorship(p2, p1, p2act);
 			if(Global.isDebugOn(DebugFlags.DEBUG_SCENE)){
 				System.out.println(p1.name()+" uses "+p1act.getLabel(this));
 				System.out.println(p2.name()+" uses "+p2act.getLabel(this));
@@ -271,6 +310,8 @@ public class Combat extends Observable implements Serializable, Cloneable{
 			this.write("<br>");
 			p1.eot(this,p2,p2act);
 			p2.eot(this,p1,p1act);
+			checkStamina(p1);
+			checkStamina(p2);
 			getStance().decay(this);
 			getStance().checkOngoing(this);
 			this.phase=0;
@@ -312,6 +353,8 @@ public class Combat extends Observable implements Serializable, Cloneable{
 			useSkills();
 			p1.eot(this,p2,p2act);
 			p2.eot(this,p1,p1act);
+			checkStamina(p1);
+			checkStamina(p2);
 			getStance().decay(this);
 			getStance().checkOngoing(this);
 			this.phase=0;
@@ -345,7 +388,7 @@ public class Combat extends Observable implements Serializable, Cloneable{
 	}
 
 	private boolean checkCounter(Character attacker, Character target, Skill skill) {
-		return !target.has(Trait.submissive)&& getStance().mobile(target) && target.counterChance(attacker, skill) > Global.random(100);
+		return !target.has(Trait.submissive)&& getStance().mobile(target) && target.counterChance(this, attacker, skill) > Global.random(100);
 	}
 
 	private boolean resolveSkill(Skill skill, Character target) {
@@ -418,17 +461,20 @@ public class Combat extends Observable implements Serializable, Cloneable{
 	}
 
 	public void updateMessage() {
+		combatMessageChanged = true;
 		this.setChanged();
 		this.notifyObservers();
+		this.setChanged();
 	}
 
 	public void updateAndClearMessage() {
 		Global.gui().clearText();
+		combatMessageChanged = true;
 		this.setChanged();
 		this.notifyObservers();
 	}
 
-	public void write(Character user, String text){
+	public void write(Character user, String text) {
 		text = Global.capitalizeFirstLetter(text);
 		if (text.length() > 0) {
 			if(user.human()){
@@ -475,7 +521,7 @@ public class Combat extends Observable implements Serializable, Cloneable{
 						write(p.name()+" drops to the floor, exhausted.");
 					}
 				}
-				p.loseWillpower(this, 10);
+				p.loseWillpower(this, Math.min(p.getWillpower().max() / 8, 15), true);
 			}
 		}
 	}

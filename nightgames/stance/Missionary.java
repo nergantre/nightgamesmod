@@ -84,7 +84,7 @@ public class Missionary extends MaledomSexStance {
 	}
 
 	@Override
-	public Position insert() {
+	public Position insertRandom() {
 		return new Mount(top,bottom);
 	}
 

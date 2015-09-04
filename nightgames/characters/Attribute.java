@@ -13,6 +13,7 @@ public enum Attribute {
 	Animism,
 	Ki,
 	Bio,
+	Divinity,
 	Willpower;
 
 	public static boolean isBasic(Attribute a) {

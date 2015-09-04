@@ -1,12 +1,15 @@
 package nightgames.stance;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 
-public class BehindFootjob extends Position {
+public class BehindFootjob extends AbstractBehindStance {
 	public BehindFootjob(Character top, Character bottom) {
 		super(top, bottom,Stance.behindfootjob);
 	}
@@ -82,11 +85,6 @@ public class BehindFootjob extends Position {
 	@Override
 	public boolean inserted(Character c) {
 		return false;
-	}
-
-	@Override
-	public Position insert(Character dom) {
-		return new Doggy(dom, getOther(dom));
 	}
 
 	@Override

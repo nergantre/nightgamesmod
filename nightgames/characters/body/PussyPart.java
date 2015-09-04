@@ -7,19 +7,27 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.status.Abuff;
 import nightgames.status.CockBound;
+import nightgames.status.DivineCharge;
 import nightgames.status.Enthralled;
 import nightgames.status.Frenzied;
 import nightgames.status.Horny;
 import nightgames.status.Shamed;
+import nightgames.status.Status;
 import nightgames.status.Stsflag;
 
 import org.json.simple.JSONObject;
 
-public enum PussyPart implements BodyPart {
-	normal("", 0, 1, 1, 6, 15, 0), arcane("arcane patterned ", .2, 1.1, 1, 9, 5, 3), fiery("fiery ", 0, 1.3, 1.2, 8, 15,
-			3), succubus("succubus ", .6, 1.5, 1.2, 999, 0, 4), feral("feral ", 1, 1.3, 1.2, 8, 7, 2), cybernetic(
-					"cybernetic ", -.50, 1.8, .5, 200, 0,
-					4), gooey("gooey ", .4, 1.5, 1.2, 999, 0, 6), tentacled("tentacled ", 0, 2, 1.2, 999, 0, 8);
+public enum PussyPart implements BodyPart, BodyPartMod {
+	normal("", 0, 1, 1, 6, 15, 0),
+	arcane("arcane patterned ", .2, 1.1, 1, 9, 5, 3),
+	fiery("fiery ", 0, 1.3, 1.2, 8, 15, 3),
+	succubus("succubus ", .6, 1.5, 1.2, 999, 0, 4),
+	feral("feral ", 1, 1.3, 1.2, 8, 7, 2),
+	cybernetic("cybernetic ", -.50, 1.8, .5, 200, 0, 4),
+	gooey("gooey ", .4, 1.5, 1.2, 999, 0, 6),
+	tentacled("tentacled ", 0, 2, 1.2, 999, 0, 8),
+	plant("flower ", .5, 2, 1.2, 999, 0, 8),
+	divine("divine ", 0, 1.0, 1.0, 999, 0, 8);
 
 	public double priority;
 	public String desc;
@@ -50,6 +58,12 @@ public enum PussyPart implements BodyPart {
 
 	@Override
 	public void describeLong(StringBuilder b, Character c) {
+		if (this == plant) {
+			b.append("A larger fleshy red flower is situated between ");
+			b.append(c.nameOrPossessivePronoun());
+			b.append(" legs, spreading a intoxicatingly sweet scent in the vicinity.");
+			return;
+		}
 		b.append("A ");
 		if (c.getArousal().percent() > 15 && c.getArousal().percent() < 60) {
 			b.append("moist ");
@@ -110,6 +124,10 @@ public enum PussyPart implements BodyPart {
 		pleasureMod += self.has(Trait.pussyTraining1) ? .5 : 0;
 		pleasureMod += self.has(Trait.pussyTraining2) ? .7 : 0;
 		pleasureMod += self.has(Trait.pussyTraining3) ? .7 : 0;
+		DivineCharge charge = (DivineCharge) self.getStatus(Stsflag.divinecharge);
+		if (charge != null) {
+			pleasureMod += charge.magnitude;
+		}
 		return pleasureMod;
 	}
 
@@ -138,17 +156,32 @@ public enum PussyPart implements BodyPart {
 	@Override
 	public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		double bonus = 0;
+		if (this == divine && c.getStance().pussyinserted()) {
+			if (self.getStatus(Stsflag.divinecharge) == null) {
+				c.write(self, Global.format(
+						"{self:NAME-POSSESSIVE} " + fullDescribe(self) + " radiates a golden glow when {self:subject-action:moan|moans}. "
+								+ "{other:SUBJECT-ACTION:realize|realizes} {self:subject-action:are|is} feeding on {self:possessive} own pleasure to charge up {self:possessive} divine energy.", self, opponent));
+			} else {
+				c.write(self, Global.format(
+						"{self:SUBJECT-ACTION:continue|continues} feeding on {self:possessive} pleasure to charge up {self:possessive} divine energy.", self, opponent));
+			}
+			self.add(new DivineCharge(self, .25));
+		}
+		if (this == PussyPart.plant && damage > opponent.getArousal().max() / 5 && Global.random(4) == 0) {
+			c.write(self, String.format("An intoxicating scent emanating from %s %s leaves %s in a trance!.", self.possessivePronoun(),
+					describe(self), opponent.directObject()));
+		}
 		if (this == PussyPart.feral) {
 			c.write(self, String.format("Musk emanating from %s %s leaves %s reeling.", self.possessivePronoun(),
 					describe(self), opponent.directObject()));
 			double base = damage;
-			if (target == CockPart.blessed) {
+			if (target.getMod() == CockMod.blessed) {
 				c.write(self,
 						String.format(
 								" The wild scent stirs something deep inside of %s, a lustfulness %s had hidden away. ",
 								opponent.nameOrPossessivePronoun(), opponent.pronoun()));
 				base *= 2.5;
-			} else if (target == CockPart.incubus) {
+			} else if (target.getMod() == CockMod.incubus) {
 				c.write(self, String.format("Whilst certainly invigorating, the scent leaves %s largely unaffected.",
 						opponent.subject()));
 				base /= 4;
@@ -169,8 +202,15 @@ public enum PussyPart implements BodyPart {
 	@Override
 	public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		double bonus = 0;
+		if (this == divine && target.isType("cock")) {
+			if (self.getStatus(Stsflag.divinecharge) != null) {
+				c.write(self, Global.format(
+						"{self:NAME-POSSESSIVE} concentrated divine energy in {self:possessive} pussy seeps into {other:name-possessive} cock, sending unimaginable pleasure directly into {other:possessive} soul.", self, opponent));
+			}
+			// no need for any effects, the bonus is in the pleasure mod
+		}
 		if (this == PussyPart.succubus && target.isType("cock")) {
-			if (target == CockPart.blessed) {
+			if (target.getMod() == CockMod.blessed) {
 				c.write(self, String.format(
 						"Putting in great effort, %s %s to draw upon %s power, but the divine blessings in %s %s keep it locked away.",
 						self.nameOrPossessivePronoun(), self.human() ? "try" : " tries",
@@ -183,7 +223,7 @@ public enum PussyPart implements BodyPart {
 						self.subjectAction("ride", "rides"), opponent.directObject(), opponent.possessivePronoun(),
 						target.describe(opponent), self.possessivePronoun(), describe(self)));
 				int strength;
-				if (target == CockPart.enlightened) {
+				if (target.getMod() == CockMod.enlightened) {
 					c.write(self,
 							String.format(
 									"Since %s had focused so much of %s in %s %s, there is much more for %s to take.",
@@ -240,16 +280,16 @@ public enum PussyPart implements BodyPart {
 				bonus += 5 + Global.random(4);
 			}
 		}
-		if (this == PussyPart.cybernetic && target == CockPart.enlightened) {
+		if (this == PussyPart.cybernetic && target.getMod() == CockMod.enlightened) {
 			c.write(self,
 					String.format("Despite %s %s's best efforts, %s focus does not waver, and %s barely %s a thing.",
 							self.nameOrPossessivePronoun(), describe(self), opponent.nameOrPossessivePronoun(),
 							opponent.pronoun(), opponent.human() ? "feel" : "feels"));
 			bonus -= 5;
 		}
-		if (this == PussyPart.cybernetic && target.isType("cock") && target != CockPart.enlightened
-				&& (Global.random(3) == 0 || target == CockPart.incubus)) {
-			String prefix = target == CockPart.incubus
+		if (this == PussyPart.cybernetic && target.isType("cock") && target.getMod() != CockMod.enlightened
+				&& (Global.random(3) == 0 || target.getMod() == CockMod.incubus)) {
+			String prefix = target.getMod() == CockMod.incubus
 					? "Eager to gain a sample of " + opponent.nameOrPossessivePronoun() + " exotic, demonic sperm, "
 					: "";
 			c.write(self, String.format(
@@ -258,16 +298,16 @@ public enum PussyPart implements BodyPart {
 					self.possessivePronoun(), describe(self), opponent.possessivePronoun(), target.describe(opponent),
 					opponent.pronoun(), opponent.possessivePronoun(), opponent.directObject()));
 			bonus += 15;
-			if (target != CockPart.incubus || Global.random(4) == 0)
+			if (target.getMod() != CockMod.incubus || Global.random(4) == 0)
 				opponent.add(c, new Shamed(opponent));
 		}
 		if (this == PussyPart.fiery && target.isType("cock")) {
-			if (target == CockPart.primal) {
+			if (target.getMod() == CockMod.primal) {
 				c.write(self,
 						String.format("The intense heat emanating from %s %s only serves to enflame %s primal passion.",
 								self.nameOrPossessivePronoun(), describe(self), opponent.nameOrPossessivePronoun()));
 				opponent.buildMojo(c, 7);
-			} else if (target == CockPart.bionic) {
+			} else if (target.getMod() == CockMod.bionic) {
 				c.write(self,
 						String.format(
 								"The heat emanating from %s %s is extremely hazardous for %s %s, nearly burning through its circuitry and definitely causing intense pain.",
@@ -285,8 +325,8 @@ public enum PussyPart implements BodyPart {
 		if (this == PussyPart.arcane) {
 			String message;
 			int strength;
-			if (target != CockPart.bionic) {
-				if (target == CockPart.primal) {
+			if (target.getMod() != CockMod.bionic) {
+				if (target.getMod() == CockMod.primal) {
 					message = String.format(
 							"The tattoos around %s %s flare up with a new intensity, responding to the energy flow from %s %s."
 									+ " The magic within them latches onto it and pulls fiercly, drawing %s strength into %s with great gulps.",
@@ -307,7 +347,7 @@ public enum PussyPart implements BodyPart {
 						"%s tattoos shine with an eldritch light, but they do not seem to be able to affect %s only partially-organic %s",
 						self.nameOrPossessivePronoun(), opponent.nameOrPossessivePronoun(), target.describe(opponent));
 			}
-			if (Global.random(8) == 0 && !opponent.wary() && target != CockPart.bionic) {
+			if (Global.random(8) == 0 && !opponent.wary() && target.getMod() != CockMod.bionic) {
 				message += " The light seems to seep into " + opponent.possessivePronoun() + " "
 						+ target.describe(opponent) + ", leaving " + opponent.directObject() + " enthralled to "
 						+ self.possessivePronoun() + " will.";
@@ -315,14 +355,15 @@ public enum PussyPart implements BodyPart {
 			}
 			c.write(self, message);
 		}
+
 		if (this == feral) {
 			if (target.isType("cock") && Global.random(10) == 0) {
 				c.write(self,
 						String.format(
 								"A cloud of lust descends over %s and %s, clearing both your thoughts of all matters except to fuck. Hard.",
 								opponent.subject(), self.subject()));
-				self.add(new Frenzied(self, c, 3));
-				opponent.add(new Frenzied(opponent, c, 3));
+				self.add(new Frenzied(self, 3));
+				opponent.add(new Frenzied(opponent, 3));
 			}
 		}
 		if (this.isType("pussy") && self.has(Trait.vaginaltongue) && target.isType("cock")
@@ -416,35 +457,56 @@ public enum PussyPart implements BodyPart {
 					self, opponent));
 			opponent.body.pleasure(self, this, otherOrgan, 10, c);
 		}
+		if (this == plant) {
+			c.write(self, Global.format("The small rough fibery filaments inside {self:name-possessive} flower pussy wraps around {other:name-possessive} cock. "
+					+ "A profound exhaustion settles on {other:direct-object}, as {other:subject-action:feel|feels} {self:name-possessive} insidious flower leeching {other:possessive} strength.", self, opponent));
+			opponent.drainStaminaAsMojo(c, self, 20, 1.25f);
+			opponent.loseWillpower(c, 5);
+		}
 	}
 
 	@Override
 	public int counterValue(BodyPart other) {
-		if (this == normal && other.getType().equals("cock") && !((CockPart) other).isGeneric()) {
+		if (this == normal && other.getType().equals("cock") && !((BasicCockPart) other).isGeneric()) {
 			// If opponent has a modded cock, that's dangerous
 			return -1;
 		}
-		if (this != normal && other.getType().equals("cock") && ((CockPart) other).isGeneric()) {
+		if (this != normal && other.getType().equals("cock") && ((BasicCockPart) other).isGeneric()) {
 			// On the other hand, if we have a mod, but he doesn't, that's good
 			// for us
 			return 1;
 		}
-		if (this == fiery) {
-			return other == CockPart.bionic ? 1 : other == CockPart.primal ? -1 : 0;
-		}
-		if (this == arcane) {
-			return other == CockPart.primal ? 1 : other == CockPart.bionic ? -1 : 0;
-		}
-		if (this == succubus) {
-			return other == CockPart.blessed ? -1 : 0;
-		}
-		if (this == feral) {
-			return other == CockPart.blessed ? 1 : other == CockPart.incubus ? -1 : 0;
-		}
-		if (this == cybernetic) {
-			return other == CockPart.incubus ? 1 : 0;
+		if (other instanceof ModdedCockPart) {
+			BodyPartMod mod = other.getMod();
+			if (this == fiery) {
+				return mod == CockMod.bionic ? 1 : mod == CockMod.primal ? -1 : 0;
+			}
+			if (this == arcane) {
+				return mod == CockMod.primal ? 1 : mod == CockMod.bionic ? -1 : 0;
+			}
+			if (this == succubus) {
+				return mod == CockMod.blessed ? -1 : 0;
+			}
+			if (this == feral) {
+				return mod == CockMod.blessed ? 1 : mod == CockMod.incubus ? -1 : 0;
+			}
+			if (this == cybernetic) {
+				return mod == CockMod.incubus ? 1 : 0;
+			}
 		}
 
 		return 0;
+	}
+
+	@Override
+	public BodyPartMod getMod() {
+		if (this == normal)
+			return BodyPartMod.noMod;
+		return this;
+	}
+
+	@Override
+	public String getModType() {
+		return name();
 	}
 }

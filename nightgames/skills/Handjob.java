@@ -26,11 +26,11 @@ public class Handjob extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		int m = 4 + Global.random(5);
+		int m = 6 + Global.random(5);
 
-		if(target.roll(this, c, accuracy())){
+		if(target.roll(this, c, accuracy(c))){
 			if(getSelf().get(Attribute.Seduction)>=8){
-				m += 4;
+				m += 6;
 				if(getSelf().human()){
 					c.write(getSelf(),deal(c,m,Result.normal, target));
 				}
@@ -62,7 +62,7 @@ public class Handjob extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return true;
 	}
 
@@ -113,7 +113,7 @@ public class Handjob extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Rub your opponent's dick";
 	}
 	@Override

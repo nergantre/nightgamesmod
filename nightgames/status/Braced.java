@@ -1,21 +1,21 @@
 package nightgames.status;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 
-public class Braced extends Status {
-	private int duration;
+public class Braced extends DurationStatus {
 
 	public Braced(Character affected) {
-		super("Braced", affected);
-		duration=3;
+		super("Braced", affected, 3);
 		flag(Stsflag.braced);
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now braced against falls.\n", affected.subjectAction("are", "is"));
+		return String.format("%s now braced.\n", affected.subjectAction("are", "is"));
 	}
 
 	@Override
@@ -25,85 +25,81 @@ public class Braced extends Status {
 
 	@Override
 	public float fitnessModifier () {
-		return (10.0f + (10.0f*duration)) / 40.f;
+		return (10.0f + (10.0f*getDuration())) / 40.f;
 	}
 	
 	@Override
 	public int mod(Attribute a) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int regen(Combat c) {
-		if(duration<=0){
-			affected.removelist.add(this);
-		}
-		duration--;
 		return 0;
 	}
 
 	@Override
 	public int damage(Combat c, int x) {
-		// TODO Auto-generated method stub
-		return -x/2;
+		return -x*3/4;
 	}
 
 	@Override
 	public double pleasure(Combat c, double x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int weakened(int x) {
-		// TODO Auto-generated method stub
-		return -x/2;
+		return -x*3/4;
+	}
+
+	@Override
+	public int drained(int x) {
+		return -x*3/4;
 	}
 
 	@Override
 	public int tempted(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int evade() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int escape() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int gainmojo(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int spendmojo(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int counter() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int value() {
-		// TODO Auto-generated method stub
-		return 30 + (30 * duration);
+		return 30 + (30 * getDuration());
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Braced(newAffected);
+	}
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new Braced(null);
 	}
 }

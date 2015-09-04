@@ -6,7 +6,7 @@ import nightgames.actions.Movement;
 import nightgames.actions.Resupply;
 import nightgames.areas.Area;
 import nightgames.characters.body.BreastsPart;
-import nightgames.characters.body.CockPart;
+import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
@@ -47,7 +47,7 @@ public class Eve extends BasePersonality {
 		character.plan = Plan.hunting;
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.d);
-		character.body.add(CockPart.big);
+		character.body.add(BasicCockPart.big);
 		character.body.add(PussyPart.normal);
 		character.body.finishBody("herm");
 	}
@@ -70,6 +70,7 @@ public class Eve extends BasePersonality {
 
 	@Override
 	public void rest() {
+		super.rest();
 		if(!(character.has(Item.Dildo)||character.has(Item.Dildo2))&&character.money>=250){
 			character.gain(Item.Dildo);
 			character.money-=250;

@@ -4,8 +4,7 @@ package nightgames.stance;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 
-public class ReverseMount extends Position {
-
+public class ReverseMount extends AbstractBehindStance {
 	public ReverseMount(Character top, Character bottom) {
 		super(top, bottom,Stance.reversemount);
 		
@@ -20,14 +19,7 @@ public class ReverseMount extends Position {
 			return top.name()+" is sitting on your chest, facing your groin.";
 		}
 	}
-	@Override
-	public Position insert(Character target) {
-		if (target == top) {
-			return insert();
-		} else {
-			return reverse().insert();
-		}
-	}
+
 	@Override
 	public boolean mobile(Character c) {
 		return c==top;
@@ -93,15 +85,6 @@ public class ReverseMount extends Position {
 		return false;
 	}
 
-	@Override
-	public Position insert() {
-		if(top.hasDick() && bottom.hasPussy()){
-			return new Missionary(top,bottom);
-		}
-		else {
-			return new ReverseCowgirl(top,bottom);
-		}
-	}
 	@Override
 	public float priorityMod(Character self) {
 		return getSubDomBonus(self, 4.0f);

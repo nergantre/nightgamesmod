@@ -1,21 +1,15 @@
 package nightgames.status;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 
-public class Cynical extends Status {
-	int duration;
-	
+public class Cynical extends DurationStatus {
 	public Cynical(Character affected) {
-		super("Cynical", affected);
+		super("Cynical", affected, 3);
 		flag(Stsflag.cynical);
-		if(affected.has(Trait.PersonalInertia)){
-			duration = 5;
-		}else{
-			duration = 3;
-		}
 	}
 
 	@Override
@@ -43,14 +37,6 @@ public class Cynical extends Status {
 		return 0;
 	}
 
-	@Override
-	public int regen(Combat c) {
-		duration--;
-		if(duration<=0){
-			affected.removelist.add(this);
-		}
-		return 0;
-	}
 	@Override
 	public int damage(Combat c, int x) {
 		return 0;
@@ -97,11 +83,21 @@ public class Cynical extends Status {
 
 	@Override
 	public int value() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Cynical(newAffected);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new Cynical(null);
 	}
 }

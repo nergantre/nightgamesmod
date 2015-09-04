@@ -11,6 +11,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.Growth;
 import nightgames.characters.Plan;
+import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.items.Clothing;
@@ -22,7 +23,6 @@ public class DataBackedNPCData implements NPCData {
 	List<ItemAmount> purchasedItems;
 	List<ItemAmount> startingItems;
 	List<CustomStringEntry> portraits;
-	List<BodyPart> parts;
 	Map<Emotion, Integer> moodThresholds;
 	Map<String, List<CustomStringEntry>> characterLines;
 	Stack<Clothing> top;
@@ -31,17 +31,19 @@ public class DataBackedNPCData implements NPCData {
 	Growth growth;
 	Item trophy;
 	String name;
-	String gender;
+	String sex;
 	String defaultPortraitName;
 	Plan plan;
 	String type;
+	RecruitmentData recruitment;
+	Body body;
 
 	public DataBackedNPCData() {
 		preferredAttributes = new ArrayList<>();
 		purchasedItems = new ArrayList<>();
 		startingItems = new ArrayList<>();
 		portraits = new ArrayList<>();
-		parts = new ArrayList<>();
+		body = new Body();
 		moodThresholds = new HashMap<>();
 		characterLines = new HashMap<>();
 		top = new Stack<>();
@@ -50,8 +52,9 @@ public class DataBackedNPCData implements NPCData {
 		growth = new Growth();
 		trophy = Item.MiscTrophy;
 		name = "Anonymous";
-		gender = "female";
+		sex = "female";
 		defaultPortraitName = "";
+		recruitment = new RecruitmentData();
 	}
 
 	@Override
@@ -118,13 +121,13 @@ public class DataBackedNPCData implements NPCData {
 	}
 
 	@Override
-	public List<BodyPart> getBodyParts() {
-		return parts;
+	public Body getBody() {
+		return body;
 	}
 
 	@Override
-	public String getGender() {
-		return gender;
+	public String getSex() {
+		return sex;
 	}
 
 	@Override
@@ -149,5 +152,10 @@ public class DataBackedNPCData implements NPCData {
 	@Override
 	public String getType() {
 		return type;
+	}
+
+	@Override
+	public RecruitmentData getRecruitment() {
+		return recruitment;
 	}
 }

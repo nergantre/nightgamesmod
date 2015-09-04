@@ -1,14 +1,17 @@
 package nightgames.stance;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 import nightgames.skills.Escape;
 import nightgames.skills.Nothing;
 import nightgames.skills.Skill;
@@ -16,7 +19,7 @@ import nightgames.skills.Struggle;
 import nightgames.skills.Suckle;
 import nightgames.skills.Wait;
 
-public class NursingHold extends Position {
+public class NursingHold extends AbstractFacingStance {
 	public NursingHold(Character top, Character bottom) {
 		super(top, bottom,Stance.nursing);
 	}
@@ -92,16 +95,6 @@ public class NursingHold extends Position {
 	@Override
 	public boolean inserted(Character c) {
 		return false;
-	}
-
-	@Override
-	public Position insert(Character dom) {
-		Character other = getOther(dom);
-		if(dom.hasDick() && other.hasPussy()){
-			return new Missionary(dom,other);
-		} else {
-			return new Cowgirl(dom,other);
-		}
 	}
 
 	public void decay(Combat c){

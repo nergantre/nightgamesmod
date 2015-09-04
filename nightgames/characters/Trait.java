@@ -2,7 +2,9 @@ package nightgames.characters;
 
 import nightgames.global.Global;
 import nightgames.items.Clothing;
+import nightgames.status.Lethargic;
 import nightgames.status.Resistance;
+import nightgames.status.Status;
 import nightgames.status.Stsflag;
 
 import java.util.HashMap;
@@ -96,13 +98,20 @@ public enum Trait {
 	
 	darkpromises("Dark Promises","Can enthrall with the right words"), //whisper upgrade, can enthrall
 	energydrain("Energy Drain", "Drains energy during intercourse"),
+	objectOfWorship("Object Of Worship", "Opponents is periodically forced to worship your body.", new TraitDescription() {
+		public void describe(StringBuilder b, Character c, Trait t) {
+				b.append("A divine aura surrounds " + c.nameDirectObject() + ".");
+		}
+	}),
 	spiritphage("Semenphage", "Feeds on semen"),
+	erophage("Erophage", "Feeds on sexuality"),
 	tight("Tight", "Powerful musculature and exquisite tightness makes for quick orgasms."),
 	holecontrol("Pussy Control", "Dexterous internal muscle control."),
 	oiledass("Oiled Ass", "Natural oils makes her ass always ready."),
 	autonomousAss("Autonomous Ass", "Asshole instinctively forces anything inside of it to cum."),
 	fetishTrainer("Fetish Trainer", "Capable of developing other's fetishes."),
-	
+	insertion("Insertion Master","More pleasure on insertion"), //more damage on insertion.
+
 	//training perks
 	analTraining1("Anal Training 1", "Refined ass control."),
 	analTraining2("Anal Training 2", "Perfected ass control."),
@@ -142,13 +151,14 @@ public enum Trait {
 	achilles("Achilles Jewels","Delicate parts are somehow even more delicate"),	//more pain from groin attacks
 	naive("Naive", "Chance to not get cynical after mindgames"), //Chance to not get cynical after recovering from mindgames
 	immobile("Immobile", "Unable to move"), //Cannot move
+	lethargic("Lethargic", "Very low mojo gain from normal methods.", new Lethargic(null)), //25% mojo gain
 
 	//Restrictions
 	softheart("Soft Hearted","Incapable of being mean"), //restricts slap, stomp, flick
 	petite("Petite","Small body, small breasts"), //restricts carry, tackle, paizuri
 	undisciplined("Undisciplined","Lover, not a fighter"), //restricts manuever, focus, armbar
 	direct("Direct","Patience is overrated"), //restricts whisper, dissolving trap, aphrodisiac trap, decoy, strip tease
-	
+
 	shy("Shy", "", new TraitDescription() {
 		public void describe(StringBuilder b, Character c, Trait t) {
 			if (c.human())
@@ -162,16 +172,17 @@ public enum Trait {
 	madscientist("Mad Scientist","May have gone overboard with her projects"),
 	witch("Witch","Learned to wield traditional arcane magic"),
 	succubus("Succubus","Embraced the dark powers that feed on mortal lust"),
+	demigoddess("Demigoddess","Blessed by a deity of sexual pleasure, and on the road to ascension herself."),
 	fighter("Fighter","A combination of martial arts and ki"),
 	slime("Slime","An accident in the biology labs made the body a bit more... malleable."),
 	dryad("Dryad","Part girl, part tree."),
 
 	//Strength
-	dexterous("Dexterous","Underwear is no obstacle for nimble fingers"), //digital stimulation through underwear
+	dexterous("Dexterous","Limbs and fingers. Underwear is not an obstacle."), //digital stimulation through underwear
 	romantic("Romantic","Every kiss is as good as the first"), //bonus to kiss
 	experienced("Experienced Lover","Skilled at pacing yourself when thrusting"), //reduced recoil from penetration
 	wrassler("Wrassler","A talent for fighting dirty"), //squeeze, knee, kick reduce arousal less
-	pimphand("Pimp Hand","A devastating slap"),
+	pimphand("Pimp Hand","A devastating slap and a bonus to hands"),
 
 	//unimplemented
 	Clingy("Clingy","can do the 'glomp' attack - weak standing grapple hug, probably something Cassie would take right away"),
@@ -230,13 +241,16 @@ public enum Trait {
 	martial("Martial","Ki bonus"),
 	broody("Broody","Dark bonus"),
 	kinky("Kinky","Fetish bonus"),
-	
+	tentacleUnderwear("Tentacle Underwear","Wearing tentacle underwear"),
+	tentacleSuit("Tentacle Suit","Wearing a tentacle suit"),
 	none("",""),
 	;
 	private String desc;
 	private TraitDescription longDesc;
 	private String name;
 	public Trait parent;
+	public Status status;
+
 	public String getDesc()
 	{
 		return desc;
@@ -260,6 +274,12 @@ public enum Trait {
 		this.parent = parent;
 	}
 
+	private Trait(String name, String description, Status status) {
+		this.name=name;
+		this.desc=description;
+		this.longDesc = longDesc;
+		this.status = status;
+	}
 	public boolean isFeat(){
 		return this.compareTo(sprinter)>=0 && this.compareTo(strapped)<0;
 	}

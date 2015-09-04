@@ -59,7 +59,7 @@ public class Spank extends Skill {
 		return true;
 	}
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Seduction)>=8;
 	}
 
@@ -70,9 +70,11 @@ public class Spank extends Skill {
 	public int speed(){
 		return 8;
 	}
-	public int accuracy(){
-		return 4;
+
+	public int accuracy(Combat c){
+		return c.getStance().dom(getSelf()) ? 100 :65;
 	}
+
 	public Tactics type(Combat c) {
 		return Tactics.damage;
 	}
@@ -107,7 +109,7 @@ public class Spank extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Slap opponent on the ass";
 	}
 

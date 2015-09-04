@@ -13,13 +13,13 @@ public class MutualUndress extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Seduction) > 50;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		if(getSelf().canAct()&&c.getStance().mobile(getSelf())&&!getSelf().nude()&&!target.nude()) {
+		if(getSelf().stripDifficulty(target) == 0 && getSelf().canAct()&&c.getStance().mobile(getSelf())&&!getSelf().nude()&&!target.nude()) {
 			return true;
 		}
 		return false;
@@ -36,7 +36,7 @@ public class MutualUndress extends Skill {
 	}
 	
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Tempt opponent to remove clothes by removing your own";
 	}
 

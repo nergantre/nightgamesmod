@@ -1,6 +1,7 @@
 package nightgames.characters.body;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.NPC;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
@@ -30,9 +31,12 @@ public class Body implements Cloneable {
 		prototypes = new HashMap<String, BodyPart>();
 		prototypes.put(PussyPart.class.getCanonicalName(), PussyPart.normal);
 		prototypes.put(BreastsPart.class.getCanonicalName(), BreastsPart.c);
-		prototypes.put(CockPart.class.getCanonicalName(), CockPart.average);
-		prototypes.put(WingsPart.class.getCanonicalName(), WingsPart.normal);
-		prototypes.put(TailPart.class.getCanonicalName(), TailPart.normal);
+		prototypes.put(BasicCockPart.class.getCanonicalName(), BasicCockPart.average);
+		// for compatibility with < v1.8.1
+		prototypes.put(CockPart.class.getCanonicalName(), BasicCockPart.average);
+		prototypes.put(ModdedCockPart.class.getCanonicalName(), new ModdedCockPart(BasicCockPart.average, CockMod.bionic));
+		prototypes.put(WingsPart.class.getCanonicalName(), WingsPart.demonic);
+		prototypes.put(TailPart.class.getCanonicalName(), TailPart.cat);
 		prototypes.put(EarPart.class.getCanonicalName(), EarPart.normal);
 		prototypes.put(StraponPart.class.getCanonicalName(), StraponPart.generic);
 		prototypes.put(TentaclePart.class.getCanonicalName(), new TentaclePart("tentacles", "back", "semen", 0, 1, 1));
@@ -95,12 +99,16 @@ public class Body implements Cloneable {
 		PartReplacement replacement = new PartReplacement(duration);
 		replacement.added.add(part);
 		replacements.add(replacement);
+		if (character != null)
+			updateCharacter();
 	}
 
 	public void temporaryRemovePart(BodyPart part, int duration) {
 		PartReplacement replacement = new PartReplacement(duration);
 		replacement.removed.add(part);
 		replacements.add(replacement);
+		if (character != null)
+			updateCharacter();
 	}
 
 	public void temporaryAddOrReplacePartWithType(BodyPart part, int duration) {
@@ -138,6 +146,8 @@ public class Body implements Cloneable {
 			replacement.added.add(part);
 			replacements.add(replacement);
 		}
+		if (character != null)
+			updateCharacter();
 		return true;
 	}
 
@@ -178,6 +188,13 @@ public class Body implements Cloneable {
 	public void add(BodyPart part) {
 		assert(part!=null);
 		bodyParts.add(part);
+		updateCharacter();
+	}
+	
+	public void updateCharacter() {
+		if (character != null) {
+			character.update();
+		}
 	}
 
 	public boolean contains(BodyPart part) {
@@ -230,7 +247,7 @@ public class Body implements Cloneable {
 		List<CockPart> upgradable = new ArrayList<CockPart>();
 		for (BodyPart part : parts) {
 			CockPart b = (CockPart) part;
-			if (b.size < size) {
+			if (b.getSize() < size) {
 				upgradable.add(b);
 			}
 		}
@@ -244,7 +261,7 @@ public class Body implements Cloneable {
 		List<CockPart> upgradable = new ArrayList<CockPart>();
 		for (BodyPart part : parts) {
 			CockPart b = (CockPart) part;
-			if (b.size > size) {
+			if (b.getSize() > size) {
 				upgradable.add(b);
 			}
 		}
@@ -310,6 +327,9 @@ public class Body implements Cloneable {
 
 	public void remove(BodyPart part) {
 		bodyParts.remove(part);
+
+		if (character != null)
+			updateCharacter();
 	}
 
 	public void removeOne(String type) {
@@ -322,6 +342,8 @@ public class Body implements Cloneable {
 		}
 		if (removed != null) {
 			bodyParts.remove(removed);
+			if (character != null)
+				updateCharacter();
 		}
 	}
 
@@ -337,6 +359,9 @@ public class Body implements Cloneable {
 		for (BodyPart part : removed) {
 			bodyParts.remove(part);
 		}
+
+		if (character != null)
+			updateCharacter();
 		return removed.size();
 	}
 
@@ -399,6 +424,9 @@ public class Body implements Cloneable {
 			perceptionBonus *= getCharismaBonus(opponent);
 			if (opponent.is(Stsflag.alluring)) {
 				perceptionBonus += .5;
+			}
+			if (character.is(Stsflag.lovestruck)) {
+				perceptionBonus += 1;
 			}
 		}
 		double bonusDamage = bonus;
@@ -489,7 +517,7 @@ public class Body implements Cloneable {
 	public void addReplace(BodyPart part, int max) {
 		int n = Math.min(Math.max(1, removeAll(part.getType())), max);
 		for (int i = 0; i < n; i++) {
-			character.body.add(part);
+			add(part);
 		}
 	}
 
@@ -506,7 +534,7 @@ public class Body implements Cloneable {
 		}
 		if (sex.equals("male") || sex.equals("herm")) {
 			if (get("cock").size() == 0) {
-				add(CockPart.average);
+				add(BasicCockPart.average);
 			}
 		}
 		if (sex.equals("male")) {
@@ -609,6 +637,8 @@ public class Body implements Cloneable {
 				Global.gui().message(sb.toString());
 			}
 		}
+		if (character != null)
+			updateCharacter();
 	}
 
 	public BodyPart getRandomHole() {
@@ -620,6 +650,8 @@ public class Body implements Cloneable {
 
 	public void clearReplacements() {
 		replacements.clear();
+		if (character != null)
+			updateCharacter();
 	}
 
 	public int mod(Attribute a, int total) {
@@ -681,6 +713,12 @@ public class Body implements Cloneable {
 						.sum();
 		}
 		return 20 * totalCounterValue;
+	}
+
+	public Body clone(Character other) throws CloneNotSupportedException {
+		Body res = clone();
+		res.character = other;
+		return res;
 	}
 
 }

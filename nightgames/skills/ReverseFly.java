@@ -3,6 +3,7 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -18,7 +19,7 @@ public class ReverseFly extends Fly {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Take off and fuck your opponent's cock in the air.";
 	}
 
@@ -47,7 +48,7 @@ public class ReverseFly extends Fly {
 		}
 
 		premessage = Global.format(premessage, getSelf(), target);
-		Result result = target.roll(this, c, accuracy()) ? Result.normal: Result.miss;
+		Result result = target.roll(this, c, accuracy(c)) ? Result.normal: Result.miss;
 		if (this.getSelf().human()) {
 			c.write(getSelf(),premessage + deal(c, 0, result, target));
 		} else if (target.human()) {
@@ -58,6 +59,14 @@ public class ReverseFly extends Fly {
 			getSelf().emote(Emotion.horny, 30);
 			target.emote(Emotion.desperate, 50);
 			target.emote(Emotion.nervous, 75);
+
+			int m = 5 + Global.random(5);
+			int otherm = m;
+			if (getSelf().has(Trait.insertion)) {
+				otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
+			}
+			target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c);
+			getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c);
 			c.setStance(new FlyingCowgirl(this.getSelf(), target));
 		} else {
 			getSelf().add(c, new Falling(getSelf()));

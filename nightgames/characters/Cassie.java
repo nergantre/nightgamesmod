@@ -7,6 +7,7 @@ import nightgames.actions.Resupply;
 import nightgames.areas.Area;
 import nightgames.characters.body.AnalPussyPart;
 import nightgames.characters.body.BreastsPart;
+import nightgames.characters.body.CockMod;
 import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.MouthPussyPart;
 import nightgames.characters.body.PussyPart;
@@ -35,6 +36,7 @@ public class Cassie extends BasePersonality {
 	public Cassie(){
 		super();
 		character = new NPC("Cassie",1,this);
+		preferredCockMod = CockMod.runic;
 		character.outfit[0].add(Clothing.bra);
 		character.outfit[0].add(Clothing.blouse);
 		character.outfit[1].add(Clothing.panties);
@@ -113,6 +115,7 @@ public class Cassie extends BasePersonality {
 				advance();
 			}
 		}
+		super.rest();
 		if(!(character.has(Item.Tickler)||character.has(Item.Tickler2))&&character.money>=300){
 			character.gain(Item.Tickler);
 			character.money-=300;
@@ -251,7 +254,7 @@ public class Cassie extends BasePersonality {
 					"face lights up in a broad smile. <i>\"It feels like you released a lot. Did you feel good?\"</i> You groan and slump flat on the ground in defeat. She gives you a light kiss on the tip of your nose " +
 					"and starts to grind her clit against your pelvis. <i>\"Come on, don't be mean. Tell me I made you feel good,\"</i> she whispers in a needy voice. <i>\"It'll help me finish faster.\"</i> Is she really " +
 					"getting off on praise, or on the knowledge that her technique gave you pleasure? Either way, there's no reason to lie, she definitely made you feel amazing. She shudders and starts to breathe " +
-					"harder as you whisper to her how good her pussy felt. She leans forward to present her modest breasts to you. <i>\"Can you touch my nipples more? I really like that.\"</i> You reach up and play with " +
+					"harder as you whisper to her how good her pussy felt. She leans forward to present her " + character.body.getLargestBreasts().describe(character) + " to you. <i>\"Can you touch my nipples more? I really like that.\"</i> You reach up and play with " +
 					"her breasts as she continues to grind against you. She stops your pillow talk by kissing you desperately just before you feel her body tense up in orgasm. She collapses on top of you and kisses " +
 					"you cheek contently. <i>\"I'll keep practicing and make you feel even better next time, \"</I> she tells you happily. <i>\"I promise.\"</i> ";
 		}

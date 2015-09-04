@@ -23,8 +23,8 @@ public class SubmissiveHold extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
-		return user.get(Attribute.Seduction) > 10;
+	public boolean requirements(Combat c, Character user, Character target) {
+		return user.get(Attribute.Seduction) > 15 && user.get(Attribute.Power) >= 15;
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class SubmissiveHold extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Holds your opponent in position";
 	}
 	

@@ -1,22 +1,16 @@
 package nightgames.status;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
+import nightgames.global.JSONUtils;
 
-public class Nimble extends Status {
-	private int duration;
-
+public class Nimble extends DurationStatus {
 	public Nimble(Character affected, int duration) {
-		super("Nimble", affected);
-		if(affected.has(Trait.PersonalInertia)){
-			this.duration=3*duration/2;
-		}
-		else{
-			this.duration=duration;
-		}
+		super("Nimble", affected, duration);
 		flag(Stsflag.nimble);
 	}
 
@@ -42,48 +36,45 @@ public class Nimble extends Status {
 	
 	@Override
 	public int mod(Attribute a) {
-		// TODO Auto-generated method stub
+		switch (a) {
+			case Speed:
+				return 2;
+			default:
+				break;
+		}
 		return 0;
 	}
 
 	@Override
 	public int regen(Combat c) {
-		duration--;
-		if(duration<0){
-			affected.removelist.add(this);
-		}
+		super.regen(c);
 		affected.emote(Emotion.confident,5);
 		return 0;
 	}
 
 	@Override
 	public int damage(Combat c, int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public double pleasure(Combat c, double x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int weakened(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int tempted(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int evade() {
-		// TODO Auto-generated method stub
-		return 0;
+		return affected.get(Attribute.Animism)*affected.getArousal().percent()/100;
 	}
 
 	@Override
@@ -93,13 +84,11 @@ public class Nimble extends Status {
 
 	@Override
 	public int gainmojo(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int spendmojo(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -110,11 +99,22 @@ public class Nimble extends Status {
 
 	@Override
 	public int value() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new Nimble(newAffected, duration);
+		return new Nimble(newAffected, getDuration());
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		obj.put("duration", getDuration());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new Nimble(null, JSONUtils.readInteger(obj, "duration"));
 	}
 }

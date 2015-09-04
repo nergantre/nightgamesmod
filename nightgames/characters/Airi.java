@@ -6,6 +6,7 @@ import nightgames.actions.Movement;
 import nightgames.actions.Resupply;
 import nightgames.areas.Area;
 import nightgames.characters.body.BreastsPart;
+import nightgames.characters.body.CockMod;
 import nightgames.characters.body.EarPart;
 import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.PussyPart;
@@ -38,6 +39,7 @@ public class Airi extends BasePersonality {
 		character = new NPC("Airi",10,this);
 		character.change(Modifier.normal);
 		character.setTrophy(Item.AiriTrophy);
+		preferredCockMod = CockMod.slimy;
 
 		this.character.set(Attribute.Power, 3);
 		this.character.set(Attribute.Bio, 5);
@@ -90,6 +92,7 @@ public class Airi extends BasePersonality {
 
 	@Override
 	public void rest() {
+		super.rest();
 		Decider.visit(character);
 		int r;
 		for(int i=0;i<8;i++){

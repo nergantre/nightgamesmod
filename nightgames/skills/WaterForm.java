@@ -15,7 +15,7 @@ public class WaterForm extends Skill{
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Ki)>=3;
 	}
 
@@ -25,7 +25,7 @@ public class WaterForm extends Skill{
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Improves evasion and counterattack rate at expense of Power";
 	}
 

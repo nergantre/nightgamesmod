@@ -13,7 +13,7 @@ public class CatsGrace extends Skill {
 	}
 	
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Animism)>=3;
 	}
 
@@ -23,7 +23,7 @@ public class CatsGrace extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Use your instinct to nimbly avoid attacks";
 	}
 

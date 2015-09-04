@@ -24,7 +24,7 @@ public class SuckNeck extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy())){
+		if(target.roll(this, c, accuracy(c))){
 			if(getSelf().get(Attribute.Dark)>=1){
 				if(getSelf().human()){
 					c.write(getSelf(),deal(c,0,Result.special, target));
@@ -59,7 +59,7 @@ public class SuckNeck extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return getSelf().get(Attribute.Seduction)>=12;
 	}
 
@@ -70,8 +70,8 @@ public class SuckNeck extends Skill {
 	public int speed(){
 		return 5;
 	}
-	public int accuracy(){
-		return 7;
+	public int accuracy(Combat c){
+		return c.getStance().dom(getSelf()) ? 100 : 70;
 	}
 	public Tactics type(Combat c) {
 		return Tactics.pleasure;
@@ -114,7 +114,7 @@ public class SuckNeck extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Suck on opponent's neck. Highly variable effectiveness";
 	}
 

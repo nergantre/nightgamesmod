@@ -5,6 +5,7 @@ import nightgames.actions.Move;
 import nightgames.actions.Movement;
 import nightgames.characters.Attribute;
 import nightgames.characters.body.BreastsPart;
+import nightgames.characters.body.CockMod;
 import nightgames.characters.body.EarPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
@@ -31,6 +32,7 @@ public class Reyka extends BasePersonality {
 	public Reyka() {
 		super();
 		this.character = new NPC("Reyka", 10, this);
+		preferredCockMod = CockMod.incubus;
 		this.character.outfit[0].add(Clothing.tanktop);
 		this.character.outfit[1].add(Clothing.miniskirt);
 		character.closet.add(Clothing.tanktop);
@@ -82,7 +84,7 @@ public class Reyka extends BasePersonality {
 		growth.addTrait(8, Trait.expertGoogler);
 		growth.addTrait(11, Trait.addictivefluids);
 		growth.addTrait(14, Trait.graceful);
-		growth.addTrait(17, Trait.analTraining1);
+		growth.addTrait(17, Trait.insertion);
 		growth.addTrait(20, Trait.spiritphage);
 		growth.addTrait(23, Trait.tongueTraining2);
 		growth.addTrait(26, Trait.magicEyeTrance);
@@ -91,7 +93,7 @@ public class Reyka extends BasePersonality {
 		growth.addTrait(35, Trait.energydrain);
 		growth.addTrait(38, Trait.experttongue);
 		growth.addTrait(41, Trait.soulsucker);
-		growth.addTrait(44, Trait.analTraining2);
+		growth.addTrait(44, Trait.analTraining1);
 		growth.addTrait(47, Trait.desensitized);
 		growth.addTrait(50, Trait.pussyTraining2);
 		growth.addTrait(53, Trait.vaginaltongue);
@@ -100,6 +102,7 @@ public class Reyka extends BasePersonality {
 
 	@Override
 	public void rest() {
+		super.rest();
 		if(!(character.has(Item.Dildo)||character.has(Item.Dildo2))&&character.money>=250){
 			character.gain(Item.Dildo);
 			character.money-=250;
@@ -229,6 +232,31 @@ public class Reyka extends BasePersonality {
 	@Override
 	public String defeat(Combat paramCombat,Result flag) {
 		character.arousal.empty();
+		if(character.has(Trait.succubus)&&character.get(Attribute.Dark)>=6){
+			return "Reyka shivers as she approaches her climax and her legs fall open defenselessly. You can't resist taking advantage of this opening to deliver the " +
+					"coup de grace. You grab hold of her thighs and run your tongue across her wet pussy. Her love juice is surprisingly sweet and almost intoxicating, " +
+					"but you stay focused on your goal. You ravage her vulnerable love button with your tongue and a flood of tasty wetness hits you as she cums. You " +
+					"prolong her climax by continuing to lick her while lapping up as much of her love juice as you can. The taste seems almost familiar, but you can't " +
+					"quite place it. Sweet and tangy like a desert wine? Not a perfect comparison, but not far off.<p>Reyka should be coming down from her peak, but " +
+					"she's still moaning quite passionately. Oh well, it can't hurt to drink up the last of her love juice. You're the one who made her juice herself, so " +
+					"it seems only fair. It is very tasty. Intoxicating was the word that came to mind early, but addictive seems to fit too. Reyka's flower is mostly " +
+					"clean, but you stick your tongue deep inside to be sure. There seems to be some fresh love juice in this bit... and this one.... Here too.<p>Reyka's " +
+					"pussy tenses up and you're treated to another flood of her wonderful flavor. You can't let this much juice go to waste. You diligantly continue to " +
+					"lick Reyka's trembling girl parts as she squeals in passion. You feel her hands grip your hair desperately and you have to hold her hips to keep her " +
+					"from squirming away. She's producing a decent amount of delicious nectar, but it occurs to you that she'll probably give you more if you focus on her " +
+					"clit. You target her pearl and lick it rapidly until she screams in pleasure and rewards you with another surge of juice. This seems like the best " +
+					"way to get more of her wonderful juice. You could just stay here drinking this stuff all night, and you just may.<p>You suddenly feel Reyka's tail wrap " +
+					"tightly around your balls. Your head jerks up in surprise and her thighs clamp together on it, holding you out of reach of her delicious honey pot. " +
+					"<i>\"Down lover\"</i> Reyka admonishes you as she covers her groin protectively. <i>\"I appreciate the dedication, but after a couple orgasms, I need a chance to " +
+					"catch my breath.\"</i> You feel your head clear a bit and realize you completely fell victim to her addictive love juice.<p>Reyka uses her grip on your " +
+					"head to force you onto your back. <i>\"I do love being eaten out, but right now I'm ready to be filled.\"</i> She releases the head scissor and positions herself " +
+					"over your dick before dropping her hips to engulf you to the hilt. A jolt goes through you and you realize exactly how horny you are. I addition to " +
+					"not having any relief, Reyka's fluids have started to affect you. You're incredibly hard and sensitive, but even though Reyka is riding you intensely, " +
+					"your ejaculation feels painfully out of reach. You don't feel your climax start to build until Reyka is moaning and approaching yet another orgasm. Is " +
+					"that an innate succubus ability? Is she controlling the timing of your orgasm? You don't have time to dwell on the question, your hips thrust involuntarily " +
+					"as you shoot your load into her waiting quim. Reyka gives you a deep, passionate kiss as she gets off of you. <i>\"Thanks lover. You sure know how to show a " +
+					"girl a good time.\"</i>";
+		}
 		return "As you bring Reyka ever closer to her climax, her prehensile"
 				+ " tail suddenly pulls you to the ground and coils around your neck."
 				+ " She squats down over your face and uses her tail to push your face"

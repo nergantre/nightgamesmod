@@ -14,7 +14,7 @@ public class Bondage extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Fetish)>=6;
 	}
 
@@ -24,7 +24,7 @@ public class Bondage extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "You and your opponent become aroused by being tied up for five turns: Arousal at least 5";
 	}
 

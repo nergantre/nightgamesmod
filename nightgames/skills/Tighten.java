@@ -6,7 +6,6 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.stance.Position;
 import nightgames.stance.Stance;
 
 public class Tighten extends Thrust {
@@ -16,7 +15,7 @@ public class Tighten extends Thrust {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Seduction)>=26 || user.has(Trait.tight);
 	}
 
@@ -26,7 +25,7 @@ public class Tighten extends Thrust {
 	}
 
 	@Override
-	public int[] getDamage(Character target, Position stance) {
+	public int[] getDamage(Combat c, Character target) {
 		int[] result = new int[2];
 
 		int m = 5 + Global.random(10) + Math.min(getSelf().get(Attribute.Power)/3, 20);
@@ -61,7 +60,7 @@ public class Tighten extends Thrust {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Squeeze opponent's dick, no pleasure to self";
 	}
 	

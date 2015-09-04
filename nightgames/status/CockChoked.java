@@ -1,18 +1,18 @@
 package nightgames.status;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
-import nightgames.global.Global;
+import nightgames.global.JSONUtils;
 
-public class CockChoked extends Status {
-	int duration;
+public class CockChoked extends DurationStatus {
 	Character other;
 	
 	public CockChoked(Character affected, Character other, int duration) {
-		super("Cock Choked", affected);
-		this.duration = duration;
+		super("Cock Choked", affected, duration);
 		this.other = other;
 		flag(Stsflag.orgasmseal);
 	}
@@ -37,51 +37,45 @@ public class CockChoked extends Status {
 
 	@Override
 	public int mod(Attribute a) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
+	public void onRemove(Combat c, Character other) {
+		affected.addlist.add(new Wary(affected, 2));
+	}
+
+	@Override
 	public int regen(Combat c) {
-		duration -= 1;
-		if(duration<=0 || !c.getStance().inserted(affected)){
-			affected.removelist.add(this);
-			affected.addlist.add(new Wary(affected, 2));
-		} else {
-			if (affected.getArousal().percent() > 80) {
-				affected.emote(Emotion.desperate, 10);
-				affected.emote(Emotion.horny, 10);
-			}
+		super.regen(c);
+		if (affected.getArousal().percent() > 80) {
+			affected.emote(Emotion.desperate, 10);
+			affected.emote(Emotion.horny, 10);
 		}
 		return 0;
 	}
 	@Override
 	public int damage(Combat c, int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public double pleasure(Combat c, double x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int weakened(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int tempted(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int evade() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -110,12 +104,23 @@ public class CockChoked extends Status {
 
 	@Override
 	public int value() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new CockChoked(newAffected, newOther, duration);
+		return new CockChoked(newAffected, newOther, getDuration());
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		obj.put("duration", getDuration());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new CockChoked(null, null, JSONUtils.readInteger(obj, "duration"));
 	}
 }

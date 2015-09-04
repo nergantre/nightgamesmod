@@ -1,9 +1,13 @@
 package nightgames.status;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.custom.requirement.InsertedRequirement;
 import nightgames.combat.Combat;
+import nightgames.global.JSONUtils;
 
 public class Knotted extends Status {
 
@@ -14,6 +18,7 @@ public class Knotted extends Status {
 		super("Knotted", affected);
 		opponent = other;
 		this.anal = anal;
+		requirements.add(new InsertedRequirement(true));
 		flag(Stsflag.knotted);
 	}
 
@@ -35,15 +40,11 @@ public class Knotted extends Status {
 
 	@Override
 	public int mod(Attribute a) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int regen(Combat c) {
-		if (!c.getStance().inserted()) {
-			affected.removelist.add(this);
-		}
 		affected.emote(Emotion.desperate, 10);
 		affected.emote(Emotion.nervous, 10);
 		affected.emote(Emotion.horny, 20);
@@ -52,25 +53,21 @@ public class Knotted extends Status {
 
 	@Override
 	public int damage(Combat c, int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public double pleasure(Combat c, double x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int weakened(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int tempted(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -86,13 +83,11 @@ public class Knotted extends Status {
 
 	@Override
 	public int gainmojo(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int spendmojo(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -103,7 +98,6 @@ public class Knotted extends Status {
 
 	@Override
 	public int value() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -122,6 +116,19 @@ public class Knotted extends Status {
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Knotted(newAffected, newOther, anal);
+	}
+	
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		obj.put("anal", anal);
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new Knotted(null, null, JSONUtils.readBoolean(obj, "anal"));
 	}
 
 }

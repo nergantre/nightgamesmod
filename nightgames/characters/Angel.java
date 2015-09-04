@@ -1,38 +1,22 @@
 package nightgames.characters;
 
-import nightgames.actions.Action;
-import nightgames.actions.Move;
-import nightgames.actions.Movement;
-import nightgames.actions.Resupply;
-import nightgames.areas.Area;
-import nightgames.characters.body.Body;
+import java.util.Optional;
+
+import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.BodyPartMod;
 import nightgames.characters.body.BreastsPart;
+import nightgames.characters.body.CockMod;
 import nightgames.characters.body.EarPart;
-import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.CockPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.daytime.Daytime;
-import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.global.Modifier;
 import nightgames.items.Clothing;
-import nightgames.items.ConditionalEffect;
 import nightgames.items.Item;
-import nightgames.skills.Skill;
-import nightgames.skills.Tactics;
-import nightgames.stance.Stance;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Optional;
-
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 
 public class Angel extends BasePersonality {
 	/**
@@ -42,6 +26,7 @@ public class Angel extends BasePersonality {
 	public Angel(){
 		super();
 		character = new NPC("Angel",1,this);
+		preferredCockMod = CockMod.blessed;
 		character.outfit[0].add(Clothing.Tshirt);
 		character.outfit[1].add(Clothing.thong);
 		character.outfit[1].add(Clothing.miniskirt);
@@ -75,31 +60,33 @@ public class Angel extends BasePersonality {
 		growth.addTrait(9, Trait.pussyTraining1);
 		growth.addTrait(12, Trait.expertGoogler);
 		growth.addTrait(15, Trait.experienced);
-		growth.addTrait(18, Trait.spiritphage);
+		growth.addTrait(18, Trait.erophage);
 		growth.addTrait(20, Trait.skeptical);
 		growth.addTrait(21, Trait.holecontrol);
-		growth.addTrait(24, Trait.pussyTraining2);
+		growth.addTrait(24, Trait.insertion);
 		growth.addTrait(27, Trait.lacedjuices);
-		growth.addTrait(30, Trait.magicEyeArousal);
-		growth.addTrait(33, Trait.energydrain);
-		growth.addTrait(36, Trait.RawSexuality);
+		growth.addTrait(30, Trait.pussyTraining2);
+		growth.addTrait(33, Trait.RawSexuality);
+		growth.addTrait(36, Trait.objectOfWorship);
 		growth.addTrait(39, Trait.tight);
 		growth.addTrait(42, Trait.desensitized);
 		growth.addTrait(45, Trait.entrallingjuices);
-		growth.addTrait(48, Trait.pussyTraining3);
-		growth.addTrait(51, Trait.desensitized2);
+		growth.addTrait(48, Trait.magicEyeArousal);
+		growth.addTrait(51, Trait.pussyTraining3);
+		growth.addTrait(54, Trait.desensitized2);
 
-		preferredAttributes.add(c -> c.get(Attribute.Dark) < 50 ? Optional.of(Attribute.Dark) : Optional.empty());
+		preferredAttributes.add(c -> c.get(Attribute.Divinity) < 50 ? Optional.of(Attribute.Divinity) : Optional.empty());
 		preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
 	}
 
 	@Override
 	public void rest() {
 		if(character.rank>=1){
-			if(!character.has(Trait.succubus)&&character.money>=1000){
+			if(!character.has(Trait.demigoddess)&&character.money>=1000){
 				advance();
 			}
 		}
+		super.rest();
 		if(!(character.has(Item.Dildo)||character.has(Item.Dildo2))&&character.money>=250){
 			character.gain(Item.Dildo);
 			character.money-=250;
@@ -172,10 +159,6 @@ public class Angel extends BasePersonality {
 				}
 				character.getMojo().gain(1);
 			}
-		}
-		if (character.has(Trait.succubus)) {
-			character.gain(Item.semen, Global.random(3) + 1);
-			buyUpTo(Item.semen, 5);
 		}
 	}
 
@@ -263,32 +246,7 @@ public class Angel extends BasePersonality {
 
 	@Override
 	public String defeat(Combat c,Result flag) {
-		if(character.has(Trait.succubus)&&character.get(Attribute.Dark)>=6){
-			return "Angel shivers as she approaches her climax and her legs fall open defenselessly. You can't resist taking advantage of this opening to deliver the " +
-					"coup de grace. You grab hold of her thighs and run your tongue across her wet pussy. Her love juice is surprisingly sweet and almost intoxicating, " +
-					"but you stay focused on your goal. You ravage her vulnerable love button with your tongue and a flood of tasty wetness hits you as she cums. You " +
-					"prolong her climax by continuing to lick her while lapping up as much of her love juice as you can. The taste seems almost familiar, but you can't " +
-					"quite place it. Sweet and tangy like a desert wine? Not a perfect comparison, but not far off.<p>Angel should be coming down from her peak, but " +
-					"she's still moaning quite passionately. Oh well, it can't hurt to drink up the last of her love juice. You're the one who made her juice herself, so " +
-					"it seems only fair. It is very tasty. Intoxicating was the word that came to mind early, but addictive seems to fit too. Angel's flower is mostly " +
-					"clean, but you stick your tongue deep inside to be sure. There seems to be some fresh love juice in this bit... and this one.... Here too.<p>Angel's " +
-					"pussy tenses up and you're treated to another flood of her wonderful flavor. You can't let this much juice go to waste. You diligantly continue to " +
-					"lick Angel's trembling girl parts as she squeals in passion. You feel her hands grip your hair desperately and you have to hold her hips to keep her " +
-					"from squirming away. She's producing a decent amount of delicious nectar, but it occurs to you that she'll probably give you more if you focus on her " +
-					"clit. You target her pearl and lick it rapidly until she screams in pleasure and rewards you with another surge of juice. This seems like the best " +
-					"way to get more of her wonderful juice. You could just stay here drinking this stuff all night, and you just may.<p>You suddenly feel Angel's tail wrap " +
-					"tightly around your balls. Your head jerks up in surprise and her thighs clamp together on it, holding you out of reach of her delicious honey pot. " +
-					"<i>\"Down boy!\"</i> Angel scolds you as she covers her groin protectively. <i>\"I appreciate the dedication, but after a couple orgasms, I need a chance to " +
-					"catch my breath.\"</i> You feel your head clear a bit and realize you completely fell victim to her addictive love juice.<p>Angel uses her grip on your " +
-					"head to force you onto your back. <i>\"I do love being eaten out, but right now I'm ready to be filled.\"</i> She releases the head scissor and positions herself " +
-					"over your dick before dropping her hips to engulf you to the hilt. A jolt goes through you and you realize exactly how horny you are. I addition to " +
-					"not having any relief, Angel's fluids have started to affect you. You're incredibly hard and sensitive, but even though Angel is riding you intensely, " +
-					"your ejaculation feels painfully out of reach. You don't feel your climax start to build until Angel is moaning and approaching yet another orgasm. Is " +
-					"that an innate succubus ability? Is she controlling the timing of your orgasm? You don't have time to dwell on the question, your hips thrust involuntarily " +
-					"as you shoot your load into her waiting quim. Angel gives you a deep, passionate kiss as she gets off of you. <i>\"Thanks lover. You sure know how to show a " +
-					"girl a good time.\"</i>";
-		}
-		else if(flag==Result.intercourse){
+		if(flag==Result.intercourse){
 			return "You thrust your cock continously into Angel's dripping pussy. Her hot insides feel amazing, but you're sure you have enough of an advantage to risk " +
 					"it. She lets out breathy moans in time to your thrusts and her arms are trembling too much to hold herself up. She's clearly about to cum, you just " +
 					"need to push her over the edge. You maul her soft, heavy boobs and suck on her neck. Angel closes her eyes tightly and whimpers in pleasure. <p>You keep " +
@@ -315,10 +273,11 @@ public class Angel extends BasePersonality {
 
 	@Override
 	public String describe(Combat c) {
-		if(character.has(Trait.succubus)){
-			return "Angel seems to have taken the path opposite her namesake. She has wings, but they're black as midnight and short horns peak out of her long hair. " +
-					"Her appearance should be frightening, but she's more beautiful and seductive than ever. Her entire being seems to " +
-					"radiate sex and you struggle to ignore a treacherous little voice in the back of your mind that tells you to just give yourself to her.";
+		if(character.has(Trait.demigoddess)){
+			return "Angel's transformation seems to be inspired by her namesake. She has large angelic wings behind her, which combined with her long blonde hair and perfect unblemished "
+					+ "skin gives her a positively divine appearance. Her appearance should be emanating holy purity, but instead her eyes and expression seems lewder than ever. "
+					+ "You're not sure what happened exactly, but it's clear to you that she's somehow become a goddess of sexuality. "
+					+ "Angel's entire being seems to radiate sex and you struggle to ignore an overwhelming urge to prostrate yourself and beg to worship her body.";
 		} else {
 			return "Angel has long, straight blonde hair that almost reaches her waist." +
 					"Beautiful, refined features complete the set, making her utterly irresistable. Her personality is prideful and overbearing, as though you belong to " +
@@ -384,6 +343,7 @@ public class Angel extends BasePersonality {
 					"while Angel licks the juice from her fingers.";
 		}
 	}
+
 	@Override
 	public String intervene3p(Combat c, Character target, Character assist) {
 		if(target.human()){
@@ -420,16 +380,14 @@ public class Angel extends BasePersonality {
 				"in case I want more sex in the morning.\"</i> You follow without protest. <br>You lose a lot of sleep, but you don't regret it.";
 	}
 	public void advance(){
-		character.add(Trait.succubus);
-		character.body.addReplace(PussyPart.succubus, 1);
-		character.body.addReplace(TailPart.demonic, 5);
-		character.body.addReplace(EarPart.pointed, 1);
-		character.body.addReplace(WingsPart.demonic, 5);
+		character.add(Trait.demigoddess);
+		character.body.addReplace(PussyPart.divine, 1);
+		character.body.addReplace(WingsPart.angelic, 5);
 		character.outfit[0].removeAllElements();
 		character.outfit[1].removeAllElements();
 		character.outfit[0].add(Clothing.bikinitop);
 		character.outfit[1].add(Clothing.bikinibottoms);
-		character.mod(Attribute.Dark,1);
+		character.mod(Attribute.Divinity,1);
 	}
 
 	public boolean checkMood(Emotion mood, int value) {

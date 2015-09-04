@@ -19,12 +19,12 @@ public class Paizuri extends Skill {
 		super("Use Breasts", self);
 	}
 
-	static int MIN_REQUIRED_BREAST_SIZE = 1;
+	static int MIN_REQUIRED_BREAST_SIZE = 3;
 
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return getSelf().hasBreasts()
-				&& getSelf().body.getLargestBreasts().size > MIN_REQUIRED_BREAST_SIZE
+				&& getSelf().body.getLargestBreasts().size >= MIN_REQUIRED_BREAST_SIZE
 				&& target.hasDick() && getSelf().topless()
 				&& target.pantsless() && c.getStance().paizuri(getSelf())
 				&& c.getStance().front(getSelf())
@@ -59,9 +59,8 @@ public class Paizuri extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
-		return user.get(Attribute.Seduction) >= 28
-				&& !user.has(Trait.petite) && user.hasBreasts();
+	public boolean requirements(Combat c, Character user, Character target) {
+		return user.get(Attribute.Seduction) >= 28 && user.hasBreasts();
 	}
 
 	@Override
@@ -92,7 +91,7 @@ public class Paizuri extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Rub your opponent's dick between your boobs";
 	}
 

@@ -1,12 +1,24 @@
 package nightgames.daytime;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.NPC;
 import nightgames.characters.Trait;
+import nightgames.characters.body.BasicCockPart;
+import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.CockMod;
+import nightgames.characters.body.CockPart;
+import nightgames.characters.body.ModdedCockPart;
+import nightgames.characters.body.PussyPart;
+import nightgames.characters.custom.requirement.BodyPartRequirement;
 import nightgames.global.Flag;
 import nightgames.global.Global;
+import nightgames.items.Item;
 
 public class MaraTime extends Activity {
 	private NPC mara;
@@ -14,6 +26,7 @@ public class MaraTime extends Activity {
 	public MaraTime(Character player) {
 		super("Mara", player);
 		mara = Global.getNPC("Mara");
+		buildTransformationPool();
 	}
 
 	@Override
@@ -21,11 +34,86 @@ public class MaraTime extends Activity {
 		return Global.checkFlag(Flag.MaraKnown);
 	}
 
+	List<TransformationOption> options;
+	
+	public void buildTransformationPool() {
+		options = new ArrayList<>();
+		TransformationOption bionicCock = new TransformationOption();
+		bionicCock.ingredients.put(Item.PriapusDraft, 10);
+		bionicCock.ingredients.put(Item.TinkersMix, 20);
+		bionicCock.ingredients.put(Item.Lubricant, 5);
+		bionicCock.ingredients.put(Item.Spring, 5);
+		bionicCock.ingredients.put(Item.Dildo, 1);
+		bionicCock.requirements.add(new BodyPartRequirement("cock"));
+		bionicCock.requirements.add((c, self, other) -> {
+			return self.body.get("cock").stream().anyMatch(cock -> ((CockPart)cock).isGeneric());
+		});
+		bionicCock.additionalRequirements = "A normal cock";
+		bionicCock.option = "Bionic Cock";
+		bionicCock.scene = "[Placeholder]<br>Mara installs a bionic cock on you";
+		bionicCock.effect = (c, self, other) -> {
+			Optional<BodyPart> optPart = self.body.get("cock").stream().filter(cock -> ((CockPart)cock).isGeneric()).findAny();
+			BasicCockPart target = (BasicCockPart) optPart.get();
+			self.body.remove(target);
+			self.body.add(new ModdedCockPart(target, CockMod.bionic));
+			return true;
+		};
+		options.add(bionicCock);
+		TransformationOption cyberneticPussy = new TransformationOption();
+		cyberneticPussy.ingredients.put(Item.TinkersMix, 20);
+		cyberneticPussy.ingredients.put(Item.Lubricant, 5);
+		cyberneticPussy.ingredients.put(Item.Spring, 5);
+		cyberneticPussy.ingredients.put(Item.Onahole, 1);
+		cyberneticPussy.requirements.add(new BodyPartRequirement("pussy"));
+		cyberneticPussy.requirements.add((c, self, other) -> {
+			return self.body.get("pussy").stream().anyMatch(part -> part == PussyPart.normal);
+		});
+		cyberneticPussy.additionalRequirements = "A normal pussy";
+		cyberneticPussy.option = "Cybernetic Pussy";
+		cyberneticPussy.scene = "[Placeholder]<br>Mara installs a cybernetic pussy on you";
+		cyberneticPussy.effect = (c, self, other) -> {
+			self.body.addReplace(PussyPart.cybernetic, 1);
+			return true;
+		};
+		options.add(cyberneticPussy);
+	}
+
 	@Override
 	public void visit(String choice) {
 		Global.gui().clearText();
 		Global.gui().clearCommand();
-		if(choice == "Start"){
+		Optional<TransformationOption> optionalOption = options.stream().filter(opt -> choice.equals(opt.option)).findFirst();
+		if (optionalOption.isPresent()) {
+			TransformationOption option = optionalOption.get();
+			boolean hasAll = option.ingredients.entrySet().stream().allMatch(entry -> player.has(entry.getKey(), entry.getValue()));
+			if (hasAll) {
+				Global.gui().message(Global.format(option.scene, mara, player));
+				option.ingredients.entrySet().stream().forEach(entry -> player.consume(entry.getKey(), entry.getValue(), false));
+				option.effect.execute(null, player, mara);
+				Global.gui().choose(this, "Leave");
+			} else {
+				Global.gui().message("Mara frowns when she sees that you don't have the requested items.");
+				Global.gui().choose(this, "Back");
+			}
+		} else if (choice.equals("Modifications")) {
+			Global.gui().message("[Placeholder]<br>Mara explains to you how she modifies her own body.");
+			options.forEach(opt -> {
+				Global.gui().message(opt.option + ":");
+				opt.ingredients.entrySet().forEach((entry) -> {
+					Global.gui().message(entry.getValue() + " " + entry.getKey().getName());					
+				});
+				if (!opt.additionalRequirements.isEmpty()) {
+					Global.gui().message(opt.additionalRequirements);
+				}
+				Global.gui().message("<br>");
+			});
+			options.forEach(opt -> {
+				if (opt.requirements.stream().allMatch(req -> req.meets(null, player, mara))) {
+					Global.gui().choose(this, opt.option);
+				}
+			});
+			Global.gui().choose(this, "Back");
+		} else if (choice.equals("Start") || choice.equals("Back")) {
 			if(mara.getAffection(player)>25&&mara.has(Trait.madscientist)){
 				Global.gui().message("Mara's computer lab has once again become a clusterfuck of electronics equipment. Not just electronics either. The back corner houses a " +
 						"small chemical lab, and there are welding and metal cutting tools probably borrowed from the mechanical engineering building. You can only identify " +
@@ -42,6 +130,7 @@ public class MaraTime extends Activity {
 					Global.gui().choose(this,"Games");
 					Global.gui().choose(this,"Sparring");
 					Global.gui().choose(this,"Sex");
+					Global.gui().choose(this,"Modifications");
 			}
 			else if(mara.getAffection(player)>0){
 				Global.gui().message("You go to the computer lab to find Mara for some quality time. She immediately breaks into a smile when she sees you enter. You can tell " +
@@ -58,10 +147,10 @@ public class MaraTime extends Activity {
 				Global.gui().message("You eventually find Mara in one of the computer labs, or at least a room labeled Computer Lab D. You typically think of a computer " +
 					"lab as having rows of fully functional computers and enough clear floorspace to walk through. Most of the computers here are only half assembled and " +
 					"every surface is covered with assorted electronics. Mara is the only one in the small room, unless someone is buried in the PLCs and cords. She's focused " + 
-					"intensly on her work and doesn't even notice you until you call out to her.<p><i>\"Oh, hi "+player.name()+".\"</i> She glances up at you, but continues typing " +
+					"intensely on her work and doesn't even notice you until you call out to her.<p><i>\"Oh, hi "+player.name()+".\"</i> She glances up at you, but continues typing " +
 					"on one of the keyboards in front of her. <i>\"How are you doing?\"</i> You ask her if she'd like to take a break and hang out for a while.<br><i>\"Sounds fun, but I really " +
 					"need to finish this tonight and it's not being cooperative.\"</i> She lets out a long yawn and picks up a nearby energy drink, but tosses it away when she realizes it's "+
-					"empty. <i>\"I'm probably going to be stuck here right up to the start of tonight's match. If you could do me a favor and get me something with some caffiene " +
+					"empty. <i>\"I'm probably going to be stuck here right up to the start of tonight's match. If you could do me a favor and get me something with some caffeine, " +
 					"I'll love you forever.\"</i><p>You find a vending machine not too far from the lab and buy an energy drink. When you return to Mara, she doesn't acknowledge your " +
 					"presence. It doesn't seem like she's trying to be rude, but she's so consumed with her work that she's probably forgotten you were ever here. Deciding not to interrupt " +
 					"her again, you set the drink near her. For the first time, you notice the dark bags under her eyes. You worry that she's pushing herself too hard.");
@@ -95,15 +184,15 @@ public class MaraTime extends Activity {
 				Global.gui().message("You invite Mara to your room some fun. As soon as you get there she walks up behind you, shoves her hand down the front of your pants, and grabs you penis. " +
 						"You're taken by surprise, but it doesn't stop you from getting hard in her hand. <i>\"You said we're here to have fun and I've decided you're my toy today,\"</i> she whispers " +
 						"in an unusually sultry voice. When you're fully erect, she withdraws her hand and orders you to strip. Once you're naked, she has you sit on the bed and begins to fondle " +
-						"your balls. <i>\"Boys get really nervous when I play with these, but it feels good, doesn't it?\"</i> She's mostly back to her typical, mischevious self, but you can see a " +
+						"your balls. <i>\"Boys get really nervous when I play with these, but it feels good, doesn't it?\"</i> She's mostly back to her typical, mischievous self, but you can see a " +
 						"dominant gleam in her eye. She takes her time undressing, turning it into a full stripshow, then she sits on your lap facing you. Her pussy is close enough to your straining " +
 						"dick that you can feel her heat. <i>\"I think it would be a lot of fun to train you,\"</i> she says in her sweetest, innocent voice. <i>\"I'll train you so no other girl can get you " +
 						"hard, but you'll come instantly at my touch. Then you'll win against everyone except me. Doesn't that sound advantageous for both of us?\"</i> You can't tell if she's joking or " +
 						"being serious, but instead of resisting, the thought just makes you hornier. She inches closer to you until she's pressing against your erection while she nibbles on your ear. " +
 						"The dual stimulus causes you to let out a sigh of pleasure. <p>Mara suddenly yelps and jerks away from you. What happened? Mara blushes and tries to regain her composure. <i>\"N-Nothing. " +
-						"Your breath just tickled my neck a bit.\"</i> She's sensitive enough that breathing on her tickled? She leans back in and begins licking your neck seductively, but now you feel a mischevious " +
+						"Your breath just tickled my neck a bit.\"</i> She's sensitive enough that breathing on her tickled? She leans back in and begins licking your neck seductively, but now you feel a mischievous " +
 						"impulse of your own to see just how ticklish she is. You move your hand to the nape of her neck and trail your fingers lightly down her back. She shivers and you can hear her try " +
-						"to hide a small giggle. This could be fun. Now you move your fingers under her thighs and tickle behind her knees. She shrieks in surprise and scrambles off you lap, suddenly realizing " +
+						"to hide a small giggle. This could be fun. Now you move your fingers under her thighs and tickle behind her knees. She shrieks in surprise and scrambles off yout lap, suddenly realizing " +
 						"she's the toy now. <i>\"Wait! We can be reasonable about this! I can do wonderful things to you.\"</i><p>You tackle Mara to the bed and wiggle your fingers under her arms. She flails " +
 						"desperately in an attempt to escape while laughing uncontrollably. You move your hands to her small breasts to tickle and tease her nipples. Her voice catches in her throat at the " +
 						"sensation and she manages to scramble out of your reach, covering her upper body protectively. The pose leaves her legs open and you can see her wetness flowing freely. She follows " +
@@ -128,7 +217,7 @@ public class MaraTime extends Activity {
 				}
 			}
 			else{
-				Global.gui().message("You suggest finding a bed for some private fun. Mara smiles at you mischeviously. <i>\"We don't really need a bed for that\"</i> She clears some space " +
+				Global.gui().message("You suggest finding a bed for some private fun. Mara smiles at you mischievously. <i>\"We don't really need a bed for that\"</i> She clears some space " +
 						"off a nearby table and starts to undress you. She wants to do it right here? The door doesn't lock. What's to stop someone from walking in on you? <i>\"Nobody is " +
 						"going to catch us. You're the only one who ever visits me here.\"</i> She gives you a tender kiss while she slips off your boxers. She's still fully dressed, and " +
 						"you start to remedy that, but she makes you sit down so she can kneel between your legs. She rubs your erection with teasingly light, slow strokes and peppers " +
@@ -140,11 +229,11 @@ public class MaraTime extends Activity {
 						"to free your overstimulated dick from her mouth. She's had her fun, now it's time for you to play with her. You strip her naked, which is hindered by her squirming " +
 						"playfully away from your hands. Once she's completely nude, you start to lick and suck her modest breasts and hard nipples. She lets out a stifled whimper of pleasure " +
 						"and you can see her love juices flowing freely from her pussy. You kiss your way down her tummy, but she catches your head before you can reach your target. You give " +
-						"her a confused look. Is she not interested in getting eaten out? She smiles playfully. <i>\"I'm not just going to make it easy for you.\"</i> You kiss her on the lips and " +
+						"her a confused look. Is she not interested in getting eaten out? She smiles playfully. <i>\"I'm just not going to make it easy for you.\"</i> You kiss her on the lips and " +
 						"slide your hand between her legs, fingering her soaked womanhood. You break the kiss so you can watch her expression while she bites her lip and struggles to keep " +
 						"from cumming.<p>You jerk in surprise as you feel her toes grip your renewed erection and scrotum. She takes advantage of your hesitation and rubs your dick between " +
 						"the soles of her feet. <i>\"You left yourself wide open,\"</i> she giggles. Even in private, it seems Mara can't help getting competitive. Well, you're not just going to keep " +
-						"letting her toy with you. It's time for the main event.<p>Mara yelps in surpise as you sit down and pull her light body onto your lap. Before she has a chance to react, you " +
+						"letting her toy with you. It's time for the main event.<p>Mara yelps in surprise as you sit down and pull her light body onto your lap. Before she has a chance to react, you " +
 						"shove your cock into her tight, dripping womanhood. She moans in pleasure and buries her face in your neck, but soon regains her senses and sits bolt upright. <i>\"That wasn't " +
 						"an orgasm!\"</i> she declares frantically, making you laugh. <i>\"I'm serious! That felt really good, but I didn't quite cum!\"</i> You give her a tender kiss and remind her that no " +
 						"one is keeping score. She pouts at you cutely, but lets out a little moan when you thrust upwards. She responds by moving her own hips, and soon she's riding you vigorously. " +
@@ -171,9 +260,9 @@ public class MaraTime extends Activity {
 						"make sure you're comfortable. When she's done, you're naked and spread-eagle on the bed. She sits between your spread legs, unfortunately still fully dressed. <i>\"Do you want to see " +
 						"me naked too?\"</i> She squirms a bit in indecision. <i>\"I really want to be nice to you and we always have so much fun when we're naked together... but I'm kinda in a dominant mood, so I " +
 						"think you should be the only one naked. Sorry.\"</i><p>Mara teasingly runs a single finger up and down your already hard penis. <i>\"I'm not sure if I should milk you over and over until " +
-						"you're dry, or whether I should keep you on the brink as long as I can until you eventaully cum in a massive burst.\"</i> She gives you a slow lick from balls to glans. <i>\"Yeah, I've " +
+						"you're dry, or whether I should keep you on the brink as long as I can until you eventually cum in a massive burst.\"</i> She gives you a slow lick from balls to glans. <i>\"Yeah, I've " +
 						"decided. Let's see if you can hit the ceiling.\"</i> She starts to stroke and play with your dick while she peppers kisses on your stomach and thighs. Her hands are very skilled and " +
-						"it soon seems that she's forgotten she was planning to tease you, because you're rapidly approaching orgam and she shows no indication of stopping. You do your best to hold back " +
+						"it soon seems that she's forgotten she was planning to tease you, because you're rapidly approaching orgasm and she shows no indication of stopping. You do your best to hold back " +
 						"and try to warn her, but it's too late, you're past the point of no return. Just as your endurance gives way, Mara tugs sharply on your balls, interrupting your climax. She takes " +
 						"her hands off your twitching dick and watches you shiver in frustration. <p><i>\"I probably can't repeat that trick too many times, can I?\"</i> she says as she plays with the precum that starts " +
 						"dripping from your penis.<p>You lose track of how many times she teases you to near orgasm and denies you. Sometimes she pulls on your balls, sometimes she squeezes your urethra " +
@@ -211,7 +300,7 @@ public class MaraTime extends Activity {
 						"Looking at the board, you realize you're trailing enough in units to use your flare card, giving you an extra action. Playing a gun tower disrupts Mara's formation and, by the end of your " +
 						"turn, you're in a much better position. <p><i>\"That's not fair!\"</i> Mara protests as she comes to her senses. <i>\"You can't play with a girl's heart like that just to win a game.\"</i> It doesn't " +
 						"really seem like you did anything worse than what she was doing just seconds ago. <i>\"It's completely different. If you tease a boy, he just gets hard and then you have something else to " +
-						"tease. But if you do that to a girl, she's going to fall in love! Look at my flushed cheeks. Feel my hearbeat. I'm madly in love right now and it's totally your fault!\"</i> She glares down " +
+						"tease. But if you do that to a girl, she's going to fall in love! Look at my flushed cheeks. Feel my heartbeat. I'm madly in love right now and it's totally your fault!\"</i> She glares down " +
 						"at the gameboard and looks through her cards. <i>\"I'm going to have to completely destroy you to avenge the wounded heart of a pure maiden.\"</i><p>In the end, Mara still ends up winning, but " +
 						"it's far from completely destroying you. You managed to give her a pretty good run for her money for the second half. By the time the game is over, she's mostly forgotten why she's " +
 						"pretending to be mad at you, but she does demand to be on top during your 'follow-up game' to address your combined sexual frustration.");	
@@ -226,7 +315,7 @@ public class MaraTime extends Activity {
 				Global.gui().message("You and Mara prepare for some sparring practice by getting undressed. She tosses her clothes aside and is so eager that she's actually bouncing noticeably, " +
 						"unconcerned about her nudity. You finish stretching and square off with her, but she raises a hand to stop you. <i>\"Wait! Can I have a kiss before we start?\"</i> You hesitate " +
 						"in surprise. Mara's always angling for an advantage, is she going to try a sneak attack when you approach to kiss her? She pouts and looks a little hurt. <i>\"I wouldn't " +
-						"do something that cruel. We're both naked, you're very sexy, and we're about to spend some time grappling. I just want a kiss first.\"</i> You feel a little guily about distrusting " +
+						"do something that cruel. We're both naked, you're very sexy, and we're about to spend some time grappling. I just want a kiss first.\"</i> You feel a little guilty about distrusting " +
 						"her as you embrace the naked girl and kiss her tenderly. She smiles gently as you part and whispers, <i>\"Thank you.\"</i> You're a little aroused, but nothing that would give Mara " +
 						"an advantage. Apparently she really didn't have an ulterior motive.<p>When you start sparring, she remains on the defensive and focuses on avoiding your attacks. Her flexibility " +
 						"serves her well her, each time you think you have a decent grip on her, she manages to slip away. You rush her, hoping to use your size to overwhelm her, but she nimbly dodges " +
@@ -253,8 +342,8 @@ public class MaraTime extends Activity {
 			else{
 				Global.gui().message("You suggest heading to the gym to do a bit of sparring, but she suggests her room would give you more privacy. This turns out to be important, because when " +
 						"you arrive she starts undressing and invites you to do the same. Obviously she feels that wrestling naked will give her a natural advantage. <i>\"Of course it will,\"</i> she " +
-						"smiles mischeviously. <i>\"But you're not really going to refuse are you?\"</i> You look over her naked body top to bottom. There's no way you're going to to " +
-						"refuse. You hastily strip down while she starts stretching. She's remarkably flexible, and you're pretty sure some of the more provacative stretches she does are intended " +
+						"smiles mischieviously. <i>\"But you're not really going to refuse are you?\"</i> You look over her naked body top to bottom. There's no way you're going to to " +
+						"refuse. You hastily strip down while she starts stretching. She's remarkably flexible, and you're pretty sure some of the more provocative stretches she does are intended " +
 						"to tempt you. It makes sense for her to grasp for any edge she can get. While you know she can be quite formidable from your night matches, you outmatch her in both height " +
 						"and weight. In a pure physical contest without her tricks or seduction, she's at a substantial disadvantage.<p>The two of you square off in the middle of the room. Mara's " +
 						"nude form is a feast for the eyes, but you force yourself to keep your head in the match. Mara seems to have no such restraint and her eyes hungrily take in every inch of your " +
@@ -266,7 +355,7 @@ public class MaraTime extends Activity {
 						"she asks with a pout, though she must already know the answer. She makes a much better rogue than a fighter. In a wrestling match with sex off the table, she only has one or two " +
 						"tricks, which makes her very predictable. She makes one last futile attempt to wriggle out from under you, at which point she notices your erection pressing against her thigh. " +
 						"<i>\"Are you planning to claim my body as the spoils of victory like some brutish barbarian?\"</i> Of course, you reply as you rub your dick against her vulva, but she's not really " +
-						"going to refuse is she? She sulks while manuevering her hips to try to get some penetration. <i>\"Stop teasing me and just put it in already.\"</i><p>You release her hands so you can " +
+						"going to refuse is she? She sulks while maneuvering her hips to try to get some penetration. <i>\"Stop teasing me and just put it in already.\"</i><p>You release her hands so you can " +
 						"line up your insertion properly. You're a little worried that she'll try some last minute mischief, but when your dick pierces her wet folds she just wraps her arms around your " +
 						"neck to pull you into a kiss. You thrust into her tight pussy and play with her hard nipples. She lets out little whimpers of pleasure each time you bury yourself into her. " +
 						"You feel yourself nearing climax and suck on her neck, giving her a hickey. She gasps and shudders as you fill her with your hot seed. You pull out of her, smearing a significant " +

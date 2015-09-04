@@ -1,9 +1,13 @@
 package nightgames.stance;
 
 
-import nightgames.characters.Character;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Mount extends Position {
+import nightgames.characters.Character;
+import nightgames.global.Global;
+
+public class Mount extends AbstractFacingStance {
 
 	public Mount(Character top, Character bottom) {
 		super(top, bottom,Stance.mount);
@@ -88,15 +92,6 @@ public class Mount extends Position {
 		return false;
 	}
 
-	@Override
-	public Position insert(Character dom) {
-		Character other = getOther(dom);
-		if(dom.hasDick() && other.hasPussy()){
-			return new Missionary(dom,other);
-		} else {
-			return new Cowgirl(dom,other);
-		}
-	}
 	@Override
 	public float priorityMod(Character self) {
 		return getSubDomBonus(self, 4.0f);

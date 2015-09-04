@@ -1,17 +1,18 @@
 package nightgames.status;
 
-import java.util.HashSet;
+import org.json.simple.JSONObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
+import nightgames.global.JSONUtils;
 
 public class Bound extends Status {
-	private int toughness;
+	private float toughness;
 	private String binding;
 
-	public Bound(Character affected, int dc, String binding) {
+	public Bound(Character affected, float dc, String binding) {
 		super("Bound", affected);
 		toughness = dc;
 		this.binding = binding;
@@ -40,7 +41,6 @@ public class Bound extends Status {
 
 	@Override
 	public int mod(Attribute a) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -52,37 +52,32 @@ public class Bound extends Status {
 	}
 	@Override
 	public int damage(Combat c, int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public double pleasure(Combat c, double x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int weakened(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int tempted(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int evade() {
-		// TODO Auto-generated method stub
 		return -15;
 	}
 
 	@Override
 	public int escape() {
-		return -toughness;
+		return -Math.round(toughness);
 	}
 	
 	@Override
@@ -113,11 +108,23 @@ public class Bound extends Status {
 
 	@Override
 	public int value() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Bound(newAffected, toughness, binding);
+	}
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		obj.put("toughness", toughness);
+		obj.put("binding", binding);
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new Bound(null, JSONUtils.readFloat(obj, "toughness"), JSONUtils.readString(obj, "binding"));
 	}
 }

@@ -33,7 +33,7 @@ public class AssFuck extends Fuck {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return fuckable(c, target)
-				&&c.getStance().insert() != c.getStance()
+				&& (c.getStance().insert(getSelf(), getSelf()) != c.getStance() || c.getStance().insert(target, getSelf()) != c.getStance())
 				&&c.getStance().mobile(getSelf())
 				&&(c.getStance().behind(getSelf())||(c.getStance().prone(target)&&!c.getStance().mobile(target)))
 				&&getSelf().canAct()&&!c.getStance().penetration(getSelf())
@@ -91,7 +91,11 @@ public class AssFuck extends Fuck {
 		} else {
 			c.setStance(new AnalProne(getSelf(),target));
 		}
-		target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c);		
+		int otherm = m;
+		if (getSelf().has(Trait.insertion)) {
+			otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
+		}
+		target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), otherm, c);		
 		if (!getSelf().has(Trait.strapped)) {
 			getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), m / 2, c);
 		}
@@ -104,8 +108,8 @@ public class AssFuck extends Fuck {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
-		return user.get(Attribute.Seduction)>=20;
+	public boolean requirements(Combat c, Character user, Character target) {
+		return user.get(Attribute.Seduction)>=15;
 	}
 
 	@Override
@@ -156,7 +160,7 @@ public class AssFuck extends Fuck {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Penetrate your opponent's ass.";
 	}
 

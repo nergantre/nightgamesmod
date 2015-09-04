@@ -1,21 +1,16 @@
 package nightgames.status;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 
-public class Masochistic extends Status {
-	private int duration;
+public class Masochistic extends DurationStatus {
 	public Masochistic(Character affected) {
-		super("Masochism", affected);
+		super("Masochism", affected, 10);
 		flag(Stsflag.masochism);
-		if(affected.has(Trait.PersonalInertia)){
-			duration = 15;
-		}else{
-			duration = 10;
-		}
 	}
 
 	@Override
@@ -39,17 +34,14 @@ public class Masochistic extends Status {
 
 	@Override
 	public int mod(Attribute a) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int regen(Combat c) {
-		duration--;
-		if(duration<0){
-			affected.removelist.add(this);
-		}
-		affected.emote(Emotion.nervous,15);
+		super.regen(c);
+		affected.emote(Emotion.nervous, 5);
+		affected.emote(Emotion.horny, 5);
 		return 0;
 	}
 
@@ -60,59 +52,61 @@ public class Masochistic extends Status {
 
 	@Override
 	public double pleasure(Combat c, double x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int weakened(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int tempted(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int evade() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int escape() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int gainmojo(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int spendmojo(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int counter() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int value() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Masochistic(newAffected);
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new Masochistic(null);
 	}
 }

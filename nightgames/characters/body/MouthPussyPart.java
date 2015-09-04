@@ -9,7 +9,7 @@ public class MouthPussyPart extends MouthPart {
 	/**
 	 * 
 	 */
-
+	public static BodyPartMod MouthPussyMod = () -> "MouthPussyMod";
 	public MouthPussyPart() {
 		super("mouth pussy", "When she opens her mouth, you can see soft pulsating folds lining her inner mouth, tailor made to suck cocks.", .5, 1.2, 1.5, true, "a ");
 	}
@@ -57,5 +57,10 @@ public class MouthPussyPart extends MouthPart {
 	@Override
 	public boolean isVisible(Character c) {
 		return true;
+	}
+
+	@Override
+	public BodyPartMod getMod() {
+		return MouthPussyMod;
 	}
 }

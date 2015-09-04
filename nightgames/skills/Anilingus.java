@@ -18,8 +18,8 @@ public class Anilingus extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
-		return (getSelf().has(Trait.shameless) || getSelf().has(Trait.Unflappable) || getSelf().get(Attribute.Seduction) > 30);
+	public boolean requirements(Combat c, Character user, Character target) {
+		return (getSelf().has(Trait.shameless) || getSelf().get(Attribute.Seduction) >= 30);
 	}
 
 	@Override
@@ -36,18 +36,18 @@ public class Anilingus extends Skill {
 	public boolean resolve(Combat c, Character target) {
 		AssPart targetAss = (AssPart) target.body.getRandom("ass");
 		Result result = Result.normal;
-		int m = 0; int n = 0;
+		int m = 10; int n = 0;
 		Optional<BodyFetish> fetish = getSelf().body.getFetish("ass");
 		if (fetish.isPresent() && fetish.get().magnitude >= 1) {
 			result = Result.sub;
-			m = 8 + Global.random(6);
+			m += 4 + Global.random(6);
 			n = 20;
 		} else if (c.getStance().enumerate() == Stance.facesitting) {
 			result = Result.reverse;
-			m = 4 + Global.random(6);
+			m += Global.random(6);
 			n = 10;
-		} else if(target.roll(this, c, accuracy())){
-			m = 4 + Global.random(6);
+		} else if(target.roll(this, c, accuracy(c))){
+			m += Global.random(6);
 			if(getSelf().has(Trait.silvertongue)){
 				m += 4;
 				result = Result.special;
@@ -76,8 +76,8 @@ public class Anilingus extends Skill {
 	public int speed(){
 		return 2;
 	}
-	public int accuracy(){
-		return 6;
+	public int accuracy(Combat c){
+		return 75;
 	}
 	public Tactics type(Combat c) {
 		return Tactics.pleasure;
@@ -118,7 +118,7 @@ public class Anilingus extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Perform anilingus on opponent";
 	}
 	public String getTargetOrganType(Combat c, Character target) {

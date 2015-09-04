@@ -80,7 +80,7 @@ public class Escape extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Cunning)>=8;
 	}
 
@@ -108,7 +108,7 @@ public class Escape extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Uses Cunning to try to escape a submissive position";
 	}
 	@Override

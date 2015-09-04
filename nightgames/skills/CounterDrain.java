@@ -34,8 +34,8 @@ public class CounterDrain extends CounterBase {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
-		return user.get(Attribute.Dark) > 25;
+	public boolean requirements(Combat c, Character user, Character target) {
+		return user.get(Attribute.Dark) >= 25;
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class CounterDrain extends CounterBase {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Counter with Drain";
 	}
 

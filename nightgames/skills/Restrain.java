@@ -24,7 +24,7 @@ public class Restrain extends Skill {
 	}
 
 	public boolean resolve(Combat c, Character target, boolean nofail) {
-		if(nofail || target.roll(this, c, accuracy())) {
+		if(nofail || target.roll(this, c, accuracy(c))) {
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.normal, target));
 			}
@@ -49,7 +49,7 @@ public class Restrain extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Power)>=8;
 	}
 
@@ -60,8 +60,8 @@ public class Restrain extends Skill {
 	public int speed(){
 		return 2;
 	}
-	public int accuracy(){
-		return 4;
+	public int accuracy(Combat c){
+		return 75;
 	}
 	public Tactics type(Combat c) {
 		return Tactics.positioning;
@@ -88,7 +88,7 @@ public class Restrain extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Restrain opponent until she struggles free";
 	}
 

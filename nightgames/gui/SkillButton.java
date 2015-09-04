@@ -41,7 +41,7 @@ public class SkillButton extends JPanel {
 		button.setOpaque(true);
 		button.setFont(new Font("Baskerville Old Face", Font.PLAIN, 18));
 		this.action=action;
-		String text = "<html>" + action.describe();
+		String text = "<html>" + action.describe(c);
 		if(action.type(c)==Tactics.damage){
 			button.setBackground(new Color(150,0,0));
 			button.setForeground(Color.WHITE);

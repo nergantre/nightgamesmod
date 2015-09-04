@@ -2,6 +2,8 @@ package nightgames.stance;
 
 
 import nightgames.characters.Character;
+import nightgames.global.Global;
+import nightgames.skills.Carry;
 
 public class Neutral extends Position {
 
@@ -83,14 +85,41 @@ public class Neutral extends Position {
 	}
 
 	@Override
-	public Position insert(Character dom) {
+	public Position insertRandomDom(Character dom) {
 		Character other = getOther(dom);
-		if(dom.hasDick() && other.hasPussy()){
+		boolean fuckPossible = dom.hasDick() && other.hasPussy();
+		boolean reversePossible = other.hasDick() && dom.hasPussy();
+		if (fuckPossible && reversePossible) {
+			if (Global.random(2) == 0) {
+				return new Standing(dom, other);
+			} else {
+				return new Jumped(dom, other);
+			}
+		} else if(fuckPossible) {
 			return new Standing(dom,other);
-		} else if(other.hasDick() && dom.hasPussy()) {
+		} else if(reversePossible) {
 			return new Jumped(dom,other);
 		} else {
 			return this;
 		}
+	}
+
+	@Override
+	public Position insert(Character pitcher, Character dom) {
+		Character catcher = getOther(pitcher);
+		Character sub = getOther(pitcher);
+		if (pitcher.body.getRandomInsertable() == null || !catcher.hasPussy()) {
+			// invalid
+			return this;
+		}
+		if (pitcher == dom) {
+			// guy is holding girl down, and is the dominant one in the new stance
+			return new Standing(pitcher, catcher);
+		}
+		if (pitcher == sub) {
+			// guy is holding girl down, and is the submissive one in the new stance
+			return new Jumped(catcher, pitcher);
+		}
+		return this;
 	}
 }

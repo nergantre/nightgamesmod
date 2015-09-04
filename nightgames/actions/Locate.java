@@ -47,20 +47,13 @@ public class Locate extends Action {
 		Character target;
 		GUI gui = Global.gui();
 		if (choice.equals("Start")) {
-			if (self.has(Item.AngelTrophy))
-				gui.choose(this, "Angel", self);
-			if (self.has(Item.CassieTrophy))
-				gui.choose(this, "Cassie", self);
-			if (self.has(Item.JewelTrophy))
-				gui.choose(this, "Jewel", self);
-			if (self.has(Item.MaraTrophy))
-				gui.choose(this, "Mara", self);
-			if (Global.checkFlag(Flag.Reyka) && self.has(Item.ReykaTrophy))
-				gui.choose(this, "Reyka", self);
-			if (self.has(Item.AiriTrophy))
-				gui.choose(this, "Airi", self);
+			Global.everyone().forEach((character) -> {
+				if (self.has(character.getTrophy())) {
+					gui.choose(this, character.getName(), self);
+				}
+			});
 		} else if ((target = Global.getNPC(choice)) != null) {
-			Item sought = Item.valueOf(target.name() + "Trophy");
+			Item sought = target.getTrophy();
 			if (sought == null) {
 				StringWriter writer = new StringWriter();
 				new UnsupportedOperationException()

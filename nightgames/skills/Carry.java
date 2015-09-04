@@ -22,7 +22,7 @@ public class Carry extends Fuck {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Power)>=25 && !user.has(Trait.petite);
 	}
 
@@ -35,7 +35,7 @@ public class Carry extends Fuck {
 				&& c.getStance().mobile(getSelf())
 				&& !c.getStance().prone(getSelf())
 				&& !c.getStance().prone(target)
-				&& !c.getStance().facing()
+				&& c.getStance().facing()
 				&& getSelf().getStamina().get()>=15
 				&& !c.getStance().penetration(getSelf());
 	}
@@ -54,15 +54,21 @@ public class Carry extends Fuck {
 				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s and %s halfway and", getSelf().bottom.get(0).getName(), getSelf().bottom.get(1).getName());
 			}
 		}
-
 		premessage = Global.format(premessage, getSelf(), target);
-		if(target.roll(this, c, accuracy())){
+		if(target.roll(this, c, accuracy(c))){
 			if(getSelf().human()){
 				c.write(getSelf(),premessage + deal(c,0,Result.normal, target));
 			}
 			else if(target.human()){
 				c.write(getSelf(),premessage + receive(c,0,Result.normal, getSelf()));
 			}
+			int m = 5 + Global.random(5);
+			int otherm = m;
+			if (getSelf().has(Trait.insertion)) {
+				otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
+			}
+			target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c);
+			getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c);
 			c.setStance(new Standing(getSelf(),target));
 		}
 		else{
@@ -81,8 +87,8 @@ public class Carry extends Fuck {
 	public Skill copy(Character user) {
 		return new Carry(user);
 	}
-	public int accuracy(){
-		return 0;
+	public int accuracy(Combat c){
+		return 60;
 	}
 	@Override
 	public Tactics type(Combat c) {
@@ -110,7 +116,7 @@ public class Carry extends Fuck {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Picks up opponent and penetrates her: Mojo 10.";
 	}
 

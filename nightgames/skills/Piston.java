@@ -6,7 +6,6 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.stance.Position;
 
 public class Piston extends Thrust {
 	public Piston(Character self) {
@@ -14,7 +13,7 @@ public class Piston extends Thrust {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Seduction)>=18;
 	}
 
@@ -29,13 +28,13 @@ public class Piston extends Thrust {
 	}
 
 	@Override
-	public int[] getDamage(Character target, Position stance) {
+	public int[] getDamage(Combat c, Character target) {
 		int results[] = new int[2];
 
 		int m = 12 + Global.random(8);
 		int mt = 8 + Global.random(5);
 		if(getSelf().has(Trait.experienced)){
-			mt = mt * 3 / 4;
+			mt = mt * 2 / 3;
 		}
 		mt = Math.max(1, mt);
 		results[0] = m;
@@ -78,7 +77,7 @@ public class Piston extends Thrust {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Fucks opponent without holding back. Very effective, but dangerous";
 	}
 

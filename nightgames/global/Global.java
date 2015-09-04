@@ -1,13 +1,48 @@
 package nightgames.global;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.swing.JFileChooser;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.ContextFactory;
+
+import com.cedarsoftware.util.io.JsonWriter;
+
 import nightgames.Resources.ResourceLoader;
 import nightgames.actions.Action;
 import nightgames.actions.Bathe;
 import nightgames.actions.Craft;
 import nightgames.actions.Energize;
 import nightgames.actions.Hide;
-import nightgames.actions.MasturbateAction;
 import nightgames.actions.Locate;
+import nightgames.actions.MasturbateAction;
 import nightgames.actions.Movement;
 import nightgames.actions.Recharge;
 import nightgames.actions.Resupply;
@@ -19,13 +54,10 @@ import nightgames.areas.Area;
 import nightgames.characters.Airi;
 import nightgames.characters.Angel;
 import nightgames.characters.Attribute;
-import nightgames.characters.BasePersonality;
 import nightgames.characters.Cassie;
 import nightgames.characters.Character;
-import nightgames.characters.Emotion;
 import nightgames.characters.Jewel;
 import nightgames.characters.Kat;
-import nightgames.characters.LoadablePersonality;
 import nightgames.characters.Mara;
 import nightgames.characters.NPC;
 import nightgames.characters.Personality;
@@ -33,19 +65,16 @@ import nightgames.characters.Player;
 import nightgames.characters.Reyka;
 import nightgames.characters.Trait;
 import nightgames.characters.TraitTree;
-import nightgames.characters.Yui;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.StraponPart;
 import nightgames.characters.custom.CustomNPC;
 import nightgames.characters.custom.JSONSourceNPCDataLoader;
-import nightgames.combat.Combat;
-import nightgames.combat.Encounter;
-import nightgames.combat.Result;
 import nightgames.daytime.Daytime;
 import nightgames.gui.GUI;
 import nightgames.items.Item;
 import nightgames.pet.Ptype;
 import nightgames.skills.*;
+import nightgames.stance.FlowerSex;
 import nightgames.trap.Alarm;
 import nightgames.trap.AphrodisiacTrap;
 import nightgames.trap.Decoy;
@@ -60,45 +89,6 @@ import nightgames.trap.TentacleTrap;
 import nightgames.trap.Trap;
 import nightgames.trap.Tripline;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.Reader;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.function.Predicate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.swing.JFileChooser;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
-import org.mozilla.javascript.Context;
-import org.mozilla.javascript.ContextFactory;
-
-import com.cedarsoftware.util.io.JsonWriter;
-
 public class Global {
 	private static Random rng;
 	private static GUI gui;
@@ -109,8 +99,8 @@ public class Global {
 	private static HashSet<Trait> featPool;
 	private static HashSet<Character> players;
 	private static HashSet<Character> resting;
-	private static HashSet<Flag> flags;
-	private static HashMap<Flag,Float> counters;
+	private static HashSet<String> flags;
+	private static HashMap<String,Float> counters;
 	private static Player human;
 	private static Match match;
 	private static Daytime day;
@@ -127,13 +117,12 @@ public class Global {
 
 	public Global(){
 		rng=new Random();
-		flags = new HashSet<Flag>();
+		flags = new HashSet<String>();
 		players = new HashSet<Character>();
 		resting = new HashSet<Character>();
-		counters = new HashMap<Flag,Float>();
+		counters = new HashMap<String,Float>();
 		jdate = new Date();
-		
-		counters.put(Flag.malePref, (float) Character.malePref);
+		counters.put(Flag.malePref.name(), 0.f);
 		
 		PrintStream fstream;
 		try {
@@ -228,7 +217,10 @@ public class Global {
 		skillPool.add(new Cunnilingus(p));
 		skillPool.add(new Escape(p));
 		skillPool.add(new Flick(p));
+		skillPool.add(new LivingClothing(p));
+		skillPool.add(new LivingClothingOther(p));
 		skillPool.add(new Engulf(p));
+		skillPool.add(new CounterFlower(p));
 		skillPool.add(new Knee(p));
 		skillPool.add(new LegLock(p));
 		skillPool.add(new LickNipples(p));
@@ -237,9 +229,12 @@ public class Global {
 		skillPool.add(new PerfectTouch(p));
 		skillPool.add(new Restrain(p));
 		skillPool.add(new Reversal(p));
+		skillPool.add(new LeechEnergy(p));
+		skillPool.add(new SweetScent(p));
 		skillPool.add(new Spank(p));
 		skillPool.add(new Stomp(p));
 		skillPool.add(new StandUp(p));
+		skillPool.add(new WildThrust(p));
 		skillPool.add(new SuckNeck(p));
 		skillPool.add(new Tackle(p));
 		skillPool.add(new Taunt(p));
@@ -375,6 +370,9 @@ public class Global {
 		skillPool.add(new CockGrowth(p));
 		skillPool.add(new BreastRay(p));
 		skillPool.add(new FootWorship(p));
+		skillPool.add(new BreastWorship(p));
+		skillPool.add(new CockWorship(p));
+		skillPool.add(new PussyWorship(p));
 		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 			skillPool.add(new SelfStun(p));	
 		}
@@ -545,7 +543,7 @@ public class Global {
 		return message;
 	}
 
-	public static void learnSkills(Character c){
+	public static void learnSkills(Character c) {
 		for(Skill skill:skillPool){
 			c.learn(skill);
 		}
@@ -559,8 +557,20 @@ public class Global {
 	    return original.substring(0, 1).toUpperCase() + original.substring(1);
 	}
 
-	public static Map<String, Character> characterPool;
-	
+	private static Map<String, NPC> characterPool;
+	public static NPC getNPCByType (String type) {
+		NPC results = characterPool.get(type);
+		if (results == null) {
+			System.err.println("failed to find NPC for type " + type);
+		}
+		return results;
+	}
+	public static Character getCharacterByType (String type) {
+		if (type.equals(human.getType())) {
+			return human;
+		}
+		return getNPCByType(type);
+	}
 	public static HashMap<String,Area> buildMap(){
 		Area quad = new Area("Quad","You are in the <b>Quad</b> that sits in the center of the Dorm, the Dining Hall, the Engineering Building, and the Liberal Arts Building. There's " +
 				"no one around at this time of night, but the Quad is well-lit and has no real cover. You can probably be spotted from any of the surrounding buildings, it may " +
@@ -603,6 +613,8 @@ public class Global {
 				"corridor, so there's no place for anyone to hide.",Movement.bridge);
 		Area sau = new Area("Student Union","You are in the <b>Student Union</b>, which doubles as base of operations during match hours. You and the other competitors can pick up " +
 				"a change of clothing here.",Movement.union);
+		Area courtyard = new Area("Courtyard","You are in the <b>Courtyard</b>. "
+				+ "It's a small opening between four buildings. There's not much to see here except a tidy garden maintained by the botany department.",Movement.courtyard);
 		quad.link(dorm);
 		quad.link(engineering);
 		quad.link(libarts);
@@ -625,6 +637,8 @@ public class Global {
 		libarts.link(pool);
 		pool.link(libarts);
 		pool.link(sau);
+		pool.link(courtyard);
+		courtyard.link(pool);
 		library.link(libarts);
 		library.link(bridge);
 		dining.link(quad);
@@ -656,34 +670,43 @@ public class Global {
 		map.put("Tunnel",tunnel);
 		map.put("Bridge",bridge);
 		map.put("Union", sau);
+		map.put("Courtyard", courtyard);
 		return map;
 	}
 
-	public static void flag(Flag f){
+	public static void flag(String f){
 		flags.add(f);
 	}
 
-	public static void unflag(Flag f){
+	public static void unflag(String f){
 		flags.remove(f);
 	}
 
+	public static void flag(Flag f){
+		flags.add(f.name());
+	}
+
+	public static void unflag(Flag f){
+		flags.remove(f.name());
+	}
+
 	public static boolean checkFlag(Flag f){
-		return flags.contains(f);
+		return flags.contains(f.name());
 	}
 
 	public static float getValue(Flag f){
-		if(!counters.containsKey(f)){
+		if(!counters.containsKey(f.name())){
 			return 0;
 		}
 		else{
-			return counters.get(f);
+			return counters.get(f.name());
 		}
 	}
 	public static void modCounter(Flag f, float inc){
-		counters.put(f, getValue(f)+inc);
+		counters.put(f.name(), getValue(f)+inc);
 	}
 	public static void setCounter(Flag f, float val){
-		counters.put(f,val);
+		counters.put(f.name(),val);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -695,13 +718,13 @@ public class Global {
 		}
 		obj.put("characters", characterArr);
 		JSONArray flagsArr = new JSONArray();
-		for(Flag flag : flags) {
-			flagsArr.add(flag.name());
+		for(String flag : flags) {
+			flagsArr.add(flag);
 		}
 		obj.put("flags", flagsArr);
 		JSONObject countersObj = new JSONObject();
-		for(Flag counter: counters.keySet()){
-			countersObj.put(counter.name(), counters.get(counter));
+		for(String counter: counters.keySet()){
+			countersObj.put(counter, counters.get(counter));
 		}
 		obj.put("counters", countersObj);
 		obj.put("time", match == null ? "dusk" : "dawn");
@@ -801,12 +824,12 @@ public class Global {
 			
 			JSONArray flagsArr = (JSONArray) object.get("flags");
 			for(Object flag : flagsArr) {
-				flags.add(Flag.valueOf((String)flag));
+				flags.add((String)flag);
 			}
 			
 			JSONObject countersObj = (JSONObject) object.get("counters");
 			for(Object counter : countersObj.keySet()) {
-				counters.put(Flag.valueOf((String)counter), JSONUtils.readFloat(countersObj, (String) counter));
+				counters.put((String)counter, JSONUtils.readFloat(countersObj, (String) counter));
 			}
 			date = JSONUtils.readInteger(object, "date");
 			String time = JSONUtils.readString(object, "time");
@@ -829,7 +852,7 @@ public class Global {
 	}
 
 	public static boolean newChallenger(Personality challenger){
-		if(getNPC(challenger.getCharacter().name())==null){
+		if(!players.contains(challenger.getCharacter())){
 			while(challenger.getCharacter().getLevel()<=human.getLevel()){
 				challenger.getCharacter().ding();
 			}
@@ -841,8 +864,8 @@ public class Global {
 	}
 
 	public static NPC getNPC(String name){
-		for(Character c : characterPool.values()) {
-			if(c.getType().equalsIgnoreCase(name)){
+		for(Character c : allNPCs()) {
+			if(c.getName().equalsIgnoreCase(name)){
 				return (NPC)c;
 			}
 		}
@@ -1072,5 +1095,9 @@ public class Global {
 		if (prefix.equals("a ") && "aeiou".contains(fullDescribe.substring(0,1).toLowerCase()))
 			return "an " + fullDescribe;
 		return prefix + fullDescribe;
+	}
+
+	public static Collection<NPC> allNPCs() {
+		return characterPool.values();
 	}
 }

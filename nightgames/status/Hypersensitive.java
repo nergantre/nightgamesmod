@@ -1,21 +1,15 @@
 package nightgames.status;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 
-public class Hypersensitive extends Status {
-	private int duration;
+public class Hypersensitive extends DurationStatus {
 	public Hypersensitive(Character affected) {
-		super("Hypersensitive", affected);
+		super("Hypersensitive", affected, 20);
 		flag(Stsflag.hypersensitive);
-		if(affected.has(Trait.PersonalInertia)){
-			duration = 30;
-		}else{
-			duration = 20;
-		}
 	}
 
 	@Override
@@ -48,11 +42,7 @@ public class Hypersensitive extends Status {
 	
 	@Override
 	public int regen(Combat c) {
-		duration--;
-		if(duration<=0){
-			affected.removelist.add(this);
-		}
-		affected.emote(Emotion.nervous,5);
+		super.regen(c);
 		return 0;
 	}
 
@@ -105,11 +95,21 @@ public class Hypersensitive extends Status {
 
 	@Override
 	public int value() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Hypersensitive(newAffected);
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new Hypersensitive(null);
 	}
 }

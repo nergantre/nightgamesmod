@@ -6,7 +6,7 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import org.json.simple.JSONObject;
 
-public enum EarPart implements BodyPart {
+public enum EarPart implements BodyPart, BodyPartMod {
 	pointed("pointed ", .2, 1.2, 1),
 	cat("cat ", .4, 1.5, 1.5), 
 	normal("normal ", 0, 1, 1);
@@ -175,5 +175,17 @@ public enum EarPart implements BodyPart {
 	@Override
 	public int counterValue(BodyPart other) {
 		return 0;
+	}
+
+	@Override
+	public BodyPartMod getMod() {
+		if (this == normal)
+			return BodyPartMod.noMod;
+		return this;
+	}
+
+	@Override
+	public String getModType() {
+		return name();
 	}
 }

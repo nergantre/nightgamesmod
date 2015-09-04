@@ -112,7 +112,7 @@ public class FlyingCowgirl extends FemdomSexStance {
 	}
 
 	@Override
-	public Position insert() {
+	public Position insertRandom() {
 		return new Mount(top, bottom);
 	}
 

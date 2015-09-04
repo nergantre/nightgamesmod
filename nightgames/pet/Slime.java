@@ -76,7 +76,7 @@ public class Slime extends Pet {
 				if(target.pantsless()&&!c.getStance().penetration(target)){
 					c.write(owner(),"Two long appendages extend from your slime and wrap around "+target.name()+"'s legs. A third, phallic shaped appendage forms and penetrates her " +
 							"pussy. She stifles a moan as the slimy tentacles thrusts in and out of her.");
-					target.body.pleasure(null, null, target.body.getRandom("cock"), 2+3*Global.random(power), c);					
+					target.body.pleasure(null, null, target.body.getRandom("pussy"), 2+3*Global.random(power), c);					
 				}
 				else{
 					c.write(owner(),"You see eyes form in "+own()+"slime as it watches the fight curiously.");

@@ -1,20 +1,19 @@
 package nightgames.status;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 
-public class Winded extends Status {
-	private int duration;
+public class Winded extends DurationStatus {
 	public Winded(Character affected) {
-		super("Winded", affected);
-		duration=1;
+		super("Winded", affected, 1);
 		flag(Stsflag.stunned);
 	}
 	public Winded(Character affected, int duration) {
-		super("Winded", affected);
-		this.duration=duration;
+		super("Winded", affected, duration);
 		flag(Stsflag.stunned);
 	}
 
@@ -47,14 +46,17 @@ public class Winded extends Status {
 	}
 
 	@Override
+	public void onRemove(Combat c, Character other) {
+		affected.addlist.add(new Braced(affected));
+		affected.heal(c, affected.getStamina().max());
+	}
+
+	@Override
 	public int regen(Combat c) {
-		if(duration<=0){
-			affected.removelist.add(this);
-		}
+		super.regen(c);
 		affected.emote(Emotion.nervous,15);
 		affected.emote(Emotion.angry,10);
-		duration--;
-		return affected.getStamina().max()/4;
+		return 0;
 	}
 
 	@Override
@@ -102,11 +104,21 @@ public class Winded extends Status {
 	}
 	@Override
 	public int value() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Winded(newAffected);
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new Winded(null);
 	}
 }

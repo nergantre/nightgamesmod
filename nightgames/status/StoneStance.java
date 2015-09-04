@@ -1,21 +1,15 @@
 package nightgames.status;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 
-public class StoneStance extends Status {
-	int duration;
+public class StoneStance extends DurationStatus {
 	public StoneStance(Character affected) {
-		super("Stone Form", affected);
-		if(affected.has(Trait.PersonalInertia)){
-			this.duration=15;
-		}
-		else{
-			this.duration=10;
-		}
+		super("Stone Form", affected, 10);
 		flag(Stsflag.form);
 	}
 
@@ -26,7 +20,6 @@ public class StoneStance extends Status {
 
 	@Override
 	public String describe() {
-		// TODO Auto-generated method stub
 		return "";
 	}
 
@@ -45,75 +38,73 @@ public class StoneStance extends Status {
 
 	@Override
 	public int regen(Combat c) {
-		duration--;
-		if(duration<0){
-			affected.removelist.add(this);
-		}
+		super.regen(c);
 		affected.emote(Emotion.confident,5);
 		return 0;
 	}
 
 	@Override
 	public int damage(Combat c, int x) {
-		// TODO Auto-generated method stub
 		return -x/2;
 	}
 
 	@Override
 	public double pleasure(Combat c, double x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int weakened(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int tempted(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int evade() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int escape() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int gainmojo(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int spendmojo(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int counter() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int value() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new StoneStance(newAffected);
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new StoneStance(null);
 	}
 }

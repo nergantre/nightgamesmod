@@ -1,32 +1,28 @@
 package nightgames.status;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
+import nightgames.global.JSONUtils;
 
-public class Horny extends Status {
-	private int duration;
-	private int magnitude;
+public class Horny extends DurationStatus {
+	private float magnitude;
 	private String source;
 
-	public Horny(Character affected, int magnitude, int duration, String source) {
-		super("Horny", affected);
+	public Horny(Character affected, float magnitude, int duration, String source) {
+		super("Horny", affected, duration);
 		this.source = source;
 		this.magnitude = magnitude;
-		if(affected.has(Trait.PersonalInertia)){
-			this.duration=3*duration/2;
-		}
-		else{
-			this.duration=duration;
-		}
 		flag(Stsflag.horny);
 	}
 
 	public String toString() {
-		return "Aroused from " + source + " ("+ magnitude +" x "+ duration+ ")";
+		return "Aroused from " + source + " ("+ magnitude +" x "+ getDuration() + ")";
 	}
+
 	@Override
 	public String describe() {
 		if(affected.human()){
@@ -39,7 +35,7 @@ public class Horny extends Status {
 
 	@Override
 	public float fitnessModifier () {
-		return -Math.min(.5f, magnitude * duration / 3.0f);
+		return -Math.min(.5f, magnitude * getDuration() / 3.0f);
 	}
 
 	@Override
@@ -49,11 +45,8 @@ public class Horny extends Status {
 
 	@Override
 	public int regen(Combat c) {
-		affected.arouse(magnitude, c);
-		duration--;
-		if(duration==0){
-			affected.removelist.add(this);
-		}
+		super.regen(c);
+		affected.arouse(Math.round(magnitude), c);
 		affected.emote(Emotion.horny,20);
 		return 0;
 	}
@@ -65,7 +58,7 @@ public class Horny extends Status {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now aroused by %s.\n", affected.subjectAction("are", "is"), source + " ("+ magnitude +" x "+ duration+ ")");
+		return String.format("%s now aroused by %s.\n", affected.subjectAction("are", "is"), source + " ("+ magnitude +" x "+ getDuration()+ ")");
 	}
 
 	@Override
@@ -78,7 +71,7 @@ public class Horny extends Status {
 		assert (s instanceof Horny);
 		Horny other = (Horny)s;
 		assert (other.source.equals(source));
-		this.duration = Math.max(other.duration, this.duration);
+		setDuration(Math.max(other.getDuration(), getDuration()));
 		this.magnitude += other.magnitude;
 	}
 
@@ -137,6 +130,23 @@ public class Horny extends Status {
 
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new Horny(newAffected, magnitude, duration, source);
+		return new Horny(newAffected, magnitude, getDuration(), source);
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		obj.put("source", source);
+		obj.put("magnitude", magnitude);
+		obj.put("duration", getDuration());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new Horny(null, 
+				JSONUtils.readFloat(obj, "magnitude"),
+				JSONUtils.readInteger(obj, "duration"),
+				JSONUtils.readString(obj, "source"));
 	}
 }

@@ -11,6 +11,7 @@ import nightgames.characters.Emotion;
 import nightgames.characters.NPC;
 import nightgames.characters.Trait;
 import nightgames.characters.BasePersonality.PreferredAttribute;
+import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -44,10 +45,14 @@ public class CustomNPC extends BasePersonality {
 		character.setTrophy(data.getTrophy());
 		character.plan = data.getPlan();
 		character.mood = Emotion.confident;
-		for (BodyPart part : data.getBodyParts()) {
-			character.body.add(part);
+		character.custom = true;
+		try {
+			character.body = data.getBody().clone(character);
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+			character.body = new Body(character);
 		}
-		character.body.finishBody(data.getGender());
+		character.body.finishBody(data.getSex());
 		for (ItemAmount i : data.getStartingItems()) {
 			character.gain(i.item, i.amount);;
 		}
@@ -173,5 +178,9 @@ public class CustomNPC extends BasePersonality {
 	
 	public String defaultImage() {
 		return data.getDefaultPortraitName();
+	}
+
+	public RecruitmentData getRecruitmentData() {
+		return data.getRecruitment();
 	}
 }

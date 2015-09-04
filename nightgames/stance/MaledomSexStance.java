@@ -36,7 +36,7 @@ public abstract class MaledomSexStance extends Position {
 			} else {
 				c.write(inserted.name() + " groans with frustration with the sudden disappearance of your dick.");
 			}
-			c.setStance(insert());
+			c.setStance(insertRandom());
 		}
 		if (!inserted.hasPussy()) {
 			if(inserted.human()){
@@ -44,10 +44,9 @@ public abstract class MaledomSexStance extends Position {
 			} else {
 				c.write(inserted.name() + " groans with frustration with the sudden disappearance of her pussy.");
 			}
-			c.setStance(insert());
+			c.setStance(insertRandom());
 		}
 	}
-	
 
 	@Override
 	public abstract BodyPart topPart();

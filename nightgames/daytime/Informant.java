@@ -1,17 +1,23 @@
 package nightgames.daytime;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import nightgames.characters.Character;
 import nightgames.characters.Eve;
 import nightgames.characters.Kat;
+import nightgames.characters.NPC;
 import nightgames.characters.Reyka;
+import nightgames.characters.custom.RecruitmentData;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 
 public class Informant extends Activity {
 	boolean acted;
-
+	private Map<String, NPC> customNPCChoices;
 	public Informant(Character player) {
 		super("Information Broker", player);
+		customNPCChoices = new HashMap<>();
 		acted = false;
 	}
 
@@ -353,6 +359,18 @@ public class Informant extends Activity {
 										+ "than you.\"</i><p>");
 				Global.gui().choose(this, "Kat: $1000");
 			}
+			for (Character c : Global.allNPCs()) {
+				if (c.isCustomNPC() && !Global.everyone().contains(c)) {
+					NPC npc = (NPC) c;
+					RecruitmentData data = npc.getRecruitmentData();
+					if (data.requirement.stream().allMatch((req) -> req.meets(null, player, null))) {
+						Global.gui().message("<i>\"" + data.introduction + "\"</i><p>");
+						customNPCChoices.put(data.action, npc);
+						Global.gui().choose(this, data.action);
+					}
+				}
+			}
+			/*
 			if (false) {
 				Global.gui()
 						.message(
@@ -361,9 +379,26 @@ public class Informant extends Activity {
 										+ "of her winnings on giving herself a bunch of new fetishes so she can get off on almost anything. She got herself a black market cock and even a set of testicles. They're a "
 										+ "liability, as I'm sure you've experienced more than once (not that I'd ever consider lopping mine off), but she added them just to make her ejaculations more satisfying.\"</i>");
 				Global.gui().choose(this, "Eve: $1000");
-			}
+			}*/
 			Global.gui().choose(this, "Back");
 			return;
+		}
+		if (customNPCChoices.containsKey(choice)) {
+			NPC npc = customNPCChoices.get(choice);
+			RecruitmentData data = npc.getRecruitmentData();
+			try {
+				Character copy = player.clone();
+				if (data.effects.stream().allMatch((effect) -> effect.execute(null, copy, null))) {
+					data.effects.stream().forEach((effect) -> effect.execute(null, player, null));
+					Global.gui().message("<i>\"" + data.confirm + "\"</i>");
+					acted = true;
+					Global.newChallenger(npc.ai);
+				} else {
+					Global.gui().message("You cannot pay the cost.<p>");
+				}
+			} catch (CloneNotSupportedException e) {
+				e.printStackTrace();
+			}
 		}
 		if (choice == "Reyka: $1000") {
 			if (player.money >= 1000) {
@@ -372,7 +407,7 @@ public class Informant extends Activity {
 						.message(
 								"<i>\"Ok, I'll talk to Reyka. She spends a lot of nights surfing the internet, but I'm sure she wouldn't mind an opportunity for some free prey.\"</i>");
 				acted = true;
-				Global.newChallenger(new Reyka());
+				Global.newChallenger(Global.getNPCByType(new Reyka().getType()).ai);
 				Global.flag(Flag.Reyka);
 			} else {
 				Global.gui().message("You don't have enough money<p>");
@@ -386,7 +421,7 @@ public class Informant extends Activity {
 								"<i>\"Pleasure doing business with you. Just be nice to Kat. She's very catlike and confident when she's turned on, but during the day or after climax, she's "
 										+ "just an ordinary girl. Besides, if her fans hear that you've been mean to her, they'll probably kick your ass. That includes me, by the way.\"</i>");
 				acted = true;
-				Global.newChallenger(new Kat());
+				Global.newChallenger(Global.getNPCByType(new Kat().getType()).ai);
 				Global.flag(Flag.Kat);
 			} else {
 				Global.gui().message("You don't have enough money<p>");
@@ -477,10 +512,6 @@ public class Informant extends Activity {
 	}
 
 	public boolean newCharacters() {
-		return Global.checkFlag(Flag.rank1)
-				&& ((!Global.checkFlag(Flag.Reyka) && Global
-						.checkFlag(Flag.blackMarketPlus)) || (!Global
-						.checkFlag(Flag.Kat) && Global
-						.checkFlag(Flag.magicstore)));
+		return Global.checkFlag(Flag.rank1);
 	}
 }

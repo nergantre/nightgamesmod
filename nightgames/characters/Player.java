@@ -559,7 +559,7 @@ public class Player extends Character {
 			}
 			break;
 		case fucking:
-			if (c.getStance().sub(this)) {
+			if (c.getStance().sub(this) && c.getStance().reverse() != c.getStance()) {
 				if (c.getStance().inserted(this)) {
 					c.write(this, Global.format("{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} clitoris with {self:possessive} hands as {other:subject-action:try|tries} to ride {self:direct-object}. " +
 							"While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:rotate|rotates} {self:possessive} body around into a dominant position", this, target));

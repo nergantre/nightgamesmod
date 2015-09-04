@@ -32,12 +32,12 @@ public class AngelTime extends Activity {
 						"lose track of time sitting there before she breaks the silence. <i>\""+player.name()+", what do you think about my friends?\"</i> That's not the question you expected. " +
 						"You've gotten along with her friends quite well so far. Angel shifts her position so you can't see her face. <i>\"I've had several lovers who couldn't get along with " +
 						"my friends. Some of them pretended they did for awhile, some of them wanted me to spend less time with them.\"</i> Her friends are very socially and sexually aggressive. " +
-						"You can see how that might make some guys uncomfortable. The fact that Angel and Mei occassionally have sex could probably also be a point of contention. It's probably " +
+						"You can see how that might make some guys uncomfortable. The fact that Angel and Mei occasionally have sex could probably also be a point of contention. It's probably " +
 						"fortunate that the night games got you used to casual and group sex before you met them. <i>\"A lot of people are superficially interested in me, but " +
 						"most lose interest when they find out what I'm really like. Sarah, Mei and Caroline know me better than anyone, but they don't think any less of me. Mei and Sarah " +
 						"need me as much as I need them. Caroline is good at making friends, but she chooses to stick with us anyway. If I have to choose between them or a boyfriend, " +
 						"I choose them without a second thought.\"</i> Angel looks you in the eye. You've never seen her this worried and vulnerable. <i>\"Do you really like them?\"</i> You can " +
-						"reply with confidence that you've grown quite fond of Sarah, Mei and Caroline, personality quirks and all. <i>\"Good, because I don't kno-... No one's going to make " +
+						"reply with confidence that you've grown quite fond of Sarah, Mei and Caroline, personalities, quirks and all. <i>\"Good, because I don't kno-... No one's going to make " +
 						"me choose between you and them, got it? That's just not going to happen.\"</i> Angel stands up, back to her normal self. <i>\"So should we meet up with them or spend a " +
 						"little more time with just the two of us?\"</i>");
 					Global.gui().choose(this,"Games");
@@ -119,7 +119,7 @@ public class AngelTime extends Activity {
 						"shudder run through her and she has to cling to your shoulders to stay on her feet. She smiles as you pull away and whispers, <i>\"You're a quick learner, lover.\"</i> She grasps your " +
 						"pent-up cock and strokes it until you cum in her hands. She offers her semen covered hand to Mei, who hesitantly begins to lick it clean. Angel looks back to address you. <i>\"I hope that's " +
 						"enough for a little while, I need to punish Mei now.\"</i><p>Mei jumps back in shock. <i>\"What did I do!?\"</i> Angel gives her a sadistically sweet smile. <i>\"Are you going to pretend you " +
-						"weren't kissing my boy on my bed a minute ago? He made you orgasm and you even drank his cum.\"</i> Angel walks over to the refridgerator in the corner, gets a couple ice cubes from the " +
+						"weren't kissing my boy on my bed a minute ago? He made you orgasm and you even drank his cum.\"</i> Angel walks over to the refrigerator in the corner, gets a couple ice cubes from the " +
 						"freezer, and puts them in a glass. Mei stammers out protest while she walks back to the bed, but Angel silences her with a kiss. She takes one of the ice cubes and teases each of " +
 						"Mei's nipples with it. She runs the cube down Mei's front and touches it to her clit. Mei yelps and tries to jerk away from the sensation, but Angel manages to slip the ice cube into " +
 						"her pussy. While Mei shivers and tries to endure the cold object in her most sensitive area, Angel moves between her legs and starts to eat her out. She teases her for awhile before " +
@@ -129,7 +129,7 @@ public class AngelTime extends Activity {
 						"for a while, but she shakes her head. <i>\"Three's a crowd. You two deserve some alone time. Besides, if I stay longer, who knows what Angel will do to me.\"</i> After she leaves, you ask Angel " +
 						"to explain what exactly the relationship between her and Mei is. You've heard Mei often tries to steal her boyfriends, but they're clearly quite close. Angel settles comfortably into the " +
 						"bed, exhausted from multiple orgasms. <i>\"Mei is straight, so even when she's seeking my affection, I have to act like it's punishment. If I neglect her for too long, she steals a boy from " +
-						"me so I have an excuse to punish her. She doesn't mean any harm, she just gets lonely.\"</i> That seems unneccessarily complicated. Still, it's very considerate of Angel to indulge Mei even when " +
+						"me so I have an excuse to punish her. She doesn't mean any harm, she just gets lonely.\"</i> That seems unnecessarily complicated. Still, it's very considerate of Angel to indulge Mei even when " +
 						"they're fighting over guys. <i>\"Of course,\"</i> she says. <i>\"Mei is my friend.\"</i>");
 				if(!player.has(Trait.experttongue)){
 					Global.gui().message("<p><b>You've improved your kissing technique to the point where it may render opponents temporarily helpless.</b>");
@@ -140,8 +140,8 @@ public class AngelTime extends Activity {
 			else{
 				Global.gui().message("You suggest to Angel that maybe the two of you should head somewhere a bit more private. You barely finish the sentence before she grabs you by the arm and " +
 						"practically drags you away. You give the other girls a quick parting wave and you hear Caroline call after you. <i>\"Have good sex.\"</i><p>Angel eventually brings you to her " +
-						"dorm room and stops in front of her room, gestures for you to wait, and disappears inside. Isn't she going to invite you in? <i>\"Not today,\"</i> she replies. <i>\"I have a better " +
-						"idea.\"</i> You feel a bit awkward loitering in the hall, so you try to make some smalltalk.<p>Her friends seem nice. <i>\"My friends are very important to me, so I want you to get along " +
+						"dorm room and stops in front of the door, gestures for you to wait, and disappears inside. Isn't she going to invite you in? <i>\"Not today,\"</i> she replies. <i>\"I have a better " +
+						"idea.\"</i> You feel a bit awkward loitering in the hall, so you try to make some small talk.<p>Her friends seem nice. <i>\"My friends are very important to me, so I want you to get along " +
 						"with them. Just be careful with Mei. If she tries to seduce you, it's just to get attention. She'll dump you in a day or two.\"</i> You thank her for the warning, though Angel " +
 						"also has reputation for dumping guys when she gets bored with them. She reappears in the doorway and pushes you against the wall, kissing you forcefully. <i>\"Not you.\"</i> she says " +
 						"after breaking the kiss. <i>\"Not today at least.\"</i> She keeps you pinned against the wall, looking as if she's trying to decide whether to fuck you right here. There are a few people passing " +
@@ -154,8 +154,8 @@ public class AngelTime extends Activity {
 						"impatience to get started. You decide to test the lotion out by sliding two well-lubricated fingers " +
 						"into her pussy. She groans softly and starts oiling up your cock in return. Your fingers explore inside her looking to map out her most sensitive areas. Eventually you find " +
 						"a spot that makes her weak in the knees, so obviously you focus on it. When she's trembling on the verge of orgasm, you deliver the coup de grace by pulling back her clitoral hood " +
-						"and rubbing her love buzzer with a lubed-up fingertip. She orgasms intensly and you have to catch her to keep you from falling to the floor.<p>Angel's first words after she " +
-						"catches her breathe are: <i>\"I want you in me right now.\"</i> You couldn't agree more. You push her against the wall and hold her leg up to get clear access to her entrance, while you " +
+						"and rubbing her love buzzer with a lubed-up fingertip. She orgasms intensely and you have to catch her to keep you from falling to the floor.<p>Angel's first words after she " +
+						"catches her breath are: <i>\"I want you in me right now.\"</i> You couldn't agree more. You push her against the wall and hold her leg up to get clear access to her entrance, while you " +
 						"thrust your lotion-slick shaft into her. She moans passionately, still sensitive from her recent orgasm. You thrust into her again and again while her nails dig into your back. " +
 						"<i>\"Fuck! I'm going to cum again!\"</i> Angel is practically screaming now. If someone else is anywhere near the showers, they must be able to hear her. You kiss her passionately to quiet her " +
 						"as you feel your own orgasm approaching. she grabs your ass with both hands and pulls you as deep into her as possible. Your cock spasms as it shoots its load into her womb and " +
@@ -173,10 +173,10 @@ public class AngelTime extends Activity {
 			if(angel.getAffection(player)>=8&&(!player.has(Trait.pokerface)||Global.random(2)==1)){
 				Global.gui().message("Today all the girls left the responsibility of choosing a game to you, with Angel's stipulation that it had to including stripping. You picked a simple, but intense " +
 						"bluffing game with stripping rules slotted in so naturally it's like the game was designed for them. Not to be immodest, but clearly your genius knows no bounds. The first five " +
-						"minutes of the game clearly seperate the people who can bluff from those who can't. Mei bet far too aggressively and is already completely naked. You lost one coaster and your belt. " +
+						"minutes of the game clearly separate the people who can bluff from those who can't. Mei bet far too aggressively and is already completely naked. You lost one coaster and your belt. " +
 						"Angel and Caroline have both been playing cautiously and are still fully clothed.<p>Poor Sarah is far too easy to read " +
 						"when she's nervous and has already been called on three bad bluffs. She's down to one coaster and her panties. This is a rather unusual situation since she is always the moderator in " +
-						"whatever game the group is playing and doesn't tend to lose her clothes. Unlike the other girls, who treat nudity very casually, she's extremely embarassed about how much of her body " +
+						"whatever game the group is playing and doesn't tend to lose her clothes. Unlike the other girls, who treat nudity very casually, she's extremely embarrassed about how much of her body " +
 						"you can see. Next round, she's forced to make a wager early since she only has one coaster to put down. She bets three and no one raises her. She flips her own coaster first - a rose, " +
 						"fortunately for her, though she no longer has any way to bluff - and flips Caroline's coaster, a skull. Sarah looks crestfallen, but she does stand up and remove her panties. You catch " +
 						"a glimpse of her very wet pussy before she covers herself with her hands and sits back down. Mei pats her on the head to comfort her.<p>Caroline starts the next round, and - though she loses " +
@@ -270,14 +270,14 @@ public class AngelTime extends Activity {
 						"pins or submission, which doesn't surprise you at all. What you weren't expecting was for her to invite an audience. Strip wrestling has become a normal nightly activity for " +
 						"you now, but the thought of doing it in front of three uninvolved girls is still a little unsettling. You do some simple stretches to warm up and Angel does the same. When you " +
 						"feel sufficiently limber, you ask Angel if she's ready to start.<i>\"I'm ready. I borrowed a pair of panties so we'd have about the same amount of clothing.\"</i> Wait... what? " +
-						"You know from sexfighting her that she often forgoes a bra, but was she not even wearing panties? Whose panties are she wearing now? No. It's probably not a good idea to let yourself " +
+						"You know from sexfighting her that she often forgoes a bra, but was she not even wearing panties? Whose panties is she wearing now? No. It's probably not a good idea to let yourself " +
 						"get distracted before a match. You try your best to put it out of your mind.<p>Angel moves first, lunging toward you and trying to take out your legs, but you move fast and step " +
 						"to the side. She catches one of your legs, but now her momentum is carrying her the wrong way and she falls to the mat. You manage to regain your balance and grab the waistband " +
 						"of her shorts, but she rolls out of reach and scrambles to her feet.<p>Caroline gives a low whistle. <i>\"They're both pretty good at this,\"</i> you hear her say. <i>\"When did Angel learn " +
 						"to wrestle?\" \"They must do this a lot. Do you think it's his fetish or hers?\"</i> Mei this time. While you're distracted by the side conversation, Angel closes the distance again " +
 						"and manages to get a hold of your shirt. Pulling you off balance, she manages to trip you and strip off your shirt at the same time. Thinking fast, you manage to catch hold of her " +
 						"shorts as you fall, pulling them down to her ankles. As she stumbles back, you escape with shorts in hand. The net result is you are shirtless and Angel is wearing her T-shirt " +
-						"and a pair of bright red, side-tie panties. She looks good in them, but she's going to have a hell of a time trying to keep those panties on.<p>You take the intiative this time, " +
+						"and a pair of bright red, side-tie panties. She looks good in them, but she's going to have a hell of a time trying to keep those panties on.<p>You take the initiative this time, " +
 						"feinting toward her panties, but actually taking her legs out from under her and landing on top. You take this opportunity to try to pull her top off, but she defends it frantically. " +
 						"In response, you change your target and successfully untie both sides of her panties and pull them off. While your hands are occupied though, Angel suddenly slips her hand down the front of your pants and grabs " +
 						"your balls. After that, pain happens.<p>When the spectators see your plight, they each react differently. Mei cheers enthusiastically, <i>\"Come on Angel, twist his balls off!\"</i> Caroline is a " +

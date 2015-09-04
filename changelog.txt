@@ -1,3 +1,65 @@
+1.8.1 changelog
+
+Major changes:
+- A lot of different body modifications have been moved to specific characters. The player must build a relationship with them in order to get the mods.
+	- Example: to get a succubus pussy or an incubus cock, you must have enough affection with Reyka in order to obtain it.
+	There are new transformation scenes for getting each body part modification, but a lot of them are placeholds right now (Only Reyka has some finished scenes at the moment)
+- Cock mods that dndw added has been refactored so that they count as modifications and not cock types. This means that you can grow and shrink them like normal.
+	- Note: This was a lot more work than I originally thought, and I had to change how the BodyPart systems worked.
+		Don't be too surprised to see some bugs until thing stabilize again.
+		On the bright side though, it will be MUCH easier to add new types of BodyPart modifications in the future.
+	- NPCs will also mod their cocks when they get one (note that it may take them a day to do it)
+- Angel has been somewhat rewritten. Her upgraded class and attribute (Succubus/Dark) overlaps with Reyka too much.
+	- Angel's upgraded class is now Demigoddess and preferred attribute is Divinity
+		- Her level up traits have been updated to reflect this.
+			- level 18 Semenphage -> Erophage (Feeds on sexuality, gains mojo/Alluring status when opponent orgasms)
+			- level 33 Energydrain -> level 36 Object of Worship (Opponents is periodically forced to worship her body)
+			- level 36 RawSexuality -> level 33
+		- Her pussy mod has been changed from succubus to divine
+			- Every time her pussy is pleasured while fucking, gain a stacking pleasure bonus. This resets when you pull out.
+				Example: base divine pussy pleasureMod is 1.0
+					1. You use thrust, pleasureMod bonus of +.25 = 1.25
+					2. She uses ride, pleasureMod bonus of +.25 = 1.5
+	- Changed the blessed cock mod to align with the Divinity Attribute and Angel. Cassie now offers the Runic cock mod instead.
+
+Bug fix:
+- Refracted Status duration, hopefully this will solve issues where statuses were not being cleared in the right order
+- Fixed a bug where if both combatants had both male and female genitalia, pussy would always take priority when fucking. (It will be random for now)
+	- Note that this opens up a lot more stances that weren't working before, so you may see a lot of missing/incorrect text when an unexpected situation comes up.
+	- I suspect that you'll see a lot of weirdness with struggle. The effect should still work, but you might see text that wont make sense.
+- Fixed a bug where loading the game could clear the malepref slider value
+
+Balance:
+- Fire form now weakens by 5 a turn instead of 1 a turn. Should still be really good.
+- Flatfooted now gives you Wary after it ends instead of Cynical. (seems to make more sense)
+- Nimble now gives you 2 bonus speed as well as some bonus evade based on Animism
+- Flick now has a 3 turn cooldown, but causes opponent to lose 25 mojo
+- Focus now reduces arousal by 20% of the cap or 20, whatever is more. It also now builds 25% Mojo. However now it has a 2 turn cooldown.
+- Footjob and Foot Pump now have a base 15% chance to cause a Foot Fetish (up from 5%). This is still increased by 2% per Fetish attribute.
+- Frottage now has a base 15% chance to cause a Cock Fetish (up from 5%). This is still increased by 2% per Fetish attribute.
+- Assfuck now only requires 15 Seduction (down from 20)
+- Sex Counter now requires 20 Seduction (up from 15)
+- Grind now builds 10% Mojo (up from 5%)
+- Invitation now requires 25 Seduction (up from 15), but now costs 30 Mojo (down from 50)
+- Capped Kick damage at Random[0-12] + min(100, Power)
+- Capped Knee damage at 4 + Random[0-11] + min(50, Power), fixed a bug where having achilles would not add bonus power.
+- Capped Magic Missile damage at 100.
+- Level Drain now requires 50 Dark (I see why SilverBard disabled this now...)
+- Use Breasts now requires at least C cup breasts, but does not exclude Petite
+- Sacrifice now costs 20 Mojo (down from 40)
+- Submissive Hold now requires 15 Seduction and 15 Power (Up from 10 Seduction only)
+- Tail Peg now requires 1 Dark OR 20 Seduction (changed from 2 Dark only)
+- Tail Peg now continuously fucks your opponent with your tail if done while already in a sex stance
+- Tail Peg now has text for players using it
+- Tickle now requires 6 Cunning
+
+Other:
+- Fixed a few skills' requirements requiring one more than the intended amount of Attributes (>= instead of >)
+- Update the status window instantly if your body changes.
+- AI will now also grow balls if the malePref is way to the right ( > 7ish)
+- Removing your dick will also remove the balls.
+- Growing balls is unavailabe without growing a cock.
+
 1.7.6 changelog
 
 Bug fix:
@@ -5,13 +67,40 @@ Bug fix:
 - Use Breasts is no longer usable while mounted facing chest/behind/in other weird situations.
 - Tighten can no longer be used when the opponent has a strapon
 - Fixed a bug where ineffective panties would still obstruct reverse fucking
+- Fixed a bug where drain kiss and upgraded kiss texts were switched.
+- Fixed a bug where stun blast would not actually make the opponent fall
 
 Balance changes:
 - Strip top and Strip bottom now only gives a pseudo 20 cunning bonus when in a dominant position (rather than 50)
 - Level Drain now can only drain 1 level maximum
 - Level Drain now can only be used when the user's level does not exceed 100 and is lower than the opponent's level
+- Romantic now gives +5% mojo built for kiss as well as increasing pleasure damage by 3. At 20 seduction, pleasure bonus becomes 10.
+- Dexterous now gives +40% hand and feet pleasure damage as well as being able to finger/handjob with underwear on.
+- Pimphand now gives +40% hand pleasure damage as well as better slaps.
+- Wrassler now also increases the opponent's pain tolerance by 50% as well.
+- Experienced lover now decreases self damage from fucking by 33% instead of 25%
+- Exhibitionist I find is good enough as is.
+- Suckle now does more damage, but builds mojo for the opponent (5%, or 10% if lactating)
+- Finger and handjob now does more pleasure damage.
+- Everyone now starts with 40 willpower
+- Knockdowns now causes the target to lose either 1/8th of their willpower, up to a maximum of 15
+- Knockdown willpower loss is now affected by strongwilled.
+
+New:
+- Added the Trait Insertion Master (better name needed)
+	- Increases base pleasure damage of fucking (but not thrusting/grinding/etc) by min(seduction / 4, 40)
+	- Angel gets this trait at 24 and Reyka at 17
+	- Players can get it after getting the Powerful hips trait
+- Added skills LivingClothing: Self and LivingClothing: Other
+	- This skill is usable with 15 science, and clothes either yourself or the opponent with tentacles.
+	- The only difference between the two other than the target is that the ones for the opponent is ineffective (does not block fucking etc)
+	- Tentacle clothing does arousal damage every turn.
+	- LivingClothing: Other can only be done while holding the opponent down
 
 Other changes:
+- Status panel now hides items that you have 0 of.
+- Characters now have to be pleasured before they orgasm. Temptation damage is no longer sufficient
+- lowered AI priority of stand up
 - Changed how statuses's resource modifiers stacked
 	- Multiple statuses used to stack multiplicatively
 		(if you had 50% pain reduction from one status, and 50% from another, it would be 25%)

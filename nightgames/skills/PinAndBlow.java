@@ -18,8 +18,8 @@ public class PinAndBlow extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
-		return user.get(Attribute.Seduction)>=22&&user.get(Attribute.Power) >= 10;
+	public boolean requirements(Combat c, Character user, Character target) {
+		return user.get(Attribute.Seduction)>=22&&user.get(Attribute.Power) >= 15;
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class PinAndBlow extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Holds your opponent down and use your mouth";
 	}
 

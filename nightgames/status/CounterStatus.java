@@ -1,15 +1,13 @@
 package nightgames.status;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.skills.CounterBase;
-import nightgames.skills.Skill;
 
-public class CounterStatus extends Status {
-	private int duration;
+public class CounterStatus extends DurationStatus {
 	private CounterBase skill;
 	private String desc;
 
@@ -18,8 +16,7 @@ public class CounterStatus extends Status {
 	}
 
 	public CounterStatus(Character affected, CounterBase skill, String description, int duration) {
-		super("Counter", affected);
-		this.duration=duration;
+		super("Counter", affected, duration);
 		this.skill = skill;
 		this.desc = description;
 		flag(Stsflag.counter);
@@ -43,14 +40,6 @@ public class CounterStatus extends Status {
 	@Override
 	public int mod(Attribute a) {
 		return 0;
-	}
-
-	@Override
-	public void eot(Combat c) {
-		if (duration <= 0) {
-			affected.removelist.add(this);
-		}
-		duration--;
 	}
 
 	@Override
@@ -102,6 +91,7 @@ public class CounterStatus extends Status {
 	public int value() {
 		return 0;
 	}
+
 	public void resolveSkill(Combat c, Character target) {
 		affected.removelist.add(this);
 		skill.resolveCounter(c, target);
@@ -111,8 +101,22 @@ public class CounterStatus extends Status {
 	public int regen(Combat c) {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new CounterStatus(newAffected, skill, desc, duration);
+		return new CounterStatus(newAffected, skill, desc, getDuration());
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		//TODO Support this once skill loading is in the game
+		obj.put("type", getClass().getSimpleName());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		//TODO Support this once skill loading is in the game
+		throw new UnsupportedOperationException();
 	}
 }

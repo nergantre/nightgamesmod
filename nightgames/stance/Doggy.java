@@ -84,7 +84,7 @@ public class Doggy extends MaledomSexStance {
 	}
 
 	@Override
-	public Position insert() {
+	public Position insertRandom() {
 		return new Behind(top,bottom);
 	}
 

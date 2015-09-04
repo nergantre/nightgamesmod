@@ -6,6 +6,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.status.Falling;
 import nightgames.status.Winded;
 
 public class StunBlast extends Skill {
@@ -15,7 +16,7 @@ public class StunBlast extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Science)>=9;
 	}
 
@@ -25,7 +26,7 @@ public class StunBlast extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "A blast of light and sound with a chance to stun: 4 Battery";
 	}
 
@@ -40,6 +41,7 @@ public class StunBlast extends Skill {
 				c.write(getSelf(),receive(c,0,Result.normal, target));
 			}
 			target.getStamina().empty();
+			target.add(c, new Falling(target));
 			target.add(c, new Winded(target));
 		}
 		else{

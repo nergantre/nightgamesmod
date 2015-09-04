@@ -14,7 +14,7 @@ public class FlashStep extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Ki)>=6;
 	}
 
@@ -27,7 +27,7 @@ public class FlashStep extends Skill {
 		return 15;
 	}
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Use lightning speed to get behind your opponent before she can react: 10 stamina";
 	}
 

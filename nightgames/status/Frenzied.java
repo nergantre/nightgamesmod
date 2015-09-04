@@ -4,36 +4,43 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.global.JSONUtils;
 import nightgames.skills.AssFuck;
 import nightgames.skills.Carry;
 import nightgames.skills.CounterDrain;
 import nightgames.skills.CounterRide;
-import nightgames.skills.Drain;
 import nightgames.skills.Engulf;
 import nightgames.skills.Fly;
 import nightgames.skills.Fuck;
 import nightgames.skills.Grind;
 import nightgames.skills.Invitation;
 import nightgames.skills.LegLock;
-import nightgames.skills.LevelDrain;
 import nightgames.skills.Piston;
 import nightgames.skills.ReverseAssFuck;
 import nightgames.skills.ReverseCarry;
 import nightgames.skills.ReverseFly;
 import nightgames.skills.ReverseFuck;
+import nightgames.skills.Shove;
 import nightgames.skills.Skill;
 import nightgames.skills.SpiralThrust;
+import nightgames.skills.Straddle;
 import nightgames.skills.SubmissiveHold;
+import nightgames.skills.Tackle;
+import nightgames.skills.Tear;
 import nightgames.skills.Thrust;
 import nightgames.skills.Tighten;
 import nightgames.skills.ToggleKnot;
+import nightgames.skills.Undress;
+import nightgames.skills.WildThrust;
 
-public class Frenzied extends Status {
+public class Frenzied extends DurationStatus {
 
 	private static final Collection<Skill> FUCK_SKILLS = new HashSet<>();
 
@@ -44,15 +51,19 @@ public class Frenzied extends Status {
 		FUCK_SKILLS.add(new Carry(p));
 		FUCK_SKILLS.add(new CounterDrain(p));
 		FUCK_SKILLS.add(new CounterRide(p));
-		FUCK_SKILLS.add(new Drain(p));
+		FUCK_SKILLS.add(new Shove(p));
+		FUCK_SKILLS.add(new Tackle(p));
+		FUCK_SKILLS.add(new Straddle(p));
+		FUCK_SKILLS.add(new Tear(p));
+		FUCK_SKILLS.add(new Undress(p));
 		FUCK_SKILLS.add(new Engulf(p)); // Probably?
 		FUCK_SKILLS.add(new Fly(p));
 		FUCK_SKILLS.add(new Fuck(p));
 		FUCK_SKILLS.add(new Grind(p));
 		FUCK_SKILLS.add(new Invitation(p));
 		FUCK_SKILLS.add(new LegLock(p));
-		FUCK_SKILLS.add(new LevelDrain(p));
 		FUCK_SKILLS.add(new Piston(p));
+		FUCK_SKILLS.add(new WildThrust(p));
 		FUCK_SKILLS.add(new ReverseAssFuck(p));
 		FUCK_SKILLS.add(new ReverseCarry(p));
 		FUCK_SKILLS.add(new ReverseFly(p));
@@ -64,15 +75,8 @@ public class Frenzied extends Status {
 		FUCK_SKILLS.add(new ToggleKnot(p));
 	}
 
-	private int duration;
-	private final int startDuration;
-	private final Combat c;
-
-	public Frenzied(Character affected, Combat c, int duration) {
-		super("Frenzied", affected);
-		this.c = c;
-		this.duration = duration;
-		this.startDuration = duration;
+	public Frenzied(Character affected, int duration) {
+		super("Frenzied", affected, duration);
 		flag(Stsflag.frenzied);
 	}
 
@@ -104,11 +108,19 @@ public class Frenzied extends Status {
 	}
 
 	@Override
+	public void onRemove(Combat c, Character other) {
+		affected.addlist.add(new Cynical(affected));
+	}
+
+	@Override
+	public boolean mindgames() {
+		return true;
+	}
+
+	@Override
 	public int regen(Combat c) {
-		if (--duration == 0 || (!c.getStance().inserted() && !c.getStance().analinserted())) {
-			affected.removelist.add(this);
-			affected.addlist.add(new Cynical(affected));
-		}
+		super.regen(c);
+		affected.buildMojo(c, 25);
 		affected.emote(Emotion.horny, 15);
 		return 0;
 	}
@@ -165,14 +177,26 @@ public class Frenzied extends Status {
 
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new Frenzied(newAffected, c, startDuration);
+		return new Frenzied(newAffected, getDuration());
 	}
 
 	@Override
-	public Collection<Skill> allowedSkills() {
+	public Collection<Skill> allowedSkills(Combat c) {
 		// Gather the preferred skills for which the character meets the
 		// requirements
-		return FUCK_SKILLS.stream().filter(s -> s.requirements(affected)).map(s -> s.copy(affected))
+		return FUCK_SKILLS.stream().filter(s -> s.requirements(c, affected, c.getOther(affected))).map(s -> s.copy(affected))
 				.collect(Collectors.toSet());
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		obj.put("duration", getDuration());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new Frenzied(null, JSONUtils.readInteger(obj, "duration"));
 	}
 }

@@ -1,10 +1,14 @@
 package nightgames.stance;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 
-public class Pin extends Position {
+public class Pin extends AbstractFacingStance {
 
 	public Pin(Character top, Character bottom) {
 		super(top, bottom,Stance.pin);
@@ -85,21 +89,6 @@ public class Pin extends Position {
 		return false;
 	}
 
-	@Override
-	public Position insert(Character dom) {
-		Character other = getOther(dom);
-
-		if(dom.hasDick()&&other.hasPussy()){
-			return new Missionary(dom,other);
-		}
-		else if(dom.hasPussy()&&bottom.hasDick()){
-			return new Cowgirl(dom,other);
-		}
-		else{
-			return this;
-		}
-	}
-	
 	@Override
 	public float priorityMod(Character self) {
 		return getSubDomBonus(self, 2.0f);

@@ -7,9 +7,9 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.stance.Position;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
+import nightgames.status.Stsflag;
 
 public class Thrust extends Skill {
 	public Thrust(String name, Character self) {
@@ -21,7 +21,7 @@ public class Thrust extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return true;
 	}
 
@@ -50,19 +50,18 @@ public class Thrust extends Skill {
 		}
 	}
 
-	public int[] getDamage(Character target, Position stance) {
+	public int[] getDamage(Combat c, Character target) {
 		int results[] = new int[2];
 
 		int m = 5 + Global.random(14);
-		int mt;
+		float mt = Math.max(1, m/3.f);
+
 		if(getSelf().has(Trait.experienced)){
-			mt = Math.max(1, m/4);
-		} else {
-			mt = Math.max(1, m/3);
+			mt = Math.max(1, m * .66f);
 		}
 
 		results[0] = m;
-		results[1] = mt;
+		results[1] = (int) mt;
 
 		return results;
 	}
@@ -86,7 +85,7 @@ public class Thrust extends Skill {
 			c.write(getSelf(),receive(c,0,result, target));
 		}
 
-		int[] m = getDamage(target, c.getStance());
+		int[] m = getDamage(c, target);
 		assert(m.length >= 2);
 
 		if (m[0] != 0)
@@ -144,7 +143,7 @@ public class Thrust extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Slow fuck, minimizes own pleasure";
 	}
 	

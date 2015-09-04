@@ -1,22 +1,15 @@
 package nightgames.status;
 
-import java.util.HashSet;
+import org.json.simple.JSONObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 
-public class Charmed extends Status {
-	private int duration;
+public class Charmed extends DurationStatus {
 	public Charmed(Character affected) {
-		super("Charmed", affected);
-		if(affected.has(Trait.PersonalInertia)){
-			duration = 8;
-		}else{
-			duration = 5;
-		}
+		super("Charmed", affected, 5);
 		flag(Stsflag.charmed);
 	}
 
@@ -37,7 +30,7 @@ public class Charmed extends Status {
 	
 	@Override
 	public float fitnessModifier () {
-		return - (2 + duration / 2.0f);
+		return - (2 + getDuration() / 2.0f);
 	}
 
 	@Override
@@ -46,12 +39,13 @@ public class Charmed extends Status {
 	}
 
 	@Override
+	public void onRemove(Combat c, Character other) {
+		affected.addlist.add(new Cynical(affected));
+	}
+
+	@Override
 	public int regen(Combat c) {
-		duration--;
-		if(duration<=0){
-			affected.removelist.add(this);
-			affected.addlist.add(new Cynical(affected));
-		}
+		super.regen(c);
 		affected.emote(Emotion.horny,15);
 		affected.loseWillpower(c, 1);
 		return 0;
@@ -113,5 +107,15 @@ public class Charmed extends Status {
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Charmed(newAffected);
+	}
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new Charmed(null);
 	}
 }

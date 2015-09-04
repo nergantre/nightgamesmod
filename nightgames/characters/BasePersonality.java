@@ -2,6 +2,10 @@ package nightgames.characters;
 
 import nightgames.actions.Action;
 import nightgames.actions.Movement;
+import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.CockMod;
+import nightgames.characters.body.CockPart;
+import nightgames.characters.custom.RecruitmentData;
 import nightgames.combat.Combat;
 import nightgames.global.Flag;
 import nightgames.global.Global;
@@ -24,6 +28,7 @@ public abstract class BasePersonality implements Personality {
 	public NPC character;
 	protected Growth growth;
 	protected List<PreferredAttribute> preferredAttributes;
+	protected CockMod preferredCockMod;
 
 	public interface PreferredAttribute {
 		Optional<Attribute> getPreferred(Character c);
@@ -31,11 +36,24 @@ public abstract class BasePersonality implements Personality {
 
 	public BasePersonality() {
 		growth = new Growth();
+		preferredCockMod = CockMod.error;
 		preferredAttributes = new ArrayList<PreferredAttribute>();
 		setGrowth();
 	}
 
 	public void setGrowth() {
+	}
+	
+	@Override
+	public void rest() {
+		if (preferredCockMod != CockMod.error) {
+			Optional<BodyPart> optDick = character.body.get("cock").stream().filter(part -> part.getMod() != preferredCockMod).findAny();
+			if (optDick.isPresent()) {
+				CockPart part = (CockPart) optDick.get();
+				character.body.remove(part);
+				character.body.add(part.applyMod(preferredCockMod));
+			}
+		}
 	}
 	
 	public void buyUpTo(Item item, int number) {
@@ -159,5 +177,9 @@ public abstract class BasePersonality implements Personality {
 			character.mod(selected, 1);
 			selected = null;
 		}
+	}
+
+	public RecruitmentData getRecruitmentData() {
+		return null;
 	}
 }

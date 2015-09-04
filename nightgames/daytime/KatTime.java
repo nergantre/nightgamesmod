@@ -1,11 +1,28 @@
 package nightgames.daytime;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.NPC;
 import nightgames.characters.Trait;
+import nightgames.characters.body.BasicCockPart;
+import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.CockMod;
+import nightgames.characters.body.CockPart;
+import nightgames.characters.body.EarPart;
+import nightgames.characters.body.ModdedCockPart;
+import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.TailPart;
+import nightgames.characters.body.WingsPart;
+import nightgames.characters.custom.requirement.BodyPartRequirement;
+import nightgames.characters.custom.requirement.NotRequirement;
 import nightgames.global.Flag;
 import nightgames.global.Global;
+import nightgames.items.Item;
 
 public class KatTime extends Activity {
 	private NPC kat;
@@ -13,6 +30,7 @@ public class KatTime extends Activity {
 	public KatTime(Character player) {
 		super("Kat", player);
 		kat = Global.getNPC("Kat");
+		buildTransformationPool();
 	}
 
 	@Override
@@ -20,11 +38,110 @@ public class KatTime extends Activity {
 		return Global.checkFlag(Flag.Kat);
 	}
 
+	List<TransformationOption> options;
+	
+	public void buildTransformationPool() {
+		options = new ArrayList<>();
+		TransformationOption primalCock = new TransformationOption();
+		primalCock.ingredients.put(Item.PriapusDraft, 10);
+		primalCock.ingredients.put(Item.Rope, 10);
+		primalCock.ingredients.put(Item.Aphrodisiac, 50);
+		primalCock.requirements.add(new BodyPartRequirement("cock"));
+		primalCock.requirements.add((c, self, other) -> {
+			return self.body.get("cock").stream().anyMatch(cock -> ((CockPart)cock).isGeneric());
+		});
+		primalCock.additionalRequirements = "A normal cock";
+		primalCock.option = "Primal Cock";
+		primalCock.scene = "[Placeholder]<br>Kat uses her totemic magic to convert your penis into a primal cock.";
+		primalCock.effect = (c, self, other) -> {
+			Optional<BodyPart> optPart = self.body.get("cock").stream().filter(cock -> ((CockPart)cock).isGeneric()).findAny();
+			BasicCockPart target = (BasicCockPart) optPart.get();
+			self.body.remove(target);
+			self.body.add(new ModdedCockPart(target, CockMod.primal));
+			return true;
+		};
+
+		options.add(primalCock);
+		TransformationOption feralPussy = new TransformationOption();
+		feralPussy.ingredients.put(Item.Rope, 10);
+		feralPussy.ingredients.put(Item.Aphrodisiac, 50);
+		feralPussy.ingredients.put(Item.FemDraft, 10);
+		feralPussy.requirements.add(new BodyPartRequirement("pussy"));
+		feralPussy.requirements.add((c, self, other) -> {
+			return self.body.get("pussy").stream().anyMatch(pussy -> pussy == PussyPart.normal);
+		});
+		feralPussy.option = "Feral Pussy";
+		feralPussy.scene = "[Placeholder]<br>Kat uses her totemic magic to convert your pussy into a feral one.";
+		feralPussy.effect = (c, self, other) -> {
+			self.body.addReplace(PussyPart.feral, 1);
+			return true;
+		};
+		feralPussy.additionalRequirements = "A normal pussy";
+		TransformationOption catTail = new TransformationOption();
+		catTail.ingredients.put(Item.Rope, 10);
+		catTail.ingredients.put(Item.Aphrodisiac, 50);
+		catTail.requirements.add(new NotRequirement(Arrays.asList(new BodyPartRequirement("tail"))));
+		catTail.requirements.add((c, self, other) -> {
+			return self.body.get("tail").stream().anyMatch(part -> part != TailPart.cat) || !self.body.has("tail");
+		});
+		catTail.option = "Cat Tail";
+		catTail.scene = "[Placeholder]<br>Kat uses her totemic magic to grow you a cat tail.";
+		catTail.effect = (c, self, other) -> {
+			self.body.addReplace(TailPart.cat, 1);
+			return true;
+		};
+		options.add(catTail);
+		TransformationOption catEars = new TransformationOption();
+		catEars.ingredients.put(Item.Rope, 10);
+		catEars.ingredients.put(Item.Aphrodisiac, 50);
+		catEars.requirements.add(new BodyPartRequirement("ears"));
+		catEars.requirements.add((c, self, other) -> {
+			return self.body.get("ears").stream().anyMatch(part -> part != EarPart.cat) || !self.body.has("ears");
+		});
+		catEars.option = "Cat Ears";
+		catEars.scene = "[Placeholder]<br>Kat uses her totemic magic to grow you cat ears.";
+		catEars.effect = (c, self, other) -> {
+			self.body.addReplace(EarPart.cat, 1);
+			return true;
+		};
+		options.add(feralPussy);
+	}
 	@Override
 	public void visit(String choice) {
 		Global.gui().clearText();
 		Global.gui().clearCommand();
-		if(choice == "Start"){
+		Optional<TransformationOption> optionalOption = options.stream().filter(opt -> choice.equals(opt.option)).findFirst();
+		if (optionalOption.isPresent()) {
+			TransformationOption option = optionalOption.get();
+			boolean hasAll = option.ingredients.entrySet().stream().allMatch(entry -> player.has(entry.getKey(), entry.getValue()));
+			if (hasAll) {
+				Global.gui().message(Global.format(option.scene, kat, player));
+				option.ingredients.entrySet().stream().forEach(entry -> player.consume(entry.getKey(), entry.getValue(), false));
+				option.effect.execute(null, player, kat);
+				Global.gui().choose(this, "Leave");
+			} else {
+				Global.gui().message("Kat frowns when she sees that you don't have the requested items.");
+				Global.gui().choose(this, "Back");
+			}
+		} else if (choice.equals("Transformations")) {
+			Global.gui().message("[Placeholder]<br>Kat explains to you how she became a cat girl through totemic magic.");
+			options.forEach(opt -> {
+				Global.gui().message(opt.option + ":");
+				opt.ingredients.entrySet().forEach((entry) -> {
+					Global.gui().message(entry.getValue() + " " + entry.getKey().getName());					
+				});
+				if (!opt.additionalRequirements.isEmpty()) {
+					Global.gui().message(opt.additionalRequirements);
+				}
+				Global.gui().message("<br>");
+			});
+			options.forEach(opt -> {
+				if (opt.requirements.stream().allMatch(req -> req.meets(null, player, kat))) {
+					Global.gui().choose(this, opt.option);
+				}
+			});
+			Global.gui().choose(this, "Back");
+		} else if (choice.equals("Start") || choice.equals("Back")) {
 			if(kat.getAffection(player)>0){
 				Global.gui().message("You send Kat a text to see if she's free. Since exchanging numbers with her, you've discovered that she's much more outgoing " +
 						"when texting than she is in person. The two of you have chatted quite a bit, you just hope she'll eventually get more used to talking with you in " +
@@ -32,13 +149,15 @@ public class KatTime extends Activity {
 						"can meet without her friends coming after you. 'i'm not with Mel and Emma right now. you can come here' About ten seconds later, she sends you a followup. " +
 						"'please don't hate them. they're my best friends and they mean well. they just think i'm still an innocent virgin who needs to be protected.' To be " +
 						"fair, she does inspire inspire that sort of protective attitude, even from her opponents. For Kat's sake, you'll do your best to get along with them, but " +
-						"they may not be as agreeable, especially if they find out you're having sex with their protectee.<p>On your way to Kat's room, you get another text. " +
+						"they may not be as agreeable, especially if they find out you're having sex with their protegée.<p>On your way to Kat's room, you get another text. " +
 						"'i think i'm too excited waiting for you to get here. what are you planning?'");
 				Global.gui().choose(this,"Games");
 				Global.gui().choose(this,"Sparring");
 				Global.gui().choose(this,"Sex");
-			}
-			else if(kat.getAttraction(player)<10){
+				if (kat.getAffection(player) > 25) {
+					Global.gui().choose(this,"Transformations");
+				}
+		} else if(kat.getAttraction(player)<10){
 				Global.gui().message("You decide to look for Kat and see if she's interested in spending some time together. You don't have any way to contact her directly, " +
 						"but she apparently spends a lot of time in the campus gardens. That's probably your best hope for running into her.<p>You eventually spot Kat walking " +
 						"through the gardens, but you almost don't recognize her. Instead of the light, casual clothes she usually wears during a match, she's currently dressed " +
@@ -61,7 +180,7 @@ public class KatTime extends Activity {
 				Global.gui().message("You head out to the campus gardens, hoping to find Kat so you can spend some time together. You aren't searching long before you find her reading " +
 						"a book in the shade of a tree. She seems pretty absorbed in the book, so you're hesitant to disturb her. Instead of calling out to her, you just sit next to her " +
 						"quietly. You don't recognize the book she's reading, but judging by the cover, it appears to be an urban fantasy romance novel. It must pretty engaging, because " +
-						"Kat still hasn't noticed that you've been sitting with her for several minutes.<p>When Kat finally perceives your presence, she lets out a starled yelp and jumps " +
+						"Kat still hasn't noticed that you've been sitting with her for several minutes.<p>When Kat finally perceives your presence, she lets out a startled yelp and jumps " +
 						"to her feet. You weren't expecting her to be that surprised. You give her a relaxed smile and a greeting. Before Kat can reply, you hear an angry voice behind you. " +
 						"<i>\"What the hell are you doing to my best friend?!\"</i> A girl with curly red hair glares at you and hugs Kat protectively. Another girl, a brunette, looks calmer, but " +
 						"also stands between you and Kat. This is bad. You quickly explain that you weren't trying to scare Kat, you just wanted to talk to her. <p><i>\"Our Kat is pretty delicate. " +
@@ -130,8 +249,8 @@ public class KatTime extends Activity {
 					"silly exercise you made up is charming. You lean down and lightly lick her inner thigh. She jerks as if shocked and lets out a moan. <i>\"Tongue is unfair! I can barely handle " +
 					"the fingers!\"</i> She really is taking this seriously. You were planning to eat her out as a reward, but you decide instead to continue the exercise until she wants to stop. " +
 					"<p>She's doing a very good job keeping her arousal in check. You've been fingering her long enough that your wrist is getting sore. You give her a brief respite while you move " +
-					"to sit behind her. She's a bit starled when you pull her into your lap to lean against your chest. From this new position, you slip your hand between her legs and resume " +
-					"fingering her. She lets out breathy moan and shivers in your arms. Within a handful of seconds, you feel her tail twitching against you leg and her moans have a clear mewing " +
+					"to sit behind her. She's a bit startled when you pull her into your lap to lean against your chest. From this new position, you slip your hand between her legs and resume " +
+					"fingering her. She lets out breathy moans and shivers in your arms. Within a handful of seconds, you feel her tail twitching against you leg and her moans have a clear mewing " +
 					"quality. <p>" +
 					"She was doing pretty well up until now. <i>\"I've been in the games long enyough to endure being fingered if I focus, but being held by a guy... and the " +
 					"warmth... and the breath on my neck! How is a girl suppose to handle that?\"</i> She squirms out of your arms and turns to face you. <i>\"I know this 'training' was just an " +
@@ -145,7 +264,7 @@ public class KatTime extends Activity {
 					"She slumps completely " +
 					"limp into your arms, eyes closed. You hold her and gently stroke her head. You pet her for a little while before she opens her eyes with a sleepy smile. <i>\"You're still inside " +
 					"me.... It's a nice feeling.\"</i> You lay her gently onto the bed and she hugs you tightly to make you aren't going anywhere. She quickly falls asleep, cuddling up against you. " +
-					"You pull a blanket over your naked bodies and close your eyes. You were suppose to be training, but a quick nap suddenly seems very inviting.");
+					"You pull a blanket over your naked bodies and close your eyes. You were supposed to be training, but a quick nap suddenly seems very inviting.");
 			Global.gui().choose(this,"Leave");
 			Daytime.train(player,kat,Attribute.Seduction);
 			kat.gainAffection(player,1);
@@ -182,7 +301,7 @@ public class KatTime extends Activity {
 					"still nyat peeking?\"</i> You assure her that your eyes are still tightly shut. To your surprise, she lets out a low sound of annoyance and pushes your head away. <i>Why are you " +
 					"being so obedient?! You're gonnya make me cum too fast!\"</i> You open your eyes (she's obviously too cat-like to care about being seen) and look at her in confusion.<p>" +
 					"<i>\"Can't you take a hint? I obviously only told you nyat to tease me so you'd want to do it more. I even teased you and gave you that dumb 'no peeking' rule to put the " +
-					"idea in your head. You shouldn't just blindly do whatever I say.\"</i> She's pouting, but it just looks rediculous with no pants on. <p>" +
+					"idea in your head. You shouldn't just blindly do whatever I say.\"</i> She's pouting, but it just looks ridiculous with no pants on. <p>" +
 					"If she's giving you the green light to tease her, you're definitely getting the urge to do so right now. You mercilessly tickle her naked inner thighs, paralyzing her with " +
 					"squeals of laughter. No matter how cute she is, you're still going to punish her for being so unreasonable. How can she expect you to pick up on reverse psychology when she's " +
 					"giving you orders? She can't demand that you obey her as a prize for winning and then demand the opposite of what she wants. You stop tickling her long enough for her to " +
@@ -196,7 +315,7 @@ public class KatTime extends Activity {
 					"then when you were eating her out. You lightly stroke her lower lips, making her moan and shiver. When you slide a finger into her, her arms give out and her upper body drops to " +
 					"the floor. <i>\"NYA! Nyat just your fingers! Aren't you horny too? Do it for real!\"</i><br>" +
 					"You seem to recall her begging you to make her cum, doing whatever you wanted to her. Now she's saying your fingers aren't good enough for her? She should be more clear about " +
-					"what she wants. She squirms in embarassment and looks hesitant to speak. She's in full cat mode, so she can't actually be feeling shame. The blushing innocent bit must be part " +
+					"what she wants. She squirms in embarrassment and looks hesitant to speak. She's in full cat mode, so she can't actually be feeling shame. The blushing innocent bit must be part " +
 					"of her libido. <i>\"I want... your... d-dick.... I want you to f-fuck me.\"</i> She can barely get the words out, but you feel an fresh flood of moisture from her entrance.<p>" +
 					"She's earned a reward, and so has your unsatisfied cock. You line your rod up with her wet hole and thrust into her before she realizes what you're doing. She moans in pleasure " +
 					"at the sensation of being completely filled. She's way beyond teasing, you might as well fuck her properly. You get a good grip on her waist and settle into a steady rhythm thrusting " +

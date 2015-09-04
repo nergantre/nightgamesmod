@@ -3,8 +3,7 @@ package nightgames.stance;
 
 import nightgames.characters.Character;
 
-public class SixNine extends Position {
-
+public class SixNine extends AbstractBehindStance {
 	public SixNine(Character top, Character bottom) {
 		super(top, bottom,Stance.sixnine);
 	}
@@ -23,11 +22,6 @@ public class SixNine extends Position {
 		} else {
 			return "You and "+top.name()+" are on the floor in 69 position. She's sitting on top of you with her pussy right in front of your face and your dick in her mouth.";
 		}
-	}
-
-	@Override
-	public Position insert(Character target) {
-		return new ReverseMount(top, bottom).insert(target);
 	}
 
 	@Override
@@ -104,7 +98,7 @@ public class SixNine extends Position {
 	}
 
 	@Override
-	public Position insert() {
+	public Position insertRandom() {
 		return this;
 	}
 }

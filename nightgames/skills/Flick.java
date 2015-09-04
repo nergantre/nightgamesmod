@@ -11,7 +11,7 @@ import nightgames.global.Global;
 public class Flick extends Skill {
 
 	public Flick(Character self) {
-		super("Flick", self);
+		super("Flick", self, 3);
 	}
 
 	@Override
@@ -31,7 +31,8 @@ public class Flick extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy())){
+		if(target.roll(this, c, accuracy(c))){
+			int mojoLost = 25;
 			int m = Global.random(6)+5;
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,m,Result.normal, target));
@@ -41,9 +42,10 @@ public class Flick extends Skill {
 			}
 			if(target.has(Trait.achilles)){
 				m+=2+Global.random(target.get(Attribute.Perception)/2);
+				mojoLost = 40;
 			}
 			target.pain(c, m);
-			target.loseMojo(c, 10);
+			target.loseMojo(c, mojoLost);
 			getSelf().emote(Emotion.dominant, 10);
 			target.emote(Emotion.angry,15);
 			target.emote(Emotion.nervous,15);
@@ -61,7 +63,7 @@ public class Flick extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Seduction)>=17 && !user.has(Trait.softheart);
 	}
 
@@ -105,7 +107,7 @@ public class Flick extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Flick opponent's genitals, which is painful and embarrassing";
 	}
 

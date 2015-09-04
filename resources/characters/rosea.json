@@ -23,8 +23,9 @@
 			},
 			"traits" : [
 				"dryad",
-				"immobile"
-			],
+				"immobile",
+				"lethargic"
+			]
 		},
 		"growth" : {
 			"resources" : {
@@ -54,17 +55,51 @@
 		}
 	},
 	"plan" : "hunting",
-	"body" : {
-		"gender" : "female",
-		"parts" : [{
-				"type" : "nightgames.characters.body.PussyPart",
-				"enum" : "plant"
-			}, {
-				"type" : "nightgames.characters.body.BreastPart",
-				"enum" : "dd"
-			}
-		]
-	},
+	"sex" : "female",
+	"body":{
+        "parts":[
+          {
+            "class":"nightgames.characters.body.BreastsPart",
+            "enum":"e"
+          },
+          {
+            "class":"nightgames.characters.body.PussyPart",
+            "enum":"plant"
+          },
+          {
+            "class":"nightgames.characters.body.EarPart",
+            "enum":"pointed"
+          },
+          {
+            "class":"nightgames.characters.body.TentaclePart",
+			"desc":"vines",
+			"attachpoint":"back",
+			"hotness":0.1,
+			"pleasure":1.2,
+			"sensitivity":0,
+			"fluids":"nectar"
+          },
+		  {
+            "class":"nightgames.characters.body.TentaclePart",
+			"desc":"vines",
+			"attachpoint":"hands",
+			"hotness":0.1,
+			"pleasure":1.2,
+			"sensitivity":0,
+			"fluids":"nectar"
+          },
+		  {
+            "class":"nightgames.characters.body.TentaclePart",
+			"desc":"vines",
+			"attachpoint":"feet",
+			"hotness":0.1,
+			"pleasure":1.2,
+			"sensitivity":0,
+			"fluids":"nectar"
+          }
+        ],
+        "hotness":1.5
+      },
 	"items" : {
 		"initial" : [{
 				"item" : "nectar",
@@ -74,78 +109,86 @@
 		"purchase" : [{
 				"item" : "nectar",
 				"amount" : 10
-			}, {
-				"item" : "Dildo",
-				"amount" : 1
 			}
 		]
 	},
 	"lines" : {
 		"hurt" : [{
-				"requirements" :
-				{
-						"trait" : "succubus"
-					},
-				"text" : "<b>\"imma drain ya\"</b>"
-			}, {
-				"requirements" :
-				{
-						"level" : 20
-					}
-				,
-				"text" : "<b>\"imma hurt ya\"</b>"
-			}, {
-				"text" : "<b>\"u wot m8\"</b>"
+				"text" : "<b>\"Aaah, what a sweet voice, you're making my flowers drip.\"</b>"
 			}
 		],
 		"naked" : [{
-				"text" : "<b>\"u wot m8\"</b>"
+				"text" : "{self:subject} seems unperturbed. While making no effort to cover herself, she beckons to you, <b>\"Like what you see? Step a little closer and I'll show you a whole new world.\"</b>"
 			}
 		],
 		"stunned" : [{
-				"text" : "<b>\"u wot m8\"</b>"
+				"text" : "<b>{self:subject} crumples onto the ground, \"You will pay for this...\"</b>"
 			}
 		],
 		"taunt" : [{
-				"text" : "\"What the fuck did you just fucking say about me, you little bitch?<br>I’ll have you know I graduated top of my class in the Navy Seals, and I’ve been involved in numerous secret raids on Al-Quaeda, and I have over 300 confirmed kills.<br>I am trained in gorilla warfare and I’m the top sniper in the entire US armed forces. You are nothing to me but just another target. I will wipe you the fuck out with precision the likes of which has never been seen before on this Earth, mark my fucking words. You think you can get away with saying that shit to me over the Internet?<br>Think again, fucker.<br>As we speak I am contacting my secret network of spies across the USA and your IP is being traced right now so you better prepare for the storm, maggot.<br>The storm that wipes out the pathetic little thing you call your life.<br>You’re fucking dead, kid.<br>I can be anywhere, anytime, and I can kill you in over seven hundred ways, and that’s just with my bare hands.<br>Not only am I extensively trained in unarmed combat, but I have access to the entire arsenal of the United States Marine Corps and I will use it to its full extent to wipe your miserable ass off the face of the continent, you little shit.<br>If only you could have known what unholy retribution your little \"clever\" comment was about to bring down upon you, maybe you would have held your fucking tongue.<br>But you couldn’t, you didn’t, and now you’re paying the price, you goddamn idiot.<br>I will shit fury all over you and you will drown in it.<br>You’re fucking dead, kiddo.\""
+				"text" : "<b>\"Be still! I'm going to have a lot of fun tormenting you inside my flower...\"</b>"
 			}
 		],
-		"tempt" : [{
-				"text" : "<b>\"u wot m8\"</b>"
+		"tempt" : [
+			{
+				"requirements": {
+					"inserted" : true
+				},
+				"text" : "<b>\"Don't worry cutie, I'll wring out your cum straight away.\"</b>"
+			},
+			{
+				"text" : "<b>\"Come a little bit closer and partake in my scent...\"</b>"
 			}
 		],
 		"orgasm" : [{
-				"text" : "I came, I saw, I came again."
+				"text" : "Hah... Hah... That was... unexpected. Now I'm even more interested in you. Come, let's try this again!"
 			}
 		],
-		"makeOrgasm" : [{
-				"text" : "I made you kumquat."
+		"makeOrgasm" : [
+			{
+				"requirements": {
+					"reverse": {
+						"orgasms" : 2
+					}
+				},
+				"text" : "<b>\"Ahahaha! Amazing! At this rate you'll be little more than fertilizer for me you know?\"</b>"
+			},
+			{
+				"requirements": {
+					"reverse": {
+						"orgasms" : 1
+					}
+				},
+				"text" : "<b>\"Ahahaha! that's the second! Are your balls dry yet?\"</b>"
+			},
+			{
+				"text" : "<b>\"And that's the first! Let's see if there's any more for me, hmm?\"</b>"
 			}
 		],
 		"describe" : [{
-				"text" : "<b>\"u wot m8\"</b>"
+				"text" : "{self:name} can only be described as an green amazoness sprouting from a tree.<br>While her body beneath her thighs are invisible to you, her voluptuous upper body extends out from a giant flower blooming on the side of the large tree in the courtyard. Her long hair is a deeper shade of green and extends down to the small of her back. Numerous fleshy red flowers adorn her body, each one lewdly slightly opening and closing as if breathing. <br>She looks at you with a hungry look in her eyes."
 			}
 		],
 		"startBattle" : [{
-				"text" : "<b>\"u gonna go down dawg\"</b>"
+				"text" : "<b>\"Come, scatter your seed and make my flowers bloom.\"</b>"
 			}
 		],
 		"night" : [{
-				"text" : "Rosea sees you after the fight cuz she wubs u. (highest affection)"
+				"text" : "Tired after the night's games, you start trudging back to your place. As you're about to leave the grounds however, you smell a sweet scene in the air. The aroma seems to arouse you, but at the same time making your accumulated fatigue disappear like magic. You grin and thank {self:name-do} in your mind."
 			}
 		],
 		"victory" : [{
 				"requirements" :
 				{
 					"result" : "anal",
-					"inserted" : ""
+					"inserted" : true
 				},
 				"text" : "She wins by fucking your ass"
 			}, {
 				"requirements" :
 				{
 					"result" : "anal",
-					"reverse" : {"inserted" : ""}
+					"reverse" : {"inserted" : true}
 				},
 				"text" : "She wins by you fucking her ass"
 			}, {
@@ -214,44 +257,55 @@
 	},
 	"mood" : {
 		"dominant" : 100,
-		"nervous" : 100,
+		"nervous" : 50,
 		"angry" : 100,
 		"confident" : 100,
 		"horny" : 100,
-		"desperate" : 100
+		"desperate" : 50
+	},
+	"recruitment" : {
+		"action" : "Rosea: $1000",
+		"requirements" : {
+			"level" : 10
+		},
+		"cost" : [
+			{"modMoney" : -1000}
+		],
+		"introduction" : "Rosea's a tree. If you want, I can plant her in the middle of the front lawn.",
+		"confirm" : "Alright, you'll see her tomorrow at dusk"
 	},
 	"portraits" : [{
-			"requirement" : {
+			"requirements" : {
 					"mood" : "dominant"
 				}
 			,
 			"text" : "rosea_dominant.png"
 		}, {
-			"requirement" : {
+			"requirements" : {
 					"mood" : "nervous"
 				}
 			,
 			"text" : "rosea_nervous.png"
 		}, {
-			"requirement" : {
+			"requirements" : {
 					"mood" : "angry"
 				}
 			,
 			"text" : "rosea_angry.png"
 		}, {
-			"requirement" : {
+			"requirements" : {
 					"mood" : "confident"
 				}
 			,
 			"text" : "rosea_confident.png"
 		}, {
-			"requirement" : {
+			"requirements" : {
 					"mood" : "horny"
 				}
 			,
 			"text" : "rosea_horny.png"
 		}, {
-			"requirement" : {
+			"requirements" : {
 					"mood" : "desperate"
 				}
 			,

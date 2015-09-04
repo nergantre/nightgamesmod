@@ -14,7 +14,7 @@ public class MouthPart extends GenericBodyPart {
 	/**
 	 * 
 	 */
-	public static MouthPart generic = new MouthPart("mouth", 0, 1, 1);
+	public static final MouthPart generic = new MouthPart("mouth", 0, 1, 1);
 	public MouthPart(String desc, String descLong, double hotness, double pleasure, double sensitivity, boolean notable, String prefix) {
 		super(desc, descLong, hotness, pleasure, sensitivity, notable, "mouth", prefix);
 	}
@@ -52,7 +52,7 @@ public class MouthPart extends GenericBodyPart {
 				if (self.human()) {
 					c.write(self, Global.capitalizeFirstLetter(Global.format("You feel a strange desire to drink down more of {other:name-possessive} " + fluid + ".", self, opponent)));
 				} else {
-					c.write(self, Global.capitalizeFirstLetter(Global.format("{other:name} drinks down your " + fluid + " and seems to want more.", self, opponent)));
+					c.write(self, Global.capitalizeFirstLetter(Global.format("{self:name} drinks down your " + fluid + " and seems to want more.", self, opponent)));
 				}
 			}
 		}

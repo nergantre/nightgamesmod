@@ -19,7 +19,7 @@ public class Drain extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Dark)>=15 || user.has(Trait.energydrain);
 	}
 
@@ -38,7 +38,7 @@ public class Drain extends Skill {
 	}
 	
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Drain your opponent of their energy";
 	}
 
@@ -113,7 +113,7 @@ public class Drain extends Skill {
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if(c.getStance().inserted(target)){
-			String muscDesc = c.getStance().analinserted() ? "anal" : "vaginal";
+			String muscDesc = c.getStance().analinserted(target) ? "anal" : "vaginal";
 			String partDesc = c.getStance().analinserted() ? getSelf().body.getRandom("ass").describe(getSelf()) : getSelf().body.getRandomPussy().describe(getSelf());
 			String base = "You put your powerful " + muscDesc + " muscles to work whilst"
 					+ " transfixing " + target.name()

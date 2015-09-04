@@ -6,6 +6,7 @@ import nightgames.actions.Movement;
 import nightgames.actions.Resupply;
 import nightgames.areas.Area;
 import nightgames.characters.body.BreastsPart;
+import nightgames.characters.body.CockMod;
 import nightgames.characters.body.EarPart;
 import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.PussyPart;
@@ -36,6 +37,7 @@ public class Kat extends BasePersonality {
 	public Kat(){
 		super();
 		character = new NPC("Kat",10,this);
+		preferredCockMod = CockMod.primal;
 		character.outfit[0].add(Clothing.bra);
 		character.outfit[0].add(Clothing.Tshirt);
 		character.outfit[1].add(Clothing.panties);
@@ -96,6 +98,7 @@ public class Kat extends BasePersonality {
 
 	@Override
 	public void rest() {
+		super.rest();
 		if(!(character.has(Item.Dildo)||character.has(Item.Dildo2))&&character.money>=250){
 			character.gain(Item.Dildo);
 			character.money-=250;

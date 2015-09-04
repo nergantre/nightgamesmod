@@ -12,7 +12,7 @@ public enum BreastsPart implements BodyPart {
 	flat("flat", "", 0),
 	a("A Cup", "tiny", 1),
 	b("B Cup", "smallish", 2),
-	c("C Cup", "perky", 3),
+	c("C Cup", "modest", 3),
 	d("D Cup", "round", 4),
 	dd("DD Cup", "large", 5),
 	e("E Cup", "huge", 6),
@@ -52,7 +52,7 @@ public enum BreastsPart implements BodyPart {
 				return Global.maybeString(desc + ' ') + Global.maybeString(name + ' ') + synonyms[Global.random(synonyms.length)];
 			}
 		} else {
-			if (c.get(Attribute.Power) > 15) {
+			if (c.get(Attribute.Power) > 25) {
 				return "muscular pecks";
 			}
 			return "flat chest";
@@ -219,5 +219,10 @@ public enum BreastsPart implements BodyPart {
 	@Override
 	public int counterValue(BodyPart other) {
 		return 0;
+	}
+
+	@Override
+	public BodyPartMod getMod() {
+		return BodyPartMod.noMod;
 	}
 }

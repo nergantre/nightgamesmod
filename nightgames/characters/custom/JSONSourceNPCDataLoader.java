@@ -16,6 +16,9 @@ import org.json.simple.JSONValue;
 
 import nightgames.characters.Plan;
 import nightgames.characters.Trait;
+import nightgames.characters.body.Body;
+import nightgames.characters.custom.effect.CustomEffect;
+import nightgames.characters.custom.effect.MoneyModEffect;
 import nightgames.characters.custom.requirement.AndRequirement;
 import nightgames.characters.custom.requirement.BodyPartRequirement;
 import nightgames.characters.custom.requirement.CustomRequirement;
@@ -26,6 +29,8 @@ import nightgames.characters.custom.requirement.LevelRequirement;
 import nightgames.characters.custom.requirement.MoodRequirement;
 import nightgames.characters.custom.requirement.NotRequirement;
 import nightgames.characters.custom.requirement.OrRequirement;
+import nightgames.characters.custom.requirement.OrgasmRequirement;
+import nightgames.characters.custom.requirement.RandomRequirement;
 import nightgames.characters.custom.requirement.ResultRequirement;
 import nightgames.characters.custom.requirement.ReverseRequirement;
 import nightgames.characters.custom.requirement.StanceRequirement;
@@ -101,12 +106,34 @@ public class JSONSourceNPCDataLoader {
 			loadItems((JSONObject)object.get("items"), data);
 			loadAllLines((JSONObject)object.get("lines"), data.characterLines);
 			loadLines((JSONArray)object.get("portraits"), data.portraits);
+			loadRecruitment((JSONObject)object.get("recruitment"), data.recruitment);
+			data.body = Body.load((JSONObject) object.get("body"), null);
+			data.sex = JSONUtils.readString(object, "sex");
 		} catch (ClassCastException e) {
+			e.printStackTrace();
 			throw new ParseException("Badly formatted JSON character: " + e.getMessage(), 0);
 		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
 			throw new ParseException("Nonexistent value: " + e.getMessage(), 0);
 		}
 		return data;
+	}
+
+	private static void loadRecruitment(JSONObject obj, RecruitmentData recruitment) {
+		recruitment.introduction = JSONUtils.readString(obj, "introduction");
+		recruitment.action = JSONUtils.readString(obj, "action");
+		recruitment.confirm = JSONUtils.readString(obj, "confirm");
+		loadRequirement((JSONObject) obj.get("requirements"), recruitment.requirement);
+		loadEffects((JSONArray) obj.get("cost"), recruitment.effects);
+	}
+
+	private static void loadEffects(JSONArray jsonArray, List<CustomEffect> effects) {
+		for (Object obj : jsonArray) {
+			JSONObject jsonObj = (JSONObject) obj;
+			if (jsonObj.containsKey("modMoney")) {
+				effects.add(new MoneyModEffect(JSONUtils.readInteger(jsonObj, "modMoney")));
+			}
+		}
 	}
 
 	private static void loadLines(JSONArray linesArr, List<CustomStringEntry> entries) {
@@ -166,7 +193,7 @@ public class JSONSourceNPCDataLoader {
 		}
 		// inserted requires the character to be inserted. Invalid out of combat
 		if (obj.containsKey("inserted")) {
-			reqs.add(new InsertedRequirement());
+			reqs.add(new InsertedRequirement(JSONUtils.readBoolean(obj, "inserted")));
 		}
 		// body part requires the character to have at least one of the type of body part specified
 		if (obj.containsKey("bodypart")) {
@@ -191,6 +218,14 @@ public class JSONSourceNPCDataLoader {
 		// result requires the battle to be in that result state. Invalid out of combat
 		if (obj.containsKey("result")) {
 			reqs.add(new ResultRequirement(Result.valueOf(JSONUtils.readString(obj, "result"))));
+		}
+		// level requires the character to have had that many orgasms in the combat
+		if (obj.containsKey("orgasms")) {
+			reqs.add(new OrgasmRequirement(JSONUtils.readInteger(obj, "orgasms")));
+		}
+		// level requires the character to have had that many orgasms in the combat
+		if (obj.containsKey("random")) {
+			reqs.add(new RandomRequirement(JSONUtils.readFloat(obj, "random")));
 		}
 	}
 

@@ -82,7 +82,7 @@ public class ReverseCowgirl extends FemdomSexStance {
 		return c==bottom;
 	}
 	@Override
-	public Position insert() {
+	public Position insertRandom() {
 		return new ReverseMount(top,bottom);
 	}
 

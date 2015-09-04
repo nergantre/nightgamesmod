@@ -6,8 +6,10 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.status.Lovestruck;
 
 public class Kiss extends Skill {
+	private static final String divineString = "Kiss of Baptism";
 
 	public Kiss(Character self) {
 		super("Kiss", self);
@@ -20,14 +22,18 @@ public class Kiss extends Skill {
 
 	@Override
 	public int getMojoBuilt(Combat c) {
-		return 10;
+		return 10 + (getSelf().has(Trait.romantic) ? 5 : 0);
 	}
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		int m = 2+Global.random(2);
-		if(getSelf().has(Trait.romantic)){
+		boolean deep = getLabel(c).equals("Deep Kiss");
+		if(getSelf().has(Trait.romantic)) {
 			m += 3;
+			if (deep) {
+				m += 7;
+			}
 		}
 		Result res = Result.normal;
 		if(getSelf().get(Attribute.Seduction)>=9){
@@ -36,12 +42,20 @@ public class Kiss extends Skill {
 		} else{
 			res = Result.weak;
 		}
+		if (deep) {
+			m += 5;
+			res = Result.special;
+		}
 		if(getSelf().has(Trait.experttongue)){
 			m += 5;
 			res = Result.special;
 		}
 		if(getSelf().has(Trait.soulsucker)){
 			res = Result.upgrade;
+		}
+		if(getLabel(c).equals(divineString)){
+			res = Result.divine;
+			m += 10;
 		}
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,m,res, target));
@@ -53,13 +67,21 @@ public class Kiss extends Skill {
 			target.drain(c, getSelf(), 10);
 			target.loseWillpower(c, Global.random(3) + 2);
 		}
+		if (res == Result.divine) {
+			target.buildMojo(c, 5);
+			target.heal(c, 30);
+			target.loseWillpower(c, Global.random(3) + 2, false);
+			if (Global.random(4) == 0) {
+				target.add(c, new Lovestruck(target, getSelf(), 5));
+			}
+		}
 		target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("mouth"), m, c);
-		getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("mouth"), 1, c);
+		getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("mouth"), Math.max(1, m / 4), c);
 		return true;
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return true;
 	}
 
@@ -76,6 +98,11 @@ public class Kiss extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
+		if(modifier==Result.divine){
+			return "You pull "+target.name()+" to you and kiss her passionately, sending your divine aura into her body though her mouth. " +
+					"You tangle your tongue around hers and probe the sensitive insides her mouth while mirroring the action in the space of her soul, sending quakes of pleasure through her physical and astral body. "
+					+ "As you finally break the kiss, she looks energized but desperate for more.";
+		}
 		if(modifier==Result.upgrade){
 			return "You pull "+target.name()+" to you and kiss her passionately. You run your tongue over her lips until her opens them and immediately invade her mouth. " +
 					"You tangle your tongue around hers and probe the sensitive insides her mouth. As you finally break the kiss, she leans against you, looking kiss-drunk and needy.";
@@ -102,6 +129,10 @@ public class Kiss extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
+		if(modifier==Result.divine){
+			return getSelf().name()+" seductively pulls you into a deep kiss. As first you try to match her enthusiastic tongue with your own, but she starts using her divine energy to directly attack your soul. "
+					+ "Golden waves of ecstacy flow through your body, completely shattering every single thought you hold and replacing them with " +getSelf().getName() + ".";
+		}
 		if(modifier==Result.upgrade){
 			return getSelf().name()+" seductively pulls you into a deep kiss. As first you try to match her enthusiastic tongue with your own, but you're quickly overwhelmed. "
 					+ "You start to feel weak as the kiss continues, and you realize she's draining you; her kiss is sapping your will to fight through your connection! "
@@ -124,7 +155,7 @@ public class Kiss extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Kiss your opponent";
 	}
 
@@ -141,7 +172,15 @@ public class Kiss extends Skill {
 
 	@Override
 	public String getLabel(Combat c){
-		return getSelf().has(Trait.soulsucker) ? "Drain Kiss" : "Kiss";
+		if (getSelf().get(Attribute.Divinity) >= 1) {
+			return divineString;
+		} else if (getSelf().has(Trait.soulsucker)) {
+			return "Drain Kiss";
+		} else if (getSelf().get(Attribute.Seduction) >= 20) {
+			return "Deep Kiss";
+		} else {
+			return "Kiss";
+		}
 	}
 
 }

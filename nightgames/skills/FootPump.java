@@ -17,7 +17,7 @@ public class FootPump extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Seduction)>=22;
 	}
 
@@ -60,7 +60,7 @@ public class FootPump extends Skill {
 		if (c.getStance().en != Stance.behindfootjob) {
 			c.setStance(new BehindFootjob(getSelf(), target));
 		}
-		if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
+		if (Global.random(100) < 15 + 2 * getSelf().get(Attribute.Fetish)) {
 			target.add(c, new BodyFetish(target, getSelf(), "feet", .25, 10));
 		}
 		return true;
@@ -88,7 +88,7 @@ public class FootPump extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Pleasure your opponent with your feet";
 	}
 

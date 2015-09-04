@@ -13,7 +13,7 @@ public class Defabricator extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Science)>=18;
 	}
 
@@ -23,7 +23,7 @@ public class Defabricator extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Does what it says on the tin.";
 	}
 

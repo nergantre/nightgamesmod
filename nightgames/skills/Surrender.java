@@ -4,8 +4,6 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.stance.Mount;
-import nightgames.stance.StandingOver;
 
 public class Surrender extends Skill {
 
@@ -14,8 +12,13 @@ public class Surrender extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
-		return user.human();
+	public float priorityMod(Combat c) {
+		return -100000000;
+	}
+
+	@Override
+	public boolean requirements(Combat c, Character user, Character target) {
+		return true;
 	}
 
 	@Override
@@ -60,7 +63,7 @@ public class Surrender extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Give up";
 	}
 }

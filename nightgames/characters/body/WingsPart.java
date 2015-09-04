@@ -6,9 +6,9 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 
-public enum WingsPart implements BodyPart {
+public enum WingsPart implements BodyPart, BodyPartMod {
 	demonic("demonic ", .2, 1.3, 1.2),
-	normal("", 0, 1, 1);
+	angelic("angelic ", .3, 1.4, 1.3);
 	public String desc;
 	public double hotness;
 	public double pleasure;
@@ -159,5 +159,15 @@ public enum WingsPart implements BodyPart {
 	@Override
 	public int counterValue(BodyPart other) {
 		return 0;
+	}
+
+	@Override
+	public BodyPartMod getMod() {
+		return this;
+	}
+
+	@Override
+	public String getModType() {
+		return name();
 	}
 }

@@ -6,14 +6,18 @@ import nightgames.areas.Cache;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.State;
+import nightgames.characters.Trait;
 import nightgames.items.Item;
 import nightgames.status.Hypersensitive;
 import nightgames.status.Stsflag;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 public class Match {
 	private int time;
@@ -24,7 +28,6 @@ public class Match {
 	private int index;
 	private boolean pause;
 	public Modifier condition;
-	
 	public Match(Collection<Character> combatants, Modifier condition){
 		this.combatants=new ArrayList<Character>();
 		for (Character c : combatants) {
@@ -42,23 +45,25 @@ public class Match {
 		dropOffTime = 0;
 		map = Global.buildMap();
 		pause=false;
-		this.combatants.get(0).place(map.get("Dorm"));
-		this.combatants.get(1).place(map.get("Engineering"));
-		if(this.combatants.size()>=3){
-			this.combatants.get(2).place(map.get("Liberal Arts"));
-		}
-		if(this.combatants.size()>=4){
-			this.combatants.get(3).place(map.get("Dining"));
-		}
-		if(this.combatants.size()>=5){
-			this.combatants.get(4).place(map.get("Union"));
-		}
-		if(this.combatants.size()>=6){
-			this.combatants.get(5).place(map.get("Bridge"));
-		}
-		if(this.combatants.size()>=7){
-			this.combatants.get(6).place(map.get("Pool"));
-		}
+		Deque<Area> areaList = new ArrayDeque<>();
+		areaList.add(map.get("Dorm"));
+		areaList.add(map.get("Engineering"));
+		areaList.add(map.get("Liberal Arts"));
+		areaList.add(map.get("Dining"));
+		areaList.add(map.get("Union"));
+		areaList.add(map.get("Bridge"));
+		areaList.add(map.get("Library"));
+		areaList.add(map.get("Tunnel"));
+		areaList.add(map.get("Workshop"));
+		areaList.add(map.get("Pool"));
+		combatants.forEach(character -> {
+			if (character.has(Trait.immobile)) {
+				character.place(map.get("Courtyard"));
+			} else {
+				character.place(areaList.pop());
+			}
+		});
+
 		for (Character player : combatants) {
 			player.getStamina().fill();
 			player.getArousal().empty();
@@ -122,72 +127,25 @@ public class Match {
 		Character winner=null;
 		for(Character combatant:score.keySet()){
 			Global.gui().message(combatant.name()+" scored "+score.get(combatant)+" victories.");
-			combatant.gainMoney(score.get(combatant)*combatant.prize());
+			combatant.modMoney(score.get(combatant)*combatant.prize());
 			if(winner==null||score.get(combatant)>=score.get(winner)){
 				winner=combatant;
 			}
 			if(combatant.human()){
 				player=combatant;
 			}
-			while(combatant.has(Item.CassieTrophy)){
-				combatant.consume(Item.CassieTrophy,1);
-				combatant.gainMoney(combatant.prize());
-				if(combatant.human()){
-					cloth++;
-				}
-			}
-			while(combatant.has(Item.MaraTrophy)){
-				combatant.consume(Item.MaraTrophy,1);
-				combatant.gainMoney(combatant.prize());
-				if(combatant.human()){
-					cloth++;
-				}
-			}
-			while(combatant.has(Item.JewelTrophy)){
-				combatant.consume(Item.JewelTrophy,1);
-				combatant.gainMoney(combatant.prize());
-				if(combatant.human()){
-					cloth++;
-				}
-			}
-			while(combatant.has(Item.AngelTrophy)){
-				combatant.consume(Item.AngelTrophy,1);
-				combatant.gainMoney(combatant.prize());
-				if(combatant.human()){
-					cloth++;
-				}
-			}
-			while(combatant.has(Item.PlayerTrophy)){
-				combatant.consume(Item.PlayerTrophy,1);
-				combatant.gainMoney(combatant.prize());
-				if(combatant.human()){
-					cloth++;
-				}
-			}
-			while(combatant.has(Item.ReykaTrophy)){
-				combatant.consume(Item.ReykaTrophy,1);
-				combatant.gainMoney(combatant.prize());
-				if(combatant.human()){
-					cloth++;
-				}
-			}
-			while(combatant.has(Item.AiriTrophy)){
-				combatant.consume(Item.AiriTrophy,1);
-				combatant.gainMoney(combatant.prize());
-				if(combatant.human()){
-					cloth++;
-				}
-			}
-			while(combatant.has(Item.KatTrophy)){
-				combatant.consume(Item.KatTrophy,1);
-				combatant.gainMoney(combatant.prize());
-				if(combatant.human()){
-					cloth++;
+			for (Character other : combatants) {
+				while(combatant.has(other.getTrophy())){
+					combatant.consume(other.getTrophy(),1);
+					combatant.modMoney(other.prize());
+					if(combatant.human()){
+						cloth++;
+					}
 				}
 			}
 			for(Challenge c: combatant.challenges){
 				if(c.done){
-					combatant.gainMoney(c.reward());
+					combatant.modMoney(c.reward());
 					if(combatant.human()){
 						creward += c.reward();
 					}
@@ -199,14 +157,14 @@ public class Match {
 		}
 		Global.gui().message("You made $"+score.get(player)*player.prize()+" for defeating opponents.");
 		int bonus = score.get(player)*condition.bonus();
-		winner.gainMoney(bonus);
+		winner.modMoney(bonus);
 		if(bonus>0){
 			Global.gui().message("You earned an additional $"+bonus+" for accepting the handicap.");
 		}
 		if(winner==player){
 			Global.gui().message("You also earned a bonus of $"+5*player.prize()+" for placing first.");
 		}
-		winner.gainMoney(5*winner.prize());
+		winner.modMoney(5*winner.prize());
 		Global.gui().message("You traded in "+cloth+" sets of clothes for a total of $"+cloth*player.prize()+".");
 		if(creward>0){
 			Global.gui().message("You also discover an envelope with $"+creward+" slipped under the door to your room. Presumably it's payment for completed challenges.");

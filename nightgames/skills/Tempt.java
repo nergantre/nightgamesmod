@@ -53,8 +53,8 @@ public class Tempt extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
-		return user.get(Attribute.Seduction) > 15;
+	public boolean requirements(Combat c, Character user, Character target) {
+		return user.get(Attribute.Seduction) >= 15;
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class Tempt extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Tempts your opponent. More effective if they can see you.";
 	}
 }

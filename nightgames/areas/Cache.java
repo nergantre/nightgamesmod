@@ -72,7 +72,7 @@ public class Cache implements Deployable {
 				for(Loot i:reward){
 					i.pickup(active);
 				}
-				active.gainMoney(Global.random(500) + 500);
+				active.modMoney(Global.random(500) + 500);
 			}
 			else if(active.check(secondary, dc-5)){
 				if(active.human()){
@@ -101,7 +101,7 @@ public class Cache implements Deployable {
 				for(Loot i:reward){
 					i.pickup(active);
 				}
-				active.gainMoney(Global.random(500) + 500);
+				active.modMoney(Global.random(500) + 500);
 			}
 			else{
 				switch(test){
@@ -171,6 +171,7 @@ public class Cache implements Deployable {
 		case 16:
 			reward.add(Item.Totem);
 			reward.add(Item.Handcuffs);
+			reward.add(Item.FaeScroll);
 			break;
 		case 15:
 			reward.add(Item.SPotion);
@@ -192,7 +193,7 @@ public class Cache implements Deployable {
 			reward.add(Item.Aphrodisiac);
 			break;
 		case 11:
-			reward.add(Item.Handcuffs);
+			reward.add(Item.FaeScroll);
 			break;
 		case 10:
 			reward.add(Item.DisSol);
@@ -231,7 +232,7 @@ public class Cache implements Deployable {
 			reward.add(Item.Tripwire);
 			break;
 		case 1:
-			reward.add(Item.EnergyDrink);
+			reward.add(Item.FaeScroll);
 			break;
 		default:
 			reward.add(Item.Aphrodisiac);

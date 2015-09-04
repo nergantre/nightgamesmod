@@ -14,7 +14,7 @@ public class Dominate extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Dark)>=9;
 	}
 
@@ -24,7 +24,7 @@ public class Dominate extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Overwhelm your opponent to force her to lie down: 10 Arousal";
 	}
 	

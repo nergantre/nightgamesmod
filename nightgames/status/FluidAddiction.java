@@ -4,11 +4,14 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
+import nightgames.global.JSONUtils;
 import nightgames.skills.Blowjob;
 import nightgames.skills.Cunnilingus;
 import nightgames.skills.Kiss;
@@ -16,22 +19,16 @@ import nightgames.skills.LickNipples;
 import nightgames.skills.Skill;
 import nightgames.skills.Suckle;
 
-public class FluidAddiction extends Status {
-	protected int duration;
+public class FluidAddiction extends DurationStatus {
 	protected int stacks;
 	private int activated;
 	Character target;
 	public FluidAddiction(Character affected, Character target, int duration) {
-		super("Addicted", affected);
+		super("Addicted", affected, duration);
 		this.target = target;
 		this.stacks = 1;
 		activated = 0;
 		flag(Stsflag.fluidaddiction);
-		if(affected.has(Trait.PersonalInertia)) {
-			this.duration=duration * 3 / 2;
-		} else {
-			this.duration=duration;
-		}
 	}
 
 	public FluidAddiction(Character affected, Character target) {
@@ -74,13 +71,15 @@ public class FluidAddiction extends Status {
 		return -2.0f;
 	}
 
+
+	@Override
+	public void onRemove(Combat c, Character other) {
+		affected.addlist.add(new Tolerance(affected, 3));
+	}
+
 	@Override
 	public int regen(Combat c) {
-		duration--;
-		if(duration<=0){
-			affected.removelist.add(this);
-			affected.addlist.add(new Tolerance(affected, 3));
-		}
+		super.regen(c);
 		affected.emote(Emotion.horny,15);
 		return 0;
 	}
@@ -95,7 +94,7 @@ public class FluidAddiction extends Status {
 		assert (s instanceof FluidAddiction);
 		if (!isActive()) {
 			FluidAddiction other = (FluidAddiction)s;
-			this.duration = Math.max(other.duration, this.duration);
+			setDuration(Math.max(other.getDuration(), getDuration()));
 			this.stacks += other.stacks;
 			if (isActive() && activated == 0) {
 				activated = 1;
@@ -173,7 +172,7 @@ public class FluidAddiction extends Status {
 	}
 
 	@Override
-	public Collection<Skill> allowedSkills(){
+	public Collection<Skill> allowedSkills(Combat c){
 		if (!isActive()) {
 			return Collections.emptySet();
 		} else if (target.has(Trait.lactating)) {
@@ -193,7 +192,7 @@ public class FluidAddiction extends Status {
 
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new FluidAddiction(newAffected, newOther, duration);
+		return new FluidAddiction(newAffected, newOther, getDuration());
 	}
 
 	public boolean activated() {
@@ -203,5 +202,17 @@ public class FluidAddiction extends Status {
 		} else {
 			return false;
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		obj.put("duration", getDuration());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new FluidAddiction(null, null, JSONUtils.readInteger(obj, "duration"));
 	}
 }

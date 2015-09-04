@@ -10,7 +10,7 @@ import nightgames.global.Global;
 public class Focus extends Skill {
 
 	public Focus(Character self) {
-		super("Focus", self);
+		super("Focus", self, 2);
 	}
 
 	@Override
@@ -20,7 +20,7 @@ public class Focus extends Skill {
 
 	@Override
 	public int getMojoBuilt(Combat c) {
-		return 20;
+		return 25;
 	}
 
 	@Override
@@ -31,12 +31,12 @@ public class Focus extends Skill {
 		else if(target.human()){
 			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		getSelf().calm(c, Global.random(8));
+		getSelf().calm(c, Math.max(getSelf().getArousal().max() / 5, 20));
 		return true;
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Cunning)>=15 && !user.has(Trait.undisciplined);
 	}
 
@@ -64,7 +64,7 @@ public class Focus extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Calm yourself and gain some mojo";
 	}
 }

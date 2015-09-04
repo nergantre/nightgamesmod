@@ -70,7 +70,7 @@ public class Stomp extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Power)>=16 && !user.has(Trait.softheart);
 	}
 
@@ -136,8 +136,8 @@ public class Stomp extends Skill {
 	}
 
 	@Override
-	public String describe() {
-		return "Stomps on your opponent's groin for extreme damage: 20 mojo";
+	public String describe(Combat c) {
+		return "Stomps on your opponent's groin for extreme damage";
 	}
 
 	@Override

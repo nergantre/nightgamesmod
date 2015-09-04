@@ -1,20 +1,15 @@
 package nightgames.status;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 
-public class BD extends Status{
-	private int duration;
+public class BD extends DurationStatus {
 	public BD(Character affected) {
-		super("Bondage", affected);
+		super("Bondage", affected, 10);
 		flag(Stsflag.bondage);
-		if(affected.has(Trait.PersonalInertia)){
-			duration = 15;
-		}else{
-			duration = 10;
-		}
 	}
 
 	@Override
@@ -44,12 +39,9 @@ public class BD extends Status{
 
 	@Override
 	public int regen(Combat c) {
+		super.regen(c);
 		if(affected.bound()){
 			affected.arouse(affected.getArousal().max()/20, c);
-		}
-		duration--;
-		if(duration<0){
-			affected.removelist.add(this);
 		}
 		return 0;
 		
@@ -57,7 +49,6 @@ public class BD extends Status{
 
 	@Override
 	public int damage(Combat c, int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -68,53 +59,56 @@ public class BD extends Status{
 
 	@Override
 	public int weakened(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int tempted(int x) {
-		// TODO Auto-generated method stub
 		return affected.is(Stsflag.bound) ? x / 2 : 0;
 	}
 
 	@Override
 	public int evade() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int escape() {
-		// TODO Auto-generated method stub
 		return -15;
 	}
 
 	@Override
 	public int gainmojo(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int spendmojo(int x) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int counter() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int value() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new BD(newAffected);
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("type", getClass().getSimpleName());
+		return obj;
+	}
+
+	public Status loadFromJSON(JSONObject obj) {
+		return new BD(null);
 	}
 }

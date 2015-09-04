@@ -16,7 +16,7 @@ public class CommandMasturbate extends PlayerCommand {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Convince your opponent to pleasure themselves for your viewing pleasure";
 	}
 

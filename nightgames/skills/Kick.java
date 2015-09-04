@@ -15,7 +15,7 @@ public class Kick extends Skill {
 	}
 
 	@Override
-	public boolean requirements(Character user) {
+	public boolean requirements(Combat c, Character user, Character target) {
 		return user.get(Attribute.Power)>=17;
 	}
 
@@ -40,8 +40,8 @@ public class Kick extends Skill {
 			}
 			target.shred(1);
 		}
-		if(target.roll(this, c, accuracy())){
-			int m = Global.random(12)+getSelf().get(Attribute.Power);
+		if(target.roll(this, c, accuracy(c))){
+			int m = Global.random(12)+Math.min(getSelf().get(Attribute.Power), 100);
 			if(getSelf().human()){
 				if(c.getStance().prone(getSelf())){
 					c.write(getSelf(),deal(c,m,Result.strong, target));
@@ -59,8 +59,8 @@ public class Kick extends Skill {
 					c.write(getSelf(),receive(c,m,Result.normal, target));
 				}
 			}
-			if(target.has(Trait.achilles)){
-				m+=4+Global.random(4);
+			if(target.has(Trait.achilles) && !target.has(Trait.armored)){
+				m+=14+Global.random(4);
 			}
 			if(target.has(Trait.armored)){
 				m = m/2;
@@ -136,7 +136,7 @@ public class Kick extends Skill {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Kick your opponent in the groin";
 	}
 	@Override
