@@ -5,6 +5,7 @@ import nightgames.actions.Movement;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
+import nightgames.characters.custom.AiModifiers;
 import nightgames.characters.custom.RecruitmentData;
 import nightgames.combat.Combat;
 import nightgames.global.Flag;
@@ -181,5 +182,9 @@ public abstract class BasePersonality implements Personality {
 
 	public RecruitmentData getRecruitmentData() {
 		return null;
+	}
+	
+	public AiModifiers getAiModifiers() {
+		return new AiModifiers();
 	}
 }

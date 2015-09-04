@@ -8,6 +8,7 @@ import javax.swing.Icon;
 import nightgames.actions.Action;
 import nightgames.actions.Movement;
 import nightgames.areas.Area;
+import nightgames.characters.custom.AiModifiers;
 import nightgames.characters.custom.RecruitmentData;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -43,4 +44,5 @@ public interface Personality extends Serializable{
 	public String makeOrgasmLiner(Combat c);
 	public String getType();
 	public RecruitmentData getRecruitmentData();
+	public AiModifiers getAiModifiers();
 }
