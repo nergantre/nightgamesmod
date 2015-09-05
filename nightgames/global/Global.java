@@ -148,7 +148,7 @@ public class Global {
 //		debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
-		debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
+//		debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
 		traitRequirements = new TraitTree(ResourceLoader.getFileResourceAsStream("data/TraitRequirements.xml"));
 		current=null;
 		factory = new ContextFactory();
@@ -271,6 +271,7 @@ public class Global {
 		skillPool.add(new Bravado(p));
 		skillPool.add(new Diversion(p));
 		skillPool.add(new Undress(p));
+		skillPool.add(new StripSelf(p));
 		skillPool.add(new StripTease(p));
 		skillPool.add(new Sensitize(p));
 		skillPool.add(new EnergyDrink(p));
@@ -973,6 +974,16 @@ public class Global {
 				if (self != null && third != null) {
 					String verbs[] = third.split("\\|");
 					return self.subjectAction(verbs[0], verbs[1]);
+				}
+				return "";
+			}
+		});
+		matchActions.put("pronoun-action", new MatchAction() {
+			@Override
+			public String replace(Character self, String first, String second, String third) {
+				if (self != null && third != null) {
+					String verbs[] = third.split("\\|");
+					return self.pronoun() + " " + self.action(verbs[0], verbs[1]);
 				}
 				return "";
 			}

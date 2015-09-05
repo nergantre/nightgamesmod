@@ -5,6 +5,7 @@ import java.util.Map;
 
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.items.clothing.ClothingTrait;
 import nightgames.status.Lethargic;
 import nightgames.status.Resistance;
 import nightgames.status.Status;
@@ -111,6 +112,8 @@ public enum Trait {
 	autonomousAss("Autonomous Ass", "Asshole instinctively forces anything inside of it to cum."),
 	fetishTrainer("Fetish Trainer", "Capable of developing other's fetishes."),
 	insertion("Insertion Master","More pleasure on insertion"), //more damage on insertion.
+	proheels("Heels Pro", "Pro at walking around in heels"), //no speed penalty from heels
+	masterheels("Heels Master", "Master at moving in heels, resists knockdowns"), //graceful when wearing heels
 
 	//training perks
 	analTraining1("Anal Training 1", "Refined ass control."),
@@ -305,6 +308,13 @@ public enum Trait {
 			// 30% to resist mindgames
 			if (s.mindgames() && Global.random(100) < 30) {
 				return "Skeptical";
+			}
+			return "";
+		});
+		resistances.put(Trait.masterheels, (c, s) -> {
+			// 33% to resist falling wearing heels
+			if (c.has(ClothingTrait.heels) && s.flags().contains(Stsflag.falling) && Global.random(100) < 33) {
+				return "Heels Master";
 			}
 			return "";
 		});

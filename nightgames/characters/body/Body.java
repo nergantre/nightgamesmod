@@ -322,6 +322,7 @@ public class Body implements Cloneable {
 		for (BodyPart part : getCurrentParts()) {
 			retval += part.getHotness(self, opponent) * (getFetish(part.getType()).isPresent() ? 2 : 0);
 		}
+		retval += self.getOutfit().getHotness();
 		int seductionDiff = Math.max(0, self.get(Attribute.Seduction) - opponent.get(Attribute.Seduction));
 		retval += seductionDiff / 10.0;
 		retval *= self.getExposure();
@@ -534,6 +535,8 @@ public class Body implements Cloneable {
 		if (sex == CharacterSex.female|| sex == CharacterSex.herm) {
 			if (get("pussy").size() == 0) {
 				add(PussyPart.normal);
+			} else if (get("breasts").size() == 0) {
+				add(BreastsPart.b);
 			}
 		}
 		if (sex == CharacterSex.male || sex == CharacterSex.herm) {

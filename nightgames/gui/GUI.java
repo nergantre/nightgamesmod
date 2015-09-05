@@ -1146,7 +1146,7 @@ public class GUI extends JFrame implements Observer {
 		HTMLDocument doc = (HTMLDocument)statusText.getDocument();
 		HTMLEditorKit editorKit = (HTMLEditorKit)statusText.getEditorKit();
 		try {
-			editorKit.insertHTML(doc, doc.getLength(), "<font face='Georgia'><font color='white'><font size='3'>"+player.describeStatus()+"<br>", 0, 0, null);
+			editorKit.insertHTML(doc, doc.getLength(), "<font face='Georgia'><font color='white'><font size='3'>"+player.getOutfit().describe(player)+"<br>"+player.describeStatus()+"<br>", 0, 0, null);
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

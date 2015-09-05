@@ -51,8 +51,16 @@ Features:
 			- 1 : hosiery/leg warmers/socks
 			- 2 : shoes
 	- Unfortunately this may mean that your saves are no longer compatible.
-
+		- NEVERMIND, I MADE THEM COMPATIBLE :D
+- Added new Traits:
+	- Heels Pro:
+		- Wearing heels does not reduce your speed, and does not make you easily knocked down (generally heels have higher hotness bonuses)
+		- Requires 15 Seduction, 20 Cunning, Limb Training 1
+	- Heels Master:
+		- While wearing heels, you have a 33% chance to avoid knockdowns (Tackle, Trip, Shove, etc)
+		- Requires 25 Seduction, 40 Cunning, Limb Training 2, Heels Pro
 - If you start off as a female or a herm, you start with bra and panties instead of boxers.
+	- If you start off as a female or a herm, you start off with b cup breasts (up from flat)
 
 Balance:
 - Made divine pussy's divine charge stack double every time she takes pleasure damage instead of increasing it by .25

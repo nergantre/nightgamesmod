@@ -107,7 +107,10 @@ public class Clothing implements Loot{
 		this.slots = slots;
 	}
 	public double getHotness() {
-		// TODO Auto-generated method stub
 		return hotness;
+	}
+	@Override
+	public String toString() {
+		return getName();
 	}
 }

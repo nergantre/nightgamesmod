@@ -227,6 +227,18 @@ public abstract class Character extends Observable implements Cloneable {
 			if (has(ClothingTrait.bulky)) {
 				total -=1;
 			}
+			if (has(ClothingTrait.shoes)) {
+				total +=1;
+			}
+			if (has(ClothingTrait.heels) && !has(Trait.proheels)) {
+				total -=2;
+			}
+			if (has(ClothingTrait.highheels) && !has(Trait.proheels)) {
+				total -=1;
+			}
+			if (has(ClothingTrait.higherheels) && !has(Trait.proheels)) {
+				total -=1;
+			}
 		default:
 			break;
 		}
@@ -641,13 +653,25 @@ public abstract class Character extends Observable implements Cloneable {
 	}
 
 	/* undress without any modifiers */
-	public void undress(Combat c){
-		outfit.undress().forEach(article -> c.getCombatantData(this).addToClothesPile(article));
+	public void undress(Combat c) {
+		if (!breastsAvailable() || !crotchAvailable()) {
+			// first time only strips down to what blocks fucking
+			outfit.strip().forEach(article -> c.getCombatantData(this).addToClothesPile(article));
+		} else {
+			// second time strips down everything
+			outfit.undress().forEach(article -> c.getCombatantData(this).addToClothesPile(article));
+		}
 	}
 
 	/* undress non indestructibles */
-	public boolean nudify(){
-		outfit.undressOnly(article -> !article.is(ClothingTrait.indestructible));
+	public boolean nudify() {
+		if (!breastsAvailable() || !crotchAvailable()) {
+			// first time only strips down to what blocks fucking
+			outfit.forcedstrip();
+		} else {
+			// second time strips down everything
+			outfit.undressOnly(c -> !c.is(ClothingTrait.indestructible));
+		}
 		return mostlyNude();
 	}
 
@@ -1791,6 +1815,15 @@ public abstract class Character extends Observable implements Cloneable {
 		int dc = 10+(getStamina().get())/2;
 		if(is(Stsflag.braced)) {
 			dc+=getStatus(Stsflag.braced).value();
+		}
+		if(has(ClothingTrait.heels) && !has(Trait.proheels)) {
+			dc-=7;
+		}
+		if(has(ClothingTrait.highheels) && !has(Trait.proheels)) {
+			dc-=8;
+		}
+		if(has(ClothingTrait.higherheels) && !has(Trait.proheels)) {
+			dc-=10;
 		}
 		return dc;
 	}
