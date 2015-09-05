@@ -23,7 +23,7 @@ public class TailJob extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&target.pantsless()&&c.getStance().mobile(getSelf())&&!c.getStance().mobile(target)&&!c.getStance().penetration(target);
+		return getSelf().canAct()&&target.crotchAvailable()&&c.getStance().mobile(getSelf())&&!c.getStance().mobile(target)&&!c.getStance().penetration(target);
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class TailJob extends Skill {
 			receiver = "pussy";
 		}
 		if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
-			target.add(c, new BodyFetish(target, getSelf(), "tail", .25, 10));
+			target.add(c, new BodyFetish(target, getSelf(), "tail", .25));
 		}
 		target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom(receiver), m, c);
 		return true;

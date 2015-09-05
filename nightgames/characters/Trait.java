@@ -1,20 +1,21 @@
 package nightgames.characters;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import nightgames.global.Global;
-import nightgames.items.Clothing;
+import nightgames.items.clothing.ClothingSlot;
+import nightgames.items.clothing.ClothingTrait;
 import nightgames.status.Lethargic;
 import nightgames.status.Resistance;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public enum Trait {
 	//Physical
 	vaginaltongue("Vaginal Tongue", "Have a second tongue", new TraitDescription() {
 		public void describe(StringBuilder b, Character c, Trait t) {
-			if (c.pantsless()) {
+			if (c.crotchAvailable()) {
 				b.append("Occasionally, a pink tongue slides out of her pussy and licks her lower lips.");
 			}
 		}
@@ -79,10 +80,10 @@ public enum Trait {
 	lactating("Lactating","Breasts produces milk", new TraitDescription() {
 		public void describe(StringBuilder b, Character c, Trait t) {
 			if (!c.human()) {
-				if (c.topless()) {
+				if (c.breastsAvailable()) {
 					b.append("You occasionally see milk dribbling down her breasts. Is she lactating?");
 				} else {
-					b.append("You notice a damp spot on her " + c.top.lastElement().getName() + ".");
+					b.append("You notice a damp spot on her " + c.getOutfit().getTopOfSlot(ClothingSlot.top).getName() + ".");
 				}
 			} else {
 				b.append("Your nipples ache from the milk building up in your mammaries.");
@@ -111,6 +112,8 @@ public enum Trait {
 	autonomousAss("Autonomous Ass", "Asshole instinctively forces anything inside of it to cum."),
 	fetishTrainer("Fetish Trainer", "Capable of developing other's fetishes."),
 	insertion("Insertion Master","More pleasure on insertion"), //more damage on insertion.
+	proheels("Heels Pro", "Pro at walking around in heels"), //no speed penalty from heels
+	masterheels("Heels Master", "Master at moving in heels, resists knockdowns"), //graceful when wearing heels
 
 	//training perks
 	analTraining1("Anal Training 1", "Refined ass control."),
@@ -150,6 +153,7 @@ public enum Trait {
 	imagination("Active Imagination","More easily swayed by pillow talk"),//more temptation damage from indirect skills
 	achilles("Achilles Jewels","Delicate parts are somehow even more delicate"),	//more pain from groin attacks
 	naive("Naive", "Chance to not get cynical after mindgames"), //Chance to not get cynical after recovering from mindgames
+	footfetishist("Foot Fetishist", "Loves those feet"), //Starts off each match with a foot fetish
 	immobile("Immobile", "Unable to move"), //Cannot move
 	lethargic("Lethargic", "Very low mojo gain from normal methods.", new Lethargic(null)), //25% mojo gain
 
@@ -183,6 +187,7 @@ public enum Trait {
 	experienced("Experienced Lover","Skilled at pacing yourself when thrusting"), //reduced recoil from penetration
 	wrassler("Wrassler","A talent for fighting dirty"), //squeeze, knee, kick reduce arousal less
 	pimphand("Pimp Hand","A devastating slap and a bonus to hands"),
+	stableform("Stable Form","Cannot be affected by unexpected transformations"), //ignores thrown transformative drafts from the opponent
 
 	//unimplemented
 	Clingy("Clingy","can do the 'glomp' attack - weak standing grapple hug, probably something Cassie would take right away"),
@@ -209,7 +214,7 @@ public enum Trait {
 	strongwilled("Strong Willed","Halves willpower loss"),
 	alwaysready("Always Ready","Always ready for penetration", new TraitDescription() {
 		public void describe(StringBuilder b, Character c, Trait t) {
-			if (!c.hasDick() && c.pantsless()) {
+			if (!c.hasDick() && c.crotchAvailable()) {
 				b.append("Juices constainly drool from ");
 				if (c.human())
 					b.append("your slobbering pussy.");
@@ -228,21 +233,6 @@ public enum Trait {
 				b.append("A large black strap-on dildo adorns " + c.name() + "'s waists.");
 		}
 	}), //currently wearing a strapon
-	ineffective("Ineffective","Provides no protection"),
-	armored("Armored","Protects the delicate bits"),
-	stylish("Stylish","Better mojo gain"),
-	lame("Lame","Small mojo penalty"),
-	skimpy("Skimpy","Better temptation daamage"),
-	flexible("Flexible","Can fuck by pulling it aside"),
-	indestructible("Indestructible","Cannot be destroyed"),
-	bulky("Bulky","Speed penalty"),
-	geeky("Geeky","Science bonus"),
-	mystic("Mystic","Arcane bonus"),
-	martial("Martial","Ki bonus"),
-	broody("Broody","Dark bonus"),
-	kinky("Kinky","Fetish bonus"),
-	tentacleUnderwear("Tentacle Underwear","Wearing tentacle underwear"),
-	tentacleSuit("Tentacle Suit","Wearing a tentacle suit"),
 	none("",""),
 	;
 	private String desc;
@@ -277,7 +267,6 @@ public enum Trait {
 	private Trait(String name, String description, Status status) {
 		this.name=name;
 		this.desc=description;
-		this.longDesc = longDesc;
 		this.status = status;
 	}
 	public boolean isFeat(){
@@ -319,6 +308,13 @@ public enum Trait {
 			// 30% to resist mindgames
 			if (s.mindgames() && Global.random(100) < 30) {
 				return "Skeptical";
+			}
+			return "";
+		});
+		resistances.put(Trait.masterheels, (c, s) -> {
+			// 33% to resist falling wearing heels
+			if (c.has(ClothingTrait.heels) && s.flags().contains(Stsflag.falling) && Global.random(100) < 33) {
+				return "Heels Master";
 			}
 			return "";
 		});

@@ -38,6 +38,11 @@ public class Shamed extends DurationStatus {
 	}
 
 	@Override
+	public void onRemove(Combat c, Character other) {
+		affected.addlist.add(new Cynical(affected));
+	}
+
+	@Override
 	public int mod(Attribute a) {
 		if(a==Attribute.Seduction || a==Attribute.Cunning){
 			return Math.min(-2, -affected.getPure(a) / 5);

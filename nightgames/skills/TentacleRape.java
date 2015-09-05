@@ -42,7 +42,7 @@ public class TentacleRape extends Skill {
 	public boolean resolve(Combat c, Character target) {
 		tentacles = getSelf().body.getRandom("tentacles");
 		if(target.roll(this, c, accuracy(c))){
-			if(target.nude()){
+			if(target.mostlyNude()){
 				int m = 2 + Global.random(4);
 				if(target.bound()){
 					if(getSelf().human()){

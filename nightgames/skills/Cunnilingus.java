@@ -20,7 +20,7 @@ public class Cunnilingus extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.pantsless()&&target.hasPussy()&&c.getStance().oral(getSelf())&&getSelf().canAct()&&!c.getStance().penetration(getSelf());
+		return target.crotchAvailable()&&target.hasPussy()&&c.getStance().oral(getSelf())&&getSelf().canAct()&&!c.getStance().penetration(getSelf());
 	}
 
 	@Override

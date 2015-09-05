@@ -1,5 +1,8 @@
 package nightgames.characters;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+
 import nightgames.actions.Action;
 import nightgames.actions.Move;
 import nightgames.actions.Movement;
@@ -10,9 +13,6 @@ import nightgames.items.Item;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-
 public class Decider {
 	private static void addAllSkillsWithPriority(ArrayList<WeightedSkill> priority, HashSet<Skill> skills, float weight)
 	{
@@ -22,13 +22,6 @@ public class Decider {
 	}
 
 	public static ArrayList<WeightedSkill> parseSkills(HashSet<Skill> available, Combat c, NPC character){
-		Character target;
-		if(c.p1==character){
-			target=c.p2;
-		}
-		else{
-			target=c.p1;
-		}
 		HashSet<Skill> damage = new HashSet<Skill>();
 		HashSet<Skill> pleasure = new HashSet<Skill>();
 		HashSet<Skill> fucking = new HashSet<Skill>();
@@ -180,7 +173,7 @@ public class Decider {
 		HashSet<Action> safe = new HashSet<Action>();
 		HashSet<Action> utility = new HashSet<Action>();
 		HashSet<Action> tactic = new HashSet<Action>();
-		if(character.nude()){
+		if(character.mostlyNude()){
 			for(Action act: available){
 				if(act.consider()==Movement.resupply){
 					return act;

@@ -1,33 +1,15 @@
 package nightgames.characters;
 
-import nightgames.actions.Action;
-import nightgames.actions.Move;
-import nightgames.actions.Movement;
-import nightgames.actions.Resupply;
-import nightgames.areas.Area;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
-import nightgames.characters.body.EarPart;
 import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.PussyPart;
-import nightgames.characters.body.TailPart;
 import nightgames.characters.body.TentaclePart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.global.Modifier;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
-import nightgames.skills.Skill;
-import nightgames.skills.Tactics;
-import nightgames.stance.Stance;
-import nightgames.status.Feral;
-import nightgames.status.Horny;
-import nightgames.status.Stsflag;
-
-import java.util.ArrayList;
-import java.util.HashSet;
 
 public class Airi extends BasePersonality {
 	/**
@@ -64,7 +46,7 @@ public class Airi extends BasePersonality {
 		character.body.add(new TentaclePart("gooey feelers", "hands", "slime", 0.0, 1.0, 1.0));
 		character.body.add(new TentaclePart("gooey feelers", "feet", "slime", 0.0, 1.0, 1.0));
 		character.body.add(new TentaclePart("slime filaments", "pussy", "slime", 0.0, 1.0, 1.0));
-		character.body.finishBody("female");
+		character.body.finishBody(CharacterSex.female);
 		}
 
 	@Override
@@ -168,7 +150,6 @@ public class Airi extends BasePersonality {
 
 	@Override
 	public String defeat(Combat c,Result flag) {
-		Character opponent = c.p1 == this.character ? c.p2 : c.p1;
 		return "You made Airi cum. She puddles.";
 	}
 
@@ -180,7 +161,6 @@ public class Airi extends BasePersonality {
 
 	@Override
 	public String draw(Combat c,Result flag) {
-		Character opponent = c.p1 == this.character ? c.p2 : c.p1;
 		return "You make each other cum at the same time. Woohoo!";
 		
 	}
@@ -220,7 +200,7 @@ public class Airi extends BasePersonality {
 	}
 	@Override
 	public boolean fit() {
-		return (!character.nude()&&character.getStamina().percent()>=50)||character.getArousal().percent()>50;
+		return (!character.mostlyNude()&&character.getStamina().percent()>=50)||character.getArousal().percent()>50;
 	}
 	@Override
 	public String night() {

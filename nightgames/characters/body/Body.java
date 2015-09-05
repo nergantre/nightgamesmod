@@ -1,10 +1,12 @@
 package nightgames.characters.body;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.CharacterSex;
 import nightgames.characters.NPC;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.items.clothing.ClothingSlot;
 import nightgames.status.Abuff;
 import nightgames.status.BodyFetish;
 import nightgames.status.Status;
@@ -318,10 +320,15 @@ public class Body implements Cloneable {
 		//represents tempt damage
 		double retval = hotness;
 		for (BodyPart part : getCurrentParts()) {
-			retval += part.isVisible(self) ? part.getHotness(self, opponent) * (getFetish(part.getType()).isPresent() ? 2 : 0) : 0;
+			retval += part.getHotness(self, opponent) * (getFetish(part.getType()).isPresent() ? 2 : 0);
 		}
+		retval += self.getOutfit().getHotness();
 		int seductionDiff = Math.max(0, self.get(Attribute.Seduction) - opponent.get(Attribute.Seduction));
 		retval += seductionDiff / 10.0;
+		retval *= self.getExposure();
+		if (self.is(Stsflag.alluring)) {
+			retval *= 1.5;
+		}
 		return retval;
 	}
 
@@ -422,12 +429,6 @@ public class Body implements Cloneable {
 		double perceptionBonus = 1.0;
 		if (opponent != null) {
 			perceptionBonus *= getCharismaBonus(opponent);
-			if (opponent.is(Stsflag.alluring)) {
-				perceptionBonus += .5;
-			}
-			if (character.is(Stsflag.lovestruck)) {
-				perceptionBonus += 1;
-			}
 		}
 		double bonusDamage = bonus;
 		if (opponent != null) {
@@ -448,6 +449,7 @@ public class Body implements Cloneable {
 		Optional<BodyFetish> fetish = getFetish(with.getType());
 		if (fetish.isPresent()) {
 			bonusDamage += magnitude * (1 + (fetish.get()).magnitude);
+			character.add(new BodyFetish(character, opponent, with.getType(), .05));
 		}
 		double origBase = bonusDamage+magnitude;
 
@@ -496,9 +498,9 @@ public class Body implements Cloneable {
 		}
 		character.pleasure(result, c);
 
-		if (opponent != null && opponent.has(Trait.fetishTrainer) && Arrays.asList(fetishParts).contains(with.getType())) {
-			if (Global.random(100) < Math.min(opponent.get(Attribute.Fetish), 25)) {
-				character.add(c, new BodyFetish(character, opponent, with.getType(), .25, 10));
+		if (opponent != null && Arrays.asList(fetishParts).contains(with.getType())) {
+			if (opponent.has(Trait.fetishTrainer) && Global.random(100) < Math.min(opponent.get(Attribute.Fetish), 25)) {
+				character.add(c, new BodyFetish(character, opponent, with.getType(), .25));
 			}
 		}
 		return result;
@@ -510,6 +512,9 @@ public class Body implements Cloneable {
 			return 1.0;
 		} else {
 			double perceptionBonus = Math.sqrt(opponent.body.getHotness(opponent, this.character) * (1.0 + (Math.max(0,character.get(Attribute.Perception)) - 5) / 10.0));
+			if (character.is(Stsflag.lovestruck)) {
+				perceptionBonus += 1;
+			}
 			return perceptionBonus;
 		}
 	}
@@ -521,23 +526,25 @@ public class Body implements Cloneable {
 		}
 	}
 
-	public void finishBody(String sex) {
+	public void finishBody(CharacterSex sex) {
 		for (BodyPart part: requiredParts) {
 			if (get(part.getType()).size() == 0) {
 				add(part);
 			}
 		}
-		if (sex.equals("female") || sex.equals("herm")) {
+		if (sex == CharacterSex.female|| sex == CharacterSex.herm) {
 			if (get("pussy").size() == 0) {
 				add(PussyPart.normal);
+			} else if (get("breasts").size() == 0) {
+				add(BreastsPart.b);
 			}
 		}
-		if (sex.equals("male") || sex.equals("herm")) {
+		if (sex == CharacterSex.male || sex == CharacterSex.herm) {
 			if (get("cock").size() == 0) {
 				add(BasicCockPart.average);
 			}
 		}
-		if (sex.equals("male")) {
+		if (sex == CharacterSex.male) {
 			if (get("balls").size() == 0) {
 				add(new GenericBodyPart("balls", 0, 1.0, 1.5, "balls", ""));
 			}

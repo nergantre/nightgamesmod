@@ -1,6 +1,7 @@
 package nightgames.gui;
 
 import nightgames.characters.Attribute;
+import nightgames.characters.CharacterSex;
 import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.global.Flag;
@@ -108,18 +109,18 @@ public class CreationGUI extends JPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				if(!CreationGUI.this.namefield.getText().isEmpty()){
 					String name = CreationGUI.this.namefield.getText();
-					String sex = "male";
+					CharacterSex sex = CharacterSex.male;
 					if (name.startsWith("male:")) {
 						name = name.substring(5);
-						sex = "male";
+						sex = CharacterSex.male;
 					}
 					if (name.startsWith("female:")) {
 						name = name.substring(7);
-						sex = "female";
+						sex = CharacterSex.female;
 					}
 					if (name.startsWith("herm:")) {
 						name = name.substring(5);
-						sex = "herm";
+						sex = CharacterSex.herm;
 					}
 					
 					Player one = new Player(name, sex);
@@ -335,6 +336,7 @@ public class CreationGUI extends JPanel{
 		StrengthBox.addItem(Trait.experienced);
 		StrengthBox.addItem(Trait.wrassler);
 		StrengthBox.addItem(Trait.pimphand);
+		StrengthBox.addItem(Trait.stableform);
 		StrengthBox.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -362,6 +364,8 @@ public class CreationGUI extends JPanel{
 		WeaknessBox.addItem(Trait.achilles);
 		WeaknessBox.addItem(Trait.ticklish);
 		WeaknessBox.addItem(Trait.lickable);
+		WeaknessBox.addItem(Trait.naive);
+		WeaknessBox.addItem(Trait.footfetishist);
 		WeaknessBox.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

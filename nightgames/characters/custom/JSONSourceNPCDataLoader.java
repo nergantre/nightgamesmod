@@ -41,12 +41,12 @@ import nightgames.global.JSONUtils;
 import nightgames.characters.Attribute;
 import nightgames.characters.Emotion;
 import nightgames.characters.Growth;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
 import nightgames.items.ItemAmount;
 import nightgames.skills.Skill;
 import nightgames.stance.Stance;
 import nightgames.status.Stsflag;
+import nightgames.items.clothing.Clothing;
 
 public class JSONSourceNPCDataLoader {
 	private static ItemAmount readItem(JSONObject obj) {
@@ -87,11 +87,11 @@ public class JSONSourceNPCDataLoader {
 			JSONObject outfit = (JSONObject) object.get("outfit");
 			JSONArray top = (JSONArray) outfit.get("top");
 			for (Object clothing : top) {
-				data.top.push(Clothing.valueOf((String) clothing));
+				data.top.push(Clothing.getByName((String)clothing));
 			}
 			JSONArray bottom = (JSONArray) outfit.get("bottom");
 			for (Object clothing : bottom) {
-				data.bottom.push(Clothing.valueOf((String) clothing));
+				data.bottom.push(Clothing.getByName((String)clothing));
 			}
 
 			// load stats

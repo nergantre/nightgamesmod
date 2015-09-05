@@ -1,4 +1,12 @@
 package nightgames.combat;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Observable;
+
 import nightgames.areas.Area;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -10,37 +18,23 @@ import nightgames.characters.body.BodyPart;
 import nightgames.global.DebugFlags;
 import nightgames.global.Flag;
 import nightgames.global.Global;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
 import nightgames.pet.Pet;
+import nightgames.skills.Anilingus;
 import nightgames.skills.BreastWorship;
 import nightgames.skills.CockWorship;
 import nightgames.skills.FootWorship;
 import nightgames.skills.PussyWorship;
 import nightgames.skills.Skill;
-import nightgames.skills.Stunned;
-import nightgames.stance.Mount;
 import nightgames.stance.Neutral;
 import nightgames.stance.Position;
 import nightgames.stance.Stance;
 import nightgames.stance.StandingOver;
 import nightgames.status.Braced;
 import nightgames.status.CounterStatus;
-import nightgames.status.Flatfooted;
-import nightgames.status.Horny;
-import nightgames.status.Status;
 import nightgames.status.Stsflag;
 import nightgames.status.Wary;
 import nightgames.status.Winded;
-
-import java.awt.GraphicsDevice.WindowTranslucency;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Observable;
 
 
 public class Combat extends Observable implements Serializable, Cloneable{
@@ -49,7 +43,9 @@ public class Combat extends Observable implements Serializable, Cloneable{
 	 */
 	private static final long serialVersionUID = -8279523341570263846L;
 	public Character p1;
+	public CombatantData p1Data;
 	public Character p2;
+	public CombatantData p2Data;
 	public int phase;
 	private Skill p1act;
 	private Skill p2act;
@@ -57,7 +53,6 @@ public class Combat extends Observable implements Serializable, Cloneable{
 	private String message;
 	private Position stance;
 	public Character lastTalked;
-	public ArrayList<Clothing> clothespile;
 	private int timer;
 	public Result state;
 	private HashMap<String,String> images;
@@ -65,13 +60,14 @@ public class Combat extends Observable implements Serializable, Cloneable{
 
 	public Combat(Character p1, Character p2, Area loc){
 		this.p1=p1;
+		p1Data = new CombatantData();
 		this.p2=p2;
+		p2Data = new CombatantData();
 		p1.startBattle(this);
 		p2.startBattle(this);
 		location=loc;
 		stance = new Neutral(p1,p2);
 		message = "";
-		clothespile=new ArrayList<Clothing>();
 		timer=0;
 		images = new HashMap<String,String>();
 		p1.state=State.combat;
@@ -85,7 +81,6 @@ public class Combat extends Observable implements Serializable, Cloneable{
 		this(p1,p2,loc);
 		stance = new Neutral(p1,p2);
 		message = "";
-		clothespile=new ArrayList<Clothing>();
 		timer=0;
 		switch(code){
 			case 1:
@@ -99,16 +94,26 @@ public class Combat extends Observable implements Serializable, Cloneable{
 	}
 	public void go(){
 		phase=0;
-		if(p1.nude() && !p2.nude()){
+		if(p1.mostlyNude() && !p2.mostlyNude()){
 			p1.emote(Emotion.nervous, 20);
 		}
-		if(p2.nude() && !p1.nude()){
+		if(p2.mostlyNude() && !p1.mostlyNude()){
 			p2.emote(Emotion.nervous, 20);
 		}
 		if(!(p1.human()||p2.human())){
 			automate();
 		}
 		this.updateMessage();
+	}
+	
+	public CombatantData getCombatantData(Character character) {
+		if (character == p1) {
+			return p1Data;
+		} else if (character == p2) {
+			return p2Data;
+		} else {
+			throw new IllegalArgumentException(character + " is not in combat " + this);
+		}
 	}
 	
 	public void doVictory(Character victor, Character loser) {
@@ -252,12 +257,13 @@ public class Combat extends Observable implements Serializable, Cloneable{
 		new CockWorship(null),
 		new FootWorship(null),
 		new PussyWorship(null),
+		new Anilingus(null),
 	};
 
 	public boolean combatMessageChanged;
 
 	private Skill checkWorship(Character self, Character other, Skill def) {
-		if (other.has(Trait.objectOfWorship) && (other.topless() || other.pantsless())) {
+		if (other.has(Trait.objectOfWorship) && (other.breastsAvailable() || other.crotchAvailable())) {
 			int chance = Math.min(20, Math.max(5, other.get(Attribute.Divinity) + 10 - self.getLevel()));
 			if (Global.random(100) < chance) {
 				List<Skill> avail = new ArrayList<Skill>(Arrays.asList(worshipSkills));
@@ -600,7 +606,8 @@ public class Combat extends Observable implements Serializable, Cloneable{
 	     Combat c = (Combat) super.clone();
          c.p1 = (Character) p1.clone();
          c.p2 = (Character) p2.clone();
-         c.clothespile = (ArrayList) clothespile.clone();
+         c.p1Data = (CombatantData) p1Data.clone();
+         c.p2Data = (CombatantData) p2Data.clone();
          c.stance = (Position) getStance().clone();
          c.state = state;
          if (c.getStance().top == p1) c.getStance().top = c.p1;

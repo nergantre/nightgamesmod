@@ -34,7 +34,7 @@ public class Invitation extends Skill {
 		Position p = c.getStance();
 		boolean insertable = (c.getStance().insert(getSelf(), getSelf()) != c.getStance() || c.getStance().insert(target, getSelf()) != c.getStance());
 		return insertable && getSelf().canRespond()
-				&& getSelf().pantsless() && target.pantsless()
+				&& getSelf().crotchAvailable() && target.crotchAvailable()
 				&&((getSelf().hasDick() && target.hasPussy()) || (getSelf().hasPussy() && target.hasDick()));
 	}
 
@@ -65,7 +65,7 @@ public class Invitation extends Skill {
 				return Global.format("You command {other:name} to embrace you. {other:SUBJECT} moves to walk towards you for a second before snapping out of it.", getSelf(), target);
 			}
 			return Global.format("You try to hug {other:name} and pull her down, but she twists out of your grasp.\n", getSelf(), target);			
-		} else if (getSelf().hasPussy()) {
+		} else if (!c.getStance().inserted(getSelf())) {
 			if (hasDivinity()) {
 				return Global.format("You command {other:name} to embrace you. {other:SUBJECT} obeys and hugs you close to {other:direct-object}. You follow up on your earlier command and tell her to fuck you, which she promptly lovingly complies.", getSelf(), target);
 			}
@@ -74,7 +74,7 @@ public class Invitation extends Skill {
 			if (hasDivinity()) {
 				return Global.format("You command {other:name} to embrace you. {other:SUBJECT} obeys and hugs you close to {other:direct-object}. You follow up on your earlier command and tell her to fuck you, which she promptly lovingly complies.", getSelf(), target);
 			}
-			return Global.format("You embrace {other:name} and pull her on top of you. Taking advantage of her distraction, you slide down to a cowgirl stance with your cock firmly inside her.", getSelf(), target);
+			return Global.format("You embrace {other:name} and pull her on top of you. Taking advantage of her distraction, you push her on top of you while you are fucking her from beneath.", getSelf(), target);
 		}
 	}
 
@@ -86,7 +86,7 @@ public class Invitation extends Skill {
 				return Global.format("{self:SUBJECT} commands {other:direct-object} to embrace {self:direct-object}. {other:SUBJECT} move to walk towards her for a brief second before snapping out of it.", getSelf(), target);
 			}
 			return Global.format("{self:NAME} hugs you softly and tries to pull you into her, but you come to your senses in the nick of time and manage to twist out of her grasp, causing {self:NAME} to pout at you cutely.\n", getSelf(), target);			
-		} else if (getSelf().hasPussy()) {
+		} else if (!c.getStance().inserted(getSelf())) {
 			if (hasDivinity()) {
 				return Global.format("{self:SUBJECT} commands {other:direct-object} to embrace her. {other:SUBJECT} obey and hug her close to {other:reflective}. {self:NAME} follows up on {self:possessive} earlier command and tell you to fuck {self:direct-object}, to which you promptly lovingly comply.", getSelf(), target);
 			}
@@ -95,7 +95,7 @@ public class Invitation extends Skill {
 			if (hasDivinity()) {
 				return Global.format("{self:SUBJECT} commands {other:direct-object} to embrace her. {other:SUBJECT} obey and hug her close to {other:reflective}. {self:NAME} follows up on {self:possessive} earlier command and tell you to fuck {self:direct-object}, to which you promptly lovingly comply.", getSelf(), target);
 			}
-			return Global.format("{self:NAME} embraces you and pulls you on top of her. Taking advantage of your distraction, she slide down to a cowgirl stance with her cock firmly inside you.", getSelf(), target);
+			return Global.format("{self:NAME} embraces you and pulls you on top of her. Taking advantage of your distraction, she pushes you above her with her fucking you from underneath.", getSelf(), target);
 		}
 	}
 
@@ -119,13 +119,15 @@ public class Invitation extends Skill {
 			result = Result.divine;
 		}
 
+		if (success) {
+			c.setStance(c.getStance().insertRandomDom(target));
+		}
 		if (getSelf().human()) {
 			c.write(getSelf(), deal(c, 0, result, target));
 		} else {
 			c.write(getSelf(), receive(c, 0, result, target));
 		}
 		if (success) {
-			c.setStance(c.getStance().insertRandomDom(target));
 			if (c.getStance().en == Stance.missionary) {
 				target.add(c, new LegLocked(target, 4 * getSelf().get(Attribute.Power)));
 			} else {

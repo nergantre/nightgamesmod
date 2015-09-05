@@ -2,6 +2,8 @@ package nightgames.skills;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
@@ -13,6 +15,15 @@ import nightgames.items.Item;
 import nightgames.items.ItemEffect;
 
 public class ThrowDraft extends Skill {
+	private static final Set<Item> transformativeItems = new HashSet<>();
+	{
+		transformativeItems.add(Item.SuccubusDraft);
+		transformativeItems.add(Item.BustDraft);
+		transformativeItems.add(Item.TinyDraft);
+		transformativeItems.add(Item.TentacleTonic);
+		transformativeItems.add(Item.PriapusDraft);
+		transformativeItems.add(Item.FemDraft);
+	}
 
 	public ThrowDraft(Character self) {
 		super("Throw draft", self);
@@ -71,12 +82,16 @@ public class ThrowDraft extends Skill {
 			}
 			c.write(getSelf(), Global.format(String.format("{self:SUBJECT-ACTION:%s|%ss} %s%s",
 					verb, verb, used.pre(), used.getName()), getSelf(), target));
-			boolean eventful = false;
-			for (ItemEffect e : used.getEffects()) {
-				eventful = e.use(c, target, getSelf(), used) || eventful;
-			}
-			if (!eventful) {
-				c.write("...But nothing happened.");
+			if (transformativeItems.contains(used) && target.has(Trait.stableform)) {
+				c.write(target, "...But nothing happened (Stable Form).");
+			} else {
+				boolean eventful = false;
+				for (ItemEffect e : used.getEffects()) {
+					eventful = e.use(c, target, getSelf(), used) || eventful;
+				}
+				if (!eventful) {
+					c.write(getSelf(), "...But nothing happened.");
+				}
 			}
 			getSelf().consume(used, 1);
 		}

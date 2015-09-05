@@ -12,7 +12,7 @@ public class CommandMasturbate extends PlayerCommand {
 	}
 	
 	public boolean usable(Combat c, Character target) {
-		return super.usable(c, target) && target.pantsless();
+		return super.usable(c, target) && target.crotchAvailable();
 	}
 
 	@Override

@@ -3,8 +3,6 @@ package nightgames.characters;
 import java.io.Serializable;
 import java.util.HashSet;
 
-import javax.swing.Icon;
-
 import nightgames.actions.Action;
 import nightgames.actions.Movement;
 import nightgames.areas.Area;

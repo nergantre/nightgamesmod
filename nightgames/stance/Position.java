@@ -101,8 +101,8 @@ public abstract class Position implements Cloneable{
 		Character target;
 
 		if (self == top) { target = bottom; } else { target = top; }
-		return (self.pantsless()||(self.has(Trait.strapped)&&target.hasPussy()))
-				&& target.pantsless()
+		return (self.crotchAvailable()||(self.has(Trait.strapped)&&target.hasPussy()))
+				&& target.crotchAvailable()
 				&& mobile(self)
 				&& !mobile(target)
 				&& (((self.hasDick() || self.has(Trait.strapped)) && !behind(target)) || !behind(self))

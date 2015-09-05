@@ -25,8 +25,8 @@ public class Paizuri extends Skill {
 	public boolean usable(Combat c, Character target) {
 		return getSelf().hasBreasts()
 				&& getSelf().body.getLargestBreasts().size >= MIN_REQUIRED_BREAST_SIZE
-				&& target.hasDick() && getSelf().topless()
-				&& target.pantsless() && c.getStance().paizuri(getSelf())
+				&& target.hasDick() && getSelf().breastsAvailable()
+				&& target.crotchAvailable() && c.getStance().paizuri(getSelf())
 				&& c.getStance().front(getSelf())
 				&& getSelf().canAct() && !c.getStance().penetration(getSelf());
 	}
@@ -53,7 +53,7 @@ public class Paizuri extends Skill {
 		}
 		target.body.pleasure(getSelf(), getSelf().body.getRandom("breasts"), target.body.getRandom("cock"), m, c);					
 		if (Global.random(100) < 2 + getSelf().get(Attribute.Fetish)) {
-			target.add(c, new BodyFetish(target, getSelf(), BreastsPart.a.getType(), .25, 10));
+			target.add(c, new BodyFetish(target, getSelf(), BreastsPart.a.getType(), .25));
 		}
 		return true;
 	}

@@ -3,7 +3,7 @@ import nightgames.characters.Character;
 import nightgames.daytime.Activity;
 import nightgames.global.Global;
 import nightgames.global.Modifier;
-import nightgames.items.Clothing;
+import nightgames.items.clothing.Clothing;
 
 import java.util.ArrayList;
 
@@ -50,25 +50,6 @@ public class ClothesChangeGUI extends JPanel {
 		for(Clothing article: player.closet){
 			if (!player.hasPussy() && Clothing.femaleOnlyClothing.contains(article)) {
 				continue;
-			}
-			switch(article.getType()){
-			case TOPOUTER:
-				TopOut.add(article);
-				break;
-			case TOP:
-				TopMid.add(article);
-				break;
-			case TOPUNDER:
-				TopIn.add(article);
-				break;
-			case BOTOUTER:
-				BotOut.add(article);
-				break;
-			case UNDERWEAR:
-				BotIn.add(article);
-				break;
-			default:
-				break;
 			}
 		}
 		
@@ -130,23 +111,6 @@ public class ClothesChangeGUI extends JPanel {
 		JButton btnOk = new JButton("OK");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ClothesChangeGUI.this.player.outfit[0].clear();
-				ClothesChangeGUI.this.player.outfit[1].clear();
-				if(ClothesChangeGUI.this.TIBox.getSelectedItem()!=ClothesChangeGUI.this.noneString){
-					ClothesChangeGUI.this.player.outfit[0].push((Clothing) ClothesChangeGUI.this.TIBox.getSelectedItem());
-				}
-				if(ClothesChangeGUI.this.TMBox.getSelectedItem()!=ClothesChangeGUI.this.noneString){
-					ClothesChangeGUI.this.player.outfit[0].push((Clothing) ClothesChangeGUI.this.TMBox.getSelectedItem());
-				}
-				if(ClothesChangeGUI.this.TOBox.getSelectedItem()!=ClothesChangeGUI.this.noneString){
-					ClothesChangeGUI.this.player.outfit[0].push((Clothing) ClothesChangeGUI.this.TOBox.getSelectedItem());
-				}
-				if(ClothesChangeGUI.this.BIBox.getSelectedItem()!=ClothesChangeGUI.this.noneString){
-					ClothesChangeGUI.this.player.outfit[1].push((Clothing) ClothesChangeGUI.this.BIBox.getSelectedItem());
-				}
-				if(ClothesChangeGUI.this.BOBox.getSelectedItem()!=ClothesChangeGUI.this.noneString){
-					ClothesChangeGUI.this.player.outfit[1].push((Clothing) ClothesChangeGUI.this.BOBox.getSelectedItem());
-				}
 				ClothesChangeGUI.this.player.change(Modifier.normal);
 				Global.gui().removeClosetGUI();
 				ClothesChangeGUI.this.resume.visit("Leave");
@@ -154,30 +118,6 @@ public class ClothesChangeGUI extends JPanel {
 		});
 		btnOk.setFont(new Font("Sylfaen", Font.PLAIN, 24));
 		horizontalBox_2.add(btnOk);
-		for(Clothing article: player.outfit[0]){
-			if(TopOut.contains(article)){
-				TOBox.setSelectedItem(article);
-			}
-		}
-		for(Clothing article: player.outfit[0]){
-			if(TopMid.contains(article)){
-				TMBox.setSelectedItem(article);
-			}
-		}
-		for(Clothing article: player.outfit[0]){
-			if(TopIn.contains(article)){
-				TIBox.setSelectedItem(article);
-			}
-		}
-		for(Clothing article: player.outfit[1]){
-			if(BotOut.contains(article)){
-				BOBox.setSelectedItem(article);
-			}
-		}
-		for(Clothing article: player.outfit[1]){
-			if(BotIn.contains(article)){
-				BIBox.setSelectedItem(article);
-			}
-		}
+		// TODO EVERYTHING!
 	}
 }

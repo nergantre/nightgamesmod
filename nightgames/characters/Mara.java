@@ -1,30 +1,18 @@
 package nightgames.characters;
 
-import nightgames.actions.Action;
-import nightgames.actions.Move;
-import nightgames.actions.Movement;
-import nightgames.actions.Resupply;
-import nightgames.areas.Area;
+import java.util.Optional;
+
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
-import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.global.Modifier;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
-import nightgames.skills.Skill;
-import nightgames.skills.Tactics;
-import nightgames.stance.Stance;
+import nightgames.items.clothing.Clothing;
 import nightgames.status.Hypersensitive;
 import nightgames.status.Oiled;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Optional;
 
 public class Mara extends BasePersonality  {
 	/**
@@ -35,14 +23,14 @@ public class Mara extends BasePersonality  {
 		super();
 		character = new NPC("Mara",1,this);
 		preferredCockMod = CockMod.bionic;
-		character.outfit[0].add(Clothing.bra);
-		character.outfit[0].add(Clothing.Tshirt);
-		character.outfit[1].add(Clothing.underwear);
-		character.outfit[1].add(Clothing.shorts);
-		character.closet.add(Clothing.bra);
-		character.closet.add(Clothing.Tshirt);
-		character.closet.add(Clothing.underwear);
-		character.closet.add(Clothing.shorts);
+		character.outfitPlan.add(Clothing.getByName("bra"));
+		character.outfitPlan.add(Clothing.getByName("Tshirt"));
+		character.outfitPlan.add(Clothing.getByName("underwear"));
+		character.outfitPlan.add(Clothing.getByName("shorts"));
+		character.closet.add(Clothing.getByName("bra"));
+		character.closet.add(Clothing.getByName("Tshirt"));
+		character.closet.add(Clothing.getByName("underwear"));
+		character.closet.add(Clothing.getByName("shorts"));
 		character.change(Modifier.normal);
 		character.mod(Attribute.Cunning, 2);
 		character.mod(Attribute.Perception, 2);
@@ -55,7 +43,7 @@ public class Mara extends BasePersonality  {
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.b);
 		character.body.add(PussyPart.normal);
-		character.body.finishBody("female");
+		character.body.finishBody(CharacterSex.female);
 	}
 
 	@Override
@@ -353,7 +341,7 @@ public class Mara extends BasePersonality  {
 	}
 	@Override
 	public boolean fightFlight(Character opponent) {
-		return !character.nude()||opponent.nude();
+		return !character.mostlyNude()||opponent.mostlyNude();
 	}
 	@Override
 	public boolean attack(Character opponent) {
@@ -407,7 +395,7 @@ public class Mara extends BasePersonality  {
 	}
 	@Override
 	public boolean fit() {
-		return character.getStamina().percent()>=75&&character.getArousal().percent()<=10&&!character.nude();
+		return character.getStamina().percent()>=75&&character.getArousal().percent()<=10&&!character.mostlyNude();
 	}
 	@Override
 	public String night() {
@@ -426,15 +414,14 @@ public class Mara extends BasePersonality  {
 	public void advance(){
 		character.add(Trait.madscientist);
 		character.body.addReplace(PussyPart.cybernetic, 1);
-		character.outfit[0].removeAllElements();
-		character.outfit[1].removeAllElements();
-		character.outfit[0].add(Clothing.bra);
-		character.outfit[0].add(Clothing.shirt);
-		character.outfit[0].add(Clothing.labcoat);
-		character.outfit[1].add(Clothing.underwear);
-		character.outfit[1].add(Clothing.pants);
-		character.closet.add(Clothing.pants);
-		character.closet.add(Clothing.labcoat);
+		character.outfitPlan.clear();
+		character.outfitPlan.add(Clothing.getByName("bra"));
+		character.outfitPlan.add(Clothing.getByName("shirt"));
+		character.outfitPlan.add(Clothing.getByName("labcoat"));
+		character.outfitPlan.add(Clothing.getByName("underwear"));
+		character.outfitPlan.add(Clothing.getByName("pants"));
+		character.closet.add(Clothing.getByName("pants"));
+		character.closet.add(Clothing.getByName("labcoat"));
 		character.mod(Attribute.Science, 1);
 	}
 

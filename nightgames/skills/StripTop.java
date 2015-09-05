@@ -6,6 +6,7 @@ import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.items.clothing.ClothingSlot;
 
 public class StripTop extends Skill {
 
@@ -15,7 +16,7 @@ public class StripTop extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().reachTop(getSelf())&&!target.topless()&&getSelf().canAct();
+		return c.getStance().reachTop(getSelf())&&!target.breastsAvailable()&&getSelf().canAct();
 	}
 
 	@Override
@@ -25,7 +26,7 @@ public class StripTop extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		int difficulty = target.top.peek().dc()
+		int difficulty = target.getOutfit().getTopOfSlot(ClothingSlot.top).dc()
 				+(target.getLevel())
 				+(target.getStamina().percent() / 5
 				- target.getArousal().percent()) / 4
@@ -37,8 +38,8 @@ public class StripTop extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.normal, target));
 			}
-			target.strip(0, c);
-			if(getSelf().human()&&target.nude()){
+			target.strip(ClothingSlot.top, c);
+			if(getSelf().human()&&target.mostlyNude()){
 				c.write(target,target.nakedLiner(c));
 			}
 			target.emote(Emotion.nervous, 10);
@@ -75,18 +76,18 @@ public class StripTop extends Skill {
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
-			return "You attempt to strip off "+target.name()+"'s "+target.top.peek().getName()+", but she shoves you away.";
+			return "You attempt to strip off "+target.name()+"'s "+target.getOutfit().getTopOfSlot(ClothingSlot.top).getName()+", but she shoves you away.";
 		}else{
-			return "After a brief struggle, you manage to pull off "+target.name()+"'s "+target.top.peek().getName()+".";
+			return "After a brief struggle, you manage to pull off "+target.name()+"'s "+target.getOutfit().getTopOfSlot(ClothingSlot.top).getName()+".";
 		}
 	}
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
-			return getSelf().name()+" tries to yank off your "+target.top.peek().getName()+", but you manage to hang onto it.";
+			return getSelf().name()+" tries to yank off your "+target.getOutfit().getTopOfSlot(ClothingSlot.top).getName()+", but you manage to hang onto it.";
 		}else{
-			return getSelf().name()+" grabs a hold of your "+target.top.peek().getName()+" and yanks it off before you can stop her.";
+			return getSelf().name()+" grabs a hold of your "+target.getOutfit().getTopOfSlot(ClothingSlot.top).getName()+" and yanks it off before you can stop her.";
 		}
 	}
 

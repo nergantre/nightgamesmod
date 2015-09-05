@@ -5,7 +5,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.global.Flag;
 import nightgames.global.Global;
-import nightgames.items.Clothing;
+import nightgames.items.clothing.Clothing;
 
 public class Meditation extends Activity {
 	private boolean acted;
@@ -77,8 +77,8 @@ public class Meditation extends Activity {
 				player.money-=1000*(player.getPure(Attribute.Ki)+1);
 				player.mod(Attribute.Ki, 1);
 				acted=true;
-				if(!player.has(Clothing.kungfupants)){
-					player.gain(Clothing.kungfupants);
+				if(!player.has(Clothing.getByName("kungfupants"))){
+					player.gain(Clothing.getByName("kungfupants"));
 				}
 				Global.gui().choose(this,"Leave");
 			}

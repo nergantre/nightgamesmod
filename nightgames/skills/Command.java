@@ -1,12 +1,19 @@
 package nightgames.skills;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.characters.body.CockPart;
+import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.items.clothing.ClothingSlot;
 import nightgames.stance.Cowgirl;
+import nightgames.stance.FaceSitting;
 import nightgames.stance.Mount;
 import nightgames.stance.ReverseMount;
 import nightgames.status.Bound;
@@ -41,24 +48,47 @@ public class Command extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
+		CockPart otherCock = target.body.getRandomCock();
+		PussyPart otherPussy = target.body.getRandomPussy();
+
+		CockPart selfCock = getSelf().body.getRandomCock();
+		PussyPart selfPussy = getSelf().body.getRandomPussy();
+		boolean otherReady = (otherCock != null && otherCock.isReady(target))
+				&& (otherPussy != null && otherPussy.isReady(target));
+		boolean selfReady = (selfCock != null && selfCock.isReady(getSelf()))
+				&& (selfPussy != null && selfPussy.isReady(getSelf()));
 		if (getSelf().bound()) { // Undress self
 			c.write(getSelf(),"You feel a compulsion to loosen " + getSelf().nameOrPossessivePronoun()
 					+ " bondage. She quickly hops to her feet and grins at you like a predator while rubbing her wrists.");
 			getSelf().free();
-		} if (!target.nude()) { // Undress self
+		} if (!target.mostlyNude()) { // Undress self
 			c.write(getSelf(),receive(c, 0, Result.miss, target));
 			new Undress(target).resolve(c, getSelf());
-		} else if (!getSelf().nude()) { // Undress me
+		} if (!getSelf().crotchAvailable() && !getSelf().getOutfit().slotUnshreddable(ClothingSlot.bottom)) {
 			c.write(getSelf(),receive(c, 0, Result.weak, target));
-			if (getSelf().topless())
-				c.write(getSelf(),"Like a hungry beast, you rip off " + getSelf().name()
-						+ "'s " + getSelf().bottom.pop() + ".");
-			else
-				c.write(getSelf(),"Like a hungry beast, you rip off " + getSelf().name()
-						+ "'s " + getSelf().top.pop() + ".");
-		} else if (target.getArousal().get() <= 15) { // Masturbate
+			c.write(getSelf(),"Like a hungry beast, you rip off " + getSelf().name()
+					+ "'s " + getSelf().shred(ClothingSlot.bottom) + ".");
+		} else if (!getSelf().breastsAvailable() && !getSelf().getOutfit().slotUnshreddable(ClothingSlot.top)) {
+			c.write(getSelf(),receive(c, 0, Result.weak, target));
+			c.write(getSelf(),"Like a hungry beast, you rip off " + getSelf().name()
+					+ "'s " + getSelf().shred(ClothingSlot.top) + ".");
+		} else if (!getSelf().crotchAvailable()) {
+			(new Undress(getSelf())).resolve(c, target);
+		} else if (!otherReady) { // Masturbate
 			c.write(getSelf(),receive(c, 0, Result.normal, target));
 			new Masturbate(target).resolve(c, getSelf());
+		} else if (!selfReady) { // Pleasure me
+			c.write(getSelf(),receive(c, 1, Result.critical, target));
+			c.setStance(new FaceSitting(getSelf(), target));
+			c.write(getSelf(),"<br>");
+			List<Skill> possible = new ArrayList<>();
+			if (getSelf().hasPussy()) {
+				possible.add(new PussyWorship(target));
+			} else if (getSelf().hasDick()) {
+				possible.add(new CockWorship(target));
+			} else {
+				possible.add(new Anilingus(target));
+			}
 		} else if (!c.getStance().penetration(getSelf())
 				&& getSelf().hasPussy() && target.hasDick()) { // Fuck me
 			c.setStance(new Mount(target, getSelf()));
@@ -78,17 +108,6 @@ public class Command extends Skill {
 				c.write(getSelf(),receive(c, 0, Result.critical, target));
 				c.write(getSelf(),"<br>");
 				new Piston(getSelf()).resolve(c, target);
-			}
-		} else if (!c.getStance().penetration(getSelf()) && getSelf().getArousal().get() <= 15) { // Pleasure me
-			c.write(getSelf(),receive(c, 1, Result.critical, target));
-			c.setStance(new ReverseMount(target, getSelf()));
-			c.write(getSelf(),"<br>");
-			if (getSelf().hasPussy()) {
-				new Cunnilingus(target).resolve(c, getSelf());
-			} else if (getSelf().hasDick()) {
-				new Blowjob(target).resolve(c, getSelf());
-			} else {
-				new LickNipples(target).resolve(c, getSelf());
 			}
 		} else { // Confused
 			c.write(getSelf(),receive(c, 0, Result.normal, target));

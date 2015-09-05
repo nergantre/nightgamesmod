@@ -183,10 +183,11 @@ public class Struggle extends Skill {
 						c.setStance(new ReverseCowgirl(getSelf(), target));
 					} else if (c.getStance().inserted(target)) {
 						c.write(getSelf(),
+								Global.format(
 								getSelf().name()
 										+ "{self:SUBJECT-ACTION:wrap|wraps} {self:possessive} legs around {other:name-possessive} waist and suddenly {self:action:pull|pulls} {other:direct-object} into a deep kiss. {other:SUBJECT-ACTION:are|is} so surprised by this sneak attack that {other:subject-action:don't|doesn't} "
 												+ "even notice {self:pronoun} {self:action:rolling|rolling} {other:direct-object} onto {other:possessive} back until {other:subject-action:feel|feels} {self:possessive} weight on {other:possessive} hips. {self:PRONOUN} {self:action:move|moves} {self:possessive} hips experimentally, enjoying the control "
-												+ "{self:pronoun} {self:action:have|has} in cowgirl position.");
+												+ "{self:pronoun} {self:action:have|has} in cowgirl position.", getSelf(), target));
 						c.setStance(new Cowgirl(getSelf(), target));
 					} else {
 						c.write(getSelf(),

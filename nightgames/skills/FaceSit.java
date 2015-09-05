@@ -31,7 +31,7 @@ public class FaceSit extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().pantsless()&&getSelf().canAct()&&c.getStance().dom(getSelf())&&c.getStance().reachTop(getSelf())&&
+		return getSelf().crotchAvailable()&&getSelf().canAct()&&c.getStance().dom(getSelf())&&c.getStance().reachTop(getSelf())&&
 				!c.getStance().penetration(getSelf())&&!c.getStance().penetration(target)&&c.getStance().prone(target)&&!getSelf().has(Trait.shy);
 	}
 
@@ -90,7 +90,7 @@ public class FaceSit extends Skill {
 			c.setStance(new FaceSitting(getSelf(), target));
 		}
 		if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
-			target.add(c, new BodyFetish(target, getSelf(), "ass", .25, 10));
+			target.add(c, new BodyFetish(target, getSelf(), "ass", .25));
 		}
 		return true;
 	}

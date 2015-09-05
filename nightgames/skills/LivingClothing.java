@@ -7,8 +7,8 @@ import nightgames.characters.body.BasicCockPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
 import nightgames.status.Hypersensitive;
 import nightgames.status.Shamed;
 
@@ -24,7 +24,7 @@ public class LivingClothing extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().inserted()&&getSelf().reallyNude()&&getSelf().has(Item.Battery, 3);
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().inserted()&&getSelf().torsoNude()&&getSelf().has(Item.Battery, 3);
 	}
 
 	@Override
@@ -40,8 +40,8 @@ public class LivingClothing extends Skill {
 		} else {
 			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
-		getSelf().top.push(Clothing.tentacletop);
-		getSelf().bottom.push(Clothing.tentaclebottom);
+		getSelf().getOutfit().equip(Clothing.getByName("tentacletop"));
+		getSelf().getOutfit().equip(Clothing.getByName("tentaclebottom"));
 		return true;
 	}
 

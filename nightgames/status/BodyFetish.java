@@ -13,41 +13,53 @@ import nightgames.global.Global;
 import nightgames.global.JSONUtils;
 import nightgames.skills.Anilingus;
 import nightgames.skills.Blowjob;
+import nightgames.skills.BreastWorship;
+import nightgames.skills.CockWorship;
 import nightgames.skills.FootWorship;
 import nightgames.skills.Grind;
 import nightgames.skills.Invitation;
 import nightgames.skills.Piston;
+import nightgames.skills.PussyWorship;
 import nightgames.skills.ReverseAssFuck;
 import nightgames.skills.ReverseCarry;
 import nightgames.skills.ReverseFly;
 import nightgames.skills.Skill;
 import nightgames.skills.SpiralThrust;
 import nightgames.skills.Thrust;
+import nightgames.skills.WildThrust;
 
-public class BodyFetish extends DurationStatus {
+public class BodyFetish extends Status {
 	Character origin;
 	public String part;
 	public double magnitude;
 
-	public BodyFetish(Character affected, Character origin, String part, double magnitude, int duration) {
-		super(Global.capitalizeFirstLetter(part) + " Fetish", affected, duration);
+	public BodyFetish(Character affected, Character origin, String part, double magnitude) {
+		super(Global.capitalizeFirstLetter(part) + " Fetish", affected);
 		flag(Stsflag.bodyfetish);
 		this.origin = origin;
 		this.part = part;
 		this.magnitude = magnitude;
 	}
 
+	public boolean lingering(){
+		return true;
+	}
+
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now affected by a %s fetish.\n", affected.subjectAction("are", "is"), part);
+		if (replaced) {
+			return String.format("%s %s fetish has grown.\n", affected.nameOrPossessivePronoun(), part);
+		} else {
+			return String.format("%s now affected by a %s fetish.\n", affected.subjectAction("are", "is"), part);
+		}
 	}
 
 	@Override
 	public String describe() {
 		String desc = "";
-		if (magnitude < .24) {
+		if (magnitude < .26) {
 			desc = "brief ";
-		} else if (magnitude < .49) {
+		} else if (magnitude < .51) {
 			desc = "";
 		} else if (magnitude < .99) {
 			desc = "fierce ";
@@ -55,7 +67,11 @@ public class BodyFetish extends DurationStatus {
 			desc = "overwhelming ";
 		}
 		if(affected.human()){
-			return Global.capitalizeFirstLetter(desc + "fantasies of worshiping " + origin.nameOrPossessivePronoun() + " " + part + " run through your mind (" + magnitude +").");
+			if (origin != null) {
+				return Global.capitalizeFirstLetter(desc + "fantasies of worshiping " + origin.nameOrPossessivePronoun() + " " + part + " run through your mind (" + magnitude +").");
+			} else {
+				return Global.capitalizeFirstLetter(desc + "fantasies of worshiping " + part + " run through your mind (" + magnitude +").");
+			}
 		}
 		else{
 			return affected.name()+" is affected by a " + desc + part + " fetish (" + magnitude +").";
@@ -66,6 +82,12 @@ public class BodyFetish extends DurationStatus {
 	public Collection<Skill> allowedSkills(Combat c){
 		if (magnitude <= .99) {
 			return Collections.emptySet();
+		} else if (part.equals("pussy")) {
+			return Arrays.asList((Skill)
+					new PussyWorship(affected));
+		} else if (part.equals("breasts")) {
+			return Arrays.asList((Skill)
+					new BreastWorship(affected));
 		} else if (part.equals("feet")) {
 			return Arrays.asList((Skill)
 					new FootWorship(affected));
@@ -82,7 +104,9 @@ public class BodyFetish extends DurationStatus {
 					new Thrust(affected),
 					new Piston(affected),
 					new Grind(affected),
-					new SpiralThrust(affected));	
+					new SpiralThrust(affected),
+					new CockWorship(affected),
+					new WildThrust(affected));
 		} else {
 			return Collections.emptySet();
 		}
@@ -108,8 +132,7 @@ public class BodyFetish extends DurationStatus {
 		assert (s instanceof BodyFetish);
 		BodyFetish other = (BodyFetish)s;
 		assert (other.part.equals(part));
-		setDuration(Math.max(other.getDuration(), this.getDuration()));
-		this.magnitude = Math.min(2.5, this.magnitude + other.magnitude);
+		this.magnitude = Math.min(3.0, this.magnitude + other.magnitude);
 	}
 
 	@Override
@@ -163,7 +186,7 @@ public class BodyFetish extends DurationStatus {
 	}
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new BodyFetish(newAffected, newOther, part, magnitude, getDuration());
+		return new BodyFetish(newAffected, newOther, part, magnitude);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -172,14 +195,20 @@ public class BodyFetish extends DurationStatus {
 		obj.put("type", getClass().getSimpleName());
 		obj.put("part", part);
 		obj.put("magnitude", magnitude);
-		obj.put("duration", getDuration());
 		return obj;
 	}
 
 	public Status loadFromJSON(JSONObject obj) {
 		return new BodyFetish(null, null,
 						JSONUtils.readString(obj, "part"),
-						JSONUtils.readFloat(obj, "magnitude"),
-						JSONUtils.readInteger(obj, "duration"));
+						JSONUtils.readFloat(obj, "magnitude"));
+	}
+
+	@Override
+	public int regen(Combat c) {
+		if (magnitude > .25) {
+			magnitude = Math.max(.25, magnitude - .1);
+		}
+		return 0;
 	}
 }

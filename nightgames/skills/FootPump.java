@@ -23,7 +23,7 @@ public class FootPump extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (c.getStance().behind(getSelf())&&target.pantsless()&&getSelf().canAct()&&!c.getStance().penetration(target)&&target.hasDick());
+		return (c.getStance().behind(getSelf())&&target.crotchAvailable()&&getSelf().canAct()&&!c.getStance().penetration(target)&&target.hasDick());
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class FootPump extends Skill {
 			c.setStance(new BehindFootjob(getSelf(), target));
 		}
 		if (Global.random(100) < 15 + 2 * getSelf().get(Attribute.Fetish)) {
-			target.add(c, new BodyFetish(target, getSelf(), "feet", .25, 10));
+			target.add(c, new BodyFetish(target, getSelf(), "feet", .25));
 		}
 		return true;
 	}

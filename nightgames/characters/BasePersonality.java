@@ -1,5 +1,13 @@
 package nightgames.characters;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import nightgames.actions.Action;
 import nightgames.actions.Movement;
 import nightgames.characters.body.BodyPart;
@@ -12,14 +20,6 @@ import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.skills.Skill;
-
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 public abstract class BasePersonality implements Personality {
 	/**

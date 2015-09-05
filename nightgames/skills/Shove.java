@@ -5,6 +5,8 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.items.clothing.ClothingSlot;
+import nightgames.items.clothing.ClothingTrait;
 import nightgames.stance.Mount;
 import nightgames.stance.Neutral;
 import nightgames.stance.ReverseMount;
@@ -32,14 +34,16 @@ public class Shove extends Skill {
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		boolean success = true;
-		if(getSelf().get(Attribute.Ki)>=1&&!target.top.isEmpty()&&getSelf().canSpend(5)) {
+		if(getSelf().get(Attribute.Ki)>=1&&
+				!target.getOutfit().slotUnshreddable(ClothingSlot.top)
+				&&getSelf().canSpend(5)) {
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.special, target));
 			}
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.special, target));
 			}
-			target.shred(0);
+			target.shred(ClothingSlot.top);
 			target.pain(c, Global.random(10)+15 + (getSelf().get(Attribute.Power)+  getSelf().get(Attribute.Ki)) / 4);
 			if(getSelf().check(Attribute.Power, target.knockdownDC()-getSelf().get(Attribute.Ki))) {
 				c.setStance(new Neutral(getSelf(),target));
@@ -112,12 +116,12 @@ public class Shove extends Skill {
 	}
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		return "You channel your ki into your hands and strike "+target.name()+" in the chest, destroying her "+target.top.peek();
+		return "You channel your ki into your hands and strike "+target.name()+" in the chest, destroying her "+target.getOutfit().getTopOfSlot(ClothingSlot.top).getName();
 	}
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return getSelf().name()+" strikes you in the chest with her palm, staggering you a step. Suddenly your "+target.top.peek()+" tears and falls off you in pieces";
+		return getSelf().name()+" strikes you in the chest with her palm, staggering you a step. Suddenly your "+target.getOutfit().getTopOfSlot(ClothingSlot.top).getName()+" tears and falls off you in pieces";
 	}
 
 	@Override

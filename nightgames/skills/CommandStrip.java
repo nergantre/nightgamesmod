@@ -11,7 +11,7 @@ public class CommandStrip extends PlayerCommand {
 	}
 
 	public boolean usable(Combat c, Character target) {
-		return super.usable(c, target) && !target.nude();
+		return super.usable(c, target) && !target.mostlyNude();
 	}
 	
 	@Override

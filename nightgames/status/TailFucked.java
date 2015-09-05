@@ -6,7 +6,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.body.BodyPart;
-import nightgames.characters.custom.requirement.InsertedRequirement;
+import nightgames.characters.custom.requirement.EitherInsertedRequirement;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.global.JSONUtils;
@@ -19,7 +19,7 @@ public class TailFucked extends Status {
 		super(hole.equals("ass") ? "Tail Pegged" : "Tail Fucked", affected);
 		this.target = hole;
 		this.other = other;
-		requirements.add(new InsertedRequirement(true));
+		requirements.add(new EitherInsertedRequirement(true));
 		flag(Stsflag.bound);
 	}
 

@@ -72,9 +72,11 @@ import nightgames.characters.custom.JSONSourceNPCDataLoader;
 import nightgames.daytime.Daytime;
 import nightgames.gui.GUI;
 import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
 import nightgames.pet.Ptype;
 import nightgames.skills.*;
 import nightgames.stance.FlowerSex;
+import nightgames.status.BodyFetish;
 import nightgames.trap.Alarm;
 import nightgames.trap.AphrodisiacTrap;
 import nightgames.trap.Decoy;
@@ -123,7 +125,7 @@ public class Global {
 		counters = new HashMap<String,Float>();
 		jdate = new Date();
 		counters.put(Flag.malePref.name(), 0.f);
-		
+		Clothing.buildClothingTable();
 		PrintStream fstream;
 		try {
 			File logfile = new File("nightgames_log.txt");
@@ -141,6 +143,7 @@ public class Global {
 		System.out.println(new Timestamp(jdate.getTime()));
 
 		debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
+		debug[DebugFlags.DEBUG_LOADING.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_DAMAGE.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
@@ -170,6 +173,7 @@ public class Global {
 		players.add(human);
 		gui.populatePlayer(human);
 		buildSkillPool(human);
+		Clothing.buildClothingTable();
 		Global.learnSkills(human);
 		rebuildCharacterPool();
 		date=0;
@@ -267,6 +271,7 @@ public class Global {
 		skillPool.add(new Bravado(p));
 		skillPool.add(new Diversion(p));
 		skillPool.add(new Undress(p));
+		skillPool.add(new StripSelf(p));
 		skillPool.add(new StripTease(p));
 		skillPool.add(new Sensitize(p));
 		skillPool.add(new EnergyDrink(p));
@@ -482,6 +487,9 @@ public class Global {
 			if(human.getAffection(player)>maxaffection){
 				maxaffection=human.getAffection(player);
 				lover=player;
+			}
+			if (player.has(Trait.footfetishist)) {
+				player.add(new BodyFetish(player, null, "feet", .25));
 			}
 		}
 //		if (true) {
@@ -800,6 +808,7 @@ public class Global {
 		human=new Player("Dummy");
 		gui.purgePlayer();
 		buildSkillPool(human);
+		Clothing.buildClothingTable();
 		rebuildCharacterPool();
 
 		boolean dawn = false;
@@ -965,6 +974,16 @@ public class Global {
 				if (self != null && third != null) {
 					String verbs[] = third.split("\\|");
 					return self.subjectAction(verbs[0], verbs[1]);
+				}
+				return "";
+			}
+		});
+		matchActions.put("pronoun-action", new MatchAction() {
+			@Override
+			public String replace(Character self, String first, String second, String third) {
+				if (self != null && third != null) {
+					String verbs[] = third.split("\\|");
+					return self.pronoun() + " " + self.action(verbs[0], verbs[1]);
 				}
 				return "";
 			}

@@ -9,6 +9,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.global.Modifier;
 import nightgames.items.Item;
+import nightgames.items.clothing.ClothingSlot;
 
 public class Aphrodisiac extends Skill {
 	public Aphrodisiac(Character self) {
@@ -83,8 +84,8 @@ public class Aphrodisiac extends Skill {
 		} else if (modifier == Result.strong){
 			return getSelf().subjectAction("dip", "dips")
 					+ " a finger "
-					+ (getSelf().pantsless() ? "" : ("under " + getSelf().possessivePronoun()
-							+ " " + getSelf().bottom.peek().getName() + " and "))
+					+ (getSelf().crotchAvailable() ? "" : ("under " + getSelf().possessivePronoun()
+							+ " " + getSelf().getOutfit().getTopOfSlot(ClothingSlot.bottom).getName() + " and "))
 					+ "into " +getSelf().possessivePronoun()+ " pussy. Once " +getSelf().subjectAction("have", "has") + " collected a drop of "
 							+ getSelf().possessivePronoun() + " juices"
 					+ " on " + getSelf().possessivePronoun() + " fingertip, " + getSelf().subjectAction("pull", "pulls") + " it out and flicks it at " + target.directObject() +","
@@ -112,8 +113,8 @@ public class Aphrodisiac extends Skill {
 		else if (modifier == Result.strong){
 			return getSelf().subjectAction("dip", "dips")
 					+ " a finger "
-					+ (getSelf().pantsless() ? "" : ("under " + getSelf().possessivePronoun()
-							+ " " + getSelf().bottom.peek().getName() + " and "))
+					+ (getSelf().crotchAvailable() ? "" : ("under " + getSelf().possessivePronoun()
+							+ " " + getSelf().getOutfit().getTopOfSlot(ClothingSlot.bottom).getName() + " and "))
 					+ "into " +getSelf().possessivePronoun()+ " pussy. Once " +getSelf().subjectAction("have", "has") + " collected a drop of "
 							+ getSelf().possessivePronoun() + " juices"
 					+ " on " + getSelf().possessivePronoun() + " fingertip, " + getSelf().subjectAction("pull", "pulls") + " it out and flicks it at " + target.directObject() +","
