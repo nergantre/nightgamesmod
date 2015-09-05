@@ -185,6 +185,6 @@ public abstract class BasePersonality implements Personality {
 	}
 	
 	public AiModifiers getAiModifiers() {
-		return new AiModifiers();
+		return AiModifiers.getDefaultModifiers(getType());
 	}
 }

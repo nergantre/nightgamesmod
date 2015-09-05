@@ -1,18 +1,42 @@
 package nightgames.characters.custom;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
-import nightgames.items.Item;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import nightgames.Resources.ResourceLoader;
+import nightgames.global.JSONUtils;
 import nightgames.skills.Skill;
 import nightgames.stance.Stance;
 import nightgames.status.Stsflag;
 
 public class AiModifiers {
 
-	private Map<Class<? extends Skill>, Double>		attackMods;
-	private Map<Stance, Double>		positionMods;
-	private Map<Stsflag, Double>	selfStatusMods;
-	private Map<Stsflag, Double>	oppStatusMods;
+	public static final Map<String, AiModifiers> DEFAULTS;
+
+	static {
+		Map<String, AiModifiers> temp = new HashMap<>();
+		InputStream is = ResourceLoader
+				.getFileResourceAsStream("data/DefaultAiModifications.json");
+		JSONArray root = (JSONArray) JSONValue.parse(new InputStreamReader(is));
+		for (Object obj : root) {
+			JSONObject jobj = (JSONObject) obj;
+			String pers = JSONUtils.readString(jobj, "personality");
+			AiModifiers mods = readMods((JSONArray) jobj.get("mods"));
+			temp.put(pers, mods);
+		}
+		DEFAULTS = Collections.unmodifiableMap(temp);
+	}
+
+	private Map<Class<? extends Skill>, Double>	attackMods;
+	private Map<Stance, Double>					positionMods;
+	private Map<Stsflag, Double>				selfStatusMods;
+	private Map<Stsflag, Double>				oppStatusMods;
 
 	public AiModifiers() {
 	}
@@ -75,4 +99,42 @@ public class AiModifiers {
 		this.oppStatusMods = oppStatusMods;
 	}
 
+	public static AiModifiers getDefaultModifiers(String personality) {
+		if (!DEFAULTS.containsKey(personality))
+			System.err.println(
+					"No default AI modifications for " + personality + "!");
+		return DEFAULTS.getOrDefault(personality, new AiModifiers());
+	}
+
+	@SuppressWarnings("unchecked")
+	private static AiModifiers readMods(JSONArray array) {
+		AiModifiers mods = new AiModifiers();
+		for (Object obj : array) {
+			JSONObject mod = (JSONObject) obj;
+			String type = JSONUtils.readString(mod, "type");
+			String value = JSONUtils.readString(mod, "value");
+			double weight = JSONUtils.readFloat(mod, "weight");
+			switch (type) {
+				case "skill":
+					try {
+						Class<? extends Skill> clazz = (Class<? extends Skill>) Class
+								.forName(value);
+						mods.attackMods.put(clazz, weight);
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					}
+					break;
+				case "position":
+					mods.positionMods.put(Stance.valueOf(value), weight);
+					break;
+				case "self-status":
+					mods.selfStatusMods.put(Stsflag.valueOf(value), weight);
+					break;
+				case "opp-status":
+					mods.oppStatusMods.put(Stsflag.valueOf(value), weight);
+					break;
+			}
+		}
+		return mods;
+	}
 }

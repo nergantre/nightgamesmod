@@ -1,0 +1,12 @@
+{
+	{
+		"personality" : "Angel",
+		"mods" : [
+			{
+				"type" : "skill",
+				"value" : "nightgames.skill.Blowjob",
+				"weight" : 0.5
+			}
+		]
+	}
+}
