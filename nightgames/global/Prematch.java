@@ -5,8 +5,8 @@ import nightgames.characters.Player;
 import nightgames.characters.Reyka;
 import nightgames.gui.SaveButton;
 import nightgames.gui.SceneButton;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
 import nightgames.status.Hypersensitive;
 
 import java.util.ArrayList;
@@ -157,10 +157,9 @@ public class Prematch implements Scene{
 		else if(response.startsWith("Do")){
 			switch(type){
 			case pantsman:
-				player.top.clear();
-				player.bottom.clear();
-				player.bottom.add(Clothing.boxers);
-				message+="Lilly smiles with her hands on her hips. <i>\"Glad to hear it. We'll hang on to the rest of your clothes until the match is over. Boxers-only starts " +
+				player.getOutfit().undress();
+				player.change(Modifier.pantsman);
+				message+="Lilly smiles with her hands on her hips. <i>\"Glad to hear it. We'll hang on to the rest of your clothes until the match is over. Underwear-only starts " +
 						"now.\"</i> She wants you to undress here before the match even starts? You hesitate as you realize your opponents are all watching you curiously. Some " +
 						"of Lilly's assistants are still around too. She laughs when she notices your reluctance. <i>\"Are you seriously getting embarrassed about this? As if " +
 						"anyone in this room hasn't seen you naked on a regular basis.\"</i> She does have a point. You quickly strip off your shirt and pants and prepare for " +

@@ -3,9 +3,11 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.items.clothing.Clothing;
+import nightgames.items.clothing.ClothingSlot;
+import nightgames.items.clothing.ClothingTrait;
 
 public class Tear extends Skill {
 
@@ -15,12 +17,15 @@ public class Tear extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Power)>=32 || user.get(Attribute.Animism)>=12;
+		return user.get(Attribute.Power) >= 32 || user.get(Attribute.Animism) >= 12;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return ((c.getStance().reachTop(getSelf())&&!target.topless())||(((c.getStance().oral(getSelf()) || c.getStance().reachBottom(getSelf()))&&!target.pantsless())))&&getSelf().canAct();
+		return ((c.getStance().reachTop(getSelf()) && !target.breastsAvailable())
+				|| (((c.getStance().oral(getSelf()) || c.getStance().reachBottom(getSelf()))
+						&& !target.crotchAvailable())))
+				&& getSelf().canAct();
 	}
 
 	@Override
@@ -30,99 +35,114 @@ public class Tear extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(c.getStance().reachTop(getSelf())&&!target.top.empty()){
-			if(target.top.peek().attribute()!=Trait.indestructible
-			&&getSelf().get(Attribute.Animism)>=12
-			&&(getSelf().check(Attribute.Power, target.top.peek().dc()+(target.getStamina().percent()-(target.getArousal().percent())/4)+getSelf().get(Attribute.Animism)*getSelf().getArousal().percent()/100)
-			||!target.canAct())){
-				if(getSelf().human()){
-					c.write(getSelf(),"You channel your animal spirit and shred "+target.name()+"'s "+target.top.peek().getName()+" with claws you don't actually have.");
+		if (c.getStance().reachTop(getSelf()) && !target.getOutfit().slotEmpty(ClothingSlot.top)) {
+			Clothing article = target.getOutfit().getTopOfSlot(ClothingSlot.top);
+			if (!article.is(ClothingTrait.indestructible) && getSelf().get(Attribute.Animism) >= 12
+					&& (getSelf().check(Attribute.Power,
+							article.dc()
+									+ (target.getStamina().percent() - (target.getArousal().percent()) / 4)
+									+ getSelf().get(Attribute.Animism) * getSelf().getArousal().percent() / 100)
+							|| !target.canAct())) {
+				if (getSelf().human()) {
+					c.write(getSelf(), "You channel your animal spirit and shred " + target.name() + "'s "
+							+ article.getName() + " with claws you don't actually have.");
+				} else if (target.human()) {
+					c.write(getSelf(),
+							getSelf().name() + " lunges towards you and rakes her nails across your " 
+									+ article.getName() + ", shredding the garment. That shouldn't be possible. Her "
+							+ "nails are not that sharp, and if they were, you surely wouldn't have gotten away unscathed.");
 				}
-				else if(target.human()){
-					c.write(getSelf(),getSelf().name()+" lunges towards you and rakes her nails across your "+target.top.peek().getName()+", shredding the garment. That shouldn't be possible. Her " +
-							"nails are not that sharp, and if they were, you surely wouldn't have gotten away unscathed.");
-				}
-				target.shred(0);
-				if(getSelf().human()&&target.nude()){
+				target.shred(ClothingSlot.top);
+				if (getSelf().human() && target.mostlyNude()) {
 					c.write(target.nakedLiner(c));
 				}
 			}
-			else if(target.top.peek().attribute()!=Trait.indestructible
-			&&getSelf().check(Attribute.Power, target.top.peek().dc()+(target.getStamina().percent()-target.getArousal().percent())/4)||!target.canAct()){
-				if(getSelf().human()){
-					c.write(getSelf(),target.name()+" yelps in surprise as you rip her "+target.top.peek().getName()+" apart.");
+			if (!article.is(ClothingTrait.indestructible)
+					&& getSelf().check(Attribute.Power,
+							article.dc()
+									+ (target.getStamina().percent() - target.getArousal().percent()) / 4)
+					|| !target.canAct()) {
+				if (getSelf().human()) {
+					c.write(getSelf(), target.name() + " yelps in surprise as you rip her "
+							+ article.getName() + " apart.");
+				} else if (target.human()) {
+					c.write(getSelf(),
+							getSelf().name() + " violently rips your " + article.getName() + " off.");
 				}
-				else if(target.human()){
-					c.write(getSelf(),getSelf().name()+" violently rips your "+target.top.peek().getName()+" off.");
+				target.shred(ClothingSlot.top);
+				if (getSelf().human() && target.mostlyNude()) {
+					c.write(target, target.nakedLiner(c));
 				}
-				target.shred(0);
-				if(getSelf().human()&&target.nude()){
-					c.write(target,target.nakedLiner(c));
+			} else {
+				if (getSelf().human()) {
+					c.write(getSelf(), "You try to tear apart " + target.name() + "'s " + article.getName()
+							+ ", but the material is more durable than you expected.");
+				} else if (target.human()) {
+					c.write(getSelf(), getSelf().name() + " yanks on your " + article.getName()
+							+ ", but fails to remove it.");
 				}
 			}
-			else{
-				if(getSelf().human()){
-					c.write(getSelf(),"You try to tear apart "+target.name()+"'s "+target.top.peek().getName()+", but the material is more durable than you expected.");
+		} else {
+			Clothing article = target.getOutfit().getTopOfSlot(ClothingSlot.top);
+			if (!article.is(ClothingTrait.indestructible) && getSelf().get(Attribute.Animism) >= 12
+					&& getSelf().check(Attribute.Power,
+							article.dc()
+									+ (target.getStamina().percent() - (target.getArousal().percent()) / 4)
+									+ getSelf().get(Attribute.Animism) * getSelf().getArousal().percent() / 100)
+					|| !target.canAct()) {
+				if (getSelf().human()) {
+					c.write(getSelf(), "You channel your animal spirit and shred " + target.name() + "'s "
+							+ article.getName() + " with claws you don't actually have.");
+				} else if (target.human()) {
+					c.write(getSelf(),
+							getSelf().name() + " lunges towards you and rakes her nails across your "
+									+ article.getName() + ", shredding the garment. That shouldn't be possible. Her "
+							+ "nails are not that sharp, and if they were, you surely wouldn't have gotten away unscathed.");
 				}
-				else if(target.human()){
-					c.write(getSelf(),getSelf().name()+" yanks on your "+target.top.peek().getName()+", but fails to remove it.");
+				target.shred(ClothingSlot.bottom);
+				if (getSelf().human() && target.mostlyNude()) {
+					c.write(target, target.nakedLiner(c));
 				}
-			}
-		}
-		else{
-			if(target.bottom.peek().attribute()!=Trait.indestructible
-			&&getSelf().get(Attribute.Animism)>=12
-			&&getSelf().check(Attribute.Power, target.bottom.peek().dc()+(target.getStamina().percent()-(target.getArousal().percent())/4)+getSelf().get(Attribute.Animism)*getSelf().getArousal().percent()/100)
-			||!target.canAct()){
-				if(getSelf().human()){
-					c.write(getSelf(),"You channel your animal spirit and shred "+target.name()+"'s "+target.bottom.peek().getName()+" with claws you don't actually have.");
-				}
-				else if(target.human()){
-					c.write(getSelf(),getSelf().name()+" lunges towards you and rakes her nails across your "+target.bottom.peek().getName()+", shredding the garment. That shouldn't be possible. Her " +
-							"nails are not that sharp, and if they were, you surely wouldn't have gotten away unscathed.");
-				}
-				target.shred(1);
-				if(getSelf().human()&&target.nude()){
-					c.write(target,target.nakedLiner(c));
-				}
-				if(target.human()&&target.pantsless()){
-					if(target.getArousal().get()>=15){
+				if (target.human() && target.crotchAvailable()) {
+					if (target.getArousal().get() >= 15) {
 						c.write("Your boner springs out, no longer restrained by your pants.");
-					}
-					else{
-						c.write(getSelf().name()+" giggles as your flaccid dick is exposed");
-					}
-				}
-				target.emote(Emotion.nervous, 10);
-			}		
-			else if(target.bottom.peek().attribute()!=Trait.indestructible
-			&&getSelf().check(Attribute.Power, target.bottom.peek().dc()+(target.getStamina().percent()-target.getArousal().percent())/4)||!target.canAct()){
-				if(getSelf().human()){
-					c.write(getSelf(),target.name()+" yelps in surprise as you rip her "+target.bottom.peek().getName()+" apart.");
-				}
-				else if(target.human()){
-					c.write(getSelf(),getSelf().name()+" violently rips your "+target.bottom.peek().getName()+" off.");
-				}
-				target.shred(1);
-				if(getSelf().human()&&target.nude()){
-					c.write(target,target.nakedLiner(c));
-				}
-				if(target.human()&&target.pantsless()){
-					if(target.getArousal().get()>=15){
-						c.write("Your boner springs out, no longer restrained by your pants.");
-					}
-					else{
-						c.write(getSelf().name()+" giggles as your flaccid dick is exposed");
+					} else {
+						c.write(getSelf().name() + " giggles as your flaccid dick is exposed");
 					}
 				}
 				target.emote(Emotion.nervous, 10);
 			}
-			else{
-				if(getSelf().human()){
-					c.write(getSelf(),"You try to tear apart "+target.name()+"'s "+target.bottom.peek().getName()+", but the material is more durable than you expected.");
+			if (!article.is(ClothingTrait.indestructible)
+					&& getSelf().check(Attribute.Power,
+							article.dc()
+									+ (target.getStamina().percent() - target.getArousal().percent()) / 4)
+					|| !target.canAct()) {
+				if (getSelf().human()) {
+					c.write(getSelf(), target.name() + " yelps in surprise as you rip her "
+							+ article.getName() + " apart.");
+				} else if (target.human()) {
+					c.write(getSelf(),
+							getSelf().name() + " violently rips your " + article.getName() + " off.");
 				}
-				else if(target.human()){
-					c.write(getSelf(),getSelf().name()+" yanks on your "+target.bottom.peek().getName()+", but fails to remove them.");
+				target.shred(ClothingSlot.bottom);
+				if (getSelf().human() && target.mostlyNude()) {
+					c.write(target, target.nakedLiner(c));
+				}
+				if (target.human() && target.crotchAvailable()) {
+					if (target.getArousal().get() >= 15) {
+						c.write("Your boner springs out, no longer restrained by your pants.");
+					} else {
+						c.write(getSelf().name() + " giggles as your flaccid dick is exposed");
+					}
+				}
+				target.emote(Emotion.nervous, 10);
+			} else {
+				if (getSelf().human()) {
+					c.write(getSelf(), "You try to tear apart " + target.name() + "'s " + article.getName()
+							+ ", but the material is more durable than you expected.");
+				} else if (target.human()) {
+					c.write(getSelf(), getSelf().name() + " yanks on your " + article.getName()
+							+ ", but fails to remove them.");
 				}
 				return false;
 			}
@@ -135,14 +155,14 @@ public class Tear extends Skill {
 		return new Tear(user);
 	}
 
-	public String getLabel(Combat c){
-		if(getSelf().get(Attribute.Animism)>=12){
+	public String getLabel(Combat c) {
+		if (getSelf().get(Attribute.Animism) >= 12) {
 			return "Shred Clothes";
-		}
-		else{
+		} else {
 			return "Tear Clothes";
 		}
 	}
+
 	@Override
 	public Tactics type(Combat c) {
 		return Tactics.stripping;

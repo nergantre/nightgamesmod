@@ -1,20 +1,20 @@
 package nightgames.characters;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import nightgames.global.Global;
-import nightgames.items.Clothing;
+import nightgames.items.clothing.ClothingSlot;
 import nightgames.status.Lethargic;
 import nightgames.status.Resistance;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public enum Trait {
 	//Physical
 	vaginaltongue("Vaginal Tongue", "Have a second tongue", new TraitDescription() {
 		public void describe(StringBuilder b, Character c, Trait t) {
-			if (c.pantsless()) {
+			if (c.crotchAvailable()) {
 				b.append("Occasionally, a pink tongue slides out of her pussy and licks her lower lips.");
 			}
 		}
@@ -79,10 +79,10 @@ public enum Trait {
 	lactating("Lactating","Breasts produces milk", new TraitDescription() {
 		public void describe(StringBuilder b, Character c, Trait t) {
 			if (!c.human()) {
-				if (c.topless()) {
+				if (c.breastsAvailable()) {
 					b.append("You occasionally see milk dribbling down her breasts. Is she lactating?");
 				} else {
-					b.append("You notice a damp spot on her " + c.top.lastElement().getName() + ".");
+					b.append("You notice a damp spot on her " + c.getOutfit().getTopOfSlot(ClothingSlot.top).getName() + ".");
 				}
 			} else {
 				b.append("Your nipples ache from the milk building up in your mammaries.");
@@ -211,7 +211,7 @@ public enum Trait {
 	strongwilled("Strong Willed","Halves willpower loss"),
 	alwaysready("Always Ready","Always ready for penetration", new TraitDescription() {
 		public void describe(StringBuilder b, Character c, Trait t) {
-			if (!c.hasDick() && c.pantsless()) {
+			if (!c.hasDick() && c.crotchAvailable()) {
 				b.append("Juices constainly drool from ");
 				if (c.human())
 					b.append("your slobbering pussy.");
@@ -230,21 +230,6 @@ public enum Trait {
 				b.append("A large black strap-on dildo adorns " + c.name() + "'s waists.");
 		}
 	}), //currently wearing a strapon
-	ineffective("Ineffective","Provides no protection"),
-	armored("Armored","Protects the delicate bits"),
-	stylish("Stylish","Better mojo gain"),
-	lame("Lame","Small mojo penalty"),
-	skimpy("Skimpy","Better temptation daamage"),
-	flexible("Flexible","Can fuck by pulling it aside"),
-	indestructible("Indestructible","Cannot be destroyed"),
-	bulky("Bulky","Speed penalty"),
-	geeky("Geeky","Science bonus"),
-	mystic("Mystic","Arcane bonus"),
-	martial("Martial","Ki bonus"),
-	broody("Broody","Dark bonus"),
-	kinky("Kinky","Fetish bonus"),
-	tentacleUnderwear("Tentacle Underwear","Wearing tentacle underwear"),
-	tentacleSuit("Tentacle Suit","Wearing a tentacle suit"),
 	none("",""),
 	;
 	private String desc;
@@ -279,7 +264,6 @@ public enum Trait {
 	private Trait(String name, String description, Status status) {
 		this.name=name;
 		this.desc=description;
-		this.longDesc = longDesc;
 		this.status = status;
 	}
 	public boolean isFeat(){

@@ -2,21 +2,16 @@ package nightgames.characters;
 
 import java.util.Optional;
 
-import nightgames.characters.body.BodyPart;
-import nightgames.characters.body.BodyPartMod;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
-import nightgames.characters.body.EarPart;
 import nightgames.characters.body.PussyPart;
-import nightgames.characters.body.CockPart;
-import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.global.Modifier;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
 
 public class Angel extends BasePersonality {
 	/**
@@ -27,12 +22,12 @@ public class Angel extends BasePersonality {
 		super();
 		character = new NPC("Angel",1,this);
 		preferredCockMod = CockMod.blessed;
-		character.outfit[0].add(Clothing.Tshirt);
-		character.outfit[1].add(Clothing.thong);
-		character.outfit[1].add(Clothing.miniskirt);
-		character.closet.add(Clothing.Tshirt);
-		character.closet.add(Clothing.thong);
-		character.closet.add(Clothing.miniskirt);
+		character.outfitPlan.add(Clothing.getByName("Tshirt"));
+		character.outfitPlan.add(Clothing.getByName("thong"));
+		character.outfitPlan.add(Clothing.getByName("miniskirt"));
+		character.closet.add(Clothing.getByName("Tshirt"));
+		character.closet.add(Clothing.getByName("thong"));
+		character.closet.add(Clothing.getByName("miniskirt"));
 		character.change(Modifier.normal);
 		character.mod(Attribute.Seduction, 2);
 		character.mod(Attribute.Perception, 1);
@@ -45,7 +40,7 @@ public class Angel extends BasePersonality {
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.dd);
 		character.body.add(PussyPart.normal);
-		character.body.finishBody("female");
+		character.body.finishBody(CharacterSex.female);
 	}
 
 	@Override
@@ -316,7 +311,7 @@ public class Angel extends BasePersonality {
 
 	@Override
 	public boolean fightFlight(Character opponent) {
-		return !character.nude()||opponent.nude();
+		return !character.mostlyNude()||opponent.mostlyNude();
 	}
 
 	@Override
@@ -367,7 +362,7 @@ public class Angel extends BasePersonality {
 	}
 	@Override
 	public boolean fit() {
-		return !character.nude()&&character.getStamina().percent()>=50;
+		return !character.mostlyNude()&&character.getStamina().percent()>=50;
 	}
 	@Override
 	public String night() {
@@ -383,10 +378,12 @@ public class Angel extends BasePersonality {
 		character.add(Trait.demigoddess);
 		character.body.addReplace(PussyPart.divine, 1);
 		character.body.addReplace(WingsPart.angelic, 5);
-		character.outfit[0].removeAllElements();
-		character.outfit[1].removeAllElements();
-		character.outfit[0].add(Clothing.bikinitop);
-		character.outfit[1].add(Clothing.bikinibottoms);
+		character.outfitPlan.clear();
+		character.outfitPlan.clear();
+		character.outfitPlan.add(Clothing.getByName("bikinitop"));
+		character.outfitPlan.add(Clothing.getByName("bikinibottoms"));
+		character.closet.add(Clothing.getByName("bikinitop"));
+		character.closet.add(Clothing.getByName("bikinibottom"));
 		character.mod(Attribute.Divinity,1);
 	}
 

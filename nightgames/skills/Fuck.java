@@ -8,6 +8,8 @@ import nightgames.characters.body.StraponPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.items.clothing.Clothing;
+import nightgames.items.clothing.ClothingSlot;
 
 public class Fuck extends Skill {
 
@@ -43,7 +45,7 @@ public class Fuck extends Skill {
 
 		return possible && ready
 				&&getSelf().clothingFuckable(selfO)
-				&&target.pantsless();
+				&&target.crotchAvailable();
 	}
 
 	@Override
@@ -56,31 +58,39 @@ public class Fuck extends Skill {
 				&&!c.getStance().penetration(getSelf())
 				&&!c.getStance().penetration(target);
 	}
+	
+	String premessage(Combat c, Character target) {
+		String premessage = "";
+		Clothing underwear = getSelf().getOutfit().getSlotAt(ClothingSlot.bottom, 0);
+		Clothing bottom = getSelf().getOutfit().getSlotAt(ClothingSlot.bottom, 1);
+		String bottomMessage;
+
+		if (underwear != null && bottom != null) {
+			bottomMessage = underwear.getName() + " and " + bottom.getName();
+		} else if (underwear != null) {
+			bottomMessage = underwear.getName();
+		} else if (bottom != null) {
+			bottomMessage = bottom.getName();
+		} else {
+			bottomMessage = "";
+		}
+
+		if(!bottomMessage.isEmpty() && getSelfOrgan().isType("cock")) {
+			premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s halfway and ", bottomMessage);
+		} else if(!bottomMessage.isEmpty() && getSelfOrgan().isType("pussy")) {
+			premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s to the side and ", bottomMessage);
+		}
+		return Global.format(premessage, getSelf(), target);
+	}
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		String premessage = "";
-		if(!getSelf().bottom.empty() && getSelfOrgan().isType("cock")) {
-			if (getSelf().bottom.size() == 1) {
-				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s halfway and ", getSelf().bottom.get(0).getName());
-			} else if (getSelf().bottom.size() == 2) {
-				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s and %s halfway and ", getSelf().bottom.get(0).getName(), getSelf().bottom.get(1).getName());
-			}
-		} else if(!getSelf().bottom.empty() && getSelfOrgan().isType("pussy")) {
-			if (getSelf().bottom.size() == 1) {
-				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s to the side and ", getSelf().bottom.get(0).getName());
-			} else if (getSelf().bottom.size() == 2) {
-				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s and %s to the side and ", getSelf().bottom.get(0).getName(), getSelf().bottom.get(1).getName());
-			}
-		}
-		premessage = Global.format(premessage, getSelf(), target);
-		
+		String premessage = premessage(c, target);
 		int m = 5+Global.random(5);
 		BodyPart selfO = getSelfOrgan();
 		BodyPart targetO = getTargetOrgan(target);
  		if(selfO.isReady(getSelf()) && targetO.isReady(target)){
 			if(getSelf().human()){
-				//c.offerImage("Fuck.jpg", "Art by Fujin Hitokiri");
 				c.write(getSelf(),premessage + deal(c,m,Result.normal, target));
 			}
 			else if(target.human()){

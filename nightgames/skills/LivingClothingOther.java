@@ -5,8 +5,8 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
 
 public class LivingClothingOther extends Skill {
 	public LivingClothingOther(Character self) {
@@ -20,7 +20,7 @@ public class LivingClothingOther extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&!c.getStance().mobile(target)&&c.getStance().mobile(getSelf())&&!c.getStance().inserted()&&target.reallyNude()&&getSelf().has(Item.Battery, 3);
+		return getSelf().canAct()&&!c.getStance().mobile(target)&&c.getStance().mobile(getSelf())&&!c.getStance().inserted()&&target.torsoNude()&&getSelf().has(Item.Battery, 3);
 	}
 
 	@Override
@@ -36,8 +36,8 @@ public class LivingClothingOther extends Skill {
 		} else {
 			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
-		target.top.push(Clothing.tentacletop);
-		target.bottom.push(Clothing.opententaclebottom);
+		getSelf().getOutfit().equip(Clothing.getByName("tentacletop"));
+		getSelf().getOutfit().equip(Clothing.getByName("tentaclebottom"));
 		return true;
 	}
 

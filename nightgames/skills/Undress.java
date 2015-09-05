@@ -23,7 +23,7 @@ public class Undress extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return getSelf().canAct()&&!c.getStance().sub(getSelf())
-				&&(!getSelf().nude() || (!getSelf().reallyNude() && getSelf().stripDifficulty(target) > 0))
+				&&(!getSelf().mostlyNude() || (!getSelf().reallyNude() && getSelf().stripDifficulty(target) > 0))
 				&&!c.getStance().prone(getSelf())&&!getSelf().has(Trait.strapped);
 	}
 

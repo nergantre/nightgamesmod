@@ -24,7 +24,7 @@ public class PinAndBlow extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (c.getStance().prone(target)&&target.pantsless()&&getSelf().canAct()&&!c.getStance().penetration(target))&&c.getStance().en!=Stance.oralpin;
+		return (c.getStance().prone(target)&&target.crotchAvailable()&&getSelf().canAct()&&!c.getStance().penetration(target))&&c.getStance().en!=Stance.oralpin;
 	}
 
 	@Override

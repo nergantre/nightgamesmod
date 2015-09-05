@@ -19,7 +19,7 @@ public class Challenge implements Deployable{
 	}
 	public GOAL pick(){
 		ArrayList<GOAL> available = new ArrayList<GOAL>();
-		if(!target.topless()&&!target.pantsless()){
+		if(!target.breastsAvailable()&&!target.crotchAvailable()){
 			available.add(GOAL.clothedwin);
 		}
 		if(owner.getPure(Attribute.Seduction)>=9){
@@ -79,7 +79,7 @@ public class Challenge implements Deployable{
 				}
 				break;
 			case clothedwin:
-				if(victor==owner&&!target.topless()&&!target.pantsless()){
+				if(victor==owner&&!target.breastsAvailable()&&!target.crotchAvailable()){
 					done = true;
 				}
 				break;

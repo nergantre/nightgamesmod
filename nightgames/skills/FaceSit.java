@@ -31,7 +31,7 @@ public class FaceSit extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().pantsless()&&getSelf().canAct()&&c.getStance().dom(getSelf())&&c.getStance().reachTop(getSelf())&&
+		return getSelf().crotchAvailable()&&getSelf().canAct()&&c.getStance().dom(getSelf())&&c.getStance().reachTop(getSelf())&&
 				!c.getStance().penetration(getSelf())&&!c.getStance().penetration(target)&&c.getStance().prone(target)&&!getSelf().has(Trait.shy);
 	}
 

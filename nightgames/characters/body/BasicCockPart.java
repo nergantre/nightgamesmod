@@ -207,7 +207,7 @@ public enum BasicCockPart implements CockPart {
 
 	@Override
 	public boolean isVisible(Character c) {
-		return c.pantsless();
+		return c.crotchAvailable();
 	}
 
 	@Override

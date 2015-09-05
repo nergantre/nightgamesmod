@@ -4,8 +4,8 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.global.Flag;
 import nightgames.global.Global;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
 
 public class Workshop extends Activity {
 	private boolean acted;
@@ -125,8 +125,8 @@ public class Workshop extends Activity {
 				if(!player.has(Item.ShockGlove)){
 					player.gain(Item.ShockGlove);
 				}
-				if(!player.has(Clothing.labcoat)){
-					player.gain(Clothing.labcoat);
+				if(!player.has(Clothing.getByName("labcoat"))){
+					player.gain(Clothing.getByName("labcoat"));
 				}
 				if(player.getPure(Attribute.Science)>=4&&!player.has(Item.Aersolizer)){
 					player.gain(Item.Aersolizer);

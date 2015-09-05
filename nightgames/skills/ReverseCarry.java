@@ -34,14 +34,8 @@ public class ReverseCarry extends Carry {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		String premessage = "";
-		if (getSelf().bottom.size() == 1) {
-			premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s to the side and ", getSelf().bottom.get(0).getName());
-		} else if (getSelf().bottom.size() == 2) {
-			premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s and %s to the side and ", getSelf().bottom.get(0).getName(), getSelf().bottom.get(1).getName());
-		}
+		String premessage = premessage(c, target);
 
-		premessage = Global.format(premessage, getSelf(), target);
 		if(target.roll(this, c, accuracy(c))){
 			if(getSelf().human()){
 				c.write(getSelf(),premessage + deal(c,premessage.length(),Result.normal, target));

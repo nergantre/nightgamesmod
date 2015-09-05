@@ -445,7 +445,7 @@ public enum PussyPart implements BodyPart, BodyPartMod {
 
 	@Override
 	public boolean isVisible(Character c) {
-		return c.pantsless();
+		return c.crotchAvailable();
 	}
 
 	@Override

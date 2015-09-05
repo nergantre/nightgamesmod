@@ -21,7 +21,7 @@ public class UseOnahole extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (getSelf().has(Item.Onahole)||getSelf().has(Item.Onahole2))&&getSelf().canAct()&&target.hasDick()&&c.getStance().reachBottom(getSelf())&&target.pantsless()&&!c.getStance().penetration(getSelf())
+		return (getSelf().has(Item.Onahole)||getSelf().has(Item.Onahole2))&&getSelf().canAct()&&target.hasDick()&&c.getStance().reachBottom(getSelf())&&target.crotchAvailable()&&!c.getStance().penetration(getSelf())
 				&&(!getSelf().human()||Global.getMatch().condition!=Modifier.notoys);
 	}
 

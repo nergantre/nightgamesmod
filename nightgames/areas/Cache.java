@@ -5,9 +5,9 @@ import nightgames.characters.Character;
 import nightgames.characters.State;
 import nightgames.characters.Trait;
 import nightgames.global.Global;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
 import nightgames.items.Loot;
+import nightgames.items.clothing.Clothing;
 
 import java.util.ArrayList;
 
@@ -162,7 +162,7 @@ public class Cache implements Deployable {
 			reward.add(Item.DisSol);
 			break;
 		case 18:
-			reward.add(Clothing.cup);
+			reward.add(Clothing.getByName("cup"));
 			break;
 		case 17:
 			reward.add(Item.SPotion);

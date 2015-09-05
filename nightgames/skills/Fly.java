@@ -52,21 +52,13 @@ public class Fly extends Fuck {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		String premessage = "";
-		if(!getSelf().bottom.empty() && getSelfOrgan().isType("cock")) {
-			if (getSelf().bottom.size() == 1) {
-				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s halfway and", getSelf().bottom.get(0).getName());
-			} else if (getSelf().bottom.size() == 2) {
-				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s and %s halfway and", getSelf().bottom.get(0).getName(), getSelf().bottom.get(1).getName());
-			}
-		}
+		String premessage = premessage(c, target);
 
-		premessage = Global.format(premessage, getSelf(), target);
 		Result result = target.roll(this, c, accuracy(c)) ? Result.normal: Result.miss;
 		if (this.getSelf().human()) {
-			c.write(getSelf(),premessage + deal(c, 0, result, target));
+			c.write(getSelf(),premessage + deal(c, premessage.length(), result, target));
 		} else if (target.human()) {
-			c.write(getSelf(),premessage + receive(c, 0, result, this.getSelf()));
+			c.write(getSelf(),premessage + receive(c, premessage.length(), result, this.getSelf()));
 		}
 		if (result == Result.normal) {
 			getSelf().emote(Emotion.dominant,50);
@@ -101,9 +93,9 @@ public class Fly extends Fuck {
 	public String deal(Combat c, int amount,
 			Result modifier, Character target) {
 		if (modifier == Result.miss){
-			return "you grab " + target.name() + " tightly and try to take off. However " +target.pronoun() + " has other ideas. She knees your crotch as you approach and sends you sprawling to the ground.";
+			return (amount==0 ? "You " :"") + "grab " + target.name() + " tightly and try to take off. However " +target.pronoun() + " has other ideas. She knees your crotch as you approach and sends you sprawling to the ground.";
 		} else {
-			return "you grab " + target.name() + " tightly and take off, "
+			return (amount==0 ? "You " :"") + "grab " + target.name() + " tightly and take off, "
 					+ (target.hasDick()&&getSelf().hasPussy() ? "inserting her dick into your hungry " + getSelf().body.getRandomPussy().describe(getSelf()) + "." :
 						" holding her helpless in the air and thrusting deep into her wet " + target.body.getRandomPussy().describe(getSelf()) + ".");
 		}
@@ -113,9 +105,9 @@ public class Fly extends Fuck {
 	public String receive(Combat c, int amount,
 			Result modifier, Character target) {
 		if (modifier == Result.miss){
-			return target.name() + " lunges for you with a hungry look in her eyes. However you have other ideas. You trip her as she approaches and send her sprawling to the floor.";
+			return (amount==0 ? target.subject() + " " :"") + "lunges for you with a hungry look in her eyes. However you have other ideas. You trip her as she approaches and send her sprawling to the floor.";
 		} else {
-			return "suddenly, " + getSelf().name() + " leaps at you, embracing you tightly"
+			return (amount==0 ? target.subject() + " " :"") + "leaps at you, embracing you tightly"
 					+ ". She then flaps her " + getSelf().body.getRandomWings().describe(target) + " hard and before you know it"
 					+ " you are twenty feet in the sky held up by her arms and legs."
 					+ " Somehow, her dick ended up inside of you in the process and"

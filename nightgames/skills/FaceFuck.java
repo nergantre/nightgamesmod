@@ -24,7 +24,7 @@ public class FaceFuck extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().dom(getSelf())&&c.getStance().reachTop(getSelf())&&((getSelf().bottom.isEmpty()&&getSelf().hasDick())||getSelf().has(Trait.strapped))&&
+		return getSelf().canAct()&&c.getStance().dom(getSelf())&&c.getStance().reachTop(getSelf())&&((getSelf().crotchAvailable()&&getSelf().hasDick())||getSelf().has(Trait.strapped))&&
 				!c.getStance().penetration(getSelf())&&!c.getStance().penetration(target)&&c.getStance().front(getSelf())&&!c.getStance().behind(target);
 	}
 

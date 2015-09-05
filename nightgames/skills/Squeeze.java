@@ -8,6 +8,8 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.items.clothing.ClothingSlot;
+import nightgames.items.clothing.ClothingTrait;
 
 public class Squeeze extends Skill {
 
@@ -27,7 +29,7 @@ public class Squeeze extends Skill {
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy(c))){
-			if(target.pantsless()){
+			if(target.crotchAvailable()){
 				if(getSelf().has(Item.ShockGlove)&&getSelf().has(Item.Battery,2)){
 					getSelf().consume(Item.Battery, 2);
 					if(target.human()){
@@ -41,7 +43,7 @@ public class Squeeze extends Skill {
 						target.pain(c, 6);
 					}
 				}
-				else if(target.has(Trait.armored)){
+				else if(target.has(ClothingTrait.armored)){
 					if(target.human()){
 						c.write(getSelf(),receive(c,0,Result.item, target));
 					}
@@ -70,7 +72,7 @@ public class Squeeze extends Skill {
 				else if(getSelf().human()){
 					c.write(getSelf(),deal(c,0,Result.weak, target));
 				}
-				target.pain(c, Global.random(7)+5-(2*target.bottom.size()));
+				target.pain(c, (int)Math.round(Global.random(7)+5-(5*target.getExposure(ClothingSlot.bottom))));
 			}
 
 			target.emote(Emotion.angry,15);
@@ -109,10 +111,10 @@ public class Squeeze extends Skill {
 			return "You use your shock glove to deliver a painful jolt directly into "+target.name()+"'s testicles.";
 		}
 		else if(modifier == Result.weak){
-			return "You grab the bulge in "+target.name()+"'s "+target.bottom.peek()+" and squeeze.";
+			return "You grab the bulge in "+target.name()+"'s "+target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName()+" and squeeze.";
 		}
 		else if(modifier == Result.item){
-			return "You grab the bulge in "+target.name()+"'s "+target.bottom.peek()+", but find it solidly protected.";
+			return "You grab the bulge in "+target.name()+"'s "+target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName()+", but find it solidly protected.";
 		}
 		else{
 			return "You manage to grab "+target.name()+"'s balls and squeeze them hard. You feel a twinge of empathy when she cries out in pain, but you maintain your grip.";
@@ -128,10 +130,10 @@ public class Squeeze extends Skill {
 			return getSelf().name()+" grabs your naked balls roughly in her gloved hand. A painful jolt of electricity shoots through your groin, sapping your will to fight.";
 		}
 		else if(modifier == Result.weak){
-			return getSelf().name()+" grabs your balls through your "+target.bottom.peek()+" and squeezes hard.";
+			return getSelf().name()+" grabs your balls through your "+target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName()+" and squeezes hard.";
 		}
 		else if(modifier == Result.item){
-			return "You grabs your crotch through your "+target.bottom.peek()+", but you can barely feel it.";
+			return getSelf().name() + " grabs your crotch through your "+target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName()+", but you can barely feel it.";
 		}
 		else{
 			return getSelf().name()+" reaches between your legs and grabs your exposed balls. You writhe in pain as she pulls and squeezes them.";

@@ -3,8 +3,8 @@ package nightgames.daytime;
 import nightgames.characters.Character;
 import nightgames.global.Flag;
 import nightgames.global.Global;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
 
 public class XxxStore extends Store{
 	
@@ -15,8 +15,8 @@ public class XxxStore extends Store{
 		add(Item.Onahole);
 		add(Item.Crop);
 		add(Item.Tickler);
-		add(Clothing.latextop);
-		add(Clothing.latexpants);
+		add(Clothing.getByName("latextop"));
+		add(Clothing.getByName("latexpants"));
 	}
 
 	@Override

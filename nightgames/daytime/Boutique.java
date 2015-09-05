@@ -3,25 +3,23 @@ package nightgames.daytime;
 import nightgames.characters.Character;
 import nightgames.global.Flag;
 import nightgames.global.Global;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
 
 public class Boutique extends Store {
 	public Boutique(Character player) {
 		super("Boutique", player);
-		add(Clothing.blouse);
-		add(Clothing.bra);
-		add(Clothing.skirt);
-		add(Clothing.panties);
-		add(Clothing.thong);
-		add(Clothing.tanktop);
-		add(Clothing.miniskirt);
-		add(Clothing.bikinitop);
-		add(Clothing.bikinibottoms);
-		add(Clothing.crotchlesspanties);
-		add(Clothing.opencupbra);
-		add(Clothing.latextop);
-		add(Clothing.latexpants);
+		add(Clothing.getByName("blouse"));
+		add(Clothing.getByName("bra"));
+		add(Clothing.getByName("skirt"));
+		add(Clothing.getByName("panties"));
+		add(Clothing.getByName("thong"));
+		add(Clothing.getByName("tanktop"));
+		add(Clothing.getByName("miniskirt"));
+		add(Clothing.getByName("bikinitop"));
+		add(Clothing.getByName("bikinibottoms"));
+		add(Clothing.getByName("crotchlesspanties"));
+		add(Clothing.getByName("opencupbra"));
 	}
 
 	@Override

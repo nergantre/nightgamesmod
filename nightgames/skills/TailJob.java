@@ -23,7 +23,7 @@ public class TailJob extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&target.pantsless()&&c.getStance().mobile(getSelf())&&!c.getStance().mobile(target)&&!c.getStance().penetration(target);
+		return getSelf().canAct()&&target.crotchAvailable()&&c.getStance().mobile(getSelf())&&!c.getStance().mobile(target)&&!c.getStance().penetration(target);
 	}
 
 	@Override

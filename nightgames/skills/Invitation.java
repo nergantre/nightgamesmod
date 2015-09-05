@@ -34,7 +34,7 @@ public class Invitation extends Skill {
 		Position p = c.getStance();
 		boolean insertable = (c.getStance().insert(getSelf(), getSelf()) != c.getStance() || c.getStance().insert(target, getSelf()) != c.getStance());
 		return insertable && getSelf().canRespond()
-				&& getSelf().pantsless() && target.pantsless()
+				&& getSelf().crotchAvailable() && target.crotchAvailable()
 				&&((getSelf().hasDick() && target.hasPussy()) || (getSelf().hasPussy() && target.hasDick()));
 	}
 

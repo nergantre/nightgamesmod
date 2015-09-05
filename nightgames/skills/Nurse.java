@@ -29,7 +29,7 @@ public class Nurse extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().topless()&&c.getStance().reachTop(getSelf())&&c.getStance().front(getSelf())
+		return getSelf().breastsAvailable()&&c.getStance().reachTop(getSelf())&&c.getStance().front(getSelf())
 				&& getSelf().body.getLargestBreasts().size >= BreastsPart.c.size
 				&&c.getStance().mobile(getSelf())
 				&&(!c.getStance().mobile(target)||c.getStance().prone(target))

@@ -27,7 +27,7 @@ public class Engulf extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && c.getStance().en != Stance.engulfed && target.nude();
+		return getSelf().canAct() && c.getStance().en != Stance.engulfed && target.mostlyNude();
 	}
 
 	public int getMojoCost(Combat c) {

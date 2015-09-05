@@ -14,8 +14,9 @@ import nightgames.combat.Result;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
 import nightgames.global.Modifier;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
+import nightgames.items.clothing.ClothingSlot;
 import nightgames.skills.Nothing;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
@@ -55,26 +56,7 @@ public class NPC extends Character {
 			description = description+"<br>"+s.describe();
 		}
 		description = description+"<p>";
-		if(top.empty()&&bottom.empty()){
-			description = description+"She is completely naked.<br>";
-		}
-		else{
-			if(top.empty()){
-				description = description+"She is topless and ";
-				if(!bottom.empty()){
-					description=description+"wearing ";
-				}
-			}
-			else{
-				description = description+"She is wearing "+top.peek().pre()+top.peek().getName()+" and ";
-			}
-			if(bottom.empty()){
-				description = description+"is naked from the waist down.<br>";
-			}
-			else{
-				description = description+bottom.peek().pre()+bottom.peek().getName()+".<br>";
-			}
-		}
+		description = description + outfit.describe(this);
 		description = description+observe(per);
 		return description;
 	}
@@ -173,12 +155,10 @@ public class NPC extends Character {
 		}
 		dress(c);
 		target.undress(c);
-		if(target.outfit[1].isEmpty() || c.clothespile.contains(target.outfit[1].firstElement())){
-			this.gain(target.getTrophy());
-		}
+		gainTrophy(c, target);
+
 		target.defeated(this);
 		c.write(ai.victory(c, flag));
-		int a = 0;
 		gainAttraction(target,1);
 		target.gainAttraction(this,2);
 	}
@@ -206,9 +186,7 @@ public class NPC extends Character {
 		}
 		target.dress(c);
 		this.undress(c);
-		if(this.outfit[1].isEmpty() || c.clothespile.contains(this.outfit[1].firstElement())){
-			target.gain(this.getTrophy());
-		}
+		target.gainTrophy(c, this);
 		this.defeated(target);
 		c.write(ai.defeat(c,flag));
 		gainAttraction(target,2);
@@ -229,9 +207,7 @@ public class NPC extends Character {
 		}
 		dress(c);
 		target.undress(c);
-		if(target.outfit[1].isEmpty() || c.clothespile.contains(target.outfit[1].firstElement())){
-			this.gain(target.getTrophy());
-		}
+		gainTrophy(c, target);
 		target.defeated(this);
 		c.write(ai.victory3p(c,target,assist));
 		gainAttraction(target,1);
@@ -307,12 +283,8 @@ public class NPC extends Character {
 		}
 		target.undress(c);
 		this.undress(c);
-		if(this.outfit[1].isEmpty() || c.clothespile.contains(this.outfit[1].firstElement())){
-			target.gain(this.getTrophy());
-		}
-		if(target.outfit[1].isEmpty() || c.clothespile.contains(target.outfit[1].firstElement())){
-			this.gain(target.getTrophy());
-		}
+		target.gainTrophy(c, this);
+		this.gainTrophy(c, target);
 		target.defeated(this);
 		this.defeated(target);
 		c.write(ai.draw(c,flag));
@@ -447,7 +419,7 @@ public class NPC extends Character {
 		if(this.has(Item.Aphrodisiac)){
 			encounter.aphrodisiactrick(this, target);
 		}
-		else if(!target.nude()&&Global.random(3)>=2){
+		else if(!target.mostlyNude()&&Global.random(3)>=2){
 			encounter.steal(this, target);
 		}
 		else{
@@ -496,12 +468,12 @@ public class NPC extends Character {
 			break;
 		case pleasure:
 			if(target.hasDick()) {
-				if(target.pantsless()){
+				if(target.crotchAvailable()){
 					c.write(this, name()+" catches you by the penis and rubs your sensitive glans.");
 					target.body.pleasure(this, body.getRandom("hands"), target.body.getRandom("cock"), 4+Math.min(Global.random(get(Attribute.Seduction)), 20), c);
 				}
 				else{
-					c.write(this, name()+" catches you as you approach and grinds her knee into the tent in your "+target.bottom.peek());
+					c.write(this, name()+" catches you as you approach and grinds her knee into the tent in your "+target.getOutfit().getTopOfSlot(ClothingSlot.bottom));
 					target.body.pleasure(this, body.getRandom("legs"), target.body.getRandom("cock"), 4+Math.min(Global.random(get(Attribute.Seduction)), 20), c);
 				}
 			} else {
@@ -620,7 +592,7 @@ public class NPC extends Character {
 				opponent.pet.caught(c,this);
 			}
 		}
-		int pheromoneChance = opponent.top.size() + opponent.bottom.size();
+		int pheromoneChance = (int)Math.round(10 * (1 - opponent.getExposure()));
 		if(opponent.has(Trait.pheromones)&&opponent.getArousal().percent()>=20&&Global.random(2 + pheromoneChance)==0){
 			c.write(opponent,"<br>You see "+name()+" swoon slightly as she gets close to you. Seems like she's starting to feel the effects of your musk.");
 			add(c, new Horny(this, opponent.has(Trait.augmentedPheromones) ? 2 : 1, 10, opponent.nameOrPossessivePronoun() + " pheromones"));
@@ -641,11 +613,11 @@ public class NPC extends Character {
 			emote(Emotion.nervous,15);
 			emote(Emotion.desperate,10);
 		}
-		if(opponent.nude()){
+		if(opponent.mostlyNude()){
 			emote(Emotion.horny,15);
 			emote(Emotion.confident,10);
 		}
-		if(nude()){
+		if(mostlyNude()){
 			emote(Emotion.nervous,10);
 			if(has(Trait.exhibitionist)){
 				emote(Emotion.horny,20);
@@ -680,44 +652,41 @@ public class NPC extends Character {
 	public NPC clone() throws CloneNotSupportedException {
 	    return (NPC) super.clone();
 	}
-	private float rateMove(Skill skill, Combat c, float urg, float fit1, float fit2) {
-	      // Clone ourselves a new combat... This should clone our characters, too
+
+	private float rateMove(Skill skill, Combat c, float selfFit, float otherFit) {
+		// Clone ourselves a new combat... This should clone our characters, too
 		Combat c2;
 		try {
 			c2 = c.clone();
-		} catch(CloneNotSupportedException e) {
+		} catch (CloneNotSupportedException e) {
 			return 0;
 		}
-		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS_RATING) && (c.p1.human() || c.p2.human()) ) {
+		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS_RATING) && (c.p1.human() || c.p2.human())) {
 			System.out.println("===> Rating " + skill);
 			System.out.println("Before:\n" + c.debugMessage());
 		}
-       // Make sure the clone is authentic
-		/*if ( urg != Math.min(c2.p1.getUrgency(), c2.p2.getUrgency())
-				|| fit1 != c2.p1.getFitness(urg, c2.stance)
-				|| fit2 != c2.p2.getFitness(urg, c2.stance))
-			throw new AssertionError();*/
-		// Now do it!
+
 		Global.debugSimulation = true;
+		Character newSelf;
+		Character newOther;
 		if (c.p1 == this) {
-			skill.setSelf(c2.p1);
-			skill.resolve(c2, c2.p2);
-			skill.setSelf(c.p1);
-       } else {
-    	   skill.setSelf(c2.p2);
-    	   skill.resolve(c2, c2.p1);
-    	   skill.setSelf(c.p2);
-      }
+			newSelf = c2.p1;
+			newOther = c2.p2;
+		} else {
+			newSelf = c2.p1;
+			newOther = c2.p2;
+		}
+		skill.setSelf(newSelf);
+		skill.resolve(c2, newOther);
+		skill.setSelf(this);
 		Global.debugSimulation = false;
-		// How close is the fight to finishing?
-       float urgency = Math.min(c2.p1.getUrgency(), c2.p2.getUrgency());
-       float dfit1 = c2.p1.getFitness(c, urgency, c2.getStance()) - fit1;
-       float dfit2 = c2.p2.getFitness(c, urgency, c2.getStance()) - fit2;
-       if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS_RATING) && (c2.p1.human() || c2.p2.human())) {
+		float selfFitnessDelta = newSelf.getFitness(c) - selfFit;
+		float otherFitnessDelta = newSelf.getOtherFitness(c, newOther) - otherFit;
+		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS_RATING) && (c2.p1.human() || c2.p2.human())) {
 			System.out.println("After:\n" + c2.debugMessage());
 		}
-       return (c.p1 == this ? dfit1 - dfit2 : dfit2 - dfit1);
-   }
+		return selfFitnessDelta - otherFitnessDelta;
+	}
 
 	public Skill prioritizeNew(ArrayList<WeightedSkill> plist, Combat c)
 	{
@@ -728,14 +697,12 @@ public class NPC extends Character {
 	    final int RUN_COUNT = 5;
 	    // Decrease to get an "easier" AI. Make negative to get a suicidal AI.
 	    final float RATING_FACTOR = 0.02f;
-	    // Increase to take input weights more into consideration
-	    final float INPUT_WEIGHT = 1.0f;
 
 	    // Starting fitness
-	    float urgency0 = Math.min(c.p1.getUrgency(), c.p2.getUrgency());
-	    float fit1 = c.p1.getFitness(c, urgency0, c.getStance());
-	    float fit2 = c.p2.getFitness(c, urgency0, c.getStance());
-	    
+	    Character other = c.getOther(this);
+	    float selfFit = getFitness(c);
+	    float otherFit = getOtherFitness(c, other);
+
 	    // Now simulate the result of all actions
 	    ArrayList<WeightedSkill> moveList = new ArrayList<WeightedSkill>();
 	    float sum = 0;
@@ -749,7 +716,7 @@ public class NPC extends Character {
         	   wskill.weight += 1.0;
            }
            for (int j = 0; j < RUN_COUNT; j++) {
-        	   raw_rating += rateMove(wskill.skill, c, urgency0, fit1, fit2);
+        	   raw_rating += rateMove(wskill.skill, c, selfFit, otherFit);
            }
            // Sum up rating, add to map
            rating = (float) Math.exp(RATING_FACTOR * raw_rating + wskill.weight + wskill.skill.priorityMod(c));

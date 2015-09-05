@@ -72,6 +72,7 @@ import nightgames.characters.custom.JSONSourceNPCDataLoader;
 import nightgames.daytime.Daytime;
 import nightgames.gui.GUI;
 import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
 import nightgames.pet.Ptype;
 import nightgames.skills.*;
 import nightgames.stance.FlowerSex;
@@ -124,7 +125,7 @@ public class Global {
 		counters = new HashMap<String,Float>();
 		jdate = new Date();
 		counters.put(Flag.malePref.name(), 0.f);
-		
+		Clothing.buildClothingTable();
 		PrintStream fstream;
 		try {
 			File logfile = new File("nightgames_log.txt");
@@ -142,6 +143,7 @@ public class Global {
 		System.out.println(new Timestamp(jdate.getTime()));
 
 		debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
+		debug[DebugFlags.DEBUG_LOADING.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_DAMAGE.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
@@ -171,6 +173,7 @@ public class Global {
 		players.add(human);
 		gui.populatePlayer(human);
 		buildSkillPool(human);
+		Clothing.buildClothingTable();
 		Global.learnSkills(human);
 		rebuildCharacterPool();
 		date=0;
@@ -804,6 +807,7 @@ public class Global {
 		human=new Player("Dummy");
 		gui.purgePlayer();
 		buildSkillPool(human);
+		Clothing.buildClothingTable();
 		rebuildCharacterPool();
 
 		boolean dawn = false;

@@ -1,29 +1,17 @@
 package nightgames.characters;
 
-import nightgames.actions.Action;
-import nightgames.actions.Move;
-import nightgames.actions.Movement;
-import nightgames.actions.Resupply;
-import nightgames.areas.Area;
+import java.util.Optional;
+
 import nightgames.characters.body.AnalPussyPart;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
-import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.global.Modifier;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
-import nightgames.skills.Skill;
-import nightgames.skills.Tactics;
-import nightgames.stance.Stance;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Optional;
+import nightgames.items.clothing.Clothing;
 
 public class Jewel extends BasePersonality {
 	/**
@@ -34,14 +22,14 @@ public class Jewel extends BasePersonality {
 		super();
 		character = new NPC("Jewel",1,this);
 		preferredCockMod = CockMod.runic;
-		character.outfit[0].add(Clothing.bra);
-		character.outfit[0].add(Clothing.tanktop);
-		character.outfit[1].add(Clothing.panties);
-		character.outfit[1].add(Clothing.jeans);
-		character.closet.add(Clothing.bra);
-		character.closet.add(Clothing.tanktop);
-		character.closet.add(Clothing.panties);
-		character.closet.add(Clothing.jeans);
+		character.outfitPlan.add(Clothing.getByName("bra"));
+		character.outfitPlan.add(Clothing.getByName("tanktop"));
+		character.outfitPlan.add(Clothing.getByName("panties"));
+		character.outfitPlan.add(Clothing.getByName("jeans"));
+		character.closet.add(Clothing.getByName("bra"));
+		character.closet.add(Clothing.getByName("tanktop"));
+		character.closet.add(Clothing.getByName("panties"));
+		character.closet.add(Clothing.getByName("jeans"));
 		character.change(Modifier.normal);
 		character.mod(Attribute.Power, 2);
 		character.mod(Attribute.Speed, 1);
@@ -55,7 +43,7 @@ public class Jewel extends BasePersonality {
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.c);
 		character.body.add(PussyPart.normal);
-		character.body.finishBody("female");
+		character.body.finishBody(CharacterSex.female);
 	}
 
 	@Override
@@ -410,13 +398,10 @@ public class Jewel extends BasePersonality {
 	public void advance(){
 		character.add(Trait.fighter);
 		character.body.addReplace(PussyPart.fiery, 100);
-		character.outfit[0].removeAllElements();
-		character.outfit[1].removeAllElements();
-		character.outfit[0].add(Clothing.gi);
-		character.outfit[1].add(Clothing.panties);
-		character.outfit[1].add(Clothing.kungfupants);
-		character.closet.add(Clothing.gi);
-		character.closet.add(Clothing.kungfupants);
+		character.outfitPlan.clear();
+		character.outfitPlan.add(Clothing.getByName("gi"));
+		character.outfitPlan.add(Clothing.getByName("panties"));
+		character.closet.add(Clothing.getByName("gi"));
 		character.mod(Attribute.Ki, 1);
 	}
 

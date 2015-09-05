@@ -1,6 +1,7 @@
 package nightgames.characters.custom;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,15 +9,16 @@ import java.util.Stack;
 
 import nightgames.characters.BasePersonality.PreferredAttribute;
 import nightgames.characters.Character;
+import nightgames.characters.CharacterSex;
 import nightgames.characters.Emotion;
 import nightgames.characters.Growth;
 import nightgames.characters.Plan;
 import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
 import nightgames.items.ItemAmount;
+import nightgames.items.clothing.Clothing;
 
 public class DataBackedNPCData implements NPCData {
 	List<PreferredAttribute> preferredAttributes;
@@ -126,8 +128,13 @@ public class DataBackedNPCData implements NPCData {
 	}
 
 	@Override
-	public String getSex() {
-		return sex;
+	public CharacterSex getSex() {
+		try {
+			CharacterSex eSex = CharacterSex.valueOf(sex);
+			return eSex;
+		} catch (IllegalArgumentException | NullPointerException e) {
+			return CharacterSex.asexual;
+		}
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.items.clothing.ClothingSlot;
 import nightgames.status.Horny;
 
 public class ImpMale extends Pet {
@@ -36,7 +37,7 @@ public class ImpMale extends Pet {
 				remove();
 				break;
 			case 2:
-				if(target.pantsless()&&!c.getStance().penetration(target)){
+				if(target.crotchAvailable()&&!c.getStance().penetration(target)){
 					c.write(owner(),"Your imp latches onto "+target.name()+" and shoves his thick cock into her pussy. As the demon humps her, she shrieks and punches him away.");
 					target.body.pleasure(null, null, target.body.getRandom("pussy"), 2+3*Global.random(power), c);					
 				}
@@ -45,7 +46,7 @@ public class ImpMale extends Pet {
 				}
 				break;
 			case 1:
-				if(target.topless()){
+				if(target.breastsAvailable()){
 					c.write(owner(),"Your imp jumps onto "+target.name()+" and grabs her nipples. Unable to fight the law of gravity, the imp falls back to the floor, pulling painfully on her nipples.");
 					target.pain(c, 3+2*Global.random(power), false);
 				}
@@ -54,22 +55,22 @@ public class ImpMale extends Pet {
 				}
 				break;
 			default:
-				if(!target.topless()){
-					if((Global.random(25)>target.top.peek().dc()+(target.getStamina().percent()-target.getArousal().percent())/4)||!target.canAct()){
-						c.write(owner(),own()+"imp steals "+target.name()+"'s "+target.top.peek().getName()+" and runs off with it.");
-						target.strip(0, c);
+				if(!target.breastsAvailable()){
+					if((Global.random(25)>target.getOutfit().getTopOfSlot(ClothingSlot.top).dc()+(target.getStamina().percent()-target.getArousal().percent())/4)||!target.canAct()){
+						c.write(owner(),own()+"imp steals "+target.name()+"'s "+target.getOutfit().getTopOfSlot(ClothingSlot.top).getName()+" and runs off with it.");
+						target.strip(ClothingSlot.top, c);
 					}
 					else{
-						c.write(owner(),own()+"imp yanks on "+target.name()+"'s "+target.top.peek().getName()+" ineffectually.");
+						c.write(owner(),own()+"imp yanks on "+target.name()+"'s "+target.getOutfit().getTopOfSlot(ClothingSlot.top).getName()+" ineffectually.");
 					}
 				}
-				else if(!target.pantsless()){
-					if((Global.random(25)>target.bottom.peek().dc()+(target.getStamina().percent()-target.getArousal().percent())/4)||!target.canAct()){
-						c.write(owner(),own()+"imp steals "+target.name()+"'s "+target.bottom.peek().getName()+" and runs off with it.");
-						target.strip(1, c);
+				else if(!target.crotchAvailable()){
+					if((Global.random(25)>target.getOutfit().getTopOfSlot(ClothingSlot.bottom).dc()+(target.getStamina().percent()-target.getArousal().percent())/4)||!target.canAct()){
+						c.write(owner(),own()+"imp steals "+target.name()+"'s "+target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName()+" and runs off with it.");
+						target.strip(ClothingSlot.bottom, c);
 					}
 					else{
-						c.write(owner(),own()+"imp yanks on "+target.name()+"'s "+target.bottom.peek().getName()+" ineffectually.");
+						c.write(owner(),own()+"imp yanks on "+target.name()+"'s "+target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName()+" ineffectually.");
 					}
 				}
 				else{

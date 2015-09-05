@@ -44,7 +44,7 @@ public class LustAura extends Skill {
 		else if(target.human()){
 			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		target.add(c, new Horny(target,3+2*getSelf().getSkimpiness(),3+Global.random(3), getSelf().nameOrPossessivePronoun() + " aura of lust"));
+		target.add(c, new Horny(target,(float) (3+2*getSelf().getExposure()),3+Global.random(3), getSelf().nameOrPossessivePronoun() + " aura of lust"));
 		target.emote(Emotion.horny, 10);
 		return true;
 	}

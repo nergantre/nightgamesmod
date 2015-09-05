@@ -17,9 +17,9 @@ import nightgames.global.Encs;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.global.Modifier;
-import nightgames.items.Clothing;
-import nightgames.items.ClothingType;
 import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
+import nightgames.items.clothing.ClothingSlot;
 import nightgames.skills.Skill;
 import nightgames.trap.Trap;
 
@@ -950,7 +950,7 @@ public class GUI extends JFrame implements Observer {
 	public void promptShower(Encounter encounter, Character target) {
 		clearCommand();
 		this.commandPanel.add(new EncounterButton("Suprise Her",encounter, target, Encs.showerattack));
-		if (!target.nude()) {
+		if (!target.mostlyNude()) {
 			this.commandPanel.add(new EncounterButton("Steal Clothes",encounter, target, Encs.stealclothes));
 		}
 		if (this.player.has(Item.Aphrodisiac)) {
@@ -1073,70 +1073,14 @@ public class GUI extends JFrame implements Observer {
 		}
 		displayStatus();
 	}
-	
+
 	public JLabel getClothing() {
+		// TODO clothing
 		BufferedImage clothesicon = null;
-		if (this.player.top.isEmpty()) {
-			if (this.player.bottom.isEmpty()) {
-				try {
-					clothesicon = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" +
-							"clothes0.png"));
-				} catch (IOException localIOException6) {
-				}
-			} else if (this.player.bottom.peek().getType() ==ClothingType.BOTOUTER) {
-				try {
-					clothesicon = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" +
-							"clothes4.png"));
-				} catch (IOException localIOException7) {
-				}
-			} else {
-				try {
-					clothesicon = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" +
-							"clothes2.png"));
-				} catch (IOException localIOException8) {
-				}
-			}
-		}else if(this.player.top.peek().getType()==ClothingType.TOPOUTER){
-			if (this.player.bottom.isEmpty()) {
-				try {
-					clothesicon = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" +
-							"clothes6.png"));
-				} catch (IOException localIOException9) {
-				}
-			} else if (this.player.bottom.peek().getType() ==ClothingType.BOTOUTER) {
-				try {
-					clothesicon = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" +
-							"clothes8.png"));
-				} catch (IOException localIOException10) {
-				}
-			} else {
-				try {
-					clothesicon = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" +
-							"clothes7.png"));
-				} catch (IOException localIOException11) {
-				}
-			}
-		}
-		else{
-			if (this.player.bottom.isEmpty()) {
-				try {
-					clothesicon = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" +
-							"clothes1.png"));
-				} catch (IOException localIOException9) {
-				}
-			} else if (this.player.bottom.peek().getType() ==ClothingType.BOTOUTER) {
-				try {
-					clothesicon = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" +
-							"clothes5.png"));
-				} catch (IOException localIOException10) {
-				}
-			} else {
-				try {
-					clothesicon = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" +
-							"clothes3.png"));
-				} catch (IOException localIOException11) {
-				}
-			}
+		try {
+				clothesicon = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" +
+						"clothes8.png"));
+		} catch (IOException localIOException10) {
 		}
 		if (clothesicon != null) {
 			return new JLabel(new ImageIcon(clothesicon));

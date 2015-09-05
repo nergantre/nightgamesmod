@@ -7,6 +7,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.items.clothing.ClothingSlot;
 
 public enum BreastsPart implements BodyPart {
 	flat("flat", "", 0),
@@ -90,9 +91,7 @@ public enum BreastsPart implements BodyPart {
 
 	@Override
 	public double getHotness(Character self, Character opponent) {
-		double hotness = -.25 + size * .3;
-		if (!self.topless())
-			hotness /= 2;
+		double hotness = -.25 + size * .3 * self.getOutfit().getExposure(ClothingSlot.top);
 		if (!opponent.hasDick()) {
 			hotness /= 2;
 		}

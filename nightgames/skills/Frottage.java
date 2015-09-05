@@ -24,7 +24,7 @@ public class Frottage extends Skill{
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().sub(getSelf())&&!c.getStance().penetration(getSelf())&&target.pantsless()&&((getSelf().hasDick()&&getSelf().pantsless())||getSelf().has(Trait.strapped));
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().sub(getSelf())&&!c.getStance().penetration(getSelf())&&target.crotchAvailable()&&((getSelf().hasDick()&&getSelf().crotchAvailable())||getSelf().has(Trait.strapped));
 	}
 
 	@Override

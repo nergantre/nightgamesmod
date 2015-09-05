@@ -1,5 +1,11 @@
 package nightgames.global;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class JSONUtils {
@@ -16,5 +22,29 @@ public class JSONUtils {
 
 	public static boolean readBoolean(JSONObject struct, String key) {
 		return ((Boolean)struct.get(key)).booleanValue();
+	}
+
+	public static <T extends Enum<T>> Set<T> loadEnumsFromArr(JSONObject obj, String name, Class<T> enumClass) {
+		Set<T> arr = new HashSet<>();
+		JSONArray savedArr = (JSONArray) obj.get(name);
+		for (Object elem : savedArr) {
+			String key = (String)elem;
+			arr.add(T.valueOf(enumClass, key));
+		}
+		return arr;
+	}
+
+	public static <T extends Enum<T>> Set<T> loadEnumsFromArrWithExtras(JSONObject obj, String name, Map<String, List<T>> extras, Class<T> enumClass) {
+		Set<T> res = new HashSet<>();
+		JSONArray savedArr = (JSONArray) obj.get(name);
+		for (Object elem : savedArr) {
+			String key = (String)elem;
+			if (extras.containsKey(key)) {
+				res.addAll(extras.get(key));
+			} else {
+				res.add(T.valueOf(enumClass, key));
+			}
+		}
+		return res;
 	}
 }

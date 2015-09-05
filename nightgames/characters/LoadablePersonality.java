@@ -1,15 +1,23 @@
 package nightgames.characters;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.EcmaError;
+import org.mozilla.javascript.NativeJavaClass;
+import org.mozilla.javascript.Scriptable;
+import org.mozilla.javascript.ScriptableObject;
+
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Flag;
 import nightgames.global.Global;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
-
-import java.io.*;
-
-import org.mozilla.javascript.*;
+import nightgames.items.clothing.Clothing;
 
 public class LoadablePersonality extends BasePersonality {
 

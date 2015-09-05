@@ -11,6 +11,7 @@ import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.items.clothing.ClothingSlot;
 import nightgames.stance.Cowgirl;
 import nightgames.stance.FaceSitting;
 import nightgames.stance.Mount;
@@ -52,26 +53,27 @@ public class Command extends Skill {
 
 		CockPart selfCock = getSelf().body.getRandomCock();
 		PussyPart selfPussy = getSelf().body.getRandomPussy();
-		boolean otherReady = (otherCock != null || otherCock.isReady(target))
-				&& (otherPussy != null || otherPussy.isReady(target));
-		boolean selfReady = (selfCock != null || selfCock.isReady(getSelf()))
-				&& (selfPussy != null || selfPussy.isReady(getSelf()));
-
+		boolean otherReady = (otherCock != null && otherCock.isReady(target))
+				&& (otherPussy != null && otherPussy.isReady(target));
+		boolean selfReady = (selfCock != null && selfCock.isReady(getSelf()))
+				&& (selfPussy != null && selfPussy.isReady(getSelf()));
 		if (getSelf().bound()) { // Undress self
 			c.write(getSelf(),"You feel a compulsion to loosen " + getSelf().nameOrPossessivePronoun()
 					+ " bondage. She quickly hops to her feet and grins at you like a predator while rubbing her wrists.");
 			getSelf().free();
-		} if (!target.nude()) { // Undress self
+		} if (!target.mostlyNude()) { // Undress self
 			c.write(getSelf(),receive(c, 0, Result.miss, target));
 			new Undress(target).resolve(c, getSelf());
-		} else if (!getSelf().nude()) { // Undress me
+		} if (!getSelf().crotchAvailable() && !getSelf().getOutfit().slotUnshreddable(ClothingSlot.bottom)) {
 			c.write(getSelf(),receive(c, 0, Result.weak, target));
-			if (getSelf().topless())
-				c.write(getSelf(),"Like a hungry beast, you rip off " + getSelf().name()
-						+ "'s " + getSelf().bottom.pop() + ".");
-			else
-				c.write(getSelf(),"Like a hungry beast, you rip off " + getSelf().name()
-						+ "'s " + getSelf().top.pop() + ".");
+			c.write(getSelf(),"Like a hungry beast, you rip off " + getSelf().name()
+					+ "'s " + getSelf().shred(ClothingSlot.bottom) + ".");
+		} else if (!getSelf().breastsAvailable() && !getSelf().getOutfit().slotUnshreddable(ClothingSlot.top)) {
+			c.write(getSelf(),receive(c, 0, Result.weak, target));
+			c.write(getSelf(),"Like a hungry beast, you rip off " + getSelf().name()
+					+ "'s " + getSelf().shred(ClothingSlot.top) + ".");
+		} else if (!getSelf().crotchAvailable()) {
+			(new Undress(getSelf())).resolve(c, target);
 		} else if (!otherReady) { // Masturbate
 			c.write(getSelf(),receive(c, 0, Result.normal, target));
 			new Masturbate(target).resolve(c, getSelf());

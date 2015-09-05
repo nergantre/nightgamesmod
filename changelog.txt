@@ -9,6 +9,50 @@ Features:
 		- 50% to not get cynical after recovering from a mindgame status (enthralled, trance, flatfooted, etc)
 	- "Foot Fetishist"
 		- Starts each match with a foot fetish at the minimum magnitude
+- Clothing has been completely refactored.
+	- All clothing will be in the resources/clothing/
+		- new clothing can be either added to the existing json file or it can be a new json file in that directory
+	- Got rid of the old skimpiness system and replaced it with exposure.
+		- All clothing have an exposure value, that is multiplied together to get your final exposure level for that slot (top or bottom)
+			- Example: you're wearing panties, a skirt, a bra, and a blouse
+				- panties exposure: .8
+				- skirt exposure: .4
+				- Total bottom exposure = .8 * .4 = .32
+				- bra exposure: .8
+				- blouse exposure: .3
+				- Total top exposure = .3 * .8 = .24
+				- Overall body exposure = (.24 + .32) / 2 = .28
+			- This body exposure value increases your body's hotness stat (in this case by .28%), which in turn affects tempt and pleasure damage you do
+		- To counteract the fact that wearing clothing reduces your body hotness stat, clothing now have a hotness stat as well
+			- This directly adds to the hotness stat of your body while you have it on, but is reduced by the exposure level of the layers above it.
+				- Example: you have a bra and a tshirt on
+					- bra hotness: .4
+					- tshirt hotness: .1
+					- tshirt exposure: .4
+					- total hotness = .1 (Tshirt) + .4(Bra) * .4(Tshirt exposure) = .26
+					- If you strip off the tshirt,
+					- total hotness = .4 (Bra)
+			- Note that these values probably will change since I'm just trying to pick values that make sense right now
+			- Hopefully this encourages people to keep their clothing on at least some of the time instead of stripping both naked within the first 2 turns.
+	- Redid the mapping of the clothing. Now certain clothing can take two slots and cover both top and bottom (like trench coat and cloak)
+		- top layers:
+			- 0 : undershirt/bra
+			- 1 : none
+			- 2 : shirt/dresses
+			- 3 : jackets/coats
+			- 4 : cloaks etc
+		- bottom layers:
+			- 0 : underwear/panties
+			- 1 : hosiery/leg warmers?
+			- 2 : pants/skirts/dresses
+			- 3 : coats etc
+			- 4 : cloaks etc
+		- feet layer:
+			- 1 : hosiery/leg warmers/socks
+			- 2 : shoes
+	- Unfortunately this may mean that your saves are no longer compatible.
+
+- If you start off as a female or a herm, you start with bra and panties instead of boxers.
 
 Balance:
 - Made divine pussy's divine charge stack double every time she takes pleasure damage instead of increasing it by .25
@@ -38,6 +82,7 @@ Bug fix:
 Other changes:
 - NPCs now buy priapus drafts & femdrafts based on the male pref slider. They also buy them much less than before.
 - Logs now also show status effects being added and removed
+- Latex clothing has been removed from the Boutique (it's purchasable in the XXX shop)
 
 1.8.1 changelog
 

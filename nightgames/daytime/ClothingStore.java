@@ -3,32 +3,32 @@ package nightgames.daytime;
 import nightgames.characters.Character;
 import nightgames.global.Flag;
 import nightgames.global.Global;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
 
 public class ClothingStore extends Store {
 
 	public ClothingStore(Character player) {
 		super("Clothing Store", player);
-		add(Clothing.Tshirt);
-		add(Clothing.shirt);
-		add(Clothing.sweatshirt);
-		add(Clothing.sweater);
-		add(Clothing.silkShirt);
-		add(Clothing.jeans);
-		add(Clothing.shorts);
-		add(Clothing.sweatpants);
-		add(Clothing.dresspants);
-		add(Clothing.boxers);
-		add(Clothing.briefs);
-		add(Clothing.sweatshirt);
-		add(Clothing.undershirt);
-		add(Clothing.trenchcoat);
-		add(Clothing.jacket);
-		add(Clothing.windbreaker);
-		add(Clothing.blazer);
-		add(Clothing.gothshirt);
-		add(Clothing.gothpants);
+		add(Clothing.getByName("Tshirt"));
+		add(Clothing.getByName("shirt"));
+		add(Clothing.getByName("sweatshirt"));
+		add(Clothing.getByName("sweater"));
+		add(Clothing.getByName("silkShirt"));
+		add(Clothing.getByName("jeans"));
+		add(Clothing.getByName("shorts"));
+		add(Clothing.getByName("sweatpants"));
+		add(Clothing.getByName("dresspants"));
+		add(Clothing.getByName("boxers"));
+		add(Clothing.getByName("briefs"));
+		add(Clothing.getByName("sweatshirt"));
+		add(Clothing.getByName("undershirt"));
+		add(Clothing.getByName("trenchcoat"));
+		add(Clothing.getByName("jacket"));
+		add(Clothing.getByName("windbreaker"));
+		add(Clothing.getByName("blazer"));
+		add(Clothing.getByName("gothshirt"));
+		add(Clothing.getByName("gothpants"));
 	}
 
 	@Override

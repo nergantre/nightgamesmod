@@ -32,7 +32,7 @@ public class TailPeg extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return getSelf().getArousal().get() >= 30 && getSelf().canAct()
-				&& target.pantsless()
+				&& target.crotchAvailable()
 				&& c.getStance().en != Stance.standing
 				&& c.getStance().en != Stance.standingover;
 	}

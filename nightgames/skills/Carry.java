@@ -6,6 +6,8 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.items.clothing.Clothing;
+import nightgames.items.clothing.ClothingSlot;
 import nightgames.stance.Standing;
 import nightgames.stance.StandingOver;
 import nightgames.status.CockBound;
@@ -46,21 +48,13 @@ public class Carry extends Fuck {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		String premessage = "";
-		if(!getSelf().bottom.empty() && getSelfOrgan().isType("cock")) {
-			if (getSelf().bottom.size() == 1) {
-				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s halfway and", getSelf().bottom.get(0).getName());
-			} else if (getSelf().bottom.size() == 2) {
-				premessage = String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s and %s halfway and", getSelf().bottom.get(0).getName(), getSelf().bottom.get(1).getName());
-			}
-		}
-		premessage = Global.format(premessage, getSelf(), target);
+		String premessage = premessage(c, target);
 		if(target.roll(this, c, accuracy(c))){
 			if(getSelf().human()){
-				c.write(getSelf(),premessage + deal(c,0,Result.normal, target));
+				c.write(getSelf(),Global.capitalizeFirstLetter(premessage + deal(c,premessage.length(),Result.normal, target)));
 			}
 			else if(target.human()){
-				c.write(getSelf(),premessage + receive(c,0,Result.normal, getSelf()));
+				c.write(getSelf(),premessage + receive(c,premessage.length(),Result.normal, getSelf()));
 			}
 			int m = 5 + Global.random(5);
 			int otherm = m;
@@ -73,9 +67,9 @@ public class Carry extends Fuck {
 		}
 		else{
 			if(getSelf().human()) {
-				c.write(getSelf(),premessage + deal(c,0,Result.miss, target));
+				c.write(getSelf(),Global.capitalizeFirstLetter(premessage + deal(c,premessage.length(),Result.miss, target)));
 			} else if(target.human()){
-				c.write(getSelf(),premessage + receive(c,0,Result.miss, target));
+				c.write(getSelf(),premessage + receive(c,premessage.length(),Result.miss, target));
 			}
 			getSelf().add(c, new Falling(getSelf()));
 			return false;
@@ -109,9 +103,9 @@ public class Carry extends Fuck {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
-			return Global.format("{self:subject} picks you up, but you scramble out of {self:posessive} grip before {self:pronoun} can do anything. Moreover, you manage to trip her while she's distracted.", getSelf(), target);
+			return Global.format((damage > 0 ? "" : "{self:subject} ") + "picks you up, but you scramble out of {self:posessive} grip before {self:pronoun} can do anything. Moreover, you manage to trip her while she's distracted.", getSelf(), target);
 		} else {
-			return Global.format("{self:subject} scoops you up in {self:possessive} powerful arms and simultaneously thrusts {self:posessive} {self:body-part:cock} into your {other:body-part:pussy}.", getSelf(), target);
+			return Global.format((damage > 0 ? "" : "{self:subject} ") + "scoops you up in {self:possessive} powerful arms and simultaneously thrusts {self:posessive} {self:body-part:cock} into your {other:body-part:pussy}.", getSelf(), target);
 		}
 	}
 
