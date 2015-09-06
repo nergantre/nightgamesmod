@@ -39,6 +39,8 @@ public class AiModifiers {
 	private Map<Stsflag, Double>				oppStatusMods;
 
 	public AiModifiers() {
+		this(new HashMap<>(), new HashMap<>(), new HashMap<>(),
+				new HashMap<>());
 	}
 
 	public AiModifiers(Map<Class<? extends Skill>, Double> attackMods,

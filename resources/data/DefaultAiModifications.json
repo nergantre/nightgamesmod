@@ -1,12 +1,709 @@
-{
+[
 	{
 		"personality" : "Angel",
 		"mods" : [
 			{
 				"type" : "skill",
-				"value" : "nightgames.skill.Blowjob",
+				"value" : "nightgames.skills.Anilingus",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Blowjob",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Charm",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.CounterRide",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.FaceFuck",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.FaceSit",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.FootPump",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.LickNipples",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.PinAndBlow",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Straddle",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.StripTease",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Tighten",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Trip",
+				"weight" : 1.0
+			},{
+				"type" : "position",
+				"value" : "cowgirl",
+				"weight" : 5.0
+			},{
+				"type" : "position",
+				"value" : "reversecowgirl",
+				"weight" : 5.0
+			},{
+				"type" : "position",
+				"value" : "sixnine",
+				"weight" : 3.0
+			},{
+				"type" : "position",
+				"value" : "trib",
+				"weight" : 5.0
+			},{
+				"type" : "position",
+				"value" : "behindfootjob",
+				"weight" : 3.0
+			},{
+				"type" : "position",
+				"value" : "oralpin",
+				"weight" : 3.0
+			},{
+				"type" : "self-status",
+				"value" : "divinecharge",
+				"weight" : 2.0
+			},{
+				"type" : "self-status",
+				"value" : "alluring",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "trance",
+				"weight" : 2.0
+			},{
+				"type" : "opponent-status",
+				"value" : "hypersensitive",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "charmed",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "lovestruck",
+				"weight" : 2.0
+			},{
+				"type" : "opponent-status",
+				"value" : "fluidaddiction",
+				"weight" : 1.5
+			},{
+				"type" : "opponent-status",
+				"value" : "bodyfetish",
+				"weight" : 1.0
+			},
+		]
+	},{
+		"personality" : "Cassie",
+		"mods" : [
+			{
+				"type" : "skill",
+				"value" : "nightgames.skills.Binding",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Blowjob",
+				"weight" : 1.5
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.CockGrowth",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Diversion",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.EyesOfTemptation",
+				"weight" : 1.5
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Handjob",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Kiss",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.LickNipples",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.NakedBloom",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Nurse",
+				"weight" : 1.5
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.PerfectTouch",
+				"weight" : 1.5
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.ReverseStraddle",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.SubmissiveHold",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Trip",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.UseOnahole",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.CounterRide",
+				"weight" : -1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Invitation",
+				"weight" : -1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.FaceSit",
+				"weight" : 1.0
+			},{
+				"type" : "position",
+				"value" : "reversemount",
+				"weight" : 3.0
+			},{
+				"type" : "position",
+				"value" : "sixnine",
+				"weight" : 5.0
+			},{
+				"type" : "position",
+				"value" : "nursing",
+				"weight" : 4.0
+			},{
+				"type" : "position",
+				"value" : "oralpin",
+				"weight" : 5.0
+			},{
+				"type" : "position",
+				"value" : "cowgirl",
+				"weight" : -2.0
+			},{
+				"type" : "opponent-status",
+				"value" : "charmed",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "suckling",
+				"weight" : 1.5
+			},{
+				"type" : "opponent-status",
+				"value" : "fluidaddiction",
+				"weight" : 2.0
+			},
+		]
+	},{
+		"personality" : "Jewel",
+		"mods" : [
+			{
+				"type" : "skill",
+				"value" : "nightgames.skills.AssFuck",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Binding",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Bondage",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.CounterPin",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.DenyOrgasm",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.FlashStep",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.FootPump",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Fuck",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Maneuver",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Restrain",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.ReverseAssFuck",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Strapon",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Tackle",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Tear",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Tie",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Turnover",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.VibroTease",
+				"weight" : 1.5
+			},{
+				"type" : "position",
+				"value" : "behind",
+				"weight" : 4.0
+			},{
+				"type" : "position",
+				"value" : "cowgirl",
+				"weight" : 4.0
+			},{
+				"type" : "position",
+				"value" : "reversecowgirl",
+				"weight" : 4.0
+			},{
+				"type" : "position",
+				"value" : "standingover",
+				"weight" : 3.0
+			},{
+				"type" : "position",
+				"value" : "anal",
+				"weight" : 6.0
+			},{
+				"type" : "position",
+				"value" : "upsidedownfemdom",
+				"weight" : 4.0
+			},{
+				"type" : "self-status",
+				"value" : "form",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "bound",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "oiled",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "distracted",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "countered",
+				"weight" : 1.0
+			}
+		]
+	},{
+		"personality"  : "Kat",
+		"mods" : [
+			{
+				"type" : "skill",
+				"value" : "nightgames.skills.Anilingus",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Blowjob",
+				"weight" : 1.5
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.CatsGrace",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.CounterRide",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Cunnilingus",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.LegLock",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.PinAndBlow",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Purr",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Reversal",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.ReverseAssFuck",
+				"weight" : 2.0
+			}{
+				"type" : "skill",
+				"value" : "nightgames.skills.Straddle",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.ToggleKnot",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Trip",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.WildThrust",
+				"weight" : 2.0
+			},{
+				"type" : "position",
+				"value" : "cowgirl",
+				"weight" : 5.0
+			},{
+				"type" : "position",
+				"value" : "reversecowgirl",
+				"weight" : 5.0
+			},{
+				"type" : "position",
+				"value" : "mount",
+				"weight" : 3.0
+			},{
+				"type" : "position",
+				"value" : "reversemount",
+				"weight" : 3.0
+			},{
+				"type" : "position",
+				"value" : "anal",
+				"weight" : 5.0
+			},{
+				"type" : "position",
+				"value" : "oralpin",
+				"weight" : 5.0
+			},{
+				"type" : "self-status",
+				"value" : "nimble",
+				"weight" : 1.0
+			},{
+				"type" : "self-status",
+				"value" : "feral",
+				"weight" : 2.0
+			},{
+				"type" : "self-status",
+				"value" : "frenzied",
+				"weight" : 2.0
+			},{
+				"type" : "opponent-status",
+				"value" : "horny",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "knotted",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "frenzied",
+				"weight" : 1.0
+			}
+		]
+	},{
+		"personality" : "Mara",
+		"mods" : [
+			{
+				"type" : "skill",
+				"value" : "nightgames.skills.Blowjob",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.CounterRide",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Diversion",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.FondleBreasts",
 				"weight" : 0.5
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Handjob",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Invitation",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.LegLock",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.PerfectTouch",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.PullOut",
+				"weight" : -2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Recover",
+				"weight" : -0.5
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.ReverseFuck",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Straddle",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.SubmissiveHold",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Submit",
+				"weight" : 0.5
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Trip",
+				"weight" : 1.0
+			},{
+				"type" : "position",
+				"value" : "cowgirl",
+				"weight" : 5.0
+			},{
+				"type" : "position",
+				"value" : "reversecowgirl",
+				"weight" : 5.0
+			},{
+				"type" : "position",
+				"value" : "doggy",
+				"weight" : 3.0
+			},{
+				"type" : "position",
+				"value" : "missionary",
+				"weight" : 3.0
+			},{
+				"type" : "position",
+				"value" : "mount",
+				"weight" : 3.0
+			},{
+				"type" : "position",
+				"value" : "reversemount",
+				"weight" : 3.0
+			},{
+				"type" : "position",
+				"value" : "sixnine",
+				"weight" : 3.0
+			},{
+				"type" : "self-status",
+				"value" : "counter",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "cockbound",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "leglocked",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "armlocked",
+				"weight" : 1.0
+			}
+		]
+	},{
+		"personality" : "Reyka",
+		"mods" : [
+			{
+				"type" : "skill",
+				"value" : "nightgames.skills.Blowjob",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Charm",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.CounterDrain",
+				"weight" : 3.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.CounterRide",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.DarkTendrils",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Drain",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.EyesOfTemptation",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.FaceSit",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Fly",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Invitation",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Kiss",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.LegLock",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.LevelDrain",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Piston",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.ReverseFuck",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.ReverseCarry",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Straddle",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.StripTease",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.SubmissiveHold",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.TailJob",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.TailPeg",
+				"weight" : 1.0
+			},{
+				"type" : "position",
+				"value" : "cowgirl",
+				"weight" : 5.0
+			},{
+				"type" : "position",
+				"value" : "reversecowgirl",
+				"weight" : 5.0
+			},{
+				"type" : "position",
+				"value" : "doggy",
+				"weight" : 3.0
+			},{
+				"type" : "position",
+				"value" : "missionary",
+				"weight" : 3.0
+			},{
+				"type" : "position",
+				"value" : "mount",
+				"weight" : 3.0
+			},{
+				"type" : "position",
+				"value" : "reversemount",
+				"weight" : 3.0
+			},{
+				"type" : "position",
+				"value" : "flying",
+				"weight" : 5.0
+			},{
+				"type" : "self-status",
+				"value" : "counter",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "cockbound",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "trance",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "charmed",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "fluidaddiction",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "leglocked",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "armlocked",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "orgasmseal",
+				"weight" : 1.0
 			}
 		]
 	}
-}
+]
