@@ -198,4 +198,9 @@ public enum Item implements Loot {
 	public List<ItemEffect> getEffects() {
 		return effect;
 	}
+	
+	@Override
+	public String getID() {
+		return name();
+	}
 }

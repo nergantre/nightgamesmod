@@ -113,4 +113,9 @@ public class Clothing implements Loot{
 	public String toString() {
 		return getName();
 	}
+	
+	@Override
+	public String getID() {
+		return this.id;
+	}
 }

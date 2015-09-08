@@ -1045,7 +1045,7 @@ public abstract class Character extends Observable implements Cloneable {
 	private static void saveLoot(JSONObject obj, Collection<? extends Loot> arr, String name) {
 		JSONArray array = new JSONArray();
 		for (Loot e : arr) {
-			array.add(e.getName());
+			array.add(e.getID());
 		}
 		obj.put(name, array);
 	}
