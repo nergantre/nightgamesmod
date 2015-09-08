@@ -78,7 +78,7 @@ public class ClothesChangeGUI extends JPanel {
 		character.outfitPlan.addAll(character.outfit.getEquipped());
 		// make sure the player is dressed correctly
 		character.change(Modifier.normal);
-		// refresh the jlists
+		// refresh the ClothingLists
 		refreshLists();
 	}
 
@@ -100,7 +100,7 @@ public class ClothesChangeGUI extends JPanel {
 
 		Box closetBox = Box.createVerticalBox();
 		closetListModel = new DefaultListModel<>();
-		JList<Clothing> closetList = new JList<Clothing>(closetListModel);
+		JList<Clothing> closetList = new ClothingList(closetListModel);
 		closetList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		closetBox.add(new JLabel("Closet"));
 		JScrollPane closetListPane = new JScrollPane(closetList);
@@ -124,7 +124,7 @@ public class ClothesChangeGUI extends JPanel {
 
 		Box outfitBox = Box.createVerticalBox();
 		outfitListModel = new DefaultListModel<>();
-		JList<Clothing> outfitList = new JList<Clothing>(outfitListModel);
+		JList<Clothing> outfitList = new ClothingList(outfitListModel);
 		outfitList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane outfitListPane = new JScrollPane(outfitList);
 		outfitListPane.setMinimumSize(new Dimension(1000, 200));

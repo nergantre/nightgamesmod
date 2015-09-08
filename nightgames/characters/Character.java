@@ -633,11 +633,11 @@ public abstract class Character extends Observable implements Cloneable {
 	}
 
 	public boolean breastsAvailable(){
-		return outfit.slotNaked(ClothingSlot.top);
+		return outfit.slotOpen(ClothingSlot.top);
 	}
 
 	public boolean crotchAvailable(){
-		return outfit.slotNaked(ClothingSlot.bottom);
+		return outfit.slotOpen(ClothingSlot.bottom);
 	}
 
 	public void dress(Combat c){
@@ -1504,7 +1504,7 @@ public abstract class Character extends Observable implements Cloneable {
 	}
 
 	public boolean has(Clothing item){
-		return closet.contains(item);
+		return closet.contains(item) || outfit.getEquipped().contains(item);
 	}
 
 	public void consume(Item item, int quantity){

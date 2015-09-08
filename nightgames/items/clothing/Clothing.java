@@ -1,6 +1,7 @@
 package nightgames.items.clothing;
 
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -122,6 +123,51 @@ public class Clothing implements Loot{
 		return this.id;
 	}
 	public static List<Clothing> getAllBuyableFrom(String shopName) {
-		return clothingTable.values().stream().filter(article -> article.stores.contains(shopName)).collect(Collectors.toList());
+		return clothingTable.values().stream().filter(article -> {
+			return article.stores.contains(shopName);
+		}).collect(Collectors.toList());
+	}
+	public String getToolTip() {
+		StringBuilder sb = new StringBuilder();
+	    sb.append("<html>");
+	    DecimalFormat format = new DecimalFormat("#.##");
+	    sb.append(getName());
+	    if (!getSlots().isEmpty()) {
+		    sb.append("<br>Slots: [");
+		    sb.append(getSlots().stream().reduce((a, b) -> {
+		    	sb.append(a.name());
+		    	sb.append(", ");
+		    	return b;
+		    }).get().name());
+		    sb.append("]");
+	    }
+	    sb.append("<br>Layer: ");
+	    sb.append(getLayer());
+	    sb.append("<br>Appearance: ");
+	    sb.append(format.format(getHotness()));
+	    sb.append("<br>Exposure: ");
+	    sb.append(format.format(getExposure()));
+	    if (!attributes().isEmpty()) {
+		    sb.append("<br>Attributes: [");
+		    sb.append(attributes().stream().reduce((a, b) -> {
+		    	sb.append(a.getName());
+		    	sb.append(", ");
+		    	return b;
+		    }).get().name());
+		    sb.append("]");
+	    }
+	    if (!buffs().isEmpty()) {
+		    sb.append("<br>Buffs: [");
+		    sb.append(buffs().stream().reduce((a, b) -> {
+		    	sb.append(a.toString());
+		    	sb.append(", ");
+		    	return b;
+		    }).get().name());
+		    sb.append("]");
+	    }
+	    sb.append("<br>Price: ");
+	    sb.append(getPrice());
+	    sb.append("</html>");
+	    return sb.toString();
 	}
 }

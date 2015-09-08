@@ -1185,6 +1185,7 @@ public class GUI extends JFrame implements Observer {
 		public ItemButton(Activity event, Clothing i) {
 			super(event, i.getName());
 			setFont(new Font("Baskerville Old Face", 0, 18));
+			setToolTipText(i.getToolTip());
 		}
 	}
 

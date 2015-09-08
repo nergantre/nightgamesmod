@@ -10,7 +10,7 @@ public class ClothingStore extends Store {
 
 	public ClothingStore(Character player) {
 		super("Clothing Store", player);
-		Clothing.getAllBuyableFrom("ClothingStore");
+		Clothing.getAllBuyableFrom("ClothingStore").forEach(article -> add(article));
 	}
 
 	@Override
