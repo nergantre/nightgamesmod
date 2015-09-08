@@ -25,9 +25,6 @@ public class Angel extends BasePersonality {
 		character.outfitPlan.add(Clothing.getByID("Tshirt"));
 		character.outfitPlan.add(Clothing.getByID("thong"));
 		character.outfitPlan.add(Clothing.getByID("miniskirt"));
-		character.closet.add(Clothing.getByID("Tshirt"));
-		character.closet.add(Clothing.getByID("thong"));
-		character.closet.add(Clothing.getByID("miniskirt"));
 		character.change(Modifier.normal);
 		character.mod(Attribute.Seduction, 2);
 		character.mod(Attribute.Perception, 1);
@@ -376,14 +373,14 @@ public class Angel extends BasePersonality {
 	}
 	public void advance(){
 		character.add(Trait.demigoddess);
+		character.add(Trait.proheels);
 		character.body.addReplace(PussyPart.divine, 1);
 		character.body.addReplace(WingsPart.angelic, 5);
-		character.outfitPlan.clear();
-		character.outfitPlan.clear();
+		character.unequipAllClothing();
+		character.outfitPlan.add(Clothing.getByID("translucentshawl"));
 		character.outfitPlan.add(Clothing.getByID("bikinitop"));
 		character.outfitPlan.add(Clothing.getByID("bikinibottoms"));
-		character.closet.add(Clothing.getByID("bikinitop"));
-		character.closet.add(Clothing.getByID("bikinibottom"));
+		character.outfitPlan.add(Clothing.getByID("highheels"));
 		character.mod(Attribute.Divinity,1);
 	}
 

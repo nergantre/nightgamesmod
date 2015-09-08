@@ -20,10 +20,6 @@ public class Yui extends BasePersonality {
 		character.outfitPlan.add(Clothing.getByID("Tshirt"));
 		character.outfitPlan.add(Clothing.getByID("panties"));
 		character.outfitPlan.add(Clothing.getByID("skirt"));
-		character.closet.add(Clothing.getByID("bra"));
-		character.closet.add(Clothing.getByID("Tshirt"));
-		character.closet.add(Clothing.getByID("panties"));
-		character.closet.add(Clothing.getByID("skirt"));
 		character.change(Modifier.normal);
 		character.setTrophy(Item.YuiTrophy);
 		character.plan = Plan.hunting;

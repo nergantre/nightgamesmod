@@ -31,10 +31,6 @@ public class Cassie extends BasePersonality {
 		character.outfitPlan.add(Clothing.getByID("blouse"));
 		character.outfitPlan.add(Clothing.getByID("panties"));
 		character.outfitPlan.add(Clothing.getByID("skirt"));
-		character.closet.add(Clothing.getByID("bra"));
-		character.closet.add(Clothing.getByID("blouse"));
-		character.closet.add(Clothing.getByID("panties"));
-		character.closet.add(Clothing.getByID("skirt"));
 		character.change(Modifier.normal);
 		character.mod(Attribute.Power, 1);
 		character.mod(Attribute.Seduction, 1);
@@ -425,18 +421,12 @@ public class Cassie extends BasePersonality {
 	public void advance(){
 		character.add(Trait.witch);
 		character.body.addReplace(PussyPart.arcane, 1);
-		character.outfitPlan.clear();
-		character.outfitPlan.clear();
+		character.unequipAllClothing();
 		character.outfitPlan.add(Clothing.getByID("bra"));
 		character.outfitPlan.add(Clothing.getByID("blouse"));
 		character.outfitPlan.add(Clothing.getByID("cloak"));
 		character.outfitPlan.add(Clothing.getByID("panties"));
 		character.outfitPlan.add(Clothing.getByID("skirt"));
-		character.closet.add(Clothing.getByID("bra"));
-		character.closet.add(Clothing.getByID("blouse"));
-		character.closet.add(Clothing.getByID("cloak"));
-		character.closet.add(Clothing.getByID("panties"));
-		character.closet.add(Clothing.getByID("skirt"));
 		character.mod(Attribute.Arcane,1);
 	}
 

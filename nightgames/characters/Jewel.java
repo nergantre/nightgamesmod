@@ -26,10 +26,6 @@ public class Jewel extends BasePersonality {
 		character.outfitPlan.add(Clothing.getByID("tanktop"));
 		character.outfitPlan.add(Clothing.getByID("panties"));
 		character.outfitPlan.add(Clothing.getByID("jeans"));
-		character.closet.add(Clothing.getByID("bra"));
-		character.closet.add(Clothing.getByID("tanktop"));
-		character.closet.add(Clothing.getByID("panties"));
-		character.closet.add(Clothing.getByID("jeans"));
 		character.change(Modifier.normal);
 		character.mod(Attribute.Power, 2);
 		character.mod(Attribute.Speed, 1);
@@ -398,10 +394,9 @@ public class Jewel extends BasePersonality {
 	public void advance(){
 		character.add(Trait.fighter);
 		character.body.addReplace(PussyPart.fiery, 100);
-		character.outfitPlan.clear();
+		character.unequipAllClothing();
 		character.outfitPlan.add(Clothing.getByID("gi"));
 		character.outfitPlan.add(Clothing.getByID("panties"));
-		character.closet.add(Clothing.getByID("gi"));
 		character.mod(Attribute.Ki, 1);
 	}
 

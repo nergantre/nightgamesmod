@@ -1502,7 +1502,11 @@ public abstract class Character extends Observable implements Cloneable {
 		}
 		return false;
 	}
-
+	public void unequipAllClothing() {
+		closet.addAll(outfitPlan);
+		outfitPlan.clear();
+		change(Modifier.normal);
+	}
 	public boolean has(Clothing item){
 		return closet.contains(item) || outfit.getEquipped().contains(item);
 	}

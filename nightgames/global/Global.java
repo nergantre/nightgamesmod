@@ -248,6 +248,7 @@ public class Global {
 		skillPool.add(new PinAndBlow(p));
 		skillPool.add(new Footjob(p));
 		skillPool.add(new FootPump(p));
+		skillPool.add(new HeelGrind(p));
 		skillPool.add(new Handjob(p));
 		skillPool.add(new Squeeze(p));
 		skillPool.add(new Nurple(p));

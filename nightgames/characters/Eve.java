@@ -23,9 +23,6 @@ public class Eve extends BasePersonality {
 		character.outfitPlan.add(Clothing.getByID("tanktop"));
 		character.outfitPlan.add(Clothing.getByID("crotchlesspanties"));
 		character.outfitPlan.add(Clothing.getByID("jeans"));
-		character.closet.add(Clothing.getByID("tanktop"));
-		character.closet.add(Clothing.getByID("crotchlesspanties"));
-		character.closet.add(Clothing.getByID("jeans"));
 		character.change(Modifier.normal);
 		character.mod(Attribute.Seduction, 2);
 		character.mod(Attribute.Perception, 1);

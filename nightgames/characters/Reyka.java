@@ -24,8 +24,6 @@ public class Reyka extends BasePersonality {
 		preferredCockMod = CockMod.incubus;
 		this.character.outfitPlan.add(Clothing.getByID("tanktop"));
 		this.character.outfitPlan.add(Clothing.getByID("miniskirt"));
-		character.closet.add(Clothing.getByID("tanktop"));
-		character.closet.add(Clothing.getByID("miniskirt"));
 		this.character.change(Modifier.normal);
 		this.character.set(Attribute.Dark, 12);
 		this.character.set(Attribute.Seduction, 14);

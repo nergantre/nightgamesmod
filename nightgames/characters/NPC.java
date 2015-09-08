@@ -755,4 +755,5 @@ public class NPC extends Character {
 	public RecruitmentData getRecruitmentData() {
 		return ai.getRecruitmentData();
 	}
+	
 }
