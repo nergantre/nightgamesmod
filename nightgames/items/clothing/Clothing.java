@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONValue;
@@ -41,6 +42,7 @@ public class Clothing implements Loot{
 	int dc;
 	String prefix;
 	List<ClothingTrait> attributes;
+	List<String> stores;
 	List<Trait> buffs;
 	private List<ClothingSlot> slots;
 	List<CharacterSex> sex;
@@ -81,13 +83,14 @@ public class Clothing implements Loot{
 
 	public static Set<Clothing> femaleOnlyClothing; 
 
-	public static Clothing getByName(String key) {
+	public static Clothing getByID(String key) {
 		Clothing results = clothingTable.get(key);
 		if (results == null) {
 			throw new IllegalArgumentException(key + " is not a valid clothing key");
 		}
 		return results;
 	}
+
 	public boolean is(ClothingTrait trait) {
 		return attributes.contains(trait);
 	}
@@ -117,5 +120,8 @@ public class Clothing implements Loot{
 	@Override
 	public String getID() {
 		return this.id;
+	}
+	public static List<Clothing> getAllBuyableFrom(String shopName) {
+		return clothingTable.values().stream().filter(article -> article.stores.contains(shopName)).collect(Collectors.toList());
 	}
 }

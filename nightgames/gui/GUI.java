@@ -19,7 +19,6 @@ import nightgames.global.Global;
 import nightgames.global.Modifier;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
-import nightgames.items.clothing.ClothingSlot;
 import nightgames.skills.Skill;
 import nightgames.trap.Trap;
 
@@ -39,13 +38,9 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -401,15 +396,17 @@ public class GUI extends JFrame implements Observer {
 		this.topPanel.setLayout(new GridLayout(0, 2, 0, 0));
 
 		this.centerPanel = new JPanel();
-		this.mainpanel.add(this.centerPanel);
+		this.mainpanel.add(centerPanel);
 		this.centerPanel.setLayout(new BorderLayout(0, 0));
 		this.statusPanel = new JPanel();
 		this.statusPanel.setLayout(new BoxLayout(this.statusPanel, 1));
 		this.statusPanel.setBackground(new Color(200, 200, 200));
 		this.clothesPanel = new JPanel();
+		this.clothesPanel.setLayout(new GridLayout(0, 1));
+		this.clothesPanel.setVisible(false);
+		clothesPanel.setBackground(new Color(25, 25, 50));
 
 		portraitPanel = new JPanel();
-		centerPanel.add(portraitPanel, BorderLayout.CENTER);
 		portraitPanel.setLayout(new BorderLayout(0, 0));
 		portraitPanel.setBackground(new Color(25, 25, 50));
 		portrait = new JLabel("");
@@ -423,6 +420,7 @@ public class GUI extends JFrame implements Observer {
 		portraitPanel.add(imgPanel, BorderLayout.CENTER);
 		this.textScroll = new JScrollPane();
 		imgPanel.add(textScroll, BorderLayout.CENTER);
+		centerPanel.add(portraitPanel, BorderLayout.CENTER);
 
 		this.textPane = new JTextPane();
 		DefaultCaret caret = (DefaultCaret) textPane.getCaret();
@@ -434,36 +432,7 @@ public class GUI extends JFrame implements Observer {
 		this.textPane.setContentType("text/html");
 		this.textScroll.setViewportView(this.textPane);
 		fontsize = 5;
-		/*
-		 * JPanel panel = new JPanel(); centerPanel.add(panel,
-		 * BorderLayout.NORTH); panel.setForeground(new Color(192, 192, 192));
-		 * panel.setBackground(Color.DARK_GRAY);
-		 * 
-		 * this.loclbl = new JLabel(); this.loclbl.setFont(new Font("Sylfaen",
-		 * 1, 16)); this.loclbl.setForeground(new Color(240, 240, 255));
-		 * panel.add(this.loclbl);
-		 * 
-		 * this.timelbl = new JLabel(); this.timelbl.setFont(new Font("Sylfaen",
-		 * 1, 16)); this.timelbl.setForeground(new Color(240, 240, 255));
-		 * panel.add(this.timelbl); this.cashlbl = new JLabel();
-		 * this.cashlbl.setFont(new Font("Sylfaen", 1, 16));
-		 * this.cashlbl.setForeground(new Color(240, 240, 255));
-		 * panel.add(this.cashlbl); this.invbtn = new
-		 * JToggleButton("Inventory"); this.invbtn.setHorizontalAlignment(4);
-		 * this.invbtn.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent arg0) { if (GUI.this.invbtn.isSelected())
-		 * { GUI.this.centerPanel.add(GUI.this.inventoryPanel, "East"); } else {
-		 * GUI.this.centerPanel.remove(GUI.this.inventoryPanel); }
-		 * GUI.this.refresh(); GUI.this.centerPanel.validate(); } });
-		 * panel.add(this.invbtn); this.stsbtn = new JToggleButton("Status");
-		 * this.stsbtn.setHorizontalAlignment(4);
-		 * this.stsbtn.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent arg0) { if (GUI.this.stsbtn.isSelected())
-		 * { GUI.this.centerPanel.add(GUI.this.statusPanel, "West"); } else {
-		 * GUI.this.centerPanel.remove(GUI.this.statusPanel); }
-		 * GUI.this.refresh(); GUI.this.centerPanel.validate(); } });
-		 * panel.add(this.stsbtn);
-		 */
+
 		JButton debug = new JButton("Debug");
 		debug.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -726,6 +695,7 @@ public class GUI extends JFrame implements Observer {
 		this.cashlbl.setFont(new Font("Sylfaen", 1, 16));
 		this.cashlbl.setForeground(new Color(0, 0, 5));
 		bio.add(this.cashlbl);
+		removeClosetGUI();
 
 		this.topPanel.validate();
 	}
@@ -1066,7 +1036,6 @@ public class GUI extends JFrame implements Observer {
 		this.statusPanel.removeAll();
 		this.statusPanel.repaint();
 		this.statusPanel.setPreferredSize(new Dimension(400, centerPanel.getHeight()));
-		;
 
 		JPanel inventoryPanel = new JPanel();
 		JPanel statsPanel = new JPanel();
@@ -1373,18 +1342,22 @@ public class GUI extends JFrame implements Observer {
 
 	public void changeClothes(Character player, Activity event) {
 		clothesPanel.removeAll();
-		clothesPanel.add(new ClothesChangeGUI(player, event), BorderLayout.CENTER);
+		clothesPanel.add(new ClothesChangeGUI(player, event));
+		centerPanel.remove(((BorderLayout)centerPanel.getLayout()).getLayoutComponent(BorderLayout.CENTER));
+		this.centerPanel.add(clothesPanel, BorderLayout.CENTER);
+		this.clothesPanel.setVisible(true);
 		this.clothesPanel.repaint();
-		GUI.this.portraitPanel.add(GUI.this.clothesPanel, "East");
-		this.portraitPanel.revalidate();
+		this.centerPanel.repaint();
+		this.centerPanel.revalidate();
 	}
 
 	public void removeClosetGUI() {
 		clothesPanel.removeAll();
-		this.clothesPanel.repaint();
-		GUI.this.portraitPanel.remove(GUI.this.clothesPanel);
-		this.portraitPanel.repaint();
-		this.portraitPanel.revalidate();
+		centerPanel.remove(((BorderLayout)centerPanel.getLayout()).getLayoutComponent(BorderLayout.CENTER));
+		this.centerPanel.add(portraitPanel, BorderLayout.CENTER);
+		this.clothesPanel.setVisible(false);
+		this.centerPanel.repaint();
+		this.centerPanel.revalidate();
 		displayStatus();
 	}
 

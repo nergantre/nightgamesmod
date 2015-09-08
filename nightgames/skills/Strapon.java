@@ -46,7 +46,7 @@ public class Strapon extends Skill {
 	}
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		getSelf().getOutfit().equip(Clothing.getByName("strapon"));
+		getSelf().getOutfit().equip(Clothing.getByID("strapon"));
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}

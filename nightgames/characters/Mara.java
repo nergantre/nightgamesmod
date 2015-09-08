@@ -23,14 +23,14 @@ public class Mara extends BasePersonality  {
 		super();
 		character = new NPC("Mara",1,this);
 		preferredCockMod = CockMod.bionic;
-		character.outfitPlan.add(Clothing.getByName("bra"));
-		character.outfitPlan.add(Clothing.getByName("Tshirt"));
-		character.outfitPlan.add(Clothing.getByName("underwear"));
-		character.outfitPlan.add(Clothing.getByName("shorts"));
-		character.closet.add(Clothing.getByName("bra"));
-		character.closet.add(Clothing.getByName("Tshirt"));
-		character.closet.add(Clothing.getByName("underwear"));
-		character.closet.add(Clothing.getByName("shorts"));
+		character.outfitPlan.add(Clothing.getByID("bra"));
+		character.outfitPlan.add(Clothing.getByID("Tshirt"));
+		character.outfitPlan.add(Clothing.getByID("underwear"));
+		character.outfitPlan.add(Clothing.getByID("shorts"));
+		character.closet.add(Clothing.getByID("bra"));
+		character.closet.add(Clothing.getByID("Tshirt"));
+		character.closet.add(Clothing.getByID("underwear"));
+		character.closet.add(Clothing.getByID("shorts"));
 		character.change(Modifier.normal);
 		character.mod(Attribute.Cunning, 2);
 		character.mod(Attribute.Perception, 2);
@@ -415,13 +415,13 @@ public class Mara extends BasePersonality  {
 		character.add(Trait.madscientist);
 		character.body.addReplace(PussyPart.cybernetic, 1);
 		character.outfitPlan.clear();
-		character.outfitPlan.add(Clothing.getByName("bra"));
-		character.outfitPlan.add(Clothing.getByName("shirt"));
-		character.outfitPlan.add(Clothing.getByName("labcoat"));
-		character.outfitPlan.add(Clothing.getByName("underwear"));
-		character.outfitPlan.add(Clothing.getByName("pants"));
-		character.closet.add(Clothing.getByName("pants"));
-		character.closet.add(Clothing.getByName("labcoat"));
+		character.outfitPlan.add(Clothing.getByID("bra"));
+		character.outfitPlan.add(Clothing.getByID("shirt"));
+		character.outfitPlan.add(Clothing.getByID("labcoat"));
+		character.outfitPlan.add(Clothing.getByID("underwear"));
+		character.outfitPlan.add(Clothing.getByID("pants"));
+		character.closet.add(Clothing.getByID("pants"));
+		character.closet.add(Clothing.getByID("labcoat"));
 		character.mod(Attribute.Science, 1);
 	}
 

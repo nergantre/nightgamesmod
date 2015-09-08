@@ -162,7 +162,7 @@ public class Cache implements Deployable {
 			reward.add(Item.DisSol);
 			break;
 		case 18:
-			reward.add(Clothing.getByName("cup"));
+			reward.add(Clothing.getByID("cup"));
 			break;
 		case 17:
 			reward.add(Item.SPotion);

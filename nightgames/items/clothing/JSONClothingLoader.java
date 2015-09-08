@@ -48,7 +48,7 @@ public class JSONClothingLoader {
 		Set<CharacterSex> sex = JSONUtils.loadEnumsFromArrWithExtras(clothingObj, "sex",
 				Collections.singletonMap("all", Arrays.asList(CharacterSex.values())),
 				CharacterSex.class);
-
+		List<String> stores = JSONUtils.loadStringsFromArr(clothingObj, "shops");
 		Clothing res = new Clothing();
 		res.id = name;
 		res.price = price;
@@ -62,6 +62,7 @@ public class JSONClothingLoader {
 		res.attributes = new ArrayList<>(attributes);
 		res.sex = new ArrayList<>(sex);
 		res.setSlots(new ArrayList<>(slots));
+		res.stores = new ArrayList<>(stores);
 		return res;
 	}
 

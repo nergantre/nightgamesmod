@@ -38,18 +38,18 @@ public class Player extends Character {
 	public Player(String name, CharacterSex sex) {
 		super(name, 1);
 		if (sex.equals("female") || sex.equals("herm")) {
-			outfitPlan.add(Clothing.getByName("bra"));
-			outfitPlan.add(Clothing.getByName("panties"));
-			closet.add(Clothing.getByName("panties"));
-			closet.add(Clothing.getByName("bra"));
+			outfitPlan.add(Clothing.getByID("bra"));
+			outfitPlan.add(Clothing.getByID("panties"));
+			closet.add(Clothing.getByID("panties"));
+			closet.add(Clothing.getByID("bra"));
 		} else {
-			outfitPlan.add(Clothing.getByName("boxers"));
-			closet.add(Clothing.getByName("boxers"));
+			outfitPlan.add(Clothing.getByID("boxers"));
+			closet.add(Clothing.getByID("boxers"));
 		}
-		outfitPlan.add(Clothing.getByName("Tshirt"));
-		outfitPlan.add(Clothing.getByName("jeans"));
-		closet.add(Clothing.getByName("Tshirt"));
-		closet.add(Clothing.getByName("jeans"));
+		outfitPlan.add(Clothing.getByID("Tshirt"));
+		outfitPlan.add(Clothing.getByID("jeans"));
+		closet.add(Clothing.getByID("Tshirt"));
+		closet.add(Clothing.getByID("jeans"));
 		
 		willpower.setMax(willpower.max());
 		change(Modifier.normal);

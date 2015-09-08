@@ -81,11 +81,11 @@ public class JSONSourceNPCDataLoader {
 			JSONObject outfit = (JSONObject) object.get("outfit");
 			JSONArray top = (JSONArray) outfit.get("top");
 			for (Object clothing : top) {
-				data.top.push(Clothing.getByName((String)clothing));
+				data.top.push(Clothing.getByID((String)clothing));
 			}
 			JSONArray bottom = (JSONArray) outfit.get("bottom");
 			for (Object clothing : bottom) {
-				data.bottom.push(Clothing.getByName((String)clothing));
+				data.bottom.push(Clothing.getByID((String)clothing));
 			}
 			
 			// load stats

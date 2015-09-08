@@ -10,25 +10,7 @@ public class ClothingStore extends Store {
 
 	public ClothingStore(Character player) {
 		super("Clothing Store", player);
-		add(Clothing.getByName("Tshirt"));
-		add(Clothing.getByName("shirt"));
-		add(Clothing.getByName("sweatshirt"));
-		add(Clothing.getByName("sweater"));
-		add(Clothing.getByName("silkShirt"));
-		add(Clothing.getByName("jeans"));
-		add(Clothing.getByName("shorts"));
-		add(Clothing.getByName("sweatpants"));
-		add(Clothing.getByName("dresspants"));
-		add(Clothing.getByName("boxers"));
-		add(Clothing.getByName("briefs"));
-		add(Clothing.getByName("sweatshirt"));
-		add(Clothing.getByName("undershirt"));
-		add(Clothing.getByName("trenchcoat"));
-		add(Clothing.getByName("jacket"));
-		add(Clothing.getByName("windbreaker"));
-		add(Clothing.getByName("blazer"));
-		add(Clothing.getByName("gothshirt"));
-		add(Clothing.getByName("gothpants"));
+		Clothing.getAllBuyableFrom("ClothingStore");
 	}
 
 	@Override
