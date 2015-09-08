@@ -2,7 +2,6 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -13,7 +12,7 @@ import nightgames.status.BodyFetish;
 
 public class FootPump extends Skill {
 	public FootPump(Character self) {
-		super("Foot Pump", self);
+		super("Heel Grind", self);
 	}
 
 	@Override
@@ -23,7 +22,7 @@ public class FootPump extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (c.getStance().behind(getSelf())&&target.crotchAvailable()&&getSelf().canAct()&&!c.getStance().penetration(target)&&target.hasDick());
+		return (c.getStance().behind(getSelf())&&target.crotchAvailable()&&getSelf().canAct()&&!c.getStance().penetration(target)&&target.hasPussy());
 	}
 
 	@Override
@@ -52,10 +51,7 @@ public class FootPump extends Skill {
 		else if(target.human()){
 			c.write(getSelf(),receive(c,m,Result.normal, target));
 		}
-		if (target.hasDick())
-			target.body.pleasure(getSelf(), getSelf().body.getRandom("feet"), target.body.getRandom("cock"), m, c);
-		else
-			target.body.pleasure(getSelf(), getSelf().body.getRandom("feet"), target.body.getRandom("pussy"), m, c);
+		target.body.pleasure(getSelf(), getSelf().body.getRandom("feet"), target.body.getRandom("pussy"), m, c);
 		target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("breasts"), m2, c);
 		if (c.getStance().en != Stance.behindfootjob) {
 			c.setStance(new BehindFootjob(getSelf(), target));
@@ -79,12 +75,12 @@ public class FootPump extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		return receive(c, damage, modifier, target);
+		return Global.format("You wrap your legs around {other:name-possessive} waist and press your heel gently in to {other:possessive} cunt. Locking your ankles to keep {other:possessive} held in place, you start to gently gyrate your heel against {other:possessive} wet lips. Cupping each of {other:possessive} {other:body-part:breasts} with your hands, you start to pull and play with {other:name-possessive} nipples between your fingers. Your heel now coated in {other:possessive} wetness, you increase the pressure and speed of your heel and feel {other:subject} start to press against your heel on {other:possessive} own.", getSelf(), target);
 	}
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return Global.format("{other:SUBJECT-ACTION:feel|feels} {self:direct-object} wrap {self:possessive} long legs around {other:possessive} waist and settle {self:possessive} {self:body-part:feet} on either side of {other:possessive} {other:body-part:cock}.	Cupping {other:possessive} dick with {self:possessive} arches, {self:subject-action:starts|start} making long steady strokes by moving {self:possessive} legs up and down. Reaching around {other:direct-object}, {self:subject-action:also start|also starts} to rub and gently flick {other:possessive} nipples with {self:possessive} fingers. Alternating between pumping and massaging {other:possessive} glans with {self:possessive} toes, {self:subject-action:quickly make|quickly makes} {other:name-do} gasp in pleasure.", getSelf(), target);
+		return Global.format("{self:subject} wraps {self:possessive} legs around your waist and presses {self:possessive} soft heel against your pussy eliciting a gasp. {self:PRONOUN} grins at your reaction while locking {self:possessive} feet on top of each other to keep you from escaping {self:possessive} assault. At the same time, you feel {self:possessive} start to gently tweak and pinch your nipples. As you become flush and dripping with arousal, you feel your body start to grind in to {self:possessive} soaked heel as it starts to slowly sink in to your cunt.", getSelf(), target);
 	}
 
 	@Override
@@ -97,7 +93,7 @@ public class FootPump extends Skill {
 		return true;
 	}
 	public String getTargetOrganType(Combat c, Character target) {
-		return "cock";
+		return "pussy";
 	}
 	public String getWithOrganType(Combat c, Character target) {
 		return "feet";

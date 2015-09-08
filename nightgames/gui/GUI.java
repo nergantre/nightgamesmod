@@ -376,7 +376,7 @@ public class GUI extends JFrame implements Observer {
 						+ "Video Games scenes 1-9 by Onyxdime\n"
 						+ "Kat Penetration Victory and Defeat scenes by Onyxdime\n"
 						+ "Kat Non-Penetration Draw scene by Onyxdime\n" + "Mara/Angel threesome scene by Onyxdime\n"
-						+ "Footfetish expansion scenes by Mistress Emily Morose\n" + "Mod by Nergantre\n"
+						+ "Footfetish expansion scenes by Sakruff\n" + "Mod by Nergantre\n"
 						+ "A ton of testing by Bronzechair");
 			}
 		});
