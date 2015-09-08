@@ -25,6 +25,7 @@ public class Angel extends BasePersonality {
 		character.outfitPlan.add(Clothing.getByID("Tshirt"));
 		character.outfitPlan.add(Clothing.getByID("thong"));
 		character.outfitPlan.add(Clothing.getByID("miniskirt"));
+		character.outfitPlan.add(Clothing.getByID("sandals"));
 		character.change(Modifier.normal);
 		character.mod(Attribute.Seduction, 2);
 		character.mod(Attribute.Perception, 1);

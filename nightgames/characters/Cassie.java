@@ -31,6 +31,8 @@ public class Cassie extends BasePersonality {
 		character.outfitPlan.add(Clothing.getByID("blouse"));
 		character.outfitPlan.add(Clothing.getByID("panties"));
 		character.outfitPlan.add(Clothing.getByID("skirt"));
+		character.outfitPlan.add(Clothing.getByID("shoes"));
+
 		character.change(Modifier.normal);
 		character.mod(Attribute.Power, 1);
 		character.mod(Attribute.Seduction, 1);
@@ -427,6 +429,8 @@ public class Cassie extends BasePersonality {
 		character.outfitPlan.add(Clothing.getByID("cloak"));
 		character.outfitPlan.add(Clothing.getByID("panties"));
 		character.outfitPlan.add(Clothing.getByID("skirt"));
+		character.outfitPlan.add(Clothing.getByID("shoes"));
+
 		character.mod(Attribute.Arcane,1);
 	}
 

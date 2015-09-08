@@ -27,6 +27,8 @@ public class Mara extends BasePersonality  {
 		character.outfitPlan.add(Clothing.getByID("Tshirt"));
 		character.outfitPlan.add(Clothing.getByID("underwear"));
 		character.outfitPlan.add(Clothing.getByID("shorts"));
+		character.outfitPlan.add(Clothing.getByID("pantyhose"));
+		character.outfitPlan.add(Clothing.getByID("boots"));
 		character.change(Modifier.normal);
 		character.mod(Attribute.Cunning, 2);
 		character.mod(Attribute.Perception, 2);
@@ -416,6 +418,8 @@ public class Mara extends BasePersonality  {
 		character.outfitPlan.add(Clothing.getByID("labcoat"));
 		character.outfitPlan.add(Clothing.getByID("underwear"));
 		character.outfitPlan.add(Clothing.getByID("pants"));
+		character.outfitPlan.add(Clothing.getByID("pantyhose"));
+		character.outfitPlan.add(Clothing.getByID("boots"));
 		character.mod(Attribute.Science, 1);
 	}
 

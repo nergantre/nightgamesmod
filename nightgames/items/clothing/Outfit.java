@@ -195,11 +195,11 @@ public class Outfit {
 
 	public double getFitness(Combat c, double bottomFitness, double topFitness) {
 		double fitness = 0;
-		fitness += outfit.get(ClothingSlot.top).stream().filter(article ->
+		fitness += outfit.get(ClothingSlot.top).stream().filter(article -> article != null).filter(article ->
 				!article.is(ClothingTrait.skimpy)
 				&& !article.is(ClothingTrait.flexible)
 				&& !article.is(ClothingTrait.open)).mapToDouble(article -> topFitness * (1 + article.dc() * .1)).sum();
-		fitness += outfit.get(ClothingSlot.bottom).stream().filter(article ->
+		fitness += outfit.get(ClothingSlot.bottom).stream().filter(article -> article != null).filter(article ->
 				!article.is(ClothingTrait.skimpy)
 				&& !article.is(ClothingTrait.flexible)
 				&& !article.is(ClothingTrait.open)).mapToDouble(article -> bottomFitness * (1 + article.dc() * .1)).sum();

@@ -26,6 +26,8 @@ public class Jewel extends BasePersonality {
 		character.outfitPlan.add(Clothing.getByID("tanktop"));
 		character.outfitPlan.add(Clothing.getByID("panties"));
 		character.outfitPlan.add(Clothing.getByID("jeans"));
+		character.outfitPlan.add(Clothing.getByID("sneakers"));
+		character.outfitPlan.add(Clothing.getByID("socks"));
 		character.change(Modifier.normal);
 		character.mod(Attribute.Power, 2);
 		character.mod(Attribute.Speed, 1);
