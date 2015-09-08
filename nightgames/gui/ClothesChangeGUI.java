@@ -2,9 +2,11 @@ package nightgames.gui;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -33,6 +35,8 @@ public class ClothesChangeGUI extends JPanel {
 	private static final long serialVersionUID = -912778444912041408L;
 	private Character character;
 	private Activity resume;
+	private JLabel appearanceLabel;
+	private JLabel exposureLabel;
 	DefaultListModel<Clothing> closetListModel;
 	DefaultListModel<Clothing> outfitListModel;
 
@@ -91,6 +95,10 @@ public class ClothesChangeGUI extends JPanel {
 		tempList = new ArrayList<>(character.outfit.getEquipped());
 		tempList.sort(new ClothingSorter());
 		tempList.forEach(article -> outfitListModel.addElement(article));
+		DecimalFormat format = new DecimalFormat("#.##");
+		appearanceLabel.setText("Appearance: " + format.format(character.outfit.getHotness()));
+		exposureLabel.setText("Exposure: " + format.format(character.outfit.getExposure()));
+		Global.gui().refresh();
 	}
 
 	public ClothesChangeGUI(Character character, Activity event){
@@ -141,12 +149,11 @@ public class ClothesChangeGUI extends JPanel {
 			}
 		});
 		btnOk.setFont(new Font("Sylfaen", Font.PLAIN, 24));
-
+		btnOk.setAlignmentX(CENTER_ALIGNMENT);
 		addButton.addActionListener(aevent -> add(closetList.getSelectedValue()));
 		removeButton.addActionListener(aevent -> remove(outfitList.getSelectedValue()));
 		removeall.addActionListener(aevent -> removeAllClothing());
 
-		refreshLists();
 
 		JPanel leftPanel = new JPanel(new BorderLayout());
 		leftPanel.add(closetBox, BorderLayout.CENTER);
@@ -161,10 +168,21 @@ public class ClothesChangeGUI extends JPanel {
 		cBPanel.add(centerChangePanel);
 		cBPanel.setOpaque(false);
 		centerPanel.add(cBPanel, BorderLayout.CENTER);
-		centerPanel.add(btnOk, BorderLayout.SOUTH);
+		Box labelPanel = Box.createVerticalBox();
+		appearanceLabel = new JLabel("Appearance: ");
+		exposureLabel = new JLabel("Exposure: ");
+		labelPanel.add(appearanceLabel);
+		labelPanel.add(exposureLabel);
+		Box miscPanel = Box.createHorizontalBox();
+		miscPanel.add(labelPanel);
+		miscPanel.add(Box.createHorizontalStrut(20));
+		miscPanel.add(btnOk);
+		miscPanel.setAlignmentX(CENTER_ALIGNMENT);
+		centerChangePanel.add(miscPanel);
 		centerPanel.setOpaque(false);
 		add(leftPanel, BorderLayout.WEST);
 		add(centerPanel, BorderLayout.CENTER);
 		add(rightPanel, BorderLayout.EAST);
+		refreshLists();
 	}
 }

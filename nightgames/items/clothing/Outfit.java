@@ -224,7 +224,7 @@ public class Outfit {
 		} else {
 			boolean addedTop = false;
 			if(top == null){
-				sb.append("{self:subject-action:are|is} is topless ");
+				sb.append("{self:subject-action:are|is} topless ");
 			} else {
 				sb.append("{self:subject-action:are|is} wearing "+top.pre()+top.getName() + " ");
 				addedTop = true;
@@ -273,7 +273,7 @@ public class Outfit {
 				sb.append(".");
 			}
 		}
-		return Global.format(sb.toString(), c, c);
+		return Global.capitalizeFirstLetter(Global.format(sb.toString(), c, c));
 	}
 
 	public boolean isNude() {
