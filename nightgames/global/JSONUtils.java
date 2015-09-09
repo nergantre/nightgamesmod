@@ -1,5 +1,6 @@
 package nightgames.global;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,15 @@ public class JSONUtils {
 		return ((Boolean)struct.get(key)).booleanValue();
 	}
 
+	public static List<String> loadStringsFromArr(JSONObject obj, String name) {
+		List<String> arr = new ArrayList<>();
+		JSONArray savedArr = (JSONArray) obj.get(name);
+		for (Object elem : savedArr) {
+			String val = (String)elem;
+			arr.add(val);
+		}
+		return arr;
+	}
 	public static <T extends Enum<T>> Set<T> loadEnumsFromArr(JSONObject obj, String name, Class<T> enumClass) {
 		Set<T> arr = new HashSet<>();
 		JSONArray savedArr = (JSONArray) obj.get(name);

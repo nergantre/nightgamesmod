@@ -9,17 +9,7 @@ import nightgames.items.clothing.Clothing;
 public class Boutique extends Store {
 	public Boutique(Character player) {
 		super("Boutique", player);
-		add(Clothing.getByName("blouse"));
-		add(Clothing.getByName("bra"));
-		add(Clothing.getByName("skirt"));
-		add(Clothing.getByName("panties"));
-		add(Clothing.getByName("thong"));
-		add(Clothing.getByName("tanktop"));
-		add(Clothing.getByName("miniskirt"));
-		add(Clothing.getByName("bikinitop"));
-		add(Clothing.getByName("bikinibottoms"));
-		add(Clothing.getByName("crotchlesspanties"));
-		add(Clothing.getByName("opencupbra"));
+		Clothing.getAllBuyableFrom("Boutique");
 	}
 
 	@Override
@@ -42,7 +32,7 @@ public class Boutique extends Store {
 		}
 		checkSale(choice);
 		if(player.human()){
-			Global.gui().message("This is a store for women's clothing. Things may get a bit expensive here.");
+			Global.gui().message("This is a higher end store for women's clothing. Things may get a bit expensive here.");
 			for(Clothing i: clothing().keySet()){
 				Global.gui().message(i.getName()+": "+i.getPrice() +(player.has(i) ? " (Owned)":""));
 			}

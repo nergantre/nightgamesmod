@@ -1048,7 +1048,7 @@ public abstract class Character extends Observable implements Cloneable {
 	private static void saveLoot(JSONObject obj, Collection<? extends Loot> arr, String name) {
 		JSONArray array = new JSONArray();
 		for (Loot e : arr) {
-			array.add(e.getName());
+			array.add(e.getID());
 		}
 		obj.put(name, array);
 	}
@@ -1097,7 +1097,7 @@ public abstract class Character extends Observable implements Cloneable {
 		JSONArray savedArr = (JSONArray) obj.get(name);
 		for (Object elem : savedArr) {
 			String key = (String)elem;
-			arr.add(Clothing.getByName(key));
+			arr.add(Clothing.getByID(key));
 		}
 	}
 
@@ -1153,11 +1153,13 @@ public abstract class Character extends Observable implements Cloneable {
 			loadClothingFromArr(obj, outfitPlan, "outfit");
 		else
 			outfitPlan.clear();
-		List<Clothing> temp = new ArrayList<>();
-		loadClothingFromArr(obj, temp, "top");
-		outfitPlan.addAll(temp);
-		loadClothingFromArr(obj, temp, "bottom");
-		outfitPlan.addAll(temp);
+		if (obj.containsKey("top") && obj.containsKey("bottom")) {
+			List<Clothing> temp = new ArrayList<>();
+			loadClothingFromArr(obj, temp, "top");
+			outfitPlan.addAll(temp);
+			loadClothingFromArr(obj, temp, "bottom");
+			outfitPlan.addAll(temp);
+		}
 		// End Clothing loading
 		
 		loadClothingFromArr(obj, closet, "closet");

@@ -22,10 +22,10 @@ public class Reyka extends BasePersonality {
 		super();
 		this.character = new NPC("Reyka", 10, this);
 		preferredCockMod = CockMod.incubus;
-		this.character.outfitPlan.add(Clothing.getByName("tanktop"));
-		this.character.outfitPlan.add(Clothing.getByName("miniskirt"));
-		character.closet.add(Clothing.getByName("tanktop"));
-		character.closet.add(Clothing.getByName("miniskirt"));
+		this.character.outfitPlan.add(Clothing.getByID("tanktop"));
+		this.character.outfitPlan.add(Clothing.getByID("miniskirt"));
+		character.closet.add(Clothing.getByID("tanktop"));
+		character.closet.add(Clothing.getByID("miniskirt"));
 		this.character.change(Modifier.normal);
 		this.character.set(Attribute.Dark, 12);
 		this.character.set(Attribute.Seduction, 14);

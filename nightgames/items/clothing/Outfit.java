@@ -212,10 +212,10 @@ public class Outfit {
 			boolean addedTop = false;
 			Clothing top = null;
 			if(slotEmpty(ClothingSlot.top)){
-				sb.append("{self:PRONOUN-ACTION:are|is} is topless");
+				sb.append("{self:PRONOUN-ACTION:are|is} is topless ");
 			} else {
 				top = getTopOfSlot(ClothingSlot.top);
-				sb.append("{self:SUBJECT-ACTION:are|is} wearing "+top.pre()+top.getName());
+				sb.append("{self:SUBJECT-ACTION:are|is} wearing "+top.pre()+top.getName() + " ");
 				addedTop = true;
 				described.add(top);
 			}

@@ -19,7 +19,6 @@ import nightgames.global.Global;
 import nightgames.global.Modifier;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
-import nightgames.items.clothing.ClothingSlot;
 import nightgames.skills.Skill;
 import nightgames.trap.Trap;
 
@@ -39,13 +38,9 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -127,20 +122,19 @@ public class GUI extends JFrame implements Observer {
 	public int fontsize;
 	private JMenuItem mntmQuitMatch;
 	private boolean skippedFeat;
-	
-	
+
 	public GUI() {
 		setBackground(Color.GRAY);
 		setDefaultCloseOperation(3);
-		if(Toolkit.getDefaultToolkit().getScreenSize().getHeight()>=1000){
-			height=900;
-		}else{
-			height=700;
+		if (Toolkit.getDefaultToolkit().getScreenSize().getHeight() >= 1000) {
+			height = 900;
+		} else {
+			height = 700;
 		}
-		if(Toolkit.getDefaultToolkit().getScreenSize().getWidth()>=1600){
-			width=1600;
-		}else{
-			width=1024;
+		if (Toolkit.getDefaultToolkit().getScreenSize().getWidth() >= 1600) {
+			width = 1600;
+		} else {
+			width = 1024;
 		}
 		setPreferredSize(new Dimension(width, height));
 		getContentPane().setLayout(new BoxLayout(getContentPane(), 1));
@@ -151,8 +145,10 @@ public class GUI extends JFrame implements Observer {
 		mntmNewgame.setBackground(Color.DARK_GRAY);
 		mntmNewgame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int result = JOptionPane.showConfirmDialog(GUI.this,"Do you want to restart the game? You'll lose any unsaved progress.","Start new game?",JOptionPane.OK_CANCEL_OPTION,JOptionPane.INFORMATION_MESSAGE);
-				if(result==JOptionPane.OK_OPTION){
+				int result = JOptionPane.showConfirmDialog(GUI.this,
+						"Do you want to restart the game? You'll lose any unsaved progress.", "Start new game?",
+						JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+				if (result == JOptionPane.OK_OPTION) {
 					Global.reset();
 				}
 			}
@@ -172,7 +168,7 @@ public class GUI extends JFrame implements Observer {
 		mntmOptions.setBackground(Color.DARK_GRAY);
 		menuBar.add(mntmOptions);
 		optionspanel = new JPanel();
-		optionspanel.setLayout(new GridLayout(0,3,0,0));
+		optionspanel.setLayout(new GridLayout(0, 3, 0, 0));
 		JLabel lblai = new JLabel("AI Mode");
 		ButtonGroup ai = new ButtonGroup();
 		rdnormal = new JRadioButton("Normal");
@@ -192,7 +188,7 @@ public class GUI extends JFrame implements Observer {
 		optionspanel.add(lbldiff);
 		optionspanel.add(rdeasy);
 		optionspanel.add(rdhard);
-		
+
 		JLabel lblSystemMessage = new JLabel("System Messages");
 		ButtonGroup sysMsgG = new ButtonGroup();
 		rdMsgOn = new JRadioButton("On");
@@ -202,7 +198,7 @@ public class GUI extends JFrame implements Observer {
 		optionspanel.add(lblSystemMessage);
 		optionspanel.add(rdMsgOn);
 		optionspanel.add(rdMsgOff);
-		
+
 		JLabel lblauto = new JLabel("Autosave (saves to auto.sav)");
 		ButtonGroup auto = new ButtonGroup();
 		rdautosaveon = new JRadioButton("on");
@@ -239,7 +235,7 @@ public class GUI extends JFrame implements Observer {
 		optionspanel.add(lblfnt);
 		optionspanel.add(rdfntnorm);
 		optionspanel.add(rdnfntlrg);
-		
+
 		JLabel lblMalePref = new JLabel("Female vs. Male Preference");
 		optionspanel.add(lblMalePref);
 		sldMalePref = new JSlider(JSlider.HORIZONTAL, 0, 10, 1);
@@ -247,7 +243,7 @@ public class GUI extends JFrame implements Observer {
 		sldMalePref.setMinorTickSpacing(1);
 		sldMalePref.setPaintTicks(true);
 		sldMalePref.setPaintLabels(true);
-		sldMalePref.setLabelTable(new Hashtable<Integer, JLabel>(){
+		sldMalePref.setLabelTable(new Hashtable<Integer, JLabel>() {
 			{
 				put(0, new JLabel("Female"));
 				put(5, new JLabel("Mixed"));
@@ -265,101 +261,88 @@ public class GUI extends JFrame implements Observer {
 		optionspanel.add(sldMalePref);
 		mntmOptions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(Global.checkFlag(Flag.systemMessages)){
+				if (Global.checkFlag(Flag.systemMessages)) {
 					rdMsgOn.setSelected(true);
-				}
-				else{
+				} else {
 					rdMsgOff.setSelected(true);
 				}
 
-				if(Global.checkFlag(Flag.hardmode)){
+				if (Global.checkFlag(Flag.hardmode)) {
 					rdhard.setSelected(true);
-				}
-				else{
+				} else {
 					rdeasy.setSelected(true);
 				}
 
-				if(Global.checkFlag(Flag.dumbmode)){
+				if (Global.checkFlag(Flag.dumbmode)) {
 					rddumb.setSelected(true);
-				}
-				else{
+				} else {
 					rdnormal.setSelected(true);
 				}
-				if(Global.checkFlag(Flag.autosave)){
+				if (Global.checkFlag(Flag.autosave)) {
 					rdautosaveon.setSelected(true);
-				}
-				else{
+				} else {
 					rdautosaveoff.setSelected(true);
 				}
-				if(Global.checkFlag(Flag.noportraits)){
+				if (Global.checkFlag(Flag.noportraits)) {
 					rdporoff.setSelected(true);
-				}
-				else{
+				} else {
 					rdporon.setSelected(true);
 				}
-				if(Global.checkFlag(Flag.noimage)){
+				if (Global.checkFlag(Flag.noimage)) {
 					rdimgoff.setSelected(true);
-				}
-				else{
+				} else {
 					rdimgon.setSelected(true);
 				}
-				if(Global.checkFlag(Flag.largefonts)){
+				if (Global.checkFlag(Flag.largefonts)) {
 					rdnfntlrg.setSelected(true);
-				}
-				else{
+				} else {
 					rdfntnorm.setSelected(true);
 				}
 				sldMalePref.setValue(Math.round(Global.getValue(Flag.malePref)));
-				int result = JOptionPane.showConfirmDialog(GUI.this,optionspanel,"Options",JOptionPane.OK_CANCEL_OPTION,JOptionPane.INFORMATION_MESSAGE);
-				if(result==JOptionPane.OK_OPTION){
-					if(rdMsgOn.isSelected()){
+				int result = JOptionPane.showConfirmDialog(GUI.this, optionspanel, "Options",
+						JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+				if (result == JOptionPane.OK_OPTION) {
+					if (rdMsgOn.isSelected()) {
 						Global.flag(Flag.systemMessages);
-					}
-					else{
+					} else {
 						Global.unflag(Flag.systemMessages);
 					}
-					if(rdnormal.isSelected()){
+					if (rdnormal.isSelected()) {
 						Global.unflag(Flag.dumbmode);
-					}
-					else{
+					} else {
 						Global.flag(Flag.dumbmode);
 					}
-					if(rdhard.isSelected()){
+					if (rdhard.isSelected()) {
 						Global.flag(Flag.hardmode);
-					}
-					else{
+					} else {
 						Global.unflag(Flag.hardmode);
 					}
-					if(rdautosaveoff.isSelected()){
+					if (rdautosaveoff.isSelected()) {
 						Global.unflag(Flag.autosave);
-					}
-					else{
+					} else {
 						Global.flag(Flag.autosave);
 					}
-					if(rdporon.isSelected()){
+					if (rdporon.isSelected()) {
 						Global.unflag(Flag.noportraits);
-					}
-					else{
+					} else {
 						Global.flag(Flag.noportraits);
 						portraitPanel.remove(portrait);
 						portraitPanel.repaint();
 					}
-					if(rdimgon.isSelected()){
+					if (rdimgon.isSelected()) {
 						Global.unflag(Flag.noimage);
-					}
-					else{
+					} else {
 						Global.flag(Flag.noimage);
-						if (img!=null)
+						if (img != null)
 							imgPanel.remove(img);
 						imgPanel.repaint();
 					}
-					if(rdnfntlrg.isSelected()){
+					if (rdnfntlrg.isSelected()) {
 						Global.flag(Flag.largefonts);
-						fontsize=6;
-					}
-					else{
+						fontsize = 6;
+					} else {
 						Global.unflag(Flag.largefonts);
-						fontsize=5;
+						fontsize = 5;
 					}
 				}
 			}
@@ -368,15 +351,17 @@ public class GUI extends JFrame implements Observer {
 		mntmCredits.setForeground(Color.WHITE);
 		mntmCredits.setBackground(Color.DARK_GRAY);
 		menuBar.add(mntmCredits);
-		
+
 		mntmQuitMatch = new JMenuItem("Quit Match");
 		mntmQuitMatch.setEnabled(false);
 		mntmQuitMatch.setForeground(Color.WHITE);
 		mntmQuitMatch.setBackground(Color.DARK_GRAY);
 		mntmQuitMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int result = JOptionPane.showConfirmDialog(GUI.this,"Do you want to quit for the night? Your opponents will continue to fight and gain exp.","Retire early?",JOptionPane.OK_CANCEL_OPTION,JOptionPane.INFORMATION_MESSAGE);
-				if(result==JOptionPane.OK_OPTION){
+				int result = JOptionPane.showConfirmDialog(GUI.this,
+						"Do you want to quit for the night? Your opponents will continue to fight and gain exp.",
+						"Retire early?", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+				if (result == JOptionPane.OK_OPTION) {
 					Global.getMatch().quit();
 				}
 			}
@@ -384,24 +369,18 @@ public class GUI extends JFrame implements Observer {
 		menuBar.add(mntmQuitMatch);
 		mntmCredits.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane
-						.showMessageDialog(GUI.this,
-								"Night Games created by The Silver Bard\n" +
-								"Reyka created by DNDW\n" +
-								"Upgraded Strapon created by ElfBoyEni\n" +
-								"Strapon victory scenes created by Legion\n" +
-								"Advanced AI by Jos\n" +
-								"Magic Training scenes by Legion\n" +
-								"Jewel 2nd Victory scene by Legion\n" +
-								"Video Games scenes 1-9 by Onyxdime\n" +
-								"Kat Penetration Victory and Defeat scenes by Onyxdime\n" +
-								"Kat Non-Penetration Draw scene by Onyxdime\n" +
-								"Mara/Angel threesome scene by Onyxdime\n" + 
-								"Mod by Nergantre\n" +
-								"A ton of testing by Bronzechair");
+				JOptionPane.showMessageDialog(GUI.this, "Night Games created by The Silver Bard\n"
+						+ "Reyka created by DNDW\n" + "Upgraded Strapon created by ElfBoyEni\n"
+						+ "Strapon victory scenes created by Legion\n" + "Advanced AI by Jos\n"
+						+ "Magic Training scenes by Legion\n" + "Jewel 2nd Victory scene by Legion\n"
+						+ "Video Games scenes 1-9 by Onyxdime\n"
+						+ "Kat Penetration Victory and Defeat scenes by Onyxdime\n"
+						+ "Kat Non-Penetration Draw scene by Onyxdime\n" + "Mara/Angel threesome scene by Onyxdime\n"
+						+ "Footfetish expansion scenes by Mistress Emily Morose\n" + "Mod by Nergantre\n"
+						+ "A ton of testing by Bronzechair");
 			}
 		});
-		
+
 		this.mainpanel = new JPanel();
 		getContentPane().add(this.mainpanel);
 		this.mainpanel.setLayout(new BoxLayout(this.mainpanel, 1));
@@ -417,105 +396,62 @@ public class GUI extends JFrame implements Observer {
 		this.topPanel.setLayout(new GridLayout(0, 2, 0, 0));
 
 		this.centerPanel = new JPanel();
-		this.mainpanel.add(this.centerPanel);
+		this.mainpanel.add(centerPanel);
 		this.centerPanel.setLayout(new BorderLayout(0, 0));
 		this.statusPanel = new JPanel();
 		this.statusPanel.setLayout(new BoxLayout(this.statusPanel, 1));
 		this.statusPanel.setBackground(new Color(200, 200, 200));
 		this.clothesPanel = new JPanel();
-				
-				portraitPanel = new JPanel();
-				centerPanel.add(portraitPanel, BorderLayout.CENTER);
-				portraitPanel.setLayout(new BorderLayout(0, 0));
-				portraitPanel.setBackground(new Color(25, 25, 50));
-				portrait = new JLabel("");
-				portrait.setVerticalAlignment(SwingConstants.TOP);
-				portraitPanel.add(portrait, BorderLayout.WEST);
-				imgPanel = new JPanel();
-				imgPanel.setLayout(new BorderLayout(0, 0));
-				imgPanel.setBackground(new Color(25, 25, 50));
-				img = new JLabel("");
-				imgPanel.add(img,BorderLayout.NORTH);
-				portraitPanel.add(imgPanel, BorderLayout.CENTER);
-				this.textScroll = new JScrollPane();
-				imgPanel.add(textScroll, BorderLayout.CENTER);
-	
-								this.textPane = new JTextPane();
-								DefaultCaret caret = (DefaultCaret)textPane.getCaret();
-								caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-								this.textPane.setForeground(new Color(240, 240, 255));
-								this.textPane.setBackground(new Color(25, 25, 50));
-								this.textPane.setPreferredSize(new Dimension(width, 400));
-								this.textPane.setEditable(false);
-								this.textPane.setContentType("text/html");
-								this.textScroll.setViewportView(this.textPane);
-								fontsize=5;
-/*		
-				JPanel panel = new JPanel();
-				centerPanel.add(panel, BorderLayout.NORTH);
-				panel.setForeground(new Color(192, 192, 192));
-				panel.setBackground(Color.DARK_GRAY);
-				
-						this.loclbl = new JLabel();
-						this.loclbl.setFont(new Font("Sylfaen", 1, 16));
-						this.loclbl.setForeground(new Color(240, 240, 255));
-						panel.add(this.loclbl);
-						
-								this.timelbl = new JLabel();
-								this.timelbl.setFont(new Font("Sylfaen", 1, 16));
-								this.timelbl.setForeground(new Color(240, 240, 255));
-								panel.add(this.timelbl);
-								this.cashlbl = new JLabel();
-								this.cashlbl.setFont(new Font("Sylfaen", 1, 16));
-								this.cashlbl.setForeground(new Color(240, 240, 255));
-								panel.add(this.cashlbl);
-								this.invbtn = new JToggleButton("Inventory");
-								this.invbtn.setHorizontalAlignment(4);
-								this.invbtn.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent arg0) {
-										if (GUI.this.invbtn.isSelected()) {
-											GUI.this.centerPanel.add(GUI.this.inventoryPanel, "East");
-										} else {
-											GUI.this.centerPanel.remove(GUI.this.inventoryPanel);
-										}
-										GUI.this.refresh();
-										GUI.this.centerPanel.validate();
-									}
-								});
-								panel.add(this.invbtn);
-								this.stsbtn = new JToggleButton("Status");
-								this.stsbtn.setHorizontalAlignment(4);
-								this.stsbtn.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent arg0) {
-										if (GUI.this.stsbtn.isSelected()) {
-											GUI.this.centerPanel.add(GUI.this.statusPanel, "West");
-										} else {
-											GUI.this.centerPanel.remove(GUI.this.statusPanel);
-										}
-										GUI.this.refresh();
-										GUI.this.centerPanel.validate();
-									}
-								});
-								panel.add(this.stsbtn);		
-*/								
+		this.clothesPanel.setLayout(new GridLayout(0, 1));
+		this.clothesPanel.setVisible(false);
+		clothesPanel.setBackground(new Color(25, 25, 50));
+
+		portraitPanel = new JPanel();
+		portraitPanel.setLayout(new BorderLayout(0, 0));
+		portraitPanel.setBackground(new Color(25, 25, 50));
+		portrait = new JLabel("");
+		portrait.setVerticalAlignment(SwingConstants.TOP);
+		portraitPanel.add(portrait, BorderLayout.WEST);
+		imgPanel = new JPanel();
+		imgPanel.setLayout(new BorderLayout(0, 0));
+		imgPanel.setBackground(new Color(25, 25, 50));
+		img = new JLabel("");
+		imgPanel.add(img, BorderLayout.NORTH);
+		portraitPanel.add(imgPanel, BorderLayout.CENTER);
+		this.textScroll = new JScrollPane();
+		imgPanel.add(textScroll, BorderLayout.CENTER);
+		centerPanel.add(portraitPanel, BorderLayout.CENTER);
+
+		this.textPane = new JTextPane();
+		DefaultCaret caret = (DefaultCaret) textPane.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		this.textPane.setForeground(new Color(240, 240, 255));
+		this.textPane.setBackground(new Color(25, 25, 50));
+		this.textPane.setPreferredSize(new Dimension(width, 400));
+		this.textPane.setEditable(false);
+		this.textPane.setContentType("text/html");
+		this.textScroll.setViewportView(this.textPane);
+		fontsize = 5;
+
 		JButton debug = new JButton("Debug");
 		debug.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Global.getMatch().resume();
 			}
 		});
-		//JScrollPane commandScroll = new JScrollPane();
-		//commandScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		//commandScroll.setPreferredSize(new Dimension(this.width, this.height/6));
-		//this.mainpanel.add(commandScroll);
+		// JScrollPane commandScroll = new JScrollPane();
+		// commandScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		// commandScroll.setPreferredSize(new Dimension(this.width,
+		// this.height/6));
+		// this.mainpanel.add(commandScroll);
 		this.commandPanel = new JPanel();
 		this.commandPanel.setBackground(Color.DARK_GRAY);
-		this.commandPanel.setPreferredSize(new Dimension(this.width, this.height/5));
+		this.commandPanel.setPreferredSize(new Dimension(this.width, this.height / 5));
 		this.commandPanel.setMinimumSize(new Dimension(0, 200));
-		//this.commandPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		// this.commandPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		this.commandPanel.setBorder(new CompoundBorder());
 		this.mainpanel.add(commandPanel);
-		//commandScroll.setViewportView(this.commandPanel);
+		// commandScroll.setViewportView(this.commandPanel);
 		skills = new ArrayList<ArrayList<SkillButton>>();
 		createCharacter();
 		setVisible(true);
@@ -529,16 +465,15 @@ public class GUI extends JFrame implements Observer {
 		return this.combat;
 	}
 
-	public void displayImage(String path,String artist){
+	public void displayImage(String path, String artist) {
 		BufferedImage pic = null;
 		try {
-			pic = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" +
-					path));
-		}catch (IOException localIOException9) {
-		}catch (IllegalArgumentException e) {
+			pic = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" + path));
+		} catch (IOException localIOException9) {
+		} catch (IllegalArgumentException e) {
 		}
 		clearImage();
-		if(pic!=null){
+		if (pic != null) {
 			img = new JLabel(new ImageIcon(pic));
 			img.setHorizontalAlignment(SwingConstants.CENTER);
 			imgPanel.add(img, BorderLayout.NORTH);
@@ -548,12 +483,14 @@ public class GUI extends JFrame implements Observer {
 		this.portraitPanel.revalidate();
 		this.portraitPanel.repaint();
 	}
-	public void clearImage(){
-		if(img!=null){
+
+	public void clearImage() {
+		if (img != null) {
 			imgPanel.remove(img);
 			img = null;
 		}
 	}
+
 	public void resetPortrait() {
 		if (Global.isDebugOn(DebugFlags.DEBUG_IMAGES)) {
 			System.out.println("Resetting Images\n");
@@ -563,23 +500,22 @@ public class GUI extends JFrame implements Observer {
 	}
 
 	public void loadPortrait(Combat c, Character player, Character enemy) {
-		if(!Global.checkFlag(Flag.noimage) && !Global.checkFlag(Flag.noportraits)){
+		if (!Global.checkFlag(Flag.noimage) && !Global.checkFlag(Flag.noportraits)) {
 			String imagepath = null;
-			if(!player.human()){
+			if (!player.human()) {
 				imagepath = player.getPortrait(c);
-			}
-			else if(!enemy.human()){
+			} else if (!enemy.human()) {
 				imagepath = enemy.getPortrait(c);
 			}
-			if(imagepath!=null){
+			if (imagepath != null) {
 				BufferedImage face = null;
 				try {
-					face = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" +imagepath));
-				}catch (IOException localIOException9) {
+					face = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" + imagepath));
+				} catch (IOException localIOException9) {
 				} catch (IllegalArgumentException badArg) {
-					
+
 				}
-				if(face!=null){
+				if (face != null) {
 					if (Global.isDebugOn(DebugFlags.DEBUG_IMAGES)) {
 						System.out.println("Loading Portrait " + imagepath + " \n");
 					}
@@ -595,7 +531,7 @@ public class GUI extends JFrame implements Observer {
 			this.portraitPanel.repaint();
 		}
 	}
-	
+
 	public Combat beginCombat(Character player, Character enemy, int code) {
 		this.combat = new Combat(player, enemy, player.location(), code);
 		this.combat.addObserver(this);
@@ -618,11 +554,10 @@ public class GUI extends JFrame implements Observer {
 	}
 
 	public void populatePlayer(Player player) {
-		if(Global.checkFlag(Flag.largefonts)){
-			fontsize=6;
-		}
-		else{
-			fontsize=5;
+		if (Global.checkFlag(Flag.largefonts)) {
+			fontsize = 6;
+		} else {
+			fontsize = 5;
 		}
 		getContentPane().remove(this.creation);
 		getContentPane().add(this.mainpanel);
@@ -638,36 +573,35 @@ public class GUI extends JFrame implements Observer {
 		this.stamina = new JLabel("Stamina: " + getLabelString(player.getStamina()));
 		this.stamina.setFont(new Font("Sylfaen", 1, 15));
 		this.stamina.setHorizontalAlignment(0);
-		this.stamina.setForeground(new Color(100,0,00));
-		this.stamina
-				.setToolTipText("Stamina represents your endurance and ability to keep fighting. If it drops to zero, you'll be temporarily stunned.");
+		this.stamina.setForeground(new Color(100, 0, 00));
+		this.stamina.setToolTipText(
+				"Stamina represents your endurance and ability to keep fighting. If it drops to zero, you'll be temporarily stunned.");
 		meter.add(this.stamina);
 		this.arousal = new JLabel("Arousal: " + getLabelString(player.getArousal()));
 		this.arousal.setFont(new Font("Sylfaen", 1, 15));
 		this.arousal.setHorizontalAlignment(0);
-		this.arousal.setForeground(new Color(100,0,50));
-		this.arousal
-				.setToolTipText("Arousal is raised when your opponent pleasures or seduces you. If it hits your max, you'll orgasm and lose the fight.");
+		this.arousal.setForeground(new Color(100, 0, 50));
+		this.arousal.setToolTipText(
+				"Arousal is raised when your opponent pleasures or seduces you. If it hits your max, you'll orgasm and lose the fight.");
 		meter.add(this.arousal);
 
 		this.mojo = new JLabel("Mojo: " + getLabelString(player.getMojo()));
 		this.mojo.setFont(new Font("Sylfaen", 1, 15));
 		this.mojo.setHorizontalAlignment(0);
-		this.mojo.setForeground(new Color(0,0,100));
-		this.mojo
-				.setToolTipText("Mojo is the abstract representation of your momentum and style. It increases with normal techniques and is used to power special moves");
+		this.mojo.setForeground(new Color(0, 0, 100));
+		this.mojo.setToolTipText(
+				"Mojo is the abstract representation of your momentum and style. It increases with normal techniques and is used to power special moves");
 		meter.add(this.mojo);
 		this.willpower = new JLabel("Willpower: " + getLabelString(player.getWillpower()));
 		this.willpower.setFont(new Font("Sylfaen", 1, 15));
 		this.willpower.setHorizontalAlignment(0);
-		this.willpower.setForeground(new Color(0,0,100));
+		this.willpower.setForeground(new Color(0, 0, 100));
 		this.willpower
 				.setToolTipText("Willpower is a representation of your will to fight. When this reaches 0, you lose.");
 		meter.add(this.willpower);
-		
+
 		this.staminaBar = new JProgressBar();
-		this.staminaBar
-				.setBorder(new SoftBevelBorder(1, null, null, null, null));
+		this.staminaBar.setBorder(new SoftBevelBorder(1, null, null, null, null));
 		this.staminaBar.setForeground(Color.RED);
 		this.staminaBar.setBackground(new Color(105, 105, 105));
 		meter.add(this.staminaBar);
@@ -675,8 +609,7 @@ public class GUI extends JFrame implements Observer {
 		this.staminaBar.setValue(player.getStamina().get());
 
 		this.arousalBar = new JProgressBar();
-		this.arousalBar
-				.setBorder(new SoftBevelBorder(1, null, null, null, null));
+		this.arousalBar.setBorder(new SoftBevelBorder(1, null, null, null, null));
 		this.arousalBar.setForeground(Color.MAGENTA);
 		this.arousalBar.setBackground(new Color(105, 105, 105));
 		meter.add(this.arousalBar);
@@ -698,7 +631,7 @@ public class GUI extends JFrame implements Observer {
 		meter.add(this.willpowerBar);
 		this.willpowerBar.setMaximum(player.getWillpower().max());
 		this.willpowerBar.setValue(player.getWillpower().get());
-		
+
 		JPanel bio = new JPanel();
 		this.topPanel.add(bio);
 		bio.setLayout(new GridLayout(2, 0, 0, 0));
@@ -718,26 +651,24 @@ public class GUI extends JFrame implements Observer {
 		this.xp.setForeground(new Color(0, 0, 5));
 		bio.add(this.xp);
 
-/*		this.power = new JLabel("Power: " + player.get(Attribute.Power));
-		this.power.setFont(new Font("Sylfaen", 1, 15));
-		this.power.setForeground(new Color(0, 0, 5));
-		this.power
-				.setToolTipText("Power is used to damage and incapacitate your opponent. Many power skills reduce your opponent's arousal in addition to stamina");
-		bio.add(this.power);
-		this.cunning = new JLabel("Cunning: " + player.get(Attribute.Cunning));
-		this.cunning.setFont(new Font("Sylfaen", 1, 15));
-		this.cunning.setForeground(new Color(0, 0, 5));
-		this.cunning
-				.setToolTipText("Cunning helps you win in indirect ways. Cunning is used to strip your opponent, set traps, and counter direct attacks");
-		bio.add(this.cunning);
-		this.seduction = new JLabel("Seduction: "
-				+ player.get(Attribute.Seduction));
-		this.seduction.setFont(new Font("Sylfaen", 1, 15));
-		this.seduction.setForeground(new Color(0, 0, 5));
-		this.seduction
-				.setToolTipText("Seduction improves your ability to arouse your opponent and make her orgasm faster");
-		bio.add(this.seduction);
-*/
+		/*
+		 * this.power = new JLabel("Power: " + player.get(Attribute.Power));
+		 * this.power.setFont(new Font("Sylfaen", 1, 15));
+		 * this.power.setForeground(new Color(0, 0, 5)); this.power
+		 * .setToolTipText(
+		 * "Power is used to damage and incapacitate your opponent. Many power skills reduce your opponent's arousal in addition to stamina"
+		 * ); bio.add(this.power); this.cunning = new JLabel("Cunning: " +
+		 * player.get(Attribute.Cunning)); this.cunning.setFont(new
+		 * Font("Sylfaen", 1, 15)); this.cunning.setForeground(new Color(0, 0,
+		 * 5)); this.cunning .setToolTipText(
+		 * "Cunning helps you win in indirect ways. Cunning is used to strip your opponent, set traps, and counter direct attacks"
+		 * ); bio.add(this.cunning); this.seduction = new JLabel("Seduction: " +
+		 * player.get(Attribute.Seduction)); this.seduction.setFont(new
+		 * Font("Sylfaen", 1, 15)); this.seduction.setForeground(new Color(0, 0,
+		 * 5)); this.seduction .setToolTipText(
+		 * "Seduction improves your ability to arouse your opponent and make her orgasm faster"
+		 * ); bio.add(this.seduction);
+		 */
 		this.stsbtn = new JToggleButton("Status");
 		this.stsbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -750,12 +681,12 @@ public class GUI extends JFrame implements Observer {
 				GUI.this.centerPanel.validate();
 			}
 		});
-		bio.add(this.stsbtn);		
+		bio.add(this.stsbtn);
 		this.loclbl = new JLabel();
 		this.loclbl.setFont(new Font("Sylfaen", 1, 16));
 		this.loclbl.setForeground(new Color(0, 0, 5));
 		bio.add(this.loclbl);
-		
+
 		this.timelbl = new JLabel();
 		this.timelbl.setFont(new Font("Sylfaen", 1, 16));
 		this.timelbl.setForeground(new Color(0, 0, 5));
@@ -764,7 +695,8 @@ public class GUI extends JFrame implements Observer {
 		this.cashlbl.setFont(new Font("Sylfaen", 1, 16));
 		this.cashlbl.setForeground(new Color(0, 0, 5));
 		bio.add(this.cashlbl);
-		
+		removeClosetGUI();
+
 		this.topPanel.validate();
 	}
 
@@ -789,22 +721,27 @@ public class GUI extends JFrame implements Observer {
 	public void clearText() {
 		this.textPane.setText("");
 	}
+
 	protected void clearTextIfNeeded() {
 		int pos = textPane.getCaretPosition();
 		textPane.setCaretPosition(textPane.getDocument().getLength());
 		textPane.selectAll();
 		int x = textPane.getSelectionEnd();
-		textPane.select(x,x);
+		textPane.select(x, x);
 	}
 
-
 	public void message(String text) {
-		if (text.trim().length() == 0) {return;}
-		//this.textPane.setText(this.textPane.getText() + "<html><font color='white'>"+text + "</span>\n");
-		HTMLDocument doc = (HTMLDocument)textPane.getDocument();
-		HTMLEditorKit editorKit = (HTMLEditorKit)textPane.getEditorKit();
+		if (text.trim().length() == 0) {
+			return;
+		}
+		// this.textPane.setText(this.textPane.getText() + "<html><font
+		// color='white'>"+text + "</span>\n");
+		HTMLDocument doc = (HTMLDocument) textPane.getDocument();
+		HTMLEditorKit editorKit = (HTMLEditorKit) textPane.getEditorKit();
 		try {
-			editorKit.insertHTML(doc, doc.getLength(), "<font face='Georgia'><font color='white'><font size='"+fontsize+"'>"+text+"<br>", 0, 0, null);
+			editorKit.insertHTML(doc, doc.getLength(),
+					"<font face='Georgia'><font color='white'><font size='" + fontsize + "'>" + text + "<br>", 0, 0,
+					null);
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -812,19 +749,21 @@ public class GUI extends JFrame implements Observer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		/*javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			   public void run() { 
-			       textScroll.getVerticalScrollBar().setValue(0);
-			   }
-			});*/
+		/*
+		 * javax.swing.SwingUtilities.invokeLater(new Runnable() { public void
+		 * run() { textScroll.getVerticalScrollBar().setValue(0); } });
+		 */
 	}
 
 	public void combatMessage(String text) {
-		//this.textPane.setText(this.textPane.getText() + "<html><font color='white'>"+text + "</span>\n");
-		HTMLDocument doc = (HTMLDocument)textPane.getDocument();
-		HTMLEditorKit editorKit = (HTMLEditorKit)textPane.getEditorKit();
+		// this.textPane.setText(this.textPane.getText() + "<html><font
+		// color='white'>"+text + "</span>\n");
+		HTMLDocument doc = (HTMLDocument) textPane.getDocument();
+		HTMLEditorKit editorKit = (HTMLEditorKit) textPane.getEditorKit();
 		try {
-			editorKit.insertHTML(doc, doc.getLength(), "<font face='Georgia'><font color='white'><font size='"+fontsize+"'>"+text+"<br>", 0, 0, null);
+			editorKit.insertHTML(doc, doc.getLength(),
+					"<font face='Georgia'><font color='white'><font size='" + fontsize + "'>" + text + "<br>", 0, 0,
+					null);
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -833,7 +772,7 @@ public class GUI extends JFrame implements Observer {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void clearCommand() {
 		skills.clear();
 		this.commandPanel.removeAll();
@@ -843,33 +782,34 @@ public class GUI extends JFrame implements Observer {
 	public void addSkill(Skill action, Combat com) {
 		int index = 0;
 		boolean placed = false;
-		while(!placed){
-			if(skills.size()<=index){
+		while (!placed) {
+			if (skills.size() <= index) {
 				skills.add(new ArrayList<SkillButton>());
 			}
-			if(skills.get(index).size()>=25){
+			if (skills.get(index).size() >= 25) {
 				index++;
-			}
-			else{
+			} else {
 				skills.get(index).add(new SkillButton(action, com));
-				placed=true;
+				placed = true;
 			}
 		}
 	}
-	public void showSkills(int index){
-		for(SkillButton button: skills.get(index)){
+
+	public void showSkills(int index) {
+		for (SkillButton button : skills.get(index)) {
 			commandPanel.add(button);
 		}
-		if(index>0){
-			commandPanel.add(new PageButton("<-",index-1));
+		if (index > 0) {
+			commandPanel.add(new PageButton("<-", index - 1));
 		}
-		if(skills.size()>index+1){
-			commandPanel.add(new PageButton("->",index+1));
+		if (skills.size() > index + 1) {
+			commandPanel.add(new PageButton("->", index + 1));
 		}
 		Global.getMatch().pause();
 		this.commandPanel.repaint();
 		this.commandPanel.revalidate();
 	}
+
 	public void addAction(Action action, Character user) {
 		this.commandPanel.add(new ActionButton(action, user));
 		Global.getMatch().pause();
@@ -899,15 +839,17 @@ public class GUI extends JFrame implements Observer {
 		this.commandPanel.add(new EventButton(event, "Next"));
 		this.commandPanel.revalidate();
 	}
+
 	public void choose(String choice) {
 		this.commandPanel.add(new SceneButton(choice));
 		this.commandPanel.revalidate();
 	}
+
 	public void choose(Activity event, String choice) {
 		this.commandPanel.add(new EventButton(event, choice));
 		this.commandPanel.revalidate();
 	}
-	
+
 	public void choose(Action event, String choice, Character self) {
 		this.commandPanel.add(new LocatorButton(event, choice, self));
 		this.commandPanel.revalidate();
@@ -917,7 +859,7 @@ public class GUI extends JFrame implements Observer {
 		this.commandPanel.add(new ItemButton(shop, i));
 		this.commandPanel.revalidate();
 	}
-	
+
 	public void sale(Store shop, Clothing i) {
 		this.commandPanel.add(new ItemButton(shop, i));
 		this.commandPanel.revalidate();
@@ -925,38 +867,38 @@ public class GUI extends JFrame implements Observer {
 
 	public void promptFF(Encounter enc, Character target) {
 		clearCommand();
-		this.commandPanel.add(new EncounterButton("Fight",enc, target, Encs.fight));
-		this.commandPanel.add(new EncounterButton("Flee",enc, target, Encs.flee));
+		this.commandPanel.add(new EncounterButton("Fight", enc, target, Encs.fight));
+		this.commandPanel.add(new EncounterButton("Flee", enc, target, Encs.flee));
 		Global.getMatch().pause();
 		this.commandPanel.revalidate();
 	}
 
 	public void promptAmbush(Encounter enc, Character target) {
 		clearCommand();
-		this.commandPanel.add(new EncounterButton("Attack "+target.name(),enc, target, Encs.ambush));
-		this.commandPanel.add(new EncounterButton("Wait",enc, target, Encs.wait));
+		this.commandPanel.add(new EncounterButton("Attack " + target.name(), enc, target, Encs.ambush));
+		this.commandPanel.add(new EncounterButton("Wait", enc, target, Encs.wait));
 		Global.getMatch().pause();
 		this.commandPanel.revalidate();
 	}
 
 	public void promptOpportunity(Encounter enc, Character target, Trap trap) {
 		clearCommand();
-		this.commandPanel.add(new EncounterButton("Attack "+target.name(),enc, target, Encs.capitalize, trap));
-		this.commandPanel.add(new EncounterButton("Wait",enc, target, Encs.wait));
+		this.commandPanel.add(new EncounterButton("Attack " + target.name(), enc, target, Encs.capitalize, trap));
+		this.commandPanel.add(new EncounterButton("Wait", enc, target, Encs.wait));
 		Global.getMatch().pause();
 		this.commandPanel.revalidate();
 	}
 
 	public void promptShower(Encounter encounter, Character target) {
 		clearCommand();
-		this.commandPanel.add(new EncounterButton("Suprise Her",encounter, target, Encs.showerattack));
+		this.commandPanel.add(new EncounterButton("Suprise Her", encounter, target, Encs.showerattack));
 		if (!target.mostlyNude()) {
-			this.commandPanel.add(new EncounterButton("Steal Clothes",encounter, target, Encs.stealclothes));
+			this.commandPanel.add(new EncounterButton("Steal Clothes", encounter, target, Encs.stealclothes));
 		}
 		if (this.player.has(Item.Aphrodisiac)) {
-			this.commandPanel.add(new EncounterButton("Use Aphrodisiac",encounter, target, Encs.aphrodisiactrick));
+			this.commandPanel.add(new EncounterButton("Use Aphrodisiac", encounter, target, Encs.aphrodisiactrick));
 		}
-		this.commandPanel.add(new EncounterButton("Do Nothing",encounter,target,Encs.wait));
+		this.commandPanel.add(new EncounterButton("Do Nothing", encounter, target, Encs.wait));
 		Global.getMatch().pause();
 		this.commandPanel.revalidate();
 	}
@@ -969,16 +911,16 @@ public class GUI extends JFrame implements Observer {
 		this.commandPanel.revalidate();
 	}
 
-	public void prompt(String message, ArrayList<JButton> choices){
+	public void prompt(String message, ArrayList<JButton> choices) {
 		clearText();
 		clearCommand();
 		message(message);
-		for(JButton button:choices){
+		for (JButton button : choices) {
 			this.commandPanel.add(button);
 		}
 		this.commandPanel.revalidate();
 	}
-	
+
 	public void ding() {
 		if (this.player.availableAttributePoints > 0) {
 			message(this.player.availableAttributePoints + " Attribute Points remain.\n");
@@ -991,10 +933,10 @@ public class GUI extends JFrame implements Observer {
 			this.commandPanel.add(new AttributeButton(Attribute.Willpower));
 			Global.getMatch().pause();
 			this.commandPanel.revalidate();
-		} else if(player.traitPoints > 0 && !skippedFeat){ 
+		} else if (player.traitPoints > 0 && !skippedFeat) {
 			clearCommand();
-			for(Trait feat:Global.getFeats(this.player)){
-				if(!player.has(feat)){
+			for (Trait feat : Global.getFeats(this.player)) {
+				if (!player.has(feat)) {
 					this.commandPanel.add(new FeatButton(feat));
 				}
 				this.commandPanel.revalidate();
@@ -1016,43 +958,45 @@ public class GUI extends JFrame implements Observer {
 		clearImage();
 		this.centerPanel.revalidate();
 		this.portraitPanel.revalidate();
-		this.portraitPanel.repaint();	
+		this.portraitPanel.repaint();
 		Global.getMatch().resume();
 	}
 
-	public void startMatch(){
+	public void startMatch() {
 		this.mntmQuitMatch.setEnabled(true);
 	}
+
 	public void endMatch() {
 		clearCommand();
 		resetPortrait();
 		this.mntmQuitMatch.setEnabled(false);
 		this.centerPanel.revalidate();
 		this.portraitPanel.revalidate();
-		this.portraitPanel.repaint();	
+		this.portraitPanel.repaint();
 		this.commandPanel.add(new SleepButton());
 		this.commandPanel.add(new SaveButton());
 		this.commandPanel.revalidate();
 	}
-/*
-	public void nextMatch() {
-		clearText();
-		message("You arrive at the student union a few minutes before the start of the match. You have enough time to check in and make idle chat with your opponents before you head to your assigned starting point and wait. At exactly 10:00, the match is on.");
 
-		clearCommand();
-		this.commandPanel.add(new MatchButton());
-		this.commandPanel.add(new SaveButton());
-		this.commandPanel.revalidate();
-	}
-*/
+	/*
+	 * public void nextMatch() { clearText(); message(
+	 * "You arrive at the student union a few minutes before the start of the match. You have enough time to check in and make idle chat with your opponents before you head to your assigned starting point and wait. At exactly 10:00, the match is on."
+	 * );
+	 * 
+	 * clearCommand(); this.commandPanel.add(new MatchButton());
+	 * this.commandPanel.add(new SaveButton()); this.commandPanel.revalidate();
+	 * }
+	 */
 	public void refresh() {
 		this.stamina.setText("Stamina: " + getLabelString(player.getStamina()));
 		this.arousal.setText(("Arousal: " + getLabelString(player.getArousal())));
 		this.mojo.setText("Mojo: " + getLabelString(player.getMojo()));
 		this.willpower.setText("Willpower: " + getLabelString(player.getWillpower()));
-//		this.power.setText("Power: " + this.player.get(Attribute.Power));
-//		this.cunning.setText("Cunning: " + this.player.get(Attribute.Cunning));
-//		this.seduction.setText("Seduction: "+ this.player.get(Attribute.Seduction));
+		// this.power.setText("Power: " + this.player.get(Attribute.Power));
+		// this.cunning.setText("Cunning: " +
+		// this.player.get(Attribute.Cunning));
+		// this.seduction.setText("Seduction: "+
+		// this.player.get(Attribute.Seduction));
 		this.lvl.setText("Lvl: " + this.player.getLevel());
 		this.xp.setText("XP: " + this.player.getXP());
 		this.staminaBar.setMaximum(this.player.getStamina().max());
@@ -1078,8 +1022,7 @@ public class GUI extends JFrame implements Observer {
 		// TODO clothing
 		BufferedImage clothesicon = null;
 		try {
-				clothesicon = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" +
-						"clothes8.png"));
+			clothesicon = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" + "clothes8.png"));
 		} catch (IOException localIOException10) {
 		}
 		if (clothesicon != null) {
@@ -1088,11 +1031,11 @@ public class GUI extends JFrame implements Observer {
 			return new JLabel();
 		}
 	}
-	
-	public void displayStatus(){
+
+	public void displayStatus() {
 		this.statusPanel.removeAll();
 		this.statusPanel.repaint();
-		this.statusPanel.setPreferredSize(new Dimension(400, centerPanel.getHeight()));;
+		this.statusPanel.setPreferredSize(new Dimension(400, centerPanel.getHeight()));
 
 		JPanel inventoryPanel = new JPanel();
 		JPanel statsPanel = new JPanel();
@@ -1106,7 +1049,7 @@ public class GUI extends JFrame implements Observer {
 		sep.setMaximumSize(new Dimension(statusPanel.getWidth(), 2));
 		statusPanel.add(sep);
 		statusPanel.add(currentStatusPanel);
-		
+
 		Map<Item, Integer> items = this.player.getInventory();
 		int count = 0;
 		this.clothesdisplay = getClothing();
@@ -1115,17 +1058,16 @@ public class GUI extends JFrame implements Observer {
 		ArrayList<JLabel> itmlbls = new ArrayList<JLabel>();
 		for (Item i : items.keySet()) {
 			if (items.get(i) > 0) {
-				itmlbls.add(count, new JLabel(i.getName() + ": " + items.get(i)+"\n"));
+				itmlbls.add(count, new JLabel(i.getName() + ": " + items.get(i) + "\n"));
 				itmlbls.get(count).setToolTipText(i.getDesc());
 				inventoryPanel.add(itmlbls.get(count));
 				count++;
 			}
 		}
-		
-		
+
 		count = 0;
 		ArrayList<JLabel> attlbls = new ArrayList<JLabel>();
-		for (Attribute a : Attribute.values()){
+		for (Attribute a : Attribute.values()) {
 			int amt = player.get(a);
 			if (amt > 0) {
 				attlbls.add(count, new JLabel(a.name() + ": " + amt));
@@ -1133,20 +1075,23 @@ public class GUI extends JFrame implements Observer {
 				count++;
 			}
 		}
-		
+
 		JTextPane statusText = new JTextPane();
-		DefaultCaret caret = (DefaultCaret)statusText.getCaret();
+		DefaultCaret caret = (DefaultCaret) statusText.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		statusText.setForeground(new Color(240, 240, 255));
 		statusText.setBackground(new Color(25, 25, 50));
 		statusText.setEditable(false);
 		statusText.setContentType("text/html");
-		statusText.setPreferredSize(new Dimension(400, centerPanel.getHeight()/2));
-		statusText.setMaximumSize(new Dimension(400, centerPanel.getHeight()/2));
-		HTMLDocument doc = (HTMLDocument)statusText.getDocument();
-		HTMLEditorKit editorKit = (HTMLEditorKit)statusText.getEditorKit();
+		statusText.setPreferredSize(new Dimension(400, centerPanel.getHeight() / 2));
+		statusText.setMaximumSize(new Dimension(400, centerPanel.getHeight() / 2));
+		HTMLDocument doc = (HTMLDocument) statusText.getDocument();
+		HTMLEditorKit editorKit = (HTMLEditorKit) statusText.getEditorKit();
 		try {
-			editorKit.insertHTML(doc, doc.getLength(), "<font face='Georgia'><font color='white'><font size='3'>"+player.getOutfit().describe(player)+"<br>"+player.describeStatus()+"<br>", 0, 0, null);
+			editorKit.insertHTML(doc,
+					doc.getLength(), "<font face='Georgia'><font color='white'><font size='3'>"
+							+ player.getOutfit().describe(player) + "<br>" + player.describeStatus() + "<br>",
+					0, 0, null);
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1167,8 +1112,7 @@ public class GUI extends JFrame implements Observer {
 				combatMessage(this.combat.getMessage());
 				combat.combatMessageChanged = false;
 			}
-			if (Global.getMatch() != null
-					&& (this.combat.phase == 0) || (this.combat.phase == 2)) {
+			if (Global.getMatch() != null && (this.combat.phase == 0) || (this.combat.phase == 2)) {
 				next(this.combat);
 			}
 		}
@@ -1220,8 +1164,7 @@ public class GUI extends JFrame implements Observer {
 			this.setText(choice);
 			addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					GUI.EventButton.this.event
-							.visit(GUI.EventButton.this.choice);
+					GUI.EventButton.this.event.visit(GUI.EventButton.this.choice);
 				}
 			});
 		}
@@ -1238,6 +1181,7 @@ public class GUI extends JFrame implements Observer {
 			setFont(new Font("Baskerville Old Face", 0, 18));
 			setToolTipText(i.getDesc());
 		}
+
 		public ItemButton(Activity event, Clothing i) {
 			super(event, i.getName());
 			setFont(new Font("Baskerville Old Face", 0, 18));
@@ -1302,7 +1246,7 @@ public class GUI extends JFrame implements Observer {
 			});
 		}
 	}
-	
+
 	private class InterveneButton extends JButton {
 		private Encounter enc;
 		private Character assist;
@@ -1315,8 +1259,7 @@ public class GUI extends JFrame implements Observer {
 			this.setText("Help " + assist.name());
 			addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					GUI.InterveneButton.this.enc.intrude(GUI.this.player,
-							GUI.InterveneButton.this.assist);
+					GUI.InterveneButton.this.enc.intrude(GUI.this.player, GUI.InterveneButton.this.assist);
 				}
 			});
 		}
@@ -1367,7 +1310,7 @@ public class GUI extends JFrame implements Observer {
 	}
 
 	private class LocatorButton extends JButton {
-		
+
 		public LocatorButton(final Action event, final String choice, final Character self) {
 			super();
 			setFont(new Font("Baskerville Old Face", 0, 18));
@@ -1379,10 +1322,11 @@ public class GUI extends JFrame implements Observer {
 			});
 		}
 	}
+
 	private class PageButton extends JButton {
 		private int page;
 
-		public PageButton(String label,int page) {
+		public PageButton(String label, int page) {
 			super();
 			setFont(new Font("Baskerville Old Face", 0, 18));
 			this.setText(label);
@@ -1398,18 +1342,22 @@ public class GUI extends JFrame implements Observer {
 
 	public void changeClothes(Character player, Activity event) {
 		clothesPanel.removeAll();
-		clothesPanel.add(new ClothesChangeGUI(player, event), BorderLayout.CENTER);
+		clothesPanel.add(new ClothesChangeGUI(player, event));
+		centerPanel.remove(((BorderLayout)centerPanel.getLayout()).getLayoutComponent(BorderLayout.CENTER));
+		this.centerPanel.add(clothesPanel, BorderLayout.CENTER);
+		this.clothesPanel.setVisible(true);
 		this.clothesPanel.repaint();
-		GUI.this.portraitPanel.add(GUI.this.clothesPanel, "East");
-		this.portraitPanel.revalidate();
+		this.centerPanel.repaint();
+		this.centerPanel.revalidate();
 	}
 
-	public void removeClosetGUI(){
+	public void removeClosetGUI() {
 		clothesPanel.removeAll();
-		this.clothesPanel.repaint();
-		GUI.this.portraitPanel.remove(GUI.this.clothesPanel);
-		this.portraitPanel.repaint();
-		this.portraitPanel.revalidate();
+		centerPanel.remove(((BorderLayout)centerPanel.getLayout()).getLayoutComponent(BorderLayout.CENTER));
+		this.centerPanel.add(portraitPanel, BorderLayout.CENTER);
+		this.clothesPanel.setVisible(false);
+		this.centerPanel.repaint();
+		this.centerPanel.revalidate();
 		displayStatus();
 	}
 

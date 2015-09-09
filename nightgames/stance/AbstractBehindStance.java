@@ -36,7 +36,7 @@ public abstract class AbstractBehindStance extends Position {
 	@Override
 	public Position insert(Character pitcher, Character dom) {
 		Character catcher = getOther(pitcher);
-		Character sub = getOther(pitcher);
+		Character sub = getOther(dom);
 		if (pitcher.body.getRandomInsertable() == null || !catcher.hasPussy()) {
 			// invalid
 			return this;

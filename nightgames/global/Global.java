@@ -374,6 +374,7 @@ public class Global {
 		skillPool.add(new BreastGrowth(p));
 		skillPool.add(new CockGrowth(p));
 		skillPool.add(new BreastRay(p));
+		skillPool.add(new FootSmother(p));
 		skillPool.add(new FootWorship(p));
 		skillPool.add(new BreastWorship(p));
 		skillPool.add(new CockWorship(p));

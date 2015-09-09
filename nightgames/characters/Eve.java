@@ -20,12 +20,12 @@ public class Eve extends BasePersonality {
 	public Eve(){
 		super();
 		character = new NPC("Eve",10,this);
-		character.outfitPlan.add(Clothing.getByName("tanktop"));
-		character.outfitPlan.add(Clothing.getByName("crotchlesspanties"));
-		character.outfitPlan.add(Clothing.getByName("jeans"));
-		character.closet.add(Clothing.getByName("tanktop"));
-		character.closet.add(Clothing.getByName("crotchlesspanties"));
-		character.closet.add(Clothing.getByName("jeans"));
+		character.outfitPlan.add(Clothing.getByID("tanktop"));
+		character.outfitPlan.add(Clothing.getByID("crotchlesspanties"));
+		character.outfitPlan.add(Clothing.getByID("jeans"));
+		character.closet.add(Clothing.getByID("tanktop"));
+		character.closet.add(Clothing.getByID("crotchlesspanties"));
+		character.closet.add(Clothing.getByID("jeans"));
 		character.change(Modifier.normal);
 		character.mod(Attribute.Seduction, 2);
 		character.mod(Attribute.Perception, 1);

@@ -103,8 +103,8 @@ public class MagicTraining extends Activity{
 							"is simple and Aisha is an extremely supportive teacher. Within the hour, you think you have it down and you're able to hit the targets " +
 							"with relative ease. Aisha smiles once you hit the last target and, with a wave of her hand, you return to the campus. The nausea returns but its " +
 							"not so bad this time. You thank Aisha and make your way back to your dorm.");
-					if(!player.has(Clothing.getByName("cloak"))){
-						player.gain(Clothing.getByName("cloak"));
+					if(!player.has(Clothing.getByID("cloak"))){
+						player.gain(Clothing.getByID("cloak"));
 					}
 					break;
 				case 1:

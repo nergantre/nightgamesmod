@@ -15,8 +15,7 @@ public class XxxStore extends Store{
 		add(Item.Onahole);
 		add(Item.Crop);
 		add(Item.Tickler);
-		add(Clothing.getByName("latextop"));
-		add(Clothing.getByName("latexpants"));
+		Clothing.getAllBuyableFrom("XxxStore");
 	}
 
 	@Override

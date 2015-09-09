@@ -16,14 +16,14 @@ public class Yui extends BasePersonality {
 	public Yui(){
 		super();
 		character = new NPC("Yui",1,this);
-		character.outfitPlan.add(Clothing.getByName("bra"));
-		character.outfitPlan.add(Clothing.getByName("Tshirt"));
-		character.outfitPlan.add(Clothing.getByName("panties"));
-		character.outfitPlan.add(Clothing.getByName("skirt"));
-		character.closet.add(Clothing.getByName("bra"));
-		character.closet.add(Clothing.getByName("Tshirt"));
-		character.closet.add(Clothing.getByName("panties"));
-		character.closet.add(Clothing.getByName("skirt"));
+		character.outfitPlan.add(Clothing.getByID("bra"));
+		character.outfitPlan.add(Clothing.getByID("Tshirt"));
+		character.outfitPlan.add(Clothing.getByID("panties"));
+		character.outfitPlan.add(Clothing.getByID("skirt"));
+		character.closet.add(Clothing.getByID("bra"));
+		character.closet.add(Clothing.getByID("Tshirt"));
+		character.closet.add(Clothing.getByID("panties"));
+		character.closet.add(Clothing.getByID("skirt"));
 		character.change(Modifier.normal);
 		character.setTrophy(Item.YuiTrophy);
 		character.plan = Plan.hunting;
