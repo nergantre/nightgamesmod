@@ -355,6 +355,7 @@ public class JSONSourceNPCDataLoader {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private static void loadAiModifiers(JSONArray arr, AiModifiers mods) {
 		for (Object aiMod : arr) {
 			JSONObject obj = (JSONObject) aiMod;

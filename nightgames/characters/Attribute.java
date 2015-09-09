@@ -14,7 +14,8 @@ public enum Attribute {
 	Ki,
 	Bio,
 	Divinity,
-	Willpower;
+	Willpower,
+	Technique;
 
 	public static boolean isBasic(Attribute a) {
 		return a == Power || a == Seduction || a == Perception;

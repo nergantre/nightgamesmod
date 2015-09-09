@@ -1,0 +1,331 @@
+{
+	"type" : "NPCSamantha",
+	"name" : "Samantha",
+	"outfit" : {
+		"top" : ["TODO_BRA", "TODO_TOP"],
+		"bottom" : ["TODO_PANTIES", "TODO_BOTTOM"]
+	},
+	"trophy" : "SamanthaTrophy",
+	"stats" : {
+		"base" : {
+			"level" : 12,
+			"attributes" : {
+				"Seduction" : 20,
+				"Cunning" : 6,
+				"Power" : 6,
+				"Technique" : 5
+			},
+			"resources" : {
+				"stamina" : 60,
+				"mojo" : 100,
+				"arousal" : 200,
+				"willpower" : 100
+			},
+			"traits" : [
+				"temptress",
+				"limbTraining1",
+				"tongueTraining1",
+				"pussyTraining1",
+				"dickhandler"
+			]
+		},
+		"growth" : {
+			"resources" : {
+				"stamina" : 1,
+				"bonusStamina" : 1,
+				"mojo" : 2,
+				"bonusMojo" : 1,
+				"arousal" : 3,
+				"bonusArousal" : 1,
+				"willpower" : 1.5,
+				"bonusWillpower" : 0.5,
+				"points" : [2, 3, 3],
+				"bonusPoints" : 1
+			},
+			"traits" : [{
+					"level" : 14,
+					"trait" : "silvertongue"
+				},{
+					"level" : 17,
+					"trait" : "limbTraining2"
+				},{
+					"level" : 20,
+					"trait" : "tongueTraining2"
+				},{
+					"level" : 23,
+					"trait" : "pussyTraining2"
+				},{
+					"level" : 26,
+					"trait" : "alwaysready"
+				},{
+					"level" : 29,
+					"trait" : "desensitized"
+				},{
+					"level" : 32,
+					"trait" : "experttongue"
+				},{
+					"level" : 35,
+					"trait" : "insertion"
+				},{
+					"level" : 38,
+					"trait" : "autonomousPussy"
+				},{
+					"level" : 41,
+					"trait" : "powerfulhips"
+				},{
+					"level" : 44,
+					"trait" : "limbTraining3"
+				},{
+					"level" : 47,
+					"trait" : "tongueTraining3"
+				},{
+					"level" : 50,
+					"trait" : "pussyTraining3"
+				}
+			],
+			"preferredAttributes" : [{
+					"attribute" : "Technique",
+					"max" : 50
+				}, {
+					"attribute" : "Seduction"
+				}
+			]
+		}
+	},
+	"plan" : "hunting",
+	"sex" : "female",
+	"body":{
+        "parts":[
+          {
+            "class":"nightgames.characters.body.BreastsPart",
+            "enum":"d"
+          },
+          {
+            "class":"nightgames.characters.body.PussyPart",
+            "enum":"normal"
+          },
+          {
+            "class":"nightgames.characters.body.EarPart",
+            "enum":"normal"
+          },
+          {
+          	"class":"nightgames.characters.body.AssPart",
+          	"desc":"ass",
+          	"hotness":0.5,
+          	"pleasure":1.2,
+          	"sensitivity":1.0
+          },
+          {
+          	"class":"nightgames.characters.body.MouthPart",
+          	"desc":"mouth",
+          	"hotness":0.0,
+          	"pleasure":1.2,
+          	"sensitivity":1.0
+          },
+          {
+            "descLong":"",
+            "pleasure":1.0,
+            "prefix":"",
+            "notable":false,
+            "sensitivity":1.0,
+            "hotness":0.0,
+            "type":"skin",
+            "class":"nightgames.characters.body.GenericBodyPart",
+            "desc":"skin"
+          },
+          {
+            "descLong":"",
+            "pleasure":1.0,
+            "prefix":"",
+            "notable":false,
+            "sensitivity":1.0,
+            "hotness":0.0,
+            "type":"hands",
+            "class":"nightgames.characters.body.GenericBodyPart",
+            "desc":"hands"
+          },
+          {
+            "descLong":"",
+            "pleasure":1.0,
+            "prefix":"",
+            "notable":false,
+            "sensitivity":1.0,
+            "hotness":0.0,
+            "type":"feet",
+            "class":"nightgames.characters.body.GenericBodyPart",
+            "desc":"feet"
+          }
+        ],
+        "hotness":1.5
+      },
+	"items" : {
+		"initial" : [{
+				"item" : "nectar",
+				"amount" : 10
+			}
+		],
+		"purchase" : [{
+				"item" : "nectar",
+				"amount" : 10
+			}
+		]
+	},
+	"lines" : {
+		"hurt" : [{
+				"text" : "Oh, a bit of a masochist, are we? That's alright, I cater to all tastes! "
+			}
+		],
+		"naked" : [{
+				"requirements": {
+					"reverse" : {"dom":""}
+				},
+				"text" : "Are you going to fuck me now? I promise my pussy will be a welcoming host. Why don't you give her a try? "
+			},{
+				"text" : "Samantha strikes a stunning pose as the last of her body is uncovered. \"All this could be yours, you know. You just need to cum a few times for me first.\""
+			}
+		],
+		"stunned" : [{
+				"text" : "I much prefer the gentler kind of love, but if this is what you want, it's what you'll get! "
+			}
+		],
+		"taunt" : [{
+				"text" : "I think I might try and see how effective pain is for you. Of course, I might have to really crank it up to get a good reaction... "
+			}
+		],
+		"tempt" : [
+			{
+				"requirements": {
+					"inserted" : true
+				},
+				"text" : "Does that feel good? Why don't you just lie back and let me take care of you? "
+			},
+			{
+				"text" : "Hmm, the things I'm going to do to you! If you relax, I'll show you why people pay fortunes to spend a night with me! "
+			}
+		],
+		"orgasm" : [
+		{
+				"requirements": {
+					"reverse": {
+						"orgasms" : 2
+					}
+				},
+				"text" : "Oh, yes! You really are good at this! Ever considered going pro?"
+			},
+			{
+				"requirements": {
+					"reverse": {
+						"orgasms" : 1
+					}
+				},
+				"text" : "Ah! It's not often I get multiple orgasms on the job! Do keep it up! "
+			},
+			{
+				"text" : "Mmm, nice job! Guess I will just have to work a little harder!"
+			}
+		],
+		"makeOrgasm" : [
+			{
+				"requirements": {
+					"reverse": {
+						"orgasms" : 2
+					}
+				},
+				"text" : "That's some stamina you've got! Surely, though, you're almost done now, right?"
+			},
+			{
+				"requirements": {
+					"reverse": {
+						"orgasms" : 1
+					}
+				},
+				"text" : "And another!  Think you are up for another round? "
+			},
+			{
+				"text" : "Good! Now we can really begin! Try to last a bit longer this time, huh? More fun for both of us! "
+			}
+		],
+		"describe" : [{
+				"text" : "TODO_DESC"
+			}
+		],
+		"startBattle" : [{
+				"text" : "Ah, there you are. I wanted to show my appreciation for your patronage. Oh yes, only the finest will do for you..."
+			}
+		],
+		"night" : [{
+				"text" : "TODO_NIGHT"
+			}
+		],
+		"victory" : [{
+				"requirements" :
+				{
+					"result" : "anal",
+					"inserted" : true
+				},
+				"text" : "TODO_VIC_ANAL_PITCH"
+			}, {
+				"requirements" :
+				{
+					"result" : "anal",
+					"reverse" : {"inserted" : true}
+				},
+				"text" : "TODO_VIC_ANAL_CATCH"
+			}, {
+				"requirements" :
+				{
+						"result" : "intercourse"
+					}
+				,
+				"text" : "You are so, so close to erupting inside Samantha, but she is equally close! You close your eyes and try to distract yourself, moving mechanically and exciting yourself as little as possible. She's struggling too, thrashing her head and moaning in pleasure. Then she screams out and goes stiff. Confident in your victory, you open the floodgates and pump into her with a feral wildness. It takes only seconds of powerful thrusting, spurred on by her impassioned sounds, for you to reach the point of no return. Just as you do, she goes limp and quiet, simply smiling at you. You realize you've been tricked, but it's too late to stop now. You give one last thrust with all your might, pouring all your lust and frustration into her, soon followed by powerful torrents of thick cum. Even as you groan in her ear, she just laughs.\n\n\"If only you knew how often I have had to fake an orgasm, {other:name-do}, you would understand how I have gotten so good at it. Don't feel too bad, though, I was actually quite close. On that note...\" She locks her arms and legs around you and rolls the both of you over. \"... You still owe me one.\""
+			}, {
+				"text" : "TODO_VIC_DEFAULT"
+			}
+		],
+		"defeat" : [{
+				"text" : "TODO_LOSS_DEFAULT"
+			}
+		],
+		"draw" : [{
+				"text" : "TODO_DRAW_DEFAULT"
+			}
+		],
+		"victory3p" : [{
+				"text" : "Samantha squats down in front of you, and you immediately cease your struggling at the sight of her shapely bosom. \"Good boy. Why don't we see if I can't have a little fun with you?\" She gets on her knees and leans in, kissing you softly. Meanwhile, her hands roam over your chest, her fingers working magic on your nipples. You had grown flaccid after {other:name-do} arrived, but just these simple touches are getting you rock hard again. Of course, her soft tongue dexterously exploring your mouth also helps. She keeps her body at some distance, careful never to make contact with you your turgid shaft. She moves her head down to one of your nipples, bringing the hand that was there down to your stomach. Her hand deftly scurries across your lower body, pressing down on your lower belly, tickling your sides and lightly drawing patterns over your abs, but still not laying a finger on the painfully swollen head of your cock. Every touch down below is accentuated by a caress, a suckle, a pull or even a light nibble on your nipples, and they seem to have a direct connection to your balls. You start to think you might actually cum just from this, and you start thinking about other things, trying to distract yourself and at least have her jerk you off to get her win. A couple of minutes pass, during which she never repeats the same combination of attentions twice, always bombarding you with new and wonderful sensations. Just when you think you are no longer able to hold on, she suddenly stops. \"Really impressive, {player:name-do}. Most guys cum after two minutes at most. Guess I'll just have to give your friend down there some direct attention. Unless...\" She lays down in front of you, resting her chin on her wrists, right in front of your dick. Then she purses her lips and softly blows. The feeling is so light, so immaterial, that you normally probably wouldn't have felt it. Now, however, it's just enough to send you into a screaming climax. You throw your head back and squeeze your eyes shut as your cock erupts. The final proof of your defeat soars through the air, nearly coating your own face. When your orgasm finally dies down, you are barely aware of being lain down on the ground and Samantha and {other:name-do} walking of, and you honestly don't care. "
+			}],
+		"victory3pAssist" :[{
+				"text" : "Samantha takes a moment to consider the situation, with you offering up {other:name-do} as you are. "Hmm, I guess I could just finger you and be done with it, but where's the fun in that? Besides, I should get something out of this too. But how to best... Ah! Perfect!" She moves in a blur, and somehow ends up with her legs wrapped around both your and {other:name-or-possessive-pronoun} heads, pressing her pussy into her face while she dives in between {other:name-or-possessive-pronoun} spread legs. You can't see what's going on down there, but being pressed up against {other:name-do} like this you can certainly feel the effects it has. She is twitching and squirming in your arms, and you have to work to hold on to her. Her moans grow to muffled screams as Samantha works her magic with her talented tongue. You count three orgasms before Samantha comes up for air, though it might have been a single long one. \"Well go on, honey. From now on you don't get to cum unless I do, I'll just get you really close until you get me off.\" {other:name-do} dives in with a vengeance as Samantha goes back down. Just the smell of Samantha's pussy so close to you has you hard as a rock against {other:name-or-possessive-pronoun} back, and her swirling tongue occasionally splatters some of those sweet juices your way. You hear Samantha let out a soft moan, and immediately every muscle in {other:name-or-possessive-pronoun} body tenses up as she screams her ecstasy into Samantha's squirting cunt. Both girls collapse into a heap as you stand, still painfully hard from the smell and {other:name-or-possessive-pronoun} squirming. Samantha, of course is the first to rise. \"Well that was fun,\" she says looking down at {other:name-do}, \"I could have you curled up and panting like that too, you know. But let's make it a fair match this time, huh?\" "
+			}
+		],
+		"intervene3p" : [{
+				"text" : "Your fight against {other:name-do} is going rather well, and you've got her on her stomach with you on top of her. Suddenly, a weight settles on your back, and when you look to the side, you are greeted by Samantha's face. She's lain down on top of you, pressing her thighs against yours and caressing your sides with her hands. \"You don't mind if I join in, do you? I always enjoy threesomes.\" You do mind, so you roll over, ending up atop her with both of you on your backs. She wraps her limbs around you holding you firmly in place. \"Go ahead,\" she says to {other:name-do}, who has gotten up by now, \"Have at him! I'll just wait for my turn.\""
+			}
+		],
+		"intervene3pAssist": [{
+				"text" : "{other:name-do} has gotten you in a bit of a pinch here. You already came once and are steaming towards a second, and she doesn't show any signs of being remotely close yet. You lunge at her, but even as you do so you know she's going to counter it and bring you down. Then she freezes, looking at something behind you, and your attack connects. You are now sitting on her thighs as she is sprawled out beneath you, and then Samantha leisurely strolls by, ostensibly the cause of {other:name-or-possessive-pronoun} distraction. She plants herself on {other:possessive-pronoun} chest, pinning her arms above her head. Samantha looks over her shoulder at you. \"Well go on, get her off and I will be able to do you next.\""
+			}
+		]
+	},
+	"mood" : {
+		"dominant" : 100,
+		"nervous" : 50,
+		"angry" : 100,
+		"confident" : 100,
+		"horny" : 100,
+		"desperate" : 50
+	},
+	"recruitment" : {
+		"action" : "Samantha: $1000",
+		"requirements" : {
+			"level" : 10
+		},
+		"cost" : [
+			{"modMoney" : -1000}
+		],
+		"introduction" : "So, I know this girl, an old friend of mine who now works as a high-class escort. She doesn't have any of that magical or technological stuff, but I swear she could make my dear old grandfather to cream his pants just by winking at him the right way. And he's dead! Anyway, you might have heard about her. She got into a bit of trouble recently after an entrepreneuring paparazzo sniped a picture of her and some prince or another going at it. Now she's got to lay low for a bit, lest mommy dearest arranges for an 'accident'. So I told her about this thing we've got going here, and she got super excited at the prospect. So much so that she's agreed to come over for a fraction of her usual rate. Girl's got to eat, I suppose. She even gave me a free blowjob for making the suggestion! Let me tell you, those were six of the finest seconds of my life! Oh, think that's funny, do you? Pay up and see how long you last!",
+		"confirm" : "Awesome, I'll go give her a call right now. Might even get another freebie out of it! I'll make sure to mention your name, too. Careful, she might want to thank you! "
+	},
+	"portraits" : [
+	],
+	"defaultPortrait" : "angel_confident.png"
+}
