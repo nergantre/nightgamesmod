@@ -24,8 +24,11 @@ public class Behind extends AbstractBehindStance {
 			return top.name()+" is holding you from behind.";
 		}
 	}
+
 	public String image() {
-		if (bottom.hasPussy()) {
+		if (top.hasPussy() && bottom.hasPussy()) {
+			return "behind_ff.jpg";
+		} else if (bottom.hasPussy()) {
 			return "behind_m.jpg";
 		} else {
 			return "behind_f.jpg";
