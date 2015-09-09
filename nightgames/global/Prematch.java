@@ -45,9 +45,9 @@ public class Prematch implements Scene{
 					"watching your opponents win, and by giving you a handicap I make that more likely to happen. I don't intend to unfairly pick on you though. Fortunately, " +
 					"you'll make more money for every fight you do win, " +
 					"so it's better for everyone.\"</i> That's.... You're not entirely sure how to respond to that. <i>\"For the first rule, I'll start with something simple: for " +
-					"tonight's match, you're only allowed to wear your boxers. Even when you come back here for a change of clothes, you'll only get your underwear. If you " +
-					"agree to this, I'll throw an extra $"+Modifier.pantsman.bonus()+" on top of your normal prize for each point you score. Interested?\"</i>";
-			type=Modifier.pantsman;
+					"tonight's match, you're only allowed to wear your underwear. Even when you come back here for a change of clothes, you'll only get your underwear. If you " +
+					"agree to this, I'll throw an extra $"+Modifier.underwearonly.bonus()+" on top of your normal prize for each point you score. Interested?\"</i>";
+			type=Modifier.underwearonly;
 			Global.flag(Flag.metLilly);
 			choice.add(new SceneButton("Do it"));
 			choice.add(new SceneButton("Not interested"));
@@ -72,7 +72,7 @@ public class Prematch implements Scene{
 			}
 			else{
 				switch(type){
-				case pantsman:
+				case underwearonly:
 					message+="<i>\"So, "+player.name()+", what would you say to another match in your underwear? For some reason, that just amuses the hell out of me. " +
 							"The bonus is still $"+type.bonus()+" per point.\"</i> ";
 					break;
@@ -130,7 +130,7 @@ public class Prematch implements Scene{
 		}
 		else{
 			available.add(Modifier.normal);
-			available.add(Modifier.pantsman);
+			available.add(Modifier.underwearonly);
 			available.add(Modifier.nudist);
 			available.add(Modifier.norecovery);
 			available.add(Modifier.vibration);
@@ -156,9 +156,9 @@ public class Prematch implements Scene{
 		}
 		else if(response.startsWith("Do")){
 			switch(type){
-			case pantsman:
+			case underwearonly:
 				player.getOutfit().undress();
-				player.change(Modifier.pantsman);
+				player.change(Modifier.underwearonly);
 				message+="Lilly smiles with her hands on her hips. <i>\"Glad to hear it. We'll hang on to the rest of your clothes until the match is over. Underwear-only starts " +
 						"now.\"</i> She wants you to undress here before the match even starts? You hesitate as you realize your opponents are all watching you curiously. Some " +
 						"of Lilly's assistants are still around too. She laughs when she notices your reluctance. <i>\"Are you seriously getting embarrassed about this? As if " +
