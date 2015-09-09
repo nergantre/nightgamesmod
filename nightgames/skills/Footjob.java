@@ -46,10 +46,10 @@ public class Footjob extends Skill {
 		if(target.roll(this, c, accuracy(c))){
 			int m = 8 + Global.random(6);
 			if(getSelf().human()){
-				c.write(getSelf(),deal(c,m,Result.normal, target));
+				c.write(getSelf(),Global.format(deal(c,m,Result.normal, target), getSelf(), target));
 			}
 			else if(target.human()){
-				c.write(getSelf(),receive(c,m,Result.normal, target));
+				c.write(getSelf(),Global.format(receive(c,m,Result.normal, target), getSelf(), target));
 			}
 			if (target.hasDick())
 				target.body.pleasure(getSelf(), getSelf().body.getRandom("feet"), target.body.getRandom("cock"), m, c);
