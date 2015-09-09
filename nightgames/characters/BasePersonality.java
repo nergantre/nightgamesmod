@@ -44,7 +44,7 @@ public abstract class BasePersonality implements Personality {
 
 	public void setGrowth() {
 	}
-	
+
 	@Override
 	public void rest() {
 		if (preferredCockMod != CockMod.error) {

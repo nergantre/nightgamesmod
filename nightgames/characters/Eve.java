@@ -23,14 +23,15 @@ public class Eve extends BasePersonality {
 		character.outfitPlan.add(Clothing.getByID("tanktop"));
 		character.outfitPlan.add(Clothing.getByID("crotchlesspanties"));
 		character.outfitPlan.add(Clothing.getByID("jeans"));
-		character.closet.add(Clothing.getByID("tanktop"));
-		character.closet.add(Clothing.getByID("crotchlesspanties"));
-		character.closet.add(Clothing.getByID("jeans"));
+		character.outfitPlan.add(Clothing.getByID("stilettopumps"));
+		character.outfitPlan.add(Clothing.getByID("garters"));
+
 		character.change(Modifier.normal);
 		character.mod(Attribute.Seduction, 2);
 		character.mod(Attribute.Perception, 1);
 		Global.gainSkills(character);
 		character.add(Trait.exhibitionist);
+		character.add(Trait.proheels);
 		character.setTrophy(Item.EveTrophy);
 		character.plan = Plan.hunting;
 		character.mood = Emotion.confident;

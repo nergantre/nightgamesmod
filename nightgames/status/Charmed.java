@@ -44,11 +44,9 @@ public class Charmed extends DurationStatus {
 	}
 
 	@Override
-	public int regen(Combat c) {
-		super.regen(c);
+	public void tick(Combat c) {
 		affected.emote(Emotion.horny,15);
 		affected.loseWillpower(c, 1);
-		return 0;
 	}
 
 	@Override

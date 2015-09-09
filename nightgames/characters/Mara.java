@@ -27,10 +27,8 @@ public class Mara extends BasePersonality  {
 		character.outfitPlan.add(Clothing.getByID("Tshirt"));
 		character.outfitPlan.add(Clothing.getByID("underwear"));
 		character.outfitPlan.add(Clothing.getByID("shorts"));
-		character.closet.add(Clothing.getByID("bra"));
-		character.closet.add(Clothing.getByID("Tshirt"));
-		character.closet.add(Clothing.getByID("underwear"));
-		character.closet.add(Clothing.getByID("shorts"));
+		character.outfitPlan.add(Clothing.getByID("pantyhose"));
+		character.outfitPlan.add(Clothing.getByID("boots"));
 		character.change(Modifier.normal);
 		character.mod(Attribute.Cunning, 2);
 		character.mod(Attribute.Perception, 2);
@@ -414,14 +412,14 @@ public class Mara extends BasePersonality  {
 	public void advance(){
 		character.add(Trait.madscientist);
 		character.body.addReplace(PussyPart.cybernetic, 1);
-		character.outfitPlan.clear();
+		character.unequipAllClothing();
 		character.outfitPlan.add(Clothing.getByID("bra"));
 		character.outfitPlan.add(Clothing.getByID("shirt"));
 		character.outfitPlan.add(Clothing.getByID("labcoat"));
 		character.outfitPlan.add(Clothing.getByID("underwear"));
 		character.outfitPlan.add(Clothing.getByID("pants"));
-		character.closet.add(Clothing.getByID("pants"));
-		character.closet.add(Clothing.getByID("labcoat"));
+		character.outfitPlan.add(Clothing.getByID("pantyhose"));
+		character.outfitPlan.add(Clothing.getByID("boots"));
 		character.mod(Attribute.Science, 1);
 	}
 

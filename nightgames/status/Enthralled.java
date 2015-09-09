@@ -53,7 +53,7 @@ public class Enthralled extends DurationStatus {
 	public void replace(Status s) {
 		assert (s instanceof Enthralled);
 		Enthralled other = (Enthralled)s;
-		setDuration(Math.max(getDuration() + 1, other.getDuration() - timesRefreshed));
+		setDuration(Math.max(getDuration() + 1, other.getDuration() - 2 * (timesRefreshed + 1)));
 		timesRefreshed += 1;
 	}
 
@@ -86,16 +86,20 @@ public class Enthralled extends DurationStatus {
 	@Override
 	public int regen(Combat c) {
 		super.regen(c);
+		return 0;
+	}
+	
+	@Override
+	public void tick(Combat c) {
 		if (affected.check(Attribute.Cunning, master.get(Attribute.Seduction)/2 +master.get(Attribute.Arcane)/2 + master.get(Attribute.Dark)/2 + 10+10*(getDuration() - timesRefreshed))) {
 			if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
 				System.out.println("Escaped from Enthralled");
 			}
 			setDuration(0);
 		}
-		affected.spendMojo(c, 5);
-		affected.loseWillpower(c, 1);
+		affected.loseMojo(c, 5, " (Enthralled)");
+		affected.loseWillpower(c, 1, 0, false, " (Enthralled)");
 		affected.emote(Emotion.horny,15);
-		return 0;
 	}
 
 	@Override

@@ -20,22 +20,30 @@ import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
 
-public class MaraTime extends Activity {
-	private NPC mara;
-	
+public class MaraTime extends BaseNPCTime {
 	public MaraTime(Character player) {
-		super("Mara", player);
-		mara = Global.getNPC("Mara");
-		buildTransformationPool();
+		super(player, Global.getNPC("Mara"));
+		knownFlag = "MaraKnown";
+		giftedString = "\"Awww thanks!\"";
+		giftString = "\"A present? You shouldn't have!\"";
+		transformationOptionString = "Modifications";
+		advTrait = Trait.madscientist;
+		transformationIntro = "[Placeholder]<br>Mara explains that she may be able to modify your body with her new equipment.";
+		loveIntro = "Mara's computer lab has once again become a clusterfuck of electronics equipment. Not just electronics either. The back corner houses a " +
+				"small chemical lab, and there are welding and metal cutting tools probably borrowed from the mechanical engineering building. You can only identify " +
+				"about 20% of the junk in here. It looks like some mad scientist's laboratory.<p>Mara notices your presence and jumps up eagerly from her workstation to greet you. <i>\"Are you here to have some fun? I've " +
+				"got a couple of toys I've been working on that I'd like your help to test before tonight's match. My classwork has gotten really easy, so I've had a lot " +
+				"of free time to develop prototype tools and traps. Well, technically the classwork hasn't actually changed very much, I guess I just never realized how... " +
+				"basic it all was.\"</i> She can't seem to sit still while she's talking. She keeps fiddling with half completed electronics devices. She doesn't seem sleep " +
+				"deprived so much as manic. Has she taken something? <i>\"I came up with a new energy drink; perfectly safe and legal. Simple formula too, I have no idea why " +
+				"it isn't being produced already.\"</i> You hug Mara close to stop her from moving around. Didn't she promise to reduce her workload and pay attention to her " +
+				"health? She's dived deeper into her work than ever and is keeping herself awake with experimental chemistry. If she keeps this up, she's going to have a " +
+				"heart attack before her 20th birthday. <i>\"I..\"</i> She goes quiet and looks down guiltily. Eventually she wraps her arms around you and buries her face in your " +
+				"chest. <i>\"I guess I'm addicted to the challenge. I didn't mean to worry you.\"</i> She raises her head and kisses you softly. <i>\"I can forget all my work when we're " +
+				"together and I always sleep well after we make love. I'm counting on you to save me from myself.\"</i>";
+		transformationFlag = "";
 	}
 
-	@Override
-	public boolean known() {
-		return Global.checkFlag(Flag.MaraKnown);
-	}
-
-	List<TransformationOption> options;
-	
 	public void buildTransformationPool() {
 		options = new ArrayList<>();
 		TransformationOption bionicCock = new TransformationOption();
@@ -79,60 +87,8 @@ public class MaraTime extends Activity {
 	}
 
 	@Override
-	public void visit(String choice) {
-		Global.gui().clearText();
-		Global.gui().clearCommand();
-		Optional<TransformationOption> optionalOption = options.stream().filter(opt -> choice.equals(opt.option)).findFirst();
-		if (optionalOption.isPresent()) {
-			TransformationOption option = optionalOption.get();
-			boolean hasAll = option.ingredients.entrySet().stream().allMatch(entry -> player.has(entry.getKey(), entry.getValue()));
-			if (hasAll) {
-				Global.gui().message(Global.format(option.scene, mara, player));
-				option.ingredients.entrySet().stream().forEach(entry -> player.consume(entry.getKey(), entry.getValue(), false));
-				option.effect.execute(null, player, mara);
-				Global.gui().choose(this, "Leave");
-			} else {
-				Global.gui().message("Mara frowns when she sees that you don't have the requested items.");
-				Global.gui().choose(this, "Back");
-			}
-		} else if (choice.equals("Modifications")) {
-			Global.gui().message("[Placeholder]<br>Mara explains to you how she modifies her own body.");
-			options.forEach(opt -> {
-				Global.gui().message(opt.option + ":");
-				opt.ingredients.entrySet().forEach((entry) -> {
-					Global.gui().message(entry.getValue() + " " + entry.getKey().getName());					
-				});
-				if (!opt.additionalRequirements.isEmpty()) {
-					Global.gui().message(opt.additionalRequirements);
-				}
-				Global.gui().message("<br>");
-			});
-			options.forEach(opt -> {
-				if (opt.requirements.stream().allMatch(req -> req.meets(null, player, mara))) {
-					Global.gui().choose(this, opt.option);
-				}
-			});
-			Global.gui().choose(this, "Back");
-		} else if (choice.equals("Start") || choice.equals("Back")) {
-			if(mara.getAffection(player)>25&&mara.has(Trait.madscientist)){
-				Global.gui().message("Mara's computer lab has once again become a clusterfuck of electronics equipment. Not just electronics either. The back corner houses a " +
-						"small chemical lab, and there are welding and metal cutting tools probably borrowed from the mechanical engineering building. You can only identify " +
-						"about 20% of the junk in here. It looks like some mad scientist's laboratory.<p>Mara notices your presence and jumps up eagerly from her workstation to greet you. <i>\"Are you here to have some fun? I've " +
-						"got a couple of toys I've been working on that I'd like your help to test before tonight's match. My classwork has gotten really easy, so I've had a lot " +
-						"of free time to develop prototype tools and traps. Well, technically the classwork hasn't actually changed very much, I guess I just never realized how... " +
-						"basic it all was.\"</i> She can't seem to sit still while she's talking. She keeps fiddling with half completed electronics devices. She doesn't seem sleep " +
-						"deprived so much as manic. Has she taken something? <i>\"I came up with a new energy drink; perfectly safe and legal. Simple formula too, I have no idea why " +
-						"it isn't being produced already.\"</i> You hug Mara close to stop her from moving around. Didn't she promise to reduce her workload and pay attention to her " +
-						"health? She's dived deeper into her work than ever and is keeping herself awake with experimental chemistry. If she keeps this up, she's going to have a " +
-						"heart attack before her 20th birthday. <i>\"I..\"</i> She goes quiet and looks down guiltily. Eventually she wraps her arms around you and buries her face in your " +
-						"chest. <i>\"I guess I'm addicted to the challenge. I didn't mean to worry you.\"</i> She raises her head and kisses you softly. <i>\"I can forget all my work when we're " +
-						"together and I always sleep well after we make love. I'm counting on you to save me from myself.\"</i>");
-					Global.gui().choose(this,"Games");
-					Global.gui().choose(this,"Sparring");
-					Global.gui().choose(this,"Sex");
-					Global.gui().choose(this,"Modifications");
-			}
-			else if(mara.getAffection(player)>0){
+	public void subVisitIntro(String choice) {
+		if(npc.getAffection(player)>0){
 				Global.gui().message("You go to the computer lab to find Mara for some quality time. She immediately breaks into a smile when she sees you enter. You can tell " +
 					"at a glance that she's better rested than the first time you came in here. It's not just her that's changed. The room is still a mess of electronics, but " +
 					"a significant portion of the clutter is gone. You can reasonably walk across the room without getting tangled in anything. <i>\"I cut back on the number of " +
@@ -143,7 +99,7 @@ public class MaraTime extends Activity {
 				Global.gui().choose(this,"Sparring");
 				Global.gui().choose(this,"Sex");
 			}
-			else if(mara.getAttraction(player)<15){
+			else if(npc.getAttraction(player)<15){
 				Global.gui().message("You eventually find Mara in one of the computer labs, or at least a room labeled Computer Lab D. You typically think of a computer " +
 					"lab as having rows of fully functional computers and enough clear floorspace to walk through. Most of the computers here are only half assembled and " +
 					"every surface is covered with assorted electronics. Mara is the only one in the small room, unless someone is buried in the PLCs and cords. She's focused " + 
@@ -154,8 +110,8 @@ public class MaraTime extends Activity {
 					"I'll love you forever.\"</i><p>You find a vending machine not too far from the lab and buy an energy drink. When you return to Mara, she doesn't acknowledge your " +
 					"presence. It doesn't seem like she's trying to be rude, but she's so consumed with her work that she's probably forgotten you were ever here. Deciding not to interrupt " +
 					"her again, you set the drink near her. For the first time, you notice the dark bags under her eyes. You worry that she's pushing herself too hard.");
-				mara.gainAttraction(player,2);
-				player.gainAttraction(mara,2);
+				npc.gainAttraction(player,2);
+				player.gainAttraction(npc,2);
 			}
 			else{
 				Global.gui().message("You head to the computer lab to see Mara. She jumps in surprise when the door opens, but relaxes when she sees who you are. <i>\"Hi "+player.name()+". "+
@@ -171,16 +127,17 @@ public class MaraTime extends Activity {
 					"She stares at you stunned for a few long seconds before looking away. <i>\"You're worried about me too?\"</i> she whispers while gently squeezing your hand. In the silence that follows, " +
 					"she seems very small and fragile. Suddenly she smiles and meets your eyes as if nothing had happened. <i>\"Let's make a deal: I'll let you distract me from my projects. As long as "+
 					"we're having fun, I won't think about anything but you.\"</i> Basically she'll only take a break while you're hanging out together. It's better than nothing.");
-				mara.gainAffection(player,1);
-				player.gainAffection(mara,1);
+				npc.gainAffection(player,1);
+				player.gainAffection(npc,1);
 				Global.gui().choose(this,"Games");
 				Global.gui().choose(this,"Sparring");
 				Global.gui().choose(this,"Sex");
 			}
 			Global.gui().choose(this,"Leave");
 		}
-		else if(choice == "Sex"){
-			if(mara.getAffection(player)>=8&&(!player.has(Trait.ticklemonster)||Global.random(2)==1)){
+	public void subVisit(String choice) {
+		if(choice == "Sex"){
+			if(npc.getAffection(player)>=8&&(!player.has(Trait.ticklemonster)||Global.random(2)==1)){
 				Global.gui().message("You invite Mara to your room some fun. As soon as you get there she walks up behind you, shoves her hand down the front of your pants, and grabs you penis. " +
 						"You're taken by surprise, but it doesn't stop you from getting hard in her hand. <i>\"You said we're here to have fun and I've decided you're my toy today,\"</i> she whispers " +
 						"in an unusually sultry voice. When you're fully erect, she withdraws her hand and orders you to strip. Once you're naked, she has you sit on the bed and begins to fondle " +
@@ -213,7 +170,7 @@ public class MaraTime extends Activity {
 				if(!player.has(Trait.ticklemonster)){
 					Global.gui().message("<p><b>You've gotten better at finding sensitive spots when tickling nude opponents.</b>");
 					player.add(Trait.ticklemonster);
-					mara.add(Trait.ticklemonster);
+					npc.add(Trait.ticklemonster);
 				}
 			}
 			else{
@@ -243,12 +200,12 @@ public class MaraTime extends Activity {
 				
 			}
 			Global.gui().choose(this,"Leave");
-			Daytime.train(player,mara,Attribute.Seduction);
-			mara.gainAffection(player,1);
-			player.gainAffection(mara,1);
+			Daytime.train(player,npc,Attribute.Seduction);
+			npc.gainAffection(player,1);
+			player.gainAffection(npc,1);
 		}
 		else if(choice == "Games"){
-			if(mara.getAffection(player)>=16&&(!player.has(Trait.spider)||Global.random(2)==1)){
+			if(npc.getAffection(player)>=16&&(!player.has(Trait.spider)||Global.random(2)==1)){
 				Global.gui().message("Mara is too damn good at these games. She moves her third spider next to your queen, trapping it in place. You don't lose until she fills in all six spaces " +
 						"adjacent to your queen, but even with just those three pieces, you don't have enough room to move out of there. For the rest of the game, you try to block off her access " +
 						"to the remaining spaces, while rushing to try to surround her queen and put her on the defensive. It's no use. You never manage to immobilize her queen so she always manages " +
@@ -281,7 +238,7 @@ public class MaraTime extends Activity {
 				if(!player.has(Trait.spider)){
 					Global.gui().message("<p><b>Mara has taught you to make the brilliant and insanely complex Spiderweb Trap.</b>");
 					player.add(Trait.spider);
-					mara.add(Trait.spider);
+					npc.add(Trait.spider);
 				}				
 			}
 			else{
@@ -306,12 +263,12 @@ public class MaraTime extends Activity {
 						"pretending to be mad at you, but she does demand to be on top during your 'follow-up game' to address your combined sexual frustration.");	
 			}
 			Global.gui().choose(this,"Leave");
-			Daytime.train(player, mara, Attribute.Cunning);
-			mara.gainAffection(player,1);
-			player.gainAffection(mara,1);
+			Daytime.train(player, npc, Attribute.Cunning);
+			npc.gainAffection(player,1);
+			player.gainAffection(npc,1);
 		}
 		else if(choice == "Sparring"){
-			if(mara.getAffection(player)>=12&&(!player.has(Trait.heeldrop)||Global.random(2)==1)){
+			if(npc.getAffection(player)>=12&&(!player.has(Trait.heeldrop)||Global.random(2)==1)){
 				Global.gui().message("You and Mara prepare for some sparring practice by getting undressed. She tosses her clothes aside and is so eager that she's actually bouncing noticeably, " +
 						"unconcerned about her nudity. You finish stretching and square off with her, but she raises a hand to stop you. <i>\"Wait! Can I have a kiss before we start?\"</i> You hesitate " +
 						"in surprise. Mara's always angling for an advantage, is she going to try a sneak attack when you approach to kiss her? She pouts and looks a little hurt. <i>\"I wouldn't " +
@@ -336,7 +293,7 @@ public class MaraTime extends Activity {
 				if(!player.has(Trait.heeldrop)){
 					Global.gui().message("<p><b>You've experienced Mara's most painful technique and learned how to use it yourself.</b>");
 					player.add(Trait.heeldrop);
-					mara.add(Trait.heeldrop);
+					npc.add(Trait.heeldrop);
 				}
 			}
 			else{
@@ -364,17 +321,12 @@ public class MaraTime extends Activity {
 				
 			}
 			Global.gui().choose(this,"Leave");
-			Daytime.train(player, mara, Attribute.Power);
-			mara.gainAffection(player,1);
-			player.gainAffection(mara,1);
+			Daytime.train(player, npc, Attribute.Power);
+			npc.gainAffection(player,1);
+			player.gainAffection(npc,1);
 		}
 		else if(choice == "Leave"){
 			done(true);
 		}
-	}
-	@Override
-	public void shop(Character npc, int budget) {
-		npc.gainAffection(mara,1);
-		mara.gainAffection(npc,1);
 	}
 }

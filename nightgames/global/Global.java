@@ -248,6 +248,7 @@ public class Global {
 		skillPool.add(new PinAndBlow(p));
 		skillPool.add(new Footjob(p));
 		skillPool.add(new FootPump(p));
+		skillPool.add(new HeelGrind(p));
 		skillPool.add(new Handjob(p));
 		skillPool.add(new Squeeze(p));
 		skillPool.add(new Nurple(p));
@@ -702,6 +703,10 @@ public class Global {
 
 	public static boolean checkFlag(Flag f){
 		return flags.contains(f.name());
+	}
+
+	public static boolean checkFlag(String key){
+		return flags.contains(key);
 	}
 
 	public static float getValue(Flag f){

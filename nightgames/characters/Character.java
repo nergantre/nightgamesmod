@@ -80,6 +80,7 @@ public abstract class Character extends Observable implements Cloneable {
 	public HashMap<String, Integer> cooldowns;
 	private HashSet<Character> mercy;
 	protected Map<Item, Integer> inventory;
+	private HashMap<String, Integer> flags;
 	protected Item trophy;
 	public State state;
 	protected int busy;
@@ -102,6 +103,7 @@ public abstract class Character extends Observable implements Cloneable {
 		body = new Body(this);
 		att = new HashMap<Attribute,Integer>();
 		cooldowns = new HashMap<String, Integer>();
+		flags = new HashMap<String, Integer>();
 		att.put(Attribute.Power, 5);
 		att.put(Attribute.Cunning, 5);
 		att.put(Attribute.Seduction, 5);
@@ -151,9 +153,9 @@ public abstract class Character extends Observable implements Cloneable {
 		c.outfit = new Outfit(outfit);
 		c.skills = (HashSet<Skill>) skills.clone();
 		c.status = new HashSet<Status>();
+		c.flags = new HashMap<>(flags);
 		for (Status s: status) {
-			Status clone = (Status) s.clone();
-			clone.affected = c;
+			Status clone = (Status) s.instance(c,c);
 			c.status.add(clone);
 		}
 		c.traits = (Set<Trait>) new TreeSet<Trait>(traits);
@@ -170,6 +172,14 @@ public abstract class Character extends Observable implements Cloneable {
 		c.body.character = c;
 		c.orgasmed = orgasmed;
 		return c;
+	}
+	
+	public void finishClone(Character other) {
+		HashSet<Status> oldstatus = status;
+		status = new HashSet<Status>();
+		for (Status s: oldstatus) {
+			status.add(s.instance(this, other));
+		}
 	}
 	public String name(){
 		return name;
@@ -523,10 +533,13 @@ public abstract class Character extends Observable implements Cloneable {
 			tempt(i);
 		}
 	}
-
 	public void arouse(int i, Combat c){
-		String message = String.format("%s aroused for <font color='rgb(240,100,100)'>%d<font color='white'>\n",
-				Global.capitalizeFirstLetter(subjectWas()), i);
+		arouse(i, c, "");
+	}
+
+	public void arouse(int i, Combat c, String source){
+		String message = String.format("%s aroused for <font color='rgb(240,100,100)'>%d<font color='white'>%s\n",
+				Global.capitalizeFirstLetter(subjectWas()), i, source);
 		if (c != null)
 			c.writeSystemMessage(message);
 		tempt(i);
@@ -575,6 +588,9 @@ public abstract class Character extends Observable implements Cloneable {
 		return willpower;
 	}
 	public void buildMojo(Combat c, int percent){
+		buildMojo(c, percent, "");
+	}
+	public void buildMojo(Combat c, int percent, String source){
 		int x = (percent*Math.min(mojo.max(), 200))/100;
 		int bonus = 0;
 		for(Status s: getStatuses()){
@@ -584,13 +600,17 @@ public abstract class Character extends Observable implements Cloneable {
 		if (x > 0) {
 			mojo.restore(x);
 			if (c != null) {
-				c.writeSystemMessage(Global.capitalizeFirstLetter(String.format("%s <font color='rgb(100,200,255)'>%d<font color='white'> mojo.",this.subjectAction("built", "built"), x)));
+				c.writeSystemMessage(Global.capitalizeFirstLetter(String.format("%s <font color='rgb(100,200,255)'>%d<font color='white'> mojo%s.",this.subjectAction("built", "built"), x, source)));
 			}
 		} else if (x < 0) {
 			loseMojo(c, x);
 		}
 	}
 	public void spendMojo(Combat c, int i){
+		spendMojo(c, i, "");
+	}
+		
+	public void spendMojo(Combat c, int i, String source){
 		int cost = i;
 		int bonus = 0;
 		for(Status s: getStatuses()){
@@ -602,10 +622,14 @@ public abstract class Character extends Observable implements Cloneable {
 			mojo.set(0);
 		}
 		if (c != null && i != 0) {
-			c.writeSystemMessage(Global.capitalizeFirstLetter(String.format("%s <font color='rgb(150,150,250)'>%d<font color='white'> mojo.",this.subjectAction("spent", "spent"), cost)));
+			c.writeSystemMessage(Global.capitalizeFirstLetter(String.format("%s <font color='rgb(150,150,250)'>%d<font color='white'> mojo%s.",this.subjectAction("spent", "spent"), cost, source)));
 		}
 	}
 	public int loseMojo(Combat c, int i) {
+		return loseMojo(c, i, "");
+	}
+
+	public int loseMojo(Combat c, int i, String source) {
 		int amt = Math.min(mojo.get(), i);
 		mojo.reduce(amt);
 		if(mojo.get()<0){
@@ -636,11 +660,11 @@ public abstract class Character extends Observable implements Cloneable {
 	}
 
 	public boolean breastsAvailable(){
-		return outfit.slotNaked(ClothingSlot.top);
+		return outfit.slotOpen(ClothingSlot.top);
 	}
 
 	public boolean crotchAvailable(){
-		return outfit.slotNaked(ClothingSlot.bottom);
+		return outfit.slotOpen(ClothingSlot.bottom);
 	}
 
 	public void dress(Combat c){
@@ -739,6 +763,7 @@ public abstract class Character extends Observable implements Cloneable {
 
 	public void tick(Combat c) {
 		body.tick(c);
+		status.forEach(s -> s.tick(c));
 		countdown(temporaryAddedTraits);
 		countdown(temporaryRemovedTraits);
 	}
@@ -1127,6 +1152,9 @@ public abstract class Character extends Observable implements Cloneable {
 		saveObj.put("body", body.save());
 		saveEnumIntMap(saveObj, inventory, "inventory");
 		saveObj.put("human", human());
+		JSONObject flagsObj = new JSONObject();
+		saveObj.put("flags", flagsObj);
+		flags.entrySet().stream().forEach(entry -> flagsObj.put(entry.getKey(), entry.getValue()));
 		return saveObj;
 	}
 
@@ -1181,6 +1209,14 @@ public abstract class Character extends Observable implements Cloneable {
 				String keyString = (String) key;
 				Item item = Item.valueOf(keyString);
 				inventory.put(item, JSONUtils.readInteger(invenObj, keyString));
+			}
+		}
+		if (obj.containsKey("flags")) {
+			JSONObject flagsObj = (JSONObject) obj.get("flags");
+			flags.clear();
+			for(Object key:flagsObj.keySet()){
+				String keyString = (String) key;
+				flags.put(keyString, JSONUtils.readInteger(flagsObj, keyString));
 			}
 		}
 		change(Modifier.normal);
@@ -1252,7 +1288,7 @@ public abstract class Character extends Observable implements Cloneable {
 		}
 		float extra = 25.0f * overflow / (arousal.max()/2.0f);
 
-		loseWillpower(c, getOrgasmWillpowerLoss(), Math.round(extra), true);
+		loseWillpower(c, getOrgasmWillpowerLoss(), Math.round(extra), true, "");
 		orgasms += 1;
 	}
 
@@ -1270,14 +1306,14 @@ public abstract class Character extends Observable implements Cloneable {
 	}
 
 	public void loseWillpower(Combat c, int i) {
-		loseWillpower(c, i, 0, false);
+		loseWillpower(c, i, 0, false, "");
 	}
 
 	public void loseWillpower(Combat c, int i, boolean primary) {
-		loseWillpower(c, i, 0, primary);
+		loseWillpower(c, i, 0, primary, "");
 	}
 
-	public void loseWillpower(Combat c, int i, int extra, boolean primary) {
+	public void loseWillpower(Combat c, int i, int extra, boolean primary, String source) {
 		int amt = i + extra;
 		boolean reduced = false;
 		if (has(Trait.strongwilled) && primary) {
@@ -1287,9 +1323,9 @@ public abstract class Character extends Observable implements Cloneable {
 		int old = willpower.get();
 		willpower.reduce(amt);
 		if (c != null) {
-			c.writeSystemMessage(String.format("%s lost <font color='rgb(220,130,40)'>%s<font color='white'> willpower" + (reduced ? " (Strong-willed)." : "."), this.subject(), extra == 0 ? Integer.toString(amt) : i + "+" + extra + " ("+amt+")"));
+			c.writeSystemMessage(String.format("%s lost <font color='rgb(220,130,40)'>%s<font color='white'> willpower" + (reduced ? " (Strong-willed)" : "" + "%s."), this.subject(), extra == 0 ? Integer.toString(amt) : i + "+" + extra + " ("+amt+")", source));
 		} else {
-			Global.gui().systemMessage((String.format("%s lost <font color='rgb(220,130,40)'>%d<font color='white'> willpower" + (reduced ? " (Strong-willed)." : "."), this.subject(), amt)));
+			Global.gui().systemMessage((String.format("%s lost <font color='rgb(220,130,40)'>%d<font color='white'> willpower" + (reduced ? " (Strong-willed)" : "" + "%s."), this.subject(), amt, source)));
 		}
 		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
 			System.out.printf("will power reduced from %d to %d\n", old, willpower.get());
@@ -1505,9 +1541,13 @@ public abstract class Character extends Observable implements Cloneable {
 		}
 		return false;
 	}
-
+	public void unequipAllClothing() {
+		closet.addAll(outfitPlan);
+		outfitPlan.clear();
+		change(Modifier.normal);
+	}
 	public boolean has(Clothing item){
-		return closet.contains(item);
+		return closet.contains(item) || outfit.getEquipped().contains(item);
 	}
 
 	public void consume(Item item, int quantity){
@@ -1902,6 +1942,24 @@ public abstract class Character extends Observable implements Cloneable {
 		dropStatus(null, null);
 		orgasms = 0;
 		setChanged();
+		if (has(ClothingTrait.heels)) {
+			setFlag("heelsTraining", getFlag("heelsTraining") + 1);
+		}
+		if (has(ClothingTrait.highheels)) {
+			setFlag("heelsTraining", getFlag("heelsTraining") + 1);
+		}
+		if (has(ClothingTrait.higherheels)) {
+			setFlag("heelsTraining", getFlag("heelsTraining") + 1);
+		}
+	}
+	public void setFlag(String string, int i) {
+		flags.put(string, i);
+	}
+	public int getFlag(String string) {
+		if (flags.containsKey(string)) {
+			return flags.get(string);
+		}
+		return 0;
 	}
 	public boolean canSpend(int mojo){
 		int cost=mojo;
@@ -2065,6 +2123,11 @@ public abstract class Character extends Observable implements Cloneable {
 		} else if (escape < -1) {
 			fit += -8 * Math.log(-escape);
 		}
+		int totalAtts = 0;
+		for (Attribute attribute : att.keySet()) {
+			totalAtts += att.get(attribute);
+		}
+		fit += Math.sqrt(totalAtts) * 5;
 
 		//what an average piece of clothing should be worth in fitness
 		double topFitness = 4.0;
@@ -2076,6 +2139,15 @@ public abstract class Character extends Observable implements Cloneable {
 			// If I'm horny, I want to make the opponent cum asap, put more emphasis on arousal
 			arousalMod = 2.0f;
 		}
+		
+		// check body parts based on my preferences
+		if (other.hasDick()) {
+			fit -= (dickPreference() - 3) * 4;
+		}
+		if (other.hasPussy()) {
+			fit -= (pussyPreference() - 3) * 4;
+		}
+
 		fit += other.outfit.getFitness(c, bottomFitness, topFitness);
 		fit += other.body.getHotness(other, this);
 		// Extreme situations
@@ -2104,6 +2176,12 @@ public abstract class Character extends Observable implements Cloneable {
         float mojoMod = 1.0f;
         float usum = arousalMod + staminaMod + mojoMod;
         Character other = c.getOther(this);
+
+		int totalAtts = 0;
+		for (Attribute attribute : att.keySet()) {
+			totalAtts += att.get(attribute);
+		}
+		fit += Math.sqrt(totalAtts) * 5;
 		// Always important: Position
 		fit += c.getStance().priorityMod(this) * 6;
 		int escape = getEscape(c);
@@ -2128,7 +2206,13 @@ public abstract class Character extends Observable implements Cloneable {
 			// ...we need to see if that's beneficial to us.
 			fit += this.body.penetrationFitnessModifier(c.getStance().inserted(this), c.getStance().analinserted(), other.body);
 		}
-		
+		if (hasDick()) {
+			fit += (dickPreference() - 3) * 4;
+		}
+
+		if (hasPussy()) {
+			fit += (pussyPreference() - 3) * 4;
+		}
 		// Also somewhat of a factor: Inventory (so we don't
 		// just use it without thinking)
 		for(Item item : inventory.keySet())
@@ -2228,10 +2312,11 @@ public abstract class Character extends Observable implements Cloneable {
 				(!article.is(ClothingTrait.armored)
 						&& !article.is(ClothingTrait.bulky)));
 		} else if (part.isType("pussy") || part.isType("ass")) {
-			return outfit.slotEmptyOrMeetsCondition(ClothingSlot.bottom, (article) -> 
-							(article.is(ClothingTrait.skimpy)
+			return outfit.slotEmptyOrMeetsCondition(ClothingSlot.bottom, (article) -> {
+							return (article.is(ClothingTrait.skimpy)
 							|| article.is(ClothingTrait.open)
-							|| article.is(ClothingTrait.flexible)));
+							|| article.is(ClothingTrait.flexible));
+							});
 		} else {
 			return false;
 		}
@@ -2349,5 +2434,9 @@ public abstract class Character extends Observable implements Cloneable {
 	}
 	public Outfit getOutfit() {
 		return outfit;
+	}
+	public boolean footAvailable() {
+		Clothing article = outfit.getTopOfSlot(ClothingSlot.feet);
+		return article == null || article.getLayer() < 2;
 	}
 }

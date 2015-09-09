@@ -51,11 +51,9 @@ public class Trance extends DurationStatus {
 	}
 
 	@Override
-	public int regen(Combat c) {
-		super.regen(c);
-		affected.loseWillpower(c, 1);
+	public void tick(Combat c) {
+		affected.loseWillpower(c, 1, 0, false, " (Trance)");
 		affected.emote(Emotion.horny,15);
-		return 0;
 	}
 
 	@Override

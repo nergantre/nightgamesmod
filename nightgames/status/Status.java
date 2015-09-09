@@ -96,4 +96,5 @@ public abstract class Status implements Cloneable {
 	public void onRemove(Combat c, Character other) {}
 	public abstract JSONObject saveToJSON();
 	public abstract Status loadFromJSON(JSONObject obj);
+	public void tick(Combat c) {}
 }

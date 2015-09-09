@@ -38,13 +38,10 @@ public class BD extends DurationStatus {
 	}
 
 	@Override
-	public int regen(Combat c) {
-		super.regen(c);
+	public void tick(Combat c) {
 		if(affected.bound()){
 			affected.arouse(affected.getArousal().max()/20, c);
 		}
-		return 0;
-		
 	}
 
 	@Override

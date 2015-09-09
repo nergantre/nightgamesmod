@@ -112,6 +112,7 @@ public class Decider {
 			addAllSkillsWithPriority(priority, stripping, 1.0f);
 			addAllSkillsWithPriority(priority, pleasure, 1.0f);
 			addAllSkillsWithPriority(priority, position, 1.0f);
+			addAllSkillsWithPriority(priority, debuff, 0f);
 			addAllSkillsWithPriority(priority, misc, 0f);
 			break;
 		case dominant:

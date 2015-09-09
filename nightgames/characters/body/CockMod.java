@@ -234,14 +234,14 @@ public enum CockMod implements BodyPartMod {
 									self.nameOrPossessivePronoun(), opponent.nameOrPossessivePronoun(),
 									target.describe(opponent), self.possessivePronoun()));
 				} else {
-					int duration = Global.random(3) + 3;
+					int duration = Global.random(3) + 2;
 					String message = String.format(
 							"The moment %s erupts inside %s, %s mind goes completely blank, leaving %s pliant and ready.",
 							self.subject(), opponent.subject(), opponent.possessivePronoun(), opponent.directObject());
 					if (target == PussyPart.feral) {
 						message += String.format(" %s offers no resistance to the subversive seed.",
 								opponent.subject());
-						duration += 3;
+						duration += 2;
 					}
 					opponent.add(c, new Enthralled(opponent, self, duration));
 					c.write(self, message);

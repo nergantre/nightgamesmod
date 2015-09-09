@@ -2,6 +2,7 @@ package nightgames.stance;
 
 
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 
 public class Doggy extends MaledomSexStance {
@@ -21,8 +22,12 @@ public class Doggy extends MaledomSexStance {
 	}
 	
 	public String image() {
+		if (top.has(Trait.strapped)) {
+			return "doggy_ff_strapped.jpg";
+		}
 		return "doggy.jpg";
 	}
+
 	@Override
 	public boolean mobile(Character c) {
 		return c==top;

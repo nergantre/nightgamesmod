@@ -46,9 +46,13 @@ public class Horny extends DurationStatus {
 	@Override
 	public int regen(Combat c) {
 		super.regen(c);
-		affected.arouse(Math.round(magnitude), c);
-		affected.emote(Emotion.horny,20);
 		return 0;
+	}
+
+	@Override
+	public void tick(Combat c) {
+		affected.arouse(Math.round(magnitude), c, " ("+ source +")");
+		affected.emote(Emotion.horny,20);		
 	}
 
 	@Override

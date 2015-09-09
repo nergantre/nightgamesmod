@@ -29,7 +29,6 @@ public class Defabricator extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		target.nudify();
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
 			c.write(target,target.nakedLiner(c));

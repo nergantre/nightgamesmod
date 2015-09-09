@@ -7,7 +7,7 @@
       "prefix":"a ",
       "attributes":[
       ],
-      "layer":1,
+      "layer":2,
 	  "slots" : ["top", "arms"],
 	  "shops" : ["ClothingStore"],
 	  "sex" : ["all"],
@@ -41,7 +41,7 @@
       "prefix":"a ",
       "attributes":[
       ],
-      "layer":1,
+      "layer":2,
 	  "slots" : ["top", "arms"],
  	  "shops" : ["Boutique"],
 	  "sex" : ["female"],	  
@@ -271,7 +271,7 @@
       "prefix":"a ",
       "attributes":[
       ],
-	  "layer":1,
+	  "layer":2,
  	  "slots" : ["top"],
    	  "sex" : ["female"],
 	  "shops" : ["Boutique"],
@@ -288,7 +288,7 @@
       "prefix":"a ",
       "attributes":[
       ],
-	  "layer":1,
+	  "layer":2,
  	  "slots" : ["top"],
 	  "shops" : ["ClothingStore"],
    	  "sex" : ["all"],
@@ -627,7 +627,7 @@
       "attributes":[
          "broody"
       ],
-	  "layer":1,
+	  "layer":2,
  	  "slots" : ["top", "arms"],
 	  "shops" : ["XxxStore"],
    	  "sex" : ["all"],
@@ -702,7 +702,7 @@
          "skimpy",
          "kinky"
       ],
-	  "layer":1,
+	  "layer":2,
  	  "slots" : ["top", "arms"],
    	  "shops" : ["XxxStore"],
    	  "sex" : ["all"],
@@ -739,7 +739,7 @@
       "attributes":[
          "stylish"
       ],
-	  "layer":1,
+	  "layer":2,
  	  "slots" : ["top", "arms"],
    	  "shops" : ["ClothingStore"],
    	  "sex" : ["all"],
@@ -757,7 +757,7 @@
       "attributes":[
          "stylish"
       ],
-	  "layer":1,
+	  "layer":2,
  	  "slots" : ["top", "arms"],
 	  "shops" : ["ClothingStore"],
    	  "sex" : ["all"],
@@ -793,7 +793,7 @@
       "attributes":[
 			"lame"
       ],
-	  "layer":1,
+	  "layer":3,
  	  "slots" : ["top", "arms"],
 	  "shops" : ["ClothingStore"],
    	  "sex" : ["all"],
@@ -961,7 +961,7 @@
       "attributes":[
       ],
 	  "layer":1,
- 	  "slots" : ["arms"],
+ 	  "slots" : ["arms", "hands"],
 	  "shops" : ["Boutique"],
    	  "sex" : ["female"],
    	  "hotness":0.65,
@@ -1009,6 +1009,24 @@
       "exposure":0.6
    },
    {
+      "displayName":"translucent shawl",
+      "buffs":[
+      ],
+      "price":2650,
+      "prefix":"a ",
+      "attributes":[
+		"open"
+      ],
+	  "layer":4,
+ 	  "slots" : ["arms", "top", "bottom", "legs"],
+	  "shops" : [],
+   	  "sex" : ["all"],
+   	  "hotness":0.75,
+      "name":"translucentshawl",
+      "toughness":0,
+      "exposure":0.99
+   },
+   {
       "displayName":"stiletto pumps",
       "buffs":[
       ],
@@ -1029,6 +1047,45 @@
       "name":"stilettopumps",
       "toughness":2,
       "exposure":0.6
+   },
+   {
+      "displayName":"boots",
+      "buffs":[
+      ],
+      "price":800,
+      "prefix":"a pair of ",
+      "attributes":[
+		"shoes"
+      ],
+	  "layer":2,
+ 	  "slots" : ["feet"],
+	  "shops" : ["ClothingStore"],
+   	  "sex" : ["all"],
+   	  "hotness":0.2,
+      "name":"boots",
+      "toughness":12,
+      "exposure":0.2
+   },
+   {
+      "displayName":"thigh-high boots",
+      "buffs":[
+      ],
+      "price":2800,
+      "prefix":"a pair of ",
+      "attributes":[
+		"heels",
+		"highheels",
+		"stylish",
+		"shoes"
+      ],
+	  "layer":2,
+ 	  "slots" : ["feet", "legs"],
+	  "shops" : ["Boutique"],
+   	  "sex" : ["female"],
+   	  "hotness":0.75,
+      "name":"thighhighboots",
+      "toughness":12,
+      "exposure":0.2
    },
    {
       "displayName":"sneakers",
@@ -1083,7 +1140,7 @@
       "exposure":0.6
    },
    {
-      "displayName":"sandles",
+      "displayName":"sandals",
       "buffs":[
       ],
       "price":650,
@@ -1091,12 +1148,12 @@
       "attributes":[
 			"open"
       ],
-	  "layer":1,
+	  "layer":2,
  	  "slots" : ["feet"],
 	  "shops" : ["ClothingStore"],
    	  "sex" : ["all"],
    	  "hotness":0.05,
-      "name":"sandles",
+      "name":"sandals",
       "toughness":5,
       "exposure":0.6
    }

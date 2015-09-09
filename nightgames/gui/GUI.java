@@ -376,7 +376,7 @@ public class GUI extends JFrame implements Observer {
 						+ "Video Games scenes 1-9 by Onyxdime\n"
 						+ "Kat Penetration Victory and Defeat scenes by Onyxdime\n"
 						+ "Kat Non-Penetration Draw scene by Onyxdime\n" + "Mara/Angel threesome scene by Onyxdime\n"
-						+ "Footfetish expansion scenes by Mistress Emily Morose\n" + "Mod by Nergantre\n"
+						+ "Footfetish expansion scenes by Sakruff\n" + "Mod by Nergantre\n"
 						+ "A ton of testing by Bronzechair");
 			}
 		});
@@ -1018,20 +1018,6 @@ public class GUI extends JFrame implements Observer {
 		displayStatus();
 	}
 
-	public JLabel getClothing() {
-		// TODO clothing
-		BufferedImage clothesicon = null;
-		try {
-			clothesicon = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" + "clothes8.png"));
-		} catch (IOException localIOException10) {
-		}
-		if (clothesicon != null) {
-			return new JLabel(new ImageIcon(clothesicon));
-		} else {
-			return new JLabel();
-		}
-	}
-
 	public void displayStatus() {
 		this.statusPanel.removeAll();
 		this.statusPanel.repaint();
@@ -1052,8 +1038,6 @@ public class GUI extends JFrame implements Observer {
 
 		Map<Item, Integer> items = this.player.getInventory();
 		int count = 0;
-		this.clothesdisplay = getClothing();
-		inventoryPanel.add(this.clothesdisplay);
 
 		ArrayList<JLabel> itmlbls = new ArrayList<JLabel>();
 		for (Item i : items.keySet()) {
@@ -1185,6 +1169,7 @@ public class GUI extends JFrame implements Observer {
 		public ItemButton(Activity event, Clothing i) {
 			super(event, i.getName());
 			setFont(new Font("Baskerville Old Face", 0, 18));
+			setToolTipText(i.getToolTip());
 		}
 	}
 
@@ -1340,10 +1325,10 @@ public class GUI extends JFrame implements Observer {
 		}
 	}
 
-	public void changeClothes(Character player, Activity event) {
+	public void changeClothes(Character player, Activity event, String backOption) {
 		clothesPanel.removeAll();
-		clothesPanel.add(new ClothesChangeGUI(player, event));
-		centerPanel.remove(((BorderLayout)centerPanel.getLayout()).getLayoutComponent(BorderLayout.CENTER));
+		clothesPanel.add(new ClothesChangeGUI(player, event, backOption));
+		centerPanel.remove(((BorderLayout) centerPanel.getLayout()).getLayoutComponent(BorderLayout.CENTER));
 		this.centerPanel.add(clothesPanel, BorderLayout.CENTER);
 		this.clothesPanel.setVisible(true);
 		this.clothesPanel.repaint();
@@ -1353,7 +1338,7 @@ public class GUI extends JFrame implements Observer {
 
 	public void removeClosetGUI() {
 		clothesPanel.removeAll();
-		centerPanel.remove(((BorderLayout)centerPanel.getLayout()).getLayoutComponent(BorderLayout.CENTER));
+		centerPanel.remove(((BorderLayout) centerPanel.getLayout()).getLayoutComponent(BorderLayout.CENTER));
 		this.centerPanel.add(portraitPanel, BorderLayout.CENTER);
 		this.clothesPanel.setVisible(false);
 		this.centerPanel.repaint();

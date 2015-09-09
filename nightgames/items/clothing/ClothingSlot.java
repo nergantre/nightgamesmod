@@ -6,7 +6,9 @@ public enum ClothingSlot {
 	arms(1),
 	bottom(5),
 	legs(3),
-	feet(1);
+	feet(1),
+	neck(0),
+	hands(1);
 	private double exposureWeight;
 	ClothingSlot(double exposureWeight) {
 		this.exposureWeight = exposureWeight;
@@ -14,4 +16,3 @@ public enum ClothingSlot {
 	
 	public double getExposureWeight() {return exposureWeight;}
 }
-

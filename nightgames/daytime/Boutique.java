@@ -9,7 +9,7 @@ import nightgames.items.clothing.Clothing;
 public class Boutique extends Store {
 	public Boutique(Character player) {
 		super("Boutique", player);
-		Clothing.getAllBuyableFrom("Boutique");
+		Clothing.getAllBuyableFrom("Boutique").forEach(article -> add(article));
 	}
 
 	@Override

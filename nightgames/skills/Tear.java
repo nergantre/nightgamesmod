@@ -56,8 +56,7 @@ public class Tear extends Skill {
 				if (getSelf().human() && target.mostlyNude()) {
 					c.write(target.nakedLiner(c));
 				}
-			}
-			if (!article.is(ClothingTrait.indestructible)
+			} else if (!article.is(ClothingTrait.indestructible)
 					&& getSelf().check(Attribute.Power,
 							article.dc()
 									+ (target.getStamina().percent() - target.getArousal().percent()) / 4)
@@ -82,8 +81,8 @@ public class Tear extends Skill {
 							+ ", but fails to remove it.");
 				}
 			}
-		} else {
-			Clothing article = target.getOutfit().getTopOfSlot(ClothingSlot.top);
+		} else if (!target.getOutfit().slotEmpty(ClothingSlot.top)) {
+			Clothing article = target.getOutfit().getTopOfSlot(ClothingSlot.bottom);
 			if (!article.is(ClothingTrait.indestructible) && getSelf().get(Attribute.Animism) >= 12
 					&& getSelf().check(Attribute.Power,
 							article.dc()

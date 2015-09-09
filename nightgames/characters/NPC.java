@@ -8,6 +8,7 @@ import nightgames.actions.Move;
 import nightgames.actions.Movement;
 import nightgames.areas.Area;
 import nightgames.characters.custom.RecruitmentData;
+import nightgames.characters.custom.effect.CustomEffect;
 import nightgames.combat.Combat;
 import nightgames.combat.Encounter;
 import nightgames.combat.Result;
@@ -653,17 +654,13 @@ public class NPC extends Character {
 	    return (NPC) super.clone();
 	}
 
-	private float rateMove(Skill skill, Combat c, float selfFit, float otherFit) {
+	public float rateAction(Combat c, float selfFit, float otherFit, CustomEffect effect) {
 		// Clone ourselves a new combat... This should clone our characters, too
 		Combat c2;
 		try {
 			c2 = c.clone();
 		} catch (CloneNotSupportedException e) {
 			return 0;
-		}
-		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS_RATING) && (c.p1.human() || c.p2.human())) {
-			System.out.println("===> Rating " + skill);
-			System.out.println("Before:\n" + c.debugMessage());
 		}
 
 		Global.debugSimulation = true;
@@ -672,13 +669,13 @@ public class NPC extends Character {
 		if (c.p1 == this) {
 			newSelf = c2.p1;
 			newOther = c2.p2;
+		} else if (c.p2 == this) {
+			newSelf = c2.p2;
+			newOther = c2.p1;
 		} else {
-			newSelf = c2.p1;
-			newOther = c2.p2;
+			throw new IllegalArgumentException("Tried to use a badly cloned combat");
 		}
-		skill.setSelf(newSelf);
-		skill.resolve(c2, newOther);
-		skill.setSelf(this);
+		effect.execute(c2, newSelf, newOther);
 		Global.debugSimulation = false;
 		float selfFitnessDelta = newSelf.getFitness(c) - selfFit;
 		float otherFitnessDelta = newSelf.getOtherFitness(c, newOther) - otherFit;
@@ -686,6 +683,19 @@ public class NPC extends Character {
 			System.out.println("After:\n" + c2.debugMessage());
 		}
 		return selfFitnessDelta - otherFitnessDelta;
+	}
+	private float rateMove(Skill skill, Combat c, float selfFit, float otherFit) {
+		// Clone ourselves a new combat... This should clone our characters, too
+		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS_RATING) && (c.p1.human() || c.p2.human())) {
+			System.out.println("===> Rating " + skill);
+			System.out.println("Before:\n" + c.debugMessage());
+		}
+		return rateAction(c, selfFit, otherFit, (combat, self, other) -> {
+			skill.setSelf(self);
+			skill.resolve(combat, other);
+			skill.setSelf(this);
+			return true;
+		});
 	}
 
 	public Skill prioritizeNew(ArrayList<WeightedSkill> plist, Combat c)
@@ -756,4 +766,5 @@ public class NPC extends Character {
 	public RecruitmentData getRecruitmentData() {
 		return ai.getRecruitmentData();
 	}
+	
 }
