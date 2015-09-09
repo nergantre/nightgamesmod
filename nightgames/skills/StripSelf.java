@@ -9,6 +9,7 @@ import nightgames.characters.Character;
 import nightgames.characters.NPC;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.global.DebugFlags;
 import nightgames.global.Global;
 import nightgames.items.clothing.Clothing;
 
@@ -50,16 +51,20 @@ public class StripSelf extends Skill {
 		} else {
 			NPC self = (NPC) getSelf();
 			HashMap<Clothing, Float> checks = new HashMap<>();
+			float selfFit = self.getFitness(c);
+			float otherFit = self.getOtherFitness(c, target);
 			getSelf().getOutfit().getAllStrippable().stream().forEach(article -> {
-				float rating = self.rateAction(c, self.getFitness(c), target.getFitness(c), (newCombat, newSelf, newOther) -> {
+				float rating = self.rateAction(c, selfFit, otherFit, (newCombat, newSelf, newOther) -> {
 					newSelf.strip(article, newCombat);
 					return true;
 				});
 				checks.put(article, rating);
 			});
-			checks.entrySet().stream().forEach(entry -> {
-				System.out.println("Stripping " + entry.getKey() + ": " + entry.getValue());
-			});
+			if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
+				checks.entrySet().stream().forEach(entry -> {
+					System.out.println("Stripping " + entry.getKey() + ": " + entry.getValue());
+				});
+			}
 			Clothing best = checks.entrySet().stream().max((first, second) -> {
 				float test = second.getValue() - first.getValue();
 				if (test < 0) { return -1; }

@@ -2088,6 +2088,11 @@ public abstract class Character extends Observable implements Cloneable {
 		} else if (escape < -1) {
 			fit += -8 * Math.log(-escape);
 		}
+		int totalAtts = 0;
+		for (Attribute attribute : att.keySet()) {
+			totalAtts += att.get(attribute);
+		}
+		fit += Math.sqrt(totalAtts) * 5;
 
 		//what an average piece of clothing should be worth in fitness
 		double topFitness = 4.0;
@@ -2099,6 +2104,15 @@ public abstract class Character extends Observable implements Cloneable {
 			// If I'm horny, I want to make the opponent cum asap, put more emphasis on arousal
 			arousalMod = 2.0f;
 		}
+		
+		// check body parts based on my preferences
+		if (other.hasDick()) {
+			fit -= dickPreference() * 4;
+		}
+		if (other.hasPussy()) {
+			fit -= pussyPreference() * 4;
+		}
+
 		fit += other.outfit.getFitness(c, bottomFitness, topFitness);
 		fit += other.body.getHotness(other, this);
 		// Extreme situations
@@ -2127,6 +2141,12 @@ public abstract class Character extends Observable implements Cloneable {
         float mojoMod = 1.0f;
         float usum = arousalMod + staminaMod + mojoMod;
         Character other = c.getOther(this);
+
+		int totalAtts = 0;
+		for (Attribute attribute : att.keySet()) {
+			totalAtts += att.get(attribute);
+		}
+		fit += Math.sqrt(totalAtts) * 5;
 		// Always important: Position
 		fit += c.getStance().priorityMod(this) * 6;
 		int escape = getEscape(c);
@@ -2151,7 +2171,13 @@ public abstract class Character extends Observable implements Cloneable {
 			// ...we need to see if that's beneficial to us.
 			fit += this.body.penetrationFitnessModifier(c.getStance().inserted(this), c.getStance().analinserted(), other.body);
 		}
-		
+		if (hasDick()) {
+			fit += dickPreference() * 4;
+		}
+
+		if (hasPussy()) {
+			fit += pussyPreference() * 4;
+		}
 		// Also somewhat of a factor: Inventory (so we don't
 		// just use it without thinking)
 		for(Item item : inventory.keySet())

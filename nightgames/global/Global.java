@@ -148,7 +148,7 @@ public class Global {
 		debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
-		debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
+//		debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
 		traitRequirements = new TraitTree(ResourceLoader.getFileResourceAsStream("data/TraitRequirements.xml"));
 		current=null;
 		factory = new ContextFactory();
@@ -178,10 +178,10 @@ public class Global {
 		rebuildCharacterPool();
 		date=0;
 		flag(Flag.systemMessages);
-		players.add(getNPC("Jewel"));
-		players.add(getNPC("Cassie"));
+		//players.add(getNPC("Jewel"));
+		//players.add(getNPC("Cassie"));
 		players.add(getNPC("Angel"));
-		players.add(getNPC("Mara"));
+		//players.add(getNPC("Mara"));
 		match = new Match(players,Modifier.normal);
 		match.round();
 	}

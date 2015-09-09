@@ -86,7 +86,6 @@ public class HeelGrind extends Skill {
 		return Global.format("{self:subject} wraps {self:possessive} legs around your waist and presses {self:possessive} soft heel against your pussy eliciting a gasp. {self:PRONOUN} grins at your reaction while locking {self:possessive} feet on top of each other to keep you from escaping {self:possessive} assault. At the same time, you feel {self:possessive} start to gently tweak and pinch your nipples. As you become flush and dripping with arousal, you feel your body start to grind in to {self:possessive} soaked heel as it starts to slowly sink in to your cunt.", getSelf(), target);
 	}
 
-
 	@Override
 	public String describe(Combat c) {
 		return "Pleasure your opponent with your feet";
