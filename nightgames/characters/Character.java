@@ -79,6 +79,7 @@ public abstract class Character extends Observable implements Cloneable {
 	public HashMap<String, Integer> cooldowns;
 	private HashSet<Character> mercy;
 	protected Map<Item, Integer> inventory;
+	private HashMap<String, Integer> flags;
 	protected Item trophy;
 	public State state;
 	protected int busy;
@@ -101,6 +102,7 @@ public abstract class Character extends Observable implements Cloneable {
 		body = new Body(this);
 		att = new HashMap<Attribute,Integer>();
 		cooldowns = new HashMap<String, Integer>();
+		flags = new HashMap<String, Integer>();
 		att.put(Attribute.Power, 5);
 		att.put(Attribute.Cunning, 5);
 		att.put(Attribute.Seduction, 5);
@@ -150,6 +152,7 @@ public abstract class Character extends Observable implements Cloneable {
 		c.outfit = new Outfit(outfit);
 		c.skills = (HashSet<Skill>) skills.clone();
 		c.status = new HashSet<Status>();
+		c.flags = new HashMap<>(flags);
 		for (Status s: status) {
 			Status clone = (Status) s.instance(c,c);
 			c.status.add(clone);
@@ -1146,6 +1149,9 @@ public abstract class Character extends Observable implements Cloneable {
 		saveObj.put("body", body.save());
 		saveEnumIntMap(saveObj, inventory, "inventory");
 		saveObj.put("human", human());
+		JSONObject flagsObj = new JSONObject();
+		saveObj.put("flags", flagsObj);
+		flags.entrySet().stream().forEach(entry -> flagsObj.put(entry.getKey(), entry.getValue()));
 		return saveObj;
 	}
 
@@ -1200,6 +1206,14 @@ public abstract class Character extends Observable implements Cloneable {
 				String keyString = (String) key;
 				Item item = Item.valueOf(keyString);
 				inventory.put(item, JSONUtils.readInteger(invenObj, keyString));
+			}
+		}
+		if (obj.containsKey("flags")) {
+			JSONObject flagsObj = (JSONObject) obj.get("flags");
+			flags.clear();
+			for(Object key:flagsObj.keySet()){
+				String keyString = (String) key;
+				flags.put(keyString, JSONUtils.readInteger(flagsObj, keyString));
 			}
 		}
 		change(Modifier.normal);
@@ -1925,6 +1939,24 @@ public abstract class Character extends Observable implements Cloneable {
 		dropStatus(null, null);
 		orgasms = 0;
 		setChanged();
+		if (has(ClothingTrait.heels)) {
+			setFlag("heelsTraining", getFlag("heelsTraining") + 1);
+		}
+		if (has(ClothingTrait.highheels)) {
+			setFlag("heelsTraining", getFlag("heelsTraining") + 1);
+		}
+		if (has(ClothingTrait.higherheels)) {
+			setFlag("heelsTraining", getFlag("heelsTraining") + 1);
+		}
+	}
+	public void setFlag(String string, int i) {
+		flags.put(string, i);
+	}
+	public int getFlag(String string) {
+		if (flags.containsKey(string)) {
+			return flags.get(string);
+		}
+		return 0;
 	}
 	public boolean canSpend(int mojo){
 		int cost=mojo;

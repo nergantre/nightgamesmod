@@ -63,6 +63,9 @@ Features:
 		- Hover over the clothing in the store or the clothing change UI to see what they do.
 	- Unfortunately this may mean that your saves are no longer compatible.
 		- NEVERMIND, I MADE THEM COMPATIBLE :D
+- When NPCs have affections over 30, you can give them gifts (Clothing)
+	- When they have over 35 affection, they'll let you pick out their wardrobe.
+	- Note that you can really screw them over by picking harmful outfits. Discretion advised.
 - Added a new character initial strength Trait:
 	- "Stable Form"
 		- Prevents the effects of Priapus Draft, FemDraft, Tiny Draft, Bust Draft, Succubus Draft and Tentacle Tonic from applying when thrown at you.
@@ -74,10 +77,14 @@ Features:
 - Added new Traits:
 	- Heels Pro:
 		- Wearing heels does not reduce your speed, and does not make you easily knocked down (generally heels have higher hotness bonuses)
-		- Requires 15 Seduction, 20 Cunning, Limb Training 1
 	- Heels Master:
 		- While wearing heels, you have a 33% chance to avoid knockdowns (Tackle, Trip, Shove, etc)
-		- Requires 25 Seduction, 40 Cunning, Limb Training 2, Heels Pro
+	- You gain Heels Training after finishing a battle with heels on.
+		- One for heels
+		- Two total for high heels
+		- Three total for higher heels (Stiletto Pumps)
+	- Heels Pro = 50 total training
+	- Heels Master = 100 total training
 - Merged in some foot fetish content from Sakruff (Thanks!)
 	- Updated text on foot job/foot pump to have events for girls
 	- Added a new skill Foot Smother

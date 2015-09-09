@@ -392,23 +392,6 @@
 		</Requirements>
 	</Trait>
 	<Trait>
-		<Name>proheels</Name>
-		<Requirements>
-				<TraitReq>limbTraining1</TraitReq>
-				<AttributeReq type="Cunning">20</AttributeReq>
-				<AttributeReq type="Seduction">15</AttributeReq>
-		</Requirements>
-	</Trait>
-	<Trait>
-		<Name>masterheels</Name>
-		<Requirements>
-				<TraitReq>limbTraining2</TraitReq>
-				<TraitReq>proheels</TraitReq>
-				<AttributeReq type="Cunning">40</AttributeReq>
-				<AttributeReq type="Seduction">25</AttributeReq>
-		</Requirements>
-	</Trait>
-	<Trait>
 		<Name>limbTraining3</Name>
 		<Requirements>
 				<TraitReq>limbTraining2</TraitReq>
