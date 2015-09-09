@@ -20,7 +20,7 @@ public class Dissolve extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().mobile(getSelf())&&getSelf().canAct()&&getSelf().has(Item.DisSol)&&!target.reallyNude()&&!c.getStance().prone(getSelf())
+		return c.getStance().mobile(getSelf())&&getSelf().canAct()&&getSelf().has(Item.DisSol)&&target.outfit.getRandomShreddableSlot() != null&&!c.getStance().prone(getSelf())
 				&&(!getSelf().human()||Global.getMatch().condition!=Modifier.noitems);
 	}
 
