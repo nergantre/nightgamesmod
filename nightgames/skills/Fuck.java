@@ -91,10 +91,10 @@ public class Fuck extends Skill {
 		BodyPart targetO = getTargetOrgan(target);
  		if(selfO.isReady(getSelf()) && targetO.isReady(target)){
 			if(getSelf().human()){
-				c.write(getSelf(),premessage + deal(c,m,Result.normal, target));
+				c.write(getSelf(),premessage + deal(c,premessage.length(),Result.normal, target));
 			}
 			else if(target.human()){
-				c.write(getSelf(),premessage + receive(c,m,Result.normal, target));
+				c.write(getSelf(),premessage + receive(c,premessage.length(),Result.normal, target));
 			}
 			if (selfO.isType("pussy")) {
 				c.setStance(c.getStance().insert(target, getSelf()));
@@ -109,9 +109,9 @@ public class Fuck extends Skill {
 			getSelf().body.pleasure(target, targetO, selfO, otherm, c);
 		} else {
 			if(getSelf().human()){
-				c.write(getSelf(),premessage + deal(c,0,Result.miss, target));
+				c.write(getSelf(),premessage + deal(c,premessage.length(),Result.miss, target));
 			} else if(target.human()) {
-				c.write(getSelf(),premessage + receive(c,0,Result.miss, target));
+				c.write(getSelf(),premessage + receive(c,premessage.length(),Result.miss, target));
 			}
 			return false;
 		}
@@ -169,14 +169,14 @@ public class Fuck extends Skill {
 		}
 		else if(modifier == Result.miss){
 			if(!selfO.isReady(getSelf()) || !targetO.isReady(target) ){
-				return getSelf().name()+" grinds her privates against yours, but since neither of you are very turned on yet, it doesn't accomplish much.";
+				return (damage == 0 ? getSelf().name()+ " " : "") +"grinds her privates against yours, but since neither of you are very turned on yet, it doesn't accomplish much.";
 			}
 			else if(!targetO.isReady(target)){
-				return getSelf().name()+" tries to push her cock inside your pussy, but you're not wet enough. You're simply not horny enough for " +
+				return (damage == 0 ? getSelf().name()+ " " : "") +"tries to push her cock inside your pussy, but you're not wet enough. You're simply not horny enough for " +
 						"effective penetration yet.";
 			}
 			else{
-				return getSelf().name()+" tries to push her cock into your ready pussy, but she is still limp.";
+				return (damage == 0 ? getSelf().name()+ " " : "") +"tries to push her cock into your ready pussy, but she is still limp.";
 			}
 		}
 		return "Bad stuff happened";

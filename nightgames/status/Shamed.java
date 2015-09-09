@@ -53,11 +53,9 @@ public class Shamed extends DurationStatus {
 	}
 
 	@Override
-	public int regen(Combat c) {
-		super.regen(c);
+	public void tick(Combat c) {
 		affected.emote(Emotion.nervous,20);
-		affected.spendMojo(c, 5);
-		return 0;
+		affected.loseMojo(c, 5, " (Shamed)");
 	}
 
 	@Override

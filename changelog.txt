@@ -59,6 +59,12 @@ Features:
 	- Heels Master:
 		- While wearing heels, you have a 33% chance to avoid knockdowns (Tackle, Trip, Shove, etc)
 		- Requires 25 Seduction, 40 Cunning, Limb Training 2, Heels Pro
+- Merged in some foot fetish content from Sakruff (Thanks!)
+	- Updated text on foot job/foot pump to have events for girls
+	- Added a new skill Foot Smother
+		- Unlocks at 20 Fetish
+		- Can be used when barefoot and you are standing over the opponent
+		- Has a raised chance to inflict foot fetish
 - If you start off as a female or a herm, you start with bra and panties instead of boxers.
 	- If you start off as a female or a herm, you start off with b cup breasts (up from flat)
 
@@ -68,7 +74,8 @@ Balance:
 - Made enthrall stack less.
 	- When enthralled status is added on to a already enthralled opponent, the final duration will be whatever is more:
 		- Original duration + 1
-		- New duration - number of times this enthralled status has been refreshed
+		- New duration - 2 * (number of times this enthralled status has been refreshed + 1)
+	- Note: If you are still having trouble with enthrall, try speccing more into Cunning.
 - Fetishes now last throughout a match, but decrease in magnitude as time passes to a minimum magnitude of .25
 	- Being pleasured by the fetish part will increase magnitude by .05
 - Kiss of Baptism has been rebalanced a bit.
@@ -78,6 +85,7 @@ Balance:
 	- Now fully heals you
 	- Buffed base damage bonus to 20
 
+	
 Bug fix:
 - Deep kiss and drain kiss' text was swapped around
 - Fixed invitation text

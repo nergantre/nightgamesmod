@@ -60,7 +60,7 @@ public class Suckling extends DurationStatus {
 	@Override
 	public int regen(Combat c) {
 		super.regen(c);
-		affected.emote(Emotion.horny,15);
+		affected.emote(Emotion.horny,5);
 		return 0;
 	}
 

@@ -10,7 +10,7 @@ public abstract class DurationStatus extends Status {
 	public DurationStatus(String name, Character affected, int duration) {
 		super(name, affected);
 		if (affected.has(Trait.PersonalInertia)) {
-			duration = Math.round(1.51f * duration);
+			duration = Math.round(1.33f * duration);
 		}
 		req = new DurationRequirement(duration);
 		

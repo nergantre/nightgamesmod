@@ -606,6 +606,8 @@ public class Combat extends Observable implements Serializable, Cloneable{
 	     Combat c = (Combat) super.clone();
          c.p1 = (Character) p1.clone();
          c.p2 = (Character) p2.clone();
+         c.p1.finishClone(c.p2);
+         c.p2.finishClone(c.p1);
          c.p1Data = (CombatantData) p1Data.clone();
          c.p2Data = (CombatantData) p2Data.clone();
          c.stance = (Position) getStance().clone();

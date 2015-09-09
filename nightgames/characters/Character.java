@@ -151,8 +151,7 @@ public abstract class Character extends Observable implements Cloneable {
 		c.skills = (HashSet<Skill>) skills.clone();
 		c.status = new HashSet<Status>();
 		for (Status s: status) {
-			Status clone = (Status) s.clone();
-			clone.affected = c;
+			Status clone = (Status) s.instance(c,c);
 			c.status.add(clone);
 		}
 		c.traits = (Set<Trait>) new TreeSet<Trait>(traits);
@@ -169,6 +168,14 @@ public abstract class Character extends Observable implements Cloneable {
 		c.body.character = c;
 		c.orgasmed = orgasmed;
 		return c;
+	}
+	
+	public void finishClone(Character other) {
+		HashSet<Status> oldstatus = status;
+		status = new HashSet<Status>();
+		for (Status s: oldstatus) {
+			status.add(s.instance(this, other));
+		}
 	}
 	public String name(){
 		return name;
@@ -520,10 +527,13 @@ public abstract class Character extends Observable implements Cloneable {
 			tempt(i);
 		}
 	}
-
 	public void arouse(int i, Combat c){
-		String message = String.format("%s aroused for <font color='rgb(240,100,100)'>%d<font color='white'>\n",
-				Global.capitalizeFirstLetter(subjectWas()), i);
+		arouse(i, c, "");
+	}
+
+	public void arouse(int i, Combat c, String source){
+		String message = String.format("%s aroused for <font color='rgb(240,100,100)'>%d<font color='white'>%s\n",
+				Global.capitalizeFirstLetter(subjectWas()), i, source);
 		if (c != null)
 			c.writeSystemMessage(message);
 		tempt(i);
@@ -572,6 +582,9 @@ public abstract class Character extends Observable implements Cloneable {
 		return willpower;
 	}
 	public void buildMojo(Combat c, int percent){
+		buildMojo(c, percent, "");
+	}
+	public void buildMojo(Combat c, int percent, String source){
 		int x = (percent*Math.min(mojo.max(), 200))/100;
 		int bonus = 0;
 		for(Status s: getStatuses()){
@@ -581,13 +594,17 @@ public abstract class Character extends Observable implements Cloneable {
 		if (x > 0) {
 			mojo.restore(x);
 			if (c != null) {
-				c.writeSystemMessage(Global.capitalizeFirstLetter(String.format("%s <font color='rgb(100,200,255)'>%d<font color='white'> mojo.",this.subjectAction("built", "built"), x)));
+				c.writeSystemMessage(Global.capitalizeFirstLetter(String.format("%s <font color='rgb(100,200,255)'>%d<font color='white'> mojo%s.",this.subjectAction("built", "built"), x, source)));
 			}
 		} else if (x < 0) {
 			loseMojo(c, x);
 		}
 	}
 	public void spendMojo(Combat c, int i){
+		spendMojo(c, i, "");
+	}
+		
+	public void spendMojo(Combat c, int i, String source){
 		int cost = i;
 		int bonus = 0;
 		for(Status s: getStatuses()){
@@ -599,10 +616,14 @@ public abstract class Character extends Observable implements Cloneable {
 			mojo.set(0);
 		}
 		if (c != null && i != 0) {
-			c.writeSystemMessage(Global.capitalizeFirstLetter(String.format("%s <font color='rgb(150,150,250)'>%d<font color='white'> mojo.",this.subjectAction("spent", "spent"), cost)));
+			c.writeSystemMessage(Global.capitalizeFirstLetter(String.format("%s <font color='rgb(150,150,250)'>%d<font color='white'> mojo%s.",this.subjectAction("spent", "spent"), cost, source)));
 		}
 	}
 	public int loseMojo(Combat c, int i) {
+		return loseMojo(c, i, "");
+	}
+
+	public int loseMojo(Combat c, int i, String source) {
 		int amt = Math.min(mojo.get(), i);
 		mojo.reduce(amt);
 		if(mojo.get()<0){
@@ -736,6 +757,7 @@ public abstract class Character extends Observable implements Cloneable {
 
 	public void tick(Combat c) {
 		body.tick(c);
+		status.forEach(s -> s.tick(c));
 		countdown(temporaryAddedTraits);
 		countdown(temporaryRemovedTraits);
 	}
@@ -1249,7 +1271,7 @@ public abstract class Character extends Observable implements Cloneable {
 		}
 		float extra = 25.0f * overflow / (arousal.max()/2.0f);
 
-		loseWillpower(c, getOrgasmWillpowerLoss(), Math.round(extra), true);
+		loseWillpower(c, getOrgasmWillpowerLoss(), Math.round(extra), true, "");
 		orgasms += 1;
 	}
 
@@ -1267,14 +1289,14 @@ public abstract class Character extends Observable implements Cloneable {
 	}
 
 	public void loseWillpower(Combat c, int i) {
-		loseWillpower(c, i, 0, false);
+		loseWillpower(c, i, 0, false, "");
 	}
 
 	public void loseWillpower(Combat c, int i, boolean primary) {
-		loseWillpower(c, i, 0, primary);
+		loseWillpower(c, i, 0, primary, "");
 	}
 
-	public void loseWillpower(Combat c, int i, int extra, boolean primary) {
+	public void loseWillpower(Combat c, int i, int extra, boolean primary, String source) {
 		int amt = i + extra;
 		boolean reduced = false;
 		if (has(Trait.strongwilled) && primary) {
@@ -1284,9 +1306,9 @@ public abstract class Character extends Observable implements Cloneable {
 		int old = willpower.get();
 		willpower.reduce(amt);
 		if (c != null) {
-			c.writeSystemMessage(String.format("%s lost <font color='rgb(220,130,40)'>%s<font color='white'> willpower" + (reduced ? " (Strong-willed)." : "."), this.subject(), extra == 0 ? Integer.toString(amt) : i + "+" + extra + " ("+amt+")"));
+			c.writeSystemMessage(String.format("%s lost <font color='rgb(220,130,40)'>%s<font color='white'> willpower" + (reduced ? " (Strong-willed)" : "" + "%s."), this.subject(), extra == 0 ? Integer.toString(amt) : i + "+" + extra + " ("+amt+")", source));
 		} else {
-			Global.gui().systemMessage((String.format("%s lost <font color='rgb(220,130,40)'>%d<font color='white'> willpower" + (reduced ? " (Strong-willed)." : "."), this.subject(), amt)));
+			Global.gui().systemMessage((String.format("%s lost <font color='rgb(220,130,40)'>%d<font color='white'> willpower" + (reduced ? " (Strong-willed)" : "" + "%s."), this.subject(), amt, source)));
 		}
 		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
 			System.out.printf("will power reduced from %d to %d\n", old, willpower.get());
@@ -2337,5 +2359,9 @@ public abstract class Character extends Observable implements Cloneable {
 	}
 	public Outfit getOutfit() {
 		return outfit;
+	}
+	public boolean footAvailable() {
+		Clothing article = outfit.getTopOfSlot(ClothingSlot.feet);
+		return article == null || article.getLayer() < 2;
 	}
 }

@@ -20,13 +20,12 @@ public class FootSmother extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		Optional<BodyFetish> fetish = target.body.getFetish("feet");
-		return fetish.isPresent() && fetish.get().magnitude >= .5;
+		return user.get(Attribute.Fetish) >= 20;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().body.has("feet")&&c.getStance().reachBottom(target)&&getSelf().canAct()&&c.getStance().prone(target)&&!c.getStance().behind(getSelf());
+		return getSelf().footAvailable()&&getSelf().body.has("feet")&&c.getStance().reachBottom(target)&&getSelf().canAct()&&c.getStance().prone(target)&&!c.getStance().behind(getSelf());
 	}
 
 	public int accuracy(Combat c){
@@ -46,7 +45,7 @@ public class FootSmother extends Skill {
 			target.body.pleasure(getSelf(), getSelf().body.getRandom("feet"), target.body.getRandom("mouth"), m, c);
 			target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("feet"), m, c);
 		}
-		if (Global.random(100) < 50 + 2 * getSelf().get(Attribute.Fetish)) {
+		if (Global.random(100) < 30 + 2 * getSelf().get(Attribute.Fetish)) {
 			target.add(c, new BodyFetish(target, getSelf(), "feet", .25));
 		}
 		return result != Result.miss;

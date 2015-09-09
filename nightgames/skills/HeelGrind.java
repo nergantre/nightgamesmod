@@ -78,13 +78,14 @@ public class HeelGrind extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		return Global.format("You wrap your legs around {other:name-possessive} waist and grip {other:possessive} {other:body-part:cock} between your toes. Massaging {other:name-possessive} {other:body-part:cock} between your toes, you start to stroke {other:possessive} {other:body-part:cock} up and down between your toes. Reaching around from behind {other:possessive} back, you start to tease and caress {other:possessive} breasts with your hands. Alternating between pumping and massaging the head of {other:possessive} {other:body-part:cock} with your toes, {other:pronoun} begins to let out a low moan with each additional touch.", getSelf(), target);
+		return Global.format("You wrap your legs around {other:name-possessive} waist and press your heel gently in to {other:possessive} cunt. Locking your ankles to keep {other:possessive} held in place, you start to gently gyrate your heel against {other:possessive} wet lips. Cupping each of {other:possessive} {other:body-part:breasts} with your hands, you start to pull and play with {other:name-possessive} nipples between your fingers. Your heel now coated in {other:possessive} wetness, you increase the pressure and speed of your heel and feel {other:subject} start to press against your heel on {other:possessive} own.", getSelf(), target);
 	}
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return Global.format("{self:SUBJECT} wraps {self:possessive} legs around your waist and settles {self:possessive} feet on both sides of your {other:body-part:cock}. Cupping your dick with {self:possessive} arches, she starts making long and steady strokes up and down your {other:body-part:cock} as it remains trapped in between {self:possessive} arches. Reaching around you, {self:subject} begins to rub and gently flick your nipples with {self:possessive} fingers. Alternating between pumping and massaging the head of your {other:body-part:cock} with {self:possessive} toes you can’t help but groan in pleasure.", getSelf(), target);
+		return Global.format("{self:subject} wraps {self:possessive} legs around your waist and presses {self:possessive} soft heel against your pussy eliciting a gasp. {self:PRONOUN} grins at your reaction while locking {self:possessive} feet on top of each other to keep you from escaping {self:possessive} assault. At the same time, you feel {self:possessive} start to gently tweak and pinch your nipples. As you become flush and dripping with arousal, you feel your body start to grind in to {self:possessive} soaked heel as it starts to slowly sink in to your cunt.", getSelf(), target);
 	}
+
 
 	@Override
 	public String describe(Combat c) {
