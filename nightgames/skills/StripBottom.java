@@ -42,7 +42,7 @@ public class StripBottom extends Skill {
 			if(getSelf().human()&&target.mostlyNude()){
 				c.write(target,target.nakedLiner(c));
 			}
-			if(target.human()&&target.crotchAvailable()){
+			if(target.human()&&target.crotchAvailable()&&target.hasDick()) {
 				if(target.getArousal().get()>=15){
 					c.write("Your boner springs out, no longer restrained by your pants.");
 				}
