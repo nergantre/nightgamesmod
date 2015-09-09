@@ -501,7 +501,7 @@ public class Combat extends Observable implements Serializable, Cloneable{
 	}
 	public void checkStamina(Character p){
 		if(p.getStamina().isEmpty() && !p.is(Stsflag.stunned)){
-			p.add(this, new Winded(p,1));
+			p.add(this, new Winded(p));
 			if(!getStance().prone(p)){
 				Character other;
 				if(p==p1){
