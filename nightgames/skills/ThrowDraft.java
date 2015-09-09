@@ -102,7 +102,7 @@ public class ThrowDraft extends Skill {
 				}
 			}
 			if (usables.size() > 0) {
-				pickBest(c, (NPC)getSelf(), target, usables);
+				used = pickBest(c, (NPC)getSelf(), target, usables);
 			}
 		}
 		if (used == null) {
