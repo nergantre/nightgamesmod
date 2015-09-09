@@ -283,7 +283,7 @@ public class Outfit {
 					index += 1;
 				}
 				if (top == null && bottom == null) {
-					sb.append(" while {self:possessive} chest and crotch is clearly visible.");
+					sb.append(" while {self:possessive} chest and crotch are clearly visible.");
 				} else {
 					sb.append(".");
 				}
