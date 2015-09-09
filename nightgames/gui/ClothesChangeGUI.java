@@ -101,7 +101,7 @@ public class ClothesChangeGUI extends JPanel {
 		Global.gui().refresh();
 	}
 
-	public ClothesChangeGUI(Character character, Activity event){
+	public ClothesChangeGUI(Character character, Activity event, String doneOption){
 		this.character = character;
 		this.resume = event;
 		setLayout(new BorderLayout());
@@ -145,7 +145,7 @@ public class ClothesChangeGUI extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				ClothesChangeGUI.this.character.change(Modifier.normal);
 				Global.gui().removeClosetGUI();
-				ClothesChangeGUI.this.resume.visit("Leave");
+				ClothesChangeGUI.this.resume.visit(doneOption);
 			}
 		});
 		btnOk.setFont(new Font("Sylfaen", Font.PLAIN, 24));

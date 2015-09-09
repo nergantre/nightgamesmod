@@ -1,15 +1,7 @@
 1.8.2 changelog
 
 Features:
-- Added a new character initial strength Trait:
-	- "Stable Form"
-		- Prevents the effects of Priapus Draft, FemDraft, Tiny Draft, Bust Draft, Succubus Draft and Tentacle Tonic from applying when thrown at you.
-- Added two new character initial weakness Traits:
-	- "Naive"
-		- 50% to not get cynical after recovering from a mindgame status (enthralled, trance, flatfooted, etc)
-	- "Foot Fetishist"
-		- Starts each match with a foot fetish at the minimum magnitude
-- Clothing has been completely refactored.
+- Clothing has been completely overhauled.
 	- All clothing will be in the resources/clothing/
 		- new clothing can be either added to the existing json file or it can be a new json file in that directory
 	- Got rid of the old skimpiness system and replaced it with exposure.
@@ -43,15 +35,42 @@ Features:
 			- 4 : cloaks etc
 		- bottom layers:
 			- 0 : underwear/panties
-			- 1 : hosiery/leg warmers?
+			- 1 : hosiery/leg warmers
 			- 2 : pants/skirts/dresses
 			- 3 : coats etc
 			- 4 : cloaks etc
+		- legs layer:
+			- 1 : hosiery/leg warmers
+			- 2 : pants
 		- feet layer:
 			- 1 : hosiery/leg warmers/socks
 			- 2 : shoes
+		- arms layer:
+			- 1 : gloves
+		- head layer:
+			- unused for now (hats?)
+		- hands layer:
+			- 1 : gloves
+			- 3 : unused for now (rings?)
+		- neck layer:
+			- unused for now (necklaces? collars?)
+	- Stripping works a bit differently as well
+		- Strip skills and Tear skills only shred top and bottom.
+		- Random strip skills (Dissolving solution) strip any slot at random
+		- Nudification skills (Defabricator, Nakedbloom, etc) will first strip top and bottom, and then strip the rest if used again.
+	- Added a ton of new clothing.
+		- Most of these can be found in the Boutique, Clothing Shop, or XXX Store.
+		- Hover over the clothing in the store or the clothing change UI to see what they do.
 	- Unfortunately this may mean that your saves are no longer compatible.
 		- NEVERMIND, I MADE THEM COMPATIBLE :D
+- Added a new character initial strength Trait:
+	- "Stable Form"
+		- Prevents the effects of Priapus Draft, FemDraft, Tiny Draft, Bust Draft, Succubus Draft and Tentacle Tonic from applying when thrown at you.
+- Added two new character initial weakness Traits:
+	- "Naive"
+		- 50% to not get cynical after recovering from a mindgame status (enthralled, trance, flatfooted, etc)
+	- "Foot Fetishist"
+		- Starts each match with a foot fetish at the minimum magnitude
 - Added new Traits:
 	- Heels Pro:
 		- Wearing heels does not reduce your speed, and does not make you easily knocked down (generally heels have higher hotness bonuses)
@@ -67,6 +86,13 @@ Features:
 		- Has a raised chance to inflict foot fetish
 - If you start off as a female or a herm, you start with bra and panties instead of boxers.
 	- If you start off as a female or a herm, you start off with b cup breasts (up from flat)
+- Changed the AI:
+	- The AI now will consider the opponent differently. This mainly makes it so that more interesting things can be added.
+	- The AI now will pick the best item to drink/throw instead of a completely random item.
+	- The AI now will take the male preference slider into account when determining what move is good
+		- Example: You have male preference slide all the way to the right.
+				   The AI will consider growing a cock good and you getting a pussy good.
+	- This is a bit experimental at the moment, so please let me know if something seems off.
 
 Balance:
 - Made divine pussy's divine charge stack double every time she takes pleasure damage instead of increasing it by .25

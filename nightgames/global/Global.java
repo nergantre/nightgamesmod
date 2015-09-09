@@ -145,7 +145,7 @@ public class Global {
 		debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
 		debug[DebugFlags.DEBUG_LOADING.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_DAMAGE.ordinal()] = true;
-		debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
+//		debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
@@ -178,10 +178,10 @@ public class Global {
 		rebuildCharacterPool();
 		date=0;
 		flag(Flag.systemMessages);
-		//players.add(getNPC("Jewel"));
-		//players.add(getNPC("Cassie"));
+		players.add(getNPC("Jewel"));
+		players.add(getNPC("Cassie"));
 		players.add(getNPC("Angel"));
-		//players.add(getNPC("Mara"));
+		players.add(getNPC("Mara"));
 		match = new Match(players,Modifier.normal);
 		match.round();
 	}
@@ -702,6 +702,10 @@ public class Global {
 
 	public static boolean checkFlag(Flag f){
 		return flags.contains(f.name());
+	}
+
+	public static boolean checkFlag(String key){
+		return flags.contains(key);
 	}
 
 	public static float getValue(Flag f){

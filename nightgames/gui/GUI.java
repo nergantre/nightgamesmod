@@ -1325,10 +1325,10 @@ public class GUI extends JFrame implements Observer {
 		}
 	}
 
-	public void changeClothes(Character player, Activity event) {
+	public void changeClothes(Character player, Activity event, String backOption) {
 		clothesPanel.removeAll();
-		clothesPanel.add(new ClothesChangeGUI(player, event));
-		centerPanel.remove(((BorderLayout)centerPanel.getLayout()).getLayoutComponent(BorderLayout.CENTER));
+		clothesPanel.add(new ClothesChangeGUI(player, event, backOption));
+		centerPanel.remove(((BorderLayout) centerPanel.getLayout()).getLayoutComponent(BorderLayout.CENTER));
 		this.centerPanel.add(clothesPanel, BorderLayout.CENTER);
 		this.clothesPanel.setVisible(true);
 		this.clothesPanel.repaint();
@@ -1338,7 +1338,7 @@ public class GUI extends JFrame implements Observer {
 
 	public void removeClosetGUI() {
 		clothesPanel.removeAll();
-		centerPanel.remove(((BorderLayout)centerPanel.getLayout()).getLayoutComponent(BorderLayout.CENTER));
+		centerPanel.remove(((BorderLayout) centerPanel.getLayout()).getLayoutComponent(BorderLayout.CENTER));
 		this.centerPanel.add(portraitPanel, BorderLayout.CENTER);
 		this.clothesPanel.setVisible(false);
 		this.centerPanel.repaint();

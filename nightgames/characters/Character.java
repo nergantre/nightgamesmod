@@ -2107,10 +2107,10 @@ public abstract class Character extends Observable implements Cloneable {
 		
 		// check body parts based on my preferences
 		if (other.hasDick()) {
-			fit -= dickPreference() * 4;
+			fit -= (dickPreference() - 3) * 4;
 		}
 		if (other.hasPussy()) {
-			fit -= pussyPreference() * 4;
+			fit -= (pussyPreference() - 3) * 4;
 		}
 
 		fit += other.outfit.getFitness(c, bottomFitness, topFitness);
@@ -2172,11 +2172,11 @@ public abstract class Character extends Observable implements Cloneable {
 			fit += this.body.penetrationFitnessModifier(c.getStance().inserted(this), c.getStance().analinserted(), other.body);
 		}
 		if (hasDick()) {
-			fit += dickPreference() * 4;
+			fit += (dickPreference() - 3) * 4;
 		}
 
 		if (hasPussy()) {
-			fit += pussyPreference() * 4;
+			fit += (pussyPreference() - 3) * 4;
 		}
 		// Also somewhat of a factor: Inventory (so we don't
 		// just use it without thinking)
