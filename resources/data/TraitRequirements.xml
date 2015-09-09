@@ -383,7 +383,6 @@
 				<LevelReq>2</LevelReq>
 		</Requirements>
 	</Trait>
-	
 	<Trait>
 		<Name>limbTraining2</Name>
 		<Requirements>
