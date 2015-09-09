@@ -1018,20 +1018,6 @@ public class GUI extends JFrame implements Observer {
 		displayStatus();
 	}
 
-	public JLabel getClothing() {
-		// TODO clothing
-		BufferedImage clothesicon = null;
-		try {
-			clothesicon = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" + "clothes8.png"));
-		} catch (IOException localIOException10) {
-		}
-		if (clothesicon != null) {
-			return new JLabel(new ImageIcon(clothesicon));
-		} else {
-			return new JLabel();
-		}
-	}
-
 	public void displayStatus() {
 		this.statusPanel.removeAll();
 		this.statusPanel.repaint();
@@ -1052,8 +1038,6 @@ public class GUI extends JFrame implements Observer {
 
 		Map<Item, Integer> items = this.player.getInventory();
 		int count = 0;
-		this.clothesdisplay = getClothing();
-		inventoryPanel.add(this.clothesdisplay);
 
 		ArrayList<JLabel> itmlbls = new ArrayList<JLabel>();
 		for (Item i : items.keySet()) {

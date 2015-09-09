@@ -1,21 +1,15 @@
 package nightgames.skills;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
+import nightgames.characters.NPC;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
-import nightgames.items.Item;
-import nightgames.items.ItemEffect;
 import nightgames.items.clothing.Clothing;
 
 public class StripSelf extends Skill {
@@ -40,6 +34,11 @@ public class StripSelf extends Skill {
 	}
 
 	@Override
+	public float priorityMod(Combat c) {
+		return -4f;
+	}
+
+	@Override
 	public boolean resolve(Combat c, Character target) {
 		Clothing clothing = null;
 		if (getSelf().human()) {
@@ -49,7 +48,25 @@ public class StripSelf extends Skill {
 				c.getCombatantData(getSelf()).addToClothesPile(clothing);
 			}
 		} else {
-			clothing = getSelf().stripRandom(c);
+			NPC self = (NPC) getSelf();
+			HashMap<Clothing, Float> checks = new HashMap<>();
+			getSelf().getOutfit().getAllStrippable().stream().forEach(article -> {
+				float rating = self.rateAction(c, self.getFitness(c), target.getFitness(c), (newCombat, newSelf, newOther) -> {
+					newSelf.strip(article, newCombat);
+					return true;
+				});
+				checks.put(article, rating);
+			});
+			checks.entrySet().stream().forEach(entry -> {
+				System.out.println("Stripping " + entry.getKey() + ": " + entry.getValue());
+			});
+			Clothing best = checks.entrySet().stream().max((first, second) -> {
+				float test = second.getValue() - first.getValue();
+				if (test < 0) { return -1; }
+				if (test > 0) { return 1; }
+				return 0;
+			}).get().getKey();
+			getSelf().strip(best, c);
 		}
 		if (clothing == null) {
 			c.write(getSelf(), "Skill failed...");

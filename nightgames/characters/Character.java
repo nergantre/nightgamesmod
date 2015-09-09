@@ -2215,10 +2215,11 @@ public abstract class Character extends Observable implements Cloneable {
 				(!article.is(ClothingTrait.armored)
 						&& !article.is(ClothingTrait.bulky)));
 		} else if (part.isType("pussy") || part.isType("ass")) {
-			return outfit.slotEmptyOrMeetsCondition(ClothingSlot.bottom, (article) -> 
-							(article.is(ClothingTrait.skimpy)
+			return outfit.slotEmptyOrMeetsCondition(ClothingSlot.bottom, (article) -> {
+							return (article.is(ClothingTrait.skimpy)
 							|| article.is(ClothingTrait.open)
-							|| article.is(ClothingTrait.flexible)));
+							|| article.is(ClothingTrait.flexible));
+							});
 		} else {
 			return false;
 		}

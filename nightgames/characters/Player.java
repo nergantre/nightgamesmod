@@ -37,20 +37,17 @@ public class Player extends Character {
 
 	public Player(String name, CharacterSex sex) {
 		super(name, 1);
-		if (sex.equals("female") || sex.equals("herm")) {
+		if (sex == CharacterSex.female || sex == CharacterSex.herm) {
 			outfitPlan.add(Clothing.getByID("bra"));
 			outfitPlan.add(Clothing.getByID("panties"));
-			closet.add(Clothing.getByID("panties"));
-			closet.add(Clothing.getByID("bra"));
 		} else {
 			outfitPlan.add(Clothing.getByID("boxers"));
-			closet.add(Clothing.getByID("boxers"));
 		}
 		outfitPlan.add(Clothing.getByID("Tshirt"));
 		outfitPlan.add(Clothing.getByID("jeans"));
-		closet.add(Clothing.getByID("Tshirt"));
-		closet.add(Clothing.getByID("jeans"));
-		
+		outfitPlan.add(Clothing.getByID("socks"));
+		outfitPlan.add(Clothing.getByID("sneakers"));
+
 		willpower.setMax(willpower.max());
 		change(Modifier.normal);
 		availableAttributePoints=0;

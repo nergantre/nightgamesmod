@@ -527,15 +527,11 @@ public class Body implements Cloneable {
 	}
 
 	public void finishBody(CharacterSex sex) {
-		for (BodyPart part: requiredParts) {
-			if (get(part.getType()).size() == 0) {
-				add(part);
-			}
-		}
 		if (sex == CharacterSex.female|| sex == CharacterSex.herm) {
 			if (get("pussy").size() == 0) {
 				add(PussyPart.normal);
-			} else if (get("breasts").size() == 0) {
+			}
+			if (get("breasts").size() == 0) {
 				add(BreastsPart.b);
 			}
 		}
@@ -547,6 +543,11 @@ public class Body implements Cloneable {
 		if (sex == CharacterSex.male) {
 			if (get("balls").size() == 0) {
 				add(new GenericBodyPart("balls", 0, 1.0, 1.5, "balls", ""));
+			}
+		}
+		for (BodyPart part: requiredParts) {
+			if (get(part.getType()).size() == 0) {
+				add(part);
 			}
 		}
 	}

@@ -23,6 +23,7 @@ public class Angel extends BasePersonality {
 		character = new NPC("Angel",1,this);
 		preferredCockMod = CockMod.blessed;
 		character.outfitPlan.add(Clothing.getByID("Tshirt"));
+		character.outfitPlan.add(Clothing.getByID("bra"));
 		character.outfitPlan.add(Clothing.getByID("thong"));
 		character.outfitPlan.add(Clothing.getByID("miniskirt"));
 		character.outfitPlan.add(Clothing.getByID("sandals"));
