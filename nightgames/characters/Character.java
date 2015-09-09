@@ -1119,7 +1119,12 @@ public abstract class Character extends Observable implements Cloneable {
 		JSONArray savedArr = (JSONArray) obj.get(name);
 		for (Object elem : savedArr) {
 			String key = (String)elem;
-			arr.add(Clothing.getByID(key));
+			try {
+				arr.add(Clothing.getByID(key));
+			} catch (IllegalArgumentException e) {
+				// If we find a piece of clothing that isn't actually available, log it and ignore it.
+				System.err.println(e);
+			}
 		}
 	}
 
