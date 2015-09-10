@@ -1,3 +1,7 @@
+1.8.2.3 changelog
+Other changes:
+	- Made the closet GUI work better with low resolutions
+
 1.8.2.2 changelog
 Bug fix:
 	- Fix crash bug when dojo training is selected

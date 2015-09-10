@@ -114,6 +114,11 @@ public class ClothesChangeGUI extends JPanel {
 		this.setForeground(Color.WHITE);
 		setLayout(new BorderLayout());
 
+		int width = Global.gui().getWidth();
+		int height = Global.gui().getHeight();
+		int strutSize = (height - 400) / 3;
+		int listWidth = (width - 400) / 3;
+
 		Box closetBox = Box.createVerticalBox();
 		closetListModel = new DefaultListModel<>();
 		JList<Clothing> closetList = new ClothingList(closetListModel);
@@ -124,7 +129,7 @@ public class ClothesChangeGUI extends JPanel {
 		closetLabel.setForeground(Color.WHITE);
 		closetBox.add(closetLabel);
 		JScrollPane closetListPane = new JScrollPane(closetList);
-		closetListPane.setMinimumSize(new Dimension(1000, 200));
+		closetListPane.setMinimumSize(new Dimension(listWidth, 0));
 		closetBox.add(closetListPane);
 
 		JButton removeall = new JButton("Remove All");
@@ -136,14 +141,14 @@ public class ClothesChangeGUI extends JPanel {
 		styleButton(removeall);
 		styleButton(addButton);
 		styleButton(removeButton);
-		
+
 		removeButton.setMaximumSize(new Dimension(100, 50));
 		removeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-		centerChangePanel.add(Box.createVerticalStrut(200));
+		centerChangePanel.add(Box.createVerticalStrut(strutSize));
 		centerChangePanel.add(addButton);
-		centerChangePanel.add(Box.createVerticalStrut(200));
+		centerChangePanel.add(Box.createVerticalStrut(strutSize));
 		centerChangePanel.add(removeButton);
-		centerChangePanel.add(Box.createVerticalStrut(200));
+		centerChangePanel.add(Box.createVerticalStrut(strutSize));
 		centerChangePanel.setOpaque(false);
 
 		Box outfitBox = Box.createVerticalBox();
@@ -154,7 +159,8 @@ public class ClothesChangeGUI extends JPanel {
 		outfitList.setForeground(Color.WHITE);
 		outfitList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane outfitListPane = new JScrollPane(outfitList);
-		outfitListPane.setMinimumSize(new Dimension(1000, 200));
+		outfitListPane.setMinimumSize(new Dimension(listWidth, 0));
+		outfitListPane.setPreferredSize(new Dimension(listWidth, height));
 
 		JLabel outfitLabel = new JLabel("Closet");
 		outfitLabel.setForeground(Color.WHITE);
@@ -178,18 +184,20 @@ public class ClothesChangeGUI extends JPanel {
 		JPanel leftPanel = new JPanel(new BorderLayout());
 		leftPanel.add(closetBox, BorderLayout.CENTER);
 		leftPanel.add(new JLabel(), BorderLayout.SOUTH);
-		leftPanel.setPreferredSize(new Dimension(500, 100));
+		leftPanel.setPreferredSize(new Dimension(listWidth, 100));
 		leftPanel.setOpaque(false);
 		JPanel rightPanel = new JPanel(new BorderLayout());
 		rightPanel.setOpaque(false);
 		rightPanel.add(outfitBox, BorderLayout.CENTER);
 		rightPanel.add(removeall, BorderLayout.SOUTH);
-		rightPanel.setPreferredSize(new Dimension(500, 100));
+		rightPanel.setPreferredSize(new Dimension(listWidth, 100));
 		JPanel centerPanel = new JPanel(new BorderLayout());
 		Box cBPanel = Box.createHorizontalBox();
 		cBPanel.add(centerChangePanel);
 		cBPanel.setOpaque(false);
 		centerPanel.add(cBPanel, BorderLayout.CENTER);
+		centerPanel.setMinimumSize(new Dimension(200, 0));
+		centerPanel.setPreferredSize(new Dimension(100, 0));
 		Box labelPanel = Box.createVerticalBox();
 		appearanceLabel = new JLabel("Appearance: ");
 		appearanceLabel.setToolTipText("Bonus to your natural body charisma and hotness");
