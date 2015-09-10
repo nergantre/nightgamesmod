@@ -1116,8 +1116,9 @@ public abstract class Character extends Observable implements Cloneable {
 			Character character = Global.getCharacterByType(keyString);
 			if (character == null) {
 				System.err.println("Failed loading character: " + keyString);
+			} else {
+				map.put(character, JSONUtils.readInteger(obj, keyString));
 			}
-			map.put(character, JSONUtils.readInteger(obj, keyString));
 		}
 		return map;
 	}
@@ -1777,6 +1778,11 @@ public abstract class Character extends Observable implements Cloneable {
 	}
 
 	public int getAttraction(Character other){
+		if (other == null) {
+			System.err.println("Other is null");
+			Thread.dumpStack();
+			return 0;
+		}
 		if(attractions.containsKey(other)){
 			return attractions.get(other);
 		}
@@ -1803,6 +1809,7 @@ public abstract class Character extends Observable implements Cloneable {
 		if (other == null) {
 			System.err.println("Other is null");
 			Thread.dumpStack();
+			return 0;
 		}
 
 		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
