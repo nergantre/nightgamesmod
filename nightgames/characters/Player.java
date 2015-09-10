@@ -92,7 +92,7 @@ public class Player extends Character {
 	public String describe(int per, Combat c) {
 		String description="<i>";
 		for(Status s:status){
-			description = description+s.describe()+"<br>";
+			description = description+s.describe(c)+"<br>";
 		}
 		description = description+"</i>";
 		description = description + outfit.describe(this);

@@ -13,7 +13,7 @@ public class Buzzed extends DurationStatus {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(affected.human()){
 			return "You feel a pleasant buzz, which makes you a bit sluggish, but also takes the edge of your sense of touch.";
 		}

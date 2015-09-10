@@ -36,7 +36,7 @@ public class FluidAddiction extends DurationStatus {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if (isActive()) {
 			if (affected.human()) {
 				return "You feel a desperate need to taste more of " + target.nameOrPossessivePronoun() + " fluids.";

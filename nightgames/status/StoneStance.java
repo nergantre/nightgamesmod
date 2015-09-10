@@ -19,7 +19,7 @@ public class StoneStance extends DurationStatus {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "";
 	}
 

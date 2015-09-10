@@ -32,7 +32,7 @@ public class TailFucked extends Status {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		BodyPart hole = affected.body.getRandom(target);
 		BodyPart tail = other.body.getRandom("tail");
 		if (hole == null || tail == null) { return ""; }

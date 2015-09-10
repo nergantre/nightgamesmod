@@ -26,7 +26,7 @@ public class ArmLocked extends Status {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(affected.human()){
 			return "Her hands are entwined with your own, preventing your escape.";
 		}

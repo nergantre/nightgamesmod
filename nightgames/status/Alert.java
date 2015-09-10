@@ -24,7 +24,7 @@ public class Alert extends DurationStatus {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "";
 	}
 

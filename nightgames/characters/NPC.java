@@ -54,7 +54,7 @@ public class NPC extends Character {
 	public String describe(int per, Combat c) {
 		String description=ai.describeAll(c);
 		for(Status s:status){
-			description = description+"<br>"+s.describe();
+			description = description+"<br>"+s.describe(c);
 		}
 		description = description+"<p>";
 		description = description + outfit.describe(this);

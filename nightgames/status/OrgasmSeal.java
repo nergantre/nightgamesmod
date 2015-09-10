@@ -21,7 +21,7 @@ public class OrgasmSeal extends DurationStatus {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(affected.hasBalls()) {
 			return Global.format("A pentragram on {self:name-possessive} ballsack glows with a sinister light.", affected, affected);
 		} else {

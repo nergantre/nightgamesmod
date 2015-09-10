@@ -15,7 +15,7 @@ public class Energized extends DurationStatus{
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "You're brimming with energy.";
 	}
 

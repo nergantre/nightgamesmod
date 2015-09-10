@@ -491,9 +491,6 @@ public class Global {
 				maxaffection=human.getAffection(player);
 				lover=player;
 			}
-			if (player.has(Trait.footfetishist)) {
-				player.add(new BodyFetish(player, null, "feet", .25));
-			}
 		}
 //		if (true) {
 //			lineup.add(human);

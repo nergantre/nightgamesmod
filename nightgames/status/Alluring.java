@@ -24,7 +24,7 @@ public class Alluring extends DurationStatus {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if (!affected.human()) {
 			return affected.name()+" looks impossibly beautiful to your eyes, you can't bear to hurt her.";
 		}

@@ -8,6 +8,7 @@ import nightgames.characters.Character;
 import nightgames.characters.State;
 import nightgames.characters.Trait;
 import nightgames.items.Item;
+import nightgames.status.BodyFetish;
 import nightgames.status.Hypersensitive;
 import nightgames.status.Stsflag;
 
@@ -72,6 +73,9 @@ public class Match {
 			player.getWillpower().fill();
 			if (player.getPure(Attribute.Science) > 0) {
 				player.chargeBattery();
+			}
+			if (player.has(Trait.footfetishist)) {
+				player.add(new BodyFetish(player, null, "feet", .25));
 			}
 		}
 	}

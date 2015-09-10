@@ -33,7 +33,7 @@ public class Suckling extends DurationStatus {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(affected.human()){
 			return "You feel an irresistable urge to suck on her nipples.";
 		}

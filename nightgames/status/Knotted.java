@@ -33,7 +33,7 @@ public class Knotted extends Status {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if (affected.human()) {
 			return opponent.nameOrPossessivePronoun() + " knotted dick is lodged inside of you, preventing escape.";
 		} else {

@@ -18,7 +18,7 @@ public class Winded extends DurationStatus {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(affected.human()){
 			return "You need a moment to catch your breath";
 		}

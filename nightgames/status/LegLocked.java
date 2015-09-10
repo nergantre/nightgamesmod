@@ -22,7 +22,7 @@ public class LegLocked extends Status {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(affected.human()){
 			return "Her legs are locked around your waist, preventing you from pulling out.";
 		} else {

@@ -29,7 +29,7 @@ public class DivineCharge extends Status {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Concentrated divine energy surges through " + affected.nameOrPossessivePronoun() + " pussy.";
 	}
 
