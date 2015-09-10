@@ -64,7 +64,7 @@ public class FootSmother extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		return "You place the soles of your feet over top of {other:name-possessive} face and press down, keeping {other:direct-object} in place and giving them no choice but to worship your feet.";
+		return "You place the soles of your feet over top of {other:name-possessive} face and press down, keeping {other:direct-object} in place and giving {other:direct-object} no choice but to worship your feet.";
 	}
 
 	@Override
