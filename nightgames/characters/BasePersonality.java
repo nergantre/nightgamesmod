@@ -148,7 +148,7 @@ public abstract class BasePersonality implements Personality {
 		ArrayList<Attribute> avail = new ArrayList<Attribute>();
 		Deque<PreferredAttribute> preferred = new ArrayDeque<PreferredAttribute>(preferredAttributes);
 		for (Attribute a : character.att.keySet()) {
-			if (Attribute.isTrainable(a) && (character.getPure(a) > 0 || Attribute.isBasic(a))) {
+			if (Attribute.isTrainable(a, character) && (character.getPure(a) > 0 || Attribute.isBasic(a))) {
 				avail.add(a);
 			}
 		}

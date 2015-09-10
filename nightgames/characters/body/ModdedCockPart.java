@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 
 public class ModdedCockPart implements CockPart {
 	private BasicCockPart base;
@@ -150,6 +151,11 @@ public class ModdedCockPart implements CockPart {
 	@Override
 	public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {
 		mod.tickHolding(c, self, opponent, otherOrgan, this);
+	}
+
+	@Override
+	public void onStartPenetration(Combat c, Character self, Character opponent, BodyPart target) {
+		mod.onStartPenetration(c, self, opponent, target, this);
 	}
 
 	@Override

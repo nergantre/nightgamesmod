@@ -926,7 +926,7 @@ public class GUI extends JFrame implements Observer {
 			message(this.player.availableAttributePoints + " Attribute Points remain.\n");
 			clearCommand();
 			for (Attribute att : this.player.att.keySet()) {
-				if (Attribute.isTrainable(att) && this.player.getPure(att) > 0) {
+				if (Attribute.isTrainable(att, this.player) && this.player.getPure(att) > 0) {
 					this.commandPanel.add(new AttributeButton(att));
 				}
 			}

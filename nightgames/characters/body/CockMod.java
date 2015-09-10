@@ -8,6 +8,7 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.status.Abuff;
 import nightgames.status.CockBound;
+import nightgames.status.DivineCharge;
 import nightgames.status.Enthralled;
 import nightgames.status.FluidAddiction;
 import nightgames.status.Horny;
@@ -61,7 +62,13 @@ public enum CockMod implements BodyPartMod {
 	public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c,
 			ModdedCockPart part) {
 		double bonus = part.getBase().applyBonuses(self, opponent, target, damage, c);
-
+		if (this == blessed && target.isType("cock")) {
+			if (self.getStatus(Stsflag.divinecharge) != null) {
+				c.write(self, Global.format(
+						"{self:NAME-POSSESSIVE} concentrated divine energy in {self:possessive} cock rams into {other:name-possessive} pussy, sending unimaginable pleasure directly into {other:possessive} soul.", self, opponent));
+			}
+			// no need for any effects, the bonus is in the pleasure mod
+		}
 		if (this == runic) {
 			String message = "";
 			if (target == PussyPart.succubus) {
@@ -193,6 +200,19 @@ public enum CockMod implements BodyPartMod {
 
 	public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c,
 			ModdedCockPart moddedCockPart) {
+		if (this == blessed && c.getStance().inserted(self)) {
+			DivineCharge charge = (DivineCharge) self.getStatus(Stsflag.divinecharge);
+			if (charge == null) {
+				c.write(self, Global.format(
+						"{self:NAME-POSSESSIVE} " + moddedCockPart.fullDescribe(self) + " radiates a golden glow as {self:subject-action:groan|groans}. "
+								+ "{other:SUBJECT-ACTION:realize|realizes} {self:subject-action:are|is} feeding on {self:possessive} own pleasure to charge up {self:possessive} divine energy.", self, opponent));
+				self.add(c, new DivineCharge(self, .25));
+			} else {
+				c.write(self, Global.format(
+						"{self:SUBJECT-ACTION:continue|continues} feeding on {self:possessive} own pleasure to charge up {self:possessive} divine energy.", self, opponent));
+				self.add(c, new DivineCharge(self, charge.magnitude));
+			}
+		}
 		return moddedCockPart.getBase().applyReceiveBonuses(self, opponent, target, damage, c);
 	}
 
@@ -291,5 +311,17 @@ public enum CockMod implements BodyPartMod {
 	@Override
 	public String getModType() {
 		return name();
+	}
+
+	public void onStartPenetration(Combat c, Character self, Character opponent, BodyPart target,
+			ModdedCockPart moddedCockPart) {
+		if (this == blessed && target.isErogenous()) {
+			if (!self.human()) {
+				c.write(self, Global.format(
+						"As soon as {self:subject} penetrates you, you realize it was a bad idea. While it looks innocuous enough, {self:name-possessive} {self:body-part:cock} "
+						+ "feels like pure ecstasy. You're not sure why you thought fucking a bonafide piece of heaven was a good idea. "
+						+ "{self:SUBJECT} hasn't even begun moving yet, but {self:possessive} cock simply sitting within you radiates a heat that has you squirming uncontrollably.", self, opponent));
+			}
+		}
 	}
 }
