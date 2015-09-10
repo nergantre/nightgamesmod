@@ -13,7 +13,6 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -31,6 +30,7 @@ import javax.swing.JFileChooser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.json.simple.parser.ParseException;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.ContextFactory;
 
@@ -769,16 +769,21 @@ public class Global {
 	public static void rebuildCharacterPool() {
 		characterPool = new HashMap<>();
 
-		JSONArray characterSet = (JSONArray) JSONValue.parse(new InputStreamReader(ResourceLoader.getFileResourceAsStream("characters/included.json")));
-		for (Object obj : characterSet) {
-			String name = (String) obj;
-			try {
-				Personality npc = new CustomNPC(JSONSourceNPCDataLoader.load(ResourceLoader.getFileResourceAsStream("characters/" + name)));
-				characterPool.put(npc.getCharacter().getType(), npc.getCharacter());
-			} catch (ParseException | IOException e1) {
-				System.err.println("Failed to load NPC");
-				e1.printStackTrace();
+		try {
+			JSONArray characterSet = (JSONArray) JSONValue.parseWithException(new InputStreamReader(ResourceLoader.getFileResourceAsStream("characters/included.json")));
+			for (Object obj : characterSet) {
+				String name = (String) obj;
+				try {
+					Personality npc = new CustomNPC(JSONSourceNPCDataLoader.load(ResourceLoader.getFileResourceAsStream("characters/" + name)));
+					characterPool.put(npc.getCharacter().getType(), npc.getCharacter());
+				} catch (ParseException | IOException e1) {
+					System.err.println("Failed to load NPC");
+					e1.printStackTrace();
+				}
 			}
+		} catch (ParseException | IOException e1) {
+			System.err.println("Failed to load character set");
+			e1.printStackTrace();
 		}
 
 		Personality cassie = new Cassie();
@@ -819,7 +824,7 @@ public class Global {
 		try {
 			file = new FileInputStream(dialog.getSelectedFile());
 			Reader loader = new InputStreamReader(file);
-			JSONObject object = (JSONObject) JSONValue.parse(loader);
+			JSONObject object = (JSONObject) JSONValue.parseWithException(loader);
 			loader.close();
 
 			JSONArray characters = (JSONArray) object.get("characters");
@@ -850,6 +855,8 @@ public class Global {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (org.json.simple.parser.ParseException e) {
 			e.printStackTrace();
 		}
 		gui.populatePlayer(human);

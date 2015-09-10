@@ -1,5 +1,6 @@
 package nightgames.items.clothing;
 
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -10,6 +11,7 @@ import java.util.stream.Collectors;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONValue;
+import org.json.simple.parser.ParseException;
 
 import nightgames.Resources.ResourceLoader;
 import nightgames.characters.Character;
@@ -26,7 +28,7 @@ public class Clothing implements Loot{
 		clothingTable = new HashMap<String, Clothing>();
 		ResourceLoader.getFileResourcesFromDirectory("data/clothing").forEach(inputstream -> {
 			try {
-				JSONArray value = (JSONArray) JSONValue.parse(new InputStreamReader(inputstream));
+				JSONArray value = (JSONArray) JSONValue.parseWithException(new InputStreamReader(inputstream));
 				JSONClothingLoader.loadClothingListFromJSON(value).forEach(article -> {
 					clothingTable.put(article.id, article);
 					if (Global.isDebugOn(DebugFlags.DEBUG_LOADING)) {
@@ -34,6 +36,10 @@ public class Clothing implements Loot{
 					}
 				});
 			} catch (ClassCastException e) {
+				e.printStackTrace();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		});
