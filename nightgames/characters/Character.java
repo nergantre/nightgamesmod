@@ -95,10 +95,12 @@ public abstract class Character extends Observable implements Cloneable {
 	public boolean custom;
 	private boolean pleasured;
 	public int orgasms;
+	public int cloned;
 
 	public Character(String name, int level){
 		this.name=name;
 		this.level=level;
+		cloned = 0;
 		custom = false;
 		body = new Body(this);
 		att = new HashMap<Attribute,Integer>();
@@ -146,6 +148,7 @@ public abstract class Character extends Observable implements Cloneable {
 	    Character c = (Character) super.clone();
 	    c.att = (HashMap<Attribute, Integer>) att.clone();
 		c.stamina = (Meter) stamina.clone();
+		c.cloned = cloned + 1;
 		c.arousal = (Meter) arousal.clone();
 		c.mojo = (Meter) mojo.clone();
 		c.willpower = (Meter) willpower.clone();
@@ -747,7 +750,10 @@ public abstract class Character extends Observable implements Cloneable {
 
 	public Clothing shred(ClothingSlot slot){
 		Clothing article = outfit.getTopOfSlot(slot);
-		if (article.is(ClothingTrait.indestructible)) {
+		if (article == null || article.is(ClothingTrait.indestructible)) {
+			System.err.println("Tried to shred clothing that doesn't exist at slot " + slot.name() + " at clone " + cloned);
+			System.err.println(outfit.toString());
+			Thread.dumpStack();
 			return null;
 		} else {
 			// don't add it to the pile
