@@ -1,16 +1,10 @@
 package nightgames.skills;
 
-import java.util.Optional;
-
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
-import nightgames.characters.body.AssPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.stance.Stance;
-import nightgames.stance.StandingOver;
 import nightgames.status.BodyFetish;
 
 public class FootSmother extends Skill {
@@ -35,16 +29,13 @@ public class FootSmother extends Skill {
 	public boolean resolve(Combat c, Character target) {
 		Result result = Result.normal;
 		int m = 0;
-		m = 6 + Global.random(4);
+		m = 8 + Global.random(6);
 		if (getSelf().human()) {
 			c.write(getSelf(), Global.format(deal(c, 0, Result.normal, target), getSelf(), target));
 		} else {
-			c.write(getSelf(), Global.format(deal(c, 0, Result.normal, target), getSelf(), target));
+			c.write(getSelf(), Global.format(receive(c, 0, Result.normal, target), getSelf(), target));
 		}
-		if (m > 0) {
-			target.body.pleasure(getSelf(), getSelf().body.getRandom("feet"), target.body.getRandom("mouth"), m, c);
-			target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("feet"), m, c);
-		}
+		target.tempt(c, getSelf(), getSelf().body.getRandom("feet"), m);
 		if (Global.random(100) < 30 + 2 * getSelf().get(Attribute.Fetish)) {
 			target.add(c, new BodyFetish(target, getSelf(), "feet", .25));
 		}
