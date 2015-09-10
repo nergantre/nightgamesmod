@@ -21,7 +21,7 @@ public class Jewel extends BasePersonality {
 	public Jewel(){
 		super();
 		character = new NPC("Jewel",1,this);
-		preferredCockMod = CockMod.runic;
+		preferredCockMod = CockMod.enlightened;
 		character.outfitPlan.add(Clothing.getByID("bra"));
 		character.outfitPlan.add(Clothing.getByID("tanktop"));
 		character.outfitPlan.add(Clothing.getByID("panties"));
