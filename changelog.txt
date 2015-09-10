@@ -1,3 +1,25 @@
+1.8.2.1 changelog
+Changes:
+	- use dark theme for closet ui
+Bug Fix: 
+	- round decimals in certain status effects
+	- fix grammatical issue with outfit descriptions
+	- fix mix up between foot pump and heel grind
+	- fix footjob text being unformatted
+	- fix Tear so it can strip bottom as well as tops
+	- strip bottom no longer mentions nonexistent dicks
+	- fix underwear only and nudist modifiers
+	- fix text for strip self
+	- fix command being able to do multiple actions in a turn
+	- fix throw draft failing for npcs
+
+Other changes:
+	- require a shreddable slot for dissolving solutions
+	- no longer require reach bottom for foot smother
+	- buff Winded to 2 turns by default
+	- ignore non existent clothing in save files
+	- lower the fetish reduction per turn to .02
+
 1.8.2 changelog
 
 Features:
@@ -127,6 +149,7 @@ Bug fix:
 - Fixed a bug where sometimes on insertion, the game would bug out
 - Fixed a bug that was causing the game to bug out when transformations changed outside a match
 - Fixed a bug where struggle has unformatted text
+- Fixed a bug where getting tail pegged does not show up.
 
 Other changes:
 - NPCs now buy priapus drafts & femdrafts based on the male pref slider. They also buy them much less than before.

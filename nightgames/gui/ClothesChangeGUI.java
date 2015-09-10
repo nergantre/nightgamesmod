@@ -1,5 +1,6 @@
 package nightgames.gui;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -101,16 +102,27 @@ public class ClothesChangeGUI extends JPanel {
 		Global.gui().refresh();
 	}
 
+	private void styleButton(JButton button) {
+		button.setOpaque(true);
+		button.setForeground(Color.white);
+		button.setBackground(Color.DARK_GRAY);
+	}
 	public ClothesChangeGUI(Character character, Activity event, String doneOption){
 		this.character = character;
 		this.resume = event;
+		this.setBackground(new Color(25, 25, 50));
+		this.setForeground(Color.WHITE);
 		setLayout(new BorderLayout());
 
 		Box closetBox = Box.createVerticalBox();
 		closetListModel = new DefaultListModel<>();
 		JList<Clothing> closetList = new ClothingList(closetListModel);
+		closetList.setBackground(new Color(50, 50, 100));
+		closetList.setForeground(Color.WHITE);
 		closetList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		closetBox.add(new JLabel("Closet"));
+		JLabel closetLabel = new JLabel("Closet");
+		closetLabel.setForeground(Color.WHITE);
+		closetBox.add(closetLabel);
 		JScrollPane closetListPane = new JScrollPane(closetList);
 		closetListPane.setMinimumSize(new Dimension(1000, 200));
 		closetBox.add(closetListPane);
@@ -121,6 +133,10 @@ public class ClothesChangeGUI extends JPanel {
 		addButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		addButton.setMaximumSize(new Dimension(100, 50));
 		JButton removeButton = new JButton("<- Remove");
+		styleButton(removeall);
+		styleButton(addButton);
+		styleButton(removeButton);
+		
 		removeButton.setMaximumSize(new Dimension(100, 50));
 		removeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		centerChangePanel.add(Box.createVerticalStrut(200));
@@ -131,13 +147,18 @@ public class ClothesChangeGUI extends JPanel {
 		centerChangePanel.setOpaque(false);
 
 		Box outfitBox = Box.createVerticalBox();
+		outfitBox.setOpaque(false);
 		outfitListModel = new DefaultListModel<>();
 		JList<Clothing> outfitList = new ClothingList(outfitListModel);
+		outfitList.setBackground(new Color(50, 50, 100));
+		outfitList.setForeground(Color.WHITE);
 		outfitList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane outfitListPane = new JScrollPane(outfitList);
 		outfitListPane.setMinimumSize(new Dimension(1000, 200));
 
-		outfitBox.add(new JLabel("Outfit"));
+		JLabel outfitLabel = new JLabel("Closet");
+		outfitLabel.setForeground(Color.WHITE);
+		outfitBox.add(outfitLabel);
 		outfitBox.add(outfitListPane);
 
 		JButton btnOk = new JButton("OK");
@@ -148,18 +169,19 @@ public class ClothesChangeGUI extends JPanel {
 				ClothesChangeGUI.this.resume.visit(doneOption);
 			}
 		});
-		btnOk.setFont(new Font("Sylfaen", Font.PLAIN, 24));
+		styleButton(btnOk);
 		btnOk.setAlignmentX(CENTER_ALIGNMENT);
 		addButton.addActionListener(aevent -> add(closetList.getSelectedValue()));
 		removeButton.addActionListener(aevent -> remove(outfitList.getSelectedValue()));
 		removeall.addActionListener(aevent -> removeAllClothing());
 
-
 		JPanel leftPanel = new JPanel(new BorderLayout());
 		leftPanel.add(closetBox, BorderLayout.CENTER);
 		leftPanel.add(new JLabel(), BorderLayout.SOUTH);
 		leftPanel.setPreferredSize(new Dimension(500, 100));
+		leftPanel.setOpaque(false);
 		JPanel rightPanel = new JPanel(new BorderLayout());
+		rightPanel.setOpaque(false);
 		rightPanel.add(outfitBox, BorderLayout.CENTER);
 		rightPanel.add(removeall, BorderLayout.SOUTH);
 		rightPanel.setPreferredSize(new Dimension(500, 100));
@@ -170,9 +192,14 @@ public class ClothesChangeGUI extends JPanel {
 		centerPanel.add(cBPanel, BorderLayout.CENTER);
 		Box labelPanel = Box.createVerticalBox();
 		appearanceLabel = new JLabel("Appearance: ");
+		appearanceLabel.setToolTipText("Bonus to your natural body charisma and hotness");
 		exposureLabel = new JLabel("Exposure: ");
+		exposureLabel.setToolTipText("How much of your natural body charisma and hotness is exposed");
 		labelPanel.add(appearanceLabel);
 		labelPanel.add(exposureLabel);
+		appearanceLabel.setForeground(Color.WHITE);
+		exposureLabel.setForeground(Color.WHITE);
+		
 		Box miscPanel = Box.createHorizontalBox();
 		miscPanel.add(labelPanel);
 		miscPanel.add(Box.createHorizontalStrut(20));

@@ -3,6 +3,7 @@ package nightgames.characters;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -672,7 +673,13 @@ public abstract class Character extends Observable implements Cloneable {
 	}
 
 	public void change(Modifier rule) {
-		outfit.change(rule, outfitPlan);
+		List<Clothing> plan = outfitPlan;
+		if (rule == Modifier.underwearonly) {
+			plan = outfitPlan.stream().filter(article -> article.getLayer() == 0).collect(Collectors.toList());
+		} else if (rule == Modifier.nudist) {
+			plan = Collections.emptyList();
+		}
+		outfit.change(rule, plan);
 	}
 
 	public String getName() {
@@ -1122,7 +1129,12 @@ public abstract class Character extends Observable implements Cloneable {
 		JSONArray savedArr = (JSONArray) obj.get(name);
 		for (Object elem : savedArr) {
 			String key = (String)elem;
-			arr.add(Clothing.getByID(key));
+			try {
+				arr.add(Clothing.getByID(key));
+			} catch (IllegalArgumentException e) {
+				// If we find a piece of clothing that isn't actually available, log it and ignore it.
+				System.err.println(e);
+			}
 		}
 	}
 

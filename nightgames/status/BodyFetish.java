@@ -66,15 +66,15 @@ public class BodyFetish extends Status {
 		} else {
 			desc = "overwhelming ";
 		}
+		String magString = Global.formatDecimal(magnitude);
 		if(affected.human()){
 			if (origin != null) {
-				return Global.capitalizeFirstLetter(desc + "fantasies of worshiping " + origin.nameOrPossessivePronoun() + " " + part + " run through your mind (" + magnitude +").");
+				return Global.capitalizeFirstLetter(desc + "fantasies of worshiping " + origin.nameOrPossessivePronoun() + " " + part + " run through your mind (" + magString +").");
 			} else {
-				return Global.capitalizeFirstLetter(desc + "fantasies of worshiping " + part + " run through your mind (" + magnitude +").");
+				return Global.capitalizeFirstLetter(desc + "fantasies of worshiping " + part + " run through your mind (" + magString +").");
 			}
-		}
-		else{
-			return affected.name()+" is affected by a " + desc + part + " fetish (" + magnitude +").";
+		} else {
+			return affected.name()+" is affected by a " + desc + part + " fetish (" + magString +").";
 		}
 	}
 
@@ -207,7 +207,7 @@ public class BodyFetish extends Status {
 	@Override
 	public int regen(Combat c) {
 		if (magnitude > .25) {
-			magnitude = Math.max(.25, magnitude - .1);
+			magnitude = Math.max(.25, magnitude - .02);
 		}
 		return 0;
 	}

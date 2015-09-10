@@ -61,10 +61,10 @@ public class Command extends Skill {
 			c.write(getSelf(),"You feel a compulsion to loosen " + getSelf().nameOrPossessivePronoun()
 					+ " bondage. She quickly hops to her feet and grins at you like a predator while rubbing her wrists.");
 			getSelf().free();
-		} if (!target.mostlyNude()) { // Undress self
+		} else if (!target.mostlyNude()) { // Undress self
 			c.write(getSelf(),receive(c, 0, Result.miss, target));
 			new Undress(target).resolve(c, getSelf());
-		} if (!getSelf().crotchAvailable() && !getSelf().getOutfit().slotUnshreddable(ClothingSlot.bottom)) {
+		} else if (!getSelf().crotchAvailable() && !getSelf().getOutfit().slotUnshreddable(ClothingSlot.bottom)) {
 			c.write(getSelf(),receive(c, 0, Result.weak, target));
 			c.write(getSelf(),"Like a hungry beast, you rip off " + getSelf().name()
 					+ "'s " + getSelf().shred(ClothingSlot.bottom) + ".");

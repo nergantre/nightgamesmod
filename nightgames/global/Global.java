@@ -12,6 +12,7 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -1125,5 +1126,10 @@ public class Global {
 
 	public static Collection<NPC> allNPCs() {
 		return characterPool.values();
+	}
+
+	private static DecimalFormat formatter = new DecimalFormat("#.##");
+	public static String formatDecimal(double val) {
+		return formatter.format(val);
 	}
 }

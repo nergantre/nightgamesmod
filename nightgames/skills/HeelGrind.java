@@ -12,7 +12,7 @@ import nightgames.status.BodyFetish;
 
 public class HeelGrind extends Skill {
 	public HeelGrind(Character self) {
-		super("Foot Pump", self);
+		super("Heel Grind", self);
 	}
 
 	@Override
@@ -22,7 +22,7 @@ public class HeelGrind extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (c.getStance().behind(getSelf())&&target.crotchAvailable()&&getSelf().canAct()&&!c.getStance().penetration(target)&&target.hasDick());
+		return (c.getStance().behind(getSelf())&&target.crotchAvailable()&&getSelf().canAct()&&!c.getStance().penetration(target)&&target.hasPussy());
 	}
 
 	@Override
@@ -51,10 +51,7 @@ public class HeelGrind extends Skill {
 		else if(target.human()){
 			c.write(getSelf(),receive(c,m,Result.normal, target));
 		}
-		if (target.hasDick())
-			target.body.pleasure(getSelf(), getSelf().body.getRandom("feet"), target.body.getRandom("cock"), m, c);
-		else
-			target.body.pleasure(getSelf(), getSelf().body.getRandom("feet"), target.body.getRandom("pussy"), m, c);
+		target.body.pleasure(getSelf(), getSelf().body.getRandom("feet"), target.body.getRandom("pussy"), m, c);
 		target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("breasts"), m2, c);
 		if (c.getStance().en != Stance.behindfootjob) {
 			c.setStance(new BehindFootjob(getSelf(), target));
@@ -96,7 +93,7 @@ public class HeelGrind extends Skill {
 		return true;
 	}
 	public String getTargetOrganType(Combat c, Character target) {
-		return "cock";
+		return "pussy";
 	}
 	public String getWithOrganType(Combat c, Character target) {
 		return "feet";

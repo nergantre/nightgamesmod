@@ -23,7 +23,7 @@ public class Tear extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return ((c.getStance().reachTop(getSelf()) && !target.breastsAvailable())
-				|| (((c.getStance().oral(getSelf()) || c.getStance().reachBottom(getSelf()))
+				|| ((c.getStance().reachBottom(getSelf())
 						&& !target.crotchAvailable())))
 				&& getSelf().canAct();
 	}
@@ -81,7 +81,7 @@ public class Tear extends Skill {
 							+ ", but fails to remove it.");
 				}
 			}
-		} else if (!target.getOutfit().slotEmpty(ClothingSlot.top)) {
+		} else if (!target.getOutfit().slotEmpty(ClothingSlot.bottom)) {
 			Clothing article = target.getOutfit().getTopOfSlot(ClothingSlot.bottom);
 			if (!article.is(ClothingTrait.indestructible) && getSelf().get(Attribute.Animism) >= 12
 					&& getSelf().check(Attribute.Power,

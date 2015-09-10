@@ -2,7 +2,7 @@ package nightgames.global;
 
 public enum Modifier {
 	normal	(0),		//No challenge
-	pantsman (100),		//Only get boxers when resupplying
+	underwearonly (100),		//Only get boxers when resupplying
 	nudist	(125),		//No clothes
 	norecovery (100),	//Arousal only empties on loss or draw, no masturbation
 	vibration (75), 	//Small arousal gain in upkeep
