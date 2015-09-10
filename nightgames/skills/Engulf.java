@@ -67,14 +67,6 @@ public class Engulf extends Skill {
 			return Global.format("{self:NAME}'s fluid body squirms violently and suddenly rushes at you. You don't react in time, and before you know it, {self:name-possessive} slime firmly locks you in inside {self:direct-object}", getSelf(), target);
 		}
 	}
-
-	public String getTargetOrganType(Combat c, Character target) {
-		return "none";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "none";
-	}
-
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		int difficulty = target.getLevel() - (target.getStamina().get() * 10 / target.getStamina().max()) + target.get(Attribute.Cunning) / 2;

@@ -174,14 +174,6 @@ public class Kiss extends Skill {
 		return true;
 	}
 
-	public String getTargetOrganType(Combat c, Character target) {
-		return "mouth";
-	}
-
-	public String getWithOrganType(Combat c, Character target) {
-		return "mouth";
-	}
-
 	@Override
 	public String getLabel(Combat c){
 		if (getSelf().get(Attribute.Divinity) >= 1 && getSelf().canSpend(divineCost)) {

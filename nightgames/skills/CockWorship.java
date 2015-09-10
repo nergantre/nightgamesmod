@@ -24,7 +24,7 @@ public class CockWorship extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (target.crotchAvailable()&&target.hasDick()&&c.getStance().oral(getSelf())&&c.getStance().front(getSelf())&&getSelf().canAct()&&!c.getStance().penetration(getSelf()));
+		return (target.crotchAvailable()&&target.hasDick()&&c.getStance().oral(getSelf())&&c.getStance().front(getSelf())&&getSelf().canAct()&&!c.getStance().vaginallyPenetrated(target));
 	}
 
 	@Override
@@ -107,12 +107,5 @@ public class CockWorship extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	
-	public String getTargetOrganType(Combat c, Character target) {
-		return "cock";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "mouth";
 	}
 }

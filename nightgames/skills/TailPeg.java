@@ -44,7 +44,7 @@ public class TailPeg extends Skill {
 
 	@Override
 	public String describe(Combat c) {
-		if (c.getStance().analinserted(c.getOther(getSelf()))) {
+		if (c.getStance().analPenetrated(c.getOther(getSelf()))) {
 			return "Fuck your opponent with your tail";
 		}
 		return "Shove your tail up your opponent's ass.";
@@ -52,7 +52,7 @@ public class TailPeg extends Skill {
 
 	@Override
 	public String getLabel(Combat c){
-		if (c.getStance().analinserted(c.getOther(getSelf()))) {
+		if (c.getStance().analPenetrated(c.getOther(getSelf()))) {
 			return "Tail Fuck";
 		} else {
 			return "Tail Peg";
@@ -62,9 +62,9 @@ public class TailPeg extends Skill {
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		if (target.roll(this, c,
-				accuracy(c) - (c.getStance().penetration(getSelf()) ? 0 : 5))) {
+				accuracy(c) - (c.getStance().havingSex() ? 0 : 5))) {
 			int strength = Math.min(20, 10 + getSelf().get(Attribute.Dark)/4);
-			boolean vaginal = c.getStance().analinserted(c.getOther(getSelf()));
+			boolean vaginal = c.getStance().analPenetrated(c.getOther(getSelf()));
 			boolean shamed = false;
 			if (!vaginal && Global.random(4) == 2) {
 				target.add(c, new Shamed(target));
@@ -208,11 +208,5 @@ public class TailPeg extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "ass";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "tail";
 	}
 }

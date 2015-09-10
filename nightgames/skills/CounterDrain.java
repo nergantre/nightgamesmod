@@ -90,10 +90,4 @@ public class CounterDrain extends CounterBase {
 						+ "Seeing the opportunity, she smirks and leisurely mounts you.", getSelf(), target);
 		}
 	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "cock";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "pussy";
-	}
 }

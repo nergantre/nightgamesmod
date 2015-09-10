@@ -14,10 +14,6 @@ public class ReverseFuck extends Fuck {
 
 	public ReverseFuck(Character self) {
 		super("ReverseFuck", self, 0);
-		if(self.human()){
-			image="Fuck.jpg";
-			artist="Art by Fujin Hitokiri";
-		}
 	}
 
 	@Override

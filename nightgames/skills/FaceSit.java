@@ -32,7 +32,7 @@ public class FaceSit extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return getSelf().crotchAvailable()&&getSelf().canAct()&&c.getStance().dom(getSelf())&&c.getStance().reachTop(getSelf())&&
-				!c.getStance().penetration(getSelf())&&!c.getStance().penetration(target)&&c.getStance().prone(target)&&!getSelf().has(Trait.shy);
+				!c.getStance().vaginallyPenetrated(getSelf())&&!c.getStance().inserted(getSelf())&&c.getStance().prone(target)&&!getSelf().has(Trait.shy);
 	}
 
 	@Override
@@ -194,12 +194,5 @@ public class FaceSit extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	
-	public String getTargetOrganType(Combat c, Character target) {
-		return "mouth";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "pussy";
 	}
 }

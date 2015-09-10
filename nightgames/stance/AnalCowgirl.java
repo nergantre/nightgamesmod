@@ -101,7 +101,7 @@ public class AnalCowgirl extends AnalSexStance {
 		Character inserter = inserted(top) ? top : bottom;
 		Character inserted = inserted(top) ? bottom : top;
 		
-		if(!inserter.hasDick()){
+		if(!inserter.hasInsertable()) {
 			if(inserter.human()){
 				c.write("With " + inserter.possessivePronoun() + " dick gone, you groan in frustration and cease your merciless movements.");
 			} else {
@@ -119,8 +119,8 @@ public class AnalCowgirl extends AnalSexStance {
 		}
 	}
 
-	public boolean analinserted(Character self) {
-		return self == bottom;
+	public boolean analPenetrated(Character self) {
+		return self == top;
 	}
 
 	@Override

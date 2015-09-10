@@ -21,7 +21,7 @@ public class UseDildo extends Skill{
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (getSelf().has(Item.Dildo)||getSelf().has(Item.Dildo2))&&getSelf().canAct()&&target.hasPussy()&&c.getStance().reachBottom(getSelf())&&target.crotchAvailable()&&!c.getStance().penetration(getSelf())
+		return (getSelf().has(Item.Dildo)||getSelf().has(Item.Dildo2))&&getSelf().canAct()&&target.hasPussy()&&c.getStance().reachBottom(getSelf())&&target.crotchAvailable()&&!c.getStance().vaginallyPenetrated(target)
 				&&(!getSelf().human()||Global.getMatch().condition!=Modifier.notoys);
 	}
 
@@ -109,11 +109,5 @@ public class UseDildo extends Skill{
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "pussy";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "dildo";
 	}
 }

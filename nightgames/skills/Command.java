@@ -89,17 +89,17 @@ public class Command extends Skill {
 			} else {
 				possible.add(new Anilingus(target));
 			}
-		} else if (!c.getStance().penetration(getSelf())
+		} else if (!c.getStance().inserted()
 				&& getSelf().hasPussy() && target.hasDick()) { // Fuck me
 			c.setStance(new Mount(target, getSelf()));
 			c.write(getSelf(),receive(c, 0, Result.special, target));
 			new Fuck(target).resolve(c, getSelf());
-		} else if (!c.getStance().penetration(getSelf())
+		} else if (!c.getStance().inserted()
 				&& target.hasPussy() && getSelf().hasDick()) { // Fuck me
 			c.setStance(new Mount(target, getSelf()));
 			c.write(getSelf(),receive(c, 0, Result.special, target));
 			new ReverseFuck(target).resolve(c, getSelf());
-		} else if (c.getStance().penetration(getSelf())) { // I drain you
+		} else if (c.getStance().inserted()) { // I drain you
 			if (Global.random(5) >= 4 && getSelf().get(Attribute.Dark) > 0) {
 				c.write(getSelf(),receive(c, 0, Result.critical, target));
 				c.write(getSelf(),"<br>");

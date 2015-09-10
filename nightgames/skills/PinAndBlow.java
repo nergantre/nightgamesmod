@@ -24,7 +24,7 @@ public class PinAndBlow extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (c.getStance().prone(target)&&target.crotchAvailable()&&getSelf().canAct()&&!c.getStance().penetration(target))&&c.getStance().en!=Stance.oralpin;
+		return (c.getStance().prone(target)&&target.crotchAvailable()&&getSelf().canAct()&&!c.getStance().connected())&&c.getStance().en!=Stance.oralpin;
 	}
 
 	@Override
@@ -89,11 +89,5 @@ public class PinAndBlow extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "none";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "mouth";
 	}
 }

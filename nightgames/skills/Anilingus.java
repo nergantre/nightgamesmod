@@ -27,7 +27,7 @@ public class Anilingus extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.crotchAvailable()&&target.body.has("ass")&&c.getStance().oral(getSelf())&&getSelf().canAct()&&!c.getStance().penetration(getSelf());
+		return target.crotchAvailable()&&target.body.has("ass")&&c.getStance().oral(getSelf())&&getSelf().canAct()&&!c.getStance().analPenetrated(target);
 	}
 
 	@Override
@@ -122,12 +122,6 @@ public class Anilingus extends Skill {
 	@Override
 	public String describe(Combat c) {
 		return "Perform anilingus on opponent";
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "ass";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "mouth";
 	}
 
 	@Override

@@ -69,10 +69,14 @@ public class Body implements Cloneable {
 	public double hotness;
 	transient Collection<PartReplacement> replacements;
 	transient public Character character;
+	transient public BodyPart lastPleasuredBy;
+	transient public BodyPart lastPleasured;
 
 	public Body() {
 		bodyParts = new LinkedHashSet<BodyPart>();
 		replacements = new ArrayList<PartReplacement>();
+		lastPleasuredBy = nonePart;
+		lastPleasured = nonePart;
 		hotness = 1.0;
 	}
 
@@ -449,7 +453,7 @@ public class Body implements Cloneable {
 		Optional<BodyFetish> fetish = getFetish(with.getType());
 		if (fetish.isPresent()) {
 			bonusDamage += magnitude * (1 + (fetish.get()).magnitude);
-			character.add(new BodyFetish(character, opponent, with.getType(), .05));
+			character.add(c, new BodyFetish(character, opponent, with.getType(), .05));
 		}
 		double origBase = bonusDamage+magnitude;
 
@@ -503,6 +507,8 @@ public class Body implements Cloneable {
 				character.add(c, new BodyFetish(character, opponent, with.getType(), .25));
 			}
 		}
+		lastPleasuredBy = with;
+		lastPleasured = target;
 		return result;
 	}
 

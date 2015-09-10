@@ -90,10 +90,4 @@ public class FootSmother extends Skill {
 	public String describe(Combat c) {
 		return "Smothers your opponent's face with your foot. Low damage but high chance of inducing fetishes.";
 	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "mouth";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "feet";
-	}
 }

@@ -95,7 +95,7 @@ public class AnalProne extends AnalSexStance {
 		Character inserter = inserted(top) ? top : bottom;
 		Character inserted = inserted(top) ? bottom : top;
 		
-		if(!inserter.hasDick()&&!inserter.has(Trait.strapped)){
+		if(!inserter.hasInsertable()){
 			if(inserted.human()){
 				c.write("With "+inserter.name()+"'s pole gone, your ass gets a respite.");
 			} else {

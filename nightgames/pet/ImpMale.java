@@ -37,7 +37,7 @@ public class ImpMale extends Pet {
 				remove();
 				break;
 			case 2:
-				if(target.crotchAvailable()&&!c.getStance().penetration(target)){
+				if(target.crotchAvailable()&&!c.getStance().vaginallyPenetrated(target)){
 					c.write(owner(),"Your imp latches onto "+target.name()+" and shoves his thick cock into her pussy. As the demon humps her, she shrieks and punches him away.");
 					target.body.pleasure(null, null, target.body.getRandom("pussy"), 2+3*Global.random(power), c);					
 				}

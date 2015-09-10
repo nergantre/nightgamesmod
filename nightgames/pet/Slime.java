@@ -27,7 +27,7 @@ public class Slime extends Pet {
 		if(target.human()){
 			switch(Global.random(4)){
 			case 3:
-				if(target.crotchAvailable()&&!c.getStance().penetration(target)){
+				if(target.crotchAvailable()&&!c.getStance().inserted(target)){
 					c.write(owner(),own()+"slime forms into a humanoid shape and grabs your dick. The slime hand molds to your penis and rubs you with a slippery pleasure.");
 					target.body.pleasure(null, null, target.body.getRandom("cock"), 2+3*Global.random(power), c);					
 				}
@@ -74,7 +74,7 @@ public class Slime extends Pet {
 		else{
 			switch(Global.random(4)){
 			case 3:
-				if(target.crotchAvailable()&&!c.getStance().penetration(target)){
+				if(target.crotchAvailable()&&!c.getStance().vaginallyPenetrated(target)){
 					c.write(owner(),"Two long appendages extend from your slime and wrap around "+target.name()+"'s legs. A third, phallic shaped appendage forms and penetrates her " +
 							"pussy. She stifles a moan as the slimy tentacles thrusts in and out of her.");
 					target.body.pleasure(null, null, target.body.getRandom("pussy"), 2+3*Global.random(power), c);					

@@ -20,7 +20,7 @@ public class Finger extends Skill {
 		return c.getStance().reachBottom(getSelf())&&(target.crotchAvailable()
 				||
 				(getSelf().has(Trait.dexterous)&&target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getLayer()<=1))
-				&&target.hasPussy()&&getSelf().canAct()&&(!c.getStance().penetration(target)||c.getStance().en==Stance.anal);
+				&&target.hasPussy()&&getSelf().canAct()&&(!c.getStance().vaginallyPenetrated(target)||c.getStance().en==Stance.anal);
 	}
 
 	@Override
@@ -135,11 +135,5 @@ public class Finger extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "pussy";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "hands";
 	}
 }

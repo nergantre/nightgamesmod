@@ -75,32 +75,11 @@ public class UpsideDownFemdom extends FemdomSexStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return true;
-	}
-	
-	@Override
-	public boolean inserted(Character c) {
-		return c==top;
-	}
-
-	@Override
 	public Position insertRandom() {
 		return new StandingOver(top,bottom);
 	}
 
 	public Position reverse() {
 		return new UpsideDownMaledom(bottom, top);
-	}
-	
-
-	@Override
-	public BodyPart topPart() {
-		return bottom.body.getRandomPussy();
-	}
-	
-	@Override
-	public BodyPart bottomPart() {
-		return top.body.getRandomInsertable();
 	}
 }

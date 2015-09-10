@@ -1310,16 +1310,7 @@ public abstract class Character extends Observable implements Cloneable {
 	}
 
 	public void doOrgasm(Combat c, Character opponent, Skill last) {
-		String opponentOrganType = "";
-		String selfOrganType = "";
-		if (last.user() == this) {
-			opponentOrganType = last.getTargetOrganType(c, opponent);
-			selfOrganType = last.getWithOrganType(c, this);
-		} else {
-			opponentOrganType = last.getWithOrganType(c, opponent);
-			selfOrganType = last.getTargetOrganType(c, this);
-		}
-		doOrgasm(c, opponent, body.getRandom(selfOrganType), opponent.body.getRandom(opponentOrganType));
+		doOrgasm(c, opponent, body.lastPleasured, body.lastPleasuredBy);
 	}
 
 	public void loseWillpower(Combat c, int i) {
@@ -2243,7 +2234,7 @@ public abstract class Character extends Observable implements Cloneable {
 		fit += body.getHotness(this, other);
 		if (c.getStance().inserted()) { // If we are fucking...
 			// ...we need to see if that's beneficial to us.
-			fit += this.body.penetrationFitnessModifier(c.getStance().inserted(this), c.getStance().analinserted(), other.body);
+			fit += this.body.penetrationFitnessModifier(c.getStance().inserted(this), c.getStance().analPenetrated(), other.body);
 		}
 		if (hasDick()) {
 			fit += (dickPreference() - 3) * 4;
@@ -2464,5 +2455,8 @@ public abstract class Character extends Observable implements Cloneable {
 	public boolean footAvailable() {
 		Clothing article = outfit.getTopOfSlot(ClothingSlot.feet);
 		return article == null || article.getLayer() < 2;
+	}
+	public boolean hasInsertable() {
+		return (hasDick() && crotchAvailable()) || has(Trait.strapped);
 	}
 }

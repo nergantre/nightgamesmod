@@ -17,7 +17,7 @@ public class Doggy extends MaledomSexStance {
 			return bottom.name()+" is on her hands and knees in front of you, while you fuck her Doggy style.";
 		}
 		else{
-			return "Things aren't going well for you. You're down on your hands and knees, while "+top.name()+" has free access to your manhood.";
+			return "Things aren't going well for you. You're down on your hands and knees, while "+top.name()+" is fucking you from behind.";
 		}
 	}
 	
@@ -79,32 +79,11 @@ public class Doggy extends MaledomSexStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return true;
-	}
-
-	@Override
-	public boolean inserted(Character c) {
-		return c==top;
-	}
-
-	@Override
 	public Position insertRandom() {
 		return new Behind(top,bottom);
 	}
 
 	public Position reverse() {
 		return new ReverseCowgirl(bottom, top);
-	}
-	
-
-	@Override
-	public BodyPart topPart() {
-		return top.body.getRandomInsertable();
-	}
-	
-	@Override
-	public BodyPart bottomPart() {
-		return bottom.body.getRandomPussy();
 	}
 }

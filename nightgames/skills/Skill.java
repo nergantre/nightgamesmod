@@ -165,12 +165,6 @@ public abstract class Skill {
 	public Collection<String> subChoices() {
 		return Collections.emptySet();
 	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "none";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "none";
-	}
 	public Character getSelf() {
 		return self;
 	}

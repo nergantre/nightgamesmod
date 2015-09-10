@@ -17,7 +17,7 @@ public class Handjob extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().reachBottom(getSelf())&&(target.crotchAvailable()||(getSelf().has(Trait.dexterous)&&target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getLayer()<=1))&&target.hasDick()&&getSelf().canAct()&&(!c.getStance().penetration(target)||c.getStance().en==Stance.anal);
+		return c.getStance().reachBottom(getSelf())&&(target.crotchAvailable()||(getSelf().has(Trait.dexterous)&&target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getLayer()<=1))&&target.hasDick()&&getSelf().canAct()&&(!c.getStance().inserted(target)||c.getStance().en==Stance.anal);
 	}
 
 	@Override
@@ -120,11 +120,5 @@ public class Handjob extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "cock";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "hands";
 	}
 }

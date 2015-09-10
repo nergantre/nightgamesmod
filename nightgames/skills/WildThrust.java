@@ -19,7 +19,7 @@ public class WildThrust extends Thrust {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&(c.getStance().penetration(getSelf())||c.getStance().penetration(target));
+		return getSelf().canAct()&&c.getStance().havingSex();
 	}
 
 	@Override

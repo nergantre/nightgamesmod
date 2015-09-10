@@ -21,7 +21,7 @@ import java.util.Scanner;
 import org.json.simple.JSONObject;
 
 public enum BasicCockPart implements CockPart {
-	tiny("tiny", 3), small("smallish", 4), average("average", 6), big("big", 8), huge("huge", 9), massive("massive",
+	tiny("tiny", 3), small("smallish", 4), average("average-sized", 6), big("big", 8), huge("huge", 9), massive("massive",
 			10);
 
 	public String desc;

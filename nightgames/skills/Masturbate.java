@@ -26,7 +26,7 @@ public class Masturbate extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().penetration(getSelf())&&Global.getMatch().condition!=Modifier.norecovery;
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&Global.getMatch().condition!=Modifier.norecovery&& getTargetOrgan(c, getSelf()) != Body.nonePart;
 	}
 	
 	@Override
@@ -38,17 +38,17 @@ public class Masturbate extends Skill {
 		return getSelf().body.getRandom("hands");
 	}
 
-	public BodyPart getTargetOrgan(Character target) {
+	public BodyPart getTargetOrgan(Combat c, Character target) {
 		ArrayList<BodyPart> parts = new ArrayList<BodyPart>();
 		BodyPart cock = target.body.getRandomCock();
 		BodyPart pussy = target.body.getRandomPussy();
-		BodyPart ass = null;
-		if (cock == null || pussy != null) {
-			ass = target.body.getRandom("ass");
+		BodyPart ass = target.body.getRandom("ass");
+		if (cock != null && !c.getStance().inserted(target)) {parts.add(cock);}
+		if (pussy != null && !c.getStance().vaginallyPenetrated(target)) {parts.add(pussy);}
+		if (parts.isEmpty() && ass != null && !c.getStance().analPenetrated(target)) {
+			parts.add(ass);
 		}
-		if (cock != null) {parts.add(cock);}
-		if (pussy != null) {parts.add(pussy);}
-		if (ass != null) {parts.add(ass);}
+		if (parts.isEmpty()) { return Body.nonePart; }
 
 		return parts.get(Global.random(parts.size()));
 	}
@@ -64,7 +64,7 @@ public class Masturbate extends Skill {
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		withO = getSelfOrgan();
-		targetO = getTargetOrgan(getSelf());
+		targetO = getTargetOrgan(c, getSelf());
 		
 		if(getSelf().human()){
 			if(getSelf().getArousal().get()<=15){
@@ -137,12 +137,5 @@ public class Masturbate extends Skill {
 	@Override
 	public String describe(Combat c) {
 		return "Raise your own arousal and boosts your mojo";
-	}
-
-	public String getTargetOrganType(Combat c, Character target) {
-		return targetO.getType();
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "hands";
 	}
 }

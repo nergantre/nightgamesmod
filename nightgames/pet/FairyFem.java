@@ -38,7 +38,7 @@ public class FairyFem extends Pet {
 				}
 				break;
 			case 2:
-				if(c.getStance().penetration(target)){
+				if(c.getStance().inserted(target)){
 					c.write(owner(),own()+"faerie flies around the edge of the fight looking for an opening.");
 				}
 				else if(target.crotchAvailable()){

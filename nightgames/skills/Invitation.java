@@ -99,13 +99,6 @@ public class Invitation extends Skill {
 		}
 	}
 
-	public String getTargetOrganType(Combat c, Character target) {
-		return "none";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "none";
-	}
-
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		int difficulty = target.getLevel() - (target.getArousal().get() * 10 / target.getArousal().max()) + target.get(Attribute.Seduction);

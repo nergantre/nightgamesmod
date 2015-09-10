@@ -21,7 +21,7 @@ public class UseOnahole extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (getSelf().has(Item.Onahole)||getSelf().has(Item.Onahole2))&&getSelf().canAct()&&target.hasDick()&&c.getStance().reachBottom(getSelf())&&target.crotchAvailable()&&!c.getStance().penetration(getSelf())
+		return (getSelf().has(Item.Onahole)||getSelf().has(Item.Onahole2))&&getSelf().canAct()&&target.hasDick()&&c.getStance().reachBottom(getSelf())&&target.crotchAvailable()&&!c.getStance().inserted(getSelf())
 				&&(!getSelf().human()||Global.getMatch().condition!=Modifier.notoys);
 	}
 
@@ -108,11 +108,5 @@ public class UseOnahole extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "cock";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "onahole";
 	}
 }

@@ -28,7 +28,7 @@ public class Paizuri extends Skill {
 				&& target.hasDick() && getSelf().breastsAvailable()
 				&& target.crotchAvailable() && c.getStance().paizuri(getSelf())
 				&& c.getStance().front(getSelf())
-				&& getSelf().canAct() && !c.getStance().penetration(getSelf());
+				&& getSelf().canAct() && !c.getStance().inserted(target);
 	}
 
 	@Override
@@ -103,12 +103,5 @@ public class Paizuri extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-
-	public String getTargetOrganType(Combat c, Character target) {
-		return "cock";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "breasts";
 	}
 }

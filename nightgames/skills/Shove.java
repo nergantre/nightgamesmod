@@ -23,7 +23,7 @@ public class Shove extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		if (target.hasStatus(Stsflag.cockbound)) { return false; }
-		return !c.getStance().dom(getSelf())&&!c.getStance().prone(target)&&c.getStance().reachTop(getSelf())&&getSelf().canAct()&&!c.getStance().penetration(getSelf());
+		return !c.getStance().dom(getSelf())&&!c.getStance().prone(target)&&c.getStance().reachTop(getSelf())&&getSelf().canAct()&&!c.getStance().havingSex();
 	}
 
 	@Override

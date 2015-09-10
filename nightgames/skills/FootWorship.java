@@ -91,10 +91,4 @@ public class FootWorship extends Skill {
 	public String describe(Combat c) {
 		return "Worship opponent's feet: builds mojo for opponent";
 	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "feet";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "mouth";
-	}
 }

@@ -38,8 +38,7 @@ public class Carry extends Fuck {
 				&& !c.getStance().prone(getSelf())
 				&& !c.getStance().prone(target)
 				&& c.getStance().facing()
-				&& getSelf().getStamina().get()>=15
-				&& !c.getStance().penetration(getSelf());
+				&& getSelf().getStamina().get()>=15;
 	}
 	
 	public int getMojoCost(Combat c) {
@@ -117,11 +116,5 @@ public class Carry extends Fuck {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "pussy";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "cock";
 	}
 }

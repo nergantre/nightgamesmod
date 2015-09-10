@@ -118,10 +118,4 @@ public class FondleBreasts extends Skill {
 	public boolean makesContact() {
 		return true;
 	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "breasts";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "hands";
-	}
 }

@@ -64,7 +64,7 @@ public class PullOut extends Skill {
 					}
 				} else {
 					if (getSelf().hasStatus(Stsflag.leglocked)) {
-						BodyPart part = c.getStance().analinserted(getSelf()) ? target.body.getRandom("ass") : target.body.getRandomPussy();
+						BodyPart part = c.getStance().analPenetrated(getSelf()) ? target.body.getRandom("ass") : target.body.getRandomPussy();
 						String partString = part.describe(target);
 						if (getSelf().human())
 							c.write(getSelf(),"You try to pull out of "+target.name()+"'s " + partString + ", but her legs immediately tighten against your waist, holding you inside her. The mere friction from her action sends a shiver down your spine.");
@@ -76,7 +76,7 @@ public class PullOut extends Skill {
 						else
 							c.write(getSelf(),"She tries to pull herself off of "+target.name()+", but with a gentle pull of your hands, she collapses back on top of you.");
 					} else if (target.has(Trait.tight) && c.getStance().inserted(getSelf())) {
-						BodyPart part = c.getStance().analinserted() ? target.body.getRandom("ass") : target.body.getRandomPussy();
+						BodyPart part = c.getStance().analPenetrated(target) ? target.body.getRandom("ass") : target.body.getRandomPussy();
 						String partString = part.describe(target);
 						if (getSelf().human())
 							c.write(getSelf(),"You try to pull yourself out of "+target.name()+"'s " +partString + ", but she clamps down hard on your cock while smiling at you. You almost cum from the sensation, and quickly abandon ideas about your escape.");
@@ -85,7 +85,7 @@ public class PullOut extends Skill {
 					}
 					int m = 8;
 					if (c.getStance().inserted(getSelf())) {
-						BodyPart part = c.getStance().analinserted() ? target.body.getRandom("ass") : target.body.getRandomPussy();
+						BodyPart part = c.getStance().analPenetrated(target) ? target.body.getRandom("ass") : target.body.getRandomPussy();
 						String partString = part.describe(target);
 						getSelf().body.pleasure(target, part, getSelf().body.getRandomInsertable(), m, c);
 					}

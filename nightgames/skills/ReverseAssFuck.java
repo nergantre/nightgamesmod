@@ -39,8 +39,7 @@ public class ReverseAssFuck extends Fuck {
 		return fuckable(c, target)
 				&&c.getStance().mobile(getSelf())
 				&&(c.getStance().prone(target)&&!c.getStance().mobile(target))
-				&&getSelf().canAct()&&!c.getStance().penetration(getSelf())
-				&&!c.getStance().penetration(target)
+				&&getSelf().canAct()
 				&&(getTargetOrgan(target).isReady(target))
 				&&(getSelfOrgan().isReady(getSelf()) || getSelf().has(Item.Lubricant) || getSelf().getArousal().percent()>50 || getSelf().has(Trait.alwaysready));
 	}

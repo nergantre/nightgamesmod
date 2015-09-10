@@ -23,7 +23,7 @@ public class Kick extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().feet(getSelf())&&getSelf().canAct()&&(!c.getStance().prone(getSelf())||getSelf().has(Trait.dirtyfighter)&&!c.getStance().penetration(getSelf()));
+		return c.getStance().feet(getSelf())&&getSelf().canAct()&&(!c.getStance().prone(getSelf())||getSelf().has(Trait.dirtyfighter)&&!c.getStance().connected());
 	}
 	
 	@Override

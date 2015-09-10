@@ -122,11 +122,4 @@ public class SuckNeck extends Skill {
 	public boolean makesContact() {
 		return true;
 	}
-
-	public String getTargetOrganType(Combat c, Character target) {
-		return "skin";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "mouth";
-	}
 }

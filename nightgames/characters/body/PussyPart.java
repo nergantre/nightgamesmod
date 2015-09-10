@@ -170,7 +170,7 @@ public enum PussyPart implements BodyPart, BodyPartMod {
 	@Override
 	public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		double bonus = 0;
-		if (this == divine && c.getStance().pussyinserted()) {
+		if (this == divine && c.getStance().vaginallyPenetrated()) {
 			DivineCharge charge = (DivineCharge) self.getStatus(Stsflag.divinecharge);
 			if (charge == null) {
 				c.write(self, Global.format(
@@ -378,8 +378,8 @@ public enum PussyPart implements BodyPart, BodyPartMod {
 						String.format(
 								"A cloud of lust descends over %s and %s, clearing both your thoughts of all matters except to fuck. Hard.",
 								opponent.subject(), self.subject()));
-				self.add(new Frenzied(self, 3));
-				opponent.add(new Frenzied(opponent, 3));
+				self.add(c, new Frenzied(self, 3));
+				opponent.add(c, new Frenzied(opponent, 3));
 			}
 		}
 		if (this.isType("pussy") && self.has(Trait.vaginaltongue) && target.isType("cock")

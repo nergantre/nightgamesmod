@@ -22,7 +22,7 @@ public class Footjob extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (target.hasDick() || target.hasPussy()) && c.getStance().feet(getSelf())&&target.crotchAvailable()&&(c.getStance().prone(getSelf())!=c.getStance().prone(target))&&getSelf().canAct()&&!c.getStance().penetration(target);
+		return (target.hasDick() || target.hasPussy()) && c.getStance().feet(getSelf())&&target.crotchAvailable()&&(c.getStance().prone(getSelf())!=c.getStance().prone(target))&&getSelf().canAct()&&!c.getStance().inserted();
 	}
 
 	@Override
@@ -132,15 +132,5 @@ public class Footjob extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		if (target.hasDick()) {
-			return "cock";
-		} else {
-			return "pussy";
-		}
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "feet";
 	}
 }

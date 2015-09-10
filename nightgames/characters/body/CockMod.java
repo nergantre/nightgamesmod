@@ -161,9 +161,9 @@ public enum CockMod implements BodyPartMod {
 				// Actual bad effects are dealt with in PussyPart
 			} else {
 				message += String.format(
-						"Drawing upon %s extensive training, %s, concentrating will into %s %s and enhancing %s abilities",
+						"Drawing upon %s extensive training, %s, concentrating her will into %s %s and enhancing %s own abilities",
 						self.possessivePronoun(), self.subjectAction("meditate", "meditates"), self.possessivePronoun(),
-						self.possessivePronoun(), part.describe(self), self.possessivePronoun());
+						part.describe(self), self.possessivePronoun());
 				for (int i = 0; i < Math.max(2, (self.get(Attribute.Ki) + 5) / 10); i++) { // +5
 																							// for
 																							// rounding:
@@ -171,7 +171,7 @@ public enum CockMod implements BodyPartMod {
 																							// 25->30->30
 					Attribute attr = new Attribute[] { Attribute.Power, Attribute.Cunning, Attribute.Seduction }[Global
 							.random(3)];
-					self.add(new Abuff(self, attr, 1, 10));
+					self.add(c, new Abuff(self, attr, 1, 10));
 				}
 				self.buildMojo(c, 5);
 				self.restoreWillpower(c, 1);

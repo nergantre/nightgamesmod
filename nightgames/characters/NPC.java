@@ -144,7 +144,7 @@ public class NPC extends Character {
 		}
 		this.gainXP(getVictoryXP(target));
 		target.gainXP(getDefeatXP(this));
-		if(c.getStance().penetration(this)){
+		if(c.getStance().inserted() && c.getStance().dom(this)){
 			getMojo().gain(2);
 			if(has(Trait.mojoMaster)){
 				getMojo().gain(2);
