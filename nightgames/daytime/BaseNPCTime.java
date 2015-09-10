@@ -89,7 +89,9 @@ public abstract class BaseNPCTime extends Activity {
 		} else if (optionalGiftOption.isPresent()) {
 			Global.gui().message(Global.format(giftedString, npc, player));
 			if (optionalGiftOption.get() instanceof Clothing) {
-				player.closet.remove(optionalGiftOption.get());
+				if (player.closet.contains(optionalGiftOption.get())) {
+					player.closet.remove(optionalGiftOption.get());
+				}
 				npc.closet.add((Clothing) optionalGiftOption.get());
 			}
 			player.gainAffection(npc, 2);
