@@ -10,12 +10,11 @@ public class XxxStore extends Store{
 	
 	public XxxStore(Character player) {
 		super("XXX Store", player);
-		add(Item.Lubricant);
-		add(Item.Dildo);
-		add(Item.Onahole);
-		add(Item.Crop);
-		add(Item.Tickler);
-		Clothing.getAllBuyableFrom("XxxStore").forEach(article -> add(article));
+		Clothing.getAllBuyableFrom("XxxStore").forEach(
+				article -> {
+					add(article);
+				}
+		);
 	}
 
 	@Override
@@ -72,7 +71,7 @@ public class XxxStore extends Store{
 			} else {
 				Global.gui().sale(this,Item.Strapon);
 			}
-
+			displayGoods();
 			Global.gui().choose(this,"Leave");
 		}
 	}
