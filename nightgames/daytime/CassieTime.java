@@ -44,18 +44,18 @@ public class CassieTime extends BaseNPCTime {
 
 	public void buildTransformationPool() {
 		options = new ArrayList<>();
-		TransformationOption blessedCock = new TransformationOption();
-		blessedCock.ingredients.put(Item.PriapusDraft, 10);
-		blessedCock.ingredients.put(Item.BewitchingDraught, 20);
-		blessedCock.ingredients.put(Item.FaeScroll, 1);
-		blessedCock.requirements.add(new BodyPartRequirement("cock"));
-		blessedCock.requirements.add((c, self, other) -> {
+		TransformationOption runicCock = new TransformationOption();
+		runicCock.ingredients.put(Item.PriapusDraft, 10);
+		runicCock.ingredients.put(Item.BewitchingDraught, 20);
+		runicCock.ingredients.put(Item.FaeScroll, 1);
+		runicCock.requirements.add(new BodyPartRequirement("cock"));
+		runicCock.requirements.add((c, self, other) -> {
 			return self.body.get("cock").stream().anyMatch(cock -> ((CockPart) cock).isGeneric());
 		});
-		blessedCock.additionalRequirements = "A normal cock";
-		blessedCock.option = "Blessed Cock";
-		blessedCock.scene = "[Placeholder]<br>Cassie blesses your cock with the power of the fairies.";
-		blessedCock.effect = (c, self, other) -> {
+		runicCock.additionalRequirements = "A normal cock";
+		runicCock.option = "Runic Cock";
+		runicCock.scene = "[Placeholder]<br>Cassie enchants your cock with the power of the fairies.";
+		runicCock.effect = (c, self, other) -> {
 			Optional<BodyPart> optPart = self.body.get("cock").stream().filter(cock -> ((CockPart) cock).isGeneric())
 					.findAny();
 			BasicCockPart target = (BasicCockPart) optPart.get();
@@ -63,7 +63,7 @@ public class CassieTime extends BaseNPCTime {
 			self.body.add(target.applyMod(CockMod.runic));
 			return true;
 		};
-		options.add(blessedCock);
+		options.add(runicCock);
 		TransformationOption arcanePussy = new TransformationOption();
 		arcanePussy.ingredients.put(Item.BewitchingDraught, 20);
 		arcanePussy.ingredients.put(Item.FemDraft, 10);
