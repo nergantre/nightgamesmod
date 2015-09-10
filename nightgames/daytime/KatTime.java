@@ -75,6 +75,7 @@ public class KatTime extends BaseNPCTime {
 			return true;
 		};
 		feralPussy.additionalRequirements = "A normal pussy";
+		options.add(feralPussy);
 		TransformationOption catTail = new TransformationOption();
 		catTail.ingredients.put(Item.Rope, 10);
 		catTail.ingredients.put(Item.Aphrodisiac, 50);
