@@ -7,6 +7,7 @@ import nightgames.gui.SaveButton;
 import nightgames.gui.SceneButton;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.items.clothing.ClothingSlot;
 import nightgames.status.Hypersensitive;
 
 import java.util.ArrayList;
@@ -130,8 +131,13 @@ public class Prematch implements Scene{
 		}
 		else{
 			available.add(Modifier.normal);
-			available.add(Modifier.underwearonly);
-			available.add(Modifier.nudist);
+			if (player.outfitPlan.stream().anyMatch(article -> article.getLayer() == 0
+					&& (article.getSlots().contains(ClothingSlot.top) || article.getSlots().contains(ClothingSlot.bottom)))) {
+				available.add(Modifier.underwearonly);
+			}
+			if (!player.outfitPlan.isEmpty()) {
+				available.add(Modifier.nudist);
+			}
 			available.add(Modifier.norecovery);
 			available.add(Modifier.vibration);
 			available.add(Modifier.vulnerable);
