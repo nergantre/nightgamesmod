@@ -1,3 +1,9 @@
+1.8.2.2 changelog
+Bug fix:
+	- Fix crash bug when dojo training is selected
+	- Fix crash bug when tear is used with Animism >= 12 and target is topless and has only one piece of bottom clothing.
+	- Fix crash bug when loading old saves with a disabled or missing NPC
+
 1.8.2.1 changelog
 Changes:
 	- use dark theme for closet ui
