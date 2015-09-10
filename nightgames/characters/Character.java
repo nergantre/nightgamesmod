@@ -1093,7 +1093,8 @@ public abstract class Character extends Observable implements Cloneable {
 	private static void saveCharIntMap(JSONObject obj, Map<Character, Integer> map, String name) {
 		JSONObject objMap = new JSONObject();
 		for(Character key:map.keySet()) {
-			objMap.put(key.getType(), map.get(key));
+			if (key != null)
+				objMap.put(key.getType(), map.get(key));
 		}
 		obj.put(name, objMap);
 	}
@@ -1784,8 +1785,12 @@ public abstract class Character extends Observable implements Cloneable {
 		}
 	}
 	public void gainAttraction(Character other, int x){
+		if (other == null) {
+			System.err.println("Other is null");
+			Thread.dumpStack();
+		}
 		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-			System.out.printf("%s gained affection for %s\n", this.name(), other.name());
+			System.out.printf("%s gained attraction for %s\n", this.name(), other.name());
 		}
 		if(attractions.containsKey(other)){
 			attractions.put(other,attractions.get(other)+x);
@@ -1795,6 +1800,14 @@ public abstract class Character extends Observable implements Cloneable {
 		}
 	}
 	public int getAffection(Character other){
+		if (other == null) {
+			System.err.println("Other is null");
+			Thread.dumpStack();
+		}
+
+		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+			System.out.printf("%s gained affection for %s\n", this.name(), other.name());
+		}
 		if(affections.containsKey(other)){
 			return affections.get(other);
 		}
@@ -1803,6 +1816,10 @@ public abstract class Character extends Observable implements Cloneable {
 		}
 	}
 	public void gainAffection(Character other, int x){
+		if (other == null) {
+			System.err.println("Other is null");
+			Thread.dumpStack();
+		}
 		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
 			System.out.printf("%s gained affection for %s\n", this.name(), other.name());
 		}
