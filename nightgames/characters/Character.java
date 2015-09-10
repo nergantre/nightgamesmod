@@ -1294,7 +1294,7 @@ public abstract class Character extends Observable implements Cloneable {
 			c.write(Global.capitalizeFirstLetter("<br><b>"+opponent.subjectAction("flush", "flushes") + " as the feedback from " + nameOrPossessivePronoun() + " orgasm feeds " + opponent.possessivePronoun() + " divine power.</b>"));
 			opponent.add(c, new Alluring(opponent, 5));
 			opponent.buildMojo(c, 100);
-			if (c.getStance().inserted(this) && opponent.has(Trait.demigoddess)) {
+			if (c.getStance().inserted(this) && opponent.has(Trait.divinity)) {
 				opponent.add(c, new DivineCharge(opponent, 1));
 			}
 		}

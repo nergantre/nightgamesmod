@@ -80,6 +80,9 @@ public class Angel extends BasePersonality {
 				advance();
 			}
 		}
+		if (character.has(Trait.demigoddess) && !character.has(Trait.divinity)) {
+			character.add(Trait.divinity);
+		}
 		super.rest();
 		if(!(character.has(Item.Dildo)||character.has(Item.Dildo2))&&character.money>=250){
 			character.gain(Item.Dildo);
@@ -375,6 +378,7 @@ public class Angel extends BasePersonality {
 	}
 	public void advance(){
 		character.add(Trait.demigoddess);
+		character.add(Trait.divinity);
 		character.add(Trait.proheels);
 		character.body.addReplace(PussyPart.divine, 1);
 		character.body.addReplace(WingsPart.angelic, 5);

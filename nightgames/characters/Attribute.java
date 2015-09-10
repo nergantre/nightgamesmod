@@ -21,6 +21,6 @@ public enum Attribute {
 	}
 
 	public static boolean isTrainable(Attribute a, Character self) {
-		return a != Speed && a != Perception && (self.has(Trait.demigoddess) || a != Divinity);
+		return a != Speed && a != Perception && (self.has(Trait.divinity) || a != Divinity);
 	}
 }

@@ -181,6 +181,9 @@ public enum Trait {
 	slime("Slime","An accident in the biology labs made the body a bit more... malleable."),
 	dryad("Dryad","Part girl, part tree."),
 
+	//Class subtrait
+	divinity("Divinity","Has aspects of divinity."),
+
 	//Strength
 	dexterous("Dexterous","Limbs and fingers. Underwear is not an obstacle."), //digital stimulation through underwear
 	romantic("Romantic","Every kiss is as good as the first"), //bonus to kiss
