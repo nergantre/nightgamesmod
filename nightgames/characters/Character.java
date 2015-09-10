@@ -2290,6 +2290,7 @@ public abstract class Character extends Observable implements Cloneable {
 		if (human() && i > 0)
 			Global.gui().message("You've gained $" + Math.round(i * Global.moneyRate) +".");
 		money += Math.round(i * Global.moneyRate);
+		update();
 	}
 
 	public void loseXP(int i) {
