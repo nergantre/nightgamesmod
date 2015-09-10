@@ -24,6 +24,11 @@ public class CounterFlower extends CounterBase {
 		return -20;
 	}
 
+	public String getBlockedString(Combat c, Character target) {
+		return Global.format("{self:SUBJECT-ACTION:block|blocks} {other:name-possessive} assault with a vine and {self:action:shoot|shoots} out {self:possessive} vines to drag {other:direct-object} into {self:possessive} flower. "
+				+ "However, {other:subject-action:are|is} wary and {other:action:jump|jumps} back before {self:subject} can catch {other:direct-object}.", getSelf(), target);
+	}
+
 	@Override
 	public void resolveCounter(Combat c, Character target) {
 		target.nudify();

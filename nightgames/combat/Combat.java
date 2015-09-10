@@ -407,7 +407,11 @@ public class Combat extends Observable implements Serializable, Cloneable{
 			} else if (target.is(Stsflag.counter) && skill.makesContact()) {
 				write("Countered!");
 				CounterStatus s = (CounterStatus)target.getStatus(Stsflag.counter);
-				s.resolveSkill(this, skill.user());
+				if (skill.user().is(Stsflag.wary)) {
+					write(target, s.getCounterSkill().getBlockedString(this, target));
+				} else {
+					s.resolveSkill(this, skill.user());
+				}
 			} else {
 				Skill.resolve(skill, this, target);
 			}
