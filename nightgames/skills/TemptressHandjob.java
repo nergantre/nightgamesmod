@@ -1,5 +1,6 @@
 package nightgames.skills;
 
+import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
@@ -30,7 +31,7 @@ public class TemptressHandjob extends Handjob {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		int m = 10 + Global.random(10);
+		int m = 10 + Global.random(getSelf().get(Attribute.Technique));
 
 		if (target.roll(this, c, accuracy(c))) {
 			if (!target.body.getRandomCock().isReady(target)) {

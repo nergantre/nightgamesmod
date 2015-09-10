@@ -1,5 +1,6 @@
 package nightgames.skills;
 
+import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
@@ -30,7 +31,7 @@ public class TemptressBlowjob extends Blowjob {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		int m = 15 + Global.random(15);
+		int m = 15 + Global.random(getSelf().get(Attribute.Technique));
 
 		if (getSelf().has(Trait.silvertongue))
 			m += 4;
@@ -77,20 +78,73 @@ public class TemptressBlowjob extends Blowjob {
 			Character target) {
 		switch (modifier) {
 			case miss:
-				return String.format("");
+				return String.format("%s towards %s %s, but %s %s hips back.",
+						getSelf().subjectAction("move", "moves"),
+						target.nameOrPossessivePronoun(),
+						target.body.getRandomCock().describe(target),
+						target.pronoun(),
+						target.action("pull", "pulls"));
 			case weak:
-				return String.format("");
+				return String.format("%s up %s flaccid %s, doing everything %s"
+						+ " can to get it hard, but %s %s back before %s can manage it.",
+						getSelf().subjectAction("gobble", "gobbles"),
+						target.nameOrPossessivePronoun(),
+						target.body.getRandomCock().describe(target),
+						getSelf().pronoun(),
+						target.pronoun(),
+						target.action("pull", "pulls"),
+						getSelf().pronoun());
 			case special:
-				return String.format("");
+				return String.format("%s %s %s into %s mouth and %s on it powerfully. It hardens"
+						+ " swiftly, as if %s pulled the blood right into it.",
+						getSelf().subjectAction("take", "takes"),
+						target.nameOrPossessivePronoun(),
+						target.body.getRandomCock().describe(target),
+						getSelf().possessivePronoun(),
+						getSelf().action("suck", "sucks"),
+						getSelf().pronoun());
 			default: // should be Result.normal
-				// already hard
 				switch (damage) {
 					case 0:
-						return String.format("");
+						return String.format("%s to town on %s %s, licking it all over."
+								+ " Long, slow licks along the shaft and small, swift lick"
+								+ " around the head cause %s to groan in pleasure.",
+								getSelf().subjectAction("go", "goes"),
+								target.nameOrPossessivePronoun(),
+								target.body.getRandomCock().describe(target),
+								target.directObject());
 					case 1:
-						return String.format("");
+						return String.format("%s %s lips around the head %s hard and wet %s "
+								+ "and %s on it forcefully while swirling %s tongue rapidly"
+								+ " around. At the same time, %s hands are massaging and"
+								+ " caressing every bit of sensitive flesh not covered by"
+								+ " %s mouth.",
+								getSelf().subjectAction("lock", "locks"),
+								getSelf().possessivePronoun(),
+								target.nameOrPossessivePronoun(),
+								target.body.getRandomCock().describe(target),
+								getSelf().action("suck", "sucks"),
+								getSelf().possessivePronoun(),
+								getSelf().possessivePronoun(),
+								getSelf().possessivePronoun());
 					default:
-						return String.format("");
+						return String.format("%s bobbing up and down now, hands still working"
+								+ " on any exposed skin while %s %s, %s and even %s all over %s"
+								+ " over-stimulated manhood. %s %s not even trying to hide %s"
+								+ " enjoyment, and %s %s loudly every time %s teeth graze"
+								+ " %s shaft.",
+								getSelf().subjectAction("are", "is"),
+								getSelf().pronoun(),
+								getSelf().action("lick", "licks"),
+								getSelf().action("suck", "sucks"),
+								getSelf().action("nibble", "nibbles"),
+								target.possessivePronoun(),
+								target.nameDirectObject(),
+								target.possessivePronoun(),
+								target.pronoun(),
+								target.action("grunt", "grunts"),
+								getSelf().possessivePronoun(),
+								target.possessivePronoun());
 				}
 		}
 	}

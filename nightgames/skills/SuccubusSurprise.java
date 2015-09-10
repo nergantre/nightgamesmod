@@ -34,6 +34,7 @@ public class SuccubusSurprise extends Skill {
 				&& c.getStance().inserted(target)
 				&& !c.getStance().analinserted()
 				&& !c.getStance().topPart().isType("strapon")
+				&& c.getStance().sub(getSelf())
 				&& getSelf().canSpend(getMojoCost(c))
 				&& !target.is(Stsflag.armlocked)
 				&& !target.is(Stsflag.leglocked);

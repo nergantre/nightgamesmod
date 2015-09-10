@@ -103,23 +103,6 @@
       "exposure":0.4
    },
    {
-      "displayName":"boxers",
-   	  "buffs":[
-   	   ],
-   	  "price":450,
-   	  "prefix":"",
-   	  "attributes":[
-   	     "flexible"
-   	  ],
-   	  "layer":0,
-   	  "slots": ["bottom"],
-   	  "sex": ["male"],
-   	  "hotness":0.3,
-   	  "name":"boxers",
-   	  "toughness":15,
-   	  "exposure":0.8
-   },
-   {
       "displayName":"panties",
       "buffs":[
       ],

@@ -18,6 +18,7 @@ import nightgames.status.Stsflag;
 public class AiModifiers {
 
 	public static final Map<String, AiModifiers> DEFAULTS;
+	public static final double AI_MOD_WEIGHT = 1.0;
 
 	static {
 		Map<String, AiModifiers> temp = new HashMap<>();
@@ -54,19 +55,19 @@ public class AiModifiers {
 	}
 
 	public double modAttack(Class<? extends Skill> clazz) {
-		return attackMods.getOrDefault(clazz, 0.0);
+		return AI_MOD_WEIGHT * attackMods.getOrDefault(clazz, 0.0);
 	}
 
 	public double modPosition(Stance pos) {
-		return positionMods.getOrDefault(pos, 0.0);
+		return AI_MOD_WEIGHT * positionMods.getOrDefault(pos, 0.0);
 	}
 
 	public double modSelfStatus(Stsflag flag) {
-		return selfStatusMods.getOrDefault(flag, 0.0);
+		return AI_MOD_WEIGHT * selfStatusMods.getOrDefault(flag, 0.0);
 	}
 
 	public double modOpponentStatus(Stsflag flag) {
-		return oppStatusMods.getOrDefault(flag, 0.0);
+		return AI_MOD_WEIGHT * oppStatusMods.getOrDefault(flag, 0.0);
 	}
 
 	public Map<Class<? extends Skill>, Double> getAttackMods() {
