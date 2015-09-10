@@ -62,11 +62,11 @@ public enum CockMod implements BodyPartMod {
 			ModdedCockPart part) {
 		double bonus = part.getBase().applyBonuses(self, opponent, target, damage, c);
 
-		if (this == blessed) {
+		if (this == runic) {
 			String message = "";
 			if (target == PussyPart.succubus) {
 				message += String.format(
-						"The holy energies inside %s %s radiate outward and into %s, causing %s %s to grow much more sensitve.",
+						"The fae energies inside %s %s radiate outward and into %s, causing %s %s to grow much more sensitve.",
 						self.nameOrPossessivePronoun(), part.describe(self), opponent.nameOrPossessivePronoun(),
 						opponent.possessivePronoun(), target.describe(opponent));
 				bonus += damage * 0.5; // +50% damage

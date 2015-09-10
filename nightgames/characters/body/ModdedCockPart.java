@@ -156,7 +156,7 @@ public class ModdedCockPart implements CockPart {
 	public int counterValue(BodyPart other) {
 		if (mod == CockMod.primal)
 			return other == PussyPart.fiery ? 1 : other == PussyPart.arcane ? -1 : 0;
-		if (mod == CockMod.blessed)
+		if (mod == CockMod.runic)
 			return other == PussyPart.succubus ? 1 : other == PussyPart.feral ? -1 : 0;
 		if (mod == CockMod.incubus)
 			return other == PussyPart.feral ? 1 : other == PussyPart.cybernetic ? -1 : 0;
