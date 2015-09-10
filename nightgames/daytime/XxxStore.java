@@ -66,8 +66,13 @@ public class XxxStore extends Store{
 			else{
 				Global.gui().sale(this,Item.Tickler);
 			}
-			Global.gui().message("You see a strapon dildo for sale. It's no use to you since you have the real thing, but you should watch your ass if the girls start " +
-					"buying these.");
+			if (player.hasDick()) {
+				Global.gui().message("You see a strapon dildo for sale. It's no use to you since you have "
+						+ "the real thing, but you should watch your ass if the girls start buying these.");
+			} else {
+				Global.gui().sale(this,Item.Strapon);
+			}
+
 			Global.gui().choose(this,"Leave");
 		}
 	}
