@@ -1,7 +1,4 @@
 1.8.2.4 changelog
-51bd155 stance: 
-d8949a7 clothing: 
-e688963 trait: 
 
 Balance:
 - buff energy drink to 50% heal and 20-30% mojo
