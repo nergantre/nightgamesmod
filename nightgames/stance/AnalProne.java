@@ -5,6 +5,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 
 public class AnalProne extends AnalSexStance {
 
@@ -76,11 +77,6 @@ public class AnalProne extends AnalSexStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return c==top;
-	}
-
-	@Override
 	public boolean inserted(Character c) {
 		return c==top;
 	}
@@ -113,10 +109,14 @@ public class AnalProne extends AnalSexStance {
 		}
 	}
 
-	public Position reverse() {
+	public Position reverse(Combat c) {
 		if (top.has(Trait.strapped)) {
+			c.write(bottom, Global.format("As {other:subject-action:are|is} thrusting into {self:name-do} with {other:possessive} strapon, {self:subject-action:suddenly pull|suddenly pulls} {self:possesive} face up towards {other:direct-object}, and kisses {other:direct-object} deeply. "
+					+ "Taking advantage of {other:possessive} surprise, {self:SUBJECT-ACTION:quickly pushes|quickly pushes} {other:direct-object} down and {self:action:pull|pulls} {other:possessive} fake cock out of {self:reflective}.", bottom, top));
 			return new Mount(bottom, top);
 		} else {
+			c.write(bottom, Global.format("As {other:subject-action:are|is} thrusting into {self:name-do}, {self:subject-action:suddenly pull|suddenly pulls} {self:possesive} face up towards {other:direct-object}, and kisses {other:direct-object} deeply. "
+					+ "Taking advantage of {other:possessive} surprise, {self:SUBJECT-ACTION:quickly pushes|quickly pushes} {other:direct-object} down and {self:action:start|starts} fucking {other:direct-object} back on top of {other:direct-object}.", bottom, top));
 			return new AnalCowgirl(bottom, top);
 		}
 	}

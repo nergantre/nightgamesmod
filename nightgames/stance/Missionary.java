@@ -4,6 +4,8 @@ package nightgames.stance;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.PussyPart;
+import nightgames.combat.Combat;
+import nightgames.global.Global;
 
 public class Missionary extends MaledomSexStance {
 
@@ -72,11 +74,6 @@ public class Missionary extends MaledomSexStance {
 	public boolean behind(Character c) {
 		return false;
 	}
-
-	@Override
-	public boolean penetration(Character c) {
-		return true;
-	}
 	
 	@Override
 	public boolean inserted(Character c) {
@@ -88,7 +85,10 @@ public class Missionary extends MaledomSexStance {
 		return new Mount(top,bottom);
 	}
 
-	public Position reverse() {
+	public Position reverse(Combat c) {
+		c.write(bottom, Global.format("self:SUBJECT-ACTION:wrap|wraps} {self:possessive} legs around {other:name-possessive} waist and suddenly {self:action:pull|pulls} {other:direct-object} into a deep kiss. {other:SUBJECT-ACTION:are|is} so surprised by this sneak attack that {other:subject-action:don't|doesn't} "
+				+ "even notice {self:pronoun} {self:action:rolling|rolling} {other:direct-object} onto {other:possessive} back until {other:subject-action:feel|feels} {self:possessive} weight on {other:possessive} hips. {self:PRONOUN} {self:action:move|moves} {self:possessive} hips experimentally, enjoying the control "
+				+ "{self:pronoun} {self:action:have|has} in cowgirl position.", bottom, top));
 		return new Cowgirl(bottom, top);
 	}
 	

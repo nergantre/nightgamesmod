@@ -170,7 +170,7 @@ public enum PussyPart implements BodyPart, BodyPartMod {
 	@Override
 	public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		double bonus = 0;
-		if (this == divine && c.getStance().vaginallyPenetrated()) {
+		if (this == divine && c.getStance().vaginallyPenetrated(self)) {
 			DivineCharge charge = (DivineCharge) self.getStatus(Stsflag.divinecharge);
 			if (charge == null) {
 				c.write(self, Global.format(

@@ -30,8 +30,7 @@ public class ImpFem extends Pet {
 				if(target.crotchAvailable()&&!c.getStance().inserted(target)){
 					c.write(owner(),own()+"imp grabs your dick and begins sucking it hungrily until you push her away.");
 					target.body.pleasure(null, null, target.body.getRandom("cock"), 2+3*Global.random(power), c);					
-				}
-				else{
+				} else {
 					c.write(owner(),own()+"imps stands at the periphery of the fight, touching herself idly.");
 				}
 				break;

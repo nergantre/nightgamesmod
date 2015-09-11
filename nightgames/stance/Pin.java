@@ -85,11 +85,6 @@ public class Pin extends AbstractFacingStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return false;
-	}
-
-	@Override
 	public float priorityMod(Character self) {
 		return getSubDomBonus(self, 2.0f);
 	}

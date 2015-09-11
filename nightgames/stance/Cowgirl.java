@@ -6,6 +6,7 @@ import nightgames.characters.body.AnalPussyPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 
 public class Cowgirl extends FemdomSexStance {
 
@@ -81,7 +82,9 @@ public class Cowgirl extends FemdomSexStance {
 		return new Mount(top,bottom);
 	}
 
-	public Position reverse() {
+	public Position reverse(Combat c) {
+		c.write(bottom, Global.format("{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} clitoris with {self:possessive} hands as {other:subject-action:try|tries} to ride {self:direct-object}. " +
+				"While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:take|takes} the chance to swing around into a dominant missionary position.", bottom, top));
 		return new Missionary(bottom, top);
 	}
 }

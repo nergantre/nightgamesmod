@@ -21,7 +21,7 @@ public class LevelDrain extends Drain {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return (this.getSelf().canAct()) && (c.getStance().canthrust(getSelf()))
-				&& (c.getStance().havingSex()) && getSelf().getLevel() < 100 && getSelf().getLevel() < target.getLevel();
+				&& (c.getStance().havingSexNoStrapped()) && getSelf().getLevel() < 100 && getSelf().getLevel() < target.getLevel();
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package nightgames.stance;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 
 public class Standing extends MaledomSexStance {
 	public Standing(Character top, Character bottom) {
@@ -76,11 +77,6 @@ public class Standing extends MaledomSexStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return true;
-	}
-
-	@Override
 	public Position insertRandom() {
 		return new Neutral(top,bottom);
 	}
@@ -104,7 +100,10 @@ public class Standing extends MaledomSexStance {
 		}
 	}
 
-	public Position reverse() {
+	public Position reverse(Combat c) {
+		c.write(bottom, Global.format("self:SUBJECT-ACTION:wrap|wraps} {self:possessive} legs around {other:name-possessive} waist and suddenly {self:action:pull|pulls} {other:direct-object} into a deep kiss. {other:SUBJECT-ACTION:are|is} so surprised by this sneak attack that {other:subject-action:don't|doesn't} "
+				+ "even notice {other:reflective} falling backwards until {other:subject-action:feel|feels} {self:possessive} weight on {other:possessive} hips. {self:PRONOUN} {self:action:move|moves} {self:possessive} hips experimentally, enjoying the control "
+				+ "{self:pronoun} {self:action:have|has} in cowgirl position.", bottom, top));
 		return new Cowgirl(bottom, top);
 	}
 	

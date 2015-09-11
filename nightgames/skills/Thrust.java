@@ -27,7 +27,7 @@ public class Thrust extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().canthrust(getSelf())&&c.getStance().havingSex();
+		return getSelf().canAct()&&c.getStance().canthrust(getSelf())&&c.getStance().havingSexOtherNoStrapped(getSelf());
 	}
 
 	public BodyPart getSelfOrgan(Combat c) {

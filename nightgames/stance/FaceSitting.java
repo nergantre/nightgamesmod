@@ -96,10 +96,7 @@ public class FaceSitting extends AbstractBehindStance {
 	public boolean behind(Character c) {
 		return c==top;
 	}
-	@Override
-	public boolean penetration(Character c) {
-		return false;
-	}
+
 	@Override
 	public boolean inserted(Character c) {
 		return false;

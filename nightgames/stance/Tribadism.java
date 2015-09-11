@@ -3,7 +3,6 @@ package nightgames.stance;
 import nightgames.characters.Character;
 
 public class Tribadism extends Position {
-
 	public Tribadism(Character top, Character bottom) {
 		super(top, bottom, Stance.trib);
 	}
@@ -71,13 +70,7 @@ public class Tribadism extends Position {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return false;
-	}
-
-	@Override
 	public Position insertRandom() {
 		return new Tribadism(bottom,top);
 	}
-
 }

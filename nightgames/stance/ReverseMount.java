@@ -81,11 +81,6 @@ public class ReverseMount extends AbstractBehindStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return false;
-	}
-
-	@Override
 	public float priorityMod(Character self) {
 		return getSubDomBonus(self, 4.0f);
 	}

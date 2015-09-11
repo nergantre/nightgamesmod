@@ -55,7 +55,7 @@ public abstract class AbstractBehindStance extends Position {
 		}
 		if (pitcher == sub && pitcher == bottom) {
 			// girl is holding guy from behind, and is the dominant one in the new stance
-			return new UpsideDownFemdom(catcher, pitcher);
+			return new ReverseCowgirl(catcher, pitcher);
 		}
 		return this;
 	}
