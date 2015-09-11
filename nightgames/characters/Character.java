@@ -2460,6 +2460,6 @@ public abstract class Character extends Observable implements Cloneable {
 		return article == null || article.getLayer() < 2;
 	}
 	public boolean hasInsertable() {
-		return (hasDick() && crotchAvailable()) || has(Trait.strapped);
+		return hasDick() || has(Trait.strapped);
 	}
 }
