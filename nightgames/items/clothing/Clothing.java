@@ -27,7 +27,7 @@ public class Clothing implements Loot{
 	public static void buildClothingTable() {
 		clothingTable = new HashMap<String, Clothing>();
 		try {
-			JSONArray value = (JSONArray) JSONValue.parseWithException(new InputStreamReader(ResourceLoader.getFileResourceAsStream("clothing/defaults.json")));
+			JSONArray value = (JSONArray) JSONValue.parseWithException(new InputStreamReader(ResourceLoader.getFileResourceAsStream("data/clothing/defaults.json")));
 			JSONClothingLoader.loadClothingListFromJSON(value).forEach(article -> {
 				clothingTable.put(article.id, article);
 				if (Global.isDebugOn(DebugFlags.DEBUG_LOADING)) {
@@ -42,6 +42,7 @@ public class Clothing implements Loot{
 			e.printStackTrace();
 		}
 		ResourceLoader.getFileResourcesFromDirectory("data/clothing").forEach(inputstream -> {
+			
 			try {
 				JSONArray value = (JSONArray) JSONValue.parseWithException(new InputStreamReader(inputstream));
 				JSONClothingLoader.loadClothingListFromJSON(value).forEach(article -> {

@@ -5,9 +5,15 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+import java.util.zip.ZipEntry;
 
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
@@ -19,8 +25,12 @@ public class ResourceLoader {
 			List<InputStream> streams = new ArrayList<InputStream>();
 			try {
 				for (File f : dir.listFiles()) {
-					if (!f.isDirectory())
+					if (!f.isDirectory()) {
 						streams.add(new FileInputStream(f));
+						if (Global.isDebugOn(DebugFlags.DEBUG_LOADING)) {
+							System.out.println("Using " + f.getAbsolutePath());
+						}
+					}
 				}
 				return streams;
 			} catch (IOException e) {
