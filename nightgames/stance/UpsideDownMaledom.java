@@ -12,6 +12,10 @@ public class UpsideDownMaledom extends MaledomSexStance {
 		super(top, bottom,Stance.upsidedownmaledom);
 	}
 
+	public int pinDifficulty(Combat c, Character self) {
+		return 8;
+	}
+
 	@Override
 	public String describe() {
 		if(top.human()){
