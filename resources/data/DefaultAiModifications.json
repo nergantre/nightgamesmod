@@ -40,6 +40,10 @@
 				"weight" : 1.0
 			},{
 				"type" : "skill",
+				"value" : "nightgames.skills.Shove",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
 				"value" : "nightgames.skills.Straddle",
 				"weight" : 1.0
 			},{
@@ -165,6 +169,10 @@
 				"weight" : 1.0
 			},{
 				"type" : "skill",
+				"value" : "nightgames.skills.Shove",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
 				"value" : "nightgames.skills.SubmissiveHold",
 				"weight" : 1.0
 			},{
@@ -270,6 +278,10 @@
 				"weight" : 2.0
 			},{
 				"type" : "skill",
+				"value" : "nightgames.skills.Shove",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
 				"value" : "nightgames.skills.Strapon",
 				"weight" : 1.0
 			},{
@@ -279,10 +291,6 @@
 			},{
 				"type" : "skill",
 				"value" : "nightgames.skills.Tear",
-				"weight" : 1.0
-			},{
-				"type" : "skill",
-				"value" : "nightgames.skills.Tie",
 				"weight" : 1.0
 			},{
 				"type" : "skill",
@@ -381,7 +389,11 @@
 				"type" : "skill",
 				"value" : "nightgames.skills.ReverseAssFuck",
 				"weight" : 2.0
-			}{
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Shove",
+				"weight" : 1.0
+			},{
 				"type" : "skill",
 				"value" : "nightgames.skills.Straddle",
 				"weight" : 1.0
@@ -490,6 +502,10 @@
 				"type" : "skill",
 				"value" : "nightgames.skills.Recover",
 				"weight" : -0.5
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Shove",
+				"weight" : 1.0
 			},{
 				"type" : "skill",
 				"value" : "nightgames.skills.ReverseFuck",
@@ -623,6 +639,10 @@
 				"type" : "skill",
 				"value" : "nightgames.skills.ReverseCarry",
 				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Shove",
+				"weight" : 1.0
 			},{
 				"type" : "skill",
 				"value" : "nightgames.skills.Straddle",
