@@ -96,10 +96,12 @@ public abstract class Character extends Observable implements Cloneable {
 	public boolean custom;
 	private boolean pleasured;
 	public int orgasms;
+	public int cloned;
 
 	public Character(String name, int level){
 		this.name=name;
 		this.level=level;
+		cloned = 0;
 		custom = false;
 		body = new Body(this);
 		att = new HashMap<Attribute,Integer>();
@@ -147,6 +149,7 @@ public abstract class Character extends Observable implements Cloneable {
 	    Character c = (Character) super.clone();
 	    c.att = (HashMap<Attribute, Integer>) att.clone();
 		c.stamina = (Meter) stamina.clone();
+		c.cloned = cloned + 1;
 		c.arousal = (Meter) arousal.clone();
 		c.mojo = (Meter) mojo.clone();
 		c.willpower = (Meter) willpower.clone();
@@ -750,7 +753,10 @@ public abstract class Character extends Observable implements Cloneable {
 
 	public Clothing shred(ClothingSlot slot){
 		Clothing article = outfit.getTopOfSlot(slot);
-		if (article.is(ClothingTrait.indestructible)) {
+		if (article == null || article.is(ClothingTrait.indestructible)) {
+			System.err.println("Tried to shred clothing that doesn't exist at slot " + slot.name() + " at clone " + cloned);
+			System.err.println(outfit.toString());
+			Thread.dumpStack();
 			return null;
 		} else {
 			// don't add it to the pile
@@ -1096,7 +1102,8 @@ public abstract class Character extends Observable implements Cloneable {
 	private static void saveCharIntMap(JSONObject obj, Map<Character, Integer> map, String name) {
 		JSONObject objMap = new JSONObject();
 		for(Character key:map.keySet()) {
-			objMap.put(key.getType(), map.get(key));
+			if (key != null)
+				objMap.put(key.getType(), map.get(key));
 		}
 		obj.put(name, objMap);
 	}
@@ -1118,8 +1125,9 @@ public abstract class Character extends Observable implements Cloneable {
 			Character character = Global.getCharacterByType(keyString);
 			if (character == null) {
 				System.err.println("Failed loading character: " + keyString);
+			} else {
+				map.put(character, JSONUtils.readInteger(obj, keyString));
 			}
-			map.put(character, JSONUtils.readInteger(obj, keyString));
 		}
 		return map;
 	}
@@ -1779,6 +1787,11 @@ public abstract class Character extends Observable implements Cloneable {
 	}
 
 	public int getAttraction(Character other){
+		if (other == null) {
+			System.err.println("Other is null");
+			Thread.dumpStack();
+			return 0;
+		}
 		if(attractions.containsKey(other)){
 			return attractions.get(other);
 		}
@@ -1787,8 +1800,12 @@ public abstract class Character extends Observable implements Cloneable {
 		}
 	}
 	public void gainAttraction(Character other, int x){
+		if (other == null) {
+			System.err.println("Other is null");
+			Thread.dumpStack();
+		}
 		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-			System.out.printf("%s gained affection for %s\n", this.name(), other.name());
+			System.out.printf("%s gained attraction for %s\n", this.name(), other.name());
 		}
 		if(attractions.containsKey(other)){
 			attractions.put(other,attractions.get(other)+x);
@@ -1798,6 +1815,15 @@ public abstract class Character extends Observable implements Cloneable {
 		}
 	}
 	public int getAffection(Character other){
+		if (other == null) {
+			System.err.println("Other is null");
+			Thread.dumpStack();
+			return 0;
+		}
+
+		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+			System.out.printf("%s gained affection for %s\n", this.name(), other.name());
+		}
 		if(affections.containsKey(other)){
 			return affections.get(other);
 		}
@@ -1806,6 +1832,10 @@ public abstract class Character extends Observable implements Cloneable {
 		}
 	}
 	public void gainAffection(Character other, int x){
+		if (other == null) {
+			System.err.println("Other is null");
+			Thread.dumpStack();
+		}
 		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
 			System.out.printf("%s gained affection for %s\n", this.name(), other.name());
 		}

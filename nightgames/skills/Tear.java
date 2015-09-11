@@ -110,8 +110,7 @@ public class Tear extends Skill {
 					}
 				}
 				target.emote(Emotion.nervous, 10);
-			}
-			if (!article.is(ClothingTrait.indestructible)
+			} else if (!article.is(ClothingTrait.indestructible)
 					&& getSelf().check(Attribute.Power,
 							article.dc()
 									+ (target.getStamina().percent() - target.getArousal().percent()) / 4)
@@ -169,14 +168,12 @@ public class Tear extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		// TODO Auto-generated method stub
-		return null;
+		return "";
 	}
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		// TODO Auto-generated method stub
-		return null;
+		return "";
 	}
 
 	@Override
