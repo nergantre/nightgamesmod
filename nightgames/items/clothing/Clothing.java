@@ -26,6 +26,21 @@ public class Clothing implements Loot{
 	public static Map<String, Clothing> clothingTable;
 	public static void buildClothingTable() {
 		clothingTable = new HashMap<String, Clothing>();
+		try {
+			JSONArray value = (JSONArray) JSONValue.parseWithException(new InputStreamReader(ResourceLoader.getFileResourceAsStream("clothing/defaults.json")));
+			JSONClothingLoader.loadClothingListFromJSON(value).forEach(article -> {
+				clothingTable.put(article.id, article);
+				if (Global.isDebugOn(DebugFlags.DEBUG_LOADING)) {
+					System.out.println("Loaded " + article.id);
+				}
+			});
+		} catch (ClassCastException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		ResourceLoader.getFileResourcesFromDirectory("data/clothing").forEach(inputstream -> {
 			try {
 				JSONArray value = (JSONArray) JSONValue.parseWithException(new InputStreamReader(inputstream));
