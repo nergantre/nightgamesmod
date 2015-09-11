@@ -25,9 +25,9 @@ public class CounterDrain extends CounterBase {
 			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
 		if (target.hasDick() && getSelf().hasPussy()) {
-			c.setStance(new Cowgirl(getSelf(), target));
+			c.setStance(Cowgirl.similarInstance(getSelf(), target));
 		} else {
-			c.setStance(new Missionary(getSelf(), target));
+			c.setStance(Missionary.similarInstance(getSelf(), target));
 		}
 		Drain drain = new Drain(getSelf());
 		drain.resolve(c, target, true);

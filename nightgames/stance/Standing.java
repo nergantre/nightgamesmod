@@ -102,9 +102,9 @@ public class Standing extends MaledomSexStance {
 
 	public Position reverse(Combat c) {
 		c.write(bottom, Global.format("self:SUBJECT-ACTION:wrap|wraps} {self:possessive} legs around {other:name-possessive} waist and suddenly {self:action:pull|pulls} {other:direct-object} into a deep kiss. {other:SUBJECT-ACTION:are|is} so surprised by this sneak attack that {other:subject-action:don't|doesn't} "
-				+ "even notice {other:reflective} falling backwards until {other:subject-action:feel|feels} {self:possessive} weight on {other:possessive} hips. {self:PRONOUN} {self:action:move|moves} {self:possessive} hips experimentally, enjoying the control "
-				+ "{self:pronoun} {self:action:have|has} in cowgirl position.", bottom, top));
-		return new Cowgirl(bottom, top);
+				+ "even notice {other:reflective} falling forward until {other:subject-action:feel|feels} {self:possessive} limbs wrapped around {other:possessive} body. {self:PRONOUN} {self:action:move|moves} {self:possessive} hips experimentally, enjoying the control "
+				+ "{self:pronoun} {self:action:have|has} coiled around {other:direct-object}.", bottom, top));
+		return new CoiledSex(bottom, top);
 	}
 	
 	@Override

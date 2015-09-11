@@ -11,7 +11,7 @@ import nightgames.global.Global;
 public class CoiledSex extends FemdomSexStance {
 
 	public CoiledSex(Character top, Character bottom) {
-		super(top, bottom,Stance.flowertrap);
+		super(top, bottom,Stance.coiled);
 	}
 
 	public int pinDifficulty(Combat c, Character self) {

@@ -43,7 +43,7 @@ public abstract class AbstractFacingStance extends Position {
 		}
 		if (pitcher == dom && pitcher == top) {
 			// guy is holding girl down, and is the dominant one in the new stance
-			return new Missionary(pitcher, catcher);
+			return Missionary.similarInstance(pitcher, catcher);			
 		}
 		if (pitcher == sub && pitcher == top) {
 			// guy is holding girl down, and is the submissive one in the new stance
@@ -51,11 +51,11 @@ public abstract class AbstractFacingStance extends Position {
 		}
 		if (pitcher == dom && pitcher == bottom) {
 			// girl is holding guy down, and is the submissive one in the new stance
-			return new Missionary(pitcher, catcher);			
+			return Missionary.similarInstance(pitcher, catcher);			
 		}
 		if (pitcher == sub && pitcher == bottom) {
 			// girl is holding guy down, and is the dominant one in the new stance
-			return new Cowgirl(catcher, pitcher);
+			return Cowgirl.similarInstance(catcher, pitcher);
 		}
 		return this;
 	}

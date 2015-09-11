@@ -21,16 +21,28 @@ public class DivineCharge extends Status {
 		requirements.add(new ReverseRequirement(Arrays.asList(new InsertedRequirement(true))));
 	}
 
+	private String getPart(Combat c) {
+		boolean penetrated = c.getStance().vaginallyPenetrated(affected);
+		boolean inserted = c.getStance().inserted(affected);
+		String part = "body";
+		if (penetrated && !inserted) {
+			part = "pussy";
+		}
+		if (!penetrated && inserted) {
+			part = "cock";
+		}
+		return part;
+	}
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
 		if (!replaced)
-			return String.format("%s concentrating divine energy in %s pussy.\n", affected.subjectAction("are", "is"), affected.possessivePronoun());
+			return String.format("%s concentrating divine energy in %s %s.\n", affected.subjectAction("are", "is"), affected.possessivePronoun(), getPart(c));
 		return "";
 	}
 
 	@Override
 	public String describe(Combat c) {
-		return "Concentrated divine energy surges through " + affected.nameOrPossessivePronoun() + " pussy.";
+		return "Concentrated divine energy surges through " + affected.nameOrPossessivePronoun() + " "+ getPart(c)+".";
 	}
 
 	@Override

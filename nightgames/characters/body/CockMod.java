@@ -153,17 +153,19 @@ public enum CockMod implements BodyPartMod {
 		} else if (this == enlightened) {
 			String message = "";
 			if (target == PussyPart.succubus) {
-				message += String.format(
+				message = String.format(
 						"Almost instinctively, %s %s entire being into %s %s. While this would normally be a good thing,"
 								+ " whilst fucking a succubus it is very, very bad indeed.",
 						self.subjectAction("focus", "focuses"), self.possessivePronoun(), self.possessivePronoun(),
 						part.describe(self));
+				c.write(self, message);
 				// Actual bad effects are dealt with in PussyPart
 			} else {
-				message += String.format(
-						"Drawing upon %s extensive training, %s, concentrating her will into %s %s and enhancing %s own abilities",
-						self.possessivePronoun(), self.subjectAction("meditate", "meditates"), self.possessivePronoun(),
+				message = String.format(
+						"Drawing upon %s extensive training, %s concentrates %s will into %s %s, enhancing %s own abilities",
+						self.possessivePronoun(), self.subjectAction("concentrate", "concentrates"), self.possessivePronoun(), self.possessivePronoun(),
 						part.describe(self), self.possessivePronoun());
+				c.write(self, message);
 				for (int i = 0; i < Math.max(2, (self.get(Attribute.Ki) + 5) / 10); i++) { // +5
 																							// for
 																							// rounding:
@@ -176,7 +178,6 @@ public enum CockMod implements BodyPartMod {
 				self.buildMojo(c, 5);
 				self.restoreWillpower(c, 1);
 			}
-			c.write(self, message);
 		}
 		return bonus;
 	}
@@ -318,9 +319,8 @@ public enum CockMod implements BodyPartMod {
 		if (this == blessed && target.isErogenous()) {
 			if (!self.human()) {
 				c.write(self, Global.format(
-						"As soon as {self:subject} penetrates you, you realize it was a bad idea. While it looks innocuous enough, {self:name-possessive} {self:body-part:cock} "
-						+ "feels like pure ecstasy. You're not sure why you thought fucking a bonafide piece of heaven was a good idea. "
-						+ "{self:SUBJECT} hasn't even begun moving yet, but {self:possessive} cock simply sitting within you radiates a heat that has you squirming uncontrollably.", self, opponent));
+						"As soon as {self:subject} penetrates you, you realize you're screwed. Both literally and figuratively. While it looks innocuous enough, {self:name-possessive} {self:body-part:cock} "
+						+ "feels like pure ecstasy. {self:SUBJECT} hasn't even begun moving yet, but {self:possessive} cock simply sitting within you radiates a heat that has you squirming uncontrollably.", self, opponent));
 			}
 		}
 	}

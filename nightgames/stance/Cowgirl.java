@@ -1,6 +1,7 @@
 package nightgames.stance;
 
 
+import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.AnalPussyPart;
 import nightgames.characters.body.BodyPart;
@@ -86,5 +87,12 @@ public class Cowgirl extends FemdomSexStance {
 		c.write(bottom, Global.format("{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} clitoris with {self:possessive} hands as {other:subject-action:try|tries} to ride {self:direct-object}. " +
 				"While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:take|takes} the chance to swing around into a dominant missionary position.", bottom, top));
 		return new Missionary(bottom, top);
+	}
+
+	public static Position similarInstance(Character top, Character bottom) {
+		if (top.get(Attribute.Power) > 25 && Global.random(2) == 0) {
+			return new UpsideDownFemdom(top, bottom);
+		}
+		return new Cowgirl(top, bottom);
 	}
 }

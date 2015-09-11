@@ -26,10 +26,10 @@ public class CounterRide extends CounterBase {
 			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
 		if (target.hasDick() && getSelf().hasPussy()) {
-			c.setStance(new Cowgirl(getSelf(), target));
+			c.setStance(Cowgirl.similarInstance(getSelf(), target));
 			(new Thrust(getSelf())).resolve(c, target);
 		} else {
-			c.setStance(new Missionary(getSelf(), target));
+			c.setStance(Missionary.similarInstance(getSelf(), target));
 			(new Thrust(getSelf())).resolve(c, target);
 		}
 	}
