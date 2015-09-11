@@ -222,6 +222,7 @@ public class Global {
 		skillPool.add(new Cunnilingus(p));
 		skillPool.add(new Escape(p));
 		skillPool.add(new Flick(p));
+		skillPool.add(new ToggleKnot(p));
 		skillPool.add(new LivingClothing(p));
 		skillPool.add(new LivingClothingOther(p));
 		skillPool.add(new Engulf(p));
