@@ -42,8 +42,30 @@ public class Fuck extends Skill {
 		BodyPart targetO = getTargetOrgan(target);
 		boolean possible = selfO != null && targetO != null;
 		boolean ready = possible && selfO.isReady(getSelf());
-
-		return possible && ready
+		boolean stancePossible = false;
+		if (ready) {
+			stancePossible = true;
+			if (selfO.isType("cock")) {
+				stancePossible &= !c.getStance().inserted(getSelf());
+			}
+			if (selfO.isType("pussy")) {
+				stancePossible &= !c.getStance().vaginallyPenetrated(getSelf());
+			}
+			if (selfO.isType("ass")) {
+				stancePossible &= !c.getStance().analPenetrated(getSelf());
+			}
+			if (targetO.isType("cock")) {
+				stancePossible &= !c.getStance().inserted(target);
+			}
+			if (targetO.isType("pussy")) {
+				stancePossible &= !c.getStance().vaginallyPenetrated(target);
+			}
+			if (targetO.isType("ass")) {
+				stancePossible &= !c.getStance().analPenetrated(target);
+			}
+		}
+		stancePossible &= !c.getStance().havingSex();
+		return possible && ready && stancePossible
 				&&getSelf().clothingFuckable(selfO)
 				&&target.crotchAvailable();
 	}
@@ -54,9 +76,7 @@ public class Fuck extends Skill {
 				&& (c.getStance().insert(getSelf(), getSelf()) != c.getStance() || c.getStance().insert(target, getSelf()) != c.getStance())
 				&&c.getStance().mobile(getSelf())
 				&&!c.getStance().mobile(target)
-				&&getSelf().canAct()
-				&&!c.getStance().penetration(getSelf())
-				&&!c.getStance().penetration(target);
+				&&getSelf().canAct();
 	}
 	
 	String premessage(Combat c, Character target) {
@@ -190,11 +210,5 @@ public class Fuck extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return getTargetOrgan(target).getType();
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return getSelfOrgan().getType();
 	}
 }

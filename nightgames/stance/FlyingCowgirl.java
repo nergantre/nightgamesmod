@@ -77,16 +77,6 @@ public class FlyingCowgirl extends FemdomSexStance {
 		return false;
 	}
 
-	@Override
-	public boolean penetration(Character c) {
-		return true;
-	}
-
-	@Override
-	public boolean inserted(Character c) {
-		return c==bottom;
-	}
-
 	public boolean flying(Character c) {
 		return true;
 	}
@@ -122,15 +112,5 @@ public class FlyingCowgirl extends FemdomSexStance {
 		} else {
 			return new Missionary(bottom, top);
 		}
-	}
-
-	@Override
-	public BodyPart topPart() {
-		return top.body.getRandomPussy();
-	}
-	
-	@Override
-	public BodyPart bottomPart() {
-		return bottom.body.getRandomInsertable();
 	}
 }

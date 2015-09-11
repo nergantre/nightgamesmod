@@ -27,22 +27,22 @@ public class FairyFem extends Pet {
 			switch(Global.random(4)){
 			case 3:
 				if(target.crotchAvailable()){
-					c.write(owner(),own()+"faerie flies at you and kicks you in the balls. She doesn't have a lot of weight to put behind it, but it still hurts like hell");
+					c.write(owner(),own()+"faerie flies at you and kicks you in the balls. She doesn't have a lot of weight to put behind it, but it still hurts like hell.");
 					if(target.has(Trait.achilles)){
 						target.pain(c, 4+Global.random(4), false);
 					}
 					target.pain(c, 3+2*Global.random(power), false);
 				}
 				else{
-					c.write(owner(),own()+"faerie flies around the edge of the fight looking for an opening");
+					c.write(owner(),own()+"faerie flies around the edge of the fight looking for an opening.");
 				}
 				break;
 			case 2:
-				if(c.getStance().penetration(target)){
-					c.write(owner(),own()+"faerie flies around the edge of the fight looking for an opening");
+				if(c.getStance().inserted(target)){
+					c.write(owner(),own()+"faerie flies around the edge of the fight looking for an opening.");
 				}
 				else if(target.crotchAvailable()){
-					c.write(owner(),own()+"faerie hugs your dick and rubs it with her entire body until you pull her off");
+					c.write(owner(),own()+"faerie hugs your dick and rubs it with her entire body until you pull her off.");
 					target.body.pleasure(null, null, target.body.getRandom("cock"), 2+3*Global.random(power), c);
 				}
 				else{
@@ -55,7 +55,7 @@ public class FairyFem extends Pet {
 				owner().buildMojo(c, 20 + power);
 				break;
 			default:
-				c.write(owner(),own()+"faerie rains magic energy on "+owner().name()+", restoring her strength");
+				c.write(owner(),own()+"faerie rains magic energy on "+owner().name()+", restoring her strength.");
 				owner().heal(c, power+Global.random(10));
 			}
 		}
@@ -63,16 +63,16 @@ public class FairyFem extends Pet {
 			switch(Global.random(4)){
 			case 3:
 				if(target.breastsAvailable()){
-					c.write(owner(),"Your faerie lands on "+target.name()+"'s tit and plays with her sensitive nipple");
+					c.write(owner(),"Your faerie lands on "+target.name()+"'s tit and plays with her sensitive nipple.");
 					target.body.pleasure(null, null, target.body.getRandom("breasts"), 3+2*Global.random(power), c);
 					target.pain(c, 3+2*Global.random(power), false, true);
 				}
 				else{
-					c.write(owner(),own()+"faerie flies around the edge of the fight looking for an opening");
+					c.write(owner(),own()+"faerie flies around the edge of the fight looking for an opening.");
 				}
 				break;
 			case 2:
-				c.write(owner(),own()+"faerie flies around the edge of the fight looking for an opening");
+				c.write(owner(),own()+"faerie flies around the edge of the fight looking for an opening.");
 				break;
 			case 1:
 				c.write(owner(),"Your faerie circles around your with a faint glow and kisses you on the cheek. You feel energy building inside you.");

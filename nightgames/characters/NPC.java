@@ -54,7 +54,7 @@ public class NPC extends Character {
 	public String describe(int per, Combat c) {
 		String description=ai.describeAll(c);
 		for(Status s:status){
-			description = description+"<br>"+s.describe();
+			description = description+"<br>"+s.describe(c);
 		}
 		description = description+"<p>";
 		description = description + outfit.describe(this);
@@ -144,7 +144,7 @@ public class NPC extends Character {
 		}
 		this.gainXP(getVictoryXP(target));
 		target.gainXP(getDefeatXP(this));
-		if(c.getStance().penetration(this)){
+		if(c.getStance().inserted() && c.getStance().dom(this)){
 			getMojo().gain(2);
 			if(has(Trait.mojoMaster)){
 				getMojo().gain(2);

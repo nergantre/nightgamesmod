@@ -97,7 +97,7 @@ public class FondleBreasts extends Skill {
 			return getSelf().name() + " gropes at your " + target.body.getRandomBreasts().describe(target) + ", but misses the mark.";
 		}
 		else if(target.breastsAvailable()){
-			return getSelf().name() + " massages your " + target.body.getRandomBreasts().describe(target) + ", and pinch your nipples, causing you to moan with desire.";
+			return getSelf().name() + " massages your " + target.body.getRandomBreasts().describe(target) + ", and pinches your nipples, causing you to moan with desire.";
 		}
 		else{
 			return getSelf().name() + " massages your " + target.body.getRandomBreasts().describe(target) + " over your "+target.getOutfit().getTopOfSlot(ClothingSlot.top).getName()+".";
@@ -117,11 +117,5 @@ public class FondleBreasts extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "breasts";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "hands";
 	}
 }

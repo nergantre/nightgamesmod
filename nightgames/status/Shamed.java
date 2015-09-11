@@ -14,7 +14,7 @@ public class Shamed extends DurationStatus {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(affected.human()){
 			return "You're a little distracted by self-consciousness, and it's throwing you off your game.";
 		}

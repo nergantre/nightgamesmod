@@ -182,6 +182,9 @@ public enum Trait {
 	dryad("Dryad","Part girl, part tree."),
 	temptress("Temptress", "Well versed in the carnal arts."),
 	
+	//Class subtrait
+	divinity("Divinity","Has aspects of divinity."),
+
 	//Strength
 	dexterous("Dexterous","Limbs and fingers. Underwear is not an obstacle."), //digital stimulation through underwear
 	romantic("Romantic","Every kiss is as good as the first"), //bonus to kiss

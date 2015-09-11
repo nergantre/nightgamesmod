@@ -76,7 +76,7 @@ public class StripSelf extends Skill {
 		if (clothing == null) {
 			c.write(getSelf(), "Skill failed...");
 		} else {
-			c.write(getSelf(), Global.format(String.format("{self:SUBJECT} stripped off %s %s", getSelf().possessivePronoun(), clothing.getName()), getSelf(), target));
+			c.write(getSelf(), Global.format(String.format("{self:SUBJECT} strip off %s %s.", getSelf().possessivePronoun(), clothing.getName()), getSelf(), target));
 		}
 		return true;
 	}

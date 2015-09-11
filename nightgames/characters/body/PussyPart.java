@@ -170,7 +170,7 @@ public enum PussyPart implements BodyPart, BodyPartMod {
 	@Override
 	public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		double bonus = 0;
-		if (this == divine && c.getStance().pussyinserted()) {
+		if (this == divine && c.getStance().vaginallyPenetrated()) {
 			DivineCharge charge = (DivineCharge) self.getStatus(Stsflag.divinecharge);
 			if (charge == null) {
 				c.write(self, Global.format(
@@ -191,11 +191,11 @@ public enum PussyPart implements BodyPart, BodyPartMod {
 			c.write(self, String.format("Musk emanating from %s %s leaves %s reeling.", self.possessivePronoun(),
 					describe(self), opponent.directObject()));
 			double base = damage;
-			if (target.getMod() == CockMod.blessed) {
+			if (target.getMod() == CockMod.runic) {
 				c.write(self,
 						String.format(
-								" The wild scent stirs something deep inside of %s, a lustfulness %s had hidden away. ",
-								opponent.nameOrPossessivePronoun(), opponent.pronoun()));
+								"The wild scent overwhelms %s carefully layered enchantments, instantly sweeping %s away.",
+								opponent.nameOrPossessivePronoun(), opponent.directObject()));
 				base *= 2.5;
 			} else if (target.getMod() == CockMod.incubus) {
 				c.write(self, String.format("Whilst certainly invigorating, the scent leaves %s largely unaffected.",
@@ -226,9 +226,9 @@ public enum PussyPart implements BodyPart, BodyPartMod {
 			// no need for any effects, the bonus is in the pleasure mod
 		}
 		if (this == PussyPart.succubus && target.isType("cock")) {
-			if (target.getMod() == CockMod.blessed) {
+			if (target.getMod() == CockMod.runic) {
 				c.write(self, String.format(
-						"Putting in great effort, %s %s to draw upon %s power, but the divine blessings in %s %s keep it locked away.",
+						"Putting in great effort, %s %s to draw upon %s power, but the fae enchantments in %s %s keep it locked away.",
 						self.nameOrPossessivePronoun(), self.human() ? "try" : " tries",
 						opponent.nameOrPossessivePronoun(), opponent.possessivePronoun(), target.describe(opponent)));
 			} else {
@@ -378,8 +378,8 @@ public enum PussyPart implements BodyPart, BodyPartMod {
 						String.format(
 								"A cloud of lust descends over %s and %s, clearing both your thoughts of all matters except to fuck. Hard.",
 								opponent.subject(), self.subject()));
-				self.add(new Frenzied(self, 3));
-				opponent.add(new Frenzied(opponent, 3));
+				self.add(c, new Frenzied(self, 3));
+				opponent.add(c, new Frenzied(opponent, 3));
 			}
 		}
 		if (this.isType("pussy") && self.has(Trait.vaginaltongue) && target.isType("cock")
@@ -501,10 +501,10 @@ public enum PussyPart implements BodyPart, BodyPartMod {
 				return mod == CockMod.primal ? 1 : mod == CockMod.bionic ? -1 : 0;
 			}
 			if (this == succubus) {
-				return mod == CockMod.blessed ? -1 : 0;
+				return mod == CockMod.runic ? -1 : 0;
 			}
 			if (this == feral) {
-				return mod == CockMod.blessed ? 1 : mod == CockMod.incubus ? -1 : 0;
+				return mod == CockMod.runic ? 1 : mod == CockMod.incubus ? -1 : 0;
 			}
 			if (this == cybernetic) {
 				return mod == CockMod.incubus ? 1 : 0;

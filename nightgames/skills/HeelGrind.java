@@ -22,7 +22,7 @@ public class HeelGrind extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (c.getStance().behind(getSelf())&&target.crotchAvailable()&&getSelf().canAct()&&!c.getStance().penetration(target)&&target.hasPussy());
+		return (c.getStance().behind(getSelf())&&target.crotchAvailable()&&getSelf().canAct()&&!c.getStance().vaginallyPenetrated(target)&&target.hasPussy());
 	}
 
 	@Override
@@ -91,11 +91,5 @@ public class HeelGrind extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "pussy";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "feet";
 	}
 }

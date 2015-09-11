@@ -82,31 +82,11 @@ public class FlowerSex extends FemdomSexStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return true;
-	}
-
-	@Override
-	public boolean inserted(Character c) {
-		return c==bottom;
-	}
-
-	@Override
 	public Position insertRandom() {
 		return new Mount(top,bottom);
 	}
 
 	public Position reverse() {
 		return this;
-	}
-
-	@Override
-	public BodyPart topPart() {
-		return top.body.getRandomPussy();
-	}
-	
-	@Override
-	public BodyPart bottomPart() {
-		return bottom.body.getRandomInsertable();
 	}
 }

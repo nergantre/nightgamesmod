@@ -41,7 +41,7 @@ public class Abuff extends DurationStatus {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		String person, adjective, modification;
 
 		if (affected.human()){

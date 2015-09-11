@@ -18,7 +18,7 @@ public class Stomp extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !c.getStance().prone(getSelf())&&c.getStance().prone(target)&&c.getStance().feet(getSelf())&&getSelf().canAct()&&!getSelf().has(Trait.softheart)&&!c.getStance().penetration(getSelf());
+		return !c.getStance().prone(getSelf())&&c.getStance().prone(target)&&c.getStance().feet(getSelf())&&getSelf().canAct()&&!getSelf().has(Trait.softheart)&&!c.getStance().inserted(target);
 	}
 
 	@Override

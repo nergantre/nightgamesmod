@@ -28,10 +28,6 @@ public class Jumped extends FemdomSexStance {
 	}
 
 	@Override
-	public boolean inserted(Character c) {
-		return bottom==c;
-	}
-	@Override
 	public boolean kiss(Character c) {
 		return true;
 	}
@@ -77,11 +73,6 @@ public class Jumped extends FemdomSexStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return true;
-	}
-
-	@Override
 	public Position insertRandom() {
 		return new Neutral(top,bottom);
 	}
@@ -107,16 +98,5 @@ public class Jumped extends FemdomSexStance {
 
 	public Position reverse() {
 		return new Missionary(bottom, top);
-	}
-	
-
-	@Override
-	public BodyPart topPart() {
-		return top.body.getRandomPussy();
-	}
-	
-	@Override
-	public BodyPart bottomPart() {
-		return bottom.body.getRandomInsertable();
 	}
 }

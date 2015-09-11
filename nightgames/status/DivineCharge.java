@@ -29,7 +29,7 @@ public class DivineCharge extends Status {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "Concentrated divine energy surges through " + affected.nameOrPossessivePronoun() + " pussy.";
 	}
 
@@ -53,6 +53,11 @@ public class DivineCharge extends Status {
 		assert (s instanceof DivineCharge);
 		DivineCharge other = (DivineCharge)s;
 		this.magnitude = this.magnitude + other.magnitude;
+		// every 10 divinity past 10, you are allowed to add another stack of divine charge.
+		// this will get out of hand super quick, but eh, you shouldn't let it get
+		// that far.
+		double res = Math.pow(2., affected.get(Attribute.Divinity) / 5.0) * .25;
+		this.magnitude = Math.min(Math.max(res, 1), this.magnitude);
 	}
 
 	@Override

@@ -244,7 +244,7 @@ public class Combat extends Observable implements Serializable, Cloneable{
 		if(getStance().bottom.human() && getStance().inserted(getStance().top) && getStance().en == Stance.anal) {
 			return Result.anal;
 		}
-		else if(getStance().penetration(p1)||getStance().penetration(p2)){
+		else if(getStance().inserted()){
 			return Result.intercourse;
 		}
 		else{
@@ -407,7 +407,11 @@ public class Combat extends Observable implements Serializable, Cloneable{
 			} else if (target.is(Stsflag.counter) && skill.makesContact()) {
 				write("Countered!");
 				CounterStatus s = (CounterStatus)target.getStatus(Stsflag.counter);
-				s.resolveSkill(this, skill.user());
+				if (skill.user().is(Stsflag.wary)) {
+					write(target, s.getCounterSkill().getBlockedString(this, skill.user()));
+				} else {
+					s.resolveSkill(this, skill.user());
+				}
 			} else {
 				Skill.resolve(skill, this, target);
 			}
@@ -510,7 +514,7 @@ public class Combat extends Observable implements Serializable, Cloneable{
 				else{
 					other=p1;
 				}
-				if((getStance().penetration(p)||getStance().penetration(other))&&getStance().dom(other)){
+				if(getStance().inserted()&&getStance().dom(other)){
 					if(p.human()){
 						write("Your legs give out, but "+other.name()+" holds you up.");
 					}
@@ -643,7 +647,7 @@ public class Combat extends Observable implements Serializable, Cloneable{
 	}
 	
 	public void checkStanceStatus(Character c, Position oldStance, Position newStance) {
-		if (oldStance.prone(c) && !newStance.prone(c)) {
+		if ((oldStance.prone(c) || !oldStance.mobile(c)) && (!newStance.prone(c) && newStance.mobile(c))) {
 			c.add(this, new Braced(c));
 			c.add(this, new Wary(c, 3));
 		} else if (!oldStance.mobile(c) && newStance.mobile(c)) {

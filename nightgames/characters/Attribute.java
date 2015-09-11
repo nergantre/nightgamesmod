@@ -21,7 +21,7 @@ public enum Attribute {
 		return a == Power || a == Seduction || a == Perception;
 	}
 
-	public static boolean isTrainable(Attribute a) {
-		return a != Speed && a != Perception;
+	public static boolean isTrainable(Attribute a, Character self) {
+		return a != Speed && a != Perception && (self.has(Trait.divinity) || a != Divinity);
 	}
 }

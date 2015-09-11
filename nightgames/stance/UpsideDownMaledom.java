@@ -83,6 +83,10 @@ public class UpsideDownMaledom extends MaledomSexStance {
 	}
 
 	@Override
+	public boolean facing() {
+		return false;
+	}
+	@Override
 	public Position insertRandom() {
 		return new StandingOver(top,bottom);
 	}

@@ -20,7 +20,7 @@ public class CockBound extends Status {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(affected.human()){
 			return "Your dick is bound by "+binding+".";
 		}

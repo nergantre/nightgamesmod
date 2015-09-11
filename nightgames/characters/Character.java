@@ -1297,7 +1297,7 @@ public abstract class Character extends Observable implements Cloneable {
 			c.write(Global.capitalizeFirstLetter("<br><b>"+opponent.subjectAction("flush", "flushes") + " as the feedback from " + nameOrPossessivePronoun() + " orgasm feeds " + opponent.possessivePronoun() + " divine power.</b>"));
 			opponent.add(c, new Alluring(opponent, 5));
 			opponent.buildMojo(c, 100);
-			if (c.getStance().inserted(this) && opponent.has(Trait.demigoddess)) {
+			if (c.getStance().inserted(this) && opponent.has(Trait.divinity)) {
 				opponent.add(c, new DivineCharge(opponent, 1));
 			}
 		}
@@ -1313,16 +1313,7 @@ public abstract class Character extends Observable implements Cloneable {
 	}
 
 	public void doOrgasm(Combat c, Character opponent, Skill last) {
-		String opponentOrganType = "";
-		String selfOrganType = "";
-		if (last.user() == this) {
-			opponentOrganType = last.getTargetOrganType(c, opponent);
-			selfOrganType = last.getWithOrganType(c, this);
-		} else {
-			opponentOrganType = last.getWithOrganType(c, opponent);
-			selfOrganType = last.getTargetOrganType(c, this);
-		}
-		doOrgasm(c, opponent, body.getRandom(selfOrganType), opponent.body.getRandom(opponentOrganType));
+		doOrgasm(c, opponent, body.lastPleasured, body.lastPleasuredBy);
 	}
 
 	public void loseWillpower(Combat c, int i) {
@@ -1892,8 +1883,11 @@ public abstract class Character extends Observable implements Cloneable {
 		// with no level or hit differences and an default accuracy of 80, 80% hit rate
 		// each level the attacker is below the target will reduce this by 5%, to a maximum of 25%
 		// each point in accuracy of skill affects changes the hit chance by 1%
-		// each point in speed and perception will increase hit by 10%
-		int chanceToHit = 5 * levelDiff + accuracy + 10 * (hitDiff - evasionBonus());
+		// each point in speed and perception will increase hit by 5%
+		int chanceToHit = 5 * levelDiff + accuracy + 5 * (hitDiff - evasionBonus());
+		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+			System.out.printf("Rolled %s against %s, base accuracy: %s, hit difference: %s, level difference: %s\n", attackroll, chanceToHit, accuracy, hitDiff, levelDiff);
+		}
 
 		return attackroll < chanceToHit;
 	}
@@ -2246,7 +2240,7 @@ public abstract class Character extends Observable implements Cloneable {
 		fit += body.getHotness(this, other);
 		if (c.getStance().inserted()) { // If we are fucking...
 			// ...we need to see if that's beneficial to us.
-			fit += this.body.penetrationFitnessModifier(c.getStance().inserted(this), c.getStance().analinserted(), other.body);
+			fit += this.body.penetrationFitnessModifier(c.getStance().inserted(this), c.getStance().analPenetrated(), other.body);
 		}
 		if (hasDick()) {
 			fit += (dickPreference() - 3) * 4;
@@ -2307,6 +2301,7 @@ public abstract class Character extends Observable implements Cloneable {
 		if (human() && i > 0)
 			Global.gui().message("You've gained $" + Math.round(i * Global.moneyRate) +".");
 		money += Math.round(i * Global.moneyRate);
+		update();
 	}
 
 	public void loseXP(int i) {
@@ -2480,5 +2475,8 @@ public abstract class Character extends Observable implements Cloneable {
 	public boolean footAvailable() {
 		Clothing article = outfit.getTopOfSlot(ClothingSlot.feet);
 		return article == null || article.getLayer() < 2;
+	}
+	public boolean hasInsertable() {
+		return (hasDick() && crotchAvailable()) || has(Trait.strapped);
 	}
 }

@@ -30,7 +30,7 @@ public class Tickle extends Skill {
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy(c))){
-			if(target.crotchAvailable()&&c.getStance().reachBottom(getSelf())&&!c.getStance().penetration(getSelf())){
+			if(target.crotchAvailable()&&c.getStance().reachBottom(getSelf())&&!c.getStance().havingSex()){
 				if(getSelf().has(Item.Tickler2)&&Global.random(2)==1&&getSelf().canSpend(10)&&(!getSelf().human()&&!target.is(Stsflag.hypersensitive)
 						||Global.getMatch().condition!=Modifier.notoys)){
 					getSelf().spendMojo(c, 10);

@@ -96,11 +96,4 @@ public class BreastWorship extends Skill {
 	public boolean makesContact() {
 		return true;
 	}
-
-	public String getTargetOrganType(Combat c, Character target) {
-		return "breasts";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "mouth";
-	}
 }

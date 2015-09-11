@@ -71,7 +71,7 @@ public class ToggleKnot extends Skill {
 								+ " A ball swells up at the base of her dick, growing to the size of a small apple. You're not"
 								+ " getting it out of you any time soon...");
 			}
-			target.add(c, new Knotted(target, getSelf(), c.getStance().analinserted()));
+			target.add(c, new Knotted(target, getSelf(), c.getStance().analPenetrated(target)));
 		}
 		return true;
 	}

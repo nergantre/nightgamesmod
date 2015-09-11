@@ -13,7 +13,7 @@ public class Cynical extends DurationStatus {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(affected.human()){
 			return "You're feeling more cynical than usual and won't fall for any mind games.";
 		}

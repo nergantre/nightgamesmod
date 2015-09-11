@@ -33,8 +33,7 @@ public class Fly extends Fuck {
 				&& (c.getStance().mobile(this.getSelf()))
 				&& (!c.getStance().prone(this.getSelf()))
 				&& c.getStance().facing()
-				&& (this.getSelf().getStamina().get() >= 15)
-				&& (!c.getStance().penetration(this.getSelf()));
+				&& (this.getSelf().getStamina().get() >= 15);
 	}
 
 	@Override

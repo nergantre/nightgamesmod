@@ -43,4 +43,6 @@ public enum Stsflag {
 	frenzied,
 	lethargic,
 	divinecharge,
+	fucked,
+	pegged,
 }

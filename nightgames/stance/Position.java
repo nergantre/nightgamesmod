@@ -7,6 +7,7 @@ import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.skills.Skill;
+import nightgames.status.Stsflag;
 
 public abstract class Position implements Cloneable{
 	public Character top;
@@ -21,6 +22,10 @@ public abstract class Position implements Cloneable{
 	}
 	public int pinDifficulty(Combat c, Character self) {
 		return 4;
+	}
+	public boolean vaginallyPenetrated(Character c) {
+		BodyPart part = partFor(c);
+		return (part != null && part.isType("pussy")) || c.is(Stsflag.fucked);
 	}
 	public int escape(Combat c, Character self) {
 		if (sub(self) && !mobile(self)) {
@@ -135,12 +140,13 @@ public abstract class Position implements Cloneable{
 		newStance.top = ntop;
 		return newStance;
 	}
-	public boolean analinserted() {
-		return en == Stance.anal;
+	public boolean analPenetrated() {
+		return analPenetrated(top) || analPenetrated(bottom);
 	}
 
-	public boolean analinserted(Character self) {
-		return en == Stance.anal && top == self;
+	public boolean analPenetrated(Character self) {
+		BodyPart part = partFor(self);
+		return self.is(Stsflag.pegged) || (part != null && part.isType("ass"));
 	}
 
 	public Position insertRandomDom(Character target) {
@@ -155,7 +161,6 @@ public abstract class Position implements Cloneable{
 		}
 	}
 	public boolean paizuri(Character self) {
-		// TODO Auto-generated method stub
 		return oral(self);
 	}
 	
@@ -176,7 +181,30 @@ public abstract class Position implements Cloneable{
 	public BodyPart partFor(Character c) {
 		return c.equals(top) ? topPart() : bottomPart();
 	}
-	public boolean pussyinserted() {
-		return inserted() && !analinserted();
+	public boolean vaginallyPenetrated() {
+		return vaginallyPenetrated(top) || vaginallyPenetrated(bottom);
+	}
+
+	public boolean havingSexNoStrapped() {
+		return (penetratedBy(top, bottom) && !bottom.has(Trait.strapped)) || (penetratedBy(bottom, top) && !top.has(Trait.strapped));
+	}
+	public boolean havingSex() {
+		return penetratedBy(top, bottom) || penetratedBy(bottom, top);
+	}
+	public boolean penetratedBy(Character inserted, Character inserter) {
+		return vaginallyPenetratedBy(inserted, inserter) || analPenetratedBy(inserted, inserter);
+	}
+	public boolean vaginallyPenetratedBy(Character self, Character other) {
+		if (other != getOther(self)) { return false; }
+		BodyPart part = partFor(self);
+		return part != null && part.isType("pussy");
+	}
+	public boolean analPenetratedBy(Character self, Character other) {
+		if (other != getOther(self)) { return false; }
+		BodyPart part = partFor(self);
+		return part != null && part.isType("ass");
+	}
+	public boolean connected() {
+		return analPenetrated() || vaginallyPenetrated() || inserted();
 	}
 }

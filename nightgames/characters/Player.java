@@ -92,7 +92,7 @@ public class Player extends Character {
 	public String describe(int per, Combat c) {
 		String description="<i>";
 		for(Status s:status){
-			description = description+s.describe()+"<br>";
+			description = description+s.describe(c)+"<br>";
 		}
 		description = description+"</i>";
 		description = description + outfit.describe(this);
@@ -108,7 +108,7 @@ public class Player extends Character {
 
 	@Override
 	public void victory(Combat c, Result flag) {
-		if(c.getStance().penetration(this)){
+		if(c.getStance().inserted() && c.getStance().dom(this)){
 			getMojo().gain(2);
 			if(has(Trait.mojoMaster)){
 				getMojo().gain(2);
@@ -146,7 +146,7 @@ public class Player extends Character {
 
 	@Override
 	public void draw(Combat c, Result flag) {
-		if(c.getStance().penetration(this)){
+		if(c.getStance().inserted()){
 			c.p1.getMojo().gain(3);
 			c.p2.getMojo().gain(3);
 		}

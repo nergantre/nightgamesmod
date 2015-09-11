@@ -87,7 +87,7 @@ public class Frenzied extends DurationStatus {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if (affected.human()) {
 			return "You cannot think about anything other than fucking all those around.";
 		} else {

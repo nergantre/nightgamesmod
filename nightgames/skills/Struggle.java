@@ -76,7 +76,7 @@ public class Struggle extends Skill {
 				getSelf().struggle();
 				return false;
 			}
-		} else if (c.getStance().penetration(getSelf()) || c.getStance().penetration(target)) {
+		} else if (c.getStance().havingSex()) {
 			boolean knotted = getSelf().hasStatus(Stsflag.knotted);
 			if (c.getStance().enumerate() == Stance.anal) {
 				int diffMod = knotted ? 50 : 0;

@@ -16,12 +16,12 @@ public abstract class AbstractFacingStance extends Position {
 	public Position insertRandomDom(Character dom) {
 		List<Position> possibleResults = new ArrayList<>();
 		Character sub = getOther(dom);
-		if (dom.hasDick() && sub.hasPussy()) {
+		if (dom.hasInsertable() && sub.hasPussy()) {
 			Position newPos = insert(dom, dom);
 			if (newPos != this)
 				possibleResults.add(newPos);
 		}
-		if (dom.hasPussy() && sub.hasDick()){
+		if (dom.hasPussy() && sub.hasInsertable()){
 			Position newPos = insert(sub, dom);
 			if (newPos != this)
 				possibleResults.add(newPos);

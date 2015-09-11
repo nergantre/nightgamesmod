@@ -99,7 +99,7 @@ public class Behind extends AbstractBehindStance {
 
 	@Override
 	public float priorityMod(Character self) {
-		return ((self.hasDick() || self.has(Trait.strapped)) ? 2 : 1) * getSubDomBonus(self, 1.0f);
+		return (self.hasInsertable() ? 2 : 1) * getSubDomBonus(self, 1.0f);
 	}
 	
 	@Override

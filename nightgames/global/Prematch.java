@@ -7,6 +7,7 @@ import nightgames.gui.SaveButton;
 import nightgames.gui.SceneButton;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.items.clothing.ClothingSlot;
 import nightgames.status.Hypersensitive;
 
 import java.util.ArrayList;
@@ -130,8 +131,13 @@ public class Prematch implements Scene{
 		}
 		else{
 			available.add(Modifier.normal);
-			available.add(Modifier.underwearonly);
-			available.add(Modifier.nudist);
+			if (player.outfitPlan.stream().anyMatch(article -> article.getLayer() == 0
+					&& (article.getSlots().contains(ClothingSlot.top) || article.getSlots().contains(ClothingSlot.bottom)))) {
+				available.add(Modifier.underwearonly);
+			}
+			if (!player.outfitPlan.isEmpty()) {
+				available.add(Modifier.nudist);
+			}
 			available.add(Modifier.norecovery);
 			available.add(Modifier.vibration);
 			available.add(Modifier.vulnerable);
@@ -166,7 +172,8 @@ public class Prematch implements Scene{
 						"the match.";
 				break;
 			case nudist:
-				player.nudify();
+				player.getOutfit().undress();
+				player.change(Modifier.nudist);
 				message+="You agree to Lilly's rule and start to strip off your clothes. You try to appear nonchalant about it, but you can't help reddening a bit when your " +
 						"opponents start cheering you on. Lilly stiffles a laugh as you hand over your clothes. <i>\"You see? You're more popular already.\"</i>";
 				break;

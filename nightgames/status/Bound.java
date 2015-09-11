@@ -25,7 +25,7 @@ public class Bound extends Status {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(affected.human()){
 			return "Your hands are bound by "+binding+".";
 		}

@@ -43,6 +43,9 @@ public class FaceSitting extends AbstractBehindStance {
 		return top==c;
 	}
 	public String image() {
+		if (top.hasPussy() && bottom.hasPussy()) {
+			return "facesit_69.jpg";
+		}
 		return "facesitting.jpg";
 	}
 	@Override

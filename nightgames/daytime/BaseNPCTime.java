@@ -89,7 +89,9 @@ public abstract class BaseNPCTime extends Activity {
 		} else if (optionalGiftOption.isPresent()) {
 			Global.gui().message(Global.format(giftedString, npc, player));
 			if (optionalGiftOption.get() instanceof Clothing) {
-				player.closet.remove(optionalGiftOption.get());
+				if (player.closet.contains(optionalGiftOption.get())) {
+					player.closet.remove(optionalGiftOption.get());
+				}
 				npc.closet.add((Clothing) optionalGiftOption.get());
 			}
 			player.gainAffection(npc, 2);
@@ -121,8 +123,8 @@ public abstract class BaseNPCTime extends Activity {
 				}
 			});
 			Global.gui().choose(this, "Back");
-		} else if (choice.equals("Start") || choice.equals("Back") && (advTrait == null || npc.has(advTrait))) {
-			if (npc.getAffection(player) > 25) {
+		} else if (choice.equals("Start") || choice.equals("Back")) {
+			if (npc.getAffection(player) > 25 && (advTrait == null || npc.has(advTrait))) {
 				Global.gui().message(Global.format(loveIntro, npc, player));
 				Global.gui().choose(this, "Games");
 				Global.gui().choose(this, "Sparring");
@@ -139,9 +141,9 @@ public abstract class BaseNPCTime extends Activity {
 			} else {
 				subVisitIntro(choice);
 			}
-		} else if (choice.equals("Leave"))
+		} else if (choice.equals("Leave")) {
 			done(true);
-		else {
+		} else {
 			subVisit(choice);
 		}
 	}

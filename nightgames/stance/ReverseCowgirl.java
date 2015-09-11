@@ -74,30 +74,11 @@ public class ReverseCowgirl extends FemdomSexStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return true;
-	}
-	@Override
-	public boolean inserted(Character c) {
-		return c==bottom;
-	}
-	@Override
 	public Position insertRandom() {
 		return new ReverseMount(top,bottom);
 	}
 
 	public Position reverse() {
 		return new Doggy(bottom, top);
-	}
-	
-
-	@Override
-	public BodyPart topPart() {
-		return top.body.getRandomPussy();
-	}
-	
-	@Override
-	public BodyPart bottomPart() {
-		return bottom.body.getRandomInsertable();
 	}
 }

@@ -98,10 +98,4 @@ public class CounterRide extends CounterBase {
 					"With a sexy grin, {self:name} wrenches your legs apart and plunges into your slobbering vagina.", getSelf(), target);
 		}
 	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "cock";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "pussy";
-	}
 }

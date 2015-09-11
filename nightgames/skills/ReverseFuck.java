@@ -14,10 +14,6 @@ public class ReverseFuck extends Fuck {
 
 	public ReverseFuck(Character self) {
 		super("ReverseFuck", self, 0);
-		if(self.human()){
-			image="Fuck.jpg";
-			artist="Art by Fujin Hitokiri";
-		}
 	}
 
 	@Override
@@ -71,7 +67,7 @@ public class ReverseFuck extends Fuck {
 
 	@Override
 	public String describe(Combat c) {
-		return "Straddle your opponent and ride her cock";
+		return "Straddle your opponent and ride " + c.getOther(getSelf()).possessivePronoun() + " cock";
 	}
 
 	@Override

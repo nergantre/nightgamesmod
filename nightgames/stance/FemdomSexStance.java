@@ -30,11 +30,11 @@ public abstract class FemdomSexStance extends Position {
 		Character inserter = inserted(top) ? top : bottom;
 		Character inserted = inserted(top) ? bottom : top;
 		
-		if(!inserter.hasDick()){
+		if(!inserter.hasInsertable()){
 			if(inserter.human()){
-				c.write("With " + inserter.possessivePronoun() + " dick gone, you groan in frustration and cease your merciless movements.");
+				c.write(inserted.name() + " groans with frustration with the sudden disappearance of your " + inserter.body.getRandomInsertable() + ".");
 			} else {
-				c.write(inserted.name() + " groans with frustration with the sudden disappearance of your dick.");
+				c.write("With " + inserter.nameOrPossessivePronoun() + " " + inserter.body.getRandomInsertable() + " gone, you groan in frustration and cease your merciless riding.");
 			}
 			c.setStance(insertRandom());
 		}
@@ -47,9 +47,24 @@ public abstract class FemdomSexStance extends Position {
 			c.setStance(insertRandom());
 		}
 	}
+
+	@Override
+	public boolean penetration(Character c) {
+		return true;
+	}
+
+	@Override
+	public boolean inserted(Character c) {
+		return c==bottom;
+	}
+
+	@Override
+	public BodyPart topPart() {
+		return top.body.getRandomPussy();
+	}
 	
 	@Override
-	public abstract BodyPart topPart();
-	@Override
-	public abstract BodyPart bottomPart();
+	public BodyPart bottomPart() {
+		return bottom.body.getRandomInsertable();
+	}
 }

@@ -21,6 +21,7 @@ public class TailFucked extends Status {
 		this.other = other;
 		requirements.add(new EitherInsertedRequirement(true));
 		flag(Stsflag.bound);
+		flag(hole.equals("ass") ? Stsflag.pegged : Stsflag.fucked);
 	}
 
 	@Override
@@ -32,7 +33,7 @@ public class TailFucked extends Status {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		BodyPart hole = affected.body.getRandom(target);
 		BodyPart tail = other.body.getRandom("tail");
 		if (hole == null || tail == null) { return ""; }

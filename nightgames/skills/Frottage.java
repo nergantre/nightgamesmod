@@ -24,7 +24,7 @@ public class Frottage extends Skill{
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().sub(getSelf())&&!c.getStance().penetration(getSelf())&&target.crotchAvailable()&&((getSelf().hasDick()&&getSelf().crotchAvailable())||getSelf().has(Trait.strapped));
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().sub(getSelf())&&!c.getStance().inserted(getSelf())&&target.crotchAvailable()&&((getSelf().hasDick()&&getSelf().crotchAvailable())||getSelf().has(Trait.strapped));
 	}
 
 	@Override
@@ -108,17 +108,5 @@ public class Frottage extends Skill{
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		if (target.hasDick())
-			return "cock";
-		else
-			return "pussy";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		if (target.hasDick())
-			return "cock";
-		else
-			return "pussy";
 	}
 }

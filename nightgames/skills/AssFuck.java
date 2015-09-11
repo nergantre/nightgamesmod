@@ -37,8 +37,7 @@ public class AssFuck extends Fuck {
 				&& (c.getStance().insert(getSelf(), getSelf()) != c.getStance() || c.getStance().insert(target, getSelf()) != c.getStance())
 				&&c.getStance().mobile(getSelf())
 				&&(c.getStance().behind(getSelf())||(c.getStance().prone(target)&&!c.getStance().mobile(target)))
-				&&getSelf().canAct()&&!c.getStance().penetration(getSelf())
-				&&!c.getStance().penetration(target)
+				&&getSelf().canAct()
 				&&(getTargetOrgan(target).isReady(target) || getSelf().has(Item.Lubricant) || getSelf().getArousal().percent()>50 || getSelf().has(Trait.alwaysready));
 	}
 
@@ -161,11 +160,5 @@ public class AssFuck extends Fuck {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "ass";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "cock";
 	}
 }
