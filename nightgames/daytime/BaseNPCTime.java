@@ -123,8 +123,8 @@ public abstract class BaseNPCTime extends Activity {
 				}
 			});
 			Global.gui().choose(this, "Back");
-		} else if (choice.equals("Start") || choice.equals("Back") && (advTrait == null || npc.has(advTrait))) {
-			if (npc.getAffection(player) > 25) {
+		} else if (choice.equals("Start") || choice.equals("Back")) {
+			if (npc.getAffection(player) > 25 && (advTrait == null || npc.has(advTrait))) {
 				Global.gui().message(Global.format(loveIntro, npc, player));
 				Global.gui().choose(this, "Games");
 				Global.gui().choose(this, "Sparring");
@@ -141,9 +141,9 @@ public abstract class BaseNPCTime extends Activity {
 			} else {
 				subVisitIntro(choice);
 			}
-		} else if (choice.equals("Leave"))
+		} else if (choice.equals("Leave")) {
 			done(true);
-		else {
+		} else {
 			subVisit(choice);
 		}
 	}
