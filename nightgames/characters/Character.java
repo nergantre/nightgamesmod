@@ -1880,8 +1880,11 @@ public abstract class Character extends Observable implements Cloneable {
 		// with no level or hit differences and an default accuracy of 80, 80% hit rate
 		// each level the attacker is below the target will reduce this by 5%, to a maximum of 25%
 		// each point in accuracy of skill affects changes the hit chance by 1%
-		// each point in speed and perception will increase hit by 10%
-		int chanceToHit = 5 * levelDiff + accuracy + 10 * (hitDiff - evasionBonus());
+		// each point in speed and perception will increase hit by 5%
+		int chanceToHit = 5 * levelDiff + accuracy + 5 * (hitDiff - evasionBonus());
+		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+			System.out.printf("Rolled %s against %s, base accuracy: %s, hit difference: %s, level difference: %s\n", attackroll, chanceToHit, accuracy, hitDiff, levelDiff);
+		}
 
 		return attackroll < chanceToHit;
 	}
