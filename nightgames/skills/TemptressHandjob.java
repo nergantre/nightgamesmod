@@ -20,11 +20,6 @@ public class TemptressHandjob extends Handjob {
 	}
 
 	@Override
-	public String getName() {
-		return "Improved Handjob";
-	}
-
-	@Override
 	public String describe(Combat c) {
 		return "Rub your opponent's dick with supreme skill.";
 	}

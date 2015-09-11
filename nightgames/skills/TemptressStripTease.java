@@ -25,13 +25,9 @@ public class TemptressStripTease extends StripTease {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		// tentacle checks to prevent nullpointers in stripDifficulty
-		return !getSelf().outfit.has(ClothingTrait.tentacleSuit)
-				&& !getSelf().outfit.has(ClothingTrait.tentacleUnderwear)
-				&& (super.usable(c, target)
-						|| (c.getStance().enumerate() == Stance.neutral
-								&& getSelf().canAct()
-								&& getSelf().mostlyNude()));
+		return super.usable(c, target)
+				|| (c.getStance().enumerate() == Stance.neutral
+						&& getSelf().canAct() && getSelf().mostlyNude());
 	}
 
 	@Override
@@ -76,6 +72,9 @@ public class TemptressStripTease extends StripTease {
 			getSelf().add(c, new Alluring(getSelf(), 5));
 			getSelf().undress(c);
 		}
+		target.emote(Emotion.horny, 30);
+		getSelf().emote(Emotion.confident, 15);
+		getSelf().emote(Emotion.dominant, 15);
 		return true;
 	}
 
@@ -122,6 +121,7 @@ public class TemptressStripTease extends StripTease {
 	}
 
 	private boolean isDance(Combat c) {
-		return !super.usable(c, null) && this.usable(c, null);
+		return !super.usable(c, c.getOther(getSelf()))
+				&& this.usable(c, c.getOther(getSelf()));
 	}
 }

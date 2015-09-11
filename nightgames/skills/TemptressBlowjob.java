@@ -45,7 +45,7 @@ public class TemptressBlowjob extends Blowjob {
 				if (target.body.getRandomCock().isReady(target)) {
 					// Was flaccid, got hard
 					c.write(getSelf(), deal(c, 0, Result.special, target));
-					getSelf().add(new FiredUp(getSelf(), target, "hands"));
+					getSelf().add(new FiredUp(getSelf(), target, "mouth"));
 				} else {
 					// Was flaccid, still is
 					c.write(getSelf(), deal(c, 0, Result.weak, target));

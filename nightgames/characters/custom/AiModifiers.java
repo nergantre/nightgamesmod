@@ -5,11 +5,14 @@ import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import nightgames.Resources.ResourceLoader;
+import nightgames.global.Flag;
+import nightgames.global.Global;
 import nightgames.global.JSONUtils;
 import nightgames.skills.Skill;
 import nightgames.stance.Stance;
@@ -17,8 +20,8 @@ import nightgames.status.Stsflag;
 
 public class AiModifiers {
 
-	public static final Map<String, AiModifiers> DEFAULTS;
-	public static final double AI_MOD_WEIGHT = 1.0;
+	public static final Map<String, AiModifiers>	DEFAULTS;
+	public static final double						AI_MOD_WEIGHT	= 1.0;
 
 	static {
 		Map<String, AiModifiers> temp = new HashMap<>();
@@ -28,7 +31,12 @@ public class AiModifiers {
 		for (Object obj : root) {
 			JSONObject jobj = (JSONObject) obj;
 			String pers = JSONUtils.readString(jobj, "personality");
+			Optional<Double> malePref = jobj.containsKey("male-pref")
+					? Optional
+							.of((double) JSONUtils.readFloat(jobj, "male-pref"))
+					: Optional.empty();
 			AiModifiers mods = readMods((JSONArray) jobj.get("mods"));
+			mods.setMalePref(malePref);
 			temp.put(pers, mods);
 		}
 		DEFAULTS = Collections.unmodifiableMap(temp);
@@ -38,20 +46,22 @@ public class AiModifiers {
 	private Map<Stance, Double>					positionMods;
 	private Map<Stsflag, Double>				selfStatusMods;
 	private Map<Stsflag, Double>				oppStatusMods;
+	private Optional<Double>					malePref;
 
 	public AiModifiers() {
-		this(new HashMap<>(), new HashMap<>(), new HashMap<>(),
-				new HashMap<>());
+		this(new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(),
+				Optional.empty());
 	}
 
 	public AiModifiers(Map<Class<? extends Skill>, Double> attackMods,
 			Map<Stance, Double> positionMods,
 			Map<Stsflag, Double> selfStatusMods,
-			Map<Stsflag, Double> oppStatusMods) {
+			Map<Stsflag, Double> oppStatusMods, Optional<Double> malePref) {
 		this.attackMods = attackMods;
 		this.positionMods = positionMods;
 		this.selfStatusMods = selfStatusMods;
 		this.oppStatusMods = oppStatusMods;
+		this.malePref = malePref;
 	}
 
 	public double modAttack(Class<? extends Skill> clazz) {
@@ -68,6 +78,14 @@ public class AiModifiers {
 
 	public double modOpponentStatus(Stsflag flag) {
 		return AI_MOD_WEIGHT * oppStatusMods.getOrDefault(flag, 0.0);
+	}
+
+	public double getMalePref() {
+		return malePref.orElse((double) Global.getValue(Flag.malePref));
+	}
+
+	public void setMalePref(Optional<Double> malePref) {
+		this.malePref = malePref;
 	}
 
 	public Map<Class<? extends Skill>, Double> getAttackMods() {
