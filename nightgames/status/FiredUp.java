@@ -37,7 +37,7 @@ public class FiredUp extends Status {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if (affected.human()) {
 			if (stack == 1) {
 				return "You are getting a good sense of how to best use your "

@@ -26,7 +26,7 @@ public class TemptressRide extends Thrust {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if (c.getStance().analinserted())
+		if (c.getStance().analPenetrated(getSelf()))
 			return super.resolve(c, target);
 		int targetDmg = 10 + Global
 				.random(Math.max(10, getSelf().get(Attribute.Technique)));
