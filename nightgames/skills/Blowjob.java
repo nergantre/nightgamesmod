@@ -1,8 +1,11 @@
 package nightgames.skills;
 
+import javax.print.attribute.standard.MediaSize.Other;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.characters.body.StraponPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -22,7 +25,7 @@ public class Blowjob extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return (target.crotchAvailable()&&target.hasDick()&&c.getStance().oral(getSelf())&&c.getStance().front(getSelf())&&getSelf().canAct()&&!c.getStance().inserted(target))
-				|| (getSelf().canRespond() && (c.getStance().inserted(target) && c.getStance().vaginallyPenetrated(getSelf()) && getSelf().has(Trait.vaginaltongue) && c.getStance().en != Stance.anal));
+				|| (getSelf().canRespond() && isVaginal(c));
 	}
 
 	@Override
@@ -39,9 +42,12 @@ public class Blowjob extends Skill {
 		return priority;
 	}
 
+	public boolean isVaginal (Combat c) {
+		return c.getStance().vaginallyPenetratedBy(getSelf(), c.getOther(getSelf())) && !c.getOther(getSelf()).has(Trait.strapped) && getSelf().has(Trait.vaginaltongue);
+	}
 	@Override
 	public int getMojoBuilt(Combat c) {
-		if (c.getStance().inserted(c.getOther(getSelf())) && getSelf().has(Trait.vaginaltongue)) {
+		if (isVaginal(c)) {
 			return 10;
 		} else if (c.getStance().enumerate() == Stance.facesitting) {
 			return 0;
@@ -56,7 +62,7 @@ public class Blowjob extends Skill {
 		if(getSelf().has(Trait.silvertongue)){
 			m += 4;
 		}
-		if (c.getStance().inserted(target) && getSelf().has(Trait.vaginaltongue)) {
+		if (isVaginal(c)) {
 			m += 4;
 			if(target.human()){
 				c.write(getSelf(),receive(c,m,Result.intercourse, target));

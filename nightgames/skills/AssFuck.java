@@ -37,8 +37,7 @@ public class AssFuck extends Fuck {
 				&& (c.getStance().insert(getSelf(), getSelf()) != c.getStance() || c.getStance().insert(target, getSelf()) != c.getStance())
 				&&c.getStance().mobile(getSelf())
 				&&(c.getStance().behind(getSelf())||(c.getStance().prone(target)&&!c.getStance().mobile(target)))
-				&&getSelf().canAct()&&!c.getStance().inserted(getSelf())
-				&&!c.getStance().analPenetrated(target)
+				&&getSelf().canAct()
 				&&(getTargetOrgan(target).isReady(target) || getSelf().has(Item.Lubricant) || getSelf().getArousal().percent()>50 || getSelf().has(Trait.alwaysready));
 	}
 

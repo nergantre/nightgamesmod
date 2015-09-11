@@ -42,24 +42,27 @@ public class Fuck extends Skill {
 		BodyPart targetO = getTargetOrgan(target);
 		boolean possible = selfO != null && targetO != null;
 		boolean ready = possible && selfO.isReady(getSelf());
-		boolean stancePossible = true;
-		if (selfO.isType("cock")) {
-			stancePossible &= !c.getStance().inserted(getSelf());
-		}
-		if (selfO.isType("pussy")) {
-			stancePossible &= !c.getStance().vaginallyPenetrated(getSelf());
-		}
-		if (selfO.isType("ass")) {
-			stancePossible &= !c.getStance().analPenetrated(getSelf());
-		}
-		if (targetO.isType("cock")) {
-			stancePossible &= !c.getStance().inserted(target);
-		}
-		if (targetO.isType("pussy")) {
-			stancePossible &= !c.getStance().vaginallyPenetrated(target);
-		}
-		if (targetO.isType("ass")) {
-			stancePossible &= !c.getStance().analPenetrated(target);
+		boolean stancePossible = false;
+		if (ready) {
+			stancePossible = true;
+			if (selfO.isType("cock")) {
+				stancePossible &= !c.getStance().inserted(getSelf());
+			}
+			if (selfO.isType("pussy")) {
+				stancePossible &= !c.getStance().vaginallyPenetrated(getSelf());
+			}
+			if (selfO.isType("ass")) {
+				stancePossible &= !c.getStance().analPenetrated(getSelf());
+			}
+			if (targetO.isType("cock")) {
+				stancePossible &= !c.getStance().inserted(target);
+			}
+			if (targetO.isType("pussy")) {
+				stancePossible &= !c.getStance().vaginallyPenetrated(target);
+			}
+			if (targetO.isType("ass")) {
+				stancePossible &= !c.getStance().analPenetrated(target);
+			}
 		}
 		stancePossible &= !c.getStance().havingSex();
 		return possible && ready && stancePossible

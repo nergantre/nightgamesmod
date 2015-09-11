@@ -48,6 +48,11 @@ public class UpsideDownFemdom extends FemdomSexStance {
 	public boolean reachTop(Character c) {
 		return false;
 	}
+	
+	@Override
+	public boolean facing() {
+		return false;
+	}
 
 	@Override
 	public boolean reachBottom(Character c) {

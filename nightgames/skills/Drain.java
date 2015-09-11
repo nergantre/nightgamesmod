@@ -26,7 +26,7 @@ public class Drain extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return (this.getSelf().canAct())
-				&& (c.getStance().havingSex());
+				&& (c.getStance().havingSexNoStrapped());
 	}
 	@Override
 	public int getMojoCost(Combat c) {
@@ -112,7 +112,7 @@ public class Drain extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		if(c.getStance().inserted(target)){
+		if(c.getStance().havingSexNoStrapped()){
 			String muscDesc = c.getStance().analPenetrated(getSelf()) ? "anal" : "vaginal";
 			String partDesc = c.getStance().analPenetrated(getSelf()) ? getSelf().body.getRandom("ass").describe(getSelf()) : getSelf().body.getRandomPussy().describe(getSelf());
 			String base = "You put your powerful " + muscDesc + " muscles to work whilst"

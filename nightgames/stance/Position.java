@@ -184,6 +184,10 @@ public abstract class Position implements Cloneable{
 	public boolean vaginallyPenetrated() {
 		return vaginallyPenetrated(top) || vaginallyPenetrated(bottom);
 	}
+
+	public boolean havingSexNoStrapped() {
+		return (penetratedBy(top, bottom) && !bottom.has(Trait.strapped)) || (penetratedBy(bottom, top) && !top.has(Trait.strapped));
+	}
 	public boolean havingSex() {
 		return penetratedBy(top, bottom) || penetratedBy(bottom, top);
 	}
