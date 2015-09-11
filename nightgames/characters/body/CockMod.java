@@ -41,7 +41,12 @@ public enum CockMod implements BodyPartMod {
 	}
 
 	public double getPleasure(Character self, BodyPart target, BasicCockPart base) {
-		return base.getPleasure(self, target) * pleasure;
+		double pleasureMod = 0;
+		DivineCharge charge = (DivineCharge) self.getStatus(Stsflag.divinecharge);
+		if (charge != null) {
+			pleasureMod += charge.magnitude;
+		}
+		return (pleasureMod + base.getPleasure(self, target)) * pleasure;
 	}
 
 	public double getSensitivity(BodyPart target, BasicCockPart base) {

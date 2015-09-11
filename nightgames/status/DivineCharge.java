@@ -6,6 +6,7 @@ import org.json.simple.JSONObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.custom.requirement.EitherInsertedRequirement;
 import nightgames.characters.custom.requirement.InsertedRequirement;
 import nightgames.characters.custom.requirement.ReverseRequirement;
 import nightgames.combat.Combat;
@@ -18,7 +19,7 @@ public class DivineCharge extends Status {
 		super("Divine Charge", affected);
 		flag(Stsflag.divinecharge);
 		this.magnitude = magnitude;
-		requirements.add(new ReverseRequirement(Arrays.asList(new InsertedRequirement(true))));
+		requirements.add(new ReverseRequirement(Arrays.asList(new EitherInsertedRequirement(true))));
 	}
 
 	private String getPart(Combat c) {
@@ -68,8 +69,8 @@ public class DivineCharge extends Status {
 		// every 10 divinity past 10, you are allowed to add another stack of divine charge.
 		// this will get out of hand super quick, but eh, you shouldn't let it get
 		// that far.
-		double res = Math.pow(2., affected.get(Attribute.Divinity) / 5.0) * .25;
-		this.magnitude = Math.min(Math.max(res, 1), this.magnitude);
+		double maximum = Math.max(1, Math.pow(2., affected.get(Attribute.Divinity) / 5.0) * .25);
+		this.magnitude = Math.min(maximum, this.magnitude);
 	}
 
 	@Override
