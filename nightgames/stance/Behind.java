@@ -96,14 +96,4 @@ public class Behind extends AbstractBehindStance {
 	public float priorityMod(Character self) {
 		return (self.hasInsertable() ? 2 : 1) * getSubDomBonus(self, 1.0f);
 	}
-	
-	@Override
-	public BodyPart topPart() {
-		return top.body.getRandomInsertable();
-	}
-	
-	@Override
-	public BodyPart bottomPart() {
-		return bottom.body.getRandomPussy();
-	}
 }

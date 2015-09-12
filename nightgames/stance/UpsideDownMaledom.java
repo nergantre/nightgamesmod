@@ -103,14 +103,4 @@ public class UpsideDownMaledom extends MaledomSexStance {
 		}
 		return new ReverseCowgirl(bottom, top);
 	}
-
-	@Override
-	public BodyPart topPart() {
-		return top.body.getRandomInsertable();
-	}
-	
-	@Override
-	public BodyPart bottomPart() {
-		return bottom.body.getRandomPussy();
-	}
 }

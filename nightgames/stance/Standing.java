@@ -106,14 +106,4 @@ public class Standing extends MaledomSexStance {
 				+ "{self:pronoun} {self:action:have|has} coiled around {other:direct-object}.", bottom, top));
 		return new CoiledSex(bottom, top);
 	}
-	
-	@Override
-	public BodyPart topPart() {
-		return top.body.getRandomInsertable();
-	}
-	
-	@Override
-	public BodyPart bottomPart() {
-		return bottom.body.getRandomPussy();
-	}
 }

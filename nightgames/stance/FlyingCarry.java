@@ -122,15 +122,4 @@ public class FlyingCarry extends MaledomSexStance {
 			return new Cowgirl(bottom, top);
 		}
 	}
-	
-
-	@Override
-	public BodyPart topPart() {
-		return top.body.getRandomInsertable();
-	}
-	
-	@Override
-	public BodyPart bottomPart() {
-		return bottom.body.getRandomPussy();
-	}
 }

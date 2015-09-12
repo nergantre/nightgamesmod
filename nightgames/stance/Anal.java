@@ -127,7 +127,7 @@ public class Anal extends AnalSexStance {
 			return new AnalCowgirl(bottom, top);
 		}
 	}
-	
+
 	@Override
 	public BodyPart topPart() {
 		return top.body.getRandomInsertable();

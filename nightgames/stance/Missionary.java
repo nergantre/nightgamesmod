@@ -100,17 +100,6 @@ public class Missionary extends MaledomSexStance {
 			return new Cowgirl(bottom, top);
 		}
 	}
-	
-
-	@Override
-	public BodyPart topPart() {
-		return top.body.getRandomInsertable();
-	}
-	
-	@Override
-	public BodyPart bottomPart() {
-		return bottom.body.getRandomPussy();
-	}
 
 	public static Position similarInstance(Character top, Character bottom) {
 		if (top.get(Attribute.Power) > 25 && Global.random(2) == 0) {
