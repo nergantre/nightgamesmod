@@ -2240,7 +2240,7 @@ public abstract class Character extends Observable implements Cloneable {
 		fit += body.getHotness(this, other);
 		if (c.getStance().inserted()) { // If we are fucking...
 			// ...we need to see if that's beneficial to us.
-			fit += this.body.penetrationFitnessModifier(c.getStance().inserted(this), c.getStance().analPenetrated(), other.body);
+			fit += this.body.penetrationFitnessModifier(c.getStance().inserted(this), c.getStance().anallyPenetrated(), other.body);
 		}
 		if (hasDick()) {
 			fit += (dickPreference() - 3) * 4;
@@ -2477,6 +2477,6 @@ public abstract class Character extends Observable implements Cloneable {
 		return article == null || article.getLayer() < 2;
 	}
 	public boolean hasInsertable() {
-		return (hasDick() && crotchAvailable()) || has(Trait.strapped);
+		return hasDick() || has(Trait.strapped);
 	}
 }

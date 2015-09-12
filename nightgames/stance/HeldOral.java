@@ -6,6 +6,7 @@ import java.util.List;
 
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.combat.Combat;
 import nightgames.global.Global;
 
 public class HeldOral extends AbstractFacingStance {
@@ -82,11 +83,6 @@ public class HeldOral extends AbstractFacingStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return false;
-	}
-
-	@Override
 	public boolean inserted(Character c) {
 		return false;
 	}
@@ -98,7 +94,7 @@ public class HeldOral extends AbstractFacingStance {
 		return bonus;
 	}
 
-	public Position reverse() {
+	public Position reverse(Combat c) {
 		return new Mount(bottom, top);
 	}
 }

@@ -32,7 +32,7 @@ public class SuccubusSurprise extends Skill {
 		return getSelf().canRespond() && !getSelf().has(Trait.succubus)
 				&& getSelf().has(Item.SuccubusDraft)
 				&& c.getStance().inserted(target)
-				&& !c.getStance().analPenetrated()
+				&& !c.getStance().anallyPenetrated()
 				&& !c.getStance().topPart().isType("strapon")
 				&& c.getStance().sub(getSelf())
 				&& getSelf().canSpend(getMojoCost(c))

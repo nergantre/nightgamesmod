@@ -44,7 +44,7 @@ public class FaceSitting extends AbstractBehindStance {
 	}
 	public String image() {
 		if (top.hasPussy() && bottom.hasPussy()) {
-			return "facesit_69.jpg";
+			return "facesitting_ff.jpg";
 		}
 		return "facesitting.jpg";
 	}
@@ -96,10 +96,7 @@ public class FaceSitting extends AbstractBehindStance {
 	public boolean behind(Character c) {
 		return c==top;
 	}
-	@Override
-	public boolean penetration(Character c) {
-		return false;
-	}
+
 	@Override
 	public boolean inserted(Character c) {
 		return false;
@@ -119,7 +116,7 @@ public class FaceSitting extends AbstractBehindStance {
 		}
 		if (pitcher == sub && pitcher == top) {
 			// guy is sitting on girl's face facing her feet, and is the submissive one in the new stance
-			return new Cowgirl(catcher, pitcher);
+			return Cowgirl.similarInstance(catcher, pitcher);
 		}
 		if (pitcher == dom && pitcher == bottom) {
 			// girl is sitting on guy's face facing his feet, and is the submissive one in the new stance

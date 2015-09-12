@@ -20,7 +20,7 @@ public class Finger extends Skill {
 		return c.getStance().reachBottom(getSelf())&&(target.crotchAvailable()
 				||
 				(getSelf().has(Trait.dexterous)&&target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getLayer()<=1))
-				&&target.hasPussy()&&getSelf().canAct()&&(!c.getStance().vaginallyPenetrated(target)||c.getStance().en==Stance.anal);
+				&&target.hasPussy()&&getSelf().canAct()&&!c.getStance().vaginallyPenetrated(target);
 	}
 
 	@Override

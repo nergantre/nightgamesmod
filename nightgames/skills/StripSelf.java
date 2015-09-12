@@ -72,6 +72,7 @@ public class StripSelf extends Skill {
 				return 0;
 			}).get().getKey();
 			getSelf().strip(best, c);
+			clothing = best;
 		}
 		if (clothing == null) {
 			c.write(getSelf(), "Skill failed...");

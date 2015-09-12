@@ -504,6 +504,7 @@ public class Body implements Cloneable {
 
 		if (opponent != null && Arrays.asList(fetishParts).contains(with.getType())) {
 			if (opponent.has(Trait.fetishTrainer) && Global.random(100) < Math.min(opponent.get(Attribute.Fetish), 25)) {
+				c.write(character, character.subjectAction("now have", "now has") + " a new fetish, courtesy of " + opponent.directObject() + ".");
 				character.add(c, new BodyFetish(character, opponent, with.getType(), .25));
 			}
 		}

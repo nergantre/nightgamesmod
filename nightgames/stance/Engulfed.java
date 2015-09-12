@@ -95,11 +95,6 @@ public class Engulfed extends Position {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return c.hasDick();
-	}
-
-	@Override
 	public boolean inserted(Character c) {
 		return c.hasDick();
 	}

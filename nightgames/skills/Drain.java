@@ -113,8 +113,8 @@ public class Drain extends Skill {
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if(c.getStance().havingSexNoStrapped()){
-			String muscDesc = c.getStance().analPenetrated(getSelf()) ? "anal" : "vaginal";
-			String partDesc = c.getStance().analPenetrated(getSelf()) ? getSelf().body.getRandom("ass").describe(getSelf()) : getSelf().body.getRandomPussy().describe(getSelf());
+			String muscDesc = c.getStance().anallyPenetrated(getSelf()) ? "anal" : "vaginal";
+			String partDesc = c.getStance().anallyPenetrated(getSelf()) ? getSelf().body.getRandom("ass").describe(getSelf()) : getSelf().body.getRandomPussy().describe(getSelf());
 			String base = "You put your powerful " + muscDesc + " muscles to work whilst"
 					+ " transfixing " + target.name()
 					+ "'s gaze with your own, goading " + target.possessivePronoun() + " energy into "+ target.possessivePronoun() + " cock."
@@ -176,8 +176,8 @@ public class Drain extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		String muscDesc = c.getStance().analPenetrated(getSelf()) ? "anal" : "vaginal";
-		String partDesc = c.getStance().analPenetrated(getSelf()) ? getSelf().body.getRandom("ass").describe(getSelf()) : getSelf().body.getRandomPussy().describe(getSelf());
+		String muscDesc = c.getStance().anallyPenetrated(getSelf()) ? "anal" : "vaginal";
+		String partDesc = c.getStance().anallyPenetrated(getSelf()) ? getSelf().body.getRandom("ass").describe(getSelf()) : getSelf().body.getRandomPussy().describe(getSelf());
 		
 		String base = "You feel " + getSelf().nameOrPossessivePronoun() + " powerful" + muscDesc+ " muscles suddenly tighten around you. "
 				+ "She starts kneading your dick bringing you immense pleasure and soon"

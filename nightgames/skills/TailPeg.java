@@ -44,7 +44,7 @@ public class TailPeg extends Skill {
 
 	@Override
 	public String describe(Combat c) {
-		if (c.getStance().analPenetrated(c.getOther(getSelf()))) {
+		if (c.getStance().anallyPenetrated(c.getOther(getSelf()))) {
 			return "Fuck your opponent with your tail";
 		}
 		return "Shove your tail up your opponent's ass.";
@@ -52,7 +52,7 @@ public class TailPeg extends Skill {
 
 	@Override
 	public String getLabel(Combat c){
-		if (c.getStance().analPenetrated(c.getOther(getSelf()))) {
+		if (c.getStance().anallyPenetrated(c.getOther(getSelf()))) {
 			return "Tail Fuck";
 		} else {
 			return "Tail Peg";
@@ -62,9 +62,9 @@ public class TailPeg extends Skill {
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		if (target.roll(this, c,
-				accuracy(c) - (c.getStance().havingSex() ? 0 : 5))) {
+				accuracy(c) + (c.getStance().havingSex() ? 20 : -20))) {
 			int strength = Math.min(20, 10 + getSelf().get(Attribute.Dark)/4);
-			boolean vaginal = c.getStance().analPenetrated(c.getOther(getSelf()));
+			boolean vaginal = c.getStance().anallyPenetrated(c.getOther(getSelf()));
 			boolean shamed = false;
 			if (!vaginal && Global.random(4) == 2) {
 				target.add(c, new Shamed(target));
@@ -98,12 +98,14 @@ public class TailPeg extends Skill {
 				if (shamed)
 					c.write(getSelf(),"The shame of having her ass violated by you has destroyed " + target.getName() + " confidence.");
 			}
-			if (vaginal) {
-				target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom("pussy"), strength, c);
-				target.add(c, new TailFucked(target, getSelf(), "pussy"));
-			} else {
-				target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom("ass"), strength, c);
-				target.add(c, new TailFucked(target, getSelf(), "ass"));
+			if (c.getStance().havingSex()) {
+				if (vaginal) {
+					target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom("pussy"), strength, c);
+					target.add(c, new TailFucked(target, getSelf(), "pussy"));
+				} else {
+					target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom("ass"), strength, c);
+					target.add(c, new TailFucked(target, getSelf(), "ass"));
+				}
 			}
 			target.pain(c, strength / 2);
 			target.emote(Emotion.nervous, 10);

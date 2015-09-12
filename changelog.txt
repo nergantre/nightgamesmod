@@ -1,3 +1,49 @@
+1.8.2.4 changelog
+
+Balance:
+- buff energy drink to 50% heal and 20-30% mojo
+- dominate can longer be used by submissive characters
+- lower speed and perception influence on accuracy from 10 -> 5%
+- make stable form block TF from skills
+- make counters fail if the target is wary
+
+Bugs:
+- make blessed cock actually be able to stack divine charge
+- fix bug where being partially clothed makes fucking fail
+- remove comment about dick in Tear when opponent has no cock
+- fix foot smother (was doing something wacko before)
+- fix foot fetish not in the first match and wrong text in fetish status
+- make strapons and XXX store clothing buyable
+- fixed a bug where gifting npcs/changing their outfit in the day time
+	- when they have >25 affection but no advanced class caused the game to be stuck
+- add in toggleknot to the skill pool
+- always load defaults.json from the clothing assets
+- reworked stances so they make more sense
+	- should have also fixed bugs where sex would end instantly
+- make Jewel prefer enlightened cocks instead of runic ones
+- fix various skill and scene text
+- update money instantly when buying
+- fixed nudist bug where you keep shoes for first combat
+- add remove pussy to body shop options
+- fixed bug where Cassie offers blessed cock when she is giving you a runic one
+- add feral pussy to kat's transformation options
+- add a check before removing gifts from player's closet
+- only offer nudist if not nude + onlyunderwear if wearing underwear
+
+Features:
+- add new stances
+	- Coiled: rarely seen when struggling when being Carried
+	- Upsidedown girl-on-top: replaces cowgirl randomly when the girl has > 25 power (or when fucking from certain stances)
+	- Upsidedown guy-on-top: replaces missionary randomly when the guy has > 25 power (or when fucking from certain stances)
+- add new image for f/f facesitting
+- move divine charge effects to divinity instead of demigoddess
+- add blessed cock effects and moved the old blessed cock effects to runic cocks (arcane/cassie)
+	- blessed cock does the same thing as divine pussy
+
+Other:
+- load defaults.json clothing by default
+- use parsewithexceptions and log the errors
+
 1.8.2.3 changelog
 Other changes:
 	- Made the closet GUI work better with low resolutions

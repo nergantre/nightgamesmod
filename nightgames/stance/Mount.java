@@ -81,11 +81,6 @@ public class Mount extends AbstractFacingStance {
 	public boolean behind(Character c) {
 		return false;
 	}
-
-	@Override
-	public boolean penetration(Character c) {
-		return false;
-	}
 	
 	@Override
 	public boolean inserted(Character c) {

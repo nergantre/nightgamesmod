@@ -38,16 +38,16 @@ public class FairyFem extends Pet {
 				}
 				break;
 			case 2:
-				if(c.getStance().inserted(target)){
+				if(!c.getStance().inserted(target)) {
+					if (target.crotchAvailable()) {
+						c.write(owner(),own()+"faerie hugs your dick and rubs it with her entire body until you pull her off.");
+						target.body.pleasure(null, null, target.body.getRandom("cock"), 2+3*Global.random(power), c);
+					} else {
+						c.write(owner(),own()+"faerie slips into your "+target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName()+" and plays with your penis until you manage to remove her.");
+						target.body.pleasure(null, null, target.body.getRandom("cock"), 2+3*Global.random(power), c);
+					}
+				} else {
 					c.write(owner(),own()+"faerie flies around the edge of the fight looking for an opening.");
-				}
-				else if(target.crotchAvailable()){
-					c.write(owner(),own()+"faerie hugs your dick and rubs it with her entire body until you pull her off.");
-					target.body.pleasure(null, null, target.body.getRandom("cock"), 2+3*Global.random(power), c);
-				}
-				else{
-					c.write(owner(),own()+"faerie slips into your "+target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName()+" and plays with your penis until you manage to remove her.");
-					target.body.pleasure(null, null, target.body.getRandom("cock"), 2+3*Global.random(power), c);
 				}
 				break;
 			case 1:

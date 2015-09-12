@@ -86,7 +86,7 @@ public class FlowerSex extends FemdomSexStance {
 		return new Mount(top,bottom);
 	}
 
-	public Position reverse() {
+	public Position reverse(Combat c) {
 		return this;
 	}
 }

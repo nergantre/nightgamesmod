@@ -47,10 +47,6 @@ public abstract class MaledomSexStance extends Position {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return c==top;
-	}
-	@Override
 	public boolean inserted(Character c) {
 		return c==top;
 	}

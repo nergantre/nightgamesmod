@@ -52,7 +52,7 @@ public class Fuck extends Skill {
 				stancePossible &= !c.getStance().vaginallyPenetrated(getSelf());
 			}
 			if (selfO.isType("ass")) {
-				stancePossible &= !c.getStance().analPenetrated(getSelf());
+				stancePossible &= !c.getStance().anallyPenetrated(getSelf());
 			}
 			if (targetO.isType("cock")) {
 				stancePossible &= !c.getStance().inserted(target);
@@ -61,7 +61,7 @@ public class Fuck extends Skill {
 				stancePossible &= !c.getStance().vaginallyPenetrated(target);
 			}
 			if (targetO.isType("ass")) {
-				stancePossible &= !c.getStance().analPenetrated(target);
+				stancePossible &= !c.getStance().anallyPenetrated(target);
 			}
 		}
 		stancePossible &= !c.getStance().havingSex();

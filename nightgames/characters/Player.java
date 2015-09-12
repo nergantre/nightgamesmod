@@ -18,6 +18,8 @@ import nightgames.items.clothing.Clothing;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 import nightgames.stance.Behind;
+import nightgames.stance.Neutral;
+import nightgames.stance.Position;
 import nightgames.status.Enthralled;
 import nightgames.status.Horny;
 import nightgames.status.Masochistic;
@@ -523,26 +525,27 @@ public class Player extends Character {
 			}
 			break;
 		case fucking:
-			if (c.getStance().sub(this) && c.getStance().reverse() != c.getStance()) {
-				if (c.getStance().inserted(this)) {
-					c.write(this, Global.format("{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} clitoris with {self:possessive} hands as {other:subject-action:try|tries} to ride {self:direct-object}. " +
-							"While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:rotate|rotates} {self:possessive} body around into a dominant position", this, target));
-				} else if (target.hasBalls()){
-					c.write(this, Global.format("{self:SUBJECT-ACTION:squeezes|squeezes} {other:possessive} balls with {self:possessive} hands as {other:subject-action:try|tries} to ride {self:direct-object}. " +
-							"While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:rotate|rotates} {self:possessive} body around into a dominant position", this, target));
+			if (c.getStance().sub(this)) {
+				Position reverse = c.getStance().reverse(c);
+				if (reverse != c.getStance()) {
+					c.setStance(reverse);
 				} else {
-					c.write(this, Global.format("{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} nipples with {self:possessive} hands as {other:subject-action:try|tries} to ride {self:direct-object}. " +
-							"While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:rotate|rotates} {self:possessive} body around into a dominant position", this, target));
+					c.write(this, Global.format("{self:NAME-POSSESSIVE} quick wits find a gap in {other:name-possessive} hold and {self:action:slip|slips} away.", this, target));
+					c.setStance(new Neutral(this, target));
 				}
-				c.setStance(c.getStance().reverse());
 			} else {
-				if (c.getStance().inserted(this)) {
-					target.body.pleasure(this, body.getRandomInsertable(), target.body.getRandomHole(), 4+Math.min(Global.random(get(Attribute.Seduction)), 20), c);
+				if (c.getStance().havingSex()) {
+					target.body.pleasure(this, c.getStance().partFor(this), c.getStance().partFor(target),
+							4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
 				} else {
-					target.body.pleasure(this, body.getRandomHole(), target.body.getRandomInsertable(), 4+Math.min(Global.random(get(Attribute.Seduction)), 20), c);
+					target.body.pleasure(this, body.getRandom("hands"), target.body.getRandomBreasts(),
+							4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
 				}
-				c.write(this, Global.format("{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} clitoris with {self:possessive} hands as {other:subject-action:try|tries} to ride {self:direct-object}. " +
-						"While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:take|takes} the chance to pleasure {other:possessive} body", this, target));				
+				c.write(this,
+						Global.format(
+								"{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} nipples with {self:possessive} hands as {other:subject-action:try|tries} to fuck {self:direct-object}. "
+										+ "While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:take|takes} the chance to pleasure {other:possessive} body",
+								this, target));
 			}
 			break;
 		case stripping:

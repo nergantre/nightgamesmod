@@ -88,11 +88,6 @@ public class Behind extends AbstractBehindStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return false;
-	}
-
-	@Override
 	public boolean inserted(Character c) {
 		return false;
 	}
@@ -100,15 +95,5 @@ public class Behind extends AbstractBehindStance {
 	@Override
 	public float priorityMod(Character self) {
 		return (self.hasInsertable() ? 2 : 1) * getSubDomBonus(self, 1.0f);
-	}
-	
-	@Override
-	public BodyPart topPart() {
-		return top.body.getRandomInsertable();
-	}
-	
-	@Override
-	public BodyPart bottomPart() {
-		return bottom.body.getRandomPussy();
 	}
 }

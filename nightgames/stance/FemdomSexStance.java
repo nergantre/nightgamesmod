@@ -49,11 +49,6 @@ public abstract class FemdomSexStance extends Position {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return true;
-	}
-
-	@Override
 	public boolean inserted(Character c) {
 		return c==bottom;
 	}

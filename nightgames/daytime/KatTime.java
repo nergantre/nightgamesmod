@@ -103,7 +103,7 @@ public class KatTime extends BaseNPCTime {
 			self.body.addReplace(EarPart.cat, 1);
 			return true;
 		};
-		options.add(feralPussy);
+		options.add(catEars);
 	}
 
 	@Override

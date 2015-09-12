@@ -88,11 +88,6 @@ public class NursingHold extends AbstractFacingStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return false;
-	}
-
-	@Override
 	public boolean inserted(Character c) {
 		return false;
 	}

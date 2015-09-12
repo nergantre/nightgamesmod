@@ -79,11 +79,6 @@ public class AnalCowgirl extends AnalSexStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return c==bottom;
-	}
-
-	@Override
 	public boolean inserted(Character c) {
 		return c==bottom;
 	}
@@ -119,7 +114,7 @@ public class AnalCowgirl extends AnalSexStance {
 		}
 	}
 
-	public boolean analPenetrated(Character self) {
+	public boolean anallyPenetrated(Character self) {
 		return self == top;
 	}
 
