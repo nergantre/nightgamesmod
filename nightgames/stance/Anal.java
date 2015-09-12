@@ -104,7 +104,7 @@ public class Anal extends AnalSexStance {
 			if(inserted.human()){
 				c.write("With "+inserter.name()+"'s pole gone, your ass gets a respite.");
 			} else {
-				c.write(inserted.name() + " sighs with relief with your dick gone.");
+				c.write(inserted.name() + " sighs with relief with your phallus gone.");
 			}
 			c.setStance(insertRandom());
 		}

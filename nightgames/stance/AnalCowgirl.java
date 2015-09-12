@@ -98,9 +98,9 @@ public class AnalCowgirl extends AnalSexStance {
 		
 		if(!inserter.hasInsertable()) {
 			if(inserter.human()){
-				c.write("With " + inserter.possessivePronoun() + " dick gone, you groan in frustration and cease your merciless movements.");
+				c.write("With " + inserter.possessivePronoun() + " pole gone, you groan in frustration and cease your merciless movements.");
 			} else {
-				c.write(inserted.name() + " groans with frustration with the sudden disappearance of your dick.");
+				c.write(inserted.name() + " groans with frustration with the sudden disappearance of your pole.");
 			}
 			c.setStance(insertRandom());
 		}
