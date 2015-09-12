@@ -4,6 +4,7 @@ import java.util.Collections;
 
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.skills.Skill;
@@ -163,14 +164,14 @@ public abstract class Position implements Cloneable{
 		if (inserted())
 			throw new UnsupportedOperationException("Attempted to get topPart in position " + getClass().getSimpleName()
 					+ ", but that position does not override the appropriate method.");
-		return null;
+		return Body.nonePart;
 	}
 
 	public BodyPart bottomPart() {
 		if (inserted())
 			throw new UnsupportedOperationException("Attempted to get bottomPart in position "
 					+ getClass().getSimpleName() + ", but that position does not override the appropriate method.");
-		return null;
+		return Body.nonePart;
 	}
 	
 	public BodyPart partFor(Character c) {

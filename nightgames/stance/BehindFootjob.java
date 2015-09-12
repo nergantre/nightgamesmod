@@ -30,8 +30,13 @@ public class BehindFootjob extends AbstractBehindStance {
 	}
 
 	public String image() {
-		return "behind_footjob.jpg";
+		if (bottom.hasDick()) {
+			return "behind_footjob.jpg";
+		} else {
+			return "heelgrind.jpg";
+		}
 	}
+
 	@Override
 	public boolean kiss(Character c) {
 		return false;

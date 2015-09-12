@@ -2292,7 +2292,7 @@ public abstract class Character extends Observable implements Cloneable {
 		xp -= i;
 	}
 	public String pronoun() {
-		if (hasPussy()) {
+		if (useFemalePronouns()) {
 			return "she";
 		} else {
 			return "he";
@@ -2302,20 +2302,23 @@ public abstract class Character extends Observable implements Cloneable {
 		return Emotion.confident;
 	}
 	public String possessivePronoun() {
-		if (hasPussy()) {
+		if (useFemalePronouns()) {
 			return "her";
 		} else {
 			return "his";
 		}
 	}
 	public String directObject() {
-		if (hasPussy()) {
+		if (useFemalePronouns()) {
 			return "her";
 		} else {
 			return "him";
 		}
 	}
 
+	private boolean useFemalePronouns() {
+		return hasPussy();
+	}
 	public String nameDirectObject() {
 		return name();
 	}
@@ -2461,5 +2464,12 @@ public abstract class Character extends Observable implements Cloneable {
 	}
 	public boolean hasInsertable() {
 		return hasDick() || has(Trait.strapped);
+	}
+	public String guyOrGirl() {
+		return useFemalePronouns() ? "girl" : "guy";
+	}
+
+	public String boyOrGirl() {
+		return useFemalePronouns() ? "girl" : "boy";
 	}
 }
