@@ -7,6 +7,7 @@ Bugs:
 Other Changes:
 - Tighten can now be used if you're bound
 - Reverse fuck now can be used when you are behind the other person
+- Fixed some text with fuck that mentions nonexistent dicks
 
 1.8.2.4 changelog
 

@@ -5,6 +5,7 @@ import nightgames.characters.Character;
 import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
+import nightgames.characters.body.StraponPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -154,13 +155,19 @@ public class Struggle extends Skill {
 						getSelf().removeStatus(Stsflag.knotted);
 						getSelf().pain(c, 10);
 					}
-					Position reversed = c.getStance().reverse(c);
-					if (reversed == c.getStance()) {
+					boolean reverseStrapped = StraponPart.isStrapon(c.getStance().partFor(target));
+					boolean reversedStance = false;
+					if (reverseStrapped) {
+						Position reversed = c.getStance().reverse(c);
+						if (reversed != c.getStance()) {
+							c.setStance(reversed);
+							reversedStance = true;
+						}
+					}
+					if (!reversedStance) {
 						c.write(getSelf(),
 								Global.format("{self:SUBJECT-ACTION:manage|manages} to shake {other:direct-object} off." ,getSelf(),target));
 						c.setStance(new Neutral(getSelf(), target));
-					} else {
-						c.setStance(reversed);
 					}
 				} else {
 					if (getSelf().hasStatus(Stsflag.cockbound)) {
