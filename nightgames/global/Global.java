@@ -216,6 +216,9 @@ public class Global {
 	public static void buildSkillPool(Player p){
 		skillPool.clear();
 		skillPool.add(new Slap(p));
+		skillPool.add(new Tribadism(p));
+		skillPool.add(new PussyGrind(p));
+		skillPool.add(new Slap(p));
 		skillPool.add(new ArmBar(p));
 		skillPool.add(new Blowjob(p));
 		skillPool.add(new Cunnilingus(p));

@@ -203,7 +203,8 @@ public abstract class Position implements Cloneable{
 	public boolean vaginallyPenetratedBy(Character self, Character other) {
 		if (other != getOther(self)) { return false; }
 		BodyPart part = partFor(self);
-		return part != null && part.isType("pussy");
+		BodyPart otherPart = partFor(other);
+		return part != null && part.isType("pussy") && !otherPart.isType("pussy");
 	}
 	public boolean anallyPenetratedBy(Character self, Character other) {
 		if (other != getOther(self)) { return false; }
