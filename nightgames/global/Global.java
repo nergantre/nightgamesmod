@@ -383,6 +383,11 @@ public class Global {
 		skillPool.add(new CockWorship(p));
 		skillPool.add(new PussyWorship(p));
 		skillPool.add(new SuccubusSurprise(p));
+		skillPool.add(new TemptressHandjob(p));
+		skillPool.add(new TemptressBlowjob(p));
+		skillPool.add(new TemptressRide(p));
+		skillPool.add(new TemptressStripTease(p));
+		skillPool.add(new Blindside(p));
 		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 			skillPool.add(new SelfStun(p));	
 		}

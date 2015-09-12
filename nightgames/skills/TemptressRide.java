@@ -20,6 +20,11 @@ public class TemptressRide extends Thrust {
 	}
 
 	@Override
+	public String getName() {
+		return "Skillful Ride";
+	}
+	
+	@Override
 	public int getMojoBuilt(Combat c) {
 		return 5;
 	}

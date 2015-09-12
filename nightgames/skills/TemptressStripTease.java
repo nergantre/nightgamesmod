@@ -24,6 +24,11 @@ public class TemptressStripTease extends StripTease {
 	}
 
 	@Override
+	public String getName() {
+		return "Skillful Strip Tease";
+	}
+	
+	@Override
 	public boolean usable(Combat c, Character target) {
 		return super.usable(c, target)
 				|| (c.getStance().enumerate() == Stance.neutral
@@ -32,7 +37,7 @@ public class TemptressStripTease extends StripTease {
 
 	@Override
 	public String getLabel(Combat c) {
-		return isDance(c) ? "Sexy Dance" : "Improved Strip Tease";
+		return isDance(c) ? "Sexy Dance" : super.getLabel(c);
 	}
 
 	@Override

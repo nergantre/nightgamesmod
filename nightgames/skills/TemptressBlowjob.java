@@ -28,6 +28,11 @@ public class TemptressBlowjob extends Blowjob {
 	public String describe(Combat c) {
 		return "Use your supreme oral skills on your opponent's dick.";
 	}
+	
+	@Override
+	public String getName() {
+		return "Skillful Blowjob";
+	}
 
 	@Override
 	public boolean resolve(Combat c, Character target) {

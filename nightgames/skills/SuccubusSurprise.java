@@ -32,7 +32,7 @@ public class SuccubusSurprise extends Skill {
 		return getSelf().canRespond() && !getSelf().has(Trait.succubus)
 				&& getSelf().has(Item.SuccubusDraft)
 				&& c.getStance().inserted(target)
-				&& !c.getStance().analinserted()
+				&& !c.getStance().analPenetrated()
 				&& !c.getStance().topPart().isType("strapon")
 				&& c.getStance().sub(getSelf())
 				&& getSelf().canSpend(getMojoCost(c))
@@ -162,13 +162,4 @@ public class SuccubusSurprise extends Skill {
 		return 2f;
 	}
 
-	@Override
-	public String getTargetOrganType(Combat c, Character target) {
-		return "cock";
-	}
-
-	@Override
-	public String getWithOrganType(Combat c, Character target) {
-		return "pussy";
-	}
 }

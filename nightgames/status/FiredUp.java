@@ -8,23 +8,23 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.global.JSONUtils;
 
-public class FiredUp extends Status {
+public class FiredUp extends DurationStatus {
 
-	private int			stack;
-	private Character	other;
-	private String		part;
+	private int stack;
+	private Character other;
+	private String part;
 
-	public FiredUp(Character affected, Character other,
-			String part) {
-		super("Fired Up", affected);
+	public FiredUp(Character affected, Character other, String part) {
+		super("Fired Up", affected, 1);
 		this.part = part;
 		this.stack = 1;
+		flag(Stsflag.firedup);
 	}
-	
+
 	public int getStack() {
 		return stack;
 	}
-	
+
 	public String getPart() {
 		return part;
 	}
@@ -43,31 +43,36 @@ public class FiredUp extends Status {
 				return "You are getting a good sense of how to best use your "
 						+ part + ".";
 			} else if (stack == 2) {
-				return String.format(
-						"The movements of your %s are growing ever more attuned to %s reactions.",
-						part, other.nameOrPossessivePronoun());
+				return String
+						.format("The movements of your %s are growing ever more attuned to %s reactions.",
+								part, other.nameOrPossessivePronoun());
 			} else {
-				return String.format(
-						"You have completely mapped out %s body, and you are finding all of %s most sensitive areas as if by magic.",
-						affected.nameOrPossessivePronoun(),
-						affected.possessivePronoun());
+				return String
+						.format("You have completely mapped out %s body, and you are finding all of %s most sensitive areas as if by magic.",
+								affected.nameOrPossessivePronoun(),
+								affected.possessivePronoun());
 			}
 		} else {
 			if (stack == 1) {
-				return Global.capitalizeFirstLetter(String.format(
-						"%s has a big grin on %s face at the prospect of further pleasuring you with %s %s.",
-						affected.pronoun(), affected.possessivePronoun(),
-						affected.possessivePronoun(), part));
+				return Global
+						.capitalizeFirstLetter(String
+								.format("%s has a big grin on %s face at the prospect of further pleasuring you with %s %s.",
+										affected.pronoun(),
+										affected.possessivePronoun(),
+										affected.possessivePronoun(), part));
 			} else if (stack == 2) {
-				return Global.capitalizeFirstLetter(String.format(
-						"%s looks as if %s is enjoying working %s %s almost as much as you are.",
-						affected.pronoun(), affected.possessivePronoun(),
-						affected.pronoun(), part));
+				return Global
+						.capitalizeFirstLetter(String
+								.format("%s looks as if %s is enjoying working %s %s almost as much as you are.",
+										affected.pronoun(),
+										affected.possessivePronoun(),
+										affected.pronoun(), part));
 			} else {
-				return Global.capitalizeFirstLetter(String.format(
-						"%s is focused almost exclusively on using %s %s to the greatest possible effect, and it's working.",
-						affected.pronoun(), affected.possessivePronoun(),
-						part));
+				return Global
+						.capitalizeFirstLetter(String
+								.format("%s is focused almost exclusively on using %s %s to the greatest possible effect, and it's working.",
+										affected.pronoun(),
+										affected.possessivePronoun(), part));
 			}
 		}
 	}
@@ -79,8 +84,6 @@ public class FiredUp extends Status {
 
 	@Override
 	public int regen(Combat c) {
-		// Remove immediately if not replaced
-		affected.removelist.add(this);
 		return 0;
 	}
 
@@ -95,11 +98,10 @@ public class FiredUp extends Status {
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return (float) (4 * stack);
 	}
 
-	
 	@Override
 	public int weakened(int x) {
 		return 0;
@@ -150,13 +152,14 @@ public class FiredUp extends Status {
 		// Replace only if it's the same part.
 		return (s instanceof FiredUp) && !((FiredUp) s).part.equals(part);
 	}
-	
+
 	@Override
 	public void replace(Status s) {
 		assert (s instanceof FiredUp);
 		stack++;
+		setDuration(1);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public JSONObject saveToJSON() {
