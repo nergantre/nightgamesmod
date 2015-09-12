@@ -1,3 +1,13 @@
+1.8.2.5 changelog
+Bugs:
+- Fixed bug with stances causing struggle to fail and crash the game
+- Fixed bug with stances causing fucking skills to be available while not even inserted.
+- Fixed bug with Kat offering feral pussy twice.
+
+Other Changes:
+- Tighten can now be used if you're bound
+- Reverse fuck now can be used when you are behind the other person
+
 1.8.2.4 changelog
 
 Balance:

@@ -33,7 +33,7 @@ public class ReverseFuck extends Fuck {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return super.usable(c, target) && c.getStance().front(getSelf());
+		return super.usable(c, target);
 	}
 
 	@Override
