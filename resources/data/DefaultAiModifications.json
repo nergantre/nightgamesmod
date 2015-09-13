@@ -344,6 +344,14 @@
 				"type" : "opponent-status",
 				"value" : "countered",
 				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "pegged",
+				"weight" : 1.5
+			},{
+				"type" : "opponent-status",
+				"value" : "fucked",
+				"weight" : 1.5
 			}
 		]
 	},{
