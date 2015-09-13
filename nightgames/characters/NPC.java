@@ -683,7 +683,7 @@ public class NPC extends Character {
 			return 0;
 		}
 
-		Global.debugSimulation = true;
+		Global.debugSimulation += 1;
 		Character newSelf;
 		Character newOther;
 		if (c.p1 == this) {
@@ -696,7 +696,7 @@ public class NPC extends Character {
 			throw new IllegalArgumentException("Tried to use a badly cloned combat");
 		}
 		effect.execute(c2, newSelf, newOther);
-		Global.debugSimulation = false;
+		Global.debugSimulation -= 1;
 		float selfFitnessDelta = newSelf.getFitness(c) - selfFit;
 		float otherFitnessDelta = newSelf.getOtherFitness(c, newOther) - otherFit;
 		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS_RATING) && (c2.p1.human() || c2.p2.human())) {
