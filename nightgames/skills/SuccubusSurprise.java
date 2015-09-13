@@ -73,6 +73,11 @@ public class SuccubusSurprise extends Skill {
 					new LegLocked(target, 4 * getSelf().get(Attribute.Power)));
 		}
 		new Grind(getSelf()).resolve(c, target);
+		
+		if (!getSelf().human() && target.human() && !oppHasBlessed && getSelf().getType().equals("CUSTOM_NPCSamantha")) {
+			c.write(getSelf(), "<br><br><i>Do you like your surprise, " + target.name() + "? I do.</i>");
+		}
+		
 		return true;
 	}
 

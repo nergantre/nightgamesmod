@@ -94,12 +94,12 @@ public class FiredUp extends DurationStatus {
 
 	@Override
 	public double pleasure(Combat c, double x) {
-		return 1 + stack * 0.3;
+		return stack * 0.3 * x;
 	}
 
 	@Override
 	public float fitnessModifier() {
-		return (float) (4 * stack);
+		return (float) (5 * stack);
 	}
 
 	@Override
