@@ -32,9 +32,9 @@ public abstract class FemdomSexStance extends Position {
 		
 		if(!inserter.hasInsertable()){
 			if(inserter.human()){
-				c.write(inserted.name() + " groans with frustration with the sudden disappearance of your " + inserter.body.getRandomInsertable() + ".");
+				c.write(inserted.name() + " groans with frustration with the sudden disappearance of your pole.");
 			} else {
-				c.write("With " + inserter.nameOrPossessivePronoun() + " " + inserter.body.getRandomInsertable() + " gone, you groan in frustration and cease your merciless riding.");
+				c.write("With " + inserter.nameOrPossessivePronoun() + " phallus gone, you groan in frustration and cease your merciless riding.");
 			}
 			c.setStance(insertRandom());
 		}

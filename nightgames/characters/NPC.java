@@ -8,6 +8,7 @@ import nightgames.actions.Action;
 import nightgames.actions.Move;
 import nightgames.actions.Movement;
 import nightgames.areas.Area;
+import nightgames.characters.body.StraponPart;
 import nightgames.characters.custom.RecruitmentData;
 import nightgames.characters.custom.effect.CustomEffect;
 import nightgames.combat.Combat;
@@ -527,7 +528,7 @@ public class NPC extends Character {
 		case fucking:
 			if (c.getStance().sub(this)) {
 				Position reverse = c.getStance().reverse(c);
-				if (reverse != c.getStance()) {
+				if (reverse != c.getStance() && StraponPart.isStrapon(reverse.bottomPart())) {
 					c.setStance(reverse);
 				} else {
 					c.write(this,
@@ -537,10 +538,10 @@ public class NPC extends Character {
 					c.setStance(new Neutral(this, target));
 				}
 			} else {
-				if (c.getStance().havingSex()) {
-					target.body.pleasure(this, c.getStance().partFor(this), c
-							.getStance().partFor(target), 4 + Math.min(
-							Global.random(get(Attribute.Seduction)), 20), c);
+
+				if (c.getStance().havingSex() && StraponPart.isStrapon(c.getStance().partFor(target))) {
+					target.body.pleasure(this, c.getStance().partFor(this), c.getStance().partFor(target),
+							4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
 				} else {
 					target.body
 							.pleasure(this, body.getRandom("hands"),
