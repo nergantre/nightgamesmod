@@ -2,7 +2,6 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -23,7 +22,7 @@ public class FootPump extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (c.getStance().behind(getSelf())&&target.pantsless()&&getSelf().canAct()&&!c.getStance().penetration(target)&&target.hasDick());
+		return (c.getStance().behind(getSelf())&&target.crotchAvailable()&&getSelf().canAct()&&!c.getStance().inserted()&&target.hasDick());
 	}
 
 	@Override
@@ -52,16 +51,13 @@ public class FootPump extends Skill {
 		else if(target.human()){
 			c.write(getSelf(),receive(c,m,Result.normal, target));
 		}
-		if (target.hasDick())
-			target.body.pleasure(getSelf(), getSelf().body.getRandom("feet"), target.body.getRandom("cock"), m, c);
-		else
-			target.body.pleasure(getSelf(), getSelf().body.getRandom("feet"), target.body.getRandom("pussy"), m, c);
+		target.body.pleasure(getSelf(), getSelf().body.getRandom("feet"), target.body.getRandom("cock"), m, c);
 		target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("breasts"), m2, c);
 		if (c.getStance().en != Stance.behindfootjob) {
 			c.setStance(new BehindFootjob(getSelf(), target));
 		}
 		if (Global.random(100) < 15 + 2 * getSelf().get(Attribute.Fetish)) {
-			target.add(c, new BodyFetish(target, getSelf(), "feet", .25, 10));
+			target.add(c, new BodyFetish(target, getSelf(), "feet", .25));
 		}
 		return true;
 	}
@@ -79,14 +75,13 @@ public class FootPump extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		return receive(c, damage, modifier, target);
+		return Global.format("You wrap your legs around {other:name-possessive} waist and grip {other:possessive} {other:body-part:cock} between your toes. Massaging {other:name-possessive} {other:body-part:cock} between your toes, you start to stroke {other:possessive} {other:body-part:cock} up and down between your toes. Reaching around from behind {other:possessive} back, you start to tease and caress {other:possessive} breasts with your hands. Alternating between pumping and massaging the head of {other:possessive} {other:body-part:cock} with your toes, {other:pronoun} begins to let out a low moan with each additional touch.", getSelf(), target);
 	}
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return Global.format("{other:SUBJECT-ACTION:feel|feels} {self:direct-object} wrap {self:possessive} long legs around {other:possessive} waist and settle {self:possessive} {self:body-part:feet} on either side of {other:possessive} {other:body-part:cock}.	Cupping {other:possessive} dick with {self:possessive} arches, {self:subject-action:starts|start} making long steady strokes by moving {self:possessive} legs up and down. Reaching around {other:direct-object}, {self:subject-action:also start|also starts} to rub and gently flick {other:possessive} nipples with {self:possessive} fingers. Alternating between pumping and massaging {other:possessive} glans with {self:possessive} toes, {self:subject-action:quickly make|quickly makes} {other:name-do} gasp in pleasure.", getSelf(), target);
+		return Global.format("{self:SUBJECT} wraps {self:possessive} legs around your waist and settles {self:possessive} feet on both sides of your {other:body-part:cock}. Cupping your dick with {self:possessive} arches, she starts making long and steady strokes up and down your {other:body-part:cock} as it remains trapped in between {self:possessive} arches. Reaching around you, {self:subject} begins to rub and gently flick your nipples with {self:possessive} fingers. Alternating between pumping and massaging the head of your {other:body-part:cock} with {self:possessive} toes you can’t help but groan in pleasure.", getSelf(), target);
 	}
-
 	@Override
 	public String describe(Combat c) {
 		return "Pleasure your opponent with your feet";
@@ -95,11 +90,5 @@ public class FootPump extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "cock";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "feet";
 	}
 }

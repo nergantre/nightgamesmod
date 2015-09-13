@@ -2,8 +2,8 @@ package nightgames.daytime;
 
 import nightgames.characters.Character;
 import nightgames.global.Global;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
 
 import java.util.HashMap;
 
@@ -64,7 +64,7 @@ public abstract class Store extends Activity {
 	}
 	public void buy(Item item){
 		if(player.money>=stock.get(item)){
-			player.money-=stock.get(item);
+			player.modMoney(-item.getPrice());
 			player.gain(item);
 			acted=true;
 			Global.gui().refresh();
@@ -75,7 +75,7 @@ public abstract class Store extends Activity {
 	}
 	public void buy(Clothing item){
 		if(player.money>=clothingstock.get(item)){
-			player.money-=clothingstock.get(item);
+			player.modMoney(-item.getPrice());
 			player.gain(item);
 			acted=true;
 			Global.gui().refresh();

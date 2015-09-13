@@ -25,9 +25,9 @@ public class CounterDrain extends CounterBase {
 			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
 		if (target.hasDick() && getSelf().hasPussy()) {
-			c.setStance(new Cowgirl(getSelf(), target));
+			c.setStance(Cowgirl.similarInstance(getSelf(), target));
 		} else {
-			c.setStance(new Missionary(getSelf(), target));
+			c.setStance(Missionary.similarInstance(getSelf(), target));
 		}
 		Drain drain = new Drain(getSelf());
 		drain.resolve(c, target, true);
@@ -41,7 +41,7 @@ public class CounterDrain extends CounterBase {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return !c.getStance().dom(getSelf()) && !c.getStance().dom(target) && getSelf().canAct()
-				&& getSelf().pantsless() && target.pantsless()
+				&& getSelf().crotchAvailable() && target.crotchAvailable()
 				&&((getSelf().hasDick() && target.hasPussy()) || (getSelf().hasPussy() && target.hasDick()));
 	}
 
@@ -89,11 +89,5 @@ public class CounterDrain extends CounterBase {
 						+ "You can't help but fall to the ground with a cry. "
 						+ "Seeing the opportunity, she smirks and leisurely mounts you.", getSelf(), target);
 		}
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "cock";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "pussy";
 	}
 }

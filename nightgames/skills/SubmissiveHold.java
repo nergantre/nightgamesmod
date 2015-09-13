@@ -87,14 +87,6 @@ public class SubmissiveHold extends Skill {
 		}
 	}
 
-	public String getTargetOrganType(Combat c, Character target) {
-		return "none";
-	}
-
-	public String getWithOrganType(Combat c, Character target) {
-		return "none";
-	}
-
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		if (getSelf().human()) {

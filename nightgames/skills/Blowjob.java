@@ -1,8 +1,11 @@
 package nightgames.skills;
 
+import javax.print.attribute.standard.MediaSize.Other;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.characters.body.StraponPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -21,14 +24,14 @@ public class Blowjob extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (target.pantsless()&&target.hasDick()&&c.getStance().oral(getSelf())&&c.getStance().front(getSelf())&&getSelf().canAct()&&!c.getStance().penetration(getSelf()))
-				|| (getSelf().canRespond() && (c.getStance().inserted(target) && getSelf().has(Trait.vaginaltongue) && c.getStance().en != Stance.anal));
+		return (target.crotchAvailable()&&target.hasDick()&&c.getStance().oral(getSelf())&&c.getStance().front(getSelf())&&getSelf().canAct()&&!c.getStance().inserted(target))
+				|| (getSelf().canRespond() && isVaginal(c));
 	}
 
 	@Override
 	public float priorityMod(Combat c) {
 		float priority = 0;
-		if (c.getStance().penetration(c.p2) || c.getStance().penetration(c.p1)) {
+		if (c.getStance().penetratedBy(getSelf(), c.getOther(getSelf()))) {
 			priority += 1.0f;
 		}
 		if (getSelf().has(Trait.silvertongue)) {
@@ -39,9 +42,12 @@ public class Blowjob extends Skill {
 		return priority;
 	}
 
+	public boolean isVaginal (Combat c) {
+		return c.getStance().vaginallyPenetratedBy(getSelf(), c.getOther(getSelf())) && !c.getOther(getSelf()).has(Trait.strapped) && getSelf().has(Trait.vaginaltongue);
+	}
 	@Override
 	public int getMojoBuilt(Combat c) {
-		if (c.getStance().inserted(c.getOther(getSelf())) && getSelf().has(Trait.vaginaltongue)) {
+		if (isVaginal(c)) {
 			return 10;
 		} else if (c.getStance().enumerate() == Stance.facesitting) {
 			return 0;
@@ -56,7 +62,7 @@ public class Blowjob extends Skill {
 		if(getSelf().has(Trait.silvertongue)){
 			m += 4;
 		}
-		if (c.getStance().inserted(target) && getSelf().has(Trait.vaginaltongue)) {
+		if (isVaginal(c)) {
 			m += 4;
 			if(target.human()){
 				c.write(getSelf(),receive(c,m,Result.intercourse, target));
@@ -125,7 +131,7 @@ public class Blowjob extends Skill {
 
 	@Override
 	public Tactics type(Combat c) {
-		if ((c.getStance().penetration(c.p2) || c.getStance().penetration(c.p1)) && getSelf().has(Trait.vaginaltongue)) {
+		if (c.getStance().vaginallyPenetrated(getSelf()) && getSelf().has(Trait.vaginaltongue)) {
 			return Tactics.fucking;
 		} else {
 			return Tactics.pleasure;
@@ -194,15 +200,5 @@ public class Blowjob extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	
-	public String getTargetOrganType(Combat c, Character target) {
-		return "cock";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		if ((c.getStance().penetration(c.p2) || c.getStance().penetration(c.p1)) && getSelf().has(Trait.vaginaltongue))
-			return "pussy";
-		else 
-			return "mouth";
 	}
 }

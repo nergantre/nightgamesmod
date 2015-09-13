@@ -3,20 +3,18 @@ package nightgames.daytime;
 import nightgames.characters.Character;
 import nightgames.global.Flag;
 import nightgames.global.Global;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
 
 public class XxxStore extends Store{
 	
 	public XxxStore(Character player) {
 		super("XXX Store", player);
-		add(Item.Lubricant);
-		add(Item.Dildo);
-		add(Item.Onahole);
-		add(Item.Crop);
-		add(Item.Tickler);
-		add(Clothing.latextop);
-		add(Clothing.latexpants);
+		Clothing.getAllBuyableFrom("XxxStore").forEach(
+				article -> {
+					add(article);
+				}
+		);
 	}
 
 	@Override
@@ -67,8 +65,13 @@ public class XxxStore extends Store{
 			else{
 				Global.gui().sale(this,Item.Tickler);
 			}
-			Global.gui().message("You see a strapon dildo for sale. It's no use to you since you have the real thing, but you should watch your ass if the girls start " +
-					"buying these.");
+			if (player.hasDick()) {
+				Global.gui().message("You see a strapon dildo for sale. It's no use to you since you have "
+						+ "the real thing, but you should watch your ass if the girls start buying these.");
+			} else {
+				Global.gui().sale(this,Item.Strapon);
+			}
+			displayGoods();
 			Global.gui().choose(this,"Leave");
 		}
 	}

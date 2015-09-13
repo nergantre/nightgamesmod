@@ -6,6 +6,7 @@ import nightgames.characters.Trait;
 import nightgames.combat.Encounter;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.items.clothing.ClothingSlot;
 
 public class Spiderweb implements Trap {
 	private Character owner;
@@ -13,7 +14,7 @@ public class Spiderweb implements Trap {
 	@Override
 	public void trigger(Character target) {
 		if(target.human()){
-			if(target.nude()){
+			if(target.mostlyNude()){
 				Global.gui().message("You feel the tripwire underfoot too late to avoid it. A staggering amount of rope flies up to entangle your limbs and pull you off the ground. " +
 						"Oh hell. You're completely immobilized and suspended in midair. Surprisingly, it's not that uncomfortable, but if someone finds you before you can get free, " +
 						"you'll be completely defenseless.");
@@ -83,7 +84,7 @@ public class Spiderweb implements Trap {
 					"now and fondles your balls. When you cum, you shoot your load onto her face and chest. You hang in the rope web, literally and figuratively drained. "+attacker.name()+" " +
 					"gratiously unties you and helps you down.");
 		}
-		if(victim.bottom.contains(victim.outfit[1].firstElement())){
+		if(victim.getOutfit().getBottomOfSlot(ClothingSlot.bottom).getLayer() == 0){
 			attacker.gain(victim.getTrophy());
 		}
 		victim.nudify();

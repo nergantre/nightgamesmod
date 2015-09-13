@@ -14,7 +14,7 @@ public class Rewired extends DurationStatus {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(affected.human()){
 			return "Your senses feel... wrong. It's like your sense of pleasure and pain are jumbled.";
 		}

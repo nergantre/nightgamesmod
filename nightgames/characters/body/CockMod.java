@@ -8,6 +8,7 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.status.Abuff;
 import nightgames.status.CockBound;
+import nightgames.status.DivineCharge;
 import nightgames.status.Enthralled;
 import nightgames.status.FluidAddiction;
 import nightgames.status.Horny;
@@ -40,7 +41,12 @@ public enum CockMod implements BodyPartMod {
 	}
 
 	public double getPleasure(Character self, BodyPart target, BasicCockPart base) {
-		return base.getPleasure(self, target) * pleasure;
+		double pleasureMod = 0;
+		DivineCharge charge = (DivineCharge) self.getStatus(Stsflag.divinecharge);
+		if (charge != null) {
+			pleasureMod += charge.magnitude;
+		}
+		return (pleasureMod + base.getPleasure(self, target)) * pleasure;
 	}
 
 	public double getSensitivity(BodyPart target, BasicCockPart base) {
@@ -61,12 +67,18 @@ public enum CockMod implements BodyPartMod {
 	public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c,
 			ModdedCockPart part) {
 		double bonus = part.getBase().applyBonuses(self, opponent, target, damage, c);
-
-		if (this == blessed) {
+		if (this == blessed && target.isType("cock")) {
+			if (self.getStatus(Stsflag.divinecharge) != null) {
+				c.write(self, Global.format(
+						"{self:NAME-POSSESSIVE} concentrated divine energy in {self:possessive} cock rams into {other:name-possessive} pussy, sending unimaginable pleasure directly into {other:possessive} soul.", self, opponent));
+			}
+			// no need for any effects, the bonus is in the pleasure mod
+		}
+		if (this == runic) {
 			String message = "";
 			if (target == PussyPart.succubus) {
 				message += String.format(
-						"The holy energies inside %s %s radiate outward and into %s, causing %s %s to grow much more sensitve.",
+						"The fae energies inside %s %s radiate outward and into %s, causing %s %s to grow much more sensitve.",
 						self.nameOrPossessivePronoun(), part.describe(self), opponent.nameOrPossessivePronoun(),
 						opponent.possessivePronoun(), target.describe(opponent));
 				bonus += damage * 0.5; // +50% damage
@@ -146,17 +158,19 @@ public enum CockMod implements BodyPartMod {
 		} else if (this == enlightened) {
 			String message = "";
 			if (target == PussyPart.succubus) {
-				message += String.format(
+				message = String.format(
 						"Almost instinctively, %s %s entire being into %s %s. While this would normally be a good thing,"
 								+ " whilst fucking a succubus it is very, very bad indeed.",
 						self.subjectAction("focus", "focuses"), self.possessivePronoun(), self.possessivePronoun(),
 						part.describe(self));
+				c.write(self, message);
 				// Actual bad effects are dealt with in PussyPart
 			} else {
-				message += String.format(
-						"Drawing upon %s extensive training, %s, concentrating will into %s %s and enhancing %s abilities",
-						self.possessivePronoun(), self.subjectAction("meditate", "meditates"), self.possessivePronoun(),
-						self.possessivePronoun(), part.describe(self), self.possessivePronoun());
+				message = String.format(
+						"Drawing upon %s extensive training, %s concentrates %s will into %s %s, enhancing %s own abilities",
+						self.possessivePronoun(), self.subjectAction("concentrate", "concentrates"), self.possessivePronoun(), self.possessivePronoun(),
+						part.describe(self), self.possessivePronoun());
+				c.write(self, message);
 				for (int i = 0; i < Math.max(2, (self.get(Attribute.Ki) + 5) / 10); i++) { // +5
 																							// for
 																							// rounding:
@@ -164,12 +178,11 @@ public enum CockMod implements BodyPartMod {
 																							// 25->30->30
 					Attribute attr = new Attribute[] { Attribute.Power, Attribute.Cunning, Attribute.Seduction }[Global
 							.random(3)];
-					self.add(new Abuff(self, attr, 1, 10));
+					self.add(c, new Abuff(self, attr, 1, 10));
 				}
 				self.buildMojo(c, 5);
 				self.restoreWillpower(c, 1);
 			}
-			c.write(self, message);
 		}
 		return bonus;
 	}
@@ -193,6 +206,19 @@ public enum CockMod implements BodyPartMod {
 
 	public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c,
 			ModdedCockPart moddedCockPart) {
+		if (this == blessed && c.getStance().inserted(self)) {
+			DivineCharge charge = (DivineCharge) self.getStatus(Stsflag.divinecharge);
+			if (charge == null) {
+				c.write(self, Global.format(
+						"{self:NAME-POSSESSIVE} " + moddedCockPart.fullDescribe(self) + " radiates a golden glow as {self:subject-action:groan|groans}. "
+								+ "{other:SUBJECT-ACTION:realize|realizes} {self:subject-action:are|is} feeding on {self:possessive} own pleasure to charge up {self:possessive} divine energy.", self, opponent));
+				self.add(c, new DivineCharge(self, .25));
+			} else {
+				c.write(self, Global.format(
+						"{self:SUBJECT-ACTION:continue|continues} feeding on {self:possessive} own pleasure to charge up {self:possessive} divine energy.", self, opponent));
+				self.add(c, new DivineCharge(self, charge.magnitude));
+			}
+		}
 		return moddedCockPart.getBase().applyReceiveBonuses(self, opponent, target, damage, c);
 	}
 
@@ -234,14 +260,14 @@ public enum CockMod implements BodyPartMod {
 									self.nameOrPossessivePronoun(), opponent.nameOrPossessivePronoun(),
 									target.describe(opponent), self.possessivePronoun()));
 				} else {
-					int duration = Global.random(3) + 3;
+					int duration = Global.random(3) + 2;
 					String message = String.format(
 							"The moment %s erupts inside %s, %s mind goes completely blank, leaving %s pliant and ready.",
 							self.subject(), opponent.subject(), opponent.possessivePronoun(), opponent.directObject());
 					if (target == PussyPart.feral) {
 						message += String.format(" %s offers no resistance to the subversive seed.",
 								opponent.subject());
-						duration += 3;
+						duration += 2;
 					}
 					opponent.add(c, new Enthralled(opponent, self, duration));
 					c.write(self, message);
@@ -291,5 +317,16 @@ public enum CockMod implements BodyPartMod {
 	@Override
 	public String getModType() {
 		return name();
+	}
+
+	public void onStartPenetration(Combat c, Character self, Character opponent, BodyPart target,
+			ModdedCockPart moddedCockPart) {
+		if (this == blessed && target.isErogenous()) {
+			if (!self.human()) {
+				c.write(self, Global.format(
+						"As soon as {self:subject} penetrates you, you realize you're screwed. Both literally and figuratively. While it looks innocuous enough, {self:name-possessive} {self:body-part:cock} "
+						+ "feels like pure ecstasy. {self:SUBJECT} hasn't even begun moving yet, but {self:possessive} cock simply sitting within you radiates a heat that has you squirming uncontrollably.", self, opponent));
+			}
+		}
 	}
 }

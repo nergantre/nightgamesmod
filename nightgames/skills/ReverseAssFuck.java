@@ -39,30 +39,20 @@ public class ReverseAssFuck extends Fuck {
 		return fuckable(c, target)
 				&&c.getStance().mobile(getSelf())
 				&&(c.getStance().prone(target)&&!c.getStance().mobile(target))
-				&&getSelf().canAct()&&!c.getStance().penetration(getSelf())
-				&&!c.getStance().penetration(target)
+				&&getSelf().canAct()
 				&&(getTargetOrgan(target).isReady(target))
 				&&(getSelfOrgan().isReady(getSelf()) || getSelf().has(Item.Lubricant) || getSelf().getArousal().percent()>50 || getSelf().has(Trait.alwaysready));
 	}
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		String premessage = "";
-		if(!getSelf().bottom.empty() && getSelfOrgan().isType("cock")) {
-			if (getSelf().bottom.size() == 1) {
-				premessage += String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s", getSelf().bottom.get(0).getName());
-			} else if (getSelf().bottom.size() == 2) {
-				premessage += String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s and %s", getSelf().bottom.get(0).getName(), getSelf().bottom.get(1).getName());
-			}
-		}
-
-		premessage = Global.format(premessage, getSelf(), target);
+		String premessage = premessage(c, target);
 		if(!getSelf().hasStatus(Stsflag.oiled)&&getSelf().getArousal().percent()>50 || getSelf().has(Trait.alwaysready)) {
 			String fluids = getSelf().hasDick() ? "copious pre-cum" : "own juices";
 			if (premessage.isEmpty()) {
 				premessage = "{self:subject-action:lube|lubes}";
 			} else {
-				premessage += " and {self:action:lube|lubes}";
+				premessage += "{self:action:lube|lubes}";
 			}
 			premessage += " up {self:possessive} ass with {self:possessive} " + fluids + ".";
 			getSelf().add(c, new Oiled(getSelf()));
@@ -70,7 +60,7 @@ public class ReverseAssFuck extends Fuck {
 			if (premessage.isEmpty()) {
 				premessage = "{self:subject-action:lube|lubes}";
 			} else {
-				premessage += " and {self:action:lube|lubes}";
+				premessage += "{self:action:lube|lubes}";
 			}
 			premessage += " up {self:possessive} ass.";
 			getSelf().add(c, new Oiled(getSelf()));
@@ -95,7 +85,7 @@ public class ReverseAssFuck extends Fuck {
 		c.setStance(new AnalCowgirl(getSelf(),target));
 		getSelf().emote(Emotion.dominant, 30);
 		if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
-			target.add(c, new BodyFetish(target, getSelf(), "ass", .25, 10));
+			target.add(c, new BodyFetish(target, getSelf(), "ass", .25));
 		}
 		return true;
 	}

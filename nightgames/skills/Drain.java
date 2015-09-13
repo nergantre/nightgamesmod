@@ -26,7 +26,7 @@ public class Drain extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return (this.getSelf().canAct())
-				&& (c.getStance().penetration(this.getSelf()));
+				&& (c.getStance().havingSexNoStrapped());
 	}
 	@Override
 	public int getMojoCost(Combat c) {
@@ -112,9 +112,9 @@ public class Drain extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		if(c.getStance().inserted(target)){
-			String muscDesc = c.getStance().analinserted(target) ? "anal" : "vaginal";
-			String partDesc = c.getStance().analinserted() ? getSelf().body.getRandom("ass").describe(getSelf()) : getSelf().body.getRandomPussy().describe(getSelf());
+		if(c.getStance().havingSexNoStrapped()){
+			String muscDesc = c.getStance().anallyPenetrated(getSelf()) ? "anal" : "vaginal";
+			String partDesc = c.getStance().anallyPenetrated(getSelf()) ? getSelf().body.getRandom("ass").describe(getSelf()) : getSelf().body.getRandomPussy().describe(getSelf());
 			String base = "You put your powerful " + muscDesc + " muscles to work whilst"
 					+ " transfixing " + target.name()
 					+ "'s gaze with your own, goading " + target.possessivePronoun() + " energy into "+ target.possessivePronoun() + " cock."
@@ -176,8 +176,8 @@ public class Drain extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		String muscDesc = c.getStance().analinserted() ? "anal" : "vaginal";
-		String partDesc = c.getStance().analinserted() ? getSelf().body.getRandom("ass").describe(getSelf()) : getSelf().body.getRandomPussy().describe(getSelf());
+		String muscDesc = c.getStance().anallyPenetrated(getSelf()) ? "anal" : "vaginal";
+		String partDesc = c.getStance().anallyPenetrated(getSelf()) ? getSelf().body.getRandom("ass").describe(getSelf()) : getSelf().body.getRandomPussy().describe(getSelf());
 		
 		String base = "You feel " + getSelf().nameOrPossessivePronoun() + " powerful" + muscDesc+ " muscles suddenly tighten around you. "
 				+ "She starts kneading your dick bringing you immense pleasure and soon"
@@ -224,19 +224,5 @@ public class Drain extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		if (c.getStance().inserted(getSelf())) {
-			return "pussy";
-		} else {
-			return "cock";
-		}
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		if (c.getStance().inserted(getSelf())) {
-			return "cock";
-		} else {
-			return "pussy";
-		}
 	}
 }

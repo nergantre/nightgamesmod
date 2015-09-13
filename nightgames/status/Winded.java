@@ -9,7 +9,7 @@ import nightgames.combat.Combat;
 
 public class Winded extends DurationStatus {
 	public Winded(Character affected) {
-		super("Winded", affected, 1);
+		super("Winded", affected, 2);
 		flag(Stsflag.stunned);
 	}
 	public Winded(Character affected, int duration) {
@@ -18,7 +18,7 @@ public class Winded extends DurationStatus {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(affected.human()){
 			return "You need a moment to catch your breath";
 		}
@@ -48,6 +48,7 @@ public class Winded extends DurationStatus {
 	@Override
 	public void onRemove(Combat c, Character other) {
 		affected.addlist.add(new Braced(affected));
+		affected.addlist.add(new Wary(affected, 3));
 		affected.heal(c, affected.getStamina().max());
 	}
 

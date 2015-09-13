@@ -1,11 +1,14 @@
 package nightgames.status;
 
+import java.util.Arrays;
+
 import org.json.simple.JSONObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.custom.requirement.InsertedRequirement;
+import nightgames.characters.custom.requirement.ReverseRequirement;
 import nightgames.combat.Combat;
 import nightgames.global.JSONUtils;
 
@@ -18,7 +21,7 @@ public class Knotted extends Status {
 		super("Knotted", affected);
 		opponent = other;
 		this.anal = anal;
-		requirements.add(new InsertedRequirement(true));
+		requirements.add(new ReverseRequirement(Arrays.asList(new InsertedRequirement(true))));
 		flag(Stsflag.knotted);
 	}
 
@@ -30,7 +33,7 @@ public class Knotted extends Status {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if (affected.human()) {
 			return opponent.nameOrPossessivePronoun() + " knotted dick is lodged inside of you, preventing escape.";
 		} else {

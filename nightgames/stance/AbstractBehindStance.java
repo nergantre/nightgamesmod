@@ -16,12 +16,12 @@ public abstract class AbstractBehindStance extends Position {
 	public Position insertRandomDom(Character dom) {
 		List<Position> possibleResults = new ArrayList<>();
 		Character sub = getOther(dom);
-		if (dom.hasDick() && sub.hasPussy()) {
+		if (dom.hasInsertable() && sub.hasPussy()) {
 			Position newPos = insert(dom, dom);
 			if (newPos != this)
 				possibleResults.add(newPos);
 		}
-		if (dom.hasPussy() && sub.hasDick()){
+		if (dom.hasPussy() && sub.hasInsertable()){
 			Position newPos = insert(sub, dom);
 			if (newPos != this)
 				possibleResults.add(newPos);
@@ -36,7 +36,7 @@ public abstract class AbstractBehindStance extends Position {
 	@Override
 	public Position insert(Character pitcher, Character dom) {
 		Character catcher = getOther(pitcher);
-		Character sub = getOther(pitcher);
+		Character sub = getOther(dom);
 		if (pitcher.body.getRandomInsertable() == null || !catcher.hasPussy()) {
 			// invalid
 			return this;
@@ -55,7 +55,7 @@ public abstract class AbstractBehindStance extends Position {
 		}
 		if (pitcher == sub && pitcher == bottom) {
 			// girl is holding guy from behind, and is the dominant one in the new stance
-			return new UpsideDownFemdom(catcher, pitcher);
+			return new ReverseCowgirl(catcher, pitcher);
 		}
 		return this;
 	}

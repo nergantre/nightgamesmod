@@ -4,10 +4,16 @@ package nightgames.stance;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.PussyPart;
+import nightgames.combat.Combat;
+import nightgames.global.Global;
 
 public class UpsideDownFemdom extends FemdomSexStance {
 	public UpsideDownFemdom(Character top, Character bottom) {
 		super(top, bottom,Stance.upsidedownfemdom);
+	}
+
+	public int pinDifficulty(Combat c, Character self) {
+		return 8;
 	}
 
 	@Override
@@ -48,6 +54,11 @@ public class UpsideDownFemdom extends FemdomSexStance {
 	public boolean reachTop(Character c) {
 		return false;
 	}
+	
+	@Override
+	public boolean facing() {
+		return false;
+	}
 
 	@Override
 	public boolean reachBottom(Character c) {
@@ -75,32 +86,18 @@ public class UpsideDownFemdom extends FemdomSexStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return true;
-	}
-	
-	@Override
-	public boolean inserted(Character c) {
-		return c==top;
-	}
-
-	@Override
 	public Position insertRandom() {
 		return new StandingOver(top,bottom);
 	}
 
-	public Position reverse() {
+	public Position reverse(Combat c) {
+		if (bottom.human()) {
+			c.write(bottom, Global.format("Summoning your remaining strength, you hold your arms up against the floor and use your hips to tip {other:name-do} off-balance with self dick still held inside of {other:possessive}. "
+					+ "{other:SUBJECT} lands on the floor with you on top of {other:direct-object} in a missionary position.", bottom, top));
+		} else {
+			c.write(bottom, Global.format("{self:SUBJECT} suddenly pushes against the floor and knocks you to the ground with {self:possessive} hips. "
+					+ "You land on the floor with {self:direct-object} on top of you, fucking you in a missionary position.", bottom, top));		
+		}
 		return new UpsideDownMaledom(bottom, top);
-	}
-	
-
-	@Override
-	public BodyPart topPart() {
-		return bottom.body.getRandomPussy();
-	}
-	
-	@Override
-	public BodyPart bottomPart() {
-		return top.body.getRandomInsertable();
 	}
 }

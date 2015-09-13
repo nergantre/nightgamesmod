@@ -16,7 +16,7 @@ public class Flick extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.pantsless()&&c.getStance().reachBottom(getSelf())&&getSelf().canAct()&&!c.getStance().penetration(target)&&!getSelf().has(Trait.shy);
+		return target.crotchAvailable()&&c.getStance().reachBottom(getSelf())&&getSelf().canAct()&&!getSelf().has(Trait.shy);
 	}
 
 	@Override

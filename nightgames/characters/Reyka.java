@@ -1,9 +1,7 @@
 package nightgames.characters;
 
-import nightgames.actions.Action;
-import nightgames.actions.Move;
-import nightgames.actions.Movement;
-import nightgames.characters.Attribute;
+import java.util.Optional;
+
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.EarPart;
@@ -12,19 +10,10 @@ import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.global.Modifier;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
-import nightgames.skills.Command;
-import nightgames.skills.Skill;
-import nightgames.skills.Tactics;
-import nightgames.stance.Stance;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Optional;
+import nightgames.items.clothing.Clothing;
 
 public class Reyka extends BasePersonality {
 	private static final long serialVersionUID = 8553663088141308399L;
@@ -33,20 +22,22 @@ public class Reyka extends BasePersonality {
 		super();
 		this.character = new NPC("Reyka", 10, this);
 		preferredCockMod = CockMod.incubus;
-		this.character.outfit[0].add(Clothing.tanktop);
-		this.character.outfit[1].add(Clothing.miniskirt);
-		character.closet.add(Clothing.tanktop);
-		character.closet.add(Clothing.miniskirt);
+		this.character.outfitPlan.add(Clothing.getByID("tanktop"));
+		this.character.outfitPlan.add(Clothing.getByID("miniskirt"));
+		this.character.outfitPlan.add(Clothing.getByID("garters"));
+		this.character.outfitPlan.add(Clothing.getByID("stilettopumps"));
 		this.character.change(Modifier.normal);
 		this.character.set(Attribute.Dark, 12);
 		this.character.set(Attribute.Seduction, 14);
 		this.character.set(Attribute.Cunning, 7);
-		this.character.set(Attribute.Speed, 7);
+		this.character.set(Attribute.Speed, 5);
 		this.character.setTrophy(Item.ReykaTrophy);
 		this.character.getStamina().setMax(40);
 		this.character.getArousal().setMax(200);
 		this.character.getMojo().setMax(70);
 		character.add(Trait.succubus);
+		character.add(Trait.proheels);
+		character.add(Trait.masterheels);
 		character.add(Trait.darkpromises);
 		character.add(Trait.Confident);
 		character.add(Trait.shameless);
@@ -60,7 +51,7 @@ public class Reyka extends BasePersonality {
 		character.body.add(TailPart.demonic);
 		character.body.add(WingsPart.demonic);
 		character.body.add(EarPart.pointed);
-		character.body.finishBody("female");
+		character.body.finishBody(CharacterSex.female);
 	}
 
 	@Override
@@ -379,12 +370,12 @@ public class Reyka extends BasePersonality {
 
 	@Override
 	public boolean fightFlight(Character paramCharacter) {
-		return !this.character.nude() || Global.random(3) == 1;
+		return !this.character.mostlyNude() || Global.random(3) == 1;
 	}
 
 	@Override
 	public boolean attack(Character paramCharacter) {
-		return !this.character.nude() || Global.random(3) == 1;
+		return !this.character.mostlyNude() || Global.random(3) == 1;
 	}
 	public double dickPreference() {
 		return 2;
@@ -400,7 +391,7 @@ public class Reyka extends BasePersonality {
 
 	@Override
 	public boolean fit() {
-		return (!this.character.nude() || Global.random(3) == 1)
+		return (!this.character.mostlyNude() || Global.random(3) == 1)
 				&& (this.character.getStamina().percent() >= 50)
 				&& (this.character.getArousal().percent() <= 50);
 	}

@@ -7,6 +7,7 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.items.clothing.ClothingTrait;
 import nightgames.stance.StandingOver;
 
 public class Knee extends Skill {
@@ -17,7 +18,7 @@ public class Knee extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&getSelf().canAct()&&c.getStance().front(target)&&!c.getStance().penetration(target);
+		return c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&getSelf().canAct()&&c.getStance().front(target)&&!c.getStance().connected();
 	}
 
 	@Override
@@ -42,10 +43,10 @@ public class Knee extends Skill {
 					c.write(getSelf(),getSelf().bbLiner(c));
 				}
 			}
-			if(target.has(Trait.achilles)&&!target.has(Trait.armored)){
+			if(target.has(Trait.achilles)&&!target.has(ClothingTrait.armored)){
 				target.pain(c, 20+Global.random(6)+Math.min(getSelf().get(Attribute.Power), 50));
 			}
-			if(target.has(Trait.armored)){
+			if(target.has(ClothingTrait.armored)){
 				target.pain(c, Global.random(6)+Math.min(getSelf().get(Attribute.Power)/2, 50));
 			}
 			else{

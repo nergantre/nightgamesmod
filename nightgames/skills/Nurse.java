@@ -29,7 +29,7 @@ public class Nurse extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().topless()&&c.getStance().reachTop(getSelf())&&c.getStance().front(getSelf())
+		return getSelf().breastsAvailable()&&c.getStance().reachTop(getSelf())&&c.getStance().front(getSelf())
 				&& getSelf().body.getLargestBreasts().size >= BreastsPart.c.size
 				&&c.getStance().mobile(getSelf())
 				&&(!c.getStance().mobile(target)||c.getStance().prone(target))
@@ -53,7 +53,7 @@ public class Nurse extends Skill {
 			c.write(target, Global.format("{other:SUBJECT-ACTION:are|is} a little confused at the sudden turn of events, but after milk starts flowing into {other:possessive} mouth, {other:pronoun} can't help but continue to suck on {self:possessive} teats.", getSelf(), target));
 			target.add(c, new Suckling(target, getSelf(), 4));
 		}
-		if (c.getStance().en != Stance.nursing &&!c.getStance().penetration(getSelf()) &&!c.getStance().penetration(target)) {
+		if (c.getStance().en != Stance.nursing &&!c.getStance().havingSex()) {
 			c.setStance(new NursingHold(getSelf(),target));
 			getSelf().emote(Emotion.dominant, 20);
 		} else {
@@ -61,7 +61,7 @@ public class Nurse extends Skill {
 			getSelf().emote(Emotion.dominant, 10);
 		}
 		if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
-			target.add(c, new BodyFetish(target, getSelf(), BreastsPart.a.getType(), .25, 10));
+			target.add(c, new BodyFetish(target, getSelf(), BreastsPart.a.getType(), .25));
 		}
 		return true;
 	}
@@ -127,12 +127,5 @@ public class Nurse extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	
-	public String getTargetOrganType(Combat c, Character target) {
-		return "mouth";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "breasts";
 	}
 }

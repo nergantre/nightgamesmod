@@ -15,7 +15,7 @@ public class Distorted extends DurationStatus {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(affected.human()){
 			return "Your image is distorted, making you hard to hit.";
 		}

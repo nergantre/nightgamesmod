@@ -26,10 +26,10 @@ public class CounterRide extends CounterBase {
 			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
 		if (target.hasDick() && getSelf().hasPussy()) {
-			c.setStance(new Cowgirl(getSelf(), target));
+			c.setStance(Cowgirl.similarInstance(getSelf(), target));
 			(new Thrust(getSelf())).resolve(c, target);
 		} else {
-			c.setStance(new Missionary(getSelf(), target));
+			c.setStance(Missionary.similarInstance(getSelf(), target));
 			(new Thrust(getSelf())).resolve(c, target);
 		}
 	}
@@ -42,7 +42,7 @@ public class CounterRide extends CounterBase {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return !c.getStance().dom(getSelf()) && !c.getStance().dom(target) && getSelf().canAct()
-				&& getSelf().pantsless() && target.pantsless()
+				&& getSelf().crotchAvailable() && target.crotchAvailable()
 				&&((getSelf().hasDick() && target.hasPussy()) || (getSelf().hasPussy() && target.hasDick()));
 	}
 
@@ -97,11 +97,5 @@ public class CounterRide extends CounterBase {
 			return Global.format("As {other:subject} approaches {self:name}, she suddenly disappears from your view; half a second later, your legs are swept out from under you. " +
 					"With a sexy grin, {self:name} wrenches your legs apart and plunges into your slobbering vagina.", getSelf(), target);
 		}
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "cock";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "pussy";
 	}
 }

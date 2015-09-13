@@ -13,7 +13,7 @@ public class Hypersensitive extends DurationStatus {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(affected.human()){
 			return "Your skin tingles and feels extremely sensitive to touch.";
 		}

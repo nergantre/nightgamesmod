@@ -34,7 +34,7 @@ public class Pin extends AbstractFacingStance {
 		return c==top;
 	}
 	public String image() {
-		return "pin.jpg";
+		return new Behind(top, bottom).image();
 	}
 	@Override
 	public boolean kiss(Character c) {
@@ -82,11 +82,6 @@ public class Pin extends AbstractFacingStance {
 	@Override
 	public boolean behind(Character c) {
 		return c==top;
-	}
-
-	@Override
-	public boolean penetration(Character c) {
-		return false;
 	}
 
 	@Override

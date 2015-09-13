@@ -2,6 +2,7 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.BasicCockPart;
 import nightgames.combat.Combat;
@@ -23,7 +24,7 @@ public class BreastRay extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&target.nude()&&getSelf().has(Item.Battery, 2);
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&target.mostlyNude()&&getSelf().has(Item.Battery, 2);
 	}
 	
 	@Override
@@ -40,7 +41,7 @@ public class BreastRay extends Skill {
 	public boolean resolve(Combat c, Character target) {
 		getSelf().consume(Item.Battery, 2);
 
-		boolean permanent = Global.random(20) == 0 && (getSelf().human() || target.human());
+		boolean permanent = Global.random(20) == 0 && (getSelf().human() || target.human())&& !target.has(Trait.stableform);
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,permanent ? 1 : 0, Result.normal, target));
 		} else if(target.human()) {		

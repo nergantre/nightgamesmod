@@ -13,7 +13,7 @@ public class Oiled extends Status {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(affected.human()){
 			return "Your skin is slick with oil and kinda feels weird.";
 		}

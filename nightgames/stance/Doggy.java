@@ -2,7 +2,10 @@ package nightgames.stance;
 
 
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
+import nightgames.combat.Combat;
+import nightgames.global.Global;
 
 public class Doggy extends MaledomSexStance {
 
@@ -16,13 +19,17 @@ public class Doggy extends MaledomSexStance {
 			return bottom.name()+" is on her hands and knees in front of you, while you fuck her Doggy style.";
 		}
 		else{
-			return "Things aren't going well for you. You're down on your hands and knees, while "+top.name()+" has free access to your manhood.";
+			return "Things aren't going well for you. You're down on your hands and knees, while "+top.name()+" is fucking you from behind.";
 		}
 	}
 	
 	public String image() {
+		if (top.has(Trait.strapped)) {
+			return "doggy_ff_strapped.jpg";
+		}
 		return "doggy.jpg";
 	}
+
 	@Override
 	public boolean mobile(Character c) {
 		return c==top;
@@ -74,32 +81,15 @@ public class Doggy extends MaledomSexStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return true;
-	}
-
-	@Override
-	public boolean inserted(Character c) {
-		return c==top;
-	}
-
-	@Override
 	public Position insertRandom() {
 		return new Behind(top,bottom);
 	}
 
-	public Position reverse() {
+	public Position reverse(Combat c) {
+		c.write(bottom, Global.format("{self:SUBJECT-ACTION:manage|manages} to reach between {self:possessive} legs and grab hold of {other:possessive} " + (top.hasBalls() ? "ballsack" : "cock")+ ", stopping {other:direct-object} in mid thrust. {self:SUBJECT-ACTION:smirk|smirks} at {other:direct-object} over {self:possessive} shoulder "
+				+ "and pushes {self:possessive} butt against {other:direct-object}, using the leverage of "
+				+ "{other:possessive} " + (top.hasBalls() ? "testicles" : "cock")+ " to keep {other:direct-object} from backing away to maintain {self:possessive} balance. {self:SUBJECT-ACTION:force|forces} {other:direct-object} onto {other:possessive} back, while never breaking {other:possessive} connection. After "
+				+ "some complex maneuvering, {other:subject-action:end|ends} up on the floor while {self:subject-action:straddle|straddles} {other:possessive} hips in a reverse cowgirl position.", bottom, top));
 		return new ReverseCowgirl(bottom, top);
-	}
-	
-
-	@Override
-	public BodyPart topPart() {
-		return top.body.getRandomInsertable();
-	}
-	
-	@Override
-	public BodyPart bottomPart() {
-		return bottom.body.getRandomPussy();
 	}
 }

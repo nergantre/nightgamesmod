@@ -6,7 +6,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.body.BodyPart;
-import nightgames.characters.custom.requirement.InsertedRequirement;
+import nightgames.characters.custom.requirement.EitherInsertedRequirement;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.global.JSONUtils;
@@ -19,8 +19,9 @@ public class TailFucked extends Status {
 		super(hole.equals("ass") ? "Tail Pegged" : "Tail Fucked", affected);
 		this.target = hole;
 		this.other = other;
-		requirements.add(new InsertedRequirement(true));
+		requirements.add(new EitherInsertedRequirement(true));
 		flag(Stsflag.bound);
+		flag(hole.equals("ass") ? Stsflag.pegged : Stsflag.fucked);
 	}
 
 	@Override
@@ -32,7 +33,7 @@ public class TailFucked extends Status {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		BodyPart hole = affected.body.getRandom(target);
 		BodyPart tail = other.body.getRandom("tail");
 		if (hole == null || tail == null) { return ""; }
@@ -55,15 +56,17 @@ public class TailFucked extends Status {
 	}
 
 	@Override
-	public int regen(Combat c) {
+	public void tick(Combat c) {
 		BodyPart hole = affected.body.getRandom(target);
 		BodyPart tail = other.body.getRandom("tail");
-		if (hole == null || tail == null) { return 0; }
+		if (hole == null || tail == null) {
+			return;
+		}
+		c.write(other, Global.capitalizeFirstLetter(Global.format("{other:name-possessive} {other:body-part:tail} relentlessly fucks {self:name-do} in {self:possessive} {self:body-part:"+target+"}", affected, other)));
 		affected.body.pleasure(other, tail, hole, 10, c);
 		other.body.pleasure(other, hole, tail, 2, c);
 		affected.emote(Emotion.desperate, 10);
 		affected.emote(Emotion.nervous, 10);
-		return 0;
 	}
 	@Override
 	public int damage(Combat c, int x) {
@@ -133,4 +136,7 @@ public class TailFucked extends Status {
 	public Status loadFromJSON(JSONObject obj) {
 		return new TailFucked(null, null, JSONUtils.readString(obj, "target"));
 	}
+
+	@Override
+	public int regen(Combat c) { return 0; }
 }

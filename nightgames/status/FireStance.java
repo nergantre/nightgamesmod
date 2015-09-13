@@ -24,7 +24,7 @@ public class FireStance extends DurationStatus {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(affected.human()){
 			return "Your spirit burns in you, feeding your power";
 		}

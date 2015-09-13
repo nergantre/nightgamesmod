@@ -3,32 +3,14 @@ package nightgames.daytime;
 import nightgames.characters.Character;
 import nightgames.global.Flag;
 import nightgames.global.Global;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
 
 public class ClothingStore extends Store {
 
 	public ClothingStore(Character player) {
 		super("Clothing Store", player);
-		add(Clothing.Tshirt);
-		add(Clothing.shirt);
-		add(Clothing.sweatshirt);
-		add(Clothing.sweater);
-		add(Clothing.silkShirt);
-		add(Clothing.jeans);
-		add(Clothing.shorts);
-		add(Clothing.sweatpants);
-		add(Clothing.dresspants);
-		add(Clothing.boxers);
-		add(Clothing.briefs);
-		add(Clothing.sweatshirt);
-		add(Clothing.undershirt);
-		add(Clothing.trenchcoat);
-		add(Clothing.jacket);
-		add(Clothing.windbreaker);
-		add(Clothing.blazer);
-		add(Clothing.gothshirt);
-		add(Clothing.gothpants);
+		Clothing.getAllBuyableFrom("ClothingStore").forEach(article -> add(article));
 	}
 
 	@Override

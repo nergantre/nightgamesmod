@@ -1,28 +1,16 @@
 package nightgames.characters;
 
-import nightgames.actions.Action;
-import nightgames.actions.Move;
-import nightgames.actions.Movement;
-import nightgames.actions.Resupply;
-import nightgames.areas.Area;
-import nightgames.characters.body.BreastsPart;
+import java.util.Optional;
+
 import nightgames.characters.body.BasicCockPart;
-import nightgames.characters.body.GenericBodyPart;
+import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.global.Modifier;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
-import nightgames.skills.Skill;
-import nightgames.skills.Tactics;
-import nightgames.stance.Stance;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Optional;
+import nightgames.items.clothing.Clothing;
 
 public class Eve extends BasePersonality {
 	/**
@@ -32,24 +20,25 @@ public class Eve extends BasePersonality {
 	public Eve(){
 		super();
 		character = new NPC("Eve",10,this);
-		character.outfit[0].add(Clothing.tanktop);
-		character.outfit[1].add(Clothing.crotchlesspanties);
-		character.outfit[1].add(Clothing.jeans);
-		character.closet.add(Clothing.tanktop);
-		character.closet.add(Clothing.crotchlesspanties);
-		character.closet.add(Clothing.jeans);
+		character.outfitPlan.add(Clothing.getByID("tanktop"));
+		character.outfitPlan.add(Clothing.getByID("crotchlesspanties"));
+		character.outfitPlan.add(Clothing.getByID("jeans"));
+		character.outfitPlan.add(Clothing.getByID("stilettopumps"));
+		character.outfitPlan.add(Clothing.getByID("garters"));
+
 		character.change(Modifier.normal);
 		character.mod(Attribute.Seduction, 2);
 		character.mod(Attribute.Perception, 1);
 		Global.gainSkills(character);
 		character.add(Trait.exhibitionist);
+		character.add(Trait.proheels);
 		character.setTrophy(Item.EveTrophy);
 		character.plan = Plan.hunting;
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.d);
 		character.body.add(BasicCockPart.big);
 		character.body.add(PussyPart.normal);
-		character.body.finishBody("herm");
+		character.body.finishBody(CharacterSex.herm);
 	}
 
 	@Override
@@ -192,7 +181,7 @@ public class Eve extends BasePersonality {
 	}
 	@Override
 	public boolean fightFlight(Character opponent) {
-		return !character.nude()||opponent.nude();
+		return !character.mostlyNude()||opponent.mostlyNude();
 	}
 	@Override
 	public boolean attack(Character opponent) {
@@ -223,7 +212,7 @@ public class Eve extends BasePersonality {
 	}
 	@Override
 	public boolean fit() {
-		return !character.nude()&&character.getStamina().percent()>=50;
+		return !character.mostlyNude()&&character.getStamina().percent()>=50;
 	}
 	@Override
 	public String night() {

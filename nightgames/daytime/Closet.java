@@ -19,7 +19,7 @@ public class Closet extends Activity {
 		Global.gui().clearText();
 		Global.gui().clearCommand();
 		if(choice=="Start"){
-			Global.gui().changeClothes(player,this);
+			Global.gui().changeClothes(player,this, "Back");
 		}
 		else{
 			done(false);

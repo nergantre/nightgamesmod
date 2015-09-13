@@ -4,7 +4,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +12,7 @@ import java.util.Optional;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.json.simple.parser.ParseException;
 
 import nightgames.characters.Plan;
 import nightgames.characters.Trait;
@@ -41,9 +41,9 @@ import nightgames.global.JSONUtils;
 import nightgames.characters.Attribute;
 import nightgames.characters.Emotion;
 import nightgames.characters.Growth;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
 import nightgames.items.ItemAmount;
+import nightgames.items.clothing.Clothing;
 
 public class JSONSourceNPCDataLoader {
 	private static ItemAmount readItem(JSONObject obj) {
@@ -68,7 +68,7 @@ public class JSONSourceNPCDataLoader {
 	}
 
 	public static NPCData load(InputStream in) throws ParseException,IOException {
-		Object value = JSONValue.parse(new InputStreamReader(in));
+		Object value = JSONValue.parseWithException(new InputStreamReader(in));
 		DataBackedNPCData data = new DataBackedNPCData();
 		try {
 			JSONObject object = (JSONObject)value;
@@ -81,11 +81,11 @@ public class JSONSourceNPCDataLoader {
 			JSONObject outfit = (JSONObject) object.get("outfit");
 			JSONArray top = (JSONArray) outfit.get("top");
 			for (Object clothing : top) {
-				data.top.push(Clothing.valueOf((String)clothing));
+				data.top.push(Clothing.getByID((String)clothing));
 			}
 			JSONArray bottom = (JSONArray) outfit.get("bottom");
 			for (Object clothing : bottom) {
-				data.bottom.push(Clothing.valueOf((String)clothing));
+				data.bottom.push(Clothing.getByID((String)clothing));
 			}
 			
 			// load stats
@@ -111,10 +111,10 @@ public class JSONSourceNPCDataLoader {
 			data.sex = JSONUtils.readString(object, "sex");
 		} catch (ClassCastException e) {
 			e.printStackTrace();
-			throw new ParseException("Badly formatted JSON character: " + e.getMessage(), 0);
+			throw new IOException("Badly formatted JSON character: " + e.getMessage());
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
-			throw new ParseException("Nonexistent value: " + e.getMessage(), 0);
+			throw new IOException("Nonexistent value: " + e.getMessage());
 		}
 		return data;
 	}

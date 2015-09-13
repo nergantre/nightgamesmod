@@ -22,7 +22,7 @@ public class DissolvingTrap implements Trap {
 		}
 		else{
 			if(target.human()){
-				if(target.nude()){
+				if(target.reallyNude()){
 					Global.gui().message("Your bare foot hits a tripwire and you brace yourself as liquid rains down on you. You hastely do your best to brush the liquid off, " +
 							"but after about a minute you realize nothing has happened. Maybe the trap was a dud.");
 				}
@@ -32,7 +32,7 @@ public class DissolvingTrap implements Trap {
 				}
 			}
 			else if(target.location().humanPresent()){
-				if(target.nude()){
+				if(target.reallyNude()){
 					Global.gui().message(target.name()+" is caught in your clothes dissolving trap, but she was already naked. Oh well.");
 				}
 				else{

@@ -19,7 +19,7 @@ public class Satiated extends DurationStatus {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if (affected.human()) {
 			return "You feel immensely powerful after feeding on your opponent's essence\n";
 		} else {

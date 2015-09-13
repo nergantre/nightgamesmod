@@ -39,7 +39,7 @@ public abstract class Status implements Cloneable {
 	}
 
 	public abstract String initialMessage(Combat c, boolean replaced);
-	public abstract String describe();
+	public abstract String describe(Combat c);
 	public abstract int mod(Attribute a);
 	public abstract int regen(Combat c);
 	public abstract int damage(Combat c, int x);
@@ -96,4 +96,5 @@ public abstract class Status implements Cloneable {
 	public void onRemove(Combat c, Character other) {}
 	public abstract JSONObject saveToJSON();
 	public abstract Status loadFromJSON(JSONObject obj);
+	public void tick(Combat c) {}
 }

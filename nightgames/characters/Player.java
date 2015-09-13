@@ -1,26 +1,26 @@
 package nightgames.characters;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import java.util.Stack;
 import java.util.stream.Collectors;
 
 import nightgames.actions.Action;
 import nightgames.actions.Move;
 import nightgames.areas.Area;
 import nightgames.areas.Deployable;
+import nightgames.characters.body.StraponPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Encounter;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.global.Modifier;
 import nightgames.gui.GUI;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 import nightgames.stance.Behind;
+import nightgames.stance.Neutral;
+import nightgames.stance.Position;
 import nightgames.status.Enthralled;
 import nightgames.status.Horny;
 import nightgames.status.Masochistic;
@@ -33,20 +33,24 @@ public class Player extends Character {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -7547460660118646782L;
 	public GUI gui;
 	public String sex;
 	private Growth growth;
 	public int traitPoints;
 
-	public Player(String name, String sex) {
+	public Player(String name, CharacterSex sex) {
 		super(name, 1);
-		outfit[0].add(Clothing.Tshirt);
-		outfit[1].add(Clothing.boxers);
-		outfit[1].add(Clothing.jeans);
-		closet.add(Clothing.Tshirt);
-		closet.add(Clothing.boxers);
-		closet.add(Clothing.jeans);
+		if (sex == CharacterSex.female || sex == CharacterSex.herm) {
+			outfitPlan.add(Clothing.getByID("bra"));
+			outfitPlan.add(Clothing.getByID("panties"));
+		} else {
+			outfitPlan.add(Clothing.getByID("boxers"));
+		}
+		outfitPlan.add(Clothing.getByID("Tshirt"));
+		outfitPlan.add(Clothing.getByID("jeans"));
+		outfitPlan.add(Clothing.getByID("socks"));
+		outfitPlan.add(Clothing.getByID("sneakers"));
+
 		willpower.setMax(willpower.max());
 		change(Modifier.normal);
 		availableAttributePoints=0;
@@ -57,7 +61,7 @@ public class Player extends Character {
 	}
 
 	public Player(String name) {
-		this(name, "male");
+		this(name, CharacterSex.male);
 	}
 
 	public void setGrowth() {
@@ -91,29 +95,10 @@ public class Player extends Character {
 	public String describe(int per, Combat c) {
 		String description="<i>";
 		for(Status s:status){
-			description = description+s.describe()+"<br>";
+			description = description+s.describe(c)+"<br>";
 		}
 		description = description+"</i>";
-		if(top.empty()&&bottom.empty()){
-			description = description+"You are completely naked.<br>";
-		}
-		else{
-			if(top.empty()){
-				description = description+"You are shirtless and ";
-				if(!bottom.empty()){
-					description=description+"wearing ";
-				}
-			}
-			else{
-				description = description+"You are wearing a "+top.peek().getName()+" and ";
-			}
-			if(bottom.empty()){
-				description = description+"are naked from the waist down.<br>";
-			}
-			else{
-				description = description+bottom.peek().getName()+".<br>";
-			}
-		}
+		description = description + outfit.describe(this);
 		if(per>=5 && this.status.size() > 0){
 			description += "<br>List of statuses:<br><i>";
 			for (Status s : this.status) {
@@ -126,7 +111,7 @@ public class Player extends Character {
 
 	@Override
 	public void victory(Combat c, Result flag) {
-		if(c.getStance().penetration(this)){
+		if(c.getStance().inserted() && c.getStance().dom(this)){
 			getMojo().gain(2);
 			if(has(Trait.mojoMaster)){
 				getMojo().gain(2);
@@ -164,7 +149,7 @@ public class Player extends Character {
 
 	@Override
 	public void draw(Combat c, Result flag) {
-		if(c.getStance().penetration(this)){
+		if(c.getStance().inserted()){
 			c.p1.getMojo().gain(3);
 			c.p2.getMojo().gain(3);
 		}
@@ -175,22 +160,6 @@ public class Player extends Character {
 			c.p1.draw(c,flag);
 		}
 
-	}
-
-	public void change(Modifier rule){
-		if(rule==Modifier.nudist){
-			top.clear();
-			bottom.clear();
-		}
-		else if(rule==Modifier.pantsman){
-			top.clear();
-			bottom.clear();
-			bottom.add(outfit[1].get(0));
-		}
-		else{
-			top=(Stack<Clothing>) outfit[0].clone();
-			bottom=(Stack<Clothing>) outfit[1].clone();
-		}
 	}
 
 	@Override
@@ -241,7 +210,7 @@ public class Player extends Character {
 		if(get(Attribute.Perception)>=8){
 			gui.message("Her Power is "+opponent.get(Attribute.Power)+", her Cunning is "+opponent.get(Attribute.Cunning)+", and her Seduction is "+opponent.get(Attribute.Seduction));
 		}
-		if(opponent.nude()||opponent.state==State.shower){
+		if(opponent.mostlyNude()||opponent.state==State.shower){
 			gui.message("She is completely naked.");
 		}
 		else{
@@ -506,9 +475,7 @@ public class Player extends Character {
 		}
 		dress(c);
 		target.undress(c);
-		if(target.outfit[1].isEmpty() || c.clothespile.contains(target.outfit[1].firstElement())){
-			this.gain(target.getTrophy());
-		}
+		this.gainTrophy(c, target);
 		target.defeated(this);
 		c.write(target.name()+"'s arms are firmly pinned, so she tries to kick you ineffectually. You catch her ankles and slowly begin kissing and licking your way " +
 				"up her legs while gently, but firmly, forcing them apart. By the time you reach her inner thighs, she's given up trying to resist. Since you no " +
@@ -549,7 +516,7 @@ public class Player extends Character {
 			target.pain(c, 4+Math.min(Global.random(get(Attribute.Power)), 20));
 			break;
 		case pleasure:
-			if(!target.pantsless() || !target.hasPussy()){
+			if(!target.crotchAvailable() || !target.hasPussy()){
 				c.write(this, "You pull "+target.name()+" off balance and lick her sensitive ear. She trembles as you nibble on her earlobe.");
 				target.body.pleasure(this, body.getRandom("tongue"), target.body.getRandom("ears"), 4+Math.min(Global.random(get(Attribute.Seduction)), 20), c);
 			}
@@ -559,26 +526,27 @@ public class Player extends Character {
 			}
 			break;
 		case fucking:
-			if (c.getStance().sub(this) && c.getStance().reverse() != c.getStance()) {
-				if (c.getStance().inserted(this)) {
-					c.write(this, Global.format("{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} clitoris with {self:possessive} hands as {other:subject-action:try|tries} to ride {self:direct-object}. " +
-							"While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:rotate|rotates} {self:possessive} body around into a dominant position", this, target));
-				} else if (target.hasBalls()){
-					c.write(this, Global.format("{self:SUBJECT-ACTION:squeezes|squeezes} {other:possessive} balls with {self:possessive} hands as {other:subject-action:try|tries} to ride {self:direct-object}. " +
-							"While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:rotate|rotates} {self:possessive} body around into a dominant position", this, target));
+			if (c.getStance().sub(this)) {
+				Position reverse = c.getStance().reverse(c);
+				if (reverse != c.getStance() && StraponPart.isStrapon(reverse.bottomPart())) {
+					c.setStance(reverse);
 				} else {
-					c.write(this, Global.format("{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} nipples with {self:possessive} hands as {other:subject-action:try|tries} to ride {self:direct-object}. " +
-							"While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:rotate|rotates} {self:possessive} body around into a dominant position", this, target));
+					c.write(this, Global.format("{self:NAME-POSSESSIVE} quick wits find a gap in {other:name-possessive} hold and {self:action:slip|slips} away.", this, target));
+					c.setStance(new Neutral(this, target));
 				}
-				c.setStance(c.getStance().reverse());
 			} else {
-				if (c.getStance().inserted(this)) {
-					target.body.pleasure(this, body.getRandomInsertable(), target.body.getRandomHole(), 4+Math.min(Global.random(get(Attribute.Seduction)), 20), c);
+				if (c.getStance().havingSex() && StraponPart.isStrapon(c.getStance().partFor(target))) {
+					target.body.pleasure(this, c.getStance().partFor(this), c.getStance().partFor(target),
+							4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
 				} else {
-					target.body.pleasure(this, body.getRandomHole(), target.body.getRandomInsertable(), 4+Math.min(Global.random(get(Attribute.Seduction)), 20), c);
+					target.body.pleasure(this, body.getRandom("hands"), target.body.getRandomBreasts(),
+							4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
 				}
-				c.write(this, Global.format("{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} clitoris with {self:possessive} hands as {other:subject-action:try|tries} to ride {self:direct-object}. " +
-						"While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:take|takes} the chance to pleasure {other:possessive} body", this, target));				
+				c.write(this,
+						Global.format(
+								"{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} nipples with {self:possessive} hands as {other:subject-action:try|tries} to fuck {self:direct-object}. "
+										+ "While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:take|takes} the chance to pleasure {other:possessive} body",
+								this, target));
 			}
 			break;
 		case stripping:
@@ -613,7 +581,7 @@ public class Player extends Character {
 				opponent.pet.caught(c,this);
 			}
 		}
-		int pheromoneChance = opponent.top.size() + opponent.bottom.size();
+		int pheromoneChance = (int)Math.round(10 * (1 - opponent.getExposure()));
 		if(opponent.has(Trait.pheromones)&&opponent.getArousal().percent()>=20&&Global.random(2 + pheromoneChance)==0){
 			c.write(opponent,"<br>Whenever you're near "+opponent.name()+", you feel your body heat up. Something in her scent is making you extremely horny.");
 			add(c, new Horny(this,opponent.has(Trait.augmentedPheromones) ? 2 : 1,10,opponent.nameOrPossessivePronoun() + " pheromones"));

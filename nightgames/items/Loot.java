@@ -7,4 +7,5 @@ public interface Loot {
 	public String pre();
 	public int getPrice();
 	public void pickup(Character owner);
+	public String getID();
 }

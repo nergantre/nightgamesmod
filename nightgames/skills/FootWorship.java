@@ -38,6 +38,11 @@ public class FootWorship extends Skill {
 		int m = 0; int n = 0;
 		m = 8 + Global.random(6);
 		n = 20;
+		if (getSelf().human()) {
+			c.write(getSelf(), Global.format(deal(c, 0, Result.normal, target), getSelf(), target));
+		} else {
+			c.write(getSelf(), Global.format(deal(c, 0, Result.normal, target), getSelf(), target));
+		}
 		if (m > 0) {
 			target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("feet"), m, c);
 		}
@@ -47,6 +52,7 @@ public class FootWorship extends Skill {
 		if (c.getStance().en == Stance.neutral) {
 			c.setStance(new StandingOver(target, getSelf()));
 		}
+		c.getCombatantData(getSelf()).toggleFlagOn("footworshipped", true);
 		return result != Result.miss;
 	}
 
@@ -63,25 +69,26 @@ public class FootWorship extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		return "You throw yourself at " + target.nameOrPossessivePronoun()
-			+ " dainty feet and start sucking on her toes. " + target.subject() + " seems surprised at first, "
-					+ "but then grins and rubs her soles against your face, eliciting a moan from you.";
+		if (c.getCombatantData(getSelf()).getBooleanFlag("footworshipped")) {
+			return "You throw yourself at " + target.nameOrPossessivePronoun()
+				+ " dainty feet and start sucking on her toes. " + target.subject() + " seems surprised at first, "
+						+ "but then grins and shoves her toes further in to your mouth, eliciting a moan from you.";
+		} else {
+			return "You can’t seem to bring yourself to stop worshipping her feet as your tongue makes its way down to {other:name-possessive} soles. {other:SUBJECT} presses her feet against your face and you feel more addicted to her feet.";
+		}
 	}
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return getSelf().name() + " throws herself at your feet. She worshipfully grasps your feet "
-				+ "and start licking between your toes, all while her face displays a mask of ecstasy.";
+		if (c.getCombatantData(getSelf()).getBooleanFlag("footworshipped")) {
+			return getSelf().name() + " throws herself at your feet. She worshipfully grasps your feet "
+					+ "and start licking between your toes, all while her face displays a mask of ecstasy.";
+		}
+		return "{self:SUBJECT} can’t seem to get enough of your feet as {self:pronoun} continues to lick along the bottom of your soles, {self:possessive} face further lost in {self:possessive} servitude as {self:pronoun} is careful not to miss a spot.";
 	}
 
 	@Override
 	public String describe(Combat c) {
 		return "Worship opponent's feet: builds mojo for opponent";
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "feet";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "mouth";
 	}
 }

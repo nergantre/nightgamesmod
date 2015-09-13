@@ -27,7 +27,7 @@ public class Thrust extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().canthrust(getSelf())&&(c.getStance().penetration(getSelf())||c.getStance().penetration(target));
+		return getSelf().canAct()&&c.getStance().canthrust(getSelf())&&c.getStance().havingSexOtherNoStrapped(getSelf());
 	}
 
 	public BodyPart getSelfOrgan(Combat c) {
@@ -93,7 +93,7 @@ public class Thrust extends Skill {
 		if (m[1] != 0)
 			getSelf().body.pleasure(target, targetO, selfO, m[1], c);
 		if (selfO.isType("ass") && Global.random(100) < 2 + getSelf().get(Attribute.Fetish)) {
-			target.add(c, new BodyFetish(target, getSelf(), "ass", .25, 10));
+			target.add(c, new BodyFetish(target, getSelf(), "ass", .25));
 		}
 		return true;
 	}
@@ -159,12 +159,5 @@ public class Thrust extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-
-	public String getTargetOrganType(Combat c, Character target) {
-		return getTargetOrgan(c, target).getType();
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return getSelfOrgan(c).getType();
 	}
 }

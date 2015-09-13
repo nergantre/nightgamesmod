@@ -79,11 +79,6 @@ public class AnalCowgirl extends AnalSexStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return c==bottom;
-	}
-
-	@Override
 	public boolean inserted(Character c) {
 		return c==bottom;
 	}
@@ -101,11 +96,11 @@ public class AnalCowgirl extends AnalSexStance {
 		Character inserter = inserted(top) ? top : bottom;
 		Character inserted = inserted(top) ? bottom : top;
 		
-		if(!inserter.hasDick()){
+		if(!inserter.hasInsertable()) {
 			if(inserter.human()){
-				c.write("With " + inserter.possessivePronoun() + " dick gone, you groan in frustration and cease your merciless movements.");
+				c.write("With " + inserter.possessivePronoun() + " pole gone, you groan in frustration and cease your merciless movements.");
 			} else {
-				c.write(inserted.name() + " groans with frustration with the sudden disappearance of your dick.");
+				c.write(inserted.name() + " groans with frustration with the sudden disappearance of your pole.");
 			}
 			c.setStance(insertRandom());
 		}
@@ -119,8 +114,8 @@ public class AnalCowgirl extends AnalSexStance {
 		}
 	}
 
-	public boolean analinserted(Character self) {
-		return self == bottom;
+	public boolean anallyPenetrated(Character self) {
+		return self == top;
 	}
 
 	@Override

@@ -30,7 +30,7 @@ public class Binding extends Skill {
 	
 	@Override
 	public String describe(Combat c) {
-		return "Bind your opponent's hands with a magic seal: 20 Mojo";
+		return "Bind your opponent's hands with a magic seal.";
 	}
 
 	@Override

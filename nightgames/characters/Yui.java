@@ -1,5 +1,7 @@
 package nightgames.characters;
 
+import java.util.HashSet;
+
 import nightgames.actions.Action;
 import nightgames.actions.Movement;
 import nightgames.characters.body.BreastsPart;
@@ -7,33 +9,25 @@ import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Modifier;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
-import nightgames.skills.Skill;
-import nightgames.skills.Tactics;
-
-import java.util.HashSet;
+import nightgames.items.clothing.Clothing;
 
 public class Yui extends BasePersonality {
 	public Yui(){
 		super();
 		character = new NPC("Yui",1,this);
-		character.outfit[0].add(Clothing.bra);
-		character.outfit[0].add(Clothing.Tshirt);
-		character.outfit[1].add(Clothing.panties);
-		character.outfit[1].add(Clothing.skirt);
-		character.closet.add(Clothing.bra);
-		character.closet.add(Clothing.Tshirt);
-		character.closet.add(Clothing.panties);
-		character.closet.add(Clothing.skirt);
+		character.outfitPlan.add(Clothing.getByID("bra"));
+		character.outfitPlan.add(Clothing.getByID("Tshirt"));
+		character.outfitPlan.add(Clothing.getByID("panties"));
+		character.outfitPlan.add(Clothing.getByID("skirt"));
 		character.change(Modifier.normal);
 		character.setTrophy(Item.YuiTrophy);
 		character.plan = Plan.hunting;
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.c);
 		character.body.add(PussyPart.normal);
-		character.body.finishBody("female");
-		}
+		character.body.finishBody(CharacterSex.female);
+	}
 
 	/**
 	 * 
@@ -114,7 +108,7 @@ public class Yui extends BasePersonality {
 
 	@Override
 	public boolean fightFlight(Character opponent) {
-		return !character.nude()||opponent.nude();
+		return !character.mostlyNude()||opponent.mostlyNude();
 	}
 
 	@Override

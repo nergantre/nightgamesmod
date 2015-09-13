@@ -1,10 +1,14 @@
 package nightgames.status;
 
+import java.util.Arrays;
+
 import org.json.simple.JSONObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.custom.requirement.EitherInsertedRequirement;
 import nightgames.characters.custom.requirement.InsertedRequirement;
+import nightgames.characters.custom.requirement.ReverseRequirement;
 import nightgames.combat.Combat;
 import nightgames.global.JSONUtils;
 
@@ -15,19 +19,31 @@ public class DivineCharge extends Status {
 		super("Divine Charge", affected);
 		flag(Stsflag.divinecharge);
 		this.magnitude = magnitude;
-		requirements.add(new InsertedRequirement(true));
+		requirements.add(new ReverseRequirement(Arrays.asList(new EitherInsertedRequirement(true))));
 	}
 
+	private String getPart(Combat c) {
+		boolean penetrated = c.getStance().vaginallyPenetrated(affected);
+		boolean inserted = c.getStance().inserted(affected);
+		String part = "body";
+		if (penetrated && !inserted) {
+			part = "pussy";
+		}
+		if (!penetrated && inserted) {
+			part = "cock";
+		}
+		return part;
+	}
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
 		if (!replaced)
-			return String.format("%s concentrating divine energy in %s pussy.\n", affected.subjectAction("are", "is"), affected.possessivePronoun());
+			return String.format("%s concentrating divine energy in %s %s.\n", affected.subjectAction("are", "is"), affected.possessivePronoun(), getPart(c));
 		return "";
 	}
 
 	@Override
-	public String describe() {
-		return "Concentrated divine energy surges through " + affected.nameOrPossessivePronoun() + " pussy.";
+	public String describe(Combat c) {
+		return "Concentrated divine energy surges through " + affected.nameOrPossessivePronoun() + " "+ getPart(c)+".";
 	}
 
 	@Override
@@ -50,6 +66,11 @@ public class DivineCharge extends Status {
 		assert (s instanceof DivineCharge);
 		DivineCharge other = (DivineCharge)s;
 		this.magnitude = this.magnitude + other.magnitude;
+		// every 10 divinity past 10, you are allowed to add another stack of divine charge.
+		// this will get out of hand super quick, but eh, you shouldn't let it get
+		// that far.
+		double maximum = Math.max(1, Math.pow(2., affected.get(Attribute.Divinity) / 5.0) * .25);
+		this.magnitude = Math.min(maximum, this.magnitude);
 	}
 
 	@Override

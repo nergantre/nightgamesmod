@@ -26,7 +26,7 @@ public class Shield extends DurationStatus {
 		return String.format("%s now shielded.\n", affected.subjectAction("are", "is"));
 	}
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "";
 	}
 

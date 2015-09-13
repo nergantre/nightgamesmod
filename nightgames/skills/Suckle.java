@@ -15,7 +15,7 @@ public class Suckle extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.topless()&&c.getStance().reachTop(getSelf())&&c.getStance().front(getSelf())&&(getSelf().canAct()||(c.getStance().enumerate()==Stance.nursing&&getSelf().canRespond()))&&c.getStance().facing();
+		return target.breastsAvailable()&&c.getStance().reachTop(getSelf())&&c.getStance().front(getSelf())&&(getSelf().canAct()||(c.getStance().enumerate()==Stance.nursing&&getSelf().canRespond()))&&c.getStance().facing();
 	}
 
 	@Override
@@ -81,12 +81,5 @@ public class Suckle extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-
-	public String getTargetOrganType(Combat c, Character target) {
-		return "breasts";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "mouth";
 	}
 }

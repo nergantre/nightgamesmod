@@ -24,8 +24,8 @@ public class FaceFuck extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().dom(getSelf())&&c.getStance().reachTop(getSelf())&&((getSelf().bottom.isEmpty()&&getSelf().hasDick())||getSelf().has(Trait.strapped))&&
-				!c.getStance().penetration(getSelf())&&!c.getStance().penetration(target)&&c.getStance().front(getSelf())&&!c.getStance().behind(target);
+		return getSelf().canAct()&&c.getStance().dom(getSelf())&&c.getStance().reachTop(getSelf())&&((getSelf().crotchAvailable()&&getSelf().hasDick())||getSelf().has(Trait.strapped))&&
+				!c.getStance().inserted(getSelf())&&c.getStance().front(getSelf())&&!c.getStance().behind(target);
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class FaceFuck extends Skill {
 			target.add(c, new Shamed(target));
 		}
 		if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
-			target.add(c, new BodyFetish(target, getSelf(), "cock", .25, 10));
+			target.add(c, new BodyFetish(target, getSelf(), "cock", .25));
 		}
 		target.loseMojo(c, 2*getSelf().get(Attribute.Seduction));
 		target.loseWillpower(c, 5);
@@ -118,11 +118,5 @@ public class FaceFuck extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "mouth";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "cock";
 	}
 }

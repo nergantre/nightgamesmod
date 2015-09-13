@@ -1,11 +1,16 @@
 package nightgames.status;
 
+import java.util.Arrays;
+
 import org.json.simple.JSONObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.custom.requirement.EitherInsertedRequirement;
 import nightgames.characters.custom.requirement.InsertedRequirement;
+import nightgames.characters.custom.requirement.OrRequirement;
+import nightgames.characters.custom.requirement.ReverseRequirement;
 import nightgames.combat.Combat;
 import nightgames.global.JSONUtils;
 
@@ -15,13 +20,13 @@ public class ArmLocked extends Status {
 	public ArmLocked(Character affected, float dc) {
 		super("Arm Locked", affected);
 		toughness = dc;
-		requirements.add(new InsertedRequirement(true));
+		requirements.add(new EitherInsertedRequirement(true));
 		requirements.add((c, self, other) -> toughness > .01);
 		flag(Stsflag.armlocked);
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(affected.human()){
 			return "Her hands are entwined with your own, preventing your escape.";
 		}

@@ -32,7 +32,7 @@ public class TailPeg extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return getSelf().getArousal().get() >= 30 && getSelf().canAct()
-				&& target.pantsless()
+				&& target.crotchAvailable()
 				&& c.getStance().en != Stance.standing
 				&& c.getStance().en != Stance.standingover;
 	}
@@ -44,7 +44,7 @@ public class TailPeg extends Skill {
 
 	@Override
 	public String describe(Combat c) {
-		if (c.getStance().analinserted(c.getOther(getSelf()))) {
+		if (c.getStance().anallyPenetrated(c.getOther(getSelf()))) {
 			return "Fuck your opponent with your tail";
 		}
 		return "Shove your tail up your opponent's ass.";
@@ -52,7 +52,7 @@ public class TailPeg extends Skill {
 
 	@Override
 	public String getLabel(Combat c){
-		if (c.getStance().analinserted(c.getOther(getSelf()))) {
+		if (c.getStance().anallyPenetrated(c.getOther(getSelf()))) {
 			return "Tail Fuck";
 		} else {
 			return "Tail Peg";
@@ -62,9 +62,9 @@ public class TailPeg extends Skill {
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		if (target.roll(this, c,
-				accuracy(c) - (c.getStance().penetration(getSelf()) ? 0 : 5))) {
+				accuracy(c) + (c.getStance().havingSex() ? 20 : -20))) {
 			int strength = Math.min(20, 10 + getSelf().get(Attribute.Dark)/4);
-			boolean vaginal = c.getStance().analinserted(c.getOther(getSelf()));
+			boolean vaginal = c.getStance().anallyPenetrated(c.getOther(getSelf()));
 			boolean shamed = false;
 			if (!vaginal && Global.random(4) == 2) {
 				target.add(c, new Shamed(target));
@@ -98,12 +98,14 @@ public class TailPeg extends Skill {
 				if (shamed)
 					c.write(getSelf(),"The shame of having her ass violated by you has destroyed " + target.getName() + " confidence.");
 			}
-			if (vaginal) {
-				target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom("pussy"), strength, c);
-				target.add(c, new TailFucked(target, getSelf(), "pussy"));
-			} else {
-				target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom("ass"), strength, c);
-				target.add(c, new TailFucked(target, getSelf(), "ass"));
+			if (c.getStance().havingSex()) {
+				if (vaginal) {
+					target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom("pussy"), strength, c);
+					target.add(c, new TailFucked(target, getSelf(), "pussy"));
+				} else {
+					target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom("ass"), strength, c);
+					target.add(c, new TailFucked(target, getSelf(), "ass"));
+				}
 			}
 			target.pain(c, strength / 2);
 			target.emote(Emotion.nervous, 10);
@@ -111,7 +113,7 @@ public class TailPeg extends Skill {
 			getSelf().emote(Emotion.confident, 15);
 			getSelf().emote(Emotion.dominant, 25);
 			if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
-				target.add(c, new BodyFetish(target, getSelf(), "tail", .25, 10));
+				target.add(c, new BodyFetish(target, getSelf(), "tail", .25));
 			}
 		} else {
 			if (target.human())
@@ -208,11 +210,5 @@ public class TailPeg extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "ass";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "tail";
 	}
 }

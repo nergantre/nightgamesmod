@@ -6,8 +6,8 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.global.Modifier;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
 import nightgames.stance.Stance;
 
 public class Strapon extends Skill {
@@ -26,11 +26,10 @@ public class Strapon extends Skill {
 		return getSelf().canAct()
 				&&c.getStance().mobile(getSelf())
 				&&!c.getStance().prone(getSelf())
-				&&getSelf().pantsless()
+				&&getSelf().crotchAvailable()
 				&&(getSelf().has(Item.Strapon)||getSelf().has(Item.Strapon2))
 				&&!getSelf().hasDick()
-				&&!c.getStance().penetration(getSelf())
-				&&!c.getStance().penetration(target)
+				&&!c.getStance().connected()
 				&&(!getSelf().human()||Global.getMatch().condition!=Modifier.notoys)
 				&&c.getStance().enumerate()!=Stance.facesitting;
 	}
@@ -46,7 +45,7 @@ public class Strapon extends Skill {
 	}
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		getSelf().bottom.push(Clothing.strapon);
+		getSelf().getOutfit().equip(Clothing.getByID("strapon"));
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,0,Result.normal, target));
 		}

@@ -14,7 +14,7 @@ public class Charmed extends DurationStatus {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(affected.human()){
 			return "You feel an irresistable attraction to her and can't imagine harming her.";
 		}
@@ -44,11 +44,9 @@ public class Charmed extends DurationStatus {
 	}
 
 	@Override
-	public int regen(Combat c) {
-		super.regen(c);
+	public void tick(Combat c) {
 		affected.emote(Emotion.horny,15);
 		affected.loseWillpower(c, 1);
-		return 0;
 	}
 
 	@Override

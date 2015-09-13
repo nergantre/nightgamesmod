@@ -14,7 +14,7 @@ public class WaterStance extends DurationStatus {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(affected.human()){
 			return "You're as smooth and responsive as flowing water.";
 		}

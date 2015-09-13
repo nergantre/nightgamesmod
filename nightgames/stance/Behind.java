@@ -24,8 +24,11 @@ public class Behind extends AbstractBehindStance {
 			return top.name()+" is holding you from behind.";
 		}
 	}
+
 	public String image() {
-		if (bottom.hasPussy()) {
+		if (top.hasPussy() && bottom.hasPussy()) {
+			return "behind_ff.jpg";
+		} else if (bottom.hasPussy()) {
 			return "behind_m.jpg";
 		} else {
 			return "behind_f.jpg";
@@ -85,27 +88,12 @@ public class Behind extends AbstractBehindStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return false;
-	}
-
-	@Override
 	public boolean inserted(Character c) {
 		return false;
 	}
 
 	@Override
 	public float priorityMod(Character self) {
-		return ((self.hasDick() || self.has(Trait.strapped)) ? 2 : 1) * getSubDomBonus(self, 1.0f);
-	}
-	
-	@Override
-	public BodyPart topPart() {
-		return top.body.getRandomInsertable();
-	}
-	
-	@Override
-	public BodyPart bottomPart() {
-		return bottom.body.getRandomPussy();
+		return (self.hasInsertable() ? 2 : 1) * getSubDomBonus(self, 1.0f);
 	}
 }

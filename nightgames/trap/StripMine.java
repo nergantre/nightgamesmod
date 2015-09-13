@@ -1,18 +1,21 @@
 package nightgames.trap;
 
+import java.util.stream.IntStream;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Encounter;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.items.clothing.ClothingSlot;
 
 public class StripMine implements Trap{
 	private Character owner;
 	@Override
 	public void trigger(Character target) {
 		if(target.human()){
-			if(target.nude()){
+			if(target.mostlyNude()){
 				Global.gui().message("You're momentarily blinded by a bright flash of light. A camera flash maybe? Is someone taking naked pictures of you?");
 			}
 			else{
@@ -23,12 +26,7 @@ public class StripMine implements Trap{
 		else if(target.location().humanPresent()){
 			Global.gui().message("You're startled by a flash of light not far away. Standing there is a half-naked "+target.name()+", looking surprised.");
 		}
-		if(!target.top.isEmpty()){
-			target.shred(0);
-		}
-		if(!target.bottom.isEmpty()){
-			target.shred(1);
-		}
+		IntStream.range(0, 2 + Global.random(4)).forEach(i -> target.shredRandom());
 		target.location().opportunity(target,this);
 	}
 

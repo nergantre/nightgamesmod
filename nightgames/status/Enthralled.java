@@ -6,6 +6,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
+import nightgames.global.DebugFlags;
 import nightgames.global.Global;
 import nightgames.global.JSONUtils;
 
@@ -22,11 +23,15 @@ public class Enthralled extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now enthralled by %s.\n", affected.subjectAction("are", "is"), master.subject());
+		if (replaced) {
+			return String.format("%s %s control of %s.\n", master.subjectAction("reinforce", "reinforces"), master.possessivePronoun(), affected.nameDirectObject());
+		} else {	
+			return String.format("%s now enthralled by %s.\n", affected.subjectAction("are", "is"), master.subject());
+		}
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(affected.human())
 		  return "You feel a constant pull on your mind, forcing you to obey " + master.possessivePronoun() + " every command.";
 		else{
@@ -48,7 +53,7 @@ public class Enthralled extends DurationStatus {
 	public void replace(Status s) {
 		assert (s instanceof Enthralled);
 		Enthralled other = (Enthralled)s;
-		setDuration(getDuration() + Math.max(1, other.getDuration() - timesRefreshed));
+		setDuration(Math.max(getDuration() + 1, other.getDuration() - 2 * (timesRefreshed + 1)));
 		timesRefreshed += 1;
 	}
 
@@ -81,13 +86,20 @@ public class Enthralled extends DurationStatus {
 	@Override
 	public int regen(Combat c) {
 		super.regen(c);
+		return 0;
+	}
+	
+	@Override
+	public void tick(Combat c) {
 		if (affected.check(Attribute.Cunning, master.get(Attribute.Seduction)/2 +master.get(Attribute.Arcane)/2 + master.get(Attribute.Dark)/2 + 10+10*(getDuration() - timesRefreshed))) {
+			if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+				System.out.println("Escaped from Enthralled");
+			}
 			setDuration(0);
 		}
-		affected.spendMojo(c, 5);
-		affected.loseWillpower(c, 1);
+		affected.loseMojo(c, 5, " (Enthralled)");
+		affected.loseWillpower(c, 1, 0, false, " (Enthralled)");
 		affected.emote(Emotion.horny,15);
-		return 0;
 	}
 
 	@Override
