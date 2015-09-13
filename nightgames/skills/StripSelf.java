@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.NPC;
 import nightgames.combat.Combat;
@@ -20,7 +21,7 @@ public class StripSelf extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return true;
+		return user.get(Attribute.Cunning) >= 03;
 	}
 
 	@Override

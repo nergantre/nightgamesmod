@@ -59,7 +59,7 @@ public class StripTop extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return true;
+		return user.get(Attribute.Cunning) >= 3;
 	}
 
 	@Override
