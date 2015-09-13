@@ -63,8 +63,9 @@ public abstract class Store extends Activity {
 		return false;
 	}
 	public void buy(Item item){
-		if(player.money>=stock.get(item)){
-			player.modMoney(-item.getPrice());
+		int price = stock.getOrDefault(item, item.getPrice());
+		if(player.money>=price){
+			player.modMoney(-price);
 			player.gain(item);
 			acted=true;
 			Global.gui().refresh();
@@ -74,8 +75,9 @@ public abstract class Store extends Activity {
 		}
 	}
 	public void buy(Clothing item){
-		if(player.money>=clothingstock.get(item)){
-			player.modMoney(-item.getPrice());
+		int price = clothingstock.getOrDefault(item, item.getPrice());
+		if(player.money>=price){
+			player.modMoney(-price);
 			player.gain(item);
 			acted=true;
 			Global.gui().refresh();
