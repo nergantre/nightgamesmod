@@ -31,6 +31,7 @@ public class Suckle extends Skill {
 		if (getSelf().has(Trait.silvertongue)) {
 			m += 4;
 		}
+		
 		target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("breasts"), m, c);
 		if (results == Result.special) {
 			getSelf().tempt(c, target, target.body.getRandomBreasts(), (3 + target.body.getRandomBreasts().size) * 2);

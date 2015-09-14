@@ -81,7 +81,7 @@ public class Cassie extends BasePersonality {
 		growth.addTrait(44, Trait.soulsucker);
 		growth.addTrait(47, Trait.pussyTraining2);
 		growth.addTrait(50, Trait.desensitized2);
-		growth.actions.put(53, () -> {
+		growth.actions.put(20, () -> {
 			character.body.addReplace(new MouthPussyPart(), 1);
 		});
 	}

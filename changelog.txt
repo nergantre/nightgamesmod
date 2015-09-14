@@ -1,3 +1,35 @@
+1.8.2.6 changelog
+Bugs:
+- Fixed a bug where transformative stacking drafts instantly transformed you to the final stage when used by NPCs.
+- Fixed a bug where the XXX store was listing the new products but you cannot buy anything
+
+Balance:
+- Lowered level drain down to 20 Dark since it cannot drain levels from a lower leveled opponent any more.
+
+New:
+- Cassie offers the mouth-pussy bodymod (with new scene)
+	- Requires a normal mouth, a fae scroll, 20 femdrafts, 10 Bewitching Draughts, and a dildo
+	- Also requires that she has gotten a mouth pussy mod already, which now unlocks for her at lvl 20.
+- Mouth-pussy now has some additional text for facefuck/blowjob etc
+- Mouth-pussy mods now also make the user take pleasure damage when doing blowjob/footworship, and take pleasure damage when receiving face fuck
+- Starting a new character now allows you to modify the starting stats all the way down to 1.
+	- This is mostly for roleplaying purposes. I would not recommend on taking any stat below 5.
+		- Especially Power < 2 or you cannot struggle.
+	- Early game requirements:
+	- Seduction
+		- 3: Kiss
+		- 5: Finger
+		- 5: Handjob
+		- 6: Suckle
+	- Power
+		- 3: Struggle
+		- 4: Turn Over
+		- 5: Shove
+	- Cunning
+		- 2: Strip Self
+		- 3: Strip Top, Strip Bottom
+		- 5: Undress
+
 1.8.2.5 changelog
 New Features:
 - Added tribadism
