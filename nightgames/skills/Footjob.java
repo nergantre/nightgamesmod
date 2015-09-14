@@ -22,7 +22,7 @@ public class Footjob extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (target.hasDick() || target.hasPussy()) && c.getStance().feet(getSelf())&&target.crotchAvailable()&&(c.getStance().prone(getSelf())!=c.getStance().prone(target))&&getSelf().canAct()&&!c.getStance().inserted();
+		return (target.hasDick() || target.hasPussy()) && c.getStance().feet(getSelf())&&target.crotchAvailable()&&(c.getStance().prone(getSelf())!=c.getStance().prone(target))&&getSelf().canAct()&&!c.getStance().inserted()&&getSelf().outfit.hasNoShoes();
 	}
 
 	@Override
