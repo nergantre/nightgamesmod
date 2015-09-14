@@ -89,7 +89,7 @@ public class Slime extends Pet {
 					target.shred(ClothingSlot.top);
 				}
 				if(!target.getOutfit().slotUnshreddable(ClothingSlot.bottom)){
-					c.write(owner(),"Your slime pounces on "+target.name()+" playfully, and it's corrosive body melts her "+target.getOutfit().getTopOfSlot(ClothingSlot.top).getName()+" as a fortunate accident.");
+					c.write(owner(),"Your slime pounces on "+target.name()+" playfully, and it's corrosive body melts her "+target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName()+" as a fortunate accident.");
 					target.shred(ClothingSlot.bottom);
 				}			
 				else{
