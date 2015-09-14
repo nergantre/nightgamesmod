@@ -36,20 +36,26 @@ public abstract class Store extends Activity {
 	public HashMap<Clothing,Integer> clothing(){
 		return clothingstock;
 	}
-	protected void displayGoods(){
-		for(Item i:stock.keySet()){
-			Global.gui().sale(this, i);
-		}
+	protected void displayClothes() {
 		for(Clothing i:clothingstock.keySet()){
 			if(!player.has(i)){
 				Global.gui().sale(this, i);
 			}
 		}
 	}
+	protected void displayItems() {
+		for(Item i:stock.keySet()){
+			Global.gui().sale(this, i);
+		}
+	}
+	protected void displayGoods(){
+		displayClothes();
+		displayItems();		
+	}
 	
 	protected boolean checkSale(String name){
 		for(Item i:stock.keySet()){
-			if(name.equals(i.getName())){
+			if(name.equals(i.getName())) {
 				buy(i);
 				return true;
 			}
