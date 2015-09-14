@@ -12,6 +12,7 @@ import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
+import nightgames.characters.body.MouthPussyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.custom.requirement.BodyPartRequirement;
 import nightgames.global.Flag;
@@ -40,7 +41,6 @@ public class CassieTime extends BaseNPCTime {
 		advTrait = Trait.witch;
 		transformationFlag = "";
 	}
-
 
 	public void buildTransformationPool() {
 		options = new ArrayList<>();
@@ -80,6 +80,48 @@ public class CassieTime extends BaseNPCTime {
 			return true;
 		};
 		options.add(arcanePussy);
+		TransformationOption mouthPussy = new TransformationOption();
+		mouthPussy.ingredients.put(Item.BewitchingDraught, 10);
+		mouthPussy.ingredients.put(Item.FemDraft, 20);
+		mouthPussy.ingredients.put(Item.Dildo, 1);
+		mouthPussy.ingredients.put(Item.FaeScroll, 1);
+		mouthPussy.requirements.add(new BodyPartRequirement("mouth"));
+		mouthPussy.requirements.add((c, self, other) -> {
+			return self.body.get("mouth").stream().anyMatch(mouth -> mouth.isGeneric());
+		});
+		mouthPussy.requirements.add((c, self, other) -> {
+			return other.body.get("mouth").stream().anyMatch(mouth -> mouth instanceof MouthPussyPart);
+		});
+		mouthPussy.additionalRequirements = "A normal mouth";
+		mouthPussy.option = "Mouth Pussy";
+		mouthPussy.scene = "When you mention Cassie's modified mouth to her, she blushes bright red and averts her eyes."
+				+ "She replies shyly, <i>\"Uhm would you mind if we don't talk about that? I'm not entirely sure what I was thinking at the time...\"</i>"
+				+ "<br>Now you're really interested. You try pressing her a bit, and after threatening her a bit with your tickler, she relents and tells you what you want to hear."
+				+ "<i>\"Well I found this spell in an old occult book I picked up when I was traveling in Greece last break. When I first tried to translate it, "
+				+ "I thought the spell would enhance my tongue control and make my blowjobs a bit better, giving myself an edge in the sex games. "
+				+ "Turns out... well I think you know how it turned out.\"</i><br>"
+				+ "You a bit red as well, and mention to her that you can certainly vouch for the effectiveness."
+				+ "<br><i>\"The main problem with it is that it leaves my mouth so sensitive. The first time I tried to practice my blowjobs with a dildo after completing the ritual, "
+				+ "I almost came from feeling the ridges on my tongue! It was super intense. It's a bit of a double edged sword. Or rather a double edged sheath if you know my drift,\"</i> Cassie chuckles softly."
+				+ "<br>You ask if she could maybe try the spell on you as well"
+				+ "Cassie seems a bit surprised with your request, but agrees pretty quickly. She takes the ingredients from you and inscribes a few runes on the dildo you brought along."
+				+ "<i>\"Uhh I think this may be a bit late, but would you mind not watching me? Sorry this is a bit embarassing for me.\"</i>"
+				+ "<br>You reassure her that whatever she's doing, it can't be too bad compared to the night games. Cassie sighs and waves for you to sit down."
+				+ "She starts the ritual by coating the inscribed dildo with all the potions you brought along. After starting a incomprehensible chant, she unbuttons her pants and starts fingering her pussy. "
+				+ "<i>\"I... uhhgh told you... that this would be, aah, embarassing... Nhhh!\"</i> Cassie grunts as she's masturbating. As she's nearing orgasm, she sticks the inscribed dildo inside her and clamps down on it hard."
+				+ "You can see a soft purple glow transfering itself from her body into the plastic rod. After taking a few seconds to calm down, Cassie beckons you over, <i>\"Your turn "+ player.name() +", say Ahh.\"</i>"
+				+ "<br>You obediently sit down on the couch, and open your mouth. As expected, Cassie takes the glowing fake phallus, still coated with her juices, and starts putting it in your mouth. "
+				+ "At first, you gag a bit from having a large foreign object stuffed into your throat, but after a few moments, you start feeling your entire oral cavity reforming itself around the false cock. "
+				+ "Your teeth recede a bit back into your gums, and you feel walls of soft muscle line your mouth. Your tongue feels like it's on fire as it rapidly lengthens, filling your maw, and spilling out of your expanded lips. "
+				+ "Finally, the changes seem to stabilize and you're left feeling very strange. Cassie notices the expression on your face and grins at you, <i>\"Don't worry, you'll get used to it pretty quickly. I know I did.\"</i>"
+				+ "<br>She begins to rub the now-drained dildo again against your newly formed mouth-pussy walls and tongue. "
+				+ "You blank out with the strange sensations that your organ transmits back to you, and Cassie takes the opportunity to mouth-fuck you to an almost-instantaneous climax."
+				+ "<br>Cassie walks by you and gives you a quick kiss which almost makes you cum yet again, <i>\"I'm so looking forward to seeing what you do with that tonight!\"</i>";
+		mouthPussy.effect = (c, self, other) -> {
+			self.body.addReplace(new MouthPussyPart(), 1);
+			return true;
+		};
+		options.add(mouthPussy);
 	}
 
 	@Override

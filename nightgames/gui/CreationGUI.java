@@ -383,10 +383,10 @@ public class CreationGUI extends JPanel{
 		
 		separator_1 = new JSeparator();
 		verticalBox.add(separator_1);
-		power = 5;
-		seduction = 5;
-		cunning = 5;
-		remaining = 2;
+		power = 3;
+		seduction = 3;
+		cunning = 3;
+		remaining = 20 - power - seduction - cunning;
 		refresh();
 	}
 	private void refresh(){
@@ -404,19 +404,19 @@ public class CreationGUI extends JPanel{
 			btnSedPlus.setEnabled(true);
 			btnCunPlus.setEnabled(true);
 		}
-		if(power <= 5){
+		if(power <= 1){
 			btnPowMin.setEnabled(false);
 		}
 		else{
 			btnPowMin.setEnabled(true);
 		}
-		if(seduction <= 5){
+		if(seduction <= 1){
 			btnSedMin.setEnabled(false);
 		}
 		else{
 			btnSedMin.setEnabled(true);
 		}
-		if(cunning <= 5){
+		if(cunning <= 1){
 			btnCunMin.setEnabled(false);
 		}
 		else{

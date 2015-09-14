@@ -3,6 +3,7 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -85,14 +86,19 @@ public class Kiss extends Skill {
 			target.loseWillpower(c, Global.random(3) + 2, false);
 			target.add(c, new Lovestruck(target, getSelf(), 2));
 		}
-		target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("mouth"), m, c);
-		getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("mouth"), Math.max(1, m / 4), c);
+		BodyPart selfMouth = getSelf().body.getRandom("mouth");
+		target.body.pleasure(getSelf(), selfMouth, target.body.getRandom("mouth"), m, c);
+		int selfDamage = Math.max(1, m / 4);
+		if (selfMouth.isErogenous()) {
+			selfDamage = m / 2;
+		}
+		getSelf().body.pleasure(target, target.body.getRandom("mouth"), selfMouth, selfDamage, c);
 		return true;
 	}
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return true;
+		return user.get(Attribute.Seduction) >= 3;
 	}
 
 	@Override

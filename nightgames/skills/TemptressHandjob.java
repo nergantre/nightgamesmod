@@ -16,7 +16,7 @@ public class TemptressHandjob extends Handjob {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.has(Trait.temptress);
+		return user.has(Trait.temptress) && user.get(Attribute.Seduction) >= 5;
 	}
 
 	@Override

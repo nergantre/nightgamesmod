@@ -22,7 +22,7 @@ public class FootPump extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (c.getStance().behind(getSelf())&&target.crotchAvailable()&&getSelf().canAct()&&!c.getStance().inserted()&&target.hasDick());
+		return (c.getStance().behind(getSelf())&&target.crotchAvailable()&&getSelf().canAct()&&!c.getStance().inserted()&&target.hasDick())&&getSelf().outfit.hasNoShoes();
 	}
 
 	@Override

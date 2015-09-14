@@ -1,5 +1,8 @@
 Seduction:
-   - Kiss -> Upgrades into Deep Kiss with Seduction:20 -> Upgrades into Drain Kiss with Trait:soulsucker
+03 - Kiss -> Upgrades into Deep Kiss with Seduction:20 -> Upgrades into Drain Kiss with Trait:soulsucker
+05 - Finger
+05 - Handjob
+06 - Suckle
 08 - Spank
 10 - Blowjob, Cunnilingus
 12 - Suck Neck -> Upgrades into Drain Energy at Dark:1
@@ -25,8 +28,9 @@ Seduction:
 50 - Tempt Undress
 
 Power:
-   - Shove -> Upgrades into Shredding Palm at Ki:1
-06 - Turn Over
+03 - Struggle
+04 - Turn Over
+05 - Shove -> Upgrades into Shredding Palm at Ki:1
 07 - Slap (CANNOT have Trait:softheart) -> Upgrades into Tiger Claw at Animism:8
 08 - Restrain
 09 - Squeeze -> Upgrades into Shock Balls with ShockGlove
@@ -46,7 +50,10 @@ Power:
 32 - Shred Clothes
 
 Cunning:
-06 - Tickle
+02 - Strip Self
+03 - Strip Top, Strip Bottom
+05 - undress
+05 - Tickle
 08 - Escape, Taunt
 09 - Bluff (AND have Trait:pokerface)
 15 - Focus (CANNOT have Trait:undisciplined)
@@ -85,8 +92,8 @@ Dark:
 12 - Dark Tendrils
 15 - Drain (OR have Trait:energydrain)
 15 - Sacrifice
+20 - Level Drain
 25 - Counter Vortex
-50 - Level Drain
 
 Science:
 03 - Spawn Slime
@@ -121,9 +128,6 @@ Other
    - Foot Worship (have Status:Foot Fetish with magnitude >= .5)
    - Tentacle Rape (have BodyPart:tentacles)
    - Toggle Knot (have BodyPart:primalcock)
-   - Suckle
-   - Finger
-   - Handjob
+
    - Fondle Breasts
    - Thrust
-   - Suckle

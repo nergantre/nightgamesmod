@@ -19,7 +19,7 @@ public class FootSmother extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().footAvailable()&&getSelf().body.has("feet")&&getSelf().canAct()&&c.getStance().prone(target)&&!c.getStance().behind(getSelf());
+		return getSelf().footAvailable()&&getSelf().body.has("feet")&&getSelf().canAct()&&c.getStance().prone(target)&&!c.getStance().behind(getSelf())&&getSelf().outfit.hasNoShoes();
 	}
 
 	public int accuracy(Combat c){

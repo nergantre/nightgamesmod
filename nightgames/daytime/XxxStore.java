@@ -15,6 +15,12 @@ public class XxxStore extends Store{
 					add(article);
 				}
 		);
+		add(Item.Dildo);
+		add(Item.Onahole);
+		add(Item.Lubricant);
+		add(Item.Crop);
+		add(Item.Tickler);
+		add(Item.Strapon);
 	}
 
 	@Override
@@ -71,7 +77,7 @@ public class XxxStore extends Store{
 			} else {
 				Global.gui().sale(this,Item.Strapon);
 			}
-			displayGoods();
+			displayClothes();
 			Global.gui().choose(this,"Leave");
 		}
 	}
