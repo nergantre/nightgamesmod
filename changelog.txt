@@ -1,3 +1,15 @@
+1.8.2.7 changelog
+Bugs:
+- disallow frottage during tribadism
+- text: fix tribadism verb tense
+- fix crash with pussy disappearing during trib
+- fix lick pussy always missing
+- fix crash with wrong clothing slot in slime.
+
+Other:
+- make oral skills never miss if they are being held down
+- disallow foot skills when you have shoes on
+
 1.8.2.6 changelog
 Bugs:
 - Fixed a bug where transformative stacking drafts instantly transformed you to the final stage when used by NPCs.
