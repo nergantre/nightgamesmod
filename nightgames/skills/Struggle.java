@@ -128,11 +128,14 @@ public class Struggle extends Skill {
 				}
 			} else {
 				int diffMod = 0;
+				/*
+				if (c.getStance().partFor(target).getMod() == CockMod.enlightened) {
+
 				if (CockMod.enlightened.partHasThisMod(c.getStance().partFor(target))) {
 					diffMod = 15;
 				} else if (CockMod.enlightened.partHasThisMod(c.getStance().partFor(getSelf()))) {
 					diffMod = -15;
-				}
+				}*/
 				if (getSelf().check(Attribute.Power, (target.getStamina().get() / 2 - getSelf().getStamina().get() / 2)
 						+ (target.get(Attribute.Power) - getSelf().get(Attribute.Power)) - (getSelf().escape(c)) + diffMod)) {
 					if (getSelf().hasStatus(Stsflag.cockbound)) {
@@ -254,7 +257,7 @@ public class Struggle extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return true;
+		return user.get(Attribute.Power) >= 3;
 	}
 
 	@Override

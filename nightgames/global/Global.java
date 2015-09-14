@@ -111,7 +111,7 @@ public class Global {
 	private static TraitTree traitRequirements;
 	public static Scene current;
 	public static boolean debug[] = new boolean[DebugFlags.values().length];
-	public static boolean debugSimulation = false;
+	public static int debugSimulation = 0;
 	public static double moneyRate = 1.0;
 	public static double xpRate = 1.0;
 	public static ContextFactory factory;
@@ -165,7 +165,7 @@ public class Global {
 	}
 	
 	public static boolean isDebugOn(DebugFlags flag) {
-		return debug[flag.ordinal()] && !debugSimulation;
+		return debug[flag.ordinal()] && debugSimulation == 0;
 	}
 
 	public static void newGame(Player one){
@@ -384,6 +384,12 @@ public class Global {
 		skillPool.add(new BreastWorship(p));
 		skillPool.add(new CockWorship(p));
 		skillPool.add(new PussyWorship(p));
+		skillPool.add(new SuccubusSurprise(p));
+		skillPool.add(new TemptressHandjob(p));
+		skillPool.add(new TemptressBlowjob(p));
+		skillPool.add(new TemptressRide(p));
+		skillPool.add(new TemptressStripTease(p));
+		skillPool.add(new Blindside(p));
 		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 			skillPool.add(new SelfStun(p));	
 		}

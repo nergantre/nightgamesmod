@@ -54,6 +54,7 @@ public enum Item implements Loot {
 	AiriTrophy	("A piece of hardened gel",0,"Not sure what else to take",""),
 	YuiTrophy	("Yui's Panties",0,"",""),
 	RoseaTrophy	("Rosea's vine thong",0,"",""),
+	SamanthaTrophy("Samantha's lacy thong",0 ,"A lacy red thong, translucent in all but the most delicate areas.", ""),
 	MiscTrophy	("Someone's underwear",0,"",""),
 	Sprayer		( "Sprayer",30,	"Necessary for making traps that use liquids","a "	),
 	SPotion		( "Sensitivity Potion",25,"Who knows whats in this stuff, but it makes any skin it touches tingle","a "),

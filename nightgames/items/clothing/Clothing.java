@@ -42,7 +42,6 @@ public class Clothing implements Loot{
 			e.printStackTrace();
 		}
 		ResourceLoader.getFileResourcesFromDirectory("data/clothing").forEach(inputstream -> {
-			
 			try {
 				JSONArray value = (JSONArray) JSONValue.parseWithException(new InputStreamReader(inputstream));
 				JSONClothingLoader.loadClothingListFromJSON(value).forEach(article -> {

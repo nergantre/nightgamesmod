@@ -5,6 +5,7 @@ import java.util.Optional;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -49,13 +50,18 @@ public class CockWorship extends Skill {
 		else if(getSelf().human()){
 			c.write(getSelf(),deal(c,m,Result.normal, target));
 		}
-		target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("cock"), m, c);
+		BodyPart mouth = getSelf().body.getRandom("mouth");
+		BodyPart cock = target.body.getRandom("cock");
+		target.body.pleasure(getSelf(), mouth, cock, m, c);
 		if (getSelf().hasDick() && (!getSelf().hasPussy() || Global.random(2) == 0)) {
 			getSelf().body.pleasure(getSelf(), getSelf().body.getRandom("hands"), getSelf().body.getRandomCock(), m, c);
 		} else if (getSelf().hasPussy()){
 			getSelf().body.pleasure(getSelf(), getSelf().body.getRandom("hands"), getSelf().body.getRandomPussy(), m, c);
 		} else {
-			getSelf().body.pleasure(getSelf(), getSelf().body.getRandom("hands"), getSelf().body.getRandomHole(), m, c);	
+			getSelf().body.pleasure(getSelf(), getSelf().body.getRandom("hands"), getSelf().body.getRandomHole(), m, c);
+		}
+		if (mouth.isErogenous()) {
+			getSelf().body.pleasure(getSelf(), cock, mouth, m, c);
 		}
 
 		target.buildMojo(c, 20);

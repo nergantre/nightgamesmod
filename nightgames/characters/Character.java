@@ -23,6 +23,7 @@ import nightgames.actions.Movement;
 import nightgames.areas.Area;
 import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
+import nightgames.characters.custom.AiModifiers;
 import nightgames.combat.Combat;
 import nightgames.combat.Encounter;
 import nightgames.combat.Result;
@@ -311,6 +312,8 @@ public abstract class Character extends Observable implements Cloneable {
 			rate += .2;
 		}
 		rate *= Global.xpRate;
+		if (!human())
+			rate *= 1.25;
 		xp+=Math.round(i * rate);
 	}
 	public int getRank() {
@@ -2262,6 +2265,20 @@ public abstract class Character extends Observable implements Cloneable {
 		fit += mojoMod / usum * 50.0f * ( 1 - Math.exp(- ((float)getMojo().get()) / Math.min(getMojo().max(), 40.0f)));
 		for (Status status : getStatuses()) {
 			fit += status.fitnessModifier();
+		}
+		
+		if (!human()) {
+			NPC me = (NPC) this;
+			AiModifiers mods = me.ai.getAiModifiers();
+			fit += mods.modPosition(c.getStance().enumerate());
+			fit += status.stream()
+					.flatMap(s -> s.flags().stream())
+					.mapToDouble(f -> mods.modSelfStatus(f))
+					.sum();
+			fit += c.getOther(this).status.stream()
+					.flatMap(s -> s.flags().stream())
+					.mapToDouble(f -> mods.modOpponentStatus(f))
+					.sum();
 		}
 		return fit;
 	}

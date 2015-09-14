@@ -22,7 +22,7 @@ public class HeelGrind extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (c.getStance().behind(getSelf())&&target.crotchAvailable()&&getSelf().canAct()&&!c.getStance().vaginallyPenetrated(target)&&target.hasPussy());
+		return (c.getStance().behind(getSelf())&&target.crotchAvailable()&&getSelf().canAct()&&!c.getStance().vaginallyPenetrated(target)&&target.hasPussy())&&getSelf().outfit.hasNoShoes();
 	}
 
 	@Override

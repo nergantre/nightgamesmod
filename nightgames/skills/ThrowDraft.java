@@ -17,7 +17,6 @@ import nightgames.global.Global;
 import nightgames.global.Modifier;
 import nightgames.items.Item;
 import nightgames.items.ItemEffect;
-import nightgames.items.clothing.Clothing;
 
 public class ThrowDraft extends Skill {
 	private static final Set<Item> transformativeItems = new HashSet<>();

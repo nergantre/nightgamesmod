@@ -182,4 +182,8 @@ public class CustomNPC extends BasePersonality {
 	public RecruitmentData getRecruitmentData() {
 		return data.getRecruitment();
 	}
+	
+	public AiModifiers getAiModifiers() {
+		return data.getAiModifiers();
+	}
 }

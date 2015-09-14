@@ -66,7 +66,7 @@ public class Finger extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return true;
+		return user.get(Attribute.Seduction) >= 5;
 	}
 
 	@Override

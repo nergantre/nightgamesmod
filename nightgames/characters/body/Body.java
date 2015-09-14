@@ -27,6 +27,11 @@ public class Body implements Cloneable {
 			removed = new ArrayList<BodyPart>();
 			this.duration = duration;
 		}
+		public PartReplacement(PartReplacement original) {
+			added = new ArrayList<BodyPart>(original.added);
+			removed = new ArrayList<BodyPart>(original.removed);
+			this.duration = original.duration;
+		}
 	}
 	static private Map<String, BodyPart> prototypes;
 	static {
@@ -561,7 +566,8 @@ public class Body implements Cloneable {
 
 	public Body clone() throws CloneNotSupportedException {
 		Body newBody = (Body) super.clone();
-		newBody.replacements = new ArrayList<PartReplacement>(this.replacements);
+		newBody.replacements = new ArrayList<PartReplacement>();
+		replacements.forEach(rep -> newBody.replacements.add(new PartReplacement(rep)));
 		return newBody;
 	}
 

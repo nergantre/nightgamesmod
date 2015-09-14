@@ -350,4 +350,9 @@ public class Outfit {
 		sb.append("]");
 		return String.format("%s@%s", sb.toString(), Integer.toHexString(this.hashCode()));
 	}
+
+	public boolean hasNoShoes() {
+		Clothing feetSlot = getTopOfSlot(ClothingSlot.feet);
+		return feetSlot == null || feetSlot.getLayer() < 2;
+	}
 }

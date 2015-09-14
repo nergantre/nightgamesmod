@@ -204,7 +204,7 @@ public abstract class Position implements Cloneable{
 		if (other != getOther(self)) { return false; }
 		BodyPart part = partFor(self);
 		BodyPart otherPart = partFor(other);
-		return part != null && part.isType("pussy") && !otherPart.isType("pussy");
+		return part != null && part.isType("pussy") && otherPart != null && !otherPart.isType("pussy");
 	}
 	public boolean anallyPenetratedBy(Character self, Character other) {
 		if (other != getOther(self)) { return false; }

@@ -36,20 +36,26 @@ public abstract class Store extends Activity {
 	public HashMap<Clothing,Integer> clothing(){
 		return clothingstock;
 	}
-	protected void displayGoods(){
-		for(Item i:stock.keySet()){
-			Global.gui().sale(this, i);
-		}
+	protected void displayClothes() {
 		for(Clothing i:clothingstock.keySet()){
 			if(!player.has(i)){
 				Global.gui().sale(this, i);
 			}
 		}
 	}
+	protected void displayItems() {
+		for(Item i:stock.keySet()){
+			Global.gui().sale(this, i);
+		}
+	}
+	protected void displayGoods(){
+		displayClothes();
+		displayItems();		
+	}
 	
 	protected boolean checkSale(String name){
 		for(Item i:stock.keySet()){
-			if(name.equals(i.getName())){
+			if(name.equals(i.getName())) {
 				buy(i);
 				return true;
 			}
@@ -63,8 +69,9 @@ public abstract class Store extends Activity {
 		return false;
 	}
 	public void buy(Item item){
-		if(player.money>=stock.get(item)){
-			player.modMoney(-item.getPrice());
+		int price = stock.getOrDefault(item, item.getPrice());
+		if(player.money>=price){
+			player.modMoney(-price);
 			player.gain(item);
 			acted=true;
 			Global.gui().refresh();
@@ -74,8 +81,9 @@ public abstract class Store extends Activity {
 		}
 	}
 	public void buy(Clothing item){
-		if(player.money>=clothingstock.get(item)){
-			player.modMoney(-item.getPrice());
+		int price = clothingstock.getOrDefault(item, item.getPrice());
+		if(player.money>=price){
+			player.modMoney(-price);
 			player.gain(item);
 			acted=true;
 			Global.gui().refresh();

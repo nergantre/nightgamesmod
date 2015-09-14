@@ -6,6 +6,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.AssPart;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -26,7 +27,7 @@ public class FootWorship extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.body.has("feet")&&c.getStance().reachBottom(getSelf())&&getSelf().canAct()&&!c.getStance().behind(getSelf());
+		return target.body.has("feet")&&c.getStance().reachBottom(getSelf())&&getSelf().canAct()&&!c.getStance().behind(getSelf())&&target.outfit.hasNoShoes();
 	}
 
 	public int accuracy(Combat c){
@@ -38,13 +39,18 @@ public class FootWorship extends Skill {
 		int m = 0; int n = 0;
 		m = 8 + Global.random(6);
 		n = 20;
+		BodyPart mouth = getSelf().body.getRandom("mouth");
+		BodyPart feet = target.body.getRandom("feet");
 		if (getSelf().human()) {
 			c.write(getSelf(), Global.format(deal(c, 0, Result.normal, target), getSelf(), target));
 		} else {
 			c.write(getSelf(), Global.format(deal(c, 0, Result.normal, target), getSelf(), target));
 		}
 		if (m > 0) {
-			target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("feet"), m, c);
+			target.body.pleasure(getSelf(), mouth, feet, m, c);
+			if (mouth.isErogenous()) {
+				getSelf().body.pleasure(getSelf(), feet, mouth, m, c);
+			}
 		}
 		if (n > 0) {
 			target.buildMojo(c, n);
@@ -69,7 +75,7 @@ public class FootWorship extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		if (c.getCombatantData(getSelf()).getBooleanFlag("footworshipped")) {
+		if (!c.getCombatantData(getSelf()).getBooleanFlag("footworshipped")) {
 			return "You throw yourself at " + target.nameOrPossessivePronoun()
 				+ " dainty feet and start sucking on her toes. " + target.subject() + " seems surprised at first, "
 						+ "but then grins and shoves her toes further in to your mouth, eliciting a moan from you.";
@@ -80,7 +86,7 @@ public class FootWorship extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		if (c.getCombatantData(getSelf()).getBooleanFlag("footworshipped")) {
+		if (!c.getCombatantData(getSelf()).getBooleanFlag("footworshipped")) {
 			return getSelf().name() + " throws herself at your feet. She worshipfully grasps your feet "
 					+ "and start licking between your toes, all while her face displays a mask of ecstasy.";
 		}

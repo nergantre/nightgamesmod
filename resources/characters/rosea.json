@@ -312,5 +312,8 @@
 			"text" : "rosea_desperate.png"
 		}
 	],
-	"defaultPortrait" : "rosea_confident.png"
+	"defaultPortrait" : "rosea_confident.png",
+	"ai-modifiers" : [
+		
+	]
 }

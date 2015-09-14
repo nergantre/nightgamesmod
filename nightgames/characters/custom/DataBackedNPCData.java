@@ -39,6 +39,7 @@ public class DataBackedNPCData implements NPCData {
 	String type;
 	RecruitmentData recruitment;
 	Body body;
+	AiModifiers aiModifiers;
 
 	public DataBackedNPCData() {
 		preferredAttributes = new ArrayList<>();
@@ -57,6 +58,7 @@ public class DataBackedNPCData implements NPCData {
 		sex = "female";
 		defaultPortraitName = "";
 		recruitment = new RecruitmentData();
+		aiModifiers = new AiModifiers();
 	}
 
 	@Override
@@ -164,5 +166,10 @@ public class DataBackedNPCData implements NPCData {
 	@Override
 	public RecruitmentData getRecruitment() {
 		return recruitment;
+	}
+
+	@Override
+	public AiModifiers getAiModifiers() {
+		return aiModifiers;
 	}
 }

@@ -22,7 +22,7 @@ public class Thrust extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return true;
+		return !user.has(Trait.temptress) || user.get(Attribute.Technique) < 11;
 	}
 
 	@Override
