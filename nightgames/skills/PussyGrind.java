@@ -25,9 +25,9 @@ public class PussyGrind extends Skill {
 	public BodyPart getTargetOrgan(Character target) {
 		return target.body.getRandomPussy();
 	}
-	
+
 	public boolean fuckable(Combat c, Character target) {
-		return c.getStance().partFor(getSelf()).isType("pussy") && c.getStance().partFor(target).isType("pussy");
+		return BodyPart.hasType(c.getStance().partsFor(getSelf()), "pussy") && BodyPart.hasType(c.getStance().partsFor(target), "pussy");
 	}
 
 	@Override

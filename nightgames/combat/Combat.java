@@ -35,7 +35,7 @@ import nightgames.status.CounterStatus;
 import nightgames.status.Stsflag;
 import nightgames.status.Wary;
 import nightgames.status.Winded;
-
+import nightgames.stance.Engulfed;
 
 public class Combat extends Observable implements Serializable, Cloneable{
 	/**
@@ -663,21 +663,15 @@ public class Combat extends Observable implements Serializable, Cloneable{
 		checkStanceStatus(p2, stance, newStance);
 		
 		if (stance.inserted() && !newStance.inserted()) {
-			BodyPart part1 = stance.partFor(p1);
-			BodyPart part2 = stance.partFor(p2);
-
-			if (part1 != null)
-				part1.onEndPenetration(this, p1, p2, part2);
-			if (part2 != null)
-				part2.onEndPenetration(this, p2, p1, part1);
+			List<BodyPart> parts1 = stance.partsFor(p1);
+			List<BodyPart> parts2 = stance.partsFor(p2);
+			parts1.forEach(part -> parts2.forEach(other -> part.onEndPenetration(this, p1, p2, other)));
+			parts2.forEach(part -> parts1.forEach(other -> part.onEndPenetration(this, p2, p1, other)));
 		} else if (!stance.inserted() && newStance.inserted()) {
-			BodyPart part1 = newStance.partFor(p1);
-			BodyPart part2 = newStance.partFor(p2);
-
-			if (part1 != null)
-				part1.onStartPenetration(this, p1, p2, part2);
-			if (part2 != null)
-				part2.onStartPenetration(this, p2, p1, part1);
+			List<BodyPart> parts1 = newStance.partsFor(p1);
+			List<BodyPart> parts2 = newStance.partsFor(p2);
+			parts1.forEach(part -> parts2.forEach(other -> part.onStartPenetration(this, p1, p2, other)));
+			parts2.forEach(part -> parts1.forEach(other -> part.onStartPenetration(this, p2, p1, other)));
 		}
 		
 		this.stance = newStance;

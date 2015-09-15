@@ -1,4 +1,7 @@
 package nightgames.characters.body;
+import java.util.Collection;
+import java.util.List;
+
 import org.json.simple.JSONObject;
 
 import nightgames.characters.Attribute;
@@ -35,7 +38,9 @@ public interface BodyPart {
 	public int mod(Attribute a, int total);
 	public BodyPart load(JSONObject obj);
 	public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan);
-	
+	public default boolean present() {
+		return !isType("none");
+	}
 	/**-1 is weak, 0 is none, 1 is strong<br>
 	  ex: <br><code>
 	  	  PussyPart.fiery.counterValue(CockPart.primal) == -1   // fiery pussy builds mojo for primal cock<br>
@@ -53,24 +58,30 @@ public interface BodyPart {
 	public default void onStartPenetration(Combat c, Character self, Character opponent, BodyPart target) {
 		//Do nothing, may be overridden in implementing classes.
 		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE))
-			System.out.printf("Starting Penetration for %s -> (%s, %s, %s)", this, self, opponent, target);
+			System.out.printf("Starting Penetration for %s -> (%s, %s, %s)\n", this.describe(self), self, opponent, target.describe(opponent));
 	}
 	
 	// Should be called when penetration ends
 	public default void onEndPenetration(Combat c, Character self, Character opponent, BodyPart target) {
 		//Do nothing, may be overridden in implementing classes.
 		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE))
-			System.out.printf("Ending Penetration for %s -> (%s, %s, %s)", this, self, opponent, target);
+			System.out.printf("Ending Penetration for %s -> (%s, %s, %s)\n", this.describe(self), self, opponent, target.describe(opponent));
 	}
-	
+
 	// Should be called when either combatant orgasms
 	public default void onOrgasm(Combat c, Character self, Character opponent, BodyPart other, boolean selfCame) {
 		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE))
-			System.out.printf("Processing Orgasm for %s -> (%s, %s, %s, %s)\n", this, self, opponent, other, selfCame+"");
+			System.out.printf("Processing Orgasm for %s -> (%s, %s, %s, %s)\n", this.describe(self), self, opponent, other.describe(opponent), Boolean.toString(selfCame));
 	}
 	// whether the part is modded
 	public default boolean isGeneric() {
 		return getMod().getModType().equals("none");
 	}
 	public BodyPartMod getMod();
+	public static boolean hasType(Collection<BodyPart> parts, String type) {
+		return parts.stream().anyMatch(part -> part.isType(type));
+	}
+	public static boolean hasOnlyType(Collection<BodyPart> parts, String type) {
+		return parts.stream().allMatch(part -> part.isType(type));
+	}
 }

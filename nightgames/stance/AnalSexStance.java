@@ -1,6 +1,10 @@
 package nightgames.stance;
 
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.AnalPussyPart;
@@ -24,9 +28,14 @@ public abstract class AnalSexStance extends Position {
 		}
 		return priority;
 	}
-	
+
 	@Override
-	public abstract BodyPart topPart();
+	public List<BodyPart> topParts() {
+		return Arrays.asList(top.body.getRandomInsertable()).stream().filter(part -> part != null && part.present()).collect(Collectors.toList());
+	}
+
 	@Override
-	public abstract BodyPart bottomPart();
+	public List<BodyPart> bottomParts() {
+		return Arrays.asList(bottom.body.getRandomAss()).stream().filter(part -> part != null && part.present()).collect(Collectors.toList());
+	}
 }

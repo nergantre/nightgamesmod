@@ -33,7 +33,7 @@ public class Thrust extends Skill {
 	public BodyPart getSelfOrgan(Combat c) {
 		if (c.getStance().inserted(getSelf())) {
 			return getSelf().body.getRandomInsertable();
-		} else if (c.getStance().en == Stance.anal) {
+		} else if (c.getStance().anallyPenetratedBy(getSelf(), c.getOther(getSelf()))) {
 			return getSelf().body.getRandom("ass");
 		} else {
 			return getSelf().body.getRandomPussy();
@@ -43,7 +43,7 @@ public class Thrust extends Skill {
 	public BodyPart getTargetOrgan(Combat c, Character target) {
 		if (c.getStance().inserted(target)) {
 			return target.body.getRandomInsertable();
-		} else if (c.getStance().en == Stance.anal) {
+		} else if (c.getStance().anallyPenetratedBy(getSelf(), c.getOther(getSelf()))) {
 			return target.body.getRandom("ass");
 		} else {
 			return target.body.getRandomPussy();

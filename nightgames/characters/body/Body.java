@@ -384,7 +384,7 @@ public class Body implements Cloneable {
 	public CockPart getRandomCock() {
 		return (CockPart)getRandom("cock");
 	}
-	
+
 	public BodyPart getRandomInsertable() {
 		BodyPart part = getRandomCock();
 		if (part == null && character.has(Trait.strapped))
@@ -396,7 +396,6 @@ public class Body implements Cloneable {
 		return get(type).size() > 0;
 	}
 
-	
 	public BodyPart getRandom(String type) {
 		List<BodyPart> parts = get(type);
 		BodyPart part = null;

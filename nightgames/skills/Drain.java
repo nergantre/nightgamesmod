@@ -112,7 +112,7 @@ public class Drain extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		if(c.getStance().havingSexNoStrapped()){
+		if(c.getStance().inserted(target)){
 			String muscDesc = c.getStance().anallyPenetrated(getSelf()) ? "anal" : "vaginal";
 			String partDesc = c.getStance().anallyPenetrated(getSelf()) ? getSelf().body.getRandom("ass").describe(getSelf()) : getSelf().body.getRandomPussy().describe(getSelf());
 			String base = "You put your powerful " + muscDesc + " muscles to work whilst"
