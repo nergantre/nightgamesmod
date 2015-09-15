@@ -22,12 +22,12 @@ public class Thrust extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return true;
+		return !user.has(Trait.temptress) || user.get(Attribute.Technique) < 11;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().canthrust(getSelf())&&c.getStance().havingSexOtherNoStrapped(getSelf());
+		return getSelfOrgan(c) != null && getTargetOrgan(c, target) != null &&getSelf().canAct()&&c.getStance().canthrust(getSelf())&&c.getStance().havingSexOtherNoStrapped(getSelf());
 	}
 
 	public BodyPart getSelfOrgan(Combat c) {
