@@ -34,4 +34,5 @@ public interface NPCData {
 	Plan getPlan();
 	String getType();
 	RecruitmentData getRecruitment();
+	AiModifiers getAiModifiers();
 }

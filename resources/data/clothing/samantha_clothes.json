@@ -1,0 +1,51 @@
+[
+	{
+	  "displayName":"knee-length black dress",
+      "buffs":[
+      ],
+      "price":400,
+      "prefix":"a ",
+      "attributes":[
+      ],
+      "layer":2,
+	  "slots" : ["top", "bottom"],
+	  "shops" : ["Boutique"],
+	  "sex" : ["female"],
+	  "hotness":0.65,
+      "name":"samdress",
+      "toughness":8,
+      "exposure":0.6
+	},{
+	  "displayName":"lacy bra",
+      "buffs":[
+      ],
+      "price":275,
+      "prefix":"a ",
+      "attributes":[
+      ],
+      "layer":0,
+	  "slots" : ["top"],
+	  "shops" : ["Boutique"],
+	  "sex" : ["all"],
+	  "hotness":0.6,
+      "name":"lacybra",
+      "toughness":5,
+      "exposure":0.8
+	},{
+	  "displayName":"lacy thong",
+      "buffs":[
+      ],
+      "price":275,
+      "prefix":"a ",
+      "attributes":[
+      ],
+      "layer":0,
+	  "slots" : ["bottom"],
+	  "shops" : ["Boutique"],
+	  "sex" : ["all"],
+	  "hotness":0.85,
+      "name":"lacythong",
+      "toughness":7,
+      "exposure":0.9
+	}
+]

@@ -180,7 +180,8 @@ public enum Trait {
 	fighter("Fighter","A combination of martial arts and ki"),
 	slime("Slime","An accident in the biology labs made the body a bit more... malleable."),
 	dryad("Dryad","Part girl, part tree."),
-
+	temptress("Temptress", "Well versed in the carnal arts."),
+	
 	//Class subtrait
 	divinity("Divinity","Has aspects of divinity."),
 

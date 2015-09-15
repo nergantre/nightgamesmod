@@ -43,19 +43,24 @@ import nightgames.characters.Emotion;
 import nightgames.characters.Growth;
 import nightgames.items.Item;
 import nightgames.items.ItemAmount;
+import nightgames.skills.Skill;
+import nightgames.stance.Stance;
+import nightgames.status.Stsflag;
 import nightgames.items.clothing.Clothing;
 
 public class JSONSourceNPCDataLoader {
 	private static ItemAmount readItem(JSONObject obj) {
-		Item item = Item.valueOf((String)obj.get("item"));
+		Item item = Item.valueOf((String) obj.get("item"));
 		int amount = JSONUtils.readInteger(obj, "amount");
 		return new ItemAmount(item, amount);
 	}
 
 	private static CustomStringEntry readLine(JSONObject obj) {
-		CustomStringEntry entry = new CustomStringEntry((String)obj.get("text"));
+		CustomStringEntry entry = new CustomStringEntry(
+				(String) obj.get("text"));
 		if (obj.containsKey("requirements")) {
-			loadRequirement((JSONObject) obj.get("requirements"), entry.requirements);
+			loadRequirement((JSONObject) obj.get("requirements"),
+					entry.requirements);
 		}
 		return entry;
 	}
@@ -71,13 +76,13 @@ public class JSONSourceNPCDataLoader {
 		Object value = JSONValue.parseWithException(new InputStreamReader(in));
 		DataBackedNPCData data = new DataBackedNPCData();
 		try {
-			JSONObject object = (JSONObject)value;
+			JSONObject object = (JSONObject) value;
 			data.name = (String) object.get("name");
 			data.type = (String) object.get("type");
-			data.trophy = Item.valueOf((String)object.get("trophy"));
-			data.plan = Plan.valueOf((String)object.get("plan"));
-			
-			//load outfit
+			data.trophy = Item.valueOf((String) object.get("trophy"));
+			data.plan = Plan.valueOf((String) object.get("plan"));
+
+			// load outfit
 			JSONObject outfit = (JSONObject) object.get("outfit");
 			JSONArray top = (JSONArray) outfit.get("top");
 			for (Object clothing : top) {
@@ -87,28 +92,46 @@ public class JSONSourceNPCDataLoader {
 			for (Object clothing : bottom) {
 				data.bottom.push(Clothing.getByID((String)clothing));
 			}
-			
+
 			// load stats
-			JSONObject stats = (JSONObject)object.get("stats");
+			JSONObject stats = (JSONObject) object.get("stats");
 			// load base stats
-			JSONObject baseStats = (JSONObject)stats.get("base");
-			data.stats.level = ((Number)baseStats.get("level")).intValue();
+			JSONObject baseStats = (JSONObject) stats.get("base");
+			data.stats.level = ((Number) baseStats.get("level")).intValue();
 			// load attributes
-			JSONObject attributes = (JSONObject)baseStats.get("attributes");
-			for (Object attributeString :attributes.keySet()) {
-				Attribute att = Attribute.valueOf((String)attributeString);
-				data.stats.attributes.put(att, ((Number)attributes.get(attributeString)).intValue());
+			JSONObject attributes = (JSONObject) baseStats.get("attributes");
+			for (Object attributeString : attributes.keySet()) {
+				Attribute att = Attribute.valueOf((String) attributeString);
+				data.stats.attributes.put(att,
+						((Number) attributes.get(attributeString)).intValue());
 			}
-			loadResources((JSONObject)baseStats.get("resources"), data.stats);
-			loadTraits((JSONArray)baseStats.get("traits"), data.stats.traits);
-			loadGrowth((JSONObject)stats.get("growth"), data.growth);
-			loadPreferredAttributes((JSONArray) ((JSONObject)stats.get("growth")).get("preferredAttributes"), data);
-			loadItems((JSONObject)object.get("items"), data);
-			loadAllLines((JSONObject)object.get("lines"), data.characterLines);
-			loadLines((JSONArray)object.get("portraits"), data.portraits);
-			loadRecruitment((JSONObject)object.get("recruitment"), data.recruitment);
+			loadResources((JSONObject) baseStats.get("resources"), data.stats);
+			loadTraits((JSONArray) baseStats.get("traits"), data.stats.traits);
+			loadGrowth((JSONObject) stats.get("growth"), data.growth);
+			loadPreferredAttributes(
+					(JSONArray) ((JSONObject) stats.get("growth"))
+							.get("preferredAttributes"),
+					data);
+			loadItems((JSONObject) object.get("items"), data);
+			loadAllLines((JSONObject) object.get("lines"), data.characterLines);
+			loadLines((JSONArray) object.get("portraits"), data.portraits);
+			loadRecruitment((JSONObject) object.get("recruitment"),
+					data.recruitment);
 			data.body = Body.load((JSONObject) object.get("body"), null);
 			data.sex = JSONUtils.readString(object, "sex");
+
+			if (object.containsKey("ai-modifiers")) {
+				loadAiModifiers((JSONArray) object.get("ai-modifiers"),
+						data.aiModifiers);
+			}
+			
+			if (object.containsKey("male-pref")) {
+				data.aiModifiers.setMalePref(Optional.of((double) 
+						JSONUtils.readFloat(object, "male-pref")));
+			} else {
+				data.aiModifiers.setMalePref(Optional.empty());
+			}
+
 		} catch (ClassCastException e) {
 			e.printStackTrace();
 			throw new IOException("Badly formatted JSON character: " + e.getMessage());
@@ -119,31 +142,38 @@ public class JSONSourceNPCDataLoader {
 		return data;
 	}
 
-	private static void loadRecruitment(JSONObject obj, RecruitmentData recruitment) {
+	private static void loadRecruitment(JSONObject obj,
+			RecruitmentData recruitment) {
 		recruitment.introduction = JSONUtils.readString(obj, "introduction");
 		recruitment.action = JSONUtils.readString(obj, "action");
 		recruitment.confirm = JSONUtils.readString(obj, "confirm");
-		loadRequirement((JSONObject) obj.get("requirements"), recruitment.requirement);
+		loadRequirement((JSONObject) obj.get("requirements"),
+				recruitment.requirement);
 		loadEffects((JSONArray) obj.get("cost"), recruitment.effects);
 	}
 
-	private static void loadEffects(JSONArray jsonArray, List<CustomEffect> effects) {
+	private static void loadEffects(JSONArray jsonArray,
+			List<CustomEffect> effects) {
 		for (Object obj : jsonArray) {
 			JSONObject jsonObj = (JSONObject) obj;
 			if (jsonObj.containsKey("modMoney")) {
-				effects.add(new MoneyModEffect(JSONUtils.readInteger(jsonObj, "modMoney")));
+				effects.add(new MoneyModEffect(
+						JSONUtils.readInteger(jsonObj, "modMoney")));
 			}
 		}
 	}
 
-	private static void loadLines(JSONArray linesArr, List<CustomStringEntry> entries) {
+	private static void loadLines(JSONArray linesArr,
+			List<CustomStringEntry> entries) {
 		for (Object obj : linesArr) {
-			entries.add(readLine((JSONObject)obj));
+			entries.add(readLine((JSONObject) obj));
 		}
 	}
 
-	private static void loadRequirement(JSONObject obj, List<CustomRequirement> reqs) {
-		// reverse reverses the self/other, so you can apply the requirement to the opponent
+	private static void loadRequirement(JSONObject obj,
+			List<CustomRequirement> reqs) {
+		// reverse reverses the self/other, so you can apply the requirement to
+		// the opponent
 		if (obj.containsKey("reverse")) {
 			List<CustomRequirement> subReqs = new ArrayList<>();
 			loadRequirement((JSONObject) obj.get("reverse"), subReqs);
@@ -151,7 +181,7 @@ public class JSONSourceNPCDataLoader {
 		}
 		// and requires that both of the sub requirements are true
 		if (obj.containsKey("and")) {
-			JSONArray reqsArr = ((JSONArray)obj.get("and"));
+			JSONArray reqsArr = ((JSONArray) obj.get("and"));
 			List<List<CustomRequirement>> allReqs = new ArrayList<>();
 			for (Object reqMem : reqsArr) {
 				JSONObject reqsObj = (JSONObject) reqMem;
@@ -163,7 +193,7 @@ public class JSONSourceNPCDataLoader {
 		}
 		// or requires that one of the sub requirements are true
 		if (obj.containsKey("or")) {
-			JSONArray reqsArr = ((JSONArray)obj.get("or"));
+			JSONArray reqsArr = ((JSONArray) obj.get("or"));
 			List<List<CustomRequirement>> allReqs = new ArrayList<>();
 			for (Object reqMem : reqsArr) {
 				JSONObject reqsObj = (JSONObject) reqMem;
@@ -181,23 +211,29 @@ public class JSONSourceNPCDataLoader {
 		}
 		// trait requires the character to have the trait
 		if (obj.containsKey("trait")) {
-			reqs.add(new TraitRequirement(Trait.valueOf(JSONUtils.readString(obj, "trait"))));
+			reqs.add(new TraitRequirement(
+					Trait.valueOf(JSONUtils.readString(obj, "trait"))));
 		}
-		// dom requires the character to be in a dominant stance. Invalid out of combat
+		// dom requires the character to be in a dominant stance. Invalid out of
+		// combat
 		if (obj.containsKey("dom")) {
 			reqs.add(new DomRequirement());
 		}
-		// sub requires the character to be in a submissive stance. Invalid out of combat
+		// sub requires the character to be in a submissive stance. Invalid out
+		// of combat
 		if (obj.containsKey("sub")) {
 			reqs.add(new SubRequirement());
 		}
 		// inserted requires the character to be inserted. Invalid out of combat
 		if (obj.containsKey("inserted")) {
-			reqs.add(new InsertedRequirement(JSONUtils.readBoolean(obj, "inserted")));
+			reqs.add(new InsertedRequirement(
+					JSONUtils.readBoolean(obj, "inserted")));
 		}
-		// body part requires the character to have at least one of the type of body part specified
+		// body part requires the character to have at least one of the type of
+		// body part specified
 		if (obj.containsKey("bodypart")) {
-			reqs.add(new BodyPartRequirement(JSONUtils.readString(obj, "bodypart")));
+			reqs.add(new BodyPartRequirement(
+					JSONUtils.readString(obj, "bodypart")));
 		}
 		// level requires the character to be at least that level
 		if (obj.containsKey("level")) {
@@ -205,35 +241,47 @@ public class JSONSourceNPCDataLoader {
 		}
 		// item requires the character to have at least that many items
 		if (obj.containsKey("item")) {
-			reqs.add(new ItemRequirement(readItem((JSONObject)obj.get("item"))));
+			reqs.add(new ItemRequirement(
+					readItem((JSONObject) obj.get("item"))));
 		}
-		// mood requires the character to be in that mood. Does not work on the player
+		// mood requires the character to be in that mood. Does not work on the
+		// player
 		if (obj.containsKey("mood")) {
-			reqs.add(new MoodRequirement(Emotion.valueOf(JSONUtils.readString(obj, "mood"))));
+			reqs.add(new MoodRequirement(
+					Emotion.valueOf(JSONUtils.readString(obj, "mood"))));
 		}
-		// stance requires the character to be in that stance. Invalid out of combat
+		// stance requires the character to be in that stance. Invalid out of
+		// combat
 		if (obj.containsKey("stance")) {
-			reqs.add(new StanceRequirement(JSONUtils.readString(obj, "stance")));
+			reqs.add(
+					new StanceRequirement(JSONUtils.readString(obj, "stance")));
 		}
-		// result requires the battle to be in that result state. Invalid out of combat
+		// result requires the battle to be in that result state. Invalid out of
+		// combat
 		if (obj.containsKey("result")) {
-			reqs.add(new ResultRequirement(Result.valueOf(JSONUtils.readString(obj, "result"))));
+			reqs.add(new ResultRequirement(
+					Result.valueOf(JSONUtils.readString(obj, "result"))));
 		}
-		// level requires the character to have had that many orgasms in the combat
+		// level requires the character to have had that many orgasms in the
+		// combat
 		if (obj.containsKey("orgasms")) {
-			reqs.add(new OrgasmRequirement(JSONUtils.readInteger(obj, "orgasms")));
+			reqs.add(new OrgasmRequirement(
+					JSONUtils.readInteger(obj, "orgasms")));
 		}
-		// level requires the character to have had that many orgasms in the combat
+		// level requires the character to have had that many orgasms in the
+		// combat
 		if (obj.containsKey("random")) {
 			reqs.add(new RandomRequirement(JSONUtils.readFloat(obj, "random")));
 		}
 	}
 
-	private static void loadAllLines(JSONObject linesObj, Map<String, List<CustomStringEntry>> characterLines) {
+	private static void loadAllLines(JSONObject linesObj,
+			Map<String, List<CustomStringEntry>> characterLines) {
 		for (Object key : linesObj.keySet()) {
-			String keyString = (String)key;
+			String keyString = (String) key;
 			characterLines.put(keyString, new ArrayList<>());
-			loadLines((JSONArray) linesObj.get(keyString), characterLines.get(keyString));
+			loadLines((JSONArray) linesObj.get(keyString),
+					characterLines.get(keyString));
 		}
 	}
 
@@ -263,7 +311,7 @@ public class JSONSourceNPCDataLoader {
 		int defaultPoints = 3;
 		for (int i = 0; i < growth.attributes.length; i++) {
 			if (i < points.size()) {
-				growth.attributes[i] = ((Number)points.get(i)).intValue();
+				growth.attributes[i] = ((Number) points.get(i)).intValue();
 				defaultPoints = growth.attributes[i];
 			} else {
 				growth.attributes[i] = defaultPoints;
@@ -272,14 +320,15 @@ public class JSONSourceNPCDataLoader {
 	}
 
 	private static void loadGrowth(JSONObject obj, Growth growth) {
-		loadGrowthResources((JSONObject)obj.get("resources"), growth);
-		loadGrowthTraits((JSONArray)obj.get("traits"), growth);
+		loadGrowthResources((JSONObject) obj.get("resources"), growth);
+		loadGrowthTraits((JSONArray) obj.get("traits"), growth);
 	}
 
-	private static void loadPreferredAttributes(JSONArray arr, DataBackedNPCData data) {
+	private static void loadPreferredAttributes(JSONArray arr,
+			DataBackedNPCData data) {
 		for (Object mem : arr) {
 			JSONObject obj = (JSONObject) mem;
-			Attribute att = Attribute.valueOf((String)obj.get("attribute"));
+			Attribute att = Attribute.valueOf((String) obj.get("attribute"));
 			final int max;
 			if (obj.containsKey("max")) {
 				max = ((Number) obj.get("max")).intValue();
@@ -287,7 +336,7 @@ public class JSONSourceNPCDataLoader {
 				max = Integer.MAX_VALUE;
 			}
 			data.preferredAttributes.add(character -> {
-				if (character.get(att) < max) { 
+				if (character.get(att) < max) {
 					return Optional.of(att);
 				} else {
 					return Optional.empty();
@@ -299,15 +348,53 @@ public class JSONSourceNPCDataLoader {
 	private static void loadGrowthTraits(JSONArray arr, Growth growth) {
 		for (Object mem : arr) {
 			JSONObject obj = (JSONObject) mem;
-			growth.addTrait(JSONUtils.readInteger(obj, "level"), Trait.valueOf((String)obj.get("trait")));
+			growth.addTrait(JSONUtils.readInteger(obj, "level"),
+					Trait.valueOf((String) obj.get("trait")));
 		}
 	}
 
 	private static void loadTraits(JSONArray arr, List<Trait> traits) {
 		for (Object traitString : arr) {
-			Trait trait = Trait.valueOf((String)traitString);
+			Trait trait = Trait.valueOf((String) traitString);
 			traits.add(trait);
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	private static void loadAiModifiers(JSONArray arr, AiModifiers mods) {
+		for (Object aiMod : arr) {
+			JSONObject obj = (JSONObject) aiMod;
+			String value = JSONUtils.readString(obj, "value");
+			double weight = JSONUtils.readFloat(obj, "weight");
+			switch (JSONUtils.readString(obj, "type")) {
+				case "skill":
+					try {
+						mods.getAttackMods().put(
+								(Class<? extends Skill>) Class.forName(value),
+								weight);
+					} catch (ClassNotFoundException e) {
+						throw new IllegalArgumentException(
+								"Skill not found: " + value);
+					}
+					break;
+				case "position":
+					mods.getPositionMods().put(Stance.valueOf(value), weight);
+					break;
+				case "self-status":
+					mods.getSelfStatusMods().put(Stsflag.valueOf(value),
+							weight);
+					break;
+				case "opponent-status":
+					mods.getOppStatusMods().put(Stsflag.valueOf(value), weight);
+					break;
+				default:
+					throw new IllegalArgumentException(
+							"Type of AiModifier must be one of \"skill\", "
+									+ "\"position\", \"self-status\" or \"opponent-status\", "
+									+ "but was \""
+									+ JSONUtils.readString(obj, "type")
+									+ "\".");
+			}
+		}
+	}
 }

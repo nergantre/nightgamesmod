@@ -231,24 +231,24 @@ public class Outfit {
 			if (top == null && bottom == null) {
 			} else {
 				if(top == null){
-					sb.append("{self:subject-action:are|is} topless ");
+					sb.append("{self:subject-action:are|is} topless");
 				} else {
-					sb.append("{self:subject-action:are|is} wearing "+top.pre()+top.getName() + " ");
+					sb.append("{self:subject-action:are|is} wearing "+top.pre()+top.getName() + "");
 					addedTop = true;
 					described.add(top);
 				}
 				if(bottom == null){
-					sb.append("but {self:possessive} crotch is clearly visible.<br>");
+					sb.append(" but {self:possessive} crotch is clearly visible.<br>");
 				} else {
 					if (bottom != top) {
-						sb.append("and ");
+						sb.append(" and ");
 						if (!addedTop) {
 							sb.append("wearing ");
 						}
 						sb.append(bottom.pre()+bottom.getName()+".<br>");
 						described.add(bottom);
 					} else {
-						sb.append(".");
+						sb.append(".<br>");
 					}
 				}
 			}

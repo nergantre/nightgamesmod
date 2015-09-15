@@ -12,6 +12,11 @@ public class Charmed extends DurationStatus {
 		super("Charmed", affected, 5);
 		flag(Stsflag.charmed);
 	}
+	
+	public Charmed(Character affected, int duration) {
+		this(affected);
+		super.setDuration(duration);
+	}
 
 	@Override
 	public String describe(Combat c) {

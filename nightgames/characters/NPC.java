@@ -78,13 +78,16 @@ public class NPC extends Character {
 			}
 		}
 		if (per >= 9) {
-			visible = visible + "Her arousal is at " + arousal.percent() + "%<br>";
+			visible = visible + "Her arousal is at " + arousal.percent()
+					+ "%<br>";
 		}
 		if (per >= 8) {
-			visible = visible + "Her stamina is at " + stamina.percent() + "%<br>";
+			visible = visible + "Her stamina is at " + stamina.percent()
+					+ "%<br>";
 		}
 		if (per >= 9) {
-			visible = visible + "Her willpower is at " + willpower.percent() + "%<br>";
+			visible = visible + "Her willpower is at " + willpower.percent()
+					+ "%<br>";
 		}
 		if (per >= 7) {
 			visible = visible + "She looks " + mood.name() + "<br>";
@@ -94,16 +97,20 @@ public class NPC extends Character {
 				visible = visible
 						+ "She's dripping with arousal and breathing heavily. She's at least 3/4 of the way to orgasm<br>";
 			} else if (arousal.percent() >= 50) {
-				visible = visible + "She's showing signs of arousal. She's at least halfway to orgasm<br>";
+				visible = visible
+						+ "She's showing signs of arousal. She's at least halfway to orgasm<br>";
 			} else if (arousal.percent() >= 25) {
-				visible = visible + "She's starting to look noticeably arousal, maybe a quarter of her limit<br>";
+				visible = visible
+						+ "She's starting to look noticeably arousal, maybe a quarter of her limit<br>";
 			}
 			if (willpower.percent() <= 75) {
 				visible = visible + "She still seems ready to fight.<br>";
 			} else if (willpower.percent() <= 50) {
-				visible = visible + "She seems a bit unsettled, but she still has some spirit left in her.<br>";
+				visible = visible
+						+ "She seems a bit unsettled, but she still has some spirit left in her.<br>";
 			} else if (willpower.percent() <= 25) {
-				visible = visible + "Her eyes seem glazed over and ready to give in.<br>";
+				visible = visible
+						+ "Her eyes seem glazed over and ready to give in.<br>";
 			}
 		}
 		if (per >= 6 && per < 8) {
@@ -115,10 +122,12 @@ public class NPC extends Character {
 		}
 		if (per >= 3 && per < 7) {
 			if (arousal.percent() >= 50) {
-				visible = visible + "She's showing clear sign of arousal. You're definitely getting to her.<br>";
+				visible = visible
+						+ "She's showing clear sign of arousal. You're definitely getting to her.<br>";
 			}
 			if (willpower.percent() <= 50) {
-				visible = visible + "She seems a bit distracted and unable to look you in the eye.<br>";
+				visible = visible
+						+ "She seems a bit distracted and unable to look you in the eye.<br>";
 
 			}
 		}
@@ -179,7 +188,8 @@ public class NPC extends Character {
 		this.gainXP(getDefeatXP(target));
 		target.gainXP(getVictoryXP(this));
 		this.arousal.empty();
-		if (!target.human() || Global.getMatch().condition != Modifier.norecovery) {
+		if (!target.human()
+				|| Global.getMatch().condition != Modifier.norecovery) {
 			target.arousal.empty();
 		}
 		if (this.has(Trait.insatiable)) {
@@ -232,7 +242,8 @@ public class NPC extends Character {
 			pickSkillsWithGUI(c, target);
 		} else {
 			for (Skill act : skills) {
-				if (Skill.skillIsUsable(c, act, target) && cooldownAvailable(act)) {
+				if (Skill.skillIsUsable(c, act, target)
+						&& cooldownAvailable(act)) {
 					available.add(act);
 				}
 			}
@@ -395,7 +406,11 @@ public class NPC extends Character {
 					}
 				}
 				if (location.humanPresent()) {
-					Global.gui().message("You notice " + name() + ai.move(available, radar).execute(this).describe());
+					Global.gui().message(
+							"You notice "
+									+ name()
+									+ ai.move(available, radar).execute(this)
+											.describe());
 				} else {
 					ai.move(available, radar).execute(this);
 				}
@@ -438,7 +453,8 @@ public class NPC extends Character {
 
 	@Override
 	public void intervene(Encounter enc, Character p1, Character p2) {
-		if (Global.random(20) + getAffection(p1) + (p1.has(Trait.sympathetic) ? 10 : 0) >= Global.random(20)
+		if (Global.random(20) + getAffection(p1)
+				+ (p1.has(Trait.sympathetic) ? 10 : 0) >= Global.random(20)
 				+ getAffection(p2) + (p2.has(Trait.sympathetic) ? 10 : 0)) {
 			enc.intrude(this, p1);
 		} else {
@@ -477,26 +493,45 @@ public class NPC extends Character {
 	public void counterattack(Character target, Tactics type, Combat c) {
 		switch (type) {
 		case damage:
-			c.write(this, name() + " avoids your clumsy attack and swings her fist into your nuts.");
-			target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
+			c.write(this,
+					name()
+							+ " avoids your clumsy attack and swings her fist into your nuts.");
+			target.pain(c,
+					4 + Math.min(Global.random(get(Attribute.Power)), 20));
 			break;
 		case pleasure:
 			if (target.hasDick()) {
 				if (target.crotchAvailable()) {
-					c.write(this, name() + " catches you by the penis and rubs your sensitive glans.");
-					target.body.pleasure(this, body.getRandom("hands"), target.body.getRandom("cock"),
-							4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
+					c.write(this,
+							name()
+									+ " catches you by the penis and rubs your sensitive glans.");
+					target.body
+							.pleasure(this, body.getRandom("hands"),
+									target.body.getRandom("cock"),
+									4 + Math.min(Global
+											.random(get(Attribute.Seduction)),
+											20), c);
 				} else {
-					c.write(this, name() + " catches you as you approach and grinds her knee into the tent in your "
-							+ target.getOutfit().getTopOfSlot(ClothingSlot.bottom));
-					target.body.pleasure(this, body.getRandom("legs"), target.body.getRandom("cock"),
-							4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
+					c.write(this,
+							name()
+									+ " catches you as you approach and grinds her knee into the tent in your "
+									+ target.getOutfit().getTopOfSlot(
+											ClothingSlot.bottom));
+					target.body
+							.pleasure(this, body.getRandom("legs"), target.body
+									.getRandom("cock"),
+									4 + Math.min(Global
+											.random(get(Attribute.Seduction)),
+											20), c);
 				}
 			} else {
-				c.write(this, name()
-						+ " pulls you off balance and licks your sensitive ear. You tremble as she nibbles on your earlobe.");
-				target.body.pleasure(this, body.getRandom("tongue"), target.body.getRandom("ears"),
-						4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
+				c.write(this,
+						name()
+								+ " pulls you off balance and licks your sensitive ear. You tremble as she nibbles on your earlobe.");
+				target.body
+						.pleasure(this, body.getRandom("tongue"), target.body
+								.getRandom("ears"), 4 + Math.min(
+								Global.random(get(Attribute.Seduction)), 20), c);
 			}
 			break;
 		case fucking:
@@ -505,7 +540,10 @@ public class NPC extends Character {
 				if (reverse != c.getStance() && !BodyPart.hasOnlyType(reverse.bottomParts(), "strapon")) {
 					c.setStance(reverse);
 				} else {
-					c.write(this, Global.format("{self:NAME-POSSESSIVE} quick wits find a gap in {other:name-possessive} hold and {self:action:slip|slips} away.", this, target));
+					c.write(this,
+							Global.format(
+									"{self:NAME-POSSESSIVE} quick wits find a gap in {other:name-possessive} hold and {self:action:slip|slips} away.",
+									this, target));
 					c.setStance(new Neutral(this, target));
 				}
 			} else {
@@ -523,25 +561,36 @@ public class NPC extends Character {
 			Clothing clothes = target.stripRandom(c);
 			if (clothes != null) {
 				c.write(this,
-						name() + " manages to catch you groping her clothing, and in a swift motion strips off your "
+						name()
+								+ " manages to catch you groping her clothing, and in a swift motion strips off your "
 								+ clothes.getName());
 			} else {
-				c.write(this, name() + " manages to dodge your groping hands and gives a retaliating slap in return");
-				target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
+				c.write(this,
+						name()
+								+ " manages to dodge your groping hands and gives a retaliating slap in return");
+				target.pain(c,
+						4 + Math.min(Global.random(get(Attribute.Power)), 20));
 			}
 			break;
 		case positioning:
 			if (c.getStance().dom(this)) {
-				c.write(this, name() + " outmanuevers you and you're exhausted from the struggle.");
+				c.write(this,
+						name()
+								+ " outmanuevers you and you're exhausted from the struggle.");
 				target.weaken(c, 10);
 			} else {
-				c.write(this, name() + " outmanuevers you and catches you from behind when you stumble.");
+				c.write(this,
+						name()
+								+ " outmanuevers you and catches you from behind when you stumble.");
 				c.setStance(new Behind(this, target));
 			}
 			break;
 		default:
-			c.write(this, name() + " manages to dodge your attack and gives a retaliating slap in return");
-			target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
+			c.write(this,
+					name()
+							+ " manages to dodge your attack and gives a retaliating slap in return");
+			target.pain(c,
+					4 + Math.min(Global.random(get(Attribute.Power)), 20));
 		}
 	}
 
@@ -564,7 +613,8 @@ public class NPC extends Character {
 		float s = Global.randomfloat() * sum;
 		for (WeightedSkill wskill : wlist) {
 			if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS))
-				System.out.printf("%.1f/%.1f %s\n", wskill.weight, s, wskill.skill);
+				System.out.printf("%.1f/%.1f %s\n", wskill.weight, s,
+						wskill.skill);
 			if (wskill.weight > s) {
 				return wskill.skill;
 			}
@@ -595,7 +645,8 @@ public class NPC extends Character {
 				}
 				mood = e;
 				if (Global.isDebugOn(DebugFlags.DEBUG_MOOD)) {
-					System.out.printf("Moodswing: %s is now %s\n", name, mood.name());
+					System.out.printf("Moodswing: %s is now %s\n", name,
+							mood.name());
 				}
 				if (c.p1.human() || c.p2.human())
 					Global.gui().loadPortrait(c, c.p1, c.p2);
@@ -608,22 +659,30 @@ public class NPC extends Character {
 	@Override
 	public void eot(Combat c, Character opponent, Skill last) {
 		super.eot(c, opponent, last);
-		if (opponent.pet != null && canAct() && c.getStance().mobile(this) && !c.getStance().prone(this)) {
+		if (opponent.pet != null && canAct() && c.getStance().mobile(this)
+				&& !c.getStance().prone(this)) {
 			if (get(Attribute.Speed) > opponent.pet.ac() * Global.random(20)) {
 				opponent.pet.caught(c, this);
 			}
 		}
-		int pheromoneChance = (int) Math.round(10 * (1 - opponent.getExposure()));
-		if (opponent.has(Trait.pheromones) && opponent.getArousal().percent() >= 20
+		int pheromoneChance = (int) Math
+				.round(10 * (1 - opponent.getExposure()));
+		if (opponent.has(Trait.pheromones)
+				&& opponent.getArousal().percent() >= 20
 				&& Global.random(2 + pheromoneChance) == 0) {
-			c.write(opponent, "<br>You see " + name()
-					+ " swoon slightly as she gets close to you. Seems like she's starting to feel the effects of your musk.");
-			add(c, new Horny(this, opponent.has(Trait.augmentedPheromones) ? 2 : 1, 10,
-					opponent.nameOrPossessivePronoun() + " pheromones"));
+			c.write(opponent,
+					"<br>You see "
+							+ name()
+							+ " swoon slightly as she gets close to you. Seems like she's starting to feel the effects of your musk.");
+			add(c,
+					new Horny(this, opponent.has(Trait.augmentedPheromones) ? 2
+							: 1, 10, opponent.nameOrPossessivePronoun()
+							+ " pheromones"));
 		}
 		if (opponent.has(Trait.smqueen) && !is(Stsflag.masochism)) {
-			c.write(Global.capitalizeFirstLetter(
-					String.format("<br>%s seems to shudder in arousal at the thought of pain.", subject())));
+			c.write(Global.capitalizeFirstLetter(String
+					.format("<br>%s seems to shudder in arousal at the thought of pain.",
+							subject())));
 			add(c, new Masochistic(this));
 		}
 		if (has(Trait.RawSexuality)) {
@@ -678,7 +737,8 @@ public class NPC extends Character {
 		return (NPC) super.clone();
 	}
 
-	public float rateAction(Combat c, float selfFit, float otherFit, CustomEffect effect) {
+	public float rateAction(Combat c, float selfFit, float otherFit,
+			CustomEffect effect) {
 		// Clone ourselves a new combat... This should clone our characters, too
 		Combat c2;
 		try {
@@ -697,13 +757,16 @@ public class NPC extends Character {
 			newSelf = c2.p2;
 			newOther = c2.p1;
 		} else {
-			throw new IllegalArgumentException("Tried to use a badly cloned combat");
+			throw new IllegalArgumentException(
+					"Tried to use a badly cloned combat");
 		}
 		effect.execute(c2, newSelf, newOther);
 		Global.debugSimulation -= 1;
 		float selfFitnessDelta = newSelf.getFitness(c) - selfFit;
-		float otherFitnessDelta = newSelf.getOtherFitness(c, newOther) - otherFit;
-		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS_RATING) && (c2.p1.human() || c2.p2.human())) {
+		float otherFitnessDelta = newSelf.getOtherFitness(c, newOther)
+				- otherFit;
+		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS_RATING)
+				&& (c2.p1.human() || c2.p2.human())) {
 			System.out.println("After:\n" + c2.debugMessage());
 		}
 		return selfFitnessDelta - otherFitnessDelta;
@@ -711,7 +774,8 @@ public class NPC extends Character {
 
 	private float rateMove(Skill skill, Combat c, float selfFit, float otherFit) {
 		// Clone ourselves a new combat... This should clone our characters, too
-		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS_RATING) && (c.p1.human() || c.p2.human())) {
+		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS_RATING)
+				&& (c.p1.human() || c.p2.human())) {
 			System.out.println("===> Rating " + skill);
 			System.out.println("Before:\n" + c.debugMessage());
 		}
@@ -752,6 +816,8 @@ public class NPC extends Character {
 			for (int j = 0; j < RUN_COUNT; j++) {
 				raw_rating += rateMove(wskill.skill, c, selfFit, otherFit);
 			}
+
+	        wskill.weight += ai.getAiModifiers().modAttack(wskill.skill.getClass());
 			// Sum up rating, add to map
 			rating = (float) Math.exp(RATING_FACTOR * raw_rating + wskill.weight + wskill.skill.priorityMod(c));
 			sum += rating;

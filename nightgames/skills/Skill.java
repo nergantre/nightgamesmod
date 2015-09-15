@@ -8,8 +8,10 @@ import java.util.Set;
 import javax.swing.Icon;
 
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.status.FiredUp;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
 
@@ -151,6 +153,21 @@ public abstract class Skill {
 		skill.user().spendMojo(c, skill.getMojoCost(c));
 		//save the mojo built of the skill before resolving it (or the status may change)
 		int generated = skill.getMojoBuilt(c);
+		
+		// Horrendously ugly, I know.
+		// But you were the one who removed getWithOrganType...
+		if (skill.user().has(Trait.temptress)) {
+			FiredUp status = (FiredUp) skill.user().status.stream()
+					.filter(s -> s instanceof FiredUp).findAny()
+					.orElse(null);
+			if (status != null) {
+				if ((status.getPart().equals("hands") && skill.getClass() != TemptressHandjob.class)
+						||(status.getPart().equals("mouth") && skill.getClass() != TemptressBlowjob.class)
+						||(status.getPart().equals("pussy") && skill.getClass() != TemptressRide.class)) {
+					skill.user().removeStatus(Stsflag.firedup);
+				}
+			}
+		}
 		
 		if (skill.resolve(c, target)) {
 			skill.user().buildMojo(c, generated);

@@ -394,6 +394,13 @@ public class Global {
 		getSkillPool().add(new BreastWorship(p));
 		getSkillPool().add(new CockWorship(p));
 		getSkillPool().add(new PussyWorship(p));
+		getSkillPool().add(new SuccubusSurprise(p));
+		getSkillPool().add(new TemptressHandjob(p));
+		getSkillPool().add(new TemptressBlowjob(p));
+		getSkillPool().add(new TemptressRide(p));
+		getSkillPool().add(new TemptressStripTease(p));
+		getSkillPool().add(new Blindside(p));
+
 		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 			getSkillPool().add(new SelfStun(p));	
 		}
@@ -793,8 +800,9 @@ public class Global {
 				try {
 					Personality npc = new CustomNPC(JSONSourceNPCDataLoader.load(ResourceLoader.getFileResourceAsStream("characters/" + name)));
 					characterPool.put(npc.getCharacter().getType(), npc.getCharacter());
+					System.out.println("Loaded " + name);
 				} catch (ParseException | IOException e1) {
-					System.err.println("Failed to load NPC");
+					System.err.println("Failed to load NPC " + name);
 					e1.printStackTrace();
 				}
 			}

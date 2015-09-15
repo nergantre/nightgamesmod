@@ -9,6 +9,7 @@ import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.status.Abuff;
 import nightgames.status.BodyFetish;
+import nightgames.status.FiredUp;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
 
