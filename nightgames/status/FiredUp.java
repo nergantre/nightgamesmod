@@ -15,7 +15,7 @@ public class FiredUp extends DurationStatus {
 	private String part;
 
 	public FiredUp(Character affected, Character other, String part) {
-		super("Fired Up", affected, 1);
+		super("Fired Up", affected, 2);
 		this.part = part;
 		this.stack = 1;
 		flag(Stsflag.firedup);
@@ -94,7 +94,7 @@ public class FiredUp extends DurationStatus {
 
 	@Override
 	public double pleasure(Combat c, double x) {
-		return stack * 0.3 * x;
+		return 0;
 	}
 
 	@Override
@@ -157,7 +157,7 @@ public class FiredUp extends DurationStatus {
 	public void replace(Status s) {
 		assert (s instanceof FiredUp);
 		stack++;
-		setDuration(1);
+		setDuration(2);
 	}
 
 	@SuppressWarnings("unchecked")

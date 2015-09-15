@@ -312,8 +312,6 @@ public abstract class Character extends Observable implements Cloneable {
 			rate += .2;
 		}
 		rate *= Global.xpRate;
-		if (!human())
-			rate *= 1.25;
 		xp+=Math.round(i * rate);
 	}
 	public int getRank() {

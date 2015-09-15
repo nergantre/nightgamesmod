@@ -50,12 +50,11 @@ public class TemptressBlowjob extends Blowjob {
 				if (target.body.getRandomCock().isReady(target)) {
 					// Was flaccid, got hard
 					c.write(getSelf(), deal(c, 0, Result.special, target));
-					getSelf().add(new FiredUp(getSelf(), target, "mouth"));
+					getSelf().add(c, new FiredUp(getSelf(), target, "mouth"));
 				} else {
 					// Was flaccid, still is
 					c.write(getSelf(), deal(c, 0, Result.weak, target));
 				}
-
 			} else {
 				FiredUp status = (FiredUp) getSelf().status.stream()
 						.filter(s -> s instanceof FiredUp).findAny()
@@ -65,8 +64,8 @@ public class TemptressBlowjob extends Blowjob {
 				c.write(getSelf(), deal(c, stack, Result.normal, target));
 				target.body.pleasure(getSelf(),
 						getSelf().body.getRandom("mouth"),
-						target.body.getRandomCock(), m, c);
-				getSelf().add(new FiredUp(getSelf(), target, "mouth"));
+						target.body.getRandomCock(), m + (m * stack) / 2, c);
+				getSelf().add(c, new FiredUp(getSelf(), target, "mouth"));
 			}
 		} else {
 			c.write(getSelf(), deal(c, 0, Result.miss, target));
