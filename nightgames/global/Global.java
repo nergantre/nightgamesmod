@@ -800,8 +800,9 @@ public class Global {
 				try {
 					Personality npc = new CustomNPC(JSONSourceNPCDataLoader.load(ResourceLoader.getFileResourceAsStream("characters/" + name)));
 					characterPool.put(npc.getCharacter().getType(), npc.getCharacter());
+					System.out.println("Loaded " + name);
 				} catch (ParseException | IOException e1) {
-					System.err.println("Failed to load NPC");
+					System.err.println("Failed to load NPC " + name);
 					e1.printStackTrace();
 				}
 			}
