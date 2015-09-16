@@ -136,6 +136,7 @@ public class CreationGUI extends JPanel{
 						Global.flag(Flag.hardmode);
 					}
 					Global.newGame(one);
+					Global.startMatch();
 				}
 			}
 		});

@@ -73,7 +73,7 @@ public class Diversion extends Skill {
 		}
 		else{
 			//TODO this is kind of terrible (deal does the effect...)
-			Clothing article = getSelf().strip(ClothingSlot.top, c);
+			Clothing article = getSelf().strip(ClothingSlot.bottom, c);
 			return "You quickly strip off your "+article.getName()+" and throw it to the right, while you jump to the left. "+target.getName()+" catches your discarded clothing, " +
 					"losing sight of you in the process.";
 		}
@@ -89,7 +89,7 @@ public class Diversion extends Skill {
 		}
 		else{
 			//TODO this is kind of terrible (deal does the effect...)
-			Clothing article = getSelf().strip(ClothingSlot.top, c);
+			Clothing article = getSelf().strip(ClothingSlot.bottom, c);
 			return "You lose sight of "+getSelf().name()+" for just a moment, but then see her moving behind you in your peripheral vision. You quickly spin around and grab her, " +
 					"but you find yourself holding just her "+article.getName()+". Wait... what the fuck?";
 		}

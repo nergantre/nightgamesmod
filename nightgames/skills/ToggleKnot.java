@@ -46,7 +46,7 @@ public class ToggleKnot extends Skill {
 				c.write(getSelf(),
 						"Deciding she's had enough for now, you let your cock return to its regular shape, once again permitting movement.");
 			} else if (target.human()) {
-				String part = c.getStance().partFor(target).describe(target);
+				String part = c.getStance().insertedPartFor(target).describe(target);
 				c.write(getSelf(), "You feel the intense pressure in your " + part + " recede as " + target.name()
 						+ " allows her knot to deflate.");
 			}

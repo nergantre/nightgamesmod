@@ -1,5 +1,6 @@
 package nightgames.characters;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import nightgames.characters.body.AnalPussyPart;
@@ -171,10 +172,11 @@ public class Jewel extends BasePersonality {
 	@Override
 	public String victory(Combat c, Result flag) {
 		Character other = c.getOther(character);
-		BodyPart selfOrgan = c.getStance().partFor(character);
-		BodyPart otherOrgan = c.getStance().partFor(other);
-		String selfODesc = selfOrgan == Body.nonePart ? "[none]" : selfOrgan.describe(character);
-		if (otherOrgan.isType("ass")) {
+		Collection<BodyPart> selfOrgans = c.getStance().partsFor(character);
+		Collection<BodyPart> otherOrgans = c.getStance().partsFor(other);
+		if (BodyPart.hasType(otherOrgans, "ass")) {
+			BodyPart insertable = character.body.getRandomInsertable();
+			String selfODesc = insertable == null ? "[none]" : insertable.describe(character);
 			return "You gasp as Jewel pounds away at your ass without mercy. You're going to cum, you realize. "
 						+ (other.hasDick() ? "She isn't even touching your dick but the sensation of her " + selfODesc + " moving over your prostate is mind blowing. "
 								: "The sensation of the " + selfODesc + " moving in and out of your rectum is mind blowing. ") 
@@ -241,7 +243,7 @@ public class Jewel extends BasePersonality {
 					"hurricane that just passed by.";
 			return message;
 		}
-		if(selfOrgan.isType("pussy") && otherOrgan.isType("cock")){
+		if(BodyPart.hasType(selfOrgans, "pussy") && BodyPart.hasType(otherOrgans, "cock")){
 			return "Jewel rocks her hips on top of you, full of confidence and in complete control. She reaches behind her with one hand to play with your balls, as if to prove " +
 					"you're completely at her mercy. Her powerful inner muscles squeeze your cock in time with her movements, creating an irresistable sensation. You moan as " +
 					"you pass the point of no return, but in one swift motion, she moves off your dick and finishes you off by hand. Your semen spills onto your stomach fruitlessly, " +
@@ -303,9 +305,6 @@ public class Jewel extends BasePersonality {
 	@Override
 	public String defeat(Combat c, Result flag) {
 		Character other = c.getOther(character);
-		BodyPart selfOrgan = c.getStance().partFor(character);
-		BodyPart otherOrgan = c.getStance().partFor(other);
-		String selfODesc = selfOrgan == Body.nonePart ? "[none]" : selfOrgan.describe(character);
 		if(character.has(Trait.fighter)){
 			return "Jewel falters as her arousal begins to overwhelm her. You manage to force her to the ground and pin her hands. You press your thigh against her slick pussy, " +
 					"making her moan in pleasure. You rub her with your leg and suck on her neck until she can't resist grinding against you. She climaxes with a scream and you kiss " +

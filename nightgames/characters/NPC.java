@@ -1,13 +1,16 @@
 package nightgames.characters;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 import nightgames.actions.Action;
 import nightgames.actions.Move;
 import nightgames.actions.Movement;
 import nightgames.areas.Area;
+import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.StraponPart;
 import nightgames.characters.custom.RecruitmentData;
 import nightgames.characters.custom.effect.CustomEffect;
@@ -43,10 +46,12 @@ public class NPC extends Character {
 	public HashMap<Emotion, Integer> emotes;
 	public Emotion mood;
 	public Plan plan;
+	private boolean fakeHuman;
 
 	public NPC(String name, int level, Personality ai) {
 		super(name, level);
 		this.ai = ai;
+		this.fakeHuman = false;
 		emotes = new HashMap<Emotion, Integer>();
 		for (Emotion e : Emotion.values()) {
 			emotes.put(e, 0);
@@ -272,7 +277,11 @@ public class NPC extends Character {
 
 	@Override
 	public boolean human() {
-		return false;
+		return fakeHuman;
+	}
+
+	public void setFakeHuman(boolean val) {
+		fakeHuman = val;
 	}
 
 	@Override
@@ -528,7 +537,7 @@ public class NPC extends Character {
 		case fucking:
 			if (c.getStance().sub(this)) {
 				Position reverse = c.getStance().reverse(c);
-				if (reverse != c.getStance() && StraponPart.isStrapon(reverse.bottomPart())) {
+				if (reverse != c.getStance() && !BodyPart.hasOnlyType(reverse.bottomParts(), "strapon")) {
 					c.setStance(reverse);
 				} else {
 					c.write(this,
@@ -538,18 +547,8 @@ public class NPC extends Character {
 					c.setStance(new Neutral(this, target));
 				}
 			} else {
-
-				if (c.getStance().havingSex() && StraponPart.isStrapon(c.getStance().partFor(target))) {
-					target.body.pleasure(this, c.getStance().partFor(this), c.getStance().partFor(target),
-							4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
-				} else {
-					target.body
-							.pleasure(this, body.getRandom("hands"),
-									target.body.getRandomBreasts(),
-									4 + Math.min(Global
-											.random(get(Attribute.Seduction)),
-											20), c);
-				}
+				target.body.pleasure(this, body.getRandom("hands"), target.body.getRandomBreasts(),
+						4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
 				c.write(this,
 						Global.format(
 								"{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} nipples with {self:possessive} hands as {other:subject-action:try|tries} to fuck {self:direct-object}. "

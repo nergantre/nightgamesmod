@@ -73,6 +73,7 @@ import nightgames.characters.custom.CustomNPC;
 import nightgames.characters.custom.JSONSourceNPCDataLoader;
 import nightgames.daytime.Daytime;
 import nightgames.gui.GUI;
+import nightgames.gui.NullGUI;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.pet.Ptype;
@@ -103,7 +104,7 @@ public class Global {
 	private static HashSet<Character> resting;
 	private static HashSet<String> flags;
 	private static HashMap<String,Float> counters;
-	private static Player human;
+	public static Player human;
 	private static Match match;
 	private static Daytime day;
 	private static int date;
@@ -117,7 +118,11 @@ public class Global {
 	public static ContextFactory factory;
 	public static Context cx;
 
-	public Global(){
+	public Global() {
+		this(false);
+	}
+
+	public Global(boolean headless) {
 		rng=new Random();
 		flags = new HashSet<String>();
 		players = new HashSet<Character>();
@@ -153,10 +158,14 @@ public class Global {
 		current=null;
 		factory = new ContextFactory();
 		cx = factory.enterContext();
-		gui=new GUI();
 		buildActionPool();
 		buildFeatPool();
 		buildParser();
+		if (headless) {
+			gui = new NullGUI();
+		} else {
+			gui = new GUI();
+		}
 	}
 
 	public static boolean meetsRequirements(Character c, Trait t)
@@ -171,7 +180,9 @@ public class Global {
 	public static void newGame(Player one){
 		human = one;
 		players.add(human);
-		gui.populatePlayer(human);
+		if (gui != null) {
+			gui.populatePlayer(human);
+		}
 		buildSkillPool(human);
 		Clothing.buildClothingTable();
 		Global.learnSkills(human);
@@ -183,7 +194,6 @@ public class Global {
 		players.add(getNPC("Angel"));
 		players.add(getNPC("Mara"));
 		match = new Match(players,Modifier.normal);
-		match.round();
 	}
 	
 	public static int random(int d){
@@ -214,184 +224,185 @@ public class Global {
 	}
 
 	public static void buildSkillPool(Player p){
-		skillPool.clear();
-		skillPool.add(new Slap(p));
-		skillPool.add(new Tribadism(p));
-		skillPool.add(new PussyGrind(p));
-		skillPool.add(new Slap(p));
-		skillPool.add(new ArmBar(p));
-		skillPool.add(new Blowjob(p));
-		skillPool.add(new Cunnilingus(p));
-		skillPool.add(new Escape(p));
-		skillPool.add(new Flick(p));
-		skillPool.add(new ToggleKnot(p));
-		skillPool.add(new LivingClothing(p));
-		skillPool.add(new LivingClothingOther(p));
-		skillPool.add(new Engulf(p));
-		skillPool.add(new CounterFlower(p));
-		skillPool.add(new Knee(p));
-		skillPool.add(new LegLock(p));
-		skillPool.add(new LickNipples(p));
-		skillPool.add(new Maneuver(p));
-		skillPool.add(new Paizuri(p));
-		skillPool.add(new PerfectTouch(p));
-		skillPool.add(new Restrain(p));
-		skillPool.add(new Reversal(p));
-		skillPool.add(new LeechEnergy(p));
-		skillPool.add(new SweetScent(p));
-		skillPool.add(new Spank(p));
-		skillPool.add(new Stomp(p));
-		skillPool.add(new StandUp(p));
-		skillPool.add(new WildThrust(p));
-		skillPool.add(new SuckNeck(p));
-		skillPool.add(new Tackle(p));
-		skillPool.add(new Taunt(p));
-		skillPool.add(new Trip(p));
-		skillPool.add(new Whisper(p));
-		skillPool.add(new Kick(p));
-		skillPool.add(new PinAndBlow(p));
-		skillPool.add(new Footjob(p));
-		skillPool.add(new FootPump(p));
-		skillPool.add(new HeelGrind(p));
-		skillPool.add(new Handjob(p));
-		skillPool.add(new Squeeze(p));
-		skillPool.add(new Nurple(p));
-		skillPool.add(new Finger(p));
-		skillPool.add(new Aphrodisiac(p));
-		skillPool.add(new Lubricate(p));
-		skillPool.add(new Dissolve(p));
-		skillPool.add(new Sedate(p));
-		skillPool.add(new Tie(p));
-		skillPool.add(new Masturbate(p));
-		skillPool.add(new Piston(p));
-		skillPool.add(new Grind(p));
-		skillPool.add(new Thrust(p));
-		skillPool.add(new UseDildo(p));
-		skillPool.add(new UseOnahole(p));
-		skillPool.add(new UseCrop(p));
-		skillPool.add(new Carry(p));
-		skillPool.add(new Tighten(p));
-		skillPool.add(new HipThrow(p));
-		skillPool.add(new SpiralThrust(p));
-		skillPool.add(new Bravado(p));
-		skillPool.add(new Diversion(p));
-		skillPool.add(new Undress(p));
-		skillPool.add(new StripSelf(p));
-		skillPool.add(new StripTease(p));
-		skillPool.add(new Sensitize(p));
-		skillPool.add(new EnergyDrink(p));
-		skillPool.add(new Strapon(p));
-		skillPool.add(new AssFuck(p));
-		skillPool.add(new Turnover(p));
-		skillPool.add(new Tear(p));
-		skillPool.add(new Binding(p));
-		skillPool.add(new Bondage(p));
-		skillPool.add(new WaterForm(p));
-		skillPool.add(new DarkTendrils(p));
-		skillPool.add(new Dominate(p));
-		skillPool.add(new FlashStep(p));
-		skillPool.add(new FlyCatcher(p));
-		skillPool.add(new Illusions(p));
-		skillPool.add(new LustAura(p));
-		skillPool.add(new MagicMissile(p));
-		skillPool.add(new Masochism(p));
-		skillPool.add(new NakedBloom(p));
-		skillPool.add(new ShrinkRay(p));
-		skillPool.add(new SpawnFaerie(p,Ptype.fairyfem));
-		skillPool.add(new SpawnImp(p,Ptype.impfem));
-		skillPool.add(new SpawnFaerie(p,Ptype.fairymale));
-		skillPool.add(new SpawnImp(p,Ptype.impmale));
-		skillPool.add(new SpawnSlime(p));
-		skillPool.add(new StunBlast(p));
-		skillPool.add(new Fly(p));
-		skillPool.add(new Command(p));
-		skillPool.add(new Obey(p));
-		skillPool.add(new OrgasmSeal(p));
-		skillPool.add(new DenyOrgasm(p));
-		skillPool.add(new Drain(p));
-		skillPool.add(new LevelDrain(p));
-		skillPool.add(new StoneForm(p));
-		skillPool.add(new FireForm(p));
-		skillPool.add(new Defabricator(p));
-		skillPool.add(new TentaclePorn(p));
-		skillPool.add(new Sacrifice(p));
-		skillPool.add(new Frottage(p));
-		skillPool.add(new FaceFuck(p));
-		skillPool.add(new VibroTease(p));
-		skillPool.add(new TailPeg(p));
-		skillPool.add(new CommandDismiss(p));
-		skillPool.add(new CommandDown(p));
-		skillPool.add(new CommandGive(p));
-		skillPool.add(new CommandHurt(p));
-		skillPool.add(new CommandInsult(p));
-		skillPool.add(new CommandMasturbate(p));
-		skillPool.add(new CommandOral(p));
-		skillPool.add(new CommandStrip(p));
-		skillPool.add(new CommandStripPlayer(p));
-		skillPool.add(new CommandUse(p));
-		skillPool.add(new ShortCircuit(p));
-		skillPool.add(new IceForm(p));
-		skillPool.add(new Barrier(p));
-		skillPool.add(new CatsGrace(p));
-		skillPool.add(new Charm(p));
-		skillPool.add(new Tempt(p));
-		skillPool.add(new EyesOfTemptation(p));
-		skillPool.add(new TailJob(p));
-		skillPool.add(new FaceSit(p));
-		skillPool.add(new Purr(p));
-		skillPool.add(new MutualUndress(p));
-		skillPool.add(new Submit(p));
-		skillPool.add(new Surrender(p));
-		skillPool.add(new ReverseFuck(p));
-		skillPool.add(new ReverseCarry(p));
-		skillPool.add(new ReverseFly(p));
-		skillPool.add(new CounterDrain(p));
-		skillPool.add(new CounterRide(p));
-		skillPool.add(new CounterPin(p));
-		skillPool.add(new ReverseAssFuck(p));
-		skillPool.add(new Nurse(p));
-		skillPool.add(new Suckle(p));
-		skillPool.add(new UseDraft(p));
-		skillPool.add(new ThrowDraft(p));
-		skillPool.add(new ReverseAssFuck(p));
-		skillPool.add(new FondleBreasts(p));
-		skillPool.add(new Fuck(p));
-		skillPool.add(new Kiss(p));
-		skillPool.add(new Struggle(p));
-		skillPool.add(new Tickle(p));
-		skillPool.add(new nightgames.skills.Wait(p));
-		skillPool.add(new StripTop(p));
-		skillPool.add(new StripBottom(p));
-		skillPool.add(new Shove(p));
-		skillPool.add(new Recover(p));
-		skillPool.add(new Straddle(p));
-		skillPool.add(new ReverseStraddle(p));
-		skillPool.add(new Stunned(p));
-		skillPool.add(new Distracted(p));
-		skillPool.add(new PullOut(p));
-		skillPool.add(new ThrowDraft(p));
-		skillPool.add(new UseDraft(p));
-		skillPool.add(new TentacleRape(p));
-		skillPool.add(new Anilingus(p));
-		skillPool.add(new UseSemen(p));
-		skillPool.add(new Invitation(p));
-		skillPool.add(new SubmissiveHold(p));
-		skillPool.add(new BreastGrowth(p));
-		skillPool.add(new CockGrowth(p));
-		skillPool.add(new BreastRay(p));
-		skillPool.add(new FootSmother(p));
-		skillPool.add(new FootWorship(p));
-		skillPool.add(new BreastWorship(p));
-		skillPool.add(new CockWorship(p));
-		skillPool.add(new PussyWorship(p));
-		skillPool.add(new SuccubusSurprise(p));
-		skillPool.add(new TemptressHandjob(p));
-		skillPool.add(new TemptressBlowjob(p));
-		skillPool.add(new TemptressRide(p));
-		skillPool.add(new TemptressStripTease(p));
-		skillPool.add(new Blindside(p));
+		getSkillPool().clear();
+		getSkillPool().add(new Slap(p));
+		getSkillPool().add(new Tribadism(p));
+		getSkillPool().add(new PussyGrind(p));
+		getSkillPool().add(new Slap(p));
+		getSkillPool().add(new ArmBar(p));
+		getSkillPool().add(new Blowjob(p));
+		getSkillPool().add(new Cunnilingus(p));
+		getSkillPool().add(new Escape(p));
+		getSkillPool().add(new Flick(p));
+		getSkillPool().add(new ToggleKnot(p));
+		getSkillPool().add(new LivingClothing(p));
+		getSkillPool().add(new LivingClothingOther(p));
+		getSkillPool().add(new Engulf(p));
+		getSkillPool().add(new CounterFlower(p));
+		getSkillPool().add(new Knee(p));
+		getSkillPool().add(new LegLock(p));
+		getSkillPool().add(new LickNipples(p));
+		getSkillPool().add(new Maneuver(p));
+		getSkillPool().add(new Paizuri(p));
+		getSkillPool().add(new PerfectTouch(p));
+		getSkillPool().add(new Restrain(p));
+		getSkillPool().add(new Reversal(p));
+		getSkillPool().add(new LeechEnergy(p));
+		getSkillPool().add(new SweetScent(p));
+		getSkillPool().add(new Spank(p));
+		getSkillPool().add(new Stomp(p));
+		getSkillPool().add(new StandUp(p));
+		getSkillPool().add(new WildThrust(p));
+		getSkillPool().add(new SuckNeck(p));
+		getSkillPool().add(new Tackle(p));
+		getSkillPool().add(new Taunt(p));
+		getSkillPool().add(new Trip(p));
+		getSkillPool().add(new Whisper(p));
+		getSkillPool().add(new Kick(p));
+		getSkillPool().add(new PinAndBlow(p));
+		getSkillPool().add(new Footjob(p));
+		getSkillPool().add(new FootPump(p));
+		getSkillPool().add(new HeelGrind(p));
+		getSkillPool().add(new Handjob(p));
+		getSkillPool().add(new Squeeze(p));
+		getSkillPool().add(new Nurple(p));
+		getSkillPool().add(new Finger(p));
+		getSkillPool().add(new Aphrodisiac(p));
+		getSkillPool().add(new Lubricate(p));
+		getSkillPool().add(new Dissolve(p));
+		getSkillPool().add(new Sedate(p));
+		getSkillPool().add(new Tie(p));
+		getSkillPool().add(new Masturbate(p));
+		getSkillPool().add(new Piston(p));
+		getSkillPool().add(new Grind(p));
+		getSkillPool().add(new Thrust(p));
+		getSkillPool().add(new UseDildo(p));
+		getSkillPool().add(new UseOnahole(p));
+		getSkillPool().add(new UseCrop(p));
+		getSkillPool().add(new Carry(p));
+		getSkillPool().add(new Tighten(p));
+		getSkillPool().add(new HipThrow(p));
+		getSkillPool().add(new SpiralThrust(p));
+		getSkillPool().add(new Bravado(p));
+		getSkillPool().add(new Diversion(p));
+		getSkillPool().add(new Undress(p));
+		getSkillPool().add(new StripSelf(p));
+		getSkillPool().add(new StripTease(p));
+		getSkillPool().add(new Sensitize(p));
+		getSkillPool().add(new EnergyDrink(p));
+		getSkillPool().add(new Strapon(p));
+		getSkillPool().add(new AssFuck(p));
+		getSkillPool().add(new Turnover(p));
+		getSkillPool().add(new Tear(p));
+		getSkillPool().add(new Binding(p));
+		getSkillPool().add(new Bondage(p));
+		getSkillPool().add(new WaterForm(p));
+		getSkillPool().add(new DarkTendrils(p));
+		getSkillPool().add(new Dominate(p));
+		getSkillPool().add(new FlashStep(p));
+		getSkillPool().add(new FlyCatcher(p));
+		getSkillPool().add(new Illusions(p));
+		getSkillPool().add(new LustAura(p));
+		getSkillPool().add(new MagicMissile(p));
+		getSkillPool().add(new Masochism(p));
+		getSkillPool().add(new NakedBloom(p));
+		getSkillPool().add(new ShrinkRay(p));
+		getSkillPool().add(new SpawnFaerie(p,Ptype.fairyfem));
+		getSkillPool().add(new SpawnImp(p,Ptype.impfem));
+		getSkillPool().add(new SpawnFaerie(p,Ptype.fairymale));
+		getSkillPool().add(new SpawnImp(p,Ptype.impmale));
+		getSkillPool().add(new SpawnSlime(p));
+		getSkillPool().add(new StunBlast(p));
+		getSkillPool().add(new Fly(p));
+		getSkillPool().add(new Command(p));
+		getSkillPool().add(new Obey(p));
+		getSkillPool().add(new OrgasmSeal(p));
+		getSkillPool().add(new DenyOrgasm(p));
+		getSkillPool().add(new Drain(p));
+		getSkillPool().add(new LevelDrain(p));
+		getSkillPool().add(new StoneForm(p));
+		getSkillPool().add(new FireForm(p));
+		getSkillPool().add(new Defabricator(p));
+		getSkillPool().add(new TentaclePorn(p));
+		getSkillPool().add(new Sacrifice(p));
+		getSkillPool().add(new Frottage(p));
+		getSkillPool().add(new FaceFuck(p));
+		getSkillPool().add(new VibroTease(p));
+		getSkillPool().add(new TailPeg(p));
+		getSkillPool().add(new CommandDismiss(p));
+		getSkillPool().add(new CommandDown(p));
+		getSkillPool().add(new CommandGive(p));
+		getSkillPool().add(new CommandHurt(p));
+		getSkillPool().add(new CommandInsult(p));
+		getSkillPool().add(new CommandMasturbate(p));
+		getSkillPool().add(new CommandOral(p));
+		getSkillPool().add(new CommandStrip(p));
+		getSkillPool().add(new CommandStripPlayer(p));
+		getSkillPool().add(new CommandUse(p));
+		getSkillPool().add(new ShortCircuit(p));
+		getSkillPool().add(new IceForm(p));
+		getSkillPool().add(new Barrier(p));
+		getSkillPool().add(new CatsGrace(p));
+		getSkillPool().add(new Charm(p));
+		getSkillPool().add(new Tempt(p));
+		getSkillPool().add(new EyesOfTemptation(p));
+		getSkillPool().add(new TailJob(p));
+		getSkillPool().add(new FaceSit(p));
+		getSkillPool().add(new Purr(p));
+		getSkillPool().add(new MutualUndress(p));
+		getSkillPool().add(new Submit(p));
+		getSkillPool().add(new Surrender(p));
+		getSkillPool().add(new ReverseFuck(p));
+		getSkillPool().add(new ReverseCarry(p));
+		getSkillPool().add(new ReverseFly(p));
+		getSkillPool().add(new CounterDrain(p));
+		getSkillPool().add(new CounterRide(p));
+		getSkillPool().add(new CounterPin(p));
+		getSkillPool().add(new ReverseAssFuck(p));
+		getSkillPool().add(new Nurse(p));
+		getSkillPool().add(new Suckle(p));
+		getSkillPool().add(new UseDraft(p));
+		getSkillPool().add(new ThrowDraft(p));
+		getSkillPool().add(new ReverseAssFuck(p));
+		getSkillPool().add(new FondleBreasts(p));
+		getSkillPool().add(new Fuck(p));
+		getSkillPool().add(new Kiss(p));
+		getSkillPool().add(new Struggle(p));
+		getSkillPool().add(new Tickle(p));
+		getSkillPool().add(new nightgames.skills.Wait(p));
+		getSkillPool().add(new StripTop(p));
+		getSkillPool().add(new StripBottom(p));
+		getSkillPool().add(new Shove(p));
+		getSkillPool().add(new Recover(p));
+		getSkillPool().add(new Straddle(p));
+		getSkillPool().add(new ReverseStraddle(p));
+		getSkillPool().add(new Stunned(p));
+		getSkillPool().add(new Distracted(p));
+		getSkillPool().add(new PullOut(p));
+		getSkillPool().add(new ThrowDraft(p));
+		getSkillPool().add(new UseDraft(p));
+		getSkillPool().add(new TentacleRape(p));
+		getSkillPool().add(new Anilingus(p));
+		getSkillPool().add(new UseSemen(p));
+		getSkillPool().add(new Invitation(p));
+		getSkillPool().add(new SubmissiveHold(p));
+		getSkillPool().add(new BreastGrowth(p));
+		getSkillPool().add(new CockGrowth(p));
+		getSkillPool().add(new BreastRay(p));
+		getSkillPool().add(new FootSmother(p));
+		getSkillPool().add(new FootWorship(p));
+		getSkillPool().add(new BreastWorship(p));
+		getSkillPool().add(new CockWorship(p));
+		getSkillPool().add(new PussyWorship(p));
+		getSkillPool().add(new SuccubusSurprise(p));
+		getSkillPool().add(new TemptressHandjob(p));
+		getSkillPool().add(new TemptressBlowjob(p));
+		getSkillPool().add(new TemptressRide(p));
+		getSkillPool().add(new TemptressStripTease(p));
+		getSkillPool().add(new Blindside(p));
+
 		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
-			skillPool.add(new SelfStun(p));	
+			getSkillPool().add(new SelfStun(p));	
 		}
 	}
 
@@ -541,6 +552,10 @@ public class Global {
 		} else {
 			match=new Match(participants,matchmod);
 		}
+		startMatch();
+	}
+	
+	public static void startMatch() {
 		match.round();
 	}
 
@@ -561,7 +576,7 @@ public class Global {
 	}
 
 	public static void learnSkills(Character c) {
-		for(Skill skill:skillPool){
+		for(Skill skill:getSkillPool()){
 			c.learn(skill);
 		}
 	}
@@ -785,8 +800,9 @@ public class Global {
 				try {
 					Personality npc = new CustomNPC(JSONSourceNPCDataLoader.load(ResourceLoader.getFileResourceAsStream("characters/" + name)));
 					characterPool.put(npc.getCharacter().getType(), npc.getCharacter());
+					System.out.println("Loaded " + name);
 				} catch (ParseException | IOException e1) {
-					System.err.println("Failed to load NPC");
+					System.err.println("Failed to load NPC " + name);
 					e1.printStackTrace();
 				}
 			}
@@ -1143,5 +1159,9 @@ public class Global {
 	private static DecimalFormat formatter = new DecimalFormat("#.##");
 	public static String formatDecimal(double val) {
 		return formatter.format(val);
+	}
+
+	public static HashSet<Skill> getSkillPool() {
+		return skillPool;
 	}
 }

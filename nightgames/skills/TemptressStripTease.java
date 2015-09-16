@@ -70,7 +70,7 @@ public class TemptressStripTease extends StripTease {
 			target.tempt(c, getSelf(),
 					10 + Global.random(Math.max(5, technique)));
 			if (Global.random(2) == 0)
-				target.add(new Charmed(target, Global.random(Math.min(3,
+				target.add(c, new Charmed(target, Global.random(Math.min(3,
 						technique))));
 			getSelf().add(c, new Alluring(getSelf(), 3));
 		} else {
@@ -82,7 +82,7 @@ public class TemptressStripTease extends StripTease {
 
 			target.tempt(c, getSelf(),
 					15 + Global.random(Math.max(10, technique)));
-			target.add(new Charmed(target,
+			target.add(c, new Charmed(target,
 					Global.random(Math.min(5, technique))));
 			getSelf().add(c, new Alluring(getSelf(), 5));
 			getSelf().undress(c);

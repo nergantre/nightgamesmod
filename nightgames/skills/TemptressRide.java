@@ -3,6 +3,7 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -12,6 +13,22 @@ public class TemptressRide extends Thrust {
 
 	public TemptressRide(Character self) {
 		super("Improved Ride", self);
+	}
+
+	@Override
+	public BodyPart getSelfOrgan(Combat c) {
+		if (c.getStance().vaginallyPenetratedBy(getSelf(), c.getOther(getSelf()))) {
+			return getSelf().body.getRandomPussy();
+		}
+		return null;
+	}
+
+	@Override
+	public BodyPart getTargetOrgan(Combat c, Character target) {
+		if (c.getStance().inserted(target)) {
+			return target.body.getRandomInsertable();
+		}
+		return null;
 	}
 
 	@Override
@@ -50,12 +67,12 @@ public class TemptressRide extends Thrust {
 		}
 
 		target.body.pleasure(getSelf(), getSelf().body.getRandomPussy(),
-				target.body.getRandomCock(), targetDmg, c);
+				target.body.getRandomCock(), targetDmg + (targetDmg * stack) / 2, c);
 
 		getSelf().body.pleasure(getSelf(), target.body.getRandomCock(),
 				getSelf().body.getRandomPussy(), selfDmg, c);
 
-		getSelf().add(new FiredUp(getSelf(), target, "pussy"));
+		getSelf().add(c, new FiredUp(getSelf(), target, "pussy"));
 		return true;
 	}
 

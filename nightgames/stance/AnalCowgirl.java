@@ -1,6 +1,10 @@
 package nightgames.stance;
 
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.AnalPussyPart;
@@ -119,12 +123,12 @@ public class AnalCowgirl extends AnalSexStance {
 	}
 
 	@Override
-	public BodyPart topPart() {
-		return top.body.getRandomAss();
+	public List<BodyPart> topParts() {
+		return Arrays.asList(top.body.getRandomAss()).stream().filter(part -> part != null && part.present()).collect(Collectors.toList());
 	}
-	
+
 	@Override
-	public BodyPart bottomPart() {
-		return bottom.body.getRandomInsertable();
+	public List<BodyPart> bottomParts() {
+		return Arrays.asList(bottom.body.getRandomInsertable()).stream().filter(part -> part != null && part.present()).collect(Collectors.toList());
 	}
 }
