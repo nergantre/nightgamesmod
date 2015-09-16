@@ -734,7 +734,11 @@ public abstract class Character extends Observable implements Cloneable {
 	}
 
 	public Clothing shredRandom() {
-		return shred(outfit.getRandomShreddableSlot());
+		ClothingSlot slot = outfit.getRandomShreddableSlot();
+		if (slot != null) {
+			return shred(slot);
+		}
+		return null;
 	}
 	public boolean topless() {
 		return outfit.slotEmpty(ClothingSlot.top);
