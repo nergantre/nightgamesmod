@@ -370,7 +370,7 @@ public class GUI extends JFrame implements Observer {
 		mntmCredits.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JOptionPane.showMessageDialog(GUI.this, "Night Games created by The Silver Bard\n"
-						+ "Reyka created by DNDW\n" + "Upgraded Strapon created by ElfBoyEni\n"
+						+ "Reyka and Samantha created by DNDW\n" + "Upgraded Strapon created by ElfBoyEni\n"
 						+ "Strapon victory scenes created by Legion\n" + "Advanced AI by Jos\n"
 						+ "Magic Training scenes by Legion\n" + "Jewel 2nd Victory scene by Legion\n"
 						+ "Video Games scenes 1-9 by Onyxdime\n"

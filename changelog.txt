@@ -1,3 +1,13 @@
+1.8.2.8 changelog
+New:
+- Merged in new NPC (Samantha) from dndw
+- Merged in ai mod system from dndw
+
+Bugs:
+- fixed crash with drain and diversion
+- fixed crashes with engulf
+- fixed some text bugs
+
 1.8.2.7 changelog
 Bugs:
 - disallow frottage during tribadism
