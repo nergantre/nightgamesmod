@@ -435,7 +435,7 @@ public class Cassie extends BasePersonality {
 	}
 
 	@Override
-	public boolean checkMood(Emotion mood, int value) {
+	public boolean checkMood(Combat c, Emotion mood, int value) {
 		switch(mood){
 		case nervous:
 			return value>=50;

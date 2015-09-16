@@ -222,7 +222,7 @@ public class Eve extends BasePersonality {
 		
 	}
 
-	public boolean checkMood(Emotion mood, int value) {
+	public boolean checkMood(Combat c, Emotion mood, int value) {
 		switch(mood){
 		case horny: case dominant:
 			return value>=50;

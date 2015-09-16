@@ -142,4 +142,8 @@ public class Engulfed extends Position {
 	public boolean faceAvailable(Character target) {
 		return target == top;
 	}
+	
+	public double pheromoneMod (Character self) {
+		return 10;
+	}
 }

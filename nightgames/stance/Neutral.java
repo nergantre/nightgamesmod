@@ -117,4 +117,8 @@ public class Neutral extends Position {
 		}
 		return this;
 	}
+
+	public double pheromoneMod (Character self) {
+		return .5;
+	}
 }

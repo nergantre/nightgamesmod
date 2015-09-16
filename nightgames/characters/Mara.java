@@ -423,7 +423,7 @@ public class Mara extends BasePersonality  {
 		character.mod(Attribute.Science, 1);
 	}
 
-	public boolean checkMood(Emotion mood, int value) {
+	public boolean checkMood(Combat c, Emotion mood, int value) {
 		switch(mood){
 		case confident:
 			return value>=50;

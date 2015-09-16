@@ -33,7 +33,7 @@ public interface Personality extends Serializable{
 	public String startBattle(Character other);
 	public boolean fit();
 	public String night();
-	public boolean checkMood(Emotion mood, int value);
+	public boolean checkMood(Combat c, Emotion mood, int value);
 	public String image(Combat c);
 	public void pickFeat();
 	public String describeAll(Combat c);

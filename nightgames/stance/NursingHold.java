@@ -122,4 +122,8 @@ public class NursingHold extends AbstractFacingStance {
 	public boolean faceAvailable(Character target) {
 		return target == top;
 	}
+
+	public double pheromoneMod (Character self) {
+		return 3;
+	}
 }

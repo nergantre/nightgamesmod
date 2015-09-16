@@ -417,7 +417,7 @@ public class Reyka extends BasePersonality {
 				"each other, and enjoy a peaceful sleep together with your arms around her and her head on your shoulder.";
 	}
 	
-	public boolean checkMood(Emotion mood, int value) {
+	public boolean checkMood(Combat c, Emotion mood, int value) {
 		switch(mood){
 		case dominant:
 			return value>=50;

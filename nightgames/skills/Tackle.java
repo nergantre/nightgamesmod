@@ -16,7 +16,7 @@ public class Tackle extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && c.getStance().mobile(getSelf())&&c.getStance().mobile(target)&&!c.getStance().prone(getSelf())&&getSelf().canAct()&&!getSelf().has(Trait.petite);
+		return !target.wary() && c.getStance().mobile(getSelf())&&c.getStance().mobile(target)&&!c.getStance().prone(getSelf())&&getSelf().canAct();
 	}
 
 	@Override

@@ -464,7 +464,7 @@ public class Jewel extends BasePersonality {
 	}
 
 	@Override
-	public boolean checkMood(Emotion mood, int value) {
+	public boolean checkMood(Combat c, Emotion mood, int value) {
 		switch(mood){
 		case angry: 
 			return value>=10;

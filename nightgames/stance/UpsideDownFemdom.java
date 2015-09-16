@@ -100,4 +100,8 @@ public class UpsideDownFemdom extends FemdomSexStance {
 		}
 		return new UpsideDownMaledom(bottom, top);
 	}
+
+	public double pheromoneMod (Character self) {
+		return 2;
+	}
 }

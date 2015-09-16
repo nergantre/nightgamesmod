@@ -636,7 +636,7 @@ public class NPC extends Character {
 	public Emotion moodSwing(Combat c) {
 		Emotion current = mood;
 		for (Emotion e : emotes.keySet()) {
-			if (ai.checkMood(e, emotes.get(e))) {
+			if (ai.checkMood(c, e, emotes.get(e))) {
 				emotes.put(e, 0);
 				// cut all the other emotions by half so that the new mood
 				// persists for a bit
@@ -665,18 +665,15 @@ public class NPC extends Character {
 				opponent.pet.caught(c, this);
 			}
 		}
-		int pheromoneChance = (int) Math
-				.round(10 * (1 - opponent.getExposure()));
 		if (opponent.has(Trait.pheromones)
 				&& opponent.getArousal().percent() >= 20
-				&& Global.random(2 + pheromoneChance) == 0) {
+				&& opponent.rollPheromones(c)) {
 			c.write(opponent,
 					"<br>You see "
 							+ name()
 							+ " swoon slightly as she gets close to you. Seems like she's starting to feel the effects of your musk.");
 			add(c,
-					new Horny(this, opponent.has(Trait.augmentedPheromones) ? 2
-							: 1, 10, opponent.nameOrPossessivePronoun()
+					new Horny(this, opponent.getPheromonePower(), 10, opponent.nameOrPossessivePronoun()
 							+ " pheromones"));
 		}
 		if (opponent.has(Trait.smqueen) && !is(Stsflag.masochism)) {

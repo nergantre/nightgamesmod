@@ -167,4 +167,11 @@ public class FaceSitting extends AbstractBehindStance {
 	public boolean faceAvailable(Character target) {
 		return target == top;
 	}
+
+	public double pheromoneMod (Character self) {
+		if (self == top) {
+			return 10;
+		}
+		return 2;
+	}
 }

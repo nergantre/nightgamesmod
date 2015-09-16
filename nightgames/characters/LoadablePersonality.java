@@ -179,7 +179,7 @@ public class LoadablePersonality extends BasePersonality {
 	}
 
 	@Override
-	public boolean checkMood(Emotion mood, int value) {
+	public boolean checkMood(Combat c, Emotion mood, int value) {
         ScriptableObject.putProperty(scope, "moodVar", Context.javaToJS(mood, scope));
         ScriptableObject.putProperty(scope, "valueVar", Context.javaToJS(value, scope));
 		return Boolean.valueOf(execute("checkMood(moodVar, valueVar)", "checkMood"));

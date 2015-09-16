@@ -101,4 +101,8 @@ public class SixNine extends AbstractBehindStance {
 	public boolean faceAvailable(Character target) {
 		return false;
 	}
+
+	public double pheromoneMod (Character self) {
+		return 10;
+	}
 }

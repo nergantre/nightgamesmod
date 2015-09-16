@@ -235,4 +235,10 @@ public abstract class Position implements Cloneable{
 	public boolean faceAvailable(Character target) {
 		return true;
 	}
+	/* 
+	 * returns likelihood modification of applying pheromones.
+	 * 1 is normal, 2 is twice as likely, .5 is half as likely, 0 is never */
+	public double pheromoneMod (Character self) {
+		return 1;
+	}
 }

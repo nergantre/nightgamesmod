@@ -61,7 +61,7 @@ public class Undress extends Skill {
 
 	@Override
 	public Tactics type(Combat c) {
-		return Tactics.misc;
+		return Tactics.stripping;
 	}
 
 	@Override

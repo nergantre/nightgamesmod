@@ -84,4 +84,8 @@ public class ReverseMount extends AbstractBehindStance {
 	public float priorityMod(Character self) {
 		return getSubDomBonus(self, 4.0f);
 	}
+
+	public double pheromoneMod (Character self) {
+		return 2;
+	}
 }

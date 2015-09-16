@@ -212,7 +212,7 @@ public class Airi extends BasePersonality {
 		
 	}
 
-	public boolean checkMood(Emotion mood, int value) {
+	public boolean checkMood(Combat c, Emotion mood, int value) {
 		switch(mood){
 		case confident:
 			return value>=50;

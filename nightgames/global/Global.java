@@ -150,10 +150,10 @@ public class Global {
 		debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
 		debug[DebugFlags.DEBUG_LOADING.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_DAMAGE.ordinal()] = true;
-//		debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
-//		debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
+		debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
+		debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
 //		debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
-		debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
+//		debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
 		traitRequirements = new TraitTree(ResourceLoader.getFileResourceAsStream("data/TraitRequirements.xml"));
 		current=null;
 		factory = new ContextFactory();
