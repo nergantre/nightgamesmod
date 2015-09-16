@@ -412,7 +412,7 @@
       "attributes":[
          "flexible"
       ],
-	  "layer":0,
+	  "layer":2,
 	  "shops" : [],
  	  "slots" : ["bottom"],
    	  "sex" : ["female"],

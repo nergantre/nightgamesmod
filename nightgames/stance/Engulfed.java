@@ -135,5 +135,11 @@ public class Engulfed extends Position {
 		parts.addAll(bottom.body.get("cock"));
 		parts.addAll(bottom.body.get("pussy"));
 		parts.addAll(bottom.body.get("ass"));
-		return parts.stream().filter(part -> part != null && part.present()).collect(Collectors.toList());	}
+		return parts.stream().filter(part -> part != null && part.present()).collect(Collectors.toList());
+	}
+
+	@Override
+	public boolean faceAvailable(Character target) {
+		return target == top;
+	}
 }

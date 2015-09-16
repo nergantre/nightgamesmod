@@ -155,7 +155,7 @@ public enum Trait {
 	naive("Naive", "Chance to not get cynical after mindgames"), //Chance to not get cynical after recovering from mindgames
 	footfetishist("Foot Fetishist", "Loves those feet"), //Starts off each match with a foot fetish
 	immobile("Immobile", "Unable to move"), //Cannot move
-	lethargic("Lethargic", "Very low mojo gain from normal methods.", new Lethargic(null)), //25% mojo gain
+	lethargic("Lethargic", "Very low mojo gain from normal methods.", new Lethargic(null, 999, .75)), //25% mojo gain
 
 	//Restrictions
 	softheart("Soft Hearted","Incapable of being mean"), //restricts slap, stomp, flick

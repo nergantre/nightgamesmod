@@ -162,4 +162,9 @@ public class FaceSitting extends AbstractBehindStance {
 	public float priorityMod(Character self) {
 		return getSubDomBonus(self, top.has(Trait.energydrain) ? 5.0f : 3.0f);
 	}
+
+	@Override
+	public boolean faceAvailable(Character target) {
+		return target == top;
+	}
 }

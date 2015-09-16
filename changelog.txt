@@ -1,3 +1,20 @@
+1.8.2.9 changelog
+
+Balance:
+- Using spiral thrust now also applies a 8 turn Lethargic debuff (Mojo gain is reduced by 75%)
+
+Bugs:
+- Changed strap-on to clothing layer 2 (same layer as pants, so if you put on a strapon, you'll remove your pants or skirt)
+- Fixed a bug with striping trap causing a crash
+- Fixed a bug where ass fucking would pleasure pussy instead (and crash if they don't have one)
+- Fixed a bug where other NPCs snapping out of enthrallment (anywhere on the playing field) would print a message for the player
+- Fixed some typos and grammar issues with Samantha
+- Fixed a bug where pets had access to your face when it is already covered
+
+Other changes:
+- Diversion can only be used when you are facing the opponent
+- You can now undress/striptease when wearing a strapon
+
 1.8.2.8 changelog
 New:
 - Merged in new NPC (Samantha) from dndw

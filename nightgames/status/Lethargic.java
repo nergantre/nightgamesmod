@@ -4,12 +4,15 @@ import org.json.simple.JSONObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.combat.Combat;
+import nightgames.global.JSONUtils;
 
-public class Lethargic extends Status {
-	int duration;
-	public Lethargic(Character affected) {
-		super("Lethargic", affected);
+public class Lethargic extends DurationStatus {
+	double magnitude;
+	public Lethargic(Character affected, int duration, double magnitude) {
+		super("Lethargic", affected, duration);
+		this.magnitude = magnitude;
 		flag(Stsflag.lethargic);
 	}
 
@@ -18,12 +21,14 @@ public class Lethargic extends Status {
 		if(affected.human()){
 			return "Your mojo gain is stopped.";
 		}
-		else{
+		else if (affected.has(Trait.lethargic)) {
 			if (affected.getMojo().get() < 40) {
 				return affected.name() + " looks lethargic."; 
 			} else {
 				return affected.name() + " looks energized";
 			}
+		} else {
+			return affected.name() + " looks lethargic.";
 		}
 	}
 
@@ -79,7 +84,7 @@ public class Lethargic extends Status {
 
 	@Override
 	public int gainmojo(int x) {
-		return -x*3/4;
+		return (int) Math.round(-x*magnitude);
 	}
 
 	@Override
@@ -96,19 +101,23 @@ public class Lethargic extends Status {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
-		return new Lethargic(newAffected);
+		return new Lethargic(newAffected, getDuration(), magnitude);
 	}
 
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
 		obj.put("type", getClass().getSimpleName());
+		obj.put("duration", getDuration());
+		obj.put("magnitude", magnitude);
 		return obj;
 	}
 
 	public Status loadFromJSON(JSONObject obj) {
-		return new Lethargic(null);
+		return new Lethargic(null,JSONUtils.readInteger(obj, "duration"),
+		JSONUtils.readFloat(obj, "magnitude"));
 	}
 }

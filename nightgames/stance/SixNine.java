@@ -96,4 +96,9 @@ public class SixNine extends AbstractBehindStance {
 	public Position insertRandom() {
 		return this;
 	}
+
+	@Override
+	public boolean faceAvailable(Character target) {
+		return false;
+	}
 }

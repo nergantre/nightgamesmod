@@ -1,13 +1,12 @@
 package nightgames.skills;
 
-import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.stance.Stance;
+import nightgames.status.Lethargic;
 
 public class SpiralThrust extends Thrust {
 	int cost;
@@ -37,7 +36,7 @@ public class SpiralThrust extends Thrust {
 		int[] result = new int[2];
 		int x = cost;
 		int mt = x / 2;
-		if(getSelf().has(Trait.experienced)){
+		if(getSelf().has(Trait.experienced)) {
 			mt = mt * 2 / 3;
 		}
 		result[0] = x;
@@ -49,6 +48,15 @@ public class SpiralThrust extends Thrust {
 	@Override
 	public int getMojoBuilt(Combat c) {
 		return 0;
+	}
+
+	@Override
+	public boolean resolve(Combat c, Character target) {
+		boolean res = super.resolve(c, target);
+		if (res) {
+			getSelf().add(new Lethargic(getSelf(), 8, .75));
+		}
+		return res;
 	}
 
 	@Override
@@ -94,7 +102,7 @@ public class SpiralThrust extends Thrust {
 	}
 
 	@Override
-	public String getName(Combat c) {
+	public String getLabel(Combat c) {
 		if (c.getStance().inserted(getSelf())) {
 			return "Spiral Thrust";
 		} else {

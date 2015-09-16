@@ -117,4 +117,9 @@ public class NursingHold extends AbstractFacingStance {
 			return avail;
 		}
 	}
+
+	@Override
+	public boolean faceAvailable(Character target) {
+		return target == top;
+	}
 }
