@@ -333,9 +333,45 @@
 		"introduction":"So, I know this girl, an old friend of mine who now works as a high-class escort. She doesn't have any of that magical or technological stuff, but I swear she could get my dear old grandfather to cream his pants just by winking at him the right way. And he's dead! Anyway, you might have heard about her. She got into a bit of trouble recently after an entrepreneuring paparazzo sniped a picture of her and some prince or another going at it. Now she's got to lay low for a bit, lest mommy dearest arranges for an 'accident'. So I told her about this thing we've got going here, and she got super excited at the prospect. So much so that she's agreed to come over for a fraction of her usual rate. Girl's got to eat, I suppose. She even gave me a free blowjob for making the suggestion! Let me tell you, those were six of the finest seconds of my life! Oh, think that's funny, do you? Pay up and see how long you last!",
 		"confirm":"Awesome, I'll go give her a call right now. Might even get another freebie out of it! I'll make sure to mention your name, too. Careful, she might want to thank you! "
 	},
-	"portraits":[
+	"portraits":[{
+			"requirements" : {
+					"mood" : "dominant"
+				}
+			,
+			"text" : "samantha_dominant.jpg"
+		}, {
+			"requirements" : {
+					"mood" : "nervous"
+				}
+			,
+			"text" : "samantha_nervous.jpg"
+		}, {
+			"requirements" : {
+					"mood" : "angry"
+				}
+			,
+			"text" : "samantha_angry.jpg"
+		}, {
+			"requirements" : {
+					"mood" : "confident"
+				}
+			,
+			"text" : "samantha_confident.jpg"
+		}, {
+			"requirements" : {
+					"mood" : "horny"
+				}
+			,
+			"text" : "samantha_horny.jpg"
+		}, {
+			"requirements" : {
+					"mood" : "desperate"
+				}
+			,
+			"text" : "samantha_desperate.jpg"
+		}
 	],
-	"defaultPortrait":"angel_confident.png",
+	"defaultPortrait":"angel_confident.jpg",
 	"ai-modifiers": [
 		{
 			"type":"skill",
