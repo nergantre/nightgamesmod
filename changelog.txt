@@ -7,6 +7,12 @@ Bugs:
 - Make oral pin require that the opponent is mobile
 - Make Samantha's sexy dance skill use similar skill restrictions
 - Make foot smother require that you are dominant and mobile
+- Added some text for footjob vs pc that had no cocks
+- Fix issue where you could throw/use nonexistent drafts
+
+Other changes:
+- Add in rest of Samantha's portraits
+	- I'm not exactly happy with some of them, may change them later
 
 1.8.2.9 changelog
 
