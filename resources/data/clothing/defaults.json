@@ -673,7 +673,7 @@
    	  "hotness":0.75,
       "name":"opencupbra",
       "toughness":5,
-	  "exposure":99
+	  "exposure":0.99
    },
    {
       "displayName":"latex top",

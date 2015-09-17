@@ -9,6 +9,7 @@ Bugs:
 - Make foot smother require that you are dominant and mobile
 - Added some text for footjob vs pc that had no cocks
 - Fix issue where you could throw/use nonexistent drafts
+- Fix issue where putting on open cup bra would make your exposure over 1
 
 Other changes:
 - Add in rest of Samantha's portraits
