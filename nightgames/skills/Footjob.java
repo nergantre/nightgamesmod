@@ -115,12 +115,18 @@ public class Footjob extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character attacker) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.miss){
 			return getSelf().name()+" swings her foot at your groin, but misses.";
 		}
 		else{
-			return getSelf().name()+" rubs your dick with the sole of her soft foot. From time to time, she teases you by pinching the glans between her toes and jostling your balls.";
+			if (target.hasDick()) {
+				return getSelf().name()+" rubs your dick with the sole of her soft foot. From time to time, she teases you by pinching the glans between her toes and jostling your balls.";
+			}
+			if (target.hasPussy()) {
+				return getSelf().name()+" toes the lips of your slit with her foot. From time to time, she teases you by slipping her big toe inside and wiggling it around.";
+			}
+			return getSelf().name()+" toes your asshole with her foot. From time to time, she teases you by pressing her big toe at your sphincter and nudging it.";
 		}
 	}
 
