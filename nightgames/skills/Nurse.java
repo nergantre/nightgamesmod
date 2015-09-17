@@ -115,7 +115,7 @@ public class Nurse extends Skill {
 					" Giggling a bit, " + getSelf().name() + " pokes your sides and slides her nipples in your mouth when you let out a yelp.";
 		} else {
 			return getSelf().name() + " gently strokes your hair as she presents her nipples to your mouth. " +
-					"Present with the opportunity, you happily suck on her breasts.";
+					"Presented with the opportunity, you happily suck on her breasts.";
 		}
 	}
 
