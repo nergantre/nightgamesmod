@@ -38,11 +38,15 @@ public class TemptressStripTease extends StripTease {
 		return isDance(c) ? super.getMojoBuilt(c) : super.getMojoCost(c);
 	}
 
+	public boolean canStrip(Combat c, Character target) {
+		boolean sexydance = (c.getStance().enumerate() == Stance.neutral
+				&& getSelf().canAct() && getSelf().mostlyNude());
+		boolean normalstrip = !getSelf().mostlyNude();
+		return getSelf().stripDifficulty(target) == 0 && (sexydance || normalstrip);
+	}
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return super.usable(c, target)
-				|| (c.getStance().enumerate() == Stance.neutral
-						&& getSelf().canAct() && getSelf().mostlyNude());
+		return canStrip(c, target) && getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf());
 	}
 
 	@Override

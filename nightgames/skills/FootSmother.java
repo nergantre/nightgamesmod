@@ -19,12 +19,15 @@ public class FootSmother extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().footAvailable()&&getSelf().body.has("feet")&&getSelf().canAct()&&c.getStance().prone(target)&&!c.getStance().behind(getSelf())&&getSelf().outfit.hasNoShoes();
+		return getSelf().footAvailable() && getSelf().body.has("feet") && c.getStance().mobile(getSelf())
+				&& c.getStance().dom(getSelf()) && getSelf().canAct() && c.getStance().prone(target)
+				&& !c.getStance().behind(getSelf()) && getSelf().outfit.hasNoShoes();
 	}
 
-	public int accuracy(Combat c){
+	public int accuracy(Combat c) {
 		return 150;
 	}
+
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		Result result = Result.normal;
@@ -46,9 +49,11 @@ public class FootSmother extends Skill {
 	public Skill copy(Character user) {
 		return new FootSmother(user);
 	}
-	public int speed(){
+
+	public int speed() {
 		return 2;
 	}
+
 	public Tactics type(Combat c) {
 		return Tactics.pleasure;
 	}
@@ -80,7 +85,8 @@ public class FootSmother extends Skill {
 			} else if (target.getArousal().percent() < 60) {
 				parts += "you feel your wetness start to run down your leg";
 			} else {
-				parts += "your {other:body-part:pussy} starts to spasm as your " +target.body.getRandomPussy().getFluids(target) + " puddles underneath you";
+				parts += "your {other:body-part:pussy} starts to spasm as your "
+						+ target.body.getRandomPussy().getFluids(target) + " puddles underneath you";
 			}
 		}
 		return message + parts + ".";
