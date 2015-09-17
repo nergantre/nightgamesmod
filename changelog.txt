@@ -1,7 +1,23 @@
+1.8.3 changelog
+
+Bugs:
+- Strapon can only be put on when not wearing a strapon
+
 1.8.2.9 changelog
 
 Balance:
 - Using spiral thrust now also applies a 8 turn Lethargic debuff (Mojo gain is reduced by 75%)
+- Pheromones has been buffed. It now applies much more when you are close to the opponent and you're exposed.
+	- The damage has also been buffed to be 1 + Animism / 10
+- Feral status effect has been changed
+	- Now applies to Kat whenever she is above 50 arousal
+	- Removed from Kat when she is below 50 arousal
+	- Changed buff
+		- Used to be 2 power, 3 cunning, 2 seduction, 2 animism, 2 speed
+		- Now 1+(animism / 2) power, 3 cunning, 2 seduction, 1.5 x animism, 2 speed
+	- Now makes orgasms only reduce arousal by 50% and reduces willpower loss to 33% of normal.
+	- Now has a (1 + Animism) / (2 + Animism) chance to ignore an orgasm for a turn even at full arousal.
+- Removed petite requirement from Pounce (NICE SKILL YOU HAVE THERE, KAT. SHAME YOU CAN'T USE IT)
 
 Bugs:
 - Changed strap-on to clothing layer 2 (same layer as pants, so if you put on a strapon, you'll remove your pants or skirt)
@@ -10,10 +26,14 @@ Bugs:
 - Fixed a bug where other NPCs snapping out of enthrallment (anywhere on the playing field) would print a message for the player
 - Fixed some typos and grammar issues with Samantha
 - Fixed a bug where pets had access to your face when it is already covered
+- Fixed a bug where using lick ass would do pleasure damage irregardless of hitting or missing
 
 Other changes:
 - Diversion can only be used when you are facing the opponent
+- Submissive hold cannot be used while bound anymore
 - You can now undress/striptease when wearing a strapon
+- Added a default portrait for Samantha
+	- Sorry didn't get time to do the mood variations
 
 1.8.2.8 changelog
 New:

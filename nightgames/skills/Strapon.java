@@ -4,6 +4,7 @@ import java.util.List;
 
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -26,6 +27,7 @@ public class Strapon extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return getSelf().canAct()
+				&&!getSelf().has(Trait.strapped)
 				&&c.getStance().mobile(getSelf())
 				&&!c.getStance().prone(getSelf())
 				&&(getSelf().has(Item.Strapon)||getSelf().has(Item.Strapon2))
