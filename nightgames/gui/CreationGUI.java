@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.awt.Font;
 
 import javax.swing.ButtonGroup;
@@ -84,7 +85,7 @@ public class CreationGUI extends JPanel{
 		
 		JPanel panel = new JPanel();
 		add(panel, BorderLayout.NORTH);
-		
+
 		JLabel lblName = new JLabel("Name");
 		lblName.setFont(new Font("Sylfaen", Font.BOLD, 15));
 		panel.add(lblName);
@@ -93,13 +94,14 @@ public class CreationGUI extends JPanel{
 		namefield.setFont(new Font("Sylfaen", Font.BOLD, 15));
 		panel.add(namefield);
 		namefield.setColumns(10);
-		
+
+		JComboBox<CharacterSex> sexBox = new JComboBox<>();
+		Arrays.stream(CharacterSex.values()).forEach(s -> sexBox.addItem(s));
+		panel.add(sexBox);
+	
 		separator = new JSeparator();
 		panel.add(separator);
-		
-		JButton btnBack = new JButton("Back");
-		btnBack.setFont(new Font("Sylfaen", Font.BOLD, 15));
-		panel.add(btnBack);
+
 		
 		JButton btnStart = new JButton("Start");
 		btnStart.setFont(new Font("Sylfaen", Font.BOLD, 15));
@@ -109,20 +111,7 @@ public class CreationGUI extends JPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				if(!CreationGUI.this.namefield.getText().isEmpty()){
 					String name = CreationGUI.this.namefield.getText();
-					CharacterSex sex = CharacterSex.male;
-					if (name.startsWith("male:")) {
-						name = name.substring(5);
-						sex = CharacterSex.male;
-					}
-					if (name.startsWith("female:")) {
-						name = name.substring(7);
-						sex = CharacterSex.female;
-					}
-					if (name.startsWith("herm:")) {
-						name = name.substring(5);
-						sex = CharacterSex.herm;
-					}
-					
+					CharacterSex sex = (CharacterSex) sexBox.getSelectedItem();
 					Player one = new Player(name, sex);
 					one.set(Attribute.Power, CreationGUI.this.power);
 					one.set(Attribute.Seduction, CreationGUI.this.seduction);

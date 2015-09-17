@@ -1,5 +1,10 @@
 1.8.3 changelog
 
+New:
+- Added a menu box for choosing sex in the character creation GUI
+	- "male:", "female:" and "herm:" will no longer work
+	- You can *try* asexual, but no guarantees on what happens.
+
 Bugs:
 - Strapon can only be put on when not wearing a strapon
 - Split bluff and wait into two skills

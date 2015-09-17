@@ -955,6 +955,10 @@ public class Global {
 		gui.purgePlayer();
 		gui.createCharacter();
 	}
+	
+	public static boolean inGame() {
+		return !players.isEmpty();
+	}
 	public static float randomfloat() {
 		return (float) rng.nextDouble();
 	}
