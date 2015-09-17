@@ -22,38 +22,15 @@ public class Wait extends Skill {
 
 	@Override
 	public int getMojoBuilt(Combat c) {
-		if(bluff()){
-			return 0;
-		} else if(focused()&&!c.getStance().sub(getSelf())){
+		if(focused()&&!c.getStance().sub(getSelf())){
 			return 25;
 		} else {
 			return 15;
 		}
 	}
 	@Override
-	public int getMojoCost(Combat c) {
-		if(bluff()){
-			return 20;
-		} else {
-			return 0;
-		}
-	}
-	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(bluff()){
-			int m = Global.random(25);
-			getSelf().spendMojo(c, 20);
-			if(getSelf().human()){
-				c.write(getSelf(),deal(c,m,Result.special, target));
-			}
-			else{
-				c.write(getSelf(),receive(c,m,Result.special, target));
-			}
-			getSelf().heal(c, m);
-			getSelf().calm(c, 50 - m);
-			getSelf().add(c, new Unreadable(getSelf()));
-		}
-		else if(focused()&&!c.getStance().sub(getSelf())){
+		if(focused()&&!c.getStance().sub(getSelf())){
 			if(getSelf().human()){
 				c.write(getSelf(),deal(c,0,Result.strong, target));
 			}
@@ -90,7 +67,7 @@ public class Wait extends Skill {
 
 	@Override
 	public Tactics type(Combat c) {
-		if(bluff()||focused()){
+		if(focused()){
 			return Tactics.calming;
 		}
 		else{
@@ -126,10 +103,7 @@ public class Wait extends Skill {
 
 	@Override
 	public String getLabel(Combat c){
-		if(bluff()){
-			return "Bluff";
-		}
-		else if(focused()){
+		if(focused()){
 			return "Focus";
 		}
 		else{
@@ -139,10 +113,7 @@ public class Wait extends Skill {
 
 	@Override
 	public String describe(Combat c) {
-		if(bluff()){
-			return "Regain some stamina and lower arousal. Hides current status from opponent.";
-		}
-		else if(focused()){
+		if(focused()){
 			return "Calm yourself and gain some mojo";
 		}
 		else{
@@ -152,9 +123,5 @@ public class Wait extends Skill {
 
 	private boolean focused(){
 		return getSelf().get(Attribute.Cunning)>=15 && !getSelf().has(Trait.undisciplined)&&getSelf().canRespond();
-	}
-
-	private boolean bluff(){
-		return !getSelf().is(Stsflag.unreadable) && getSelf().has(Trait.pokerface)&&getSelf().get(Attribute.Cunning)>=9&&getSelf().canSpend(20)&&getSelf().canRespond();
 	}
 }

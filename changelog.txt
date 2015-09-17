@@ -2,6 +2,7 @@
 
 Bugs:
 - Strapon can only be put on when not wearing a strapon
+- Split bluff and wait into two skills
 
 1.8.2.9 changelog
 

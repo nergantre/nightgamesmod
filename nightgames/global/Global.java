@@ -370,6 +370,7 @@ public class Global {
 		getSkillPool().add(new Struggle(p));
 		getSkillPool().add(new Tickle(p));
 		getSkillPool().add(new nightgames.skills.Wait(p));
+		getSkillPool().add(new Bluff(p));
 		getSkillPool().add(new StripTop(p));
 		getSkillPool().add(new StripBottom(p));
 		getSkillPool().add(new Shove(p));
