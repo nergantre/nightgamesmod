@@ -46,7 +46,7 @@ public class Blindside extends Skill {
 							target.name(), target.pronoun(), target.pronoun(),
 							target.directObject(), target.directObject()));
 		} else {
-			c.write(getSelf(), "Seductively swaing her hips, " + getSelf().subject()
+			c.write(getSelf(), "Seductively swaying her hips, " + getSelf().subject()
 					+ " shashays over to you. "
 					+ "Her eyes fix you in place as she leans in and firmly kisses you, shoving her tongue down"
 					+ " your mouth. You are so absorbed in kissing back, that you only notice her ulterior motive"
