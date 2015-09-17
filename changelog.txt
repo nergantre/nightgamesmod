@@ -3,6 +3,7 @@
 Bugs:
 - Strapon can only be put on when not wearing a strapon
 - Split bluff and wait into two skills
+- Make powerful hips allow you to grind from the submissive position
 
 1.8.2.9 changelog
 
