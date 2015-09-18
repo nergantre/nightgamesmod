@@ -38,4 +38,8 @@ public abstract class AnalSexStance extends Position {
 	public List<BodyPart> bottomParts() {
 		return Arrays.asList(bottom.body.getRandomAss()).stream().filter(part -> part != null && part.present()).collect(Collectors.toList());
 	}
+
+	public double pheromoneMod (Character self) {
+		return 3;
+	}
 }

@@ -135,7 +135,7 @@ public class Yui extends BasePersonality {
 	}
 
 	@Override
-	public boolean checkMood(Emotion mood, int value) {
+	public boolean checkMood(Combat c, Emotion mood, int value) {
 		// TODO Auto-generated method stub
 		return false;
 	}

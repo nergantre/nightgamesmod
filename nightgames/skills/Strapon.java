@@ -1,7 +1,10 @@
 package nightgames.skills;
 
+import java.util.List;
+
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -24,9 +27,9 @@ public class Strapon extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return getSelf().canAct()
+				&&!getSelf().has(Trait.strapped)
 				&&c.getStance().mobile(getSelf())
 				&&!c.getStance().prone(getSelf())
-				&&getSelf().crotchAvailable()
 				&&(getSelf().has(Item.Strapon)||getSelf().has(Item.Strapon2))
 				&&!getSelf().hasDick()
 				&&!c.getStance().connected()
@@ -45,12 +48,21 @@ public class Strapon extends Skill {
 	}
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		getSelf().getOutfit().equip(Clothing.getByID("strapon"));
-		if(getSelf().human()){
-			c.write(getSelf(),deal(c,0,Result.normal, target));
-		}
-		else if(target.human()){
-			c.write(getSelf(),receive(c,0,Result.normal, target));
+		List<Clothing> unequipped = getSelf().getOutfit().equip(Clothing.getByID("strapon"));
+		if (unequipped.isEmpty()) {
+			if(getSelf().human()){
+				c.write(getSelf(),Global.capitalizeFirstLetter(deal(c,0,Result.normal, target)));
+			}
+			else {
+				c.write(getSelf(),Global.capitalizeFirstLetter(receive(c,0,Result.normal, target)));
+			}
+		} else {
+			if(getSelf().human()){
+				c.write(getSelf(),"You take off your " + unequipped.get(0) + " and fasten a strap on dildo onto yourself.");
+			}
+			else {
+				c.write(getSelf(),getSelf().subject() + " takes off " + target.possessivePronoun() + " " + unequipped.get(0) + " and straps on a thick rubber cock and grins at you in a way that makes you feel a bit nervous.");
+			}
 		}
 		target.loseMojo(c, 10);
 		target.emote(Emotion.nervous, 10);

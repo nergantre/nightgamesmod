@@ -9,7 +9,6 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
-import nightgames.status.Stsflag;
 
 public class Thrust extends Skill {
 	public Thrust(String name, Character self) {
@@ -43,7 +42,7 @@ public class Thrust extends Skill {
 	public BodyPart getTargetOrgan(Combat c, Character target) {
 		if (c.getStance().inserted(target)) {
 			return target.body.getRandomInsertable();
-		} else if (c.getStance().anallyPenetratedBy(getSelf(), c.getOther(getSelf()))) {
+		} else if (c.getStance().anallyPenetratedBy(c.getOther(getSelf()), getSelf())) {
 			return target.body.getRandom("ass");
 		} else {
 			return target.body.getRandomPussy();

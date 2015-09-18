@@ -577,10 +577,9 @@ public class Player extends Character {
 				opponent.pet.caught(c,this);
 			}
 		}
-		int pheromoneChance = (int)Math.round(10 * (1 - opponent.getExposure()));
-		if(opponent.has(Trait.pheromones)&&opponent.getArousal().percent()>=20&&Global.random(2 + pheromoneChance)==0){
+		if(opponent.has(Trait.pheromones)&&opponent.getArousal().percent()>=20&&opponent.rollPheromones(c)) {
 			c.write(opponent,"<br>Whenever you're near "+opponent.name()+", you feel your body heat up. Something in her scent is making you extremely horny.");
-			add(c, new Horny(this,opponent.has(Trait.augmentedPheromones) ? 2 : 1,10,opponent.nameOrPossessivePronoun() + " pheromones"));
+			add(c, new Horny(this,opponent.getPheromonePower(),10,opponent.nameOrPossessivePronoun() + " pheromones"));
 		}
 		if(opponent.has(Trait.smqueen)&&!is(Stsflag.masochism)){
 			c.write(Global.capitalizeFirstLetter(String.format("<br>%s seem to shudder in arousal at the thought of pain.", subject())));

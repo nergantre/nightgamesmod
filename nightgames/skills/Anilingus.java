@@ -55,6 +55,8 @@ public class Anilingus extends Skill {
 				result = Result.special;
 			}
 		} else {
+			m = 0;
+			n = 0;
 			result = Result.miss;
 		}
 		if (getSelf().human()) {

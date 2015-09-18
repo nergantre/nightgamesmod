@@ -390,7 +390,7 @@ public class Angel extends BasePersonality {
 		character.mod(Attribute.Divinity,1);
 	}
 
-	public boolean checkMood(Emotion mood, int value) {
+	public boolean checkMood(Combat c, Emotion mood, int value) {
 		switch(mood){
 		case horny:
 			return value>=50;

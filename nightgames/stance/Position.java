@@ -1,5 +1,4 @@
 package nightgames.stance;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -232,5 +231,14 @@ public abstract class Position implements Cloneable{
 	}
 	public boolean connected() {
 		return anallyPenetrated() || vaginallyPenetrated() || inserted();
+	}
+	public boolean faceAvailable(Character target) {
+		return true;
+	}
+	/* 
+	 * returns likelihood modification of applying pheromones.
+	 * 1 is normal, 2 is twice as likely, .5 is half as likely, 0 is never */
+	public double pheromoneMod (Character self) {
+		return 1;
 	}
 }

@@ -49,7 +49,7 @@ public class ThrowDraft extends Skill {
 	public Collection<String> subChoices() {
 		ArrayList<String> usables = new ArrayList<String>();
 		for (Item i : getSelf().getInventory().keySet()) {
-			if (i.getEffects().get(0).throwable()) {
+			if (getSelf().has(i)&&i.getEffects().get(0).throwable()) {
 				usables.add(i.getName());
 			}
 		}

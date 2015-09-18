@@ -6,6 +6,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.status.Charmed;
+import nightgames.status.Stsflag;
 import nightgames.status.Trance;
 
 public class Purr extends Skill {
@@ -21,7 +22,7 @@ public class Purr extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&getSelf().getArousal().percent()>=20;
+		return !(target.is(Stsflag.wary) || target.is(Stsflag.charmed)) && getSelf().canAct()&&c.getStance().mobile(getSelf())&&getSelf().getArousal().percent()>=20;
 	}
 
 	@Override

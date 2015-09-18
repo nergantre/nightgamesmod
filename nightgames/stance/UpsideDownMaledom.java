@@ -103,4 +103,10 @@ public class UpsideDownMaledom extends MaledomSexStance {
 		}
 		return new ReverseCowgirl(bottom, top);
 	}
+
+	public double pheromoneMod (Character self) {
+		if (self == bottom)
+			return 10;
+		return 2;
+	}
 }

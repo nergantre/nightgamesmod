@@ -412,7 +412,7 @@
       "attributes":[
          "flexible"
       ],
-	  "layer":0,
+	  "layer":2,
 	  "shops" : [],
  	  "slots" : ["bottom"],
    	  "sex" : ["female"],
@@ -673,7 +673,7 @@
    	  "hotness":0.75,
       "name":"opencupbra",
       "toughness":5,
-	  "exposure":99
+	  "exposure":0.99
    },
    {
       "displayName":"latex top",

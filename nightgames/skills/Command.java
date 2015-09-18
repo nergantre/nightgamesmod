@@ -54,9 +54,9 @@ public class Command extends Skill {
 		CockPart selfCock = getSelf().body.getRandomCock();
 		PussyPart selfPussy = getSelf().body.getRandomPussy();
 		boolean otherReady = (otherCock != null && otherCock.isReady(target))
-				&& (otherPussy != null && otherPussy.isReady(target));
+				|| (otherPussy != null && otherPussy.isReady(target));
 		boolean selfReady = (selfCock != null && selfCock.isReady(getSelf()))
-				&& (selfPussy != null && selfPussy.isReady(getSelf()));
+				|| (selfPussy != null && selfPussy.isReady(getSelf()));
 		if (getSelf().bound()) { // Undress self
 			c.write(getSelf(),"You feel a compulsion to loosen " + getSelf().nameOrPossessivePronoun()
 					+ " bondage. She quickly hops to her feet and grins at you like a predator while rubbing her wrists.");

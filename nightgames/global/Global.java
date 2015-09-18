@@ -370,6 +370,7 @@ public class Global {
 		getSkillPool().add(new Struggle(p));
 		getSkillPool().add(new Tickle(p));
 		getSkillPool().add(new nightgames.skills.Wait(p));
+		getSkillPool().add(new Bluff(p));
 		getSkillPool().add(new StripTop(p));
 		getSkillPool().add(new StripBottom(p));
 		getSkillPool().add(new Shove(p));
@@ -953,6 +954,10 @@ public class Global {
 		human=new Player("Dummy");
 		gui.purgePlayer();
 		gui.createCharacter();
+	}
+	
+	public static boolean inGame() {
+		return !players.isEmpty();
 	}
 	public static float randomfloat() {
 		return (float) rng.nextDouble();

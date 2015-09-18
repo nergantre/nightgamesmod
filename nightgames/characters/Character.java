@@ -734,7 +734,11 @@ public abstract class Character extends Observable implements Cloneable {
 	}
 
 	public Clothing shredRandom() {
-		return shred(outfit.getRandomShreddableSlot());
+		ClothingSlot slot = outfit.getRandomShreddableSlot();
+		if (slot != null) {
+			return shred(slot);
+		}
+		return null;
 	}
 	public boolean topless() {
 		return outfit.slotEmpty(ClothingSlot.top);
@@ -947,6 +951,21 @@ public abstract class Character extends Observable implements Cloneable {
 			System.out.println(message);
 		}
 	}
+	private double getPheromonesChance(Combat c) {
+		double baseChance = .1 + getExposure() / 2 + ((arousal.getOverflow() + arousal.get()) / (float)arousal.max());
+		double mod = c.getStance().pheromoneMod(this);
+		double chance = Math.min(1, baseChance * mod);
+		return chance;
+	}
+	public boolean rollPheromones(Combat c) {
+		double chance = getPheromonesChance(c);
+		double roll = Global.randomdouble();
+		System.out.println("Pheromones: rolled " + Global.formatDecimal(roll) + " vs " + chance + ".");
+		return roll < chance;
+	}
+	public int getPheromonePower() {
+		return 1 + get(Attribute.Animism) / 10;
+	}
 	public void dropStatus(Combat c, Character opponent){
 		Set<Status> removedStatuses = status.stream().filter(s -> !s.meetsRequirements(c, this, opponent)).collect(Collectors.toSet()); 
 		removedStatuses.addAll(removelist);
@@ -1079,6 +1098,10 @@ public abstract class Character extends Observable implements Cloneable {
 	public abstract String taunt(Combat c);
 	public abstract void intervene(Encounter enc, Character p1,Character p2);
 	public abstract void showerScene(Character target, Encounter encounter);
+
+	public boolean humanControlled (Combat c) {
+		return human() || (Global.isDebugOn(DebugFlags.DEBUG_SKILL_CHOICES) && c.getOther(this).human());
+	}
 
 	@SuppressWarnings({ "unchecked"})
 	private static void saveLoot(JSONObject obj, Collection<? extends Loot> arr, String name) {
@@ -1304,6 +1327,9 @@ public abstract class Character extends Observable implements Cloneable {
 		if (has(Trait.insatiable)) {
 			arousal.restore((int) (arousal.max()*.2));
 		}
+		if (is(Stsflag.feral)) {
+			arousal.restore(arousal.max() / 2);
+		}
 		float extra = 25.0f * overflow / (arousal.max()/2.0f);
 
 		loseWillpower(c, getOrgasmWillpowerLoss(), Math.round(extra), true, "");
@@ -1324,17 +1350,21 @@ public abstract class Character extends Observable implements Cloneable {
 
 	public void loseWillpower(Combat c, int i, int extra, boolean primary, String source) {
 		int amt = i + extra;
-		boolean reduced = false;
+		String reduced = "";
 		if (has(Trait.strongwilled) && primary) {
 			amt = amt * 2 / 3 + 1;
-			reduced = true;
+			reduced = " (Strong-willed)";
+		}
+		if (is(Stsflag.feral) && primary) {
+			amt = amt / 3;
+			reduced = " (Feral)";
 		}
 		int old = willpower.get();
 		willpower.reduce(amt);
 		if (c != null) {
-			c.writeSystemMessage(String.format("%s lost <font color='rgb(220,130,40)'>%s<font color='white'> willpower" + (reduced ? " (Strong-willed)" : "" + "%s."), this.subject(), extra == 0 ? Integer.toString(amt) : i + "+" + extra + " ("+amt+")", source));
+			c.writeSystemMessage(String.format("%s lost <font color='rgb(220,130,40)'>%s<font color='white'> willpower" + reduced + "%s.", this.subject(), extra == 0 ? Integer.toString(amt) : i + "+" + extra + " ("+amt+")", source));
 		} else {
-			Global.gui().systemMessage((String.format("%s lost <font color='rgb(220,130,40)'>%d<font color='white'> willpower" + (reduced ? " (Strong-willed)" : "" + "%s."), this.subject(), amt, source)));
+			Global.gui().systemMessage(String.format("%s lost <font color='rgb(220,130,40)'>%d<font color='white'> willpower" + reduced + "%s.", this.subject(), amt, source));
 		}
 		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
 			System.out.printf("will power reduced from %d to %d\n", old, willpower.get());
@@ -1345,7 +1375,6 @@ public abstract class Character extends Observable implements Cloneable {
 		willpower.restore(i);
 		c.writeSystemMessage(String.format("%s regained <font color='rgb(181,230,30)'>%d<font color='white'> willpower.", this.subject(), i));
 	}
-
 
 	public void eot(Combat c, Character opponent, Skill last) {
 		dropStatus(c, opponent);
@@ -2173,7 +2202,7 @@ public abstract class Character extends Observable implements Cloneable {
 			// If I'm horny, I want to make the opponent cum asap, put more emphasis on arousal
 			arousalMod = 2.0f;
 		}
-		
+
 		// check body parts based on my preferences
 		if (other.hasDick()) {
 			fit -= (dickPreference() - 3) * 4;
@@ -2181,7 +2210,7 @@ public abstract class Character extends Observable implements Cloneable {
 		if (other.hasPussy()) {
 			fit -= (pussyPreference() - 3) * 4;
 		}
-
+		
 		fit += other.outfit.getFitness(c, bottomFitness, topFitness);
 		fit += other.body.getHotness(other, this);
 		// Extreme situations
@@ -2227,10 +2256,10 @@ public abstract class Character extends Observable implements Cloneable {
 		//what an average piece of clothing should be worth in fitness
 		double topFitness = 4.0;
 		double bottomFitness = 4.0;
-		// If I'm horny, I want the other guy's clothing off, so I put more fitness in them
+		// If I'm horny, I don't care about my clothing, so I put more less fitness in them
 		if (getMood() == Emotion.horny) {
-			topFitness = 8;
-			topFitness = 6;
+			topFitness = 1;
+			topFitness = 1;
 			// If I'm horny, I put less importance on my own arousal
 			arousalMod = .7f;
 		}
@@ -2247,6 +2276,11 @@ public abstract class Character extends Observable implements Cloneable {
 		if (hasPussy()) {
 			fit += (pussyPreference() - 3) * 4;
 		}
+		if (has(Trait.pheromones)) {
+			fit += 5 * getPheromonePower();
+			fit += 15 * getPheromonesChance(c) *  (2 + getPheromonePower());
+		}
+
 		// Also somewhat of a factor: Inventory (so we don't
 		// just use it without thinking)
 		for(Item item : inventory.keySet())
@@ -2264,11 +2298,11 @@ public abstract class Character extends Observable implements Cloneable {
 		for (Status status : getStatuses()) {
 			fit += status.fitnessModifier();
 		}
-		
+
 		if (!human()) {
 			NPC me = (NPC) this;
 			AiModifiers mods = me.ai.getAiModifiers();
-			fit += mods.modPosition(c.getStance().enumerate());
+			fit += mods.modPosition(c.getStance().enumerate()) * 6;
 			fit += status.stream()
 					.flatMap(s -> s.flags().stream())
 					.mapToDouble(f -> mods.modSelfStatus(f))

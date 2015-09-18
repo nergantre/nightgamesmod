@@ -88,4 +88,8 @@ public class Pin extends AbstractFacingStance {
 	public float priorityMod(Character self) {
 		return getSubDomBonus(self, 2.0f);
 	}
+
+	public double pheromoneMod (Character self) {
+		return 1.5;
+	}
 }

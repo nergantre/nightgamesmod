@@ -96,4 +96,8 @@ public class BehindFootjob extends AbstractBehindStance {
 		c.write(bottom, Global.format("{self:SUBJECT-ACTION:summon what little willpower you have left and grab|grabs} {other:name-possessive} feet and pull them off {self:name-possessive} crotch. Taking advantage of the momentum, {self:subject} push {other:direct-object} back with {self:name-possessive} body and hold {other:direct-object} down while sitting on top of {other:direct-object}.", bottom, top));
 		return new ReverseMount(bottom, top);
 	}
+
+	public double pheromoneMod (Character self) {
+		return 1.5;
+	}
 }

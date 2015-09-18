@@ -66,8 +66,7 @@ public class FairyFem extends Pet {
 					c.write(owner(),"Your faerie lands on "+target.name()+"'s tit and plays with her sensitive nipple.");
 					target.body.pleasure(null, null, target.body.getRandom("breasts"), 3+2*Global.random(power), c);
 					target.pain(c, 3+2*Global.random(power), false, true);
-				}
-				else{
+				} else {
 					c.write(owner(),own()+"faerie flies around the edge of the fight looking for an opening.");
 				}
 				break;

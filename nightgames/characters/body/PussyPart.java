@@ -190,7 +190,7 @@ public enum PussyPart implements BodyPart, BodyPartMod {
 		if (this == PussyPart.feral) {
 			c.write(self, String.format("Musk emanating from %s %s leaves %s reeling.", self.possessivePronoun(),
 					describe(self), opponent.directObject()));
-			double base = damage;
+			double base = damage + self.getPheromonePower();
 			if (target.getMod() == CockMod.runic) {
 				c.write(self,
 						String.format(

@@ -145,11 +145,13 @@ public class GUI extends JFrame implements Observer {
 		mntmNewgame.setBackground(Color.DARK_GRAY);
 		mntmNewgame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int result = JOptionPane.showConfirmDialog(GUI.this,
-						"Do you want to restart the game? You'll lose any unsaved progress.", "Start new game?",
-						JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
-				if (result == JOptionPane.OK_OPTION) {
-					Global.reset();
+				if (Global.inGame()) {
+					int result = JOptionPane.showConfirmDialog(GUI.this,
+							"Do you want to restart the game? You'll lose any unsaved progress.", "Start new game?",
+							JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					if (result == JOptionPane.OK_OPTION) {
+						Global.reset();
+					}
 				}
 			}
 		});

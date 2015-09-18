@@ -42,7 +42,7 @@ public class ImpFem extends Pet {
 				target.pain(c, 4+3*Global.random(power), false);
 				break;
 			case 1:
-				if(c.getStance().prone(target)){
+				if(c.getStance().prone(target) && c.getStance().faceAvailable(target)){
 					c.write(owner(),own()+"imp straddles your face, forcing her wet pussy onto your nose and mouth. Her scent is unnaturally intoxicating and fires up your libido.");
 				}
 				else{

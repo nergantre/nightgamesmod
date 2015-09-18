@@ -37,7 +37,7 @@ public class TemptressRide extends Thrust {
 	}
 
 	@Override
-	public String getName() {
+	public String getLabel(Combat c) {
 		return "Skillful Ride";
 	}
 	
@@ -110,7 +110,7 @@ public class TemptressRide extends Thrust {
 						getSelf().pronoun(), getSelf().action("push", "pushes"),
 						target.possessivePronoun(),
 						target.body.getRandomCock().describe(target),
-						getSelf().pronoun());
+						getSelf().directObject());
 			default:
 				return String.format(
 						"%s up and down %s rock-hard %s while the velvet vise"

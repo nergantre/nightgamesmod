@@ -117,4 +117,13 @@ public class NursingHold extends AbstractFacingStance {
 			return avail;
 		}
 	}
+
+	@Override
+	public boolean faceAvailable(Character target) {
+		return target == top;
+	}
+
+	public double pheromoneMod (Character self) {
+		return 3;
+	}
 }

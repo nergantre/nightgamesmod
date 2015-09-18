@@ -75,7 +75,7 @@ public class Decider {
 			addAllSkillsWithPriority(priority, fucking, 1.0f);
 			addAllSkillsWithPriority(priority, damage, 1.0f);
 			addAllSkillsWithPriority(priority, summoning, .5f);
-			addAllSkillsWithPriority(priority, misc, 0f);
+			addAllSkillsWithPriority(priority, misc, 1f);
 			break;
 		case angry:
 			addAllSkillsWithPriority(priority, damage, 2.5f);
@@ -83,7 +83,7 @@ public class Decider {
 			addAllSkillsWithPriority(priority, debuff, 2.0f);
 			addAllSkillsWithPriority(priority, stripping, 1.0f);
 			addAllSkillsWithPriority(priority, pleasure, 0.0f);
-			addAllSkillsWithPriority(priority, misc, 0f);
+			addAllSkillsWithPriority(priority, misc, 1f);
 			addAllSkillsWithPriority(priority, summoning, 0f);
 			break;
 		case nervous:
@@ -94,7 +94,7 @@ public class Decider {
 			addAllSkillsWithPriority(priority, position, 1.0f);
 			addAllSkillsWithPriority(priority, damage, .5f);
 			addAllSkillsWithPriority(priority, pleasure, 0.0f);
-			addAllSkillsWithPriority(priority, misc, 0f);
+			addAllSkillsWithPriority(priority, misc, 1f);
 			break;
 		case desperate:
 			//and probably a bit confused
@@ -113,7 +113,7 @@ public class Decider {
 			addAllSkillsWithPriority(priority, pleasure, 1.0f);
 			addAllSkillsWithPriority(priority, position, 1.0f);
 			addAllSkillsWithPriority(priority, debuff, 0f);
-			addAllSkillsWithPriority(priority, misc, 0f);
+			addAllSkillsWithPriority(priority, misc, 1f);
 			break;
 		case dominant:
 			addAllSkillsWithPriority(priority, position, 3.0f);
@@ -123,7 +123,7 @@ public class Decider {
 			addAllSkillsWithPriority(priority, debuff, 2.0f);
 			addAllSkillsWithPriority(priority, summoning, 1.0f);
 			addAllSkillsWithPriority(priority, damage, 1.0f);
-			addAllSkillsWithPriority(priority, misc, 0f);
+			addAllSkillsWithPriority(priority, misc, 1f);
 			break;
 		}
 /*	if(character.getArousal().percent()>85||character.getStamina().percent()<10){

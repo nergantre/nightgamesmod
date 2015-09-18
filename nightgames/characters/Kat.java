@@ -63,7 +63,7 @@ public class Kat extends BasePersonality {
 		growth.bonusStamina = 1;
 		growth.bonusArousal = 2;
 		growth.bonusMojo = 2;
-		preferredAttributes.add(c -> c.get(Attribute.Animism) < 20 ? Optional.of(Attribute.Animism) : Optional.empty());
+		preferredAttributes.add(c -> Optional.of(Attribute.Animism));
 
 		growth.addTrait(10, Trait.sympathetic);
 		growth.addTrait(13, Trait.analTraining1);
@@ -387,10 +387,10 @@ public class Kat extends BasePersonality {
 		
 	}
 
-	public boolean checkMood(Emotion mood, int value) {
+	public boolean checkMood(Combat c, Emotion mood, int value) {
 		if(character.getArousal().percent()>=50){
 			if(!character.is(Stsflag.feral)){
-				character.add(new Feral(character));
+				character.add(c, new Feral(character));
 			}
 			if(!character.has(Trait.shameless)){
 				character.add(Trait.shameless);
@@ -408,7 +408,7 @@ public class Kat extends BasePersonality {
 		else{
 			if(!character.has(Trait.shy)){
 				character.add(Trait.shy);
-				character.remove(Trait.shameless);
+				character.removeStatus(Stsflag.feral);
 			}
 			switch(mood){
 			case nervous:

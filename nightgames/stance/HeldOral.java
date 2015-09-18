@@ -97,4 +97,16 @@ public class HeldOral extends AbstractFacingStance {
 	public Position reverse(Combat c) {
 		return new Mount(bottom, top);
 	}
+
+	@Override
+	public boolean faceAvailable(Character target) {
+		return target == bottom;
+	}
+
+	public double pheromoneMod (Character self) {
+		if (self == bottom) {
+			return 10;
+		}
+		return 2;
+	}
 }
