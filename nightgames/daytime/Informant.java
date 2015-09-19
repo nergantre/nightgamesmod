@@ -66,7 +66,7 @@ public class Informant extends Activity {
 									+ "but you've proven yourself worthy of learning powerful and potentially dangerous secrets. Because Tyler here has made a business out of such secrets, I'm sure he'll be thrilled "
 									+ "to offer you details.\"</i><p>Aesop steps forward as if on cue. You get the impression they've done this a few times. <i>\"Congratulations. From here on is where your mind gets blown. "
 									+ "I'm now allowed to sell you some more valuable secrets and you now have the income to afford them. I can't afford to give you as big a discount anymore, but if you're willing to "
-									+ "pay, I can help you find some extremely rare and powerful artifacts, technology you couldn't imagine, a master who will train you in legenday martial arts, even magic.\"</i><p>While "
+									+ "pay, I can help you find some extremely rare and powerful artifacts, technology you couldn't imagine, a master who will train you in legendary martial arts, even magic.\"</i><p>While "
 									+ "you're still processing this, Maya speaks up again. <i>\"I appreciate that you haven't mentioned the Game to any outsiders. If the wrong people heard what we're doing, there would "
 									+ "be an unpleasant scandal. As you and your fellow competitors gain access to these gifts, the importance of secrecy grows. These are secrets that the general public is not ready "
 									+ "for.\"</i><p>This is all very far-fetched. The skeptical part of your brain is telling you this is an elaborate scam, but all the money you're paying Aesop is coming from the Game. "
@@ -127,7 +127,7 @@ public class Informant extends Activity {
 						.message(
 								"You ask if Aesop has any advice on how to condition yourself mentally. Picking up details in the environment and your opponents' behavior seems to be an important "
 										+ "element of winning the matches. Also, since you can only be defeated by orgasming, learning techniques to control your arousal would be valuable.<br>Aesop hesitates for a few seconds "
-										+ "before speaking. <i>\"I can point you in the right direction, but I should warn you that there's a tradeoff that every player who persues this path has to face. The two aspects of "
+										+ "before speaking. <i>\"I can point you in the right direction, but I should warn you that there's a tradeoff that every player who pursues this path has to face. The two aspects of "
 										+ "mental training that you just mentioned are conflicting. If you sharpen your senses to be more aware of your opponents, your sense of touch will also be sharpened and you'll be "
 										+ "more vulnerable to their 'attacks.' On the other hand, you can train yourself to block out the pleasure being inflicted on you, but you risk your brain filtering out crucial information.\"</i><br>"
 										+ "<i>\"If you're still interested, there's a girl named Suzume who leads guided meditation on campus. If you ask nicely, she may give you a private lesson to push you in either direction.\"</i>");
@@ -145,7 +145,7 @@ public class Informant extends Activity {
 				Global.gui()
 						.message(
 								"<i>\"If you're looking for something you can't purchase at a reputable store - say, for example, powerful aphrodisiacs or chemicals that "
-										+ "can rapidly desolve synthetic clothing without harming skin - I know a guy on campus.\"</i><br>You hand over a considerable sum of cash and Aesop slides you "
+										+ "can rapidly dissolve synthetic clothing without harming skin - I know a guy on campus.\"</i><br>You hand over a considerable sum of cash and Aesop slides you "
 										+ "a piece of paper.<br><i>\"The dude's name is Mike Ridley, definitely an asshole, but he can get you want you want. He probably won't ask what you want it "
 										+ "for and you shouldn't volunteer the information. He mostly sells pot to normal students. He's not in the loop, so to speak.\"</i>");
 				Global.flag(Flag.blackMarket);
@@ -162,7 +162,7 @@ public class Informant extends Activity {
 				Global.gui()
 						.message(
 								"<i>\"Cassie Brooke, huh? Sweet girl, a little shy, a little geeky, never been in trouble in her life. She's not the type of girl who usually "
-										+ "enters sexfights, but she's adapting to it pretty well, all things considered. This is apparently a matter of neccessity for her, her family doesn't "
+										+ "enters sexfights, but she's adapting to it pretty well, all things considered. This is apparently a matter of necessity for her, her family doesn't "
 										+ "have a whole lot of money, doesn't get enough financial aid, and they don't want her getting a job until she graduates. Of course, I seriously doubt "
 										+ "they'd approve of this either. Hopefully she's clever enough to explain away her sudden income.<br>I can give you her normal schedule. but you shouldn't "
 										+ "need any help finding her. The two of you are in a couple classes together this semester.\"</i><p>It's true, you see her in class regularly, and before the "
@@ -207,7 +207,7 @@ public class Informant extends Activity {
 								"<i>\"There's a bit of a mystery surrounding Mara Cyr, to be honest. I can't figure out when, or even if, she sleeps. She's a freshman Computer Engineering "
 										+ "student, but her classload looks more like something I'd expect from a junior or senior in that major. Most students in that situation would be working late into the "
 										+ "night, but she's spending her nights sexfighting. I can totally understand why she'd need something to relieve the stress, but again it doesn't leave a lot of time "
-										+ "for sleep. If you told me she invented a time machine to pack more hours into the day, I wouldn't be particularly surpised. There's no question the girl is a genius. "
+										+ "for sleep. If you told me she invented a time machine to pack more hours into the day, I wouldn't be particularly surprised. There's no question the girl is a genius. "
 										+ "Like a lot of geniuses, her personality is kinda problematic. On the surface she seems arrogant and manipulative, but I'd wager under that facade, she's actually "
 										+ "a nice girl. If you're interested in her, she's pretty easy to find. When she's not in class or in a match, she seems to spend all her time in on of the computer labs "
 										+ "or the electrical engineering workshop.\"</i>");
@@ -225,7 +225,7 @@ public class Informant extends Activity {
 				Global.gui()
 						.message(
 								"<i>\"Jewel Silvers... Her parents must like jewelry. Not really; her family has a long military tradition going back generations. I'm surprised she hasn't "
-										+ "joined the army, but she probably doesn't have the right temperment for it. She spent most of her youth bouncing between military bases, getting in fights with all "
+										+ "joined the army, but she probably doesn't have the right temperament for it. She spent most of her youth bouncing between military bases, getting in fights with all "
 										+ "the local kids, mostly boys. Seems like she mastered the male anatomy pretty quickly, which probably won her a few fights growing up. I wonder what those kids would "
 										+ "say if they could see the beauty she turned into. It's not like she's putting any effort into her appearance, she must just have some seriously good genes. I found an "
 										+ "old picture of her mother when she was in college, just as gorgeous. Under the pretty face, Jewel is still the same rough and tumble tomboy she was growing up. She's "
@@ -245,7 +245,7 @@ public class Informant extends Activity {
 			if (player.money >= 2500) {
 				Global.gui()
 						.message(
-								"Rare artifacts sound more like something you should be smuggling than something that will help you in a sexfight. Still, curiosity compells "
+								"Rare artifacts sound more like something you should be smuggling than something that will help you in a sexfight. Still, curiosity compels "
 										+ "you to hand over an unreasonable amount of money for Aesop's information. <i>\"You once asked me about an address and a password for the black market. I "
 										+ "gave you the address. Now I think you're ready for the password. The black market stocks some rare and unusual items for their prefered customers. Tell "
 										+ "them Callisto sent you and they'll make them available for you. I do feel compelled to warn you that some of the shit they sell there is pretty dangerous. "
@@ -277,10 +277,10 @@ public class Informant extends Activity {
 				Global.gui()
 						.message(
 								"You're interested in improving your martial arts skill, but Jewel is probably the best martial artist on campus. Even if she agrees to train you, "
-										+ "becoming your rival's student probably won't get you to the top. Aesop smirks at you. <i>\"Jewel is not the best martial artist on campus. Suzuki Suzume, in additon "
+										+ "becoming your rival's student probably won't get you to the top. Aesop smirks at you. <i>\"Jewel is not the best martial artist on campus. Suzuki Suzume, in addition "
 										+ "to her skill with guided meditation, is the successor to a long japanese martial arts legacy. During her participation in the Games, she adapted the karate "
 										+ "and judo she learned in her family's dojo into something completely new. She's pretty eager to take on a student, but she had to wait for the competitors in your "
-										+ "year to be ranked.\"</i> You've gotten used to paying Aesop for infromation by now, but if Suzume is so eager for a student she could have approached you directly and "
+										+ "year to be ranked.\"</i> You've gotten used to paying Aesop for information by now, but if Suzume is so eager for a student she could have approached you directly and "
 										+ "saved you a lot of money. Aesop smiles in a way that reminds you of a shark. <i>\"I'm an information broker. Sometimes I sell people information, sometimes I buy "
 										+ "their silence. The Suzuki dojo has fallen on tough times recently, so when I offered her a thousand dollars to wait for you to come to me, she was fairly agreeable.\"</i> "
 										+ "Fucking hell. If nothing else, at least Aesop is giving you a lesson in economics 101.");
@@ -303,7 +303,7 @@ public class Informant extends Activity {
 										+ "couple years learning magic and teaching it to others. She'll take you on as an apprentice for a price.\"</i> Of course there's a price. Everyone involved in the "
 										+ "Games has been eager to take your money.<p>Aesop gives you a frown of disapproval. <i>\"I wasn't implying that she's greedy. Aisha is passionate about developing "
 										+ "her craft and only takes money to further her research. Of all the people I've sent you to, she's easily the most altruistic. I meant it when I called her a "
-										+ "friend, and I have a lot of respect for her, so don't make judgements before you've met her.\"</i>");
+										+ "friend, and I have a lot of respect for her, so don't make judgments before you've met her.\"</i>");
 				Global.flag(Flag.magicstore);
 				player.money -= 2500;
 				Global.gui().choose(this, "Leave");
