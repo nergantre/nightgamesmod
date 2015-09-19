@@ -1,6 +1,10 @@
 package nightgames.stance;
 
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
@@ -50,14 +54,18 @@ public abstract class MaledomSexStance extends Position {
 	public boolean inserted(Character c) {
 		return c==top;
 	}
-
+	
 	@Override
-	public BodyPart topPart() {
-		return top.body.getRandomInsertable();
+	public List<BodyPart> topParts() {
+		return Arrays.asList(top.body.getRandomInsertable()).stream().filter(part -> part != null && part.present()).collect(Collectors.toList());
 	}
 
 	@Override
-	public BodyPart bottomPart() {
-		return bottom.body.getRandomPussy();
+	public List<BodyPart> bottomParts() {
+		return Arrays.asList(bottom.body.getRandomPussy()).stream().filter(part -> part != null && part.present()).collect(Collectors.toList());
+	}
+
+	public double pheromoneMod (Character self) {
+		return 2;
 	}
 }

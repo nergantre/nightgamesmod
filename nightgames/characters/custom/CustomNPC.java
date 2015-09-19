@@ -150,7 +150,7 @@ public class CustomNPC extends BasePersonality {
 		return data.getLine("startBattle", null, this.character, Global.getPlayer());
 	}
 
-	public boolean checkMood(Emotion mood, int value) {
+	public boolean checkMood(Combat c, Emotion mood, int value) {
 		return data.checkMood(this.character, mood, value);
 	}
 

@@ -38,11 +38,15 @@ public class TemptressStripTease extends StripTease {
 		return isDance(c) ? super.getMojoBuilt(c) : super.getMojoCost(c);
 	}
 
+	public boolean canStrip(Combat c, Character target) {
+		boolean sexydance = (c.getStance().enumerate() == Stance.neutral
+				&& getSelf().canAct() && getSelf().mostlyNude());
+		boolean normalstrip = !getSelf().mostlyNude();
+		return getSelf().stripDifficulty(target) == 0 && (sexydance || normalstrip);
+	}
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return super.usable(c, target)
-				|| (c.getStance().enumerate() == Stance.neutral
-						&& getSelf().canAct() && getSelf().mostlyNude());
+		return canStrip(c, target) && getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf());
 	}
 
 	@Override
@@ -70,7 +74,7 @@ public class TemptressStripTease extends StripTease {
 			target.tempt(c, getSelf(),
 					10 + Global.random(Math.max(5, technique)));
 			if (Global.random(2) == 0)
-				target.add(new Charmed(target, Global.random(Math.min(3,
+				target.add(c, new Charmed(target, Global.random(Math.min(3,
 						technique))));
 			getSelf().add(c, new Alluring(getSelf(), 3));
 		} else {
@@ -82,7 +86,7 @@ public class TemptressStripTease extends StripTease {
 
 			target.tempt(c, getSelf(),
 					15 + Global.random(Math.max(10, technique)));
-			target.add(new Charmed(target,
+			target.add(c, new Charmed(target,
 					Global.random(Math.min(5, technique))));
 			getSelf().add(c, new Alluring(getSelf(), 5));
 			getSelf().undress(c);
@@ -116,7 +120,7 @@ public class TemptressStripTease extends StripTease {
 					+ " takes a few steps back and starts "
 					+ "moving sinously. She sensually runs her hands over her body, "
 					+ "undoing straps and buttons where she encounters them, and starts"
-					+ " peeling her clothes of slowly, never breaking eye contact."
+					+ " peeling her clothes off slowly, never breaking eye contact."
 					+ " You can only gawk in amazement as her perfect body is revealed bit"
 					+ " by bit, and the thought of doing anything to blemish such"
 					+ " perfection seems very unpleasant indeed.";

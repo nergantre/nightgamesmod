@@ -7,6 +7,7 @@ import nightgames.actions.Action;
 import nightgames.actions.Move;
 import nightgames.areas.Area;
 import nightgames.areas.Deployable;
+import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.StraponPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Encounter;
@@ -528,20 +529,15 @@ public class Player extends Character {
 		case fucking:
 			if (c.getStance().sub(this)) {
 				Position reverse = c.getStance().reverse(c);
-				if (reverse != c.getStance() && StraponPart.isStrapon(reverse.bottomPart())) {
+				if (reverse != c.getStance() && !BodyPart.hasOnlyType(reverse.bottomParts(), "strapon")) {
 					c.setStance(reverse);
 				} else {
 					c.write(this, Global.format("{self:NAME-POSSESSIVE} quick wits find a gap in {other:name-possessive} hold and {self:action:slip|slips} away.", this, target));
 					c.setStance(new Neutral(this, target));
 				}
 			} else {
-				if (c.getStance().havingSex() && StraponPart.isStrapon(c.getStance().partFor(target))) {
-					target.body.pleasure(this, c.getStance().partFor(this), c.getStance().partFor(target),
-							4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
-				} else {
-					target.body.pleasure(this, body.getRandom("hands"), target.body.getRandomBreasts(),
-							4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
-				}
+				target.body.pleasure(this, body.getRandom("hands"), target.body.getRandomBreasts(),
+						4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
 				c.write(this,
 						Global.format(
 								"{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} nipples with {self:possessive} hands as {other:subject-action:try|tries} to fuck {self:direct-object}. "
@@ -581,10 +577,9 @@ public class Player extends Character {
 				opponent.pet.caught(c,this);
 			}
 		}
-		int pheromoneChance = (int)Math.round(10 * (1 - opponent.getExposure()));
-		if(opponent.has(Trait.pheromones)&&opponent.getArousal().percent()>=20&&Global.random(2 + pheromoneChance)==0){
+		if(opponent.has(Trait.pheromones)&&opponent.getArousal().percent()>=20&&opponent.rollPheromones(c)) {
 			c.write(opponent,"<br>Whenever you're near "+opponent.name()+", you feel your body heat up. Something in her scent is making you extremely horny.");
-			add(c, new Horny(this,opponent.has(Trait.augmentedPheromones) ? 2 : 1,10,opponent.nameOrPossessivePronoun() + " pheromones"));
+			add(c, new Horny(this,opponent.getPheromonePower(),10,opponent.nameOrPossessivePronoun() + " pheromones"));
 		}
 		if(opponent.has(Trait.smqueen)&&!is(Stsflag.masochism)){
 			c.write(Global.capitalizeFirstLetter(String.format("<br>%s seem to shudder in arousal at the thought of pain.", subject())));

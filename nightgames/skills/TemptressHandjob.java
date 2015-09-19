@@ -42,7 +42,7 @@ public class TemptressHandjob extends Handjob {
 				if (target.body.getRandomCock().isReady(target)) {
 					// Was flaccid, got hard
 					c.write(getSelf(), deal(c, 0, Result.special, target));
-					getSelf().add(new FiredUp(getSelf(), target, "hands"));
+					getSelf().add(c, new FiredUp(getSelf(), target, "hands"));
 				} else {
 					// Was flaccid, still is
 					c.write(getSelf(), deal(c, 0, Result.weak, target));
@@ -56,8 +56,8 @@ public class TemptressHandjob extends Handjob {
 				c.write(getSelf(), deal(c, stack, Result.normal, target));
 				target.body.pleasure(getSelf(),
 						getSelf().body.getRandom("hands"),
-						target.body.getRandomCock(), m, c);
-				getSelf().add(new FiredUp(getSelf(), target, "hands"));
+						target.body.getRandomCock(), m + (m * stack) / 2, c);
+				getSelf().add(c, new FiredUp(getSelf(), target, "hands"));
 			}
 		} else {
 			c.write(getSelf(), deal(c, 0, Result.miss, target));

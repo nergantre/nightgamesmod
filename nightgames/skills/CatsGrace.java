@@ -5,6 +5,7 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.status.Nimble;
+import nightgames.status.Stsflag;
 
 public class CatsGrace extends Skill {
 
@@ -19,7 +20,7 @@ public class CatsGrace extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&getSelf().getArousal().percent()>=20;
+		return !getSelf().is(Stsflag.nimble) && getSelf().canAct()&&c.getStance().mobile(getSelf())&&getSelf().getArousal().percent()>=20;
 	}
 
 	@Override

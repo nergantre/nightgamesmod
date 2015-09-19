@@ -396,11 +396,15 @@
 			},{
 				"type" : "skill",
 				"value" : "nightgames.skills.ReverseAssFuck",
-				"weight" : 2.0
+				"weight" : 1.0
 			},{
 				"type" : "skill",
 				"value" : "nightgames.skills.Shove",
 				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Tackle",
+				"weight" : 2.0
 			},{
 				"type" : "skill",
 				"value" : "nightgames.skills.Straddle",
@@ -414,10 +418,6 @@
 				"value" : "nightgames.skills.Trip",
 				"weight" : 1.0
 			},{
-				"type" : "skill",
-				"value" : "nightgames.skills.WildThrust",
-				"weight" : 2.0
-			},{
 				"type" : "position",
 				"value" : "cowgirl",
 				"weight" : 5.0
@@ -429,6 +429,10 @@
 				"type" : "position",
 				"value" : "mount",
 				"weight" : 3.0
+			},{
+				"type" : "position",
+				"value" : "neutral",
+				"weight" : -2.0
 			},{
 				"type" : "position",
 				"value" : "reversemount",

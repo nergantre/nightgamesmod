@@ -3,6 +3,7 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -33,7 +34,7 @@ public class SuccubusSurprise extends Skill {
 				&& getSelf().has(Item.SuccubusDraft)
 				&& c.getStance().inserted(target)
 				&& !c.getStance().anallyPenetrated()
-				&& !c.getStance().topPart().isType("strapon")
+				&& !BodyPart.hasOnlyType(c.getStance().topParts(), "strapon")
 				&& c.getStance().sub(getSelf())
 				&& getSelf().canSpend(getMojoCost(c))
 				&& !target.is(Stsflag.armlocked)
@@ -47,7 +48,7 @@ public class SuccubusSurprise extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		boolean oppHasBlessed = c.getStance().topPart()
+		boolean oppHasBlessed = c.getStance().insertedPartFor(target)
 				.getMod() == CockMod.blessed;
 		if (getSelf().human()) {
 			if (oppHasBlessed) {

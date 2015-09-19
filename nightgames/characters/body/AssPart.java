@@ -104,4 +104,5 @@ public class AssPart extends GenericBodyPart {
 	public double priority(Character c) {
 		return (c.has(Trait.tight) ? 1 : 0)+ (c.has(Trait.holecontrol) ? 1 : 0) + (c.has(Trait.oiledass) ? 1 : 0) + (c.has(Trait.autonomousAss) ? 4 : 0);
 	}
+
 }

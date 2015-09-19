@@ -29,7 +29,7 @@ public class SubmissiveHold extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canRespond() && c.getStance().sub(getSelf()) && (c.getStance().inserted(getSelf()) || c.getStance().inserted(target))
+		return getSelf().canAct() && c.getStance().sub(getSelf()) && (c.getStance().inserted(getSelf()) || c.getStance().inserted(target))
 				&& getSelf().canSpend(getMojoCost(c)) && !target.is(Stsflag.armlocked)&& !target.is(Stsflag.leglocked);
 	}
 

@@ -115,7 +115,7 @@ public enum CockMod implements BodyPartMod {
 				self.pain(c, Global.random(9) + 4);
 				amtDrained = 0;
 			} else {
-				message += String.format("Despite %s best efforts, some of the elusive energy passes into %s.",
+				message += String.format(" Despite %s best efforts, some of the elusive energy passes into %s.",
 						opponent.nameOrPossessivePronoun(), self.nameDirectObject());
 				amtDrained = 3;
 			}
@@ -167,7 +167,7 @@ public enum CockMod implements BodyPartMod {
 				// Actual bad effects are dealt with in PussyPart
 			} else {
 				message = String.format(
-						"Drawing upon %s extensive training, %s concentrates %s will into %s %s, enhancing %s own abilities",
+						"Drawing upon %s extensive training, %s %s will into %s %s, enhancing %s own abilities",
 						self.possessivePronoun(), self.subjectAction("concentrate", "concentrates"), self.possessivePronoun(), self.possessivePronoun(),
 						part.describe(self), self.possessivePronoun());
 				c.write(self, message);
@@ -276,7 +276,7 @@ public enum CockMod implements BodyPartMod {
 				if (target != PussyPart.cybernetic) {
 					c.write(self,
 							String.format(
-									"Sensing %s moment of passion, %s %s greedliy draws upon the rampant flows of orgasmic energy within %s, transferring the power back into %s.",
+									"Sensing %s moment of passion, %s %s greedily draws upon the rampant flows of orgasmic energy within %s, transferring the power back into %s.",
 									opponent.nameOrPossessivePronoun(), self.nameOrPossessivePronoun(), part.describe(self),
 									opponent.directObject(), self.directObject()));
 					int attDamage = target == PussyPart.feral ? 10 : 5;

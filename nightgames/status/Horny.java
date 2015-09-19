@@ -36,7 +36,7 @@ public class Horny extends DurationStatus {
 
 	@Override
 	public float fitnessModifier () {
-		return -Math.min(.5f, magnitude * getDuration() / 3.0f);
+		return -Math.min(.5f, magnitude * getDuration());
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class Horny extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now aroused by %s.\n", affected.subjectAction("are", "is"), source + " ("+ Global.formatDecimal(magnitude) +" x "+ getDuration()+ ")");
+		return String.format("%s %saroused by %s.\n", affected.subjectAction("are", "is"), replaced ? "" : "now ", source + " ("+ Global.formatDecimal(magnitude) +" x "+ getDuration()+ ")");
 	}
 
 	@Override

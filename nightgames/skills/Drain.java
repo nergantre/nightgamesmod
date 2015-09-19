@@ -112,7 +112,7 @@ public class Drain extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		if(c.getStance().havingSexNoStrapped()){
+		if(c.getStance().inserted(target)){
 			String muscDesc = c.getStance().anallyPenetrated(getSelf()) ? "anal" : "vaginal";
 			String partDesc = c.getStance().anallyPenetrated(getSelf()) ? getSelf().body.getRandom("ass").describe(getSelf()) : getSelf().body.getRandomPussy().describe(getSelf());
 			String base = "You put your powerful " + muscDesc + " muscles to work whilst"
@@ -176,48 +176,87 @@ public class Drain extends Skill {
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		String muscDesc = c.getStance().anallyPenetrated(getSelf()) ? "anal" : "vaginal";
-		String partDesc = c.getStance().anallyPenetrated(getSelf()) ? getSelf().body.getRandom("ass").describe(getSelf()) : getSelf().body.getRandomPussy().describe(getSelf());
-		
-		String base = "You feel " + getSelf().nameOrPossessivePronoun() + " powerful" + muscDesc+ " muscles suddenly tighten around you. "
-				+ "She starts kneading your dick bringing you immense pleasure and soon"
-				+ " you feel yourself erupt into her, but you realize your are shooting"
-				+ " something far more precious than semen into her " + partDesc + "; as more of the ethereal"
-				+ " fluid leaves you, you feel ";
-		switch (damage) {
-		case 4:
-			return base + "your strength leaving you with it, "
-					+ "making you more tired than you have ever felt.";
-		case 5:
-			return base
-					+ "memories of previous sexual experiences escape your mind,"
-					+ " numbing your skills, rendering you more sensitive and"
-					+ " perilously close to the edge of climax.";
-		case 3:
-			return base + "your mind go numb, causing your confidence and"
-					+ "cunning to flow into her.";
-		case 1:
-			return "Clearly the succubus is trying to do something really special to you, "
-					+ "as you can feel the walls of her " + partDesc + " squirm against you in a way "
-					+ "no human could manage, but all you feel is some drowsiness";
-		case 2:
-			return "Clearly the succubus is trying to do something really special to you, "
-					+ "as you can feel the walls of her " + partDesc + " squirm against you in a way "
-					+ "no human could manage, but all you feel is your focus waning some";
-		case 0:
-			return getSelf().name()+" squeezes you with her " + partDesc + " and starts to milk you, but you suddenly feel her shudder and moan loudly. Looks like her plan backfired.";
-		case 6:
-			return base
-					+ "something snap loose inside of you and it seems to flow right "
-					+ "through your dick and into her. When it is over you feel... empty "
-					+ "somehow. At the same time, "+getSelf().name()+" seems radiant, looking more powerful,"
-					+ " smarter and even more seductive than before. Through all of this,"
-					+ " she has kept on thrusting and you are right on the edge of climax."
-					+ " Your defeat appears imminent, but you have already lost something"
-					+ " far more valuable than a simple sex fight...";
-		default:
-			// Should never happen
-			return " nothing. You should be feeling something, but you're not.";
+		if(c.getStance().inserted(target)){
+			String muscDesc = c.getStance().anallyPenetrated(getSelf()) ? "anal" : "vaginal";
+			String partDesc = c.getStance().anallyPenetrated(getSelf()) ? getSelf().body.getRandom("ass").describe(getSelf()) : getSelf().body.getRandomPussy().describe(getSelf());
+			
+			String base = "You feel " + getSelf().nameOrPossessivePronoun() + " powerful" + muscDesc+ " muscles suddenly tighten around you. "
+					+ "She starts kneading your dick bringing you immense pleasure and soon"
+					+ " you feel yourself erupt into her, but you realize your are shooting"
+					+ " something far more precious than semen into her " + partDesc + "; as more of the ethereal"
+					+ " fluid leaves you, you feel ";
+			switch (damage) {
+			case 4:
+				return base + "your strength leaving you with it, "
+						+ "making you more tired than you have ever felt.";
+			case 5:
+				return base
+						+ "memories of previous sexual experiences escape your mind,"
+						+ " numbing your skills, rendering you more sensitive and"
+						+ " perilously close to the edge of climax.";
+			case 3:
+				return base + "your mind go numb, causing your confidence and"
+						+ "cunning to flow into her.";
+			case 1:
+				return "Clearly the succubus is trying to do something really special to you, "
+						+ "as you can feel the walls of her " + partDesc + " squirm against you in a way "
+						+ "no human could manage, but all you feel is some drowsiness";
+			case 2:
+				return "Clearly the succubus is trying to do something really special to you, "
+						+ "as you can feel the walls of her " + partDesc + " squirm against you in a way "
+						+ "no human could manage, but all you feel is your focus waning some";
+			case 0:
+				return getSelf().name()+" squeezes you with her " + partDesc + " and starts to milk you, but you suddenly feel her shudder and moan loudly. Looks like her plan backfired.";
+			case 6:
+				return base
+						+ "something snap loose inside of you and it seems to flow right "
+						+ "through your dick and into her. When it is over you feel... empty "
+						+ "somehow. At the same time, "+getSelf().name()+" seems radiant, looking more powerful,"
+						+ " smarter and even more seductive than before. Through all of this,"
+						+ " she has kept on thrusting and you are right on the edge of climax."
+						+ " Your defeat appears imminent, but you have already lost something"
+						+ " far more valuable than a simple sex fight...";
+			default:
+				// Should never happen
+				return " nothing. You should be feeling something, but you're not.";
+			}
+		} else {
+			String base = "You feel " + getSelf().nameOrPossessivePronoun() + " powerful will drawing some of your energy into " + getSelf().possessivePronoun() + " cock, ";
+			switch (damage) {
+			case 4:
+				return base + "your strength leaving you with it, "
+						+ "making you more tired than you have ever felt.";
+			case 5:
+				return base
+						+ "memories of previous sexual experiences escape your mind,"
+						+ " numbing your skills, rendering you more sensitive and"
+						+ " perilously close to the edge of climax.";
+			case 3:
+				return base + "your mind go numb, causing your confidence and"
+						+ "cunning to flow into her.";
+			case 1:
+				return "Clearly the demon is trying to do something really special to you, "
+						+ "as you can feel " + getSelf().nameOrPossessivePronoun() + " cock thrust against you in a way "
+						+ "no human could manage, but all you feel is some drowsiness";
+			case 2:
+				return "Clearly the demon is trying to do something really special to you, "
+						+ "as you can feel " + getSelf().nameOrPossessivePronoun() + " cock thrust against you in a way "
+						+ "no human could manage, but all you feel is your focus waning some";
+			case 0:
+				return getSelf().name()+" draws upon your will through your connection, but you suddenly feel " + getSelf().pronoun() + " shudder and moan loudly. Looks like " + getSelf().possessivePronoun() + " plan backfired.";
+			case 6:
+				return base
+						+ "something snap loose inside of you and it seems to flow right "
+						+ "through your pussy and into " +getSelf().directObject() +". When it is over you feel... empty "
+						+ "somehow. At the same time, "+getSelf().name()+" seems radiant, looking more powerful,"
+						+ " smarter and even more seductive than before. Through all of this,"
+						+ " " + getSelf().pronoun() + " has kept on thrusting and you are right on the edge of climax."
+						+ " Your defeat appears imminent, but you have already lost something"
+						+ " far more valuable than a simple sex fight...";
+			default:
+				// Should never happen
+				return " nothing. You should be feeling something, but you're not.";
+			}
 		}
 	}
 

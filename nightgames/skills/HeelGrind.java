@@ -75,7 +75,7 @@ public class HeelGrind extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		return Global.format("You wrap your legs around {other:name-possessive} waist and press your heel gently in to {other:possessive} cunt. Locking your ankles to keep {other:possessive} held in place, you start to gently gyrate your heel against {other:possessive} wet lips. Cupping each of {other:possessive} {other:body-part:breasts} with your hands, you start to pull and play with {other:name-possessive} nipples between your fingers. Your heel now coated in {other:possessive} wetness, you increase the pressure and speed of your heel and feel {other:subject} start to press against your heel on {other:possessive} own.", getSelf(), target);
+		return Global.format("You wrap your legs around {other:name-possessive} waist and press your heel gently into {other:possessive} cunt. Locking your ankles to keep {other:possessive} held in place, you start to gently gyrate your heel against {other:possessive} wet lips. Cupping each of {other:possessive} {other:body-part:breasts} with your hands, you start to pull and play with {other:name-possessive} nipples between your fingers. Your heel now coated in {other:possessive} wetness, you increase the pressure and speed of your heel and feel {other:subject} start to press against your heel on {other:possessive} own.", getSelf(), target);
 	}
 
 	@Override

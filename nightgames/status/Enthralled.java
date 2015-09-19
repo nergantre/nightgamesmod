@@ -78,9 +78,15 @@ public class Enthralled extends DurationStatus {
 	@Override
 	public void onRemove(Combat c, Character other) {
 		affected.addlist.add(new Cynical(affected));
-		Global.gui().message("Everything around you suddenly seems much clearer,"
-				+ " like a lens snapped into focus. You don't really remember why"
-				+ " you were heading in the direction you where...");
+		if (c != null && affected.human()) {
+			c.write(affected, "Everything around you suddenly seems much clearer,"
+					+ " like a lens snapped into focus. You don't really remember why"
+					+ " you were heading in the direction you where...");
+		} else if (affected.human()) {
+			Global.gui().message("Everything around you suddenly seems much clearer,"
+					+ " like a lens snapped into focus. You don't really remember why"
+					+ " you were heading in the direction you where...");
+		}
 	}
 
 	@Override

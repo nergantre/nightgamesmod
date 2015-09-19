@@ -96,4 +96,8 @@ public class Behind extends AbstractBehindStance {
 	public float priorityMod(Character self) {
 		return (self.hasInsertable() ? 2 : 1) * getSubDomBonus(self, 1.0f);
 	}
+
+	public double pheromoneMod (Character self) {
+		return 1.5;
+	}
 }

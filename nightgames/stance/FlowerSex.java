@@ -89,4 +89,8 @@ public class FlowerSex extends FemdomSexStance {
 	public Position reverse(Combat c) {
 		return this;
 	}
+	
+	public double pheromoneMod (Character self) {
+		return 10;
+	}
 }

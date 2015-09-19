@@ -128,14 +128,11 @@ public class Struggle extends Skill {
 				}
 			} else {
 				int diffMod = 0;
-				/*
-				if (c.getStance().partFor(target).getMod() == CockMod.enlightened) {
-
-				if (CockMod.enlightened.partHasThisMod(c.getStance().partFor(target))) {
+				if (CockMod.enlightened.partHasThisMod(c.getStance().insertedPartFor(target))) {
 					diffMod = 15;
-				} else if (CockMod.enlightened.partHasThisMod(c.getStance().partFor(getSelf()))) {
+				} else if (CockMod.enlightened.partHasThisMod(c.getStance().insertedPartFor(getSelf()))) {
 					diffMod = -15;
-				}*/
+				}
 				if (getSelf().check(Attribute.Power, (target.getStamina().get() / 2 - getSelf().getStamina().get() / 2)
 						+ (target.get(Attribute.Power) - getSelf().get(Attribute.Power)) - (getSelf().escape(c)) + diffMod)) {
 					if (getSelf().hasStatus(Stsflag.cockbound)) {
@@ -158,7 +155,7 @@ public class Struggle extends Skill {
 						getSelf().removeStatus(Stsflag.knotted);
 						getSelf().pain(c, 10);
 					}
-					boolean reverseStrapped = StraponPart.isStrapon(c.getStance().partFor(target));
+					boolean reverseStrapped = BodyPart.hasOnlyType(c.getStance().partsFor(target), "strapon");
 					boolean reversedStance = false;
 					if (reverseStrapped) {
 						Position reversed = c.getStance().reverse(c);

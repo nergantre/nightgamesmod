@@ -9,7 +9,6 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
-import nightgames.status.Stsflag;
 
 public class Thrust extends Skill {
 	public Thrust(String name, Character self) {
@@ -27,13 +26,13 @@ public class Thrust extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().canthrust(getSelf())&&c.getStance().havingSexOtherNoStrapped(getSelf());
+		return getSelfOrgan(c) != null && getTargetOrgan(c, target) != null &&getSelf().canAct()&&c.getStance().canthrust(getSelf())&&c.getStance().havingSexOtherNoStrapped(getSelf());
 	}
 
 	public BodyPart getSelfOrgan(Combat c) {
 		if (c.getStance().inserted(getSelf())) {
 			return getSelf().body.getRandomInsertable();
-		} else if (c.getStance().en == Stance.anal) {
+		} else if (c.getStance().anallyPenetratedBy(getSelf(), c.getOther(getSelf()))) {
 			return getSelf().body.getRandom("ass");
 		} else {
 			return getSelf().body.getRandomPussy();
@@ -43,7 +42,7 @@ public class Thrust extends Skill {
 	public BodyPart getTargetOrgan(Combat c, Character target) {
 		if (c.getStance().inserted(target)) {
 			return target.body.getRandomInsertable();
-		} else if (c.getStance().en == Stance.anal) {
+		} else if (c.getStance().anallyPenetratedBy(c.getOther(getSelf()), getSelf())) {
 			return target.body.getRandom("ass");
 		} else {
 			return target.body.getRandomPussy();
