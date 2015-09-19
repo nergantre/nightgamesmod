@@ -17,7 +17,7 @@ public class CommandMasturbate extends PlayerCommand {
 
 	@Override
 	public String describe(Combat c) {
-		return "Convince your opponent to pleasure themselves for your viewing pleasure";
+		return "Convince your opponents to pleasure themselves for your viewing pleasure";
 	}
 
 	@Override
@@ -53,10 +53,10 @@ public class CommandMasturbate extends PlayerCommand {
 		switch (modifier) {
 		case normal:
 			return target.name() + " seems more than happy to do as you tell her, "
-					+ "as she starts fingering herself with abandon.";
+					+ "as she starts fingering herself in abandon.";
 		case special:
 			return "Looking at you lustily, " + target.name()
-					+ " rubs her clit as she gets wet.";
+					+ " rubs her clit as she gets wetter and wetter.";
 		case weak:
 			return target.name() + " follows your command to the letter, but"
 					+ " it doesn't seem to have that much of an effect on her.";
