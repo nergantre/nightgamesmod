@@ -85,7 +85,7 @@ public class Spank extends Skill {
 			return "You try to spank "+target.name()+", but she dodges away.";
 		}
 		if(modifier==Result.special){
-			return "You bend "+target.name()+" over your knee and spank her, alternating between hitting her soft butt check and her sensitive pussy.";
+			return "You bend "+target.name()+" over your knee and spank her, alternating between hitting her soft butt cheek and her sensitive pussy.";
 		}
 		else{
 			return "You spank "+target.name()+" on her naked butt cheek.";
