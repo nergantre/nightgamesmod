@@ -6,6 +6,7 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.items.clothing.ClothingSlot;
 import nightgames.stance.Stance;
 
 public class Finger extends Skill {
@@ -16,7 +17,10 @@ public class Finger extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().reachBottom(getSelf())&&(target.pantsless()||(getSelf().has(Trait.dexterous)&&target.bottom.size()<=1))&&target.hasPussy()&&getSelf().canAct()&&(!c.getStance().penetration(target)||c.getStance().en==Stance.anal);
+		return c.getStance().reachBottom(getSelf())&&(target.crotchAvailable()
+				||
+				(getSelf().has(Trait.dexterous)&&target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getLayer()<=1))
+				&&target.hasPussy()&&getSelf().canAct()&&!c.getStance().vaginallyPenetrated(target);
 	}
 
 	@Override
@@ -62,7 +66,7 @@ public class Finger extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return true;
+		return user.get(Attribute.Seduction) >= 5;
 	}
 
 	@Override
@@ -131,11 +135,5 @@ public class Finger extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "pussy";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "hands";
 	}
 }

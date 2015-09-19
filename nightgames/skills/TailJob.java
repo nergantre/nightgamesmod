@@ -23,7 +23,7 @@ public class TailJob extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&target.pantsless()&&c.getStance().mobile(getSelf())&&!c.getStance().mobile(target)&&!c.getStance().penetration(target);
+		return getSelf().canAct()&&target.crotchAvailable()&&c.getStance().mobile(getSelf())&&!c.getStance().mobile(target)&&!c.getStance().inserted(target);
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class TailJob extends Skill {
 			receiver = "pussy";
 		}
 		if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
-			target.add(c, new BodyFetish(target, getSelf(), "tail", .25, 10));
+			target.add(c, new BodyFetish(target, getSelf(), "tail", .25));
 		}
 		target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom(receiver), m, c);
 		return true;
@@ -83,16 +83,5 @@ public class TailJob extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-
-	public String getTargetOrganType(Combat c, Character target) {
-		if (target.hasDick()) {
-			return "cock";
-		} else {
-			return "pussy";
-		}
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "tail";
 	}
 }

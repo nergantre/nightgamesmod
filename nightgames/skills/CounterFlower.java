@@ -24,6 +24,11 @@ public class CounterFlower extends CounterBase {
 		return -20;
 	}
 
+	public String getBlockedString(Combat c, Character target) {
+		return Global.format("{self:SUBJECT-ACTION:block|blocks} {other:name-possessive} assault with a vine and {self:action:shoot|shoots} out {self:possessive} vines to drag {other:direct-object} into {self:possessive} flower. "
+				+ "However, {other:subject-action:were|was} wary of {self:direct-object} and {other:action:jump|jumps} back before {self:subject} can catch {other:direct-object}.", getSelf(), target);
+	}
+
 	@Override
 	public void resolveCounter(Combat c, Character target) {
 		target.nudify();
@@ -103,11 +108,5 @@ public class CounterFlower extends CounterBase {
 					+ "With a salacious smile, {self:subject} uses her vines and drags {other:name-do} into {self:possessive} flower and deposits you in {self:possessive} arms. "
 					+ "{other:PRONOUN} coils her limbs around yours, forcing your face inside her fragrant cleavage and your cock inside her warm sticky flower cunt.", getSelf(), target);
 		}
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "cock";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "pussy";
 	}
 }

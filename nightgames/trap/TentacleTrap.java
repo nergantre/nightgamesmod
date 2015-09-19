@@ -20,7 +20,7 @@ public class TentacleTrap implements Trap {
 
 	@Override
 	public void trigger(Character target) {
-		if(target.nude()){
+		if(target.mostlyNude()){
 			if(target.human()){
 				Global.gui().message("An unearthly glow appears from the floor surrounding you and at least a dozen tentacles burst from the floor. Before you can react, you're lifted helpless " +
 						"into the air. The tentacles assault you front and back, wriggling around you nipples and cock, while one persistant tentacle forces its way into your ass. The overwhelming " +

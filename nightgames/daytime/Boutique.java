@@ -3,25 +3,13 @@ package nightgames.daytime;
 import nightgames.characters.Character;
 import nightgames.global.Flag;
 import nightgames.global.Global;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
 
 public class Boutique extends Store {
 	public Boutique(Character player) {
 		super("Boutique", player);
-		add(Clothing.blouse);
-		add(Clothing.bra);
-		add(Clothing.skirt);
-		add(Clothing.panties);
-		add(Clothing.thong);
-		add(Clothing.tanktop);
-		add(Clothing.miniskirt);
-		add(Clothing.bikinitop);
-		add(Clothing.bikinibottoms);
-		add(Clothing.crotchlesspanties);
-		add(Clothing.opencupbra);
-		add(Clothing.latextop);
-		add(Clothing.latexpants);
+		Clothing.getAllBuyableFrom("Boutique").forEach(article -> add(article));
 	}
 
 	@Override
@@ -44,7 +32,7 @@ public class Boutique extends Store {
 		}
 		checkSale(choice);
 		if(player.human()){
-			Global.gui().message("This is a store for women's clothing. Things may get a bit expensive here.");
+			Global.gui().message("This is a higher end store for women's clothing. Things may get a bit expensive here.");
 			for(Clothing i: clothing().keySet()){
 				Global.gui().message(i.getName()+": "+i.getPrice() +(player.has(i) ? " (Owned)":""));
 			}

@@ -16,7 +16,7 @@ public class ArmBar extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().dom(getSelf())&&c.getStance().reachTop(target)&&getSelf().canAct()&&!getSelf().has(Trait.undisciplined)&&!c.getStance().penetration(getSelf());
+		return c.getStance().dom(getSelf())&&c.getStance().reachTop(target)&&getSelf().canAct()&&!getSelf().has(Trait.undisciplined)&&!c.getStance().inserted();
 	}
 
 	@Override

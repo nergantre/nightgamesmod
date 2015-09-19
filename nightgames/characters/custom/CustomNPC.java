@@ -31,10 +31,9 @@ public class CustomNPC extends BasePersonality {
 		growth = data.getGrowth();
 		preferredAttributes = new ArrayList<PreferredAttribute>(data.getPreferredAttributes());
 		character = new NPC(data.getName(),data.getStats().level,this);
-		character.outfit[0].addAll(data.getTopOutfit());
-		character.outfit[1].addAll(data.getBottomOutfit());
-		character.closet.addAll(character.outfit[0]);
-		character.closet.addAll(character.outfit[1]);
+		character.outfitPlan.addAll(data.getTopOutfit());
+		character.outfitPlan.addAll(data.getBottomOutfit());
+		character.closet.addAll(character.outfitPlan);
 		character.change(Modifier.normal);
 		character.att = new HashMap<Attribute, Integer>(data.getStats().attributes);
 		character.traits = new HashSet<Trait>(data.getStats().traits);
@@ -114,7 +113,7 @@ public class CustomNPC extends BasePersonality {
 
 	@Override
 	public boolean fightFlight(Character opponent) {
-		return !character.nude()||opponent.nude();
+		return !character.mostlyNude()||opponent.mostlyNude();
 	}
 
 	@Override
@@ -144,14 +143,14 @@ public class CustomNPC extends BasePersonality {
 	}
 	@Override
 	public boolean fit() {
-		return !character.nude()&&character.getStamina().percent()>=50;
+		return !character.mostlyNude()&&character.getStamina().percent()>=50;
 	}
 	@Override
 	public String night() {
 		return data.getLine("startBattle", null, this.character, Global.getPlayer());
 	}
 
-	public boolean checkMood(Emotion mood, int value) {
+	public boolean checkMood(Combat c, Emotion mood, int value) {
 		return data.checkMood(this.character, mood, value);
 	}
 
@@ -182,5 +181,9 @@ public class CustomNPC extends BasePersonality {
 
 	public RecruitmentData getRecruitmentData() {
 		return data.getRecruitment();
+	}
+	
+	public AiModifiers getAiModifiers() {
+		return data.getAiModifiers();
 	}
 }

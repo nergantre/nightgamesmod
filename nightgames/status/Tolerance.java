@@ -14,7 +14,7 @@ public class Tolerance extends DurationStatus {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(affected.human()){
 			return "You've built up a tolerance to addictive fluids.";
 		}

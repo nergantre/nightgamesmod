@@ -24,7 +24,7 @@ public class CommandUse extends PlayerCommand {
 	}
 
 	public boolean usable(Combat c, Character target) {
-		if (!super.usable(c, target) || !target.nude())
+		if (!super.usable(c, target) || !target.mostlyNude())
 			return false;
 		boolean usable = false;
 		for (Item candidate : CANDIDATES)

@@ -20,7 +20,7 @@ public class Dissolve extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().mobile(getSelf())&&getSelf().canAct()&&getSelf().has(Item.DisSol)&&!target.nude()&&!c.getStance().prone(getSelf())
+		return c.getStance().mobile(getSelf())&&getSelf().canAct()&&getSelf().has(Item.DisSol)&&target.outfit.getRandomShreddableSlot() != null&&!c.getStance().prone(getSelf())
 				&&(!getSelf().human()||Global.getMatch().condition!=Modifier.noitems);
 	}
 
@@ -34,12 +34,7 @@ public class Dissolve extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.special, getSelf()));
 			}
-			if(!target.top.isEmpty()){
-				target.shred(0);
-			}
-			if(!target.bottom.isEmpty()){
-				target.shred(1);
-			}
+			target.shredRandom();
 		}
 		else if(target.roll(this, c, accuracy(c))){
 			if(getSelf().human()){
@@ -48,12 +43,7 @@ public class Dissolve extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.normal, getSelf()));
 			}
-			if(!target.top.isEmpty()){
-				target.shred(0);
-			}
-			if(!target.bottom.isEmpty()){
-				target.shred(1);
-			}
+			target.shredRandom();
 		}
 		else{
 			if(getSelf().human()){

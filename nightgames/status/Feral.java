@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 
 public class Feral extends Status {
 
@@ -14,8 +15,8 @@ public class Feral extends Status {
 	}
 
 	@Override
-	public String describe() {
-		return "";
+	public String describe(Combat c) {
+		return String.format("%s seems beyond reason in %s feral lust.\n", affected.subjectAction("have", "has"), affected.possessivePronoun());
 	}
 
 	@Override
@@ -32,15 +33,15 @@ public class Feral extends Status {
 	public int mod(Attribute a) {
 		switch(a){
 		case Power:
-			return 2;
+			return 1 + affected.getPure(Attribute.Animism) / 2;
 		case Cunning:
 			return 3;
 		case Seduction:
 			return 2;
 		case Animism:
-			return 2;
+			return affected.getPure(Attribute.Animism) / 2;
 		case Speed:
-			return 1;
+			return 2;
 		default:
 			break;
 		}
@@ -49,8 +50,12 @@ public class Feral extends Status {
 
 	@Override
 	public int regen(Combat c) {
-		if(affected.getArousal().percent()<50){
+		if(affected.getArousal().percent()<40){
 			affected.removelist.add(this);
+		}
+		int ignoreOrgasmChance = Math.min(5, 2 + affected.get(Attribute.Animism) / 10);
+		if (Global.random(ignoreOrgasmChance) != 0) {
+			affected.addlist.add(new IgnoreOrgasm(affected, 0));
 		}
 		return 0;
 	}

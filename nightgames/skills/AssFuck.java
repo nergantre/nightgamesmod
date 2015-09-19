@@ -8,8 +8,9 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
+import nightgames.items.clothing.ClothingSlot;
 import nightgames.stance.Anal;
 import nightgames.stance.AnalProne;
 import nightgames.status.Flatfooted;
@@ -36,27 +37,19 @@ public class AssFuck extends Fuck {
 				&& (c.getStance().insert(getSelf(), getSelf()) != c.getStance() || c.getStance().insert(target, getSelf()) != c.getStance())
 				&&c.getStance().mobile(getSelf())
 				&&(c.getStance().behind(getSelf())||(c.getStance().prone(target)&&!c.getStance().mobile(target)))
-				&&getSelf().canAct()&&!c.getStance().penetration(getSelf())
-				&&!c.getStance().penetration(target)
+				&&getSelf().canAct()
 				&&(getTargetOrgan(target).isReady(target) || getSelf().has(Item.Lubricant) || getSelf().getArousal().percent()>50 || getSelf().has(Trait.alwaysready));
 	}
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		String premessage = "";
-		if(!getSelf().bottom.empty() && getSelfOrgan().isType("cock")) {
-			if (getSelf().bottom.size() == 1) {
-				premessage += String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s", getSelf().bottom.get(0).getName());
-			} else if (getSelf().bottom.size() == 2) {
-				premessage += String.format("{self:SUBJECT-ACTION:pull|pulls} down {self:possessive} %s and %s", getSelf().bottom.get(0).getName(), getSelf().bottom.get(1).getName());
-			}
-		}
+		String premessage = premessage(c, target);
 		if(!target.hasStatus(Stsflag.oiled)&&getSelf().getArousal().percent()>50 || getSelf().has(Trait.alwaysready)) {
 			String fluids = target.hasDick() ? "copious pre-cum" : "own juices";
 			if (premessage.isEmpty()) {
 				premessage = "{self:subject-action:lube|lubes}";
 			} else {
-				premessage += " and {self:action:lube|lubes}";
+				premessage += "{self:action:lube|lubes}";
 			}
 			premessage += " up {other:possessive} ass with {self:possessive} " + fluids + ".";
 			target.add(c, new Oiled(target));
@@ -64,7 +57,7 @@ public class AssFuck extends Fuck {
 			if (premessage.isEmpty()) {
 				premessage = "{self:subject-action:lube|lubes}";
 			} else {
-				premessage += " and {self:action:lube|lubes}";
+				premessage += "{self:action:lube|lubes}";
 			}
 			premessage += " up {other:possessive} ass.";
 			target.add(c, new Oiled(target));
@@ -74,16 +67,16 @@ public class AssFuck extends Fuck {
 	
 		int m = Global.random(5);
 		if(getSelf().human()) {
-			c.write(getSelf(),deal(c,m,Result.normal, target));
+			c.write(getSelf(),deal(c,premessage.length(),Result.normal, target));
 		}
 		else if(target.human()){
 			if (getSelf().has(Trait.strapped)&&getSelf().has(Item.Strapon2)){
 				m+=3;
 			}
 			if (!c.getStance().behind(getSelf()) && getSelf().has(Trait.strapped)){
-				c.write(getSelf(),receive(c,m,Result.upgrade, target));
+				c.write(getSelf(),receive(c,premessage.length(),Result.upgrade, target));
 			} else {
-				c.write(getSelf(),receive(c,m,Result.normal, target));
+				c.write(getSelf(),receive(c,premessage.length(),Result.normal, target));
 			}
 		}
 		if(c.getStance().behind(getSelf())){
@@ -126,7 +119,7 @@ public class AssFuck extends Fuck {
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if(modifier == Result.normal){
-			return String.format("You make sure %s ass is sufficiently lubricated and you push your %s into her %s.",
+			return String.format((damage == 0 ? "You" :"After you") + " make sure %s ass is sufficiently lubricated and you push your %s into her %s.",
 					target.nameOrPossessivePronoun(), getSelfOrgan().describe(getSelf()), getTargetOrgan(target).describe(target));
 		}
 		else {
@@ -167,11 +160,5 @@ public class AssFuck extends Fuck {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "ass";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "cock";
 	}
 }

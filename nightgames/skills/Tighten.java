@@ -9,7 +9,6 @@ import nightgames.global.Global;
 import nightgames.stance.Stance;
 
 public class Tighten extends Thrust {
-
 	public Tighten(Character self) {
 		super("Tighten", self);
 	}
@@ -21,7 +20,7 @@ public class Tighten extends Thrust {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().inserted(target)&&target.hasDick();	
+		return getSelf().canRespond()&&c.getStance().penetratedBy(getSelf(), target)&&c.getStance().havingSexNoStrapped()&&target.hasDick();	
 	}
 
 	@Override

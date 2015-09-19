@@ -4,6 +4,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.items.clothing.ClothingSlot;
 import nightgames.status.Flatfooted;
 import nightgames.status.Shield;
 
@@ -26,12 +27,12 @@ public class FairyMale extends Pet {
 		if(owner().human()){
 			switch(Global.random(4)){
 			case 3:
-				if(target.pantsless()){
+				if(target.crotchAvailable()){
 					c.write(owner(),"Your faerie flies between "+target.name()+"'s legs and rubs her sensitive clit with both his tiny hands.");
 					target.body.pleasure(null, null, target.body.getRandom("pussy"), 2+3*Global.random(power), c);					
 				}
 				else{
-					c.write(owner(),"Your faerie crawls into "+target.name()+"'s "+target.bottom.peek().getName()+" and fondles her until she fishes him out.");
+					c.write(owner(),"Your faerie crawls into "+target.name()+"'s "+target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName()+" and fondles her until she fishes him out.");
 					target.body.pleasure(null, null, target.body.getRandom("pussy"), 2+3*Global.random(power), c);					
 				}
 				break;

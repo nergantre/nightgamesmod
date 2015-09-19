@@ -208,6 +208,21 @@ public class BodyShop extends Activity  {
 			}
 		});
 
+		selection.add(new ShopSelection("Remove Pussy", 2500) {
+			@Override
+			void buy(Character buyer) {
+				buyer.body.removeAll("pussy");
+			}
+			@Override
+			boolean available(Character buyer) {
+				return buyer.hasPussy();
+			}
+			@Override
+			double priority(Character buyer) {
+				return Math.max(0, buyer.dickPreference() - 7);
+			}
+		});
+
 		selection.add(new ShopSelection("Grow Balls", 1000) {
 			@Override
 			void buy(Character buyer) {

@@ -88,11 +88,6 @@ public class SixNine extends AbstractBehindStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return false;
-	}
-
-	@Override
 	public boolean inserted(Character c) {
 		return false;
 	}
@@ -100,5 +95,14 @@ public class SixNine extends AbstractBehindStance {
 	@Override
 	public Position insertRandom() {
 		return this;
+	}
+
+	@Override
+	public boolean faceAvailable(Character target) {
+		return false;
+	}
+
+	public double pheromoneMod (Character self) {
+		return 10;
 	}
 }

@@ -19,7 +19,7 @@ public class Sore extends DurationStatus {
 		return String.format("%s now sore.\n", affected.subjectAction("are", "is"));
 	}
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "";
 	}
 

@@ -15,7 +15,7 @@ public class Suckle extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.topless()&&c.getStance().reachTop(getSelf())&&c.getStance().front(getSelf())&&(getSelf().canAct()||(c.getStance().enumerate()==Stance.nursing&&getSelf().canRespond()))&&c.getStance().facing();
+		return target.breastsAvailable()&&c.getStance().reachTop(getSelf())&&c.getStance().front(getSelf())&&(getSelf().canAct()||(c.getStance().enumerate()==Stance.nursing&&getSelf().canRespond()))&&c.getStance().facing();
 	}
 
 	@Override
@@ -31,6 +31,7 @@ public class Suckle extends Skill {
 		if (getSelf().has(Trait.silvertongue)) {
 			m += 4;
 		}
+		
 		target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("breasts"), m, c);
 		if (results == Result.special) {
 			getSelf().tempt(c, target, target.body.getRandomBreasts(), (3 + target.body.getRandomBreasts().size) * 2);
@@ -43,7 +44,7 @@ public class Suckle extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return true;
+		return user.get(Attribute.Seduction) >= 6;
 	}
 
 	@Override
@@ -81,12 +82,5 @@ public class Suckle extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-
-	public String getTargetOrganType(Combat c, Character target) {
-		return "breasts";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "mouth";
 	}
 }

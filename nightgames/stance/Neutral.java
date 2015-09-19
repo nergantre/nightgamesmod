@@ -80,11 +80,6 @@ public class Neutral extends Position {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return false;
-	}
-
-	@Override
 	public Position insertRandomDom(Character dom) {
 		Character other = getOther(dom);
 		boolean fuckPossible = dom.hasDick() && other.hasPussy();
@@ -121,5 +116,9 @@ public class Neutral extends Position {
 			return new Jumped(catcher, pitcher);
 		}
 		return this;
+	}
+
+	public double pheromoneMod (Character self) {
+		return .5;
 	}
 }

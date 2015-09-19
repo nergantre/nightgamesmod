@@ -3,11 +3,10 @@ package nightgames.characters;
 import java.io.Serializable;
 import java.util.HashSet;
 
-import javax.swing.Icon;
-
 import nightgames.actions.Action;
 import nightgames.actions.Movement;
 import nightgames.areas.Area;
+import nightgames.characters.custom.AiModifiers;
 import nightgames.characters.custom.RecruitmentData;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -34,7 +33,7 @@ public interface Personality extends Serializable{
 	public String startBattle(Character other);
 	public boolean fit();
 	public String night();
-	public boolean checkMood(Emotion mood, int value);
+	public boolean checkMood(Combat c, Emotion mood, int value);
 	public String image(Combat c);
 	public void pickFeat();
 	public String describeAll(Combat c);
@@ -43,4 +42,5 @@ public interface Personality extends Serializable{
 	public String makeOrgasmLiner(Combat c);
 	public String getType();
 	public RecruitmentData getRecruitmentData();
+	public AiModifiers getAiModifiers();
 }

@@ -7,6 +7,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Encounter;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.items.clothing.ClothingTrait;
 import nightgames.stance.StandingOver;
 import nightgames.status.Winded;
 
@@ -23,7 +24,7 @@ public class SpringTrap implements Trap {
 				Global.gui().message("You hear a sudden yelp as your trap catches "+target.name()+" right in the cooch. She eventually manages to extract the rope from between her legs " +
 						"and collapses to the floor in pain.");
 			}
-			if(target.has(Trait.armored)){
+			if(target.has(ClothingTrait.armored)){
 				target.pain(null, 3);
 			}
 			else{

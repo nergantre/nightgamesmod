@@ -1,33 +1,21 @@
 package nightgames.characters;
 
-import nightgames.actions.Action;
-import nightgames.actions.Move;
-import nightgames.actions.Movement;
-import nightgames.actions.Resupply;
-import nightgames.areas.Area;
+import java.util.Optional;
+
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.EarPart;
-import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.global.Modifier;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
-import nightgames.skills.Skill;
-import nightgames.skills.Tactics;
-import nightgames.stance.Stance;
+import nightgames.items.clothing.Clothing;
 import nightgames.status.Feral;
 import nightgames.status.Horny;
 import nightgames.status.Stsflag;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Optional;
 
 public class Kat extends BasePersonality {
 	/**
@@ -38,14 +26,12 @@ public class Kat extends BasePersonality {
 		super();
 		character = new NPC("Kat",10,this);
 		preferredCockMod = CockMod.primal;
-		character.outfit[0].add(Clothing.bra);
-		character.outfit[0].add(Clothing.Tshirt);
-		character.outfit[1].add(Clothing.panties);
-		character.outfit[1].add(Clothing.skirt);
-		character.closet.add(Clothing.bra);
-		character.closet.add(Clothing.Tshirt);
-		character.closet.add(Clothing.panties);
-		character.closet.add(Clothing.skirt);
+		character.outfitPlan.add(Clothing.getByID("bra"));
+		character.outfitPlan.add(Clothing.getByID("Tshirt"));
+		character.outfitPlan.add(Clothing.getByID("panties"));
+		character.outfitPlan.add(Clothing.getByID("skirt"));
+		character.outfitPlan.add(Clothing.getByID("sneakers"));
+		character.outfitPlan.add(Clothing.getByID("socks"));
 		character.change(Modifier.normal);
 		character.setTrophy(Item.KatTrophy);
 		this.character.set(Attribute.Power, 10);
@@ -66,7 +52,7 @@ public class Kat extends BasePersonality {
 		character.body.add(PussyPart.feral);
 		character.body.add(TailPart.cat);
 		character.body.add(EarPart.cat);
-		character.body.finishBody("female");
+		character.body.finishBody(CharacterSex.female);
 		}
 
 	@Override
@@ -77,7 +63,7 @@ public class Kat extends BasePersonality {
 		growth.bonusStamina = 1;
 		growth.bonusArousal = 2;
 		growth.bonusMojo = 2;
-		preferredAttributes.add(c -> c.get(Attribute.Animism) < 20 ? Optional.of(Attribute.Animism) : Optional.empty());
+		preferredAttributes.add(c -> Optional.of(Attribute.Animism));
 
 		growth.addTrait(10, Trait.sympathetic);
 		growth.addTrait(13, Trait.analTraining1);
@@ -331,7 +317,7 @@ public class Kat extends BasePersonality {
 	}
 	@Override
 	public boolean fightFlight(Character opponent) {
-		return !character.nude()||opponent.nude();
+		return !character.mostlyNude()||opponent.mostlyNude();
 	}
 	@Override
 	public boolean attack(Character opponent) {
@@ -383,7 +369,7 @@ public class Kat extends BasePersonality {
 	}
 	@Override
 	public boolean fit() {
-		return (!character.nude()&&character.getStamina().percent()>=50)||character.getArousal().percent()>50;
+		return (!character.mostlyNude()&&character.getStamina().percent()>=50)||character.getArousal().percent()>50;
 	}
 	@Override
 	public String night() {
@@ -401,10 +387,10 @@ public class Kat extends BasePersonality {
 		
 	}
 
-	public boolean checkMood(Emotion mood, int value) {
+	public boolean checkMood(Combat c, Emotion mood, int value) {
 		if(character.getArousal().percent()>=50){
 			if(!character.is(Stsflag.feral)){
-				character.add(new Feral(character));
+				character.add(c, new Feral(character));
 			}
 			if(!character.has(Trait.shameless)){
 				character.add(Trait.shameless);
@@ -422,7 +408,7 @@ public class Kat extends BasePersonality {
 		else{
 			if(!character.has(Trait.shy)){
 				character.add(Trait.shy);
-				character.remove(Trait.shameless);
+				character.removeStatus(Stsflag.feral);
 			}
 			switch(mood){
 			case nervous:

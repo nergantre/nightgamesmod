@@ -2,6 +2,7 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.BasicCockPart;
 import nightgames.combat.Combat;
@@ -45,7 +46,7 @@ public class BreastGrowth extends Skill {
 	public boolean resolve(Combat c, Character target) {
 		Result res = target.roll(this, c, 0) ? Result.normal : Result.miss;
 
-		boolean permanent = Global.random(20) == 0 && (getSelf().human() || target.human());
+		boolean permanent = Global.random(20) == 0 && (getSelf().human() || target.human()) && !target.has(Trait.stableform);
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,permanent ? 1 : 0, res, target));
 		} else if(target.human()) {		

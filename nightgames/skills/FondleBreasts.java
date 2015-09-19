@@ -7,6 +7,7 @@ import nightgames.characters.body.BreastsPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.items.clothing.ClothingSlot;
 
 public class FondleBreasts extends Skill {
 
@@ -28,7 +29,7 @@ public class FondleBreasts extends Skill {
 	public boolean resolve(Combat c, Character target) {
 		int m = 1 + Global.random(4);
 		if(target.roll(this, c, accuracy(c))){
-			if(target.topless()){
+			if(target.breastsAvailable()){
 				m += 4;
 				if(getSelf().human()){
 					c.write(getSelf(),deal(c,m,Result.normal, target));
@@ -82,11 +83,11 @@ public class FondleBreasts extends Skill {
 		if(modifier == Result.miss){
 			return "You grope at "+target.name()+"'s breasts, but miss.";
 		}
-		else if(target.top.isEmpty()){
+		else if(target.breastsAvailable()){
 			return "You massage "+target.name()+"'s soft breasts and pinch her nipples, causing her to moan with desire.";
 		}
 		else{
-			return "You massage "+target.name()+"'s breasts over her "+target.top.peek().getName()+".";
+			return "You massage "+target.name()+"'s breasts over her "+target.getOutfit().getTopOfSlot(ClothingSlot.top).getName()+".";
 		}
 	}
 
@@ -95,11 +96,11 @@ public class FondleBreasts extends Skill {
 		if(modifier == Result.miss){
 			return getSelf().name() + " gropes at your " + target.body.getRandomBreasts().describe(target) + ", but misses the mark.";
 		}
-		else if(target.topless()){
-			return getSelf().name() + " massages your " + target.body.getRandomBreasts().describe(target) + ", and pinch your nipples, causing you to moan with desire.";
+		else if(target.breastsAvailable()){
+			return getSelf().name() + " massages your " + target.body.getRandomBreasts().describe(target) + ", and pinches your nipples, causing you to moan with desire.";
 		}
 		else{
-			return getSelf().name() + " massages your " + target.body.getRandomBreasts().describe(target) + " over your "+target.top.peek().getName()+".";
+			return getSelf().name() + " massages your " + target.body.getRandomBreasts().describe(target) + " over your "+target.getOutfit().getTopOfSlot(ClothingSlot.top).getName()+".";
 		}
 	}
 
@@ -116,11 +117,5 @@ public class FondleBreasts extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "breasts";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "hands";
 	}
 }

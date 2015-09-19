@@ -1,11 +1,13 @@
 package nightgames.stance;
 
 
+import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.AnalPussyPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 
 public class Cowgirl extends FemdomSexStance {
 
@@ -77,32 +79,20 @@ public class Cowgirl extends FemdomSexStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return true;
-	}
-
-	@Override
-	public boolean inserted(Character c) {
-		return c==bottom;
-	}
-
-	@Override
 	public Position insertRandom() {
 		return new Mount(top,bottom);
 	}
 
-	public Position reverse() {
+	public Position reverse(Combat c) {
+		c.write(bottom, Global.format("{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} clitoris with {self:possessive} hands as {other:subject-action:try|tries} to ride {self:direct-object}. " +
+				"While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:take|takes} the chance to swing around into a dominant missionary position.", bottom, top));
 		return new Missionary(bottom, top);
 	}
-	
 
-	@Override
-	public BodyPart topPart() {
-		return top.body.getRandomPussy();
-	}
-	
-	@Override
-	public BodyPart bottomPart() {
-		return bottom.body.getRandomInsertable();
+	public static Position similarInstance(Character top, Character bottom) {
+		if (top.get(Attribute.Power) > 25 && Global.random(2) == 0) {
+			return new UpsideDownFemdom(top, bottom);
+		}
+		return new Cowgirl(top, bottom);
 	}
 }

@@ -9,7 +9,6 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
-import nightgames.status.Stsflag;
 
 public class Thrust extends Skill {
 	public Thrust(String name, Character self) {
@@ -22,18 +21,18 @@ public class Thrust extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return true;
+		return !user.has(Trait.temptress) || user.get(Attribute.Technique) < 11;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().canthrust(getSelf())&&(c.getStance().penetration(getSelf())||c.getStance().penetration(target));
+		return getSelfOrgan(c) != null && getTargetOrgan(c, target) != null &&getSelf().canAct()&&c.getStance().canthrust(getSelf())&&c.getStance().havingSexOtherNoStrapped(getSelf());
 	}
 
 	public BodyPart getSelfOrgan(Combat c) {
 		if (c.getStance().inserted(getSelf())) {
 			return getSelf().body.getRandomInsertable();
-		} else if (c.getStance().en == Stance.anal) {
+		} else if (c.getStance().anallyPenetratedBy(getSelf(), c.getOther(getSelf()))) {
 			return getSelf().body.getRandom("ass");
 		} else {
 			return getSelf().body.getRandomPussy();
@@ -43,7 +42,7 @@ public class Thrust extends Skill {
 	public BodyPart getTargetOrgan(Combat c, Character target) {
 		if (c.getStance().inserted(target)) {
 			return target.body.getRandomInsertable();
-		} else if (c.getStance().en == Stance.anal) {
+		} else if (c.getStance().anallyPenetratedBy(c.getOther(getSelf()), getSelf())) {
 			return target.body.getRandom("ass");
 		} else {
 			return target.body.getRandomPussy();
@@ -93,7 +92,7 @@ public class Thrust extends Skill {
 		if (m[1] != 0)
 			getSelf().body.pleasure(target, targetO, selfO, m[1], c);
 		if (selfO.isType("ass") && Global.random(100) < 2 + getSelf().get(Attribute.Fetish)) {
-			target.add(c, new BodyFetish(target, getSelf(), "ass", .25, 10));
+			target.add(c, new BodyFetish(target, getSelf(), "ass", .25));
 		}
 		return true;
 	}
@@ -159,12 +158,5 @@ public class Thrust extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-
-	public String getTargetOrganType(Combat c, Character target) {
-		return getTargetOrgan(c, target).getType();
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return getSelfOrgan(c).getType();
 	}
 }

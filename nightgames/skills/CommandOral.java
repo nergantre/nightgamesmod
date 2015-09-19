@@ -13,7 +13,7 @@ public class CommandOral extends PlayerCommand {
 	}
 
 	public boolean usable(Combat c, Character target) {
-		return super.usable(c, target) && getSelf().pantsless()
+		return super.usable(c, target) && getSelf().crotchAvailable()
 				&& c.getStance().oral(target);
 	}
 	

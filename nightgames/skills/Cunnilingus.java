@@ -20,7 +20,7 @@ public class Cunnilingus extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.pantsless()&&target.hasPussy()&&c.getStance().oral(getSelf())&&getSelf().canAct()&&!c.getStance().penetration(getSelf());
+		return target.crotchAvailable()&&target.hasPussy()&&c.getStance().oral(getSelf())&&getSelf().canAct()&&!c.getStance().vaginallyPenetrated(target);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class Cunnilingus extends Skill {
 			m += 4;
 		}
 		int i = 0;
-		if(c.getStance().enumerate()!= Stance.facesitting && !target.roll(this, c, accuracy(c))) {
+		if(c.getStance().mobile(target) && !target.roll(this, c, accuracy(c))) {
 			results = Result.miss;
 		} else { 
 			if (target.has(Trait.entrallingjuices) && Global.random(4) == 0 && !target.wary()) {
@@ -199,11 +199,5 @@ public class Cunnilingus extends Skill {
 	@Override
 	public String describe(Combat c) {
 		return "Perfom cunnilingus on opponent";
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "pussy";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "mouth";
 	}
 }

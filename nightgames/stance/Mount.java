@@ -81,11 +81,6 @@ public class Mount extends AbstractFacingStance {
 	public boolean behind(Character c) {
 		return false;
 	}
-
-	@Override
-	public boolean penetration(Character c) {
-		return false;
-	}
 	
 	@Override
 	public boolean inserted(Character c) {
@@ -95,5 +90,9 @@ public class Mount extends AbstractFacingStance {
 	@Override
 	public float priorityMod(Character self) {
 		return getSubDomBonus(self, 4.0f);
+	}
+
+	public double pheromoneMod (Character self) {
+		return 3;
 	}
 }

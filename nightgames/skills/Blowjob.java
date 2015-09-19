@@ -1,8 +1,12 @@
 package nightgames.skills;
 
+import javax.print.attribute.standard.MediaSize.Other;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.StraponPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -21,14 +25,14 @@ public class Blowjob extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (target.pantsless()&&target.hasDick()&&c.getStance().oral(getSelf())&&c.getStance().front(getSelf())&&getSelf().canAct()&&!c.getStance().penetration(getSelf()))
-				|| (getSelf().canRespond() && (c.getStance().inserted(target) && getSelf().has(Trait.vaginaltongue) && c.getStance().en != Stance.anal));
+		return (target.crotchAvailable()&&target.hasDick()&&c.getStance().oral(getSelf())&&c.getStance().front(getSelf())&&getSelf().canAct()&&!c.getStance().inserted(target))
+				|| (getSelf().canRespond() && isVaginal(c));
 	}
 
 	@Override
 	public float priorityMod(Combat c) {
 		float priority = 0;
-		if (c.getStance().penetration(c.p2) || c.getStance().penetration(c.p1)) {
+		if (c.getStance().penetratedBy(getSelf(), c.getOther(getSelf()))) {
 			priority += 1.0f;
 		}
 		if (getSelf().has(Trait.silvertongue)) {
@@ -39,9 +43,12 @@ public class Blowjob extends Skill {
 		return priority;
 	}
 
+	public boolean isVaginal (Combat c) {
+		return c.getStance().vaginallyPenetratedBy(getSelf(), c.getOther(getSelf())) && !c.getOther(getSelf()).has(Trait.strapped) && getSelf().has(Trait.vaginaltongue);
+	}
 	@Override
 	public int getMojoBuilt(Combat c) {
-		if (c.getStance().inserted(c.getOther(getSelf())) && getSelf().has(Trait.vaginaltongue)) {
+		if (isVaginal(c)) {
 			return 10;
 		} else if (c.getStance().enumerate() == Stance.facesitting) {
 			return 0;
@@ -56,7 +63,7 @@ public class Blowjob extends Skill {
 		if(getSelf().has(Trait.silvertongue)){
 			m += 4;
 		}
-		if (c.getStance().inserted(target) && getSelf().has(Trait.vaginaltongue)) {
+		if (isVaginal(c)) {
 			m += 4;
 			if(target.human()){
 				c.write(getSelf(),receive(c,m,Result.intercourse, target));
@@ -72,7 +79,7 @@ public class Blowjob extends Skill {
 			}
 			target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("cock"), m, c);					
 			target.buildMojo(c, 10);
-		} else if(target.roll(this, c, accuracy(c))){
+		} else if(c.getStance().mobile(target)&&target.roll(this, c, accuracy(c))){
 			if(getSelf().has(Trait.silvertongue)){
 				if(target.human()){
 					c.write(getSelf(),receive(c,m,Result.special, target));
@@ -90,7 +97,12 @@ public class Blowjob extends Skill {
 				}
 			}
 
-			target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("cock"), m, c);					
+			BodyPart mouth = getSelf().body.getRandom("mouth");
+			BodyPart cock = target.body.getRandom("cock");
+			target.body.pleasure(getSelf(), mouth, cock, m, c);
+			if (mouth.isErogenous()) {
+				getSelf().body.pleasure(getSelf(), cock, mouth, m, c);
+			}
 
 			if(ReverseMount.class.isInstance(c.getStance())){
 				c.setStance(new SixNine(getSelf(),target));
@@ -110,7 +122,7 @@ public class Blowjob extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Seduction)>=10;
+		return user.get(Attribute.Seduction)>=10 && !user.has(Trait.temptress);
 	}
 	public int accuracy(Combat c){
 		return 75;
@@ -125,7 +137,7 @@ public class Blowjob extends Skill {
 
 	@Override
 	public Tactics type(Combat c) {
-		if ((c.getStance().penetration(c.p2) || c.getStance().penetration(c.p1)) && getSelf().has(Trait.vaginaltongue)) {
+		if (c.getStance().vaginallyPenetrated(getSelf()) && getSelf().has(Trait.vaginaltongue)) {
 			return Tactics.fucking;
 		} else {
 			return Tactics.pleasure;
@@ -134,56 +146,67 @@ public class Blowjob extends Skill {
 
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
+		String m = "";
 		if(modifier==Result.miss){
-			return "You try to take "+target.name()+"'s penis into your mouth, but she manages to pull away.";
+			m = "You try to take "+target.name()+"'s penis into your mouth, but she manages to pull away.";
 		}
 		if(target.getArousal().get()<15){
-			return "You suck on "+target.name()+" flaccid little penis until it grows into an intimidating large erection.";
+			m = "You suck on "+target.name()+" flaccid little penis until it grows into an intimidating large erection.";
 		}
 		else if(target.getArousal().percent()>=90){
-			return target.name()+"'s girl-cock seems ready to burst, so you suck on it strongly and attack the glans with your tongue fiercely.";
+			m = target.name()+"'s girl-cock seems ready to burst, so you suck on it strongly and attack the glans with your tongue fiercely.";
 		}
 		else if(modifier==Result.special){
-			return "You put your skilled tongue to good use tormenting and teasing her unnatural member.";
+			m = "You put your skilled tongue to good use tormenting and teasing her unnatural member.";
 		} else if (modifier==Result.reverse) {
-			return "With " +target.name() + " sitting over your face, you have no choice but to try to suck her off.";
+			m = "With " +target.name() + " sitting over your face, you have no choice but to try to suck her off.";
 		} else {
-			return "You feel a bit odd, faced with "+target.name()+"'s rigid cock, but as you lick and suck on it, you discover the taste is quite palatable. Besides, " +
+			m = "You feel a bit odd, faced with "+target.name()+"'s rigid cock, but as you lick and suck on it, you discover the taste is quite palatable. Besides, " +
 					"making "+target.name()+" squirm and moan in pleasure is well worth it.";
 		}
+		if (getSelf().body.getRandom("mouth").isErogenous()) {
+			m += "<br>Unfortunately for you, your sensitive modified mouth pussy sends spasms of pleasure into you too as you mouth fuck " + target.possessivePronoun() + " cock.";
+		}
+		return m;
 	}
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
+		String m = "";
 		if(modifier==Result.miss){
-			return getSelf().name()+" tries to suck your cock, but you pull your hips back to avoid her.";
+			m += getSelf().name()+" tries to suck your cock, but you pull your hips back to avoid her.";
 		} else if(modifier==Result.special){
-			return getSelf().name()+"'s soft lips and talented tongue work over your dick, drawing out dangerously irresistible pleasure with each touch.";
+			m += getSelf().name()+"'s soft lips and talented tongue work over your dick, drawing out dangerously irresistible pleasure with each touch.";
 		} else if(modifier==Result.intercourse){
-			return getSelf().name()+"'s pussy lips suddenly quiver and you feel a long sinuous object wrap around your cock. You realize she's controlling her vaginal tongue to blow you with her pussy! "
+			m += getSelf().name()+"'s pussy lips suddenly quiver and you feel a long sinuous object wrap around your cock. You realize she's controlling her vaginal tongue to blow you with her pussy! "
 					+"Her lower tongue runs up and down your shaft causing you to shudder with arousal.";
 		} else if(modifier == Result.reverse){
-			return "Faced with your dick sitting squarely in front of her face, " + getSelf().name() + " obediently tongues your cock in defeat.";
+			m += "Faced with your dick sitting squarely in front of her face, " + getSelf().name() + " obediently tongues your cock in defeat.";
 		} else if(target.getArousal().get()<15){
-			return getSelf().name()+" takes your soft penis into her mouth and sucks on it until it hardens";
+			m += getSelf().name()+" takes your soft penis into her mouth and sucks on it until it hardens";
 		}
 		else if(target.getArousal().percent()>=90){
-			return getSelf().name()+" laps up the precum leaking from your cock and takes the entire length into her mouth, sucking relentlessly";
+			m += getSelf().name()+" laps up the precum leaking from your cock and takes the entire length into her mouth, sucking relentlessly";
 		} else{
 			int r = Global.random(4);
 			if(r==0){
-				return getSelf().name()+" runs her tongue up the length of your dick, sending a jolt of pleasure up your spine. She slowly wraps her lips around your dick and sucks.";
+				m += getSelf().name()+" runs her tongue up the length of your dick, sending a jolt of pleasure up your spine. She slowly wraps her lips around your dick and sucks.";
 			}
 			else if(r==1){
-				return getSelf().name()+" sucks on the head of your cock while her hand strokes the shaft.";
+				m += getSelf().name()+" sucks on the head of your cock while her hand strokes the shaft.";
 			}
 			else if(r==2){
-				return getSelf().name()+" licks her way down to the base of your cock and gently sucks on your balls.";
+				m += getSelf().name()+" licks her way down to the base of your cock and gently sucks on your balls.";
 			}
 			else{
-				return getSelf().name()+" runs her tongue around the glans of your penis and teases your urethra.";
+				m += getSelf().name()+" runs her tongue around the glans of your penis and teases your urethra.";
 			}
 		}
+
+		if (getSelf().body.getRandom("mouth").isErogenous()) {
+			m += "<br>Unfortunately for her, " + getSelf().nameOrPossessivePronoun() + " sensitive modified mouth pussy sends spasms of pleasure into " + getSelf().directObject() + " too as " + getSelf().subject() + " mouth fucks " + target.possessivePronoun() + " cock.";
+		}
+		return m;
 	}
 
 	@Override
@@ -194,15 +217,5 @@ public class Blowjob extends Skill {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	
-	public String getTargetOrganType(Combat c, Character target) {
-		return "cock";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		if ((c.getStance().penetration(c.p2) || c.getStance().penetration(c.p1)) && getSelf().has(Trait.vaginaltongue))
-			return "pussy";
-		else 
-			return "mouth";
 	}
 }

@@ -4,6 +4,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.items.clothing.ClothingSlot;
 import nightgames.stance.StandingOver;
 import nightgames.status.Falling;
 import nightgames.status.Oiled;
@@ -26,7 +27,7 @@ public class Slime extends Pet {
 		if(target.human()){
 			switch(Global.random(4)){
 			case 3:
-				if(target.pantsless()&&!c.getStance().penetration(target)){
+				if(target.crotchAvailable()&&!c.getStance().inserted(target)){
 					c.write(owner(),own()+"slime forms into a humanoid shape and grabs your dick. The slime hand molds to your penis and rubs you with a slippery pleasure.");
 					target.body.pleasure(null, null, target.body.getRandom("cock"), 2+3*Global.random(power), c);					
 				}
@@ -35,15 +36,15 @@ public class Slime extends Pet {
 				}
 				break;
 			case 2:
-				if(!target.top.isEmpty()){
+				if(!target.getOutfit().slotUnshreddable(ClothingSlot.top)){
 					c.write(owner(),own()+"slime forms into a shape that's vaguely human and clearly female. Somehow it manages to look cute and innocent while still being an animated blob of slime. " +
-							"While you're processing this, the slime jumps on you and your "+target.top.peek().getName()+" dissolves under its touch.");
-					target.shred(0);
+							"While you're processing this, the slime jumps on you and your "+target.getOutfit().getTopOfSlot(ClothingSlot.top).getName()+" dissolves under its touch.");
+					target.shred(ClothingSlot.top);
 				}
-				else if(!target.bottom.isEmpty()){
+				if(!target.getOutfit().slotUnshreddable(ClothingSlot.bottom)){
 					c.write(owner(),own()+"slime forms into a shape that's vaguely human and clearly female. Somehow it manages to look cute and innocent while still being an animated blob of slime. " +
-							"While you're processing this, the slime jumps on you and your "+target.bottom.peek().getName()+" dissolves under its touch.");
-					target.shred(1);
+							"While you're processing this, the slime jumps on you and your "+target.getOutfit().getTopOfSlot(ClothingSlot.top).getName()+" dissolves under its touch.");
+					target.shred(ClothingSlot.bottom);
 				}
 				else{
 					c.write(owner(),own()+"slime forms into a shape that's vaguely human and clearly female. Somehow it manages to look cute and innocent while still being an animated blob of slime. " +
@@ -73,7 +74,7 @@ public class Slime extends Pet {
 		else{
 			switch(Global.random(4)){
 			case 3:
-				if(target.pantsless()&&!c.getStance().penetration(target)){
+				if(target.crotchAvailable()&&!c.getStance().vaginallyPenetrated(target)){
 					c.write(owner(),"Two long appendages extend from your slime and wrap around "+target.name()+"'s legs. A third, phallic shaped appendage forms and penetrates her " +
 							"pussy. She stifles a moan as the slimy tentacles thrusts in and out of her.");
 					target.body.pleasure(null, null, target.body.getRandom("pussy"), 2+3*Global.random(power), c);					
@@ -83,13 +84,13 @@ public class Slime extends Pet {
 				}
 				break;
 			case 2:
-				if(!target.top.isEmpty()){
-					c.write(owner(),"Your slime pounces on "+target.name()+" playfully, and it's corrosive body melts her "+target.top.peek().getName()+" as a fortunate accident.");
-					target.shred(0);
+				if(!target.getOutfit().slotUnshreddable(ClothingSlot.top)){
+					c.write(owner(),"Your slime pounces on "+target.name()+" playfully, and it's corrosive body melts her "+target.getOutfit().getTopOfSlot(ClothingSlot.top).getName()+" as a fortunate accident.");
+					target.shred(ClothingSlot.top);
 				}
-				else if(!target.bottom.isEmpty()){
-					c.write(owner(),"Your slime pounces on "+target.name()+" playfully, and it's corrosive body melts her "+target.bottom.peek().getName()+" as a fortunate accident.");
-					target.shred(1);
+				if(!target.getOutfit().slotUnshreddable(ClothingSlot.bottom)){
+					c.write(owner(),"Your slime pounces on "+target.name()+" playfully, and it's corrosive body melts her "+target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName()+" as a fortunate accident.");
+					target.shred(ClothingSlot.bottom);
 				}			
 				else{
 					c.write(owner(),"You slime hugs "+target.name()+" affectionately, covering her in slimy liquid.");
@@ -144,6 +145,8 @@ public class Slime extends Pet {
 		+opponent.own()+"form. The two grapple and melt into each other so it's impossible to tell where one ends and the other begins. You can make out vaguely sexual shapes being formed " +
 				"in the mix. Somehow you can tell that they're each trying to pleasure the other. Eventually the battle ends and a single humanoid shape forms from the amorphous mass, " +
 				"revealing that "+own()+"slime was victorious.");
+			break;
+		default:
 			break;
 		}
 		opponent.remove();

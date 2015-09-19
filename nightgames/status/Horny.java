@@ -6,6 +6,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 import nightgames.global.JSONUtils;
 
 public class Horny extends DurationStatus {
@@ -20,11 +21,11 @@ public class Horny extends DurationStatus {
 	}
 
 	public String toString() {
-		return "Aroused from " + source + " ("+ magnitude +" x "+ getDuration() + ")";
+		return "Aroused from " + source + " ("+ Global.formatDecimal(magnitude) +" x "+ getDuration() + ")";
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(affected.human()){
 			return "Your heart pounds in your chest as you try to surpress your arousal from contacting " + source + ".";
 		}
@@ -35,7 +36,7 @@ public class Horny extends DurationStatus {
 
 	@Override
 	public float fitnessModifier () {
-		return -Math.min(.5f, magnitude * getDuration() / 3.0f);
+		return -Math.min(.5f, magnitude * getDuration());
 	}
 
 	@Override
@@ -46,9 +47,13 @@ public class Horny extends DurationStatus {
 	@Override
 	public int regen(Combat c) {
 		super.regen(c);
-		affected.arouse(Math.round(magnitude), c);
-		affected.emote(Emotion.horny,20);
 		return 0;
+	}
+
+	@Override
+	public void tick(Combat c) {
+		affected.arouse(Math.round(magnitude), c, " ("+ source +")");
+		affected.emote(Emotion.horny,20);		
 	}
 
 	@Override
@@ -58,7 +63,7 @@ public class Horny extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now aroused by %s.\n", affected.subjectAction("are", "is"), source + " ("+ magnitude +" x "+ getDuration()+ ")");
+		return String.format("%s %saroused by %s.\n", affected.subjectAction("are", "is"), replaced ? "" : "now ", source + " ("+ Global.formatDecimal(magnitude) +" x "+ getDuration()+ ")");
 	}
 
 	@Override

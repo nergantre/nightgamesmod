@@ -1,13 +1,18 @@
 package nightgames.stance;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.Trait;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.skills.Escape;
 import nightgames.skills.Nothing;
@@ -95,11 +100,6 @@ public class Engulfed extends Position {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return c.hasDick();
-	}
-
-	@Override
 	public boolean inserted(Character c) {
 		return c.hasDick();
 	}
@@ -118,5 +118,32 @@ public class Engulfed extends Position {
 	@Override
 	public float priorityMod(Character self) {
 		return dom(self) ? 5 : 0;
+	}
+
+	@Override
+	public List<BodyPart> topParts() {
+		List<BodyPart> parts = new ArrayList<>();
+		parts.addAll(top.body.get("cock"));
+		parts.addAll(top.body.get("pussy"));
+		parts.addAll(top.body.get("ass"));
+		return parts.stream().filter(part -> part != null && part.present()).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<BodyPart> bottomParts() {
+		List<BodyPart> parts = new ArrayList<>();
+		parts.addAll(bottom.body.get("cock"));
+		parts.addAll(bottom.body.get("pussy"));
+		parts.addAll(bottom.body.get("ass"));
+		return parts.stream().filter(part -> part != null && part.present()).collect(Collectors.toList());
+	}
+
+	@Override
+	public boolean faceAvailable(Character target) {
+		return target == top;
+	}
+	
+	public double pheromoneMod (Character self) {
+		return 10;
 	}
 }

@@ -4,10 +4,16 @@ package nightgames.stance;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.PussyPart;
+import nightgames.combat.Combat;
+import nightgames.global.Global;
 
 public class UpsideDownMaledom extends MaledomSexStance {
 	public UpsideDownMaledom(Character top, Character bottom) {
 		super(top, bottom,Stance.upsidedownmaledom);
+	}
+
+	public int pinDifficulty(Combat c, Character self) {
+		return 8;
 	}
 
 	@Override
@@ -73,13 +79,13 @@ public class UpsideDownMaledom extends MaledomSexStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return true;
-	}
-	
-	@Override
 	public boolean inserted(Character c) {
 		return c==top;
+	}
+
+	@Override
+	public boolean facing() {
+		return false;
 	}
 
 	@Override
@@ -87,17 +93,20 @@ public class UpsideDownMaledom extends MaledomSexStance {
 		return new StandingOver(top,bottom);
 	}
 
-	public Position reverse() {
-		return new UpsideDownFemdom(bottom, top);
+	public Position reverse(Combat c) {
+		if (bottom.human()) {
+			c.write(bottom, Global.format("Summoning your remaining strength, you hold your arms up against the floor and use your hips to tip {other:name-do} off-balance with {other:possessive} dick still held inside of you. "
+					+ "{other:SUBJECT} lands on the floor with you on top of {other:direct-object} in a reverse cow-girl.", bottom, top));
+		} else {
+			c.write(bottom, Global.format("{self:SUBJECT} suddenly pushes against the floor and knocks you to the ground with {self:possessive} hips. "
+					+ "You land on the floor with {self:direct-object} on top of you with in a reverse cow-girl position.", bottom, top));		
+		}
+		return new ReverseCowgirl(bottom, top);
 	}
 
-	@Override
-	public BodyPart topPart() {
-		return top.body.getRandomInsertable();
-	}
-	
-	@Override
-	public BodyPart bottomPart() {
-		return bottom.body.getRandomPussy();
+	public double pheromoneMod (Character self) {
+		if (self == bottom)
+			return 10;
+		return 2;
 	}
 }

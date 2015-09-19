@@ -3,6 +3,8 @@ package nightgames.stance;
 
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
+import nightgames.combat.Combat;
+import nightgames.global.Global;
 
 public class ReverseCowgirl extends FemdomSexStance {
 
@@ -74,30 +76,13 @@ public class ReverseCowgirl extends FemdomSexStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return true;
-	}
-	@Override
-	public boolean inserted(Character c) {
-		return c==bottom;
-	}
-	@Override
 	public Position insertRandom() {
 		return new ReverseMount(top,bottom);
 	}
 
-	public Position reverse() {
+	public Position reverse(Combat c) {
+		c.write(bottom, Global.format("{self:SUBJECT-ACTION:manage|manages} to unbalance {other:name-do} and push {other:direct-object} forward onto {other:possessive} hands and knees. {self:SUBJECT-ACTION:follow|follows} {other:direct-object}, still inside {other:possessive} tight wetness, and continue "
+				+ "to fuck {other:direct-object} from behind.", bottom, top));
 		return new Doggy(bottom, top);
-	}
-	
-
-	@Override
-	public BodyPart topPart() {
-		return top.body.getRandomPussy();
-	}
-	
-	@Override
-	public BodyPart bottomPart() {
-		return bottom.body.getRandomInsertable();
 	}
 }

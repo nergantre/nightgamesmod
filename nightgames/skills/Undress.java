@@ -17,14 +17,14 @@ public class Undress extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return true;
+		return user.get(Attribute.Cunning) >= 05;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return getSelf().canAct()&&!c.getStance().sub(getSelf())
-				&&(!getSelf().nude() || (!getSelf().reallyNude() && getSelf().stripDifficulty(target) > 0))
-				&&!c.getStance().prone(getSelf())&&!getSelf().has(Trait.strapped);
+				&&(!getSelf().mostlyNude() || (!getSelf().reallyNude() && getSelf().stripDifficulty(target) > 0))
+				&&!c.getStance().prone(getSelf());
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class Undress extends Skill {
 
 	@Override
 	public Tactics type(Combat c) {
-		return Tactics.misc;
+		return Tactics.stripping;
 	}
 
 	@Override

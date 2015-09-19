@@ -29,7 +29,7 @@ public class SubmissiveHold extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canRespond() && c.getStance().sub(getSelf()) && (c.getStance().inserted(getSelf()) || c.getStance().inserted(target))
+		return getSelf().canAct() && c.getStance().sub(getSelf()) && (c.getStance().inserted(getSelf()) || c.getStance().inserted(target))
 				&& getSelf().canSpend(getMojoCost(c)) && !target.is(Stsflag.armlocked)&& !target.is(Stsflag.leglocked);
 	}
 
@@ -85,14 +85,6 @@ public class SubmissiveHold extends Skill {
 		} else {
 			return Global.format("{self:SUBJECT} embraces you and wraps her lithesome legs around your waist, holding you inside her.", getSelf(), target);
 		}
-	}
-
-	public String getTargetOrganType(Combat c, Character target) {
-		return "none";
-	}
-
-	public String getWithOrganType(Combat c, Character target) {
-		return "none";
 	}
 
 	@Override

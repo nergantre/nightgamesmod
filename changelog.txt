@@ -1,3 +1,340 @@
+1.8.3 changelog
+
+New:
+- Added a menu box for choosing sex in the character creation GUI
+	- "male:", "female:" and "herm:" will no longer work
+	- You can *try* asexual, but no guarantees on what happens.
+
+Bugs:
+- Strapon can only be put on when not wearing a strapon
+- Split bluff and wait into two skills
+- Make powerful hips allow you to grind from the submissive position
+- Make oral pin require that the opponent is mobile
+- Make Samantha's sexy dance skill use similar skill restrictions
+- Make foot smother require that you are dominant and mobile
+- Added some text for footjob vs pc that had no cocks
+- Fix issue where you could throw/use nonexistent drafts
+- Fix issue where putting on open cup bra would make your exposure over 1
+
+Other changes:
+- Add in rest of Samantha's portraits
+	- I'm not exactly happy with some of them, may change them later
+
+1.8.2.9 changelog
+
+Balance:
+- Using spiral thrust now also applies a 8 turn Lethargic debuff (Mojo gain is reduced by 75%)
+- Pheromones has been buffed. It now applies much more when you are close to the opponent and you're exposed.
+	- The damage has also been buffed to be 1 + Animism / 10
+- Feral status effect has been changed
+	- Now applies to Kat whenever she is above 50 arousal
+	- Removed from Kat when she is below 50 arousal
+	- Changed buff
+		- Used to be 2 power, 3 cunning, 2 seduction, 2 animism, 2 speed
+		- Now 1+(animism / 2) power, 3 cunning, 2 seduction, 1.5 x animism, 2 speed
+	- Now makes orgasms only reduce arousal by 50% and reduces willpower loss to 33% of normal.
+	- Now has a (1 + Animism) / (2 + Animism) chance to ignore an orgasm for a turn even at full arousal.
+- Removed petite requirement from Pounce (NICE SKILL YOU HAVE THERE, KAT. SHAME YOU CAN'T USE IT)
+
+Bugs:
+- Changed strap-on to clothing layer 2 (same layer as pants, so if you put on a strapon, you'll remove your pants or skirt)
+- Fixed a bug with striping trap causing a crash
+- Fixed a bug where ass fucking would pleasure pussy instead (and crash if they don't have one)
+- Fixed a bug where other NPCs snapping out of enthrallment (anywhere on the playing field) would print a message for the player
+- Fixed some typos and grammar issues with Samantha
+- Fixed a bug where pets had access to your face when it is already covered
+- Fixed a bug where using lick ass would do pleasure damage irregardless of hitting or missing
+
+Other changes:
+- Diversion can only be used when you are facing the opponent
+- Submissive hold cannot be used while bound anymore
+- You can now undress/striptease when wearing a strapon
+- Added a default portrait for Samantha
+	- Sorry didn't get time to do the mood variations
+
+1.8.2.8 changelog
+New:
+- Merged in new NPC (Samantha) from dndw
+- Merged in ai mod system from dndw
+
+Bugs:
+- fixed crash with drain and diversion
+- fixed crashes with engulf
+- fixed some text bugs
+
+1.8.2.7 changelog
+Bugs:
+- disallow frottage during tribadism
+- text: fix tribadism verb tense
+- fix crash with pussy disappearing during trib
+- fix lick pussy always missing
+- fix crash with wrong clothing slot in slime.
+
+Other:
+- make oral skills never miss if they are being held down
+- disallow foot skills when you have shoes on
+
+1.8.2.6 changelog
+Bugs:
+- Fixed a bug where transformative stacking drafts instantly transformed you to the final stage when used by NPCs.
+- Fixed a bug where the XXX store was listing the new products but you cannot buy anything
+
+Balance:
+- Lowered level drain down to 20 Dark since it cannot drain levels from a lower leveled opponent any more.
+
+New:
+- Cassie offers the mouth-pussy bodymod (with new scene)
+	- Requires a normal mouth, a fae scroll, 20 femdrafts, 10 Bewitching Draughts, and a dildo
+	- Also requires that she has gotten a mouth pussy mod already, which now unlocks for her at lvl 20.
+- Mouth-pussy now has some additional text for facefuck/blowjob etc
+- Mouth-pussy mods now also make the user take pleasure damage when doing blowjob/footworship, and take pleasure damage when receiving face fuck
+- Starting a new character now allows you to modify the starting stats all the way down to 1.
+	- This is mostly for roleplaying purposes. I would not recommend on taking any stat below 5.
+		- Especially Power < 2 or you cannot struggle.
+	- Early game requirements:
+	- Seduction
+		- 3: Kiss
+		- 5: Finger
+		- 5: Handjob
+		- 6: Suckle
+	- Power
+		- 3: Struggle
+		- 4: Turn Over
+		- 5: Shove
+	- Cunning
+		- 2: Strip Self
+		- 3: Strip Top, Strip Bottom
+		- 5: Undress
+
+1.8.2.5 changelog
+New Features:
+- Added tribadism
+
+Bugs:
+- Fixed bug with stances causing struggle to fail and crash the game
+- Fixed bug with stances causing fucking skills to be available while not even inserted.
+- Fixed bug with Kat offering feral pussy twice.
+
+Other Changes:
+- Tighten can now be used if you're bound
+- Reverse fuck now can be used when you are behind the other person
+- Fixed some text with fuck that mentions nonexistent dicks
+- Revised Jewel's victory scene so that it makes more sense for girls (WIP, will add others slowly)
+
+1.8.2.4 changelog
+
+Balance:
+- buff energy drink to 50% heal and 20-30% mojo
+- dominate can longer be used by submissive characters
+- lower speed and perception influence on accuracy from 10 -> 5%
+- make stable form block TF from skills
+- make counters fail if the target is wary
+
+Bugs:
+- make blessed cock actually be able to stack divine charge
+- fix bug where being partially clothed makes fucking fail
+- remove comment about dick in Tear when opponent has no cock
+- fix foot smother (was doing something wacko before)
+- fix foot fetish not in the first match and wrong text in fetish status
+- make strapons and XXX store clothing buyable
+- fixed a bug where gifting npcs/changing their outfit in the day time
+	- when they have >25 affection but no advanced class caused the game to be stuck
+- add in toggleknot to the skill pool
+- always load defaults.json from the clothing assets
+- reworked stances so they make more sense
+	- should have also fixed bugs where sex would end instantly
+- make Jewel prefer enlightened cocks instead of runic ones
+- fix various skill and scene text
+- update money instantly when buying
+- fixed nudist bug where you keep shoes for first combat
+- add remove pussy to body shop options
+- fixed bug where Cassie offers blessed cock when she is giving you a runic one
+- add feral pussy to kat's transformation options
+- add a check before removing gifts from player's closet
+- only offer nudist if not nude + onlyunderwear if wearing underwear
+
+Features:
+- add new stances
+	- Coiled: rarely seen when struggling when being Carried
+	- Upsidedown girl-on-top: replaces cowgirl randomly when the girl has > 25 power (or when fucking from certain stances)
+	- Upsidedown guy-on-top: replaces missionary randomly when the guy has > 25 power (or when fucking from certain stances)
+- add new image for f/f facesitting
+- move divine charge effects to divinity instead of demigoddess
+- add blessed cock effects and moved the old blessed cock effects to runic cocks (arcane/cassie)
+	- blessed cock does the same thing as divine pussy
+
+Other:
+- load defaults.json clothing by default
+- use parsewithexceptions and log the errors
+
+1.8.2.3 changelog
+Other changes:
+	- Made the closet GUI work better with low resolutions
+
+1.8.2.2 changelog
+Bug fix:
+	- Fix crash bug when dojo training is selected
+	- Fix crash bug when tear is used with Animism >= 12 and target is topless and has only one piece of bottom clothing.
+	- Fix crash bug when loading old saves with a disabled or missing NPC
+
+1.8.2.1 changelog
+Changes:
+	- use dark theme for closet ui
+Bug Fix: 
+	- round decimals in certain status effects
+	- fix grammatical issue with outfit descriptions
+	- fix mix up between foot pump and heel grind
+	- fix footjob text being unformatted
+	- fix Tear so it can strip bottom as well as tops
+	- strip bottom no longer mentions nonexistent dicks
+	- fix underwear only and nudist modifiers
+	- fix text for strip self
+	- fix command being able to do multiple actions in a turn
+	- fix throw draft failing for npcs
+
+Other changes:
+	- require a shreddable slot for dissolving solutions
+	- no longer require reach bottom for foot smother
+	- buff Winded to 2 turns by default
+	- ignore non existent clothing in save files
+	- lower the fetish reduction per turn to .02
+
+1.8.2 changelog
+
+Features:
+- Clothing has been completely overhauled.
+	- All clothing will be in the resources/clothing/
+		- new clothing can be either added to the existing json file or it can be a new json file in that directory
+	- Got rid of the old skimpiness system and replaced it with exposure.
+		- All clothing have an exposure value, that is multiplied together to get your final exposure level for that slot (top or bottom)
+			- Example: you're wearing panties, a skirt, a bra, and a blouse
+				- panties exposure: .8
+				- skirt exposure: .4
+				- Total bottom exposure = .8 * .4 = .32
+				- bra exposure: .8
+				- blouse exposure: .3
+				- Total top exposure = .3 * .8 = .24
+				- Overall body exposure = (.24 + .32) / 2 = .28
+			- This body exposure value increases your body's hotness stat (in this case by .28%), which in turn affects tempt and pleasure damage you do
+		- To counteract the fact that wearing clothing reduces your body hotness stat, clothing now have a hotness stat as well
+			- This directly adds to the hotness stat of your body while you have it on, but is reduced by the exposure level of the layers above it.
+				- Example: you have a bra and a tshirt on
+					- bra hotness: .4
+					- tshirt hotness: .1
+					- tshirt exposure: .4
+					- total hotness = .1 (Tshirt) + .4(Bra) * .4(Tshirt exposure) = .26
+					- If you strip off the tshirt,
+					- total hotness = .4 (Bra)
+			- Note that these values probably will change since I'm just trying to pick values that make sense right now
+			- Hopefully this encourages people to keep their clothing on at least some of the time instead of stripping both naked within the first 2 turns.
+	- Redid the mapping of the clothing. Now certain clothing can take two slots and cover both top and bottom (like trench coat and cloak)
+		- top layers:
+			- 0 : undershirt/bra
+			- 1 : none
+			- 2 : shirt/dresses
+			- 3 : jackets/coats
+			- 4 : cloaks etc
+		- bottom layers:
+			- 0 : underwear/panties
+			- 1 : hosiery/leg warmers
+			- 2 : pants/skirts/dresses
+			- 3 : coats etc
+			- 4 : cloaks etc
+		- legs layer:
+			- 1 : hosiery/leg warmers
+			- 2 : pants
+		- feet layer:
+			- 1 : hosiery/leg warmers/socks
+			- 2 : shoes
+		- arms layer:
+			- 1 : gloves
+		- head layer:
+			- unused for now (hats?)
+		- hands layer:
+			- 1 : gloves
+			- 3 : unused for now (rings?)
+		- neck layer:
+			- unused for now (necklaces? collars?)
+	- Stripping works a bit differently as well
+		- Strip skills and Tear skills only shred top and bottom.
+		- Random strip skills (Dissolving solution) strip any slot at random
+		- Nudification skills (Defabricator, Nakedbloom, etc) will first strip top and bottom, and then strip the rest if used again.
+	- Added a ton of new clothing.
+		- Most of these can be found in the Boutique, Clothing Shop, or XXX Store.
+		- Hover over the clothing in the store or the clothing change UI to see what they do.
+	- Unfortunately this may mean that your saves are no longer compatible.
+		- NEVERMIND, I MADE THEM COMPATIBLE :D
+- When NPCs have affections over 30, you can give them gifts (Clothing)
+	- When they have over 35 affection, they'll let you pick out their wardrobe.
+	- Note that you can really screw them over by picking harmful outfits. Discretion advised.
+- Added a new character initial strength Trait:
+	- "Stable Form"
+		- Prevents the effects of Priapus Draft, FemDraft, Tiny Draft, Bust Draft, Succubus Draft and Tentacle Tonic from applying when thrown at you.
+- Added two new character initial weakness Traits:
+	- "Naive"
+		- 50% to not get cynical after recovering from a mindgame status (enthralled, trance, flatfooted, etc)
+	- "Foot Fetishist"
+		- Starts each match with a foot fetish at the minimum magnitude
+- Added new Traits:
+	- Heels Pro:
+		- Wearing heels does not reduce your speed, and does not make you easily knocked down (generally heels have higher hotness bonuses)
+	- Heels Master:
+		- While wearing heels, you have a 33% chance to avoid knockdowns (Tackle, Trip, Shove, etc)
+	- You gain Heels Training after finishing a battle with heels on.
+		- One for heels
+		- Two total for high heels
+		- Three total for higher heels (Stiletto Pumps)
+	- Heels Pro = 50 total training
+	- Heels Master = 100 total training
+- Merged in some foot fetish content from Sakruff (Thanks!)
+	- Updated text on foot job/foot pump to have events for girls
+	- Added a new skill Foot Smother
+		- Unlocks at 20 Fetish
+		- Can be used when shoeless and you are standing over the opponent
+		- Has a raised chance to inflict foot fetish
+- If you start off as a female or a herm, you start with bra and panties instead of boxers.
+	- If you start off as a female or a herm, you start off with b cup breasts (up from flat)
+- Changed the AI:
+	- The AI now will consider the opponent differently. This mainly makes it so that more interesting things can be added.
+	- The AI now will pick the best item to drink/throw instead of a completely random item.
+	- The AI now will take the male preference slider into account when determining what move is good
+		- Example: You have male preference slide all the way to the right.
+				   The AI will consider growing a cock good and you getting a pussy good.
+	- This is a bit experimental at the moment, so please let me know if something seems off.
+
+Balance:
+- Made divine pussy's divine charge stack double every time she takes pleasure damage instead of increasing it by .25
+	- Makes getting out of vaginal penetration very important versus Angel
+- Made enthrall stack less.
+	- When enthralled status is added on to a already enthralled opponent, the final duration will be whatever is more:
+		- Original duration + 1
+		- New duration - 2 * (number of times this enthralled status has been refreshed + 1)
+	- Note: If you are still having trouble with enthrall, try speccing more into Cunning.
+- Fetishes now last throughout a match, but decrease in magnitude as time passes to a minimum magnitude of .25
+	- Being pleasured by the fetish part will increase magnitude by .05
+- Kiss of Baptism has been rebalanced a bit.
+	- It now costs 30 mojo instead of building 10 mojo.
+	- Now always applies Love Struck, but only for 2 turns
+	- Now builds you 50% mojo
+	- Now fully heals you
+	- Buffed base damage bonus to 20
+
+	
+Bug fix:
+- Deep kiss and drain kiss' text was swapped around
+- Fixed invitation text
+- Fixed some bugs with insertion requirements requiring the wrong person to be inserted.
+- Fixed a text bug with alluring
+- Fixed a bug where sometimes on insertion, the game would bug out
+- Fixed a bug that was causing the game to bug out when transformations changed outside a match
+- Fixed a bug where struggle has unformatted text
+- Fixed a bug where getting tail pegged does not show up.
+
+Other changes:
+- NPCs now buy priapus drafts & femdrafts based on the male pref slider. They also buy them much less than before.
+- Logs now also show status effects being added and removed
+- Latex clothing has been removed from the Boutique (it's purchasable in the XXX shop)
+
 1.8.1 changelog
 
 Major changes:

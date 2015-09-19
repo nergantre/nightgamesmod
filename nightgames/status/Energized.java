@@ -15,7 +15,7 @@ public class Energized extends DurationStatus{
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "You're brimming with energy.";
 	}
 
@@ -32,10 +32,13 @@ public class Energized extends DurationStatus{
 	@Override
 	public int regen(Combat c) {
 		super.regen(c);
-		affected.buildMojo(c, 10);
-		affected.emote(Emotion.confident,5);
-		affected.emote(Emotion.dominant,10);
 		return 0;
+	}
+
+	public void tick(Combat c) {
+		affected.buildMojo(c, 10, " (Energized)");
+		affected.emote(Emotion.confident,5);
+		affected.emote(Emotion.dominant,10);		
 	}
 
 	@Override

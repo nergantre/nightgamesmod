@@ -1,6 +1,7 @@
 package nightgames.gui;
 
 import nightgames.characters.Attribute;
+import nightgames.characters.CharacterSex;
 import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.global.Flag;
@@ -18,6 +19,7 @@ import javax.swing.JTextField;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.awt.Font;
 
 import javax.swing.ButtonGroup;
@@ -83,7 +85,7 @@ public class CreationGUI extends JPanel{
 		
 		JPanel panel = new JPanel();
 		add(panel, BorderLayout.NORTH);
-		
+
 		JLabel lblName = new JLabel("Name");
 		lblName.setFont(new Font("Sylfaen", Font.BOLD, 15));
 		panel.add(lblName);
@@ -92,13 +94,14 @@ public class CreationGUI extends JPanel{
 		namefield.setFont(new Font("Sylfaen", Font.BOLD, 15));
 		panel.add(namefield);
 		namefield.setColumns(10);
-		
+
+		JComboBox<CharacterSex> sexBox = new JComboBox<>();
+		Arrays.stream(CharacterSex.values()).forEach(s -> sexBox.addItem(s));
+		panel.add(sexBox);
+	
 		separator = new JSeparator();
 		panel.add(separator);
-		
-		JButton btnBack = new JButton("Back");
-		btnBack.setFont(new Font("Sylfaen", Font.BOLD, 15));
-		panel.add(btnBack);
+
 		
 		JButton btnStart = new JButton("Start");
 		btnStart.setFont(new Font("Sylfaen", Font.BOLD, 15));
@@ -108,20 +111,7 @@ public class CreationGUI extends JPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				if(!CreationGUI.this.namefield.getText().isEmpty()){
 					String name = CreationGUI.this.namefield.getText();
-					String sex = "male";
-					if (name.startsWith("male:")) {
-						name = name.substring(5);
-						sex = "male";
-					}
-					if (name.startsWith("female:")) {
-						name = name.substring(7);
-						sex = "female";
-					}
-					if (name.startsWith("herm:")) {
-						name = name.substring(5);
-						sex = "herm";
-					}
-					
+					CharacterSex sex = (CharacterSex) sexBox.getSelectedItem();
 					Player one = new Player(name, sex);
 					one.set(Attribute.Power, CreationGUI.this.power);
 					one.set(Attribute.Seduction, CreationGUI.this.seduction);
@@ -135,6 +125,7 @@ public class CreationGUI extends JPanel{
 						Global.flag(Flag.hardmode);
 					}
 					Global.newGame(one);
+					Global.startMatch();
 				}
 			}
 		});
@@ -335,6 +326,7 @@ public class CreationGUI extends JPanel{
 		StrengthBox.addItem(Trait.experienced);
 		StrengthBox.addItem(Trait.wrassler);
 		StrengthBox.addItem(Trait.pimphand);
+		StrengthBox.addItem(Trait.stableform);
 		StrengthBox.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -362,6 +354,8 @@ public class CreationGUI extends JPanel{
 		WeaknessBox.addItem(Trait.achilles);
 		WeaknessBox.addItem(Trait.ticklish);
 		WeaknessBox.addItem(Trait.lickable);
+		WeaknessBox.addItem(Trait.naive);
+		WeaknessBox.addItem(Trait.footfetishist);
 		WeaknessBox.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -379,10 +373,10 @@ public class CreationGUI extends JPanel{
 		
 		separator_1 = new JSeparator();
 		verticalBox.add(separator_1);
-		power = 5;
-		seduction = 5;
-		cunning = 5;
-		remaining = 2;
+		power = 3;
+		seduction = 3;
+		cunning = 3;
+		remaining = 20 - power - seduction - cunning;
 		refresh();
 	}
 	private void refresh(){
@@ -400,19 +394,19 @@ public class CreationGUI extends JPanel{
 			btnSedPlus.setEnabled(true);
 			btnCunPlus.setEnabled(true);
 		}
-		if(power <= 5){
+		if(power <= 1){
 			btnPowMin.setEnabled(false);
 		}
 		else{
 			btnPowMin.setEnabled(true);
 		}
-		if(seduction <= 5){
+		if(seduction <= 1){
 			btnSedMin.setEnabled(false);
 		}
 		else{
 			btnSedMin.setEnabled(true);
 		}
-		if(cunning <= 5){
+		if(cunning <= 1){
 			btnCunMin.setEnabled(false);
 		}
 		else{

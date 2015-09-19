@@ -1,183 +1,223 @@
 package nightgames.gui;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.swing.Box;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+
 import nightgames.characters.Character;
 import nightgames.daytime.Activity;
 import nightgames.global.Global;
 import nightgames.global.Modifier;
-import nightgames.items.Clothing;
-
-import java.util.ArrayList;
-
-import javax.swing.JPanel;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
-import java.awt.GridLayout;
-import javax.swing.JButton;
-import javax.swing.Box;
-
-import java.awt.Font;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import nightgames.items.clothing.Clothing;
+import nightgames.items.clothing.ClothingSorter;
 
 public class ClothesChangeGUI extends JPanel {
-	private Character player;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -912778444912041408L;
+	private Character character;
 	private Activity resume;
-	private ArrayList<Clothing> TopOut;
-	private ArrayList<Clothing> TopMid;
-	private ArrayList<Clothing> TopIn;
-	private ArrayList<Clothing> BotOut;
-	private ArrayList<Clothing> BotIn;
-	private String noneString = "";
-	private JComboBox TOBox;
-	private JComboBox TMBox;
-	private JComboBox TIBox;
-	private JComboBox BOBox;
-	private JComboBox BIBox;
-	
-	public ClothesChangeGUI(Character player, Activity event){
-		this.player = player;
-		this.resume = event;
-		setLayout(new GridLayout(0, 1, 0, 0));
-		
-		TopOut = new ArrayList<Clothing>();
-		TopMid = new ArrayList<Clothing>();
-		TopIn = new ArrayList<Clothing>();
-		BotOut = new ArrayList<Clothing>();
-		BotIn = new ArrayList<Clothing>();
-		
-		for(Clothing article: player.closet){
-			if (!player.hasPussy() && Clothing.femaleOnlyClothing.contains(article)) {
-				continue;
-			}
-			switch(article.getType()){
-			case TOPOUTER:
-				TopOut.add(article);
-				break;
-			case TOP:
-				TopMid.add(article);
-				break;
-			case TOPUNDER:
-				TopIn.add(article);
-				break;
-			case BOTOUTER:
-				BotOut.add(article);
-				break;
-			case UNDERWEAR:
-				BotIn.add(article);
-				break;
-			default:
-				break;
-			}
+	private JLabel appearanceLabel;
+	private JLabel exposureLabel;
+	DefaultListModel<Clothing> closetListModel;
+	DefaultListModel<Clothing> outfitListModel;
+
+	private void removeAllClothing() {
+		character.closet.addAll(character.outfitPlan);
+		character.outfitPlan.clear();
+		character.change(Modifier.normal);
+		refreshLists();
+	}
+
+	private void remove(Clothing article) {
+		if (article == null) { return; }
+		if (!character.outfitPlan.contains(article)) {
+			System.err.println("Error: tried to remove nonexistent article: " + article.getName());
+			return;
 		}
-		
-		JSeparator separator_1 = new JSeparator();
-		add(separator_1);
-		
-		JLabel lblTop = new JLabel("Top");
-		lblTop.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTop.setFont(new Font("Sylfaen", Font.PLAIN, 20));
-		add(lblTop);
-		
-		TOBox = new JComboBox(TopOut.toArray());
-		TOBox.setFont(new Font("Sylfaen", Font.PLAIN, 22));
-		add(TOBox);
-		TOBox.addItem(noneString);
-		TOBox.setSelectedItem(noneString);
-		
-		TMBox = new JComboBox(TopMid.toArray());
-		TMBox.setFont(new Font("Sylfaen", Font.PLAIN, 22));
-		add(TMBox);
-		TMBox.addItem(noneString);
-		TMBox.setSelectedItem(noneString);
-		
-		TIBox = new JComboBox(TopIn.toArray());
-		TIBox.setFont(new Font("Sylfaen", Font.PLAIN, 22));
-		add(TIBox);
-		TIBox.addItem(noneString);
-		TIBox.setSelectedItem(noneString);
-		
-		JSeparator separator = new JSeparator();
-		add(separator);
-		
-		JLabel lblBottom = new JLabel("Bottom");
-		lblBottom.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBottom.setFont(new Font("Sylfaen", Font.PLAIN, 20));
-		add(lblBottom);
-		
-		BOBox = new JComboBox(BotOut.toArray());
-		BOBox.setFont(new Font("Sylfaen", Font.PLAIN, 22));
-		add(BOBox);
-		BOBox.addItem(noneString);
-		BOBox.setSelectedItem(noneString);
-		
-		BIBox = new JComboBox(BotIn.toArray());
-		BIBox.setFont(new Font("Sylfaen", Font.PLAIN, 22));
-		add(BIBox);
-		BIBox.addItem(noneString);
-		BIBox.setSelectedItem(noneString);
-		
-		JSeparator separator_2 = new JSeparator();
-		add(separator_2);
-		
-		Box horizontalBox_2 = Box.createHorizontalBox();
-		add(horizontalBox_2);
-		
-		Component horizontalStrut = Box.createHorizontalStrut(200);
-		horizontalBox_2.add(horizontalStrut);
-		
+		character.outfitPlan.remove(article);
+		character.closet.add(article);
+		character.change(Modifier.normal);
+		refreshLists();
+	}
+
+	private void add(Clothing article) {
+		if (article == null) { return; }
+		if (!character.closet.contains(article)) {
+			System.err.println("Error: tried to equip nonexistent article: " + article.getName());
+			return;
+		}
+		// remove the article from the closet
+		character.closet.remove(article);
+		// change to make sure everything is equipped correctly
+		character.change(Modifier.normal);
+		// get the currently equipped items
+		Set<Clothing> unequipped = new HashSet<Clothing>(character.outfit.getEquipped());
+		// equip the new item
+		character.outfit.equip(article);
+		// get {previously equipped} - {currently equipped} to see what was unequipped
+		unequipped.removeAll(character.outfit.getEquipped());
+		// add all the unequipped items back into the closet
+		character.closet.addAll(unequipped);
+		// make the outfit plan the currently equipped items
+		character.outfitPlan.clear();
+		character.outfitPlan.addAll(character.outfit.getEquipped());
+		// make sure the player is dressed correctly
+		character.change(Modifier.normal);
+		// refresh the ClothingLists
+		refreshLists();
+	}
+
+	private void refreshLists() {
+		closetListModel.clear();
+		List<Clothing> tempList = new ArrayList<>(character.closet);
+		tempList.sort(new ClothingSorter());
+		tempList.forEach(article -> closetListModel.addElement(article));
+		outfitListModel.clear();
+		tempList = new ArrayList<>(character.outfit.getEquipped());
+		tempList.sort(new ClothingSorter());
+		tempList.forEach(article -> outfitListModel.addElement(article));
+		DecimalFormat format = new DecimalFormat("#.##");
+		appearanceLabel.setText("Appearance: " + format.format(character.outfit.getHotness()));
+		exposureLabel.setText("Exposure: " + format.format(character.outfit.getExposure()));
+		Global.gui().refresh();
+	}
+
+	private void styleButton(JButton button) {
+		button.setOpaque(true);
+		button.setForeground(Color.white);
+		button.setBackground(Color.DARK_GRAY);
+	}
+	public ClothesChangeGUI(Character character, Activity event, String doneOption){
+		this.character = character;
+		this.resume = event;
+		this.setBackground(new Color(25, 25, 50));
+		this.setForeground(Color.WHITE);
+		setLayout(new BorderLayout());
+
+		int width = Global.gui().getWidth();
+		int height = Global.gui().getHeight();
+		int strutSize = (height - 400) / 3;
+		int listWidth = (width - 400) / 3;
+
+		Box closetBox = Box.createVerticalBox();
+		closetListModel = new DefaultListModel<>();
+		JList<Clothing> closetList = new ClothingList(closetListModel);
+		closetList.setBackground(new Color(50, 50, 100));
+		closetList.setForeground(Color.WHITE);
+		closetList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		JLabel closetLabel = new JLabel("Closet");
+		closetLabel.setForeground(Color.WHITE);
+		closetBox.add(closetLabel);
+		JScrollPane closetListPane = new JScrollPane(closetList);
+		closetListPane.setMinimumSize(new Dimension(listWidth, 0));
+		closetBox.add(closetListPane);
+
+		JButton removeall = new JButton("Remove All");
+		Box centerChangePanel = Box.createVerticalBox();
+		JButton addButton = new JButton("Add ->");
+		addButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		addButton.setMaximumSize(new Dimension(100, 50));
+		JButton removeButton = new JButton("<- Remove");
+		styleButton(removeall);
+		styleButton(addButton);
+		styleButton(removeButton);
+
+		removeButton.setMaximumSize(new Dimension(100, 50));
+		removeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		centerChangePanel.add(Box.createVerticalStrut(strutSize));
+		centerChangePanel.add(addButton);
+		centerChangePanel.add(Box.createVerticalStrut(strutSize));
+		centerChangePanel.add(removeButton);
+		centerChangePanel.add(Box.createVerticalStrut(strutSize));
+		centerChangePanel.setOpaque(false);
+
+		Box outfitBox = Box.createVerticalBox();
+		outfitBox.setOpaque(false);
+		outfitListModel = new DefaultListModel<>();
+		JList<Clothing> outfitList = new ClothingList(outfitListModel);
+		outfitList.setBackground(new Color(50, 50, 100));
+		outfitList.setForeground(Color.WHITE);
+		outfitList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		JScrollPane outfitListPane = new JScrollPane(outfitList);
+		outfitListPane.setMinimumSize(new Dimension(listWidth, 0));
+		outfitListPane.setPreferredSize(new Dimension(listWidth, height));
+
+		JLabel outfitLabel = new JLabel("Closet");
+		outfitLabel.setForeground(Color.WHITE);
+		outfitBox.add(outfitLabel);
+		outfitBox.add(outfitListPane);
+
 		JButton btnOk = new JButton("OK");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ClothesChangeGUI.this.player.outfit[0].clear();
-				ClothesChangeGUI.this.player.outfit[1].clear();
-				if(ClothesChangeGUI.this.TIBox.getSelectedItem()!=ClothesChangeGUI.this.noneString){
-					ClothesChangeGUI.this.player.outfit[0].push((Clothing) ClothesChangeGUI.this.TIBox.getSelectedItem());
-				}
-				if(ClothesChangeGUI.this.TMBox.getSelectedItem()!=ClothesChangeGUI.this.noneString){
-					ClothesChangeGUI.this.player.outfit[0].push((Clothing) ClothesChangeGUI.this.TMBox.getSelectedItem());
-				}
-				if(ClothesChangeGUI.this.TOBox.getSelectedItem()!=ClothesChangeGUI.this.noneString){
-					ClothesChangeGUI.this.player.outfit[0].push((Clothing) ClothesChangeGUI.this.TOBox.getSelectedItem());
-				}
-				if(ClothesChangeGUI.this.BIBox.getSelectedItem()!=ClothesChangeGUI.this.noneString){
-					ClothesChangeGUI.this.player.outfit[1].push((Clothing) ClothesChangeGUI.this.BIBox.getSelectedItem());
-				}
-				if(ClothesChangeGUI.this.BOBox.getSelectedItem()!=ClothesChangeGUI.this.noneString){
-					ClothesChangeGUI.this.player.outfit[1].push((Clothing) ClothesChangeGUI.this.BOBox.getSelectedItem());
-				}
-				ClothesChangeGUI.this.player.change(Modifier.normal);
+				ClothesChangeGUI.this.character.change(Modifier.normal);
 				Global.gui().removeClosetGUI();
-				ClothesChangeGUI.this.resume.visit("Leave");
+				ClothesChangeGUI.this.resume.visit(doneOption);
 			}
 		});
-		btnOk.setFont(new Font("Sylfaen", Font.PLAIN, 24));
-		horizontalBox_2.add(btnOk);
-		for(Clothing article: player.outfit[0]){
-			if(TopOut.contains(article)){
-				TOBox.setSelectedItem(article);
-			}
-		}
-		for(Clothing article: player.outfit[0]){
-			if(TopMid.contains(article)){
-				TMBox.setSelectedItem(article);
-			}
-		}
-		for(Clothing article: player.outfit[0]){
-			if(TopIn.contains(article)){
-				TIBox.setSelectedItem(article);
-			}
-		}
-		for(Clothing article: player.outfit[1]){
-			if(BotOut.contains(article)){
-				BOBox.setSelectedItem(article);
-			}
-		}
-		for(Clothing article: player.outfit[1]){
-			if(BotIn.contains(article)){
-				BIBox.setSelectedItem(article);
-			}
-		}
+		styleButton(btnOk);
+		btnOk.setAlignmentX(CENTER_ALIGNMENT);
+		addButton.addActionListener(aevent -> add(closetList.getSelectedValue()));
+		removeButton.addActionListener(aevent -> remove(outfitList.getSelectedValue()));
+		removeall.addActionListener(aevent -> removeAllClothing());
+
+		JPanel leftPanel = new JPanel(new BorderLayout());
+		leftPanel.add(closetBox, BorderLayout.CENTER);
+		leftPanel.add(new JLabel(), BorderLayout.SOUTH);
+		leftPanel.setPreferredSize(new Dimension(listWidth, 100));
+		leftPanel.setOpaque(false);
+		JPanel rightPanel = new JPanel(new BorderLayout());
+		rightPanel.setOpaque(false);
+		rightPanel.add(outfitBox, BorderLayout.CENTER);
+		rightPanel.add(removeall, BorderLayout.SOUTH);
+		rightPanel.setPreferredSize(new Dimension(listWidth, 100));
+		JPanel centerPanel = new JPanel(new BorderLayout());
+		Box cBPanel = Box.createHorizontalBox();
+		cBPanel.add(centerChangePanel);
+		cBPanel.setOpaque(false);
+		centerPanel.add(cBPanel, BorderLayout.CENTER);
+		centerPanel.setMinimumSize(new Dimension(200, 0));
+		centerPanel.setPreferredSize(new Dimension(100, 0));
+		Box labelPanel = Box.createVerticalBox();
+		appearanceLabel = new JLabel("Appearance: ");
+		appearanceLabel.setToolTipText("Bonus to your natural body charisma and hotness");
+		exposureLabel = new JLabel("Exposure: ");
+		exposureLabel.setToolTipText("How much of your natural body charisma and hotness is exposed");
+		labelPanel.add(appearanceLabel);
+		labelPanel.add(exposureLabel);
+		appearanceLabel.setForeground(Color.WHITE);
+		exposureLabel.setForeground(Color.WHITE);
+		
+		Box miscPanel = Box.createHorizontalBox();
+		miscPanel.add(labelPanel);
+		miscPanel.add(Box.createHorizontalStrut(20));
+		miscPanel.add(btnOk);
+		miscPanel.setAlignmentX(CENTER_ALIGNMENT);
+		centerChangePanel.add(miscPanel);
+		centerPanel.setOpaque(false);
+		add(leftPanel, BorderLayout.WEST);
+		add(centerPanel, BorderLayout.CENTER);
+		add(rightPanel, BorderLayout.EAST);
+		refreshLists();
 	}
 }

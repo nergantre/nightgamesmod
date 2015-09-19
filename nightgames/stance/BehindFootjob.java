@@ -30,8 +30,13 @@ public class BehindFootjob extends AbstractBehindStance {
 	}
 
 	public String image() {
-		return "behind_footjob.jpg";
+		if (bottom.hasDick()) {
+			return "behind_footjob.jpg";
+		} else {
+			return "heelgrind.jpg";
+		}
 	}
+
 	@Override
 	public boolean kiss(Character c) {
 		return false;
@@ -78,11 +83,6 @@ public class BehindFootjob extends AbstractBehindStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return false;
-	}
-
-	@Override
 	public boolean inserted(Character c) {
 		return false;
 	}
@@ -92,7 +92,12 @@ public class BehindFootjob extends AbstractBehindStance {
 		return getSubDomBonus(self, 4.0f);
 	}
 
-	public Position reverse() {
-		return new Mount(bottom, top);
+	public Position reverse(Combat c) {
+		c.write(bottom, Global.format("{self:SUBJECT-ACTION:summon what little willpower you have left and grab|grabs} {other:name-possessive} feet and pull them off {self:name-possessive} crotch. Taking advantage of the momentum, {self:subject} push {other:direct-object} back with {self:name-possessive} body and hold {other:direct-object} down while sitting on top of {other:direct-object}.", bottom, top));
+		return new ReverseMount(bottom, top);
+	}
+
+	public double pheromoneMod (Character self) {
+		return 1.5;
 	}
 }

@@ -3,7 +3,9 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BasicCockPart;
+import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
+import nightgames.characters.body.StraponPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -11,6 +13,7 @@ import nightgames.stance.Cowgirl;
 import nightgames.stance.Doggy;
 import nightgames.stance.Missionary;
 import nightgames.stance.Neutral;
+import nightgames.stance.Position;
 import nightgames.stance.ReverseCowgirl;
 import nightgames.stance.Stance;
 import nightgames.stance.StandingOver;
@@ -76,7 +79,7 @@ public class Struggle extends Skill {
 				getSelf().struggle();
 				return false;
 			}
-		} else if (c.getStance().penetration(getSelf()) || c.getStance().penetration(target)) {
+		} else if (c.getStance().havingSex()) {
 			boolean knotted = getSelf().hasStatus(Stsflag.knotted);
 			if (c.getStance().enumerate() == Stance.anal) {
 				int diffMod = knotted ? 50 : 0;
@@ -125,9 +128,9 @@ public class Struggle extends Skill {
 				}
 			} else {
 				int diffMod = 0;
-				if (c.getStance().partFor(target).getMod() == CockMod.enlightened) {
+				if (CockMod.enlightened.partHasThisMod(c.getStance().insertedPartFor(target))) {
 					diffMod = 15;
-				} else if (c.getStance().partFor(getSelf()).getMod() == CockMod.enlightened) {
+				} else if (CockMod.enlightened.partHasThisMod(c.getStance().insertedPartFor(getSelf()))) {
 					diffMod = -15;
 				}
 				if (getSelf().check(Attribute.Power, (target.getStamina().get() / 2 - getSelf().getStamina().get() / 2)
@@ -152,43 +155,16 @@ public class Struggle extends Skill {
 						getSelf().removeStatus(Stsflag.knotted);
 						getSelf().pain(c, 10);
 					}
-					if ((c.getStance().behind(getSelf()) || c.getStance().en == Stance.reversecowgirl)
-							&& c.getStance().inserted(getSelf())) {
-						c.write(getSelf(),
-								Global.format(
-										"{self:SUBJECT-ACTION:manage|manages} to unbalance {other:name-do} and push {other:direct-object} forward onto {other:possessive} hands and knees. {self:SUBJECT-ACTION:follow|follows} {other:direct-object}, still inside {other:possessive} tight wetness, and continue "
-										+ "to fuck {other:direct-object} from behind.",
-										getSelf(), target));
-						c.setStance(new Doggy(getSelf(), target));
-					} else if (c.getStance().en == Stance.flying) {
-						c.write(getSelf(),
-								"You manage to shake yourself loose from the demoness.\n"
-										+ "Immediately afterwards you realize letting go of the person"
-										+ " holding you a good distance up from the ground may not have been"
-										+ " the smartest move you've ever made, as the ground is quickly"
-										+ " approaching your face.");
-						c.setStance(c.getStance().insertRandom());
-					} else if (c.getStance().inserted(getSelf())) {
-						c.write(getSelf(), "You surpise " + target.name()
-								+ " by hugging her close to your chest, preventing her from using stabilizing her position with her arms. You "
-								+ "roll on top of her into traditional missionary position, careful not to let your cock slip out of her.");
-						c.setStance(new Missionary(getSelf(), target));
-					} else if (c.getStance().inserted(target) && c.getStance().en == Stance.doggy) {
-						c.write(getSelf(),
-								Global.format(
-										"{self:SUBJECT-ACTION:manage|manages} to reach between {self:possessive} legs and grab hold of {other:possessive} ballsack, stopping {other:direct-object} in mid thrust. {self:SUBJECT-ACTION:smirk|smirks} at {other:direct-object} over {self:possessive} shoulder "
-										+ "and pushes {self:possessive} butt against {other:direct-object}, using the leverage of "
-										+ "{other:possessive} testicles to keep {other:direct-object} from backing away to maintain {self:possessive} balance. {self:SUBJECT-ACTION:force|forces} {other:direct-object} onto {other:possessive} back, while never breaking {other:possessive} connection. After "
-										+ "some complex maneuvering, {other:subject-action:end|ends} up on the floor while {self:subject-action:straddle|straddles} {other:possessive} hips in a reverse cowgirl position.", getSelf(), target));
-						c.setStance(new ReverseCowgirl(getSelf(), target));
-					} else if (c.getStance().inserted(target)) {
-						c.write(getSelf(),
-								getSelf().name()
-										+ "{self:SUBJECT-ACTION:wrap|wraps} {self:possessive} legs around {other:name-possessive} waist and suddenly {self:action:pull|pulls} {other:direct-object} into a deep kiss. {other:SUBJECT-ACTION:are|is} so surprised by this sneak attack that {other:subject-action:don't|doesn't} "
-												+ "even notice {self:pronoun} {self:action:rolling|rolling} {other:direct-object} onto {other:possessive} back until {other:subject-action:feel|feels} {self:possessive} weight on {other:possessive} hips. {self:PRONOUN} {self:action:move|moves} {self:possessive} hips experimentally, enjoying the control "
-												+ "{self:pronoun} {self:action:have|has} in cowgirl position.");
-						c.setStance(new Cowgirl(getSelf(), target));
-					} else {
+					boolean reverseStrapped = BodyPart.hasOnlyType(c.getStance().partsFor(target), "strapon");
+					boolean reversedStance = false;
+					if (reverseStrapped) {
+						Position reversed = c.getStance().reverse(c);
+						if (reversed != c.getStance()) {
+							c.setStance(reversed);
+							reversedStance = true;
+						}
+					}
+					if (!reversedStance) {
 						c.write(getSelf(),
 								Global.format("{self:SUBJECT-ACTION:manage|manages} to shake {other:direct-object} off." ,getSelf(),target));
 						c.setStance(new Neutral(getSelf(), target));
@@ -278,7 +254,7 @@ public class Struggle extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return true;
+		return user.get(Attribute.Power) >= 3;
 	}
 
 	@Override

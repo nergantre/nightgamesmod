@@ -15,10 +15,10 @@ public class StripTease extends Skill {
 	}
 
 	public static boolean hasRequirements(Character user) {
-		return user.get(Attribute.Seduction)>=24 && !user.has(Trait.direct) && !user.has(Trait.shy);
+		return user.get(Attribute.Seduction)>=24 && !user.has(Trait.direct) && !user.has(Trait.shy) && !user.has(Trait.temptress);
 	}
 	public static boolean isUsable(Combat c, Character self, Character target) {
-		return self.stripDifficulty(target) == 0 && self.canAct()&&c.getStance().mobile(self)&&!self.nude()&&!c.getStance().prone(self)&&c.getStance().front(self)&&!self.has(Trait.strapped);
+		return self.stripDifficulty(target) == 0 && self.canAct()&&c.getStance().mobile(self)&&!self.mostlyNude()&&!c.getStance().prone(self)&&c.getStance().front(self)&&(!self.breastsAvailable() || !self.crotchAvailable());
 	}
 
 	@Override

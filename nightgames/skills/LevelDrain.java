@@ -15,13 +15,13 @@ public class LevelDrain extends Drain {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Dark)>=50;
+		return user.get(Attribute.Dark)>=20;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return (this.getSelf().canAct()) && (c.getStance().canthrust(getSelf()))
-				&& (c.getStance().penetration(this.getSelf())) && getSelf().getLevel() < 100 && getSelf().getLevel() < target.getLevel();
+				&& (c.getStance().havingSexNoStrapped()) && getSelf().getLevel() < 100 && getSelf().getLevel() < target.getLevel();
 	}
 
 	@Override
@@ -174,12 +174,5 @@ public class LevelDrain extends Drain {
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-
-	public String getTargetOrganType(Combat c, Character target) {
-		return "cock";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "pussy";
 	}
 }

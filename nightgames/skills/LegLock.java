@@ -15,7 +15,7 @@ public class LegLock extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().dom(getSelf())&&c.getStance().reachBottom(getSelf())&&c.getStance().prone(target)&&getSelf().canAct()&&!c.getStance().penetration(getSelf());
+		return c.getStance().dom(getSelf())&&c.getStance().reachBottom(getSelf())&&c.getStance().prone(target)&&getSelf().canAct()&&!c.getStance().connected();
 	}
 
 	@Override

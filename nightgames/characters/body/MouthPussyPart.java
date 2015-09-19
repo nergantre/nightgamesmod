@@ -11,7 +11,7 @@ public class MouthPussyPart extends MouthPart {
 	 */
 	public static BodyPartMod MouthPussyMod = () -> "MouthPussyMod";
 	public MouthPussyPart() {
-		super("mouth pussy", "When she opens her mouth, you can see soft pulsating folds lining her inner mouth, tailor made to suck cocks.", .5, 1.2, 1.5, true, "a ");
+		super("mouth pussy", "When she opens her mouth, you can see soft pulsating folds lining her inner mouth, tailor made to suck cocks.", .5, 1.5, 2, true, "a ");
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class MouthPussyPart extends MouthPart {
 	public double getPleasure(Character self, BodyPart target) {
 		double pleasureMod = super.getPleasure(self, target);
 		if (target != null && target.isType("cock")) {
-			pleasureMod += 2;
+			pleasureMod += 2.5;
 		} else if (target != null && target.isType("mouth")) {
 			pleasureMod += 1;
 		}

@@ -80,11 +80,6 @@ public class StandingOver extends AbstractFacingStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return false;
-	}
-	
-	@Override
 	public boolean inserted(Character c) {
 		return false;
 	}
@@ -92,5 +87,9 @@ public class StandingOver extends AbstractFacingStance {
 	@Override
 	public float priorityMod(Character self) {
 		return getSubDomBonus(self, 2.0f);
+	}
+
+	public double pheromoneMod (Character self) {
+		return 1.5;
 	}
 }

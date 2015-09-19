@@ -1,17 +1,5 @@
 package nightgames.characters;
 
-import nightgames.actions.Action;
-import nightgames.actions.Movement;
-import nightgames.characters.body.BodyPart;
-import nightgames.characters.body.CockMod;
-import nightgames.characters.body.CockPart;
-import nightgames.characters.custom.RecruitmentData;
-import nightgames.combat.Combat;
-import nightgames.global.Flag;
-import nightgames.global.Global;
-import nightgames.items.Item;
-import nightgames.skills.Skill;
-
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -19,6 +7,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import nightgames.actions.Action;
+import nightgames.actions.Movement;
+import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.CockMod;
+import nightgames.characters.body.CockPart;
+import nightgames.characters.custom.AiModifiers;
+import nightgames.characters.custom.RecruitmentData;
+import nightgames.combat.Combat;
+import nightgames.global.Flag;
+import nightgames.global.Global;
+import nightgames.items.Item;
+import nightgames.skills.Skill;
 
 public abstract class BasePersonality implements Personality {
 	/**
@@ -43,7 +44,7 @@ public abstract class BasePersonality implements Personality {
 
 	public void setGrowth() {
 	}
-	
+
 	@Override
 	public void rest() {
 		if (preferredCockMod != CockMod.error) {
@@ -148,7 +149,7 @@ public abstract class BasePersonality implements Personality {
 		ArrayList<Attribute> avail = new ArrayList<Attribute>();
 		Deque<PreferredAttribute> preferred = new ArrayDeque<PreferredAttribute>(preferredAttributes);
 		for (Attribute a : character.att.keySet()) {
-			if (Attribute.isTrainable(a) && (character.getPure(a) > 0 || Attribute.isBasic(a))) {
+			if (Attribute.isTrainable(a, character) && (character.getPure(a) > 0 || Attribute.isBasic(a))) {
 				avail.add(a);
 			}
 		}
@@ -181,5 +182,9 @@ public abstract class BasePersonality implements Personality {
 
 	public RecruitmentData getRecruitmentData() {
 		return null;
+	}
+	
+	public AiModifiers getAiModifiers() {
+		return AiModifiers.getDefaultModifiers(getType());
 	}
 }

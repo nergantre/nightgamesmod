@@ -15,7 +15,7 @@ public class Falling extends Status {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		return "";
 	}
 

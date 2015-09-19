@@ -24,7 +24,7 @@ public class Frottage extends Skill{
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().sub(getSelf())&&!c.getStance().penetration(getSelf())&&target.pantsless()&&((getSelf().hasDick()&&getSelf().pantsless())||getSelf().has(Trait.strapped));
+		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().sub(getSelf())&&!c.getStance().havingSex()&&target.crotchAvailable()&&((getSelf().hasDick()&&getSelf().crotchAvailable())||getSelf().has(Trait.strapped));
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class Frottage extends Skill{
 		}
 		target.body.pleasure(getSelf(), dealer, receiver, m, c);
 		if (Global.random(100) < 15 + 2 * getSelf().get(Attribute.Fetish)) {
-			target.add(c, new BodyFetish(target, getSelf(), "cock", .25, 10));
+			target.add(c, new BodyFetish(target, getSelf(), "cock", .25));
 		}
 		getSelf().emote(Emotion.horny, 15);
 		target.emote(Emotion.horny, 15);
@@ -108,17 +108,5 @@ public class Frottage extends Skill{
 	@Override
 	public boolean makesContact() {
 		return true;
-	}
-	public String getTargetOrganType(Combat c, Character target) {
-		if (target.hasDick())
-			return "cock";
-		else
-			return "pussy";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		if (target.hasDick())
-			return "cock";
-		else
-			return "pussy";
 	}
 }

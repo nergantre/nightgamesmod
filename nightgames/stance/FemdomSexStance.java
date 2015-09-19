@@ -1,6 +1,10 @@
 package nightgames.stance;
 
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import nightgames.characters.Character;
 import nightgames.characters.body.AnalPussyPart;
 import nightgames.characters.body.BodyPart;
@@ -30,11 +34,11 @@ public abstract class FemdomSexStance extends Position {
 		Character inserter = inserted(top) ? top : bottom;
 		Character inserted = inserted(top) ? bottom : top;
 		
-		if(!inserter.hasDick()){
+		if(!inserter.hasInsertable()){
 			if(inserter.human()){
-				c.write("With " + inserter.possessivePronoun() + " dick gone, you groan in frustration and cease your merciless movements.");
+				c.write(inserted.name() + " groans with frustration with the sudden disappearance of your pole.");
 			} else {
-				c.write(inserted.name() + " groans with frustration with the sudden disappearance of your dick.");
+				c.write("With " + inserter.nameOrPossessivePronoun() + " phallus gone, you groan in frustration and cease your merciless riding.");
 			}
 			c.setStance(insertRandom());
 		}
@@ -47,9 +51,22 @@ public abstract class FemdomSexStance extends Position {
 			c.setStance(insertRandom());
 		}
 	}
-	
+
 	@Override
-	public abstract BodyPart topPart();
+	public boolean inserted(Character c) {
+		return c==bottom;
+	}
 	@Override
-	public abstract BodyPart bottomPart();
+	public List<BodyPart> topParts() {
+		return Arrays.asList(top.body.getRandomPussy()).stream().filter(part -> part != null && part.present()).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<BodyPart> bottomParts() {
+		return Arrays.asList(bottom.body.getRandomInsertable()).stream().filter(part -> part != null && part.present()).collect(Collectors.toList());
+	}
+
+	public double pheromoneMod (Character self) {
+		return 3;
+	}
 }

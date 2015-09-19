@@ -1,6 +1,10 @@
 package nightgames.stance;
 
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.AnalPussyPart;
@@ -79,11 +83,6 @@ public class AnalCowgirl extends AnalSexStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return c==bottom;
-	}
-
-	@Override
 	public boolean inserted(Character c) {
 		return c==bottom;
 	}
@@ -101,11 +100,11 @@ public class AnalCowgirl extends AnalSexStance {
 		Character inserter = inserted(top) ? top : bottom;
 		Character inserted = inserted(top) ? bottom : top;
 		
-		if(!inserter.hasDick()){
+		if(!inserter.hasInsertable()) {
 			if(inserter.human()){
-				c.write("With " + inserter.possessivePronoun() + " dick gone, you groan in frustration and cease your merciless movements.");
+				c.write("With " + inserter.possessivePronoun() + " pole gone, you groan in frustration and cease your merciless movements.");
 			} else {
-				c.write(inserted.name() + " groans with frustration with the sudden disappearance of your dick.");
+				c.write(inserted.name() + " groans with frustration with the sudden disappearance of your pole.");
 			}
 			c.setStance(insertRandom());
 		}
@@ -119,17 +118,17 @@ public class AnalCowgirl extends AnalSexStance {
 		}
 	}
 
-	public boolean analinserted(Character self) {
-		return self == bottom;
+	public boolean anallyPenetrated(Character self) {
+		return self == top;
 	}
 
 	@Override
-	public BodyPart topPart() {
-		return top.body.getRandomAss();
+	public List<BodyPart> topParts() {
+		return Arrays.asList(top.body.getRandomAss()).stream().filter(part -> part != null && part.present()).collect(Collectors.toList());
 	}
-	
+
 	@Override
-	public BodyPart bottomPart() {
-		return bottom.body.getRandomInsertable();
+	public List<BodyPart> bottomParts() {
+		return Arrays.asList(bottom.body.getRandomInsertable()).stream().filter(part -> part != null && part.present()).collect(Collectors.toList());
 	}
 }

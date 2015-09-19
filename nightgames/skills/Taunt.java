@@ -17,7 +17,7 @@ public class Taunt extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.nude()&&!c.getStance().sub(getSelf())&&getSelf().canAct()&&!getSelf().has(Trait.shy);
+		return target.mostlyNude()&&!c.getStance().sub(getSelf())&&getSelf().canAct()&&!getSelf().has(Trait.shy);
 	}
 
 	@Override
@@ -32,15 +32,15 @@ public class Taunt extends Skill {
 		else if(target.human()){
 			c.write(getSelf(),receive(c,0,Result.normal, target));
 		}
-		int m = (6+Global.random(4)) * Math.min(2, (1 + getSelf().getSkimpiness()));
+		double m = (6+Global.random(4) + getSelf().body.getHotness(getSelf(), target)) * Math.min(2, (1 + getSelf().getExposure()));
 		if(target.has(Trait.imagination)){
 			m += 4;
-			target.tempt(c, getSelf(), m);
+			target.tempt(c, getSelf(), (int) Math.round(m));
 			if(Global.random(4)>=1){
 				target.add(c, new Shamed(target));
 			}
 		} else {
-			target.tempt(c, getSelf(), m);
+			target.tempt(c, getSelf(), (int) Math.round(m));
 			if(Global.random(4)>=2){
 				target.add(c, new Shamed(target));
 			}

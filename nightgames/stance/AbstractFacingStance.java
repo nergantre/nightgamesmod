@@ -16,12 +16,12 @@ public abstract class AbstractFacingStance extends Position {
 	public Position insertRandomDom(Character dom) {
 		List<Position> possibleResults = new ArrayList<>();
 		Character sub = getOther(dom);
-		if (dom.hasDick() && sub.hasPussy()) {
+		if (dom.hasInsertable() && sub.hasPussy()) {
 			Position newPos = insert(dom, dom);
 			if (newPos != this)
 				possibleResults.add(newPos);
 		}
-		if (dom.hasPussy() && sub.hasDick()){
+		if (dom.hasPussy() && sub.hasInsertable()){
 			Position newPos = insert(sub, dom);
 			if (newPos != this)
 				possibleResults.add(newPos);
@@ -36,14 +36,14 @@ public abstract class AbstractFacingStance extends Position {
 	@Override
 	public Position insert(Character pitcher, Character dom) {
 		Character catcher = getOther(pitcher);
-		Character sub = getOther(pitcher);
+		Character sub = getOther(dom);
 		if (pitcher.body.getRandomInsertable() == null || !catcher.hasPussy()) {
 			// invalid
 			return this;
 		}
 		if (pitcher == dom && pitcher == top) {
 			// guy is holding girl down, and is the dominant one in the new stance
-			return new Missionary(pitcher, catcher);
+			return Missionary.similarInstance(pitcher, catcher);			
 		}
 		if (pitcher == sub && pitcher == top) {
 			// guy is holding girl down, and is the submissive one in the new stance
@@ -51,11 +51,11 @@ public abstract class AbstractFacingStance extends Position {
 		}
 		if (pitcher == dom && pitcher == bottom) {
 			// girl is holding guy down, and is the submissive one in the new stance
-			return new Missionary(pitcher, catcher);			
+			return Missionary.similarInstance(pitcher, catcher);			
 		}
 		if (pitcher == sub && pitcher == bottom) {
 			// girl is holding guy down, and is the dominant one in the new stance
-			return new Cowgirl(catcher, pitcher);
+			return Cowgirl.similarInstance(catcher, pitcher);
 		}
 		return this;
 	}

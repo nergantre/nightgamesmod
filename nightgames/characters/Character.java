@@ -9,8 +9,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
+import java.util.Optional;
 import java.util.Set;
-import java.util.Stack;
 import java.util.TreeSet;
 import java.util.Vector;
 import java.util.stream.Collectors;
@@ -23,6 +23,7 @@ import nightgames.actions.Movement;
 import nightgames.areas.Area;
 import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
+import nightgames.characters.custom.AiModifiers;
 import nightgames.combat.Combat;
 import nightgames.combat.Encounter;
 import nightgames.combat.Result;
@@ -32,16 +33,20 @@ import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.global.JSONUtils;
 import nightgames.global.Modifier;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
+import nightgames.items.Loot;
+import nightgames.items.clothing.Clothing;
+import nightgames.items.clothing.ClothingSlot;
+import nightgames.items.clothing.ClothingTrait;
+import nightgames.items.clothing.Outfit;
 import nightgames.pet.Pet;
 import nightgames.skills.Nothing;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 import nightgames.stance.Position;
 import nightgames.stance.Stance;
-import nightgames.status.Abuff;
 import nightgames.status.Alluring;
+import nightgames.status.DivineCharge;
 import nightgames.status.Enthralled;
 import nightgames.status.Resistance;
 import nightgames.status.Status;
@@ -63,10 +68,9 @@ public abstract class Character extends Observable implements Cloneable {
 	protected Meter arousal;
 	protected Meter mojo;
 	protected Meter willpower;
-	public Stack<Clothing> top;
-	public Stack<Clothing> bottom;
+	public Outfit outfit;
+	public List<Clothing> outfitPlan;
 	protected Area location;
-	public Stack<Clothing>[] outfit;
 	protected HashSet<Skill> skills;
 	public HashSet<Status> status;
 	public Set<Trait> traits;
@@ -77,6 +81,7 @@ public abstract class Character extends Observable implements Cloneable {
 	public HashMap<String, Integer> cooldowns;
 	private HashSet<Character> mercy;
 	protected Map<Item, Integer> inventory;
+	private HashMap<String, Integer> flags;
 	protected Item trophy;
 	public State state;
 	protected int busy;
@@ -91,15 +96,17 @@ public abstract class Character extends Observable implements Cloneable {
 	public boolean custom;
 	private boolean pleasured;
 	public int orgasms;
+	public int cloned;
 
-	@SuppressWarnings("unchecked")
 	public Character(String name, int level){
 		this.name=name;
 		this.level=level;
+		cloned = 0;
 		custom = false;
 		body = new Body(this);
 		att = new HashMap<Attribute,Integer>();
 		cooldowns = new HashMap<String, Integer>();
+		flags = new HashMap<String, Integer>();
 		att.put(Attribute.Power, 5);
 		att.put(Attribute.Cunning, 5);
 		att.put(Attribute.Seduction, 5);
@@ -113,11 +120,10 @@ public abstract class Character extends Observable implements Cloneable {
 		willpower = new Meter(40);
 		orgasmed = false;
 		pleasured = false;
-		top = new Stack<Clothing>();
-		bottom = new Stack<Clothing>();
-		outfit = new Stack[2];
-		outfit[0]=new Stack<Clothing>();
-		outfit[1]=new Stack<Clothing>();
+
+		outfit = new Outfit();
+		outfitPlan = new ArrayList<Clothing>();
+
 		closet = new HashSet<Clothing>();
 		skills = new HashSet<Skill>();
 		status = new HashSet<Status>();
@@ -143,17 +149,17 @@ public abstract class Character extends Observable implements Cloneable {
 	    Character c = (Character) super.clone();
 	    c.att = (HashMap<Attribute, Integer>) att.clone();
 		c.stamina = (Meter) stamina.clone();
+		c.cloned = cloned + 1;
 		c.arousal = (Meter) arousal.clone();
 		c.mojo = (Meter) mojo.clone();
 		c.willpower = (Meter) willpower.clone();
-		c.top = (Stack<Clothing>) top.clone();
-		c.bottom = (Stack<Clothing>) bottom.clone();
-		c.outfit = (Stack[]) outfit.clone();
+		c.outfitPlan = new ArrayList<Clothing>(outfitPlan);
+		c.outfit = new Outfit(outfit);
 		c.skills = (HashSet<Skill>) skills.clone();
 		c.status = new HashSet<Status>();
+		c.flags = new HashMap<>(flags);
 		for (Status s: status) {
-			Status clone = (Status) s.clone();
-			clone.affected = c;
+			Status clone = (Status) s.instance(c,c);
 			c.status.add(clone);
 		}
 		c.traits = (Set<Trait>) new TreeSet<Trait>(traits);
@@ -170,6 +176,14 @@ public abstract class Character extends Observable implements Cloneable {
 		c.body.character = c;
 		c.orgasmed = orgasmed;
 		return c;
+	}
+	
+	public void finishClone(Character other) {
+		HashSet<Status> oldstatus = status;
+		status = new HashSet<Status>();
+		for (Status s: oldstatus) {
+			status.add(s.instance(this, other));
+		}
 	}
 	public String name(){
 		return name;
@@ -195,22 +209,22 @@ public abstract class Character extends Observable implements Cloneable {
 		total += body.mod(a, total);
 		switch(a){
 		case Arcane:
-			if(has(Trait.mystic)){
+			if(outfit.has(ClothingTrait.mystic)){
 				total+=2;
 			}
 			break;
 		case Dark:
-			if(has(Trait.broody)){
+			if(outfit.has(ClothingTrait.broody)){
 				total+=2;
 			}
 			break;
 		case Ki:
-			if(has(Trait.martial)){
+			if(outfit.has(ClothingTrait.martial)){
 				total+=2;
 			}
 			break;
 		case Fetish:
-			if(has(Trait.kinky)){
+			if(outfit.has(ClothingTrait.kinky)){
 				total+=2;
 			}
 			break;
@@ -220,24 +234,36 @@ public abstract class Character extends Observable implements Cloneable {
 				}
 				break;
 		case Science:
-			if(has(Trait.geeky)){
+			if(has(ClothingTrait.geeky)){
 				total+=2;
 			}
 			break;
 		case Speed:
-			for(Clothing article:top){
-				if(article.attribute()==Trait.bulky){
-					total--;
-				}
+			if (has(ClothingTrait.bulky)) {
+				total -=1;
 			}
-			for(Clothing article:bottom){
-				if(article.attribute()==Trait.bulky){
-					total--;
-				}
+			if (has(ClothingTrait.shoes)) {
+				total +=1;
 			}
+			if (has(ClothingTrait.heels) && !has(Trait.proheels)) {
+				total -=2;
+			}
+			if (has(ClothingTrait.highheels) && !has(Trait.proheels)) {
+				total -=1;
+			}
+			if (has(ClothingTrait.higherheels) && !has(Trait.proheels)) {
+				total -=1;
+			}
+		default:
+			break;
 		}
 		return total;
 	}
+
+	public boolean has(ClothingTrait attribute) {
+		return outfit.has(attribute);
+	}
+
 	public int getPure(Attribute a){
 		int total =0;
 		if(att.containsKey(a) && !a.equals(Attribute.Willpower)){
@@ -509,10 +535,13 @@ public abstract class Character extends Observable implements Cloneable {
 			tempt(i);
 		}
 	}
-
 	public void arouse(int i, Combat c){
-		String message = String.format("%s aroused for <font color='rgb(240,100,100)'>%d<font color='white'>\n",
-				Global.capitalizeFirstLetter(subjectWas()), i);
+		arouse(i, c, "");
+	}
+
+	public void arouse(int i, Combat c, String source){
+		String message = String.format("%s aroused for <font color='rgb(240,100,100)'>%d<font color='white'>%s\n",
+				Global.capitalizeFirstLetter(subjectWas()), i, source);
 		if (c != null)
 			c.writeSystemMessage(message);
 		tempt(i);
@@ -561,6 +590,9 @@ public abstract class Character extends Observable implements Cloneable {
 		return willpower;
 	}
 	public void buildMojo(Combat c, int percent){
+		buildMojo(c, percent, "");
+	}
+	public void buildMojo(Combat c, int percent, String source){
 		int x = (percent*Math.min(mojo.max(), 200))/100;
 		int bonus = 0;
 		for(Status s: getStatuses()){
@@ -570,11 +602,17 @@ public abstract class Character extends Observable implements Cloneable {
 		if (x > 0) {
 			mojo.restore(x);
 			if (c != null) {
-				c.writeSystemMessage(Global.capitalizeFirstLetter(String.format("%s <font color='rgb(100,200,255)'>%d<font color='white'> mojo.",this.subjectAction("built", "built"), x)));
+				c.writeSystemMessage(Global.capitalizeFirstLetter(String.format("%s <font color='rgb(100,200,255)'>%d<font color='white'> mojo%s.",this.subjectAction("built", "built"), x, source)));
 			}
+		} else if (x < 0) {
+			loseMojo(c, x);
 		}
 	}
 	public void spendMojo(Combat c, int i){
+		spendMojo(c, i, "");
+	}
+		
+	public void spendMojo(Combat c, int i, String source){
 		int cost = i;
 		int bonus = 0;
 		for(Status s: getStatuses()){
@@ -586,10 +624,14 @@ public abstract class Character extends Observable implements Cloneable {
 			mojo.set(0);
 		}
 		if (c != null && i != 0) {
-			c.writeSystemMessage(Global.capitalizeFirstLetter(String.format("%s <font color='rgb(150,150,250)'>%d<font color='white'> mojo.",this.subjectAction("spent", "spent"), cost)));
+			c.writeSystemMessage(Global.capitalizeFirstLetter(String.format("%s <font color='rgb(150,150,250)'>%d<font color='white'> mojo%s.",this.subjectAction("spent", "spent"), cost, source)));
 		}
 	}
 	public int loseMojo(Combat c, int i) {
+		return loseMojo(c, i, "");
+	}
+
+	public int loseMojo(Combat c, int i, String source) {
 		int amt = Math.min(mojo.get(), i);
 		mojo.reduce(amt);
 		if(mojo.get()<0){
@@ -606,146 +648,121 @@ public abstract class Character extends Observable implements Cloneable {
 	public int init(){
 		return att.get(Attribute.Speed)+Global.random(10);
 	}
+
 	public boolean reallyNude(){
-		return reallyTopless() && reallyPantsless();
+		return topless() && pantsless();
 	}
-	public boolean nude(){
-		return topless()&&pantsless();
+
+	public boolean torsoNude(){
+		return topless() && pantsless();
 	}
-	public boolean topless(){
-		for(Clothing article: top){
-			if(article.attribute()!=Trait.ineffective){
-				return false;
-			}
-		}
-		return true;
+
+	public boolean mostlyNude(){
+		return breastsAvailable()&&crotchAvailable();
 	}
-	public boolean pantsless(){
-		for(Clothing article: bottom){
-			if(article.attribute()!=Trait.ineffective){
-				return false;
-			}
-		}
-		return true;
+
+	public boolean breastsAvailable(){
+		return outfit.slotOpen(ClothingSlot.top);
 	}
+
+	public boolean crotchAvailable(){
+		return outfit.slotOpen(ClothingSlot.bottom);
+	}
+
 	public void dress(Combat c){
-		for(Clothing article: outfit[0]){
-			if(c.clothespile.contains(article)&&!top.contains(article))
-			  top.push(article);
-		}
-		for(Clothing article: outfit[1]){
-			if(c.clothespile.contains(article)&&!bottom.contains(article))
-			  bottom.push(article);
-		}
+		outfit.dress(c.getCombatantData(this).getClothespile());
 	}
-	public void change(Modifier rule){
-		top=(Stack<Clothing>) outfit[0].clone();
-		bottom=(Stack<Clothing>) outfit[1].clone();
+
+	public void change(Modifier rule) {
+		List<Clothing> plan = outfitPlan;
+		if (rule == Modifier.underwearonly) {
+			plan = outfitPlan.stream().filter(article -> article.getLayer() == 0).collect(Collectors.toList());
+		} else if (rule == Modifier.nudist) {
+			plan = Collections.emptyList();
+		}
+		outfit.change(rule, plan);
 	}
+
 	public String getName() {
 		return name;
 	}
-	public void undress(Combat c){
-		c.clothespile.addAll(top);
-		c.clothespile.addAll(bottom);
-		top.clear();
-		bottom.clear();
-	}
-	public boolean nudify(){
-		ArrayList<Clothing> temp = new ArrayList<Clothing>();
-		temp.addAll(top);
-		for(Clothing article: temp){
-			if(article.attribute()!=Trait.indestructible){
-				top.remove(article);
-			}
-		}
-		temp.clear();
-		temp.addAll(bottom);
-		for(Clothing article: temp){
-			if(article.attribute()!=Trait.indestructible){
-				bottom.remove(article);
-			}
-		}
-		return nude();
-	}
-	public Clothing strip(int half, Combat c){
-		if(half==0){
-			if(topless()){
-				return null;
-			}
-			else{
-				c.clothespile.add(top.peek());
-				return top.pop();
-			}
-		}
-		else{
-			if(pantsless()){
-				return null;
-			}
-			else{
-				c.clothespile.add(bottom.peek());
-				return bottom.pop();
-			}
+
+	/* undress without any modifiers */
+	public void undress(Combat c) {
+		if (!breastsAvailable() || !crotchAvailable()) {
+			// first time only strips down to what blocks fucking
+			outfit.strip().forEach(article -> c.getCombatantData(this).addToClothesPile(article));
+		} else {
+			// second time strips down everything
+			outfit.undress().forEach(article -> c.getCombatantData(this).addToClothesPile(article));
 		}
 	}
-	public Clothing stripRandom(Combat c){
+
+	/* undress non indestructibles */
+	public boolean nudify() {
+		if (!breastsAvailable() || !crotchAvailable()) {
+			// first time only strips down to what blocks fucking
+			outfit.forcedstrip();
+		} else {
+			// second time strips down everything
+			outfit.undressOnly(c -> !c.is(ClothingTrait.indestructible));
+		}
+		return mostlyNude();
+	}
+
+	public Clothing strip(Clothing article, Combat c) {
+		if (article == null) { return null; }
+		Clothing res = outfit.unequip(article);
+		c.getCombatantData(this).addToClothesPile(res);
+		return res;
+	}
+
+	public Clothing strip(ClothingSlot slot, Combat c){
+		return strip(outfit.getTopOfSlot(slot), c);
+	}
+
+	public Clothing stripRandom(Combat c) {
 		return stripRandom(c, false);
 	}
-	public boolean reallyTopless() {
-		return top.isEmpty();
+
+	public void gainTrophy(Combat c, Character target) {
+		Optional<Clothing> underwear = target.outfitPlan.stream().filter(article -> 
+										article.getSlots().contains(ClothingSlot.bottom) && article.getLayer() == 0).findFirst();
+		if (!underwear.isPresent() || c.getCombatantData(target).getClothespile().contains(underwear.get())) {
+			this.gain(target.getTrophy());
+		}
 	}
-	public boolean reallyPantsless() {
-		return bottom.isEmpty();
+
+	public Clothing shredRandom() {
+		ClothingSlot slot = outfit.getRandomShreddableSlot();
+		if (slot != null) {
+			return shred(slot);
+		}
+		return null;
+	}
+	public boolean topless() {
+		return outfit.slotEmpty(ClothingSlot.top);
+	}
+	public boolean pantsless() {
+		return outfit.slotEmpty(ClothingSlot.bottom);
 	}
 	public Clothing stripRandom(Combat c, boolean force){
-		int half;
-		boolean topless = force ? reallyTopless() : topless();
-		boolean pantsless = force ? reallyPantsless() : pantsless();
-		
-		if (topless && !pantsless) {
-			half = 1;
-		} else if (!topless && pantsless) {
-			half = 0;
-		} else if (!topless && !pantsless) {
-			half = Global.random(2);
-		} else {
-			return null;
-		}
-		if(half==0){
-			if(topless){
-				return null;
-			}
-			else{
-				c.clothespile.add(top.peek());
-				return top.pop();
-			}
-		}
-		else{
-			if(pantsless){
-				return null;
-			}
-			else{
-				c.clothespile.add(bottom.peek());
-				return bottom.pop();
-			}
-		}
+		return strip(force ? outfit.getRandomEquippedSlot() : outfit.getRandomNakedSlot(), c);
 	}
-	public Clothing shred(int half){
-		if(half==0){
-			if(!topless()&&top.peek().attribute()!=Trait.indestructible){
-				return top.pop();
-			}
-			else{
-				return null;
-			}
-		}
-		else{
-			if(!pantsless()&&bottom.peek().attribute()!=Trait.indestructible){
-				return bottom.pop();
-			}
-			else{
-				return null;
-			}
+	public Clothing getRandomStrippable() {
+		return getOutfit().getTopOfSlot(getOutfit().getRandomEquippedSlot());
+	}
+
+	public Clothing shred(ClothingSlot slot){
+		Clothing article = outfit.getTopOfSlot(slot);
+		if (article == null || article.is(ClothingTrait.indestructible)) {
+			System.err.println("Tried to shred clothing that doesn't exist at slot " + slot.name() + " at clone " + cloned);
+			System.err.println(outfit.toString());
+			Thread.dumpStack();
+			return null;
+		} else {
+			// don't add it to the pile
+			return outfit.unequip(article);
 		}
 	}
 	
@@ -761,6 +778,7 @@ public abstract class Character extends Observable implements Cloneable {
 
 	public void tick(Combat c) {
 		body.tick(c);
+		status.forEach(s -> s.tick(c));
 		countdown(temporaryAddedTraits);
 		countdown(temporaryRemovedTraits);
 	}
@@ -802,16 +820,6 @@ public abstract class Character extends Observable implements Cloneable {
 		traits.remove(t);
 	}
 	public boolean hasPure(Trait t){
-		for(Clothing shirt:top){
-			if(shirt.adds(t)){
-				return true;
-			}
-		}
-		for(Clothing pants:bottom){
-			if(pants.adds(t)){
-				return true;
-			}
-		}
 		return getTraits().contains(t);
 	}
 
@@ -819,6 +827,8 @@ public abstract class Character extends Observable implements Cloneable {
 		boolean hasTrait = false;
 		if (t.parent != null)
 			hasTrait = hasTrait || getTraits().contains(t.parent);
+		if (outfit.has(t))
+			return true;
 		hasTrait = hasTrait || this.hasPure(t);
 		return hasTrait;
 	}
@@ -868,17 +878,17 @@ public abstract class Character extends Observable implements Cloneable {
 			weaken(c, regen);
 		}
 		if(combat){
-			if(has(Trait.exhibitionist)&&nude()){
+			if(has(Trait.exhibitionist)&&mostlyNude()){
 				buildMojo(c, 5);
 			}
-			if(has(Trait.stylish)){
+			if(outfit.has(ClothingTrait.stylish)){
 				buildMojo(c, 3);
 			}
 			if(has(Trait.SexualGroove)){
 				buildMojo(c, 2);
 			}
-			if(has(Trait.lame)){
-				buildMojo(c, -3);
+			if(outfit.has(ClothingTrait.lame)){
+				buildMojo(c, -2);
 			}
 		}
 		orgasmed = false;
@@ -937,12 +947,35 @@ public abstract class Character extends Observable implements Cloneable {
 		} else if (human() || (location() != null && location().humanPresent())){
 			Global.gui().message("<b>"+ message+"</b>");
 		}
+		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+			System.out.println(message);
+		}
+	}
+	private double getPheromonesChance(Combat c) {
+		double baseChance = .1 + getExposure() / 2 + ((arousal.getOverflow() + arousal.get()) / (float)arousal.max());
+		double mod = c.getStance().pheromoneMod(this);
+		double chance = Math.min(1, baseChance * mod);
+		return chance;
+	}
+	public boolean rollPheromones(Combat c) {
+		double chance = getPheromonesChance(c);
+		double roll = Global.randomdouble();
+		System.out.println("Pheromones: rolled " + Global.formatDecimal(roll) + " vs " + chance + ".");
+		return roll < chance;
+	}
+	public int getPheromonePower() {
+		return 1 + get(Attribute.Animism) / 10;
 	}
 	public void dropStatus(Combat c, Character opponent){
 		Set<Status> removedStatuses = status.stream().filter(s -> !s.meetsRequirements(c, this, opponent)).collect(Collectors.toSet()); 
-		removedStatuses.stream().forEach(s -> s.onRemove(c, opponent));
+		removedStatuses.addAll(removelist);
+		removedStatuses.stream().forEach(s -> {
+			if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+				System.out.println(s.name + " removed from " + name());
+			}
+			s.onRemove(c, opponent);
+		});
 		status.removeAll(removedStatuses);
-		status.removeAll(removelist);
 		for(Status s: addlist){
 			add(c, s);
 		}
@@ -1017,7 +1050,7 @@ public abstract class Character extends Observable implements Cloneable {
 			s.struggle(this);
 		}
 	}
-	public int escape(Combat c) {
+	public int getEscape(Combat c) {
 		int total=0;
 		for(Status s: getStatuses()){
 			total+=s.escape();
@@ -1028,10 +1061,16 @@ public abstract class Character extends Observable implements Cloneable {
 		int stanceMod = c.getStance().escape(c, this);
 		if (stanceMod < 0) {
 			total += stanceMod;
-			c.getStance().struggle();
 		}
+		return total;
+	}
+	public int escape(Combat c) {
+		int total = getEscape(c);
 		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
 			System.out.println("Escape: " + total);
+		}
+		if (c.getStance().escape(c, this) < 0) {
+			c.getStance().struggle();
 		}
 		return total;
 	}
@@ -1060,20 +1099,32 @@ public abstract class Character extends Observable implements Cloneable {
 	public abstract void intervene(Encounter enc, Character p1,Character p2);
 	public abstract void showerScene(Character target, Encounter encounter);
 
+	public boolean humanControlled (Combat c) {
+		return human() || (Global.isDebugOn(DebugFlags.DEBUG_SKILL_CHOICES) && c.getOther(this).human());
+	}
+
+	@SuppressWarnings({ "unchecked"})
+	private static void saveLoot(JSONObject obj, Collection<? extends Loot> arr, String name) {
+		JSONArray array = new JSONArray();
+		for (Loot e : arr) {
+			array.add(e.getID());
+		}
+		obj.put(name, array);
+	}
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private static void saveArr(JSONObject obj, Collection<? extends Enum> arr, String name) {
+	private static void saveEnums(JSONObject obj, Collection<? extends Enum> arr, String name) {
 		JSONArray array = new JSONArray();
 		for (Enum e : arr) {
 			array.add(e.name());
 		}
 		obj.put(name, array);
 	}
-
 	@SuppressWarnings("unchecked")
 	private static void saveCharIntMap(JSONObject obj, Map<Character, Integer> map, String name) {
 		JSONObject objMap = new JSONObject();
 		for(Character key:map.keySet()) {
-			objMap.put(key.getType(), map.get(key));
+			if (key != null)
+				objMap.put(key.getType(), map.get(key));
 		}
 		obj.put(name, objMap);
 	}
@@ -1095,8 +1146,9 @@ public abstract class Character extends Observable implements Cloneable {
 			Character character = Global.getCharacterByType(keyString);
 			if (character == null) {
 				System.err.println("Failed loading character: " + keyString);
+			} else {
+				map.put(character, JSONUtils.readInteger(obj, keyString));
 			}
-			map.put(character, JSONUtils.readInteger(obj, keyString));
 		}
 		return map;
 	}
@@ -1106,16 +1158,12 @@ public abstract class Character extends Observable implements Cloneable {
 		JSONArray savedArr = (JSONArray) obj.get(name);
 		for (Object elem : savedArr) {
 			String key = (String)elem;
-			arr.add(Clothing.valueOf(key));
-		}
-	}
-
-	private static void loadTraitsFromArr(JSONObject obj, Collection<Trait> arr, String name) {
-		arr.clear();
-		JSONArray savedArr = (JSONArray) obj.get(name);
-		for (Object elem : savedArr) {
-			String key = (String)elem;
-			arr.add(Trait.valueOf(key));
+			try {
+				arr.add(Clothing.getByID(key));
+			} catch (IllegalArgumentException e) {
+				// If we find a piece of clothing that isn't actually available, log it and ignore it.
+				System.err.println(e);
+			}
 		}
 	}
 
@@ -1139,13 +1187,15 @@ public abstract class Character extends Observable implements Cloneable {
 		saveCharIntMap(saveObj, affections, "affections");
 		saveCharIntMap(saveObj, attractions, "attractions");
 		saveEnumIntMap(saveObj, att, "attributes");
-		saveArr(saveObj, outfit[0], "top");
-		saveArr(saveObj, outfit[1], "bottom");
-		saveArr(saveObj, closet, "closet");
-		saveArr(saveObj, traits, "traits");
+		saveLoot(saveObj, outfitPlan, "outfit");
+		saveLoot(saveObj, closet, "closet");
+		saveEnums(saveObj, traits, "traits");
 		saveObj.put("body", body.save());
 		saveEnumIntMap(saveObj, inventory, "inventory");
 		saveObj.put("human", human());
+		JSONObject flagsObj = new JSONObject();
+		saveObj.put("flags", flagsObj);
+		flags.entrySet().stream().forEach(entry -> flagsObj.put(entry.getKey(), entry.getValue()));
 		return saveObj;
 	}
 
@@ -1166,10 +1216,23 @@ public abstract class Character extends Observable implements Cloneable {
 		}
 		affections = loadCharIntMap(obj, "affections");
 		attractions = loadCharIntMap(obj, "attractions");
-		loadClothingFromArr(obj, outfit[0], "top");
-		loadClothingFromArr(obj, outfit[1], "bottom");
+		
+		// TODO Clothing loading, this is for compatibility, remove this later.
+		if (obj.containsKey("outfit"))
+			loadClothingFromArr(obj, outfitPlan, "outfit");
+		else
+			outfitPlan.clear();
+		if (obj.containsKey("top") && obj.containsKey("bottom")) {
+			List<Clothing> temp = new ArrayList<>();
+			loadClothingFromArr(obj, temp, "top");
+			outfitPlan.addAll(temp);
+			loadClothingFromArr(obj, temp, "bottom");
+			outfitPlan.addAll(temp);
+		}
+		// End Clothing loading
+		
 		loadClothingFromArr(obj, closet, "closet");
-		loadTraitsFromArr(obj, traits, "traits");
+		traits = new HashSet<>(JSONUtils.loadEnumsFromArr(obj, "traits", Trait.class));
 		body = Body.load((JSONObject) obj.get("body"), this);
 		{
 			JSONObject attObj = (JSONObject) obj.get("attributes");
@@ -1189,6 +1252,14 @@ public abstract class Character extends Observable implements Cloneable {
 				inventory.put(item, JSONUtils.readInteger(invenObj, keyString));
 			}
 		}
+		if (obj.containsKey("flags")) {
+			JSONObject flagsObj = (JSONObject) obj.get("flags");
+			flags.clear();
+			for(Object key:flagsObj.keySet()){
+				String keyString = (String) key;
+				flags.put(keyString, JSONUtils.readInteger(flagsObj, keyString));
+			}
+		}
 		change(Modifier.normal);
 		Global.gainSkills(this);
 		Global.learnSkills(this);
@@ -1198,6 +1269,21 @@ public abstract class Character extends Observable implements Cloneable {
 	public boolean checkOrgasm() {
 		return getArousal().isFull() && !is(Stsflag.orgasmseal) && pleasured;
 	}
+
+	public CharacterSex getSex() {
+		// it's oversimplified I know. So sue me :(
+		if (hasDick() && hasPussy()) {
+			return CharacterSex.herm;
+		}
+		if (hasDick()) {
+			return CharacterSex.male;
+		}
+		if (hasPussy()) {
+			return CharacterSex.female;
+		}
+		return CharacterSex.asexual;
+	}
+
 	public void doOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart) {
 		orgasmed = true;
 		c.write(this, "<br>");
@@ -1232,52 +1318,53 @@ public abstract class Character extends Observable implements Cloneable {
 			c.write(Global.capitalizeFirstLetter("<br><b>"+opponent.subjectAction("flush", "flushes") + " as the feedback from " + nameOrPossessivePronoun() + " orgasm feeds " + opponent.possessivePronoun() + " divine power.</b>"));
 			opponent.add(c, new Alluring(opponent, 5));
 			opponent.buildMojo(c, 100);
+			if (c.getStance().inserted(this) && opponent.has(Trait.divinity)) {
+				opponent.add(c, new DivineCharge(opponent, 1));
+			}
 		}
 
 		getArousal().empty();
 		if (has(Trait.insatiable)) {
 			arousal.restore((int) (arousal.max()*.2));
 		}
+		if (is(Stsflag.feral)) {
+			arousal.restore(arousal.max() / 2);
+		}
 		float extra = 25.0f * overflow / (arousal.max()/2.0f);
 
-		loseWillpower(c, getOrgasmWillpowerLoss(), Math.round(extra), true);
+		loseWillpower(c, getOrgasmWillpowerLoss(), Math.round(extra), true, "");
 		orgasms += 1;
 	}
 
 	public void doOrgasm(Combat c, Character opponent, Skill last) {
-		String opponentOrganType = "";
-		String selfOrganType = "";
-		if (last.user() == this) {
-			opponentOrganType = last.getTargetOrganType(c, opponent);
-			selfOrganType = last.getWithOrganType(c, this);
-		} else {
-			opponentOrganType = last.getWithOrganType(c, opponent);
-			selfOrganType = last.getTargetOrganType(c, this);
-		}
-		doOrgasm(c, opponent, body.getRandom(selfOrganType), opponent.body.getRandom(opponentOrganType));
+		doOrgasm(c, opponent, body.lastPleasured, body.lastPleasuredBy);
 	}
 
 	public void loseWillpower(Combat c, int i) {
-		loseWillpower(c, i, 0, false);
+		loseWillpower(c, i, 0, false, "");
 	}
 
 	public void loseWillpower(Combat c, int i, boolean primary) {
-		loseWillpower(c, i, 0, primary);
+		loseWillpower(c, i, 0, primary, "");
 	}
 
-	public void loseWillpower(Combat c, int i, int extra, boolean primary) {
+	public void loseWillpower(Combat c, int i, int extra, boolean primary, String source) {
 		int amt = i + extra;
-		boolean reduced = false;
+		String reduced = "";
 		if (has(Trait.strongwilled) && primary) {
 			amt = amt * 2 / 3 + 1;
-			reduced = true;
+			reduced = " (Strong-willed)";
+		}
+		if (is(Stsflag.feral) && primary) {
+			amt = amt / 3;
+			reduced = " (Feral)";
 		}
 		int old = willpower.get();
 		willpower.reduce(amt);
 		if (c != null) {
-			c.writeSystemMessage(String.format("%s lost <font color='rgb(220,130,40)'>%s<font color='white'> willpower" + (reduced ? " (Strong-willed)." : "."), this.subject(), extra == 0 ? Integer.toString(amt) : i + "+" + extra + " ("+amt+")"));
+			c.writeSystemMessage(String.format("%s lost <font color='rgb(220,130,40)'>%s<font color='white'> willpower" + reduced + "%s.", this.subject(), extra == 0 ? Integer.toString(amt) : i + "+" + extra + " ("+amt+")", source));
 		} else {
-			Global.gui().systemMessage((String.format("%s lost <font color='rgb(220,130,40)'>%d<font color='white'> willpower" + (reduced ? " (Strong-willed)." : "."), this.subject(), amt)));
+			Global.gui().systemMessage(String.format("%s lost <font color='rgb(220,130,40)'>%d<font color='white'> willpower" + reduced + "%s.", this.subject(), amt, source));
 		}
 		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
 			System.out.printf("will power reduced from %d to %d\n", old, willpower.get());
@@ -1288,7 +1375,6 @@ public abstract class Character extends Observable implements Cloneable {
 		willpower.restore(i);
 		c.writeSystemMessage(String.format("%s regained <font color='rgb(181,230,30)'>%d<font color='white'> willpower.", this.subject(), i));
 	}
-
 
 	public void eot(Combat c, Character opponent, Skill last) {
 		dropStatus(c, opponent);
@@ -1330,13 +1416,13 @@ public abstract class Character extends Observable implements Cloneable {
 			//TODO this works weirdly when both have both organs.
 			body.tickHolding(c, opponent, selfOrgan, otherOrgan);
 		}
-		if (has(Trait.tentacleSuit)) {
+		if (outfit.has(ClothingTrait.tentacleSuit)) {
 			c.write(this, Global.format("The tentacle suit squirms against {self:name-possessive} body.", this, opponent));
 			if (hasBreasts())
 				body.pleasure(null, null, body.getRandom("breasts"), 5, c);
 			body.pleasure(null, null, body.getRandom("skin"), 5, c);
 		}
-		if (has(Trait.tentacleUnderwear)) {
+		if (outfit.has(ClothingTrait.tentacleUnderwear)) {
 			String undieName = "underwear";
 			if (hasPussy()) {
 				undieName = "panties";
@@ -1457,8 +1543,8 @@ public abstract class Character extends Observable implements Cloneable {
 				name, mood,
 				stamina.get(), stamina.max(),
 				arousal.get(), arousal.max(),
-				mojo.get(), mojo.max(), top.size() + bottom.size(),
-				getFitness(c, getUrgency(), p));
+				mojo.get(), mojo.max(), outfit.getEquipped().size(),
+				getFitness(c));
 	}
 
 	public void gain(Item item) {
@@ -1493,9 +1579,13 @@ public abstract class Character extends Observable implements Cloneable {
 		}
 		return false;
 	}
-
+	public void unequipAllClothing() {
+		closet.addAll(outfitPlan);
+		outfitPlan.clear();
+		change(Modifier.normal);
+	}
 	public boolean has(Clothing item){
-		return closet.contains(item);
+		return closet.contains(item) || outfit.getEquipped().contains(item);
 	}
 
 	public void consume(Item item, int quantity){
@@ -1715,6 +1805,11 @@ public abstract class Character extends Observable implements Cloneable {
 	}
 
 	public int getAttraction(Character other){
+		if (other == null) {
+			System.err.println("Other is null");
+			Thread.dumpStack();
+			return 0;
+		}
 		if(attractions.containsKey(other)){
 			return attractions.get(other);
 		}
@@ -1723,8 +1818,12 @@ public abstract class Character extends Observable implements Cloneable {
 		}
 	}
 	public void gainAttraction(Character other, int x){
+		if (other == null) {
+			System.err.println("Other is null");
+			Thread.dumpStack();
+		}
 		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-			System.out.printf("%s gained affection for %s\n", this.name(), other.name());
+			System.out.printf("%s gained attraction for %s\n", this.name(), other.name());
 		}
 		if(attractions.containsKey(other)){
 			attractions.put(other,attractions.get(other)+x);
@@ -1734,6 +1833,15 @@ public abstract class Character extends Observable implements Cloneable {
 		}
 	}
 	public int getAffection(Character other){
+		if (other == null) {
+			System.err.println("Other is null");
+			Thread.dumpStack();
+			return 0;
+		}
+
+		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+			System.out.printf("%s gained affection for %s\n", this.name(), other.name());
+		}
 		if(affections.containsKey(other)){
 			return affections.get(other);
 		}
@@ -1742,6 +1850,10 @@ public abstract class Character extends Observable implements Cloneable {
 		}
 	}
 	public void gainAffection(Character other, int x){
+		if (other == null) {
+			System.err.println("Other is null");
+			Thread.dumpStack();
+		}
 		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
 			System.out.printf("%s gained affection for %s\n", this.name(), other.name());
 		}
@@ -1798,8 +1910,11 @@ public abstract class Character extends Observable implements Cloneable {
 		// with no level or hit differences and an default accuracy of 80, 80% hit rate
 		// each level the attacker is below the target will reduce this by 5%, to a maximum of 25%
 		// each point in accuracy of skill affects changes the hit chance by 1%
-		// each point in speed and perception will increase hit by 10%
-		int chanceToHit = 5 * levelDiff + accuracy + 10 * (hitDiff - evasionBonus());
+		// each point in speed and perception will increase hit by 5%
+		int chanceToHit = 5 * levelDiff + accuracy + 5 * (hitDiff - evasionBonus());
+		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+			System.out.printf("Rolled %s against %s, base accuracy: %s, hit difference: %s, level difference: %s\n", attackroll, chanceToHit, accuracy, hitDiff, levelDiff);
+		}
 
 		return attackroll < chanceToHit;
 	}
@@ -1808,6 +1923,15 @@ public abstract class Character extends Observable implements Cloneable {
 		int dc = 10+(getStamina().get())/2;
 		if(is(Stsflag.braced)) {
 			dc+=getStatus(Stsflag.braced).value();
+		}
+		if(has(ClothingTrait.heels) && !has(Trait.proheels)) {
+			dc-=7;
+		}
+		if(has(ClothingTrait.highheels) && !has(Trait.proheels)) {
+			dc-=8;
+		}
+		if(has(ClothingTrait.higherheels) && !has(Trait.proheels)) {
+			dc-=10;
 		}
 		return dc;
 	}
@@ -1881,6 +2005,24 @@ public abstract class Character extends Observable implements Cloneable {
 		dropStatus(null, null);
 		orgasms = 0;
 		setChanged();
+		if (has(ClothingTrait.heels)) {
+			setFlag("heelsTraining", getFlag("heelsTraining") + 1);
+		}
+		if (has(ClothingTrait.highheels)) {
+			setFlag("heelsTraining", getFlag("heelsTraining") + 1);
+		}
+		if (has(ClothingTrait.higherheels)) {
+			setFlag("heelsTraining", getFlag("heelsTraining") + 1);
+		}
+	}
+	public void setFlag(String string, int i) {
+		flags.put(string, i);
+	}
+	public int getFlag(String string) {
+		if (flags.containsKey(string)) {
+			return flags.get(string);
+		}
+		return 0;
 	}
 	public boolean canSpend(int mojo){
 		int cost=mojo;
@@ -1934,41 +2076,6 @@ public abstract class Character extends Observable implements Cloneable {
 	}
 	public String toString() {
 		return name;
-	}
-	public float getUrgency() {
-
-         // How urgent do we want the fight to end? We are
-         // essentially trying to approximate how many
-         // moves we will still have until the end of the
-         // fight.
-
-        // Once arousal is too high, the fight ends.
-         float remArousal = getArousal().max() - getArousal().get();
-
-         // Arousal is worse the more clothes we lose, because
-         // we will probably lose it quicker.
-         float arousalPerRound = 5;
-         for(int i = 0; i < top.size(); i++) arousalPerRound /= 1.2;
-         for(int i = 0; i < bottom.size(); i++) arousalPerRound /= 1.2;
-
-         // Depending on our stamina, we should count on
-         // spending a few of these rounds knocked down,
-         // so effectively we have even less rounds to
-         // work with - let's make them count!
-         float fitness = Math.max(0.5f, Math.min(1.0f,
-                         (float) getStamina().get() / 40));
-
-         // cap urgency so that very high maximum arousal does not round fitness to 0
-         return Math.min(100, remArousal / arousalPerRound * fitness);
-	}
-	public float rateUrgency(float urgency, float urgency2) {
-		// How important is it to reach a goal with given
-		// urgency, given that we are gunning roughly for
-		// the second urgency? We use a normal distribution
-		// (hah, fancy!) that gives roughly 50% weight at
-		// a difference of 15.
-		float x = (urgency - urgency2) / 15;
-		return (float) Math.exp(-x*x);
 	}
 
 	public boolean taintedFluids() {
@@ -2066,55 +2173,144 @@ public abstract class Character extends Observable implements Cloneable {
 		Global.gui().showSkills(0);
 	}
 
-	public float getFitness(Combat c, float urgency, Position p) {
+	public float getOtherFitness(Combat c, Character other) {
 		float fit = 0;
         // Urgency marks
-		float ushort = 1.0f;
-		float umid = 1.0f;
-        float ulong = 1.0f;
-        float usum = ushort + umid + ulong;
-        Character other = p.other(this);
-		// Always important: Position
-		fit += p.priorityMod(this) * 6;
-		fit += p.escape(c, this) / 4;
-		// Also important: Clothing.
-		float topMultiplier = 2.0f;
-		float botMultiplier = 3.0f;
-		if (hasDick()) {
-			botMultiplier += 4;
+		float arousalMod = 1.0f;
+		float staminaMod = 1.0f;
+        float mojoMod = 1.0f;
+        float usum = arousalMod + staminaMod + mojoMod;
+		int escape = other.getEscape(c);
+		if (escape > 1) {
+			fit += 8 * Math.log(escape);
+		} else if (escape < -1) {
+			fit += -8 * Math.log(-escape);
 		}
-		if (has(Trait.submissive)) {
-			botMultiplier = -5;
-			topMultiplier = -5;
+		int totalAtts = 0;
+		for (Attribute attribute : att.keySet()) {
+			totalAtts += att.get(attribute);
+		}
+		fit += Math.sqrt(totalAtts) * 5;
+
+		//what an average piece of clothing should be worth in fitness
+		double topFitness = 4.0;
+		double bottomFitness = 4.0;
+		// If I'm horny, I want the other guy's clothing off, so I put more fitness in them
+		if (getMood() == Emotion.horny) {
+			topFitness = 8;
+			topFitness = 6;
+			// If I'm horny, I want to make the opponent cum asap, put more emphasis on arousal
+			arousalMod = 2.0f;
+		}
+
+		// check body parts based on my preferences
+		if (other.hasDick()) {
+			fit -= (dickPreference() - 3) * 4;
+		}
+		if (other.hasPussy()) {
+			fit -= (pussyPreference() - 3) * 4;
+		}
+		
+		fit += other.outfit.getFitness(c, bottomFitness, topFitness);
+		fit += other.body.getHotness(other, this);
+		// Extreme situations
+		if (other.arousal.isFull()) fit -= 50;
+		// will power empty is a loss waiting to happen
+		if (other.willpower.isEmpty()) fit -= 100;
+		if (other.stamina.isEmpty()) fit -= staminaMod * 3;
+		fit += 100.0f * (other.getWillpower().max() - other.getWillpower().get()) / Math.min(100, other.getWillpower().max());
+		// Short-term: Arousal
+		fit += arousalMod / usum * 100.0f * (other.getArousal().max() - other.getArousal().get()) / Math.min(100, other.getArousal().max());
+		// Mid-term: Stamina
+		fit += staminaMod / usum * 50.0f * ( 1 - Math.exp(-((float)other.getStamina().get()) / Math.min(other.getStamina().max(), 100.0f)));
+		// Long term: Mojo
+		fit += mojoMod / usum * 50.0f * ( 1 - Math.exp(- ((float)other.getMojo().get()) / Math.min(other.getMojo().max(), 40.0f)));
+		for (Status status : other.getStatuses()) {
+			fit += status.fitnessModifier();
+		}
+		return fit;
+	}
+
+	public float getFitness(Combat c) {
+		float fit = 0;
+        // Urgency marks
+		float arousalMod = 1.0f;
+		float staminaMod = 1.0f;
+        float mojoMod = 1.0f;
+        float usum = arousalMod + staminaMod + mojoMod;
+        Character other = c.getOther(this);
+
+		int totalAtts = 0;
+		for (Attribute attribute : att.keySet()) {
+			totalAtts += att.get(attribute);
+		}
+		fit += Math.sqrt(totalAtts) * 5;
+		// Always important: Position
+		fit += c.getStance().priorityMod(this) * 6;
+		int escape = getEscape(c);
+		if (escape > 1) {
+			fit += 8 * Math.log(escape);
+		} else if (escape < -1) {
+			fit += -8 * Math.log(-escape);
+		}
+		//what an average piece of clothing should be worth in fitness
+		double topFitness = 4.0;
+		double bottomFitness = 4.0;
+		// If I'm horny, I don't care about my clothing, so I put more less fitness in them
+		if (getMood() == Emotion.horny) {
+			topFitness = 1;
+			topFitness = 1;
+			// If I'm horny, I put less importance on my own arousal
+			arousalMod = .7f;
+		}
+		fit += outfit.getFitness(c, bottomFitness, topFitness);
+		fit += body.getHotness(this, other);
+		if (c.getStance().inserted()) { // If we are fucking...
+			// ...we need to see if that's beneficial to us.
+			fit += this.body.penetrationFitnessModifier(c.getStance().inserted(this), c.getStance().anallyPenetrated(), other.body);
+		}
+		if (hasDick()) {
+			fit += (dickPreference() - 3) * 4;
+		}
+
+		if (hasPussy()) {
+			fit += (pussyPreference() - 3) * 4;
 		}
 		if (has(Trait.pheromones)) {
-			topMultiplier -= 1;
-			botMultiplier -= 2;
+			fit += 5 * getPheromonePower();
+			fit += 15 * getPheromonesChance(c) *  (2 + getPheromonePower());
 		}
-		fit += top.size() * topMultiplier + bottom.size() * botMultiplier;
-		fit += this.body.getCharismaBonus(other) * (other.getArousal().percent()) / 2;
-		
-		if (p.inserted()) { // If we are fucking...
-			// ...we need to see if that's beneficial to us.
-			fit += this.body.penetrationFitnessModifier(p.inserted(this), p.analinserted(), other.body);
-		}
-		
+
 		// Also somewhat of a factor: Inventory (so we don't
 		// just use it without thinking)
 		for(Item item : inventory.keySet())
 		        fit += (float) item.getPrice() / 10;
 		// Extreme situations
 		if (arousal.isFull()) fit -= 100;
-		if (stamina.isEmpty()) fit -= umid * 3;
+		if (stamina.isEmpty()) fit -= staminaMod * 3;
 		fit += 100.0f * (getWillpower().max() - getWillpower().get()) / Math.min(100, getWillpower().max());
 		// Short-term: Arousal
-		fit += ushort / usum * 100.0f * (getArousal().max() - getArousal().get()) / Math.min(100, getArousal().max());
+		fit += arousalMod / usum * 100.0f * (getArousal().max() - getArousal().get()) / Math.min(100, getArousal().max());
 		// Mid-term: Stamina
-		fit += umid / usum * 50.0f * ( 1 - Math.exp(-((float)getStamina().get()) / Math.min(getStamina().max(), 100.0f)));
+		fit += staminaMod / usum * 50.0f * ( 1 - Math.exp(-((float)getStamina().get()) / Math.min(getStamina().max(), 100.0f)));
 		// Long term: Mojo
-		fit += ulong / usum * 50.0f * ( 1 - Math.exp(- ((float)getMojo().get()) / Math.min(getMojo().max(), 40.0f)));
+		fit += mojoMod / usum * 50.0f * ( 1 - Math.exp(- ((float)getMojo().get()) / Math.min(getMojo().max(), 40.0f)));
 		for (Status status : getStatuses()) {
 			fit += status.fitnessModifier();
+		}
+
+		if (!human()) {
+			NPC me = (NPC) this;
+			AiModifiers mods = me.ai.getAiModifiers();
+			fit += mods.modPosition(c.getStance().enumerate()) * 6;
+			fit += status.stream()
+					.flatMap(s -> s.flags().stream())
+					.mapToDouble(f -> mods.modSelfStatus(f))
+					.sum();
+			fit += c.getOther(this).status.stream()
+					.flatMap(s -> s.flags().stream())
+					.mapToDouble(f -> mods.modOpponentStatus(f))
+					.sum();
 		}
 		return fit;
 	}
@@ -2123,28 +2319,21 @@ public abstract class Character extends Observable implements Cloneable {
 		return name + "'s";
 	}
 
-	public int getSkimpiness(){
-		int result = 2;
-		for(Clothing article: top){
-			if(article.attribute()!=Trait.skimpy&&article.attribute()!=Trait.ineffective){
-				result--;
-				break;
-			}
-		}
-		for(Clothing article: bottom){
-			if(article.attribute()!=Trait.skimpy&&article.attribute()!=Trait.ineffective){
-				result--;
-				break;
-			}
-		}
-		return result;
+	public double getExposure(ClothingSlot slot) {
+		return outfit.getExposure(slot);
 	}
+
+	public double getExposure(){
+		return outfit.getExposure();
+	}
+
 	public abstract String getPortrait(Combat c);
 
 	public void modMoney(int i) {
 		if (human() && i > 0)
-			Global.gui().message("You've gained $" + Math.round(i * Global.moneyRate) +".");;
+			Global.gui().message("You've gained $" + Math.round(i * Global.moneyRate) +".");
 		money += Math.round(i * Global.moneyRate);
+		update();
 	}
 
 	public void loseXP(int i) {
@@ -2152,7 +2341,7 @@ public abstract class Character extends Observable implements Cloneable {
 		xp -= i;
 	}
 	public String pronoun() {
-		if (hasPussy()) {
+		if (useFemalePronouns()) {
 			return "she";
 		} else {
 			return "he";
@@ -2162,20 +2351,23 @@ public abstract class Character extends Observable implements Cloneable {
 		return Emotion.confident;
 	}
 	public String possessivePronoun() {
-		if (hasPussy()) {
+		if (useFemalePronouns()) {
 			return "her";
 		} else {
 			return "his";
 		}
 	}
 	public String directObject() {
-		if (hasPussy()) {
+		if (useFemalePronouns()) {
 			return "her";
 		} else {
 			return "him";
 		}
 	}
 
+	private boolean useFemalePronouns() {
+		return hasPussy();
+	}
 	public String nameDirectObject() {
 		return name();
 	}
@@ -2188,20 +2380,15 @@ public abstract class Character extends Observable implements Cloneable {
 		if (part.isType("strapon")) {
 			return true;
 		} if (part.isType("cock")) {
-			for(Clothing article: bottom){
-				if(article.buff()==Trait.armored){
-					return false;
-				}
-			}
-			return true;
+			return outfit.slotEmptyOrMeetsCondition(ClothingSlot.bottom, (article) ->
+				(!article.is(ClothingTrait.armored)
+						&& !article.is(ClothingTrait.bulky)));
 		} else if (part.isType("pussy") || part.isType("ass")) {
-			for(Clothing article: bottom){
-				Trait attribute = article.attribute();
-				if(attribute != Trait.skimpy && attribute != Trait.ineffective && attribute != Trait.flexible){
-					return false;
-				}
-			}
-			return true;
+			return outfit.slotEmptyOrMeetsCondition(ClothingSlot.bottom, (article) -> {
+							return (article.is(ClothingTrait.skimpy)
+							|| article.is(ClothingTrait.open)
+							|| article.is(ClothingTrait.flexible));
+							});
 		} else {
 			return false;
 		}
@@ -2258,16 +2445,18 @@ public abstract class Character extends Observable implements Cloneable {
 	public boolean isCustomNPC() {
 		return custom;
 	}
+
 	public String recruitLiner() {
 		return "";
 	}
 
 	public int stripDifficulty(Character other) {
-		if (has(Trait.tentacleSuit) || has(Trait.tentacleUnderwear)) { 
+		if (outfit.has(ClothingTrait.tentacleSuit) || outfit.has(ClothingTrait.tentacleUnderwear)) { 
 			return other.get(Attribute.Science) + 20;
 		}
 		return 0;
 	}
+
 	public void startBattle(Combat combat) {
 		orgasms = 0;
 	}
@@ -2314,5 +2503,22 @@ public abstract class Character extends Observable implements Cloneable {
 	public void update() {
 		setChanged();
 		notifyObservers();
+	}
+	public Outfit getOutfit() {
+		return outfit;
+	}
+	public boolean footAvailable() {
+		Clothing article = outfit.getTopOfSlot(ClothingSlot.feet);
+		return article == null || article.getLayer() < 2;
+	}
+	public boolean hasInsertable() {
+		return hasDick() || has(Trait.strapped);
+	}
+	public String guyOrGirl() {
+		return useFemalePronouns() ? "girl" : "guy";
+	}
+
+	public String boyOrGirl() {
+		return useFemalePronouns() ? "girl" : "boy";
 	}
 }

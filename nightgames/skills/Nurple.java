@@ -22,7 +22,7 @@ public class Nurple extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.topless()&&c.getStance().reachTop(getSelf())&&getSelf().canAct();
+		return target.breastsAvailable()&&c.getStance().reachTop(getSelf())&&getSelf().canAct();
 	}
 
 	@Override

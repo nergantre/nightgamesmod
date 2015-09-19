@@ -5,7 +5,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.global.Flag;
 import nightgames.global.Global;
-import nightgames.items.Clothing;
+import nightgames.items.clothing.Clothing;
 
 public class Meditation extends Activity {
 	private boolean acted;
@@ -77,8 +77,8 @@ public class Meditation extends Activity {
 				player.money-=1000*(player.getPure(Attribute.Ki)+1);
 				player.mod(Attribute.Ki, 1);
 				acted=true;
-				if(!player.has(Clothing.kungfupants)){
-					player.gain(Clothing.kungfupants);
+				if(!player.has(Clothing.getByID("gi"))){
+					player.gain(Clothing.getByID("gi"));
 				}
 				Global.gui().choose(this,"Leave");
 			}
@@ -98,7 +98,7 @@ public class Meditation extends Activity {
 					"will clear and your senses will be sharper than ever before. You'll be able to see details you never would have been able to make out. You'll be able to hear a pin drop " +
 					"in a storm. The entire universe will rush in through your skin and you'll perceive it all.\"</i><p>Suzume snaps her fingers and instantly everything is different. Your eyes " +
 					"are still closed, but you feel like you can perceive the shape of the room around you. Suzume has been pacing behind you, but her footfalls were too light for you to notice. " +
-					"now you can pinpoint her exact location and movement. You hear a rustle of cloth from her direction and realize she's taking off her socks. <i>\"We're going to give your heightened " +
+					"Now you can pinpoint her exact location and movement. You hear a rustle of cloth from her direction and realize she's taking off her socks. <i>\"We're going to give your heightened " +
 					"senses a little practice so you can adapt to them. Keep your eyes closed, but you can speak now. What am I doing?\"</i> When you reply that she's removing socks, you can somehow " +
 					"sense her smile. <i>\"Very good, what about now?\"</i> Another rustle; shirt and pants this time. Then bra. Finally you hear the whisper of her panties sliding down her legs. Even " +
 					"though you can't see her, you can perceive every move she makes as if she were performing a strip show. Your erection strains against your pants as you hear her nude form approach " +
@@ -115,7 +115,7 @@ public class Meditation extends Activity {
 			}
 			else{
 				Global.gui().message("Suzume instructs you to sit in the middle of the dojo and close your eyes. <i>\"I'm going to count down from ten. With each number, you will feel your " +
-					"mind openning and you will be more receptive to my words. When I reach zero, imagine your mind as an empty vessel, ready to take in everything around you.\"</i> As she " +
+					"mind opening and you will be more receptive to my words. When I reach zero, imagine your mind as an empty vessel, ready to take in everything around you.\"</i> As she " +
 					"counts down, you can feel yourself slipping into a trance. You know you could pull back at any time, but that would defeat the entire purpose of this, so instead you " +
 					"let yourself go. <i>\"I want you to imagine a thick fog has surrounded you your entire life, shrouding the world and dulling your senses. When I snap my fingers now, the fog " +
 					"will clear and your senses will be sharper than ever before. You'll be able to see details you never would have been able to make out. You'll be able to hear a pin drop " +
@@ -133,10 +133,10 @@ public class Meditation extends Activity {
 			if(Global.random(100)>=50){
 				Global.gui().message("Suzume has you lie down on the cold, somewhat uncomfortable floor. <i>\"Now please close your eyes while I count down from ten. I want you to imagine a set of stairs and "+
 						"with at each count I want you to take one step down. As you descend, everything in the world will fade away except my voice.\"</i> She begins to count down and you imagine yourself "+
-						"walking down the stairs. By the time she finishes counting, you no longer feel the hard floor beneath you. There's no sensation and no ambiant noise. The only thing that matters "+
+						"walking down the stairs. By the time she finishes counting, you no longer feel the hard floor beneath you. There's no sensation and no ambient noise. The only thing that matters "+
 						"right now is Suzume's voice. <i>\"Your body is your fortress. Nothing can reach you until you allow it. Just keep out everything that doesn't matter.\"</i><p>Suzume stops talking and "+
-						"you find yourself alone in your mind. With no sounds to track the time, you aren't sure how long you're waiting before she speaks again. <i>\"How are you feelig right now? You can "+
-						"speak.\"</i> You tell her that you are feeling pretty numb, but it's hard to tell how effective the meditation is. You hear Suzume giggle quietly. <i>\"Stay calm, open your eyes, and look"+
+						"you find yourself alone in your mind. With no sounds to track the time, you aren't sure how long you're waiting before she speaks again. <i>\"How are you feeling right now? You can "+
+						"speak.\"</i> You tell her that you are feeling pretty numb, but it's hard to tell how effective the meditation is. You hear Suzume giggle quietly. <i>\"Stay calm, open your eyes, and look "+
 						"down.\"</i> You open your eyes and raise your head. Your pants and boxers are gone, and Suzume is gripping your balls tightly. This should be cause for alarm, but her command to 'stay calm' "+
 						"is working quite well. <i>\"Don't worry, I would never damage someone in my care. You would, however, be in a lot of discomfort if the suggestion wasn't working.\"</i> She releases your "+
 						"genitals, helps you to your feet, and hands you your missing clothes. <i>\"Your sensitivity should already be starting to return. You'll keep some of your endurance, but you'll probably "+
@@ -149,7 +149,7 @@ public class Meditation extends Activity {
 				Global.gui().message("Suzume has you lie down on the cold, somewhat uncomfortable floor. <i>\"Now please close your eyes while I count down from ten. I want you to imagine a set of stairs and "+
 						"with at each count I want you to take one step down. As you descend, everything in the world will fade away except my voice.\"</i> She begins to count down and you imagine yourself "+
 						"walking down the stairs. By the time she finishes counting, you no longer feel the hard floor beneath you. There's no sensation and no sound.<p>There's nothing. You feel completely "+
-						"seperated from your body and lost in the void. Forget about the meditation, you need to wake up now. Nothing happens. You can't find your way back to the world and your body. You begin "+
+						"separated from your body and lost in the void. Forget about the meditation, you need to wake up now. Nothing happens. You can't find your way back to the world and your body. You begin "+
 						"to panic, but suddenly you can see Suzume's face, very close to yours and looking worried. <i>\"Can you hear me? You went too deep and lost my voice. It's not a good idea to be so deep inside "+
 						"yourself without something to guide you back. Do you feel ok now?\"</i> You affirm that you're fully awake and feel normal. She gives a quiet sigh of relief. <i>\"We should stop for now. I " +
 						"don't think we can salvage this session. Give me a call if you want to try again.\"</i>");

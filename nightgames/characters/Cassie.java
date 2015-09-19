@@ -1,32 +1,22 @@
 package nightgames.characters;
 
+import java.util.HashSet;
+import java.util.Optional;
+
 import nightgames.actions.Action;
-import nightgames.actions.Move;
 import nightgames.actions.Movement;
-import nightgames.actions.Resupply;
-import nightgames.areas.Area;
-import nightgames.characters.body.AnalPussyPart;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
-import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.MouthPussyPart;
 import nightgames.characters.body.PussyPart;
-import nightgames.characters.body.TailPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.global.Modifier;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
-import nightgames.skills.Skill;
-import nightgames.skills.Tactics;
-import nightgames.stance.Stance;
+import nightgames.items.clothing.Clothing;
 import nightgames.status.Energized;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Optional;
 
 public class Cassie extends BasePersonality {
 	/**
@@ -37,14 +27,12 @@ public class Cassie extends BasePersonality {
 		super();
 		character = new NPC("Cassie",1,this);
 		preferredCockMod = CockMod.runic;
-		character.outfit[0].add(Clothing.bra);
-		character.outfit[0].add(Clothing.blouse);
-		character.outfit[1].add(Clothing.panties);
-		character.outfit[1].add(Clothing.skirt);
-		character.closet.add(Clothing.bra);
-		character.closet.add(Clothing.blouse);
-		character.closet.add(Clothing.panties);
-		character.closet.add(Clothing.skirt);
+		character.outfitPlan.add(Clothing.getByID("bra"));
+		character.outfitPlan.add(Clothing.getByID("blouse"));
+		character.outfitPlan.add(Clothing.getByID("panties"));
+		character.outfitPlan.add(Clothing.getByID("skirt"));
+		character.outfitPlan.add(Clothing.getByID("shoes"));
+
 		character.change(Modifier.normal);
 		character.mod(Attribute.Power, 1);
 		character.mod(Attribute.Seduction, 1);
@@ -61,7 +49,7 @@ public class Cassie extends BasePersonality {
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.c);
 		character.body.add(PussyPart.normal);
-		character.body.finishBody("female");
+		character.body.finishBody(CharacterSex.female);
 	}
 
 	@Override
@@ -93,7 +81,7 @@ public class Cassie extends BasePersonality {
 		growth.addTrait(44, Trait.soulsucker);
 		growth.addTrait(47, Trait.pussyTraining2);
 		growth.addTrait(50, Trait.desensitized2);
-		growth.actions.put(53, () -> {
+		growth.actions.put(20, () -> {
 			character.body.addReplace(new MouthPussyPart(), 1);
 		});
 	}
@@ -206,13 +194,6 @@ public class Cassie extends BasePersonality {
 
 	@Override
 	public String victory(Combat c,Result flag) {
-		Character opponent;
-		if(c.p1==character){
-			opponent=c.p2;
-		}
-		else{
-			opponent=c.p1;
-		}
 		if(flag==Result.anal){
 			character.arousal.empty();
 			return "Cassie bucks her hips against your ass wildly causing the strapon to rub hard against your prostate. Your arms and legs feel like jelly as she thrusts in again and again. " +
@@ -377,11 +358,11 @@ public class Cassie extends BasePersonality {
 	}
 	@Override
 	public boolean fightFlight(Character opponent) {
-		return !character.nude();
+		return !character.mostlyNude();
 	}
 	@Override
 	public boolean attack(Character opponent) {
-		return !character.nude();
+		return !character.mostlyNude();
 	}
 
 	public double dickPreference() {
@@ -425,7 +406,7 @@ public class Cassie extends BasePersonality {
 	}
 	@Override
 	public boolean fit() {
-		return !character.nude()&&character.getStamina().percent()>=50&&character.getArousal().percent()<=50;
+		return !character.mostlyNude()&&character.getStamina().percent()>=50&&character.getArousal().percent()<=50;
 	}
 	@Override
 	public String night() {
@@ -442,19 +423,19 @@ public class Cassie extends BasePersonality {
 	public void advance(){
 		character.add(Trait.witch);
 		character.body.addReplace(PussyPart.arcane, 1);
-		character.outfit[0].removeAllElements();
-		character.outfit[1].removeAllElements();
-		character.outfit[0].add(Clothing.bra);
-		character.outfit[0].add(Clothing.Tshirt);
-		character.outfit[0].add(Clothing.cloak);
-		character.outfit[1].add(Clothing.panties);
-		character.outfit[1].add(Clothing.skirt);
-		character.closet.add(Clothing.cloak);
+		character.unequipAllClothing();
+		character.outfitPlan.add(Clothing.getByID("bra"));
+		character.outfitPlan.add(Clothing.getByID("blouse"));
+		character.outfitPlan.add(Clothing.getByID("cloak"));
+		character.outfitPlan.add(Clothing.getByID("panties"));
+		character.outfitPlan.add(Clothing.getByID("skirt"));
+		character.outfitPlan.add(Clothing.getByID("shoes"));
+
 		character.mod(Attribute.Arcane,1);
 	}
 
 	@Override
-	public boolean checkMood(Emotion mood, int value) {
+	public boolean checkMood(Combat c, Emotion mood, int value) {
 		switch(mood){
 		case nervous:
 			return value>=50;

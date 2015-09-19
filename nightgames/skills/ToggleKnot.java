@@ -46,7 +46,7 @@ public class ToggleKnot extends Skill {
 				c.write(getSelf(),
 						"Deciding she's had enough for now, you let your cock return to its regular shape, once again permitting movement.");
 			} else if (target.human()) {
-				String part = c.getStance().partFor(target).describe(target);
+				String part = c.getStance().insertedPartFor(target).describe(target);
 				c.write(getSelf(), "You feel the intense pressure in your " + part + " recede as " + target.name()
 						+ " allows her knot to deflate.");
 			}
@@ -71,7 +71,7 @@ public class ToggleKnot extends Skill {
 								+ " A ball swells up at the base of her dick, growing to the size of a small apple. You're not"
 								+ " getting it out of you any time soon...");
 			}
-			target.add(c, new Knotted(target, getSelf(), c.getStance().analinserted()));
+			target.add(c, new Knotted(target, getSelf(), c.getStance().anallyPenetrated(target)));
 		}
 		return true;
 	}

@@ -334,7 +334,7 @@ public class Encounter implements Serializable{
 						"pretty turned on by the encounter, but you can chalk this up as a win.\n");
 			}
 		}
-		if(!target.nude()){
+		if(!target.mostlyNude()){
 			attacker.gain(target.getTrophy());
 		}
 		target.nudify();
@@ -353,7 +353,7 @@ public class Encounter implements Serializable{
 			Global.gui().message("You jerk off frantically, trying to finish as fast as possible. Just as you feel the familiar sensation of imminent orgasm, you're grabbed from behind. " +
 					"You freeze, cock still in hand. As you turn your head to look at your attacker, "+attacker.name()+" kisses you on the lips and rubs the head of your penis with her " +
 					"palm. You were so close to the edge that just you cum instantly.");
-			if(!target.nude()){
+			if(!target.mostlyNude()){
 				Global.gui().message("You groan in resignation and reluctantly strip off your clothes and hand them over.");
 			}
 		}
@@ -363,7 +363,7 @@ public class Encounter implements Serializable{
 					"You sneak up and hug her from behind while kissing the nape of her neck. She moans and shudders in your arms, but doesn't stop fingering herself. She probably realizes " +
 					"she has no chance of winning even if she fights back. You help her along by licking her neck and fondling her breasts as she hits her climax.");
 		}
-		if(!target.nude()){
+		if(!target.mostlyNude()){
 			attacker.gain(target.getTrophy());
 		}
 		target.nudify();
@@ -396,7 +396,7 @@ public class Encounter implements Serializable{
 					"now and fondles your balls. When you cum, you shoot your load onto her face and chest. You hang in the rope web, literally and figuratively drained. "+attacker.name()+" " +
 					"gratiously unties you and helps you down.");
 		}
-		if(!target.nude()){
+		if(!target.mostlyNude()){
 			attacker.gain(target.getTrophy());
 		}
 		target.nudify();

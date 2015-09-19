@@ -20,7 +20,7 @@ public class FlashStep extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&!c.getStance().prone(target)&&!c.getStance().behind(getSelf())&&getSelf().canAct()&&!c.getStance().penetration(getSelf());
+		return !target.wary() && c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&!c.getStance().prone(target)&&!c.getStance().behind(getSelf())&&getSelf().canAct()&&!c.getStance().inserted();
 	}
 	@Override
 	public int getMojoCost(Combat c) {

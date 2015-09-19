@@ -15,7 +15,7 @@ public class Lovestruck extends DurationStatus {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(affected.human()){
 			return "You feel an irresistable attraction to " + other.nameDirectObject() + ".";
 		}
@@ -45,10 +45,8 @@ public class Lovestruck extends DurationStatus {
 	}
 
 	@Override
-	public int regen(Combat c) {
-		super.regen(c);
-		affected.loseWillpower(c, 1);
-		return 0;
+	public void tick(Combat c) {
+		affected.loseWillpower(c, 1, 0, false, " (Lovestruck)");
 	}
 
 	@Override

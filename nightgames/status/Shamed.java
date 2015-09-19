@@ -14,7 +14,7 @@ public class Shamed extends DurationStatus {
 	}
 
 	@Override
-	public String describe() {
+	public String describe(Combat c) {
 		if(affected.human()){
 			return "You're a little distracted by self-consciousness, and it's throwing you off your game.";
 		}
@@ -38,6 +38,11 @@ public class Shamed extends DurationStatus {
 	}
 
 	@Override
+	public void onRemove(Combat c, Character other) {
+		affected.addlist.add(new Cynical(affected));
+	}
+
+	@Override
 	public int mod(Attribute a) {
 		if(a==Attribute.Seduction || a==Attribute.Cunning){
 			return Math.min(-2, -affected.getPure(a) / 5);
@@ -48,11 +53,9 @@ public class Shamed extends DurationStatus {
 	}
 
 	@Override
-	public int regen(Combat c) {
-		super.regen(c);
+	public void tick(Combat c) {
 		affected.emote(Emotion.nervous,20);
-		affected.spendMojo(c, 5);
-		return 0;
+		affected.loseMojo(c, 5, " (Shamed)");
 	}
 
 	@Override

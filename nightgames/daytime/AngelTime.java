@@ -1,6 +1,8 @@
 package nightgames.daytime;
 
 
+import java.util.ArrayList;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.NPC;
@@ -8,43 +10,39 @@ import nightgames.characters.Trait;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 
-public class AngelTime extends Activity {
-	private NPC angel;
-	
+public class AngelTime extends BaseNPCTime {
 	public AngelTime(Character player) {
-		super("Angel", player);
-		angel = Global.getNPC("Angel");	
-	}
-	
-	@Override
-	public boolean known() {
-		return Global.checkFlag(Flag.AngelKnown);
+		super(player, Global.getNPC("Angel"));
+		knownFlag = "AngelKnown";
+		giftedString = "\"Hmph thanks.\"";
+		giftString = "\"A present mm? Alright let's see it.\"";
+		transformationOptionString = "Blessings";
+		advTrait = Trait.demigoddess;
+		transformationIntro = "[Placeholder]<br>Angel says she may be able to try a few things with her new divine powers.";
+		loveIntro = "You meet Angel at her room, but for once, she doesn't seem eager to get to sex. You can tell she has something on her mind, so you let her lean " +
+				"against you on the futon while she thinks. It's quiet. You aren't used to your time with Angel being quiet, mostly because you so rarely meet her alone. You " +
+				"lose track of time sitting there before she breaks the silence. <i>\""+player.name()+", what do you think about my friends?\"</i> That's not the question you expected. " +
+				"You've gotten along with her friends quite well so far. Angel shifts her position so you can't see her face. <i>\"I've had several lovers who couldn't get along with " +
+				"my friends. Some of them pretended they did for awhile, some of them wanted me to spend less time with them.\"</i> Her friends are very socially and sexually aggressive. " +
+				"You can see how that might make some guys uncomfortable. The fact that Angel and Mei occasionally have sex could probably also be a point of contention. It's probably " +
+				"fortunate that the night games got you used to casual and group sex before you met them. <i>\"A lot of people are superficially interested in me, but " +
+				"most lose interest when they find out what I'm really like. Sarah, Mei and Caroline know me better than anyone, but they don't think any less of me. Mei and Sarah " +
+				"need me as much as I need them. Caroline is good at making friends, but she chooses to stick with us anyway. If I have to choose between them or a boyfriend, " +
+				"I choose them without a second thought.\"</i> Angel looks you in the eye. You've never seen her this worried and vulnerable. <i>\"Do you really like them?\"</i> You can " +
+				"reply with confidence that you've grown quite fond of Sarah, Mei and Caroline, personalities, quirks and all. <i>\"Good, because I don't kno-... No one's going to make " +
+				"me choose between you and them, got it? That's just not going to happen.\"</i> Angel stands up, back to her normal self. <i>\"So should we meet up with them or spend a " +
+				"little more time with just the two of us?\"</i>";
+		transformationFlag = "";
 	}
 
 	@Override
-	public void visit(String choice) {
-		Global.gui().clearText();
-		Global.gui().clearCommand();
-		if(choice == "Start"){
-			if(angel.getAffection(player)>25&&angel.has(Trait.succubus)){
-				Global.gui().message("You meet Angel at her room, but for once, she doesn't seem eager to get to sex. You can tell she has something on her mind, so you let her lean " +
-						"against you on the futon while she thinks. It's quiet. You aren't used to your time with Angel being quiet, mostly because you so rarely meet her alone. You " +
-						"lose track of time sitting there before she breaks the silence. <i>\""+player.name()+", what do you think about my friends?\"</i> That's not the question you expected. " +
-						"You've gotten along with her friends quite well so far. Angel shifts her position so you can't see her face. <i>\"I've had several lovers who couldn't get along with " +
-						"my friends. Some of them pretended they did for awhile, some of them wanted me to spend less time with them.\"</i> Her friends are very socially and sexually aggressive. " +
-						"You can see how that might make some guys uncomfortable. The fact that Angel and Mei occasionally have sex could probably also be a point of contention. It's probably " +
-						"fortunate that the night games got you used to casual and group sex before you met them. <i>\"A lot of people are superficially interested in me, but " +
-						"most lose interest when they find out what I'm really like. Sarah, Mei and Caroline know me better than anyone, but they don't think any less of me. Mei and Sarah " +
-						"need me as much as I need them. Caroline is good at making friends, but she chooses to stick with us anyway. If I have to choose between them or a boyfriend, " +
-						"I choose them without a second thought.\"</i> Angel looks you in the eye. You've never seen her this worried and vulnerable. <i>\"Do you really like them?\"</i> You can " +
-						"reply with confidence that you've grown quite fond of Sarah, Mei and Caroline, personalities, quirks and all. <i>\"Good, because I don't kno-... No one's going to make " +
-						"me choose between you and them, got it? That's just not going to happen.\"</i> Angel stands up, back to her normal self. <i>\"So should we meet up with them or spend a " +
-						"little more time with just the two of us?\"</i>");
-					Global.gui().choose(this,"Games");
-					Global.gui().choose(this,"Sparring");
-					Global.gui().choose(this,"Sex");
-			}
-			else if(angel.getAffection(player)>0){
+	public void buildTransformationPool() {
+		options = new ArrayList<>();
+	}
+	
+	@Override
+	public void subVisitIntro(String choice) {
+		if(npc.getAffection(player)>0){
 				Global.gui().message("You text Angel, suggesting to meet up. She responds with a location where to meet her. When you arrive however, you find her friends waiting "+
 						"for you instead. One of the girls, Caroline, waves you over to where they're sitting. <i>\"Angel stepped away for a minute. Sit down and talk with us until " +
 						"she gets back.\"</i> You spend some time chatting with the girls about their hobbies (Caroline plays a lot of video games and Sarah is fond of romance novels) " +
@@ -61,14 +59,14 @@ public class AngelTime extends Activity {
 				Global.gui().choose(this,"Sparring");
 				Global.gui().choose(this,"Sex");
 			}
-			else if(angel.getAttraction(player)<15){
+			else if(npc.getAttraction(player)<15){
 				Global.gui().message("While walking through the quad, you spot Angel talking with three other girls. They're too far away to hear what they are talking about, but "+
 					"you can tell they're close friends. If Angel was alone, you wouldn't hesitate to talk to her, but their group is radiating an almost impenetrable atmosphere. " +
 					"What strikes you more than anything else is how... normal they seem. At night, Angel is always an insatiable sex queen, but here she's just like any other college " +
 					"girl. You're still musing on this as the girls pass by. It doesn't seem like Angel noticed you. You decide you'll probably have better luck approaching " +
 					"her when she's alone.");
-				angel.gainAttraction(player,2);
-				player.gainAttraction(angel, 2);
+				npc.gainAttraction(player,2);
+				player.gainAttraction(npc, 2);
 			}
 			else{
 				Global.gui().message("Using the information you got from Aesop, you go looking for Angel. Your hope is to invite her to spend time training together and possibly sex. " +
@@ -86,16 +84,17 @@ public class AngelTime extends Activity {
 					"to you without blushing and lowering her eyes.<p>The five of you chat idly for a few minutes before Angel returns to your previous topic in the least subtle way possible. " +
 					"<i>\"So, sex? or...?\"</i> She doesn't seem to mind discussing this in front of her friends. None of them seem surprised at her frankness, though Sarah's blush deepens a bit. As " +
 					"long as you don't mention your nightly activities, it's probably fine.");
-				angel.gainAffection(player,1);
-				player.gainAffection(angel, 1);
+				npc.gainAffection(player,1);
+				player.gainAffection(npc, 1);
 				Global.gui().choose(this,"Games");
 				Global.gui().choose(this,"Sparring");
 				Global.gui().choose(this,"Sex");
 			}
 			Global.gui().choose(this,"Leave");
 		}
-		else if(choice == "Sex"){
-			if(angel.getAffection(player)>=12&&(!player.has(Trait.experttongue)||Global.random(2)==1)){
+	public void subVisit(String choice) {
+		if(choice == "Sex"){
+			if(npc.getAffection(player)>=12&&(!player.has(Trait.experttongue)||Global.random(2)==1)){
 				Global.gui().message("You're in Angel's room, naked and feeling a little overwhelmed. She embraces your from behind and you can feel her soft, heavy breasts pressed against " +
 						"your back. She nibbles lightly on your ear while motioning toward the naked girl on her bed. <i>\"She's all yours. Show me what you can do.\"</i> As for how you got here... " +
 						"we should probably back up a bit.<p>You spent some time chatting with Angel and her friends. At this point it might be fair to call them your friends too. The conversation " +
@@ -134,7 +133,7 @@ public class AngelTime extends Activity {
 				if(!player.has(Trait.experttongue)){
 					Global.gui().message("<p><b>You've improved your kissing technique to the point where it may render opponents temporarily helpless.</b>");
 					player.add(Trait.experttongue);
-					angel.add(Trait.experttongue);
+					npc.add(Trait.experttongue);
 				}
 			}
 			else{
@@ -165,12 +164,12 @@ public class AngelTime extends Activity {
 						"don't regret it.");
 			}
 			Global.gui().choose(this,"Leave");
-			Daytime.train(player,angel,Attribute.Seduction);
-			angel.gainAffection(player,1);
-			player.gainAffection(angel,1);
+			Daytime.train(player,npc,Attribute.Seduction);
+			npc.gainAffection(player,1);
+			player.gainAffection(npc,1);
 		}
 		else if(choice == "Games"){
-			if(angel.getAffection(player)>=8&&(!player.has(Trait.pokerface)||Global.random(2)==1)){
+			if(npc.getAffection(player)>=8&&(!player.has(Trait.pokerface)||Global.random(2)==1)){
 				Global.gui().message("Today all the girls left the responsibility of choosing a game to you, with Angel's stipulation that it had to including stripping. You picked a simple, but intense " +
 						"bluffing game with stripping rules slotted in so naturally it's like the game was designed for them. Not to be immodest, but clearly your genius knows no bounds. The first five " +
 						"minutes of the game clearly separate the people who can bluff from those who can't. Mei bet far too aggressively and is already completely naked. You lost one coaster and your belt. " +
@@ -199,7 +198,7 @@ public class AngelTime extends Activity {
 				if(!player.has(Trait.pokerface)){
 					Global.gui().message("<p><b>You've mastered the art of bluffing.</b>");
 					player.add(Trait.pokerface);
-					angel.add(Trait.pokerface);
+					npc.add(Trait.pokerface);
 				}
 			}
 			else{
@@ -226,12 +225,12 @@ public class AngelTime extends Activity {
 						"No one is allowed to get dressed and you get the lion's share of the interest, but you feel strangely comfortable with most of the girls in similar states of undress. ");					
 			}
 			Global.gui().choose(this,"Leave");
-			Daytime.train(player,angel,Attribute.Cunning);
-			angel.gainAffection(player,1);
-			player.gainAffection(angel,1);
+			Daytime.train(player,npc,Attribute.Cunning);
+			npc.gainAffection(player,1);
+			player.gainAffection(npc,1);
 		}
 		else if(choice == "Sparring"){
-			if(angel.getAffection(player)>=16&&(!player.has(Trait.disciplinarian)||Global.random(2)==1)){
+			if(npc.getAffection(player)>=16&&(!player.has(Trait.disciplinarian)||Global.random(2)==1)){
 				Global.gui().message("Your strip wrestling with Angel has become a routine secondary version of your nightly competitions. Unfortunately, in this venue, Angel has a a much better " +
 						"win rate than you. You've also gotten used to your three girl audience. Mei's sadistic side comes to the fore as she cheers on Angel whenever she's got the upper hand. Caroline, " +
 						"on the other hand, consistently encourages the underdog, usually you. Sarah seems to support both of you evenly, but spends most of the matches covertly masturbating to the " +
@@ -262,7 +261,7 @@ public class AngelTime extends Activity {
 				if(!player.has(Trait.disciplinarian)){
 					Global.gui().message("<p><b>You've learn how to spank your opponent in a way that can ruin their morale.</b>");
 					player.add(Trait.disciplinarian);
-					angel.add(Trait.disciplinarian);
+					npc.add(Trait.disciplinarian);
 				}
 			}
 			else{
@@ -289,17 +288,12 @@ public class AngelTime extends Activity {
 						"you. In no time, you disgracefully cum in front of four horny girls, leaving your balls even more sore than before.");					
 			}
 			Global.gui().choose(this,"Leave");
-			Daytime.train(player,angel,Attribute.Power);
-			angel.gainAffection(player,1);
-			player.gainAffection(angel,1);
+			Daytime.train(player,npc,Attribute.Power);
+			npc.gainAffection(player,1);
+			player.gainAffection(npc,1);
 		}
 		else if(choice == "Leave"){
 			done(true);
 		}
-	}
-	@Override
-	public void shop(Character npc, int budget) {
-		npc.gainAffection(angel,1);
-		angel.gainAffection(npc,1);
 	}
 }

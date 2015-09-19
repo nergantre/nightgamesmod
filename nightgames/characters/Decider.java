@@ -1,5 +1,8 @@
 package nightgames.characters;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+
 import nightgames.actions.Action;
 import nightgames.actions.Move;
 import nightgames.actions.Movement;
@@ -10,9 +13,6 @@ import nightgames.items.Item;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-
 public class Decider {
 	private static void addAllSkillsWithPriority(ArrayList<WeightedSkill> priority, HashSet<Skill> skills, float weight)
 	{
@@ -22,13 +22,6 @@ public class Decider {
 	}
 
 	public static ArrayList<WeightedSkill> parseSkills(HashSet<Skill> available, Combat c, NPC character){
-		Character target;
-		if(c.p1==character){
-			target=c.p2;
-		}
-		else{
-			target=c.p1;
-		}
 		HashSet<Skill> damage = new HashSet<Skill>();
 		HashSet<Skill> pleasure = new HashSet<Skill>();
 		HashSet<Skill> fucking = new HashSet<Skill>();
@@ -82,7 +75,7 @@ public class Decider {
 			addAllSkillsWithPriority(priority, fucking, 1.0f);
 			addAllSkillsWithPriority(priority, damage, 1.0f);
 			addAllSkillsWithPriority(priority, summoning, .5f);
-			addAllSkillsWithPriority(priority, misc, 0f);
+			addAllSkillsWithPriority(priority, misc, 1f);
 			break;
 		case angry:
 			addAllSkillsWithPriority(priority, damage, 2.5f);
@@ -90,7 +83,7 @@ public class Decider {
 			addAllSkillsWithPriority(priority, debuff, 2.0f);
 			addAllSkillsWithPriority(priority, stripping, 1.0f);
 			addAllSkillsWithPriority(priority, pleasure, 0.0f);
-			addAllSkillsWithPriority(priority, misc, 0f);
+			addAllSkillsWithPriority(priority, misc, 1f);
 			addAllSkillsWithPriority(priority, summoning, 0f);
 			break;
 		case nervous:
@@ -101,7 +94,7 @@ public class Decider {
 			addAllSkillsWithPriority(priority, position, 1.0f);
 			addAllSkillsWithPriority(priority, damage, .5f);
 			addAllSkillsWithPriority(priority, pleasure, 0.0f);
-			addAllSkillsWithPriority(priority, misc, 0f);
+			addAllSkillsWithPriority(priority, misc, 1f);
 			break;
 		case desperate:
 			//and probably a bit confused
@@ -119,7 +112,8 @@ public class Decider {
 			addAllSkillsWithPriority(priority, stripping, 1.0f);
 			addAllSkillsWithPriority(priority, pleasure, 1.0f);
 			addAllSkillsWithPriority(priority, position, 1.0f);
-			addAllSkillsWithPriority(priority, misc, 0f);
+			addAllSkillsWithPriority(priority, debuff, 0f);
+			addAllSkillsWithPriority(priority, misc, 1f);
 			break;
 		case dominant:
 			addAllSkillsWithPriority(priority, position, 3.0f);
@@ -129,7 +123,7 @@ public class Decider {
 			addAllSkillsWithPriority(priority, debuff, 2.0f);
 			addAllSkillsWithPriority(priority, summoning, 1.0f);
 			addAllSkillsWithPriority(priority, damage, 1.0f);
-			addAllSkillsWithPriority(priority, misc, 0f);
+			addAllSkillsWithPriority(priority, misc, 1f);
 			break;
 		}
 /*	if(character.getArousal().percent()>85||character.getStamina().percent()<10){
@@ -180,7 +174,7 @@ public class Decider {
 		HashSet<Action> safe = new HashSet<Action>();
 		HashSet<Action> utility = new HashSet<Action>();
 		HashSet<Action> tactic = new HashSet<Action>();
-		if(character.nude()){
+		if(character.mostlyNude()){
 			for(Action act: available){
 				if(act.consider()==Movement.resupply){
 					return act;

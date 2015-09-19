@@ -2,21 +2,16 @@ package nightgames.characters;
 
 import java.util.Optional;
 
-import nightgames.characters.body.BodyPart;
-import nightgames.characters.body.BodyPartMod;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
-import nightgames.characters.body.EarPart;
 import nightgames.characters.body.PussyPart;
-import nightgames.characters.body.CockPart;
-import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.global.Modifier;
-import nightgames.items.Clothing;
 import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
 
 public class Angel extends BasePersonality {
 	/**
@@ -27,12 +22,11 @@ public class Angel extends BasePersonality {
 		super();
 		character = new NPC("Angel",1,this);
 		preferredCockMod = CockMod.blessed;
-		character.outfit[0].add(Clothing.Tshirt);
-		character.outfit[1].add(Clothing.thong);
-		character.outfit[1].add(Clothing.miniskirt);
-		character.closet.add(Clothing.Tshirt);
-		character.closet.add(Clothing.thong);
-		character.closet.add(Clothing.miniskirt);
+		character.outfitPlan.add(Clothing.getByID("Tshirt"));
+		character.outfitPlan.add(Clothing.getByID("bra"));
+		character.outfitPlan.add(Clothing.getByID("thong"));
+		character.outfitPlan.add(Clothing.getByID("miniskirt"));
+		character.outfitPlan.add(Clothing.getByID("sandals"));
 		character.change(Modifier.normal);
 		character.mod(Attribute.Seduction, 2);
 		character.mod(Attribute.Perception, 1);
@@ -45,7 +39,7 @@ public class Angel extends BasePersonality {
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.dd);
 		character.body.add(PussyPart.normal);
-		character.body.finishBody("female");
+		character.body.finishBody(CharacterSex.female);
 	}
 
 	@Override
@@ -85,6 +79,9 @@ public class Angel extends BasePersonality {
 			if(!character.has(Trait.demigoddess)&&character.money>=1000){
 				advance();
 			}
+		}
+		if (character.has(Trait.demigoddess) && !character.has(Trait.divinity)) {
+			character.add(Trait.divinity);
 		}
 		super.rest();
 		if(!(character.has(Item.Dildo)||character.has(Item.Dildo2))&&character.money>=250){
@@ -274,7 +271,7 @@ public class Angel extends BasePersonality {
 	@Override
 	public String describe(Combat c) {
 		if(character.has(Trait.demigoddess)){
-			return "Angel's transformation seems to be inspired by her namesake. She has large angelic wings behind her, which combined with her long blonde hair and perfect unblemished "
+			return "Angel's transformation seems to have taken inspiration from her own name. She has large angelic wings behind her, which combined with her long blonde hair and perfect unblemished "
 					+ "skin gives her a positively divine appearance. Her appearance should be emanating holy purity, but instead her eyes and expression seems lewder than ever. "
 					+ "You're not sure what happened exactly, but it's clear to you that she's somehow become a goddess of sexuality. "
 					+ "Angel's entire being seems to radiate sex and you struggle to ignore an overwhelming urge to prostrate yourself and beg to worship her body.";
@@ -316,7 +313,7 @@ public class Angel extends BasePersonality {
 
 	@Override
 	public boolean fightFlight(Character opponent) {
-		return !character.nude()||opponent.nude();
+		return !character.mostlyNude()||opponent.mostlyNude();
 	}
 
 	@Override
@@ -367,7 +364,7 @@ public class Angel extends BasePersonality {
 	}
 	@Override
 	public boolean fit() {
-		return !character.nude()&&character.getStamina().percent()>=50;
+		return !character.mostlyNude()&&character.getStamina().percent()>=50;
 	}
 	@Override
 	public String night() {
@@ -381,16 +378,19 @@ public class Angel extends BasePersonality {
 	}
 	public void advance(){
 		character.add(Trait.demigoddess);
+		character.add(Trait.divinity);
+		character.add(Trait.proheels);
 		character.body.addReplace(PussyPart.divine, 1);
 		character.body.addReplace(WingsPart.angelic, 5);
-		character.outfit[0].removeAllElements();
-		character.outfit[1].removeAllElements();
-		character.outfit[0].add(Clothing.bikinitop);
-		character.outfit[1].add(Clothing.bikinibottoms);
+		character.unequipAllClothing();
+		character.outfitPlan.add(Clothing.getByID("translucentshawl"));
+		character.outfitPlan.add(Clothing.getByID("bikinitop"));
+		character.outfitPlan.add(Clothing.getByID("bikinibottoms"));
+		character.outfitPlan.add(Clothing.getByID("highheels"));
 		character.mod(Attribute.Divinity,1);
 	}
 
-	public boolean checkMood(Emotion mood, int value) {
+	public boolean checkMood(Combat c, Emotion mood, int value) {
 		switch(mood){
 		case horny:
 			return value>=50;

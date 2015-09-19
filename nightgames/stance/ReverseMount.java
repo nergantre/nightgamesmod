@@ -81,22 +81,11 @@ public class ReverseMount extends AbstractBehindStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return false;
-	}
-
-	@Override
 	public float priorityMod(Character self) {
 		return getSubDomBonus(self, 4.0f);
 	}
-	
-	@Override
-	public BodyPart topPart() {
-		return top.body.getRandomPussy();
-	}
-	
-	@Override
-	public BodyPart bottomPart() {
-		return bottom.body.getRandomInsertable();
+
+	public double pheromoneMod (Character self) {
+		return 2;
 	}
 }

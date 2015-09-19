@@ -88,11 +88,6 @@ public class NursingHold extends AbstractFacingStance {
 	}
 
 	@Override
-	public boolean penetration(Character c) {
-		return false;
-	}
-
-	@Override
 	public boolean inserted(Character c) {
 		return false;
 	}
@@ -121,5 +116,14 @@ public class NursingHold extends AbstractFacingStance {
 			avail.add(new Wait(bottom));
 			return avail;
 		}
+	}
+
+	@Override
+	public boolean faceAvailable(Character target) {
+		return target == top;
+	}
+
+	public double pheromoneMod (Character self) {
+		return 3;
 	}
 }

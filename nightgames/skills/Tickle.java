@@ -30,7 +30,7 @@ public class Tickle extends Skill {
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		if(target.roll(this, c, accuracy(c))){
-			if(target.pantsless()&&c.getStance().reachBottom(getSelf())&&!c.getStance().penetration(getSelf())){
+			if(target.crotchAvailable()&&c.getStance().reachBottom(getSelf())&&!c.getStance().havingSex()){
 				if(getSelf().has(Item.Tickler2)&&Global.random(2)==1&&getSelf().canSpend(10)&&(!getSelf().human()&&!target.is(Stsflag.hypersensitive)
 						||Global.getMatch().condition!=Modifier.notoys)){
 					getSelf().spendMojo(c, 10);
@@ -42,7 +42,7 @@ public class Tickle extends Skill {
 					}
 					target.add(c, new Hypersensitive(target));
 				}
-				else if(getSelf().has(Trait.ticklemonster)&&target.nude()){
+				else if(getSelf().has(Trait.ticklemonster)&&target.mostlyNude()){
 					if(getSelf().human()){
 						c.write(getSelf(),deal(c,0,Result.special, target));
 					}
@@ -77,7 +77,7 @@ public class Tickle extends Skill {
 				target.weaken(c, bonus / 2 + 2+target.get(Attribute.Perception)+Global.random(6));
 			}
 			else if(hastickler()&&Global.random(2)==1&&(!getSelf().human()||Global.getMatch().condition!=Modifier.notoys)){
-				if(target.topless()&&c.getStance().reachTop(getSelf())){
+				if(target.breastsAvailable()&&c.getStance().reachTop(getSelf())){
 					if(getSelf().human()){
 						c.write(getSelf(),deal(c,0,Result.item, target));
 					}
@@ -120,9 +120,10 @@ public class Tickle extends Skill {
 					bonus = 2 + Global.random(3);
 					c.write(target, Global.format("{other:SUBJECT-ACTION:squirm|squirms} uncontrollably from {self:name-possessive} actions. Yup definitely ticklish.", getSelf(), target));
 				}
-				int m = 4+Global.random(3)-(target.top.size()+target.bottom.size());
+				int m = (int) Math.round((4+Global.random(3)) * (1.5 - target.getExposure()));
+				int weak = (int) Math.round((bonus / 2 + Global.random(3+target.get(Attribute.Perception))) * (1.5 - target.getExposure()));
 				target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("skin"), m, bonus, c);
-				target.weaken(c, bonus / 2 + Global.random(3+target.get(Attribute.Perception))-(target.top.size()+target.bottom.size()));
+				target.weaken(c, weak);
 			}
 		}
 		else{
@@ -139,7 +140,7 @@ public class Tickle extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Cunning) >= 6;
+		return user.get(Attribute.Cunning) >= 5;
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -10,6 +11,7 @@ import nightgames.status.Lovestruck;
 
 public class Kiss extends Skill {
 	private static final String divineString = "Kiss of Baptism";
+	private static final int divineCost = 30;
 
 	public Kiss(Character self) {
 		super("Kiss", self);
@@ -22,7 +24,18 @@ public class Kiss extends Skill {
 
 	@Override
 	public int getMojoBuilt(Combat c) {
+		if (getLabel(c).equals(divineString)) {
+			return 0;
+		}
 		return 10 + (getSelf().has(Trait.romantic) ? 5 : 0);
+	}
+
+	@Override
+	public int getMojoCost(Combat c) {
+		if (getLabel(c).equals(divineString)) {
+			return divineCost;
+		}
+		return 0;
 	}
 
 	@Override
@@ -55,7 +68,7 @@ public class Kiss extends Skill {
 		}
 		if(getLabel(c).equals(divineString)){
 			res = Result.divine;
-			m += 10;
+			m += 20;
 		}
 		if(getSelf().human()){
 			c.write(getSelf(),deal(c,m,res, target));
@@ -68,21 +81,24 @@ public class Kiss extends Skill {
 			target.loseWillpower(c, Global.random(3) + 2);
 		}
 		if (res == Result.divine) {
-			target.buildMojo(c, 5);
-			target.heal(c, 30);
+			target.buildMojo(c, 50);
+			target.heal(c, 100);
 			target.loseWillpower(c, Global.random(3) + 2, false);
-			if (Global.random(4) == 0) {
-				target.add(c, new Lovestruck(target, getSelf(), 5));
-			}
+			target.add(c, new Lovestruck(target, getSelf(), 2));
 		}
-		target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("mouth"), m, c);
-		getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("mouth"), Math.max(1, m / 4), c);
+		BodyPart selfMouth = getSelf().body.getRandom("mouth");
+		target.body.pleasure(getSelf(), selfMouth, target.body.getRandom("mouth"), m, c);
+		int selfDamage = Math.max(1, m / 4);
+		if (selfMouth.isErogenous()) {
+			selfDamage = m / 2;
+		}
+		getSelf().body.pleasure(target, target.body.getRandom("mouth"), selfMouth, selfDamage, c);
 		return true;
 	}
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return true;
+		return user.get(Attribute.Seduction) >= 3;
 	}
 
 	@Override
@@ -103,11 +119,11 @@ public class Kiss extends Skill {
 					"You tangle your tongue around hers and probe the sensitive insides her mouth while mirroring the action in the space of her soul, sending quakes of pleasure through her physical and astral body. "
 					+ "As you finally break the kiss, she looks energized but desperate for more.";
 		}
-		if(modifier==Result.upgrade){
+		if(modifier==Result.special){
 			return "You pull "+target.name()+" to you and kiss her passionately. You run your tongue over her lips until her opens them and immediately invade her mouth. " +
 					"You tangle your tongue around hers and probe the sensitive insides her mouth. As you finally break the kiss, she leans against you, looking kiss-drunk and needy.";
 		}
-		if(modifier==Result.special){
+		if(modifier==Result.upgrade){
 			return "You pull "+target.name()+" to you and kiss her passionately. You run your tongue over her lips until her opens them and immediately invade her mouth. " +
 					"You focus on her lifeforce inside her and draw it out through the kiss while overwhelming her defenses with heady pleasure. As you finally break the kiss, she leans against you, looking kiss-drunk and needy.";
 		}
@@ -163,16 +179,10 @@ public class Kiss extends Skill {
 	public boolean makesContact() {
 		return true;
 	}
-	public String getTargetOrganType(Combat c, Character target) {
-		return "mouth";
-	}
-	public String getWithOrganType(Combat c, Character target) {
-		return "mouth";
-	}
 
 	@Override
 	public String getLabel(Combat c){
-		if (getSelf().get(Attribute.Divinity) >= 1) {
+		if (getSelf().get(Attribute.Divinity) >= 1 && getSelf().canSpend(divineCost)) {
 			return divineString;
 		} else if (getSelf().has(Trait.soulsucker)) {
 			return "Drain Kiss";
@@ -182,5 +192,4 @@ public class Kiss extends Skill {
 			return "Kiss";
 		}
 	}
-
 }
