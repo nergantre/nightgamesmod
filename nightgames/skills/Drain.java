@@ -123,7 +123,7 @@ public class Drain extends Skill {
 			case 4:
 				return base + "and you can feel " + target.possessivePronoun() + " strength pumping into you.";
 			case 3:
-				return base + "and you can feel " + target.possessivePronoun() + " memories and excperiences flow"
+				return base + "and you can feel " + target.possessivePronoun() + " memories and experiences flow"
 						+ " into you, adding to your skill.";
 			case 5:
 				return base + "taking " + target.possessivePronoun() + " raw sexual energy and"
@@ -137,9 +137,9 @@ public class Drain extends Skill {
 			case 6:
 				return base
 						+ "far more powerfully than you even thought possible."
-						+ " You feel a fragment of " + target.possessivePronoun() + " soul break away from him and"
-						+ " spew into you, taking with it a portion of " + target.possessivePronoun() + " strength,"
-						+ " skill and wits and merging with your own. You have clearly"
+						+ " You feel a fragment of " + target.possessivePronoun() + " soul break away from her and"
+						+ " gush into you, taking along a portion of " + target.possessivePronoun() + " strength,"
+						+ " skill and wits, merging with your own. You have clearly"
 						+ " won this fight, and a lot more than that.";
 			default:
 				// Should never happen
@@ -200,11 +200,11 @@ public class Drain extends Skill {
 			case 1:
 				return "Clearly the succubus is trying to do something really special to you, "
 						+ "as you can feel the walls of her " + partDesc + " squirm against you in a way "
-						+ "no human could manage, but all you feel is some drowsiness";
+						+ "no human could manage, but all you feel is some drowsiness.";
 			case 2:
 				return "Clearly the succubus is trying to do something really special to you, "
 						+ "as you can feel the walls of her " + partDesc + " squirm against you in a way "
-						+ "no human could manage, but all you feel is your focus waning some";
+						+ "no human could manage, but all you feel is your focus waning some.";
 			case 0:
 				return getSelf().name()+" squeezes you with her " + partDesc + " and starts to milk you, but you suddenly feel her shudder and moan loudly. Looks like her plan backfired.";
 			case 6:
