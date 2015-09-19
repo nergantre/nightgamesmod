@@ -54,7 +54,7 @@ public enum BreastsPart implements BodyPart {
 			}
 		} else {
 			if (c.get(Attribute.Power) > 25) {
-				return "muscular pecks";
+				return "muscular pecs";
 			}
 			return "flat chest";
 		}
