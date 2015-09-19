@@ -59,7 +59,7 @@ public class Encounter implements Serializable{
 					Global.gui().message(p1.name() 
 							+ " doesn't appear to notice you at first, but when you "
 							+ "wave your hand close to her face her eyes open wide and"
-							+ " she immediatly drops to the floor. Although the display"
+							+ " she immediately drops to the floor. Although the display"
 							+ " leaves you somewhat worried about her health, she is"
 							+ " still in a very vulnerable position and you never were"
 							+ " one to let an opportunity pass you by.");
@@ -280,8 +280,8 @@ public class Encounter implements Serializable{
 						"she jumps and lets out a surprised yelp. Before she can recover from her surprise, you pounce!");
 			}
 			else if(location.id()==Movement.pool){
-				Global.gui().message("You creep up to the jaccuzzi where "+target.name()+" is soaking comfortably. As you get close, you notice that her eyes are " +
-						"closed and she may well be sleeping. You crouch by the edge of the jaccuzzi for a few seconds and just admire her nude body with her breasts " +
+				Global.gui().message("You creep up to the jacuzzi where "+target.name()+" is soaking comfortably. As you get close, you notice that her eyes are " +
+						"closed and she may well be sleeping. You crouch by the edge of the jacuzzi for a few seconds and just admire her nude body with her breasts " +
 						"just above the surface. You lean down and give her a light kiss on the forehead to wake her up. She opens her eyes and swears under her breath " +
 						"when she sees you. She scrambles out of the tub, but you easily catch her before she can get away.");
 			}
@@ -307,9 +307,9 @@ public class Encounter implements Serializable{
 						"firmly grasps your twitching dick. In just a few strokes, you cum so hard it's almost painful.\n");
 			}
 			else if(location.id()==Movement.pool){
-				Global.gui().message("As you relax in the jaccuzi, you start to feel extremely horny. Your cock is in your hand before you're even aware of it. You stroke yourself " +
+				Global.gui().message("As you relax in the jacuzzi, you start to feel extremely horny. Your cock is in your hand before you're even aware of it. You stroke yourself " +
 						"off underwater and you're just about ready to cum when you hear nearby footsteps. Oh shit, you'd almost completely forgotten you were in the middle of a " +
-						"match. The footsteps are from "+attacker.name()+", who sits down at the edge of the jaccuzi while smiling confidently. You look for a way to escape, but it's " +
+						"match. The footsteps are from "+attacker.name()+", who sits down at the edge of the jacuzzi while smiling confidently. You look for a way to escape, but it's " +
 						"hopeless. You were so close to finishing you just need to cum now. "+attacker.name()+" seems to be thinking the same thing, as she dips her bare feet into the " +
 						"water and grasps your penis between them. She pumps you with her feet and you shoot your load into the water in seconds.\n");
 			}
@@ -326,7 +326,7 @@ public class Encounter implements Serializable{
 						"it's hardly surprising.\n");
 			}
 			else if(location.id()==Movement.pool){
-				Global.gui().message("You sneak up to the jaccuzi, and empty the aphrodisiac into the water without "+target.name()+" noticing. You slip away and find a hiding spot. In a " +
+				Global.gui().message("You sneak up to the jacuzzi, and empty the aphrodisiac into the water without "+target.name()+" noticing. You slip away and find a hiding spot. In a " +
 						"couple minutes, you notice her stir. She glances around, but fails to see you and then closes her eyes and relaxes again. There's something different now though and " +
 						"her soft moan confirms it. You grin and quietly approach again. You can see her hand moving under the surface of the water as she enjoys herself tremendously. Her moans " +
 						"rise in volume and frequency. Now's the right moment. You lean down and kiss her on the lips. Her masturbation stops immediately, but you reach underwater and finger " +
@@ -394,7 +394,7 @@ public class Encounter implements Serializable{
 					"and sucking it until it's completely hard. Then the teasing starts. She strokes you, rubs you, and licks the head of your dick. She uses every technique to " +
 					"pleasure you, but stops just short of letting you ejaculate. It's maddening. Finally you have to swallow your pride and beg to cum. She pumps you dick in earnest " +
 					"now and fondles your balls. When you cum, you shoot your load onto her face and chest. You hang in the rope web, literally and figuratively drained. "+attacker.name()+" " +
-					"gratiously unties you and helps you down.");
+					"graciously unties you and helps you down.");
 		}
 		if(!target.mostlyNude()){
 			attacker.gain(target.getTrophy());
