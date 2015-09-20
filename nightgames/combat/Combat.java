@@ -121,9 +121,11 @@ public class Combat extends Observable implements Serializable, Cloneable{
 			victor.gain(Item.semen, 3);
 			if (loser.human()) {
 				write("<br><b>As she leaves, you see all your scattered semen ooze out and gather into a orb in " + victor.nameOrPossessivePronoun() + " hands. " +
-						"She carelessly drops your seed in some empty bottles that appeared out of nowhere</b>");
+						"She casually drops your seed in some empty vials that appeared out of nowhere</b>");
 			} else if (victor.human()) {
-				write("<br><b>You will " + loser.nameOrPossessivePronoun() + " scattered semen into your hands and into a few bottles that you've prepared. Yum, you just got some leftovers.</b>");
+				write("<br><b>" + loser.nameOrPossessivePronoun() + " scattered semen lazily oozes into the few flasks you've prepared. " +
+						"To speed up the process, you milk " + loser.possessivePronoun() + " out of the last drops " +
+						loser.subject() + " had to offer. Yum, you just got some leftovers.</b>");
 			}
 		}
 		if (loser.human()) {
