@@ -181,18 +181,18 @@ public class Cunnilingus extends Skill {
 		} else if (modifier == Result.special) {
 			return getSelf().nameOrPossessivePronoun() + " skilled tongue explores your pussy, finding and pleasuring your more sensitive areas. " +
 					"She repeatedly attacks your clitoris until you can't suppress your pleasured moans."
-					+ (damage == -1 ? " Your aphrodisiac juices manages to arouse her as much as she aroused you." : "")
-					+ (damage == -2 ? " Your tainted juices quickly reduces her into a willing thrall."
+					+ (damage == -1 ? " Your aphrodisiac juices manage to arouse her as much as she aroused you." : "")
+					+ (damage == -2 ? " Your tainted juices quickly reduce her into a willing thrall."
 							: "");
 		} else if (modifier == Result.reverse) {
 			return getSelf().name() + " obediently laps at your pussy as you sit on her face."
-					+ (damage == -1 ? " Your aphrodisiac juices manages to arouse her as much as she aroused you." : "")
-					+ (damage == -2 ? " Your tainted juices quickly reduces her into a willing thrall."
+					+ (damage == -1 ? " Your aphrodisiac juices manage to arouse her as much as she aroused you." : "")
+					+ (damage == -2 ? " Your tainted juices quickly reduce her into a willing thrall."
 							: "");
 		}
 		return getSelf().name() + " locates and captures your clit between her lips and attacks it with her tongue."
-				+ (damage == -1 ? " Your aphrodisiac juices manages to arouse her as much as she aroused you." : "")
-				+ (damage == -2 ? " Your tainted juices quickly reduces her into a willing thrall."
+				+ (damage == -1 ? " Your aphrodisiac juices manage to arouse her as much as she aroused you." : "")
+				+ (damage == -2 ? " Your tainted juices quickly reduce her into a willing thrall."
 						: "");
 	}
 
