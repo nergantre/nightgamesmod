@@ -110,7 +110,7 @@ public enum Trait {
 	holecontrol("Pussy Control", "Dexterous internal muscle control."),
 	oiledass("Oiled Ass", "Natural oils makes her ass always ready."),
 	autonomousAss("Autonomous Ass", "Asshole instinctively forces anything inside of it to cum."),
-	fetishTrainer("Fetish Trainer", "Capable of developing other's fetishes."),
+	fetishTrainer("Fetish Trainer", "Capable of developing others' fetishes."),
 	insertion("Insertion Master","More pleasure on insertion"), //more damage on insertion.
 	proheels("Heels Pro", "Pro at walking around in heels"), //no speed penalty from heels
 	masterheels("Heels Master", "Master at moving in heels, resists knockdowns"), //graceful when wearing heels
