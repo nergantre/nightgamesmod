@@ -23,7 +23,6 @@ public class SuccubusSurprise extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-
 		return user.get(Attribute.Seduction) >= 15
 				|| user.get(Attribute.Cunning) >= 15;
 	}
@@ -159,12 +158,12 @@ public class SuccubusSurprise extends Skill {
 
 	@Override
 	public int getMojoCost(Combat c) {
-		return 20;
+		return Math.max(10, 50 - getSelf().get(Attribute.Technique));
 	}
 
 	@Override
 	public float priorityMod(Combat c) {
-		return 2f;
+		return 0f;
 	}
 
 }
