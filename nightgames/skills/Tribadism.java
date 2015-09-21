@@ -90,7 +90,7 @@ public class Tribadism extends Skill {
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if(modifier == Result.normal){
-			return Global.format("You grab {other:name-possessive} legs and lift it into the air. You then push your hot snatch across her pussy lips and grind down on it.", getSelf(), target);
+			return Global.format("You grab {other:name-possessive} legs and push them apart. You then push your hot snatch across her pussy lips and grind down on it.", getSelf(), target);
 		}
 		return "Bad stuff happened";
 	}
@@ -100,7 +100,7 @@ public class Tribadism extends Skill {
 		BodyPart selfO = getSelfOrgan();
 		BodyPart targetO = getTargetOrgan(target);
 		if(modifier == Result.normal){
-			String message = getSelf().name()+" grabs your leg and lifts it. She then rubs her "+ selfO.describe(getSelf())+ " against your wet " + targetO.describe(target) + ", grinding it against you.";
+			String message = getSelf().name()+" grabs your leg and slides her crotch against yours. She then grinds her "+ selfO.describe(getSelf())+ " against your wet " + targetO.describe(target) + ".";
 			return message;
 		}
 		return "Bad stuff happened";

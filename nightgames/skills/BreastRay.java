@@ -76,7 +76,7 @@ public class BreastRay extends Skill {
 		String message;
 		message = "You point your growth ray at "+target.name()+"'s breasts and fire. Her breasts balloon up and the new sensitivity causes her to moan.";
 		if (damage > 0)
-			message += " You realize the effects are permanent!";
+			message += " The change in " + target.name() + " looks permanent!";
 		return message;
 	}
 

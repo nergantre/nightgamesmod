@@ -59,7 +59,7 @@ public class Encounter implements Serializable{
 					Global.gui().message(p1.name() 
 							+ " doesn't appear to notice you at first, but when you "
 							+ "wave your hand close to her face her eyes open wide and"
-							+ " she immediately crumbles to the floor. Although the display"
+							+ " she immediately drops to the floor. Although the display"
 							+ " leaves you somewhat worried about her health, she is"
 							+ " still in a very vulnerable position and you never were"
 							+ " one to let an opportunity pass you by.");
@@ -394,7 +394,7 @@ public class Encounter implements Serializable{
 					"and sucking it until it's completely hard. Then the teasing starts. She strokes you, rubs you, and licks the head of your dick. She uses every technique to " +
 					"pleasure you, but stops just short of letting you ejaculate. It's maddening. Finally you have to swallow your pride and beg to cum. She pumps you dick in earnest " +
 					"now and fondles your balls. When you cum, you shoot your load onto her face and chest. You hang in the rope web, literally and figuratively drained. "+attacker.name()+" " +
-					"gratiously unties you and helps you down.");
+					"graciously unties you and helps you down.");
 		}
 		if(!target.mostlyNude()){
 			attacker.gain(target.getTrophy());

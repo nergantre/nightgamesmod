@@ -67,7 +67,7 @@ public class EyesOfTemptation extends Skill {
 		if (modifier == Result.normal)
 			return Global.format("As {other:subject-action:gaze|gazes} into {self:name-possessive} eyes, {other:subject-action:feel|feels} {other:possessive} will slipping into the abyss.", getSelf(), target);
 		else
-			return Global.format("{other:SUBJECT-ACTION:look|looks} away as soon as {self:subject-action:focus|focuses} {self:possessive} eyes on {other:direct-object}", getSelf(), target);
+			return Global.format("{other:SUBJECT-ACTION:look|looks} away as soon as {self:subject-action:focus|focuses} {self:possessive} eyes on {other:direct-object}.", getSelf(), target);
 	}
 
 	@Override
