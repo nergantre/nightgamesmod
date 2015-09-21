@@ -78,7 +78,6 @@ public class SuccubusSurprise extends Skill {
 		if (!getSelf().human() && target.human() && !oppHasBlessed && getSelf().getType().equals("CUSTOM_NPCSamantha")) {
 			c.write(getSelf(), "<br><br><i>Do you like your surprise, " + target.name() + "? I do.</i>");
 		}
-		
 		return true;
 	}
 
@@ -104,7 +103,7 @@ public class SuccubusSurprise extends Skill {
 				target.name(), target.pronoun(), target.pronoun());
 		if (isArmLock(c.getStance())) {
 			result += String.format(
-					"grab %s hands amd pull %s deeper into you. ",
+					"grab %s hands and pull %s deeper into you. ",
 					target.possessivePronoun(), target.directObject());
 		} else {
 			result += String.format(

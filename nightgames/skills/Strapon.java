@@ -61,7 +61,7 @@ public class Strapon extends Skill {
 				c.write(getSelf(),"You take off your " + unequipped.get(0) + " and fasten a strap on dildo onto yourself.");
 			}
 			else {
-				c.write(getSelf(),getSelf().subject() + " takes off " + target.possessivePronoun() + " " + unequipped.get(0) + " and straps on a thick rubber cock and grins at you in a way that makes you feel a bit nervous.");
+				c.write(getSelf(),getSelf().subject() + " takes off " + getSelf().possessivePronoun() + " " + unequipped.get(0) + " and straps on a thick rubber cock and grins at you in a way that makes you feel a bit nervous.");
 			}
 		}
 		target.loseMojo(c, 10);

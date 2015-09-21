@@ -116,12 +116,12 @@ public class Shove extends Skill {
 	}
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
-		return "You channel your ki into your hands and strike "+target.name()+" in the chest, destroying her "+target.getOutfit().getTopOfSlot(ClothingSlot.top).getName();
+		return "You channel your ki into your hands and strike "+target.name()+" in the chest, destroying her " + target.getOutfit().getTopOfSlot(ClothingSlot.top).getName() + ".";
 	}
 
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return getSelf().name()+" strikes you in the chest with her palm, staggering you a step. Suddenly your "+target.getOutfit().getTopOfSlot(ClothingSlot.top).getName()+" tears and falls off you in pieces";
+		return getSelf().name()+" strikes you in the chest with her palm, staggering your footing. Suddenly your "+target.getOutfit().getTopOfSlot(ClothingSlot.top).getName()+" tears and falls off you in tatters.";
 	}
 
 	@Override
