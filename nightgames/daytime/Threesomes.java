@@ -39,15 +39,15 @@ public class Threesomes implements Scene {
 					"it's not enough to wait for someone to give you what you want. You need to take it.\"</i> You can't see her face, but she's clearly talking to Cassie now. <i>\"Come " +
 					"here. Get a good grip on "+player.name()+"'s 'vital parts'.\"</i> Cassie kneels over you and hesitantly grasps your balls. <i>\"Now he'll listen to whatever you say. Claim " +
 					"him and he'll be all yours.\"</i><p>" +
-					"<i>\"What?!\"</i> Cassie looks at Jewel in shock. <i>\"That's incredibly coersive. I don't want "+player.name()+" to pay attention to me " +
+					"<i>\"What?!\"</i> Cassie looks at Jewel in shock. <i>\"That's incredibly coercive. I don't want "+player.name()+" to pay attention to me " +
 					"just because I threatened to hurt him. Besides, what about you and the other girls? Right before you came here, you were telling me that you like him too. How would you " +
 					"feel if I tried to monopolize him?\"</i><p>" +
 					"Jewel moves enough that you can see her face. She's got a confident grin and a challenging gleam in her eye. <i>\"You can try to monopolize him all you want. Me and the " +
 					"other girls will just steal him back if we need a little love. Also, you've misunderstood the purpose of holding the boy's most important parts. it's not about the threat " +
-					"of pain. You're just demonstrating your superiority. He's not afraid you're going to hurt him, he just can't resist you. You may call it coersive, but you can't claim he " +
+					"of pain. You're just demonstrating your superiority. He's not afraid you're going to hurt him, he just can't resist you. You may call it forceful, but you can't claim he " +
 					"doesn't like it. You've been shamelessly staring at his boner for awhile now.\"</i><br>" +
 					"You groan as you realize Jewel is right. Maybe it's the attention your genitals are getting, the feel of Jewel pressed against your naked body, or the idea of Cassie acting " +
-					"uncharacteristically bold. Whatever the reason and despite the bizzare situation, you're rock hard.<p>" +
+					"uncharacteristically bold. Whatever the reason and despite the bizarre situation, you're rock hard.<p>" +
 					"Cassie bites her lip in indecision for several seconds, before shaking her head. She releases her grip on your testicles and starts to stroke your dick. Jewel doesn't seem " +
 					"to mind this change of plan. She licks your neck and caresses your body, increasing your pleasure. Cassie lies down next to you and kisses you tenderly. <i>\"Sorry, I'm going " +
 					"to be greedy.\"</i> She speaks in a whisper, her face mere inches from yours. <i>\"I don't want to claim you, but I want you to choose me. I love the way you make me feel " +
@@ -88,7 +88,7 @@ public class Threesomes implements Scene {
 					"but lets you clearly see what's happening. It doesn't however, help you understand why it's happening. Jewel grins mischievously at Mara. <i>\"The bully is " +
 					"helpless. Next we remove his pants.\"</i> Mara nods and pulls down you pants and underwear, exposing your flaccid dick. Why are you being stripped? Also, why have " +
 					"you suddenly been labeled a bully? Jewel strokes your head affectionately as Mara explains. <i>\"Sorry, I guess I didn't actually explain earlier. Jewel was telling " +
-					"me stories about her school days, when she used to defeat and humiliate bullies. Really exciting stories, but we needed a boy for our reinactment. You're playing the " +
+					"me stories about her school days, when she used to defeat and humiliate bullies. Really exciting stories, but we needed a boy for our reenactment. You're playing the " +
 					"bully, I'm the girl you were picking on, and Jewel is herself. Her specialty was helping girls get revenge against the boys who were bullying on them.\"</i><br>" +
 					"Jewel smiles down at you, not unkindly. <i>\"We appreciate your cooperation. I promise we'll make it up to you later.\"</i> Well, at least you know what's going on now. You're still " +
 					"pinned, so your continued cooperation is probably not up to you. <br>" +
