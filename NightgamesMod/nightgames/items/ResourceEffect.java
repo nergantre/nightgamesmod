@@ -30,6 +30,10 @@ public class ResourceEffect extends ItemEffect {
 			user.loseMojo(c, amt);
 		} else if (type.equals("pain")) {
 			user.pain(c, amt);
+		} else if (type.equals("wprestore")) {
+			user.restoreWillpower(c, amt);
+		} else if (type.equals("wplose")) {
+			user.loseWillpower(c, amt, false);
 		} else {
 			return false;
 		}

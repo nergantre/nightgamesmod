@@ -13,6 +13,7 @@ public class HWStore extends Store {
 		add(Item.Rope);
 		add(Item.Spring);
 		add(Item.Sprayer);
+		add(Item.EmptyBottle);
 	}
 
 	@Override

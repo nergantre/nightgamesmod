@@ -158,9 +158,9 @@ public class Global {
 		current=null;
 		factory = new ContextFactory();
 		cx = factory.enterContext();
+		buildParser();
 		buildActionPool();
 		buildFeatPool();
-		buildParser();
 		if (headless) {
 			gui = new NullGUI();
 		} else {

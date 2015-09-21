@@ -23,6 +23,8 @@ import nightgames.actions.Movement;
 import nightgames.areas.Area;
 import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.CockMod;
+import nightgames.characters.body.PussyPart;
 import nightgames.characters.custom.AiModifiers;
 import nightgames.combat.Combat;
 import nightgames.combat.Encounter;
@@ -2520,5 +2522,8 @@ public abstract class Character extends Observable implements Cloneable {
 
 	public String boyOrGirl() {
 		return useFemalePronouns() ? "girl" : "boy";
+	}
+	public boolean isDemonic() {
+		return has(Trait.succubus) || body.get("cock").stream().anyMatch(part -> part.getMod() == PussyPart.succubus) || body.get("cock").stream().anyMatch(part -> part.getMod() == CockMod.incubus);
 	}
 }

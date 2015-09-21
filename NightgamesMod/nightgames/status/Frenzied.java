@@ -46,7 +46,7 @@ public class Frenzied extends DurationStatus {
 
 	static {
 		// Skills that either lead to penetration, or can be used during it.
-		Character p = Global.getPlayer();
+		Character p = Global.noneCharacter();
 		FUCK_SKILLS.add(new AssFuck(p));
 		FUCK_SKILLS.add(new Carry(p));
 		FUCK_SKILLS.add(new CounterDrain(p));
