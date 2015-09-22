@@ -12,11 +12,13 @@ import nightgames.combat.Combat;
 import nightgames.combat.Encounter;
 import nightgames.daytime.Activity;
 import nightgames.daytime.Store;
+import nightgames.debug.DebugGUIPanel;
 import nightgames.global.DebugFlags;
 import nightgames.global.Encs;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.global.Modifier;
+import nightgames.global.Prematch;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.skills.Skill;
@@ -371,15 +373,40 @@ public class GUI extends JFrame implements Observer {
 		menuBar.add(mntmQuitMatch);
 		mntmCredits.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(GUI.this, "Night Games created by The Silver Bard\n"
-						+ "Reyka and Samantha created by DNDW\n" + "Upgraded Strapon created by ElfBoyEni\n"
-						+ "Strapon victory scenes created by Legion\n" + "Advanced AI by Jos\n"
-						+ "Magic Training scenes by Legion\n" + "Jewel 2nd Victory scene by Legion\n"
-						+ "Video Games scenes 1-9 by Onyxdime\n"
-						+ "Kat Penetration Victory and Defeat scenes by Onyxdime\n"
-						+ "Kat Non-Penetration Draw scene by Onyxdime\n" + "Mara/Angel threesome scene by Onyxdime\n"
-						+ "Footfetish expansion scenes by Sakruff\n" + "Mod by Nergantre\n"
-						+ "A ton of testing by Bronzechair");
+				JPanel panel = new JPanel();
+				panel.add (new JLabel("<html>Night Games created by The Silver Bard<br>"
+						+ "Reyka and Samantha created by DNDW<br>"
+	            		+ "Upgraded Strapon created by ElfBoyEni<br>"
+						+ "Strapon victory scenes created by Legion<br>"
+						+ "Advanced AI by Jos<br>"
+						+ "Magic Training scenes by Legion<br>"
+						+ "Jewel 2nd Victory scene by Legion<br>"
+						+ "Video Games scenes 1-9 by Onyxdime<br>"
+						+ "Kat Penetration Victory and Defeat scenes by Onyxdime<br>"
+						+ "Kat Non-Penetration Draw scene by Onyxdime<br>"
+						+ "Mara/Angel threesome scene by Onyxdime<br>"
+						+ "Footfetish expansion scenes by Sakruff<br>"
+						+ "Mod by Nergantre<br>"
+						+ "A ton of testing by Bronzechair</html>"));
+				Object[] options = { "OK", "DEBUG" };
+				Object[] okOnly = { "OK" };
+	            int results = JOptionPane.showOptionDialog(GUI.this, panel, "Credits",
+				        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+				        options, options[0]);
+	            if (results == 1 && Global.inGame()) {
+	            	JPanel debugPanel = new DebugGUIPanel();
+	            	JOptionPane.showOptionDialog(GUI.this, debugPanel, "Debug", JOptionPane.PLAIN_MESSAGE,
+	                        JOptionPane.INFORMATION_MESSAGE,
+	                        null,
+	                        okOnly,
+	                        okOnly[0]);
+	            } else if (results == 1) {
+	            	JOptionPane.showOptionDialog(GUI.this, "Not in game", "Debug", JOptionPane.PLAIN_MESSAGE,
+	                        JOptionPane.INFORMATION_MESSAGE,
+	                        null,
+	                        okOnly,
+	                        okOnly[0]);
+	            }
 			}
 		});
 
@@ -933,7 +960,9 @@ public class GUI extends JFrame implements Observer {
 				}
 			}
 			this.commandPanel.add(new AttributeButton(Attribute.Willpower));
-			Global.getMatch().pause();
+			if (Global.getMatch() != null) {
+				Global.getMatch().pause();
+			}
 			this.commandPanel.revalidate();
 		} else if (player.traitPoints > 0 && !skippedFeat) {
 			clearCommand();
@@ -949,7 +978,15 @@ public class GUI extends JFrame implements Observer {
 			skippedFeat = false;
 			clearCommand();
 			Global.gui().message(Global.gainSkills(this.player));
-			endCombat();
+			if (this.combat != null) {
+				endCombat();
+			} else if (Global.getMatch() != null){
+				Global.getMatch().resume();
+			} else if (Global.day != null){
+				Global.getDay().plan();
+			} else {
+				new Prematch(Global.human);
+			}
 		}
 	}
 

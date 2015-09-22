@@ -109,7 +109,7 @@ public class Global {
 	private static HashMap<String,Float> counters;
 	public static Player human;
 	private static Match match;
-	private static Daytime day;
+	public static Daytime day;
 	private static int date;
 	private Date jdate;
 	private static TraitTree traitRequirements;
@@ -748,7 +748,7 @@ public class Global {
 	public static void setCounter(Flag f, float val){
 		counters.put(f.name(),val);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public static void save(boolean auto){
 		JSONObject obj = new JSONObject();
