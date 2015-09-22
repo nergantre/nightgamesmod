@@ -42,7 +42,7 @@ public class SuccubusSurprise extends Skill {
 
 	@Override
 	public String describe(Combat c) {
-		return "Use a Succubus Draft and hold on to your opponent.";
+		return "Use a Succubus Draft and latch unto your opponent.";
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class SuccubusSurprise extends Skill {
 		new Grind(getSelf()).resolve(c, target);
 		
 		if (!getSelf().human() && target.human() && !oppHasBlessed && getSelf().getType().equals("CUSTOM_NPCSamantha")) {
-			c.write(getSelf(), "<br><br><i>Do you like your surprise, " + target.name() + "? I do.</i>");
+			c.write(getSelf(), "<br><br>\"<i>Do you like your surprise, " + target.name() + "? I do.\"</i>");
 		}
 		return true;
 	}
@@ -97,8 +97,8 @@ public class SuccubusSurprise extends Skill {
 				"You might be on the receiving end here, but that"
 						+ " doesn't mean you should just give up! You distract %s for a moment,"
 						+ " just long enough to bring a very special bottle to your lips. When %s"
-						+ " notices, %s pulls it away from you, but you already had a few good"
-						+ " swallows in. A warmth spreads trough you as the draft takes effect, and you ",
+						+ " notices, %s tries and snatch it away, but you already had swallowed"
+						+ " enough. A sultry wave washes over you as the draft takes effect, and you ",
 				target.name(), target.pronoun(), target.pronoun());
 		if (isArmLock(c.getStance())) {
 			result += String.format(
