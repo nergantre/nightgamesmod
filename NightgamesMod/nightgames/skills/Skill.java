@@ -150,7 +150,6 @@ public abstract class Skill {
 
 	public static void resolve(Skill skill, Combat c, Character target) {
 		skill.user().addCooldown(skill);
-		skill.user().spendMojo(c, skill.getMojoCost(c));
 		//save the mojo built of the skill before resolving it (or the status may change)
 		int generated = skill.getMojoBuilt(c);
 		
@@ -168,8 +167,10 @@ public abstract class Skill {
 				}
 			}
 		}
-		
-		if (skill.resolve(c, target)) {
+
+		boolean success = skill.resolve(c, target);
+		skill.user().spendMojo(c, skill.getMojoCost(c));
+		if (success) {
 			skill.user().buildMojo(c, generated);
 		}
 	}

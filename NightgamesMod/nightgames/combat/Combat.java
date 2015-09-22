@@ -150,27 +150,27 @@ public class Combat extends Observable implements Serializable, Cloneable{
 			victor.gain(Item.ExtremeAphrodisiac, 1);
 		}
 		if (checkBottleCollection(victor, loser, PussyPart.plant)) {
-			write(victor, Global.format("<br><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of {other:name-possessive} nectar in an empty bottle</b>", victor, loser));
+			write(victor, Global.format("<br><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of {other:possessive} nectar in an empty bottle</b>", victor, loser));
 			victor.consume(Item.EmptyBottle, 1, false);
 			victor.gain(Item.nectar, 3);
 		}
 		if (checkBottleCollection(victor, loser, PussyPart.cybernetic)) {
-			write(victor, Global.format("<br><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of {other:name-possessive} artificial lubricant in an empty bottle</b>", victor, loser));
+			write(victor, Global.format("<br><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of {other:possessive} artificial lubricant in an empty bottle</b>", victor, loser));
 			victor.consume(Item.EmptyBottle, 1, false);
 			victor.gain(Item.LubricatingOils, 1);
 		}
 		if (checkBottleCollection(victor, loser, PussyPart.arcane)) {
-			write(victor, Global.format("<br><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of {other:name-possessive} the floating mana wisps ejected from {other:possessive} orgasm in an empty bottle</b>", victor, loser));
+			write(victor, Global.format("<br><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of the floating mana wisps ejected from {other:possessive} orgasm in an empty bottle</b>", victor, loser));
 			victor.consume(Item.EmptyBottle, 1, false);
 			victor.gain(Item.RawAether, 1);
 		}
 		if (checkBottleCollection(victor, loser, PussyPart.feral)) {
-			write(victor, Global.format("<br><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of {other:name-possessive} musky juices in an empty bottle</b>", victor, loser));
+			write(victor, Global.format("<br><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of {other:possessive} musky juices in an empty bottle</b>", victor, loser));
 			victor.consume(Item.EmptyBottle, 1, false);
 			victor.gain(Item.FeralMusk, 1);
 		}
 		if (checkBottleCollection(victor, loser, PussyPart.gooey)) {
-			write(victor, Global.format("<br><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of {other:name-possessive} goo in an empty bottle</b>", victor, loser));
+			write(victor, Global.format("<br><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of {other:possessive} goo in an empty bottle</b>", victor, loser));
 			victor.consume(Item.EmptyBottle, 1, false);
 			victor.gain(Item.BioGel, 1);
 		}

@@ -1,6 +1,7 @@
 package nightgames.daytime;
 
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
@@ -45,13 +46,20 @@ public class HWStore extends Store {
 		}
 	}
 
+	protected void displayItems() {
+		for(Item i:stock.keySet()){
+			if (i != Item.EmptyBottle || player.getRank() > 0)
+				Global.gui().sale(this, i);
+		}
+	}
 	@Override
 	public void shop(Character npc, int budget) {
 		int remaining = budget;
 		int bored = 0;
 		while(remaining>10&&bored<10){
 			for(Item i:stock.keySet()){
-				if(remaining>i.getPrice()&&!npc.has(i,20)){
+				boolean emptyBottleCheck = npc.has(Trait.madscientist) || i != Item.EmptyBottle;
+				if(remaining>i.getPrice()&&!npc.has(i,20) && emptyBottleCheck){
 					npc.gain(i);
 					npc.money-=i.getPrice();
 					remaining-=i.getPrice();

@@ -164,7 +164,7 @@ public class Blowjob extends Skill {
 			m = "You feel a bit odd, faced with "+target.name()+"'s rigid cock, but as you lick and suck on it, you discover the taste is quite palatable. Besides, " +
 					"making "+target.name()+" squirm and moan in pleasure is well worth it.";
 		}
-		if (getSelf().body.getRandom("mouth").isErogenous()) {
+		if (modifier != Result.miss && getSelf().body.getRandom("mouth").isErogenous()) {
 			m += "<br>Unfortunately for you, your sensitive modified mouth pussy sends spasms of pleasure into you too as you mouth fuck " + target.possessivePronoun() + " cock.";
 		}
 		return m;
@@ -203,8 +203,8 @@ public class Blowjob extends Skill {
 			}
 		}
 
-		if (getSelf().body.getRandom("mouth").isErogenous()) {
-			m += "<br>Unfortunately for her, " + getSelf().nameOrPossessivePronoun() + " sensitive modified mouth pussy sends spasms of pleasure into " + getSelf().directObject() + " too as " + getSelf().subject() + " mouth fucks " + target.possessivePronoun() + " cock.";
+		if (modifier != Result.miss && getSelf().body.getRandom("mouth").isErogenous()) {
+			m += "<br>Unfortunately for her, as " + getSelf().subject() + " mouth fucks " + target.possessivePronoun() + " cock " + getSelf().nameOrPossessivePronoun() + " sensitive modified mouth pussy sends spasms of pleasure into " + getSelf().reflectivePronoun() + " too.";
 		}
 		return m;
 	}

@@ -1081,6 +1081,9 @@ public abstract class Character extends Observable implements Cloneable {
 		}
 		return total;
 	}
+	public boolean canMasturbate(){
+		return !(stunned()||bound()||is(Stsflag.distracted)||is(Stsflag.enthralled));
+	}
 	public boolean canAct(){
 		return !(stunned()||distracted()||bound()||is(Stsflag.enthralled));
 	}

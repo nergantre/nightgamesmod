@@ -39,11 +39,12 @@ public class Anilingus extends Skill {
 	public boolean resolve(Combat c, Character target) {
 		AssPart targetAss = (AssPart) target.body.getRandom("ass");
 		Result result = Result.normal;
-		int m = 10; int n = 0;
+		int m = 10; int n = 0; int selfm = 0;
 		if (getLabel(c).equals(worshipString)) {
 			result = Result.sub;
 			m += 4 + Global.random(6);
 			n = 20;
+			selfm = 20;
 		} else if (c.getStance().enumerate() == Stance.facesitting) {
 			result = Result.reverse;
 			m += Global.random(6);
@@ -69,6 +70,9 @@ public class Anilingus extends Skill {
 		}
 		if (n > 0) {
 			target.buildMojo(c, n);
+		}
+		if (selfm > 0) {
+			getSelf().tempt(c, target, target.body.getRandom("ass"), selfm);
 		}
 		return result != Result.miss;
 	}
