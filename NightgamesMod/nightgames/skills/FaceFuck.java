@@ -101,8 +101,8 @@ public class FaceFuck extends Skill {
 			}
 		} else {
 			if (target.body.getRandom("mouth").isErogenous()) {
-				m = "You grab hold of "+target.name()+"'s head and push your cock into her mouth. What you find inside though is unexpected. " + target.name()
-					+ " has transformed her mouth into a second female genitalia, complete with soft hot walls, and ridges and folds that slides across your dick as you thrust into her.";
+				m = "You grab hold of "+target.name()+"'s head and push your cock into her mouth. What you find inside is unexpected, though. " + target.name()
++					+ " has transformed her mouth into a second female genitalia; its soft hot walls, its ridges and folds slide across your dick delightfully as you thrust into her.";
 				if (modifier == Result.reverse) {
 					m += "<br>Her skillful tongue works its magic on your cock while you're fucking her mouth pussy, and you find yourself on the verge of orgasm way quicker than you would like.";
 				}
@@ -130,13 +130,13 @@ public class FaceFuck extends Skill {
 					"to gag on the artificial member while "+getSelf().name()+" revels in her dominance.";
 		}
 		else if(modifier==Result.upgrade){
-			m = getSelf().name()+" slightly moves forward on you, pushing her Strap-On against your lips. You try to keep your mouth closed but "+getSelf().name()+" holds your nose together, " +
-					"forcing you to eventually part your lips and suck on the rubbery invader. After a few sucks, you manage to push it out, although you're still shivering " +
+			m = getSelf().name()+" slightly moves forward on you, pushing her strapon against your lips. You try to keep your mouth closed but "+getSelf().name()+" pinches your nose together, " +
++					"and pushes in the rubbery invader as you gasp for air. After a few sucks, you manage to push it out, although you're still shivering " +
 					"with a mix of arousal and humiliation.";
 		} else if (target.body.getRandom("mouth").isErogenous()) {
 			m = getSelf().name()+" forces your mouth open and shoves her sizable girl-cock into it. You're momentarily overwhelmed by the strong, musky smell and the taste, but " +
-					"she quickly starts moving her hips, fucking your mouth. Your modified oral orifice was literally designed to squeeze cum though, and " + target.name()
-					+ " soon flushes with excitement while fucking your modified lips.";
+					"she quickly starts moving her hips, fucking your mouth. However, your modified oral orifice was literally designed to squeeze cum; soon " + getSelf().name()
+					+ " finds herself ramming with little more than her own enjoyment in mind.";
 		} else {
 			m = getSelf().name()+" forces your mouth open and shoves her sizable girl-cock into it. You're momentarily overwhelmed by the strong, musky smell and the taste, but " +
 					"she quickly starts moving her hips, fucking your mouth like a pussy. You feel your cheeks redden in shame, but you still do what you can to pleasure her. " +
