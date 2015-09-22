@@ -13,6 +13,7 @@ import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.body.ModdedCockPart;
 import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.WingsPart;
 import nightgames.characters.custom.requirement.BodyPartRequirement;
 import nightgames.global.Global;
 import nightgames.items.Item;
@@ -85,6 +86,24 @@ public class AngelTime extends BaseNPCTime {
 				return true;
 			};
 			options.add(divinePussy);
+		}
+		{
+			TransformationOption angelWings = new TransformationOption();
+			angelWings.ingredients.put(Item.HolyWater, 10);
+			angelWings.requirements.add((c, self, other) -> {
+				return self.body.get("wings").size() == 0;
+			});
+			angelWings.requirements.add((c, self, other) -> {
+				return self.get(Attribute.Divinity) >= 10;
+			});
+			angelWings.additionalRequirements = "No wings<br>Divinity greater than 10";
+			angelWings.option = "Angelic Wings";
+			angelWings.scene = "[Placeholder]<br>Angel gives you white feathery wings on your back.";
+			angelWings.effect = (c, self, other) -> {
+				self.body.addReplace(WingsPart.angelic, 1);
+				return true;
+			};
+			options.add(angelWings);
 		}
 		{
 			TransformationOption divinity = new TransformationOption();

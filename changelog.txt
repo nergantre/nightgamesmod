@@ -1,3 +1,41 @@
+1.8.3.1 changelog
+
+New:
+- Added some body mods for Angel
+	- Includes an option for Divinity attributes
+	- Everything costs "Holy Water". Yes it's in quotes. Yes it's probably what you think it is.
+- Added some new items
+	- Added Empty Bottles to the hardware store after you're rank 1.
+		- Please don't ask why buying empty bottles cost 100$... They're uh... expensive bottles. That freezes the contents inside so they never spoil. Yeah.
+	- Having an empty bottle in your inventory and defeating a girl with pussy mods can give you some cool new items.
+		- Before you make a bug report, Samantha and Jewel don't have anything special. It didn't really make sense to me.
+	- Defeating another NPC with a penis lets you collect semen in another way.
+
+Other Changes:
+- Restructured the JAR so that it no longer holds any assets. Everything is outside the JAR
+	- If you have trouble playing the game, make sure everything is in one folder,
+		and the location of the folder is somewhere where you don't need admin permissions to access.
+	- IE don't put it in C:\Windows\System ...
+- Added a debug prompt
+	- Mostly for debugging, but well... if you need to cheat...
+	- It's in credits -> debug for now
+	- Some examples:
+		- Player.setXP 1000
+		- Player.setMoney 100000
+		- Player.ding
+		- Player.ding 10
+		- Player.addItem EmptyBottle 20
+		- Player.addTrait soulsucker
+		- Mara.removeTrait ticklish
+			- this wont work very well on level up traits since they'll get it back immediately
+		- Angel.list
+
+Bug fixes:
+- Fixed some textual bugs.
+- "Fixed" succubus surprise so it's a bit more rare and bit more of a surprise.
+- Fixed Trance not making you masturbate.
+- Fixed kiss of baptism and various divine skills doing nothing if you didn't have two times the mojo needed
+
 1.8.3 changelog
 
 New:
