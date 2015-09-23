@@ -620,7 +620,7 @@ public class Global {
 				"are running. You're a bit jealous when you notice that the machines here are free, while yours are coin-op. There's a tunnel here that connects to the basement of the " +
 				"Dining Hall.",Movement.laundry);
 		Area engineering = new Area("Engineering Building","You are in the Science and <b>Engineering Building</b>. Most of the lecture rooms are in other buildings; this one is mostly " +
-				"for specialized rooms and labs. The first floor contains workshops mostly used by the Mechanical and Electical Engineering classes. The second floor has " +
+				"for specialized rooms and labs. The first floor contains workshops mostly used by the Mechanical and Electrical Engineering classes. The second floor has " +
 				"the Biology and Chemistry Labs. There's a third floor, but that's considered out of bounds.",Movement.engineering);
 		Area lab = new Area("Chemistry Lab","You are in the <b>Chemistry Lab</b>. The shelves and cabinets are full of all manner of dangerous and/or interesting chemicals. A clever enough " +
 				"person could combine some of the safer ones into something useful. Just outside the lab is a bridge connecting to the library.",Movement.lab);
@@ -630,7 +630,7 @@ public class Global {
 		Area libarts = new Area("Liberal Arts Building","You are in the <b>Liberal Arts Building</b>. There are three floors of lecture halls and traditional classrooms, but only " +
 				"the first floor is in bounds. The Library is located directly out back, and the side door is just a short walk from the pool.",Movement.la);
 		Area pool = new Area("Pool","You are by the indoor <b>Pool</b>, which is connected to the Student Union for reasons that no one has ever really explained. There pool is quite " +
-				"large and there is even a jaccuzi. A quick soak would feel good, but the lack of privacy is a concern. The side doors are locked at this time of night, but the " +
+				"large and there is even a jacuzzi. A quick soak would feel good, but the lack of privacy is a concern. The side doors are locked at this time of night, but the " +
 				"door to the Student Union is open and there's a back door that exits near the Liberal Arts building.",Movement.pool);
 		Area library = new Area("Library","You are in the <b>Library</b>. It's a two floor building with an open staircase connecting the first and second floors. The front entrance leads to " +
 				"the Liberal Arts building. The second floor has a Bridge connecting to the Chemistry Lab in the Science and Engineering building.",Movement.library);
@@ -643,7 +643,7 @@ public class Global {
 				"using the tunnel to and from the Dorm, so no one keeps anything important in here. There's enough junk down here to provide some hiding places and there's a chance " +
 				"you could find something useable in one of these boxes.",Movement.storage);
 		Area tunnel = new Area("Tunnel","You are in the <b>Tunnel</b> connecting the dorm to the dining hall. It doesn't get a lot of use during the day and most of the freshmen " +
-				"aren't even aware of its existance, but many upperclassmen have been thankful for it on cold winter days and it's proven to be a major tactical asset. The " +
+				"aren't even aware of its existence, but many upperclassmen have been thankful for it on cold winter days and it's proven to be a major tactical asset. The " +
 				"tunnel is well-lit and doesn't offer any hiding places.",Movement.tunnel);
 		Area bridge = new Area("Bridge","You are on the <b>Bridge</b> connecting the second floors of the Science and Engineering Building and the Library. It's essentially just a " +
 				"corridor, so there's no place for anyone to hide.",Movement.bridge);
@@ -960,16 +960,16 @@ public class Global {
 
 	public static String getIntro() {
 		return "You don't really know why you're going to the Student Union in the middle of the night. You'd have to be insane to accept the invitation you received this afternoon. Seriously, someone " +
-			"is offering you money to sexfight a bunch girls? You're more likely to get mugged (though you're not carrying any money) or murdered if you show up. Best case scenerio, it's probably a prank " +
+			"is offering you money to sexfight a bunch of girls? You're more likely to get mugged (though you're not carrying any money) or murdered if you show up. Best case scenario, it's probably a prank " +
 			"for gullible freshmen. You have no good reason to believe the invitation is on the level, but here you are, walking into the empty Student Union.\n\nNot quite empty, it turns out. The same " +
 			"woman who approached you this afternoon greets you and brings you to a room near the back of the building. Inside, you're surprised to find three quite attractive girls. After comparing notes, " +
 			"you confirm they're all freshmen like you and received the same invitation today. You're surprised, both that these girls would agree to such an invitation, and that you're the only guy here. For " +
 			"the first time, you start to believe that this might actually happen. After a few minutes of awkward small talk (though none of these girls seem self-conscious about being here), the woman walks " +
 			"in again leading another girl. Embarrassingly you recognize the girl, named Cassie, who is a classmate of yours, and who you've become friends with over the past couple weeks. She blushes when she " +
 			"sees you and the two of you consciously avoid eye contact while the woman explains the rules of the competition.\n\nThere are a lot of specific points, but the rules basically boil down to this: " +
-			"competitors move around the empty areas of the campus and engage each other in sexfights. When one competitor orgasms, the other gets a point and can claim their clothes. Additional orgasms between " +
-			"those two players are not worth any points until the loser gets a replacement set of clothes at either the Student Union or the first floor of the dorm building. It seems to be customary, but not " +
-			"required, for the loser to get the winner off after a fight, when it doesn't count. After three hours, the match ends and each player is paid for each opponent they defeat, each set of clothes taken, " +
+			"competitors move around the empty areas of the campus and engage each other in sexfights. When one competitor orgasms and can't go on, the other gets a point and can claim the loser's clothes. " +
+			"Those two players are forbidden to engage again until the loser gets a replacement set of clothes at either the Student Union or the first floor of the dorm building. It seems to be customary, but not " +
+			"required, for the loser to get the winner off after a fight, when it doesn't count. After three hours, the match ends and each player is paid for each opponent they defeat, each set of clothes turned in, " +
 			"and a bonus for whoever scores the most points.\n\nAfter the explanation, she confirms with each participant whether they are still interested in participating. Everyone agrees. The first match " +
 			"starts at exactly 10:00.";
 	}
