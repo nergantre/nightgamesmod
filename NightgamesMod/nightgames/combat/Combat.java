@@ -15,6 +15,8 @@ import nightgames.characters.NPC;
 import nightgames.characters.State;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.BodyPartMod;
+import nightgames.characters.body.PussyPart;
 import nightgames.global.DebugFlags;
 import nightgames.global.Flag;
 import nightgames.global.Global;
@@ -116,17 +118,61 @@ public class Combat extends Observable implements Serializable, Cloneable{
 		}
 	}
 	
+	private boolean checkBottleCollection(Character victor, Character loser, PussyPart mod) {
+		return victor.has(Item.EmptyBottle, 1) && loser.body.get("pussy").stream().anyMatch(part -> part.getMod() == mod);
+	}
+
 	public void doVictory(Character victor, Character loser) {
 		if (loser.hasDick() && victor.has(Trait.succubus)) {
 			victor.gain(Item.semen, 3);
 			if (loser.human()) {
-				write("<br><b>As she leaves, you see all your scattered semen ooze out and gather into a orb in " + victor.nameOrPossessivePronoun() + " hands. " +
+				write(victor, "<br><b>As she leaves, you see all your scattered semen ooze out and gather into a orb in " + victor.nameOrPossessivePronoun() + " hands. " +
 						"She casually drops your seed in some empty vials that appeared out of nowhere</b>");
 			} else if (victor.human()) {
-				write("<br><b>" + loser.nameOrPossessivePronoun() + " scattered semen lazily oozes into the few flasks you've prepared. " +
+				write(victor, "<br><b>" + loser.nameOrPossessivePronoun() + " scattered semen lazily oozes into a few magically conjured flasks. " +
 						"To speed up the process, you milk " + loser.possessivePronoun() + " out of the last drops " +
 						loser.subject() + " had to offer. Yum, you just got some leftovers.</b>");
 			}
+		} else if (loser.hasDick() && (victor.human() || victor.has(Trait.madscientist)) && victor.has(Item.EmptyBottle, 1)) {
+			// for now only the player and mara collects semen
+			write(victor, Global.format("<br><b>{self:SUBJECT-ACTION:manage|manages} to collect some of {other:name-possessive} scattered semen in an empty bottle</b>", victor, loser));
+			victor.consume(Item.EmptyBottle, 1, false);
+			victor.gain(Item.semen, 1);
+		}
+		if (checkBottleCollection(victor, loser, PussyPart.divine)) {
+			write(victor, Global.format("<br><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of {other:name-possessive} divine pussy juices in an empty bottle</b>", victor, loser));
+			victor.consume(Item.EmptyBottle, 1, false);
+			victor.gain(Item.HolyWater, 1);
+		}
+		if (checkBottleCollection(victor, loser, PussyPart.succubus)) {
+			write(victor, Global.format("<br><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of {other:name-possessive} demonic pussy juices in an empty bottle</b>", victor, loser));
+			victor.consume(Item.EmptyBottle, 1, false);
+			victor.gain(Item.ExtremeAphrodisiac, 1);
+		}
+		if (checkBottleCollection(victor, loser, PussyPart.plant)) {
+			write(victor, Global.format("<br><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of {other:possessive} nectar in an empty bottle</b>", victor, loser));
+			victor.consume(Item.EmptyBottle, 1, false);
+			victor.gain(Item.nectar, 3);
+		}
+		if (checkBottleCollection(victor, loser, PussyPart.cybernetic)) {
+			write(victor, Global.format("<br><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of {other:possessive} artificial lubricant in an empty bottle</b>", victor, loser));
+			victor.consume(Item.EmptyBottle, 1, false);
+			victor.gain(Item.LubricatingOils, 1);
+		}
+		if (checkBottleCollection(victor, loser, PussyPart.arcane)) {
+			write(victor, Global.format("<br><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of the floating mana wisps ejected from {other:possessive} orgasm in an empty bottle</b>", victor, loser));
+			victor.consume(Item.EmptyBottle, 1, false);
+			victor.gain(Item.RawAether, 1);
+		}
+		if (checkBottleCollection(victor, loser, PussyPart.feral)) {
+			write(victor, Global.format("<br><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of {other:possessive} musky juices in an empty bottle</b>", victor, loser));
+			victor.consume(Item.EmptyBottle, 1, false);
+			victor.gain(Item.FeralMusk, 1);
+		}
+		if (checkBottleCollection(victor, loser, PussyPart.gooey)) {
+			write(victor, Global.format("<br><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of {other:possessive} goo in an empty bottle</b>", victor, loser));
+			victor.consume(Item.EmptyBottle, 1, false);
+			victor.gain(Item.BioGel, 1);
 		}
 		if (loser.human()) {
 			write("<br>Ashamed at your loss, you resolve to win next time.");

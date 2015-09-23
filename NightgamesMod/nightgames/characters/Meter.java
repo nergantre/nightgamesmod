@@ -1,6 +1,9 @@
 package nightgames.characters;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
+
+import nightgames.global.Global;
 
 public class Meter implements Serializable, Cloneable {
 	/**
@@ -79,5 +82,8 @@ public class Meter implements Serializable, Cloneable {
 	}
 	public Meter clone() throws CloneNotSupportedException {
 		return (Meter) super.clone();
+	}
+	public String toString() {
+		return String.format("current: %s / max: %s", Global.formatDecimal(current), Global.formatDecimal(max));
 	}
 }

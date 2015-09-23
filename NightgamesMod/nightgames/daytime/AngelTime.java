@@ -2,13 +2,21 @@ package nightgames.daytime;
 
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.NPC;
 import nightgames.characters.Trait;
-import nightgames.global.Flag;
+import nightgames.characters.body.BasicCockPart;
+import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.CockMod;
+import nightgames.characters.body.CockPart;
+import nightgames.characters.body.ModdedCockPart;
+import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.WingsPart;
+import nightgames.characters.custom.requirement.BodyPartRequirement;
 import nightgames.global.Global;
+import nightgames.items.Item;
 
 public class AngelTime extends BaseNPCTime {
 	public AngelTime(Character player) {
@@ -16,7 +24,7 @@ public class AngelTime extends BaseNPCTime {
 		knownFlag = "AngelKnown";
 		giftedString = "\"Hmph thanks.\"";
 		giftString = "\"A present mm? Alright let's see it.\"";
-		transformationOptionString = "Blessings";
+		transformationOptionString = "Sacraments";
 		advTrait = Trait.demigoddess;
 		transformationIntro = "[Placeholder]<br>Angel says she may be able to try a few things with her new divine powers.";
 		loveIntro = "You meet Angel at her room, but for once, she doesn't seem eager to get to sex. You can tell she has something on her mind, so you let her lean " +
@@ -38,6 +46,82 @@ public class AngelTime extends BaseNPCTime {
 	@Override
 	public void buildTransformationPool() {
 		options = new ArrayList<>();
+		{
+			TransformationOption blessedCock = new TransformationOption();
+			blessedCock.ingredients.put(Item.HolyWater, 10);
+			blessedCock.requirements.add(new BodyPartRequirement("cock"));
+			blessedCock.requirements.add((c, self, other) -> {
+				return self.body.get("cock").stream().anyMatch(cock -> ((CockPart)cock).isGeneric());
+			});
+			blessedCock.requirements.add((c, self, other) -> {
+				return self.get(Attribute.Divinity) >= 10;
+			});
+			blessedCock.additionalRequirements = "A normal cock<br>Divinity greater than 10";
+			blessedCock.option = "Blessed Cock";
+			blessedCock.scene = "[Placeholder]<br>Angel performs a sacrament on your cock, imbuing it with holy powers.";
+			blessedCock.effect = (c, self, other) -> {
+				Optional<BodyPart> optPart = self.body.get("cock").stream().filter(cock -> ((CockPart)cock).isGeneric()).findAny();
+				BasicCockPart target = (BasicCockPart) optPart.get();
+				self.body.remove(target);
+				self.body.add(new ModdedCockPart(target, CockMod.blessed));
+				return true;
+			};
+			options.add(blessedCock);
+		}
+		{
+			TransformationOption divinePussy = new TransformationOption();
+			divinePussy.ingredients.put(Item.HolyWater, 10);
+			divinePussy.requirements.add(new BodyPartRequirement("pussy"));
+			divinePussy.requirements.add((c, self, other) -> {
+				return self.body.get("pussy").stream().anyMatch(part -> part == PussyPart.normal);
+			});
+			divinePussy.requirements.add((c, self, other) -> {
+				return self.get(Attribute.Divinity) >= 10;
+			});
+			divinePussy.additionalRequirements = "A normal pussy<br>Divinity greater than 10";
+			divinePussy.option = "Divine Pussy";
+			divinePussy.scene = "[Placeholder]<br>Angel performs a sacrament on your pussy, imbuing it with holy powers.";
+			divinePussy.effect = (c, self, other) -> {
+				self.body.addReplace(PussyPart.divine, 1);
+				return true;
+			};
+			options.add(divinePussy);
+		}
+		{
+			TransformationOption angelWings = new TransformationOption();
+			angelWings.ingredients.put(Item.HolyWater, 10);
+			angelWings.requirements.add((c, self, other) -> {
+				return self.body.get("wings").size() == 0;
+			});
+			angelWings.requirements.add((c, self, other) -> {
+				return self.get(Attribute.Divinity) >= 10;
+			});
+			angelWings.additionalRequirements = "No wings<br>Divinity greater than 10";
+			angelWings.option = "Angelic Wings";
+			angelWings.scene = "[Placeholder]<br>Angel gives you white feathery wings on your back.";
+			angelWings.effect = (c, self, other) -> {
+				self.body.addReplace(WingsPart.angelic, 1);
+				return true;
+			};
+			options.add(angelWings);
+		}
+		{
+			TransformationOption divinity = new TransformationOption();
+			// WARNING this is using the players current divinity. If this changes to work on other NPCs, it will fail.
+			final int currentDivinity = player.getPure(Attribute.Divinity);
+			final int numberHolyWaters = 1 + currentDivinity / 10;
+			divinity.requirements.add((c, self, other) -> {
+				return self.has(Item.HolyWater, numberHolyWaters);
+			});
+			divinity.additionalRequirements = numberHolyWaters + " Holy Waters";
+			divinity.option = "Bestow Divinity";
+			divinity.scene = "[Placeholder]<br>Angel has sex with you, lending you a part of her divinity.";
+			divinity.effect = (c, self, other) -> {
+				self.mod(Attribute.Divinity, 1);
+				return true;
+			};
+			options.add(divinity);
+		}
 	}
 	
 	@Override

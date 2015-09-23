@@ -27,6 +27,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -106,7 +109,7 @@ public class Global {
 	private static HashMap<String,Float> counters;
 	public static Player human;
 	private static Match match;
-	private static Daytime day;
+	public static Daytime day;
 	private static int date;
 	private Date jdate;
 	private static TraitTree traitRequirements;
@@ -158,9 +161,9 @@ public class Global {
 		current=null;
 		factory = new ContextFactory();
 		cx = factory.enterContext();
+		buildParser();
 		buildActionPool();
 		buildFeatPool();
-		buildParser();
 		if (headless) {
 			gui = new NullGUI();
 		} else {
@@ -745,7 +748,7 @@ public class Global {
 	public static void setCounter(Flag f, float val){
 		counters.put(f.name(),val);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public static void save(boolean auto){
 		JSONObject obj = new JSONObject();
@@ -773,7 +776,11 @@ public class Global {
 				file = new FileWriter("./auto.sav");
 			}
 			else{
-				JFileChooser dialog = new JFileChooser("./");            
+				JFileChooser dialog = new JFileChooser("./");
+				FileFilter savesFilter = new FileNameExtensionFilter(
+					    "Nightgame Saves", "ngs");
+				dialog.addChoosableFileFilter(savesFilter);
+				dialog.setFileFilter(savesFilter);
 	            dialog.setMultiSelectionEnabled(false);
 	            int rv = dialog.showSaveDialog(gui);
 	            
@@ -781,7 +788,12 @@ public class Global {
 	            {
 	            	return;
 	            }
-				file = new FileWriter(dialog.getSelectedFile());
+	            File saveFile = dialog.getSelectedFile();
+	            String fname = saveFile.getAbsolutePath();
+	            if (!fname.endsWith(".ngs")) {
+	            	fname += ".ngs";
+	            }
+				file = new FileWriter(new File(fname));
 			}
 			PrintWriter saver = new PrintWriter(file);
 			saver.write(JsonWriter.formatJson(obj.toJSONString()));
@@ -827,16 +839,20 @@ public class Global {
 		characterPool.put(jewel.getCharacter().getType(), jewel.getCharacter());
 		characterPool.put(airi.getCharacter().getType(), airi.getCharacter());
 	}
-	
+
 	public static void load(){
 		JFileChooser dialog = new JFileChooser("./");
+		FileFilter savesFilter = new FileNameExtensionFilter(
+			    "Nightgame Saves", "ngs");
+		dialog.addChoosableFileFilter(savesFilter);
+		dialog.setFileFilter(savesFilter);
         dialog.setMultiSelectionEnabled(false);
         int rv = dialog.showOpenDialog(gui);      
         if (rv != JFileChooser.APPROVE_OPTION)
         {
         	return;
         }
-		FileInputStream file;
+		FileInputStream fileIS;
 		players.clear();
 		flags.clear();
 		gui.clearText();
@@ -848,8 +864,18 @@ public class Global {
 
 		boolean dawn = false;
 		try {
-			file = new FileInputStream(dialog.getSelectedFile());
-			Reader loader = new InputStreamReader(file);
+			File file = dialog.getSelectedFile();
+			if (!file.isFile()) {
+				file = new File(dialog.getSelectedFile().getAbsolutePath() + ".ngs");
+				if (!file.isFile()) {
+					// not a valid save, abort
+					JOptionPane.showMessageDialog(gui, "Nightgames save file not found", "File not found",
+						    JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+			}
+			fileIS = new FileInputStream(file);
+			Reader loader = new InputStreamReader(fileIS);
 			JSONObject object = (JSONObject) JSONValue.parseWithException(loader);
 			loader.close();
 

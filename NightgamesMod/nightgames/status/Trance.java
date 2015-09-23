@@ -15,11 +15,13 @@ import nightgames.skills.Skill;
 import nightgames.skills.Thrust;
 
 public class Trance extends DurationStatus {
-	public Trance(Character affected) {
-		super("Trance", affected, 3);
+	public Trance(Character affected, int duration) {
+		super("Trance", affected, duration);
 		flag(Stsflag.trance);
 	}
-
+	public Trance(Character affected) {
+		this(affected, 3);
+	}
 	@Override
 	public String describe(Combat c) {
 		if(affected.human()){

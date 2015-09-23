@@ -70,9 +70,9 @@ public class BreastWorship extends Skill {
 	@Override
 	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if(modifier==Result.normal){
-			return "You worshipfully circle your tongue around each of "+target.name()+"'s nipples, and start sucking like a newborn.";
+			return "You worshipfully circle your tongue around each of "+target.name()+"'s nipples, and start sucking like a newborn while furiously masturbating.";
 		} else {
-			return "You worshipfully circle your tongue around each of "+target.name()+"'s nipples, and start sucking like a newborn. " +
+			return "You worshipfully circle your tongue around each of "+target.name()+"'s nipples, and start sucking like a newborn while furiously masturbating. " +
 					"Her milk slides smoothly down your throat, and you're left with a warm comfortable feeling.";
 		}
 	}

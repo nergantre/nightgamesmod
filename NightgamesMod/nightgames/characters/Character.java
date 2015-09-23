@@ -23,6 +23,8 @@ import nightgames.actions.Movement;
 import nightgames.areas.Area;
 import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.CockMod;
+import nightgames.characters.body.PussyPart;
 import nightgames.characters.custom.AiModifiers;
 import nightgames.combat.Combat;
 import nightgames.combat.Encounter;
@@ -313,6 +315,11 @@ public abstract class Character extends Observable implements Cloneable {
 		}
 		rate *= Global.xpRate;
 		xp+=Math.round(i * rate);
+		this.update();
+	}
+	public void setXP(int i) {
+		xp = i;
+		this.update();
 	}
 	public int getRank() {
 		return rank;
@@ -1073,6 +1080,9 @@ public abstract class Character extends Observable implements Cloneable {
 			c.getStance().struggle();
 		}
 		return total;
+	}
+	public boolean canMasturbate(){
+		return !(stunned()||bound()||is(Stsflag.distracted)||is(Stsflag.enthralled));
 	}
 	public boolean canAct(){
 		return !(stunned()||distracted()||bound()||is(Stsflag.enthralled));
@@ -2332,13 +2342,16 @@ public abstract class Character extends Observable implements Cloneable {
 	public void modMoney(int i) {
 		if (human() && i > 0)
 			Global.gui().message("You've gained $" + Math.round(i * Global.moneyRate) +".");
-		money += Math.round(i * Global.moneyRate);
+		setMoney((int) (money + Math.round(i * Global.moneyRate)));
+	}
+	public void setMoney(int i) {
+		money = i;
 		update();
 	}
-
 	public void loseXP(int i) {
 		assert(i >= 0);
 		xp -= i;
+		this.update();
 	}
 	public String pronoun() {
 		if (useFemalePronouns()) {
@@ -2520,5 +2533,8 @@ public abstract class Character extends Observable implements Cloneable {
 
 	public String boyOrGirl() {
 		return useFemalePronouns() ? "girl" : "boy";
+	}
+	public boolean isDemonic() {
+		return has(Trait.succubus) || body.get("cock").stream().anyMatch(part -> part.getMod() == PussyPart.succubus) || body.get("cock").stream().anyMatch(part -> part.getMod() == CockMod.incubus);
 	}
 }

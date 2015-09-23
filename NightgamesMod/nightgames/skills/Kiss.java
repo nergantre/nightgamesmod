@@ -120,7 +120,7 @@ public class Kiss extends Skill {
 					+ "As you finally break the kiss, she looks energized but desperate for more.";
 		}
 		if(modifier==Result.special){
-			return "You pull "+target.name()+" to you and kiss her passionately. You run your tongue over her lips until her opens them and immediately invade her mouth. " +
+			return "You pull "+target.name()+" to you and kiss her passionately. You run your tongue over her lips until she opens them and immediately invade her mouth. " +
 					"You tangle your tongue around hers and probe the sensitive insides her mouth. As you finally break the kiss, she leans against you, looking kiss-drunk and needy.";
 		}
 		if(modifier==Result.upgrade){
