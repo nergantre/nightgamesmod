@@ -20,7 +20,8 @@ public class Cunnilingus extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.crotchAvailable()&&target.hasPussy()&&c.getStance().oral(getSelf())&&getSelf().canAct()&&!c.getStance().vaginallyPenetrated(target);
+		boolean canUse = (c.getStance().enumerate() == Stance.facesitting && getSelf().canRespond()) || getSelf().canAct();
+		return target.crotchAvailable()&&target.hasPussy()&&c.getStance().oral(getSelf())&&canUse&&!c.getStance().vaginallyPenetrated(target);
 	}
 
 	@Override
