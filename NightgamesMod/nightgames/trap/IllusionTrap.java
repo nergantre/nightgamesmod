@@ -12,11 +12,11 @@ public class IllusionTrap implements Trap {
 	public void trigger(Character target) {
 		if(target.human()){
 			Global.gui().message("You run into a girl you don't recognize, but she's beautiful and completely naked. You don't have a chance to wonder where she came from, because " +
-					"she immediately presses her warm, soft body against you and kisses you passionately. She slips a hand between you to grope your crotch and suddenly vanishes. " +
-					"She was just an illusion, but your erection is very real.");
+					"she immediately presses her warm, soft body against you and kisses you passionately. She slips down a hand to grope your crotch, and suddenly vanishes after a few strokes. " +
+					"She was just an illusion, but your arousal is very real.");
 		}
 		else if(target.location().humanPresent()){
-			Global.gui().message("There's a flash of pink light and "+target.name()+" flushes with arousal");
+			Global.gui().message("There's a flash of pink light and "+target.name()+" flushes with arousal.");
 		}
 		if(target.has(Trait.imagination)){
 			target.tempt(25);
@@ -44,7 +44,7 @@ public class IllusionTrap implements Trap {
 	public String setup(Character owner) {
 		this.owner=owner;
 		owner.spendMojo(null, 15);
-		return "You cast a simple illusion that will trigger when someone approaches and seduce them.";
+		return "You cast a simple spell that will trigger when someone approaches; an illusion will seduce the trespasser.";
 	}
 
 	@Override
