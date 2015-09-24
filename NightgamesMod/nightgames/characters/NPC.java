@@ -624,7 +624,7 @@ public class NPC extends Character {
 
 	public void emote(Emotion emo, int amt) {
 		if (Global.isDebugOn(DebugFlags.DEBUG_MOOD)) {
-			System.out.printf("%s: %+d %s", amt, emo.name());
+			System.out.printf("%s: %+d %s", getName(), amt, emo.name());
 		}
 		if (emo == mood) {
 			// if already this mood, cut gain by half

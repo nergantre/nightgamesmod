@@ -182,7 +182,7 @@ public class Drain extends Skill {
 			
 			String base = "You feel " + getSelf().nameOrPossessivePronoun() + " powerful" + muscDesc+ " muscles suddenly tighten around you. "
 					+ "She starts kneading your dick bringing you immense pleasure and soon"
-					+ " you feel yourself erupt into her, but you realize your are shooting"
+					+ " you feel yourself erupt into her, but you realize you are shooting"
 					+ " something far more precious than semen into her " + partDesc + "; as more of the ethereal"
 					+ " fluid leaves you, you feel ";
 			switch (damage) {
