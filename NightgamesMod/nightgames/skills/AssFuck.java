@@ -130,18 +130,18 @@ public class AssFuck extends Fuck {
 	@Override
 	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if(modifier == Result.upgrade){
-			return getSelf().name()+" spreads your legs apart and teasingly pokes the Strap-On against your anus. Your try to struggle away but "+getSelf().name()
+			return getSelf().name()+" spreads your legs apart and teasingly pokes the strap-on against your anus. Your try to struggle away but "+getSelf().name()
 					+" pulls your hips closer and slowly pushes the dildo inside your ass.";
 		}
 		if(modifier == Result.normal){
 			if(getSelf().has(Trait.strapped)){
 				if(getSelf().has(Item.Strapon2)){
 					
-					return getSelf().name()+" aligns her Strap-On behind you and pushes it into your lubricated ass. After pushing it in completely, "
+					return getSelf().name()+" aligns her strap-on behind you and pushes it into your lubricated ass. After pushing it in completely, "
 							+getSelf().name()+" pushes a button on a controller which causes the Dildo to vibrate in your ass, giving you a slight shiver.";
 				}
 				else{
-					return getSelf().name()+" lubes up her strapon, positions herself behind you, and shoves it into your ass.";
+					return getSelf().name()+" lubes up her strap-on, positions herself behind you, and shoves it into your ass.";
 				}
 			}
 			else{
