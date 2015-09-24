@@ -40,7 +40,7 @@ public enum Trait {
 	dirtyfighter("Dirty Fighter","Down, but not out"), //Jewel Sparring perk, kick can be used from prone
 	spiral("Spiral","Who the hell do you think I am?"), //Jewel Sex perk, Spiral Thrust
 	fearless("Fearless","Leeroy Jenkins"), //Jewel Gaming perk, Bravado
-	clairvoyance("Clairvoyance",""), //Reyka Sparring perk evasion bonus
+	clairvoyance("Clairvoyance","Good with predicting and poker"), //Reyka Sparring perk evasion bonus
 	locator("Locator","Like a bloodhound"), //Reyka Gaming perk out of combat action
 	desensitized("Desensitized","Sex is old hat now"), //Reyka Sex perk slight pleasure reduction
 	desensitized2("Desensitized 2","Only the strongest stimulation gets you off"), //Reyka Sex perk slight pleasure reduction
@@ -163,7 +163,7 @@ public enum Trait {
 	undisciplined("Undisciplined","Lover, not a fighter"), //restricts manuever, focus, armbar
 	direct("Direct","Patience is overrated"), //restricts whisper, dissolving trap, aphrodisiac trap, decoy, strip tease
 
-	shy("Shy", "", new TraitDescription() {
+	shy("Shy", "Seldom prone to shameless displays", new TraitDescription() {
 		public void describe(StringBuilder b, Character c, Trait t) {
 			if (c.human())
 				b.append("You shy away from your opponent's gaze.");

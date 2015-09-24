@@ -63,9 +63,9 @@ public class TailFucked extends Status {
 			affected.removelist.add(this);
 			return;
 		}
-		c.write(other, Global.capitalizeFirstLetter(Global.format("{other:name-possessive} {other:body-part:tail} relentlessly fucks {self:name-do} in {self:possessive} {self:body-part:"+target+"}", affected, other)));
+		c.write(other, Global.capitalizeFirstLetter(Global.format("{other:name-possessive} {other:body-part:tail} relentlessly fucks {self:name-do} in {self:possessive} {self:body-part:"+target+"}.", affected, other)));
 		affected.body.pleasure(other, tail, hole, 10, c);
-		other.body.pleasure(other, hole, tail, 2, c);
+		other.body.pleasure(affected, hole, tail, 2, c);
 		affected.emote(Emotion.desperate, 10);
 		affected.emote(Emotion.nervous, 10);
 	}

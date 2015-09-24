@@ -47,7 +47,7 @@ public class TentacleTrap implements Trap {
 						"\n...Is that it? You're safe... you guess?");
 			}
 			else if(target.location().humanPresent()){
-				Global.gui().message(target.name()+"stumbles into range of the fetish totem. A cage of phallic tentacles appear around her. They apparently aren't interested in her and " +
+				Global.gui().message(target.name()+" stumbles into range of the fetish totem. A cage of phallic tentacles appear around her. They apparently aren't interested in her and " +
 						"they disappear, leaving her slightly bewildered.");
 			}
 		}		
