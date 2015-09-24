@@ -12,6 +12,8 @@ New:
 	- Defeating another NPC with a penis lets you collect semen in another way.
 
 Other Changes:
+- Made the default save file format .ngs
+	- Your old saves should still work, it's just named .ngs if you save from the dialog
 - Restructured the JAR so that it no longer holds any assets. Everything is outside the JAR
 	- If you have trouble playing the game, make sure everything is in one folder,
 		and the location of the folder is somewhere where you don't need admin permissions to access.

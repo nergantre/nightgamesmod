@@ -59,7 +59,8 @@ public class TailFucked extends Status {
 	public void tick(Combat c) {
 		BodyPart hole = affected.body.getRandom(target);
 		BodyPart tail = other.body.getRandom("tail");
-		if (hole == null || tail == null) {
+		if (hole == null || tail == null || c == null) {
+			affected.removelist.add(this);
 			return;
 		}
 		c.write(other, Global.capitalizeFirstLetter(Global.format("{other:name-possessive} {other:body-part:tail} relentlessly fucks {self:name-do} in {self:possessive} {self:body-part:"+target+"}.", affected, other)));

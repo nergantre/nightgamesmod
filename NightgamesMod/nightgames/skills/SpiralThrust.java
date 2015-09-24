@@ -54,7 +54,7 @@ public class SpiralThrust extends Thrust {
 	public boolean resolve(Combat c, Character target) {
 		boolean res = super.resolve(c, target);
 		if (res) {
-			getSelf().add(new Lethargic(getSelf(), 8, .75));
+			getSelf().add(new Lethargic(getSelf(), 30, .75));
 		}
 		return res;
 	}

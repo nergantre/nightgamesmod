@@ -34,7 +34,11 @@ public class Trance extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now entranced.\n", affected.subjectAction("are", "is"));
+		if (!replaced) {
+			return String.format("%s now entranced.\n", affected.subjectAction("are", "is"));
+		} else {
+			return String.format("%s already entranced.\n", affected.subjectAction("are", "is"));
+		}
 	}
 
 	@Override
@@ -61,6 +65,11 @@ public class Trance extends DurationStatus {
 	@Override
 	public void onRemove(Combat c, Character other) {
 		affected.addlist.add(new Cynical(affected));
+	}
+
+	@Override
+	public boolean overrides(Status s) {
+		return false;
 	}
 
 	@Override

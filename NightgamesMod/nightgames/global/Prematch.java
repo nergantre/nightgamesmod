@@ -90,9 +90,15 @@ public class Prematch implements Scene{
 							"good at forcing a draw.\"</i> She shrugs. <i>\"That's the theory at least. You'll be my guinea pig for this. If you agree, the bonus will be $"+type.bonus()+".\"</i>";
 					break;
 				case vibration:
-					message+="<i>\"Do you like toys, "+player.name()+"? I thought of a way to make your matches harder that you'll still enjoy.\"</i> She holds up a small plastic ring. " +
-							"<i>\"Vibrating cock-ring,\"</i> she explains. <i>\"I'll give you a $"+type.bonus()+" for each fight you win while this little fellow keeps you horny and ready to " +
-							"burst.\"</i>";
+					if (player.hasDick()) {
+						message+="<i>\"Do you like toys, "+player.name()+"? I thought of a way to make your matches harder that you'll still enjoy.\"</i> She holds up a small plastic ring. " +
+								"<i>\"Vibrating cock-ring,\"</i> she explains. <i>\"I'll give you a $"+type.bonus()+" for each fight you win while this little fellow keeps you horny and ready to " +
+								"burst.\"</i>";
+					} else if (player.hasPussy()) {
+						message+="<i>\"Do you like toys, "+player.name()+"? I thought of a way to make your matches harder that you'll still enjoy.\"</i> She holds up a small plastic ring. " +
+								"<i>\"Vibrating clit-ring,\"</i> she explains. <i>\"I'll give you a $"+type.bonus()+" for each fight you win while this little fellow keeps you horny and ready to " +
+								"burst.\"</i>";
+					}
 					break;
 				case vulnerable:
 					message+="<i>\"I've got a simple handicap for you tonight. You've probably come across some sensitization potions that temporarily enhance your sense of touch, right? " +
@@ -139,7 +145,9 @@ public class Prematch implements Scene{
 				available.add(Modifier.nudist);
 			}
 			available.add(Modifier.norecovery);
-			available.add(Modifier.vibration);
+			if (player.hasDick() || player.hasPussy()) {
+				available.add(Modifier.vibration);
+			}
 			available.add(Modifier.vulnerable);
 			available.add(Modifier.pacifist);
 			if(player.has(Item.Dildo)||player.has(Item.Dildo2)||player.has(Item.Tickler)||player.has(Item.Tickler2)){
@@ -194,14 +202,25 @@ public class Prematch implements Scene{
 						"pulls a tissue out of her pocket to clean up. <i>\"Hopefully you're not too worn out. The match hasn't even started yet.\"</i>";
 				break;
 			case vibration:
-				message+="You agree to Lilly's rule and reach out to take the cock-ring, but she shakes her head. <i>\"I need to put it on you to make sure it's positioned correctly. Don't worry, " +
-						"you don't need to undress.\"</i> She steps close to you and slips her hand down the front of your pants and underwear. Her fingers dexterously manipulate your dick as she " +
-						"manuevers the ring onto it. From her expression, it looks like she's concentrating on her task rather than trying to entice you, but her closeness and her touch still " +
-						"have an effect on you. <i>\"Don't feel embarrassed,\"</i> she says with a reassuring smile. <i>\"It's actually easier to put this on when you're a little hard.\"</i> She fits the " +
-						"cock-ring in place and removes her hand. <i>\"Time to test.\"</i> She holds up a small remote and switches it on. Your hips jerk at the intense sensation on your cock. You " +
-						"have to endure this for three hours? <i>\"The intensity will automatically modulate to keep you from going numb, but after a few minutes, you'll partially adapt to it. " +
-						"I'll hang onto the remote during the match.\"</i> She hits the button again and the vibration stops. <i>\"If this ends up making you cum, I won't be offended if you think " +
-						"about me.\"</i>";
+				if (player.hasDick()) {
+					message+="You agree to Lilly's rule and reach out to take the cock-ring, but she shakes her head. <i>\"I need to put it on you to make sure it's positioned correctly. Don't worry, " +
+							"you don't need to undress.\"</i> She steps close to you and slips her hand down the front of your pants and underwear. Her fingers dexterously manipulate your dick as she " +
+							"manuevers the ring onto it. From her expression, it looks like she's concentrating on her task rather than trying to entice you, but her closeness and her touch still " +
+							"have an effect on you. <i>\"Don't feel embarrassed,\"</i> she says with a reassuring smile. <i>\"It's actually easier to put this on when you're a little hard.\"</i> She fits the " +
+							"cock-ring in place and removes her hand. <i>\"Time to test.\"</i> She holds up a small remote and switches it on. Your hips jerk at the intense sensation on your cock. You " +
+							"have to endure this for three hours? <i>\"The intensity will automatically modulate to keep you from going numb, but after a few minutes, you'll partially adapt to it. " +
+							"I'll hang onto the remote during the match.\"</i> She hits the button again and the vibration stops. <i>\"If this ends up making you cum, I won't be offended if you think " +
+							"about me.\"</i>";
+				} else if (player.hasPussy()) {
+					message+="You agree to Lilly's rule and reach out to take the clit-ring, but she shakes her head. <i>\"I need to put it on you to make sure it's positioned correctly. Don't worry, " +
+							"you don't need to undress.\"</i> She steps close to you and slips her hand down the front of your waistband and underwear. Her fingers dexterously teases your nub as she " +
+							"manuevers the ring onto it. From her expression, it looks like she's concentrating on her task rather than trying to entice you, but her closeness and her touch still " +
+							"have an effect on you. <i>\"Don't feel embarrassed,\"</i> she says with a reassuring smile. <i>\"I have to get it a bit hard a bit before putting it on.\"</i> She fits the " +
+							"clit-ring in place and removes her hand. <i>\"Time to test.\"</i> She holds up a small remote and switches it on. Your hips jerk at the intense sensation on your sensitive nub. You " +
+							"have to endure this for three hours? <i>\"The intensity will automatically modulate to keep you from going numb, but after a few minutes, you'll partially adapt to it. " +
+							"I'll hang onto the remote during the match.\"</i> She hits the button again and the vibration stops. <i>\"If this ends up making you cum, I won't be offended if you think " +
+							"about me.\"</i>";
+				}
 				break;
 			case vulnerable:
 				player.add(new Hypersensitive(player));

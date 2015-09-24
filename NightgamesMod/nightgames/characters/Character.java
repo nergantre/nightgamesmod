@@ -948,14 +948,16 @@ public abstract class Character extends Observable implements Cloneable {
 				message = status.initialMessage(c, false);
 			}
 		}
-		message = Global.capitalizeFirstLetter(message);
-		if (c!= null) {
-			c.write(this, "<b>"+ message+"</b>");
-		} else if (human() || (location() != null && location().humanPresent())){
-			Global.gui().message("<b>"+ message+"</b>");
-		}
-		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-			System.out.println(message);
+		if (!message.isEmpty()) {
+			message = Global.capitalizeFirstLetter(message);
+			if (c!= null) {
+				c.write(this, "<b>"+ message+"</b>");
+			} else if (human() || (location() != null && location().humanPresent())){
+				Global.gui().message("<b>"+ message+"</b>");
+			}
+			if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+				System.out.println(message);
+			}
 		}
 	}
 	private double getPheromonesChance(Combat c) {
@@ -1307,7 +1309,7 @@ public abstract class Character extends Observable implements Cloneable {
 		} else if (selfPart != null && selfPart.isType("cock") && opponentPart != null && !opponentPart.isType("none")) {
 			c.write(this, Global.format("<b>{self:NAME-POSSESSIVE} back arches as thick ropes of jizz fire from {self:possessive} dick and land on {other:name-possessive} " + opponentPart.describe(opponent)
 			+ ".</b>", this, opponent));
-			opponent.body.receiveCum(c, opponent, opponentPart);
+			opponent.body.receiveCum(c, this, opponentPart);
 		} else {
 			c.write(this, Global.format("<b>{self:SUBJECT-ACTION:shudder|shudders} as {other:subject-action:bring|brings} {self:direct-object} to a toe-curling climax.</b>", this, opponent));
 		}
