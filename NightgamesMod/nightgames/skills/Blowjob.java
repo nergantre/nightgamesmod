@@ -60,6 +60,7 @@ public class Blowjob extends Skill {
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		int m = 10 + Global.random(8);
+		boolean facesitting = c.getStance().enumerate() == Stance.facesitting;
 		if(getSelf().has(Trait.silvertongue)){
 			m += 4;
 		}
@@ -71,7 +72,7 @@ public class Blowjob extends Skill {
 				c.write(getSelf(),deal(c,m,Result.intercourse, target));
 			}
 			target.body.pleasure(getSelf(), getSelf().body.getRandom("pussy"), target.body.getRandom("cock"), m, c);					
-		} else if(c.getStance().enumerate() == Stance.facesitting){
+		} else if(facesitting){
 			if(target.human()){
 				c.write(getSelf(),receive(c,m,Result.reverse, target));
 			} else if(getSelf().human()){
