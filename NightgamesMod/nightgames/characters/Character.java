@@ -948,14 +948,16 @@ public abstract class Character extends Observable implements Cloneable {
 				message = status.initialMessage(c, false);
 			}
 		}
-		message = Global.capitalizeFirstLetter(message);
-		if (c!= null) {
-			c.write(this, "<b>"+ message+"</b>");
-		} else if (human() || (location() != null && location().humanPresent())){
-			Global.gui().message("<b>"+ message+"</b>");
-		}
-		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-			System.out.println(message);
+		if (!message.isEmpty()) {
+			message = Global.capitalizeFirstLetter(message);
+			if (c!= null) {
+				c.write(this, "<b>"+ message+"</b>");
+			} else if (human() || (location() != null && location().humanPresent())){
+				Global.gui().message("<b>"+ message+"</b>");
+			}
+			if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+				System.out.println(message);
+			}
 		}
 	}
 	private double getPheromonesChance(Combat c) {
