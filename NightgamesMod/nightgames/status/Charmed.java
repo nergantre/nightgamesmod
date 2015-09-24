@@ -51,7 +51,7 @@ public class Charmed extends DurationStatus {
 	@Override
 	public void tick(Combat c) {
 		affected.emote(Emotion.horny,15);
-		affected.loseWillpower(c, 1);
+		affected.loseWillpower(c, 1, 0, false, " (Charmed)");
 	}
 
 	@Override
