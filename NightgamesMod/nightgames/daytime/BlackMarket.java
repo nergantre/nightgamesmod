@@ -6,6 +6,7 @@ import nightgames.characters.Trait;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import java.util.Map;
 
 public class BlackMarket extends Store {
 	private boolean trained;
@@ -131,10 +132,16 @@ public class BlackMarket extends Store {
 					"the nearby table and an attractive girl on the couch who makes no indication that she noticed you enter. <i>\"Don't mind the bitch,\"</i> says Ridley, noticing your " +
 					"attention. <i>\"She doesn't care who you are and neither do I. What are you looking for?\"</i>");
 			}
+			Map<Item, Integer> MyInventory = this.player.getInventory();
 			for(Item i: stock.keySet()){
-				Global.gui().message(i.getName()+": "+i.getPrice());
+				if (MyInventory.get(i) == null || MyInventory.get(i) == 0) {
+					Global.gui().message(i.getName()+": $"+i.getPrice());
+				}
+				else {
+					Global.gui().message(i.getName()+": $"+i.getPrice() + " (you have: " + MyInventory.get(i) + ")");
+				}
 			}
-			Global.gui().message("You have :$"+player.money+" to spend.");
+			Global.gui().message("You have : $"+player.money+" to spend.");
 			displayGoods();
 			Global.gui().choose(this,"Leave");
 		}
