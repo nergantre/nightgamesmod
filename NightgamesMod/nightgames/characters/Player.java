@@ -246,6 +246,10 @@ public class Player extends Character {
 	@Override
 	public void move() {
 		gui.clearCommand();
+		Character master = null;
+		if (this.is(Stsflag.enthralled)) {
+			master = ((Enthralled)getStatus(Stsflag.enthralled)).master;
+		}
 		if(state==State.combat){
 			if(!location.fight.battle()){
 				Global.getMatch().resume();
@@ -254,16 +258,12 @@ public class Player extends Character {
 		else if(busy>0){
 			busy--;
 		}
-		else if (this.is(Stsflag.enthralled)) {
-			Character master;
-			master = ((Enthralled)getStatus(Stsflag.enthralled)).master;
-			if(master!=null){
+		else if (master!=null && eligible(master) && eligible(this)) {
 			Move compelled = findPath(master.location());
 			gui.message("You feel an irresistible compulsion to head to the <b>"
 					+ master.location().name+"</b>");
 			if (compelled != null)
 				this.gui.addAction(compelled, this);
-			}
 		}
 		else if(state==State.shower||state==State.lostclothes){
 			bathe();
