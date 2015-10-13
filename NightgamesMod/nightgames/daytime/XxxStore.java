@@ -5,6 +5,7 @@ import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import java.util.Map;
 
 public class XxxStore extends Store{
 	
@@ -30,6 +31,7 @@ public class XxxStore extends Store{
 
 	@Override
 	public void visit(String choice) {
+		Map<Item, Integer> MyInventory = this.player.getInventory();
 		if(choice=="Start"){
 			acted=false;
 		}
@@ -42,17 +44,25 @@ public class XxxStore extends Store{
 		checkSale(choice);
 		if(player.human()){
 			Global.gui().message("The adult specialty store stocks several items that could be useful during a match.");
-			for(Item i: stock.keySet()){
-				Global.gui().message(i.getName()+": "+i.getPrice());
-			}
+				for(Item i: stock.keySet()){
+					if (MyInventory.get(i) == null || MyInventory.get(i) == 0) {
+						Global.gui().message(i.getName()+": $"+i.getPrice());
+					}
+					else {
+						Global.gui().message(i.getName()+": $"+i.getPrice() + " (you have: " + MyInventory.get(i) + ")");
+					}
+				}
 			Global.gui().message("You have :$"+player.money+" to spend.");
 			Global.gui().sale(this,Item.Lubricant);
 			
-			if(player.has(Item.Dildo)){
-				Global.gui().message("You already have a perfectly serviceable dildo. You don't need another.");
-			}
-			else if(player.has(Item.Dildo2)){
+			if(player.has(Item.Dildo2)){
 				Global.gui().message("You already have a much better dildo. You don't need an average one.");
+				if (!player.has(Item.Dildo)) {
+					Global.gui().sale(this,Item.Dildo);
+				}
+			}
+			else if(player.has(Item.Dildo)){
+				Global.gui().message("You already have a perfectly serviceable dildo. You don't need another.");
 			}
 			else{
 				Global.gui().sale(this,Item.Dildo);

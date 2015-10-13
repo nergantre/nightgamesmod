@@ -5,7 +5,7 @@ import nightgames.characters.Trait;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
-
+import java.util.Map;
 
 public class HWStore extends Store {
 	public HWStore(Character player) {
@@ -37,10 +37,16 @@ public class HWStore extends Store {
 		if(player.human()){
 			Global.gui().message("Nothing at the hardware store is designed for the sort of activities you have in mind, but there are components you could use to make some " +
 					"effective traps.");
+			Map<Item, Integer> MyInventory = this.player.getInventory();
 			for(Item i: stock.keySet()){
-				Global.gui().message(i.getName()+": "+i.getPrice());
+				if (MyInventory.get(i) == null || MyInventory.get(i) == 0) {
+					Global.gui().message(i.getName()+": $"+i.getPrice());
+				}
+				else {
+					Global.gui().message(i.getName()+": $"+i.getPrice() + " (you have: " + MyInventory.get(i) + ")");
+				}
 			}
-			Global.gui().message("You have: $"+player.money+" available to spend.");
+			Global.gui().message("You have : $"+player.money+" to spend.");
 			displayGoods();
 			Global.gui().choose(this,"Leave");
 		}
