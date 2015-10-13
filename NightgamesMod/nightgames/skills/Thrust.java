@@ -56,7 +56,7 @@ public class Thrust extends Skill {
 		float mt = Math.max(1, m/3.f);
 
 		if(getSelf().has(Trait.experienced)){
-			mt = Math.max(1, m * .66f);
+			mt = Math.max(1, mt * .66f);
 		}
 
 		results[0] = m;
