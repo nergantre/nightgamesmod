@@ -9,8 +9,6 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
-import nightgames.items.clothing.Clothing;
-import nightgames.items.clothing.ClothingSlot;
 import nightgames.stance.Anal;
 import nightgames.stance.AnalProne;
 import nightgames.status.Flatfooted;
@@ -34,7 +32,6 @@ public class AssFuck extends Fuck {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return fuckable(c, target)
-				&& (c.getStance().insert(getSelf(), getSelf()) != c.getStance() || c.getStance().insert(target, getSelf()) != c.getStance())
 				&&c.getStance().mobile(getSelf())
 				&&(c.getStance().behind(getSelf())||(c.getStance().prone(target)&&!c.getStance().mobile(target)))
 				&&getSelf().canAct()
