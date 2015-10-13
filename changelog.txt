@@ -1,3 +1,18 @@
+1.8.3.2 changelog
+
+Bug fixes:
+- Fixed some textual bugs (thanks charred and bronzechair!)
+- Merged store price displays from CharredNewt
+- Fixed ass fuck requiring a pussy
+- Fixed hypnotic semen affecting yourself
+- Fixed various minor issues
+
+Balance:
+- Nerfed spiral thrust
+	- Now applies a 30 turn lethargic status that lasts out of battle.
+- allow usage of oral skills while bound and being facesat
+- make cunnilingus unable to miss in facesitting
+
 1.8.3.1 changelog
 
 New:
