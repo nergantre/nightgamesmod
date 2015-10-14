@@ -452,7 +452,7 @@ public class Body implements Cloneable {
 			if (c.getStance().sub(opponent) && opponent.has(Trait.submissive)) {
 				bonusDamage += bonusDamage + magnitude;
 			} else if (c.getStance().dom(opponent) && opponent.has(Trait.submissive)) {
-				bonusDamage += bonusDamage - (magnitude * 2. / 3.);
+				bonusDamage -= (bonusDamage + magnitude) * 2. / 3.;
 			}
 		}
 		Optional<BodyFetish> fetish = getFetish(with.getType());
