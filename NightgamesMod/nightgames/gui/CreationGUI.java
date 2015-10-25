@@ -37,7 +37,9 @@ import javax.swing.JComboBox;
 import java.awt.Dimension;
 import java.awt.Component;
 
-public class CreationGUI extends JPanel{
+public class CreationGUI extends JPanel
+{
+	private static final long serialVersionUID = 4021957207079034248L;
 	private JTextField powerfield;
 	private JTextField seductionfield;
 	private JTextField cunningfield;
@@ -64,11 +66,11 @@ public class CreationGUI extends JPanel{
 	private Box verticalBox;
 	private Box horizontalBox;
 	private JLabel lblStrength;
-	private JComboBox StrengthBox;
+	private JComboBox<Trait> StrengthBox;
 	private JTextPane StrengthDescription;
 	private JSeparator separator_2;
 	private JLabel lblWeakness;
-	private JComboBox WeaknessBox;
+	private JComboBox<Trait> WeaknessBox;
 	private JTextPane WeaknessDescription;
 	private JPanel panel_1;
 	private JPanel panel_4;
@@ -80,6 +82,7 @@ public class CreationGUI extends JPanel{
 	private JPanel panel_10;
 	private JPanel panel_11;
 	private JPanel panel_12;
+	@SuppressWarnings("unchecked")
 	public CreationGUI() {
 		setLayout(new BorderLayout(0, 0));
 		
@@ -87,7 +90,7 @@ public class CreationGUI extends JPanel{
 		add(panel, BorderLayout.NORTH);
 
 		JLabel lblName = new JLabel("Name");
-		lblName.setFont(new Font("Sylfaen", Font.BOLD, 15));
+		lblName.setFont(new Font("Verdana", Font.BOLD, 13));
 		panel.add(lblName);
 		
 		namefield = new JTextField();
@@ -104,7 +107,7 @@ public class CreationGUI extends JPanel{
 
 		
 		JButton btnStart = new JButton("Start");
-		btnStart.setFont(new Font("Sylfaen", Font.BOLD, 15));
+		btnStart.setFont(new Font("Verdana", Font.BOLD, 12));
 		panel.add(btnStart);
 		btnStart.addActionListener(new ActionListener(){
 			@Override
@@ -138,20 +141,23 @@ public class CreationGUI extends JPanel{
 		scrollPane.setViewportView(textPane);
 		textPane.setForeground(new Color(240, 240, 255));
 		textPane.setBackground(new Color(25, 25, 50));
-		textPane.setFont(new Font("Baskerville Old Face", Font.PLAIN, 22));
+		textPane.setFont(new Font("Arial", Font.PLAIN, 16));
 		textPane.setEditable(false);
 		textPane.setText(Global.getIntro());
 		
+		//Create a panel along the bottom of the screen
 		JPanel panel_2 = new JPanel();
 		add(panel_2, BorderLayout.SOUTH);
 		panel_2.setLayout(new GridLayout(0, 12, 0, 0));
 		
+		//The power label
 		JLabel lblPower = new JLabel("Power");
-		lblPower.setFont(new Font("Sylfaen", Font.BOLD, 15));
+		lblPower.setFont(new Font("Verdana", Font.BOLD, 15));
 		panel_2.add(lblPower);
 		
+		//The power value display
 		powerfield = new JTextField();
-		powerfield.setFont(new Font("Sylfaen", Font.BOLD, 15));
+		powerfield.setFont(new Font("Verdana", Font.BOLD, 15));
 		powerfield.setEditable(false);
 		panel_2.add(powerfield);
 		powerfield.setColumns(10);
@@ -159,12 +165,14 @@ public class CreationGUI extends JPanel{
 		panel_4 = new JPanel();
 		panel_2.add(panel_4);
 		
+		//Seduction label
 		JLabel lblSeduction = new JLabel("Seduction");
-		lblSeduction.setFont(new Font("Sylfaen", Font.BOLD, 15));
+		lblSeduction.setFont(new Font("Verdana", Font.BOLD, 15));
 		panel_2.add(lblSeduction);
 		
+		//Seduction value display
 		seductionfield = new JTextField();
-		seductionfield.setFont(new Font("Sylfaen", Font.BOLD, 15));
+		seductionfield.setFont(new Font("Verdana", Font.BOLD, 15));
 		seductionfield.setEditable(false);
 		panel_2.add(seductionfield);
 		seductionfield.setColumns(10);
@@ -172,12 +180,14 @@ public class CreationGUI extends JPanel{
 		panel_5 = new JPanel();
 		panel_2.add(panel_5);
 		
+		//Cunning label
 		JLabel lblCunning = new JLabel("Cunning");
-		lblCunning.setFont(new Font("Sylfaen", Font.BOLD, 15));
+		lblCunning.setFont(new Font("Verdana", Font.BOLD, 15));
 		panel_2.add(lblCunning);
 		
+		//Cunning value display
 		cunningfield = new JTextField();
-		cunningfield.setFont(new Font("Sylfaen", Font.BOLD, 15));
+		cunningfield.setFont(new Font("Verdana", Font.BOLD, 15));
 		cunningfield.setEditable(false);
 		panel_2.add(cunningfield);
 		cunningfield.setColumns(10);
@@ -189,15 +199,18 @@ public class CreationGUI extends JPanel{
 		panel_2.add(horizontalBox);
 		horizontalBox.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		
+		//Remaining label
 		JLabel lblAttributePoints = new JLabel("Remaining");
 		horizontalBox.add(lblAttributePoints);
-		lblAttributePoints.setFont(new Font("Sylfaen", Font.PLAIN, 15));
+		lblAttributePoints.setFont(new Font("Verdana", Font.PLAIN, 10));
 		
+		//Remaining value display
 		attPoints = new JTextField();
 		horizontalBox.add(attPoints);
-		attPoints.setFont(new Font("Sylfaen", Font.PLAIN, 15));
+		attPoints.setFont(new Font("Verdana", Font.PLAIN, 15));
 		attPoints.setEditable(false);
 		attPoints.setColumns(2);
+		attPoints.setMinimumSize(new Dimension(30, 15));
 		
 		panel_7 = new JPanel();
 		horizontalBox.add(panel_7);
@@ -317,9 +330,10 @@ public class CreationGUI extends JPanel{
 		panel_3.add(verticalBox);
 		
 		lblStrength = new JLabel("Strength");
+		lblStrength.setFont(new Font("Verdana", Font.BOLD, 12));
 		verticalBox.add(lblStrength);
 		
-		StrengthBox = new JComboBox();
+		StrengthBox = new JComboBox<Trait>();
 		StrengthBox.addItem(Trait.exhibitionist);
 		StrengthBox.addItem(Trait.romantic);
 		StrengthBox.addItem(Trait.dexterous);
@@ -346,9 +360,10 @@ public class CreationGUI extends JPanel{
 		verticalBox.add(separator_2);
 		
 		lblWeakness = new JLabel("Weakness");
+		lblWeakness.setFont(new Font("Verdana", Font.BOLD, 12));
 		verticalBox.add(lblWeakness);
 		
-		WeaknessBox = new JComboBox();
+		WeaknessBox = new JComboBox<Trait>();
 		WeaknessBox.addItem(Trait.insatiable);
 		WeaknessBox.addItem(Trait.imagination);
 		WeaknessBox.addItem(Trait.achilles);
@@ -356,6 +371,7 @@ public class CreationGUI extends JPanel{
 		WeaknessBox.addItem(Trait.lickable);
 		WeaknessBox.addItem(Trait.naive);
 		WeaknessBox.addItem(Trait.footfetishist);
+		WeaknessBox.addItem(Trait.direct);
 		WeaknessBox.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -379,39 +395,38 @@ public class CreationGUI extends JPanel{
 		remaining = 20 - power - seduction - cunning;
 		refresh();
 	}
-	private void refresh(){
+	private void refresh()
+	{
 		powerfield.setText(""+power);
 		seductionfield.setText(""+seduction);
 		cunningfield.setText(""+cunning);
 		attPoints.setText(""+remaining);
-		if(remaining <= 0){
+		if(remaining <= 0)
+		{
 			btnPowPlus.setEnabled(false);
 			btnSedPlus.setEnabled(false);
 			btnCunPlus.setEnabled(false);
 		}
-		else{
+		else
+		{
 			btnPowPlus.setEnabled(true);
 			btnSedPlus.setEnabled(true);
 			btnCunPlus.setEnabled(true);
 		}
-		if(power <= 1){
+		
+		if(power <= 1)
 			btnPowMin.setEnabled(false);
-		}
-		else{
+		else
 			btnPowMin.setEnabled(true);
-		}
-		if(seduction <= 1){
+		
+		if(seduction <= 1)
 			btnSedMin.setEnabled(false);
-		}
-		else{
+		else
 			btnSedMin.setEnabled(true);
-		}
-		if(cunning <= 1){
+		
+		if(cunning <= 1)
 			btnCunMin.setEnabled(false);
-		}
-		else{
+		else
 			btnCunMin.setEnabled(true);
-		}
 	}
-
 }
