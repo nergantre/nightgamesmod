@@ -41,6 +41,7 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -67,6 +68,8 @@ import javax.swing.text.DefaultCaret;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class GUI extends JFrame implements Observer {
 
@@ -125,26 +128,42 @@ public class GUI extends JFrame implements Observer {
 	private JMenuItem mntmQuitMatch;
 	private boolean skippedFeat;
 
-	public GUI() {
+	public GUI()
+	{
+		try
+		{
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
 		setBackground(Color.GRAY);
 		setDefaultCloseOperation(3);
-		if (Toolkit.getDefaultToolkit().getScreenSize().getHeight() >= 1000) {
+		
+		if (Toolkit.getDefaultToolkit().getScreenSize().getHeight() >= 1000)
 			height = 900;
-		} else {
+		else
 			height = 700;
-		}
-		if (Toolkit.getDefaultToolkit().getScreenSize().getWidth() >= 1600) {
+		
+		if (Toolkit.getDefaultToolkit().getScreenSize().getWidth() >= 1600)
 			width = 1600;
-		} else {
+		else
 			width = 1024;
-		}
+		
 		setPreferredSize(new Dimension(width, height));
 		getContentPane().setLayout(new BoxLayout(getContentPane(), 1));
+		
 		JMenuBar menuBar = new JMenuBar();
+		UIManager.put("MenuItem.background", Color.DARK_GRAY);
+		UIManager.put("MenuItem.foreground", Color.WHITE);
+		//UIManager.put("MenuItem.border", BorderFactory.createLineBorder(Color.black, 1));
+		//UIManager.put("MenuItem.borderPainted", true);
+		UIManager.put("MenuItem.opaque", true);
 		setJMenuBar(menuBar);
-		JMenuItem mntmNewgame = new JMenuItem("NewGame");
-		mntmNewgame.setForeground(Color.WHITE);
-		mntmNewgame.setBackground(Color.DARK_GRAY);
+		
+		JMenuItem mntmNewgame = new JMenuItem("New Game");
 		mntmNewgame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (Global.inGame()) {
@@ -158,18 +177,16 @@ public class GUI extends JFrame implements Observer {
 			}
 		});
 		menuBar.add(mntmNewgame);
+		
 		JMenuItem mntmLoad = new JMenuItem("Load");
-		mntmLoad.setForeground(Color.WHITE);
-		mntmLoad.setBackground(Color.DARK_GRAY);
 		menuBar.add(mntmLoad);
 		mntmLoad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Global.load();
 			}
 		});
+		
 		JMenuItem mntmOptions = new JMenuItem("Options");
-		mntmOptions.setForeground(Color.WHITE);
-		mntmOptions.setBackground(Color.DARK_GRAY);
 		menuBar.add(mntmOptions);
 		optionspanel = new JPanel();
 		optionspanel.setLayout(new GridLayout(0, 3, 0, 0));
@@ -247,7 +264,10 @@ public class GUI extends JFrame implements Observer {
 		sldMalePref.setMinorTickSpacing(1);
 		sldMalePref.setPaintTicks(true);
 		sldMalePref.setPaintLabels(true);
-		sldMalePref.setLabelTable(new Hashtable<Integer, JLabel>() {
+		sldMalePref.setLabelTable(new Hashtable<Integer, JLabel>()
+		{
+			private static final long serialVersionUID = -844424944631584044L;
+
 			{
 				put(0, new JLabel("Female"));
 				put(5, new JLabel("Mixed"));
@@ -255,8 +275,7 @@ public class GUI extends JFrame implements Observer {
 			}
 		});
 		sldMalePref.setValue(Math.round(Global.getValue(Flag.malePref)));
-		sldMalePref.setToolTipText("This setting affects the gender your opponents will gravitate towards once that"
-				+ " option becomes available.");
+		sldMalePref.setToolTipText("This setting affects the gender your opponents will gravitate towards once that option becomes available.");
 		sldMalePref.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				Global.setCounter(Flag.malePref, sldMalePref.getValue());
@@ -351,15 +370,12 @@ public class GUI extends JFrame implements Observer {
 				}
 			}
 		});
+		
 		JMenuItem mntmCredits = new JMenuItem("Credits");
-		mntmCredits.setForeground(Color.WHITE);
-		mntmCredits.setBackground(Color.DARK_GRAY);
 		menuBar.add(mntmCredits);
 
 		mntmQuitMatch = new JMenuItem("Quit Match");
 		mntmQuitMatch.setEnabled(false);
-		mntmQuitMatch.setForeground(Color.WHITE);
-		mntmQuitMatch.setBackground(Color.DARK_GRAY);
 		mntmQuitMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int result = JOptionPane.showConfirmDialog(GUI.this,
@@ -759,23 +775,21 @@ public class GUI extends JFrame implements Observer {
 		textPane.select(x, x);
 	}
 
-	public void message(String text) {
-		if (text.trim().length() == 0) {
+	public void message(String text)
+	{
+		if (text.trim().length() == 0)
 			return;
-		}
-		// this.textPane.setText(this.textPane.getText() + "<html><font
-		// color='white'>"+text + "</span>\n");
+		
 		HTMLDocument doc = (HTMLDocument) textPane.getDocument();
 		HTMLEditorKit editorKit = (HTMLEditorKit) textPane.getEditorKit();
-		try {
+		
+		try
+		{
 			editorKit.insertHTML(doc, doc.getLength(),
-					"<font face='Georgia'><font color='white'><font size='" + fontsize + "'>" + text + "<br>", 0, 0,
-					null);
-		} catch (BadLocationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+					"<font face='Georgia'><font color='white'><font size='" + fontsize + "'>" + text + "<br>", 0, 0, null);
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 		/*
