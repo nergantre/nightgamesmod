@@ -18,8 +18,7 @@ public class Airi extends BasePersonality {
 	 */
 	private static final long serialVersionUID = -8169646189131720872L;
 	public Airi(){
-		super();
-		character = new NPC("Airi",10,this);
+		super("Airi",10);
 		character.change(Modifier.normal);
 		character.setTrophy(Item.AiriTrophy);
 		preferredCockMod = CockMod.slimy;

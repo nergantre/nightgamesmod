@@ -14,8 +14,7 @@ import nightgames.items.clothing.Clothing;
 
 public class Yui extends BasePersonality {
 	public Yui(){
-		super();
-		character = new NPC("Yui",1,this);
+		super("Yui",1);
 		character.outfitPlan.add(Clothing.getByID("bra"));
 		character.outfitPlan.add(Clothing.getByID("Tshirt"));
 		character.outfitPlan.add(Clothing.getByID("panties"));

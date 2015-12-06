@@ -19,8 +19,7 @@ public class Eve extends BasePersonality {
 	 */
 	private static final long serialVersionUID = -8169646189131720872L;
 	public Eve(){
-		super();
-		character = new NPC("Eve",10,this);
+		super("Eve",10);
 		character.outfitPlan.add(Clothing.getByID("tanktop"));
 		character.outfitPlan.add(Clothing.getByID("crotchlesspanties"));
 		character.outfitPlan.add(Clothing.getByID("jeans"));

@@ -20,8 +20,7 @@ public class Angel extends BasePersonality {
 	 */
 	private static final long serialVersionUID = -8169646189131720872L;
 	public Angel(){
-		super();
-		character = new NPC("Angel",1,this);
+		super("Angel",1);
 		preferredCockMod = CockMod.blessed;
 		character.outfitPlan.add(Clothing.getByID("Tshirt"));
 		character.outfitPlan.add(Clothing.getByID("bra"));

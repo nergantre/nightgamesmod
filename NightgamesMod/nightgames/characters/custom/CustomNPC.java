@@ -26,11 +26,10 @@ public class CustomNPC extends BasePersonality {
 	private NPCData data;
 	private static final long serialVersionUID = -8169646189131720872L;
 	public CustomNPC(NPCData data){
-		super();
+		super(data.getName(),data.getStats().level);
 		this.data = data;
 		growth = data.getGrowth();
 		preferredAttributes = new ArrayList<PreferredAttribute>(data.getPreferredAttributes());
-		character = new NPC(data.getName(),data.getStats().level,this);
 		character.outfitPlan.addAll(data.getTopOutfit());
 		character.outfitPlan.addAll(data.getBottomOutfit());
 		character.closet.addAll(character.outfitPlan);

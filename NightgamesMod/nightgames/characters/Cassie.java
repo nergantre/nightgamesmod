@@ -25,8 +25,7 @@ public class Cassie extends BasePersonality {
 	 */
 	private static final long serialVersionUID = 8601852023164119671L;
 	public Cassie(){
-		super();
-		character = new NPC("Cassie",1,this);
+		super("Cassie", 1);
 		preferredCockMod = CockMod.runic;
 		character.outfitPlan.add(Clothing.getByID("bra"));
 		character.outfitPlan.add(Clothing.getByID("blouse"));

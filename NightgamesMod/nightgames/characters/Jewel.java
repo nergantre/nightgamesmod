@@ -23,8 +23,7 @@ public class Jewel extends BasePersonality {
 	 */
 	private static final long serialVersionUID = 6677748046858370216L;
 	public Jewel(){
-		super();
-		character = new NPC("Jewel",1,this);
+		super("Jewel",1);
 		preferredCockMod = CockMod.enlightened;
 		character.outfitPlan.add(Clothing.getByID("bra"));
 		character.outfitPlan.add(Clothing.getByID("tanktop"));

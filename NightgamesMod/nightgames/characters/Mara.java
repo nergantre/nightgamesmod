@@ -21,8 +21,7 @@ public class Mara extends BasePersonality  {
 	 */
 	private static final long serialVersionUID = -3812726803607189573L;
 	public Mara(){
-		super();
-		character = new NPC("Mara",1,this);
+		super("Mara",1);
 		preferredCockMod = CockMod.bionic;
 		character.outfitPlan.add(Clothing.getByID("bra"));
 		character.outfitPlan.add(Clothing.getByID("Tshirt"));

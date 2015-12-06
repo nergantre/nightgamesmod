@@ -24,8 +24,7 @@ public class Kat extends BasePersonality {
 	 */
 	private static final long serialVersionUID = -8169646189131720872L;
 	public Kat(){
-		super();
-		character = new NPC("Kat",10,this);
+		super("Kat",10);
 		preferredCockMod = CockMod.primal;
 		character.outfitPlan.add(Clothing.getByID("bra"));
 		character.outfitPlan.add(Clothing.getByID("Tshirt"));

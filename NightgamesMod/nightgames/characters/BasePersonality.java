@@ -35,7 +35,8 @@ public abstract class BasePersonality implements Personality {
 		Optional<Attribute> getPreferred(Character c);
 	}
 
-	public BasePersonality() {
+	public BasePersonality(String name, int level) {
+		this.character = new NPC(name, level, this);
 		growth = new Growth();
 		preferredCockMod = CockMod.error;
 		preferredAttributes = new ArrayList<PreferredAttribute>();

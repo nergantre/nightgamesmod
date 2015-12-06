@@ -20,8 +20,7 @@ public class Reyka extends BasePersonality {
 	private static final long serialVersionUID = 8553663088141308399L;
 
 	public Reyka() {
-		super();
-		this.character = new NPC("Reyka", 10, this);
+		super("Reyka", 10);
 		preferredCockMod = CockMod.incubus;
 		this.character.outfitPlan.add(Clothing.getByID("tanktop"));
 		this.character.outfitPlan.add(Clothing.getByID("miniskirt"));
