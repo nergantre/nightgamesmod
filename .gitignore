@@ -4,3 +4,4 @@ nightgames_log.txt
 *.ngs
 *.iml
 .idea
+out
