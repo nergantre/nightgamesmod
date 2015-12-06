@@ -129,16 +129,7 @@ public class GUI extends JFrame implements Observer {
 	private boolean skippedFeat;
 
 	public GUI()
-	{
-		try
-		{
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		
+	{	
 		setBackground(Color.GRAY);
 		setDefaultCloseOperation(3);
 		
