@@ -10,6 +10,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.Trait;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.JSONUtils;
 import nightgames.skills.Blowjob;
@@ -29,6 +30,7 @@ public class FluidAddiction extends DurationStatus {
 		this.stacks = 1;
 		activated = 0;
 		flag(Stsflag.fluidaddiction);
+		flag(Stsflag.purgable);
 	}
 
 	public FluidAddiction(Character affected, Character target) {
@@ -128,7 +130,7 @@ public class FluidAddiction extends DurationStatus {
 	}
 
 	@Override
-	public double pleasure(Combat c, double x) {
+	public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x) {
 		return 0;
 	}
 

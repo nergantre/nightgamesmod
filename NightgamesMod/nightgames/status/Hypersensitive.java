@@ -4,12 +4,14 @@ import org.json.simple.JSONObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 
 public class Hypersensitive extends DurationStatus {
 	public Hypersensitive(Character affected) {
 		super("Hypersensitive", affected, 20);
 		flag(Stsflag.hypersensitive);
+		flag(Stsflag.purgable);
 	}
 
 	@Override
@@ -52,7 +54,7 @@ public class Hypersensitive extends DurationStatus {
 	}
 
 	@Override
-	public double pleasure(Combat c, double x) {
+	public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x) {
 		return x/3;
 	}
 

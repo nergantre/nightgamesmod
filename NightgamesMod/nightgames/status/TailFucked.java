@@ -75,7 +75,7 @@ public class TailFucked extends Status {
 	}
 
 	@Override
-	public double pleasure(Combat c, double x) {
+	public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x) {
 		return 0;
 	}
 

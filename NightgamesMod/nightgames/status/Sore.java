@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.JSONUtils;
 
@@ -12,6 +13,7 @@ public class Sore extends DurationStatus {
 	public Sore(Character affected, int duration) {
 		super("Sore", affected, duration);
 		this.flag(Stsflag.sore);
+		flag(Stsflag.purgable);
 	}
 
 	@Override
@@ -25,7 +27,7 @@ public class Sore extends DurationStatus {
 
 	@Override
 	public float fitnessModifier () {
-		return -1f;
+		return -3f;
 	}
 	
 	@Override
@@ -37,22 +39,22 @@ public class Sore extends DurationStatus {
 	public int regen(Combat c) {
 		super.regen(c);
 		affected.emote(Emotion.nervous,10);
-		return -1;		
+		return -affected.getStamina().max()/20;		
 	}
 
 	@Override
 	public int damage(Combat c, int x) {
-		return 0;
+		return 5;
 	}
 
 	@Override
-	public double pleasure(Combat c, double x) {
+	public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x) {
 		return 0;
 	}
 
 	@Override
 	public int weakened(int x) {
-		return 0;
+		return x;
 	}
 
 	@Override
@@ -62,22 +64,22 @@ public class Sore extends DurationStatus {
 
 	@Override
 	public int evade() {
-		return 0;
+		return -10;
 	}
 
 	@Override
 	public int escape() {
-		return 0;
+		return -10;
 	}
 
 	@Override
 	public int gainmojo(int x) {
-		return 0;
+		return -x/2;
 	}
 
 	@Override
 	public int spendmojo(int x) {
-		return 0;
+		return x * 2;
 	}
 
 	@Override

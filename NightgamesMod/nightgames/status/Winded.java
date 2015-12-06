@@ -5,16 +5,18 @@ import org.json.simple.JSONObject;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 
 public class Winded extends DurationStatus {
 	public Winded(Character affected) {
-		super("Winded", affected, 2);
-		flag(Stsflag.stunned);
+		this(affected, 2);
 	}
+
 	public Winded(Character affected, int duration) {
 		super("Winded", affected, duration);
 		flag(Stsflag.stunned);
+		flag(Stsflag.purgable);
 	}
 
 	@Override
@@ -66,7 +68,7 @@ public class Winded extends DurationStatus {
 	}
 
 	@Override
-	public double pleasure(Combat c, double x) {
+	public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x) {
 		return 0;
 	}
 

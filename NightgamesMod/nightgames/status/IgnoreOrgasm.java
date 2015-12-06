@@ -4,6 +4,7 @@ import org.json.simple.JSONObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.JSONUtils;
 
@@ -45,7 +46,7 @@ public class IgnoreOrgasm extends DurationStatus {
 	}
 
 	@Override
-	public double pleasure(Combat c, double x) {
+	public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x) {
 		if (affected.getArousal().isFull()) {
 			return -x*9/10;
 		}

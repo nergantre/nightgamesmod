@@ -5,6 +5,8 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.items.clothing.ClothingSlot;
+import nightgames.items.clothing.ClothingTrait;
 
 import org.json.simple.JSONObject;
 
@@ -73,7 +75,7 @@ public class GenericBodyPart implements BodyPart {
 		else
 			return "normal " +desc;
 	}
-	
+
 	@Override
 	public String toString() {
 		return fullDescribe(null);
@@ -170,7 +172,16 @@ public class GenericBodyPart implements BodyPart {
 	@Override
 	public double applyBonuses(Character self, Character opponent,
 			BodyPart target, double damage, Combat c) {
-		return 0;
+		int bonus = 0;
+		if (self.has(ClothingTrait.nursegloves) && type.equals("hands")) {
+			c.write(self, Global.format("{self:name-possessive} rubber gloves provide an unique sensation as {self:subject-action:run|runs} {self:possessive} hands over {other:possessive} " +target.describe(opponent), self, opponent));
+			bonus += 5 + Global.random(5);
+			if (Global.random(5) == 0) {
+				c.write(self, "Unfortunately, the gloves wear out with their usage.");
+				self.shred(ClothingSlot.hands);
+			}
+		}
+		return bonus;
 	}
 
 	@Override

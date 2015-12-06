@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
+import nightgames.characters.body.FacePart;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -41,6 +42,7 @@ public class Mara extends BasePersonality  {
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.b);
 		character.body.add(PussyPart.normal);
+		character.body.add(new FacePart(.1, 1.1));
 		character.body.finishBody(CharacterSex.female);
 	}
 

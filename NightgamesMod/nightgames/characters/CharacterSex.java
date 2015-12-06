@@ -6,7 +6,7 @@ public enum CharacterSex {
 	male("male"),
 	female("female"),
 	herm("hermaphrodite"),
-	asexual("asexual (warning: untested)");
+	asexual("asexual");
 
 	private String desc;
 

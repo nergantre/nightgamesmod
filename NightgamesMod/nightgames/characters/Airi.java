@@ -2,6 +2,7 @@ package nightgames.characters;
 
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
+import nightgames.characters.body.FacePart;
 import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TentaclePart;
@@ -46,6 +47,8 @@ public class Airi extends BasePersonality {
 		character.body.add(new TentaclePart("gooey feelers", "hands", "slime", 0.0, 1.0, 1.0));
 		character.body.add(new TentaclePart("gooey feelers", "feet", "slime", 0.0, 1.0, 1.0));
 		character.body.add(new TentaclePart("slime filaments", "pussy", "slime", 0.0, 1.0, 1.0));
+		//mostly feminine face
+		character.body.add(new FacePart(.1, 2.3));
 		character.body.finishBody(CharacterSex.female);
 		}
 

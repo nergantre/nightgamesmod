@@ -77,6 +77,7 @@ public class Body implements Cloneable {
 	transient public Character character;
 	transient public BodyPart lastPleasuredBy;
 	transient public BodyPart lastPleasured;
+	public double baseFemininity;
 
 	public Body() {
 		bodyParts = new LinkedHashSet<BodyPart>();
@@ -463,7 +464,7 @@ public class Body implements Cloneable {
 		double origBase = bonusDamage+magnitude;
 
 		for(Status s: character.status){
-			bonusDamage+=s.pleasure(c, origBase);
+			bonusDamage+=s.pleasure(c, with, target, origBase);
 		}
 		double base = (magnitude + bonusDamage);
 		double multiplier = Math.max(0, 1 + ((sensitivity - 1) + (pleasure - 1) + (perceptionBonus - 1)));
@@ -538,7 +539,40 @@ public class Body implements Cloneable {
 		}
 	}
 
+	public double getFemininity() {
+		double femininity = baseFemininity;
+		femininity += getLargestBreasts().size / ((double)BreastsPart.maximumSize().size);
+		femininity += getCurrentParts().stream().mapToDouble(part -> part.getFemininity(character)).sum();
+		return femininity;
+	}
+
 	public void finishBody(CharacterSex sex) {
+		switch (sex) {
+		case female:
+			baseFemininity += 2;
+			if (!has("face")) {
+				add(new FacePart(0, 2));
+			}
+			break;
+		case male:
+			baseFemininity -= 2;
+			if (!has("face")) {
+				add(new FacePart(0, -2));
+			}
+			break;
+		case herm:
+			baseFemininity += 1;
+			if (!has("face")) {
+				add(new FacePart(0, 0));
+			}
+			break;
+		case asexual:
+			baseFemininity += 0;
+			if (!has("face")) {
+				add(new FacePart(0, 0));
+			}
+			break;
+		}
 		if (sex == CharacterSex.female|| sex == CharacterSex.herm) {
 			if (get("pussy").size() == 0) {
 				add(PussyPart.normal);
@@ -575,6 +609,7 @@ public class Body implements Cloneable {
 	public JSONObject save() {
 		JSONObject bodyObj = new JSONObject();
 		bodyObj.put("hotness", hotness);
+		bodyObj.put("femininity", baseFemininity);
 		JSONArray partsArr = new JSONArray();
 		for (BodyPart part : bodyParts) {
 			JSONObject obj = part.save();
@@ -584,23 +619,36 @@ public class Body implements Cloneable {
 		bodyObj.put("parts", partsArr);
 		return bodyObj;
 	}
+	
+	public static BodyPart loadPart(JSONObject obj) {
+		String classType = (String) obj.get("class");
+		return prototypes.get(classType).load(obj);
+	}
 
 	public void loadParts(JSONArray partsArr) {
 		for (Object part : partsArr) {
 			JSONObject obj = (JSONObject) part;
-			String classType = (String) obj.get("class");
-			this.add(prototypes.get(classType).load(obj));
+			this.add(loadPart(obj));
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public static Body load(JSONObject bodyObj, Character character) {
 		double hotness = ((Number)bodyObj.get("hotness")).doubleValue();
 		Body body = new Body(character, hotness);
 		body.loadParts((JSONArray) bodyObj.get("parts"));
+		double defaultFemininity = 0;
+		if (body.has("pussy")) {
+			defaultFemininity += 2;
+		}
+		if (body.has("cock")) {
+			defaultFemininity -= 2;
+		}
+		double femininity = ((Number)bodyObj.getOrDefault("femininity", defaultFemininity)).doubleValue();
+		body.baseFemininity = femininity;
 		return body;
 	}
-
-	public void tick(Combat c) {
+	private void advancedTemporaryParts(Combat c) {
 		ArrayList<PartReplacement> expired = new ArrayList<Body.PartReplacement>();
 		for (PartReplacement r : replacements) {
 			r.duration -= 1;
@@ -658,6 +706,9 @@ public class Body implements Cloneable {
 				Global.gui().message(sb.toString());
 			}
 		}
+	}
+	public void tick(Combat c) {
+		advancedTemporaryParts(c);
 		if (character != null)
 			updateCharacter();
 	}
@@ -742,4 +793,10 @@ public class Body implements Cloneable {
 		return res;
 	}
 
+	public void purge(Combat c) {
+		for (PartReplacement r : replacements) {
+			r.duration = 0;
+		}
+		advancedTemporaryParts(c);		
+	}
 }

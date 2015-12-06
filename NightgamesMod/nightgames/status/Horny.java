@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.global.JSONUtils;
@@ -18,6 +19,7 @@ public class Horny extends DurationStatus {
 		this.source = source;
 		this.magnitude = magnitude;
 		flag(Stsflag.horny);
+		flag(Stsflag.purgable);
 	}
 
 	public String toString() {
@@ -86,7 +88,7 @@ public class Horny extends DurationStatus {
 	}
 
 	@Override
-	public double pleasure(Combat c, double x) {
+	public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x) {
 		return 0;
 	}
 

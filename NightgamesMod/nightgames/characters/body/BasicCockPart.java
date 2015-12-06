@@ -11,6 +11,7 @@ import nightgames.status.Enthralled;
 import nightgames.status.FluidAddiction;
 import nightgames.status.Horny;
 import nightgames.status.Hypersensitive;
+import nightgames.status.Sensitized;
 import nightgames.status.Stsflag;
 import nightgames.status.Winded;
 
@@ -182,12 +183,21 @@ public enum BasicCockPart implements CockPart {
 	@Override
 	public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		double bonus = 0;
-		if (opponent.has(Trait.dickhandler)) {
+		if (opponent.has(Trait.dickhandler) || opponent.has(Trait.anatomyknowledge)) {
 			c.write(opponent,
 					Global.format(
 							"{other:NAME-POSSESSIVE} expert handling of {self:name-possessive} cock causes {self:subject} to shudder uncontrollably.",
 							self, opponent));
-			bonus += 5;
+			if (opponent.has(Trait.dickhandler)) {
+				bonus += 5;
+			}
+			if (opponent.has(Trait.anatomyknowledge)) {
+				bonus += 5;
+			}
+		}
+		if (self.has(Trait.druglacedprecum) && !opponent.isPartProtected(target)) {
+			opponent.add(new Sensitized(opponent, target, .2, 2.0, 20));
+			c.write(self, Global.format("{self:NAME-POSSESSIVE} drug-laced precum is affecting {other:direct-object}.", self, opponent));
 		}
 		return bonus;
 	}

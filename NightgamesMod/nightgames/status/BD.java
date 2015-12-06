@@ -4,12 +4,14 @@ import org.json.simple.JSONObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 
 public class BD extends DurationStatus {
 	public BD(Character affected) {
 		super("Bondage", affected, 10);
 		flag(Stsflag.bondage);
+		flag(Stsflag.purgable);
 	}
 
 	@Override
@@ -50,7 +52,7 @@ public class BD extends DurationStatus {
 	}
 
 	@Override
-	public double pleasure(Combat c, double x) {
+	public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x) {
 		return affected.is(Stsflag.bound) ? x / 2 : 0;
 	}
 

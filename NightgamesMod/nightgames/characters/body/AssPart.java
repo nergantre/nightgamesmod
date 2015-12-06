@@ -14,16 +14,28 @@ public class AssPart extends GenericBodyPart {
 	 * 
 	 */
 	public static AssPart generic = new AssPart("ass", 0, 1.2, 1);
+	public double size;
+	public static double SIZE_SMALL = 0;
+	public static double SIZE_NORMAL = 1;
+	public static double SIZE_BIG = 2;
+	public static double SIZE_HUGE = 3;
 
 	public AssPart(String desc, String longDesc, double hotness,
-			double pleasure, double sensitivity, boolean notable) {
+			double pleasure, double sensitivity, double size, boolean notable) {
 		super(desc, longDesc, hotness, pleasure, sensitivity, notable, "ass",
 				"a ");
+		this.size = size;
 	}
 
 	public AssPart(String desc, double hotness, double pleasure,
 			double sensitivity) {
 		super(desc, "", hotness, pleasure, sensitivity, false, "ass", "a ");
+		this.size = SIZE_NORMAL;
+	}
+
+	@Override
+	public double getFemininity(Character c) {
+		return size - SIZE_NORMAL;
 	}
 
 	@Override
@@ -66,6 +78,24 @@ public class AssPart extends GenericBodyPart {
 	}
 
 	@Override
+	public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
+		double bonus = 0;
+		if (opponent.has(Trait.asshandler) || opponent.has(Trait.anatomyknowledge)) {
+			c.write(opponent,
+					Global.format(
+							"{other:NAME-POSSESSIVE} expert handling of {self:name-possessive} ass causes {self:subject} to shudder uncontrollably.",
+							self, opponent));
+			if (opponent.has(Trait.asshandler)) {
+				bonus += 5;
+			}
+			if (opponent.has(Trait.anatomyknowledge)) {
+				bonus += 5;
+			}
+		}
+		return bonus;
+	}
+
+	@Override
 	public boolean isReady(Character c) {
 		return c.has(Trait.oiledass) || c.is(Stsflag.oiled);
 	}
@@ -84,7 +114,15 @@ public class AssPart extends GenericBodyPart {
 		return true;
 	}
 
+	@SuppressWarnings("unchecked")
+	public JSONObject saveToDict() {
+		JSONObject res = super.saveToDict();
+		res.put("size", size);
+		return res;
+	}
+
 	@Override
+	@SuppressWarnings("unchecked")
 	public BodyPart loadFromDict(JSONObject dict) {
 		try {
 			GenericBodyPart part = new AssPart(
@@ -92,7 +130,9 @@ public class AssPart extends GenericBodyPart {
 					(String) dict.get("descLong"),
 					((Number) dict.get("hotness")).doubleValue(),
 					((Number) dict.get("pleasure")).doubleValue(),
-					((Number) dict.get("sensitivity")).doubleValue(), false);
+					((Number) dict.get("sensitivity")).doubleValue(),
+					((Number) dict.getOrDefault("size", Double.valueOf(SIZE_NORMAL))).doubleValue(),
+					false);
 			return part;
 		} catch (ClassCastException e) {
 			System.err.println(e.getMessage());

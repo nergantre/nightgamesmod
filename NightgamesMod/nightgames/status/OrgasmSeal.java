@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.global.JSONUtils;
@@ -13,6 +14,7 @@ public class OrgasmSeal extends DurationStatus {
 	public OrgasmSeal(Character affected, int duration) {
 		super("Orgasm Sealed", affected, duration);
 		flag(Stsflag.orgasmseal);
+		flag(Stsflag.purgable);
 	}
 
 	@Override
@@ -60,7 +62,7 @@ public class OrgasmSeal extends DurationStatus {
 	}
 
 	@Override
-	public double pleasure(Combat c, double x) {
+	public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x) {
 		return 0;
 	}
 

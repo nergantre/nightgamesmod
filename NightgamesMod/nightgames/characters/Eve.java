@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BreastsPart;
+import nightgames.characters.body.FacePart;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -38,6 +39,8 @@ public class Eve extends BasePersonality {
 		character.body.add(BreastsPart.d);
 		character.body.add(BasicCockPart.big);
 		character.body.add(PussyPart.normal);
+		//somewhat androgynous face
+		character.body.add(new FacePart(.1, .9));
 		character.body.finishBody(CharacterSex.herm);
 	}
 

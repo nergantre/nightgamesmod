@@ -129,7 +129,7 @@ public class Cache implements Deployable {
 		}
 	}
 	public void calcReward(int level){
-		int value = level+Global.random(10);
+		int value = Global.random(Math.min(24, level / 2));
 		switch(value){
 		case 23:
 			reward.add(Item.Sprayer);
@@ -137,11 +137,14 @@ public class Cache implements Deployable {
 			reward.add(Item.Sprayer);
 			reward.add(Item.Tripwire);
 			reward.add(Item.Tripwire);
+			reward.add(Item.FaeScroll);
+			reward.add(Item.FaeScroll);
 		case 22:
 			reward.add(Item.SPotion);
 			reward.add(Item.SPotion);
 			reward.add(Item.Totem);
 			reward.add(Item.Aphrodisiac);
+			reward.add(Item.ExtremeAphrodisiac);
 			break;
 		case 21:
 			reward.add(Item.Rope);
@@ -149,17 +152,20 @@ public class Cache implements Deployable {
 			reward.add(Item.Rope);
 			reward.add(Item.Rope);
 			reward.add(Item.Tripwire);
+			reward.add(Item.FeralMusk);
 			break;
 		case 20:
 			reward.add(Item.Totem);
 			reward.add(Item.SPotion);
 			reward.add(Item.SPotion);
 			reward.add(Item.Lubricant);
+			reward.add(Item.HolyWater);
 			break;
 		case 19:
 			reward.add(Item.Handcuffs);
 			reward.add(Item.Handcuffs);
 			reward.add(Item.DisSol);
+			reward.add(Item.BioGel);
 			break;
 		case 18:
 			reward.add(Clothing.getByID("cup"));
@@ -167,16 +173,19 @@ public class Cache implements Deployable {
 		case 17:
 			reward.add(Item.SPotion);
 			reward.add(Item.SPotion);
+			reward.add(Item.RawAether);
 			break;
 		case 16:
 			reward.add(Item.Totem);
 			reward.add(Item.Handcuffs);
 			reward.add(Item.FaeScroll);
+			reward.add(Item.LubricatingOils);
 			break;
 		case 15:
 			reward.add(Item.SPotion);
 			reward.add(Item.Aphrodisiac);
 			reward.add(Item.Sprayer);
+			reward.add(Item.nectar);
 			break;
 		case 14:
 			reward.add(Item.Lubricant);

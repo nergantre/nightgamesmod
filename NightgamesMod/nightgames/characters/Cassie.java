@@ -7,6 +7,7 @@ import nightgames.actions.Action;
 import nightgames.actions.Movement;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
+import nightgames.characters.body.FacePart;
 import nightgames.characters.body.MouthPussyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
@@ -81,6 +82,8 @@ public class Cassie extends BasePersonality {
 		growth.addTrait(44, Trait.soulsucker);
 		growth.addTrait(47, Trait.pussyTraining2);
 		growth.addTrait(50, Trait.desensitized2);
+		//mostly feminine face, cute but not quite at Angel's level
+		character.body.add(new FacePart(.1, 2.9));
 		growth.actions.put(20, () -> {
 			character.body.addReplace(new MouthPussyPart(), 1);
 		});

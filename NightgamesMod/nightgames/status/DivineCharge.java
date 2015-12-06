@@ -6,6 +6,7 @@ import org.json.simple.JSONObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.body.BodyPart;
 import nightgames.characters.custom.requirement.EitherInsertedRequirement;
 import nightgames.characters.custom.requirement.InsertedRequirement;
 import nightgames.characters.custom.requirement.ReverseRequirement;
@@ -18,6 +19,7 @@ public class DivineCharge extends Status {
 	public DivineCharge(Character affected, double magnitude) {
 		super("Divine Charge", affected);
 		flag(Stsflag.divinecharge);
+		flag(Stsflag.purgable);
 		this.magnitude = magnitude;
 		requirements.add(new ReverseRequirement(Arrays.asList(new EitherInsertedRequirement(true))));
 	}
@@ -79,7 +81,7 @@ public class DivineCharge extends Status {
 	}
 
 	@Override
-	public double pleasure(Combat c, double x) {
+	public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x) {
 		return 0;
 	}
 

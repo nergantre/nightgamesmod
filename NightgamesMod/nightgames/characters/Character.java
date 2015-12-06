@@ -1334,7 +1334,10 @@ public abstract class Character extends Observable implements Cloneable {
 				opponent.add(c, new DivineCharge(opponent, 1));
 			}
 		}
-
+		if (opponent.has(Trait.sexualmomentum)) {
+			c.write(Global.capitalizeFirstLetter("<br><b>"+opponent.subjectAction("are more composed", "seems more composed") + " as " + nameOrPossessivePronoun() + " forced orgasm goes straight to " + opponent.possessivePronoun() + " ego.</b>"));
+			opponent.restoreWillpower(c, 10 + Global.random(10));
+		}
 		getArousal().empty();
 		if (has(Trait.insatiable)) {
 			arousal.restore((int) (arousal.max()*.2));
@@ -2538,5 +2541,17 @@ public abstract class Character extends Observable implements Cloneable {
 	}
 	public boolean isDemonic() {
 		return has(Trait.succubus) || body.get("cock").stream().anyMatch(part -> part.getMod() == PussyPart.succubus) || body.get("cock").stream().anyMatch(part -> part.getMod() == CockMod.incubus);
+	}
+	public boolean isPartProtected(BodyPart target) {
+		if (target.isType("hands") && has(ClothingTrait.nursegloves)) {
+			return true;
+		}
+		return false;
+	}
+	public void purge(Combat c) {
+		temporaryAddedTraits.clear();
+		temporaryRemovedTraits.clear();
+		body.purge(c);
+		status = new HashSet<Status>(status.stream().filter(s -> !s.flags().contains(Stsflag.purgable)).collect(Collectors.toSet()));
 	}
 }

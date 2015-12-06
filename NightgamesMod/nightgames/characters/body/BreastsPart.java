@@ -117,6 +117,11 @@ public enum BreastsPart implements BodyPart {
 		}
 	}
 
+	@Override
+	public double getFemininity(Character self) {
+		return 3 * ((double)size) / maximumSize().size;
+	}
+
 	public static BreastsPart maximumSize() {
 		BreastsPart max = flat;
 		for (BreastsPart b : BreastsPart.values()) {

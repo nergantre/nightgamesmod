@@ -535,9 +535,9 @@ public class Combat extends Observable implements Serializable, Cloneable{
 	public void write(Character user, String text) {
 		text = Global.capitalizeFirstLetter(text);
 		if (text.length() > 0) {
-			if(user.human()){
+			if(user.human()) {
 				message=message+"<br><font color='rgb(200,200,255)'>"+text+"<font color='white'>";
-			}else{
+			} else {
 				message=message+"<br><font color='rgb(255,200,200)'>"+text+"<font color='white'>";
 			}
 			lastTalked = user;

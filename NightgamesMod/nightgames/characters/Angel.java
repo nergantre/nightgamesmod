@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
+import nightgames.characters.body.FacePart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.WingsPart;
 import nightgames.combat.Combat;
@@ -38,6 +39,8 @@ public class Angel extends BasePersonality {
 		character.plan = Plan.hunting;
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.dd);
+		//very feminine face
+		character.body.add(new FacePart(.1, 4.2));
 		character.body.add(PussyPart.normal);
 		character.body.finishBody(CharacterSex.female);
 	}

@@ -4,6 +4,7 @@ import org.json.simple.JSONObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.global.JSONUtils;
@@ -19,6 +20,7 @@ public class FiredUp extends DurationStatus {
 		this.part = part;
 		this.stack = 1;
 		flag(Stsflag.firedup);
+		flag(Stsflag.purgable);
 	}
 
 	public int getStack() {
@@ -93,7 +95,7 @@ public class FiredUp extends DurationStatus {
 	}
 
 	@Override
-	public double pleasure(Combat c, double x) {
+	public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x) {
 		return 0;
 	}
 

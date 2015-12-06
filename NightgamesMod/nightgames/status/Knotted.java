@@ -7,6 +7,7 @@ import org.json.simple.JSONObject;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.body.BodyPart;
 import nightgames.characters.custom.requirement.InsertedRequirement;
 import nightgames.characters.custom.requirement.ReverseRequirement;
 import nightgames.combat.Combat;
@@ -23,6 +24,7 @@ public class Knotted extends Status {
 		this.anal = anal;
 		requirements.add(new ReverseRequirement(Arrays.asList(new InsertedRequirement(true))));
 		flag(Stsflag.knotted);
+		flag(Stsflag.purgable);
 	}
 
 	@Override
@@ -60,7 +62,7 @@ public class Knotted extends Status {
 	}
 
 	@Override
-	public double pleasure(Combat c, double x) {
+	public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x) {
 		return 0;
 	}
 

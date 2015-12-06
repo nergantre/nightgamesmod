@@ -15,6 +15,7 @@ public enum Attribute {
 	Bio,
 	Divinity,
 	Willpower,
+	Medicine,
 	Technique;
 
 	public static boolean isBasic(Attribute a) {

@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
@@ -19,6 +20,7 @@ public class Enthralled extends DurationStatus {
 		timesRefreshed = 0;
 		this.master = master;
 		flag(Stsflag.enthralled);
+		flag(Stsflag.purgable);
 	}
 
 	@Override
@@ -114,7 +116,7 @@ public class Enthralled extends DurationStatus {
 	}
 
 	@Override
-	public double pleasure(Combat c, double paramInt) {
+	public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double paramInt) {
 		return paramInt/4;
 	}
 

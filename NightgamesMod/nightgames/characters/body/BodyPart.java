@@ -53,6 +53,10 @@ public interface BodyPart {
 	   </code>
 	*/
 	public int counterValue(BodyPart other);
+
+	public default double getFemininity(Character self) {
+		return 0;
+	}
 	
 	// Should be called whenever a combatant is penetrated in any way
 	public default void onStartPenetration(Combat c, Character self, Character opponent, BodyPart target) {

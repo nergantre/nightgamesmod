@@ -96,7 +96,11 @@ public enum Trait {
 	testosterone("Testosterone","More powerful muscles"), //Having a cock gives + to power
 	pussyhandler("Pussy Handler","Expert at pleasing the pussy"), //Bonus damage to pussies
 	dickhandler("Dick Handler","Expert at pleasing cocks"), //Bonus damage to cocks
-	
+	asshandler("Ass Handler","Adept at giving anal pleasure"), //Bonus damage to asses
+	sexualmomentum("Sexual Momentum", "Causing an orgasm with penetration goes straight to your ego"), //You regain some willpower when you cause a climax while fucking someone
+	anatomyknowledge("Anatomical Knowledge", "Advanced medical knowledge; find all the good spots"), //Increased damage when using finger / fuck skills
+	druglacedprecum("Drug-laced Precum", "Drugs in your precum are perfect for increasing an enemies sensitivity"), //Anybody part that comes into contact with your precum becomes increasingly sensitive for x turns.
+
 	darkpromises("Dark Promises","Can enthrall with the right words"), //whisper upgrade, can enthrall
 	energydrain("Energy Drain", "Drains energy during intercourse"),
 	objectOfWorship("Object Of Worship", "Opponents is periodically forced to worship your body.", new TraitDescription() {
@@ -145,7 +149,7 @@ public enum Trait {
 	autonomousPussy("Autonomous Pussy", "Her pussy instinctively forces anything inside of it to cum."),
 	//AI traits
 	submissive("Submissive", "Enjoys being the sub."),
-	
+	opportunist("Opportunist", "Always ready to stuff someone's backside."),
 	//Weaknesses
 	ticklish("Ticklish","Can be easily tickled into submission"), 	//more weaken damage and arousal from tickle
 	insatiable("Insatiable","One orgasm is never enough"), //arousal doesn't completely clear at end of match

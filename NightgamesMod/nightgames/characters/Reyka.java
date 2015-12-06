@@ -5,6 +5,7 @@ import java.util.Optional;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.EarPart;
+import nightgames.characters.body.FacePart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
@@ -51,6 +52,7 @@ public class Reyka extends BasePersonality {
 		character.body.add(TailPart.demonic);
 		character.body.add(WingsPart.demonic);
 		character.body.add(EarPart.pointed);
+		character.body.add(new FacePart(4.5, 1.1));
 		character.body.finishBody(CharacterSex.female);
 	}
 

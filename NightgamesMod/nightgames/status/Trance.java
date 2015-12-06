@@ -8,6 +8,7 @@ import org.json.simple.JSONObject;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.skills.Masturbate;
 import nightgames.skills.Piston;
@@ -18,6 +19,7 @@ public class Trance extends DurationStatus {
 	public Trance(Character affected, int duration) {
 		super("Trance", affected, duration);
 		flag(Stsflag.trance);
+		flag(Stsflag.purgable);
 	}
 	public Trance(Character affected) {
 		this(affected, 3);
@@ -86,7 +88,7 @@ public class Trance extends DurationStatus {
 	}
 
 	@Override
-	public double pleasure(Combat c, double x) {
+	public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x) {
 		return 0;
 	}
 

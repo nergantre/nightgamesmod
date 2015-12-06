@@ -14,6 +14,7 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.status.Abuff;
 import nightgames.status.Alluring;
+import nightgames.status.InducedEuphoria;
 import nightgames.status.Distorted;
 import nightgames.status.Energized;
 import nightgames.status.FluidAddiction;
@@ -74,6 +75,7 @@ public enum Item implements Loot {
 	ShockGlove	( "Shock Glove",800,"Delivers a safe, but painful electric shock", "a " ),
 	Aersolizer	( "Aerosolizer",500, "Turns a liquid into an unavoidable cloud of mist", "an "),
 	Battery		( "Battery",0,"Available energy to power electronic equipment","a "),
+	MedicalSupplies ("Medical Supplies", 0, "Basic medical supplies that contains a syringe, some bandages, and a pair of rubber gloves among others", ""),
 	semen		( "Semen",100 ,"A small bottle filled with cum. Kinda gross", "a bottle of ",
 			Arrays.asList((ItemEffect)
 					new ConditionalEffect(new GroupEffect(Arrays.asList((ItemEffect)
@@ -141,6 +143,7 @@ public enum Item implements Loot {
 			Arrays.asList((ItemEffect)
 					new GroupEffect(Arrays.asList((ItemEffect)
 							new BuffEffect("drink", "throw", new Trance(Global.noneCharacter(), 5)),
+							new BuffEffect("drink", "throw", new InducedEuphoria(Global.noneCharacter())),
 						new ResourceEffect("arouse", 50)
 						))),
 					5),

@@ -46,4 +46,7 @@ public enum Stsflag {
 	fucked,
 	pegged, 
 	firedup,
+	aphrodisiac,
+	sensitized,
+	purgable,
 }

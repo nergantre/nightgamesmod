@@ -5,12 +5,14 @@ import org.json.simple.JSONObject;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 
 public class Shamed extends DurationStatus {
 	public Shamed(Character affected) {
 		super("Shamed", affected, 4);
 		flag(Stsflag.shamed);
+		flag(Stsflag.purgable);
 	}
 
 	@Override
@@ -64,7 +66,7 @@ public class Shamed extends DurationStatus {
 	}
 
 	@Override
-	public double pleasure(Combat c, double x) {
+	public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x) {
 		return 0;
 	}
 

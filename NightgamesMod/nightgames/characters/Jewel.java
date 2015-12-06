@@ -8,6 +8,7 @@ import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
+import nightgames.characters.body.FacePart;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -44,6 +45,8 @@ public class Jewel extends BasePersonality {
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.c);
 		character.body.add(PussyPart.normal);
+		//fairly feminine face
+		character.body.add(new FacePart(.1, 1.9));
 		character.body.finishBody(CharacterSex.female);
 	}
 

@@ -58,6 +58,10 @@ public enum PussyPart implements BodyPart, BodyPartMod {
 	}
 
 	@Override
+	public double getFemininity(Character self) {
+		return 3;
+	}
+	@Override
 	public void describeLong(StringBuilder b, Character c) {
 		if (this == plant) {
 			b.append("A larger fleshy red flower is situated between ");
@@ -205,12 +209,17 @@ public enum PussyPart implements BodyPart, BodyPartMod {
 			opponent.add(c, new Horny(opponent, (int) Math.max(1, Math.floor(base / 5)), 5,
 					self.nameOrPossessivePronoun() + " feral musk"));
 		}
-		if (opponent.has(Trait.pussyhandler)) {
+		if (opponent.has(Trait.pussyhandler) || opponent.has(Trait.anatomyknowledge)) {
 			c.write(opponent,
 					Global.format(
 							"{other:NAME-POSSESSIVE} expert handling of {self:name-possessive} pussy causes {self:subject} to shudder uncontrollably.",
 							self, opponent));
-			bonus += 5;
+			if (opponent.has(Trait.pussyhandler)) {
+				bonus += 5;
+			}
+			if (opponent.has(Trait.anatomyknowledge)) {
+				bonus += 5;
+			}
 		}
 		return bonus;
 	}

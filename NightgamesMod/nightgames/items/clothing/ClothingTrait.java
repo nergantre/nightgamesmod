@@ -18,6 +18,7 @@ public enum ClothingTrait {
 	higherheels("Higher Heels","Impossible to run in unless you're used to it"),
 	tentacleUnderwear("Tentacle Underwear","Wearing tentacle underwear"),
 	tentacleSuit("Tentacle Suit","Wearing a tentacle suit"),
+	nursegloves("Nurse's Gloves","Wearing a pair of rubber nitrile gloves."),
 	stylish("Stylish","Better mojo gain"),
 	lame("Lame","Small mojo penalty"),
 	none("","");
