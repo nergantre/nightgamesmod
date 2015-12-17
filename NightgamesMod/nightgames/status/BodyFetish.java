@@ -58,23 +58,23 @@ public class BodyFetish extends Status {
 	public String describe(Combat c) {
 		String desc = "";
 		if (magnitude < .26) {
-			desc = "brief ";
+			desc = "a slight ";
 		} else if (magnitude < .51) {
 			desc = "";
 		} else if (magnitude < .99) {
-			desc = "fierce ";
+			desc = "a fierce ";
 		} else {
-			desc = "overwhelming ";
+			desc = "an overwhelming ";
 		}
 		String magString = Global.formatDecimal(magnitude);
 		if(affected.human()){
 			if (origin != null && c != null && c.getOther(affected) == origin) {
-				return Global.capitalizeFirstLetter(desc + "fantasies of worshiping " + origin.nameOrPossessivePronoun() + " " + part + " run through your mind (" + magString +").");
+				return Global.capitalizeFirstLetter(desc + "fantasies of worshipping " + origin.nameOrPossessivePronoun() + " " + part + " run through your mind (" + magString +").");
 			} else {
-				return Global.capitalizeFirstLetter(desc + "fantasies of worshiping " + part + " run through your mind (" + magString +").");
+				return Global.capitalizeFirstLetter(desc + "fantasies of worshipping " + part + " run through your mind (" + magString +").");
 			}
 		} else {
-			return affected.name()+" is affected by a " + desc + part + " fetish (" + magString +").";
+			return affected.name()+" is affected by " + desc + part + " fetish (" + magString +").";
 		}
 	}
 

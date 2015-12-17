@@ -20,7 +20,8 @@ public class Cunnilingus extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.crotchAvailable()&&target.hasPussy()&&c.getStance().oral(getSelf())&&getSelf().canAct()&&!c.getStance().vaginallyPenetrated(target);
+		boolean canUse = (c.getStance().enumerate() == Stance.facesitting && getSelf().canRespond()) || getSelf().canAct();
+		return target.crotchAvailable()&&target.hasPussy()&&c.getStance().oral(getSelf())&&canUse&&!c.getStance().vaginallyPenetrated(target);
 	}
 
 	@Override
@@ -40,12 +41,13 @@ public class Cunnilingus extends Skill {
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		Result results = Result.normal;
+		boolean facesitting = c.getStance().enumerate()== Stance.facesitting;
 		int m = 10 + Global.random(8);
 		if(getSelf().has(Trait.silvertongue)) {
 			m += 4;
 		}
 		int i = 0;
-		if(c.getStance().mobile(target) && !target.roll(this, c, accuracy(c))) {
+		if(!facesitting && c.getStance().mobile(target) && !target.roll(this, c, accuracy(c))) {
 			results = Result.miss;
 		} else { 
 			if (target.has(Trait.entrallingjuices) && Global.random(4) == 0 && !target.wary()) {
@@ -54,7 +56,7 @@ public class Cunnilingus extends Skill {
 				i = -1;
 				this.getSelf().tempt(c, target, 5);
 			}
-			if (c.getStance().enumerate()== Stance.facesitting) {
+			if (facesitting) {
 				results = Result.reverse;
 			}
 		}

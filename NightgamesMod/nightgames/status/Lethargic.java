@@ -16,6 +16,10 @@ public class Lethargic extends DurationStatus {
 		flag(Stsflag.lethargic);
 	}
 
+	public boolean lingering(){
+		return true;
+	}
+
 	@Override
 	public String describe(Combat c) {
 		if(affected.human()){

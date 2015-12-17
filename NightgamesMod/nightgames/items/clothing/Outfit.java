@@ -220,11 +220,21 @@ public class Outfit {
 		Clothing arms = getTopOfSlot(ClothingSlot.arms, 3);
 		Clothing legs = getTopOfSlot(ClothingSlot.legs, 3);
 		Clothing feet = getTopOfSlot(ClothingSlot.feet, 3);
-		
+
+		Set<Clothing> others = new LinkedHashSet<Clothing>();
+		if(arms != null) {
+			others.add(arms);
+		}
+		if(legs != null) {
+			others.add(legs);
+		}
+		if(feet != null) {
+			others.add(feet);
+		}
 		if (over != null) {
 			sb.append("Under {self:possessive} " + over.getName() + ", ");
 		}
-		if(isNude()){
+		if(top == null && bottom == null && others.isEmpty()){
 			sb.append("{self:subject-action:are|is} completely naked.<br>");
 		} else {
 			boolean addedTop = false;
@@ -251,16 +261,6 @@ public class Outfit {
 						sb.append(".<br>");
 					}
 				}
-			}
-			Set<Clothing> others = new LinkedHashSet<Clothing>();
-			if(arms != null) {
-				others.add(arms);
-			}
-			if(legs != null) {
-				others.add(legs);
-			}
-			if(feet != null) {
-				others.add(feet);
 			}
 			others.removeAll(described);
 			if (!others.isEmpty()) {

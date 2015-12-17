@@ -55,7 +55,7 @@ public class Piston extends Thrust {
 		} else if (modifier == Result.reverse) {
 			return Global.format("{self:SUBJECT-ACTION:bounce|bounces} on {other:name-possessive} cock, relentlessly driving you both towards orgasm.", getSelf(), target);
 		} else {
-			return "You rapidly pound your dick into "+target.name()+"'s pussy. Her pleasure filled cries are proof that you're having an effect, but you're feeling it " +
+			return "You rapidly pound your dick into "+target.name()+"'s pussy. Her pleasure-filled cries are proof that you're having an effect, but you're feeling it " +
 					"as much as she is.";
 		}
 	}
@@ -78,7 +78,7 @@ public class Piston extends Thrust {
 
 	@Override
 	public String describe(Combat c) {
-		return "Fucks opponent without holding back. Very effective, but dangerous";
+		return "Fuck opponent without holding back. Very effective, but dangerous";
 	}
 
 	@Override

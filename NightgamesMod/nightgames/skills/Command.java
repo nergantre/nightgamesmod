@@ -89,6 +89,7 @@ public class Command extends Skill {
 			} else {
 				possible.add(new Anilingus(target));
 			}
+			possible.get(Global.random(possible.size())).resolve(c, target);
 		} else if (!c.getStance().inserted()
 				&& getSelf().hasPussy() && target.hasDick()) { // Fuck me
 			c.setStance(new Mount(target, getSelf()));

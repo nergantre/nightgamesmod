@@ -27,7 +27,8 @@ public class Anilingus extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.crotchAvailable()&&target.body.has("ass")&&c.getStance().oral(getSelf())&&getSelf().canAct()&&!c.getStance().anallyPenetrated(target);
+		boolean canUse = (c.getStance().enumerate() == Stance.facesitting && getSelf().canRespond()) || getSelf().canAct();
+		return target.crotchAvailable()&&target.body.has("ass")&&c.getStance().oral(getSelf())&&canUse&&!c.getStance().anallyPenetrated(target);
 	}
 
 	@Override

@@ -29,7 +29,7 @@ public class Undress extends Skill {
 
 	@Override
 	public String describe(Combat c) {
-		return "Removes your own clothes";
+		return "Remove your own clothes";
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class Undress extends Skill {
 			return "You manage to struggle out of some of your clothing.";
 		}
 		if (c.getStance().en != Stance.neutral) {
-			return "You wiggle out of your clothes and toss them aside";
+			return "You wiggle out of your clothes and toss them aside.";
 		}
 		return "You quickly strip off your clothes and toss them aside.";
 	}
@@ -85,7 +85,7 @@ public class Undress extends Skill {
 			return getSelf().subject() + " manages to struggle out of some of her clothing.";
 		}
 		if (c.getStance().en != Stance.neutral) {
-			return getSelf().name() + " wiggles out of her clothes and tosses them aside";
+			return getSelf().name() + " wiggles out of her clothes and tosses them aside.";
 		}
 		return getSelf().name()+" puts some space between you and strips naked.";
 	}
