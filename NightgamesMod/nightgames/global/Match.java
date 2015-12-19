@@ -173,6 +173,7 @@ public class Match {
 		}
 		if (winner == player) {
 			Global.gui().message("You also earned a bonus of $" + 5 * player.prize() + " for placing first.");
+			Global.flag(Flag.victory);
 		}
 		winner.modMoney(5 * winner.prize());
 		Global.gui()

@@ -2539,4 +2539,21 @@ public abstract class Character extends Observable implements Cloneable {
 	public boolean isDemonic() {
 		return has(Trait.succubus) || body.get("cock").stream().anyMatch(part -> part.getMod() == PussyPart.succubus) || body.get("cock").stream().anyMatch(part -> part.getMod() == CockMod.incubus);
 	}
+	
+	public int baseDisarm() {
+		int disarm = 0;
+		if (has(Trait.cautious)) {
+			disarm += 5;
+		}
+		return disarm;
+	}
+	
+	public int baseRecoilPleasure()
+	  {
+	    int total = get(Attribute.Submissive) / 2;
+	    if (has(Trait.responsive)) {
+	      total += 3;
+	    }
+	    return total;
+	  }
 }

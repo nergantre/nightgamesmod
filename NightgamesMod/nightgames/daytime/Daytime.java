@@ -19,6 +19,13 @@ public class Daytime {
 	public Daytime(Player player){
 		this.player=player;
 		buildActivities();
+		if (Global.checkFlag(Flag.metAlice)) {
+			 if (Global.checkFlag(Flag.victory)) {
+				 Global.unflag(Flag.AliceAvailable);
+			 } else {
+			 	Global.flag(Flag.AliceAvailable);
+			 }
+		}
 		Global.unflag(Flag.threesome);
 		this.threesome = new Threesomes(player);
 		time=3;

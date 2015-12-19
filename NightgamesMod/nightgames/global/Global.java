@@ -404,6 +404,12 @@ public class Global {
 		getSkillPool().add(new TemptressRide(p));
 		getSkillPool().add(new TemptressStripTease(p));
 		getSkillPool().add(new Blindside(p));
+		getSkillPool().add(new Beg(p));
+		getSkillPool().add(new Cowardice(p));
+		getSkillPool().add(new Dive(p));
+		getSkillPool().add(new Offer(p));
+		getSkillPool().add(new ShamefulDisplay(p));
+		getSkillPool().add(new Stumble(p));
 
 		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 			getSkillPool().add(new SelfStun(p));	

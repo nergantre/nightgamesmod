@@ -13,7 +13,7 @@ public class Tripline implements Trap {
 	@Override
 	public void trigger(Character target) {
 		if(target.human()){
-			if(!target.check(Attribute.Perception, 20-target.get(Attribute.Perception))){
+			if(!target.check(Attribute.Perception, 20-target.get(Attribute.Perception) + target.baseDisarm())){
 				Global.gui().message("You trip over a line of cord and fall on your face.");
 				target.pain(null, 5);
 				target.location().opportunity(target,this);

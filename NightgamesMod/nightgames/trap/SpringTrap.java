@@ -15,7 +15,7 @@ public class SpringTrap implements Trap {
 	private Character owner;
 	@Override
 	public void trigger(Character target) {
-		if(!target.check(Attribute.Perception, 24-target.get(Attribute.Perception))){
+		if(!target.check(Attribute.Perception, 24-target.get(Attribute.Perception) + target.baseDisarm())){
 			if(target.human()){
 				Global.gui().message("As you're walking, your foot hits something and there's a sudden debilitating pain in your groin. Someone has set up a spring-loaded rope designed " +
 						"to shoot up into your nuts, which is what just happened. You collapse into the fetal position and pray that there's no one nearby.");

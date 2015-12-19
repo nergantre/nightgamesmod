@@ -11,4 +11,5 @@ public enum Tactics {
 	summoning,
 	debuff,
 	misc,
+	negative,
 }

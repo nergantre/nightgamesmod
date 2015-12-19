@@ -12,7 +12,7 @@ public class Snare implements Trap {
 	private Character owner;
 	@Override
 	public void trigger(Character target) {
-		if(target.check(Attribute.Perception, 20-target.get(Attribute.Perception))){
+		if(target.check(Attribute.Perception, 20-target.get(Attribute.Perception) + target.baseDisarm())){
 			if(target.human()){
 				Global.gui().message("You notice a snare on the floor in front of you and manage to disarm it safely");
 			}

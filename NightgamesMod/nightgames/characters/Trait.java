@@ -227,7 +227,7 @@ public enum Trait {
 			}
 		}
 	}),
-
+	responsive("Responsive", "Return more pleasure when being fucked"),
 	//Item
 	strapped("Strapped","Penis envy", new TraitDescription() {
 		public void describe(StringBuilder b, Character c, Trait t) {

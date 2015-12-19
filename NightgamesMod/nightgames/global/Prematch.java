@@ -20,6 +20,7 @@ public class Prematch implements Scene{
 	public Prematch(Player player){
 		this.player=player;
 		Global.current=this;
+		Global.unflag(Flag.victory);
 		ArrayList<JButton> choice = new ArrayList<JButton>();		
 		String message = "";
 		if(player.getLevel()<5){
