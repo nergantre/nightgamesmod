@@ -8,9 +8,13 @@ import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 
 public class Shamed extends DurationStatus {
+	
+	private int magnitude;
+	
 	public Shamed(Character affected) {
 		super("Shamed", affected, 4);
 		flag(Stsflag.shamed);
+		magnitude = 1;
 	}
 
 	@Override
@@ -34,7 +38,7 @@ public class Shamed extends DurationStatus {
 	
 	@Override
 	public float fitnessModifier () {
-		return -1.0f;
+		return -1.0f * magnitude;
 	}
 
 	@Override
@@ -45,7 +49,7 @@ public class Shamed extends DurationStatus {
 	@Override
 	public int mod(Attribute a) {
 		if(a==Attribute.Seduction || a==Attribute.Cunning){
-			return Math.min(-2, -affected.getPure(a) / 5);
+			return Math.min(-2 * magnitude, (-affected.getPure(a) * magnitude) / 5);
 		}
 		else{
 			return 0;
@@ -55,7 +59,7 @@ public class Shamed extends DurationStatus {
 	@Override
 	public void tick(Combat c) {
 		affected.emote(Emotion.nervous,20);
-		affected.loseMojo(c, 5, " (Shamed)");
+		affected.loseMojo(c, 5 * magnitude, " (Shamed)");
 	}
 
 	@Override
@@ -70,12 +74,12 @@ public class Shamed extends DurationStatus {
 
 	@Override
 	public int weakened(int x) {
-		return 1;
+		return magnitude;
 	}
 
 	@Override
 	public int tempted(int x) {
-		return 2;
+		return 2 * magnitude;
 	}
 
 	@Override
@@ -85,12 +89,12 @@ public class Shamed extends DurationStatus {
 
 	@Override
 	public int escape() {
-		return -2;
+		return -2 * magnitude;
 	}
 
 	@Override
 	public int gainmojo(int x) {
-		return -x/2;
+		return (-x * magnitude)/2;
 	}
 
 	@Override
@@ -111,6 +115,14 @@ public class Shamed extends DurationStatus {
 		return new Shamed(newAffected);
 	}
 
+	@Override
+	public void replace(Status newStatus) {
+		assert newStatus instanceof Shamed;
+		Shamed other = (Shamed) newStatus;
+		setDuration(Math.max(other.getDuration(), getDuration()));
+		this.magnitude += other.magnitude;	
+	}
+	
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();

@@ -8,8 +8,12 @@ import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 
 public class Buzzed extends DurationStatus {
+	
+	private int magnitude;
+	
 	public Buzzed(Character affected) {
 		super("Buzzed", affected, 20);
+		magnitude = 1;
 	}
 
 	@Override
@@ -35,13 +39,13 @@ public class Buzzed extends DurationStatus {
 	@Override
 	public int mod(Attribute a) {
 		if(a == Attribute.Perception){
-			return -3;
+			return -3 * magnitude;
 		}
 		else if(a == Attribute.Power){
-			return -1;
+			return -magnitude;
 		}
 		else if(a == Attribute.Cunning){
-			return -2;
+			return -2 * magnitude;
 		}
 		return 0;
 	}
@@ -60,7 +64,7 @@ public class Buzzed extends DurationStatus {
 
 	@Override
 	public double pleasure(Combat c, double x) {
-		return -x/10;
+		return -x/(10 / magnitude);
 	}
 
 	@Override
@@ -75,7 +79,7 @@ public class Buzzed extends DurationStatus {
 
 	@Override
 	public int evade() {
-		return -5;
+		return -5 * magnitude;
 	}
 
 	@Override
@@ -102,6 +106,20 @@ public class Buzzed extends DurationStatus {
 	public int value() {
 		return 0;
 	}
+	
+	@Override
+	public boolean lingering() {
+		return true;
+	}
+	
+	@Override
+	public void replace(Status newStatus) {
+		assert newStatus instanceof Buzzed;
+		Buzzed other = (Buzzed) newStatus;
+		setDuration(Math.max(other.getDuration(), getDuration()));
+		this.magnitude += other.magnitude;		
+	}
+	
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Buzzed(newAffected);
