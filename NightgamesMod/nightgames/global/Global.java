@@ -504,6 +504,7 @@ public class Global {
 		}
 		date++;
 		day=new Daytime(human);
+		day.plan();
 	}
 
 	public static void dusk(Modifier matchmod){
@@ -1011,6 +1012,10 @@ public class Global {
 		return arr[Global.random(arr.length)];
 	}
 
+	public static int getDate() {
+		return date;
+	}
+	
 	interface MatchAction {
 		String replace(Character self, String first, String second, String third);
 	}

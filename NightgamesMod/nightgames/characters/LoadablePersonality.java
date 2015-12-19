@@ -77,7 +77,7 @@ public class LoadablePersonality extends BasePersonality {
 	}
 
 	@Override
-	public void rest() {
+	public void rest(int time) {
 		// TODO Auto-generated method stub
 	}
 

@@ -63,8 +63,8 @@ public class Eve extends BasePersonality {
 	}
 
 	@Override
-	public void rest() {
-		super.rest();
+	public void rest(int time) {
+		super.rest(time);
 		if (!(character.has(Item.Dildo) || character.has(Item.Dildo2))
 				&& character.money >= 250) {
 			character.gain(Item.Dildo);
@@ -99,7 +99,7 @@ public class Eve extends BasePersonality {
 		}
 		Decider.visit(character);
 		int r;
-		for (int i = 0; i < 9; i++) {
+		for (int i = 0; i < time; i++) {
 			r = Global.random(4);
 			if (r == 1) {
 				if (character.has(Trait.fitnessNut)) {

@@ -15,6 +15,7 @@ public class Daytime {
 	private Player player;
 	private int time;
 	private Threesomes threesome;
+	private int daylength;
 	
 	public Daytime(Player player){
 		this.player=player;
@@ -39,18 +40,52 @@ public class Daytime {
 					"someone overseeing the Game, but he hasn't even given you his name. Why all the secrecy? <i>\"If you're looking for more information, you " +
 					"know someone who sells it.\"</i> There's a click and the call ends.");
 			player.rankup();
-		}
-		else{
-			Global.gui().message("You try to get as much sleep as you can before your morning classes.<p>You're done with classes by mid-afternoon" +
-					" and have the rest of the day free.");
-		}
-				
-		plan();
+		
+	} else if ((player.getLevel() >= 20) && (player.getRank() == 1)) {
+	       Global.gui().clearText();
+	       Global.gui().message("In the morning, you receive a call from a restricted number. You have a pretty decent guess who it might be. Hopefully it is good news. <i>\"Hello again " + 
+	         player.name() + ".\"</i> You were right, that voice is pretty hard to forget. <i>\"I am impressed. You and your opponents are " + 
+	         "all quickly adapting to what most people would consider an extraordinary situation. If you are taking advantage of the people and services available " + 
+	         "to you, you could probably use more money. Therefore, I am authorizing another pay increase. Congratulations.\"</i> This is the mysterious Benefactor " + 
+	         "everyone keeps referring to, right? Is he ever planning to show himself in person? What is he getting out of all this? <i>\"Your curiosity is admirable. " + 
+	         "Keep searching. If you have as much potential as I think you do, we'll meet soon enough.\"</i>");
+	       player.rankup();
+	       this.time = 15;
+	     }
+	     else if ((player.getLevel() >= 30) && (player.getRank() == 2)) {
+	       Global.gui().clearText();
+	       Global.gui().message("In the morning, you receive a call from a restricted number. You are not at all surprised to hear the voice of your anonymous Benefactor again. It did seem about time for him to call again. <i>\"Hello " + 
+	         player.name() + ". Have you been keeping busy? You've been putting " + 
+	         "on a good show in your matches, but when we last spoke, you had many questions. Are you any closer to finding your answers?\"</i><p>" + 
+	         "That's an odd question since it depends on whether or not he has become more willing to talk. Who else is going to fill you in about this " + 
+	         "apparently clandestine organization. <i>\"Oh don't become lazy now. I chose you for this Game, in part, for your drive and initiative. Are " + 
+	         "you limited to just the information that has been handed to you? Just because Aesop does not have the answers for sale does not mean there " + 
+	         "are no clues. Will you simply give up?\"</i><p>" + 
+	         "You know he's trying to provoke you, but it's working anyway. If he's offering a challenge, you'll show him you can track him down. The next " + 
+	         "time you speak to this Benefactor, it will be in person. <i>\"Excellent!\"</i> His voice has only a trace of mockery in it. <i>\"You are " + 
+	         "already justifying your new rank, which is what I am calling you about, incidently. Perhaps you can put your increased pay rate or the trust " + 
+	         "you've built with your opponents to good use. Well then, I shall wait to hear from you this time.\"</i> There's a click and the call ends.");
+	       player.rankup();
+	       this.time = 15;
+	 
+	     }
+	     else if ((Global.getDate() % 7 == 6) || (Global.getDate() % 7 == 0)) {
+	       Global.gui().message("You don't have any classes today, but you try to get up at a reasonable hour so you can make full use of your weekend.");
+	       this.time = 9;
+	     }
+	     else {
+	       Global.gui().message("You try to get as much sleep as you can before your morning classes.<p>You're done with classes by mid-afternoon and have the rest of the day free.");
+	       
+	       this.time = 15;
+	     }
+	     
+	     this.daylength = (22 - this.time);
+		//plan();
 	}
 	public void plan(){
 		String threescene;
-		if(time<10){
-			Global.gui().message("It is currently "+time+":00. Your next match starts at 10:00.");
+		if(time<22){
+			Global.gui().message("It is currently "+displayTime()+". Your next match starts at 10:00.");
 			Global.gui().refresh();
 			Global.gui().clearCommand();
 			if(!Global.checkFlag(Flag.threesome)){
@@ -61,7 +96,7 @@ public class Daytime {
 				}
 			}
 			for(Activity act: activities){
-				if(act.known()&&act.time()+time<=10){
+				if(act.known()&&act.time()+time<=22){
 					Global.gui().addActivity(act);
 				}
 			}
@@ -69,10 +104,11 @@ public class Daytime {
 		else{
 			for(Character npc: Global.everyone()){
 				if(!npc.human()){
-					if(npc.getLevel()>=10&&npc.getRank()==0){
+					if((npc.getLevel()>=10&&npc.getRank()==0) 
+							|| (npc.getLevel() >= 20 && npc.getRank() == 1)) {
 						npc.rankup();
 					}
-					((NPC)npc).daytime();
+					((NPC)npc).daytime(daylength);
 				}
 			}
 			//Global.gui().nextMatch();
@@ -152,4 +188,14 @@ public class Daytime {
 			}
 		}
 	}
+	
+	private String displayTime() {
+	     if (this.time < 12)
+	       return this.time + ":00am";
+	     if (this.time == 12) {
+	       return "noon";
+	     }
+	     
+	     return this.time - 12 + ":00pm";
+	   }
 }

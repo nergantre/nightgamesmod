@@ -16,7 +16,7 @@ public interface Personality extends Serializable{
 	public Skill act(HashSet<Skill> available,Combat c);
 	public Action move(HashSet<Action> available,HashSet<Movement> radar);
 	public NPC getCharacter();
-	public void rest();
+	public void rest(int time);
 	public String bbLiner(Combat c);
 	public String nakedLiner(Combat c);
 	public String stunLiner(Combat c);

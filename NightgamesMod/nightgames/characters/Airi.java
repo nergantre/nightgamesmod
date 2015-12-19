@@ -73,11 +73,11 @@ public class Airi extends BasePersonality {
 	}
 
 	@Override
-	public void rest() {
-		super.rest();
+	public void rest(int time) {
+		super.rest(time);
 		Decider.visit(character);
 		int r;
-		for(int i=0;i<8;i++){
+		for(int i=0;i<time;i++){
 			r=Global.random(4);
 			if(r==1){
 				if(character.has(Trait.fitnessNut)){

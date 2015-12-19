@@ -59,7 +59,7 @@ public class CustomNPC extends BasePersonality {
 	}
 
 	@Override
-	public void rest() {
+	public void rest(int time) {
 		for (ItemAmount i : data.getPurchasedItems()) {
 			buyUpTo(i.item, i.amount);
 		}

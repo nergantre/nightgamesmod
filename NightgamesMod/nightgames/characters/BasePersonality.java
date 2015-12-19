@@ -46,7 +46,7 @@ public abstract class BasePersonality implements Personality {
 	}
 
 	@Override
-	public void rest() {
+	public void rest(int time) {
 		if (preferredCockMod != CockMod.error) {
 			Optional<BodyPart> optDick = character.body.get("cock").stream().filter(part -> part.getMod() != preferredCockMod).findAny();
 			if (optDick.isPresent()) {

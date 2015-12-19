@@ -97,13 +97,13 @@ public class Cassie extends BasePersonality {
 		return proposed;
 	}
 	@Override
-	public void rest() {
+	public void rest(int time) {
 		if(character.rank>=1){
 			if(!character.has(Trait.witch)&&character.money>=1000){
 				advance();
 			}
 		}
-		super.rest();
+		super.rest(time);
 		if(!(character.has(Item.Tickler)||character.has(Item.Tickler2))&&character.money>=300){
 			character.gain(Item.Tickler);
 			character.money-=300;
@@ -150,7 +150,7 @@ public class Cassie extends BasePersonality {
 			Global.getDay().visit("Black Market", character, Global.random(character.money));
 		}
 		int r;
-		for(int i=0;i<9;i++){
+		for(int i=0;i<time;i++){
 			r=Global.random(4);
 			if(r==1){
 				if(character.has(Trait.fitnessNut)){

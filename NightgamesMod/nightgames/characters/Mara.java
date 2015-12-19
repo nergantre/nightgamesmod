@@ -75,13 +75,13 @@ public class Mara extends BasePersonality  {
 	}
 
 	@Override
-	public void rest() {
+	public void rest(int time) {
 		if(character.rank==1){
 			if(!character.has(Trait.madscientist)&&character.money>=1000){
 				advance();
 			}
 		}
-		super.rest();
+		super.rest(time);
 		if(!(character.has(Item.Onahole)||character.has(Item.Onahole2))&&character.money>=300){
 			character.gain(Item.Onahole);
 			character.money-=300;
@@ -122,7 +122,7 @@ public class Mara extends BasePersonality  {
 		}
 		Decider.visit(character);
 		int r;
-		for(int i=0;i<11;i++){
+		for(int i=0;i<time;i++){
 			r=Global.random(4);
 			if(r==1){
 				if(character.has(Trait.fitnessNut)){

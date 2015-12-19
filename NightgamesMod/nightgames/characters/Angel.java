@@ -74,7 +74,7 @@ public class Angel extends BasePersonality {
 	}
 
 	@Override
-	public void rest() {
+	public void rest(int time) {
 		if(character.rank>=1){
 			if(!character.has(Trait.demigoddess)&&character.money>=1000){
 				advance();
@@ -83,7 +83,7 @@ public class Angel extends BasePersonality {
 		if (character.has(Trait.demigoddess) && !character.has(Trait.divinity)) {
 			character.add(Trait.divinity);
 		}
-		super.rest();
+		super.rest(time);
 		if(!(character.has(Item.Dildo)||character.has(Item.Dildo2))&&character.money>=250){
 			character.gain(Item.Dildo);
 			character.money-=250;
@@ -136,7 +136,7 @@ public class Angel extends BasePersonality {
 		}
 		Decider.visit(character);
 		int r;
-		for(int i=0;i<8;i++){
+		for(int i=0;i<time;i++){
 			r=Global.random(4);
 			if(r==1){
 				if(character.has(Trait.fitnessNut)){

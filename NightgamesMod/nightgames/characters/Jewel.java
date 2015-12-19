@@ -80,13 +80,13 @@ public class Jewel extends BasePersonality {
 	}
 
 	@Override
-	public void rest() {
+	public void rest(int time) {
 		if(character.rank>=1){
 			if(!character.has(Trait.fighter)&&character.money>=1000){
 				advance();
 			}
 		}
-		super.rest();
+		super.rest(time);
 		if(!(character.has(Item.Crop)||character.has(Item.Crop2))&&character.money>=200){
 			character.gain(Item.Crop);
 			character.money-=200;
@@ -119,7 +119,7 @@ public class Jewel extends BasePersonality {
 			Global.getDay().visit("Black Market", character, Global.random(character.money));		
 		}
 		int r;
-		for(int i=0;i<8;i++){
+		for(int i=0;i<time;i++){
 			r=Global.random(4);
 			if(r==1){
 				if(character.has(Trait.fitnessNut)){

@@ -481,8 +481,8 @@ public class NPC extends Character {
 		Global.gui().message(ai.night());
 	}
 
-	public void daytime() {
-		ai.rest();
+	public void daytime(int time) {
+		ai.rest(time);
 	}
 
 	public Emotion getMood() {
