@@ -397,4 +397,21 @@
 				<LevelReq>22</LevelReq>
 		</Requirements>
 	</Trait>
+	<Trait>
+		<Name>cautious</Name>
+		<Requirements>
+			<AttributeReq type="Cunning">10</AttributeReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>responsive</Name>
+		<Requirements>
+			<AttributeReq type="Submissive">1</AttributeReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>assmaster</Name>
+		<Requirements>
+		</Requirements>
+	</Trait>
 </RequirementList>
