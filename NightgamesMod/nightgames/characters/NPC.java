@@ -857,4 +857,8 @@ public class NPC extends Character {
 		return ai.getRecruitmentData();
 	}
 
+	@Override
+	public double dickPreference() {
+		return ai instanceof Eve ? 10.0 : super.dickPreference();
+	}
 }

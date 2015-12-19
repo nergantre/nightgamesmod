@@ -228,6 +228,7 @@ public enum Trait {
 		}
 	}),
 	responsive("Responsive", "Return more pleasure when being fucked"),
+	assmaster("Ass Master", "Who needs lube? Also boosts pleasure to both parties when assfucking"),
 	//Item
 	strapped("Strapped","Penis envy", new TraitDescription() {
 		public void describe(StringBuilder b, Character c, Trait t) {

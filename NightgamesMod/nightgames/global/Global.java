@@ -61,6 +61,7 @@ import nightgames.characters.Angel;
 import nightgames.characters.Attribute;
 import nightgames.characters.Cassie;
 import nightgames.characters.Character;
+import nightgames.characters.Eve;
 import nightgames.characters.Jewel;
 import nightgames.characters.Kat;
 import nightgames.characters.Mara;
@@ -838,6 +839,7 @@ public class Global {
 		Personality mara = new Mara();
 		Personality jewel = new Jewel();
 		Personality airi = new Airi();
+		Personality eve = new Eve();
 		characterPool.put(cassie.getCharacter().getType(), cassie.getCharacter());
 		characterPool.put(angel.getCharacter().getType(), angel.getCharacter());
 		characterPool.put(reyka.getCharacter().getType(), reyka.getCharacter());
@@ -845,6 +847,7 @@ public class Global {
 		characterPool.put(mara.getCharacter().getType(), mara.getCharacter());
 		characterPool.put(jewel.getCharacter().getType(), jewel.getCharacter());
 		characterPool.put(airi.getCharacter().getType(), airi.getCharacter());
+		characterPool.put(eve.getCharacter().getType(), eve.getCharacter());
 	}
 
 	public static void load(){

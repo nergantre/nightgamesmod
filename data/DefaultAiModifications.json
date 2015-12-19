@@ -737,5 +737,182 @@
 				"weight" : 1.0
 			}
 		]
+	}, {
+		"personality" : "Eve",
+		"mods" : [
+			{
+				"type" : "skill",
+				"value" : "nightgames.skills.Anilingus",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.AssFuck",
+				"weight" : 5.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Bondage",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.FaceFuck",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.CounterPin",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Diversion",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Footjob",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.FootPump",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Frottage",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Fuck",
+				"weight" : 4.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Handjob",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Knee",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Maneuver",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Masochism",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Piston",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.PullOut",
+				"weight" : -3.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.ReverseAssFuck",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.ReverseFuck",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.ReverseStraddle",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Sedate",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Spank",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Squeeze",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Tackle",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Taunt",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Tie",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.TortoiseWrap",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Turnover",
+				"weight" : 2.0
+			},{
+				"type" : "position",
+				"value" : "anal",
+				"weight" : 8.0
+			},{
+				"type" : "position",
+				"value" : "behind",
+				"weight" : 5.0
+			},{
+				"type" : "position",
+				"value" : "behindfootjob",
+				"weight" : 3.0
+			},{
+				"type" : "position",
+				"value" : "reversecowgirl",
+				"weight" : 3.0
+			},{
+				"type" : "self-status",
+				"value" : "counter",
+				"weight" : 1.0
+			},{
+				"type" : "self-status",
+				"value" : "masochism",
+				"weight" : 1.0
+			},{
+				"type" : "self-status",
+				"value" : "alluring",
+				"weight" : 1.0
+			},{
+				"type" : "self-status",
+				"value" : "frenzied",
+				"weight" : 2.0
+			},{
+				"type" : "opponent-status",
+				"value" : "bound",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "oiled",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "horny",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "bodyfetish",
+				"weight" : 3.0
+			},{
+				"type" : "opponent-status",
+				"value" : "countered",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "bondage",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "tied",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "frenzied",
+				"weight" : 2.0
+			},
+		]
 	}
 ]
