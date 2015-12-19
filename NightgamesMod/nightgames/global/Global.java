@@ -773,7 +773,7 @@ public class Global {
 		try {
 			FileWriter file;
 			if(auto){
-				file = new FileWriter("./auto.sav");
+				file = new FileWriter("./auto.ngs");
 			}
 			else{
 				JFileChooser dialog = new JFileChooser("./");

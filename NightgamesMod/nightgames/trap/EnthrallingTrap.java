@@ -17,7 +17,8 @@ public class EnthrallingTrap implements Trap {
 	@Override
 	public void trigger(Character target) {
 		if (target.human()) {
-			if (target.check(Attribute.Perception, 25-target.get(Attribute.Perception))) {
+			if (target.check(Attribute.Perception, 25-target.get(Attribute.Perception))
+					|| !target.eligible(owner) || !owner.eligible(target)) {
 				Global.gui()
 						.message(
 								"As you step across the "
