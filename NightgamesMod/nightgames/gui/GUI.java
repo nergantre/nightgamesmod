@@ -966,6 +966,7 @@ public class GUI extends JFrame implements Observer {
 			this.commandPanel.revalidate();
 		} else if (player.traitPoints > 0 && !skippedFeat) {
 			clearCommand();
+			message("You've earned a new perk. Select one below.");
 			for (Trait feat : Global.getFeats(this.player)) {
 				if (!player.has(feat)) {
 					this.commandPanel.add(new FeatButton(feat));
