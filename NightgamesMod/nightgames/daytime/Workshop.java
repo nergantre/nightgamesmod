@@ -55,7 +55,7 @@ public class Workshop extends Activity {
 						"pick up the dildo, but immediately drop it in surprise. It's vibrating, but that doesn't feel like vibration you've ever experienced, it's almost " +
 						"like a current running through your arm. Jett clearly knows what he's doing. You're not going to question his pricing again.");
 				player.money-=Item.Dildo2.getPrice();
-				player.consume(Item.Dildo, 1);
+				player.consume(Item.Dildo, 1, false);
 				player.gain(Item.Dildo2);
 				acted=true;
 			}
@@ -71,7 +71,7 @@ public class Workshop extends Activity {
 						"reason for this, it's just a quirk of nature.\"</i> He inserts a few of these into your tickler and returns it. <i>\"That's sufficient. I once made a tickler " +
 						"entirely out of these. It wasn't a good idea.\"</i>");
 				player.money-=Item.Tickler2.getPrice();
-				player.consume(Item.Tickler, 1);
+				player.consume(Item.Tickler, 1, false);
 				player.gain(Item.Tickler2);
 				acted=true;
 			}
@@ -87,7 +87,7 @@ public class Workshop extends Activity {
 						"trick was finding the ideal material. My solution is quite painful on impact, but has no risk of breaking the skin or leaving unpleasant welts.\"</i> You take " +
 						"the crop with great care. It suddenly feels quite dangerous.");
 				player.money-=Item.Crop2.getPrice();
-				player.consume(Item.Crop, 1);
+				player.consume(Item.Crop, 1, false);
 				player.gain(Item.Crop2);
 				acted=true;
 			}
@@ -102,7 +102,7 @@ public class Workshop extends Activity {
 						"<i>\"It's self lubricating and maintains a temperature slightly above a normal human body.\"</i> Quite impressive, and there's no obvious heating mechanism or " +
 						"liquid supply. How does it work? <i>\"Trade secret. Sorry mate, but until the patent is finalized, I can't reveal the magic trick.\"</i>");
 				player.money-=Item.Onahole2.getPrice();
-				player.consume(Item.Onahole, 1);
+				player.consume(Item.Onahole, 1, false);
 				player.gain(Item.Onahole2);
 				acted=true;
 			}
@@ -114,7 +114,7 @@ public class Workshop extends Activity {
 			if(player.money>=Item.Strapon2.getPrice()){
 				Global.gui().message("[Placeholder]<br>Jett upgrades your strapon with a more flexible body and a vibration feature.");
 				player.money-=Item.Strapon2.getPrice();
-				player.consume(Item.Strapon, 1);
+				player.consume(Item.Strapon, 1, false);
 				player.gain(Item.Strapon2);
 				acted=true;
 			}
@@ -183,31 +183,31 @@ public class Workshop extends Activity {
 		if(npc.has(Item.Onahole)&&remaining>=Item.Onahole2.getPrice()){
 			npc.money-=Item.Onahole2.getPrice();
 			remaining-=Item.Onahole2.getPrice();
-			npc.consume(Item.Onahole, 1);
+			npc.consume(Item.Onahole, 1, false);
 			npc.gain(Item.Onahole2);
 		}
 		if(npc.has(Item.Dildo)&&remaining>=Item.Dildo2.getPrice()){
 			npc.money-=Item.Dildo2.getPrice();
 			remaining-=Item.Dildo2.getPrice();
-			npc.consume(Item.Dildo, 1);
+			npc.consume(Item.Dildo, 1, false);
 			npc.gain(Item.Dildo2);
 		}
 		if(npc.has(Item.Tickler)&&remaining>=Item.Tickler2.getPrice()){
 			npc.money-=Item.Tickler2.getPrice();
 			remaining-=Item.Tickler2.getPrice();
-			npc.consume(Item.Tickler, 1);
+			npc.consume(Item.Tickler, 1, false);
 			npc.gain(Item.Tickler2);
 		}
 		if(npc.has(Item.Crop)&&remaining>=Item.Crop2.getPrice()){
 			npc.money-=Item.Crop2.getPrice();
 			remaining-=Item.Crop2.getPrice();
-			npc.consume(Item.Crop, 1);
+			npc.consume(Item.Crop, 1, false);
 			npc.gain(Item.Crop2);
 		}
 		if(npc.has(Item.Strapon2)&&remaining>=Item.Strapon2.getPrice()){
 			npc.money-=Item.Strapon2.getPrice();
 			remaining-=Item.Strapon2.getPrice();
-			npc.consume(Item.Strapon, 1);
+			npc.consume(Item.Strapon, 1, false);
 			npc.gain(Item.Strapon2);
 		}
 		if(npc.getPure(Attribute.Science)>0&&remaining>=1000){

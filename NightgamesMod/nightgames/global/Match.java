@@ -146,7 +146,7 @@ public class Match {
 			}
 			for (Character other : combatants) {
 				while (combatant.has(other.getTrophy())) {
-					combatant.consume(other.getTrophy(), 1);
+					combatant.consume(other.getTrophy(), 1, false);
 					combatant.modMoney(other.prize());
 					if (combatant.human()) {
 						cloth++;
