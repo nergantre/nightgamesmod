@@ -77,9 +77,20 @@ public class Clothing implements Loot{
 	public String getName(){
 		return name;
 	}
-	public int dc(){
+	public int dc(Character attacker){
+		if (attacker != null && attacker.has(Trait.bramaster) && layer == 0 && slots.contains(ClothingSlot.top)) {
+			return dc / 2;
+		}
+		if (attacker != null && attacker.has(Trait.pantymaster) && layer == 0 && slots.contains(ClothingSlot.bottom)) {
+			return dc / 2;
+		}
 		return dc;
 	}
+	
+	public int dc() {
+		return dc(null);
+	}
+	
 	public String pre(){
 		return prefix;
 	}

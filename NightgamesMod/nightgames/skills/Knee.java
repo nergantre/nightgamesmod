@@ -46,7 +46,7 @@ public class Knee extends Skill {
 			if(target.has(Trait.achilles)&&!target.has(ClothingTrait.armored)){
 				target.pain(c, 20+Global.random(6)+Math.min(getSelf().get(Attribute.Power), 50));
 			}
-			if(target.has(ClothingTrait.armored)){
+			if(target.has(ClothingTrait.armored) || target.has(Trait.brassballs)){
 				target.pain(c, Global.random(6)+Math.min(getSelf().get(Attribute.Power)/2, 50));
 			}
 			else{

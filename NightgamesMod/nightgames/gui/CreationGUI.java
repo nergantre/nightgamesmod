@@ -377,6 +377,9 @@ public class CreationGUI extends JPanel{
 		StrengthBox.addItem(Trait.wrassler);
 		StrengthBox.addItem(Trait.pimphand);
 		StrengthBox.addItem(Trait.stableform);
+		StrengthBox.addItem(Trait.brassballs);
+		StrengthBox.addItem(Trait.bramaster);
+		StrengthBox.addItem(Trait.pantymaster);
 		StrengthBox.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

@@ -192,7 +192,10 @@ public enum Trait {
 	wrassler("Wrassler","A talent for fighting dirty"), //squeeze, knee, kick reduce arousal less
 	pimphand("Pimp Hand","A devastating slap and a bonus to hands"),
 	stableform("Stable Form","Cannot be affected by unexpected transformations"), //ignores thrown transformative drafts from the opponent
-
+	brassballs("Brass Balls", "Can take a kick"),
+	bramaster("Bra Master", "Better at undoing bras."),
+	pantymaster("Panty Master", "Better at removing panties"),
+	
 	//unimplemented
 	Clingy("Clingy","can do the 'glomp' attack - weak standing grapple hug, probably something Cassie would take right away"),
 	cautious("Cautious","Better chance of avoiding traps"),

@@ -44,6 +44,8 @@ public class Kick extends Skill {
 		}
 		if(target.roll(this, c, accuracy(c))){
 			int m = Global.random(12)+Math.min(getSelf().get(Attribute.Power), 100);
+			if (target.has(Trait.brassballs))
+				m *= .8;
 			if(getSelf().human()){
 				if(c.getStance().prone(getSelf())){
 					c.write(getSelf(),deal(c,m,Result.strong, target));
