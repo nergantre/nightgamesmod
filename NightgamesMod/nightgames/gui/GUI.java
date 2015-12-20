@@ -711,19 +711,35 @@ public class GUI extends JFrame implements Observer {
                     
                 }
                 
-                if (width > 720) {
-                    map = new JLabel(new ImageIcon(mapPath));
-                    map.setVerticalAlignment(SwingConstants.BOTTOM);
-                }
-                
-                else
+                if (mapPath != null)
                 {
-                    Image scaledMap = mapPath.getScaledInstance(width/6, height/4, Image.SCALE_SMOOTH);
-                    map = new JLabel(new ImageIcon(scaledMap));
-                    map.setVerticalAlignment(SwingConstants.BOTTOM);
-                }
+                    if (width > 720) {
+                        map = new JLabel(new ImageIcon(mapPath));
+                        map.setVerticalAlignment(SwingConstants.BOTTOM);
+                    }
+                    
+                    else{
+                        Image scaledMap = mapPath.getScaledInstance(width/6, height/4, Image.SCALE_SMOOTH);
+                        map = new JLabel(new ImageIcon(scaledMap));
+                        map.setVerticalAlignment(SwingConstants.BOTTOM);
+                    }
                 
-                portraitPanel.add(map, BorderLayout.WEST);
+
+                    if (width > 720) {
+                        map = new JLabel(new ImageIcon(mapPath));
+                        map.setVerticalAlignment(SwingConstants.BOTTOM);
+                    }
+
+                    else
+                    {
+                        Image scaledMap = mapPath.getScaledInstance(width/6, height/4, Image.SCALE_SMOOTH);
+                        map = new JLabel(new ImageIcon(scaledMap));
+                        map.setVerticalAlignment(SwingConstants.BOTTOM);
+                    }
+                
+                    portraitPanel.add(map, BorderLayout.WEST);
+                    
+                }
                 
             }
         }
@@ -731,7 +747,20 @@ public class GUI extends JFrame implements Observer {
         //Map unloader
 
         public void unloadMap(){
-            portraitPanel.remove(map);
+            if(!Global.checkFlag(Flag.noimage))
+            {
+                BufferedImage mapPath = null;
+                try{
+                    mapPath = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets//map.png"));
+                } catch (IOException localIOException10) {
+                } catch (IllegalArgumentException badArg) {
+                    
+                }
+                
+                if (mapPath != null)
+                    portraitPanel.remove(map);
+            }
+            
         }
 
         //Combat GUI
