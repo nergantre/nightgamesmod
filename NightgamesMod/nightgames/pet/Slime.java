@@ -43,7 +43,7 @@ public class Slime extends Pet {
 				}
 				if(!target.getOutfit().slotUnshreddable(ClothingSlot.bottom)){
 					c.write(owner(),own()+"slime forms into a shape that's vaguely human and clearly female. Somehow it manages to look cute and innocent while still being an animated blob of slime. " +
-							"While you're processing this, the slime jumps on you and your "+target.getOutfit().getTopOfSlot(ClothingSlot.top).getName()+" dissolves under its touch.");
+							"While you're processing this, the slime jumps on you and your "+target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName()+" dissolves under its touch.");
 					target.shred(ClothingSlot.bottom);
 				}
 				else{
