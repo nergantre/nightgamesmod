@@ -6,6 +6,7 @@ import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.status.Abuff;
 
 public class LegLock extends Skill {
 
@@ -27,6 +28,7 @@ public class LegLock extends Skill {
 			else if(target.human()){
 				c.write(getSelf(),receive(c,0,Result.normal, target));
 			}
+			target.add(new Abuff(target, Attribute.Speed, -2, 5));
 			target.pain(c, Global.random(10)+7);
 			target.emote(Emotion.angry,15);
 		}
