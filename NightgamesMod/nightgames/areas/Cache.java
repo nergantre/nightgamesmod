@@ -137,6 +137,7 @@ public class Cache implements Deployable {
 			reward.add(Item.Sprayer);
 			reward.add(Item.Tripwire);
 			reward.add(Item.Tripwire);
+			reward.add(Item.Talisman);
 		case 22:
 			reward.add(Item.SPotion);
 			reward.add(Item.SPotion);
@@ -155,6 +156,7 @@ public class Cache implements Deployable {
 			reward.add(Item.SPotion);
 			reward.add(Item.SPotion);
 			reward.add(Item.Lubricant);
+			reward.add(Item.Talisman);
 			break;
 		case 19:
 			reward.add(Item.Handcuffs);
@@ -167,6 +169,7 @@ public class Cache implements Deployable {
 		case 17:
 			reward.add(Item.SPotion);
 			reward.add(Item.SPotion);
+			reward.add(Item.Talisman);
 			break;
 		case 16:
 			reward.add(Item.Totem);
@@ -177,6 +180,7 @@ public class Cache implements Deployable {
 			reward.add(Item.SPotion);
 			reward.add(Item.Aphrodisiac);
 			reward.add(Item.Sprayer);
+			reward.add(Item.Talisman);
 			break;
 		case 14:
 			reward.add(Item.Lubricant);
@@ -187,6 +191,7 @@ public class Cache implements Deployable {
 			reward.add(Item.Rope);
 			reward.add(Item.Rope);
 			reward.add(Item.Sedative);
+			reward.add(Item.Talisman);
 			break;
 		case 12:
 			reward.add(Item.Aphrodisiac);
@@ -194,14 +199,17 @@ public class Cache implements Deployable {
 			break;
 		case 11:
 			reward.add(Item.FaeScroll);
+			reward.add(Item.Talisman);
 			break;
 		case 10:
 			reward.add(Item.DisSol);
 			reward.add(Item.Tripwire);
 			reward.add(Item.Sprayer);
+			reward.add(Item.Talisman);
 			break;
 		case 9:
 			reward.add(Item.Totem);
+			reward.add(Item.Talisman);
 			break;
 		case 8:
 			reward.add(Item.Aphrodisiac);
@@ -211,6 +219,7 @@ public class Cache implements Deployable {
 			reward.add(Item.Tripwire);
 			reward.add(Item.Tripwire);
 			reward.add(Item.Phone);
+			reward.add(Item.Talisman);
 			break;
 		case 6:
 			reward.add(Item.SPotion);
@@ -221,6 +230,7 @@ public class Cache implements Deployable {
 		case 4:
 			reward.add(Item.Lubricant);
 			reward.add(Item.DisSol);
+			reward.add(Item.Talisman);
 			break;
 		case 3:
 			reward.add(Item.Beer);
@@ -233,6 +243,7 @@ public class Cache implements Deployable {
 			break;
 		case 1:
 			reward.add(Item.FaeScroll);
+			reward.add(Item.Talisman);
 			break;
 		default:
 			reward.add(Item.Aphrodisiac);

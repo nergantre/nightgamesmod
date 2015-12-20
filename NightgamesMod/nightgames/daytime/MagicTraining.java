@@ -5,6 +5,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Player;
 import nightgames.global.Flag;
 import nightgames.global.Global;
+import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 
 public class MagicTraining extends Activity{
@@ -52,19 +53,7 @@ public class MagicTraining extends Activity{
 			acted = true;
 		}
 		else if(choice=="Start"){
-			Global.gui().message("Aisha smiles warmly as she greets you. <i>\"Hello "+player.name()+". Are you here for for another lesson in the arcane arts or do you want some advice about writing? " +
-					"I think you could pen a very nice fantasy novel if you tried.\"</i>");
-			Global.gui().choose(this,"Lesson: $"+1000*(player.getPure(Attribute.Arcane)+1));
-			if (this.player.getPure(Attribute.Animism) >= 1) {
-		        Global.gui().choose(this, "Animism training: $" + (500 + 500 * (this.player.getPure(Attribute.Animism) + 1)));
-			}
-		    if ((Global.checkFlag(Flag.catspirit)) && (!Global.checkFlag(Flag.furry))) {
-		    	Global.gui().choose(this, "Ask about Animal Spirit");
-		    }
-		    if ((Global.checkFlag(Flag.furry)) && (this.player.getPure(Attribute.Animism) == 0)) {
-		        Global.gui().choose(this, "Get Animal Spirit");
-		    }
-			Global.gui().choose(this,"Leave");
+			presentOptions();
 			acted = false;
 		}
 		else if(choice=="Leave"){
@@ -354,6 +343,14 @@ public class MagicTraining extends Activity{
 		       this.player.mod(Attribute.Animism, 1);
 		       this.acted = true;
 		       Global.gui().choose(this, "Leave");
+		     } else if (choice.startsWith("Buy a minor scroll: $200")) {
+		    	 Global.gui().message("You purchase a minor scroll. With the correct spell, "
+		    	 		+ "you can use it to summon a team of fairies.");
+		    	 player.money -= 200;
+		    	 assert player.money >= 0;
+		    	 player.gain(Item.MinorScroll);
+		    	 this.acted = true;
+		    	 presentOptions();
 		     }
 	}
 
@@ -369,6 +366,23 @@ public class MagicTraining extends Activity{
 			budget-=1000*(npc.getPure(Attribute.Arcane)+1);
 			npc.mod(Attribute.Arcane, 1);
 		}
+	}
+	
+	private void presentOptions() {
+		Global.gui().choose(this,"Lesson: $"+1000*(player.getPure(Attribute.Arcane)+1));
+		if (this.player.getPure(Attribute.Animism) >= 1) {
+	        Global.gui().choose(this, "Animism training: $" + (500 + 500 * (this.player.getPure(Attribute.Animism) + 1)));
+		}
+	    if ((Global.checkFlag(Flag.catspirit)) && (!Global.checkFlag(Flag.furry))) {
+	    	Global.gui().choose(this, "Ask about Animal Spirit");
+	    }
+	    if ((Global.checkFlag(Flag.furry)) && (this.player.getPure(Attribute.Animism) == 0)) {
+	        Global.gui().choose(this, "Get Animal Spirit");
+	    }
+	    if (player.getPure(Attribute.Arcane) >= 2 && player.money >= 200) {
+	    	Global.gui().choose(this, "Buy a minor scroll: $200");
+	    }
+		Global.gui().choose(this,"Leave");
 	}
 
 }

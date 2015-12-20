@@ -77,102 +77,104 @@ public enum Item implements Loot {
 	semen		( "Semen",100 ,"A small bottle filled with cum. Kinda gross", "a bottle of ",
 			Arrays.asList((ItemEffect)
 					new ConditionalEffect(new GroupEffect(Arrays.asList((ItemEffect)
-						new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Dark, 2, 15)),
-						new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Seduction, 2, 15)),
-						new BuffEffect("drink", "throw", new Alluring(Global.noneCharacter(), 5)),
-						new ResourceEffect("heal", 30),
-						new ResourceEffect("build", 30),
-						new ResourceEffect("arouse", 10)
-						)), new ConditionalEffect.EffectCondition() {
-							@Override
-							public boolean operation(Combat c, Character user, Character opponent,
-									Item item) {
-								return user.has(Trait.succubus);
-							}
-						}),
+							new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Dark, 2, 15)),
+							new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Seduction, 2, 15)),
+							new BuffEffect("drink", "throw", new Alluring(Global.noneCharacter(), 5)),
+							new ResourceEffect("heal", 30),
+							new ResourceEffect("build", 30),
+							new ResourceEffect("arouse", 10)
+							)), new ConditionalEffect.EffectCondition() {
+						@Override
+						public boolean operation(Combat c, Character user, Character opponent,
+								Item item) {
+							return user.has(Trait.succubus);
+						}
+					}),
 					new ConditionalEffect(new GroupEffect(Arrays.asList((ItemEffect)
-						new BuffEffect("drink", "throw", new Shamed(Global.noneCharacter())),
-						new ResourceEffect("arouse", 10)
-						)), new ConditionalEffect.EffectCondition() {
-							@Override
-							public boolean operation(Combat c, Character user, Character opponent,
-									Item item) {
-								return !user.has(Trait.succubus);
-							}
-						})),
-					15),
+							new BuffEffect("drink", "throw", new Shamed(Global.noneCharacter())),
+							new ResourceEffect("arouse", 10)
+							)), new ConditionalEffect.EffectCondition() {
+						@Override
+						public boolean operation(Combat c, Character user, Character opponent,
+								Item item) {
+							return !user.has(Trait.succubus);
+						}
+					})),
+			15),
 	EmptyBottle		( "Empty Bottle",100 ,"A small flask that can be used to collect liquids.", "an "),
 	HolyWater		( "\"Holy Water\"",100 ,"A small flask filled with \"Holy Water\"", "a bottle of ",
 			Arrays.asList((ItemEffect)
 					new ConditionalEffect(new GroupEffect(Arrays.asList((ItemEffect)
-						new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Divinity, 2, 15)),
-						new BuffEffect("drink", "throw", new Alluring(Global.noneCharacter(), 5)),
-						new ResourceEffect("heal", 100),
-						new ResourceEffect("build", 30),
-						new ResourceEffect("arouse", 10)
-						)), new ConditionalEffect.EffectCondition() {
-							@Override
-							public boolean operation(Combat c, Character user, Character opponent,
-									Item item) {
-								return !user.isDemonic();
-							}
-						}),
+							new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Divinity, 2, 15)),
+							new BuffEffect("drink", "throw", new Alluring(Global.noneCharacter(), 5)),
+							new ResourceEffect("heal", 100),
+							new ResourceEffect("build", 30),
+							new ResourceEffect("arouse", 10)
+							)), new ConditionalEffect.EffectCondition() {
+						@Override
+						public boolean operation(Combat c, Character user, Character opponent,
+								Item item) {
+							return !user.isDemonic();
+						}
+					}),
 					new ConditionalEffect(new GroupEffect(Arrays.asList((ItemEffect)
-						new TextEffect("drink", "throw", "The \"holy water\" splashes onto {self:name-possessive} demonic body, eliciting a shriek from the demon."),
-						new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Dark, -10, 15)),
-						new ResourceEffect("pain", 100)
-						)), new ConditionalEffect.EffectCondition() {
-							@Override
-							public boolean operation(Combat c, Character user, Character opponent,
-									Item item) {
-								return user.isDemonic();
-							}
-						})),
-					15),
+							new TextEffect("drink", "throw", "The \"holy water\" splashes onto {self:name-possessive} demonic body, eliciting a shriek from the demon."),
+							new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Dark, -10, 15)),
+							new ResourceEffect("pain", 100)
+							)), new ConditionalEffect.EffectCondition() {
+						@Override
+						public boolean operation(Combat c, Character user, Character opponent,
+								Item item) {
+							return user.isDemonic();
+						}
+					})),
+			15),
 	nectar		( "Nectar",100 ,"A glob of amber nectar", "a glob of ",
 			Arrays.asList((ItemEffect)
 					new GroupEffect(Arrays.asList((ItemEffect)
-						new ResourceEffect("heal", 100),
-						new ResourceEffect("build", 50),
-						new ResourceEffect("arouse", 10)
-						))),
-					15),
+							new ResourceEffect("heal", 100),
+							new ResourceEffect("build", 50),
+							new ResourceEffect("arouse", 10)
+							))),
+			15),
 	ExtremeAphrodisiac		( "Extreme Aphrodisiac",100 ,"A succubus's pussy juices", "a bottle of ",
 			Arrays.asList((ItemEffect)
 					new GroupEffect(Arrays.asList((ItemEffect)
 							new BuffEffect("drink", "throw", new Trance(Global.noneCharacter(), 5)),
-						new ResourceEffect("arouse", 50)
-						))),
-					5),
+							new ResourceEffect("arouse", 50)
+							))),
+			5),
 	RawAether		( "Raw Aether",100 ,"Raw Aether collected from an enchanted pussy", "a bottle of ",
 			Arrays.asList((ItemEffect)
 					new GroupEffect(Arrays.asList((ItemEffect)
-						new BuffEffect("drink", "throw", new Energized(Global.noneCharacter(), 25)),
-						new ResourceEffect("build", 50)
-						))),
-					25),
+							new BuffEffect("drink", "throw", new Energized(Global.noneCharacter(), 25)),
+							new ResourceEffect("build", 50)
+							))),
+			25),
 	LubricatingOils		( "Lubricating Oils",100 ,"Artificial lubricant collected from a cybernetic pussy", "a bottle of ",
 			Arrays.asList((ItemEffect)
 					new GroupEffect(Arrays.asList((ItemEffect)
-						new BuffEffect("drink", "throw", new Oiled(Global.noneCharacter())),
-						new BuffEffect("drink", "throw", new Horny(Global.noneCharacter(), 15, 10, "Aphrodisiac Oils"))
-						))),
-					25),
+							new BuffEffect("drink", "throw", new Oiled(Global.noneCharacter())),
+							new BuffEffect("drink", "throw", new Horny(Global.noneCharacter(), 15, 10, "Aphrodisiac Oils"))
+							))),
+			25),
 	FeralMusk		( "Feral Musk",100 ,"Musk collected from a feral pussy", "a bottle of ",
 			Arrays.asList((ItemEffect)
 					new GroupEffect(Arrays.asList((ItemEffect)
-						new BuffEffect("drink", "throw", new Frenzied(Global.noneCharacter(), 7))
-						))),
-					7),
+							new BuffEffect("drink", "throw", new Frenzied(Global.noneCharacter(), 7))
+							))),
+			7),
 	BioGel		( "Bio Gel",100 ,"Goo collected from a slime-girl", "a bottle of ",
 			Arrays.asList((ItemEffect)
 					new GroupEffect(Arrays.asList((ItemEffect)
-						new BuffEffect("drink", "throw", new FluidAddiction(Global.noneCharacter(), Global.noneCharacter(), 10)),
-						new ResourceEffect("wprestore", 500)
-						))),
-					10),
+							new BuffEffect("drink", "throw", new FluidAddiction(Global.noneCharacter(), Global.noneCharacter(), 10)),
+							new ResourceEffect("wprestore", 500)
+							))),
+			10),
 	Ward		( "Dark Ward",100,"","a "),
-	FaeScroll	( "Summoning Scroll",150,"","a "),
+	FaeScroll	( "Summoning Scroll",150,"A scroll containing powerful magic","a "),
+	MinorScroll ( "Minor Summoning Scroll", 50, "Less potent than usual, can be used in combat if you know magic", "a "),
+	Talisman    ( "Dark Talisman", 100, "An innocent-looking carving imbued with dark magic", "a " ),
 	Totem		( "Fetish Totem",150,"A small penis shaped totem that can summon tentacles","a "),
 	Capacitor	( "Capacitor",30,"","a "),
 	TinyDraft	( "Tiny Draft", 100, "Temporarily shrink a penis", "a ", Collections.singleton((ItemEffect)new BodyModEffect("drink", "throw", BasicCockPart.average, BodyModEffect.Effect.downgrade)), 15),
@@ -200,25 +202,25 @@ public enum Item implements Loot {
 			new MaybeEffect(new BodyModEffect("drink", "throw", PussyPart.tentacled, BodyModEffect.Effect.replace, 15), .3)
 			), 15),
 	JuggernautJuice
-				( "Juggernaut Juice", 250, "Makes you nigh invulnerable.", "a ", Arrays.asList((ItemEffect)
-						new BuffEffect("drink", "throw", new Shield(Global.noneCharacter(), .5, 10)),
-						new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Power, 5, 10)),
-						new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Cunning, -5, 10)),
-						new RemoveTraitEffect("drink", "throw", Trait.achilles)), 10),
+	( "Juggernaut Juice", 250, "Makes you nigh invulnerable.", "a ", Arrays.asList((ItemEffect)
+			new BuffEffect("drink", "throw", new Shield(Global.noneCharacter(), .5, 10)),
+			new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Power, 5, 10)),
+			new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Cunning, -5, 10)),
+			new RemoveTraitEffect("drink", "throw", Trait.achilles)), 10),
 	BewitchingDraught
-				( "Bewitching Draught", 250, "Makes you inhumanly alluring.", "a ", Arrays.asList((ItemEffect)
-						new BuffEffect("drink", "throw", new Alluring(Global.noneCharacter(), 10)),
-						new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Seduction, 5, 10)),
-						new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Power, -5, 10)),
-						new AddTraitEffect("drink", "throw", Trait.RawSexuality),
-						new AddTraitEffect("drink", "throw", Trait.augmentedPheromones)), 10),
+	( "Bewitching Draught", 250, "Makes you inhumanly alluring.", "a ", Arrays.asList((ItemEffect)
+			new BuffEffect("drink", "throw", new Alluring(Global.noneCharacter(), 10)),
+			new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Seduction, 5, 10)),
+			new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Power, -5, 10)),
+			new AddTraitEffect("drink", "throw", Trait.RawSexuality),
+			new AddTraitEffect("drink", "throw", Trait.augmentedPheromones)), 10),
 	TinkersMix
-				( "TinkersMix", 250, "Not sure if it's a good idea to drink this...", "a ", Arrays.asList((ItemEffect)
-						new BuffEffect("drink", "throw", new Distorted(Global.noneCharacter(), 10)),
-						new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Cunning, 5, 10)),
-						new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Seduction, -5, 10)),
-						new AddTraitEffect("drink", "throw", Trait.lacedjuices),
-						new AddTraitEffect("drink", "throw", Trait.aikidoNovice)), 10);
+	( "TinkersMix", 250, "Not sure if it's a good idea to drink this...", "a ", Arrays.asList((ItemEffect)
+			new BuffEffect("drink", "throw", new Distorted(Global.noneCharacter(), 10)),
+			new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Cunning, 5, 10)),
+			new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Seduction, -5, 10)),
+			new AddTraitEffect("drink", "throw", Trait.lacedjuices),
+			new AddTraitEffect("drink", "throw", Trait.aikidoNovice)), 10);
 
 	/**
 	 * The Item's display name.
@@ -268,7 +270,7 @@ public enum Item implements Loot {
 	public List<ItemEffect> getEffects() {
 		return effect;
 	}
-	
+
 	@Override
 	public String getID() {
 		return name();

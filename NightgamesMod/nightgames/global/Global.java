@@ -412,6 +412,8 @@ public class Global {
 		getSkillPool().add(new ShamefulDisplay(p));
 		getSkillPool().add(new Stumble(p));
 		getSkillPool().add(new TortoiseWrap(p));
+		getSkillPool().add(new FaerieSwarm(p));
+		getSkillPool().add(new DarkTalisman(p));
 
 		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 			getSkillPool().add(new SelfStun(p));	
