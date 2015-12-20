@@ -121,6 +121,11 @@ public class KatTime extends BaseNPCTime {
 				Global.gui().choose(this, "Games");
 				Global.gui().choose(this, "Sparring");
 				Global.gui().choose(this, "Sex");
+				if ((Global.checkFlag(Flag.metAisha)) 
+						&& (!Global.checkFlag(Flag.catspirit)) 
+						&& (Global.getNPC("Kat").getAffection(this.player) >= 5)) {
+			           Global.gui().choose(this, "Ask about Animal Spirit");
+		         }
 			} else if (npc.getAttraction(player) < 10) {
 				Global.gui().message(
 						"You decide to look for Kat and see if she's interested in spending some time together. You don't have any way to contact her directly, "
@@ -327,6 +332,30 @@ public class KatTime extends BaseNPCTime {
 			Daytime.train(player, npc, Attribute.Power);
 			npc.gainAffection(player, 1);
 			player.gainAffection(npc, 1);
+		}
+	     else if (choice.startsWith("Ask about Animal Spirit")) {
+	       Global.flag(Flag.catspirit);
+	       Global.gui().message("You know that Kat's power comes from an animal spirit "
+	       		+ "inside her, but she never mentioned how that came to be. It seems like "
+	       		+ "that might be a useful ability, so you decide to ask her about it. <i>"
+	       		+ "\"Hmm? My cat spirit? It's something I got from my friend, Aisha. Have "
+	       		+ "you met her?\"</i> If she's referring to Aisha Song, the girl who gives"
+	       		+ " magic lessons and temporarily gave you a massive penis, then yes. "
+	       		+ "You've most certainly 'met' her.<p><i>\"Aisha is really nice. When "
+	       		+ "I was doing really badly in the Games, she offered to teach me magic."
+	       		+ " I was never able to learn it though. When she said she could use the "
+	       		+ "magic on me to give me catlike reflexes, I jumped at the opportunity. "
+	       		+ "We did a ritual and I got these ears and this tail.\"</i> She proudly "
+	       		+ "shows off her normally hidden cat parts. <i>\"They're a little "
+	       		+ "inconvenient, but they're really cute, aren't they?\"</i><p>It's "
+	       		+ "interesting that Aisha never brought up the possibility of giving "
+	       		+ "you a spirit. Maybe you should ask her about it.<br><i>\"You "
+	       		+ "totally should! I'm imagining you with puppy ears now, or maybe"
+	       		+ " a tiger.\"</i> She blushes a bit at her own mental image. "
+	       		+ "<i>\"I think Aisha may feel bad about how the ritual turned out, "
+	       		+ "even though I keep telling her I don't regret it. If she refuses"
+	       		+ " to give you a spirit, I'll try to  help you talk her into it.\"</i>");
+	        Global.gui().choose(this, "Leave");
 		} else if (choice == "Leave") {
 			done(true);
 		}

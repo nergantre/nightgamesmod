@@ -55,6 +55,15 @@ public class MagicTraining extends Activity{
 			Global.gui().message("Aisha smiles warmly as she greets you. <i>\"Hello "+player.name()+". Are you here for for another lesson in the arcane arts or do you want some advice about writing? " +
 					"I think you could pen a very nice fantasy novel if you tried.\"</i>");
 			Global.gui().choose(this,"Lesson: $"+1000*(player.getPure(Attribute.Arcane)+1));
+			if (this.player.getPure(Attribute.Animism) >= 1) {
+		        Global.gui().choose(this, "Animism training: $" + (500 + 500 * (this.player.getPure(Attribute.Animism) + 1)));
+			}
+		    if ((Global.checkFlag(Flag.catspirit)) && (!Global.checkFlag(Flag.furry))) {
+		    	Global.gui().choose(this, "Ask about Animal Spirit");
+		    }
+		    if ((Global.checkFlag(Flag.furry)) && (this.player.getPure(Attribute.Animism) == 0)) {
+		        Global.gui().choose(this, "Get Animal Spirit");
+		    }
 			Global.gui().choose(this,"Leave");
 			acted = false;
 		}
@@ -222,6 +231,130 @@ public class MagicTraining extends Activity{
 			}			
 			Global.gui().choose(this,"Leave");
 		}
+		else if (choice.startsWith("Animism")) {
+		       if (this.player.money >= 500 + 500 * (this.player.getPure(Attribute.Animism) + 1)) {
+		         this.player.money -= 500 + 500 * (this.player.getPure(Attribute.Animism) + 1);
+		         Global.gui().message("Kat comes in again to help you practice tapping "
+		         		+ "into your animal side. As per Kat's suggestion, you both spend "
+		         		+ "the entire training session naked, so as to distance yourselves "
+		         		+ "from civilized habits. Aisha volunteers to help out by teasing"
+		         		+ " you to sufficient arousal for your instincts to come out. She "
+		         		+ "also provides some actual help by monitoring your spirit's power.");
+		         this.player.mod(Attribute.Animism, 1);
+		         this.acted = true;
+		       }
+		       else {
+		         Global.gui().message("You don't have enough money for training.");
+		       }
+		       Global.gui().choose(this, "Leave");
+		     }
+		     else if (choice.startsWith("Ask about Animal Spirit")) {
+		       Global.flag(Flag.furry);
+		       Global.gui().message("You bring up the topic of Kat's animal spirit and "
+		       		+ "how she mentioned Aisha's involvement. Aisha's smile fades and "
+		       		+ "she nods somberly.<br><i>\"Yes. I told Kat that I was studying "
+		       		+ "ways to harness and use spirit magic. She became interested in "
+		       		+ "the idea and asked if I could use it to make her more capable "
+		       		+ "in a fight. I should have refused until my research was more "
+		       		+ "advanced, but... I was overconfident.\"</i> She sighs, her "
+		       		+ "expression heavy with guilt. <i>\"I thought I could use the "
+		       		+ "cat spirit to improve her strength and reflexes. I thought I"
+		       		+ " understood how the spirit would affect her. I thought that"
+		       		+ " even if something happened, I could simply release the "
+		       		+ "spirit and return her to normal. I was mistaken about many "
+		       		+ "things.</i>\"<p><i>\"When I performed the ritual, the cat "
+		       		+ "spirit permanently fused to Kat's soul. She gained the "
+		       		+ "strength and speed she wanted, but there were immediate "
+		       		+ "physical and personality changes. She already had trouble "
+		       		+ "dealing with people she didn't know, but from then on she"
+		       		+ " was forced to keep people at arm's length so they wouldn't "
+		       		+ "discover her supernatural attributes. I studied everything "
+		       		+ "I could find on spirit magic and realized where I went wrong,"
+		       		+ " but I could never find a way to fix it. She's likely stuck"
+		       		+ " like that for the rest of her life.\"</i><p>Kat actually seems "
+		       		+ "pretty positively inclined towards her cat spirit. Also, if Aisha's"
+		       		+ " research has advanced so much, she could safely give you the spirit's"
+		       		+ " abilities without the side-effects, right?<br>Aisha seems furious"
+		       		+ " at your suggestion. <i>\"You want me to do to you what I did to "
+		       		+ "Kat? No! I'm not going to risk ruining another life. How can you"
+		       		+ " even ask such a thing?!\"</i> She doesn't appear likely to budge"
+		       		+ " to you alone. If you really want this power, you'll probably "
+		       		+ "need to rely on Kat's help.");
+		       Global.gui().choose(this, "Get Animal Spirit");
+		       Global.gui().choose(this, "Lesson: $" + (500 + 500 * (this.player.getPure(Attribute.Arcane) + 1)));
+		       Global.gui().choose(this, "Leave");
+		     }
+		     else if (choice.startsWith("Get Animal Spirit")) {
+		       Global.gui().message("Kat agrees to come to the creative writing reference"
+		       		+ " room to try to convince Aisha. Aisha is delighted to see her and "
+		       		+ "immediately pulls the shorter girl into a hug before she can say "
+		       		+ "anything. <i>\"Oh my adorable little kitty Kat, you should come visit"
+		       		+ " me more often.\"</i> Kat extracts her face from between Aisha's large"
+		       		+ " breasts. Her expression appears midly annoyed, but you can tell she's"
+		       		+ " secretly enjoying the attention.<p>After the two of the exchange "
+		       		+ "greetings, Kat supports your request to be possessed with an animal"
+		       		+ " spirit. Aisha looks crestfallen and shakes her head. <i>\"Kat. You of "
+		       		+ "all people.... You know the dangers of this kind of ritual. What if"
+		       		+ " he's changed the way you were. You can't want that for anyone else."
+		       		+ "\"</i><br>Kat takes off her hat, revealing her feline ears, and "
+		       		+ "smiles reassuringly. \"<i>These things aren't so bad. Sure they're"
+		       		+ " a little inconvenient to hide, but my cat powers have given me so "
+		       		+ "many wonderful things. I'm so grateful for what you've done for me. If"
+		       		+ " spirit magic gives " + 
+		         this.player.name() + " even half as much happiness as it's given me, I'm "
+		         		+ "sure he won't regret it.\"</i><p>" + 
+		         "Aisha finally relents and instructs you to get undressed while she leaves "
+		         + "to gather the materials she needs. Kat fidgets awkwardly as you strip. "
+		         + "She's bright red and tries not to stare at your naked body, but keeps "
+		         + "sneaking obvious glances. You didn't think it was possible anymore, but "
+		         + "her shy behavior is actually making you embarrassed.<br> Aisha returns "
+		         + "after a couple minutes and quickly prepares for the ritual. You obediently "
+		         + "follow her instructions and end up lying in a magic circle surrounded by"
+		         + " lit candles and unidentified relics. You feel her drawing runes over "
+		         + "your naked body, which feels odd and a bit ticklish, but you wait "
+		         + "patiently until she's finished.<p> The ritual itself has strange effects "
+		         + "on your consciousness, so you only have a vague recollection of it. "
+		         + "It's apparently over by the time you come back to your senses. " 
+		         + "You open your eyes as you feel two pairs of hands running all over you. "
+		         + "Aisha and Kat are both exploring your nude body, though not focusing too"
+		         + " much on your erogenous zones. Kat runs her fingers through your hair, "
+		         + "while Aisha reaches under your butt.<p> <i>\"No ears or tail, and I don't "
+		         + "see any fur in unexpected areas.\"</i> Aisha looks very relieved and "
+		         + "soon certifies you anatomically human. <i>\"With the safeguards I used " 
+		         + "this time, the effect may be less potent for you than it was for Kat, "
+		         + "but your instincts seem pretty strong down here.\"</i> She grabs your "
+		         + "rock-hard cock, sending a jolt of pleasure through you. <i>\"This big "
+		         + "boy has been standing at attention for at least ten minutes now. We'll "
+		         + "need to get your mental arousal to match your physical arousal before " 
+		         + "we'll know whether we succeeded. I'm tempted to try you out myself, but "
+		         + "our Kitty Kat is already pretty needy. She'll probably be a more "
+		         + "appropriate test anyway.\"</i><p><i>\"Nya?!\"</i> Kat lets out a startled "
+		         + "noise at suddenly being the focus of attention. You hadn't noticed how "
+		         + "animal-like she'd become, and maybe she didn't either. At Aisha's prompting,"
+		         + " she strips naked and eagerly moves to straddle you. She lowers her hips "
+		         + "and inserts your stiff rod into her soaked pussy. Pleasure shoots through "
+		         + "you much more strongly than usual. The hot, wet, tightness fills a gap in "
+		         + "your senses that you hadn't realized was there. The sensation lights a "
+		         + "fire in your veins as she rides you energetically.<p>You feel...something..."
+		         + " rise in you as your arousal builds. You can control it, but it's "
+		         + "persistently guiding you. This feels good, but it would be better if you "
+		         + "were on top and moving faster. You grab Kat and easily push her down,"
+		         + " despite her increased feral strength. You position her on her hands and"
+		         + " knees and impale her pussy from behind. She lets out a short yowl of "
+		         + "protest, but decides she prefers this position as you vigorously thrust"
+		         + " your hips. With this fierce fucking, it's not long until she's spasming " 
+		         + "with orgasm. You let out an involuntary howl as you shoot a thick load into"
+		         + " her womb.<p>As you and Kat lie exhausted, your head starts to clear. "
+		         + "Aisha clears her throat to remind you that you had an audience for your "
+		         + "primal lovemaking. You doubt it would have mattered if you had remembered."
+		         + " She looks a little flushed, though it's hard to tell with her dark skin "
+		         + "tone. <i>\"I think we can consider that a success. If Kat is willing to " 
+		         + "continue to help you out, you should ask her to train you to control your new powers. "
+		         + "I want you to do it here, so I can continue to watch you... just to be safe, of course.\"</i>");
+		       this.player.mod(Attribute.Animism, 1);
+		       this.acted = true;
+		       Global.gui().choose(this, "Leave");
+		     }
 	}
 
 	@Override

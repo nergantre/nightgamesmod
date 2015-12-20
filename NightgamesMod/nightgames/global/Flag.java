@@ -58,5 +58,9 @@ public enum Flag {
 	AiriEnabled,
 	systemMessages,
 	malePref,
-	masturbationSemen, AliceAvailable, metAlice, victory,
+	masturbationSemen,
+	AliceAvailable,
+	metAlice,
+	victory,
+	catspirit,
 }
