@@ -29,6 +29,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Panel;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -67,10 +68,11 @@ import javax.swing.text.DefaultCaret;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+
 
 public class GUI extends JFrame implements Observer {
-
-	protected Combat combat;
+        protected Combat combat;
 	private Player player;
 	private ArrayList<ArrayList<SkillButton>> skills;
 	JPanel commandPanel;
@@ -87,8 +89,8 @@ public class GUI extends JFrame implements Observer {
 	private JProgressBar willpowerBar;
 	private JPanel topPanel;
 	private JLabel loclbl;
-	private JLabel timelbl;
-	private JLabel cashlbl;
+	private JLabel timeLabel;
+	private JLabel cashLabel;
 	private Panel panel0;
 	private CreationGUI creation;
 	private JScrollPane textScroll;
@@ -99,11 +101,12 @@ public class GUI extends JFrame implements Observer {
 	private JPanel centerPanel;
 	private JPanel clothesPanel;
 	private JLabel clothesdisplay;
-	private JPanel optionspanel;
+	private JPanel optionsPanel;
 	private JPanel portraitPanel;
 	private JLabel portrait;
+        private JLabel map;
 	private JPanel imgPanel;
-	private JLabel img;
+	private JLabel imgLabel;
 	private JRadioButton rdnormal;
 	private JRadioButton rddumb;
 	private JRadioButton rdeasy;
@@ -118,33 +121,57 @@ public class GUI extends JFrame implements Observer {
 	private JRadioButton rdimgoff;
 	private JRadioButton rdfntnorm;
 	private JRadioButton rdnfntlrg;
-	private JSlider sldMalePref;
-	private int width = 1024;
-	private int height = 700;
+	private JSlider malePrefSlider;
+	private int width;
+	private int height;
 	public int fontsize;
 	private JMenuItem mntmQuitMatch;
 	private boolean skippedFeat;
-
+        
 	public GUI() {
-		setBackground(Color.GRAY);
-		setDefaultCloseOperation(3);
-		if (Toolkit.getDefaultToolkit().getScreenSize().getHeight() >= 1000) {
-			height = 900;
-		} else {
-			height = 700;
-		}
-		if (Toolkit.getDefaultToolkit().getScreenSize().getWidth() >= 1600) {
-			width = 1600;
-		} else {
-			width = 1024;
-		}
+            
+                //frame title
+                this.setTitle("NightGames Mod Mod v0.1");
+                
+                //closing operation
+                setDefaultCloseOperation(3);
+                
+                //resolution resolver
+                
+                height = (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.85);
+                width = (int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.85);
+                
 		setPreferredSize(new Dimension(width, height));
+                
+                
+                //center the window on the monitor
+                
+                int y = (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight());
+                int x = (int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth());
+                
+                int x1 = (x / 2) - (width / 2);
+                int y1 = (y / 2) - (height / 2);
+                
+                int centerX = (x1);
+                int centerY = (y1);
+                
+                this.setLocation(centerX, centerY);
+                
+                //menu bar
+                
 		getContentPane().setLayout(new BoxLayout(getContentPane(), 1));
+                
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		JMenuItem mntmNewgame = new JMenuItem("NewGame");
+                
+                //menu bar - new game
+                
+		JMenuItem mntmNewgame = new JMenuItem("New Game");
+                
 		mntmNewgame.setForeground(Color.WHITE);
-		mntmNewgame.setBackground(Color.DARK_GRAY);
+		mntmNewgame.setBackground(new Color(35, 35, 35));
+                mntmNewgame.setHorizontalAlignment(SwingConstants.CENTER);
+                
 		mntmNewgame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (Global.inGame()) {
@@ -157,112 +184,156 @@ public class GUI extends JFrame implements Observer {
 				}
 			}
 		});
+                
 		menuBar.add(mntmNewgame);
-		JMenuItem mntmLoad = new JMenuItem("Load");
-		mntmLoad.setForeground(Color.WHITE);
-		mntmLoad.setBackground(Color.DARK_GRAY);
-		menuBar.add(mntmLoad);
+                
+                //menu bar - load game - can't change because can't figure out where the frame is with swing
+                
+		JMenuItem mntmLoad = new JMenuItem("Load");                     //Initializer
+                
+		mntmLoad.setForeground(Color.WHITE);                            //Formatting
+		mntmLoad.setBackground(new Color(35, 35, 35));
+                mntmLoad.setHorizontalAlignment(SwingConstants.CENTER);
+                
 		mntmLoad.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Global.load();
-			}
+                    @Override
+                    public void actionPerformed(ActionEvent arg0) {
+                        Global.load();
+                    }
 		});
+                
+                menuBar.add(mntmLoad);
+                
+                //menu bar - options
+                
 		JMenuItem mntmOptions = new JMenuItem("Options");
 		mntmOptions.setForeground(Color.WHITE);
-		mntmOptions.setBackground(Color.DARK_GRAY);
+		mntmOptions.setBackground(new Color(35, 35, 35));
+                
 		menuBar.add(mntmOptions);
-		optionspanel = new JPanel();
-		optionspanel.setLayout(new GridLayout(0, 3, 0, 0));
-		JLabel lblai = new JLabel("AI Mode");
+                
+                
+                //options submenu creator
+                
+		optionsPanel = new JPanel();
+		optionsPanel.setLayout(new GridLayout(0, 3, 0, 0));
+                
+                //AILabel - options submenu - visible
+                
+		JLabel AILabel = new JLabel("AI Mode");
 		ButtonGroup ai = new ButtonGroup();
 		rdnormal = new JRadioButton("Normal");
 		rddumb = new JRadioButton("Old");
 		ai.add(rdnormal);
 		ai.add(rddumb);
-		optionspanel.add(lblai);
-		optionspanel.add(rdnormal);
-		optionspanel.add(rddumb);
+		optionsPanel.add(AILabel);
+		optionsPanel.add(rdnormal);
+		optionsPanel.add(rddumb);
 
-		JLabel lbldiff = new JLabel("Difficulty");
+                //difficultyLabel - options submenu - visible
+                
+		JLabel difficultyLabel = new JLabel("Difficulty");
 		ButtonGroup diff = new ButtonGroup();
 		rdeasy = new JRadioButton("Normal");
 		rdhard = new JRadioButton("Hard");
 		diff.add(rdeasy);
 		diff.add(rdhard);
-		optionspanel.add(lbldiff);
-		optionspanel.add(rdeasy);
-		optionspanel.add(rdhard);
-
-		JLabel lblSystemMessage = new JLabel("System Messages");
+		optionsPanel.add(difficultyLabel);
+		optionsPanel.add(rdeasy);
+		optionsPanel.add(rdhard);
+                
+                //systemMessageLabel - options submenu - visible
+                
+		JLabel systemMessageLabel = new JLabel("System Messages");
 		ButtonGroup sysMsgG = new ButtonGroup();
 		rdMsgOn = new JRadioButton("On");
 		rdMsgOff = new JRadioButton("Off");
 		sysMsgG.add(rdMsgOn);
 		sysMsgG.add(rdMsgOff);
-		optionspanel.add(lblSystemMessage);
-		optionspanel.add(rdMsgOn);
-		optionspanel.add(rdMsgOff);
+		optionsPanel.add(systemMessageLabel);
+		optionsPanel.add(rdMsgOn);
+		optionsPanel.add(rdMsgOff);
 
+                //autosave - options submenu - visible -(not currently working?)
+                
 		JLabel lblauto = new JLabel("Autosave (saves to auto.sav)");
 		ButtonGroup auto = new ButtonGroup();
 		rdautosaveon = new JRadioButton("on");
 		rdautosaveoff = new JRadioButton("off");
 		auto.add(rdautosaveon);
 		auto.add(rdautosaveoff);
-		optionspanel.add(lblauto);
-		optionspanel.add(rdautosaveon);
-		optionspanel.add(rdautosaveoff);
-		JLabel lblpor = new JLabel("Portraits");
-		ButtonGroup portraits = new ButtonGroup();
+		optionsPanel.add(lblauto);
+		optionsPanel.add(rdautosaveon);
+		optionsPanel.add(rdautosaveoff);
+                
+                //portraitsLabel - options submenu - visible
+                
+		JLabel portraitsLabel = new JLabel("Portraits");
+                
+                //portraits - options submenu - visible
+                
+		ButtonGroup portraitsButton = new ButtonGroup();
+                
+                //rdpron / rdporoff - options submenu - visible
+                
 		rdporon = new JRadioButton("on");
 		rdporoff = new JRadioButton("off");
-		portraits.add(rdporon);
-		portraits.add(rdporoff);
-		optionspanel.add(lblpor);
-		optionspanel.add(rdporon);
-		optionspanel.add(rdporoff);
-		JLabel lblimg = new JLabel("Images");
+		portraitsButton.add(rdporon);
+		portraitsButton.add(rdporoff);
+		optionsPanel.add(portraitsLabel);
+		optionsPanel.add(rdporon);
+		optionsPanel.add(rdporoff);
+                
+                //imageLabel - options submenu - visible
+		JLabel imageLabel = new JLabel("Images");
 		ButtonGroup image = new ButtonGroup();
 		rdimgon = new JRadioButton("on");
 		rdimgoff = new JRadioButton("off");
 		image.add(rdimgon);
 		image.add(rdimgoff);
-		optionspanel.add(lblimg);
-		optionspanel.add(rdimgon);
-		optionspanel.add(rdimgoff);
-		JLabel lblfnt = new JLabel("Font Size");
+		optionsPanel.add(imageLabel);
+		optionsPanel.add(rdimgon);
+		optionsPanel.add(rdimgoff);
+                
+                //fontSizeLabel - options submenu - visible
+		JLabel fontSizeLabel = new JLabel("Font Size");
 		ButtonGroup size = new ButtonGroup();
 		rdfntnorm = new JRadioButton("normal");
 		rdnfntlrg = new JRadioButton("large");
 		size.add(rdfntnorm);
 		size.add(rdnfntlrg);
-		optionspanel.add(lblfnt);
-		optionspanel.add(rdfntnorm);
-		optionspanel.add(rdnfntlrg);
+		optionsPanel.add(fontSizeLabel);
+		optionsPanel.add(rdfntnorm);
+		optionsPanel.add(rdnfntlrg);
+                
+                //m/f preference (no (other) males in the games yet... good for modders?)
 
-		JLabel lblMalePref = new JLabel("Female vs. Male Preference");
-		optionspanel.add(lblMalePref);
-		sldMalePref = new JSlider(JSlider.HORIZONTAL, 0, 10, 1);
-		sldMalePref.setMajorTickSpacing(5);
-		sldMalePref.setMinorTickSpacing(1);
-		sldMalePref.setPaintTicks(true);
-		sldMalePref.setPaintLabels(true);
-		sldMalePref.setLabelTable(new Hashtable<Integer, JLabel>() {
+                //malePrefLabel - options submenu - visible
+		JLabel malePrefLabel = new JLabel("Female vs. Male Preference");
+		optionsPanel.add(malePrefLabel);
+		malePrefSlider = new JSlider(JSlider.HORIZONTAL, 0, 10, 1);
+		malePrefSlider.setMajorTickSpacing(5);
+		malePrefSlider.setMinorTickSpacing(1);
+		malePrefSlider.setPaintTicks(true);
+		malePrefSlider.setPaintLabels(true);
+		malePrefSlider.setLabelTable(new Hashtable<Integer, JLabel>() {
 			{
 				put(0, new JLabel("Female"));
 				put(5, new JLabel("Mixed"));
 				put(10, new JLabel("Male"));
 			}
 		});
-		sldMalePref.setValue(Math.round(Global.getValue(Flag.malePref)));
-		sldMalePref.setToolTipText("This setting affects the gender your opponents will gravitate towards once that"
+		malePrefSlider.setValue(Math.round(Global.getValue(Flag.malePref)));
+		malePrefSlider.setToolTipText("This setting affects the gender your opponents will gravitate towards once that"
 				+ " option becomes available.");
-		sldMalePref.addChangeListener(new ChangeListener() {
+		malePrefSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				Global.setCounter(Flag.malePref, sldMalePref.getValue());
+				Global.setCounter(Flag.malePref, malePrefSlider.getValue());
 			}
 		});
-		optionspanel.add(sldMalePref);
+                
+                //malePrefPanel - options submenu - visible
+		optionsPanel.add(malePrefSlider);
 		mntmOptions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (Global.checkFlag(Flag.systemMessages)) {
@@ -302,8 +373,8 @@ public class GUI extends JFrame implements Observer {
 				} else {
 					rdfntnorm.setSelected(true);
 				}
-				sldMalePref.setValue(Math.round(Global.getValue(Flag.malePref)));
-				int result = JOptionPane.showConfirmDialog(GUI.this, optionspanel, "Options",
+				malePrefSlider.setValue(Math.round(Global.getValue(Flag.malePref)));
+				int result = JOptionPane.showConfirmDialog(GUI.this, optionsPanel, "Options",
 						JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 				if (result == JOptionPane.OK_OPTION) {
 					if (rdMsgOn.isSelected()) {
@@ -337,8 +408,8 @@ public class GUI extends JFrame implements Observer {
 						Global.unflag(Flag.noimage);
 					} else {
 						Global.flag(Flag.noimage);
-						if (img != null)
-							imgPanel.remove(img);
+						if (imgLabel != null)
+							imgPanel.remove(imgLabel);
 						imgPanel.repaint();
 					}
 					if (rdnfntlrg.isSelected()) {
@@ -351,15 +422,20 @@ public class GUI extends JFrame implements Observer {
 				}
 			}
 		});
+                
+                //menu bar - credits
+                
 		JMenuItem mntmCredits = new JMenuItem("Credits");
 		mntmCredits.setForeground(Color.WHITE);
-		mntmCredits.setBackground(Color.DARK_GRAY);
+		mntmCredits.setBackground(new Color(35, 35, 35));
 		menuBar.add(mntmCredits);
 
+                //menu bar - quit match
+                
 		mntmQuitMatch = new JMenuItem("Quit Match");
 		mntmQuitMatch.setEnabled(false);
 		mntmQuitMatch.setForeground(Color.WHITE);
-		mntmQuitMatch.setBackground(Color.DARK_GRAY);
+		mntmQuitMatch.setBackground(new Color(35, 35, 35));
 		mntmQuitMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int result = JOptionPane.showConfirmDialog(GUI.this,
@@ -409,53 +485,94 @@ public class GUI extends JFrame implements Observer {
 	            }
 			}
 		});
-
+                
+                //panel layouts
+                
+                
+                //mainpanel - everything is contained within it
+                
 		this.mainpanel = new JPanel();
 		getContentPane().add(this.mainpanel);
 		this.mainpanel.setLayout(new BoxLayout(this.mainpanel, 1));
-
+                
+                //panel0 - invisible, only handles topPanel
+                
 		this.panel0 = new Panel();
 		this.mainpanel.add(this.panel0);
 		this.panel0.setLayout(new BoxLayout(this.panel0, 0));
+                
+                //topPanel - invisible, menus
 
 		this.topPanel = new JPanel();
 		this.panel0.add(this.topPanel);
-		this.topPanel.setBackground(Color.DARK_GRAY);
-		this.topPanel.setPreferredSize(new Dimension(width, 40));
-		this.topPanel.setLayout(new GridLayout(0, 2, 0, 0));
+		this.topPanel.setLayout(new GridLayout(0, 1, 0, 0));
 
+                //centerPanel - invisible, body of GUI
+                
 		this.centerPanel = new JPanel();
 		this.mainpanel.add(centerPanel);
 		this.centerPanel.setLayout(new BorderLayout(0, 0));
+                
+                //statusPanel - visible, character status
+                
 		this.statusPanel = new JPanel();
 		this.statusPanel.setLayout(new BoxLayout(this.statusPanel, 1));
-		this.statusPanel.setBackground(new Color(200, 200, 200));
+                
+                //clothesPanel - ??? (invisible & not added, probably to-do)
+                
 		this.clothesPanel = new JPanel();
 		this.clothesPanel.setLayout(new GridLayout(0, 1));
-		this.clothesPanel.setVisible(false);
+		this.clothesPanel.setVisible(true);
 		clothesPanel.setBackground(new Color(25, 25, 50));
 
+                //portraitPanel - invisible, contains imgPanel, west panel
+                
 		portraitPanel = new JPanel();
 		portraitPanel.setLayout(new BorderLayout(0, 0));
-		portraitPanel.setBackground(new Color(25, 25, 50));
+                if (width < 720){
+                    portraitPanel.setSize(new Dimension(height, width/6));
+                }
+                
+		portraitPanel.setBackground(new Color(0, 10, 30));
 		portrait = new JLabel("");
 		portrait.setVerticalAlignment(SwingConstants.TOP);
 		portraitPanel.add(portrait, BorderLayout.WEST);
+                
+                //imgPanel - visible, contains imgLabel
+                
 		imgPanel = new JPanel();
 		imgPanel.setLayout(new BorderLayout(0, 0));
-		imgPanel.setBackground(new Color(25, 25, 50));
-		img = new JLabel("");
-		imgPanel.add(img, BorderLayout.NORTH);
+		imgPanel.setBackground(new Color(0, 10, 30));                   //probably not doing anything
+
+                
+                if (width < 720){
+                    portraitPanel.setSize(new Dimension(height, width/6));
+                    System.out.println("Oh god so tiny");
+                }
+                //imgLabel - probably contains the portrait image (?)
+                
+		imgLabel = new JLabel("");
+		imgPanel.add(imgLabel, BorderLayout.NORTH);
 		portraitPanel.add(imgPanel, BorderLayout.CENTER);
+                
+                if (width < 720){
+                    portraitPanel.setSize(new Dimension(height, width/6));
+                    System.out.println("Oh god so tiny");
+                }
+                
+                //textScroll
+                
 		this.textScroll = new JScrollPane();
 		imgPanel.add(textScroll, BorderLayout.CENTER);
 		centerPanel.add(portraitPanel, BorderLayout.CENTER);
 
+                //textPane
+                
 		this.textPane = new JTextPane();
 		DefaultCaret caret = (DefaultCaret) textPane.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		this.textPane.setForeground(new Color(240, 240, 255));
-		this.textPane.setBackground(new Color(25, 25, 50));
+		this.textPane.setBackground(new Color(18, 30, 49));
 		this.textPane.setPreferredSize(new Dimension(width, 400));
 		this.textPane.setEditable(false);
 		this.textPane.setContentType("text/html");
@@ -468,34 +585,37 @@ public class GUI extends JFrame implements Observer {
 				Global.getMatch().resume();
 			}
 		});
-		// JScrollPane commandScroll = new JScrollPane();
-		// commandScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		// commandScroll.setPreferredSize(new Dimension(this.width,
-		// this.height/6));
-		// this.mainpanel.add(commandScroll);
+
+                //commandPanel - visible, contains the player's command buttons
+                
 		this.commandPanel = new JPanel();
-		this.commandPanel.setBackground(Color.DARK_GRAY);
-		this.commandPanel.setPreferredSize(new Dimension(this.width, this.height / 5));
-		this.commandPanel.setMinimumSize(new Dimension(0, 200));
-		// this.commandPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		this.commandPanel.setBackground(new Color(0, 10, 30));
+		this.commandPanel.setPreferredSize(new Dimension(this.width, 80));
+
+
 		this.commandPanel.setBorder(new CompoundBorder());
 		this.mainpanel.add(commandPanel);
-		// commandScroll.setViewportView(this.commandPanel);
+
 		skills = new ArrayList<ArrayList<SkillButton>>();
 		createCharacter();
 		setVisible(true);
 		pack();
 	}
 
+        //combat GUI
+        
 	public Combat beginCombat(Character player, Character enemy) {
+                unloadMap();
 		this.combat = new Combat(player, enemy, player.location());
 		this.combat.addObserver(this);
 		loadPortrait(combat, player, enemy);
 		return this.combat;
 	}
 
+        //image loader
+        
 	public void displayImage(String path, String artist) {
-		BufferedImage pic = null;
+            BufferedImage pic = null;
 		try {
 			pic = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" + path));
 		} catch (IOException localIOException9) {
@@ -503,23 +623,28 @@ public class GUI extends JFrame implements Observer {
 		}
 		clearImage();
 		if (pic != null) {
-			img = new JLabel(new ImageIcon(pic));
-			img.setHorizontalAlignment(SwingConstants.CENTER);
-			imgPanel.add(img, BorderLayout.NORTH);
-			img.setToolTipText(artist);
+			imgLabel = new JLabel(new ImageIcon(pic));
+			imgLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			imgPanel.add(imgLabel, BorderLayout.NORTH);
+			imgLabel.setToolTipText(artist);
 		}
 		this.centerPanel.revalidate();
 		this.portraitPanel.revalidate();
 		this.portraitPanel.repaint();
+
 	}
 
+        //image unloader
+        
 	public void clearImage() {
-		if (img != null) {
-			imgPanel.remove(img);
-			img = null;
+		if (imgLabel != null) {
+			imgPanel.remove(imgLabel);
+			imgLabel = null;
 		}
 	}
 
+        //image reloader (debug mode only)
+        
 	public void resetPortrait() {
 		if (Global.isDebugOn(DebugFlags.DEBUG_IMAGES)) {
 			System.out.println("Resetting Images\n");
@@ -528,6 +653,8 @@ public class GUI extends JFrame implements Observer {
 		portraitPanel.remove(portrait);
 	}
 
+        //portrait loader
+        
 	public void loadPortrait(Combat c, Character player, Character enemy) {
 		if (!Global.checkFlag(Flag.noimage) && !Global.checkFlag(Flag.noportraits)) {
 			String imagepath = null;
@@ -550,8 +677,18 @@ public class GUI extends JFrame implements Observer {
 					}
 					portrait.setIcon(null);
 					portraitPanel.remove(portrait);
-					portrait = new JLabel(new ImageIcon(face));
-					portrait.setVerticalAlignment(SwingConstants.TOP);
+                                        
+                                        if (width > 720){
+                                            portrait = new JLabel(new ImageIcon(face));
+                                            portrait.setVerticalAlignment(SwingConstants.TOP);
+                                        }
+                                        else
+                                        {
+                                            Image scaledFace = face.getScaledInstance(width/6, height/4, Image.SCALE_SMOOTH);
+                                            portrait = new JLabel(new ImageIcon(scaledFace));
+                                            portrait.setVerticalAlignment(SwingConstants.TOP);
+                                            System.out.println("Portrait resizing active.");
+                                        }
 					portraitPanel.add(portrait, BorderLayout.WEST);
 				}
 			}
@@ -560,21 +697,65 @@ public class GUI extends JFrame implements Observer {
 			this.portraitPanel.repaint();
 		}
 	}
+        
+        //Map loader
+        
+        public void loadMap(){
+            if(!Global.checkFlag(Flag.noimage))
+            {
+                BufferedImage mapPath = null;
+                try{
+                    mapPath = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets//map.png"));
+                } catch (IOException localIOException10) {
+                } catch (IllegalArgumentException badArg) {
+                    
+                }
+                
+                if (width > 720) {
+                    map = new JLabel(new ImageIcon(mapPath));
+                    map.setVerticalAlignment(SwingConstants.BOTTOM);
+                }
+                
+                else
+                {
+                    Image scaledMap = mapPath.getScaledInstance(width/6, height/4, Image.SCALE_SMOOTH);
+                    map = new JLabel(new ImageIcon(scaledMap));
+                    map.setVerticalAlignment(SwingConstants.BOTTOM);
+                }
+                
+                portraitPanel.add(map, BorderLayout.WEST);
+                
+            }
+        }
+        
+        //Map unloader
 
+        public void unloadMap(){
+            portraitPanel.remove(map);
+        }
+
+        //Combat GUI
+        
 	public Combat beginCombat(Character player, Character enemy, int code) {
-		this.combat = new Combat(player, enemy, player.location(), code);
+		unloadMap();
+                this.combat = new Combat(player, enemy, player.location(), code);
 		this.combat.addObserver(this);
 		message(this.combat.getMessage());
 		loadPortrait(combat, player, enemy);
 		return this.combat;
 	}
 
+        //Combat spectate ???
+        
 	public void watchCombat(Combat c) {
 		this.combat = c;
 		this.combat.addObserver(this);
 		loadPortrait(c, c.p1, c.p2);
 	}
 
+        
+        //getLabelString - handles all the meters (bars)
+        
 	public String getLabelString(Meter meter) {
 		if (meter.getOverflow() > 0) {
 			return "(" + Integer.toString(meter.get() + meter.getOverflow()) + ")/" + meter.max();
@@ -582,6 +763,8 @@ public class GUI extends JFrame implements Observer {
 		return Integer.toString(meter.get()) + "/" + meter.max();
 	}
 
+        
+        
 	public void populatePlayer(Player player) {
 		if (Global.checkFlag(Flag.largefonts)) {
 			fontsize = 6;
@@ -595,21 +778,22 @@ public class GUI extends JFrame implements Observer {
 		player.gui = this;
 		player.addObserver(this);
 		JPanel meter = new JPanel();
-		meter.setBackground(new Color(200, 200, 200));
+		meter.setBackground(new Color(0, 10, 30));
 		this.topPanel.add(meter);
 		meter.setLayout(new GridLayout(0, 4, 0, 0));
 
 		this.stamina = new JLabel("Stamina: " + getLabelString(player.getStamina()));
 		this.stamina.setFont(new Font("Sylfaen", 1, 15));
 		this.stamina.setHorizontalAlignment(0);
-		this.stamina.setForeground(new Color(100, 0, 00));
+		this.stamina.setForeground(new Color(164, 8, 2));
 		this.stamina.setToolTipText(
 				"Stamina represents your endurance and ability to keep fighting. If it drops to zero, you'll be temporarily stunned.");
 		meter.add(this.stamina);
+                
 		this.arousal = new JLabel("Arousal: " + getLabelString(player.getArousal()));
 		this.arousal.setFont(new Font("Sylfaen", 1, 15));
 		this.arousal.setHorizontalAlignment(0);
-		this.arousal.setForeground(new Color(100, 0, 50));
+		this.arousal.setForeground(new Color(254, 1, 107));
 		this.arousal.setToolTipText(
 				"Arousal is raised when your opponent pleasures or seduces you. If it hits your max, you'll orgasm and lose the fight.");
 		meter.add(this.arousal);
@@ -617,46 +801,47 @@ public class GUI extends JFrame implements Observer {
 		this.mojo = new JLabel("Mojo: " + getLabelString(player.getMojo()));
 		this.mojo.setFont(new Font("Sylfaen", 1, 15));
 		this.mojo.setHorizontalAlignment(0);
-		this.mojo.setForeground(new Color(0, 0, 100));
+		this.mojo.setForeground(new Color(51, 153, 255));
 		this.mojo.setToolTipText(
 				"Mojo is the abstract representation of your momentum and style. It increases with normal techniques and is used to power special moves");
 		meter.add(this.mojo);
+                
 		this.willpower = new JLabel("Willpower: " + getLabelString(player.getWillpower()));
 		this.willpower.setFont(new Font("Sylfaen", 1, 15));
 		this.willpower.setHorizontalAlignment(0);
-		this.willpower.setForeground(new Color(0, 0, 100));
+		this.willpower.setForeground(new Color(68, 170, 85));
 		this.willpower
 				.setToolTipText("Willpower is a representation of your will to fight. When this reaches 0, you lose.");
 		meter.add(this.willpower);
 
 		this.staminaBar = new JProgressBar();
 		this.staminaBar.setBorder(new SoftBevelBorder(1, null, null, null, null));
-		this.staminaBar.setForeground(Color.RED);
-		this.staminaBar.setBackground(new Color(105, 105, 105));
+		this.staminaBar.setForeground(new Color(164, 8, 2));
+		this.staminaBar.setBackground(new Color(50, 50, 50));
 		meter.add(this.staminaBar);
 		this.staminaBar.setMaximum(player.getStamina().max());
 		this.staminaBar.setValue(player.getStamina().get());
 
 		this.arousalBar = new JProgressBar();
 		this.arousalBar.setBorder(new SoftBevelBorder(1, null, null, null, null));
-		this.arousalBar.setForeground(Color.MAGENTA);
-		this.arousalBar.setBackground(new Color(105, 105, 105));
+		this.arousalBar.setForeground(new Color(254, 1, 107));
+		this.arousalBar.setBackground(new Color(50, 50, 50));
 		meter.add(this.arousalBar);
 		this.arousalBar.setMaximum(player.getArousal().max());
 		this.arousalBar.setValue(player.getArousal().get());
 
 		this.mojoBar = new JProgressBar();
 		this.mojoBar.setBorder(new SoftBevelBorder(1, null, null, null, null));
-		this.mojoBar.setForeground(Color.BLUE);
-		this.mojoBar.setBackground(new Color(105, 105, 105));
+		this.mojoBar.setForeground(new Color(51, 153, 255));
+		this.mojoBar.setBackground(new Color(50, 50, 50));
 		meter.add(this.mojoBar);
 		this.mojoBar.setMaximum(player.getMojo().max());
 		this.mojoBar.setValue(player.getMojo().get());
 
 		this.willpowerBar = new JProgressBar();
 		this.willpowerBar.setBorder(new SoftBevelBorder(1, null, null, null, null));
-		this.willpowerBar.setForeground(Color.GREEN);
-		this.willpowerBar.setBackground(new Color(105, 105, 105));
+		this.willpowerBar.setForeground(new Color(68, 170, 85));
+		this.willpowerBar.setBackground(new Color(50, 50, 50));
 		meter.add(this.willpowerBar);
 		this.willpowerBar.setMaximum(player.getWillpower().max());
 		this.willpowerBar.setValue(player.getWillpower().get());
@@ -664,40 +849,24 @@ public class GUI extends JFrame implements Observer {
 		JPanel bio = new JPanel();
 		this.topPanel.add(bio);
 		bio.setLayout(new GridLayout(2, 0, 0, 0));
-		bio.setBackground(new Color(200, 200, 200));
+		bio.setBackground(new Color(0, 10, 30));
 
 		JLabel name = new JLabel(player.name());
 		name.setHorizontalAlignment(2);
 		name.setFont(new Font("Sylfaen", 1, 15));
-		name.setForeground(new Color(0, 0, 5));
+		name.setForeground(new Color(240, 240, 255));
 		bio.add(name);
 		this.lvl = new JLabel("Lvl: " + player.getLevel());
 		this.lvl.setFont(new Font("Sylfaen", 1, 15));
-		this.lvl.setForeground(new Color(0, 0, 5));
+		this.lvl.setForeground(new Color(240, 240, 255));
+                
 		bio.add(this.lvl);
 		this.xp = new JLabel("XP: " + player.getXP());
 		this.xp.setFont(new Font("Sylfaen", 1, 15));
-		this.xp.setForeground(new Color(0, 0, 5));
+		this.xp.setForeground(new Color(240, 240, 255));
 		bio.add(this.xp);
-
-		/*
-		 * this.power = new JLabel("Power: " + player.get(Attribute.Power));
-		 * this.power.setFont(new Font("Sylfaen", 1, 15));
-		 * this.power.setForeground(new Color(0, 0, 5)); this.power
-		 * .setToolTipText(
-		 * "Power is used to damage and incapacitate your opponent. Many power skills reduce your opponent's arousal in addition to stamina"
-		 * ); bio.add(this.power); this.cunning = new JLabel("Cunning: " +
-		 * player.get(Attribute.Cunning)); this.cunning.setFont(new
-		 * Font("Sylfaen", 1, 15)); this.cunning.setForeground(new Color(0, 0,
-		 * 5)); this.cunning .setToolTipText(
-		 * "Cunning helps you win in indirect ways. Cunning is used to strip your opponent, set traps, and counter direct attacks"
-		 * ); bio.add(this.cunning); this.seduction = new JLabel("Seduction: " +
-		 * player.get(Attribute.Seduction)); this.seduction.setFont(new
-		 * Font("Sylfaen", 1, 15)); this.seduction.setForeground(new Color(0, 0,
-		 * 5)); this.seduction .setToolTipText(
-		 * "Seduction improves your ability to arouse your opponent and make her orgasm faster"
-		 * ); bio.add(this.seduction);
-		 */
+                
+                UIManager.put("ToggleButton.select", new Color(75, 88, 102));
 		this.stsbtn = new JToggleButton("Status");
 		this.stsbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -710,20 +879,23 @@ public class GUI extends JFrame implements Observer {
 				GUI.this.centerPanel.validate();
 			}
 		});
-		bio.add(this.stsbtn);
+                bio.add(this.stsbtn);
 		this.loclbl = new JLabel();
 		this.loclbl.setFont(new Font("Sylfaen", 1, 16));
-		this.loclbl.setForeground(new Color(0, 0, 5));
+		this.loclbl.setForeground(new Color(240, 240, 255));
+                
+		this.stsbtn.setBackground(new Color(85, 98, 112));
+                this.stsbtn.setForeground(new Color(240, 240, 255));
 		bio.add(this.loclbl);
 
-		this.timelbl = new JLabel();
-		this.timelbl.setFont(new Font("Sylfaen", 1, 16));
-		this.timelbl.setForeground(new Color(0, 0, 5));
-		bio.add(this.timelbl);
-		this.cashlbl = new JLabel();
-		this.cashlbl.setFont(new Font("Sylfaen", 1, 16));
-		this.cashlbl.setForeground(new Color(0, 0, 5));
-		bio.add(this.cashlbl);
+		this.timeLabel = new JLabel();
+		this.timeLabel.setFont(new Font("Sylfaen", 1, 16));
+		this.timeLabel.setForeground(new Color(240, 240, 255));
+		bio.add(this.timeLabel);
+		this.cashLabel = new JLabel();
+		this.cashLabel.setFont(new Font("Sylfaen", 1, 16));
+		this.cashLabel.setForeground(new Color(33, 180, 42));
+		bio.add(this.cashLabel);
 		removeClosetGUI();
 
 		this.topPanel.validate();
@@ -763,8 +935,7 @@ public class GUI extends JFrame implements Observer {
 		if (text.trim().length() == 0) {
 			return;
 		}
-		// this.textPane.setText(this.textPane.getText() + "<html><font
-		// color='white'>"+text + "</span>\n");
+
 		HTMLDocument doc = (HTMLDocument) textPane.getDocument();
 		HTMLEditorKit editorKit = (HTMLEditorKit) textPane.getEditorKit();
 		try {
@@ -778,15 +949,11 @@ public class GUI extends JFrame implements Observer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		/*
-		 * javax.swing.SwingUtilities.invokeLater(new Runnable() { public void
-		 * run() { textScroll.getVerticalScrollBar().setValue(0); } });
-		 */
+
 	}
 
 	public void combatMessage(String text) {
-		// this.textPane.setText(this.textPane.getText() + "<html><font
-		// color='white'>"+text + "</span>\n");
+
 		HTMLDocument doc = (HTMLDocument) textPane.getDocument();
 		HTMLEditorKit editorKit = (HTMLEditorKit) textPane.getEditorKit();
 		try {
@@ -995,19 +1162,24 @@ public class GUI extends JFrame implements Observer {
 		clearText();
 		resetPortrait();
 		clearImage();
+                loadMap();
 		this.centerPanel.revalidate();
 		this.portraitPanel.revalidate();
 		this.portraitPanel.repaint();
 		Global.getMatch().resume();
 	}
 
+        //Night match initializer
+        
 	public void startMatch() {
 		this.mntmQuitMatch.setEnabled(true);
+                loadMap();
 	}
 
 	public void endMatch() {
 		clearCommand();
 		resetPortrait();
+                unloadMap();
 		this.mntmQuitMatch.setEnabled(false);
 		this.centerPanel.revalidate();
 		this.portraitPanel.revalidate();
@@ -1017,25 +1189,11 @@ public class GUI extends JFrame implements Observer {
 		this.commandPanel.revalidate();
 	}
 
-	/*
-	 * public void nextMatch() { clearText(); message(
-	 * "You arrive at the student union a few minutes before the start of the match. You have enough time to check in and make idle chat with your opponents before you head to your assigned starting point and wait. At exactly 10:00, the match is on."
-	 * );
-	 * 
-	 * clearCommand(); this.commandPanel.add(new MatchButton());
-	 * this.commandPanel.add(new SaveButton()); this.commandPanel.revalidate();
-	 * }
-	 */
 	public void refresh() {
 		this.stamina.setText("Stamina: " + getLabelString(player.getStamina()));
 		this.arousal.setText(("Arousal: " + getLabelString(player.getArousal())));
 		this.mojo.setText("Mojo: " + getLabelString(player.getMojo()));
 		this.willpower.setText("Willpower: " + getLabelString(player.getWillpower()));
-		// this.power.setText("Power: " + this.player.get(Attribute.Power));
-		// this.cunning.setText("Cunning: " +
-		// this.player.get(Attribute.Cunning));
-		// this.seduction.setText("Seduction: "+
-		// this.player.get(Attribute.Seduction));
 		this.lvl.setText("Lvl: " + this.player.getLevel());
 		this.xp.setText("XP: " + this.player.getXP());
 		this.staminaBar.setMaximum(this.player.getStamina().max());
@@ -1047,12 +1205,20 @@ public class GUI extends JFrame implements Observer {
 		this.willpowerBar.setMaximum(this.player.getWillpower().max());
 		this.willpowerBar.setValue(this.player.getWillpower().get());
 		this.loclbl.setText(this.player.location().name);
-		this.cashlbl.setText("$" + this.player.money);
-		if (Global.getMatch() != null) {
-			this.timelbl.setText(Global.getMatch().getTime());
+		this.cashLabel.setText("$" + this.player.money);
+		if (Global.getMatch() != null) {                    
+			this.timeLabel.setText(Global.getMatch().getTime() + " pm");
+                        
+                        if (Global.getMatch().getTime().equals("11"))
+                        {
+                            this.timeLabel.setText(Global.getMatch().getTime() + " am");
+                        }
+                        
+                        this.timeLabel.setForeground(new Color(0, 51, 102));
 		}
-		if (Global.getDay() != null) {
-			this.timelbl.setText(Global.getDay().getTime());
+		if (Global.getDay() != null) {                                  //not updating correctly during daytime
+                        this.timeLabel.setText(Global.getDay().getTime() + " pm");
+			this.timeLabel.setForeground(new Color(253, 184, 19));
 		}
 		displayStatus();
 	}
@@ -1061,19 +1227,41 @@ public class GUI extends JFrame implements Observer {
 		this.statusPanel.removeAll();
 		this.statusPanel.repaint();
 		this.statusPanel.setPreferredSize(new Dimension(400, centerPanel.getHeight()));
+                
+                if (width < 720){
+                    this.statusPanel.setMaximumSize(new Dimension(height, width/6));
+                    System.out.println("STATUS PANEL");
+                }
 
 		JPanel inventoryPanel = new JPanel();
+                
 		JPanel statsPanel = new JPanel();
+                
 		JPanel currentStatusPanel = new JPanel();
+                
 		statusPanel.add(inventoryPanel);
+                
 		JSeparator sep = new JSeparator();
 		sep.setMaximumSize(new Dimension(statusPanel.getWidth(), 2));
 		statusPanel.add(sep);
 		statusPanel.add(statsPanel);
+                
 		sep = new JSeparator();
 		sep.setMaximumSize(new Dimension(statusPanel.getWidth(), 2));
+
 		statusPanel.add(sep);
 		statusPanel.add(currentStatusPanel);
+                sep = new JSeparator();
+                sep.setMaximumSize(new Dimension(statusPanel.getWidth(), 2));
+                
+                currentStatusPanel.setBackground(new Color(0, 10, 30));
+                statsPanel.setBackground(new Color(18, 30, 49));
+                inventoryPanel.setBackground(new Color (18, 30, 49));
+                
+                if (width < 720){
+                    inventoryPanel.setSize(new Dimension(height, width/6));
+                    System.out.println("Oh god so tiny");
+                }
 
 		Map<Item, Integer> items = this.player.getInventory();
 		int count = 0;
@@ -1081,7 +1269,15 @@ public class GUI extends JFrame implements Observer {
 		ArrayList<JLabel> itmlbls = new ArrayList<JLabel>();
 		for (Item i : items.keySet()) {
 			if (items.get(i) > 0) {
-				itmlbls.add(count, new JLabel(i.getName() + ": " + items.get(i) + "\n"));
+                            
+                            JLabel dirtyTrick = new JLabel(i.getName() + ": " + items.get(i) + "\n");
+                            
+                            dirtyTrick.setForeground(new Color(240, 240, 255));
+                            
+                            itmlbls.add(count, dirtyTrick);
+                            
+                            //itmlbls.add(count, new JLabel(i.getName() + ": " + items.get(i) + "\n"));
+                                
 				itmlbls.get(count).setToolTipText(i.getDesc());
 				inventoryPanel.add(itmlbls.get(count));
 				count++;
@@ -1093,21 +1289,32 @@ public class GUI extends JFrame implements Observer {
 		for (Attribute a : Attribute.values()) {
 			int amt = player.get(a);
 			if (amt > 0) {
-				attlbls.add(count, new JLabel(a.name() + ": " + amt));
+                            
+                                JLabel dirtyTrick = new JLabel(a.name() + ": " + amt);
+                                
+                                dirtyTrick.setForeground(new Color(240, 240, 255));
+                                
+                                attlbls.add(count, dirtyTrick);
+                                
+				//attlbls.add(count, new JLabel(a.name() + ": " + amt)); //stats are gray due to this
 				statsPanel.add(attlbls.get(count));
 				count++;
 			}
 		}
-
-		JTextPane statusText = new JTextPane();
+		
+                //statusText - body, clothing and status description
+                
+                JTextPane statusText = new JTextPane();
 		DefaultCaret caret = (DefaultCaret) statusText.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-		statusText.setForeground(new Color(240, 240, 255));
-		statusText.setBackground(new Color(25, 25, 50));
+		statusText.setBackground(new Color(18, 30, 49));
 		statusText.setEditable(false);
 		statusText.setContentType("text/html");
 		statusText.setPreferredSize(new Dimension(400, centerPanel.getHeight() / 2));
 		statusText.setMaximumSize(new Dimension(400, centerPanel.getHeight() / 2));
+                if (width < 720){
+                    statusText.setSize(new Dimension(height, width/6));
+                }
 		HTMLDocument doc = (HTMLDocument) statusText.getDocument();
 		HTMLEditorKit editorKit = (HTMLEditorKit) statusText.getEditorKit();
 		try {
@@ -1122,7 +1329,12 @@ public class GUI extends JFrame implements Observer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+                
 		currentStatusPanel.add(statusText);
+                if (width < 720){
+                    currentStatusPanel.setSize(new Dimension(height, width/6));
+                    System.out.println("Oh god so tiny");
+                }
 		this.centerPanel.revalidate();
 		this.statusPanel.revalidate();
 		this.statusPanel.repaint();
@@ -1142,9 +1354,7 @@ public class GUI extends JFrame implements Observer {
 	}
 
 	private class NextButton extends JButton {
-		/**
-		 * 
-		 */
+
 		private static final long serialVersionUID = 6773730244369679822L;
 		private Combat combat;
 
@@ -1172,9 +1382,7 @@ public class GUI extends JFrame implements Observer {
 	}
 
 	private class EventButton extends JButton {
-		/**
-		 * 
-		 */
+
 		private static final long serialVersionUID = 7130158464211753531L;
 		protected Activity event;
 		protected String choice;
@@ -1194,9 +1402,7 @@ public class GUI extends JFrame implements Observer {
 	}
 
 	private class ItemButton extends GUI.EventButton {
-		/**
-		 * 
-		 */
+
 		private static final long serialVersionUID = 3200753975433797292L;
 
 		public ItemButton(Activity event, Item i) {
