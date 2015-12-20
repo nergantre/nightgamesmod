@@ -40,6 +40,7 @@ import org.mozilla.javascript.ContextFactory;
 
 import com.cedarsoftware.util.io.JsonWriter;
 
+import nightgames.characters.Maya;
 import nightgames.Resources.ResourceLoader;
 import nightgames.actions.Action;
 import nightgames.actions.Bathe;
@@ -414,6 +415,9 @@ public class Global {
 		getSkillPool().add(new TortoiseWrap(p));
 		getSkillPool().add(new FaerieSwarm(p));
 		getSkillPool().add(new DarkTalisman(p));
+		getSkillPool().add(new HeightenSenses(p));
+		getSkillPool().add(new LewdSuggestion(p));
+		getSkillPool().add(new Suggestion(p));
 
 		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 			getSkillPool().add(new SelfStun(p));	
@@ -547,6 +551,29 @@ public class Global {
 				participants.add(c);
 			}
 		}
+		if (matchmod == Modifier.maya) {
+		       ArrayList<Character> randomizer = new ArrayList<>();
+		       if (lover != null) {
+		         lineup.add(lover);
+		       }
+		       lineup.add(human);
+		       randomizer.addAll(players);
+		       Collections.shuffle(randomizer);
+		       for (Character player : randomizer) {
+		         if ((!lineup.contains(player)) && (!player.human()) && (lineup.size() < 4) && (!player.has(Trait.event))) {
+		           lineup.add(player);
+		         }
+		         else if ((lineup.size() >= 4) || (player.has(Trait.event))) {
+		           resting.add(player);
+		         }
+		       }
+		       if (!checkFlag(Flag.Maya)) {
+		         newChallenger(new Maya(human.getLevel()));
+		         flag(Flag.Maya);
+		       }
+		       lineup.add(getNPC("Maya"));
+		       match = new Match(lineup, matchmod);
+		     }
 		if(participants.size()>5){
 			ArrayList<Character> randomizer = new ArrayList<Character>();
 			if(lover!=null){
@@ -847,6 +874,7 @@ public class Global {
 		Personality jewel = new Jewel();
 		Personality airi = new Airi();
 		Personality eve = new Eve();
+		Personality maya = new Maya(1);
 		characterPool.put(cassie.getCharacter().getType(), cassie.getCharacter());
 		characterPool.put(angel.getCharacter().getType(), angel.getCharacter());
 		characterPool.put(reyka.getCharacter().getType(), reyka.getCharacter());
@@ -855,6 +883,7 @@ public class Global {
 		characterPool.put(jewel.getCharacter().getType(), jewel.getCharacter());
 		characterPool.put(airi.getCharacter().getType(), airi.getCharacter());
 		characterPool.put(eve.getCharacter().getType(), eve.getCharacter());
+		characterPool.put(maya.getCharacter().getType(), maya.getCharacter());
 	}
 
 	public static void load(){

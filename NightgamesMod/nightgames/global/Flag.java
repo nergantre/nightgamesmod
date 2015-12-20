@@ -62,5 +62,5 @@ public enum Flag {
 	AliceAvailable,
 	metAlice,
 	victory,
-	catspirit,
+	catspirit, Clue1, Maya,
 }

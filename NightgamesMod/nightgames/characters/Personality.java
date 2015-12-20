@@ -43,4 +43,5 @@ public interface Personality extends Serializable{
 	public String getType();
 	public RecruitmentData getRecruitmentData();
 	public AiModifiers getAiModifiers();
+	public String resist3p(Combat combat, Character target, Character assist);
 }

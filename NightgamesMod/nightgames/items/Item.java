@@ -60,6 +60,7 @@ public enum Item implements Loot {
 	KatTrophy	("Kat's Panties",0,"Cute pink panties",""),
 	AiriTrophy	("A piece of hardened gel",0,"Not sure what else to take",""),
 	YuiTrophy	("Yui's Panties",0,"",""),
+	MayaTrophy  ("Maya's Panties", 0, "Lacy, stylish, and coveted by all", ""),
 	RoseaTrophy	("Rosea's Vine Thong",0,"",""),
 	SamanthaTrophy("Samantha's Lacy Thong",0 ,"A lacy red thong, translucent in all but the most delicate areas.", ""),
 	MiscTrophy	("Someone's underwear",0,"",""),

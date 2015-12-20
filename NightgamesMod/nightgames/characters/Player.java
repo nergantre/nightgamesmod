@@ -684,4 +684,9 @@ public class Player extends Character {
 	public String getType() {
 		return getClass().getSimpleName();
 	}
+
+	@Override
+	public boolean resist3p(Combat c, Character target, Character assist) {
+		return has(Trait.cursed);
+	}
 }

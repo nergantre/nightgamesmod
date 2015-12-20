@@ -248,9 +248,7 @@ public class Match {
 		return null;
 	}
 
-	public void score(Character character) {
-		score.put(character, score.get(character) + 1);
-	}
+	public void score(Character character, int points) { this.score.put(character, Integer.valueOf(((Integer)this.score.get(character)).intValue() + points)); }
 
 	public void manageConditions(Character player) {
 		if (condition == Modifier.vibration) {

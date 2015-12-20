@@ -11,6 +11,7 @@ public enum Modifier {
 	notoys (50),		//Unable to use toys
 	noitems (50),		//Unable to use consumables
 	ftc (0),			//Fuck the Carrier
+	maya(0),			
 	;
 	private int bonus;
 	private Modifier(int bonus){

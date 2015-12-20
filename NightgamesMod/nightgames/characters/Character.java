@@ -1100,6 +1100,7 @@ public abstract class Character extends Observable implements Cloneable {
 	public abstract void defeat(Combat c, Result flag);
 	public abstract void intervene3p(Combat c,Character target, Character assist);
 	public abstract void victory3p(Combat c,Character target, Character assist);
+	public abstract boolean resist3p(Combat c, Character target, Character assist);
 	public abstract void act(Combat c);
 	public abstract void move();
 	public abstract void draw(Combat c, Result flag);
@@ -1627,7 +1628,7 @@ public abstract class Character extends Observable implements Cloneable {
 	}
 	public void resupply(){
 		for(Character victor: mercy){
-			victor.bounty();
+			victor.bounty(has(Trait.event) ? 5 : 1);
 		}
 		mercy.clear();
 		change(Global.getMatch().condition);
@@ -1666,7 +1667,7 @@ public abstract class Character extends Observable implements Cloneable {
 	}
 	public void finishMatch(){
 		for(Character victor: mercy){
-			victor.bounty();
+			victor.bounty(has(Trait.event) ? 5 : 1);
 		}
 		Global.gui().clearImage();
 		mercy.clear();
@@ -1686,8 +1687,8 @@ public abstract class Character extends Observable implements Cloneable {
 			throw new RuntimeException ("empty location");
 		}
 	}
-	public void bounty(){
-		Global.getMatch().score(this);
+	public void bounty(int points){
+		Global.getMatch().score(this, points);
 	}
 	public boolean eligible(Character p2) {
 		return (!mercy.contains(p2))&&state!=State.resupplying;

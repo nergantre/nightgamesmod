@@ -157,6 +157,8 @@ public enum Trait {
 	immobile("Immobile", "Unable to move"), //Cannot move
 	lethargic("Lethargic", "Very low mojo gain from normal methods.", new Lethargic(null, 999, .75)), //25% mojo gain
 	hairtrigger("Hair Trigger", "Very quick to shoot. Not for beginners."),
+	cursed("Cursed", "Restricts some skills. The name is probably a plot point. The suspense is killing me."),
+	
 	//Restrictions
 	softheart("Soft Hearted","Incapable of being mean"), //restricts slap, stomp, flick
 	petite("Petite","Small body, small breasts"), //restricts carry, tackle, paizuri
@@ -198,7 +200,6 @@ public enum Trait {
 	
 	//unimplemented
 	Clingy("Clingy","can do the 'glomp' attack - weak standing grapple hug, probably something Cassie would take right away"),
-	cautious("Cautious","Better chance of avoiding traps"),
 
 	//Feats
 	sprinter("Sprinter","Better at escaping combat"),
@@ -230,6 +231,7 @@ public enum Trait {
 			}
 		}
 	}),
+	cautious("Cautious","Better chance of avoiding traps"),
 	responsive("Responsive", "Return more pleasure when being fucked"),
 	assmaster("Ass Master", "Who needs lube? Also boosts pleasure to both parties when assfucking"),
 	//Item
@@ -241,6 +243,9 @@ public enum Trait {
 				b.append("A large black strap-on dildo adorns " + c.name() + "'s waists.");
 		}
 	}), //currently wearing a strapon
+	
+	event("event", "special character"),
+	
 	none("",""),
 	;
 	private String desc;

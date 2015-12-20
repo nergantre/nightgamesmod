@@ -187,4 +187,8 @@ public abstract class BasePersonality implements Personality {
 	public AiModifiers getAiModifiers() {
 		return AiModifiers.getDefaultModifiers(getType());
 	}
+	
+	public String resist3p(Combat c, Character target, Character assist) {
+	    return null;
+	}
 }

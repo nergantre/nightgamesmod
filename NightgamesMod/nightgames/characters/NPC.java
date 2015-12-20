@@ -231,6 +231,15 @@ public class NPC extends Character {
 	}
 
 	@Override
+	public boolean resist3p(Combat combat, Character intruder, Character assist) { 
+		if (has(Trait.cursed)) {
+	       Global.gui().message(this.ai.resist3p(combat, intruder, assist));
+	       return true;
+	     }	     
+	     return false;
+	   }
+	
+	@Override
 	public void act(Combat c) {
 		HashSet<Skill> available = new HashSet<Skill>();
 		Character target;
