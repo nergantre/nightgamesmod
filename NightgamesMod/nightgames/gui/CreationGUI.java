@@ -36,6 +36,7 @@ import javax.swing.Box;
 import javax.swing.JComboBox;
 import java.awt.Dimension;
 import java.awt.Component;
+import java.awt.Container;
 
 public class CreationGUI extends JPanel{
 	private JTextField powerfield;
@@ -80,13 +81,16 @@ public class CreationGUI extends JPanel{
 	private JPanel panel_10;
 	private JPanel panel_11;
 	private JPanel panel_12;
+        
 	public CreationGUI() {
 		setLayout(new BorderLayout(0, 0));
-		
+                
 		JPanel panel = new JPanel();
 		add(panel, BorderLayout.NORTH);
+                panel.setBackground(new Color(0, 10, 30));
 
 		JLabel lblName = new JLabel("Name");
+                lblName.setForeground(new Color(240, 240, 255));
 		lblName.setFont(new Font("Sylfaen", Font.BOLD, 15));
 		panel.add(lblName);
 		
@@ -137,7 +141,7 @@ public class CreationGUI extends JPanel{
 		textPane = new JTextPane();
 		scrollPane.setViewportView(textPane);
 		textPane.setForeground(new Color(240, 240, 255));
-		textPane.setBackground(new Color(25, 25, 50));
+		textPane.setBackground(new Color(18, 30, 49));
 		textPane.setFont(new Font("Baskerville Old Face", Font.PLAIN, 22));
 		textPane.setEditable(false);
 		textPane.setText(Global.getIntro());
@@ -145,18 +149,24 @@ public class CreationGUI extends JPanel{
 		JPanel panel_2 = new JPanel();
 		add(panel_2, BorderLayout.SOUTH);
 		panel_2.setLayout(new GridLayout(0, 12, 0, 0));
+                panel_2.setForeground(new Color(240, 240, 255));
+                panel_2.setBackground(new Color(19, 30, 49));
 		
 		JLabel lblPower = new JLabel("Power");
+                lblPower.setForeground(new Color(240, 240, 255));
 		lblPower.setFont(new Font("Sylfaen", Font.BOLD, 15));
 		panel_2.add(lblPower);
 		
 		powerfield = new JTextField();
 		powerfield.setFont(new Font("Sylfaen", Font.BOLD, 15));
 		powerfield.setEditable(false);
+                powerfield.setBackground(new Color(18, 30, 49));
+                powerfield.setForeground(new Color(240, 240, 255));
 		panel_2.add(powerfield);
 		powerfield.setColumns(10);
 		
 		panel_4 = new JPanel();
+                panel_4.setBackground(new Color(0, 10, 30));
 		panel_2.add(panel_4);
 		
 		JLabel lblSeduction = new JLabel("Seduction");
@@ -166,10 +176,13 @@ public class CreationGUI extends JPanel{
 		seductionfield = new JTextField();
 		seductionfield.setFont(new Font("Sylfaen", Font.BOLD, 15));
 		seductionfield.setEditable(false);
+                seductionfield.setBackground(new Color(18, 30, 49));
+                seductionfield.setForeground(new Color(240, 240, 255));
 		panel_2.add(seductionfield);
 		seductionfield.setColumns(10);
 		
 		panel_5 = new JPanel();
+                panel_5.setBackground(new Color(0, 10, 30));
 		panel_2.add(panel_5);
 		
 		JLabel lblCunning = new JLabel("Cunning");
@@ -179,11 +192,15 @@ public class CreationGUI extends JPanel{
 		cunningfield = new JTextField();
 		cunningfield.setFont(new Font("Sylfaen", Font.BOLD, 15));
 		cunningfield.setEditable(false);
+                cunningfield.setBackground(new Color(18, 30, 49));
+                cunningfield.setForeground(new Color(240, 240, 255));
 		panel_2.add(cunningfield);
 		cunningfield.setColumns(10);
 		
 		panel_6 = new JPanel();
-		panel_2.add(panel_6);
+                panel_6.setBackground(new Color(0, 10, 30));
+                panel_2.add(panel_6);
+                
 		
 		horizontalBox = Box.createHorizontalBox();
 		panel_2.add(horizontalBox);
@@ -197,20 +214,28 @@ public class CreationGUI extends JPanel{
 		horizontalBox.add(attPoints);
 		attPoints.setFont(new Font("Sylfaen", Font.PLAIN, 15));
 		attPoints.setEditable(false);
+                attPoints.setBackground(new Color(18, 30, 49));
+                attPoints.setForeground(new Color(240, 240, 255));
 		attPoints.setColumns(2);
 		
 		panel_7 = new JPanel();
 		horizontalBox.add(panel_7);
+                
 		
 		panel_11 = new JPanel();
 		panel_2.add(panel_11);
+                panel_11.setBackground(new Color(0, 10, 30));
 		
 		rdbtnNormal = new JRadioButton("Normal");
 		rdbtnNormal.setSelected(true);
+                rdbtnNormal.setForeground(new Color(240, 240, 255));
+                rdbtnNormal.setBackground(new Color(0, 10, 30));
 		panel_2.add(rdbtnNormal);
 		
 		btnPowMin = new JButton("-");
 		btnPowMin.setFont(new Font("Sylfaen", Font.BOLD, 15));
+                btnPowMin.setForeground(new Color(240, 240 , 255));
+                btnPowMin.setBackground(new Color(85, 98, 112));
 		panel_2.add(btnPowMin);
 		btnPowMin.addActionListener(new ActionListener(){
 			@Override
@@ -223,6 +248,8 @@ public class CreationGUI extends JPanel{
 		
 		btnPowPlus = new JButton("+");
 		btnPowPlus.setFont(new Font("Sylfaen", Font.BOLD, 15));
+                btnPowPlus.setForeground(new Color(240, 240, 255));
+                btnPowPlus.setBackground(new Color(85, 98, 112));
 		panel_2.add(btnPowPlus);
 		btnPowPlus.addActionListener(new ActionListener(){
 			@Override
@@ -235,9 +262,12 @@ public class CreationGUI extends JPanel{
 		
 		panel_8 = new JPanel();
 		panel_2.add(panel_8);
+                panel_8.setBackground(new Color(0, 10, 30));
 		
 		btnSedMin = new JButton("-");
 		btnSedMin.setFont(new Font("Sylfaen", Font.BOLD, 15));
+                btnSedMin.setForeground(new Color(240, 240, 255));
+                btnSedMin.setBackground(new Color(85, 98, 112));
 		panel_2.add(btnSedMin);
 		btnSedMin.addActionListener(new ActionListener(){
 			@Override
@@ -250,6 +280,8 @@ public class CreationGUI extends JPanel{
 		
 		btnSedPlus = new JButton("+");
 		btnSedPlus.setFont(new Font("Sylfaen", Font.BOLD, 15));
+                btnSedPlus.setForeground(new Color(240, 240, 255));
+                btnSedPlus.setBackground(new Color(85, 98, 112));
 		panel_2.add(btnSedPlus);
 		btnSedPlus.addActionListener(new ActionListener(){
 			@Override
@@ -262,9 +294,12 @@ public class CreationGUI extends JPanel{
 		
 		panel_9 = new JPanel();
 		panel_2.add(panel_9);
+                panel_9.setBackground(new Color(0, 10, 30));
 		
 		btnCunMin = new JButton("-");
 		btnCunMin.setFont(new Font("Sylfaen", Font.BOLD, 15));
+                btnCunMin.setForeground(new Color(240, 240, 255));
+                btnCunMin.setBackground(new Color(85, 98, 112));
 		panel_2.add(btnCunMin);
 		btnCunMin.addActionListener(new ActionListener(){
 			@Override
@@ -277,24 +312,33 @@ public class CreationGUI extends JPanel{
 		
 		btnCunPlus = new JButton("+");
 		btnCunPlus.setFont(new Font("Sylfaen", Font.BOLD, 15));
+                btnCunPlus.setForeground(new Color(240, 240, 255));
+                btnCunPlus.setBackground(new Color(85, 98, 112));
 		panel_2.add(btnCunPlus);
 		
 		panel_10 = new JPanel();
 		panel_2.add(panel_10);
+                panel_10.setBackground(new Color(0, 10, 30));
 		
 		panel_1 = new JPanel();
 		panel_2.add(panel_1);
+                panel_1.setBackground(new Color(0, 10, 30));
 		
 		panel_12 = new JPanel();
 		panel_2.add(panel_12);
+                panel_12.setBackground(new Color(0, 10, 30));
 		
 		rdbtnDumb = new JRadioButton("Old AI");
+                rdbtnDumb.setForeground(new Color(240, 240, 240));
+                rdbtnDumb.setBackground(new Color(0, 10, 30));
 		panel_2.add(rdbtnDumb);
 		for (int i = 0; i < 11; i++) {
 			panel_2.add(new JPanel());
 		}
 
 		rdbtnHard = new JCheckBox("Hard Mode");
+                rdbtnHard.setForeground(new Color(240, 240, 255));
+                rdbtnHard.setBackground(new Color(0, 10, 30));
 		panel_2.add(rdbtnHard);
 		btnCunPlus.addActionListener(new ActionListener(){
 			@Override
@@ -316,10 +360,16 @@ public class CreationGUI extends JPanel{
 		verticalBox = Box.createVerticalBox();
 		panel_3.add(verticalBox);
 		
+                panel_3.setBackground(new Color(0, 10, 30));
+                
 		lblStrength = new JLabel("Strength");
+                lblStrength.setBackground(new Color(0, 10, 30));
+                lblStrength.setForeground(new Color(240, 240, 255));
 		verticalBox.add(lblStrength);
 		
 		StrengthBox = new JComboBox();
+                StrengthBox.setBackground(new Color(0, 10, 30));
+                StrengthBox.setForeground(new Color(240, 240, 255));
 		StrengthBox.addItem(Trait.exhibitionist);
 		StrengthBox.addItem(Trait.romantic);
 		StrengthBox.addItem(Trait.dexterous);
@@ -338,7 +388,8 @@ public class CreationGUI extends JPanel{
 		StrengthDescription = new JTextPane();
 		StrengthDescription.setPreferredSize(new Dimension(100, 100));
 		StrengthDescription.setEditable(false);
-		StrengthDescription.setForeground(Color.black);
+                StrengthDescription.setBackground(new Color(18, 30, 49));
+		StrengthDescription.setForeground(new Color(240, 240, 255));
 		StrengthDescription.setText(((Trait)StrengthBox.getSelectedItem()).getDesc());
 		verticalBox.add(StrengthDescription);
 		
@@ -346,9 +397,13 @@ public class CreationGUI extends JPanel{
 		verticalBox.add(separator_2);
 		
 		lblWeakness = new JLabel("Weakness");
+                lblWeakness.setBackground(new Color(0, 10, 30));
+                lblWeakness.setForeground(new Color(240, 240, 255));
 		verticalBox.add(lblWeakness);
 		
 		WeaknessBox = new JComboBox();
+                WeaknessBox.setBackground(new Color(0, 10, 30));
+                WeaknessBox.setForeground(new Color(240, 240, 255));
 		WeaknessBox.addItem(Trait.insatiable);
 		WeaknessBox.addItem(Trait.imagination);
 		WeaknessBox.addItem(Trait.achilles);
@@ -365,12 +420,13 @@ public class CreationGUI extends JPanel{
 		verticalBox.add(WeaknessBox);
 		
 		WeaknessDescription = new JTextPane();
+                WeaknessDescription.setBackground(new Color(18, 30, 49));
+                WeaknessDescription.setForeground(new Color(240, 240, 255));
 		WeaknessDescription.setPreferredSize(new Dimension(100, 100));
 		WeaknessDescription.setEditable(false);
-		WeaknessDescription.setForeground(Color.black);
 		WeaknessDescription.setText(((Trait)WeaknessBox.getSelectedItem()).getDesc());
 		verticalBox.add(WeaknessDescription);
-		
+                
 		separator_1 = new JSeparator();
 		verticalBox.add(separator_1);
 		power = 3;
@@ -378,6 +434,7 @@ public class CreationGUI extends JPanel{
 		cunning = 3;
 		remaining = 20 - power - seduction - cunning;
 		refresh();
+                
 	}
 	private void refresh(){
 		powerfield.setText(""+power);
