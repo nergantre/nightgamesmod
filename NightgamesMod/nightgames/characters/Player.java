@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import nightgames.actions.Action;
 import nightgames.actions.Move;
+import nightgames.actions.Shortcut;
 import nightgames.areas.Area;
 import nightgames.areas.Deployable;
 import nightgames.characters.body.BodyPart;
@@ -297,6 +298,11 @@ public class Player extends Character {
 				for(Area path:location.adjacent){
 					gui.addAction(new Move(path),this);
 				}
+				if (getPure(Attribute.Cunning) >= 28) {
+			         for (Area path : this.location.shortcut) {
+			           gui.addAction(new Shortcut(path), this);
+			         }
+			    }
 				for(Action act:Global.getActions()){
 					if(act.usable(this)){
 						gui.addAction(act,this);

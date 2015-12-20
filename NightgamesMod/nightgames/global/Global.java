@@ -700,6 +700,10 @@ public class Global {
 		bridge.link(library);
 		sau.link(pool);
 		sau.link(quad);
+		workshop.shortcut(pool);
+		pool.shortcut(workshop);
+		library.shortcut(tunnel);
+		tunnel.shortcut(library);
 		HashMap<String,Area> map = new HashMap<String, Area>();
 		map.put("Quad",quad);
 		map.put("Dorm",dorm);

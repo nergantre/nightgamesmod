@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
+import nightgames.actions.Shortcut;
 import nightgames.actions.Action;
 import nightgames.actions.Move;
 import nightgames.actions.Movement;
@@ -399,6 +400,11 @@ public class NPC extends Character {
 							radar.add(path.id());
 						}
 					}
+					if (getPure(Attribute.Cunning) >= 28) {
+				         for (Area path : this.location.shortcut) {
+				           available.add(new Shortcut(path));
+				         }
+				    }
 				}
 				for (Action act : Global.getActions()) {
 					if (act.usable(this)) {

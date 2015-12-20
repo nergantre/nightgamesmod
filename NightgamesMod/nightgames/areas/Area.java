@@ -18,6 +18,7 @@ public class Area implements Serializable{
 	private static final long serialVersionUID = -1372128249588089014L;
 	public String name;
 	public HashSet<Area> adjacent;
+	public HashSet<Area> shortcut;
 	public ArrayList<Character> present;
 	public String description;
 	public Encounter fight;
@@ -31,6 +32,7 @@ public class Area implements Serializable{
 		this.description=description;
 		this.enumerator=enumerator;
 		adjacent=new HashSet<Area>();
+		shortcut = new HashSet<Area>();
 		present=new ArrayList<Character>();
 		env=new ArrayList<Deployable>();
 		alarm=false;
@@ -40,6 +42,11 @@ public class Area implements Serializable{
 	public void link(Area adj){
 		adjacent.add(adj);
 	}
+	
+	public void shortcut(Area sc) {
+		shortcut.add(sc);
+	}
+	
 	public boolean open(){
 		return enumerator==Movement.quad;
 	}
