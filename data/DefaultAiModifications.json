@@ -914,5 +914,198 @@
 				"weight" : 2.0
 			},
 		]
+	}, {
+		"personality" : "Maya",
+		"mods" : [
+			{
+				"type" : "skill",
+				"value" : "nightgames.skills.Blowjob",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.CounterRide",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Cunnilingus",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Drain",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.FaceSit",
+				"weight" : -1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Footjob",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.FootPump",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Grind",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.HeightenSenses",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Invitation",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.LevelDrain",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.LewdSuggestion",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.MutualUndress",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Paizuri",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.PerfectTouch",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.PinAndBlow",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.PullOut",
+				"weight" : -3.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.ReverseCarry",
+				"weight" : 3.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.ReverseFuck",
+				"weight" : 3.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.ReverseStraddle",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.SubmissiveHold",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.LegLock",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Suggestion",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Thrust",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Tighten",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Piston",
+				"weight" : 2.0
+			},{
+				"type" : "position",
+				"value" : "cowgirl",
+				"weight" : 8.0
+			},{
+				"type" : "position",
+				"value" : "missionary",
+				"weight" : 5.0
+			},{
+				"type" : "position",
+				"value" : "reversecowgirl",
+				"weight" : 8.0
+			},{
+				"type" : "position",
+				"value" : "mount",
+				"weight" : 4.0
+			},{
+				"type" : "position",
+				"value" : "reversemount",
+				"weight" : 4.0
+			},{
+				"type" : "position",
+				"value" : "behindfootjob",
+				"weight" : 4.0
+			},{
+				"type" : "position",
+				"value" : "oralpin",
+				"weight" : 4.0
+			},{
+				"type" : "self-status",
+				"value" : "alluring",
+				"weight" : 1.0
+			},{
+				"type" : "self-status",
+				"value" : "counter",
+				"weight" : 1.0
+			},{
+				"type" : "self-status",
+				"value" : "frenzied",
+				"weight" : 2.0
+			},{
+				"type" : "self-status",
+				"value" : "fucked",
+				"weight" : 2.0
+			},{
+				"type" : "opponent-status",
+				"value" : "cockbound",
+				"weight" : 2.0
+			},{
+				"type" : "opponent-status",
+				"value" : "hypersensitive",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "horny",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "charmed",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "countered",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "leglocked",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "armlocked",
+				"weight" : 1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "frenzied",
+				"weight" : 2.0
+			},{
+				"type" : "opponent-status",
+				"value" : "braced",
+				"weight" : -1.0
+			},{
+				"type" : "opponent-status",
+				"value" : "wary",
+				"weight" : -1.0
+			}
+		]
 	}
 ]

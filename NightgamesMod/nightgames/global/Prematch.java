@@ -55,7 +55,7 @@ public class Prematch implements Scene {
 			Global.flag(Flag.metLilly);
 			choice.add(new SceneButton("Do it"));
 			choice.add(new SceneButton("Not interested"));
-		} else if ((player.getRank() > 0) && (Global.getDate() % 30 == 0)) {
+		} else if ((player.getRank() > 0) && (Global.getDate() % 30 >= 0)) {
 			message = message
 					+ "When you arrive at the student union, you notice the girls have all "
 					+ "gathered around Lilly. As you get closer, you notice Maya, the recruiter"
@@ -78,7 +78,7 @@ public class Prematch implements Scene {
 					+ "Lilly takes the lead again. <i>\"If any of you actually manage to make "
 					+ "Maya cum, I'll give you multiple points for it. Otherwise you can just"
 					+ " consider this a learning opportunity and a chance to experience an "
-					+ "orgasm at the hands of a master.\"</i><p>";
+					+ "orgasm at the hands of a master.\"</i><p>\n\nTODO: FIX CONDITION";
 
 			this.type = Modifier.maya;
 			choice.add(new SceneButton("Start The Match"));

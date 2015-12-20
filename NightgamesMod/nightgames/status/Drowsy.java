@@ -25,8 +25,7 @@ public class Drowsy extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		// TODO Auto-generated method stub
-		return null;
+		return "Your head feels woozy, as if you've just woken up.";
 	}
 
 	@Override
