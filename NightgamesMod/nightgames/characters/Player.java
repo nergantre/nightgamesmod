@@ -485,10 +485,29 @@ public class Player extends Character {
 		target.undress(c);
 		this.gainTrophy(c, target);
 		target.defeated(this);
+		if (target.hasDick()) {
+		       c.write(String.format("You position yourself between %s's legs, gently "
+		       		+ "forcing them open with your knees. %s dick stands erect, fully "
+		       		+ "exposed and ready for attention. You grip the needy member and "
+		       		+ "start jerking it with a practiced hand. %s moans softly, but seems"
+		       		+ " to be able to handle this level of stimulation. You need to turn "
+		       		+ "up the heat some more. Well, if you weren't prepared to suck a cock"
+		       		+ " or two, you may have joined the wrong competition. You take just "
+		       		+ "the glans into your mouth, attacking the most senstitive area with "
+		       		+ "your tongue. %s lets out a gasp and shudders. That's a more promising "
+		       		+ "reaction.<p>You continue your oral assault until you hear a breathy "
+		       		+ "moan, <i>\"I'm gonna cum!\"</i> You hastily remove %s dick out of "
+		       		+ "your mouth and pump it rapidly. %s shoots %s load into the air, barely "
+		       		+ "missing you.", new Object[] {
+		         target.name(), Global.capitalizeFirstLetter(target.possessivePronoun()), target.name(), 
+		         Global.capitalizeFirstLetter(target.pronoun()), target.possessivePronoun(), 
+		         target.name(), target.possessivePronoun() }));
+		     } else {
 		c.write(target.name()+"'s arms are firmly pinned, so she tries to kick you ineffectually. You catch her ankles and slowly begin kissing and licking your way " +
 				"up her legs while gently, but firmly, forcing them apart. By the time you reach her inner thighs, she's given up trying to resist. Since you no " +
 				"longer need to hold her legs, you can focus on her flooded pussy. You pump two fingers in and out of her while licking and sucking her clit. In no " +
 				"time at all, she's trembling and moaning in orgasm.");
+		     }
 		gainAttraction(target,1);
 		target.gainAttraction(this,1);
 	}

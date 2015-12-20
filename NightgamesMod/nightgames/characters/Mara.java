@@ -360,14 +360,33 @@ public class Mara extends BasePersonality  {
 					"a fountain and paints her legs and feet. Mara continues to stimulate your oversensitized dick and balls while she finishes herself off, apparently too " +
 					"caught up in her own enjoyment to notice your discomfort.";
 		}
-		else{
+		 if (target.hasDick()) {
+		       return String.format("Mara approaches %s like a panther claiming its prey. "
+		       		+ "She runs her fingers down the length of %s's body, eliciting a shiver "
+		       		+ "each time she hits a ticklish spot. Her probing fingers avoid %s's "
+		       		+ "nipples and genitals, focusing instead on the ticklish areas under %s "
+		       		+ "arms, behind %s knees and on %s inner thighs. You struggle to hold "
+		       		+ "onto %s as %s squirms and pleads for mercy. After a few minutes, %s "
+		       		+ "pleas shift in tone and you realise Mara's dancing fingers have "
+		       		+ "moved to %s dick and balls. %s entire body trembles as if unable to "
+		       		+ "decide whether it's being tickled into submission or stroked to "
+		       		+ "ejaculation. You finally hear a breathless gasp as %s hits %s climax"
+		       		+ " and shudders in your arms. You release %s and %s collapses, completely"
+		       		+ " exhausted. Mara grins at you mischievously. <i>\"%s obviously enjoyed "
+		       		+ "that. Do you want to be next?\"</i>", 
+		         target.name(), target.name(), target.name(), target.possessivePronoun(), 
+		         target.possessivePronoun(), target.possessivePronoun(), target.name(), 
+		         target.pronoun(), target.possessivePronoun(), target.possessivePronoun(),
+		         target.possessivePronoun(), target.name(), target.possessivePronoun(), 
+		         target.directObject(), target.pronoun(), 
+		         Global.capitalizeFirstLetter(target.possessivePronoun()) );
+		     }
 			return "Mara approaches "+target.name()+" like a panther claiming its prey. She runs her fingers down the length of "+target.name()+"'s body, eliciting a shiver " +
 					"each time she hits a ticklish spot. Her probing fingers avoid "+target.name()+"'s nipples and pussy, focusing instead on the ticklish areas under her arms, " +
 					"behind her knees and on her inner thighs. You struggle to hold onto "+target.name()+" as she squirms and pleads for mercy. After a few minutes, her pleas " +
 					"shift in tone and you realise Mara's dancing fingers have moved to her pussy and clit. Her entire body trembles as if unable to decide whether it's being " +
 					"tickled into submission or fingered to ecstasy. You finally hear a breathless gasp as "+target.name() +" hits her climax and shudders in your arms. You release " +
 					"her and she collapses, completely exhausted. Mara grins at you mischeviously. <i>\"She obviously enjoyed that. Do you want to be next?\"</i>";
-		}
 	}
 	@Override
 	public String intervene3p(Combat c, Character target, Character assist) {

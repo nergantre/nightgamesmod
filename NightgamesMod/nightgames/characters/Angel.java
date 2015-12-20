@@ -331,14 +331,36 @@ public class Angel extends BasePersonality {
 					"your slick dick. When her tongue attacks your glans, poking out of her cleavage, it pushes you past the limit. You erupt like a fountain into her face, " +
 					"while she tries to catch as much of your seed in her mouth as she can.";
 		}
-		else{
+		if (target.hasDick()) {
+		       return String.format("You present %s's naked, helpless form to Angel's tender "
+		       		+ "minstrations. Angel licks her lips and begins licking and stroking %s's"
+		       		+ " body. She's hitting all the right spots, because soon %s is squirming "
+		       		+ "and moaning in pleasure, and Angel hasn't even touched %s cock yet."
+		       		+ " Angel meets your eyes to make sure you're paying attention and slowly"
+		       		+ " moves her fingers down the front of %s's body. You can't see her hands"
+		       		+ " from this position, but you know when she reaches her target, because "
+		       		+ "%s immediately jumps as if %s's been shocked. Soon it takes all of your"
+		       		+ " energy to control %s who is violently shaking in the throes of orgasm."
+		       		+ " You ease %s to the floor as %s goes completely limp, while Angel licks"
+		       		+ " the cum from her fingers.", 
+		         target.name(), 
+		         target.name(), 
+		         target.name(), 
+		         target.possessivePronoun(), 
+		         target.name(), 
+		         target.name(), 
+		         target.pronoun(), 
+		         target.name(), 
+		         target.directObject(),
+		         target.pronoun() );
+		     }
 			return "You present "+target.name()+"'s naked, helpless form to Angel's tender minstrations. Angel licks her lips and begins licking and stroking "+target.name()+"'s body. She's " +
 					"hitting all the right spots, because soon "+target.name()+" is squirming and moaning in pleasure, and Angel hasn't even touched her pussy yet. " +
 					"Angel meets your eyes to focus your attention and slowly moves her fingers down the front of "+target.name()+"'s body. You can't see her hands from " +
 					"this position, but you know when she reaches her target, because "+target.name()+" immediately jumps as if she's been shocked. Soon it takes all of "+
 					"your energy to control "+target.name()+" who is violently shaking in the throes of orgasm. You ease her to the floor as she goes completely limp, " +
 					"while Angel licks the juice from her fingers.";
-		}
+		
 	}
 
 	@Override

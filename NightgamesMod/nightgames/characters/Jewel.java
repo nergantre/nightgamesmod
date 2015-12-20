@@ -411,13 +411,25 @@ public class Jewel extends BasePersonality {
 					"to pull away, but Jewel is holding your manhood securely and doesn't let it get away. She thoroughly tortures you with pure pleasure. You beg for mercy, but she doesn't let up until " +
 					"you cum in her hands.";
 		}
-		else{
+		 if (target.hasDick()) {
+		       return String.format("Jewel looks over %s, trying to decide what to do with %s."
+		       		+ " She stands up and presses her bare foot against %s dick and balls. "
+		       		+ "%s groans in pleasure and pain as Jewel roughly grinds her foot against "
+		       		+ "the sensitive organs. <i>\"Do you like that? You can't help it, can "
+		       		+ "you?\"</i> She grins sadistically. <i>\"I've stomped many boys into "
+		       		+ "the ground, but no matter how much pride they have, they always end "
+		       		+ "up moaning in pleasure. It's like penises exist just to be dominated.\""
+		       		+ "</i> You feel a chill run down your back, watching Jewel's display of"
+		       		+ " dominance, but you're also rock hard. %s lets out a loud moan and "
+		       		+ "covers Jewel's foot with cum.", 
+		         target.name(), target.directObject(), 
+		         target.possessivePronoun(), target.name(), target.name() );
+		     }
 			return "Jewel looks over "+target.name()+", trying to decide what to do with her. She leans in and kisses the helpless girl firmly on the lips. Breaking the kiss, " +
 					"she starts to probe and inspect "+target.name()+"'s other lips, making her twitch and whimper with each touch. "+ target.name() +" apparently passes the inspection, "+
 					"because Jewel slides her hips forward and presses her own wet pussy against "+target.name()+"'s. Both girls moan softly as Jewel begins moving her hips, grinding their lips and clits together. For a moment, " +
 					"you think Jewel's plan may backfire and she may cum first, but "+target.name()+" soon shudders to climax in your arms. Jewel doesn't stop until she reaches " +
 					"her own orgasm too.";
-		}
 	}
 	@Override
 	public String intervene3p(Combat c, Character target, Character assist) {

@@ -378,12 +378,23 @@ public class Cassie extends BasePersonality {
 					"you can give of your approaching climax, but Cassie picks up on it. She backs off your dick just far enough to circle her tongue around the sensitive head, " +
 					"pushing you over the edge. You shoot your load over her face and glasses as she pumps your shaft with her hand.";
 		}
-		else{
+		if (target.hasDick()) {
+		       return String.format("Cassie kneels between %s's legs and takes hold of %s cock."
+		       		+ " She gives you a hesitant look. <i>\"This is a bit awkward.\"</i> Is "
+		       		+ "she suddenly reluctant to pleasure a penis? You can attest that she's "
+		       		+ "quite good at it.<p>Cassie's cheeks turn noticeably red. <i>\"Just "
+		       		+ "don't get jealous.\"</i> She starts to stroke the cock, while slowly"
+		       		+ " licking the glans. %s moans in pleasure and bucks %s hips. Cassie's "
+		       		+ "technique has obviously gotten quite good. It only takes a few minutes"
+		       		+ " for her to milk out a mouthful of semen. You can't help feeling a "
+		       		+ "bit envious, maybe you should go a round with her before the match ends.", 
+		         target.name(), target.possessivePronoun(), target.name(), 
+		         target.possessivePronoun() );
+		     }
 			return "Cassie settles herself in front of "+target.name()+" and tenderly kisses her on the lips. <i>\"I don't really swing this way, but setting the mood is " +
 					"important.\"</i> She leans in to lick and suck "+target.name()+" neck, before moving down to her breasts. She gives each nipple attention until "+target.name()+
 					" is panting with desire. She continues downward to "+target.name()+"'s pussy and starts eating her out. "+target.name()+" moans loudly and arches her back against " +
 					"you. You gently lower her to the floor as she recovers from her climax, while Cassie wipes the juices from her mouth and looks satisfied at her work.";
-		}
 	}
 	@Override
 	public String intervene3p(Combat c, Character target, Character assist) {
