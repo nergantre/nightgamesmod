@@ -414,6 +414,7 @@ public class CreationGUI extends JPanel{
 		WeaknessBox.addItem(Trait.lickable);
 		WeaknessBox.addItem(Trait.naive);
 		WeaknessBox.addItem(Trait.footfetishist);
+		WeaknessBox.addItem(Trait.hairtrigger);
 		WeaknessBox.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

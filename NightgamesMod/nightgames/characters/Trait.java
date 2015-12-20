@@ -156,7 +156,7 @@ public enum Trait {
 	footfetishist("Foot Fetishist", "Loves those feet"), //Starts off each match with a foot fetish
 	immobile("Immobile", "Unable to move"), //Cannot move
 	lethargic("Lethargic", "Very low mojo gain from normal methods.", new Lethargic(null, 999, .75)), //25% mojo gain
-
+	hairtrigger("Hair Trigger", "Very quick to shoot. Not for beginners."),
 	//Restrictions
 	softheart("Soft Hearted","Incapable of being mean"), //restricts slap, stomp, flick
 	petite("Petite","Small body, small breasts"), //restricts carry, tackle, paizuri
