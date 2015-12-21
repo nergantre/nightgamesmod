@@ -47,14 +47,15 @@ public enum Trait {
 	RawSexuality("Raw Sexuality","Constant lust boost for you and your opponent in battle", new TraitDescription() {
 		public void describe(StringBuilder b, Character c, Trait t) {
 			if (c.human())
-				b.append("You");
+				b.append("You exude");
 			else
-				b.append(c.name());
-			b.append(" exudes a aura of pure eros, making both of you flush with excitement.");
+				b.append(c.name() + " exudes");
+			b.append(" an aura of pure eros, making both of you flush with excitement.");
 		}
 	}), //Eve
 	affectionate("Affectionate","Increased affection gain from draws"), //Kat Sex perk
 	aikidoNovice("Aikido Novice","Improved counterattack rate"), //Kat Sparring perk
+	analFanatic("Anal Fanatic", "Lives for fucking ass"),
 	
 	//Passive Skills
 	exhibitionist("Exhibitionist","More effective without any clothes"), //Passively builds mojo while nude

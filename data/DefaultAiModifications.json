@@ -755,11 +755,15 @@
 			},{
 				"type" : "skill",
 				"value" : "nightgames.skills.FaceFuck",
-				"weight" : 2.0
+				"weight" : 3.0
 			},{
 				"type" : "skill",
 				"value" : "nightgames.skills.CounterPin",
-				"weight" : 1.0
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.CounterRide",
+				"weight" : -2.0
 			},{
 				"type" : "skill",
 				"value" : "nightgames.skills.Diversion",
@@ -782,12 +786,28 @@
 				"weight" : 4.0
 			},{
 				"type" : "skill",
-				"value" : "nightgames.skills.Handjob",
-				"weight" : 1.0
+				"value" : "nightgames.skills.ImbueFetish",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Invitation",
+				"weight" : -2.0
 			},{
 				"type" : "skill",
 				"value" : "nightgames.skills.Knee",
-				"weight" : 1.0
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Kick",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Slap",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Stomp",
+				"weight" : 2.0
 			},{
 				"type" : "skill",
 				"value" : "nightgames.skills.Maneuver",
@@ -807,7 +827,7 @@
 			},{
 				"type" : "skill",
 				"value" : "nightgames.skills.ReverseAssFuck",
-				"weight" : 1.0
+				"weight" : 2.0
 			},{
 				"type" : "skill",
 				"value" : "nightgames.skills.ReverseFuck",
@@ -894,6 +914,10 @@
 				"weight" : 1.0
 			},{
 				"type" : "opponent-status",
+				"value" : "winded",
+				"weight" : 3.0
+			},{
+				"type" : "opponent-status",
 				"value" : "bodyfetish",
 				"weight" : 3.0
 			},{
@@ -952,10 +976,6 @@
 			},{
 				"type" : "skill",
 				"value" : "nightgames.skills.HeightenSenses",
-				"weight" : 1.0
-			},{
-				"type" : "skill",
-				"value" : "nightgames.skills.Invitation",
 				"weight" : 1.0
 			},{
 				"type" : "skill",

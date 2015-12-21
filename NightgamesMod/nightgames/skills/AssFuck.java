@@ -14,6 +14,7 @@ import nightgames.items.clothing.ClothingSlot;
 import nightgames.stance.Anal;
 import nightgames.stance.AnalProne;
 import nightgames.status.Flatfooted;
+import nightgames.status.Frenzied;
 import nightgames.status.Oiled;
 import nightgames.status.Stsflag;
 
@@ -114,6 +115,16 @@ public class AssFuck extends Fuck {
 		target.emote(Emotion.desperate, 50);
 		if (!target.has(Trait.Unflappable)) {
 			target.add(c, new Flatfooted(target, 1));
+		}
+		if (getSelf().has(Trait.analFanatic) && getSelf().hasDick()) {
+			c.write(getSelf(), String.format("Now with %s %s deeply embedded within %s ass,"
+					+ " %s mind clears itself of everything but fucking %s as hard as possible.", 
+					getSelf().possessivePronoun(), 
+					getSelf().body.getRandomCock().describe(getSelf()), 
+					target.nameOrPossessivePronoun(), 
+					getSelf().nameOrPossessivePronoun(), 
+					target.directObject()));
+			getSelf().add(new Frenzied(getSelf(), 6));
 		}
 		return true;
 	}

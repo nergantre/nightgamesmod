@@ -54,6 +54,7 @@ import nightgames.actions.Recharge;
 import nightgames.actions.Resupply;
 import nightgames.actions.Scavenge;
 import nightgames.actions.SetTrap;
+import nightgames.actions.Shortcut;
 import nightgames.actions.Use;
 import nightgames.actions.Wait;
 import nightgames.areas.Area;
@@ -418,6 +419,7 @@ public class Global {
 		getSkillPool().add(new HeightenSenses(p));
 		getSkillPool().add(new LewdSuggestion(p));
 		getSkillPool().add(new Suggestion(p));
+		getSkillPool().add(new ImbueFetish(p));
 
 		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 			getSkillPool().add(new SelfStun(p));	
@@ -571,7 +573,22 @@ public class Global {
 		         newChallenger(new Maya(human.getLevel()));
 		         flag(Flag.Maya);
 		       }
-		       lineup.add(getNPC("Maya"));
+		       NPC maya = getNPC("Maya");
+		       lineup.add(maya);
+		       maya.gain(Item.Aphrodisiac, 10);
+		       maya.gain(Item.DisSol, 10);
+		       maya.gain(Item.Sedative, 10);
+		       maya.gain(Item.Lubricant, 10);
+		       maya.gain(Item.BewitchingDraught, 5);
+		       maya.gain(Item.FeralMusk, 10);
+		       maya.gain(Item.ExtremeAphrodisiac, 5);
+		       maya.gain(Item.ZipTie, 10);
+		       maya.gain(Item.SuccubusDraft, 10);
+		       maya.gain(Item.Lactaid, 5);
+		       maya.gain(Item.Handcuffs, 5);
+		       maya.gain(Item.Onahole2);
+		       maya.gain(Item.Dildo2);
+		       maya.gain(Item.Strapon2);
 		       match = new Match(lineup, matchmod);
 		     }
 		if(participants.size()>5){

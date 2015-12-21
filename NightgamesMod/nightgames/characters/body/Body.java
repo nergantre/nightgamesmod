@@ -431,7 +431,7 @@ public class Body implements Cloneable {
 		if(character.has(Trait.desensitized2)){
 			sensitivity -= .5;
 		}
-		if (target.isErogenous() && opponent.has(Trait.hairtrigger)) {
+		if (target.isErogenous() && opponent != null && opponent.has(Trait.hairtrigger)) {
 			sensitivity += 1;
 		}
 		double pleasure = 1;

@@ -112,10 +112,10 @@ public class Blowjob extends Skill {
 		}
 		else{
 			if(getSelf().human()){
-				c.write(deal(c,0,Result.miss, target));
+				c.write(getSelf(), deal(c,0,Result.miss, target));
 			}
 			else if(target.human()){
-				c.write(receive(c,0,Result.miss, target));
+				c.write(getSelf(), receive(c,0,Result.miss, target));
 			}
 			return false;
 		}

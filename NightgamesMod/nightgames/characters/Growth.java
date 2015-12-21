@@ -35,6 +35,7 @@ public class Growth {
 			2,
 			3,
 			3,
+			3,
 		};
 		traits = new HashMap<Integer, List<Trait>>();
 		actions = new HashMap<Integer, Runnable>();

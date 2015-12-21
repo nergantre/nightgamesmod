@@ -344,7 +344,7 @@ public class Maya extends BasePersonality {
 		return "<i>\"Aaaand there we are. Think you can go again?\"</i>";
 	}
 
-	public String resist3p(Combat c, Character target, Character assist) {
+	public String resist3p(Combat c, Character assist, Character target) {
 		if (target.human()) {
 			return "As you attempt to hold off Maya, you see " + assist.name()
 					+ " stealthily approaching behind her. Looks like you're about to get "

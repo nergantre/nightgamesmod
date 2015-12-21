@@ -1,6 +1,5 @@
 package nightgames.stance;
 
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,20 +18,24 @@ public class AnalProne extends AnalSexStance {
 
 	@Override
 	public String describe() {
-		if(top.human()){
-			return String.format("You're holding %s legs over your shoulder while your cock in buried in %s's ass.",
-					bottom.nameOrPossessivePronoun(), bottom.possessivePronoun());
-		} else if (top.has(Trait.strapped)){
-			return "You're flat on your back with your feet over your head while " + top.name() + " pegs you with her strapon dildo.";
-		}
-		else{
-			return top.name()+" is fucking you in the ass";
+		if (top.human()) {
+			return String.format(
+					"You're holding %s legs over your shoulder while your cock in buried in %s's ass.",
+					bottom.nameOrPossessivePronoun(),
+					bottom.possessivePronoun());
+		} else if (top.has(Trait.strapped)) {
+			return "You're flat on your back with your feet over your head while "
+					+ top.name() + " pegs you with her strapon dildo.";
+		} else {
+			return "You're flat on your back with your feet over your head while "
+					+ top.name() + " pegs you with " + top.possessivePronoun()
+					+ " " + top.body.getRandomInsertable().describe(top) + ".";
 		}
 	}
 
 	@Override
 	public boolean mobile(Character c) {
-		return c==top;
+		return c == top;
 	}
 
 	@Override
@@ -42,12 +45,12 @@ public class AnalProne extends AnalSexStance {
 
 	@Override
 	public boolean dom(Character c) {
-		return c==top;
+		return c == top;
 	}
 
 	@Override
 	public boolean sub(Character c) {
-		return c==bottom;
+		return c == bottom;
 	}
 
 	@Override
@@ -57,12 +60,12 @@ public class AnalProne extends AnalSexStance {
 
 	@Override
 	public boolean reachBottom(Character c) {
-		return c==top;
+		return c == top;
 	}
 
 	@Override
 	public boolean prone(Character c) {
-		return c==bottom;
+		return c == bottom;
 	}
 
 	@Override
@@ -82,32 +85,37 @@ public class AnalProne extends AnalSexStance {
 
 	@Override
 	public boolean inserted(Character c) {
-		return c==top;
+		return c == top;
 	}
 
 	@Override
 	public Position insertRandom() {
-		return new Mount(top,bottom);
+		return new Mount(top, bottom);
 	}
 
 	@Override
-	public void checkOngoing(Combat c){
+	public void checkOngoing(Combat c) {
 		Character inserter = inserted(top) ? top : bottom;
 		Character inserted = inserted(top) ? bottom : top;
-		
-		if(!inserter.hasInsertable()){
-			if(inserted.human()){
-				c.write("With "+inserter.name()+"'s pole gone, your ass gets a respite.");
+
+		if (!inserter.hasInsertable()) {
+			if (inserted.human()) {
+				c.write("With " + inserter.name()
+						+ "'s pole gone, your ass gets a respite.");
 			} else {
-				c.write(inserted.name() + " sighs with relief with your dick gone.");
+				c.write(inserted.name()
+						+ " sighs with relief with your dick gone.");
 			}
 			c.setStance(insertRandom());
 		}
 		if (inserted.body.getRandom("ass") == null) {
-			if(inserted.human()){
-				c.write("With your asshole suddenly disappearing, " + inserter.name() + "'s dick pops out of what was once your sphincter.");
+			if (inserted.human()) {
+				c.write("With your asshole suddenly disappearing, "
+						+ inserter.name()
+						+ "'s dick pops out of what was once your sphincter.");
 			} else {
-				c.write("Your dick pops out of " + inserted.name() + " as her asshole shrinks and disappears.");
+				c.write("Your dick pops out of " + inserted.name()
+						+ " as her asshole shrinks and disappears.");
 			}
 			c.setStance(insertRandom());
 		}
@@ -115,16 +123,22 @@ public class AnalProne extends AnalSexStance {
 
 	public Position reverse(Combat c) {
 		if (top.has(Trait.strapped)) {
-			c.write(bottom, Global.format("As {other:subject-action:are|is} thrusting into {self:name-do} with {other:possessive} strapon, {self:subject-action:suddenly pull|suddenly pulls} {self:possesive} face up towards {other:direct-object}, and kisses {other:direct-object} deeply. "
-					+ "Taking advantage of {other:possessive} surprise, {self:SUBJECT-ACTION:quickly pushes|quickly pushes} {other:direct-object} down and {self:action:pull|pulls} {other:possessive} fake cock out of {self:reflective}.", bottom, top));
+			c.write(bottom,
+					Global.format(
+							"As {other:subject-action:are|is} thrusting into {self:name-do} with {other:possessive} strapon, {self:subject-action:suddenly pull|suddenly pulls} {self:possesive} face up towards {other:direct-object}, and kisses {other:direct-object} deeply. "
+									+ "Taking advantage of {other:possessive} surprise, {self:SUBJECT-ACTION:quickly pushes|quickly pushes} {other:direct-object} down and {self:action:pull|pulls} {other:possessive} fake cock out of {self:reflective}.",
+							bottom, top));
 			return new Mount(bottom, top);
 		} else {
-			c.write(bottom, Global.format("As {other:subject-action:are|is} thrusting into {self:name-do}, {self:subject-action:suddenly pull|suddenly pulls} {self:possesive} face up towards {other:direct-object}, and kisses {other:direct-object} deeply. "
-					+ "Taking advantage of {other:possessive} surprise, {self:SUBJECT-ACTION:quickly pushes|quickly pushes} {other:direct-object} down and {self:action:start|starts} fucking {other:direct-object} back on top of {other:direct-object}.", bottom, top));
+			c.write(bottom,
+					Global.format(
+							"As {other:subject-action:are|is} thrusting into {self:name-do}, {self:subject-action:suddenly pull|suddenly pulls} {self:possesive} face up towards {other:direct-object}, and kisses {other:direct-object} deeply. "
+									+ "Taking advantage of {other:possessive} surprise, {self:SUBJECT-ACTION:quickly pushes|quickly pushes} {other:direct-object} down and {self:action:start|starts} fucking {other:direct-object} back on top of {other:direct-object}.",
+							bottom, top));
 			return new AnalCowgirl(bottom, top);
 		}
 	}
-	
+
 	public String image() {
 		if (bottom.hasPussy()) {
 			return "analf.jpg";

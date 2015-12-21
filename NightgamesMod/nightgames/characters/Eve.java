@@ -30,7 +30,7 @@ public class Eve extends BasePersonality {
 
 		character.change(Modifier.normal);
 		this.character.set(Attribute.Power, 12);
-		this.character.set(Attribute.Fetish, 14);
+		this.character.set(Attribute.Fetish, 15);
 		this.character.set(Attribute.Cunning, 12);
 		this.character.set(Attribute.Speed, 6);
 		this.character.set(Attribute.Seduction, 13);
@@ -39,6 +39,7 @@ public class Eve extends BasePersonality {
 		character.add(Trait.proheels);
 		character.add(Trait.insatiable);
 		character.add(Trait.assmaster);
+		character.add(Trait.analFanatic);
 		character.setTrophy(Item.EveTrophy);
 		character.plan = Plan.hunting;
 		character.mood = Emotion.confident;

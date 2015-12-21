@@ -101,9 +101,9 @@ public class Frenzied extends DurationStatus {
 		if (a == Attribute.Cunning)
 			return -5;
 		if (a == Attribute.Power)
-			return 3;
+			return 8;
 		if (a == Attribute.Animism)
-			return 3;
+			return 8;
 		return 0;
 	}
 
@@ -127,12 +127,12 @@ public class Frenzied extends DurationStatus {
 
 	@Override
 	public int damage(Combat c, int x) {
-		return 0;
+		return (int) (-x * 0.2);
 	}
 
 	@Override
 	public double pleasure(Combat c, double x) {
-		return 0;
+		return (int) (-x * 0.2);
 	}
 
 	@Override
@@ -157,7 +157,7 @@ public class Frenzied extends DurationStatus {
 
 	@Override
 	public int gainmojo(int x) {
-		return 0;
+		return (int) (x*1.25);
 	}
 
 	@Override
@@ -175,6 +175,14 @@ public class Frenzied extends DurationStatus {
 		return 0;
 	}
 
+	@Override
+	public void tick(Combat c) {
+		if (!c.getStance().inserted(affected))
+			affected.removelist.add(this);
+		else
+			setDuration(getDuration() + 2);
+	}
+	
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Frenzied(newAffected, getDuration());
