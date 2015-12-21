@@ -20,7 +20,7 @@ public class ImbueFetish extends Skill {
 	private String chosenFetish;
 
 	public ImbueFetish(Character self) {
-		super("Imbue Fetish", self, 2);
+		super("Imbue Fetish", self, 3);
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class ImbueFetish extends Skill {
 
 	@Override
 	public int getMojoCost(Combat c) {
-		return 15;
+		return 25;
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class ImbueFetish extends Skill {
 			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
 		target.add(new BodyFetish(target, getSelf(), chosenFetish,
-				Global.randomdouble() * .25
+				Global.randomdouble() * .2
 						+ getSelf().get(Attribute.Fetish) * .01));
 		chosenFetish = null;
 		return true;

@@ -791,7 +791,7 @@
 			},{
 				"type" : "skill",
 				"value" : "nightgames.skills.Invitation",
-				"weight" : -2.0
+				"weight" : -4.0
 			},{
 				"type" : "skill",
 				"value" : "nightgames.skills.Knee",
@@ -811,7 +811,7 @@
 			},{
 				"type" : "skill",
 				"value" : "nightgames.skills.Maneuver",
-				"weight" : 2.0
+				"weight" : 4.0
 			},{
 				"type" : "skill",
 				"value" : "nightgames.skills.Masochism",
@@ -847,6 +847,10 @@
 			},{
 				"type" : "skill",
 				"value" : "nightgames.skills.Squeeze",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.StripBottom",
 				"weight" : 2.0
 			},{
 				"type" : "skill",

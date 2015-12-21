@@ -91,13 +91,21 @@ public class AssFuck extends Fuck {
 					&& getSelf().has(Trait.strapped)) {
 				c.write(getSelf(), receive(c, premessage.length(),
 						Result.upgrade, target));
+			} else if (getSelf().name().equals("Eve") && c.getStance().behind(getSelf())) {
+				m += 5;
+				c.write(getSelf(),
+						receive(c, premessage.length(), Result.special, target));
 			} else {
 				c.write(getSelf(),
 						receive(c, premessage.length(), Result.normal, target));
 			}
 		}
 		if (c.getStance().behind(getSelf())) {
-			c.setStance(new Anal(getSelf(), target));
+			if (getSelf().name().equals("Eve")) {
+				c.setStance(new AnalProne(getSelf(), target));
+			} else {
+				c.setStance(new Anal(getSelf(), target));
+			}
 		} else {
 			c.setStance(new AnalProne(getSelf(), target));
 		}
@@ -188,6 +196,17 @@ public class AssFuck extends Fuck {
 				return getSelf().name()
 						+ " rubs her cock up and down your ass crack before thrusting her hips to penetrate you.";
 			}
+		} else if (modifier == Result.special) {
+			//Eve
+			return String.format("While maintaining a firm grip, Eve runs her hands down your sides. <i>\"Are you ready for"
+					+ " me now, %s? Actually, I don't care if you are. It's not like you can stop me now.\"</i> There's only"
+					+ " one thing that could mean, and you don't want any part of it. You struggle in Eve's arms, trying to"
+					+ " get away as she is dryhumping your ass, getting it wet for her. Finally, you manage to stumble away,"
+					+ " but Eve trips you before you regain your balance. She follows you to the ground, rolling you onto your"
+					+ " back and lifting your legs. <i>\"Uh uh, you're not going anywhere, my little cumslut-to-be. Now just lay back and"
+					+ " take it.\"</i> Keeping your legs up with one arm, she uses the other to line up her %s with your hole. Then,"
+					+ " she brutually slams it all the way in in one go. Your screams and Eve's laughter fill the air as she starts"
+					+ " fucking you at a furious pace.", target.name(), getSelf().body.getRandomCock().describe(getSelf()));
 		} else {
 			return getSelf().name()
 					+ " rubs her dick against your ass, but she's still flaccid and can't actually penetrate you.";

@@ -144,11 +144,12 @@ public class Thrust extends Skill {
 			Character target) {
 		if (modifier == Result.anal) {
 			if (getSelf().has(Trait.strapped)) {
-				return getSelf().name()
+				String res = getSelf().name()
 						+ " thrusts her hips, pumping her artificial cock in and out of your ass and pushing on your prostate.";
-			} else if (getSelf().has(Trait.assmaster)) {
-				return getSelf().name()
+			 if (getSelf().has(Trait.assmaster))
+				return res + getSelf().name()
 						+ "'s penchant for fucking people in the ass makes her thrusting that much more powerful, and that much more intense for the both of you.";
+			 return res;
 			} else {
 				return getSelf().name()
 						+ "'s cock slowly pumps the inside of your rectum.";

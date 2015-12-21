@@ -50,7 +50,7 @@ public class Maneuver extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Cunning)>=20;
+		return user.get(Attribute.Cunning)>=20 || user.has(Trait.assmaster);
 	}
 
 	@Override
