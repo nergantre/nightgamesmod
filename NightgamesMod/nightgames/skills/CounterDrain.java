@@ -85,7 +85,7 @@ public class CounterDrain extends CounterBase {
 		} else {
 			return Global.format("{self:SUBJECT} suddenly opens her eyes as you approach. "
 						+ "The purple light that was orbiting around her suddenly reverses directions and flies into you. "
-						+ "The purple energy seem to paralyze your muscles and you collapse like a puppet with your strings cut."
+						+ "The purple energy seems to paralyze your muscles and you collapse like a puppet with your strings cut."
 						+ "You can't help but fall to the ground with a cry. "
 						+ "Seeing the opportunity, she smirks and leisurely mounts you.", getSelf(), target);
 		}

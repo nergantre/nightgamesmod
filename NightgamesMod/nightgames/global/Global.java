@@ -420,6 +420,7 @@ public class Global {
 		getSkillPool().add(new LewdSuggestion(p));
 		getSkillPool().add(new Suggestion(p));
 		getSkillPool().add(new ImbueFetish(p));
+		getSkillPool().add(new AssJob(p));
 
 		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 			getSkillPool().add(new SelfStun(p));	

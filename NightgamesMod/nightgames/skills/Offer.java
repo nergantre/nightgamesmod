@@ -65,10 +65,12 @@ public class Offer extends Skill {
 					c.write(getSelf(), receive(c, 0, Result.special, target));
 				}
 				c.setStance(new Missionary(target, getSelf()));
-				getSelf().pleasure(
+				getSelf().body.pleasure(target, target.body.getRandomCock(),
+						getSelf().body.getRandomPussy(),
 						Global.random(5) + getSelf().get(Attribute.Perception),
 						c);
-				target.pleasure(
+				target.body.pleasure(getSelf(), getSelf().body.getRandomPussy(),
+						target.body.getRandomCock(),
 						Global.random(5) + getSelf().get(Attribute.Perception),
 						c);
 
@@ -80,12 +82,17 @@ public class Offer extends Skill {
 					c.write(getSelf(), receive(c, 0, Result.anal, target));
 				}
 				c.setStance(new Anal(target, getSelf()));
-				getSelf().pleasure(
+				getSelf().body.pleasure(target,
+						target.body.getRandomInsertable(),
+						getSelf().body.getRandomAss(),
 						Global.random(5) + getSelf().get(Attribute.Perception),
 						c);
-				target.pleasure(
-						Global.random(5) + getSelf().get(Attribute.Perception),
-						c);
+				if (!target.has(Trait.strapped))
+					target.body.pleasure(getSelf(),
+							getSelf().body.getRandomAss(),
+							target.body.getRandomCock(), Global.random(5)
+									+ getSelf().get(Attribute.Perception),
+							c);
 			}
 		} else {
 			assert getSelf().hasDick() && target.hasPussy();
@@ -96,9 +103,11 @@ public class Offer extends Skill {
 				c.write(getSelf(), receive(c, 0, Result.normal, target));
 			}
 			c.setStance(new Cowgirl(target, getSelf()));
-			getSelf().pleasure(
+			getSelf().body.pleasure(target, target.body.getRandomPussy(),
+					getSelf().body.getRandomCock(),
 					Global.random(5) + getSelf().get(Attribute.Perception), c);
-			target.pleasure(
+			target.body.pleasure(getSelf(), getSelf().body.getRandomCock(),
+					target.body.getRandomPussy(),
 					Global.random(5) + getSelf().get(Attribute.Perception), c);
 		}
 		return true;
@@ -205,16 +214,17 @@ public class Offer extends Skill {
 						getSelf().name(), getSelf().possessivePronoun(),
 						getSelf().directObject());
 			default: // special
-				return String.format("%s lays flat on %s back, spreading %s legs and then using"
-						+ " %s fingers to open up %s labia to you. %s beady eyes, staring longingly"
-						+ " at your %s overwhelm you, and you can't help but oblige, getting "
-						+ "between %s legs and sheathing your shaft.",
-						getSelf().name(),
+				return String.format(
+						"%s lays flat on %s back, spreading %s legs and then using"
+								+ " %s fingers to open up %s labia to you. %s beady eyes, staring longingly"
+								+ " at your %s overwhelm you, and you can't help but oblige, getting "
+								+ "between %s legs and sheathing your shaft.",
+						getSelf().name(), getSelf().possessivePronoun(),
 						getSelf().possessivePronoun(),
 						getSelf().possessivePronoun(),
 						getSelf().possessivePronoun(),
-						getSelf().possessivePronoun(),
-						Global.capitalizeFirstLetter(getSelf().possessivePronoun()),
+						Global.capitalizeFirstLetter(
+								getSelf().possessivePronoun()),
 						target.body.getRandomCock().describe(target),
 						getSelf().possessivePronoun());
 		}
