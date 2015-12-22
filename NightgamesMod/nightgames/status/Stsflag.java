@@ -45,5 +45,8 @@ public enum Stsflag {
 	divinecharge,
 	fucked,
 	pegged, 
-	firedup, tied, drowsy,
+	firedup, 
+	tied, 
+	drowsy, 
+	tailsucked,
 }

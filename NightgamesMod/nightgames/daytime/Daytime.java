@@ -71,7 +71,7 @@ public class Daytime {
 	     }
 	     else if ((Global.getDate() % 7 == 6) || (Global.getDate() % 7 == 0)) {
 	       Global.gui().message("You don't have any classes today, but you try to get up at a reasonable hour so you can make full use of your weekend.");
-	       this.time = 9;
+	       this.time = 12;
 	     }
 	     else {
 	       Global.gui().message("You try to get as much sleep as you can before your morning classes.<p>You're done with classes by mid-afternoon and have the rest of the day free.");

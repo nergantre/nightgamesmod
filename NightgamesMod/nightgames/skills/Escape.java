@@ -39,7 +39,7 @@ public class Escape extends Skill {
 				getSelf().struggle();
 				return false;
 			}
-		} else if(getSelf().check(Attribute.Cunning, 20+target.get(Attribute.Cunning) - getSelf().escape(c))) {
+		} else if(getSelf().check(Attribute.Cunning, 10+target.get(Attribute.Cunning) - getSelf().escape(c))) {
 			if(getSelf().human()){
 				if (getSelf().hasStatus(Stsflag.cockbound)) {
 					c.write(getSelf(),"You somehow managed to wiggle out of "+target.name()+"'s iron grip on your dick.");

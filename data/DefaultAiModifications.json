@@ -676,6 +676,10 @@
 				"value" : "nightgames.skills.TailPeg",
 				"weight" : 1.0
 			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.TailSuck",
+				"weight" : 2.0
+			},{
 				"type" : "position",
 				"value" : "cowgirl",
 				"weight" : 5.0
