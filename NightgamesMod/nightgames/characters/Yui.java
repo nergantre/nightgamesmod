@@ -8,7 +8,7 @@ import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.global.Modifier;
+import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 
@@ -20,7 +20,7 @@ public class Yui extends BasePersonality {
 		character.outfitPlan.add(Clothing.getByID("Tshirt"));
 		character.outfitPlan.add(Clothing.getByID("panties"));
 		character.outfitPlan.add(Clothing.getByID("skirt"));
-		character.change(Modifier.normal);
+		character.change(DefaultModifier.normal);
 		character.setTrophy(Item.YuiTrophy);
 		character.plan = Plan.hunting;
 		character.mood = Emotion.confident;

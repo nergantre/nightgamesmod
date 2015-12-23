@@ -199,7 +199,7 @@ public class Global {
 		players.add(getNPC("Cassie"));
 		players.add(getNPC("Angel"));
 		players.add(getNPC("Mara"));
-		match = new Match(players,Modifier.normal);
+		match = new Match(players,DefaultModifier.normal);
 	}
 	
 	public static int random(int d){
@@ -505,7 +505,7 @@ public class Global {
 			player.getStamina().fill();
 			player.getArousal().empty();
 			player.getMojo().empty();
-			player.change(Modifier.normal);
+			player.change(DefaultModifier.normal);
 			level += player.getLevel();
 		}
 		level /= players.size();
@@ -517,7 +517,7 @@ public class Global {
 		day.plan();
 	}
 
-	public static void dusk(Modifier matchmod){
+	public static void dusk(DefaultModifier matchmod){
 		HashSet<Character> lineup = new HashSet<Character>();
 		Character lover=null;
 		int maxaffection=0;
@@ -555,7 +555,7 @@ public class Global {
 				participants.add(c);
 			}
 		}
-		if (matchmod == Modifier.maya) {
+		if (matchmod == DefaultModifier.maya) {
 		       ArrayList<Character> randomizer = new ArrayList<>();
 		       if (lover != null) {
 		         lineup.add(lover);

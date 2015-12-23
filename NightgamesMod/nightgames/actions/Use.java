@@ -2,7 +2,7 @@ package nightgames.actions;
 
 import nightgames.characters.Character;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
+import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 import nightgames.status.Buzzed;
 import nightgames.status.Oiled;
@@ -26,7 +26,7 @@ public class Use extends Action {
 
 	@Override
 	public boolean usable(Character user) {
-		return user.has(item)&&(!user.human()||Global.getMatch().condition!=Modifier.noitems);
+		return user.has(item)&&(!user.human()||Global.getMatch().condition!=DefaultModifier.noitems);
 	}
 
 	@Override

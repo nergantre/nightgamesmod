@@ -34,7 +34,7 @@ import nightgames.global.DebugFlags;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.global.JSONUtils;
-import nightgames.global.Modifier;
+import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 import nightgames.items.Loot;
 import nightgames.items.clothing.Clothing;
@@ -680,11 +680,11 @@ public abstract class Character extends Observable implements Cloneable {
 		outfit.dress(c.getCombatantData(this).getClothespile());
 	}
 
-	public void change(Modifier rule) {
+	public void change(DefaultModifier rule) {
 		List<Clothing> plan = outfitPlan;
-		if (rule == Modifier.underwearonly) {
+		if (rule == DefaultModifier.underwearonly) {
 			plan = outfitPlan.stream().filter(article -> article.getLayer() == 0).collect(Collectors.toList());
-		} else if (rule == Modifier.nudist) {
+		} else if (rule == DefaultModifier.nudist) {
 			plan = Collections.emptyList();
 		}
 		outfit.change(rule, plan);
@@ -1273,7 +1273,7 @@ public abstract class Character extends Observable implements Cloneable {
 				flags.put(keyString, JSONUtils.readInteger(flagsObj, keyString));
 			}
 		}
-		change(Modifier.normal);
+		change(DefaultModifier.normal);
 		Global.gainSkills(this);
 		Global.learnSkills(this);
 	}
@@ -1595,7 +1595,7 @@ public abstract class Character extends Observable implements Cloneable {
 	public void unequipAllClothing() {
 		closet.addAll(outfitPlan);
 		outfitPlan.clear();
-		change(Modifier.normal);
+		change(DefaultModifier.normal);
 	}
 	public boolean has(Clothing item){
 		return closet.contains(item) || outfit.getEquipped().contains(item);
@@ -2166,7 +2166,7 @@ public abstract class Character extends Observable implements Cloneable {
 		for(Skill a: pleasure){
 			Global.gui().addSkill(a,c);
 		}
-		if(Global.getMatch().condition!=Modifier.pacifist){
+		if(Global.getMatch().condition!=DefaultModifier.pacifist){
 			for(Skill a: damage){
 				Global.gui().addSkill(a,c);
 			}

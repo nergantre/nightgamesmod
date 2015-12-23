@@ -7,7 +7,7 @@ import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
+import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.status.Drowsy;
@@ -25,7 +25,7 @@ public class Maya extends BasePersonality {
 		character.outfitPlan.add(Clothing.getByID("skirt"));
 		character.outfitPlan.add(Clothing.getByID("sneakers"));
 		character.outfitPlan.add(Clothing.getByID("socks"));
-		this.character.change(Modifier.normal);
+		this.character.change(DefaultModifier.normal);
 		this.character.set(Attribute.Dark, 40);
 		this.character.set(Attribute.Seduction, 66);
 		this.character.set(Attribute.Cunning, 39);

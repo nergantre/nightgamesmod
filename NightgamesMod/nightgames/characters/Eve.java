@@ -9,7 +9,7 @@ import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
+import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 
@@ -28,7 +28,7 @@ public class Eve extends BasePersonality {
 		character.outfitPlan.add(Clothing.getByID("stilettopumps"));
 		character.outfitPlan.add(Clothing.getByID("garters"));
 
-		character.change(Modifier.normal);
+		character.change(DefaultModifier.normal);
 		this.character.set(Attribute.Power, 12);
 		this.character.set(Attribute.Fetish, 15);
 		this.character.set(Attribute.Cunning, 12);

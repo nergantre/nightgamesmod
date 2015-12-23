@@ -3,7 +3,7 @@ package nightgames.actions;
 import nightgames.characters.Character;
 import nightgames.characters.State;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
+import nightgames.global.DefaultModifier;
 
 public class Resupply extends Action {
 
@@ -19,7 +19,7 @@ public class Resupply extends Action {
 	@Override
 	public Movement execute(Character user) {
 		if(user.human()){
-			if(Global.getMatch().condition==Modifier.nudist){
+			if(Global.getMatch().condition==DefaultModifier.nudist){
 				Global.gui().message("You check in so you're eligible to fight again, but you still don't get any clothes.");
 			}
 			else{

@@ -4,7 +4,7 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
+import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 
 public class Sedate extends Skill {
@@ -20,7 +20,7 @@ public class Sedate extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().mobile(getSelf())&&getSelf().canAct()&&getSelf().has(Item.Sedative)&&!c.getStance().prone(getSelf())&&(!getSelf().human()||Global.getMatch().condition!=Modifier.noitems);
+		return c.getStance().mobile(getSelf())&&getSelf().canAct()&&getSelf().has(Item.Sedative)&&!c.getStance().prone(getSelf())&&(!getSelf().human()||Global.getMatch().condition!=DefaultModifier.noitems);
 	}
 
 	@Override

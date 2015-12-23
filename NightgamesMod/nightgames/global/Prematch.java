@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 
 public class Prematch implements Scene {
-	private Modifier	type;
+	private DefaultModifier	type;
 	private Player		player;
 
 	public Prematch(Player player) {
@@ -28,7 +28,7 @@ public class Prematch implements Scene {
 			message += "You arrive at the student union a few minutes before the start of the match. "
 					+ "You have enough time to check in and make idle chat with your opponents before "
 					+ "you head to your assigned starting point and wait. At exactly 10:00, the match is on.";
-			type = Modifier.normal;
+			type = DefaultModifier.normal;
 			choice.add(new SceneButton("Start The Match"));
 		} else if (!Global.checkFlag(Flag.metLilly)) {
 			message += "You get to the student union a little earlier than usual. Cassie and Jewel are there already and you spend a few minutes talking with them while "
@@ -49,9 +49,9 @@ public class Prematch implements Scene {
 					+ "so it's better for everyone.\"</i> That's.... You're not entirely sure how to respond to that. <i>\"For the first rule, I'll start with something simple: for "
 					+ "tonight's match, you're only allowed to wear your underwear. Even when you come back here for a change of clothes, you'll only get your underwear. If you "
 					+ "agree to this, I'll throw an extra $"
-					+ Modifier.underwearonly.bonus()
+					+ DefaultModifier.underwearonly.bonus()
 					+ " on top of your normal prize for each point you score. Interested?\"</i>";
-			type = Modifier.underwearonly;
+			type = DefaultModifier.underwearonly;
 			Global.flag(Flag.metLilly);
 			choice.add(new SceneButton("Do it"));
 			choice.add(new SceneButton("Not interested"));
@@ -80,7 +80,7 @@ public class Prematch implements Scene {
 					+ " consider this a learning opportunity and a chance to experience an "
 					+ "orgasm at the hands of a master.\"</i><p>\n\nTODO: FIX CONDITION";
 
-			this.type = Modifier.maya;
+			this.type = DefaultModifier.maya;
 			choice.add(new SceneButton("Start The Match"));
 		} else {
 			message += "You arrive at the student union with about 10 minutes to spare before the start of the match. You greet each of the girls and make some idle chatter with "
@@ -94,7 +94,7 @@ public class Prematch implements Scene {
 				Global.flag(Flag.Airi);
 			}
 			type = offer(player);
-			if (type == Modifier.normal) {
+			if (type == DefaultModifier.normal) {
 				message += "<i>\"Sorry " + player.name()
 						+ ", there's no bonus money available tonight. Our Benefactor doesn't always give us the extra budget.\"<i/> She shrugs casually and "
 						+ "brushes her pigtail over her shoulder. <i>\"There's nothing wrong with having a normal match. You don't want to get so caught up in gimmicks that you forget "
@@ -179,33 +179,33 @@ public class Prematch implements Scene {
 		Global.gui().prompt(message, choice);
 	}
 
-	private Modifier offer(Player player) {
-		ArrayList<Modifier> available = new ArrayList<Modifier>();
+	private DefaultModifier offer(Player player) {
+		ArrayList<DefaultModifier> available = new ArrayList<DefaultModifier>();
 		if (Global.random(10) >= 4) {
-			return Modifier.normal;
+			return DefaultModifier.normal;
 		} else {
-			available.add(Modifier.normal);
+			available.add(DefaultModifier.normal);
 			if (player.outfitPlan.stream()
 					.anyMatch(article -> article.getLayer() == 0
 							&& (article.getSlots().contains(ClothingSlot.top)
 									|| article.getSlots()
 											.contains(ClothingSlot.bottom)))) {
-				available.add(Modifier.underwearonly);
+				available.add(DefaultModifier.underwearonly);
 			}
 			if (!player.outfitPlan.isEmpty()) {
-				available.add(Modifier.nudist);
+				available.add(DefaultModifier.nudist);
 			}
-			available.add(Modifier.norecovery);
+			available.add(DefaultModifier.norecovery);
 			if (player.hasDick() || player.hasPussy()) {
-				available.add(Modifier.vibration);
+				available.add(DefaultModifier.vibration);
 			}
-			available.add(Modifier.vulnerable);
-			available.add(Modifier.pacifist);
+			available.add(DefaultModifier.vulnerable);
+			available.add(DefaultModifier.pacifist);
 			if (player.has(Item.Dildo) || player.has(Item.Dildo2)
 					|| player.has(Item.Tickler) || player.has(Item.Tickler2)) {
-				available.add(Modifier.notoys);
+				available.add(DefaultModifier.notoys);
 			}
-			available.add(Modifier.noitems);
+			available.add(DefaultModifier.noitems);
 		}
 		return available.get(Global.random(available.size()));
 	}
@@ -217,13 +217,13 @@ public class Prematch implements Scene {
 		if (response.startsWith("Start")) {
 			Global.dusk(type);
 		} else if (response.startsWith("Not")) {
-			type = Modifier.normal;
+			type = DefaultModifier.normal;
 			Global.dusk(type);
 		} else if (response.startsWith("Do")) {
 			switch (type) {
 				case underwearonly:
 					player.getOutfit().undress();
-					player.change(Modifier.underwearonly);
+					player.change(DefaultModifier.underwearonly);
 					message += "Lilly smiles with her hands on her hips. <i>\"Glad to hear it. We'll hang on to the rest of your clothes until the match is over. Underwear-only starts "
 							+ "now.\"</i> She wants you to undress here before the match even starts? You hesitate as you realize your opponents are all watching you curiously. Some "
 							+ "of Lilly's assistants are still around too. She laughs when she notices your reluctance. <i>\"Are you seriously getting embarrassed about this? As if "
@@ -232,7 +232,7 @@ public class Prematch implements Scene {
 					break;
 				case nudist:
 					player.getOutfit().undress();
-					player.change(Modifier.nudist);
+					player.change(DefaultModifier.nudist);
 					message += "You agree to Lilly's rule and start to strip off your clothes. You try to appear nonchalant about it, but you can't help reddening a bit when your "
 							+ "opponents start cheering you on. Lilly stiffles a laugh as you hand over your clothes. <i>\"You see? You're more popular already.\"</i>";
 					break;

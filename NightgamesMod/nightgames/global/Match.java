@@ -28,9 +28,9 @@ public class Match {
 	private HashMap<Character, Integer> score;
 	private int index;
 	private boolean pause;
-	public Modifier condition;
+	public DefaultModifier condition;
 
-	public Match(Collection<Character> combatants, Modifier condition) {
+	public Match(Collection<Character> combatants, DefaultModifier condition) {
 		this.combatants = new ArrayList<Character>();
 		for (Character c : combatants) {
 			this.combatants.add(c);
@@ -163,7 +163,7 @@ public class Match {
 			}
 			combatant.challenges.clear();
 			combatant.state = State.ready;
-			combatant.change(Modifier.normal);
+			combatant.change(DefaultModifier.normal);
 		}
 		Global.gui().message("You made $" + score.get(player) * player.prize() + " for defeating opponents.");
 		int bonus = score.get(player) * condition.bonus();
@@ -251,9 +251,9 @@ public class Match {
 	public void score(Character character, int points) { this.score.put(character, Integer.valueOf(((Integer)this.score.get(character)).intValue() + points)); }
 
 	public void manageConditions(Character player) {
-		if (condition == Modifier.vibration) {
+		if (condition == DefaultModifier.vibration) {
 			player.tempt(5);
-		} else if (condition == Modifier.vulnerable) {
+		} else if (condition == DefaultModifier.vulnerable) {
 			if (!player.is(Stsflag.hypersensitive)) {
 				player.add(new Hypersensitive(player));
 			}

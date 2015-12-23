@@ -16,7 +16,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
+import nightgames.global.DefaultModifier;
 import nightgames.items.ItemAmount;
 import nightgames.skills.Tactics;
 public class CustomNPC extends BasePersonality {
@@ -34,7 +34,7 @@ public class CustomNPC extends BasePersonality {
 		character.outfitPlan.addAll(data.getTopOutfit());
 		character.outfitPlan.addAll(data.getBottomOutfit());
 		character.closet.addAll(character.outfitPlan);
-		character.change(Modifier.normal);
+		character.change(DefaultModifier.normal);
 		character.att = new HashMap<Attribute, Integer>(data.getStats().attributes);
 		character.traits = new HashSet<Trait>(data.getStats().traits);
 		character.getArousal().setMax(data.getStats().arousal);

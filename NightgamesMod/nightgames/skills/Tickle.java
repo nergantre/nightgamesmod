@@ -6,7 +6,7 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
+import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 import nightgames.status.Hypersensitive;
 import nightgames.status.Stsflag;
@@ -32,7 +32,7 @@ public class Tickle extends Skill {
 		if(target.roll(this, c, accuracy(c))){
 			if(target.crotchAvailable()&&c.getStance().reachBottom(getSelf())&&!c.getStance().havingSex()){
 				if(getSelf().has(Item.Tickler2)&&Global.random(2)==1&&getSelf().canSpend(10)&&(!getSelf().human()&&!target.is(Stsflag.hypersensitive)
-						||Global.getMatch().condition!=Modifier.notoys)){
+						||Global.getMatch().condition!=DefaultModifier.notoys)){
 					getSelf().spendMojo(c, 10);
 					if(getSelf().human()){
 						c.write(getSelf(),deal(c,0,Result.critical, target));
@@ -52,7 +52,7 @@ public class Tickle extends Skill {
 					target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("skin"), 6 + Global.random(8), c);
 					target.weaken(c, Global.random(4));
 				}	
-				else if(hastickler()&&(!getSelf().human()||Global.getMatch().condition!=Modifier.notoys)){
+				else if(hastickler()&&(!getSelf().human()||Global.getMatch().condition!=DefaultModifier.notoys)){
 					if(getSelf().human()){
 						c.write(getSelf(),deal(c,0,Result.strong, target));
 					}
@@ -76,7 +76,7 @@ public class Tickle extends Skill {
 				target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("skin"), 2 + Global.random(4), bonus, c);
 				target.weaken(c, bonus / 2 + 2+target.get(Attribute.Perception)+Global.random(6));
 			}
-			else if(hastickler()&&Global.random(2)==1&&(!getSelf().human()||Global.getMatch().condition!=Modifier.notoys)){
+			else if(hastickler()&&Global.random(2)==1&&(!getSelf().human()||Global.getMatch().condition!=DefaultModifier.notoys)){
 				if(target.breastsAvailable()&&c.getStance().reachTop(getSelf())){
 					if(getSelf().human()){
 						c.write(getSelf(),deal(c,0,Result.item, target));

@@ -14,7 +14,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
+import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 import nightgames.items.ItemEffect;
 
@@ -42,7 +42,7 @@ public class ThrowDraft extends Skill {
 	public boolean usable(Combat c, Character target) {
 		boolean hasItems = subChoices().size() > 0;
 		return hasItems&&getSelf().canAct()&&c.getStance().mobile(getSelf())&&(c.getStance().reachTop(getSelf())||c.getStance().reachBottom(getSelf()))
-				&&(!getSelf().human()||Global.getMatch().condition!=Modifier.noitems);
+				&&(!getSelf().human()||Global.getMatch().condition!=DefaultModifier.noitems);
 	}
 
 	@Override

@@ -2,7 +2,7 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
+import nightgames.global.DefaultModifier;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -31,7 +31,7 @@ public class TortoiseWrap extends Skill {
 				&& (getSelf().has(Item.Rope)) && (c.getStance().dom(getSelf()))
 				&& (!target.is(Stsflag.tied)) && (getSelf().is(Stsflag.bondage))
 				&& ((!getSelf().human())
-						|| (Global.getMatch().condition != Modifier.noitems));
+						|| (Global.getMatch().condition != DefaultModifier.noitems));
 	}
 
 	@Override

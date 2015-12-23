@@ -4,7 +4,7 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
+import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 import nightgames.status.Bound;
 import nightgames.status.Stsflag;
@@ -23,7 +23,7 @@ public class Tie extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return !target.wary() && getSelf().canAct()&&c.getStance().reachTop(getSelf())&&!c.getStance().reachTop(target)&&(getSelf().has(Item.ZipTie)||getSelf().has(Item.Handcuffs))&&c.getStance().dom(getSelf())&&!target.is(Stsflag.bound)
-				&&(!getSelf().human()||Global.getMatch().condition!=Modifier.noitems);
+				&&(!getSelf().human()||Global.getMatch().condition!=DefaultModifier.noitems);
 	}
 
 	@Override

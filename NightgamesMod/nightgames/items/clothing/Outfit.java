@@ -21,7 +21,7 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
+import nightgames.global.DefaultModifier;
 
 public class Outfit {
 	private Map<ClothingSlot, List<Clothing>> outfit;
@@ -129,7 +129,7 @@ public class Outfit {
 	}
 
 	// mutator apis below
-	public void change(Modifier rule, List<Clothing> plan) {
+	public void change(DefaultModifier rule, List<Clothing> plan) {
 		undress();
 		plan.forEach(article -> equip(article));
 	}

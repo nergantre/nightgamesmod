@@ -5,7 +5,7 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
+import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 
 public class UseDildo extends Skill{
@@ -22,7 +22,7 @@ public class UseDildo extends Skill{
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return (getSelf().has(Item.Dildo)||getSelf().has(Item.Dildo2))&&getSelf().canAct()&&target.hasPussy()&&c.getStance().reachBottom(getSelf())&&target.crotchAvailable()&&!c.getStance().vaginallyPenetrated(target)
-				&&(!getSelf().human()||Global.getMatch().condition!=Modifier.notoys);
+				&&(!getSelf().human()||Global.getMatch().condition!=DefaultModifier.notoys);
 	}
 
 	@Override

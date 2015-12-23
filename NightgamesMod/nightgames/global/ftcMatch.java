@@ -6,7 +6,7 @@ import nightgames.characters.Character;
 
 public class ftcMatch extends Match {
 
-	public ftcMatch(HashSet<Character> combatants, Modifier condition) {
+	public ftcMatch(HashSet<Character> combatants, DefaultModifier condition) {
 		super(combatants, condition);
 		// TODO Auto-generated constructor stub
 	}

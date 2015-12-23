@@ -14,7 +14,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Encounter;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
+import nightgames.global.DefaultModifier;
 import nightgames.gui.GUI;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
@@ -55,7 +55,7 @@ public class Player extends Character {
 		outfitPlan.add(Clothing.getByID("sneakers"));
 
 		willpower.setMax(willpower.max());
-		change(Modifier.normal);
+		change(DefaultModifier.normal);
 		availableAttributePoints=0;
 		setTrophy(Item.PlayerTrophy);
 		body.finishBody(sex);

@@ -12,7 +12,7 @@ import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
+import nightgames.global.DefaultModifier;
 
 public class Masturbate extends Skill {
 	public Masturbate(Character self) {
@@ -26,7 +26,7 @@ public class Masturbate extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canMasturbate()&&c.getStance().mobile(getSelf())&&Global.getMatch().condition!=Modifier.norecovery&& getTargetOrgan(c, getSelf()) != Body.nonePart;
+		return getSelf().canMasturbate()&&c.getStance().mobile(getSelf())&&Global.getMatch().condition!=DefaultModifier.norecovery&& getTargetOrgan(c, getSelf()) != Body.nonePart;
 	}
 	
 	@Override

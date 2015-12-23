@@ -7,7 +7,7 @@ import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
+import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 import nightgames.items.clothing.ClothingSlot;
 
@@ -23,7 +23,7 @@ public class Aphrodisiac extends Skill {
 	public boolean usable(Combat c, Character target) {
 		return (c.getStance().mobile(this.getSelf()))
 				&& (this.getSelf().canAct())
-				&& ((this.getSelf().has(Item.Aphrodisiac)&&(!getSelf().human()||Global.getMatch().condition!=Modifier.noitems)) || ((this.getSelf()
+				&& ((this.getSelf().has(Item.Aphrodisiac)&&(!getSelf().human()||Global.getMatch().condition!=DefaultModifier.noitems)) || ((this.getSelf()
 						.hasPussy() && getSelf().body.getRandomPussy() == PussyPart.succubus) && this.getSelf().getArousal().get() >= 10))
 				&& (!c.getStance().prone(this.getSelf()));
 	}

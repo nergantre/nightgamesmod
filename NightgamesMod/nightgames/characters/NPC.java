@@ -20,7 +20,7 @@ import nightgames.combat.Encounter;
 import nightgames.combat.Result;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
+import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
@@ -190,7 +190,7 @@ public class NPC extends Character {
 		target.gainXP(getVictoryXP(this));
 		this.arousal.empty();
 		if (!target.human()
-				|| Global.getMatch().condition != Modifier.norecovery) {
+				|| Global.getMatch().condition != DefaultModifier.norecovery) {
 			target.arousal.empty();
 		}
 		if (this.has(Trait.insatiable)) {

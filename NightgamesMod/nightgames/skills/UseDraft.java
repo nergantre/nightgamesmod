@@ -14,7 +14,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
+import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 import nightgames.items.ItemEffect;
 
@@ -31,7 +31,7 @@ public class UseDraft extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		boolean hasItems = subChoices().size() > 0;
-		return hasItems&&getSelf().canAct()&&c.getStance().mobile(getSelf())&&(!getSelf().human()||Global.getMatch().condition!=Modifier.noitems);
+		return hasItems&&getSelf().canAct()&&c.getStance().mobile(getSelf())&&(!getSelf().human()||Global.getMatch().condition!=DefaultModifier.noitems);
 	}
 
 	@Override

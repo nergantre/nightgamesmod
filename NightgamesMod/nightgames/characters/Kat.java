@@ -10,7 +10,7 @@ import nightgames.characters.body.TailPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
+import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.status.Feral;
@@ -32,7 +32,7 @@ public class Kat extends BasePersonality {
 		character.outfitPlan.add(Clothing.getByID("skirt"));
 		character.outfitPlan.add(Clothing.getByID("sneakers"));
 		character.outfitPlan.add(Clothing.getByID("socks"));
-		character.change(Modifier.normal);
+		character.change(DefaultModifier.normal);
 		character.setTrophy(Item.KatTrophy);
 		this.character.set(Attribute.Power, 10);
 		this.character.set(Attribute.Animism, 2);

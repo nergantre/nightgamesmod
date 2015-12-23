@@ -9,7 +9,7 @@ import nightgames.characters.body.WingsPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
+import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 
@@ -27,7 +27,7 @@ public class Angel extends BasePersonality {
 		character.outfitPlan.add(Clothing.getByID("thong"));
 		character.outfitPlan.add(Clothing.getByID("miniskirt"));
 		character.outfitPlan.add(Clothing.getByID("sandals"));
-		character.change(Modifier.normal);
+		character.change(DefaultModifier.normal);
 		character.mod(Attribute.Seduction, 2);
 		character.mod(Attribute.Perception, 1);
 		Global.gainSkills(character);

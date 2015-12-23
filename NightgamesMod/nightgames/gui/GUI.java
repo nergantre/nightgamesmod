@@ -17,7 +17,7 @@ import nightgames.global.DebugFlags;
 import nightgames.global.Encs;
 import nightgames.global.Flag;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
+import nightgames.global.DefaultModifier;
 import nightgames.global.Prematch;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
@@ -1563,7 +1563,7 @@ public class GUI extends JFrame implements Observer {
 			this.setText("Start the match");
 			addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					Global.dusk(Modifier.normal);
+					Global.dusk(DefaultModifier.normal);
 				}
 			});
 		}

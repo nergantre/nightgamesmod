@@ -25,7 +25,7 @@ import javax.swing.ListSelectionModel;
 import nightgames.characters.Character;
 import nightgames.daytime.Activity;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
+import nightgames.global.DefaultModifier;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSorter;
 
@@ -44,7 +44,7 @@ public class ClothesChangeGUI extends JPanel {
 	private void removeAllClothing() {
 		character.closet.addAll(character.outfitPlan);
 		character.outfitPlan.clear();
-		character.change(Modifier.normal);
+		character.change(DefaultModifier.normal);
 		refreshLists();
 	}
 
@@ -56,7 +56,7 @@ public class ClothesChangeGUI extends JPanel {
 		}
 		character.outfitPlan.remove(article);
 		character.closet.add(article);
-		character.change(Modifier.normal);
+		character.change(DefaultModifier.normal);
 		refreshLists();
 	}
 
@@ -69,7 +69,7 @@ public class ClothesChangeGUI extends JPanel {
 		// remove the article from the closet
 		character.closet.remove(article);
 		// change to make sure everything is equipped correctly
-		character.change(Modifier.normal);
+		character.change(DefaultModifier.normal);
 		// get the currently equipped items
 		Set<Clothing> unequipped = new HashSet<Clothing>(character.outfit.getEquipped());
 		// equip the new item
@@ -82,7 +82,7 @@ public class ClothesChangeGUI extends JPanel {
 		character.outfitPlan.clear();
 		character.outfitPlan.addAll(character.outfit.getEquipped());
 		// make sure the player is dressed correctly
-		character.change(Modifier.normal);
+		character.change(DefaultModifier.normal);
 		// refresh the ClothingLists
 		refreshLists();
 	}
@@ -170,7 +170,7 @@ public class ClothesChangeGUI extends JPanel {
 		JButton btnOk = new JButton("OK");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ClothesChangeGUI.this.character.change(Modifier.normal);
+				ClothesChangeGUI.this.character.change(DefaultModifier.normal);
 				Global.gui().removeClosetGUI();
 				ClothesChangeGUI.this.resume.visit(doneOption);
 			}
