@@ -1,0 +1,73 @@
+Some statuses can now stack, intensifying their effect and extending their duration
+Buzzed status now stacks and persists after fights
+Energy Drinks now stack
+Sedatives now stack
+Shamed status now stacks
+Added a menu button that displays the map I posted on the blog for ease of navigation -- TODO
+Added message to clarify perks selection screen
+Fixed issue where portraits were attached to images option
+Added perk Cautious
+Shamed now gives a buff to Submissive
+Added perk Responsive
+Submissive attribute now increases pleasure dealt to opponents when they fuck you
+New Submissive skill: Invite
+New Submissive skill: Beg
+New Fetish skill: Tortoise Wrap
+New Submissive skill: Shameful Display
+Capped the amount of money the AI will spend on consumables each day
+Added the game's first futanari character Eve. She's a sadistic hedonist and uses the Fetish skill tree
+Eve doesn't have any daytime scenes yet
+Added some scenes with Kat and Aisha that lead to being able to learn the Animism skill tree
+Kat's Feral buff now also applies to players with Animism >= 4
+New consumable item: Summoning Scroll
+New consumable item: Dark Talisman
+Video Game scenes featuring NPCs now increase their affection
+Added three new Video Games scenes featuring Angel's friend, Caroline
+Added weekends. You now have more daytime hours on Saturday and Sunday
+Feral status now scales with Animism
+Added perk Ass Master
+Added the introduction scene for Alice, the submissive trainer
+Made some changes to how postmatch scenes are implemented. They should be easier to add now
+Characters can reach rank 2 at level 20, this comes with a pay increase
+Added submissive training scene, with a few different variations
+Added a couple shortcuts to the map that can be used by character with high Cunning
+After visiting an NPC at least once, their attraction will start to be converted to affection, making it no longer useless
+Armbar now causes a Power debuff
+Leglock now causes a Speed debuff
+New starting trait: Brass Balls reduces damage from low blows
+New starting trait: Bra Master gives bonus to stripping tops
+New starting trait: Panty Peeler gives bonus to stripping bottoms
+New starting weakness: Hair Trigger for people who are finding the game too easy
+Characters can reach rank 3 at level 30, this comes with a pay increase
+Added a new, very powerful, probably familiar NPC who appears as a special event enemy
+This NPC has access to the Hypnosis skillset.
+There's currently no way for the player to learn Hypnosis
+Added Angel double-team scene for NPCs with a dick (slight cheat, it's almost identical to her normal one)
+Added Player double-team scene for NPCs with a dick
+Added Cassie double-team scene for NPCs with a dick
+Added Jewel double-team scene for NPCs with a dick
+Added Mara double-team scene for NPCs with a dick (another copy of normal scene)
+Fixed an issue where NPCs could miss their advanced class if they hit level 20 too quickly
+__________________________________________________________________________________________________
+
+
+Merged in invalidcharacter's GUI changes
+
+__________________________________________________________________________________________________
+Original changes:
+Added special text for Eve using AssFuck
+Added trait AnalFanatic - boosts pleasure to both parties when having anal sex and makes the holder Frenzied for the duration (Surprise, Eve gets this)
+Frenzied now boosts Power and Animism more than before, and reduces damage taken
+Made the 'Mystery NPC' vastly more powerful to deal with the mod allowing higher damage and limits
+Fixed the Experienced trait doing the opposite of what it's supposed to
+Added '.ngs' extension to the autosave so the load dialog can see it straight away
+Fixed a bug where Enthralling Trap could force a character to move back and forth if they can't fight their 'master' (thanks to ReliableNarrator)
+Fixed a fatal bug for the Slime where it could destroy the wrong article of clothing
+Various small fixes, mostly text related
+CockGrowth now has an actual accuracy calculation instead of a flat 0
+Escape is somewhat more likely to work in escaping stances
+Added Imbue Fetish, which bestows a somewhat-random fetish on the target. Requires Fetish >= 10
+Added Assjob - Descriptions written by CharredNewt
+Added TailSuck and a status it can cause; Only usable by succubi (Reyka, or by using a draft)
+Fixed LevelDrain giving the target Satiated instead of the user
+Fixed EnthrallingTrap not having a string representation for use in the button (You can only see this under the influence of a Succubus Draft)

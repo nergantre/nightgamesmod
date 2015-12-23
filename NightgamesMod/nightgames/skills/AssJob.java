@@ -12,7 +12,7 @@ import nightgames.status.BodyFetish;
 public class AssJob extends Skill {
 
 	public AssJob(Character self) {
-		super("Ass Job", self);
+		super("Assjob", self);
 	}
 
 	@Override

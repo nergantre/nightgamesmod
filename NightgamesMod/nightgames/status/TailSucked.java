@@ -19,7 +19,8 @@ public class TailSucked extends Status {
 		super("Tail Sucked", affected);
 		this.sucker = sucker;
 		this.power = power;
-		requirements.add((c, self, other) -> new TailSuck(other).usable(c, self));
+		requirements.add((c, self, other) -> c != null && self != null
+				&& other != null && new TailSuck(other).usable(c, self));
 		flag(Stsflag.bound);
 		flag(Stsflag.tailsucked);
 	}
@@ -53,19 +54,22 @@ public class TailSucked extends Status {
 			affected.removelist.add(this);
 			return;
 		}
-		
-		c.write(sucker, String.format("%s tail sucks powerfully, and %s"
-				+ " some of %s strength being drawn in.", 
-				sucker.nameOrPossessivePronoun(), affected.subjectAction("feel", "feels"),
-				affected.possessivePronoun()));
-		
-		Attribute toDrain = Global.pickRandom(affected.att.entrySet().stream()
-				.filter(e -> e.getValue() != 0).map(e -> e.getKey())
-				.toArray(Attribute[]::new));
+
+		c.write(sucker,
+				String.format(
+						"%s tail sucks powerfully, and %s"
+								+ " some of %s strength being drawn in.",
+						sucker.nameOrPossessivePronoun(),
+						affected.subjectAction("feel", "feels"),
+						affected.possessivePronoun()));
+
+		Attribute toDrain = Global.pickRandom(
+				affected.att.entrySet().stream().filter(e -> e.getValue() != 0)
+						.map(e -> e.getKey()).toArray(Attribute[]::new));
 		affected.addlist.add(new Abuff(affected, toDrain, -power, 20));
 		sucker.addlist.add(new Abuff(sucker, toDrain, power, 20));
-		affected.drain(c, sucker, 1 + Global.random(power*3));
-		affected.drainMojo(c, sucker, 1 + Global.random(power*3));
+		affected.drain(c, sucker, 1 + Global.random(power * 3));
+		affected.drainMojo(c, sucker, 1 + Global.random(power * 3));
 	}
 
 	@Override

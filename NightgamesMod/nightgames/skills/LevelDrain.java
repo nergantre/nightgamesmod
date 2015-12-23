@@ -63,7 +63,7 @@ public class LevelDrain extends Drain {
 		case 1:
 			int stolen = stealXP(target);
 			if (stolen > 0) {
-				getSelf().add(c, new Satiated(target, stolen, 0));
+				getSelf().add(c, new Satiated(getSelf(), stolen, 0));
 				if (getSelf().human())
 					c.write("You have absorbed " + stolen + " XP from " + target.name() + "!\n");
 				else
