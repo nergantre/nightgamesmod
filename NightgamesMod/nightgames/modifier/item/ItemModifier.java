@@ -15,6 +15,10 @@ public abstract class ItemModifier {
 			.unmodifiableList(Arrays.asList(new BanToysModifier(), new BanConsumablesModifier()));
 
 	public static final ItemModifier NULL_MODIFIER = new ItemModifier() {
+		@Override
+		public String toString() {
+			return "null-item-modifier";
+		}
 	};
 
 	public Set<Item> bannedItems() {
@@ -56,6 +60,11 @@ public abstract class ItemModifier {
 			public boolean itemIsBanned(Item i) {
 				return mod.itemIsBanned(i);
 			}
+
+			@Override
+			public String toString() {
+				return mod.toString();
+			}
 		};
 	}
 
@@ -72,6 +81,11 @@ public abstract class ItemModifier {
 			public boolean itemIsBanned(Item i) {
 				return me.itemIsBanned(i) || other.itemIsBanned(i);
 			}
+
+			@Override
+			public String toString() {
+				return me.toString() + other.toString();
+			}
 		};
 	}
 
@@ -83,4 +97,7 @@ public abstract class ItemModifier {
 			result = result.combineWith(mods[i]);
 		return result;
 	}
+	
+	@Override
+	public abstract String toString();
 }

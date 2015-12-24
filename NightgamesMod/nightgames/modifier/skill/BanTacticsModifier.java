@@ -44,6 +44,6 @@ public class BanTacticsModifier extends SkillModifier implements ModifierCompone
 
 	@Override
 	public String toString() {
-		return tactics.toString();
+		return "Banned:" + tactics.toString();
 	}
 }

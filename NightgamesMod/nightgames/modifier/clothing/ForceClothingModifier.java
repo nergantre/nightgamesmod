@@ -31,7 +31,7 @@ public class ForceClothingModifier extends ClothingModifier implements ModifierC
 
 	@Override
 	public String toString() {
-		return ids.toString();
+		return "Forced:" + ids.toString();
 	}
 	
 	@Override

@@ -53,7 +53,7 @@ public class BanActionModifier extends ActionModifier implements ModifierCompone
 	
 	@Override
 	public String toString() {
-		return absolutes.toString();
+		return "Banned:" + absolutes.toString();
 	}
 
 	@Override

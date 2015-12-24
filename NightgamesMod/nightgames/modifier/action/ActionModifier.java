@@ -15,7 +15,11 @@ import nightgames.global.Match;
 public abstract class ActionModifier {
 
 	public static final List<ActionModifier> TYPES = Collections.singletonList(new BanActionModifier());
-	public static final ActionModifier NULL_MODIFIER = new ActionModifier(){};
+	public static final ActionModifier NULL_MODIFIER = new ActionModifier(){
+		@Override
+		public String toString() {
+			return "null-action-modifier";
+		}};
 
 	public Set<Action> bannedActions() {
 		return Collections.emptySet();
@@ -45,6 +49,10 @@ public abstract class ActionModifier {
 				Map<Action, BiPredicate<Character, Match>> actions = new HashMap<>(me.conditionalBans());
 				actions.putAll(other.conditionalBans());
 				return Collections.unmodifiableMap(actions);
+			}
+			@Override
+			public String toString() {
+				return me.toString() + other.toString();
 			}			
 		};
 	}
@@ -58,4 +66,6 @@ public abstract class ActionModifier {
 		}
 		return mod;
 	}
+
+	public abstract String toString();
 }

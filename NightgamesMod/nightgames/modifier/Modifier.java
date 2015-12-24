@@ -1,5 +1,6 @@
 package nightgames.modifier;
 
+import nightgames.actions.Action;
 import nightgames.characters.Character;
 import nightgames.global.Match;
 import nightgames.modifier.skill.SkillModifier;
@@ -35,6 +36,8 @@ public interface Modifier {
 	 * Undo all changes to the character's inventory made by handleItems 
 	 */
 	void undoItems(Character c);
+	
+	boolean allowAction(Action act, Character c, Match m);
 	
 	int bonus();
 	boolean isApplicable();

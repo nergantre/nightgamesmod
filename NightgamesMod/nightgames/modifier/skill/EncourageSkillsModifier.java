@@ -89,6 +89,6 @@ public class EncourageSkillsModifier extends SkillModifier implements ModifierCo
 	
 	@Override
 	public String toString() {
-		return absolutes.toString();
+		return "Encouraged:" + absolutes.toString();
 	}
 }

@@ -9,7 +9,20 @@
 			"value" : {
 				"tactic" : "fucking"
 			}
-		}
+		},{
+			"type" : "encourage-skills",
+			"value": {
+				"list" : [
+					{
+						"skill" : "Blow",
+						"weight" : 1.0
+					},{
+						"skill" : "Kick",
+						"weight" : -2.0
+					}
+				]
+			}
+		}	
 	],
 	"action" : [
 		{

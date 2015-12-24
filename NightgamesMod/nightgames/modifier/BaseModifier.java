@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
+import nightgames.actions.Action;
 import nightgames.characters.Character;
 import nightgames.global.Match;
 import nightgames.items.Item;
@@ -14,8 +15,10 @@ import nightgames.modifier.skill.SkillModifier;
 
 public abstract class BaseModifier implements Modifier {
 
-	protected static final BiConsumer<Character, Match> EMPTY_CONSUMER = (c, m) -> {};
-	
+	protected static final BiConsumer<Character, Match> EMPTY_CONSUMER = (c,
+			m) -> {
+	};
+
 	protected ClothingModifier				clothing;
 	protected ItemModifier					items;
 	protected StatusModifier				status;
@@ -42,7 +45,7 @@ public abstract class BaseModifier implements Modifier {
 				StatusModifier.NULL_MODIFIER, SkillModifier.NULL_MODIFIER,
 				ActionModifier.NULL_MODIFIER, EMPTY_CONSUMER);
 	}
-	
+
 	@Override
 	public void handleOutfit(Character c) {
 		if (c.human() || !clothing.playerOnly())
@@ -83,13 +86,28 @@ public abstract class BaseModifier implements Modifier {
 	}
 
 	@Override
+	public boolean allowAction(Action act, Character c, Match m) {
+		return !c.human() || !actions.actionIsBanned(act, c, m);
+	}
+	
+	@Override
 	public void undoItems(Character c) {
 		if (moddedItems.containsKey(c))
 			moddedItems.get(c).forEach((item, count) -> c.gain(item, -count));
 	}
-	
+
 	@Override
 	public boolean isApplicable() {
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return String.format(
+				"Modifier\n\tClothing: %s\n\tItems: %s\n\t"
+				+ "Status: %s\n\tSkills: %s\n\tActions: %s\n\tCustom: %s\n",
+				clothing.toString(), items.toString(), status.toString(),
+				skills.toString(), actions.toString(),
+				custom == EMPTY_CONSUMER ? "no" : "yes");
 	}
 }

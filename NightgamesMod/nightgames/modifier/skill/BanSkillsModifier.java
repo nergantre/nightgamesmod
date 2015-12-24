@@ -50,6 +50,6 @@ public class BanSkillsModifier extends SkillModifier implements ModifierComponen
 	
 	@Override
 	public String toString() {
-		return skills.toString();
+		return "Banned:" + skills.toString();
 	}
 }

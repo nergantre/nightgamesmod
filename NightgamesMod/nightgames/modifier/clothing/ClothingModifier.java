@@ -20,6 +20,10 @@ public abstract class ClothingModifier {
 	public static final List<ClothingModifier> TYPES = Collections.unmodifiableList(Arrays.asList(
 			new ForceClothingModifier(), new NoPantiesModifier(), new NudeModifier(), new UnderwearOnlyModifier()));
 	public static final ClothingModifier NULL_MODIFIER = new ClothingModifier() {
+		@Override
+		public String toString() {
+			return "null-clothing-modifier";
+		}
 
 	};
 
@@ -94,6 +98,10 @@ public abstract class ClothingModifier {
 				me.apply(outfit);
 				next.apply(outfit);
 			}
+			@Override
+			public String toString() {
+				return me.toString() + ", " + next.toString();
+			}
 		};
 	}
 
@@ -109,6 +117,11 @@ public abstract class ClothingModifier {
 			public void apply(Outfit o) {
 				playerOnly.apply(o);
 			}
+
+			@Override
+			public String toString() {
+				return playerOnly.toString();
+			}
 		};
 	}
 
@@ -121,6 +134,8 @@ public abstract class ClothingModifier {
 		return result;
 	}
 
+	public abstract String toString();
+	
 	public static void main(String[] args) {
 		Clothing.buildClothingTable();
 		Outfit test1 = new Outfit();

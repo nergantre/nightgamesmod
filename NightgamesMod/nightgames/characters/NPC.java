@@ -827,7 +827,10 @@ public class NPC extends Character {
 
 	        wskill.weight += ai.getAiModifiers().modAttack(wskill.skill.getClass());
 			// Sum up rating, add to map
-			rating = (float) Math.exp(RATING_FACTOR * raw_rating + wskill.weight + wskill.skill.priorityMod(c));
+			rating = (float) Math.exp(RATING_FACTOR * raw_rating + wskill.weight 
+					+ wskill.skill.priorityMod(c) 
+					+ Global.getMatch().condition.getSkillModifier()
+						.encouragement(wskill.skill, c, this));
 			sum += rating;
 			moveList.add(new WeightedSkill(sum, raw_rating, rating, wskill.skill));
 		}
