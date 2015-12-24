@@ -7,7 +7,6 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 
 public class UseCrop extends Skill {
@@ -23,8 +22,7 @@ public class UseCrop extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (getSelf().has(Item.Crop)||getSelf().has(Item.Crop2))&&getSelf().canAct()&&c.getStance().mobile(getSelf())&&(c.getStance().reachTop(getSelf())||c.getStance().reachBottom(getSelf()))
-				&&(!getSelf().human()||Global.getMatch().condition!=DefaultModifier.notoys);
+		return (getSelf().has(Item.Crop)||getSelf().has(Item.Crop2))&&getSelf().canAct()&&c.getStance().mobile(getSelf())&&(c.getStance().reachTop(getSelf())||c.getStance().reachBottom(getSelf()));
 	}
 
 	@Override

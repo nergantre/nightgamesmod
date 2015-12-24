@@ -2,24 +2,13 @@ package nightgames.stance;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
-import nightgames.skills.Escape;
-import nightgames.skills.Nothing;
-import nightgames.skills.Skill;
-import nightgames.skills.Struggle;
-import nightgames.skills.Suckle;
-import nightgames.skills.Wait;
 
 public class Engulfed extends Position {
 	public Engulfed(Character top, Character bottom) {

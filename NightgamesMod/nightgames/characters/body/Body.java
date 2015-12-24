@@ -1,22 +1,28 @@
 package nightgames.characters.body;
-import nightgames.characters.Attribute;
-import nightgames.characters.Character;
-import nightgames.characters.CharacterSex;
-import nightgames.characters.NPC;
-import nightgames.characters.Trait;
-import nightgames.combat.Combat;
-import nightgames.global.Global;
-import nightgames.items.clothing.ClothingSlot;
-import nightgames.status.Abuff;
-import nightgames.status.BodyFetish;
-import nightgames.status.FiredUp;
-import nightgames.status.Status;
-import nightgames.status.Stsflag;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import nightgames.characters.Attribute;
+import nightgames.characters.Character;
+import nightgames.characters.CharacterSex;
+import nightgames.characters.Trait;
+import nightgames.combat.Combat;
+import nightgames.global.Global;
+import nightgames.status.Abuff;
+import nightgames.status.BodyFetish;
+import nightgames.status.Status;
+import nightgames.status.Stsflag;
 
 public class Body implements Cloneable {
 	static class PartReplacement {

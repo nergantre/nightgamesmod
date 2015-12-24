@@ -4,10 +4,8 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.stance.Stance;
-import nightgames.skills.Cowardice;
-import nightgames.skills.Tactics;
 import nightgames.stance.Behind;
+import nightgames.stance.Stance;
 
 public class Cowardice extends Skill {
 

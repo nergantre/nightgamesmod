@@ -1,14 +1,19 @@
 package nightgames.items;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.BasicCockPart;
+import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.EarPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
-import nightgames.characters.body.TentaclePart;
 import nightgames.characters.body.WingsPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
@@ -22,15 +27,7 @@ import nightgames.status.Horny;
 import nightgames.status.Oiled;
 import nightgames.status.Shamed;
 import nightgames.status.Shield;
-import nightgames.status.Status;
 import nightgames.status.Trance;
-import nightgames.status.Winded;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Arrays;
-import java.util.List;
 
 public enum Item implements Loot {
 	Tripwire	( "Trip Wire",10, "A strong wire used to trigger traps","a "	),

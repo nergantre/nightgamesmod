@@ -2,10 +2,8 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.status.Bound;
 import nightgames.status.Stsflag;
 
 public class OrgasmSeal extends Skill {

@@ -1,11 +1,9 @@
 package nightgames.pet;
 
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
-import nightgames.stance.StandingOver;
 import nightgames.status.Falling;
 import nightgames.status.Oiled;
 

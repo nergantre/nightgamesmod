@@ -1,5 +1,11 @@
 package nightgames.global;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Deque;
+import java.util.HashMap;
+
 import nightgames.actions.Movement;
 import nightgames.areas.Area;
 import nightgames.areas.Cache;
@@ -7,18 +13,8 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.State;
 import nightgames.characters.Trait;
-import nightgames.items.Item;
+import nightgames.modifier.Modifier;
 import nightgames.status.BodyFetish;
-import nightgames.status.Hypersensitive;
-import nightgames.status.Stsflag;
-
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 
 public class Match {
 	private int time;
@@ -28,9 +24,9 @@ public class Match {
 	private HashMap<Character, Integer> score;
 	private int index;
 	private boolean pause;
-	public DefaultModifier condition;
+	public Modifier condition;
 
-	public Match(Collection<Character> combatants, DefaultModifier condition) {
+	public Match(Collection<Character> combatants, Modifier condition) {
 		this.combatants = new ArrayList<Character>();
 		for (Character c : combatants) {
 			this.combatants.add(c);
@@ -77,6 +73,7 @@ public class Match {
 			if (player.has(Trait.footfetishist)) {
 				player.add(new BodyFetish(player, null, "feet", .25));
 			}
+			manageConditions(player);
 		}
 	}
 
@@ -98,9 +95,7 @@ public class Match {
 				Global.gui().refresh();
 				if (combatants.get(index).state != State.quit) {
 					combatants.get(index).upkeep();
-					if (combatants.get(index).human()) {
-						manageConditions(combatants.get(index));
-					}
+					manageConditions(combatants.get(index));
 					combatants.get(index).move();
 					if (Global.isDebugOn(DebugFlags.DEBUG_SCENE) && index < combatants.size()) {
 						System.out.println(
@@ -163,7 +158,8 @@ public class Match {
 			}
 			combatant.challenges.clear();
 			combatant.state = State.ready;
-			combatant.change(DefaultModifier.normal);
+			condition.undoItems(combatant);
+			combatant.change();
 		}
 		Global.gui().message("You made $" + score.get(player) * player.prize() + " for defeating opponents.");
 		int bonus = score.get(player) * condition.bonus();
@@ -253,13 +249,17 @@ public class Match {
 	public void score(Character character, int points) { this.score.put(character, Integer.valueOf(((Integer)this.score.get(character)).intValue() + points)); }
 
 	public void manageConditions(Character player) {
-		if (condition == DefaultModifier.vibration) {
+		/*if (condition == DefaultModifier.vibration) {
 			player.tempt(5);
 		} else if (condition == DefaultModifier.vulnerable) {
 			if (!player.is(Stsflag.hypersensitive)) {
 				player.add(new Hypersensitive(player));
 			}
-		}
+		}*/
+		condition.handleOutfit(player);
+		condition.handleItems(player);
+		condition.handleStatus(player);
+		condition.handleTurn(player, this);
 	}
 
 	public int meanLvl() {

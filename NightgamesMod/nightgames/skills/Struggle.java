@@ -2,25 +2,16 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
-import nightgames.characters.body.StraponPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.stance.Cowgirl;
-import nightgames.stance.Doggy;
-import nightgames.stance.Missionary;
 import nightgames.stance.Neutral;
 import nightgames.stance.Position;
-import nightgames.stance.ReverseCowgirl;
 import nightgames.stance.Stance;
-import nightgames.stance.StandingOver;
 import nightgames.status.Bound;
-import nightgames.status.Braced;
 import nightgames.status.CockBound;
-import nightgames.status.Falling;
 import nightgames.status.Stsflag;
 
 public class Struggle extends Skill {

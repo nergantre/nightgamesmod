@@ -1,12 +1,10 @@
 package nightgames.skills;
 
 import nightgames.characters.Attribute;
-import nightgames.global.Global;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.skills.Stumble;
-import nightgames.skills.Tactics;
+import nightgames.global.Global;
 import nightgames.stance.Mount;
 import nightgames.stance.ReverseMount;
 import nightgames.stance.Stance;

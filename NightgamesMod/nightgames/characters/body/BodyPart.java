@@ -1,6 +1,5 @@
 package nightgames.characters.body;
 import java.util.Collection;
-import java.util.List;
 
 import org.json.simple.JSONObject;
 

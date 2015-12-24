@@ -8,7 +8,6 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingTrait;
-import nightgames.stance.StandingOver;
 
 public class Knee extends Skill {
 

@@ -1,13 +1,13 @@
 package nightgames.skills;
 
+import java.util.Arrays;
+import java.util.List;
+
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class CommandGive extends PlayerCommand {
 

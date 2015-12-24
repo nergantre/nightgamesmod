@@ -1,17 +1,14 @@
 package nightgames.stance;
 
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
-import nightgames.global.Global;
 import nightgames.skills.Escape;
 import nightgames.skills.Nothing;
 import nightgames.skills.Skill;

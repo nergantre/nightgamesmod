@@ -1,29 +1,5 @@
 package nightgames.gui;
 
-import nightgames.Resources.ResourceLoader;
-import nightgames.actions.Action;
-import nightgames.actions.Locate;
-import nightgames.characters.Attribute;
-import nightgames.characters.Character;
-import nightgames.characters.Meter;
-import nightgames.characters.Player;
-import nightgames.characters.Trait;
-import nightgames.combat.Combat;
-import nightgames.combat.Encounter;
-import nightgames.daytime.Activity;
-import nightgames.daytime.Store;
-import nightgames.debug.DebugGUIPanel;
-import nightgames.global.DebugFlags;
-import nightgames.global.Encs;
-import nightgames.global.Flag;
-import nightgames.global.Global;
-import nightgames.global.DefaultModifier;
-import nightgames.global.Prematch;
-import nightgames.items.Item;
-import nightgames.items.clothing.Clothing;
-import nightgames.skills.Skill;
-import nightgames.trap.Trap;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -41,6 +17,7 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -59,6 +36,8 @@ import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.event.ChangeEvent;
@@ -67,8 +46,30 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultCaret;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
+
+import nightgames.Resources.ResourceLoader;
+import nightgames.actions.Action;
+import nightgames.actions.Locate;
+import nightgames.characters.Attribute;
+import nightgames.characters.Character;
+import nightgames.characters.Meter;
+import nightgames.characters.Player;
+import nightgames.characters.Trait;
+import nightgames.combat.Combat;
+import nightgames.combat.Encounter;
+import nightgames.daytime.Activity;
+import nightgames.daytime.Store;
+import nightgames.debug.DebugGUIPanel;
+import nightgames.global.DebugFlags;
+import nightgames.global.Encs;
+import nightgames.global.Flag;
+import nightgames.global.Global;
+import nightgames.global.Prematch;
+import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
+import nightgames.modifier.standard.NoModifier;
+import nightgames.skills.Skill;
+import nightgames.trap.Trap;
 
 
 public class GUI extends JFrame implements Observer {
@@ -1563,7 +1564,7 @@ public class GUI extends JFrame implements Observer {
 			this.setText("Start the match");
 			addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					Global.dusk(DefaultModifier.normal);
+					Global.dusk(new NoModifier());
 				}
 			});
 		}

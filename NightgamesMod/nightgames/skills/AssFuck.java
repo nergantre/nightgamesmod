@@ -9,8 +9,6 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
-import nightgames.items.clothing.Clothing;
-import nightgames.items.clothing.ClothingSlot;
 import nightgames.stance.Anal;
 import nightgames.stance.AnalProne;
 import nightgames.status.Flatfooted;

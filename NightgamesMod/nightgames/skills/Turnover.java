@@ -7,8 +7,6 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.stance.Behind;
 import nightgames.stance.Stance;
-import nightgames.status.Braced;
-import nightgames.status.Stsflag;
 
 public class Turnover extends Skill {
 

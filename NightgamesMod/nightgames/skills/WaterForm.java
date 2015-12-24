@@ -4,7 +4,6 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.status.Alert;
 import nightgames.status.Stsflag;
 import nightgames.status.WaterStance;
 

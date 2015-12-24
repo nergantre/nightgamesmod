@@ -1,14 +1,14 @@
 package nightgames.skills;
 
+import nightgames.characters.Attribute;
+import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.combat.Combat;
+import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.Anal;
 import nightgames.stance.Cowgirl;
 import nightgames.stance.Missionary;
-import nightgames.characters.Attribute;
-import nightgames.characters.Character;
-import nightgames.combat.Combat;
-import nightgames.combat.Result;
 import nightgames.status.Shamed;
 
 public class Offer extends Skill {

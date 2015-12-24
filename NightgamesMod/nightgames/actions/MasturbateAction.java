@@ -4,7 +4,6 @@ import nightgames.characters.Character;
 import nightgames.characters.State;
 import nightgames.global.Flag;
 import nightgames.global.Global;
-import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 
 public class MasturbateAction extends Action {
@@ -14,7 +13,7 @@ public class MasturbateAction extends Action {
 
 	@Override
 	public boolean usable(Character user) {
-		return user.getArousal().get()>=15&&!(user.human()&&Global.getMatch().condition==DefaultModifier.norecovery);
+		return user.getArousal().get()>=15;
 	}
 
 	@Override

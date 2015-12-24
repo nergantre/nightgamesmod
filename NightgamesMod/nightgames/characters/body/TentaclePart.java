@@ -1,15 +1,15 @@
 package nightgames.characters.body;
 
-import nightgames.characters.Character;
-import nightgames.combat.Combat;
-import nightgames.global.Global;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.json.simple.JSONObject;
+
+import nightgames.characters.Character;
+import nightgames.combat.Combat;
+import nightgames.global.Global;
 
 public class TentaclePart extends GenericBodyPart {
 	private static final BodyPartMod TentacleMod = () -> "TentacleMod";

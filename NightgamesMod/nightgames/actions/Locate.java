@@ -1,15 +1,14 @@
 package nightgames.actions;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 import nightgames.areas.Area;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.gui.GUI;
 import nightgames.items.Item;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
 
 public class Locate extends Action {
 	private static final long serialVersionUID = 1L;

@@ -8,7 +8,6 @@ import nightgames.characters.body.TentaclePart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 
 public class Airi extends BasePersonality {
@@ -19,7 +18,7 @@ public class Airi extends BasePersonality {
 	public Airi(){
 		super();
 		character = new NPC("Airi",10,this);
-		character.change(DefaultModifier.normal);
+		character.change();
 		character.setTrophy(Item.AiriTrophy);
 		preferredCockMod = CockMod.slimy;
 

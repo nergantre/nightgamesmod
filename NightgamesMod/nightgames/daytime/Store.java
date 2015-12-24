@@ -1,11 +1,11 @@
 package nightgames.daytime;
 
+import java.util.HashMap;
+
 import nightgames.characters.Character;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
-
-import java.util.HashMap;
 
 public abstract class Store extends Activity {
 	protected HashMap<Item,Integer> stock;

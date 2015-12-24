@@ -3,7 +3,6 @@ package nightgames.daytime;
 import nightgames.characters.Character;
 import nightgames.global.Flag;
 import nightgames.global.Global;
-import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 
 public class ClothingStore extends Store {

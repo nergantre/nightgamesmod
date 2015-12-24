@@ -1,24 +1,15 @@
 package nightgames.characters.body;
 
+import java.util.Arrays;
+import java.util.Optional;
+
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.status.Abuff;
-import nightgames.status.CockBound;
-import nightgames.status.Enthralled;
-import nightgames.status.FluidAddiction;
-import nightgames.status.Horny;
-import nightgames.status.Hypersensitive;
-import nightgames.status.Stsflag;
-import nightgames.status.Winded;
-
-import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.Scanner;
-import org.json.simple.JSONObject;
 
 public enum BasicCockPart implements CockPart {
 	tiny("tiny", 3), small("smallish", 4), average("average-sized", 6), big("big", 8), huge("huge", 9), massive("massive",

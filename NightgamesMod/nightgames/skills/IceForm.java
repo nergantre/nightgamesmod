@@ -6,7 +6,6 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.status.IceStance;
 import nightgames.status.Stsflag;
-import nightgames.status.WaterStance;
 
 public class IceForm extends Skill {
 

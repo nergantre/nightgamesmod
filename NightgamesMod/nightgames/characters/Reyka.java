@@ -11,7 +11,6 @@ import nightgames.characters.body.WingsPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 
@@ -26,7 +25,7 @@ public class Reyka extends BasePersonality {
 		this.character.outfitPlan.add(Clothing.getByID("miniskirt"));
 		this.character.outfitPlan.add(Clothing.getByID("garters"));
 		this.character.outfitPlan.add(Clothing.getByID("stilettopumps"));
-		this.character.change(DefaultModifier.normal);
+		this.character.change();
 		this.character.set(Attribute.Dark, 12);
 		this.character.set(Attribute.Seduction, 14);
 		this.character.set(Attribute.Cunning, 7);

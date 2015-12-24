@@ -1,12 +1,8 @@
 package nightgames.stance;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
-import nightgames.global.Global;
 
 public class Pin extends AbstractFacingStance {
 

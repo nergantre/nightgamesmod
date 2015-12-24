@@ -1,16 +1,10 @@
 package nightgames.skills;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Emotion;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 import nightgames.items.ItemEffect;
 
@@ -27,7 +21,7 @@ public class UseSemen extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		boolean hasItems = getSelf().has(Item.semen);
-		return hasItems&&getSelf().canAct()&&getSelf().has(Trait.succubus)&&c.getStance().mobile(getSelf())&&(!getSelf().human()||Global.getMatch().condition!=DefaultModifier.noitems);
+		return hasItems&&getSelf().canAct()&&getSelf().has(Trait.succubus)&&c.getStance().mobile(getSelf());
 	}
 
 	@Override

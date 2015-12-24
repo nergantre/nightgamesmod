@@ -1,11 +1,9 @@
 package nightgames.skills;
 
-import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 
 public class UseOnahole extends Skill {
@@ -21,8 +19,7 @@ public class UseOnahole extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (getSelf().has(Item.Onahole)||getSelf().has(Item.Onahole2))&&getSelf().canAct()&&target.hasDick()&&c.getStance().reachBottom(getSelf())&&target.crotchAvailable()&&!c.getStance().inserted(target)
-				&&(!getSelf().human()||Global.getMatch().condition!=DefaultModifier.notoys);
+		return (getSelf().has(Item.Onahole)||getSelf().has(Item.Onahole2))&&getSelf().canAct()&&target.hasDick()&&c.getStance().reachBottom(getSelf())&&target.crotchAvailable()&&!c.getStance().inserted(target);
 	}
 
 	@Override

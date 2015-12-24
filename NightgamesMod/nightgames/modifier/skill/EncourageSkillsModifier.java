@@ -1,13 +1,12 @@
 package nightgames.modifier.skill;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiFunction;
 
+import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.skills.Skill;
-import nightgames.characters.Character;
 
 public class EncourageSkillsModifier extends SkillModifier {
 

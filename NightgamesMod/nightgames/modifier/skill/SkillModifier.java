@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.characters.Character;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 

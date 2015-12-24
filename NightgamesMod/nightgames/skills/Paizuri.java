@@ -1,16 +1,11 @@
 package nightgames.skills;
 
-import java.util.List;
-
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
-import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.BreastsPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
 
 public class Paizuri extends Skill {

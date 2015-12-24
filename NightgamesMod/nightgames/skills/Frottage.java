@@ -9,7 +9,6 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.status.BodyFetish;
-import nightgames.status.Stsflag;
 
 public class Frottage extends Skill{
 

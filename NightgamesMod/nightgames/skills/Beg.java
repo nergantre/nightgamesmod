@@ -1,13 +1,12 @@
 package nightgames.skills;
 
-import nightgames.global.Global;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.global.Global;
 import nightgames.status.Charmed;
 import nightgames.status.Stsflag;
-import nightgames.skills.Tactics;
 
 public class Beg extends Skill {
 

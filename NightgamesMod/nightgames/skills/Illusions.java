@@ -6,7 +6,6 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.status.Alluring;
 import nightgames.status.Distorted;
-import nightgames.status.Nimble;
 
 public class Illusions extends Skill {
 

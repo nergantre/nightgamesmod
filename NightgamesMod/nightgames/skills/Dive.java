@@ -4,8 +4,6 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.skills.Dive;
-import nightgames.skills.Tactics;
 import nightgames.stance.Stance;
 import nightgames.stance.StandingOver;
 

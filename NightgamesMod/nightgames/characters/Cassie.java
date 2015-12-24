@@ -13,7 +13,6 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Flag;
 import nightgames.global.Global;
-import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.status.Energized;
@@ -33,7 +32,7 @@ public class Cassie extends BasePersonality {
 		character.outfitPlan.add(Clothing.getByID("skirt"));
 		character.outfitPlan.add(Clothing.getByID("shoes"));
 
-		character.change(DefaultModifier.normal);
+		character.change();
 		character.mod(Attribute.Power, 1);
 		character.mod(Attribute.Seduction, 1);
 		character.mod(Attribute.Cunning, 1);

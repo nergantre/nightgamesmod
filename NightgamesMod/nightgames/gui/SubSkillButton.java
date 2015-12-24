@@ -1,17 +1,13 @@
 package nightgames.gui;
-import nightgames.characters.Player;
-import nightgames.combat.Combat;
-import nightgames.global.Global;
-import nightgames.skills.Skill;
-import nightgames.skills.Tactics;
-
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import java.awt.Color;
-import java.awt.Font;
+import nightgames.combat.Combat;
+import nightgames.skills.Skill;
 
 
 public class SubSkillButton extends JButton{

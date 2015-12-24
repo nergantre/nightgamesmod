@@ -1,7 +1,6 @@
 package nightgames.characters;
 
 import java.io.Serializable;
-import java.text.DecimalFormat;
 
 import nightgames.global.Global;
 

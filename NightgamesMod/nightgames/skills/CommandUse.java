@@ -1,5 +1,8 @@
 package nightgames.skills;
 
+import java.util.Arrays;
+import java.util.List;
+
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -8,9 +11,6 @@ import nightgames.items.Item;
 import nightgames.status.Hypersensitive;
 import nightgames.status.Oiled;
 import nightgames.status.Stsflag;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class CommandUse extends PlayerCommand {
 

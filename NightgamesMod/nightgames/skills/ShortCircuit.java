@@ -7,7 +7,6 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.status.Rewired;
-import nightgames.status.Shamed;
 
 public class ShortCircuit extends Skill {
 

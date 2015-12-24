@@ -6,8 +6,6 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.status.Stsflag;
-import nightgames.status.Unreadable;
 
 public class Wait extends Skill {
 

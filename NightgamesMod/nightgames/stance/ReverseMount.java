@@ -2,7 +2,6 @@ package nightgames.stance;
 
 
 import nightgames.characters.Character;
-import nightgames.characters.body.BodyPart;
 
 public class ReverseMount extends AbstractBehindStance {
 	public ReverseMount(Character top, Character bottom) {

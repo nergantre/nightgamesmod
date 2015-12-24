@@ -2,15 +2,11 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.body.Body;
-import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.stance.BehindFootjob;
 import nightgames.stance.HeldOral;
 import nightgames.stance.Stance;
-import nightgames.status.BodyFetish;
 
 public class PinAndBlow extends Skill {
 	public PinAndBlow(Character self) {

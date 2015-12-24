@@ -2,9 +2,6 @@ package nightgames.stance;
 
 
 import nightgames.characters.Character;
-import nightgames.characters.body.AnalPussyPart;
-import nightgames.characters.body.BodyPart;
-import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 

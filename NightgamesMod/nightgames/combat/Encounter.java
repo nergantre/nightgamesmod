@@ -1,5 +1,7 @@
 package nightgames.combat;
 
+import java.io.Serializable;
+
 import nightgames.actions.Movement;
 import nightgames.areas.Area;
 import nightgames.characters.Attribute;
@@ -16,8 +18,6 @@ import nightgames.status.Status;
 import nightgames.status.Stsflag;
 import nightgames.trap.Spiderweb;
 import nightgames.trap.Trap;
-
-import java.io.Serializable;
 
 public class Encounter implements Serializable{
 	/**

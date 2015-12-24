@@ -3,8 +3,6 @@ package nightgames.skills;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.global.Global;
-import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 
 public class Dissolve extends Skill {
@@ -20,8 +18,7 @@ public class Dissolve extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().mobile(getSelf())&&getSelf().canAct()&&getSelf().has(Item.DisSol)&&target.outfit.getRandomShreddableSlot() != null&&!c.getStance().prone(getSelf())
-				&&(!getSelf().human()||Global.getMatch().condition!=DefaultModifier.noitems);
+		return c.getStance().mobile(getSelf())&&getSelf().canAct()&&getSelf().has(Item.DisSol)&&target.outfit.getRandomShreddableSlot() != null&&!c.getStance().prone(getSelf());
 	}
 
 	@Override

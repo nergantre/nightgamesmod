@@ -1,42 +1,36 @@
 package nightgames.gui;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
+
+import javax.swing.Box;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.CharacterSex;
 import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.global.Flag;
 import nightgames.global.Global;
-
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import java.awt.Color;
-
-import javax.swing.JButton;
-import java.awt.GridLayout;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Arrays;
-import java.awt.Font;
-
-import javax.swing.ButtonGroup;
-import javax.swing.JCheckBox;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
-import javax.swing.JTextArea;
-import javax.swing.BoxLayout;
-import javax.swing.JTextPane;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.JRadioButton;
-import javax.swing.Box;
-import javax.swing.JComboBox;
-import java.awt.Dimension;
-import java.awt.Component;
-import java.awt.Container;
 
 public class CreationGUI extends JPanel{
 	private JTextField powerfield;

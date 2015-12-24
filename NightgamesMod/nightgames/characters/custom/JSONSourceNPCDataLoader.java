@@ -1,6 +1,5 @@
 package nightgames.characters.custom;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -14,6 +13,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.json.simple.parser.ParseException;
 
+import nightgames.characters.Attribute;
+import nightgames.characters.Emotion;
+import nightgames.characters.Growth;
 import nightgames.characters.Plan;
 import nightgames.characters.Trait;
 import nightgames.characters.body.Body;
@@ -38,15 +40,12 @@ import nightgames.characters.custom.requirement.SubRequirement;
 import nightgames.characters.custom.requirement.TraitRequirement;
 import nightgames.combat.Result;
 import nightgames.global.JSONUtils;
-import nightgames.characters.Attribute;
-import nightgames.characters.Emotion;
-import nightgames.characters.Growth;
 import nightgames.items.Item;
 import nightgames.items.ItemAmount;
+import nightgames.items.clothing.Clothing;
 import nightgames.skills.Skill;
 import nightgames.stance.Stance;
 import nightgames.status.Stsflag;
-import nightgames.items.clothing.Clothing;
 
 public class JSONSourceNPCDataLoader {
 	private static ItemAmount readItem(JSONObject obj) {

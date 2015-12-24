@@ -2,10 +2,10 @@ package nightgames.modifier.skill;
 
 import java.util.function.BiFunction;
 
+import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
-import nightgames.characters.Character;
 
 public class EncourageTacticsModifier extends SkillModifier {
 

@@ -6,7 +6,6 @@ import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.stance.StandingOver;
 import nightgames.status.Bound;
 import nightgames.status.Oiled;
 import nightgames.status.Stsflag;

@@ -3,7 +3,6 @@ package nightgames.stance;
 
 import nightgames.characters.Character;
 import nightgames.global.Global;
-import nightgames.skills.Carry;
 
 public class Neutral extends Position {
 

@@ -2,7 +2,6 @@ package nightgames.daytime;
 
 import java.util.ArrayList;
 
-import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.global.Flag;
 import nightgames.global.Global;

@@ -1,11 +1,7 @@
 package nightgames.global;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-
-import nightgames.characters.Character;
 
 public class Logwriter {
 	public Logwriter(){

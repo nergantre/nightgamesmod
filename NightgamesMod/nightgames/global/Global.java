@@ -11,7 +11,6 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.Reader;
-import java.net.URISyntaxException;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -40,7 +39,6 @@ import org.mozilla.javascript.ContextFactory;
 
 import com.cedarsoftware.util.io.JsonWriter;
 
-import nightgames.characters.Maya;
 import nightgames.Resources.ResourceLoader;
 import nightgames.actions.Action;
 import nightgames.actions.Bathe;
@@ -54,7 +52,6 @@ import nightgames.actions.Recharge;
 import nightgames.actions.Resupply;
 import nightgames.actions.Scavenge;
 import nightgames.actions.SetTrap;
-import nightgames.actions.Shortcut;
 import nightgames.actions.Use;
 import nightgames.actions.Wait;
 import nightgames.areas.Area;
@@ -67,6 +64,7 @@ import nightgames.characters.Eve;
 import nightgames.characters.Jewel;
 import nightgames.characters.Kat;
 import nightgames.characters.Mara;
+import nightgames.characters.Maya;
 import nightgames.characters.NPC;
 import nightgames.characters.Personality;
 import nightgames.characters.Player;
@@ -82,6 +80,16 @@ import nightgames.gui.GUI;
 import nightgames.gui.NullGUI;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.modifier.Modifier;
+import nightgames.modifier.standard.NoItemsModifier;
+import nightgames.modifier.standard.NoModifier;
+import nightgames.modifier.standard.NoRecoveryModifier;
+import nightgames.modifier.standard.NoToysModifier;
+import nightgames.modifier.standard.NudistModifier;
+import nightgames.modifier.standard.PacifistModifier;
+import nightgames.modifier.standard.UnderwearOnlyModifier;
+import nightgames.modifier.standard.VibrationModifier;
+import nightgames.modifier.standard.VulnerableModifier;
 import nightgames.pet.Ptype;
 import nightgames.skills.*;
 import nightgames.trap.Alarm;
@@ -106,6 +114,7 @@ public class Global {
 	private static HashSet<Action> actionPool;
 	private static HashSet<Trap> trapPool;
 	private static HashSet<Trait> featPool;
+	private static HashSet<Modifier> modifierPool;
 	private static HashSet<Character> players;
 	private static HashSet<Character> resting;
 	private static HashSet<String> flags;
@@ -167,6 +176,7 @@ public class Global {
 		buildParser();
 		buildActionPool();
 		buildFeatPool();
+		buildModifierPool();
 		if (headless) {
 			gui = new NullGUI();
 		} else {
@@ -199,7 +209,7 @@ public class Global {
 		players.add(getNPC("Cassie"));
 		players.add(getNPC("Angel"));
 		players.add(getNPC("Mara"));
-		match = new Match(players,DefaultModifier.normal);
+		match = new Match(players, new NoModifier());
 	}
 	
 	public static int random(int d){
@@ -473,6 +483,18 @@ public class Global {
 		}
 	}
 
+	public static void buildModifierPool() {
+		modifierPool = new HashSet<>();
+		modifierPool.add(new NoModifier());
+		modifierPool.add(new NoItemsModifier());
+		modifierPool.add(new NoToysModifier());
+		modifierPool.add(new NoRecoveryModifier());
+		modifierPool.add(new NudistModifier());
+		modifierPool.add(new PacifistModifier());
+		modifierPool.add(new UnderwearOnlyModifier());
+		modifierPool.add(new VibrationModifier());
+		modifierPool.add(new VulnerableModifier());
+	}
 	public static HashSet<Action> getActions(){
 		return actionPool;
 	}
@@ -505,7 +527,7 @@ public class Global {
 			player.getStamina().fill();
 			player.getArousal().empty();
 			player.getMojo().empty();
-			player.change(DefaultModifier.normal);
+			player.change();
 			level += player.getLevel();
 		}
 		level /= players.size();
@@ -517,7 +539,7 @@ public class Global {
 		day.plan();
 	}
 
-	public static void dusk(DefaultModifier matchmod){
+	public static void dusk(Modifier matchmod){
 		HashSet<Character> lineup = new HashSet<Character>();
 		Character lover=null;
 		int maxaffection=0;
@@ -555,7 +577,7 @@ public class Global {
 				participants.add(c);
 			}
 		}
-		if (matchmod == DefaultModifier.maya) {
+		if (matchmod.name().equals("maya")) {
 		       ArrayList<Character> randomizer = new ArrayList<>();
 		       if (lover != null) {
 		         lineup.add(lover);
@@ -1263,5 +1285,9 @@ public class Global {
 
 	public static HashSet<Skill> getSkillPool() {
 		return skillPool;
+	}
+	
+	public static HashSet<Modifier> getModifierPool() {
+		return modifierPool;
 	}
 }

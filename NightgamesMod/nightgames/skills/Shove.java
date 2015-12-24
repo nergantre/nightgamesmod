@@ -6,12 +6,9 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
-import nightgames.items.clothing.ClothingTrait;
 import nightgames.stance.Mount;
 import nightgames.stance.Neutral;
 import nightgames.stance.ReverseMount;
-import nightgames.stance.StandingOver;
-import nightgames.status.Braced;
 import nightgames.status.Falling;
 import nightgames.status.Stsflag;
 

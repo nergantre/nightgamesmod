@@ -8,8 +8,6 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.Jumped;
-import nightgames.stance.Standing;
-import nightgames.stance.StandingOver;
 import nightgames.status.Falling;
 
 public class ReverseCarry extends Carry {

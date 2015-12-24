@@ -56,12 +56,14 @@ public abstract class BaseModifier implements Modifier {
 		inventory.forEach((item, count) -> {
 			if (items.itemIsBanned(item)) {
 				c.getInventory().remove(item);
+				moddedItems.get(c).putIfAbsent(item, 0);
 				moddedItems.get(c).compute(item, (i, cnt) -> cnt - count);
 			}
 		});
 		items.ensuredItems().forEach((item, count) -> {
 			while (!c.has(item, count)) {
 				c.gain(item);
+				moddedItems.get(c).putIfAbsent(item, 0);
 				moddedItems.get(c).compute(item, (i, cnt) -> cnt + 1);
 			}
 		});
@@ -84,5 +86,10 @@ public abstract class BaseModifier implements Modifier {
 	public void undoItems(Character c) {
 		if (moddedItems.containsKey(c))
 			moddedItems.get(c).forEach((item, count) -> c.gain(item, -count));
+	}
+	
+	@Override
+	public boolean isApplicable() {
+		return true;
 	}
 }

@@ -13,10 +13,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import nightgames.global.DebugFlags;
-import nightgames.global.Global;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.global.DebugFlags;
+import nightgames.global.Global;
 import nightgames.items.Item;
 
 public class DebugGUIPanel extends JPanel {

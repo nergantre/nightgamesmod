@@ -3,7 +3,6 @@ package nightgames.actions;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.State;
-import nightgames.global.Global;
 
 public class Craft extends Action {
 

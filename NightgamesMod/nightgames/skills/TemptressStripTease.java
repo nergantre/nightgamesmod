@@ -7,7 +7,6 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.items.clothing.ClothingTrait;
 import nightgames.stance.Stance;
 import nightgames.status.Alluring;
 import nightgames.status.Charmed;

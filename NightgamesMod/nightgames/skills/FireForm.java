@@ -4,11 +4,8 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.status.Alert;
 import nightgames.status.FireStance;
-import nightgames.status.StoneStance;
 import nightgames.status.Stsflag;
-import nightgames.status.WaterStance;
 
 public class FireForm extends Skill{
 

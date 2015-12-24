@@ -1,8 +1,6 @@
 package nightgames.stance;
 
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
-import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 

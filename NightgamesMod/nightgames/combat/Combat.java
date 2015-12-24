@@ -16,7 +16,6 @@ import nightgames.characters.NPC;
 import nightgames.characters.State;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
-import nightgames.characters.body.BodyPartMod;
 import nightgames.characters.body.PussyPart;
 import nightgames.global.DebugFlags;
 import nightgames.global.Flag;
@@ -38,7 +37,6 @@ import nightgames.status.CounterStatus;
 import nightgames.status.Stsflag;
 import nightgames.status.Wary;
 import nightgames.status.Winded;
-import nightgames.stance.Engulfed;
 
 public class Combat extends Observable implements Serializable, Cloneable {
 	/**

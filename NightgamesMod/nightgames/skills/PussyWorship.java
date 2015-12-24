@@ -2,19 +2,12 @@ package nightgames.skills;
 
 import java.util.Optional;
 
-import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.stance.ReverseMount;
-import nightgames.stance.SixNine;
-import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
-import nightgames.status.CockBound;
-import nightgames.status.Stsflag;
-import nightgames.status.Trance;
 
 public class PussyWorship extends Skill {
 

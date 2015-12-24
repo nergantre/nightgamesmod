@@ -8,7 +8,6 @@ import nightgames.combat.Combat;
 import nightgames.combat.Encounter;
 import nightgames.global.Global;
 import nightgames.items.Item;
-import nightgames.items.clothing.ClothingSlot;
 
 public class StripMine implements Trap{
 	private Character owner;

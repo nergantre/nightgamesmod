@@ -1,7 +1,6 @@
 package nightgames.actions;
 
 import nightgames.characters.Character;
-import nightgames.global.Global;
 
 public class Wait extends Action {
 

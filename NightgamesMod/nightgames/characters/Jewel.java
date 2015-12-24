@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.Optional;
 
 import nightgames.characters.body.AnalPussyPart;
-import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
@@ -12,7 +11,6 @@ import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 
@@ -31,7 +29,7 @@ public class Jewel extends BasePersonality {
 		character.outfitPlan.add(Clothing.getByID("jeans"));
 		character.outfitPlan.add(Clothing.getByID("sneakers"));
 		character.outfitPlan.add(Clothing.getByID("socks"));
-		character.change(DefaultModifier.normal);
+		character.change();
 		character.mod(Attribute.Power, 2);
 		character.mod(Attribute.Speed, 1);
 		Global.gainSkills(character);

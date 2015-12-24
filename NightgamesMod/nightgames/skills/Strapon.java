@@ -8,7 +8,6 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.stance.Stance;
@@ -33,7 +32,6 @@ public class Strapon extends Skill {
 				&&(getSelf().has(Item.Strapon)||getSelf().has(Item.Strapon2))
 				&&!getSelf().hasDick()
 				&&!c.getStance().connected()
-				&&(!getSelf().human()||Global.getMatch().condition!=DefaultModifier.notoys)
 				&&c.getStance().enumerate()!=Stance.facesitting;
 	}
 

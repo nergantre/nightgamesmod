@@ -5,7 +5,6 @@ import java.util.Collection;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.combat.Combat;

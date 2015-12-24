@@ -1,10 +1,11 @@
 package nightgames.characters.body;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import org.json.simple.JSONObject;
 
 public enum EarPart implements BodyPart, BodyPartMod {
 	pointed("pointed ", .2, 1.2, 1),

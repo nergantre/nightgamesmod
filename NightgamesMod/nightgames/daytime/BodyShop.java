@@ -1,11 +1,20 @@
 package nightgames.daytime;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.characters.body.*;
-import nightgames.daytime.BodyShop.ShopSelection;
+import nightgames.characters.body.AnalPussyPart;
+import nightgames.characters.body.AssPart;
+import nightgames.characters.body.BasicCockPart;
+import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.BreastsPart;
+import nightgames.characters.body.CockPart;
+import nightgames.characters.body.EarPart;
+import nightgames.characters.body.GenericBodyPart;
+import nightgames.characters.body.PussyPart;
 import nightgames.global.DebugFlags;
 import nightgames.global.Flag;
 import nightgames.global.Global;

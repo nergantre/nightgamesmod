@@ -10,6 +10,7 @@ import java.util.Optional;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+
 import nightgames.Resources.ResourceLoader;
 import nightgames.global.Flag;
 import nightgames.global.Global;

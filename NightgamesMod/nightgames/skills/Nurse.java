@@ -8,7 +8,6 @@ import nightgames.characters.body.BreastsPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.stance.Mount;
 import nightgames.stance.NursingHold;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;

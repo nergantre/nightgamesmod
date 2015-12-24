@@ -2,10 +2,7 @@ package nightgames.skills;
 
 import java.util.Optional;
 
-import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
-import nightgames.characters.body.AssPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;

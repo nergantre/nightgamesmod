@@ -8,8 +8,8 @@ import java.util.Set;
 import java.util.function.BiPredicate;
 
 import nightgames.actions.Action;
-import nightgames.global.Match;
 import nightgames.characters.Character;
+import nightgames.global.Match;
 
 public class BanActionModifier extends ActionModifier {
 

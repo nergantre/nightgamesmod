@@ -3,9 +3,7 @@ package nightgames.items;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
-import nightgames.global.DebugFlags;
 import nightgames.global.Global;
-import nightgames.status.Status;
 
 public class BodyModEffect extends ItemEffect {
 	private BodyPart affected;

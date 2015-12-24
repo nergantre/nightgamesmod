@@ -1,5 +1,7 @@
 package nightgames.characters.body;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
@@ -7,8 +9,6 @@ import nightgames.global.Global;
 import nightgames.status.FluidAddiction;
 import nightgames.status.Stsflag;
 import nightgames.status.Trance;
-
-import org.json.simple.JSONObject;
 
 public class MouthPart extends GenericBodyPart {
 	/**

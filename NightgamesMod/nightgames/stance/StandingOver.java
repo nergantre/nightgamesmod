@@ -1,10 +1,6 @@
 package nightgames.stance;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import nightgames.characters.Character;
-import nightgames.global.Global;
 
 public class StandingOver extends AbstractFacingStance {
 

@@ -3,8 +3,6 @@ package nightgames.skills;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.global.Global;
-import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 import nightgames.status.Oiled;
 import nightgames.status.Stsflag;
@@ -22,8 +20,7 @@ public class Lubricate extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().mobile(getSelf())&&getSelf().canAct()&&getSelf().has(Item.Lubricant)&&target.mostlyNude()&&!target.is(Stsflag.oiled)&&!c.getStance().prone(getSelf())
-				&&(!getSelf().human()||Global.getMatch().condition!=DefaultModifier.noitems);
+		return c.getStance().mobile(getSelf())&&getSelf().canAct()&&getSelf().has(Item.Lubricant)&&target.mostlyNude()&&!target.is(Stsflag.oiled)&&!c.getStance().prone(getSelf());
 	}
 
 	@Override

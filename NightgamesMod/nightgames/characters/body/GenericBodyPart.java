@@ -1,12 +1,12 @@
 package nightgames.characters.body;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-
-import org.json.simple.JSONObject;
 
 public class GenericBodyPart implements BodyPart {
 	/**

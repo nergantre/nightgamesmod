@@ -4,10 +4,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.stance.StandingOver;
-import nightgames.status.Braced;
 import nightgames.status.Falling;
-import nightgames.status.Stsflag;
 
 public class Trip extends Skill {
 	public Trip(Character self) {

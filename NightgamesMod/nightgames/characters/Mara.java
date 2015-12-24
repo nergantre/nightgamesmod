@@ -8,7 +8,6 @@ import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.status.Hypersensitive;
@@ -29,7 +28,7 @@ public class Mara extends BasePersonality  {
 		character.outfitPlan.add(Clothing.getByID("shorts"));
 		character.outfitPlan.add(Clothing.getByID("pantyhose"));
 		character.outfitPlan.add(Clothing.getByID("boots"));
-		character.change(DefaultModifier.normal);
+		character.change();
 		character.mod(Attribute.Cunning, 2);
 		character.mod(Attribute.Perception, 2);
 		Global.gainSkills(character);

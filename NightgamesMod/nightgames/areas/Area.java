@@ -1,14 +1,13 @@
 package nightgames.areas;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+
 import nightgames.actions.Movement;
 import nightgames.characters.Character;
 import nightgames.combat.Encounter;
 import nightgames.global.Global;
 import nightgames.trap.Trap;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Observable;
 
 
 public class Area implements Serializable{

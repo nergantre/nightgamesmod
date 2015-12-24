@@ -3,10 +3,10 @@ package nightgames.characters.custom;
 import java.util.ArrayList;
 import java.util.List;
 
-import nightgames.combat.Combat;
-import nightgames.global.Global;
 import nightgames.characters.Character;
 import nightgames.characters.custom.requirement.CustomRequirement;
+import nightgames.combat.Combat;
+import nightgames.global.Global;
 
 public class CustomStringEntry {
 	/**

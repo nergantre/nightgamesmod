@@ -7,7 +7,6 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.status.Horny;
 import nightgames.status.Shamed;
-import nightgames.skills.ShamefulDisplay;
 
 public class ShamefulDisplay extends Skill {
 

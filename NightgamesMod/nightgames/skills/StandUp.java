@@ -3,12 +3,7 @@ package nightgames.skills;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.global.Global;
-import nightgames.stance.Neutral;
 import nightgames.stance.StandingOver;
-import nightgames.status.Braced;
-import nightgames.status.Stsflag;
-import nightgames.status.Wary;
 
 public class StandUp extends Skill {
 

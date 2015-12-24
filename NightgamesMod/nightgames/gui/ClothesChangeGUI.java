@@ -3,8 +3,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
@@ -25,7 +23,6 @@ import javax.swing.ListSelectionModel;
 import nightgames.characters.Character;
 import nightgames.daytime.Activity;
 import nightgames.global.Global;
-import nightgames.global.DefaultModifier;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSorter;
 
@@ -44,7 +41,7 @@ public class ClothesChangeGUI extends JPanel {
 	private void removeAllClothing() {
 		character.closet.addAll(character.outfitPlan);
 		character.outfitPlan.clear();
-		character.change(DefaultModifier.normal);
+		character.change();
 		refreshLists();
 	}
 
@@ -56,7 +53,7 @@ public class ClothesChangeGUI extends JPanel {
 		}
 		character.outfitPlan.remove(article);
 		character.closet.add(article);
-		character.change(DefaultModifier.normal);
+		character.change();
 		refreshLists();
 	}
 
@@ -69,7 +66,7 @@ public class ClothesChangeGUI extends JPanel {
 		// remove the article from the closet
 		character.closet.remove(article);
 		// change to make sure everything is equipped correctly
-		character.change(DefaultModifier.normal);
+		character.change();
 		// get the currently equipped items
 		Set<Clothing> unequipped = new HashSet<Clothing>(character.outfit.getEquipped());
 		// equip the new item
@@ -82,7 +79,7 @@ public class ClothesChangeGUI extends JPanel {
 		character.outfitPlan.clear();
 		character.outfitPlan.addAll(character.outfit.getEquipped());
 		// make sure the player is dressed correctly
-		character.change(DefaultModifier.normal);
+		character.change();
 		// refresh the ClothingLists
 		refreshLists();
 	}
@@ -170,7 +167,7 @@ public class ClothesChangeGUI extends JPanel {
 		JButton btnOk = new JButton("OK");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ClothesChangeGUI.this.character.change(DefaultModifier.normal);
+				ClothesChangeGUI.this.character.change();
 				Global.gui().removeClosetGUI();
 				ClothesChangeGUI.this.resume.visit(doneOption);
 			}

@@ -7,7 +7,6 @@ import org.json.simple.JSONObject;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.custom.requirement.EitherInsertedRequirement;
-import nightgames.characters.custom.requirement.InsertedRequirement;
 import nightgames.characters.custom.requirement.ReverseRequirement;
 import nightgames.combat.Combat;
 import nightgames.global.JSONUtils;

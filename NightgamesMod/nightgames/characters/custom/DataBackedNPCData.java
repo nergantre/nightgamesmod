@@ -1,7 +1,6 @@
 package nightgames.characters.custom;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +13,6 @@ import nightgames.characters.Emotion;
 import nightgames.characters.Growth;
 import nightgames.characters.Plan;
 import nightgames.characters.body.Body;
-import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.items.Item;
 import nightgames.items.ItemAmount;

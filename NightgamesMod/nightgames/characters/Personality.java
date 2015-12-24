@@ -5,7 +5,6 @@ import java.util.HashSet;
 
 import nightgames.actions.Action;
 import nightgames.actions.Movement;
-import nightgames.areas.Area;
 import nightgames.characters.custom.AiModifiers;
 import nightgames.characters.custom.RecruitmentData;
 import nightgames.combat.Combat;

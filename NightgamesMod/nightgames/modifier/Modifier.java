@@ -37,6 +37,7 @@ public interface Modifier {
 	void undoItems(Character c);
 	
 	int bonus();
+	boolean isApplicable();
 	String name();
 	String intro();
 	String acceptance();

@@ -3,7 +3,6 @@ package nightgames.items;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.status.Status;
 
 public class TextEffect extends ItemEffect {
 	private String format;

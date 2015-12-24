@@ -2,8 +2,6 @@ package nightgames.actions;
 
 import nightgames.characters.Character;
 import nightgames.characters.State;
-import nightgames.global.Global;
-import nightgames.items.Item;
 
 public class Scavenge extends Action {
 

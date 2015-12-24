@@ -6,7 +6,6 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.skills.CounterBase;
-import nightgames.skills.Skill;
 
 public class CounterStatus extends DurationStatus {
 	private CounterBase skill;

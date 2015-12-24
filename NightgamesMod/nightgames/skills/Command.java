@@ -5,19 +5,14 @@ import java.util.List;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
-import nightgames.stance.Cowgirl;
 import nightgames.stance.FaceSitting;
 import nightgames.stance.Mount;
-import nightgames.stance.ReverseMount;
-import nightgames.status.Bound;
-import nightgames.status.Flatfooted;
 import nightgames.status.Stsflag;
 
 public class Command extends Skill {

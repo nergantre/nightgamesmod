@@ -6,11 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
-import nightgames.characters.body.AnalPussyPart;
 import nightgames.characters.body.BodyPart;
-import nightgames.characters.body.PussyPart;
-import nightgames.combat.Combat;
 
 public abstract class AnalSexStance extends Position {
 	public AnalSexStance(Character top, Character bottom, Stance stance) {

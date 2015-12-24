@@ -7,7 +7,6 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.status.Charmed;
 import nightgames.status.Stsflag;
-import nightgames.status.Trance;
 
 public class Purr extends Skill {
 

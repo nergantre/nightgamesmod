@@ -1,18 +1,15 @@
 package nightgames.characters;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 
-import nightgames.actions.Shortcut;
 import nightgames.actions.Action;
 import nightgames.actions.Move;
 import nightgames.actions.Movement;
+import nightgames.actions.Shortcut;
 import nightgames.areas.Area;
 import nightgames.characters.body.BodyPart;
-import nightgames.characters.body.StraponPart;
 import nightgames.characters.custom.RecruitmentData;
 import nightgames.characters.custom.effect.CustomEffect;
 import nightgames.combat.Combat;
@@ -20,7 +17,6 @@ import nightgames.combat.Encounter;
 import nightgames.combat.Result;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
-import nightgames.global.DefaultModifier;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
@@ -190,7 +186,7 @@ public class NPC extends Character {
 		target.gainXP(getVictoryXP(this));
 		this.arousal.empty();
 		if (!target.human()
-				|| Global.getMatch().condition != DefaultModifier.norecovery) {
+				|| !Global.getMatch().condition.name().equals("norecovery")) {
 			target.arousal.empty();
 		}
 		if (this.has(Trait.insatiable)) {

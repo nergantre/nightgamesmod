@@ -3,7 +3,6 @@ package nightgames.daytime;
 import java.util.ArrayList;
 
 import nightgames.characters.Character;
-import nightgames.characters.Player;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.global.Scene;

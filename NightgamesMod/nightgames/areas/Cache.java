@@ -1,5 +1,7 @@
 package nightgames.areas;
 
+import java.util.ArrayList;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.State;
@@ -8,8 +10,6 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.Loot;
 import nightgames.items.clothing.Clothing;
-
-import java.util.ArrayList;
 
 public class Cache implements Deployable {
 	private int dc;

@@ -2,13 +2,10 @@ package nightgames.daytime;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.NPC;
-import nightgames.characters.Trait;
 import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
@@ -17,7 +14,6 @@ import nightgames.characters.body.EarPart;
 import nightgames.characters.body.ModdedCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
-import nightgames.characters.body.WingsPart;
 import nightgames.characters.custom.requirement.BodyPartRequirement;
 import nightgames.characters.custom.requirement.NotRequirement;
 import nightgames.global.Flag;

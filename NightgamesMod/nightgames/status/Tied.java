@@ -6,8 +6,6 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.global.JSONUtils;
-import nightgames.status.Status;
-import nightgames.status.Stsflag;
 
 public class Tied extends DurationStatus {
 

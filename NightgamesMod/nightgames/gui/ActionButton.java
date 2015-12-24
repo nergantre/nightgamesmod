@@ -1,14 +1,14 @@
 package nightgames.gui;
 
-import nightgames.actions.Action;
-import nightgames.characters.Character;
-import nightgames.global.Global;
-
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+
+import nightgames.actions.Action;
+import nightgames.characters.Character;
+import nightgames.global.Global;
 
 public class ActionButton extends JButton{
 	protected Action action;

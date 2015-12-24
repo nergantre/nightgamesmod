@@ -4,8 +4,8 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
-import nightgames.items.Item;
 import nightgames.characters.Character;
+import nightgames.items.Item;
 
 public abstract class ItemModifier {
 

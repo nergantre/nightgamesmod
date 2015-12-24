@@ -7,7 +7,6 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
-import nightgames.stance.Stance;
 
 public class Nurple extends Skill {
 

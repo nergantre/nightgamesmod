@@ -2,7 +2,6 @@ package nightgames.actions;
 
 import nightgames.characters.Character;
 import nightgames.global.Global;
-import nightgames.global.DefaultModifier;
 import nightgames.trap.Trap;
 
 public class SetTrap extends Action {
@@ -15,8 +14,7 @@ public class SetTrap extends Action {
 	@Override
 	public boolean usable(Character user) {
 		return trap.recipe(user)&&!user.location().open()&&trap.requirements(user)
-				&&user.location().env.size()<5
-				&&(!user.human()||Global.getMatch().condition!=DefaultModifier.noitems);
+				&&user.location().env.size()<5;
 	}
 
 	@Override

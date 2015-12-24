@@ -5,7 +5,6 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.stance.Neutral;
-import nightgames.status.Braced;
 import nightgames.status.Stsflag;
 
 public class Escape extends Skill {

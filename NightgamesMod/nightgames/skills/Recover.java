@@ -5,9 +5,6 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.Neutral;
-import nightgames.status.Braced;
-import nightgames.status.Stsflag;
-import nightgames.status.Wary;
 
 public class Recover extends Skill {
 

@@ -3,15 +3,12 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.characters.body.BreastsPart;
-import nightgames.characters.body.CockPart;
 import nightgames.characters.body.BasicCockPart;
+import nightgames.characters.body.CockPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.items.Item;
 import nightgames.status.Hypersensitive;
-import nightgames.status.Shamed;
 
 public class CockGrowth extends Skill {
 	public CockGrowth(Character self) {

@@ -1,7 +1,6 @@
 package nightgames.pet;
 
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 
 public class FGoblin extends Pet {

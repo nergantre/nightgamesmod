@@ -3,7 +3,6 @@ package nightgames.skills;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.stance.Mount;
 import nightgames.stance.ReverseMount;
 
 public class ReverseStraddle extends Skill {

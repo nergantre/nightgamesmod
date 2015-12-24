@@ -6,11 +6,7 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.items.clothing.Clothing;
-import nightgames.items.clothing.ClothingSlot;
 import nightgames.stance.Standing;
-import nightgames.stance.StandingOver;
-import nightgames.status.CockBound;
 import nightgames.status.Falling;
 
 public class Carry extends Fuck {

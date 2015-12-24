@@ -1,10 +1,11 @@
 package nightgames.characters.body;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
-import nightgames.global.DebugFlags;
 import nightgames.global.Global;
 import nightgames.status.Abuff;
 import nightgames.status.CockBound;
@@ -13,10 +14,7 @@ import nightgames.status.Enthralled;
 import nightgames.status.Frenzied;
 import nightgames.status.Horny;
 import nightgames.status.Shamed;
-import nightgames.status.Status;
 import nightgames.status.Stsflag;
-
-import org.json.simple.JSONObject;
 
 public enum PussyPart implements BodyPart, BodyPartMod {
 	normal("", 0, 1, 1, 6, 15, 0),

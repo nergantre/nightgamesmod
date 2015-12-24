@@ -1,7 +1,7 @@
 package nightgames.modifier;
 
-import nightgames.status.Status;
 import nightgames.characters.Character;
+import nightgames.status.Status;
 
 public class StatusModifier {
 

@@ -3,14 +3,9 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
-import nightgames.characters.body.BreastsPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.global.Global;
-import nightgames.status.Charmed;
 import nightgames.status.Frenzied;
-import nightgames.status.Hypersensitive;
 
 public class SweetScent extends Skill {
 	public SweetScent(Character self) {

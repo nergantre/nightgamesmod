@@ -8,9 +8,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.stance.FlyingCarry;
 import nightgames.stance.FlyingCowgirl;
-import nightgames.stance.StandingOver;
 import nightgames.status.Falling;
 
 public class ReverseFly extends Fly {

@@ -4,7 +4,6 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.status.Stsflag;
 
 public class Sacrifice extends Skill {
 
