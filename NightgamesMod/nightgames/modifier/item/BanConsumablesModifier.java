@@ -4,9 +4,12 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Set;
 
-import nightgames.items.Item;
+import org.json.simple.JSONObject;
 
-public class BanConsumablesModifier extends ItemModifier {
+import nightgames.items.Item;
+import nightgames.modifier.ModifierComponent;
+
+public class BanConsumablesModifier extends ItemModifier implements ModifierComponent<BanConsumablesModifier> {
 
 	static final Set<Item> CONSUMABLES;
 	
@@ -20,5 +23,20 @@ public class BanConsumablesModifier extends ItemModifier {
 	@Override
 	public Set<Item> bannedItems() {
 		return CONSUMABLES;
+	}
+
+	@Override
+	public String name() {
+		return "ban-consumables";
+	}
+
+	@Override
+	public BanConsumablesModifier instance(JSONObject obj) {
+		return new BanConsumablesModifier();
+	}
+	
+	@Override
+	public String toString() {
+		return name();
 	}
 }

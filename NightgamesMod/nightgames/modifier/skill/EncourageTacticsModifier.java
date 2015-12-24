@@ -1,13 +1,21 @@
 package nightgames.modifier.skill;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.BiFunction;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
+import nightgames.global.JSONUtils;
+import nightgames.modifier.ModifierComponent;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 
-public class EncourageTacticsModifier extends SkillModifier {
+public class EncourageTacticsModifier extends SkillModifier implements ModifierComponent<EncourageTacticsModifier> {
 
 	private final Tactics								modified;
 	private final BiFunction<Character, Combat, Double>	weight;
@@ -34,4 +42,23 @@ public class EncourageTacticsModifier extends SkillModifier {
 		return false;
 	}
 
+	@Override
+	public String name() {
+		return "encourage-tactic";
+	}
+
+	@Override
+	public EncourageTacticsModifier instance(JSONObject obj) {
+		if (!obj.containsKey("tactic") || !obj.containsKey("weight")) {
+			Tactics tact = Tactics.valueOf(JSONUtils.readString(obj, "tactic"));
+			double weight = JSONUtils.readFloat(obj, "weight");
+			return new EncourageTacticsModifier(tact, weight);
+		}
+		throw new IllegalArgumentException("'encourage-tactic' must have a 'tactic' and a 'weight'");
+	}
+
+	@Override
+	public String toString() {
+		return modified.toString() + " " + weight.apply(Global.noneCharacter(), null);
+	}
 }

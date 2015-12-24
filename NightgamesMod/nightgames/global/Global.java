@@ -495,6 +495,7 @@ public class Global {
 		modifierPool.add(new VibrationModifier());
 		modifierPool.add(new VulnerableModifier());
 	}
+	
 	public static HashSet<Action> getActions(){
 		return actionPool;
 	}
