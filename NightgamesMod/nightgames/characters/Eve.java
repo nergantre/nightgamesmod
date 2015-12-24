@@ -364,7 +364,7 @@ public class Eve extends BasePersonality {
 
 	@Override
 	public String startBattle(Character other) {
-		return "Eve gives you a dominant grin and cracks her knuckles. <i>\"Come on boy, let's play.\"</i>";
+		return "Eve gives you a dominant grin and cracks her knuckles. <i>\"Come on "+other.boyOrGirl()+", let's play.\"</i>";
 	}
 
 	@Override

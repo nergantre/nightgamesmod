@@ -12,7 +12,7 @@ import nightgames.status.BodyFetish;
 public class AssJob extends Skill {
 
 	public AssJob(Character self) {
-		super("Ass Job", self);
+		super("Assjob", self);
 	}
 
 	@Override
@@ -144,20 +144,44 @@ public class AssJob extends Skill {
 		switch (modifier) {
 			case special:
 				if (getSelf().crotchAvailable() && target.crotchAvailable()) {
-					return "<Assjob: deal from behind; both naked>";
+					return String.format(
+							"You push your naked ass back against"
+									+ " %s %s, rubbing it with vigor.",
+							target.nameOrPossessivePronoun(),
+							target.body.getRandomCock().describe(target));
 				} else {
-					return "<Assjob: deal from behind; at least one clothed>";
+					return String.format(
+							"You relax slightly in %s arms and rub your ass"
+									+ " into %s crotch.",
+							target.nameOrPossessivePronoun(), target.name());
 				}
 			case strong:
 				if (!target.crotchAvailable()) {
-					return "<Assjob: deal from on top; target clothed>";
+					return String.format(
+							"You hump your ass against %s covered groin.",
+							target.nameOrPossessivePronoun());
 				} else if (target.body.getRandomCock().isReady(getSelf())) {
-					return "<Assjob: deal from on top; target hard>";
+					return String.format(
+							"You wedge %s %s in your soft crack and"
+									+ " firmly rub it up against you, eliciting a quiet moan from"
+									+ " %s.",
+							target.nameOrPossessivePronoun(),
+							target.body.getRandomCock().describe(target),
+							target.directObject());
 				} else {
-					return "<Assjob: deal from on top; target flaccid>";
+					return String.format(
+							"You lean back and rub your ass against %s, but"
+									+ " %s %s is still too soft to really get into it.",
+							target.name(), target.possessivePronoun(),
+							target.body.getRandomCock().describe(target));
 				}
 			case normal:
-				return "<Assjob: deal from other position>";
+				return String.format(
+						"You back up against %s and grab %s by the waist."
+								+ " Before %s has a chance to push you away, you rub your ass against"
+								+ " %s crotch.",
+						target.name(), target.directObject(), target.pronoun(),
+						target.possessivePronoun());
 			case miss:
 			default:
 				return String.format(

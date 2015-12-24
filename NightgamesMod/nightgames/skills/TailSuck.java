@@ -58,7 +58,7 @@ public class TailSuck extends Skill {
 			target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"),
 					target.body.getRandomCock(), Global.random(10) + 10, c);
 			drain(c, target);
-			target.add(new TailSucked(target, getSelf(), power()));
+			target.add(c, new TailSucked(target, getSelf(), power()));
 		} else {
 			if (getSelf().human()) {
 				c.write(getSelf(), deal(c, 0, Result.miss, target));
@@ -72,8 +72,9 @@ public class TailSuck extends Skill {
 						c);
 			else
 				target.pleasure(Global.random(5) + 5, c);
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	@Override
@@ -155,8 +156,8 @@ public class TailSuck extends Skill {
 		Attribute toDrain = Global.pickRandom(
 				target.att.entrySet().stream().filter(e -> e.getValue() != 0)
 						.map(e -> e.getKey()).toArray(Attribute[]::new));
-		target.add(new Abuff(target, toDrain, -power(), 20));
-		getSelf().add(new Abuff(getSelf(), toDrain, power(), 20));
+		target.add(c, new Abuff(target, toDrain, -power(), 20));
+		getSelf().add(c, new Abuff(getSelf(), toDrain, power(), 20));
 		target.drain(c, getSelf(), 1 + Global.random(power() * 3));
 		target.drainMojo(c, getSelf(), 1 + Global.random(power() * 3));
 		target.emote(Emotion.desperate, 5);

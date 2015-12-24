@@ -204,11 +204,13 @@ public class Match {
 							+ "you will.\"</i><br>");
 			Global.flag(Flag.challengeAccepted);
 		}
+		/*
 		if (maxaffection >= 15 && closest != null) {
 			closest.afterParty();
 		} else {
 			Global.gui().message("You walk back to your dorm and get yourself cleaned up.");
 		}
+		*/
 		for (Character character : combatants) {
 			if (character.getFlag("heelsTraining") >= 50 && !character.hasPure(Trait.proheels)) {
 				if (character.human()) {
@@ -227,7 +229,7 @@ public class Match {
 		if (Global.checkFlag(Flag.autosave)) {
 			Global.save(true);
 		}
-		Global.gui().endMatch();
+		new Postmatch(Global.getPlayer(), combatants);
 	}
 
 	public String getTime() {

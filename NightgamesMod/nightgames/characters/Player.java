@@ -617,7 +617,7 @@ public class Player extends Character {
 		}
 		if ((getPure(Attribute.Animism) >= 4) && (getArousal().percent() >= 50) && 
 			       (!is(Stsflag.feral))) {
-			add(new Feral(this));
+			add(c, new Feral(this));
 		}
 	}
 

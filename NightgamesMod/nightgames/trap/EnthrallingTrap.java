@@ -101,4 +101,8 @@ public class EnthrallingTrap implements Trap {
 			trigger(active);
 		}
 	}
+	
+	public String toString() {
+		return "Enthralling Trap";
+	}
 }
