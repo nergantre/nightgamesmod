@@ -1,6 +1,5 @@
 package nightgames.stance;
 
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -18,23 +17,27 @@ import nightgames.skills.Wait;
 
 public class NursingHold extends AbstractFacingStance {
 	public NursingHold(Character top, Character bottom) {
-		super(top, bottom,Stance.nursing);
+		super(top, bottom, Stance.nursing);
 	}
 
 	@Override
 	public String describe() {
-		if(top.human()){
-			return "You are cradling "+bottom.nameOrPossessivePronoun()+" head in your lap with your breasts dangling in front of " + bottom.directObject();
-		}
-		else{
-			return top.name()+" is holding your head in her lap, with her enticing breasts right in front of your mouth.";
+		if (top.human()) {
+			return "You are cradling " + bottom.nameOrPossessivePronoun()
+					+ " head in your lap with your breasts dangling in front of "
+					+ bottom.directObject();
+		} else {
+			return top.name()
+					+ " is holding your head in her lap, with her enticing breasts right in front of your mouth.";
 		}
 	}
 
 	@Override
 	public boolean mobile(Character c) {
-		return c==top;
-	}	
+		return c == top;
+	}
+
+	@Override
 	public String image() {
 		return "nursing.jpg";
 	}
@@ -46,12 +49,12 @@ public class NursingHold extends AbstractFacingStance {
 
 	@Override
 	public boolean dom(Character c) {
-		return c==top;
+		return c == top;
 	}
 
 	@Override
 	public boolean sub(Character c) {
-		return c==bottom;
+		return c == bottom;
 	}
 
 	@Override
@@ -61,12 +64,12 @@ public class NursingHold extends AbstractFacingStance {
 
 	@Override
 	public boolean reachBottom(Character c) {
-		return c==top;
+		return c == top;
 	}
 
 	@Override
 	public boolean prone(Character c) {
-		return c==bottom;
+		return c == bottom;
 	}
 
 	@Override
@@ -89,7 +92,8 @@ public class NursingHold extends AbstractFacingStance {
 		return false;
 	}
 
-	public void decay(Combat c){
+	@Override
+	public void decay(Combat c) {
 		time++;
 		bottom.weaken(null, 5);
 		bottom.loseWillpower(c, 3);
@@ -98,8 +102,9 @@ public class NursingHold extends AbstractFacingStance {
 
 	@Override
 	public float priorityMod(Character self) {
-		return dom(self) ? (self.has(Trait.lactating) ? 5 : 2) : 0;
+		return dom(self) ? self.has(Trait.lactating) ? 5 : 2 : 0;
 	}
+
 	@Override
 	public Collection<Skill> availSkills(Character c) {
 		if (c == top) {
@@ -120,7 +125,8 @@ public class NursingHold extends AbstractFacingStance {
 		return target == top;
 	}
 
-	public double pheromoneMod (Character self) {
+	@Override
+	public double pheromoneMod(Character self) {
 		return 3;
 	}
 }

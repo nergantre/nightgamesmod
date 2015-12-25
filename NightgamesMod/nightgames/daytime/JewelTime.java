@@ -43,6 +43,7 @@ public class JewelTime extends BaseNPCTime {
 		transformationFlag = "";
 	}
 
+	@Override
 	public void buildTransformationPool() {
 		options = new ArrayList<>();
 		TransformationOption enlightenedCock = new TransformationOption();
@@ -51,14 +52,15 @@ public class JewelTime extends BaseNPCTime {
 		enlightenedCock.ingredients.put(Item.JuggernautJuice, 10);
 		enlightenedCock.requirements.add(new BodyPartRequirement("cock"));
 		enlightenedCock.requirements.add((c, self, other) -> {
-			return self.body.get("cock").stream().anyMatch(cock -> ((CockPart) cock).isGeneric());
+			return self.body.get("cock").stream()
+					.anyMatch(cock -> ((CockPart) cock).isGeneric());
 		});
 		enlightenedCock.additionalRequirements = "A normal cock";
 		enlightenedCock.option = "Enlightened Cock";
 		enlightenedCock.scene = "[Placeholder]<br>Jewel trains your cock to be enlightened.";
 		enlightenedCock.effect = (c, self, other) -> {
-			Optional<BodyPart> optPart = self.body.get("cock").stream().filter(cock -> ((CockPart) cock).isGeneric())
-					.findAny();
+			Optional<BodyPart> optPart = self.body.get("cock").stream()
+					.filter(cock -> ((CockPart) cock).isGeneric()).findAny();
 			BasicCockPart target = (BasicCockPart) optPart.get();
 			self.body.remove(target);
 			self.body.add(new ModdedCockPart(target, CockMod.enlightened));
@@ -71,7 +73,8 @@ public class JewelTime extends BaseNPCTime {
 		fieryPussy.ingredients.put(Item.FemDraft, 10);
 		fieryPussy.requirements.add(new BodyPartRequirement("pussy"));
 		fieryPussy.requirements.add((c, self, other) -> {
-			return self.body.get("pussy").stream().anyMatch(part -> part == PussyPart.normal);
+			return self.body.get("pussy").stream()
+					.anyMatch(part -> part == PussyPart.normal);
 		});
 		fieryPussy.additionalRequirements = "A normal pussy";
 		fieryPussy.option = "Fiery Pussy";
@@ -97,7 +100,8 @@ public class JewelTime extends BaseNPCTime {
 		} else if (npc.getAttraction(player) < 15) {
 			Global.gui().message(
 					"You wait by the campus gardens, which according to Aesop, is on Jewel's jogging route. Sure enough, she comes running by within ten minutes and "
-							+ "calls out to you when she notices you. <i>\"Hey " + player.name()
+							+ "calls out to you when she notices you. <i>\"Hey "
+							+ player.name()
 							+ ". It's good to see you. Are you here to train too?\"</i> She's not breathing particularly heavily and there's only "
 							+ "a subtle touch of sweat on her skin, so presumably you've caught her early in her run. You could pretend to have run into her by coincidence, but "
 							+ "you decide to be honest and tell her you were hoping to train with her. She raises an eyebrow and looks over you appraisingly. <i>\"I wouldn't mind having a running partner, "
@@ -128,9 +132,11 @@ public class JewelTime extends BaseNPCTime {
 		Global.gui().choose(this, "Leave");
 	}
 
+	@Override
 	public void subVisit(String choice) {
-		if (choice == "Sex") {
-			if (npc.getAffection(player) >= 16 && (!player.has(Trait.spiral) || Global.random(2) == 1)) {
+		if (choice.equals("Sex")) {
+			if (npc.getAffection(player) >= 16
+					&& (!player.has(Trait.spiral) || Global.random(2) == 1)) {
 				Global.gui().message(
 						"Jewel leads you to her bedroom instead of the wilderness for once. She seems unusually eager and almost like she could break into skipping at any time. "
 								+ "She's always been as fond of sex as the next girl, but this is uncharacteristic. You eventually decide to ask her if anything special is happening today. <i>\"Hmm? Well, "
@@ -194,8 +200,9 @@ public class JewelTime extends BaseNPCTime {
 			Daytime.train(player, npc, Attribute.Seduction);
 			npc.gainAffection(player, 1);
 			player.gainAffection(npc, 1);
-		} else if (choice == "Games") {
-			if (npc.getAffection(player) >= 8 && (!player.has(Trait.fearless) || Global.random(2) == 1)) {
+		} else if (choice.equals("Games")) {
+			if (npc.getAffection(player) >= 8
+					&& (!player.has(Trait.fearless) || Global.random(2) == 1)) {
 				Global.gui().message(
 						"Today you've brought a wargame to appeal to Jewel's love of military history. You let her play the Allies, both because her father is a soldier and because the "
 								+ "Allies are on offense in this scenario. She advances all her troops from the start, taking heavy casualties, but stealing a couple victory point locations from you. You bide "
@@ -213,7 +220,8 @@ public class JewelTime extends BaseNPCTime {
 								+ "kids, or a spouse. In a game, the only thing that matters is victory. When you lose a piece, no one has to cry over a friend or family member's grave. You can't treat war like a game, "
 								+ "and likewise you can't treat a game like war.\"</i><p>She stands up and practically drags you out of your chair. <i>\"Enough serious talk. Strip and get on the bed. I'm on top today.\"</i>");
 				if (!player.has(Trait.fearless)) {
-					Global.gui().message("<p><b>Jewel has taught you a valuable lesson in reckless determination.</b>");
+					Global.gui().message(
+							"<p><b>Jewel has taught you a valuable lesson in reckless determination.</b>");
 					player.add(Trait.fearless);
 					npc.add(Trait.fearless);
 				}
@@ -229,8 +237,10 @@ public class JewelTime extends BaseNPCTime {
 			Daytime.train(player, npc, Attribute.Cunning);
 			npc.gainAffection(player, 1);
 			player.gainAffection(npc, 1);
-		} else if (choice == "Sparring") {
-			if (npc.getAffection(player) >= 12 && (!player.has(Trait.dirtyfighter) || Global.random(2) == 1)) {
+		} else if (choice.equals("Sparring")) {
+			if (npc.getAffection(player) >= 12
+					&& (!player.has(Trait.dirtyfighter)
+							|| Global.random(2) == 1)) {
 				Global.gui().message(
 						"Your martial arts training has finally reached the point where Jewel is willing to spar with you seriously. She's all business when it comes to sparring. There "
 								+ "are no sex holds and no stripping. The only victory condition is to make your opponent admit defeat. Jewel darts in with a snap-kick, which you barely manage to block, and "
@@ -272,7 +282,7 @@ public class JewelTime extends BaseNPCTime {
 			Daytime.train(player, npc, Attribute.Power);
 			npc.gainAffection(player, 1);
 			player.gainAffection(npc, 1);
-		} else if (choice == "Leave") {
+		} else if (choice.equals("Leave")) {
 			done(true);
 		}
 	}

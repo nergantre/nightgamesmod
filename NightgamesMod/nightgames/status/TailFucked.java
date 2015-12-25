@@ -12,12 +12,12 @@ import nightgames.global.Global;
 import nightgames.global.JSONUtils;
 
 public class TailFucked extends Status {
-	private String target;
-	private Character other;
+	private String		target;
+	private Character	other;
 
 	public TailFucked(Character affected, Character other, String hole) {
 		super(hole.equals("ass") ? "Tail Pegged" : "Tail Fucked", affected);
-		this.target = hole;
+		target = hole;
 		this.other = other;
 		requirements.add(new EitherInsertedRequirement(true));
 		flag(Stsflag.bound);
@@ -28,25 +28,40 @@ public class TailFucked extends Status {
 	public String initialMessage(Combat c, boolean replaced) {
 		BodyPart hole = affected.body.getRandom(target);
 		BodyPart tail = other.body.getRandom("tail");
-		if (hole == null || tail == null) { return ""; }
-		return Global.capitalizeFirstLetter(String.format("%s now fucking %s %s with %s %s\n", other.subjectAction("are", "is"), affected.nameOrPossessivePronoun(), hole.describe(affected), other.possessivePronoun(), tail.describe(other)));
+		if (hole == null || tail == null) {
+			return "";
+		}
+		return Global.capitalizeFirstLetter(String.format(
+				"%s now fucking %s %s with %s %s\n",
+				other.subjectAction("are", "is"),
+				affected.nameOrPossessivePronoun(), hole.describe(affected),
+				other.possessivePronoun(), tail.describe(other)));
 	}
 
 	@Override
 	public String describe(Combat c) {
 		BodyPart hole = affected.body.getRandom(target);
 		BodyPart tail = other.body.getRandom("tail");
-		if (hole == null || tail == null) { return ""; }
-		if(affected.human()){
-			return Global.capitalizeFirstLetter(String.format("%s fucking %s %s with %s %s\n", other.subjectAction("are", "is"), affected.nameOrPossessivePronoun(), hole.describe(affected), other.possessivePronoun(), tail.describe(other)));
+		if (hole == null || tail == null) {
+			return "";
 		}
-		else{
-			return Global.capitalizeFirstLetter(String.format("%s fucking %s %s with %s %s\n", other.subjectAction("are", "is"), affected.nameOrPossessivePronoun(), hole.describe(affected), other.possessivePronoun(), tail.describe(other)));
+		if (affected.human()) {
+			return Global.capitalizeFirstLetter(String.format(
+					"%s fucking %s %s with %s %s\n",
+					other.subjectAction("are", "is"),
+					affected.nameOrPossessivePronoun(), hole.describe(affected),
+					other.possessivePronoun(), tail.describe(other)));
+		} else {
+			return Global.capitalizeFirstLetter(String.format(
+					"%s fucking %s %s with %s %s\n",
+					other.subjectAction("are", "is"),
+					affected.nameOrPossessivePronoun(), hole.describe(affected),
+					other.possessivePronoun(), tail.describe(other)));
 		}
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return -3;
 	}
 
@@ -63,12 +78,16 @@ public class TailFucked extends Status {
 			affected.removelist.add(this);
 			return;
 		}
-		c.write(other, Global.capitalizeFirstLetter(Global.format("{other:name-possessive} {other:body-part:tail} relentlessly fucks {self:name-do} in {self:possessive} {self:body-part:"+target+"}.", affected, other)));
+		c.write(other,
+				Global.capitalizeFirstLetter(Global
+						.format("{other:name-possessive} {other:body-part:tail} relentlessly fucks {self:name-do} in {self:possessive} {self:body-part:"
+								+ target + "}.", affected, other)));
 		affected.body.pleasure(other, tail, hole, 10, c);
 		other.body.pleasure(affected, hole, tail, 2, c);
 		affected.emote(Emotion.desperate, 10);
 		affected.emote(Emotion.nervous, 10);
 	}
+
 	@Override
 	public int damage(Combat c, int x) {
 		return 0;
@@ -113,7 +132,9 @@ public class TailFucked extends Status {
 	public int counter() {
 		return -10;
 	}
-	public String toString(){
+
+	@Override
+	public String toString() {
 		return "Tail fucked";
 	}
 
@@ -126,6 +147,8 @@ public class TailFucked extends Status {
 	public Status instance(Character newAffected, Character newOther) {
 		return new TailFucked(newAffected, newOther, target);
 	}
+
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -134,10 +157,13 @@ public class TailFucked extends Status {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new TailFucked(null, null, JSONUtils.readString(obj, "target"));
 	}
 
 	@Override
-	public int regen(Combat c) { return 0; }
+	public int regen(Combat c) {
+		return 0;
+	}
 }

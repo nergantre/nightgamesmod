@@ -122,9 +122,10 @@ public class AiModifiers {
 	}
 
 	public static AiModifiers getDefaultModifiers(String personality) {
-		if (!DEFAULTS.containsKey(personality))
+		if (!DEFAULTS.containsKey(personality)) {
 			System.err.println(
 					"No default AI modifications for " + personality + "!");
+		}
 		return DEFAULTS.getOrDefault(personality, new AiModifiers());
 	}
 

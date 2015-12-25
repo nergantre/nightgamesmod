@@ -15,16 +15,18 @@ import nightgames.skills.Tactics;
 
 public abstract class SkillModifier {
 
-	public static final List<SkillModifier> TYPES = Collections
-			.unmodifiableList(Arrays.asList(new BanSkillsModifier(), new BanTacticsModifier(),
-					new EncourageSkillsModifier(null, 0), new EncourageTacticsModifier(null, 0)));
+	public static final List<SkillModifier>	TYPES			= Collections
+			.unmodifiableList(Arrays.asList(new BanSkillsModifier(),
+					new BanTacticsModifier(),
+					new EncourageSkillsModifier(null, 0),
+					new EncourageTacticsModifier(null, 0)));
 
-	public static final SkillModifier NULL_MODIFIER = new SkillModifier() {
-		@Override
-		public String toString() {
-			return "null-skill-modifier";
-		}
-	};
+	public static final SkillModifier		NULL_MODIFIER	= new SkillModifier() {
+																@Override
+																public String toString() {
+																	return "null-skill-modifier";
+																}
+															};
 
 	public Set<Skill> bannedSkills() {
 		return Collections.emptySet();
@@ -67,7 +69,7 @@ public abstract class SkillModifier {
 			public double encouragement(Skill s, Combat c, Character u) {
 				return me.encouragement(s, c, u) + next.encouragement(s, c, u);
 			}
-			
+
 			@Override
 			public String toString() {
 				return me.toString() + ", " + next.toString();
@@ -91,7 +93,7 @@ public abstract class SkillModifier {
 			public double encouragement(Skill s, Combat c, Character u) {
 				return mod.encouragement(s, c, u);
 			}
-			
+
 			@Override
 			public String toString() {
 				return mod.toString();
@@ -100,14 +102,16 @@ public abstract class SkillModifier {
 	}
 
 	public static SkillModifier allOf(SkillModifier... modifiers) {
-		if (modifiers.length == 0)
+		if (modifiers.length == 0) {
 			return NULL_MODIFIER;
+		}
 		SkillModifier result = modifiers[0];
-		for (int i = 1; i < modifiers.length; i++)
+		for (int i = 1; i < modifiers.length; i++) {
 			result = result.andThen(modifiers[i]);
+		}
 		return result;
 	}
-	
+
 	@Override
 	public abstract String toString();
 }

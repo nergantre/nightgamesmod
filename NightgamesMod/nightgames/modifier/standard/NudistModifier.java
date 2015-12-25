@@ -7,7 +7,7 @@ import nightgames.modifier.clothing.NudeModifier;
 public class NudistModifier extends BaseModifier {
 
 	public NudistModifier() {
-		this.clothing = new NudeModifier();
+		clothing = new NudeModifier();
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class NudistModifier extends BaseModifier {
 		return "You agree to Lilly's rule and start to strip off your clothes. You try to appear nonchalant about it, but you can't help reddening a bit when your "
 				+ "opponents start cheering you on. Lilly stiffles a laugh as you hand over your clothes. <i>\"You see? You're more popular already.\"</i>";
 	}
-	
+
 	@Override
 	public boolean isApplicable() {
 		return !Global.getPlayer().outfitPlan.isEmpty();

@@ -14,12 +14,16 @@ public class TribadismStance extends Position {
 
 	@Override
 	public String describe() {
-		return top.subjectAction("are", "is") + " holding " + bottom.nameOrPossessivePronoun() + " legs across " + top.possessivePronoun() + " chest while grinding " + top.possessivePronoun() +" soaked cunt into " + bottom.possessivePronoun() + " pussy.";
+		return top.subjectAction("are", "is") + " holding "
+				+ bottom.nameOrPossessivePronoun() + " legs across "
+				+ top.possessivePronoun() + " chest while grinding "
+				+ top.possessivePronoun() + " soaked cunt into "
+				+ bottom.possessivePronoun() + " pussy.";
 	}
 
 	@Override
 	public boolean mobile(Character c) {
-		return c==top;
+		return c == top;
 	}
 
 	@Override
@@ -32,17 +36,19 @@ public class TribadismStance extends Position {
 		return false;
 	}
 
+	@Override
 	public String image() {
 		return "trib.jpg";
 	}
+
 	@Override
 	public boolean dom(Character c) {
-		return c==top;
+		return c == top;
 	}
 
 	@Override
 	public boolean sub(Character c) {
-		return c==bottom;
+		return c == bottom;
 	}
 
 	@Override
@@ -52,12 +58,12 @@ public class TribadismStance extends Position {
 
 	@Override
 	public boolean reachBottom(Character c) {
-		return c==top;
+		return c == top;
 	}
 
 	@Override
 	public boolean prone(Character c) {
-		return c==bottom;
+		return c == bottom;
 	}
 
 	@Override
@@ -82,17 +88,23 @@ public class TribadismStance extends Position {
 
 	@Override
 	public List<BodyPart> bottomParts() {
-		return Arrays.asList(bottom.body.getRandomPussy()).stream().filter(part -> part != null && part.present()).collect(Collectors.toList());
+		return Arrays.asList(bottom.body.getRandomPussy()).stream()
+				.filter(part -> part != null && part.present())
+				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<BodyPart> topParts() {
-		return Arrays.asList(top.body.getRandomPussy()).stream().filter(part -> part != null && part.present()).collect(Collectors.toList());
+		return Arrays.asList(top.body.getRandomPussy()).stream()
+				.filter(part -> part != null && part.present())
+				.collect(Collectors.toList());
 	}
 
-	public double pheromoneMod (Character self) {
-		if (self == bottom)
+	@Override
+	public double pheromoneMod(Character self) {
+		if (self == bottom) {
 			return 10;
+		}
 		return 2;
 	}
 }

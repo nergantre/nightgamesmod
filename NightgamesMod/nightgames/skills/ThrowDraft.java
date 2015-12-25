@@ -19,6 +19,7 @@ import nightgames.items.ItemEffect;
 
 public class ThrowDraft extends Skill {
 	private static final Set<Item> transformativeItems = new HashSet<>();
+
 	{
 		transformativeItems.add(Item.SuccubusDraft);
 		transformativeItems.add(Item.BustDraft);
@@ -40,26 +41,30 @@ public class ThrowDraft extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		boolean hasItems = subChoices().size() > 0;
-		return hasItems&&getSelf().canAct()&&c.getStance().mobile(getSelf())&&(c.getStance().reachTop(getSelf())||c.getStance().reachBottom(getSelf()));
+		return hasItems && getSelf().canAct() && c.getStance().mobile(getSelf())
+				&& (c.getStance().reachTop(getSelf())
+						|| c.getStance().reachBottom(getSelf()));
 	}
 
 	@Override
 	public Collection<String> subChoices() {
 		ArrayList<String> usables = new ArrayList<String>();
 		for (Item i : getSelf().getInventory().keySet()) {
-			if (getSelf().has(i)&&i.getEffects().get(0).throwable()) {
+			if (getSelf().has(i) && i.getEffects().get(0).throwable()) {
 				usables.add(i.getName());
 			}
 		}
 		return usables;
 	}
 
-	public Item pickBest(Combat c, NPC self, Character target, List<Item> usables) {
+	public Item pickBest(Combat c, NPC self, Character target,
+			List<Item> usables) {
 		HashMap<Item, Float> checks = new HashMap<>();
 		float selfFitness = self.getFitness(c);
 		float targetFitness = self.getOtherFitness(c, target);
 		usables.stream().forEach(item -> {
-			float rating = self.rateAction(c, selfFitness, targetFitness, (newCombat, newSelf, newOther) -> {
+			float rating = self.rateAction(c, selfFitness, targetFitness,
+					(newCombat, newSelf, newOther) -> {
 				for (ItemEffect e : item.getEffects()) {
 					e.use(newCombat, newOther, newSelf, item);
 				}
@@ -69,13 +74,18 @@ public class ThrowDraft extends Skill {
 		});
 		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 			checks.entrySet().stream().forEach(entry -> {
-				System.out.println("Item " + entry.getKey() + ": " + entry.getValue());
+				System.out.println(
+						"Item " + entry.getKey() + ": " + entry.getValue());
 			});
 		}
 		Item best = checks.entrySet().stream().max((first, second) -> {
 			float test = second.getValue() - first.getValue();
-			if (test < 0) { return -1; }
-			if (test > 0) { return 1; }
+			if (test < 0) {
+				return -1;
+			}
+			if (test > 0) {
+				return 1;
+			}
 			return 0;
 		}).get().getKey();
 		return best;
@@ -99,7 +109,7 @@ public class ThrowDraft extends Skill {
 				}
 			}
 			if (usables.size() > 0) {
-				used = pickBest(c, (NPC)getSelf(), target, usables);
+				used = pickBest(c, (NPC) getSelf(), target, usables);
 			}
 		}
 		if (used == null) {
@@ -109,9 +119,13 @@ public class ThrowDraft extends Skill {
 			if (verb.isEmpty()) {
 				verb = "throw";
 			}
-			c.write(getSelf(), Global.format(String.format("{self:SUBJECT-ACTION:%s|%ss} %s%s",
-					verb, verb, used.pre(), used.getName()), getSelf(), target));
-			if (transformativeItems.contains(used) && target.has(Trait.stableform)) {
+			c.write(getSelf(),
+					Global.format(
+							String.format("{self:SUBJECT-ACTION:%s|%ss} %s%s",
+									verb, verb, used.pre(), used.getName()),
+							getSelf(), target));
+			if (transformativeItems.contains(used)
+					&& target.has(Trait.stableform)) {
 				c.write(target, "...But nothing happened (Stable Form).");
 			} else {
 				boolean eventful = false;
@@ -138,12 +152,14 @@ public class ThrowDraft extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
 		return "";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
+	public String receive(Combat c, int damage, Result modifier,
+			Character target) {
 		return "";
 	}
 

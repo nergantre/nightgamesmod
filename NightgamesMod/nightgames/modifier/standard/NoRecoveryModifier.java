@@ -9,10 +9,10 @@ import nightgames.skills.Masturbate;
 public class NoRecoveryModifier extends BaseModifier {
 
 	public NoRecoveryModifier() {
-		this.actions = new BanActionModifier(new MasturbateAction());
-		this.skills = new BanSkillsModifier(new Masturbate(null));
+		actions = new BanActionModifier(new MasturbateAction());
+		skills = new BanSkillsModifier(new Masturbate(null));
 	}
-	
+
 	@Override
 	public int bonus() {
 		return 100;

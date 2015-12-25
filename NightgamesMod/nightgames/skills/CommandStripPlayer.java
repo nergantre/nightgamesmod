@@ -10,10 +10,11 @@ public class CommandStripPlayer extends PlayerCommand {
 		super("Force Strip Player", self);
 	}
 
+	@Override
 	public boolean usable(Combat c, Character target) {
 		return super.usable(c, target) && !getSelf().mostlyNude();
 	}
-	
+
 	@Override
 	public String describe(Combat c) {
 		return "Make your thrall undress you.";
@@ -22,8 +23,9 @@ public class CommandStripPlayer extends PlayerCommand {
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		getSelf().undress(c);
-		if (getSelf().human())
-			c.write(getSelf(),deal(c, 0, Result.normal, target));
+		if (getSelf().human()) {
+			c.write(getSelf(), deal(c, 0, Result.normal, target));
+		}
 		return true;
 	}
 
@@ -38,14 +40,16 @@ public class CommandStripPlayer extends PlayerCommand {
 	}
 
 	@Override
-	public String deal(Combat c, int magnitude, Result modifier, Character target) {
-		return "With an elated gleam in her eyes, " + target.name() + 
-				" moves her hands with nigh-inhuman dexterity, stripping all"
+	public String deal(Combat c, int magnitude, Result modifier,
+			Character target) {
+		return "With an elated gleam in her eyes, " + target.name()
+				+ " moves her hands with nigh-inhuman dexterity, stripping all"
 				+ " of your clothes in just a second.";
 	}
 
 	@Override
-	public String receive(Combat c, int magnitude, Result modifier, Character target) {
+	public String receive(Combat c, int magnitude, Result modifier,
+			Character target) {
 		return "<<This should not be displayed, please inform The"
 				+ " Silver Bard: CommandStripPlayer-receive>>";
 	}

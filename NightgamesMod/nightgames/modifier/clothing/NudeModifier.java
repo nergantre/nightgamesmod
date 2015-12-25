@@ -7,7 +7,8 @@ import org.json.simple.JSONObject;
 
 import nightgames.modifier.ModifierComponent;
 
-public class NudeModifier extends ClothingModifier implements ModifierComponent<NudeModifier> {
+public class NudeModifier extends ClothingModifier
+		implements ModifierComponent<NudeModifier> {
 
 	@Override
 	public Set<Integer> allowedLayers() {
@@ -23,10 +24,10 @@ public class NudeModifier extends ClothingModifier implements ModifierComponent<
 	public NudeModifier instance(JSONObject obj) {
 		return new NudeModifier();
 	}
-	
+
 	@Override
 	public String toString() {
 		return name();
 	}
-	
+
 }

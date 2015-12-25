@@ -15,24 +15,24 @@ public class Wary extends DurationStatus {
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
+		if (affected.human()) {
 			return "You're wary of your opponent.";
-		}
-		else{
-			return affected.name()+" is wary of you.";
+		} else {
+			return affected.name() + " is wary of you.";
 		}
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now wary.\n", affected.subjectAction("are", "is"));
+		return String.format("%s now wary.\n",
+				affected.subjectAction("are", "is"));
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return 5;
 	}
-	
+
 	@Override
 	public int mod(Attribute a) {
 		return 0;
@@ -87,11 +87,13 @@ public class Wary extends DurationStatus {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Wary(newAffected, getDuration());
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -100,6 +102,7 @@ public class Wary extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Wary(null, JSONUtils.readInteger(obj, "duration"));
 	}

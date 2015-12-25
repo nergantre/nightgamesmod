@@ -10,7 +10,10 @@ import nightgames.stance.Missionary;
 
 public class CounterRide extends CounterBase {
 	public CounterRide(Character self) {
-		super("Sex Counter", self, 5, Global.format("{self:SUBJECT-ACTION:invite|invites} the opponent with {self:possessive} body.", self, self));
+		super("Sex Counter", self, 5,
+				Global.format(
+						"{self:SUBJECT-ACTION:invite|invites} the opponent with {self:possessive} body.",
+						self, self));
 	}
 
 	@Override
@@ -27,10 +30,10 @@ public class CounterRide extends CounterBase {
 		}
 		if (target.hasDick() && getSelf().hasPussy()) {
 			c.setStance(Cowgirl.similarInstance(getSelf(), target));
-			(new Thrust(getSelf())).resolve(c, target);
+			new Thrust(getSelf()).resolve(c, target);
 		} else {
 			c.setStance(Missionary.similarInstance(getSelf(), target));
-			(new Thrust(getSelf())).resolve(c, target);
+			new Thrust(getSelf()).resolve(c, target);
 		}
 	}
 
@@ -41,9 +44,11 @@ public class CounterRide extends CounterBase {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !c.getStance().dom(getSelf()) && !c.getStance().dom(target) && getSelf().canAct()
-				&& getSelf().crotchAvailable() && target.crotchAvailable()
-				&&((getSelf().hasDick() && target.hasPussy()) || (getSelf().hasPussy() && target.hasDick()));
+		return !c.getStance().dom(getSelf()) && !c.getStance().dom(target)
+				&& getSelf().canAct() && getSelf().crotchAvailable()
+				&& target.crotchAvailable()
+				&& (getSelf().hasDick() && target.hasPussy()
+						|| getSelf().hasPussy() && target.hasDick());
 	}
 
 	@Override
@@ -67,18 +72,27 @@ public class CounterRide extends CounterBase {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
 		if (modifier == Result.setup && getSelf().hasPussy()) {
-			return Global.format("You turn around and bend over with your ass seductively waving in the air. You slowly " +
-					"tease your glistening lower lips and spread them apart, inviting {other:name} to take {other:possessive} pleasure.", getSelf(), target);
+			return Global.format(
+					"You turn around and bend over with your ass seductively waving in the air. You slowly "
+							+ "tease your glistening lower lips and spread them apart, inviting {other:name} to take {other:possessive} pleasure.",
+					getSelf(), target);
 		} else if (modifier == Result.setup && getSelf().hasDick()) {
-			return Global.format("You grab your cock and quickly stroke it to full mast. You let your dick go and it swings back and forth, catching {other:name-possessive} gaze.", getSelf(), target);
+			return Global.format(
+					"You grab your cock and quickly stroke it to full mast. You let your dick go and it swings back and forth, catching {other:name-possessive} gaze.",
+					getSelf(), target);
 		} else if (getSelf().hasPussy() && target.hasDick()) {
-			return Global.format("As {other:subject} approaches you, you suddenly lower your center of balance and sweep {other:possessive} legs out from under her. " +
-					"With one smooth motion, you drop your hips and lodge {other:possessive} dick firmly inside yourself.", getSelf(), target);
+			return Global.format(
+					"As {other:subject} approaches you, you suddenly lower your center of balance and sweep {other:possessive} legs out from under her. "
+							+ "With one smooth motion, you drop your hips and lodge {other:possessive} dick firmly inside yourself.",
+					getSelf(), target);
 		} else {
-			return Global.format("As {other:subject} approaches you, you suddenly lower your center of balance and sweep {other:possessive} legs out from under her. " +
-					"With one smooth motion, you spread her legs apart and plunge into her depths.", getSelf(), target);
+			return Global.format(
+					"As {other:subject} approaches you, you suddenly lower your center of balance and sweep {other:possessive} legs out from under her. "
+							+ "With one smooth motion, you spread her legs apart and plunge into her depths.",
+					getSelf(), target);
 		}
 	}
 
@@ -86,16 +100,24 @@ public class CounterRide extends CounterBase {
 	public String receive(Combat c, int damage, Result modifier,
 			Character target) {
 		if (modifier == Result.setup && getSelf().hasPussy()) {
-			return Global.format("{self:SUBJECT} turns around and bends over her ass seductively waving in the air. She slowly " +
-					"teases her glistening lower lips and spread them apart, inviting you in to her embrace.", getSelf(), target);
+			return Global.format(
+					"{self:SUBJECT} turns around and bends over her ass seductively waving in the air. She slowly "
+							+ "teases her glistening lower lips and spread them apart, inviting you in to her embrace.",
+					getSelf(), target);
 		} else if (modifier == Result.setup && getSelf().hasDick()) {
-			return Global.format("{self:SUBJECT} takes out her cock and strokes it to full mast. She then lets her dick go and it swings back and forth, catching your gaze.", getSelf(), target);
+			return Global.format(
+					"{self:SUBJECT} takes out her cock and strokes it to full mast. She then lets her dick go and it swings back and forth, catching your gaze.",
+					getSelf(), target);
 		} else if (getSelf().hasPussy() && target.hasDick()) {
-			return Global.format("As {other:subject} approaches {self:name}, she suddenly disappears from your view; half a second later, your legs are swept out from under you. " +
-					"With a soft giggle, {self:name} swiftly mounts you and starts riding your cock.", getSelf(), target);
+			return Global.format(
+					"As {other:subject} approaches {self:name}, she suddenly disappears from your view; half a second later, your legs are swept out from under you. "
+							+ "With a soft giggle, {self:name} swiftly mounts you and starts riding your cock.",
+					getSelf(), target);
 		} else {
-			return Global.format("As {other:subject} approaches {self:name}, she suddenly disappears from your view; half a second later, your legs are swept out from under you. " +
-					"With a sexy grin, {self:name} wrenches your legs apart and plunges into your slobbering vagina.", getSelf(), target);
+			return Global.format(
+					"As {other:subject} approaches {self:name}, she suddenly disappears from your view; half a second later, your legs are swept out from under you. "
+							+ "With a sexy grin, {self:name} wrenches your legs apart and plunges into your slobbering vagina.",
+					getSelf(), target);
 		}
 	}
 }

@@ -20,10 +20,11 @@ public class Suggestion extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (getSelf().canAct()) && (c.getStance().mobile(getSelf()))
-				&& (!c.getStance().behind(getSelf())) && (!c.getStance().behind(target))
-				&& (!c.getStance().sub(getSelf())) && (!target.is(Stsflag.charmed))
-				&& (getSelf().canSpend(5));
+		return getSelf().canAct() && c.getStance().mobile(getSelf())
+				&& !c.getStance().behind(getSelf())
+				&& !c.getStance().behind(target)
+				&& !c.getStance().sub(getSelf()) && !target.is(Stsflag.charmed)
+				&& getSelf().canSpend(5);
 	}
 
 	@Override

@@ -11,15 +11,16 @@ import nightgames.items.Item;
 
 public abstract class ItemModifier {
 
-	public static final List<ItemModifier> TYPES = Collections
-			.unmodifiableList(Arrays.asList(new BanToysModifier(), new BanConsumablesModifier()));
+	public static final List<ItemModifier>	TYPES			= Collections
+			.unmodifiableList(Arrays.asList(new BanToysModifier(),
+					new BanConsumablesModifier()));
 
-	public static final ItemModifier NULL_MODIFIER = new ItemModifier() {
-		@Override
-		public String toString() {
-			return "null-item-modifier";
-		}
-	};
+	public static final ItemModifier		NULL_MODIFIER	= new ItemModifier() {
+																@Override
+																public String toString() {
+																	return "null-item-modifier";
+																}
+															};
 
 	public Set<Item> bannedItems() {
 		return Collections.emptySet();
@@ -35,8 +36,9 @@ public abstract class ItemModifier {
 
 	public void giveRequiredItems(Character c) {
 		ensuredItems().forEach((item, count) -> {
-			while (!c.has(item, count))
+			while (!c.has(item, count)) {
 				c.gain(item);
+			}
 		});
 	}
 
@@ -90,14 +92,16 @@ public abstract class ItemModifier {
 	}
 
 	public static ItemModifier allOf(ItemModifier... mods) {
-		if (mods.length == 0)
+		if (mods.length == 0) {
 			return NULL_MODIFIER;
+		}
 		ItemModifier result = mods[0];
-		for (int i = 1; i < mods.length; i++)
+		for (int i = 1; i < mods.length; i++) {
 			result = result.combineWith(mods[i]);
+		}
 		return result;
 	}
-	
+
 	@Override
 	public abstract String toString();
 }

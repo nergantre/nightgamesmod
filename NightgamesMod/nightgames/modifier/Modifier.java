@@ -26,22 +26,26 @@ public interface Modifier {
 	 * Get a SkillModifier specific to the current Match
 	 */
 	SkillModifier getSkillModifier();
-	
+
 	/**
 	 * Process non-combat turn
 	 */
 	void handleTurn(Character c, Match m);
 
 	/**
-	 * Undo all changes to the character's inventory made by handleItems 
+	 * Undo all changes to the character's inventory made by handleItems
 	 */
 	void undoItems(Character c);
-	
+
 	boolean allowAction(Action act, Character c, Match m);
-	
+
 	int bonus();
+
 	boolean isApplicable();
+
 	String name();
+
 	String intro();
+
 	String acceptance();
 }

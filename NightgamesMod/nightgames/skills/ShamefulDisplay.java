@@ -21,7 +21,7 @@ public class ShamefulDisplay extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (getSelf().canAct()) && (c.getStance().mobile(getSelf()))
+		return getSelf().canAct() && c.getStance().mobile(getSelf())
 				&& getSelf().crotchAvailable()
 				&& (getSelf().hasDick() || getSelf().hasPussy());
 	}

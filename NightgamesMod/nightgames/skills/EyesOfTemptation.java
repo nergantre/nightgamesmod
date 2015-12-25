@@ -16,12 +16,15 @@ public class EyesOfTemptation extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Seduction) >= 45 || user.get(Attribute.Dark) >= 20 || user.get(Attribute.Arcane) >= 10;
+		return user.get(Attribute.Seduction) >= 45
+				|| user.get(Attribute.Dark) >= 20
+				|| user.get(Attribute.Arcane) >= 10;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canRespond() && c.getStance().facing() && !target.wary();
+		return getSelf().canRespond() && c.getStance().facing()
+				&& !target.wary();
 	}
 
 	@Override
@@ -31,12 +34,12 @@ public class EyesOfTemptation extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		Result result = target.roll(this, c, accuracy(c))? Result.normal : Result.miss;
-		if(getSelf().human()) {
-			c.write(getSelf(),deal(c,0,result, target));
-		}
-		else if(target.human()) {
-			c.write(getSelf(),receive(c,0,result, target));
+		Result result = target.roll(this, c, accuracy(c)) ? Result.normal
+				: Result.miss;
+		if (getSelf().human()) {
+			c.write(getSelf(), deal(c, 0, result, target));
+		} else if (target.human()) {
+			c.write(getSelf(), receive(c, 0, result, target));
 		}
 		if (result == Result.normal) {
 			target.add(c, new Enthralled(target, getSelf(), 5));
@@ -49,7 +52,9 @@ public class EyesOfTemptation extends Skill {
 	public Skill copy(Character user) {
 		return new EyesOfTemptation(user);
 	}
-	public int speed(){
+
+	@Override
+	public int speed() {
 		return 9;
 	}
 
@@ -58,20 +63,28 @@ public class EyesOfTemptation extends Skill {
 		return 100;
 	}
 
+	@Override
 	public Tactics type(Combat c) {
 		return Tactics.pleasure;
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
-		if (modifier == Result.normal)
-			return Global.format("As {other:subject-action:gaze|gazes} into {self:name-possessive} eyes, {other:subject-action:feel|feels} {other:possessive} will slipping into the abyss.", getSelf(), target);
-		else
-			return Global.format("{other:SUBJECT-ACTION:look|looks} away as soon as {self:subject-action:focus|focuses} {self:possessive} eyes on {other:direct-object}.", getSelf(), target);
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
+		if (modifier == Result.normal) {
+			return Global.format(
+					"As {other:subject-action:gaze|gazes} into {self:name-possessive} eyes, {other:subject-action:feel|feels} {other:possessive} will slipping into the abyss.",
+					getSelf(), target);
+		} else {
+			return Global.format(
+					"{other:SUBJECT-ACTION:look|looks} away as soon as {self:subject-action:focus|focuses} {self:possessive} eyes on {other:direct-object}.",
+					getSelf(), target);
+		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
+	public String receive(Combat c, int damage, Result modifier,
+			Character target) {
 		return deal(c, damage, modifier, target);
 	}
 

@@ -52,9 +52,9 @@ public class Shamed extends DurationStatus {
 	public int mod(Attribute a) {
 		if (a == Attribute.Seduction || a == Attribute.Cunning) {
 			return Math.min(-2 * magnitude,
-					(-affected.getPure(a) * magnitude) / 5);
-		} else if ((a == Attribute.Submissive)
-				&& (this.affected.getPure(Attribute.Submissive) > 0)) {
+					-affected.getPure(a) * magnitude / 5);
+		} else if (a == Attribute.Submissive
+				&& affected.getPure(Attribute.Submissive) > 0) {
 			return magnitude;
 		} else {
 			return 0;
@@ -64,7 +64,7 @@ public class Shamed extends DurationStatus {
 	@Override
 	public void tick(Combat c) {
 		affected.emote(Emotion.nervous, 20);
-		if (this.affected.getPure(Attribute.Submissive) > 0) {
+		if (affected.getPure(Attribute.Submissive) > 0) {
 			affected.buildMojo(c, 3 * magnitude, " (Shamed)");
 		} else {
 			affected.loseMojo(c, 5 * magnitude, " (Shamed)");
@@ -103,7 +103,7 @@ public class Shamed extends DurationStatus {
 
 	@Override
 	public int gainmojo(int x) {
-		return (-x * magnitude) / 2;
+		return -x * magnitude / 2;
 	}
 
 	@Override
@@ -131,9 +131,10 @@ public class Shamed extends DurationStatus {
 		assert newStatus instanceof Shamed;
 		Shamed other = (Shamed) newStatus;
 		setDuration(Math.max(other.getDuration(), getDuration()));
-		this.magnitude += other.magnitude;
+		magnitude += other.magnitude;
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -141,6 +142,7 @@ public class Shamed extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Shamed(null);
 	}

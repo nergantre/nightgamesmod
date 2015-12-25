@@ -8,6 +8,7 @@ import nightgames.combat.Result;
 
 public class Bravado extends Skill {
 	int cost;
+
 	public Bravado(Character self) {
 		super("Determination", self);
 		cost = 0;
@@ -20,7 +21,7 @@ public class Bravado extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canRespond()&&c.getStance().mobile(getSelf());
+		return getSelf().canRespond() && c.getStance().mobile(getSelf());
 	}
 
 	@Override
@@ -32,17 +33,16 @@ public class Bravado extends Skill {
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		int x = cost;
-		if(getSelf().human()){
-			c.write(getSelf(),deal(c,x,Result.normal, target));
+		if (getSelf().human()) {
+			c.write(getSelf(), deal(c, x, Result.normal, target));
+		} else if (target.human()) {
+			c.write(getSelf(), receive(c, x, Result.normal, target));
 		}
-		else if(target.human()){
-			c.write(getSelf(),receive(c,x,Result.normal, target));
-		}
-		getSelf().calm(c, x/2);
+		getSelf().calm(c, x / 2);
 		getSelf().heal(c, x);
 		getSelf().emote(Emotion.confident, 30);
 		getSelf().emote(Emotion.dominant, 20);
-		getSelf().emote(Emotion.nervous,-20);
+		getSelf().emote(Emotion.nervous, -20);
 		getSelf().emote(Emotion.desperate, -30);
 		return true;
 	}
@@ -58,13 +58,16 @@ public class Bravado extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
 		return "You grit your teeth and put all your willpower into the fight.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character attacker) {
-		return getSelf().name()+" gives you a determined glare as she seems to gain a second wind.";
+	public String receive(Combat c, int damage, Result modifier,
+			Character attacker) {
+		return getSelf().name()
+				+ " gives you a determined glare as she seems to gain a second wind.";
 	}
 
 	@Override

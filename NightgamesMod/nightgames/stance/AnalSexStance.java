@@ -1,6 +1,5 @@
 package nightgames.stance;
 
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +18,7 @@ public abstract class AnalSexStance extends Position {
 		priority += getSubDomBonus(self, 4);
 		if (!inserted(self) && self.body.getRandom("ass") != null) {
 			priority += self.body.getRandom("ass").priority(self);
-		} else if (inserted(self) && self.body.getRandomInsertable() != null){
+		} else if (inserted(self) && self.body.getRandomInsertable() != null) {
 			priority += self.body.getRandomInsertable().priority(self);
 		}
 		return priority;
@@ -27,15 +26,20 @@ public abstract class AnalSexStance extends Position {
 
 	@Override
 	public List<BodyPart> topParts() {
-		return Arrays.asList(top.body.getRandomInsertable()).stream().filter(part -> part != null && part.present()).collect(Collectors.toList());
+		return Arrays.asList(top.body.getRandomInsertable()).stream()
+				.filter(part -> part != null && part.present())
+				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<BodyPart> bottomParts() {
-		return Arrays.asList(bottom.body.getRandomAss()).stream().filter(part -> part != null && part.present()).collect(Collectors.toList());
+		return Arrays.asList(bottom.body.getRandomAss()).stream()
+				.filter(part -> part != null && part.present())
+				.collect(Collectors.toList());
 	}
 
-	public double pheromoneMod (Character self) {
+	@Override
+	public double pheromoneMod(Character self) {
 		return 3;
 	}
 }

@@ -6,7 +6,7 @@ import nightgames.modifier.BaseModifier;
 public class MayaModifier extends BaseModifier {
 
 	// Does nothing
-	
+
 	@Override
 	public int bonus() {
 		return 0;
@@ -47,7 +47,7 @@ public class MayaModifier extends BaseModifier {
 	public String acceptance() {
 		return "";
 	}
-	
+
 	@Override
 	public boolean isApplicable() {
 		return Global.getPlayer().getRank() > 0 && Global.getDate() % 30 == 0;

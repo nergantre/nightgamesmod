@@ -17,58 +17,58 @@ public class Maya extends BasePersonality {
 	private static final long serialVersionUID = 447375506153223682L;
 
 	public Maya(int playerLvl) {
-		this.character = new NPC("Maya", 50, this);
+		character = new NPC("Maya", 50, this);
 		character.outfitPlan.add(Clothing.getByID("camisole"));
 		character.outfitPlan.add(Clothing.getByID("blouse"));
 		character.outfitPlan.add(Clothing.getByID("lacepanties"));
 		character.outfitPlan.add(Clothing.getByID("skirt"));
 		character.outfitPlan.add(Clothing.getByID("sneakers"));
 		character.outfitPlan.add(Clothing.getByID("socks"));
-		this.character.change();
-		this.character.set(Attribute.Dark, 40);
-		this.character.set(Attribute.Seduction, 66);
-		this.character.set(Attribute.Cunning, 39);
-		this.character.set(Attribute.Speed, 17);
-		this.character.set(Attribute.Power, 36);
-		this.character.set(Attribute.Hypnosis, 8);
-		this.character.getStamina().setMax(250);
-		this.character.getArousal().setMax(600);
-		this.character.getMojo().setMax(350);
-		this.character.getWillpower().setMax(100);
-		this.character.add(Trait.darkpromises);
-		this.character.add(Trait.tongueTraining1);
-		this.character.add(Trait.tongueTraining2);
-		this.character.add(Trait.limbTraining1);
-		this.character.add(Trait.limbTraining2);
-		this.character.add(Trait.pussyTraining1);
-		this.character.add(Trait.pussyTraining2);
-		this.character.add(Trait.pussyTraining3);
-		this.character.add(Trait.analTraining1);
-		this.character.add(Trait.analTraining2);
-		this.character.add(Trait.Confident);
-		this.character.add(Trait.dickhandler);
-		this.character.add(Trait.tight);
-		this.character.add(Trait.vaginaltongue);
-		this.character.add(Trait.insertion);
-		this.character.add(Trait.holecontrol);
-		this.character.add(Trait.autonomousPussy);
-		this.character.add(Trait.experienced);
-		this.character.add(Trait.responsive);
-		this.character.add(Trait.powerfulhips);
+		character.change();
+		character.set(Attribute.Dark, 40);
+		character.set(Attribute.Seduction, 66);
+		character.set(Attribute.Cunning, 39);
+		character.set(Attribute.Speed, 17);
+		character.set(Attribute.Power, 36);
+		character.set(Attribute.Hypnosis, 8);
+		character.getStamina().setMax(250);
+		character.getArousal().setMax(600);
+		character.getMojo().setMax(350);
+		character.getWillpower().setMax(100);
+		character.add(Trait.darkpromises);
+		character.add(Trait.tongueTraining1);
+		character.add(Trait.tongueTraining2);
+		character.add(Trait.limbTraining1);
+		character.add(Trait.limbTraining2);
+		character.add(Trait.pussyTraining1);
+		character.add(Trait.pussyTraining2);
+		character.add(Trait.pussyTraining3);
+		character.add(Trait.analTraining1);
+		character.add(Trait.analTraining2);
+		character.add(Trait.Confident);
+		character.add(Trait.dickhandler);
+		character.add(Trait.tight);
+		character.add(Trait.vaginaltongue);
+		character.add(Trait.insertion);
+		character.add(Trait.holecontrol);
+		character.add(Trait.autonomousPussy);
+		character.add(Trait.experienced);
+		character.add(Trait.responsive);
+		character.add(Trait.powerfulhips);
 
-		this.character.add(Trait.event);
-		this.character.add(Trait.cursed);
+		character.add(Trait.event);
+		character.add(Trait.cursed);
 		Global.gainSkills(character);
-		this.character.setTrophy(Item.MayaTrophy);
-		while (this.character.getLevel() < playerLvl + 20) {
-			this.character.ding();
+		character.setTrophy(Item.MayaTrophy);
+		while (character.getLevel() < playerLvl + 20) {
+			character.ding();
 		}
-		this.character.plan = Plan.hunting;
-		this.character.mood = Emotion.confident;
-		this.character.body.add(BreastsPart.d);
-		this.character.body.add(PussyPart.normal);
-		this.character.body.finishBody(CharacterSex.female);
-		this.preferredCockMod = CockMod.error;
+		character.plan = Plan.hunting;
+		character.mood = Emotion.confident;
+		character.body.add(BreastsPart.d);
+		character.body.add(PussyPart.normal);
+		character.body.finishBody(CharacterSex.female);
+		preferredCockMod = CockMod.error;
 	}
 
 	@Override
@@ -95,8 +95,8 @@ public class Maya extends BasePersonality {
 	public String victory(Combat c, Result flag) {
 		Character target = c.getOther(character);
 		target.add(new Drowsy(target));
-		this.character.arousal.empty();
-		this.character.add(new Energized(this.character, 10));
+		character.arousal.empty();
+		character.add(new Energized(character, 10));
 		return "Maya completely outmatches you. How were you suppose to deal with"
 				+ " someone this skilled? Your cock spurts a sticky white flag in her hands "
 				+ "as you cum. You slump down to the floor as you catch your breath. Maya "
@@ -151,8 +151,8 @@ public class Maya extends BasePersonality {
 					+ "her foot. You can't hold on any more. Your cock throbs and you shoot "
 					+ "your seed onto her foot.";
 		}
-		if (assist.eligible(this.character)) {
-			assist.defeated(this.character);
+		if (assist.eligible(character)) {
+			assist.defeated(character);
 		}
 		return "Maya looks a bit surprised as you restrain her opponent. <i>\"You're going to "
 				+ "side with me? I appreciate the thought.\"</i> She kneels down in front of "
@@ -322,6 +322,8 @@ public class Maya extends BasePersonality {
 			case confident:
 			case desperate:
 				return value >= 200;
+			default:
+				break;
 		}
 		return value >= 100;
 	}
@@ -343,6 +345,7 @@ public class Maya extends BasePersonality {
 		return "<i>\"Aaaand there we are. Think you can go again?\"</i>";
 	}
 
+	@Override
 	public String resist3p(Combat c, Character assist, Character target) {
 		if (target.human()) {
 			return "As you attempt to hold off Maya, you see " + assist.name()
@@ -375,6 +378,5 @@ public class Maya extends BasePersonality {
 				+ "'s face to bring her out of the trance and the girl looks down at your defeated form in confusion. <i>\"Thank you for your cooperation. Now we can "
 				+ "continue our fight without interruption.\"</i>";
 	}
-	
-	
+
 }

@@ -9,23 +9,23 @@ public class ReverseStraddle extends Skill {
 
 	public ReverseStraddle(Character self) {
 		super("Mount(Reverse)", self);
-		
+
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().mobile(getSelf())&&c.getStance().mobile(target)&&c.getStance().prone(target)&&getSelf().canAct();
+		return c.getStance().mobile(getSelf()) && c.getStance().mobile(target)
+				&& c.getStance().prone(target) && getSelf().canAct();
 	}
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(getSelf().human()){
-			c.write(getSelf(),deal(c,0,Result.normal, target));
+		if (getSelf().human()) {
+			c.write(getSelf(), deal(c, 0, Result.normal, target));
+		} else if (target.human()) {
+			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
-		else if(target.human()){
-			c.write(getSelf(),receive(c,0,Result.normal, target));
-		}
-		c.setStance(new ReverseMount(getSelf(),target));
+		c.setStance(new ReverseMount(getSelf(), target));
 		return true;
 	}
 
@@ -38,21 +38,27 @@ public class ReverseStraddle extends Skill {
 	public Skill copy(Character user) {
 		return new ReverseStraddle(user);
 	}
-	public int speed(){
+
+	@Override
+	public int speed() {
 		return 6;
 	}
+
+	@Override
 	public Tactics type(Combat c) {
 		return Tactics.positioning;
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
-		return "You straddle "+target.name()+", facing her feet.";
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
+		return "You straddle " + target.name() + ", facing her feet.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return getSelf().name()+" sits on your chest, facing your crotch.";
+	public String receive(Combat c, int damage, Result modifier,
+			Character target) {
+		return getSelf().name() + " sits on your chest, facing your crotch.";
 	}
 
 	@Override

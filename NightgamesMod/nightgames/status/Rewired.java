@@ -15,11 +15,11 @@ public class Rewired extends DurationStatus {
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
+		if (affected.human()) {
 			return "Your senses feel... wrong. It's like your sense of pleasure and pain are jumbled.";
-		}
-		else{
-			return affected.name()+" fidgets uncertainly at the alien sensation of her rewired nerves.";
+		} else {
+			return affected.name()
+					+ " fidgets uncertainly at the alien sensation of her rewired nerves.";
 		}
 	}
 
@@ -30,7 +30,8 @@ public class Rewired extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s senses is now rewired.\n", affected.nameOrPossessivePronoun());
+		return String.format("%s senses is now rewired.\n",
+				affected.nameOrPossessivePronoun());
 	}
 
 	@Override
@@ -40,7 +41,7 @@ public class Rewired extends DurationStatus {
 
 	@Override
 	public double pleasure(Combat c, double x) {
-		affected.getStamina().reduce((int)Math.round(x));
+		affected.getStamina().reduce((int) Math.round(x));
 		return 0;
 	}
 
@@ -78,7 +79,9 @@ public class Rewired extends DurationStatus {
 	public int counter() {
 		return 0;
 	}
-	public boolean lingering(){
+
+	@Override
+	public boolean lingering() {
 		return true;
 	}
 
@@ -86,11 +89,13 @@ public class Rewired extends DurationStatus {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Rewired(newAffected, getDuration());
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -99,6 +104,7 @@ public class Rewired extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Rewired(null, JSONUtils.readInteger(obj, "duration"));
 	}

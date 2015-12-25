@@ -11,7 +11,7 @@ import nightgames.global.JSONUtils;
 
 public class ArmLocked extends Status {
 	private float toughness;
-	
+
 	public ArmLocked(Character affected, float dc) {
 		super("Arm Locked", affected);
 		toughness = dc;
@@ -22,21 +22,21 @@ public class ArmLocked extends Status {
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
+		if (affected.human()) {
 			return "Her hands are entwined with your own, preventing your escape.";
-		}
-		else{
+		} else {
 			return "Your hands are entwined with hers, preventing her escape.";
 		}
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s being held down.\n", affected.subjectAction("are", "is"));
+		return String.format("%s being held down.\n",
+				affected.subjectAction("are", "is"));
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return -toughness / 10.0f;
 	}
 
@@ -101,7 +101,8 @@ public class ArmLocked extends Status {
 		return -10;
 	}
 
-	public String toString(){
+	@Override
+	public String toString() {
 		return "Bound by hands";
 	}
 
@@ -109,10 +110,13 @@ public class ArmLocked extends Status {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new ArmLocked(newAffected, Math.round(toughness));
 	}
+
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -121,6 +125,7 @@ public class ArmLocked extends Status {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new ArmLocked(null, JSONUtils.readFloat(obj, "toughness"));
 	}

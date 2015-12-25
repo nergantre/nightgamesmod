@@ -14,21 +14,21 @@ public class Cynical extends DurationStatus {
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
+		if (affected.human()) {
 			return "You're feeling more cynical than usual and won't fall for any mind games.";
-		}
-		else{
-			return affected.name()+" has a cynical edge in her eyes.";
+		} else {
+			return affected.name() + " has a cynical edge in her eyes.";
 		}
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now cynical towards future mind games.\n", affected.subjectAction("are", "is"));
+		return String.format("%s now cynical towards future mind games.\n",
+				affected.subjectAction("are", "is"));
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return 1;
 	}
 
@@ -76,6 +76,7 @@ public class Cynical extends DurationStatus {
 	public int spendmojo(int x) {
 		return 0;
 	}
+
 	@Override
 	public int counter() {
 		return 0;
@@ -85,11 +86,13 @@ public class Cynical extends DurationStatus {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Cynical(newAffected);
 	}
-	
+
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -97,6 +100,7 @@ public class Cynical extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Cynical(null);
 	}

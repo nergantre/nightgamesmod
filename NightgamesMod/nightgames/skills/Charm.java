@@ -16,7 +16,8 @@ public class Charm extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canRespond()&&c.getStance().facing()&&!target.wary();
+		return getSelf().canRespond() && c.getStance().facing()
+				&& !target.wary();
 	}
 
 	@Override
@@ -26,53 +27,60 @@ public class Charm extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(getSelf().human()){
-			c.write(getSelf(),deal(c,0,Result.normal, target));
+		if (getSelf().human()) {
+			c.write(getSelf(), deal(c, 0, Result.normal, target));
+		} else if (target.human()) {
+			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
-		else if(target.human()){
-			c.write(getSelf(),receive(c,0,Result.normal, target));
-		}
-		double mag = 2+Global.random(4) + 5 * getSelf().body.getCharismaBonus(target);
-		if(target.has(Trait.imagination)){
+		double mag = 2 + Global.random(4)
+				+ 5 * getSelf().body.getCharismaBonus(target);
+		if (target.has(Trait.imagination)) {
 			mag += 4;
 		}
-		int m = (int) (Math.round(mag));
+		int m = (int) Math.round(mag);
 		target.tempt(c, getSelf(), m);
-		double chance = (5 + Math.sqrt(Math.max(0, mag)))/10.0;
+		double chance = (5 + Math.sqrt(Math.max(0, mag))) / 10.0;
 		double roll = Global.randomdouble();
-		if(chance > roll){
+		if (chance > roll) {
 			c.write(target.subjectAction("were", "was") + " charmed.");
 			target.add(c, new Charmed(target));
-			target.emote(Emotion.horny,10);
+			target.emote(Emotion.horny, 10);
 			getSelf().emote(Emotion.confident, 20);
 		}
-		target.emote(Emotion.horny,10);
+		target.emote(Emotion.horny, 10);
 		return true;
 	}
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Cunning)>=8 && user.get(Attribute.Seduction) > 16;
+		return user.get(Attribute.Cunning) >= 8
+				&& user.get(Attribute.Seduction) > 16;
 	}
 
 	@Override
 	public Skill copy(Character user) {
 		return new Charm(user);
 	}
-	public int speed(){
+
+	@Override
+	public int speed() {
 		return 9;
 	}
+
+	@Override
 	public Tactics type(Combat c) {
 		return Tactics.pleasure;
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
 		return "You flash a dazzling smile at " + target.getName() + ".";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
+	public String receive(Combat c, int damage, Result modifier,
+			Character target) {
 		return getSelf().getName() + " flashes a dazzling smile at you.";
 	}
 

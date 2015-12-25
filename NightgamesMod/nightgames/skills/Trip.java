@@ -13,25 +13,26 @@ public class Trip extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && c.getStance().mobile(getSelf())&&!c.getStance().prone(target)&&c.getStance().front(getSelf())&&getSelf().canAct();
+		return !target.wary() && c.getStance().mobile(getSelf())
+				&& !c.getStance().prone(target)
+				&& c.getStance().front(getSelf()) && getSelf().canAct();
 	}
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy(c)) && getSelf().check(Attribute.Cunning, target.knockdownDC())){
-			if(getSelf().human()){
-				c.write(getSelf(),deal(c,0,Result.normal, target));
-			}
-			else if(target.human()){
-				c.write(getSelf(),receive(c,0,Result.normal, target));
+		if (target.roll(this, c, accuracy(c))
+				&& getSelf().check(Attribute.Cunning, target.knockdownDC())) {
+			if (getSelf().human()) {
+				c.write(getSelf(), deal(c, 0, Result.normal, target));
+			} else if (target.human()) {
+				c.write(getSelf(), receive(c, 0, Result.normal, target));
 			}
 			target.add(c, new Falling(target));
 		} else {
-			if(getSelf().human()){
-				c.write(getSelf(),deal(c,0,Result.miss, target));
-			}
-			else if(target.human()){
-				c.write(getSelf(),receive(c,0,Result.miss, target));
+			if (getSelf().human()) {
+				c.write(getSelf(), deal(c, 0, Result.miss, target));
+			} else if (target.human()) {
+				c.write(getSelf(), receive(c, 0, Result.miss, target));
 			}
 			return false;
 		}
@@ -45,39 +46,52 @@ public class Trip extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Cunning)>=16;
+		return user.get(Attribute.Cunning) >= 16;
 	}
 
 	@Override
 	public Skill copy(Character user) {
 		return new Trip(user);
 	}
-	public int speed(){
+
+	@Override
+	public int speed() {
 		return 2;
 	}
-	public int accuracy(Combat c){
-		return Math.round(Math.max(Math.min(150, 2.5f * (getSelf().get(Attribute.Cunning)
-				- c.getOther(getSelf()).get(Attribute.Cunning)) + 75), 40));
+
+	@Override
+	public int accuracy(Combat c) {
+		return Math.round(Math.max(Math.min(150,
+				2.5f * (getSelf().get(Attribute.Cunning)
+						- c.getOther(getSelf()).get(Attribute.Cunning)) + 75),
+				40));
 	}
+
+	@Override
 	public Tactics type(Combat c) {
 		return Tactics.positioning;
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
-		if(modifier==Result.miss){
-			return "You try to trip "+target.name()+", but she keeps her balance.";
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
+		if (modifier == Result.miss) {
+			return "You try to trip " + target.name()
+					+ ", but she keeps her balance.";
 		} else {
-			return "You catch "+target.name()+" off balance and trip her.";
+			return "You catch " + target.name() + " off balance and trip her.";
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
-		if(modifier==Result.miss){
-			return getSelf().name()+" hooks your ankle, but you recover without falling.";
+	public String receive(Combat c, int damage, Result modifier,
+			Character target) {
+		if (modifier == Result.miss) {
+			return getSelf().name()
+					+ " hooks your ankle, but you recover without falling.";
 		} else {
-			return getSelf().name()+" takes your feet out from under you and sends you sprawling to the floor.";
+			return getSelf().name()
+					+ " takes your feet out from under you and sends you sprawling to the floor.";
 		}
 	}
 

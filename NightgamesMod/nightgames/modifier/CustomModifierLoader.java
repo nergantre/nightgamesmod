@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -99,7 +97,7 @@ public final class CustomModifierLoader {
 					"All modifiers must have an object 'value'");
 		}
 		JSONObject value = (JSONObject) obj.get("value");
-		return (ActionModifier) template.instance(value);
+		return template.instance(value);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -117,7 +115,7 @@ public final class CustomModifierLoader {
 					"All modifiers must have an object 'value'");
 		}
 		JSONObject value = (JSONObject) obj.get("value");
-		return (SkillModifier) template.instance(value);
+		return template.instance(value);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -135,7 +133,7 @@ public final class CustomModifierLoader {
 					"All modifiers must have an object 'value'");
 		}
 		JSONObject value = (JSONObject) obj.get("value");
-		return (ClothingModifier) template.instance(value);
+		return template.instance(value);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -153,7 +151,7 @@ public final class CustomModifierLoader {
 					"All modifiers must have an object 'value'");
 		}
 		JSONObject value = (JSONObject) obj.get("value");
-		return (ItemModifier) template.instance(value);
+		return template.instance(value);
 	}
 
 	private static ActionModifier readActionModifiers(JSONArray arr) {

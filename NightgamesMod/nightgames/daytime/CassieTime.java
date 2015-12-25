@@ -25,21 +25,22 @@ public class CassieTime extends BaseNPCTime {
 		giftString = "\"A present? You shouldn't have!\"";
 		transformationOptionString = "Enchantments";
 		transformationIntro = "[Placeholder]<br>Cassie tells you she could perhaps enchant some of your body.";
-		loveIntro = "You and Cassie lay together in her bed while she casts spells above you. Every twitch of her fingers brings a new burst of light and color. She weaves " +
-                "the colors into abstract pictures, but sometimes you can make out figures and familiar places in the patterns. There's no clear narrative or purpose emerging, Cassie " +
-                "probably just likes practicing her witchcraft. <i>\"Not everything I learned has practical applications,\"</i> she says quietly. <i>\"But it's pretty isn't it?\"</i> It is pretty. " +
-                "For a moment you're tempted to say that it's not as pretty as she is, but the line is so cliché that you can't manage it. Cassie rests her head on your chest in silence, " +
-                "but you can tell it's a silence caused by her hesitating to speak rather than having nothing to say.<p><i>\"I had a crush on you almost as long as we've known each other,\"</i> " +
-                "she says without looking at you. <i>\"You're cute, funny, and we got along so well whenever we talked. I tried to think of ways to flirt with you so you'd see me as more than " +
-                "a friend, but I don't think I'd have ever worked up the courage to try. When I saw that we had both joined the games, I can't properly describe what I felt. Embarrassed" +
-                " of course - maybe more embarrassed than I've been in years - to be seen at a sexfighting competition by someone I knew. I was also really excited about the possibility " +
-                "of being intimate with the boy I liked. Most of all, I was scared that you might look down on me when you found out what a horny girl I am.\"</i> She grasps your hand and you " +
-                "squeeze it reassuringly. You pull her towards you and kiss her softly. <i>\"I guess it turned out better than I could have hoped.\"</i><p>She sits up and looks at you, blushing " +
-                "deeply. <i>\"We can't keep lying here with my embarrassing story in the air, let's do some training.\"</i>";
+		loveIntro = "You and Cassie lay together in her bed while she casts spells above you. Every twitch of her fingers brings a new burst of light and color. She weaves "
+				+ "the colors into abstract pictures, but sometimes you can make out figures and familiar places in the patterns. There's no clear narrative or purpose emerging, Cassie "
+				+ "probably just likes practicing her witchcraft. <i>\"Not everything I learned has practical applications,\"</i> she says quietly. <i>\"But it's pretty isn't it?\"</i> It is pretty. "
+				+ "For a moment you're tempted to say that it's not as pretty as she is, but the line is so cliché that you can't manage it. Cassie rests her head on your chest in silence, "
+				+ "but you can tell it's a silence caused by her hesitating to speak rather than having nothing to say.<p><i>\"I had a crush on you almost as long as we've known each other,\"</i> "
+				+ "she says without looking at you. <i>\"You're cute, funny, and we got along so well whenever we talked. I tried to think of ways to flirt with you so you'd see me as more than "
+				+ "a friend, but I don't think I'd have ever worked up the courage to try. When I saw that we had both joined the games, I can't properly describe what I felt. Embarrassed"
+				+ " of course - maybe more embarrassed than I've been in years - to be seen at a sexfighting competition by someone I knew. I was also really excited about the possibility "
+				+ "of being intimate with the boy I liked. Most of all, I was scared that you might look down on me when you found out what a horny girl I am.\"</i> She grasps your hand and you "
+				+ "squeeze it reassuringly. You pull her towards you and kiss her softly. <i>\"I guess it turned out better than I could have hoped.\"</i><p>She sits up and looks at you, blushing "
+				+ "deeply. <i>\"We can't keep lying here with my embarrassing story in the air, let's do some training.\"</i>";
 		advTrait = Trait.witch;
 		transformationFlag = "";
 	}
 
+	@Override
 	public void buildTransformationPool() {
 		options = new ArrayList<>();
 		TransformationOption runicCock = new TransformationOption();
@@ -48,14 +49,15 @@ public class CassieTime extends BaseNPCTime {
 		runicCock.ingredients.put(Item.FaeScroll, 1);
 		runicCock.requirements.add(new BodyPartRequirement("cock"));
 		runicCock.requirements.add((c, self, other) -> {
-			return self.body.get("cock").stream().anyMatch(cock -> ((CockPart) cock).isGeneric());
+			return self.body.get("cock").stream()
+					.anyMatch(cock -> ((CockPart) cock).isGeneric());
 		});
 		runicCock.additionalRequirements = "A normal cock";
 		runicCock.option = "Runic Cock";
 		runicCock.scene = "[Placeholder]<br>Cassie enchants your cock with the power of the fairies.";
 		runicCock.effect = (c, self, other) -> {
-			Optional<BodyPart> optPart = self.body.get("cock").stream().filter(cock -> ((CockPart) cock).isGeneric())
-					.findAny();
+			Optional<BodyPart> optPart = self.body.get("cock").stream()
+					.filter(cock -> ((CockPart) cock).isGeneric()).findAny();
 			BasicCockPart target = (BasicCockPart) optPart.get();
 			self.body.remove(target);
 			self.body.add(target.applyMod(CockMod.runic));
@@ -68,7 +70,8 @@ public class CassieTime extends BaseNPCTime {
 		arcanePussy.ingredients.put(Item.FaeScroll, 1);
 		arcanePussy.requirements.add(new BodyPartRequirement("pussy"));
 		arcanePussy.requirements.add((c, self, other) -> {
-			return self.body.get("pussy").stream().anyMatch(pussy -> pussy == PussyPart.normal);
+			return self.body.get("pussy").stream()
+					.anyMatch(pussy -> pussy == PussyPart.normal);
 		});
 		arcanePussy.additionalRequirements = "A normal pussy";
 		arcanePussy.option = "Arcane Pussy";
@@ -85,10 +88,12 @@ public class CassieTime extends BaseNPCTime {
 		mouthPussy.ingredients.put(Item.FaeScroll, 1);
 		mouthPussy.requirements.add(new BodyPartRequirement("mouth"));
 		mouthPussy.requirements.add((c, self, other) -> {
-			return self.body.get("mouth").stream().anyMatch(mouth -> mouth.isGeneric());
+			return self.body.get("mouth").stream()
+					.anyMatch(mouth -> mouth.isGeneric());
 		});
 		mouthPussy.requirements.add((c, self, other) -> {
-			return other.body.get("mouth").stream().anyMatch(mouth -> mouth instanceof MouthPussyPart);
+			return other.body.get("mouth").stream()
+					.anyMatch(mouth -> mouth instanceof MouthPussyPart);
 		});
 		mouthPussy.additionalRequirements = "A normal mouth";
 		mouthPussy.option = "Mouth Pussy";
@@ -107,7 +112,8 @@ public class CassieTime extends BaseNPCTime {
 				+ "<br>You reassure her that whatever she's doing, it can't be too bad compared to the night games. Cassie sighs and waves for you to sit down."
 				+ "She starts the ritual by coating the inscribed dildo with all the potions you brought along. After starting a incomprehensible chant, she unbuttons her pants and starts fingering her pussy. "
 				+ "<i>\"I... uhhgh told you... that this would be, aah, embarassing... Nhhh!\"</i> Cassie grunts as she's masturbating. As she's nearing orgasm, she sticks the inscribed dildo inside her and clamps down on it hard."
-				+ "You can see a soft purple glow transfering itself from her body into the plastic rod. After taking a few seconds to calm down, Cassie beckons you over, <i>\"Your turn "+ player.name() +", say Ahh.\"</i>"
+				+ "You can see a soft purple glow transfering itself from her body into the plastic rod. After taking a few seconds to calm down, Cassie beckons you over, <i>\"Your turn "
+				+ player.name() + ", say Ahh.\"</i>"
 				+ "<br>You obediently sit down on the couch, and open your mouth. As expected, Cassie takes the glowing fake phallus, still coated with her juices, and starts putting it in your mouth. "
 				+ "At first, you gag a bit from having a large foreign object stuffed into your throat, but after a few moments, you start feeling your entire oral cavity reforming itself around the false cock. "
 				+ "Your teeth recede a bit back into your gums, and you feel walls of soft muscle line your mouth. Your tongue feels like it's on fire as it rapidly lengthens, filling your maw, and spilling out of your expanded lips. "
@@ -165,9 +171,12 @@ public class CassieTime extends BaseNPCTime {
 		Global.gui().choose(this, "Leave");
 	}
 
+	@Override
 	public void subVisit(String choice) {
-		if (choice == "Sex") {
-			if (npc.getAffection(player) >= 12 && (!player.has(Trait.silvertongue) || Global.random(2) == 1)) {
+		if (choice.equals("Sex")) {
+			if (npc.getAffection(player) >= 12
+					&& (!player.has(Trait.silvertongue)
+							|| Global.random(2) == 1)) {
 				Global.gui().message(
 						"Cassie eagerly invites you to her room for some intimate time. The room is quite tidy, though you're surprised to see a couple anime "
 								+ "posters on the wall. Cassie gets a little embarrassed as you look around, but she kisses you softly and leads you to the bed. You quickly strip each other "
@@ -223,8 +232,10 @@ public class CassieTime extends BaseNPCTime {
 			Daytime.train(player, npc, Attribute.Seduction);
 			npc.gainAffection(player, 1);
 			player.gainAffection(npc, 1);
-		} else if (choice == "Games") {
-			if (npc.getAffection(player) >= 16 && (!player.has(Trait.misdirection) || Global.random(2) == 1)) {
+		} else if (choice.equals("Games")) {
+			if (npc.getAffection(player) >= 16
+					&& (!player.has(Trait.misdirection)
+							|| Global.random(2) == 1)) {
 				Global.gui().message(
 						"Cassie continues to impress you with her gaming prowess, but right now, you've got a decisive advantage. You're at match point, so if either of you can "
 								+ "score again, that'll almost certainly be the game. Unfortunately for her, you've got her R&D completely locked down. If she doesn't have the agenda she needs in her "
@@ -271,8 +282,9 @@ public class CassieTime extends BaseNPCTime {
 			Daytime.train(player, npc, Attribute.Cunning);
 			npc.gainAffection(player, 1);
 			player.gainAffection(npc, 1);
-		} else if (choice == "Sparring") {
-			if (npc.getAffection(player) >= 8 && (!player.has(Trait.judonovice) || Global.random(2) == 1)) {
+		} else if (choice.equals("Sparring")) {
+			if (npc.getAffection(player) >= 8 && (!player.has(Trait.judonovice)
+					|| Global.random(2) == 1)) {
 				Global.gui().message(
 						"You and Cassie manage to procure an actual fitness room with actual wrestling mats for your sparring practice. No more rolling around in couch cushions and pillows. "
 								+ "the downside it that you don't have the same level of privacy as in your dorm room, so today you'll need to stick with just sparring. Cassie seems a lot more confident than usual "
@@ -287,7 +299,8 @@ public class CassieTime extends BaseNPCTime {
 								+ "is my answer to that.\"</i><p>She extends her hand to help you up, but instead you pull her down on top of you and kiss her tenderly. She blushes and grins at you when you break the kiss. "
 								+ "<i>\"That's not a judo technique.\"</i> She stands back up and motions for you to do the same. <i>\"Come on, I'll show you what I've learned.\"</i>");
 				if (!player.has(Trait.judonovice)) {
-					Global.gui().message("<p><b>By training with Cassie, you learned the Hip Throw skill.</b>");
+					Global.gui().message(
+							"<p><b>By training with Cassie, you learned the Hip Throw skill.</b>");
 					player.add(Trait.judonovice);
 					npc.add(Trait.judonovice);
 				}
@@ -317,7 +330,7 @@ public class CassieTime extends BaseNPCTime {
 			Daytime.train(player, npc, Attribute.Power);
 			npc.gainAffection(player, 1);
 			player.gainAffection(npc, 1);
-		} else if (choice == "Leave") {
+		} else if (choice.equals("Leave")) {
 			Global.modCounter(Flag.CassieLoneliness, -2);
 			done(true);
 		}

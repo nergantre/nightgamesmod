@@ -11,12 +11,14 @@ import org.json.simple.JSONObject;
 import nightgames.global.JSONUtils;
 import nightgames.modifier.ModifierComponent;
 
-public class ForceClothingModifier extends ClothingModifier implements ModifierComponent<ForceClothingModifier> {
+public class ForceClothingModifier extends ClothingModifier
+		implements ModifierComponent<ForceClothingModifier> {
 
 	private final Set<String> ids;
 
 	public ForceClothingModifier(String... ids) {
-		this.ids = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(ids)));
+		this.ids = Collections
+				.unmodifiableSet(new HashSet<>(Arrays.asList(ids)));
 	}
 
 	@Override
@@ -33,20 +35,24 @@ public class ForceClothingModifier extends ClothingModifier implements ModifierC
 	public String toString() {
 		return "Forced:" + ids.toString();
 	}
-	
+
 	@Override
 	public ForceClothingModifier instance(JSONObject obj) {
 		if (obj.containsKey("clothing")) {
 			Object raw = obj.get("clothing");
 			if (raw instanceof JSONArray) {
 				return new ForceClothingModifier(
-						JSONUtils.loadStringsFromArr(obj, "clothing").toArray(new String[] {}));
+						JSONUtils.loadStringsFromArr(obj, "clothing")
+								.toArray(new String[] {}));
 			} else if (raw instanceof String) {
 				return new ForceClothingModifier((String) raw);
-			} else
+			} else {
 				throw new IllegalArgumentException(
 						"'clothing' item of 'force-clothing' must be String or String Array.");
-		} else
-			throw new IllegalArgumentException("'force-clothing' element must have 'clothing' item");
+			}
+		} else {
+			throw new IllegalArgumentException(
+					"'force-clothing' element must have 'clothing' item");
+		}
 	}
 }

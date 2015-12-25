@@ -15,7 +15,7 @@ import nightgames.modifier.standard.NoModifier;
 import nightgames.modifier.standard.UnderwearOnlyModifier;
 
 public class Prematch implements Scene {
-	private Modifier	type;
+	private Modifier type;
 
 	public Prematch(Player player) {
 		Global.current = this;
@@ -53,7 +53,7 @@ public class Prematch implements Scene {
 			Global.flag(Flag.metLilly);
 			choice.add(new SceneButton("Do it"));
 			choice.add(new SceneButton("Not interested"));
-		} else if ((player.getRank() > 0) && (Global.getDate() % 30 == 0)) {
+		} else if (player.getRank() > 0 && Global.getDate() % 30 == 0) {
 			message = message
 					+ "When you arrive at the student union, you notice the girls have all "
 					+ "gathered around Lilly. As you get closer, you notice Maya, the recruiter"
@@ -78,7 +78,7 @@ public class Prematch implements Scene {
 					+ " consider this a learning opportunity and a chance to experience an "
 					+ "orgasm at the hands of a master.\"</i><p>\n\nTODO: FIX CONDITION";
 
-			this.type = new MayaModifier();
+			type = new MayaModifier();
 			choice.add(new SceneButton("Start The Match"));
 		} else {
 			message += "You arrive at the student union with about 10 minutes to spare before the start of the match. You greet each of the girls and make some idle chatter with "
@@ -102,11 +102,13 @@ public class Prematch implements Scene {
 	}
 
 	private Modifier offer(Player player) {
-		if (Global.random(10) > 4)
+		if (Global.random(10) > 4) {
 			return new NoModifier();
+		}
 		HashSet<Modifier> modifiers = Global.getModifierPool();
-		modifiers.removeIf(mod -> !mod.isApplicable() || mod.name().equals("normal"));
-		return Global.pickRandom(modifiers.toArray(new Modifier[]{}));
+		modifiers.removeIf(
+				mod -> !mod.isApplicable() || mod.name().equals("normal"));
+		return Global.pickRandom(modifiers.toArray(new Modifier[] {}));
 	}
 
 	@Override

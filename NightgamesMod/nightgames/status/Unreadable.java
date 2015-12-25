@@ -6,7 +6,6 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 
-
 public class Unreadable extends DurationStatus {
 	public Unreadable(Character affected) {
 		super("Unreadable", affected, 3);
@@ -15,8 +14,10 @@ public class Unreadable extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now unreadable.\n", affected.subjectAction("are", "is"));
+		return String.format("%s now unreadable.\n",
+				affected.subjectAction("are", "is"));
 	}
+
 	@Override
 	public String describe(Combat c) {
 		return null;
@@ -28,10 +29,10 @@ public class Unreadable extends DurationStatus {
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return 1f;
 	}
-	
+
 	@Override
 	public int regen(Combat c) {
 		super.regen(c);
@@ -77,6 +78,7 @@ public class Unreadable extends DurationStatus {
 	public int spendmojo(int x) {
 		return 0;
 	}
+
 	@Override
 	public int counter() {
 		return 0;
@@ -86,11 +88,13 @@ public class Unreadable extends DurationStatus {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Unreadable(newAffected);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -98,6 +102,7 @@ public class Unreadable extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Unreadable(null);
 	}

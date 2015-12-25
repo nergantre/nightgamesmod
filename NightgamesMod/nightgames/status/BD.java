@@ -14,21 +14,21 @@ public class BD extends DurationStatus {
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
+		if (affected.human()) {
 			return "Fantasies of being tied up continue to dance through your head.";
-		}
-		else{
-			return affected.name()+" is affected by a brief bondage fetish.";
+		} else {
+			return affected.name() + " is affected by a brief bondage fetish.";
 		}
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now affected by a bondage fetish.\n", affected.subjectAction("are", "is"));
+		return String.format("%s now affected by a bondage fetish.\n",
+				affected.subjectAction("are", "is"));
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return -1;
 	}
 
@@ -39,8 +39,8 @@ public class BD extends DurationStatus {
 
 	@Override
 	public void tick(Combat c) {
-		if(affected.bound()){
-			affected.arouse(affected.getArousal().max()/20, c);
+		if (affected.bound()) {
+			affected.arouse(affected.getArousal().max() / 20, c);
 		}
 	}
 
@@ -93,11 +93,13 @@ public class BD extends DurationStatus {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new BD(newAffected);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -105,6 +107,7 @@ public class BD extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new BD(null);
 	}

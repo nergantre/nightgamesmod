@@ -12,6 +12,7 @@ public class Winded extends DurationStatus {
 		super("Winded", affected, 2);
 		flag(Stsflag.stunned);
 	}
+
 	public Winded(Character affected, int duration) {
 		super("Winded", affected, duration);
 		flag(Stsflag.stunned);
@@ -19,26 +20,27 @@ public class Winded extends DurationStatus {
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
+		if (affected.human()) {
 			return "You need a moment to catch your breath";
-		}
-		else{
-			return affected.name()+" is panting and trying to recover";
+		} else {
+			return affected.name() + " is panting and trying to recover";
 		}
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now winded.\n", affected.subjectAction("are", "is"));
+		return String.format("%s now winded.\n",
+				affected.subjectAction("are", "is"));
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return -.3f;
 	}
+
 	@Override
 	public int mod(Attribute a) {
-		if(a==Attribute.Power||a==Attribute.Speed){
+		if (a == Attribute.Power || a == Attribute.Speed) {
 			return -2;
 		} else {
 			return 0;
@@ -55,8 +57,8 @@ public class Winded extends DurationStatus {
 	@Override
 	public int regen(Combat c) {
 		super.regen(c);
-		affected.emote(Emotion.nervous,15);
-		affected.emote(Emotion.angry,10);
+		affected.emote(Emotion.nervous, 15);
+		affected.emote(Emotion.angry, 10);
 		return 0;
 	}
 
@@ -99,19 +101,23 @@ public class Winded extends DurationStatus {
 	public int spendmojo(int x) {
 		return 0;
 	}
+
 	@Override
 	public int counter() {
 		return -10;
 	}
+
 	@Override
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Winded(newAffected);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -119,6 +125,7 @@ public class Winded extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Winded(null);
 	}

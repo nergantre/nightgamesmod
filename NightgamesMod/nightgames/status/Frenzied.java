@@ -82,7 +82,8 @@ public class Frenzied extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s mind blanks, leaving only the bestial need to breed.",
+		return String.format(
+				"%s mind blanks, leaving only the bestial need to breed.",
 				affected.nameOrPossessivePronoun());
 	}
 
@@ -91,19 +92,23 @@ public class Frenzied extends DurationStatus {
 		if (affected.human()) {
 			return "You cannot think about anything other than fucking all those around.";
 		} else {
-			return String.format("%s has a frenzied look in %s eyes, interested in nothing but raw, hard sex.",
+			return String.format(
+					"%s has a frenzied look in %s eyes, interested in nothing but raw, hard sex.",
 					affected.name(), affected.possessivePronoun());
 		}
 	}
 
 	@Override
 	public int mod(Attribute a) {
-		if (a == Attribute.Cunning)
+		if (a == Attribute.Cunning) {
 			return -5;
-		if (a == Attribute.Power)
+		}
+		if (a == Attribute.Power) {
 			return 8;
-		if (a == Attribute.Animism)
+		}
+		if (a == Attribute.Animism) {
 			return 8;
+		}
 		return 0;
 	}
 
@@ -157,7 +162,7 @@ public class Frenzied extends DurationStatus {
 
 	@Override
 	public int gainmojo(int x) {
-		return (int) (x*1.25);
+		return (int) (x * 1.25);
 	}
 
 	@Override
@@ -177,12 +182,13 @@ public class Frenzied extends DurationStatus {
 
 	@Override
 	public void tick(Combat c) {
-		if (!c.getStance().inserted(affected))
+		if (!c.getStance().inserted(affected)) {
 			affected.removelist.add(this);
-		else
+		} else {
 			setDuration(getDuration() + 2);
+		}
 	}
-	
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Frenzied(newAffected, getDuration());
@@ -192,10 +198,12 @@ public class Frenzied extends DurationStatus {
 	public Collection<Skill> allowedSkills(Combat c) {
 		// Gather the preferred skills for which the character meets the
 		// requirements
-		return FUCK_SKILLS.stream().filter(s -> s.requirements(c, affected, c.getOther(affected))).map(s -> s.copy(affected))
-				.collect(Collectors.toSet());
+		return FUCK_SKILLS.stream()
+				.filter(s -> s.requirements(c, affected, c.getOther(affected)))
+				.map(s -> s.copy(affected)).collect(Collectors.toSet());
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -204,6 +212,7 @@ public class Frenzied extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Frenzied(null, JSONUtils.readInteger(obj, "duration"));
 	}

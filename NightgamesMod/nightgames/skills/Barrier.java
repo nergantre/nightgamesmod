@@ -14,14 +14,15 @@ public class Barrier extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Arcane)>=18;
+		return user.get(Attribute.Arcane) >= 18;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !c.getStance().sub(getSelf())&&!c.getStance().prone(getSelf())&&!c.getStance().prone(target)&&getSelf().canAct();
+		return !c.getStance().sub(getSelf()) && !c.getStance().prone(getSelf())
+				&& !c.getStance().prone(target) && getSelf().canAct();
 	}
-	
+
 	@Override
 	public int getMojoCost(Combat c) {
 		return 10;
@@ -34,11 +35,10 @@ public class Barrier extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(getSelf().human()){
-			c.write(getSelf(),deal(c,0,Result.normal, target));
-		}
-		else if(target.human()){
-			c.write(getSelf(),receive(c,0,Result.normal, target));
+		if (getSelf().human()) {
+			c.write(getSelf(), deal(c, 0, Result.normal, target));
+		} else if (target.human()) {
+			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
 		getSelf().add(c, new Shield(getSelf(), .5));
 		return true;
@@ -55,13 +55,16 @@ public class Barrier extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
 		return "You conjure a simple magic barrier around yourself, reducing physical damage. Unfortunately, it will do nothing against a gentle caress.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return getSelf().name()+" holds a hand in front of her and you see a magical barrier appear briefly, before it becomes invisible.";
+	public String receive(Combat c, int damage, Result modifier,
+			Character target) {
+		return getSelf().name()
+				+ " holds a hand in front of her and you see a magical barrier appear briefly, before it becomes invisible.";
 	}
 
 }

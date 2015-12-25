@@ -22,7 +22,7 @@ public class Stumble extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (getSelf().canAct()) && (c.getStance().en == Stance.neutral);
+		return getSelf().canAct() && c.getStance().en == Stance.neutral;
 	}
 
 	@Override

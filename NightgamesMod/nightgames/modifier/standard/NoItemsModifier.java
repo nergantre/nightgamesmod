@@ -7,7 +7,7 @@ import nightgames.modifier.item.BanConsumablesModifier;
 public class NoItemsModifier extends BaseModifier {
 
 	public NoItemsModifier() {
-		this.items = new BanConsumablesModifier();
+		items = new BanConsumablesModifier();
 	}
 
 	@Override

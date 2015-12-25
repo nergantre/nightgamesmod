@@ -15,27 +15,27 @@ public class WaterStance extends DurationStatus {
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
+		if (affected.human()) {
 			return "You're as smooth and responsive as flowing water.";
-		}
-		else{
-			return affected.name()+" continues her flowing movements.";
+		} else {
+			return affected.name() + " continues her flowing movements.";
 		}
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now in a water stance.\n", affected.subjectAction("are", "is"));
+		return String.format("%s now in a water stance.\n",
+				affected.subjectAction("are", "is"));
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return 1.0f;
 	}
 
 	@Override
 	public int mod(Attribute a) {
-		if(Attribute.Power==a){
+		if (Attribute.Power == a) {
 			return -2;
 		}
 		return 0;
@@ -44,7 +44,7 @@ public class WaterStance extends DurationStatus {
 	@Override
 	public int regen(Combat c) {
 		super.regen(c);
-		affected.emote(Emotion.confident,5);
+		affected.emote(Emotion.confident, 5);
 		return 0;
 	}
 
@@ -97,11 +97,13 @@ public class WaterStance extends DurationStatus {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new WaterStance(newAffected);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -109,6 +111,7 @@ public class WaterStance extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new WaterStance(null);
 	}

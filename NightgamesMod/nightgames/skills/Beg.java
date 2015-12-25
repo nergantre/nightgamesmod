@@ -31,9 +31,9 @@ public class Beg extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if ((Global.random(30) <= getSelf().get(Attribute.Submissive)
-				- target.get(Attribute.Cunning) / 2)
-				&& (!target.is(Stsflag.cynical))) {
+		if (Global.random(30) <= getSelf().get(Attribute.Submissive)
+				- target.get(Attribute.Cunning) / 2
+				&& !target.is(Stsflag.cynical)) {
 			target.add(new Charmed(target));
 			if (getSelf().human()) {
 				c.write(deal(c, 0, Result.normal, target));

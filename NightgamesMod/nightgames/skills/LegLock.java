@@ -16,28 +16,28 @@ public class LegLock extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().dom(getSelf())&&c.getStance().reachBottom(getSelf())&&c.getStance().prone(target)&&getSelf().canAct()&&!c.getStance().connected();
+		return c.getStance().dom(getSelf())
+				&& c.getStance().reachBottom(getSelf())
+				&& c.getStance().prone(target) && getSelf().canAct()
+				&& !c.getStance().connected();
 	}
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(target.roll(this, c, accuracy(c))){
-			if(getSelf().human()){
-				c.write(getSelf(),deal(c,0,Result.normal, target));
-			}
-			else if(target.human()){
-				c.write(getSelf(),receive(c,0,Result.normal, target));
+		if (target.roll(this, c, accuracy(c))) {
+			if (getSelf().human()) {
+				c.write(getSelf(), deal(c, 0, Result.normal, target));
+			} else if (target.human()) {
+				c.write(getSelf(), receive(c, 0, Result.normal, target));
 			}
 			target.add(new Abuff(target, Attribute.Speed, -2, 5));
-			target.pain(c, Global.random(10)+7);
-			target.emote(Emotion.angry,15);
-		}
-		else{
-			if(getSelf().human()){
-				c.write(getSelf(),deal(c,0,Result.miss, target));
-			}
-			else if(target.human()){
-				c.write(getSelf(),receive(c,0,Result.miss, target));
+			target.pain(c, Global.random(10) + 7);
+			target.emote(Emotion.angry, 15);
+		} else {
+			if (getSelf().human()) {
+				c.write(getSelf(), deal(c, 0, Result.miss, target));
+			} else if (target.human()) {
+				c.write(getSelf(), receive(c, 0, Result.miss, target));
 			}
 			return false;
 		}
@@ -46,37 +46,44 @@ public class LegLock extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Power)>=24;
+		return user.get(Attribute.Power) >= 24;
 	}
 
 	@Override
 	public Skill copy(Character user) {
 		return new LegLock(user);
 	}
-	public int speed(){
+
+	@Override
+	public int speed() {
 		return 2;
 	}
+
+	@Override
 	public Tactics type(Combat c) {
 		return Tactics.damage;
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
-		if(modifier==Result.miss){
-			return "You grab "+target.name()+"'s leg, but she kicks free.";
-		}
-		else{
-			return "You take hold of "+target.name()+"'s ankle and force her leg to extend painfully.";
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
+		if (modifier == Result.miss) {
+			return "You grab " + target.name() + "'s leg, but she kicks free.";
+		} else {
+			return "You take hold of " + target.name()
+					+ "'s ankle and force her leg to extend painfully.";
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
-		if(modifier==Result.miss){
-			return getSelf().name()+" tries to put you in a leglock, but you slip away.";
-		}
-		else{
-			return getSelf().name()+" pulls your leg across her in a painful submission hold.";
+	public String receive(Combat c, int damage, Result modifier,
+			Character target) {
+		if (modifier == Result.miss) {
+			return getSelf().name()
+					+ " tries to put you in a leglock, but you slip away.";
+		} else {
+			return getSelf().name()
+					+ " pulls your leg across her in a painful submission hold.";
 		}
 	}
 
@@ -84,6 +91,7 @@ public class LegLock extends Skill {
 	public String describe(Combat c) {
 		return "A submission hold on your opponent's leg";
 	}
+
 	@Override
 	public boolean makesContact() {
 		return true;

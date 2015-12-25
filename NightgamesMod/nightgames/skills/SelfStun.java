@@ -31,7 +31,7 @@ public class SelfStun extends Skill {
 		getSelf().add(c, new Winded(getSelf()));
 		if (getSelf().human()) {
 			c.write(getSelf(), deal(c, 0, Result.normal, target));
-		} else if(getSelf().human()) {
+		} else if (getSelf().human()) {
 			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
 		return true;
@@ -48,12 +48,14 @@ public class SelfStun extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
 		return "You stun yourself. Yup.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
+	public String receive(Combat c, int damage, Result modifier,
+			Character target) {
 		return "She stuns herself. Yup.";
 	}
 

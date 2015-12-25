@@ -4,6 +4,11 @@ import nightgames.characters.Character;
 
 public class Wait extends Action {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -644996487174479671L;
+
 	public Wait() {
 		super("Wait");
 	}

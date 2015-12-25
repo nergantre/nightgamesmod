@@ -14,21 +14,22 @@ public class Aphrodisiac extends Skill {
 		super("Use Aphrodisiac", self);
 	}
 
+	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
 		return true;
 	}
 
+	@Override
 	public boolean usable(Combat c, Character target) {
-		return (c.getStance().mobile(this.getSelf()))
-				&& (this.getSelf().canAct())
-				&& this.getSelf()
-						.has(Item.Aphrodisiac)
-				|| (this.getSelf().hasPussy()
+		return c.getStance().mobile(getSelf()) && getSelf().canAct()
+				&& getSelf().has(Item.Aphrodisiac)
+				|| getSelf().hasPussy()
 						&& getSelf().body.getRandomPussy() == PussyPart.succubus
-						&& this.getSelf().getArousal().get() >= 10
-						&& !c.getStance().prone(this.getSelf()));
+						&& getSelf().getArousal().get() >= 10
+						&& !c.getStance().prone(getSelf());
 	}
 
+	@Override
 	public boolean resolve(Combat c, Character target) {
 		int magnitude = Global.random(5) + 15;
 		if (getSelf().hasPussy()
@@ -42,18 +43,18 @@ public class Aphrodisiac extends Skill {
 			} else if (target.human()) {
 				c.write(getSelf(), receive(c, 0, Result.special, getSelf()));
 			}
-			this.getSelf().consume(Item.Aphrodisiac, 1);
+			getSelf().consume(Item.Aphrodisiac, 1);
 			target.arouse(magnitude, c);
 			target.emote(Emotion.horny, 20);
 		} else if (target.roll(this, c, accuracy(c))) {
-			if (this.getSelf().human()) {
+			if (getSelf().human()) {
 				c.write(getSelf(), deal(c, magnitude, Result.normal, target));
 			} else {
 				c.write(getSelf(),
-						receive(c, magnitude, Result.normal, this.getSelf()));
+						receive(c, magnitude, Result.normal, getSelf()));
 			}
 			target.emote(Emotion.horny, 20);
-			this.getSelf().consume(Item.Aphrodisiac, 1);
+			getSelf().consume(Item.Aphrodisiac, 1);
 			target.arouse(magnitude, c);
 		} else {
 			if (getSelf().human()) {
@@ -66,14 +67,17 @@ public class Aphrodisiac extends Skill {
 		return true;
 	}
 
+	@Override
 	public Skill copy(Character user) {
 		return new Aphrodisiac(user);
 	}
 
+	@Override
 	public Tactics type(Combat c) {
 		return Tactics.pleasure;
 	}
 
+	@Override
 	public String deal(Combat c, int damage, Result modifier,
 			Character target) {
 		if (modifier == Result.special) {
@@ -86,11 +90,11 @@ public class Aphrodisiac extends Skill {
 		} else if (modifier == Result.strong) {
 			return getSelf().subjectAction("dip", "dips") + " a finger "
 					+ (getSelf().crotchAvailable() ? ""
-							: ("under " + getSelf().possessivePronoun() + " "
+							: "under " + getSelf().possessivePronoun() + " "
 									+ getSelf().getOutfit()
 											.getTopOfSlot(ClothingSlot.bottom)
 											.getName()
-									+ " and "))
+									+ " and ")
 					+ "into " + getSelf().possessivePronoun() + " pussy. Once "
 					+ getSelf().subjectAction("have", "has")
 					+ " collected a drop of " + getSelf().possessivePronoun()
@@ -113,6 +117,7 @@ public class Aphrodisiac extends Skill {
 
 	}
 
+	@Override
 	public String receive(Combat c, int damage, Result modifier,
 			Character target) {
 		if (modifier == Result.miss) {
@@ -127,11 +132,11 @@ public class Aphrodisiac extends Skill {
 		} else if (modifier == Result.strong) {
 			return getSelf().subjectAction("dip", "dips") + " a finger "
 					+ (getSelf().crotchAvailable() ? ""
-							: ("under " + getSelf().possessivePronoun() + " "
+							: "under " + getSelf().possessivePronoun() + " "
 									+ getSelf().getOutfit()
 											.getTopOfSlot(ClothingSlot.bottom)
 											.getName()
-									+ " and "))
+									+ " and ")
 					+ "into " + getSelf().possessivePronoun() + " pussy. Once "
 					+ getSelf().subjectAction("have", "has")
 					+ " collected a drop of " + getSelf().possessivePronoun()
@@ -151,6 +156,7 @@ public class Aphrodisiac extends Skill {
 		}
 	}
 
+	@Override
 	public String describe(Combat c) {
 		return "Throws a bottle of Aphrodisiac at the opponent";
 	}

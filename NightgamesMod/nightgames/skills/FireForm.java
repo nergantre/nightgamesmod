@@ -7,7 +7,7 @@ import nightgames.combat.Result;
 import nightgames.status.FireStance;
 import nightgames.status.Stsflag;
 
-public class FireForm extends Skill{
+public class FireForm extends Skill {
 
 	public FireForm(Character self) {
 		super("Fire Form", self);
@@ -15,12 +15,13 @@ public class FireForm extends Skill{
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Ki)>=15;
+		return user.get(Attribute.Ki) >= 15;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&!c.getStance().sub(getSelf())&&!getSelf().is(Stsflag.form);
+		return getSelf().canAct() && !c.getStance().sub(getSelf())
+				&& !getSelf().is(Stsflag.form);
 	}
 
 	@Override
@@ -30,11 +31,10 @@ public class FireForm extends Skill{
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(getSelf().human()){
-			c.write(getSelf(),deal(c,0,Result.normal, target));
-		}
-		else if(target.human()){
-			c.write(getSelf(),receive(c,0,Result.normal, target));
+		if (getSelf().human()) {
+			c.write(getSelf(), deal(c, 0, Result.normal, target));
+		} else if (target.human()) {
+			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
 		getSelf().add(c, new FireStance(getSelf()));
 		return true;
@@ -51,13 +51,16 @@ public class FireForm extends Skill{
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
 		return "You let your ki burn, wearing down your body, but enhancing your spirit.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return getSelf().name()+" powers up and you can almost feel the energy radiating from her.";
+	public String receive(Combat c, int damage, Result modifier,
+			Character target) {
+		return getSelf().name()
+				+ " powers up and you can almost feel the energy radiating from her.";
 	}
 
 }

@@ -21,7 +21,11 @@ public class VibroTease extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().dom(getSelf())&&(c.getStance().en==Stance.anal)&&getSelf().has(Trait.strapped)&&c.getStance().inserted(getSelf())&&getSelf().has(Item.Strapon2);
+		return getSelf().canAct() && c.getStance().dom(getSelf())
+				&& c.getStance().en == Stance.anal
+				&& getSelf().has(Trait.strapped)
+				&& c.getStance().inserted(getSelf())
+				&& getSelf().has(Item.Strapon2);
 	}
 
 	@Override
@@ -31,16 +35,16 @@ public class VibroTease extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(getSelf().human()){
-			c.write(getSelf(),deal(c,0,Result.normal, target));
-		}
-		else{
-			if(target.human()){
-				c.write(getSelf(),receive(c,0,Result.normal, target));
+		if (getSelf().human()) {
+			c.write(getSelf(), deal(c, 0, Result.normal, target));
+		} else {
+			if (target.human()) {
+				c.write(getSelf(), receive(c, 0, Result.normal, target));
 			}
 		}
 		int m = 10 + Global.random(5);
-		target.body.pleasure(getSelf(), null, target.body.getRandom("ass"), m, c);
+		target.body.pleasure(getSelf(), null, target.body.getRandom("ass"), m,
+				c);
 		getSelf().arouse(2, c);
 		return true;
 	}
@@ -49,6 +53,7 @@ public class VibroTease extends Skill {
 	public int getMojoBuilt(Combat c) {
 		return 15;
 	}
+
 	@Override
 	public Skill copy(Character user) {
 		return new VibroTease(user);
@@ -60,14 +65,17 @@ public class VibroTease extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
 		return "";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return getSelf().name()+" cranks up the vibration to maximum level which stirs up your insides. " +
-				"She teasingly pokes the tip against your prostate which causes your limbs to get shaky from the pleasure.";
+	public String receive(Combat c, int damage, Result modifier,
+			Character target) {
+		return getSelf().name()
+				+ " cranks up the vibration to maximum level which stirs up your insides. "
+				+ "She teasingly pokes the tip against your prostate which causes your limbs to get shaky from the pleasure.";
 	}
 
 	@Override

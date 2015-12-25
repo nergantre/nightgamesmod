@@ -4,10 +4,15 @@ import nightgames.areas.Area;
 import nightgames.characters.Character;
 
 public class Move extends Action {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6111866290941387475L;
 	private Area destination;
+
 	public Move(Area destination) {
-		super("Move("+destination.name+")");
-		this.destination=destination;
+		super("Move(" + destination.name + ")");
+		this.destination = destination;
 	}
 
 	@Override
@@ -20,7 +25,8 @@ public class Move extends Action {
 		user.travel(destination);
 		return destination.id();
 	}
-	public Area getDestination(){
+
+	public Area getDestination() {
 		return destination;
 	}
 

@@ -65,13 +65,14 @@ public class TailSuck extends Skill {
 			} else if (target.human()) {
 				c.write(getSelf(), receive(c, 0, Result.miss, target));
 			}
-			if (target.hasBalls())
+			if (target.hasBalls()) {
 				target.body.pleasure(getSelf(),
 						getSelf().body.getRandom("tail"),
 						target.body.getRandom("balls"), Global.random(5) + 5,
 						c);
-			else
+			} else {
 				target.pleasure(Global.random(5) + 5, c);
+			}
 			return false;
 		}
 		return true;
@@ -165,7 +166,7 @@ public class TailSuck extends Skill {
 	}
 
 	private int power() {
-		return (int) (1 + (double) getSelf().get(Attribute.Dark) / 20.0);
+		return (int) (1 + getSelf().get(Attribute.Dark) / 20.0);
 	}
 
 }

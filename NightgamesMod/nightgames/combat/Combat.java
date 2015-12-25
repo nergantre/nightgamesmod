@@ -40,7 +40,7 @@ import nightgames.status.Winded;
 
 public class Combat extends Observable implements Serializable, Cloneable {
 	/**
-	 * 
+	 *
 	 */
 	private static final long		serialVersionUID	= -8279523341570263846L;
 	public Character				p1;
@@ -107,7 +107,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 		if (!(p1.human() || p2.human())) {
 			automate();
 		}
-		this.updateMessage();
+		updateMessage();
 	}
 
 	public CombatantData getCombatantData(Character character) {
@@ -226,7 +226,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 			p2.evalChallenges(this, null);
 			p2.draw(this, state);
 			phase = 2;
-			this.updateMessage();
+			updateMessage();
 			if (!(p1.human() || p2.human())) {
 				end();
 			}
@@ -239,7 +239,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 			p2.victory(this, state);
 			doVictory(p2, p1);
 			phase = 2;
-			this.updateMessage();
+			updateMessage();
 			if (!(p1.human() || p2.human())) {
 				end();
 			}
@@ -252,7 +252,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 			p1.victory(this, state);
 			doVictory(p1, p2);
 			phase = 2;
-			this.updateMessage();
+			updateMessage();
 			if (!(p1.human() || p2.human())) {
 				end();
 			}
@@ -268,7 +268,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 				p2.victory(this, state);
 				doVictory(p2, p1);
 				phase = 2;
-				this.updateMessage();
+				updateMessage();
 				if (!(p1.human() || p2.human())) {
 					end();
 				}
@@ -282,7 +282,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 				p1.victory(this, state);
 				doVictory(p1, p2);
 				phase = 2;
-				this.updateMessage();
+				updateMessage();
 				if (!(p2.human() || p1.human())) {
 					end();
 				}
@@ -294,7 +294,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 				}
 				p2.draw(this, state);
 				phase = 2;
-				this.updateMessage();
+				updateMessage();
 				if (!(p1.human() || p2.human())) {
 					end();
 				}
@@ -324,7 +324,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 		p1act = null;
 		p2act = null;
 		p1.act(this);
-		this.updateAndClearMessage();
+		updateAndClearMessage();
 	}
 
 	private Result eval() {
@@ -338,11 +338,11 @@ public class Combat extends Observable implements Serializable, Cloneable {
 		}
 	}
 
-	Skill worshipSkills[] = { new BreastWorship(null), new CockWorship(null),
-			new FootWorship(null), new PussyWorship(null),
-			new Anilingus(null), };
+	Skill			worshipSkills[]	= { new BreastWorship(null),
+			new CockWorship(null), new FootWorship(null),
+			new PussyWorship(null), new Anilingus(null), };
 
-	public boolean combatMessageChanged;
+	public boolean	combatMessageChanged;
 
 	private Skill checkWorship(Character self, Character other, Skill def) {
 		if (other.has(Trait.objectOfWorship)
@@ -406,12 +406,12 @@ public class Combat extends Observable implements Serializable, Cloneable {
 			checkStamina(p2);
 			getStance().decay(this);
 			getStance().checkOngoing(this);
-			this.phase = 0;
+			phase = 0;
 			if (!(p1.human() || p2.human())) {
 				timer++;
 				turn();
 			}
-			this.updateMessage();
+			updateMessage();
 		}
 	}
 
@@ -448,7 +448,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 			checkStamina(p2);
 			getStance().decay(this);
 			getStance().checkOngoing(this);
-			this.phase = 0;
+			phase = 0;
 		}
 		if (p1.checkLoss() && p2.checkLoss()) {
 			state = eval();
@@ -554,7 +554,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 
 	public void clear() {
 		message = "";
-		this.updateMessage();
+		updateMessage();
 	}
 
 	public void write(String text) {
@@ -569,15 +569,15 @@ public class Combat extends Observable implements Serializable, Cloneable {
 
 	public void updateMessage() {
 		combatMessageChanged = true;
-		this.setChanged();
+		setChanged();
 		this.notifyObservers();
-		this.setChanged();
+		setChanged();
 	}
 
 	public void updateAndClearMessage() {
 		Global.gui().clearText();
 		combatMessageChanged = true;
-		this.setChanged();
+		setChanged();
 		this.notifyObservers();
 	}
 
@@ -600,7 +600,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 	}
 
 	public String debugMessage() {
-		return "Stance: " + this.getStance().getClass().getName() + "\np1: "
+		return "Stance: " + getStance().getClass().getName() + "\np1: "
 				+ p1.debugMessage(this, getStance()) + "\np2: "
 				+ p2.debugMessage(this, getStance());
 	}
@@ -673,7 +673,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 				Global.gui().watchCombat(this);
 			}
 		}
-		this.updateMessage();
+		updateMessage();
 	}
 
 	public boolean end() {
@@ -719,24 +719,29 @@ public class Combat extends Observable implements Serializable, Cloneable {
 		}
 	}
 
+	@Override
 	public Combat clone() throws CloneNotSupportedException {
 		Combat c = (Combat) super.clone();
-		c.p1 = (Character) p1.clone();
-		c.p2 = (Character) p2.clone();
+		c.p1 = p1.clone();
+		c.p2 = p2.clone();
 		c.p1.finishClone(c.p2);
 		c.p2.finishClone(c.p1);
 		c.p1Data = (CombatantData) p1Data.clone();
 		c.p2Data = (CombatantData) p2Data.clone();
-		c.stance = (Position) getStance().clone();
+		c.stance = getStance().clone();
 		c.state = state;
-		if (c.getStance().top == p1)
+		if (c.getStance().top == p1) {
 			c.getStance().top = c.p1;
-		if (c.getStance().top == p2)
+		}
+		if (c.getStance().top == p2) {
 			c.getStance().top = c.p2;
-		if (c.getStance().bottom == p1)
+		}
+		if (c.getStance().bottom == p1) {
 			c.getStance().bottom = c.p1;
-		if (c.getStance().bottom == p2)
+		}
+		if (c.getStance().bottom == p2) {
 			c.getStance().bottom = c.p2;
+		}
 		return c;
 	}
 
@@ -764,8 +769,8 @@ public class Combat extends Observable implements Serializable, Cloneable {
 
 	public void checkStanceStatus(Character c, Position oldStance,
 			Position newStance) {
-		if ((oldStance.prone(c) || !oldStance.mobile(c))
-				&& (!newStance.prone(c) && newStance.mobile(c))) {
+		if ((oldStance.prone(c) || !oldStance.mobile(c)) && !newStance.prone(c)
+				&& newStance.mobile(c)) {
 			c.add(this, new Braced(c));
 			c.add(this, new Wary(c, 3));
 		} else if (!oldStance.mobile(c) && newStance.mobile(c)) {
@@ -798,7 +803,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 					other -> part.onStartPenetration(this, p2, p1, other)));
 		}
 
-		this.stance = newStance;
+		stance = newStance;
 		offerImage(stance.image(), "");
 	}
 

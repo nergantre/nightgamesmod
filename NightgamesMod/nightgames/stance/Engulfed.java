@@ -1,6 +1,5 @@
 package nightgames.stance;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,24 +11,26 @@ import nightgames.combat.Combat;
 
 public class Engulfed extends Position {
 	public Engulfed(Character top, Character bottom) {
-		super(top, bottom,Stance.engulfed);
+		super(top, bottom, Stance.engulfed);
 	}
 
 	@Override
 	public String describe() {
-		if(top.human()){
-			return "You have engulfed " + bottom.name() + " inside your slime body, with only her face outside of you";
-		}
-		else{
-			return top.name()+" is holding your entire body inside her slime body, with only your face outside.";
+		if (top.human()) {
+			return "You have engulfed " + bottom.name()
+					+ " inside your slime body, with only her face outside of you";
+		} else {
+			return top.name()
+					+ " is holding your entire body inside her slime body, with only your face outside.";
 		}
 	}
 
 	@Override
 	public boolean mobile(Character c) {
-		return c==top;
+		return c == top;
 	}
 
+	@Override
 	public String image() {
 		if (bottom.hasPussy()) {
 			return "engulfed_f.jpg";
@@ -40,27 +41,27 @@ public class Engulfed extends Position {
 
 	@Override
 	public boolean kiss(Character c) {
-		return c==top;
+		return c == top;
 	}
 
 	@Override
 	public boolean dom(Character c) {
-		return c==top;
+		return c == top;
 	}
 
 	@Override
 	public boolean sub(Character c) {
-		return c==bottom;
+		return c == bottom;
 	}
 
 	@Override
 	public boolean reachTop(Character c) {
-		return c==top;
+		return c == top;
 	}
 
 	@Override
 	public boolean reachBottom(Character c) {
-		return c==top;
+		return c == top;
 	}
 
 	@Override
@@ -70,17 +71,17 @@ public class Engulfed extends Position {
 
 	@Override
 	public boolean feet(Character c) {
-		return c==top;
+		return c == top;
 	}
 
 	@Override
 	public boolean oral(Character c) {
-		return c==top;
+		return c == top;
 	}
 
 	@Override
 	public boolean behind(Character c) {
-		return c==top;
+		return c == top;
 	}
 
 	@Override
@@ -98,7 +99,8 @@ public class Engulfed extends Position {
 		return new Neutral(top, bottom);
 	}
 
-	public void decay(Combat c){
+	@Override
+	public void decay(Combat c) {
 		time++;
 		bottom.weaken(null, 5);
 		top.emote(Emotion.dominant, 10);
@@ -115,7 +117,8 @@ public class Engulfed extends Position {
 		parts.addAll(top.body.get("cock"));
 		parts.addAll(top.body.get("pussy"));
 		parts.addAll(top.body.get("ass"));
-		return parts.stream().filter(part -> part != null && part.present()).collect(Collectors.toList());
+		return parts.stream().filter(part -> part != null && part.present())
+				.collect(Collectors.toList());
 	}
 
 	@Override
@@ -124,15 +127,17 @@ public class Engulfed extends Position {
 		parts.addAll(bottom.body.get("cock"));
 		parts.addAll(bottom.body.get("pussy"));
 		parts.addAll(bottom.body.get("ass"));
-		return parts.stream().filter(part -> part != null && part.present()).collect(Collectors.toList());
+		return parts.stream().filter(part -> part != null && part.present())
+				.collect(Collectors.toList());
 	}
 
 	@Override
 	public boolean faceAvailable(Character target) {
 		return target == top;
 	}
-	
-	public double pheromoneMod (Character self) {
+
+	@Override
+	public double pheromoneMod(Character self) {
 		return 10;
 	}
 }

@@ -13,8 +13,9 @@ public class Boutique extends Store {
 
 	@Override
 	public boolean known() {
-		if (player.hasPussy())
+		if (player.hasPussy()) {
 			return Global.checkFlag(Flag.basicStores);
+		}
 		return false;
 	}
 
@@ -22,22 +23,25 @@ public class Boutique extends Store {
 	public void visit(String choice) {
 		Global.gui().clearText();
 		Global.gui().clearCommand();
-		if(choice=="Start"){
-			acted=false;
+		if (choice.equals("Start")) {
+			acted = false;
 		}
-		if(choice=="Leave"){
+		if (choice.equals("Leave")) {
 			done(acted);
 			return;
 		}
 		checkSale(choice);
-		if(player.human()){
-			Global.gui().message("This is a higher end store for women's clothing. Things may get a bit expensive here.");
-			for(Clothing i: clothing().keySet()){
-				Global.gui().message(i.getName()+": "+i.getPrice() +(player.has(i) ? " (Owned)":""));
+		if (player.human()) {
+			Global.gui().message(
+					"This is a higher end store for women's clothing. Things may get a bit expensive here.");
+			for (Clothing i : clothing().keySet()) {
+				Global.gui().message(i.getName() + ": " + i.getPrice()
+						+ (player.has(i) ? " (Owned)" : ""));
 			}
-			Global.gui().message("You have: $"+player.money+" available to spend.");
+			Global.gui().message(
+					"You have: $" + player.money + " available to spend.");
 			displayGoods();
-			Global.gui().choose(this,"Leave");
+			Global.gui().choose(this, "Leave");
 		}
 	}
 

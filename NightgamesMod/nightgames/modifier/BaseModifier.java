@@ -15,18 +15,18 @@ import nightgames.modifier.skill.SkillModifier;
 
 public abstract class BaseModifier implements Modifier {
 
-	protected static final BiConsumer<Character, Match> EMPTY_CONSUMER = (c,
+	protected static final BiConsumer<Character, Match>	EMPTY_CONSUMER	= (c,
 			m) -> {
-	};
+																		};
 
-	protected ClothingModifier				clothing;
-	protected ItemModifier					items;
-	protected StatusModifier				status;
-	protected SkillModifier					skills;
-	protected ActionModifier				actions;
-	protected BiConsumer<Character, Match>	custom;
+	protected ClothingModifier							clothing;
+	protected ItemModifier								items;
+	protected StatusModifier							status;
+	protected SkillModifier								skills;
+	protected ActionModifier							actions;
+	protected BiConsumer<Character, Match>				custom;
 
-	protected Map<Character, Map<Item, Integer>> moddedItems;
+	protected Map<Character, Map<Item, Integer>>		moddedItems;
 
 	protected BaseModifier(ClothingModifier clothing, ItemModifier items,
 			StatusModifier status, SkillModifier skills, ActionModifier actions,
@@ -37,7 +37,7 @@ public abstract class BaseModifier implements Modifier {
 		this.skills = skills;
 		this.actions = actions;
 		this.custom = custom;
-		this.moddedItems = new HashMap<>();
+		moddedItems = new HashMap<>();
 	}
 
 	protected BaseModifier() {
@@ -48,8 +48,9 @@ public abstract class BaseModifier implements Modifier {
 
 	@Override
 	public void handleOutfit(Character c) {
-		if (c.human() || !clothing.playerOnly())
+		if (c.human() || !clothing.playerOnly()) {
 			clothing.apply(c.outfit);
+		}
 	}
 
 	@Override
@@ -77,10 +78,12 @@ public abstract class BaseModifier implements Modifier {
 		status.apply(c);
 	}
 
+	@Override
 	public SkillModifier getSkillModifier() {
 		return skills;
 	}
 
+	@Override
 	public void handleTurn(Character c, Match m) {
 		custom.accept(c, m);
 	}
@@ -89,11 +92,12 @@ public abstract class BaseModifier implements Modifier {
 	public boolean allowAction(Action act, Character c, Match m) {
 		return !c.human() || !actions.actionIsBanned(act, c, m);
 	}
-	
+
 	@Override
 	public void undoItems(Character c) {
-		if (moddedItems.containsKey(c))
+		if (moddedItems.containsKey(c)) {
 			moddedItems.get(c).forEach((item, count) -> c.gain(item, -count));
+		}
 	}
 
 	@Override
@@ -105,7 +109,7 @@ public abstract class BaseModifier implements Modifier {
 	public String toString() {
 		return String.format(
 				"Modifier\n\tClothing: %s\n\tItems: %s\n\t"
-				+ "Status: %s\n\tSkills: %s\n\tActions: %s\n\tCustom: %s\n",
+						+ "Status: %s\n\tSkills: %s\n\tActions: %s\n\tCustom: %s\n",
 				clothing.toString(), items.toString(), status.toString(),
 				skills.toString(), actions.toString(),
 				custom == EMPTY_CONSUMER ? "no" : "yes");

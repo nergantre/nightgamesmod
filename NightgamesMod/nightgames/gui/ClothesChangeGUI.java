@@ -1,10 +1,9 @@
 package nightgames.gui;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -28,15 +27,15 @@ import nightgames.items.clothing.ClothingSorter;
 
 public class ClothesChangeGUI extends JPanel {
 	/**
-	 * 
+	 *
 	 */
-	private static final long serialVersionUID = -912778444912041408L;
-	private Character character;
-	private Activity resume;
-	private JLabel appearanceLabel;
-	private JLabel exposureLabel;
-	DefaultListModel<Clothing> closetListModel;
-	DefaultListModel<Clothing> outfitListModel;
+	private static final long	serialVersionUID	= -912778444912041408L;
+	private Character			character;
+	private Activity			resume;
+	private JLabel				appearanceLabel;
+	private JLabel				exposureLabel;
+	DefaultListModel<Clothing>	closetListModel;
+	DefaultListModel<Clothing>	outfitListModel;
 
 	private void removeAllClothing() {
 		character.closet.addAll(character.outfitPlan);
@@ -46,9 +45,12 @@ public class ClothesChangeGUI extends JPanel {
 	}
 
 	private void remove(Clothing article) {
-		if (article == null) { return; }
+		if (article == null) {
+			return;
+		}
 		if (!character.outfitPlan.contains(article)) {
-			System.err.println("Error: tried to remove nonexistent article: " + article.getName());
+			System.err.println("Error: tried to remove nonexistent article: "
+					+ article.getName());
 			return;
 		}
 		character.outfitPlan.remove(article);
@@ -58,9 +60,12 @@ public class ClothesChangeGUI extends JPanel {
 	}
 
 	private void add(Clothing article) {
-		if (article == null) { return; }
+		if (article == null) {
+			return;
+		}
 		if (!character.closet.contains(article)) {
-			System.err.println("Error: tried to equip nonexistent article: " + article.getName());
+			System.err.println("Error: tried to equip nonexistent article: "
+					+ article.getName());
 			return;
 		}
 		// remove the article from the closet
@@ -68,10 +73,12 @@ public class ClothesChangeGUI extends JPanel {
 		// change to make sure everything is equipped correctly
 		character.change();
 		// get the currently equipped items
-		Set<Clothing> unequipped = new HashSet<Clothing>(character.outfit.getEquipped());
+		Set<Clothing> unequipped = new HashSet<Clothing>(
+				character.outfit.getEquipped());
 		// equip the new item
 		character.outfit.equip(article);
-		// get {previously equipped} - {currently equipped} to see what was unequipped
+		// get {previously equipped} - {currently equipped} to see what was
+		// unequipped
 		unequipped.removeAll(character.outfit.getEquipped());
 		// add all the unequipped items back into the closet
 		character.closet.addAll(unequipped);
@@ -94,8 +101,10 @@ public class ClothesChangeGUI extends JPanel {
 		tempList.sort(new ClothingSorter());
 		tempList.forEach(article -> outfitListModel.addElement(article));
 		DecimalFormat format = new DecimalFormat("#.##");
-		appearanceLabel.setText("Appearance: " + format.format(character.outfit.getHotness()));
-		exposureLabel.setText("Exposure: " + format.format(character.outfit.getExposure()));
+		appearanceLabel.setText(
+				"Appearance: " + format.format(character.outfit.getHotness()));
+		exposureLabel.setText(
+				"Exposure: " + format.format(character.outfit.getExposure()));
 		Global.gui().refresh();
 	}
 
@@ -104,11 +113,13 @@ public class ClothesChangeGUI extends JPanel {
 		button.setForeground(Color.white);
 		button.setBackground(Color.DARK_GRAY);
 	}
-	public ClothesChangeGUI(Character character, Activity event, String doneOption){
+
+	public ClothesChangeGUI(Character character, Activity event,
+			String doneOption) {
 		this.character = character;
-		this.resume = event;
-		this.setBackground(new Color(25, 25, 50));
-		this.setForeground(Color.WHITE);
+		resume = event;
+		setBackground(new Color(25, 25, 50));
+		setForeground(Color.WHITE);
 		setLayout(new BorderLayout());
 
 		int width = Global.gui().getWidth();
@@ -165,17 +176,17 @@ public class ClothesChangeGUI extends JPanel {
 		outfitBox.add(outfitListPane);
 
 		JButton btnOk = new JButton("OK");
-		btnOk.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ClothesChangeGUI.this.character.change();
-				Global.gui().removeClosetGUI();
-				ClothesChangeGUI.this.resume.visit(doneOption);
-			}
+		btnOk.addActionListener(arg0 -> {
+			ClothesChangeGUI.this.character.change();
+			Global.gui().removeClosetGUI();
+			resume.visit(doneOption);
 		});
 		styleButton(btnOk);
 		btnOk.setAlignmentX(CENTER_ALIGNMENT);
-		addButton.addActionListener(aevent -> add(closetList.getSelectedValue()));
-		removeButton.addActionListener(aevent -> remove(outfitList.getSelectedValue()));
+		addButton.addActionListener(
+				aevent -> add(closetList.getSelectedValue()));
+		removeButton.addActionListener(
+				aevent -> remove(outfitList.getSelectedValue()));
 		removeall.addActionListener(aevent -> removeAllClothing());
 
 		JPanel leftPanel = new JPanel(new BorderLayout());
@@ -197,14 +208,16 @@ public class ClothesChangeGUI extends JPanel {
 		centerPanel.setPreferredSize(new Dimension(100, 0));
 		Box labelPanel = Box.createVerticalBox();
 		appearanceLabel = new JLabel("Appearance: ");
-		appearanceLabel.setToolTipText("Bonus to your natural body charisma and hotness");
+		appearanceLabel.setToolTipText(
+				"Bonus to your natural body charisma and hotness");
 		exposureLabel = new JLabel("Exposure: ");
-		exposureLabel.setToolTipText("How much of your natural body charisma and hotness is exposed");
+		exposureLabel.setToolTipText(
+				"How much of your natural body charisma and hotness is exposed");
 		labelPanel.add(appearanceLabel);
 		labelPanel.add(exposureLabel);
 		appearanceLabel.setForeground(Color.WHITE);
 		exposureLabel.setForeground(Color.WHITE);
-		
+
 		Box miscPanel = Box.createHorizontalBox();
 		miscPanel.add(labelPanel);
 		miscPanel.add(Box.createHorizontalStrut(20));

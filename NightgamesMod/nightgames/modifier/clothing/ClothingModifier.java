@@ -17,22 +17,30 @@ import nightgames.items.clothing.Outfit;
 
 public abstract class ClothingModifier {
 
-	public static final List<ClothingModifier> TYPES = Collections.unmodifiableList(Arrays.asList(
-			new ForceClothingModifier(), new NoPantiesModifier(), new NudeModifier(), new UnderwearOnlyModifier()));
-	public static final ClothingModifier NULL_MODIFIER = new ClothingModifier() {
-		@Override
-		public String toString() {
-			return "null-clothing-modifier";
-		}
+	public static final List<ClothingModifier>				TYPES					= Collections
+			.unmodifiableList(Arrays.asList(new ForceClothingModifier(),
+					new NoPantiesModifier(), new NudeModifier(),
+					new UnderwearOnlyModifier()));
+	public static final ClothingModifier					NULL_MODIFIER			= new ClothingModifier() {
+																						@Override
+																						public String toString() {
+																							return "null-clothing-modifier";
+																						}
 
-	};
+																					};
 
-	protected static final Set<Integer> ALL_LAYERS = Collections
-			.unmodifiableSet(IntStream.range(0, Clothing.N_LAYERS).boxed().collect(Collectors.toSet()));
-	protected static final Set<ClothingSlot> ALL_SLOTS = Collections.unmodifiableSet(EnumSet.allOf(ClothingSlot.class));
-	protected static final Map<ClothingSlot, Set<Integer>> ALL_SLOT_LAYER_COMBOS = Collections
-			.unmodifiableMap(EnumSet.allOf(ClothingSlot.class).stream().collect(Collectors.toMap(t -> t,
-					t -> IntStream.range(0, Clothing.N_LAYERS).boxed().collect(Collectors.toSet()))));
+	protected static final Set<Integer>						ALL_LAYERS				= Collections
+			.unmodifiableSet(IntStream.range(0, Clothing.N_LAYERS).boxed()
+					.collect(Collectors.toSet()));
+	protected static final Set<ClothingSlot>				ALL_SLOTS				= Collections
+			.unmodifiableSet(EnumSet.allOf(ClothingSlot.class));
+	protected static final Map<ClothingSlot, Set<Integer>>	ALL_SLOT_LAYER_COMBOS	= Collections
+			.unmodifiableMap(
+					EnumSet.allOf(ClothingSlot.class).stream()
+							.collect(Collectors.toMap(t -> t,
+									t -> IntStream.range(0, Clothing.N_LAYERS)
+											.boxed()
+											.collect(Collectors.toSet()))));
 
 	public Set<Integer> allowedLayers() {
 		return ALL_LAYERS;
@@ -73,18 +81,23 @@ public abstract class ClothingModifier {
 		equipped.removeIf(c -> !allowedLayers().contains(c.getLayer()));
 
 		// remove disallowed slots
-		equipped.removeIf(c -> c.getSlots().stream().anyMatch(s -> !allowedSlots().contains(s)));
+		equipped.removeIf(c -> c.getSlots().stream()
+				.anyMatch(s -> !allowedSlots().contains(s)));
 
 		// remove disallowed combinations
 		equipped.removeIf(c -> !allowedSlotLayerCombos().entrySet().stream()
-				.allMatch(e -> !c.getSlots().contains(e.getKey()) || e.getValue().contains(c.getLayer())));
+				.allMatch(e -> !c.getSlots().contains(e.getKey())
+						|| e.getValue().contains(c.getLayer())));
 
 		// remove disallowed attributes
-		equipped.removeIf(c -> forbiddenAttributes().stream().anyMatch(t -> c.attributes().contains(t)));
+		equipped.removeIf(c -> forbiddenAttributes().stream()
+				.anyMatch(t -> c.attributes().contains(t)));
 
 		// add forced items, first remove same slots
-		equipped.removeIf(c -> forcedItems().stream().map(Clothing::getByID).anyMatch(
-				c2 -> c2.getSlots().stream().anyMatch(s -> c.getSlots().contains(s)) && c2.getLayer() == c.getLayer()));
+		equipped.removeIf(c -> forcedItems().stream().map(Clothing::getByID)
+				.anyMatch(c2 -> c2.getSlots().stream()
+						.anyMatch(s -> c.getSlots().contains(s))
+						&& c2.getLayer() == c.getLayer()));
 		forcedItems().stream().map(Clothing::getByID).forEach(equipped::add);
 
 		equipped.forEach(outfit::equip);
@@ -98,6 +111,7 @@ public abstract class ClothingModifier {
 				me.apply(outfit);
 				next.apply(outfit);
 			}
+
 			@Override
 			public String toString() {
 				return me.toString() + ", " + next.toString();
@@ -126,16 +140,19 @@ public abstract class ClothingModifier {
 	}
 
 	public static ClothingModifier allOf(ClothingModifier... modifiers) {
-		if (modifiers.length == 0)
+		if (modifiers.length == 0) {
 			return NULL_MODIFIER;
+		}
 		ClothingModifier result = modifiers[0];
-		for (int i = 1; i < modifiers.length; i++)
+		for (int i = 1; i < modifiers.length; i++) {
 			result = result.andThen(modifiers[i]);
+		}
 		return result;
 	}
 
+	@Override
 	public abstract String toString();
-	
+
 	public static void main(String[] args) {
 		Clothing.buildClothingTable();
 		Outfit test1 = new Outfit();
@@ -158,10 +175,13 @@ public abstract class ClothingModifier {
 		new NoPantiesModifier().apply(test3);
 		System.out.println(test3);
 
-		new NoPantiesModifier().andThen(new ForceClothingModifier("blouse", "thong")).apply(test4);
+		new NoPantiesModifier()
+				.andThen(new ForceClothingModifier("blouse", "thong"))
+				.apply(test4);
 		System.out.println(test4);
 
-		allOf(forAll(new UnderwearOnlyModifier()), new ForceClothingModifier("blouse", "thong"),
+		allOf(forAll(new UnderwearOnlyModifier()),
+				new ForceClothingModifier("blouse", "thong"),
 				new NoPantiesModifier()).apply(test5);
 		System.out.println(test5);
 	}

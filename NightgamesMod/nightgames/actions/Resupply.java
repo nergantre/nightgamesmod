@@ -6,6 +6,11 @@ import nightgames.global.Global;
 
 public class Resupply extends Action {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3349606637987124335L;
+
 	public Resupply() {
 		super("Resupply");
 	}
@@ -17,15 +22,16 @@ public class Resupply extends Action {
 
 	@Override
 	public Movement execute(Character user) {
-		if(user.human()){
-			if(Global.getMatch().condition.name().equals("nudist")){
-				Global.gui().message("You check in so you're eligible to fight again, but you still don't get any clothes.");
-			}
-			else{
-				Global.gui().message("You pick up a change of clothes and prepare to get back in the fray.");
+		if (user.human()) {
+			if (Global.getMatch().condition.name().equals("nudist")) {
+				Global.gui().message(
+						"You check in so you're eligible to fight again, but you still don't get any clothes.");
+			} else {
+				Global.gui().message(
+						"You pick up a change of clothes and prepare to get back in the fray.");
 			}
 		}
-		user.state=State.resupplying;
+		user.state = State.resupplying;
 		return Movement.resupply;
 	}
 

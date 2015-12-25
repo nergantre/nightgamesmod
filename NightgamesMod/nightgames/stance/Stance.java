@@ -19,5 +19,10 @@ public enum Stance {
 	behindfootjob,
 	nursing,
 	facesitting,
-	engulfed, oralpin, flowertrap, coiled, upsidedownmaledom, upsidedownfemdom,
+	engulfed,
+	oralpin,
+	flowertrap,
+	coiled,
+	upsidedownmaledom,
+	upsidedownfemdom,
 }

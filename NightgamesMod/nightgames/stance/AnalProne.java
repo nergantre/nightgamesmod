@@ -116,6 +116,7 @@ public class AnalProne extends AnalSexStance {
 		}
 	}
 
+	@Override
 	public Position reverse(Combat c) {
 		if (top.has(Trait.strapped)) {
 			c.write(bottom,
@@ -134,6 +135,7 @@ public class AnalProne extends AnalSexStance {
 		}
 	}
 
+	@Override
 	public String image() {
 		if (bottom.hasPussy()) {
 			return "analf.jpg";

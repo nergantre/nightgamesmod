@@ -102,14 +102,17 @@ public class Stomp extends Skill {
 		return new Stomp(user);
 	}
 
+	@Override
 	public int speed() {
 		return 4;
 	}
 
+	@Override
 	public Tactics type(Combat c) {
 		return Tactics.damage;
 	}
 
+	@Override
 	public String getLabel(Combat c) {
 		if (getSelf().has(Trait.heeldrop)) {
 			return "Double Legdrop";
@@ -134,12 +137,12 @@ public class Stomp extends Skill {
 						+ "compels you to mutter a quick apology before you jump up and slam your heel into her vulnerable quim.";
 			}
 		} else if (modifier == Result.strong) {
-			return String.format("You use your foot to maneuver %s's %s out of the way and revealing %s soft balls. "
-					+ "%s does not seem to realize what you are planning before your foot is already plunging down towards them."
-					+ " When it lands, you feel a sympathetic jolt run up your spine as %s gonads are crushed beneath your foot."
-					+ " %s whimpers in pain, but not as much as you'd expect from such a magnificent impact.", 
-					target.name(),
-					target.body.getRandomCock().describe(target),
+			return String.format(
+					"You use your foot to maneuver %s's %s out of the way and revealing %s soft balls. "
+							+ "%s does not seem to realize what you are planning before your foot is already plunging down towards them."
+							+ " When it lands, you feel a sympathetic jolt run up your spine as %s gonads are crushed beneath your foot."
+							+ " %s whimpers in pain, but not as much as you'd expect from such a magnificent impact.",
+					target.name(), target.body.getRandomCock().describe(target),
 					target.possessivePronoun(),
 					Global.capitalizeFirstLetter(target.pronoun()),
 					target.possessivePronoun(),
@@ -148,10 +151,10 @@ public class Stomp extends Skill {
 			return "You step between " + target.name()
 					+ "'s legs and stomp down on her groin. Your foot hits something solid and she doesn't seem terribly affected.";
 		} else if (modifier == Result.weak2) {
-			return String.format("You step between %s's legs and stomp down on %s groin."
-					+ "%s exhales sharply, but does not seem hurt much at all. Somehow.", 
-					target.name(),
-					target.possessivePronoun(),
+			return String.format(
+					"You step between %s's legs and stomp down on %s groin."
+							+ "%s exhales sharply, but does not seem hurt much at all. Somehow.",
+					target.name(), target.possessivePronoun(),
 					Global.capitalizeFirstLetter(target.pronoun()));
 		} else {
 			if (target.hasBalls()) {
@@ -173,17 +176,18 @@ public class Stomp extends Skill {
 					+ "you a proper footjob, she's mostly just playing with your balls. Too late, you realize that she's actually lining up her targets. Two torrents of pain "
 					+ "erupt from your delicates as her feet crash down on them.";
 		} else if (modifier == Result.strong) {
-			return String.format("%s forces your legs out of the way and then starts using %s "
-					+ "foot to fondle your %s. You were just thinking that this could be much"
-					+ " worse, when %s suddenly lifts the foot up and slams it back down with"
-					+ " great force. You don't often feel much pain from your balls, but the"
-					+ " enormous impact still hurts a lot.", 
-					getSelf().name(),
-					getSelf().possessivePronoun(),
+			return String.format(
+					"%s forces your legs out of the way and then starts using %s "
+							+ "foot to fondle your %s. You were just thinking that this could be much"
+							+ " worse, when %s suddenly lifts the foot up and slams it back down with"
+							+ " great force. You don't often feel much pain from your balls, but the"
+							+ " enormous impact still hurts a lot.",
+					getSelf().name(), getSelf().possessivePronoun(),
 					target.body.getRandomCock().describe(target),
 					getSelf().pronoun());
 		} else if (modifier == Result.weak2) {
-			return getSelf().name() + " forces your legs open and brutally stomps your "
+			return getSelf().name()
+					+ " forces your legs open and brutally stomps your "
 					+ "balls. Despite the great blow, you don't feel much pain.";
 		} else if (modifier == Result.weak) {
 			return getSelf().name()

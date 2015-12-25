@@ -6,7 +6,7 @@ import nightgames.modifier.BaseModifier;
 public class VibrationModifier extends BaseModifier {
 
 	public VibrationModifier() {
-		this.custom = (c, m) -> c.tempt(5);
+		custom = (c, m) -> c.tempt(5);
 	}
 
 	@Override

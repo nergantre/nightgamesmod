@@ -25,7 +25,7 @@ public class Tribadism extends Skill {
 	public BodyPart getTargetOrgan(Character target) {
 		return target.body.getRandomPussy();
 	}
-	
+
 	public boolean fuckable(Combat c, Character target) {
 		BodyPart selfO = getSelfOrgan();
 		BodyPart targetO = getTargetOrgan(target);
@@ -41,27 +41,24 @@ public class Tribadism extends Skill {
 			}
 		}
 		stancePossible &= !c.getStance().havingSex();
-		return possible && stancePossible
-				&&getSelf().clothingFuckable(selfO)
-				&&target.crotchAvailable();
+		return possible && stancePossible && getSelf().clothingFuckable(selfO)
+				&& target.crotchAvailable();
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return fuckable(c, target) &&c.getStance().mobile(getSelf())
-				&&!c.getStance().mobile(target)
-				&&getSelf().canAct();
+		return fuckable(c, target) && c.getStance().mobile(getSelf())
+				&& !c.getStance().mobile(target) && getSelf().canAct();
 	}
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		BodyPart selfO = getSelfOrgan();
 		BodyPart targetO = getTargetOrgan(target);
-		if(getSelf().human()){
-			c.write(getSelf(),deal(c,0,Result.normal, target));
-		}
-		else if(target.human()){
-			c.write(getSelf(),receive(c,0,Result.normal, target));
+		if (getSelf().human()) {
+			c.write(getSelf(), deal(c, 0, Result.normal, target));
+		} else if (target.human()) {
+			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
 		c.setStance(new TribadismStance(getSelf(), target));
 		int otherm = 10;
@@ -80,27 +77,38 @@ public class Tribadism extends Skill {
 	public Skill copy(Character user) {
 		return new Tribadism(user);
 	}
-	public int speed(){
+
+	@Override
+	public int speed() {
 		return 2;
 	}
+
+	@Override
 	public Tactics type(Combat c) {
 		return Tactics.fucking;
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
-		if(modifier == Result.normal){
-			return Global.format("You grab {other:name-possessive} legs and push them apart. You then push your hot snatch across her pussy lips and grind down on it.", getSelf(), target);
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
+		if (modifier == Result.normal) {
+			return Global.format(
+					"You grab {other:name-possessive} legs and push them apart. You then push your hot snatch across her pussy lips and grind down on it.",
+					getSelf(), target);
 		}
 		return "Bad stuff happened";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
+	public String receive(Combat c, int damage, Result modifier,
+			Character target) {
 		BodyPart selfO = getSelfOrgan();
 		BodyPart targetO = getTargetOrgan(target);
-		if(modifier == Result.normal){
-			String message = getSelf().name()+" grabs your leg and slides her crotch against yours. She then grinds her "+ selfO.describe(getSelf())+ " against your wet " + targetO.describe(target) + ".";
+		if (modifier == Result.normal) {
+			String message = getSelf().name()
+					+ " grabs your leg and slides her crotch against yours. She then grinds her "
+					+ selfO.describe(getSelf()) + " against your wet "
+					+ targetO.describe(target) + ".";
 			return message;
 		}
 		return "Bad stuff happened";
@@ -110,7 +118,7 @@ public class Tribadism extends Skill {
 	public String describe(Combat c) {
 		return "Grinds your pussy against your opponent's.";
 	}
-	
+
 	@Override
 	public boolean makesContact() {
 		return true;

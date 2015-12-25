@@ -14,7 +14,7 @@ public class Focus extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&!c.getStance().sub(getSelf());
+		return getSelf().canAct() && !c.getStance().sub(getSelf());
 	}
 
 	@Override
@@ -24,11 +24,10 @@ public class Focus extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(getSelf().human()){
-			c.write(getSelf(),deal(c,0,Result.normal, target));
-		}
-		else if(target.human()){
-			c.write(getSelf(),receive(c,0,Result.normal, target));
+		if (getSelf().human()) {
+			c.write(getSelf(), deal(c, 0, Result.normal, target));
+		} else if (target.human()) {
+			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
 		getSelf().calm(c, Math.max(getSelf().getArousal().max() / 5, 20));
 		return true;
@@ -36,14 +35,17 @@ public class Focus extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Cunning)>=15 && !user.has(Trait.undisciplined);
+		return user.get(Attribute.Cunning) >= 15
+				&& !user.has(Trait.undisciplined);
 	}
 
 	@Override
 	public Skill copy(Character user) {
 		return new Focus(user);
 	}
-	public int speed(){
+
+	@Override
+	public int speed() {
 		return 0;
 	}
 
@@ -53,13 +55,16 @@ public class Focus extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
 		return "You take a moment to clear your thoughts, focusing your mind and calming your body.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return getSelf().name()+" closes her eyes and takes a deep breath. When she opens her eyes, she seems more composed.";
+	public String receive(Combat c, int damage, Result modifier,
+			Character target) {
+		return getSelf().name()
+				+ " closes her eyes and takes a deep breath. When she opens her eyes, she seems more composed.";
 	}
 
 	@Override

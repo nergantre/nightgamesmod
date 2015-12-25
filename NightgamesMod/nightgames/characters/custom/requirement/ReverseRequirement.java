@@ -14,7 +14,9 @@ public class ReverseRequirement implements CustomRequirement {
 
 	@Override
 	public boolean meets(Combat c, Character self, Character other) {
-		if (other == null) { return false; }
+		if (other == null) {
+			return false;
+		}
 		return req.stream().allMatch(r -> r.meets(c, other, self));
 	}
 }

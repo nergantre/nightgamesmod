@@ -5,6 +5,11 @@ import nightgames.characters.State;
 
 public class Scavenge extends Action {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6692555226745083699L;
+
 	public Scavenge() {
 		super("Scavenge Items");
 	}
@@ -16,7 +21,7 @@ public class Scavenge extends Action {
 
 	@Override
 	public Movement execute(Character user) {
-		user.state=State.searching;
+		user.state = State.searching;
 		return Movement.scavenge;
 	}
 

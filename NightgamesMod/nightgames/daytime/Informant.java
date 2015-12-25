@@ -75,18 +75,18 @@ public class Informant extends Activity {
 							+ "harem. Obviously a serious athlete such as yourself needs a wide range of competitors to hone his skills. I happen to know some girls who are currently taking a break from the "
 							+ "Game for various reasons. For a nominal fee, I could probably convince them to return. Let me know if you're interested in hearing their stories.\"</i>");
 			Global.flag(Flag.rank1);
-		} else if (choice == "Start" || choice == "Back") {
+		} else if (choice.equals("Start") || choice.equals("Back")) {
 			Global.gui().message(
 					"The spot where you're suppose to meet Aesop is quiet again. Given the number of people in the Quad during the day, you're starting to feel like people "
 							+ "are intentionally avoiding this bench. You don't have too long to think about it though, Aesop shows up shortly after you do.<br><i>\"It's good to see my favorite client "
 							+ "as always. What kind of tale are you looking for today?\"</i>");
 			acted = false;
 		}
-		if (choice == "Leave") {
+		if (choice.equals("Leave")) {
 			done(acted);
 			return;
 		}
-		if (choice == "Purchasing supplies: Free") {
+		if (choice.equals("Purchasing supplies: Free")) {
 			Global.gui().message(
 					"<i>\"As you were probably told when you entered, there are rules restricting the clothes you can wear to a match. If everyone wore a bunch of hard to remove layers, "
 							+ "it would bog the matches down. Other than that, you're allowed to bring just about any tools and toys you want. Most of the higher rank players carry an arsenal of various useful items.\"</i> "
@@ -101,7 +101,7 @@ public class Informant extends Activity {
 			acted = true;
 			return;
 		}
-		if (choice == "The Competition: Free") {
+		if (choice.equals("The Competition: Free")) {
 			Global.gui().message(
 					"<i>\"Looking for advice about girls? If you don't have any older brothers to ask, I might be able to help.\"</i><br>Aesop laughs a bit at his own crappy joke.<br><i>\"In all seriousness, you should definitely "
 							+ "get to know your enemies. This isn't a zero-sum game, everyone who participates can make some money. Obviously there would be issues if you tried to doctor the "
@@ -117,7 +117,7 @@ public class Informant extends Activity {
 			acted = true;
 			return;
 		}
-		if (choice == "Sharpening the mind: $200") {
+		if (choice.equals("Sharpening the mind: $200")) {
 			if (player.money >= 200) {
 				Global.gui().message(
 						"You ask if Aesop has any advice on how to condition yourself mentally. Picking up details in the environment and your opponents' behavior seems to be an important "
@@ -135,7 +135,7 @@ public class Informant extends Activity {
 				Global.gui().message("You don't have enough money<p>");
 			}
 		}
-		if (choice == "Black Market: $400") {
+		if (choice.equals("Black Market: $400")) {
 			if (player.money >= 400) {
 				Global.gui().message(
 						"<i>\"If you're looking for something you can't purchase at a reputable store - say, for example, powerful aphrodisiacs or chemicals that "
@@ -151,7 +151,7 @@ public class Informant extends Activity {
 				Global.gui().message("You don't have enough money<p>");
 			}
 		}
-		if (choice == "Cassie: $300") {
+		if (choice.equals("Cassie: $300")) {
 			if (player.money >= 300) {
 				Global.gui().message(
 						"<i>\"Cassie Brooke, huh? Sweet girl, a little shy, a little geeky, never been in trouble in her life. She's not the type of girl who usually "
@@ -172,7 +172,7 @@ public class Informant extends Activity {
 				Global.gui().message("You don't have enough money<p>");
 			}
 		}
-		if (choice == "Angel: $300") {
+		if (choice.equals("Angel: $300")) {
 			if (player.money >= 300) {
 				Global.gui().message(
 						"<i>\"Angel Hart, there's a hell of a name. Three words for you: Beautiful Blonde Nymphomaniac. Oh baby, that's a delicious combination. None of that "
@@ -192,7 +192,7 @@ public class Informant extends Activity {
 				Global.gui().message("You don't have enough money<p>");
 			}
 		}
-		if (choice == "Mara: $300") {
+		if (choice.equals("Mara: $300")) {
 			if (player.money >= 300) {
 				Global.gui().message(
 						"<i>\"There's a bit of a mystery surrounding Mara Cyr, to be honest. I can't figure out when, or even if, she sleeps. She's a freshman Computer Engineering "
@@ -211,7 +211,7 @@ public class Informant extends Activity {
 				Global.gui().message("You don't have enough money<p>");
 			}
 		}
-		if (choice == "Jewel: $300") {
+		if (choice.equals("Jewel: $300")) {
 			if (player.money >= 300) {
 				Global.gui().message(
 						"<i>\"Jewel Silvers... Her parents must like jewelry. Not really; her family has a long military tradition going back generations. I'm surprised she hasn't "
@@ -231,7 +231,7 @@ public class Informant extends Activity {
 				Global.gui().message("You don't have enough money<p>");
 			}
 		}
-		if (choice == "Exotic Artifacts: $2500") {
+		if (choice.equals("Exotic Artifacts: $2500")) {
 			if (player.money >= 2500) {
 				Global.gui().message(
 						"Rare artifacts sound more like something you should be smuggling than something that will help you in a sexfight. Still, curiosity compels "
@@ -248,7 +248,7 @@ public class Informant extends Activity {
 				Global.gui().message("You don't have enough money<p>");
 			}
 		}
-		if (choice == "Body Shop: $2500") {
+		if (choice.equals("Body Shop: $2500")) {
 			if (player.money >= 2500) {
 				Global.gui().message(
 						"Aesop looks at you strangely then slips you a piece of paper.");
@@ -261,7 +261,7 @@ public class Informant extends Activity {
 				Global.gui().message("You don't have enough money<p>");
 			}
 		}
-		if (choice == "Martial Arts: $2500") {
+		if (choice.equals("Martial Arts: $2500")) {
 			if (player.money >= 2500) {
 				Global.gui().message(
 						"You're interested in improving your martial arts skill, but Jewel is probably the best martial artist on campus. Even if she agrees to train you, "
@@ -281,7 +281,7 @@ public class Informant extends Activity {
 				Global.gui().message("You don't have enough money<p>");
 			}
 		}
-		if (choice == "Magic?: $2500") {
+		if (choice.equals("Magic?: $2500")) {
 			if (player.money >= 2500) {
 				Global.gui().message(
 						"What exactly did Aesop mean when we said magic? Presumably you haven't actually stepped into a fantasy novel. If he means the art of misdirection "
@@ -300,7 +300,7 @@ public class Informant extends Activity {
 				Global.gui().message("You don't have enough money<p>");
 			}
 		}
-		if (choice == "Advanced Equipment: $2500") {
+		if (choice.equals("Advanced Equipment: $2500")) {
 			if (player.money >= 2500) {
 				Global.gui().message(
 						"You're interested in the technology Aesop mentioned. A handful of zipties and a rubber dildo will only get you so far. <i>\"You're going to want to meet "
@@ -318,7 +318,7 @@ public class Informant extends Activity {
 				Global.gui().message("You don't have enough money<p>");
 			}
 		}
-		if (choice == "More Competitors") {
+		if (choice.equals("More Competitors")) {
 			if (!Global.checkFlag(Flag.Reyka)
 					&& Global.checkFlag(Flag.blackMarketPlus)) {
 				Global.gui().message(
@@ -356,25 +356,25 @@ public class Informant extends Activity {
 					}
 				}
 			}
-			if ((!Global.checkFlag(Flag.Eve))
-					&& (Global.checkFlag(Flag.blackMarketPlus))
-					&& (this.player.getRank() >= 2)) {
+			if (!Global.checkFlag(Flag.Eve)
+					&& Global.checkFlag(Flag.blackMarketPlus)
+					&& player.getRank() >= 2) {
 				Global.gui().message(
 						"<i>\"Eve Ranger is... a lot of things, but mostly a cautionary tale. "
-						+ "She started the same year I did. From the beginning, it was obvious"
-						+ " she had more potential than any of us, She could have become a "
-						+ "dominant player, if she cared about actually winning, but instead "
-						+ "she focused almost obsessively on enhancing her own pleasure. She "
-						+ "spent most of her winnings on giving herself a bunch of new fetishes"
-						+ " so she can get off on almost anything. She got herself a black"
-						+ " market cock and even a set of testicles. They're a liability, as "
-						+ "I'm sure you've experienced more than once (not that I'd ever consider"
-						+ " lopping mine off), but she added them just to make her ejaculations "
-						+ "more satisfying. She's never taken the matches seriously and only "
-						+ "tries to win to indulge in her sadism. I'm mentioning her because "
-						+ "you guys can probably compete with her if she's just fucking around. "
-						+ "To be honest though, I'd be perfectly happy to never deal with her "
-						+ "again.\"</i><p>");
+								+ "She started the same year I did. From the beginning, it was obvious"
+								+ " she had more potential than any of us, She could have become a "
+								+ "dominant player, if she cared about actually winning, but instead "
+								+ "she focused almost obsessively on enhancing her own pleasure. She "
+								+ "spent most of her winnings on giving herself a bunch of new fetishes"
+								+ " so she can get off on almost anything. She got herself a black"
+								+ " market cock and even a set of testicles. They're a liability, as "
+								+ "I'm sure you've experienced more than once (not that I'd ever consider"
+								+ " lopping mine off), but she added them just to make her ejaculations "
+								+ "more satisfying. She's never taken the matches seriously and only "
+								+ "tries to win to indulge in her sadism. I'm mentioning her because "
+								+ "you guys can probably compete with her if she's just fucking around. "
+								+ "To be honest though, I'd be perfectly happy to never deal with her "
+								+ "again.\"</i><p>");
 
 				Global.gui().choose(this, "Eve: $1000");
 			}
@@ -401,7 +401,7 @@ public class Informant extends Activity {
 				e.printStackTrace();
 			}
 		}
-		if (choice == "Reyka: $1000") {
+		if (choice.equals("Reyka: $1000")) {
 			if (player.money >= 1000) {
 				player.money -= 1000;
 				Global.gui().message(
@@ -414,7 +414,7 @@ public class Informant extends Activity {
 				Global.gui().message("You don't have enough money<p>");
 			}
 		}
-		if (choice == "Kat: $1000") {
+		if (choice.equals("Kat: $1000")) {
 			if (player.money >= 1000) {
 				player.money -= 1000;
 				Global.gui().message(
@@ -428,22 +428,24 @@ public class Informant extends Activity {
 				Global.gui().message("You don't have enough money<p>");
 			}
 		}
-		if (choice == "Eve: $1000") {
-			if (this.player.money >= 1000) {
-		    	this.player.money -= 1000;
-		        Global.gui().message("You think you see Aesop flinch slightly, but he does a "
-		         		+ "decent job hiding it. <i>\"I was kinda hoping not to have to talk to"
-		         		+ " her anytime soon. Nah, don't worry about it. It's what you're paying"
-		         		+ " for after all.\"</i>");
-		         
-		        this.acted = true;
-		        Global.newChallenger(Global.getNPCByType(new Eve().getType()).ai);
-		        Global.flag(Flag.Eve);
-		    } else {
-			    Global.gui().message("You don't have enough money<p>");
-		    }
+		if (choice.equals("Eve: $1000")) {
+			if (player.money >= 1000) {
+				player.money -= 1000;
+				Global.gui().message(
+						"You think you see Aesop flinch slightly, but he does a "
+								+ "decent job hiding it. <i>\"I was kinda hoping not to have to talk to"
+								+ " her anytime soon. Nah, don't worry about it. It's what you're paying"
+								+ " for after all.\"</i>");
+
+				acted = true;
+				Global.newChallenger(
+						Global.getNPCByType(new Eve().getType()).ai);
+				Global.flag(Flag.Eve);
+			} else {
+				Global.gui().message("You don't have enough money<p>");
+			}
 		}
-		if (choice == "Competition Info") {
+		if (choice.equals("Competition Info")) {
 			String message = "<i>\"You want to know how the competition is doing? I can give you a breakdown on each of your opponents:\"</i><p>";
 			for (Character npc : Global.everyone()) {
 				if (!npc.human()) {
@@ -511,7 +513,7 @@ public class Informant extends Activity {
 
 	@Override
 	public void shop(Character npc, int budget) {
-		return;
+
 	}
 
 	public boolean newCharacters() {

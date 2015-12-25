@@ -11,12 +11,14 @@ import nightgames.global.JSONUtils;
 import nightgames.modifier.ModifierComponent;
 import nightgames.skills.Tactics;
 
-public class BanTacticsModifier extends SkillModifier implements ModifierComponent<BanTacticsModifier> {
+public class BanTacticsModifier extends SkillModifier
+		implements ModifierComponent<BanTacticsModifier> {
 
 	private final Set<Tactics> tactics;
 
 	public BanTacticsModifier(Tactics... skills) {
-		this.tactics = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(skills)));
+		tactics = Collections
+				.unmodifiableSet(new HashSet<>(Arrays.asList(skills)));
 	}
 
 	@Override
@@ -36,10 +38,12 @@ public class BanTacticsModifier extends SkillModifier implements ModifierCompone
 			Tactics tact = Tactics.valueOf(name);
 			return new BanTacticsModifier(tact);
 		} else if (obj.containsKey("tactics")) {
-			return new BanTacticsModifier(JSONUtils.loadStringsFromArr(obj, "tactics").stream().map(Tactics::valueOf)
-					.toArray(Tactics[]::new));
+			return new BanTacticsModifier(
+					JSONUtils.loadStringsFromArr(obj, "tactics").stream()
+							.map(Tactics::valueOf).toArray(Tactics[]::new));
 		}
-		throw new IllegalArgumentException("'ban-tactics' must have 'tactic' or 'tactics'");
+		throw new IllegalArgumentException(
+				"'ban-tactics' must have 'tactic' or 'tactics'");
 	}
 
 	@Override

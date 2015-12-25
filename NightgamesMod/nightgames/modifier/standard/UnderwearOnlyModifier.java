@@ -7,7 +7,7 @@ import nightgames.modifier.BaseModifier;
 public class UnderwearOnlyModifier extends BaseModifier {
 
 	public UnderwearOnlyModifier() {
-		this.clothing = new nightgames.modifier.clothing.UnderwearOnlyModifier();
+		clothing = new nightgames.modifier.clothing.UnderwearOnlyModifier();
 	}
 
 	@Override

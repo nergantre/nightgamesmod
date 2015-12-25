@@ -11,7 +11,7 @@ import nightgames.global.JSONUtils;
 public class Drowsy extends DurationStatus {
 
 	private int magnitude;
-	
+
 	public Drowsy(Character affected) {
 		super("Drowsy", affected, affected.has(Trait.PersonalInertia) ? 4 : 6);
 		flag(Stsflag.drowsy);
@@ -30,18 +30,18 @@ public class Drowsy extends DurationStatus {
 
 	@Override
 	public String describe(Combat c) {
-		if (this.affected.human()) {
-		       return "You feel lethargic and sluggish. You're struggling to remain standing";
-		     }
-		     
-		     return this.affected.name() + " looks extremely sleepy.";
+		if (affected.human()) {
+			return "You feel lethargic and sluggish. You're struggling to remain standing";
+		}
+
+		return affected.name() + " looks extremely sleepy.";
 	}
 
 	@Override
 	public int mod(Attribute a) {
 		return 0;
 	}
-	
+
 	@Override
 	public int regen(Combat c) {
 		super.regen(c);
@@ -52,7 +52,7 @@ public class Drowsy extends DurationStatus {
 	public void tick(Combat c) {
 		affected.loseMojo(c, magnitude * -5);
 	}
-	
+
 	@Override
 	public int damage(Combat c, int x) {
 		return 0;
@@ -60,12 +60,12 @@ public class Drowsy extends DurationStatus {
 
 	@Override
 	public double pleasure(Combat c, double x) {
-		return -(x * this.magnitude) / 4;
+		return -(x * magnitude) / 4;
 	}
 
 	@Override
 	public int weakened(int x) {
-		return x * this.magnitude / 4;
+		return x * magnitude / 4;
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public class Drowsy extends DurationStatus {
 
 	@Override
 	public int gainmojo(int x) {
-		return x * this.magnitude / 3;
+		return x * magnitude / 3;
 	}
 
 	@Override
@@ -107,9 +107,11 @@ public class Drowsy extends DurationStatus {
 	public Status instance(Character newAffected, Character newOther) {
 		return new Drowsy(newAffected);
 	}
-	
+
 	@Override
-	public boolean lingering() { return true; }
+	public boolean lingering() {
+		return true;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -123,8 +125,7 @@ public class Drowsy extends DurationStatus {
 
 	@Override
 	public Status loadFromJSON(JSONObject obj) {
-		return new Drowsy(null, 
-				JSONUtils.readInteger(obj, "magnitude"),
+		return new Drowsy(null, JSONUtils.readInteger(obj, "magnitude"),
 				JSONUtils.readInteger(obj, "duration"));
 	}
 

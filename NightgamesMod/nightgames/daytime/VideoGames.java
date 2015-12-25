@@ -22,31 +22,30 @@ public class VideoGames extends Activity {
 	public void visit(String choice) {
 		Global.gui().clearText();
 		Global.gui().clearCommand();
-		if(choice=="Start"){
-			if(player.money>=50){
-				Global.gui().message("Do you want to purchase a new game? Your old games are still good, but you're unlikely to learn as much from replaying them.");
+		if (choice.equals("Start")) {
+			if (player.money >= 50) {
+				Global.gui().message(
+						"Do you want to purchase a new game? Your old games are still good, but you're unlikely to learn as much from replaying them.");
 				Global.gui().choose(this, "Yes: $50");
 				Global.gui().choose(this, "No");
-			}else{
+			} else {
 				visit("No");
 			}
-		}
-		else if(choice=="Leave"){
+		} else if (choice.equals("Leave")) {
 			done(true);
 			return;
-		}
-		else {
-			if(choice.startsWith("Yes")){
-				player.money-=50;
-				paid=true;
-			}	
-			else if(choice.startsWith("No")){
-				paid=false;
+		} else {
+			if (choice.startsWith("Yes")) {
+				player.money -= 50;
+				paid = true;
+			} else if (choice.startsWith("No")) {
+				paid = false;
 			}
 			showScene(pickScene());
-			if(paid){
-				if(Global.random(5)==0){
-					Global.gui().message("<p><b>You feel like your experiences have grown from playing the game.</b>");
+			if (paid) {
+				if (Global.random(5) == 0) {
+					Global.gui().message(
+							"<p><b>You feel like your experiences have grown from playing the game.</b>");
 					player.gainXP(50);
 				}
 			}
@@ -55,7 +54,7 @@ public class VideoGames extends Activity {
 
 	@Override
 	public void shop(Character npc, int budget) {
-		if(Global.random(5)==0){
+		if (Global.random(5) == 0) {
 			npc.availableAttributePoints += 1;
 		}
 	}
@@ -86,32 +85,32 @@ public class VideoGames extends Activity {
 				Global.gui().message(
 						"You settle down to play some video games. Just after you turn on your console through your phone starts buzzing. It's a text from Cassie asking if she can come over to hang out. Barely five minutes after you replied you hear a gentle knock at your door. You open it and she flits inside excitedly, her eyes darting around the room, examining your place.<p><i>\"So this is where you live...\"</i> she murmurs, her voice trailing off as she sees your game collection, diving down on her hands and knees to thoroughly inspect it.<p><i>\"Nope. Nope. Nope... Ahh! Let's play this,\"</i> she announces, raising this year's modern FPS with a beaming smile. You nod in approval and she pops it in the disc tray, grabbing a second controller and snuggling in beside you on the couch. A couple of co-op matches later and she's wrapped her legs around yours. You can feel the pleasant warm glow of her body radiating into you as blasts of bombs and clicks of controllers flood the room. She's very good, and manages to save your ass more times than you can count. Towards the end of the final mission though she gets too far ahead and is suddenly grabbed by two stereotypically evil mercenaries.<p><i>\"Oh no! Help!\"</i> she squeals, elbowing you in the side to get your attention.<p>You sprint forward, taking aim down your iron sights and reduce both of the hired guns to a red mist, freeing up her avatar to make the final push and complete the objective. Huge gold letters shine across the screen, \"YOU'RE WINNER!\"<p><i>\"My hero!\"</i> she beams, tossing the controller on the carpeted floor and wrapping her arms around your neck in a big hug. Her lips connect with your cheek and plant a soft, sweet kiss before nuzzling into your shoulder and closing her eyes. You carefully balance your controller on the thin arm of the couch and wrap your arms around her for the remainder of the hour.");
 
-				this.player.gainAffection(Global.getNPC("Cassie"), 1);
-				Global.getNPC("Cassie").gainAffection(this.player, 1);
+				player.gainAffection(Global.getNPC("Cassie"), 1);
+				Global.getNPC("Cassie").gainAffection(player, 1);
 				Global.flag(Flag.Cassievg1);
 				break;
 			case cassie2:
 				Global.gui().message(
 						"Just before you turn on your console you decide to text Cassie and see if she wants to join you. She responds almost immediately and arrives a few minutes later. She's looking particularly cute today in a  short black skirt and a white tank top.<p><i>\"Shall we do versus mode today? How about we up the stakes this time? Every time you are killed you lose a piece of clothing.\"</i><br>You agree, launching Duty Calls and letting Cassie pick the map. The two of you are soon running around an abandoned factory. There's no point in hiding, you're both on the same TV and she'll see you. You decide to grab an assault rifle and rush forward, keeping the pressure on her. Unfortunately she lands the first kill and you take off your shirt, tossing it aside.<p>As the match continues you can't help but notice Cassie becoming a bit distracted by your bare chest. Her eyes continually glance down to your abs, and you notice her biting her lower lip.<p>*Bang*<p>You score your first kill while she is distracted. You expect her to take off her top like you, but she responds unusually by unhooking her skirt.<p><i>\"What? It was short anyway! I'm not losing much.\"</i><br>The game continues again, but only very briefly as you notice her running past a large metal generator.<p>*Bang*<p><i>\"Hey, stop looking at my screen, jerk!\"</i> she jeers, bumping into you teasingly and stripping off her shirt.<br>Another two kills later and you begin to wonder whether she's deliberately losing, or just nervous of being nude in front of you. You look to your right and see her brightly blushing as she attempts to cover her nipples while slipping out of her panties.<p><i>\"G-guess you win!\"</i> she mutters, spreading her legs slightly in defeat. You glance down and look at her puffy vulva lips and perky breasts.<p><i>\"I'll win nex-\"</i> she begins, but is cut off mid sentence by you leaning on top of her and pressing her down into the couch with a romantic kiss directly on her lips. She blossoms under your touch and you feel her nipples stiffen as her sensitive nubs rub against your bare chest. You continue making out with her, when a devilish thought crosses your mind. You begin sucking on her neck to distract her, while looking up at the TV. You reach for the controller and go to the options menu and select 'Rumble test.' The controller begins vibrating in your hand, typically used to let you know when you've been shot during a game, but you have a far more nefarious use for it.<p>Cassie opens her eyes at the rumbling noise, <i>\"Huh, what is that? Ohhhhh!\"</i><br>She gasps in pleasure as you slide the rounded controller handle in between her thighs to her glistening, wet pussy. The vibrations course through her body making her moan and writhe as it pushes up against her intensely delicate clitoris.<p><i>\"A-naaa... AHHHHHH!\"</i> she squeals as the beginnings of an orgasm begin to rush over her body. She buries her face between your shoulder and neck, her laboured stuttered breaths caressing down your chest. The controller continues to buzz unrelentingly against her bud until she can take it no longer. You feel a wetness spread over your hand as she reaches the pinnacle of her climax hard against the hard plastic controller.<p><i>\"Ah... ah...\"</i> she sighs, her breath returning to a normal level. <i>\"Ha... haha... you're evil,\"</i> she laughs, coming down from her climax and kissing you again.");
 
-				this.player.gainAffection(Global.getNPC("Cassie"), 1);
-				Global.getNPC("Cassie").gainAffection(this.player, 1);
+				player.gainAffection(Global.getNPC("Cassie"), 1);
+				Global.getNPC("Cassie").gainAffection(player, 1);
 				Global.flag(Flag.Cassievg2);
 				break;
 			case mara1:
 				Global.gui().message(
 						"You've barely turned on your console when you hear three sharp knocks on your door. You weren't expecting any visitors, but are pleasantly surprised to see Mara standing there when you open it, clothed in a purple t-shirt and black leggings.<p><i>\"Jesus, I thought my place was a mess!\"</i> she jokes, lifting a pair of your unwashed pants from the floor and tossing them across the room. She notices the TV screen out of the corner of her eye flickering with the logo for the WeeX3.<br><i>\"Sweet, what games have you got here? Nope. Nah, crap. Have you not got any decent strategy games?\"</i><br>You bend over and pull out a few boxes until you come across a couple of games at the back and hand them to her. She glances over them for a few seconds before putting one of them back.<br><i>\"Hmm... let's play Humanity.\"</i><br>Humanity was an incredibly complex game where you guided a country through thousands of years of history. You've never been able to get your head around it, giving up on it months ago; Mara repeatedly assured you that she would help. So, with the controller in your hands, and a notepad in Mara's the two of you sat side by side and began your quest to forge a civilization together.<p>Time seems to pass almost as quickly as it does in game - Mara and you scheming, preparing, and engaging radical and genius tactics. While the AI takes their turn you place the palms of your hands around the back of her neck.<p><i>\"Huh? Wh- Ohhhh...\"</i> she gasps in pleasure as you gently draw your fingertips around her neck, massaging it softly, slowly sliding under the top of her t-shirt to do her shoulders as well.<br><i>\"Yeah, right there, ah... go a little bit harder.\"</i><br>You dig your fingers into her smooth black skin a little firmer this time, feeling a couple of knots melt away as her short dark hair tickles the dorsal side of your hand. Her shoulders begin to sag, and she leans back in the chair, much more relaxed now.<p><i>\"God, you're amazing at that!\"</i> she almost purrs, <i>\"But I think you'll be needing one too after what I tell you next.</i><br>You're glad that she's enjoying this. She still needs to learn to relax. Even when she's gaming she picks the most difficult and challenging one she can find. She nods at the TV which is announcing it is your turn again, and lifts her notepad up showing a long list of calculations.<p><i>\"We need to cut the budget, our deficit is far too high. Slash military spending by half and disband the Eastern brigades.\"</i><br>You briefly protest, shocked by how radical her plan sounds. The mathematics look probably right though, you'll be bankrupt in a few turns if your nation kept spending like it was doing. Much later, and the two of you have created a marvellous empire, spanning several continents, connected with one of the most impressive infrastructure networks in the world. Her strategical mind combined with your cunning and military tactics ensured an astounding victory.<p><i>\"We sure make a great team,\"</i> she whispers with a smile. You nod in agreement and wrap her in a huge hug, planting a kiss on her cheek; it was well played by both of you. Neither of you could have succeeded alone. As you lean over to turn off the console you think you hear her whisper something else.<p><i>\"I wish we...be more...\"</i> she cuts herself off mid-sentence, only to quickly stand up and announce that she has to go for a seminar, rushing out the door and slamming it behind her, leaving you somewhat stunned at her quick departure.");
 
-				this.player.gainAffection(Global.getNPC("Mara"), 1);
-				Global.getNPC("Mara").gainAffection(this.player, 1);
+				player.gainAffection(Global.getNPC("Mara"), 1);
+				Global.getNPC("Mara").gainAffection(player, 1);
 				Global.flag(Flag.Maravg1);
 				break;
 			case mara2:
 				Global.gui().message(
 						"You boot up an FPS and slump down in your comfy chair. It'll be nice to get some relaxation in before the next match tonight. You jump into a multiplayer match and plug in your headset.<p>\"TEAM DEATHMATCH\" the TV loudly booms.<p>No sooner has the game begun than you hear a sharp rap at the door. You quickly take your headset off open it to find Mara standing there is a very short purple skirt and black t-shirt. She looks absolutely exhausted, her shoulders slumped and smile heavier than usual.<p><i>\"I kind of overworked myself again...\"</i><br>You beckon her in before she can finish her sentence and wave her over to the couch, closing the door with a dull thud. She slumps down on the couch, closing her eyes and resting her head on the back of it. You invite her to put the headset on and take over for you.<p>She's a little hesitant at first, but soon gets into the way of the game, running and gunning her away around the map, barking commands to her team. The easiness of a no-frills first person shooter seems to do her some good, and you see her begin to return to the Mara you know and love from the nightly competition. As you sit on the floor in front of her a wicked thought crosses your mind.<p><i>\"Hit the bunker! Grab that flag!\"</i><br>You lean over to her legs and begin slowly planting wet kisses up her knee, your fingers softly grabbing her thighs and parting them as you raise your head to the inside of her thighs.<p><i>\"Keep up the a-ah-assault!\"</i><br>You hear her voice tremor as you approach her purple panties, your cheeks brushing against her soft thighs. Then, before she can pull away, you clamp your mouth over the front of her panties, feeling her jitter slightly in surprise. With your fingers slowly trailing their way up her sensitive, ticklish thighs you breathe heavily through the fabric of her panties, blasting her vulva with a wave of your hot breath.<p><i>\"I need a snip-ohhh... Y-yeah, I'm ok, I need a sniper.\"</i><br>She seems to have recovered pretty quickly from your first teasing of her pussy, so you decide to ramp up the pleasure and begin stabbing your tongue in quick darting motions against her panties, bumping against her clitoris through the thin cloth. You hear her breathing grow noticeably louder and become more laboured;  her panties quickly dampen as her pussy swells in anticipation of your nimble tongue. You致e got her now. You strongly doubt that she will be able to stay quiet enough for the guys playing not to hear her moans.<p>Taking a single finger you slide her panties aside, revealing her glistening wet slit. With a agonisingly slow lap, you draw your tongue from the bottom of it, straight to the top and finish with a quick circumnavigation of her clit. Her thighs clench against your cheeks while the sweet taste of her juices collect on your dancing tongue.<p>You decide to take things to the next level and begin licking her faster and faster, your tongue rapidly darting past her pussy lips and into her warm, wet depths. You curl it up along the roof, trying to stimulate her g-spot. She responds by lifting her legs up over your shoulders, giving you even better access.<p><i>\"Ah ah! oh... N-no, I just ah! hurt my foot...mmm...\"</i><br>It's turning you on to hear Mara desperately try to hide the fact she was being pleasured while playing. You slide your tongue out of her wet hole, returning to her clitoris and start licking in a regular rhythm. Her thighs begin shaking either side of your head, trembling and clenching in undulations of ecstasy.<p><i>\"God... oh my... God! SHIT! I'M CUMMING! I'M CUMMING!\"</i> she squealed as your tongue quickened its assault on her sensitive nub. You hear the headset thud to the floor as she tears it off and wraps her hands around the back of your head, pulling you in closer.<p><i>\"F-fuck! Don't stop! Ah D-oh ohhn! stop!\"</i><br>You obey her orders and continue to lick furiously as she rides out her orgasm, her hips bucking wildly and legs trembling uncontrollably.<br><i>\"AHH OHHH MMMMMM!! Enough! ToOOH sensitive!\"</i><br>You slowly stop, letting her catch her breath as you pull her panties back across and sit down beside her. She cuddles up next to you, resting her head on your chest.<p><i>\"You're the best thing that happened to me all year. I was a catherine wheel spinning out of control before I met you.\"</i><br>Her words pull at your heartstrings, and you run your fingers through her soft, short hair, falling asleep together.");
 
-				this.player.gainAffection(Global.getNPC("Mara"), 1);
-				Global.getNPC("Mara").gainAffection(this.player, 1);
+				player.gainAffection(Global.getNPC("Mara"), 1);
+				Global.getNPC("Mara").gainAffection(player, 1);
 				Global.flag(Flag.maravg2);
 				break;
 			case cassiemara:
@@ -149,26 +148,26 @@ public class VideoGames extends Activity {
 		available.add(Scene.basic2);
 		available.add(Scene.basic3);
 		available.add(Scene.porn1);
-		if (this.player.getAffection(Global.getNPC("Cassie")) >= 5) {
+		if (player.getAffection(Global.getNPC("Cassie")) >= 5) {
 			available.add(Scene.cassie1);
 		}
-		if ((this.player.getAffection(Global.getNPC("Cassie")) >= 10)
-				&& (Global.checkFlag(Flag.Cassievg1))) {
+		if (player.getAffection(Global.getNPC("Cassie")) >= 10
+				&& Global.checkFlag(Flag.Cassievg1)) {
 			available.add(Scene.cassie2);
 		}
-		if (this.player.getAffection(Global.getNPC("Mara")) >= 5) {
+		if (player.getAffection(Global.getNPC("Mara")) >= 5) {
 			available.add(Scene.mara1);
 		}
-		if ((this.player.getAffection(Global.getNPC("Mara")) >= 10)
-				&& (Global.checkFlag(Flag.Maravg1))) {
+		if (player.getAffection(Global.getNPC("Mara")) >= 10
+				&& Global.checkFlag(Flag.Maravg1)) {
 			available.add(Scene.mara2);
 		}
-		if ((Global.getNPC("Cassie").getAffection(Global.getNPC("Mara")) >= 10)
-				&& (Global.checkFlag(Flag.Cassievg2))
-				&& (Global.checkFlag(Flag.maravg2))) {
+		if (Global.getNPC("Cassie").getAffection(Global.getNPC("Mara")) >= 10
+				&& Global.checkFlag(Flag.Cassievg2)
+				&& Global.checkFlag(Flag.maravg2)) {
 			available.add(Scene.cassiemara);
 		}
-		if (this.player.getAffection(Global.getNPC("Angel")) >= 10) {
+		if (player.getAffection(Global.getNPC("Angel")) >= 10) {
 			available.add(Scene.caroline1);
 		}
 		if (Global.getValue(Flag.CarolineAffection) >= 3.0F) {
@@ -177,7 +176,7 @@ public class VideoGames extends Activity {
 		if (Global.getValue(Flag.CarolineAffection) >= 10.0F) {
 			available.add(Scene.caroline3);
 		}
-		return (Scene) available.get(Global.random(available.size()));
+		return available.get(Global.random(available.size()));
 	}
 
 	private static enum Scene {

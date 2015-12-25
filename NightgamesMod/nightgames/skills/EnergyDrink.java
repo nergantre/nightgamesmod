@@ -19,7 +19,8 @@ public class EnergyDrink extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().mobile(getSelf())&&getSelf().canAct()&&getSelf().has(Item.EnergyDrink);
+		return c.getStance().mobile(getSelf()) && getSelf().canAct()
+				&& getSelf().has(Item.EnergyDrink);
 	}
 
 	@Override
@@ -29,15 +30,14 @@ public class EnergyDrink extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(getSelf().human()){
-			c.write(getSelf(),deal(c,0,Result.normal, target));
-		}
-		else if(target.human()){
-			c.write(getSelf(),receive(c,0,Result.normal, getSelf()));
+		if (getSelf().human()) {
+			c.write(getSelf(), deal(c, 0, Result.normal, target));
+		} else if (target.human()) {
+			c.write(getSelf(), receive(c, 0, Result.normal, getSelf()));
 		}
 		getSelf().heal(c, Math.max(20, getSelf().getStamina().max() / 2));
-		getSelf().buildMojo(c, 20+Global.random(10));
-		
+		getSelf().buildMojo(c, 20 + Global.random(10));
+
 		getSelf().consume(Item.EnergyDrink, 1);
 		return true;
 	}
@@ -53,13 +53,16 @@ public class EnergyDrink extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
 		return "You chug an energy drink and feel some of your fatigue vanish.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return target.name()+" opens up an energy drink and downs the whole can.";
+	public String receive(Combat c, int damage, Result modifier,
+			Character target) {
+		return target.name()
+				+ " opens up an energy drink and downs the whole can.";
 	}
 
 }

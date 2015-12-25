@@ -28,7 +28,8 @@ public class Command extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !getSelf().human()&&getSelf().canRespond()&&target.is(Stsflag.enthralled);
+		return !getSelf().human() && getSelf().canRespond()
+				&& target.is(Stsflag.enthralled);
 	}
 
 	@Override
@@ -48,34 +49,41 @@ public class Command extends Skill {
 
 		CockPart selfCock = getSelf().body.getRandomCock();
 		PussyPart selfPussy = getSelf().body.getRandomPussy();
-		boolean otherReady = (otherCock != null && otherCock.isReady(target))
-				|| (otherPussy != null && otherPussy.isReady(target));
-		boolean selfReady = (selfCock != null && selfCock.isReady(getSelf()))
-				|| (selfPussy != null && selfPussy.isReady(getSelf()));
+		boolean otherReady = otherCock != null && otherCock.isReady(target)
+				|| otherPussy != null && otherPussy.isReady(target);
+		boolean selfReady = selfCock != null && selfCock.isReady(getSelf())
+				|| selfPussy != null && selfPussy.isReady(getSelf());
 		if (getSelf().bound()) { // Undress self
-			c.write(getSelf(),"You feel a compulsion to loosen " + getSelf().nameOrPossessivePronoun()
+			c.write(getSelf(),
+					"You feel a compulsion to loosen " + getSelf()
+							.nameOrPossessivePronoun()
 					+ " bondage. She quickly hops to her feet and grins at you like a predator while rubbing her wrists.");
 			getSelf().free();
 		} else if (!target.mostlyNude()) { // Undress self
-			c.write(getSelf(),receive(c, 0, Result.miss, target));
+			c.write(getSelf(), receive(c, 0, Result.miss, target));
 			new Undress(target).resolve(c, getSelf());
-		} else if (!getSelf().crotchAvailable() && !getSelf().getOutfit().slotUnshreddable(ClothingSlot.bottom)) {
-			c.write(getSelf(),receive(c, 0, Result.weak, target));
-			c.write(getSelf(),"Like a hungry beast, you rip off " + getSelf().name()
-					+ "'s " + getSelf().shred(ClothingSlot.bottom) + ".");
-		} else if (!getSelf().breastsAvailable() && !getSelf().getOutfit().slotUnshreddable(ClothingSlot.top)) {
-			c.write(getSelf(),receive(c, 0, Result.weak, target));
-			c.write(getSelf(),"Like a hungry beast, you rip off " + getSelf().name()
-					+ "'s " + getSelf().shred(ClothingSlot.top) + ".");
+		} else if (!getSelf().crotchAvailable() && !getSelf().getOutfit()
+				.slotUnshreddable(ClothingSlot.bottom)) {
+			c.write(getSelf(), receive(c, 0, Result.weak, target));
+			c.write(getSelf(),
+					"Like a hungry beast, you rip off " + getSelf().name()
+							+ "'s " + getSelf().shred(ClothingSlot.bottom)
+							+ ".");
+		} else if (!getSelf().breastsAvailable()
+				&& !getSelf().getOutfit().slotUnshreddable(ClothingSlot.top)) {
+			c.write(getSelf(), receive(c, 0, Result.weak, target));
+			c.write(getSelf(),
+					"Like a hungry beast, you rip off " + getSelf().name()
+							+ "'s " + getSelf().shred(ClothingSlot.top) + ".");
 		} else if (!getSelf().crotchAvailable()) {
-			(new Undress(getSelf())).resolve(c, target);
+			new Undress(getSelf()).resolve(c, target);
 		} else if (!otherReady) { // Masturbate
-			c.write(getSelf(),receive(c, 0, Result.normal, target));
+			c.write(getSelf(), receive(c, 0, Result.normal, target));
 			new Masturbate(target).resolve(c, getSelf());
 		} else if (!selfReady) { // Pleasure me
-			c.write(getSelf(),receive(c, 1, Result.critical, target));
+			c.write(getSelf(), receive(c, 1, Result.critical, target));
 			c.setStance(new FaceSitting(getSelf(), target));
-			c.write(getSelf(),"<br>");
+			c.write(getSelf(), "<br>");
 			List<Skill> possible = new ArrayList<>();
 			if (getSelf().hasPussy()) {
 				possible.add(new PussyWorship(target));
@@ -85,28 +93,28 @@ public class Command extends Skill {
 				possible.add(new Anilingus(target));
 			}
 			possible.get(Global.random(possible.size())).resolve(c, target);
-		} else if (!c.getStance().inserted()
-				&& getSelf().hasPussy() && target.hasDick()) { // Fuck me
+		} else if (!c.getStance().inserted() && getSelf().hasPussy()
+				&& target.hasDick()) { // Fuck me
 			c.setStance(new Mount(target, getSelf()));
-			c.write(getSelf(),receive(c, 0, Result.special, target));
+			c.write(getSelf(), receive(c, 0, Result.special, target));
 			new Fuck(target).resolve(c, getSelf());
-		} else if (!c.getStance().inserted()
-				&& target.hasPussy() && getSelf().hasDick()) { // Fuck me
+		} else if (!c.getStance().inserted() && target.hasPussy()
+				&& getSelf().hasDick()) { // Fuck me
 			c.setStance(new Mount(target, getSelf()));
-			c.write(getSelf(),receive(c, 0, Result.special, target));
+			c.write(getSelf(), receive(c, 0, Result.special, target));
 			new ReverseFuck(target).resolve(c, getSelf());
 		} else if (c.getStance().inserted()) { // I drain you
 			if (Global.random(5) >= 4 && getSelf().get(Attribute.Dark) > 0) {
-				c.write(getSelf(),receive(c, 0, Result.critical, target));
-				c.write(getSelf(),"<br>");
+				c.write(getSelf(), receive(c, 0, Result.critical, target));
+				c.write(getSelf(), "<br>");
 				new Drain(getSelf()).resolve(c, target);
 			} else {
-				c.write(getSelf(),receive(c, 0, Result.critical, target));
-				c.write(getSelf(),"<br>");
+				c.write(getSelf(), receive(c, 0, Result.critical, target));
+				c.write(getSelf(), "<br>");
 				new Piston(getSelf()).resolve(c, target);
 			}
 		} else { // Confused
-			c.write(getSelf(),receive(c, 0, Result.normal, target));
+			c.write(getSelf(), receive(c, 0, Result.normal, target));
 			new Masturbate(target).resolve(c, getSelf());
 		}
 		return true;
@@ -123,41 +131,45 @@ public class Command extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
 		return null;
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
-		if (modifier == null)
+	public String receive(Combat c, int damage, Result modifier,
+			Character target) {
+		if (modifier == null) {
 			return getSelf().name()
 					+ "'s order confuses you for a moment, snapping her control over you.";
+		}
 		switch (modifier) {
-		case critical:
-			switch (damage) {
-			case 0:
-				return "While commanding you to be still, " + getSelf().name()
-						+ " starts bouncing wildly on your dick.";
-			case 1:
-				return "Her scent overwhelms you and you feel a compulsion to pleasure her.";
-			case 2:
-				return "You feel an irresistible compulsion to lie down on your back";
+			case critical:
+				switch (damage) {
+					case 0:
+						return "While commanding you to be still, "
+								+ getSelf().name()
+								+ " starts bouncing wildly on your dick.";
+					case 1:
+						return "Her scent overwhelms you and you feel a compulsion to pleasure her.";
+					case 2:
+						return "You feel an irresistible compulsion to lie down on your back";
+					default:
+						break;
+				}
+			case miss:
+				return "You feel an uncontrollable desire to undress yourself";
+			case normal:
+				return getSelf().name()
+						+ "'s eyes bid you to pleasure yourself on her behalf.";
+			case special:
+				return getSelf().name()
+						+ "'s voice pulls you in and you cannot resist fucking her";
+			case weak:
+				return "You are desperate to see more of " + getSelf().name()
+						+ "'s body";
 			default:
-				break;
-			}
-		case miss:
-			return "You feel an uncontrollable desire to undress yourself";
-		case normal:
-			return getSelf().name()
-					+ "'s eyes bid you to pleasure yourself on her behalf.";
-		case special:
-			return getSelf().name()
-					+ "'s voice pulls you in and you cannot resist fucking her";
-		case weak:
-			return "You are desperate to see more of " + getSelf().name()
-					+ "'s body";
-		default:
-			return null;
+				return null;
 		}
 	}
 }

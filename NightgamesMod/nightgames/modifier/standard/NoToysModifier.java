@@ -10,7 +10,7 @@ import nightgames.modifier.item.BanToysModifier;
 public class NoToysModifier extends BaseModifier {
 
 	public NoToysModifier() {
-		this.items = new BanToysModifier();
+		items = new BanToysModifier();
 	}
 
 	@Override
@@ -38,6 +38,7 @@ public class NoToysModifier extends BaseModifier {
 				+ "to the toys I have for personal use.\"</i>";
 	}
 
+	@Override
 	public boolean isApplicable() {
 		Map<Item, Integer> inv = Global.getPlayer().getInventory();
 		return inv.containsKey(Item.Dildo) || inv.containsKey(Item.Dildo2)

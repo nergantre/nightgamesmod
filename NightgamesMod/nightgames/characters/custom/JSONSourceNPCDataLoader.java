@@ -71,7 +71,8 @@ public class JSONSourceNPCDataLoader {
 		stats.willpower = JSONUtils.readFloat(resources, "willpower");
 	}
 
-	public static NPCData load(InputStream in) throws ParseException,IOException {
+	public static NPCData load(InputStream in)
+			throws ParseException, IOException {
 		Object value = JSONValue.parseWithException(new InputStreamReader(in));
 		DataBackedNPCData data = new DataBackedNPCData();
 		try {
@@ -85,11 +86,11 @@ public class JSONSourceNPCDataLoader {
 			JSONObject outfit = (JSONObject) object.get("outfit");
 			JSONArray top = (JSONArray) outfit.get("top");
 			for (Object clothing : top) {
-				data.top.push(Clothing.getByID((String)clothing));
+				data.top.push(Clothing.getByID((String) clothing));
 			}
 			JSONArray bottom = (JSONArray) outfit.get("bottom");
 			for (Object clothing : bottom) {
-				data.bottom.push(Clothing.getByID((String)clothing));
+				data.bottom.push(Clothing.getByID((String) clothing));
 			}
 
 			// load stats
@@ -123,17 +124,18 @@ public class JSONSourceNPCDataLoader {
 				loadAiModifiers((JSONArray) object.get("ai-modifiers"),
 						data.aiModifiers);
 			}
-			
+
 			if (object.containsKey("male-pref")) {
-				data.aiModifiers.setMalePref(Optional.of((double) 
-						JSONUtils.readFloat(object, "male-pref")));
+				data.aiModifiers.setMalePref(Optional
+						.of((double) JSONUtils.readFloat(object, "male-pref")));
 			} else {
 				data.aiModifiers.setMalePref(Optional.empty());
 			}
 
 		} catch (ClassCastException e) {
 			e.printStackTrace();
-			throw new IOException("Badly formatted JSON character: " + e.getMessage());
+			throw new IOException(
+					"Badly formatted JSON character: " + e.getMessage());
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 			throw new IOException("Nonexistent value: " + e.getMessage());
@@ -180,7 +182,7 @@ public class JSONSourceNPCDataLoader {
 		}
 		// and requires that both of the sub requirements are true
 		if (obj.containsKey("and")) {
-			JSONArray reqsArr = ((JSONArray) obj.get("and"));
+			JSONArray reqsArr = (JSONArray) obj.get("and");
 			List<List<CustomRequirement>> allReqs = new ArrayList<>();
 			for (Object reqMem : reqsArr) {
 				JSONObject reqsObj = (JSONObject) reqMem;
@@ -192,7 +194,7 @@ public class JSONSourceNPCDataLoader {
 		}
 		// or requires that one of the sub requirements are true
 		if (obj.containsKey("or")) {
-			JSONArray reqsArr = ((JSONArray) obj.get("or"));
+			JSONArray reqsArr = (JSONArray) obj.get("or");
 			List<List<CustomRequirement>> allReqs = new ArrayList<>();
 			for (Object reqMem : reqsArr) {
 				JSONObject reqsObj = (JSONObject) reqMem;
