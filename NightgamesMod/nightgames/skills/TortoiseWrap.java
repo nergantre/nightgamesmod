@@ -1,14 +1,10 @@
 package nightgames.skills;
 
 import nightgames.characters.Attribute;
-import nightgames.global.Global;
-import nightgames.global.Modifier;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.items.Item;
-import nightgames.skills.Tactics;
-import nightgames.skills.TortoiseWrap;
 import nightgames.status.Hypersensitive;
 import nightgames.status.Stsflag;
 import nightgames.status.Tied;
@@ -26,12 +22,10 @@ public class TortoiseWrap extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (getSelf().canAct()) && (c.getStance().reachTop(getSelf()))
-				&& (!c.getStance().reachTop(target))
-				&& (getSelf().has(Item.Rope)) && (c.getStance().dom(getSelf()))
-				&& (!target.is(Stsflag.tied)) && (getSelf().is(Stsflag.bondage))
-				&& ((!getSelf().human())
-						|| (Global.getMatch().condition != Modifier.noitems));
+		return getSelf().canAct() && c.getStance().reachTop(getSelf())
+				&& !c.getStance().reachTop(target) && getSelf().has(Item.Rope)
+				&& c.getStance().dom(getSelf()) && !target.is(Stsflag.tied)
+				&& getSelf().is(Stsflag.bondage);
 	}
 
 	@Override

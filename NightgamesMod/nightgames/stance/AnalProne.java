@@ -1,12 +1,7 @@
 package nightgames.stance;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 
@@ -121,6 +116,7 @@ public class AnalProne extends AnalSexStance {
 		}
 	}
 
+	@Override
 	public Position reverse(Combat c) {
 		if (top.has(Trait.strapped)) {
 			c.write(bottom,
@@ -139,6 +135,7 @@ public class AnalProne extends AnalSexStance {
 		}
 	}
 
+	@Override
 	public String image() {
 		if (bottom.hasPussy()) {
 			return "analf.jpg";

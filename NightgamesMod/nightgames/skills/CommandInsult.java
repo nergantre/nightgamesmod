@@ -1,10 +1,8 @@
 package nightgames.skills;
 
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.stance.Stance;
 
 public class CommandInsult extends PlayerCommand {
 
@@ -25,7 +23,7 @@ public class CommandInsult extends PlayerCommand {
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		target.loseMojo(c, 15);
-		c.write(getSelf(),deal(c, 0, Result.normal, target));
+		c.write(getSelf(), deal(c, 0, Result.normal, target));
 		return true;
 	}
 
@@ -40,14 +38,16 @@ public class CommandInsult extends PlayerCommand {
 	}
 
 	@Override
-	public String deal(Combat c, int magnitude, Result modifier, Character target) {
+	public String deal(Combat c, int magnitude, Result modifier,
+			Character target) {
 		return "Your words nearly drive " + target.name()
 				+ " to tears with their ferocity and psychic backup. Luckily,"
 				+ " she won't remember any of it later.";
 	}
 
 	@Override
-	public String receive(Combat c, int magnitude, Result modifier, Character target) {
+	public String receive(Combat c, int magnitude, Result modifier,
+			Character target) {
 		return "<<This should not be displayed, please inform The"
 				+ " Silver Bard: CommandInsult-receive>>";
 	}

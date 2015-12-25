@@ -15,8 +15,8 @@ public enum Attribute {
 	Bio,
 	Divinity,
 	Willpower,
-	Technique, 
-	Submissive, 
+	Technique,
+	Submissive,
 	Hypnosis;
 
 	public static boolean isBasic(Attribute a) {
@@ -24,6 +24,7 @@ public enum Attribute {
 	}
 
 	public static boolean isTrainable(Attribute a, Character self) {
-		return a != Speed && a != Perception && (self.has(Trait.divinity) || a != Divinity);
+		return a != Speed && a != Perception
+				&& (self.has(Trait.divinity) || a != Divinity);
 	}
 }

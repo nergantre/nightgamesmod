@@ -15,7 +15,8 @@ public class Braced extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now braced.\n", affected.subjectAction("are", "is"));
+		return String.format("%s now braced.\n",
+				affected.subjectAction("are", "is"));
 	}
 
 	@Override
@@ -24,10 +25,10 @@ public class Braced extends DurationStatus {
 	}
 
 	@Override
-	public float fitnessModifier () {
-		return (10.0f + (10.0f*getDuration())) / 40.f;
+	public float fitnessModifier() {
+		return (10.0f + 10.0f * getDuration()) / 40.f;
 	}
-	
+
 	@Override
 	public int mod(Attribute a) {
 		return 0;
@@ -35,7 +36,7 @@ public class Braced extends DurationStatus {
 
 	@Override
 	public int damage(Combat c, int x) {
-		return -x*3/4;
+		return -x * 3 / 4;
 	}
 
 	@Override
@@ -45,12 +46,12 @@ public class Braced extends DurationStatus {
 
 	@Override
 	public int weakened(int x) {
-		return -x*3/4;
+		return -x * 3 / 4;
 	}
 
 	@Override
 	public int drained(int x) {
-		return -x*3/4;
+		return -x * 3 / 4;
 	}
 
 	@Override
@@ -85,13 +86,15 @@ public class Braced extends DurationStatus {
 
 	@Override
 	public int value() {
-		return 30 + (30 * getDuration());
+		return 30 + 30 * getDuration();
 	}
 
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Braced(newAffected);
 	}
+
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -99,6 +102,7 @@ public class Braced extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Braced(null);
 	}

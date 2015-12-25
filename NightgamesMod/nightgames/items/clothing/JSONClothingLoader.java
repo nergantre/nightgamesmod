@@ -42,13 +42,19 @@ public class JSONClothingLoader {
 		String prefix = JSONUtils.readString(clothingObj, "prefix");
 		float hotness = JSONUtils.readFloat(clothingObj, "hotness");
 		float exposure = JSONUtils.readFloat(clothingObj, "exposure");
-		Set<Trait> traits = JSONUtils.loadEnumsFromArr(clothingObj, "buffs", Trait.class);
-		Set<ClothingTrait> attributes = JSONUtils.loadEnumsFromArr(clothingObj, "attributes", ClothingTrait.class);
-		Set<ClothingSlot> slots = JSONUtils.loadEnumsFromArr(clothingObj, "slots", ClothingSlot.class);
-		Set<CharacterSex> sex = JSONUtils.loadEnumsFromArrWithExtras(clothingObj, "sex",
-				Collections.singletonMap("all", Arrays.asList(CharacterSex.values())),
+		Set<Trait> traits = JSONUtils.loadEnumsFromArr(clothingObj, "buffs",
+				Trait.class);
+		Set<ClothingTrait> attributes = JSONUtils.loadEnumsFromArr(clothingObj,
+				"attributes", ClothingTrait.class);
+		Set<ClothingSlot> slots = JSONUtils.loadEnumsFromArr(clothingObj,
+				"slots", ClothingSlot.class);
+		Set<CharacterSex> sex = JSONUtils.loadEnumsFromArrWithExtras(
+				clothingObj, "sex",
+				Collections.singletonMap("all",
+						Arrays.asList(CharacterSex.values())),
 				CharacterSex.class);
-		List<String> stores = JSONUtils.loadStringsFromArr(clothingObj, "shops");
+		List<String> stores = JSONUtils.loadStringsFromArr(clothingObj,
+				"shops");
 		Clothing res = new Clothing();
 		res.id = name;
 		res.price = price;
@@ -66,7 +72,8 @@ public class JSONClothingLoader {
 		return res;
 	}
 
-	public static List<Clothing> loadClothingListFromJSON(JSONArray clothingArr) {
+	public static List<Clothing> loadClothingListFromJSON(
+			JSONArray clothingArr) {
 		List<Clothing> results = new ArrayList<Clothing>();
 		for (Object obj : clothingArr) {
 			results.add(loadClothingFromJSON((JSONObject) obj));

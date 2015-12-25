@@ -15,7 +15,8 @@ public class StoneStance extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now in a Stone stance.\n", affected.subjectAction("are", "is"));
+		return String.format("%s now in a Stone stance.\n",
+				affected.subjectAction("are", "is"));
 	}
 
 	@Override
@@ -24,13 +25,13 @@ public class StoneStance extends DurationStatus {
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return 1.0f;
 	}
 
 	@Override
 	public int mod(Attribute a) {
-		if(a==Attribute.Speed){
+		if (a == Attribute.Speed) {
 			return -1;
 		}
 		return 0;
@@ -39,13 +40,13 @@ public class StoneStance extends DurationStatus {
 	@Override
 	public int regen(Combat c) {
 		super.regen(c);
-		affected.emote(Emotion.confident,5);
+		affected.emote(Emotion.confident, 5);
 		return 0;
 	}
 
 	@Override
 	public int damage(Combat c, int x) {
-		return -x/2;
+		return -x / 2;
 	}
 
 	@Override
@@ -92,11 +93,13 @@ public class StoneStance extends DurationStatus {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new StoneStance(newAffected);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -104,6 +107,7 @@ public class StoneStance extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new StoneStance(null);
 	}

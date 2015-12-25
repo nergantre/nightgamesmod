@@ -9,13 +9,12 @@ import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 
 public class Eve extends BasePersonality {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -8169646189131720872L;
 
@@ -28,12 +27,12 @@ public class Eve extends BasePersonality {
 		character.outfitPlan.add(Clothing.getByID("stilettopumps"));
 		character.outfitPlan.add(Clothing.getByID("garters"));
 
-		character.change(Modifier.normal);
-		this.character.set(Attribute.Power, 12);
-		this.character.set(Attribute.Fetish, 15);
-		this.character.set(Attribute.Cunning, 12);
-		this.character.set(Attribute.Speed, 6);
-		this.character.set(Attribute.Seduction, 13);
+		character.change();
+		character.set(Attribute.Power, 12);
+		character.set(Attribute.Fetish, 15);
+		character.set(Attribute.Cunning, 12);
+		character.set(Attribute.Speed, 6);
+		character.set(Attribute.Seduction, 13);
 		Global.gainSkills(character);
 		character.add(Trait.exhibitionist);
 		character.add(Trait.proheels);
@@ -148,7 +147,7 @@ public class Eve extends BasePersonality {
 
 	@Override
 	public String victory(Combat c, Result flag) {
-		this.character.arousal.empty();
+		character.arousal.empty();
 		if (flag == Result.anal) {
 			return "As Eve pounds you mercilessly in the ass, your body is overwhelmed"
 					+ " by the strange sensations radiating from your insides. <i>\"How"
@@ -312,8 +311,8 @@ public class Eve extends BasePersonality {
 					+ "let up until she ejaculates onto you.";
 		}
 
-		if (assist.eligible(this.character)) {
-			assist.defeated(this.character);
+		if (assist.eligible(character)) {
+			assist.defeated(character);
 			assist.nudify();
 		}
 		return "Eve kneels between " + target.name()
@@ -364,7 +363,8 @@ public class Eve extends BasePersonality {
 
 	@Override
 	public String startBattle(Character other) {
-		return "Eve gives you a dominant grin and cracks her knuckles. <i>\"Come on "+other.boyOrGirl()+", let's play.\"</i>";
+		return "Eve gives you a dominant grin and cracks her knuckles. <i>\"Come on "
+				+ other.boyOrGirl() + ", let's play.\"</i>";
 	}
 
 	@Override
@@ -382,6 +382,7 @@ public class Eve extends BasePersonality {
 
 	}
 
+	@Override
 	public boolean checkMood(Combat c, Emotion mood, int value) {
 		switch (mood) {
 			case horny:

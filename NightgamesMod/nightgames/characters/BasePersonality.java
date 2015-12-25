@@ -23,13 +23,13 @@ import nightgames.skills.Skill;
 
 public abstract class BasePersonality implements Personality {
 	/**
-	 * 
+	 *
 	 */
-	private static final long serialVersionUID = 2279220186754458082L;
-	public NPC character;
-	protected Growth growth;
-	protected List<PreferredAttribute> preferredAttributes;
-	protected CockMod preferredCockMod;
+	private static final long			serialVersionUID	= 2279220186754458082L;
+	public NPC							character;
+	protected Growth					growth;
+	protected List<PreferredAttribute>	preferredAttributes;
+	protected CockMod					preferredCockMod;
 
 	public interface PreferredAttribute {
 		Optional<Attribute> getPreferred(Character c);
@@ -48,7 +48,9 @@ public abstract class BasePersonality implements Personality {
 	@Override
 	public void rest(int time) {
 		if (preferredCockMod != CockMod.error && character.rank > 0) {
-			Optional<BodyPart> optDick = character.body.get("cock").stream().filter(part -> part.getMod() != preferredCockMod).findAny();
+			Optional<BodyPart> optDick = character.body.get("cock").stream()
+					.filter(part -> part.getMod() != preferredCockMod)
+					.findAny();
 			if (optDick.isPresent()) {
 				CockPart part = (CockPart) optDick.get();
 				character.body.remove(part);
@@ -56,38 +58,40 @@ public abstract class BasePersonality implements Personality {
 			}
 		}
 	}
-	
+
 	public void buyUpTo(Item item, int number) {
-		while (character.money>item.getPrice() && character.count(item) < 3) {
-			character.money-=item.getPrice();
+		while (character.money > item.getPrice() && character.count(item) < 3) {
+			character.money -= item.getPrice();
 			character.gain(item);
 		}
 	}
 
+	@Override
 	public String getType() {
 		return getClass().getSimpleName();
 	}
 
-	public Skill act(HashSet<Skill> available,Combat c) {
-		HashSet<Skill> tactic = new HashSet<Skill>();	
+	@Override
+	public Skill act(HashSet<Skill> available, Combat c) {
+		HashSet<Skill> tactic = new HashSet<Skill>();
 		Skill chosen;
-		ArrayList<WeightedSkill> priority = Decider.parseSkills(available, c, character);
-		if(!Global.checkFlag(Flag.dumbmode)){
-			chosen = character.prioritizeNew(priority,c);
-		}
-		else{
+		ArrayList<WeightedSkill> priority = Decider.parseSkills(available, c,
+				character);
+		if (!Global.checkFlag(Flag.dumbmode)) {
+			chosen = character.prioritizeNew(priority, c);
+		} else {
 			chosen = character.prioritize(priority);
 		}
-		if(chosen==null){
-			tactic=available;
+		if (chosen == null) {
+			tactic = available;
 			Skill[] actions = tactic.toArray(new Skill[tactic.size()]);
 			return actions[Global.random(actions.length)];
-		}
-		else{
+		} else {
 			return chosen;
 		}
 	}
 
+	@Override
 	public Action move(HashSet<Action> available, HashSet<Movement> radar) {
 		Action proposed = Decider.parseMoves(available, radar, character);
 		return proposed;
@@ -96,18 +100,22 @@ public abstract class BasePersonality implements Personality {
 	@Override
 	public void pickFeat() {
 		ArrayList<Trait> available = new ArrayList<Trait>();
-		for(Trait feat: Global.getFeats(character)){
-			if(!character.has(feat)){
+		for (Trait feat : Global.getFeats(character)) {
+			if (!character.has(feat)) {
 				available.add(feat);
 			}
 		}
-		if (available.size() == 0) { return; }
-		character.add((Trait) available.toArray()[Global.random(available.size())]);
+		if (available.size() == 0) {
+			return;
+		}
+		character.add(
+				(Trait) available.toArray()[Global.random(available.size())]);
 	}
 
 	@Override
 	public String image(Combat c) {
-		String fname = character.name().toLowerCase() + "_" + character.mood.name()+".jpg";
+		String fname = character.name().toLowerCase() + "_"
+				+ character.mood.name() + ".jpg";
 		return fname;
 	}
 
@@ -125,6 +133,7 @@ public abstract class BasePersonality implements Personality {
 		distributePoints();
 	}
 
+	@Override
 	public String describeAll(Combat c) {
 		StringBuilder b = new StringBuilder();
 		b.append(describe(c));
@@ -133,7 +142,7 @@ public abstract class BasePersonality implements Personality {
 		b.append("<br>");
 		for (Trait t : character.getTraits()) {
 			t.describe(character, b);
-			b.append(" ");
+			b.append(' ');
 		}
 		b.append("<br>");
 		return b.toString();
@@ -145,11 +154,15 @@ public abstract class BasePersonality implements Personality {
 	}
 
 	public void distributePoints() {
-		if (character.availableAttributePoints <= 0) { return; }
+		if (character.availableAttributePoints <= 0) {
+			return;
+		}
 		ArrayList<Attribute> avail = new ArrayList<Attribute>();
-		Deque<PreferredAttribute> preferred = new ArrayDeque<PreferredAttribute>(preferredAttributes);
+		Deque<PreferredAttribute> preferred = new ArrayDeque<PreferredAttribute>(
+				preferredAttributes);
 		for (Attribute a : character.att.keySet()) {
-			if (Attribute.isTrainable(a, character) && (character.getPure(a) > 0 || Attribute.isBasic(a))) {
+			if (Attribute.isTrainable(a, character)
+					&& (character.getPure(a) > 0 || Attribute.isBasic(a))) {
 				avail.add(a);
 			}
 		}
@@ -160,13 +173,14 @@ public abstract class BasePersonality implements Personality {
 		}
 		for (; character.availableAttributePoints > 0; character.availableAttributePoints--) {
 			Attribute selected = null;
-			//remove all the attributes that isn't in avail
+			// remove all the attributes that isn't in avail
 			preferred = new ArrayDeque<>(preferred.stream().filter(p -> {
 				Optional<Attribute> att = p.getPreferred(character);
 				return att.isPresent() && avail.contains(att.get());
 			}).collect(Collectors.toList()));
 			if (preferred.size() > 0) {
-				Optional<Attribute> pref = preferred.removeFirst().getPreferred(character);
+				Optional<Attribute> pref = preferred.removeFirst()
+						.getPreferred(character);
 				if (pref.isPresent()) {
 					selected = pref.get();
 				}
@@ -180,15 +194,18 @@ public abstract class BasePersonality implements Personality {
 		}
 	}
 
+	@Override
 	public RecruitmentData getRecruitmentData() {
 		return null;
 	}
-	
+
+	@Override
 	public AiModifiers getAiModifiers() {
 		return AiModifiers.getDefaultModifiers(getType());
 	}
-	
+
+	@Override
 	public String resist3p(Combat c, Character target, Character assist) {
-	    return null;
+		return null;
 	}
 }

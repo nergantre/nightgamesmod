@@ -1,32 +1,30 @@
 package nightgames.actions;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 import nightgames.areas.Area;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.gui.GUI;
 import nightgames.items.Item;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
 public class Locate extends Action {
-	private static final long serialVersionUID = 1L;
-
-	private boolean done;
+	private static final long	serialVersionUID	= 1L;
 
 	public Locate() {
 		super("Locate");
-		done = false;
 	}
 
 	@Override
 	public boolean usable(Character self) {
 		boolean hasUnderwear = false;
-		for (Item i : self.getInventory().keySet())
-			if (i.toString().contains("Trophy"))
+		for (Item i : self.getInventory().keySet()) {
+			if (i.toString().contains("Trophy")) {
 				hasUnderwear = true;
+			}
+		}
 		return self.has(Trait.locator) && hasUnderwear;
 	}
 
@@ -59,18 +57,13 @@ public class Locate extends Action {
 				new UnsupportedOperationException()
 						.printStackTrace(new PrintWriter(writer));
 				gui.clearText();
-				gui.message("If you see this text ingame, something went wrong with"
-						+ " the locator function. Please take the time to send the information"
-						+ " below to The Silver Bard at his wordpress blog or Fenoxo's Forum: "
-						+ "\n\nSelf: "
-						+ self.name()
-						+ "("
-						+ self.human()
-						+ ")\n"
-						+ "Choice: "
-						+ choice
-						+ "\nStacktrace:\n"
-						+ writer.toString());
+				gui.message(
+						"If you see this text ingame, something went wrong with"
+								+ " the locator function. Please take the time to send the information"
+								+ " below to The Silver Bard at his wordpress blog or Fenoxo's Forum: "
+								+ "\n\nSelf: " + self.name() + "("
+								+ self.human() + ")\n" + "Choice: " + choice
+								+ "\nStacktrace:\n" + writer.toString());
 				gui.clearCommand();
 				gui.choose(this, "Leave", self);
 			}
@@ -84,13 +77,14 @@ public class Locate extends Action {
 							+ ", you attempt to scry for its owner's location. In your mind, an image of the "
 							+ area.name
 							+ " appears. It falls apart as quickly as it came to be, but you know where "
-							+target.name()+" currently is. Your hard-earned trophy is already burning up in those creepy "
-							+"purple flames, the smoke flowing from your nose straight to your crotch and setting another fire there.");
+							+ target.name()
+							+ " currently is. Your hard-earned trophy is already burning up in those creepy "
+							+ "purple flames, the smoke flowing from your nose straight to your crotch and setting another fire there.");
 				} else {
 					gui.message("Focusing on the essence contained in the "
 							+ desc
 							+ ", you attempt to scry for its owner's location. However, you draw a blank. Your hard-earned trophy is already burning up in those creepy "
-							+"purple flames, the smoke flowing from your nose straight to your crotch and setting another fire there.");
+							+ "purple flames, the smoke flowing from your nose straight to your crotch and setting another fire there.");
 				}
 				self.tempt(15);
 				self.consume(sought, 1);
@@ -98,8 +92,7 @@ public class Locate extends Action {
 				gui.choose(this, "Leave", self);
 			} else {
 				gui.clearText();
-				gui.message("You need some of "
-						+ target.name()
+				gui.message("You need some of " + target.name()
 						+ "'s personal belongings to find her. Underwear would work.");
 				execute(self);
 			}
@@ -111,18 +104,13 @@ public class Locate extends Action {
 			new UnsupportedOperationException()
 					.printStackTrace(new PrintWriter(writer));
 			gui.clearText();
-			gui.message("If you see this text in game, something went wrong with"
-					+ " the locator function. Please take the time to send the information"
-					+ " below to The Silver Bard at his wordpress blog or Fenoxo's Forum: "
-					+ "\n\nSelf: "
-					+ self.name()
-					+ "("
-					+ self.human()
-					+ ")\n"
-					+ "Choice: "
-					+ choice
-					+ "\nStacktrace:\n"
-					+ writer.toString());
+			gui.message(
+					"If you see this text in game, something went wrong with"
+							+ " the locator function. Please take the time to send the information"
+							+ " below to The Silver Bard at his wordpress blog or Fenoxo's Forum: "
+							+ "\n\nSelf: " + self.name() + "(" + self.human()
+							+ ")\n" + "Choice: " + choice + "\nStacktrace:\n"
+							+ writer.toString());
 			gui.clearCommand();
 			gui.choose(this, "Leave", self);
 		}
@@ -132,7 +120,9 @@ public class Locate extends Action {
 	public Movement consider() {
 		return Movement.locating;
 	}
-	public boolean freeAction(){
+
+	@Override
+	public boolean freeAction() {
 		return true;
 	}
 }

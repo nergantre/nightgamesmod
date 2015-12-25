@@ -17,20 +17,25 @@ public class OrgasmSeal extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s ability to cum is now sealed!\n", affected.subject());
+		return String.format("%s ability to cum is now sealed!\n",
+				affected.subject());
 	}
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.hasBalls()) {
-			return Global.format("A pentragram on {self:name-possessive} ballsack glows with a sinister light.", affected, affected);
+		if (affected.hasBalls()) {
+			return Global.format(
+					"A pentragram on {self:name-possessive} ballsack glows with a sinister light.",
+					affected, affected);
 		} else {
-			return Global.format("A pentragram on {self:name-possessive} lower belly glows with a sinister light.", affected, affected);
+			return Global.format(
+					"A pentragram on {self:name-possessive} lower belly glows with a sinister light.",
+					affected, affected);
 		}
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		if (affected.getArousal().percent() > 80) {
 			return -10;
 		}
@@ -54,6 +59,7 @@ public class OrgasmSeal extends DurationStatus {
 		}
 		return 0;
 	}
+
 	@Override
 	public int damage(Combat c, int x) {
 		return 0;
@@ -98,7 +104,9 @@ public class OrgasmSeal extends DurationStatus {
 	public int counter() {
 		return 0;
 	}
-	public String toString(){
+
+	@Override
+	public String toString() {
 		return "Orgasm Sealed";
 	}
 
@@ -106,11 +114,13 @@ public class OrgasmSeal extends DurationStatus {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new OrgasmSeal(newAffected, getDuration());
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -119,6 +129,7 @@ public class OrgasmSeal extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new OrgasmSeal(null, JSONUtils.readInteger(obj, "duration"));
 	}

@@ -2,13 +2,10 @@ package nightgames.daytime;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.NPC;
-import nightgames.characters.Trait;
 import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
@@ -17,7 +14,6 @@ import nightgames.characters.body.EarPart;
 import nightgames.characters.body.ModdedCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
-import nightgames.characters.body.WingsPart;
 import nightgames.characters.custom.requirement.BodyPartRequirement;
 import nightgames.characters.custom.requirement.NotRequirement;
 import nightgames.global.Flag;
@@ -36,7 +32,8 @@ public class KatTime extends BaseNPCTime {
 		advTrait = null;
 		transformationFlag = "";
 	}
-	
+
+	@Override
 	public void buildTransformationPool() {
 		options = new ArrayList<>();
 		TransformationOption primalCock = new TransformationOption();
@@ -45,14 +42,15 @@ public class KatTime extends BaseNPCTime {
 		primalCock.ingredients.put(Item.Aphrodisiac, 50);
 		primalCock.requirements.add(new BodyPartRequirement("cock"));
 		primalCock.requirements.add((c, self, other) -> {
-			return self.body.get("cock").stream().anyMatch(cock -> ((CockPart) cock).isGeneric());
+			return self.body.get("cock").stream()
+					.anyMatch(cock -> ((CockPart) cock).isGeneric());
 		});
 		primalCock.additionalRequirements = "A normal cock";
 		primalCock.option = "Primal Cock";
 		primalCock.scene = "[Placeholder]<br>Kat uses her totemic magic to convert your penis into a primal cock.";
 		primalCock.effect = (c, self, other) -> {
-			Optional<BodyPart> optPart = self.body.get("cock").stream().filter(cock -> ((CockPart) cock).isGeneric())
-					.findAny();
+			Optional<BodyPart> optPart = self.body.get("cock").stream()
+					.filter(cock -> ((CockPart) cock).isGeneric()).findAny();
 			BasicCockPart target = (BasicCockPart) optPart.get();
 			self.body.remove(target);
 			self.body.add(new ModdedCockPart(target, CockMod.primal));
@@ -66,7 +64,8 @@ public class KatTime extends BaseNPCTime {
 		feralPussy.ingredients.put(Item.FemDraft, 10);
 		feralPussy.requirements.add(new BodyPartRequirement("pussy"));
 		feralPussy.requirements.add((c, self, other) -> {
-			return self.body.get("pussy").stream().anyMatch(pussy -> pussy == PussyPart.normal);
+			return self.body.get("pussy").stream()
+					.anyMatch(pussy -> pussy == PussyPart.normal);
 		});
 		feralPussy.option = "Feral Pussy";
 		feralPussy.scene = "[Placeholder]<br>Kat uses her totemic magic to convert your pussy into a feral one.";
@@ -79,9 +78,11 @@ public class KatTime extends BaseNPCTime {
 		TransformationOption catTail = new TransformationOption();
 		catTail.ingredients.put(Item.Rope, 10);
 		catTail.ingredients.put(Item.Aphrodisiac, 50);
-		catTail.requirements.add(new NotRequirement(Arrays.asList(new BodyPartRequirement("tail"))));
+		catTail.requirements.add(new NotRequirement(
+				Arrays.asList(new BodyPartRequirement("tail"))));
 		catTail.requirements.add((c, self, other) -> {
-			return self.body.get("tail").stream().anyMatch(part -> part != TailPart.cat) || !self.body.has("tail");
+			return self.body.get("tail").stream().anyMatch(
+					part -> part != TailPart.cat) || !self.body.has("tail");
 		});
 		catTail.option = "Cat Tail";
 		catTail.scene = "[Placeholder]<br>Kat uses her totemic magic to grow you a cat tail.";
@@ -95,7 +96,8 @@ public class KatTime extends BaseNPCTime {
 		catEars.ingredients.put(Item.Aphrodisiac, 50);
 		catEars.requirements.add(new BodyPartRequirement("ears"));
 		catEars.requirements.add((c, self, other) -> {
-			return self.body.get("ears").stream().anyMatch(part -> part != EarPart.cat) || !self.body.has("ears");
+			return self.body.get("ears").stream().anyMatch(
+					part -> part != EarPart.cat) || !self.body.has("ears");
 		});
 		catEars.option = "Cat Ears";
 		catEars.scene = "[Placeholder]<br>Kat uses her totemic magic to grow you cat ears.";
@@ -108,95 +110,97 @@ public class KatTime extends BaseNPCTime {
 
 	@Override
 	public void subVisitIntro(String choice) {
-			if (npc.getAffection(player) > 0) {
-				Global.gui().message(
-						"You send Kat a text to see if she's free. Since exchanging numbers with her, you've discovered that she's much more outgoing "
-								+ "when texting than she is in person. The two of you have chatted quite a bit, you just hope she'll eventually get more used to talking with you in "
-								+ "person.<br>You quickly receive a reply from Kat. 'i'm free right now. :) do you want to meet up?' You text her back, asking if there's a place you "
-								+ "can meet without her friends coming after you. 'i'm not with Mel and Emma right now. you can come here' About ten seconds later, she sends you a followup. "
-								+ "'please don't hate them. they're my best friends and they mean well. they just think i'm still an innocent virgin who needs to be protected.' To be "
-								+ "fair, she does inspire inspire that sort of protective attitude, even from her opponents. For Kat's sake, you'll do your best to get along with them, but "
-								+ "they may not be as agreeable, especially if they find out you're having sex with their protegée.<p>On your way to Kat's room, you get another text. "
-								+ "'i think i'm too excited waiting for you to get here. what are you planning?'");
-				Global.gui().choose(this, "Games");
-				Global.gui().choose(this, "Sparring");
-				Global.gui().choose(this, "Sex");
-				if ((Global.checkFlag(Flag.metAisha)) 
-						&& (!Global.checkFlag(Flag.catspirit)) 
-						&& (Global.getNPC("Kat").getAffection(this.player) >= 5)) {
-			           Global.gui().choose(this, "Ask about Animal Spirit");
-		         }
-			} else if (npc.getAttraction(player) < 10) {
-				Global.gui().message(
-						"You decide to look for Kat and see if she's interested in spending some time together. You don't have any way to contact her directly, "
-								+ "but she apparently spends a lot of time in the campus gardens. That's probably your best hope for running into her.<p>You eventually spot Kat walking "
-								+ "through the gardens, but you almost don't recognize her. Instead of the light, casual clothes she usually wears during a match, she's currently dressed "
-								+ "in an excessively baggy outfit. She's still pretty cute, but those clothes make her look like she's trying to hide her small frame. She's probably trying "
-								+ "to hide something else, though. At night, she doesn't have to worry about people seeing her cat ears and tail, but in her day-to-day life, it's got to be "
-								+ "a real inconvenience. To her credit, you don't see any obvious bulge in her pants where her tail should be. It would be interesting to see how she "
-								+ "maneuvers her tail to keep it from showing. It also sounds like a good excuse to get her pants off. As for her ears, she has them hidden under a cloth "
-								+ "hat... that has cat ears on it. She's wearing a cat ear hat over her actual cat ears. Does that qualify as hiding in plain sight? In her hand, she's "
-								+ "carrying a paperback book that she's either just been reading or is looking for a place to read.<p>You call out to Kat and for a moment, she looks like "
-								+ "a small, startled animal. She looks noticeably relieved when she sees you. That's probably a good sign. Before the two of you have a chance to talk, someone "
-								+ "else calls out to Kat. Two girls insert themselves between you and Kat. Were they with her? You didn't even notice them. One of the girls puts an arm around "
-								+ "Kat's shoulder and leads her away. <i>\"Sorry, we're in a bit of a hurry.\"</i> Kat looks like she wants to say something, but can't get the words out.<p>After they"
-								+ "leave, the other girl gives you a smile with no goodwill. <i>\"I know. That girl's super cute, isn't she? Unfortunately, you'll need to find another girl to hit "
-								+ "on. She doesn't have any experience with men and isn't very good at asserting herself, so we can't let anyone take advantage of her.\"</i><p>Ugh. This is inconvenient. "
-								+ "You can't very well explain that you're already intimately acquainted with Kat. You'll need to find another opportunity to approach her.");
-				npc.gainAttraction(player, 2);
-				player.gainAttraction(npc, 2);
-			} else {
-				Global.gui().message(
-						"You head out to the campus gardens, hoping to find Kat so you can spend some time together. You aren't searching long before you find her reading "
-								+ "a book in the shade of a tree. She seems pretty absorbed in the book, so you're hesitant to disturb her. Instead of calling out to her, you just sit next to her "
-								+ "quietly. You don't recognize the book she's reading, but judging by the cover, it appears to be an urban fantasy romance novel. It must pretty engaging, because "
-								+ "Kat still hasn't noticed that you've been sitting with her for several minutes.<p>When Kat finally perceives your presence, she lets out a startled yelp and jumps "
-								+ "to her feet. You weren't expecting her to be that surprised. You give her a relaxed smile and a greeting. Before Kat can reply, you hear an angry voice behind you. "
-								+ "<i>\"What the hell are you doing to my best friend?!\"</i> A girl with curly red hair glares at you and hugs Kat protectively. Another girl, a brunette, looks calmer, but "
-								+ "also stands between you and Kat. This is bad. You quickly explain that you weren't trying to scare Kat, you just wanted to talk to her. <p><i>\"Our Kat is pretty delicate. "
-								+ "Maybe you should learn how to approach a girl without scaring her before you try to pick her up.\"</i> The brunette speaks in a reasonable tone, but there's a definite "
-								+ "edge to her voice. The redhead snorts and starts to lead Kat away. <br><i>\"I don't want this creep talking to Kat at all.\"</i> Kat tugs on the girl's sleeve to stop her and "
-								+ "whispers something in her ear. The girl looks back at you shocked. <i>\"This guy? Are you kidding me?\"</i> The brunette joins the two of them and they enter a brief huddle. "
-								+ "You stand there awkwardly, unable to hear their conversation. There are more than a few glances in your direction, and Kat's face is gradually turning red. <br>Eventually, "
-								+ "Kat leaves the huddle to stand behind you, as if hiding from her friends. The calmer of the two girls gives you an awkward smile. <i>\"We'll give you two some space.\"</i> "
-								+ "She has to practically drag away the other girl, who is glaring daggers at you."
-								+ "Kat doesn't make eye contact, but shyly touches your hand. <i>\"Will you come to my room for a little while?\"</i> she softly asks.<p>She's quiet all the way to her room "
-								+ "and that doesn't change after you arrive. You sit next to each other in silence on her bed. She's leaning against you slightly, but is looking away, so you can't see "
-								+ "her expression. You'll probably have to be the one to initiate conversation, but you aren't sure how to start. To your surprise Kat is the one to break the silence. "
-								+ "She takes your hand and gently moves it to her groin. <i>\"C-can you touch me? Just a little bit....\"</i> Her face it beet red and she can't look you in the eye, but that "
-								+ "was way more forward than you were expecting. You don't mind, of course.<p>You pull down Kat's pants and slip your hand into her underwear. Under your skilled touch, "
-								+ "her nethers quickly start to get wet. You gently lay her down on the bed as she whimpers in pleasure. Her tail twitches uncontrollably the more you finger her. You "
-								+ "slide her panties down to get better access to her girl parts and she ends up kicking them off completely.<p>Just as you're about to finish Kat off, she grabs your "
-								+ "wrist to stop you. <i>\"Wait! If you keep that up, I'm gonnya cum and we'll be right back where we started.\"</i> She isn't interesting in climaxing, she just wants you to "
-								+ "leave her horny and unsatisfied? She squirms noticeably as she sits up on the bed. <i>\"It's really frustrating to stop nyow, but I need to be patient. I'm counting on "
-								+ "you to reward me when we're done.\"</i> She settles into a comfortable seated position on the bed, apparently not bothered that her naked lower half is visible. <i>\"We've "
-								+ "fought together a bunch, but since you're myaking an effort to get to know me, I wanted to explain how my animal spirit works. The Girl was too flustered about being "
-								+ "alone with a boy to talk properly, so I needed your help to bring out the Cat to do the talking.\"</i><p>"
-								+ "By arousing Kat, you brought out her animal side. So that's who "
-								+ "you're talking to now? <i>\"The urge to mate is a very primal thing. The more I feel it, the stronger the cat spirit gets, which improves my instinct and my reflexes. It's "
-								+ "nyat like a Jekyll and Hyde thing though. The Girl and the Cat have the same memories, same intelligence, same personality, and same interests. I'm still Kat, just "
-								+ "imyagine you've turned up the catliness level on a mixer.\"</i> She said they have the same personality, but she doesn't sound at all like Kat. Her manner of speech is "
-								+ "completely different and she obviously talks a lot more. <i>\"Nya~. The Cat is a wild animal, so it doesn't add much in the way of myannerisms or speech style. The "
-								+ "only real difference is that I'm free from a lot of human social inhibitions. I don't get shy talking to others and I don't feel shame, see?\"</i> She spreads her legs "
-								+ "to flash you a good look at her soaked privates. <i>\"This is how the Girl's inner monologue sounds, or to put it another way, this is how Kat would talk if she wasn't "
-								+ "shy. Oh, I also do a lot more meowing. That's totally the Cat's fault.\"</i><p>Ok, you get the general idea. You just aren't sure what to call her when she's like this. "
-								+ "<i>\"Nya! I told you, I'm still Kat. I have all the same thoughts and all the same desires I do normally.\"</i> She seductively pulls you close to her and whispers in your "
-								+ "ear. <i>\"I want you to fuck me, because the Girl wants you to fuck her. I'm just nyot embarrassed to say it. Speaking of which....\"</i> She lies back on the bed and spreads "
-								+ "her legs open for you. <i>\"I've been patient for awhile. I think I deserve a reward.\"</i> You have some more questions, but you can't simply turn down Kat when she's asking "
-								+ "in such a lewd pose. You kneel between her legs and start to eat her out. She mews in pleasure and writhes on the bed. She's already very turned on, so don't need "
-								+ "to lick her clit very long to make her orgasm. She arches her back and lets out a breathless moan as she hits her peak.<p>You sit next to Kat and gently stroke her "
-								+ "head while you wait for her to recover. After she catches her breath, she blushes furiously and scrambles to retrieve her discarded panties. You enjoy the view of her "
-								+ "cute butt until she finishes putting her underwear back on. She sits down on the bed next to you and gives you a light kiss on the cheek. <i>\"Thanks.\"</i> She smiles shyly "
-								+ "and looks away. <i>\"That felt really good.\"</i> She holds her phone out to you. <i>\"Can we exchange numbers? You know... so we can train together?\"</i> You add yourself to her "
-								+ "contacts and return the phone. She sends a short text to you. She seems a lot less awkward now, but she still acts so innocent. It's still hard to believe this is the "
-								+ "same girl that was asking you to fuck her just minutes ago. You look at the text she sent you: 'i meant everything i said &#60;3.'");
-				npc.gainAffection(player, 1);
-				player.gainAffection(npc, 1);
+		if (npc.getAffection(player) > 0) {
+			Global.gui().message(
+					"You send Kat a text to see if she's free. Since exchanging numbers with her, you've discovered that she's much more outgoing "
+							+ "when texting than she is in person. The two of you have chatted quite a bit, you just hope she'll eventually get more used to talking with you in "
+							+ "person.<br>You quickly receive a reply from Kat. 'i'm free right now. :) do you want to meet up?' You text her back, asking if there's a place you "
+							+ "can meet without her friends coming after you. 'i'm not with Mel and Emma right now. you can come here' About ten seconds later, she sends you a followup. "
+							+ "'please don't hate them. they're my best friends and they mean well. they just think i'm still an innocent virgin who needs to be protected.' To be "
+							+ "fair, she does inspire inspire that sort of protective attitude, even from her opponents. For Kat's sake, you'll do your best to get along with them, but "
+							+ "they may not be as agreeable, especially if they find out you're having sex with their protegée.<p>On your way to Kat's room, you get another text. "
+							+ "'i think i'm too excited waiting for you to get here. what are you planning?'");
+			Global.gui().choose(this, "Games");
+			Global.gui().choose(this, "Sparring");
+			Global.gui().choose(this, "Sex");
+			if (Global.checkFlag(Flag.metAisha)
+					&& !Global.checkFlag(Flag.catspirit)
+					&& Global.getNPC("Kat").getAffection(player) >= 5) {
+				Global.gui().choose(this, "Ask about Animal Spirit");
 			}
-			Global.gui().choose(this, "Leave");
+		} else if (npc.getAttraction(player) < 10) {
+			Global.gui().message(
+					"You decide to look for Kat and see if she's interested in spending some time together. You don't have any way to contact her directly, "
+							+ "but she apparently spends a lot of time in the campus gardens. That's probably your best hope for running into her.<p>You eventually spot Kat walking "
+							+ "through the gardens, but you almost don't recognize her. Instead of the light, casual clothes she usually wears during a match, she's currently dressed "
+							+ "in an excessively baggy outfit. She's still pretty cute, but those clothes make her look like she's trying to hide her small frame. She's probably trying "
+							+ "to hide something else, though. At night, she doesn't have to worry about people seeing her cat ears and tail, but in her day-to-day life, it's got to be "
+							+ "a real inconvenience. To her credit, you don't see any obvious bulge in her pants where her tail should be. It would be interesting to see how she "
+							+ "maneuvers her tail to keep it from showing. It also sounds like a good excuse to get her pants off. As for her ears, she has them hidden under a cloth "
+							+ "hat... that has cat ears on it. She's wearing a cat ear hat over her actual cat ears. Does that qualify as hiding in plain sight? In her hand, she's "
+							+ "carrying a paperback book that she's either just been reading or is looking for a place to read.<p>You call out to Kat and for a moment, she looks like "
+							+ "a small, startled animal. She looks noticeably relieved when she sees you. That's probably a good sign. Before the two of you have a chance to talk, someone "
+							+ "else calls out to Kat. Two girls insert themselves between you and Kat. Were they with her? You didn't even notice them. One of the girls puts an arm around "
+							+ "Kat's shoulder and leads her away. <i>\"Sorry, we're in a bit of a hurry.\"</i> Kat looks like she wants to say something, but can't get the words out.<p>After they"
+							+ "leave, the other girl gives you a smile with no goodwill. <i>\"I know. That girl's super cute, isn't she? Unfortunately, you'll need to find another girl to hit "
+							+ "on. She doesn't have any experience with men and isn't very good at asserting herself, so we can't let anyone take advantage of her.\"</i><p>Ugh. This is inconvenient. "
+							+ "You can't very well explain that you're already intimately acquainted with Kat. You'll need to find another opportunity to approach her.");
+			npc.gainAttraction(player, 2);
+			player.gainAttraction(npc, 2);
+		} else {
+			Global.gui().message(
+					"You head out to the campus gardens, hoping to find Kat so you can spend some time together. You aren't searching long before you find her reading "
+							+ "a book in the shade of a tree. She seems pretty absorbed in the book, so you're hesitant to disturb her. Instead of calling out to her, you just sit next to her "
+							+ "quietly. You don't recognize the book she's reading, but judging by the cover, it appears to be an urban fantasy romance novel. It must pretty engaging, because "
+							+ "Kat still hasn't noticed that you've been sitting with her for several minutes.<p>When Kat finally perceives your presence, she lets out a startled yelp and jumps "
+							+ "to her feet. You weren't expecting her to be that surprised. You give her a relaxed smile and a greeting. Before Kat can reply, you hear an angry voice behind you. "
+							+ "<i>\"What the hell are you doing to my best friend?!\"</i> A girl with curly red hair glares at you and hugs Kat protectively. Another girl, a brunette, looks calmer, but "
+							+ "also stands between you and Kat. This is bad. You quickly explain that you weren't trying to scare Kat, you just wanted to talk to her. <p><i>\"Our Kat is pretty delicate. "
+							+ "Maybe you should learn how to approach a girl without scaring her before you try to pick her up.\"</i> The brunette speaks in a reasonable tone, but there's a definite "
+							+ "edge to her voice. The redhead snorts and starts to lead Kat away. <br><i>\"I don't want this creep talking to Kat at all.\"</i> Kat tugs on the girl's sleeve to stop her and "
+							+ "whispers something in her ear. The girl looks back at you shocked. <i>\"This guy? Are you kidding me?\"</i> The brunette joins the two of them and they enter a brief huddle. "
+							+ "You stand there awkwardly, unable to hear their conversation. There are more than a few glances in your direction, and Kat's face is gradually turning red. <br>Eventually, "
+							+ "Kat leaves the huddle to stand behind you, as if hiding from her friends. The calmer of the two girls gives you an awkward smile. <i>\"We'll give you two some space.\"</i> "
+							+ "She has to practically drag away the other girl, who is glaring daggers at you."
+							+ "Kat doesn't make eye contact, but shyly touches your hand. <i>\"Will you come to my room for a little while?\"</i> she softly asks.<p>She's quiet all the way to her room "
+							+ "and that doesn't change after you arrive. You sit next to each other in silence on her bed. She's leaning against you slightly, but is looking away, so you can't see "
+							+ "her expression. You'll probably have to be the one to initiate conversation, but you aren't sure how to start. To your surprise Kat is the one to break the silence. "
+							+ "She takes your hand and gently moves it to her groin. <i>\"C-can you touch me? Just a little bit....\"</i> Her face it beet red and she can't look you in the eye, but that "
+							+ "was way more forward than you were expecting. You don't mind, of course.<p>You pull down Kat's pants and slip your hand into her underwear. Under your skilled touch, "
+							+ "her nethers quickly start to get wet. You gently lay her down on the bed as she whimpers in pleasure. Her tail twitches uncontrollably the more you finger her. You "
+							+ "slide her panties down to get better access to her girl parts and she ends up kicking them off completely.<p>Just as you're about to finish Kat off, she grabs your "
+							+ "wrist to stop you. <i>\"Wait! If you keep that up, I'm gonnya cum and we'll be right back where we started.\"</i> She isn't interesting in climaxing, she just wants you to "
+							+ "leave her horny and unsatisfied? She squirms noticeably as she sits up on the bed. <i>\"It's really frustrating to stop nyow, but I need to be patient. I'm counting on "
+							+ "you to reward me when we're done.\"</i> She settles into a comfortable seated position on the bed, apparently not bothered that her naked lower half is visible. <i>\"We've "
+							+ "fought together a bunch, but since you're myaking an effort to get to know me, I wanted to explain how my animal spirit works. The Girl was too flustered about being "
+							+ "alone with a boy to talk properly, so I needed your help to bring out the Cat to do the talking.\"</i><p>"
+							+ "By arousing Kat, you brought out her animal side. So that's who "
+							+ "you're talking to now? <i>\"The urge to mate is a very primal thing. The more I feel it, the stronger the cat spirit gets, which improves my instinct and my reflexes. It's "
+							+ "nyat like a Jekyll and Hyde thing though. The Girl and the Cat have the same memories, same intelligence, same personality, and same interests. I'm still Kat, just "
+							+ "imyagine you've turned up the catliness level on a mixer.\"</i> She said they have the same personality, but she doesn't sound at all like Kat. Her manner of speech is "
+							+ "completely different and she obviously talks a lot more. <i>\"Nya~. The Cat is a wild animal, so it doesn't add much in the way of myannerisms or speech style. The "
+							+ "only real difference is that I'm free from a lot of human social inhibitions. I don't get shy talking to others and I don't feel shame, see?\"</i> She spreads her legs "
+							+ "to flash you a good look at her soaked privates. <i>\"This is how the Girl's inner monologue sounds, or to put it another way, this is how Kat would talk if she wasn't "
+							+ "shy. Oh, I also do a lot more meowing. That's totally the Cat's fault.\"</i><p>Ok, you get the general idea. You just aren't sure what to call her when she's like this. "
+							+ "<i>\"Nya! I told you, I'm still Kat. I have all the same thoughts and all the same desires I do normally.\"</i> She seductively pulls you close to her and whispers in your "
+							+ "ear. <i>\"I want you to fuck me, because the Girl wants you to fuck her. I'm just nyot embarrassed to say it. Speaking of which....\"</i> She lies back on the bed and spreads "
+							+ "her legs open for you. <i>\"I've been patient for awhile. I think I deserve a reward.\"</i> You have some more questions, but you can't simply turn down Kat when she's asking "
+							+ "in such a lewd pose. You kneel between her legs and start to eat her out. She mews in pleasure and writhes on the bed. She's already very turned on, so don't need "
+							+ "to lick her clit very long to make her orgasm. She arches her back and lets out a breathless moan as she hits her peak.<p>You sit next to Kat and gently stroke her "
+							+ "head while you wait for her to recover. After she catches her breath, she blushes furiously and scrambles to retrieve her discarded panties. You enjoy the view of her "
+							+ "cute butt until she finishes putting her underwear back on. She sits down on the bed next to you and gives you a light kiss on the cheek. <i>\"Thanks.\"</i> She smiles shyly "
+							+ "and looks away. <i>\"That felt really good.\"</i> She holds her phone out to you. <i>\"Can we exchange numbers? You know... so we can train together?\"</i> You add yourself to her "
+							+ "contacts and return the phone. She sends a short text to you. She seems a lot less awkward now, but she still acts so innocent. It's still hard to believe this is the "
+							+ "same girl that was asking you to fuck her just minutes ago. You look at the text she sent you: 'i meant everything i said &#60;3.'");
+			npc.gainAffection(player, 1);
+			player.gainAffection(npc, 1);
 		}
+		Global.gui().choose(this, "Leave");
+	}
+
+	@Override
 	public void subVisit(String choice) {
-		if (choice == "Sex") {
+		if (choice.equals("Sex")) {
 			Global.gui().message(
 					"Kat sits on her bed and looks at you hesitantly, with red cheeks. <i>\"Are we going to... you know?\"</i> Despite her shy appearance, there's definitely "
 							+ "an eagerness to her voice. You both want the same thing. You give her a quick kiss on the lips and help her remove her shirt. She shyly crosses her arms over her bra "
@@ -238,7 +242,7 @@ public class KatTime extends BaseNPCTime {
 			Daytime.train(player, npc, Attribute.Seduction);
 			npc.gainAffection(player, 1);
 			player.gainAffection(npc, 1);
-		} else if (choice == "Games") {
+		} else if (choice.equals("Games")) {
 			Global.gui().message(
 					"Despite your shared intimacy, Kat still has trouble speaking normally when you're alone together. You've turned to games as, not just a form of "
 							+ "strategy training, but also a means of getting her to relax. As you get deep into the game, it seems to be working. It probably helps that she seems to have a "
@@ -296,7 +300,7 @@ public class KatTime extends BaseNPCTime {
 			Daytime.train(player, npc, Attribute.Cunning);
 			npc.gainAffection(player, 1);
 			player.gainAffection(npc, 1);
-		} else if (choice == "Sparring") {
+		} else if (choice.equals("Sparring")) {
 			Global.gui().message(
 					"You and Kat are able to find a private room with a wrestling mat so you can do some sparring without covering up her cat parts. You spend some time stretching and warming up together, "
 							+ "before you have to figure out how you're going to actually train. You're a lot taller and heavier than her, so an actual sparring match would be problematic. "
@@ -332,31 +336,31 @@ public class KatTime extends BaseNPCTime {
 			Daytime.train(player, npc, Attribute.Power);
 			npc.gainAffection(player, 1);
 			player.gainAffection(npc, 1);
-		}
-	     else if (choice.startsWith("Ask about Animal Spirit")) {
-	       Global.flag(Flag.catspirit);
-	       Global.gui().message("You know that Kat's power comes from an animal spirit "
-	       		+ "inside her, but she never mentioned how that came to be. It seems like "
-	       		+ "that might be a useful ability, so you decide to ask her about it. <i>"
-	       		+ "\"Hmm? My cat spirit? It's something I got from my friend, Aisha. Have "
-	       		+ "you met her?\"</i> If she's referring to Aisha Song, the girl who gives"
-	       		+ " magic lessons and temporarily gave you a massive penis, then yes. "
-	       		+ "You've most certainly 'met' her.<p><i>\"Aisha is really nice. When "
-	       		+ "I was doing really badly in the Games, she offered to teach me magic."
-	       		+ " I was never able to learn it though. When she said she could use the "
-	       		+ "magic on me to give me catlike reflexes, I jumped at the opportunity. "
-	       		+ "We did a ritual and I got these ears and this tail.\"</i> She proudly "
-	       		+ "shows off her normally hidden cat parts. <i>\"They're a little "
-	       		+ "inconvenient, but they're really cute, aren't they?\"</i><p>It's "
-	       		+ "interesting that Aisha never brought up the possibility of giving "
-	       		+ "you a spirit. Maybe you should ask her about it.<br><i>\"You "
-	       		+ "totally should! I'm imagining you with puppy ears now, or maybe"
-	       		+ " a tiger.\"</i> She blushes a bit at her own mental image. "
-	       		+ "<i>\"I think Aisha may feel bad about how the ritual turned out, "
-	       		+ "even though I keep telling her I don't regret it. If she refuses"
-	       		+ " to give you a spirit, I'll try to  help you talk her into it.\"</i>");
-	        Global.gui().choose(this, "Leave");
-		} else if (choice == "Leave") {
+		} else if (choice.startsWith("Ask about Animal Spirit")) {
+			Global.flag(Flag.catspirit);
+			Global.gui().message(
+					"You know that Kat's power comes from an animal spirit "
+							+ "inside her, but she never mentioned how that came to be. It seems like "
+							+ "that might be a useful ability, so you decide to ask her about it. <i>"
+							+ "\"Hmm? My cat spirit? It's something I got from my friend, Aisha. Have "
+							+ "you met her?\"</i> If she's referring to Aisha Song, the girl who gives"
+							+ " magic lessons and temporarily gave you a massive penis, then yes. "
+							+ "You've most certainly 'met' her.<p><i>\"Aisha is really nice. When "
+							+ "I was doing really badly in the Games, she offered to teach me magic."
+							+ " I was never able to learn it though. When she said she could use the "
+							+ "magic on me to give me catlike reflexes, I jumped at the opportunity. "
+							+ "We did a ritual and I got these ears and this tail.\"</i> She proudly "
+							+ "shows off her normally hidden cat parts. <i>\"They're a little "
+							+ "inconvenient, but they're really cute, aren't they?\"</i><p>It's "
+							+ "interesting that Aisha never brought up the possibility of giving "
+							+ "you a spirit. Maybe you should ask her about it.<br><i>\"You "
+							+ "totally should! I'm imagining you with puppy ears now, or maybe"
+							+ " a tiger.\"</i> She blushes a bit at her own mental image. "
+							+ "<i>\"I think Aisha may feel bad about how the ritual turned out, "
+							+ "even though I keep telling her I don't regret it. If she refuses"
+							+ " to give you a spirit, I'll try to  help you talk her into it.\"</i>");
+			Global.gui().choose(this, "Leave");
+		} else if (choice.equals("Leave")) {
 			done(true);
 		}
 	}

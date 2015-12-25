@@ -1,27 +1,29 @@
 package nightgames.characters.body;
 
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 
-import org.json.simple.JSONObject;
-
 public class GenericBodyPart implements BodyPart {
 	/**
-	 * 
+	 *
 	 */
-	public String type;
-	public String desc;
-	public String prefix;
-	public double hotness;
-	public double sensitivity;
-	public double pleasure;
-	public String descLong;
-	private boolean notable;
+	public String	type;
+	public String	desc;
+	public String	prefix;
+	public double	hotness;
+	public double	sensitivity;
+	public double	pleasure;
+	public String	descLong;
+	private boolean	notable;
 
-	public GenericBodyPart(String desc, String descLong, double hotness, double pleasure, double sensitivity, boolean notable, String type, String prefix) {
+	public GenericBodyPart(String desc, String descLong, double hotness,
+			double pleasure, double sensitivity, boolean notable, String type,
+			String prefix) {
 		this.desc = desc;
 		this.descLong = descLong;
 		this.hotness = hotness;
@@ -32,11 +34,13 @@ public class GenericBodyPart implements BodyPart {
 		this.prefix = prefix;
 	}
 
-	public GenericBodyPart(String desc, double hotness, double pleasure, double sensitivity, String type, String prefix) {
+	public GenericBodyPart(String desc, double hotness, double pleasure,
+			double sensitivity, String type, String prefix) {
 		this(desc, "", hotness, pleasure, sensitivity, false, type, prefix);
 	}
 
-	public GenericBodyPart(String desc, double hotness, double pleasure, double sensitivity, boolean notable, String type, String prefix) {
+	public GenericBodyPart(String desc, double hotness, double pleasure,
+			double sensitivity, boolean notable, String type, String prefix) {
 		this(desc, "", hotness, pleasure, sensitivity, notable, type, prefix);
 	}
 
@@ -63,17 +67,18 @@ public class GenericBodyPart implements BodyPart {
 
 	@Override
 	public double priority(Character c) {
-		return (this.getPleasure(c, null) - 1) * 3;
+		return (getPleasure(c, null) - 1) * 3;
 	}
 
 	@Override
 	public String fullDescribe(Character c) {
-		if (notable)
+		if (notable) {
 			return desc;
-		else
-			return "normal " +desc;
+		} else {
+			return "normal " + desc;
+		}
 	}
-	
+
 	@Override
 	public String toString() {
 		return fullDescribe(null);
@@ -110,27 +115,28 @@ public class GenericBodyPart implements BodyPart {
 	}
 
 	@Override
-	public boolean equals(Object other)
+	public boolean equals(Object other) // $codepro.audit.disable
+										// com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.obeyEqualsContract.obeyGeneralContractOfEquals
 	{
-		return this.toString().equals(other.toString());
+		return toString().equals(other.toString());
 	}
 
 	@Override
 	public int hashCode() {
-		return (this.type + ":" +this.toString()).hashCode();
+		return (type + ":" + toString()).hashCode();
 	}
 
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToDict() {
 		JSONObject res = new JSONObject();
-		res.put("desc",			desc);
-		res.put("descLong",		descLong);
-		res.put("hotness",		hotness);
-		res.put("pleasure",		pleasure);
-		res.put("sensitivity",	sensitivity);
-		res.put("notable",		notable);
-		res.put("type",			type);
-		res.put("prefix",		prefix);
+		res.put("desc", desc);
+		res.put("descLong", descLong);
+		res.put("hotness", hotness);
+		res.put("pleasure", pleasure);
+		res.put("sensitivity", sensitivity);
+		res.put("notable", notable);
+		res.put("type", type);
+		res.put("prefix", prefix);
 
 		return res;
 	}
@@ -143,14 +149,12 @@ public class GenericBodyPart implements BodyPart {
 				dict.put("generic", true);
 			}
 			GenericBodyPart part = new GenericBodyPart(
-										(String)dict.get("desc"),
-										(String)dict.get("descLong"),
-										((Number)dict.get("hotness")).doubleValue(),
-										((Number)dict.get("pleasure")).doubleValue(),
-										((Number)dict.get("sensitivity")).doubleValue(),
-										(Boolean)dict.get("notable"),
-										(String)dict.get("type"),
-										(String)dict.get("prefix"));
+					(String) dict.get("desc"), (String) dict.get("descLong"),
+					((Number) dict.get("hotness")).doubleValue(),
+					((Number) dict.get("pleasure")).doubleValue(),
+					((Number) dict.get("sensitivity")).doubleValue(),
+					(Boolean) dict.get("notable"), (String) dict.get("type"),
+					(String) dict.get("prefix"));
 			return part;
 		} catch (ClassCastException e) {
 			System.err.println(e.getMessage());
@@ -163,6 +167,7 @@ public class GenericBodyPart implements BodyPart {
 		return saveToDict();
 	}
 
+	@Override
 	public BodyPart load(JSONObject obj) {
 		return loadFromDict(obj);
 	}
@@ -187,6 +192,7 @@ public class GenericBodyPart implements BodyPart {
 	public boolean isNotable() {
 		return notable;
 	}
+
 	@Override
 	public double applyReceiveBonuses(Character self, Character opponent,
 			BodyPart target, double damage, Combat c) {
@@ -207,7 +213,7 @@ public class GenericBodyPart implements BodyPart {
 	public String prefix() {
 		return prefix;
 	}
-	
+
 	@Override
 	public int compare(BodyPart other) {
 		return 0;
@@ -230,7 +236,8 @@ public class GenericBodyPart implements BodyPart {
 	}
 
 	@Override
-	public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {
+	public void tickHolding(Combat c, Character self, Character opponent,
+			BodyPart otherOrgan) {
 
 	}
 

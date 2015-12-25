@@ -80,10 +80,12 @@ public class Flick extends Skill {
 		return new Flick(user);
 	}
 
+	@Override
 	public int speed() {
 		return 6;
 	}
 
+	@Override
 	public Tactics type(Combat c) {
 		return Tactics.damage;
 	}

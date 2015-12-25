@@ -12,15 +12,16 @@ public class Alert extends DurationStatus {
 		super("Alert", affected, 3);
 		flag(Stsflag.alert);
 	}
-	
+
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return 3;
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now more alert\n", affected.subjectAction("are", "is"));
+		return String.format("%s now more alert\n",
+				affected.subjectAction("are", "is"));
 	}
 
 	@Override
@@ -36,7 +37,7 @@ public class Alert extends DurationStatus {
 	@Override
 	public int regen(Combat c) {
 		super.regen(c);
-		affected.emote(Emotion.confident,5);
+		affected.emote(Emotion.confident, 5);
 		return 0;
 	}
 
@@ -94,7 +95,8 @@ public class Alert extends DurationStatus {
 	public Status instance(Character newAffected, Character newOther) {
 		return new Alert(newAffected);
 	}
-	
+
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -102,6 +104,7 @@ public class Alert extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Alert(null);
 	}

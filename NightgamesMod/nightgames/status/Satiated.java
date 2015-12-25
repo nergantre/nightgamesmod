@@ -9,10 +9,12 @@ import nightgames.global.JSONUtils;
 
 public class Satiated extends DurationStatus {
 	int value;
+
 	public Satiated(Character affected, int xp, int levels) {
 		super("Satiated", affected, 1);
-		this.value = xp + 95 + (5 * (affected.getLevel() + levels));
+		value = xp + 95 + 5 * (affected.getLevel() + levels);
 	}
+
 	public Satiated(Character affected, int value) {
 		super("Satiated", affected, 1);
 		this.value = value;
@@ -23,20 +25,22 @@ public class Satiated extends DurationStatus {
 		if (affected.human()) {
 			return "You feel immensely powerful after feeding on your opponent's essence\n";
 		} else {
-			return affected.name() + " feels immensely satisfied after feeding on your essence\n";
+			return affected.name()
+					+ " feels immensely satisfied after feeding on your essence\n";
 		}
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now satiated.\n", affected.subjectAction("are", "is"));
+		return String.format("%s now satiated.\n",
+				affected.subjectAction("are", "is"));
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return value / 10;
 	}
-	
+
 	@Override
 	public int mod(Attribute a) {
 		return 0;
@@ -91,11 +95,13 @@ public class Satiated extends DurationStatus {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Satiated(newAffected, value);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -104,6 +110,7 @@ public class Satiated extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Satiated(null, JSONUtils.readInteger(obj, "value"));
 	}

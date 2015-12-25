@@ -12,6 +12,6 @@ public class LevelRequirement implements CustomRequirement {
 
 	@Override
 	public boolean meets(Combat c, Character self, Character other) {
-		return self.getLevel() >= (level);
+		return self.getLevel() >= level;
 	}
 }

@@ -14,19 +14,19 @@ public class Oiled extends Status {
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
+		if (affected.human()) {
 			return "Your skin is slick with oil and kinda feels weird.";
-		}
-		else{
-			return affected.name()+" is shiny with lubricant, making you more tempted to touch and rub her skin.";
+		} else {
+			return affected.name()
+					+ " is shiny with lubricant, making you more tempted to touch and rub her skin.";
 		}
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now lubricated.\n", affected.subjectAction("are", "is"));
+		return String.format("%s now lubricated.\n",
+				affected.subjectAction("are", "is"));
 	}
-
 
 	@Override
 	public int mod(Attribute a) {
@@ -45,7 +45,7 @@ public class Oiled extends Status {
 
 	@Override
 	public double pleasure(Combat c, double x) {
-		return x/4;
+		return x / 4;
 	}
 
 	@Override
@@ -77,11 +77,14 @@ public class Oiled extends Status {
 	public int spendmojo(int x) {
 		return 0;
 	}
+
 	@Override
 	public int counter() {
 		return 0;
 	}
-	public boolean lingering(){
+
+	@Override
+	public boolean lingering() {
 		return true;
 	}
 
@@ -89,11 +92,13 @@ public class Oiled extends Status {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Oiled(newAffected);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -101,6 +106,7 @@ public class Oiled extends Status {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Oiled(null);
 	}

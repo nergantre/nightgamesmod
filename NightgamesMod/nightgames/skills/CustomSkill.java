@@ -9,6 +9,7 @@ import nightgames.combat.Result;
 
 public class CustomSkill extends Skill {
 	LoadedSkillData data;
+
 	public CustomSkill(LoadedSkillData data, Character self) {
 		super(data.name, self, data.cooldown);
 		this.data = data;
@@ -16,12 +17,14 @@ public class CustomSkill extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return data.skillRequirements.stream().allMatch(req -> req.meets(c, user, target));
+		return data.skillRequirements.stream()
+				.allMatch(req -> req.meets(c, user, target));
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return data.usableRequirements.stream().allMatch(req -> req.meets(c, getSelf(), target));
+		return data.usableRequirements.stream()
+				.allMatch(req -> req.meets(c, getSelf(), target));
 	}
 
 	@Override
@@ -53,7 +56,7 @@ public class CustomSkill extends Skill {
 	public int getMojoCost(Combat c) {
 		return data.mojoCost;
 	}
-	
+
 	@Override
 	public Tactics type(Combat c) {
 		return data.tactics;
@@ -65,18 +68,21 @@ public class CustomSkill extends Skill {
 	}
 
 	@Override
-	public int accuracy(Combat c){
+	public int accuracy(Combat c) {
 		return data.accuracy;
 	}
 
 	@Override
-	public int speed(){
+	public int speed() {
 		return data.speed;
 	}
 
 	@Override
 	public String getLabel(Combat c) {
-		Optional<CustomStringEntry> picked = data.labels.stream().filter(entry -> entry.meetsRequirements(c, getSelf(), c.getOther(getSelf()))).findFirst();
+		Optional<CustomStringEntry> picked = data.labels.stream()
+				.filter(entry -> entry.meetsRequirements(c, getSelf(),
+						c.getOther(getSelf())))
+				.findFirst();
 		if (picked.isPresent()) {
 			return picked.get().getLine(c, getSelf(), c.getOther(getSelf()));
 		}
@@ -84,12 +90,14 @@ public class CustomSkill extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
 		return null;
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
+	public String receive(Combat c, int damage, Result modifier,
+			Character target) {
 		return null;
 	}
 }

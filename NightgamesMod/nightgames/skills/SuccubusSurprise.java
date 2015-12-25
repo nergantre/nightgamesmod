@@ -7,7 +7,6 @@ import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.stance.Position;
 import nightgames.stance.Stance;
@@ -73,9 +72,11 @@ public class SuccubusSurprise extends Skill {
 					new LegLocked(target, 4 * getSelf().get(Attribute.Power)));
 		}
 		new Grind(getSelf()).resolve(c, target);
-		
-		if (!getSelf().human() && target.human() && !oppHasBlessed && getSelf().getType().equals("CUSTOM_NPCSamantha")) {
-			c.write(getSelf(), "<br><br>\"<i>Do you like your surprise, " + target.name() + "? I do.\"</i>");
+
+		if (!getSelf().human() && target.human() && !oppHasBlessed
+				&& getSelf().getType().equals("CUSTOM_NPCSamantha")) {
+			c.write(getSelf(), "<br><br>\"<i>Do you like your surprise, "
+					+ target.name() + "? I do.\"</i>");
 		}
 		return true;
 	}
@@ -117,8 +118,8 @@ public class SuccubusSurprise extends Skill {
 		} else {
 			result += String.format(
 					"Realizing what is going on, %s frantically tries to pull out, "
-					+ "but your hold is unrelenting. You grind against %s, and soon the "
-					+ "energy starts flowing.",
+							+ "but your hold is unrelenting. You grind against %s, and soon the "
+							+ "energy starts flowing.",
 					target.name(), target.directObject());
 		}
 		return result;

@@ -79,7 +79,7 @@ public class Squeeze extends Skill {
 					c.write(getSelf(), deal(c, 0, Result.weak, target));
 				}
 				target.pain(c, (int) Math.round(Global.random(7) + 5
-						- (5 * target.getExposure(ClothingSlot.bottom))));
+						- 5 * target.getExposure(ClothingSlot.bottom)));
 			}
 
 			target.emote(Emotion.angry, 15);
@@ -104,6 +104,7 @@ public class Squeeze extends Skill {
 		return new Squeeze(user);
 	}
 
+	@Override
 	public Tactics type(Combat c) {
 		return Tactics.damage;
 	}
@@ -167,6 +168,7 @@ public class Squeeze extends Skill {
 		}
 	}
 
+	@Override
 	public String getLabel(Combat c) {
 		if (getSelf().has(Item.ShockGlove)) {
 			return "Shock Balls";

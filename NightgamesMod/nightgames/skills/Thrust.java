@@ -58,8 +58,9 @@ public class Thrust extends Skill {
 
 		int m = 5 + Global.random(14);
 		if (c.getStance().anallyPenetrated(target)
-				&& getSelf().has(Trait.assmaster))
+				&& getSelf().has(Trait.assmaster)) {
 			m *= 1.5;
+		}
 
 		float mt = Math.max(1, m / 3.f);
 
@@ -94,12 +95,14 @@ public class Thrust extends Skill {
 		}
 
 		int[] m = getDamage(c, target);
-		assert(m.length >= 2);
+		assert m.length >= 2;
 
-		if (m[0] != 0)
+		if (m[0] != 0) {
 			target.body.pleasure(getSelf(), selfO, targetO, m[0], c);
-		if (m[1] != 0)
+		}
+		if (m[1] != 0) {
 			getSelf().body.pleasure(target, targetO, selfO, m[1], c);
+		}
 		if (selfO.isType("ass")
 				&& Global.random(100) < 2 + getSelf().get(Attribute.Fetish)) {
 			target.add(c, new BodyFetish(target, getSelf(), "ass", .25));
@@ -107,6 +110,7 @@ public class Thrust extends Skill {
 		return true;
 	}
 
+	@Override
 	public int getMojoBuilt(Combat c) {
 		return 0;
 	}
@@ -146,10 +150,11 @@ public class Thrust extends Skill {
 			if (getSelf().has(Trait.strapped)) {
 				String res = getSelf().name()
 						+ " thrusts her hips, pumping her artificial cock in and out of your ass and pushing on your prostate.";
-			 if (getSelf().has(Trait.assmaster))
-				return res + getSelf().name()
-						+ "'s penchant for fucking people in the ass makes her thrusting that much more powerful, and that much more intense for the both of you.";
-			 return res;
+				if (getSelf().has(Trait.assmaster)) {
+					return res + getSelf().name()
+							+ "'s penchant for fucking people in the ass makes her thrusting that much more powerful, and that much more intense for the both of you.";
+				}
+				return res;
 			} else {
 				return getSelf().name()
 						+ "'s cock slowly pumps the inside of your rectum.";

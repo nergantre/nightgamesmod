@@ -14,30 +14,38 @@ import nightgames.global.JSONUtils;
 
 public class Knotted extends Status {
 
-	private Character opponent;
-	private boolean anal;
-	
+	private Character	opponent;
+	private boolean		anal;
+
 	public Knotted(Character affected, Character other, boolean anal) {
 		super("Knotted", affected);
 		opponent = other;
 		this.anal = anal;
-		requirements.add(new ReverseRequirement(Arrays.asList(new InsertedRequirement(true))));
+		requirements.add(new ReverseRequirement(
+				Arrays.asList(new InsertedRequirement(true))));
 		flag(Stsflag.knotted);
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("The base of %s %s swells up, forming a tight seal within %s %s and keeping it inside.",
-				opponent.nameOrPossessivePronoun(), c.getStance().insertedPartFor(opponent).describe(opponent),
-				affected.nameOrPossessivePronoun(), c.getStance().insertablePartFor(affected).describe(affected));
+		return String
+				.format("The base of %s %s swells up, forming a tight seal within %s %s and keeping it inside.",
+						opponent.nameOrPossessivePronoun(),
+						c.getStance().insertedPartFor(opponent).describe(
+								opponent),
+						affected.nameOrPossessivePronoun(),
+						c.getStance().insertablePartFor(affected)
+								.describe(affected));
 	}
 
 	@Override
 	public String describe(Combat c) {
 		if (affected.human()) {
-			return opponent.nameOrPossessivePronoun() + " knotted dick is lodged inside of you, preventing escape.";
+			return opponent.nameOrPossessivePronoun()
+					+ " knotted dick is lodged inside of you, preventing escape.";
 		} else {
-			return "The knot in you dick is keeping it fully entrenched within " + affected.name() + ".";
+			return "The knot in you dick is keeping it fully entrenched within "
+					+ affected.name() + ".";
 		}
 	}
 
@@ -106,9 +114,10 @@ public class Knotted extends Status {
 
 	@Override
 	public float fitnessModifier() {
-		//This is counted twice, but that's intentional.
-		//(The other place is Character#getFitness())
-		return affected.body.penetrationFitnessModifier(false, anal, opponent.body);
+		// This is counted twice, but that's intentional.
+		// (The other place is Character#getFitness())
+		return affected.body.penetrationFitnessModifier(false, anal,
+				opponent.body);
 	}
 
 	@Override
@@ -120,8 +129,8 @@ public class Knotted extends Status {
 	public Status instance(Character newAffected, Character newOther) {
 		return new Knotted(newAffected, newOther, anal);
 	}
-	
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -130,6 +139,7 @@ public class Knotted extends Status {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Knotted(null, null, JSONUtils.readBoolean(obj, "anal"));
 	}

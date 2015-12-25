@@ -13,7 +13,7 @@ public class DurationRequirement implements CustomRequirement {
 	public void tick(int i) {
 		duration -= i;
 	}
-	
+
 	@Override
 	public boolean meets(Combat c, Character self, Character other) {
 		return duration > 0;

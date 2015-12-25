@@ -7,7 +7,6 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.items.clothing.ClothingTrait;
 import nightgames.stance.Stance;
 import nightgames.status.Alluring;
 import nightgames.status.Charmed;
@@ -39,14 +38,18 @@ public class TemptressStripTease extends StripTease {
 	}
 
 	public boolean canStrip(Combat c, Character target) {
-		boolean sexydance = (c.getStance().enumerate() == Stance.neutral
-				&& getSelf().canAct() && getSelf().mostlyNude());
+		boolean sexydance = c.getStance().enumerate() == Stance.neutral
+				&& getSelf().canAct() && getSelf().mostlyNude();
 		boolean normalstrip = !getSelf().mostlyNude();
-		return getSelf().stripDifficulty(target) == 0 && (sexydance || normalstrip);
+		return getSelf().stripDifficulty(target) == 0
+				&& (sexydance || normalstrip);
 	}
+
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return canStrip(c, target) && getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf());
+		return canStrip(c, target) && getSelf().canAct()
+				&& c.getStance().mobile(getSelf())
+				&& !c.getStance().prone(getSelf());
 	}
 
 	@Override
@@ -56,7 +59,8 @@ public class TemptressStripTease extends StripTease {
 
 	@Override
 	public String describe(Combat c) {
-		return isDance(c) ? "Do a slow, titilating dance to charm your opponent."
+		return isDance(c)
+				? "Do a slow, titilating dance to charm your opponent."
 				: "Shed your clothes seductively, charming your opponent.";
 	}
 
@@ -73,9 +77,10 @@ public class TemptressStripTease extends StripTease {
 			}
 			target.tempt(c, getSelf(),
 					10 + Global.random(Math.max(5, technique)));
-			if (Global.random(2) == 0)
-				target.add(c, new Charmed(target, Global.random(Math.min(3,
-						technique))));
+			if (Global.random(2) == 0) {
+				target.add(c, new Charmed(target,
+						Global.random(Math.min(3, technique))));
+			}
 			getSelf().add(c, new Alluring(getSelf(), 3));
 		} else {
 			if (getSelf().human()) {
@@ -86,8 +91,8 @@ public class TemptressStripTease extends StripTease {
 
 			target.tempt(c, getSelf(),
 					15 + Global.random(Math.max(10, technique)));
-			target.add(c, new Charmed(target,
-					Global.random(Math.min(5, technique))));
+			target.add(c,
+					new Charmed(target, Global.random(Math.min(5, technique))));
 			getSelf().add(c, new Alluring(getSelf(), 5));
 			getSelf().undress(c);
 		}
@@ -106,8 +111,7 @@ public class TemptressStripTease extends StripTease {
 	public String receive(Combat c, int damage, Result modifier,
 			Character target) {
 		if (isDance(c)) {
-			return getSelf().name()
-					+ " backs up a little and starts swinging"
+			return getSelf().name() + " backs up a little and starts swinging"
 					+ " her hips side to side. Curious as to what's going on, you"
 					+ " cease your attacks and watch as she bends and curves, putting"
 					+ " on a slow dance that would be very arousing even if she weren't"
@@ -116,8 +120,7 @@ public class TemptressStripTease extends StripTease {
 					+ " reverie when she plants a soft kiss on your lips, and you dreamily"
 					+ " gaze into her eyes as she gets back into a fighting stance.";
 		} else {
-			return getSelf().name()
-					+ " takes a few steps back and starts "
+			return getSelf().name() + " takes a few steps back and starts "
 					+ "moving sinously. She sensually runs her hands over her body, "
 					+ "undoing straps and buttons where she encounters them, and starts"
 					+ " peeling her clothes off slowly, never breaking eye contact."
@@ -128,14 +131,14 @@ public class TemptressStripTease extends StripTease {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
 		if (isDance(c)) {
 			return "You slowly dance for " + target.name() + ", showing off"
 					+ " your naked body.";
 		} else {
 			return "You seductively perform a short dance, shedding clothes as you do so. "
-					+ target.name()
-					+ " seems quite taken with it, as "
+					+ target.name() + " seems quite taken with it, as "
 					+ target.pronoun()
 					+ " is practically drooling onto the ground.";
 		}
@@ -143,6 +146,6 @@ public class TemptressStripTease extends StripTease {
 
 	private boolean isDance(Combat c) {
 		return !super.usable(c, c.getOther(getSelf()))
-				&& this.usable(c, c.getOther(getSelf()));
+				&& usable(c, c.getOther(getSelf()));
 	}
 }

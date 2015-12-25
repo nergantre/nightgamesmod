@@ -10,6 +10,7 @@ import java.util.Optional;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+
 import nightgames.Resources.ResourceLoader;
 import nightgames.global.Flag;
 import nightgames.global.Global;
@@ -121,9 +122,10 @@ public class AiModifiers {
 	}
 
 	public static AiModifiers getDefaultModifiers(String personality) {
-		if (!DEFAULTS.containsKey(personality))
+		if (!DEFAULTS.containsKey(personality)) {
 			System.err.println(
 					"No default AI modifications for " + personality + "!");
+		}
 		return DEFAULTS.getOrDefault(personality, new AiModifiers());
 	}
 

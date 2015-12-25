@@ -8,19 +8,18 @@ import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.global.Modifier;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 
 public class Yui extends BasePersonality {
-	public Yui(){
+	public Yui() {
 		super();
-		character = new NPC("Yui",1,this);
+		character = new NPC("Yui", 1, this);
 		character.outfitPlan.add(Clothing.getByID("bra"));
 		character.outfitPlan.add(Clothing.getByID("Tshirt"));
 		character.outfitPlan.add(Clothing.getByID("panties"));
 		character.outfitPlan.add(Clothing.getByID("skirt"));
-		character.change(Modifier.normal);
+		character.change();
 		character.setTrophy(Item.YuiTrophy);
 		character.plan = Plan.hunting;
 		character.mood = Emotion.confident;
@@ -30,7 +29,7 @@ public class Yui extends BasePersonality {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -108,7 +107,7 @@ public class Yui extends BasePersonality {
 
 	@Override
 	public boolean fightFlight(Character opponent) {
-		return !character.mostlyNude()||opponent.mostlyNude();
+		return !character.mostlyNude() || opponent.mostlyNude();
 	}
 
 	@Override
@@ -145,6 +144,7 @@ public class Yui extends BasePersonality {
 		// TODO Auto-generated method stub
 		return "";
 	}
+
 	@Override
 	public String orgasmLiner(Combat c) {
 		return "Reyka shudders, <i>\"Mmm it's been a while since I've felt that. Here, I'll return the favor\"</i>";

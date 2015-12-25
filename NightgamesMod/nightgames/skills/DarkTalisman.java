@@ -21,9 +21,9 @@ public class DarkTalisman extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (getSelf().canAct()) && (c.getStance().mobile(getSelf()))
-				&& (!c.getStance().prone(getSelf()))
-				&& (!target.is(Stsflag.enthralled))
+		return getSelf().canAct() && c.getStance().mobile(getSelf())
+				&& !c.getStance().prone(getSelf())
+				&& !target.is(Stsflag.enthralled)
 				&& getSelf().has(Item.Talisman);
 	}
 

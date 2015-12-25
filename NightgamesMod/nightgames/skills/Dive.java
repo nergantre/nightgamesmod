@@ -4,8 +4,6 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.skills.Dive;
-import nightgames.skills.Tactics;
 import nightgames.stance.Stance;
 import nightgames.stance.StandingOver;
 
@@ -22,7 +20,7 @@ public class Dive extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (getSelf().canAct()) && (c.getStance().en == Stance.neutral);
+		return getSelf().canAct() && c.getStance().en == Stance.neutral;
 	}
 
 	@Override

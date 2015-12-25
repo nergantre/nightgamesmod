@@ -5,8 +5,8 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 
 public class AttributeRequirement implements CustomRequirement {
-	Attribute att;
-	int amount;
+	Attribute	att;
+	int			amount;
 
 	public AttributeRequirement(Attribute att, int amount) {
 		this.att = att;

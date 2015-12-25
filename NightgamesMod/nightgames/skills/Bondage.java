@@ -15,12 +15,14 @@ public class Bondage extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Fetish)>=6;
+		return user.get(Attribute.Fetish) >= 6;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canRespond()&&c.getStance().mobile(getSelf())&&getSelf().getArousal().get()>=5&&!getSelf().is(Stsflag.bondage);
+		return getSelf().canRespond() && c.getStance().mobile(getSelf())
+				&& getSelf().getArousal().get() >= 5
+				&& !getSelf().is(Stsflag.bondage);
 	}
 
 	@Override
@@ -30,11 +32,10 @@ public class Bondage extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(getSelf().human()){
-			c.write(getSelf(),deal(c,0,Result.normal, target));
-		}
-		else if(target.human()){
-			c.write(getSelf(),receive(c,0,Result.normal, target));
+		if (getSelf().human()) {
+			c.write(getSelf(), deal(c, 0, Result.normal, target));
+		} else if (target.human()) {
+			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
 		getSelf().add(c, new BD(getSelf()));
 		target.add(c, new BD(target));
@@ -52,13 +53,17 @@ public class Bondage extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
-		return "You imagine the exhilarating feeling of ropes digging into your skin and binding you. You push this feeling into "+target.name()+"'s libido.";
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
+		return "You imagine the exhilarating feeling of ropes digging into your skin and binding you. You push this feeling into "
+				+ target.name() + "'s libido.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return getSelf().name()+" flushes and wraps her arms around herself tightly. Suddenly the thought of being tied up and dominated slips into your head.";
+	public String receive(Combat c, int damage, Result modifier,
+			Character target) {
+		return getSelf().name()
+				+ " flushes and wraps her arms around herself tightly. Suddenly the thought of being tied up and dominated slips into your head.";
 	}
 
 }

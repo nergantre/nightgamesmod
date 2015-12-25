@@ -1,14 +1,14 @@
 package nightgames.skills;
 
+import nightgames.characters.Attribute;
+import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.combat.Combat;
+import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.Anal;
 import nightgames.stance.Cowgirl;
 import nightgames.stance.Missionary;
-import nightgames.characters.Attribute;
-import nightgames.characters.Character;
-import nightgames.combat.Combat;
-import nightgames.combat.Result;
 import nightgames.status.Shamed;
 
 public class Offer extends Skill {
@@ -28,7 +28,7 @@ public class Offer extends Skill {
 				&& c.getStance().mobile(target)
 				&& !c.getStance().mobile(getSelf())
 				&& (target.hasDick() || target.has(Trait.strapped)
-						|| (target.hasPussy() && getSelf().hasDick()))
+						|| target.hasPussy() && getSelf().hasDick())
 				&& getSelf().canAct() && target.canAct()
 				&& !c.getStance().inserted();
 	}
@@ -37,9 +37,9 @@ public class Offer extends Skill {
 	public String describe(Combat c) {
 		Character other = c.getOther(getSelf());
 		return other.hasDick() || other.has(Trait.strapped)
-				? ("Offer your " + (getSelf().hasPussy() ? "pussy" : "ass")
+				? "Offer your " + (getSelf().hasPussy() ? "pussy" : "ass")
 						+ " to " + other.possessivePronoun() + "'s "
-						+ other.body.getRandomInsertable().describe(other))
+						+ other.body.getRandomInsertable().describe(other)
 				: "Offer " + other.directObject() + " the use of your dick";
 	}
 
@@ -52,8 +52,9 @@ public class Offer extends Skill {
 				c.write(getSelf(), receive(c, 0, Result.miss, target));
 			}
 			getSelf().add(new Shamed(getSelf()));
-			if (target.hasDick() || target.has(Trait.strapped))
+			if (target.hasDick() || target.has(Trait.strapped)) {
 				new Spank(target).resolve(c, getSelf());
+			}
 			return false;
 		}
 		if (target.hasDick() || target.has(Trait.strapped)) {
@@ -87,12 +88,13 @@ public class Offer extends Skill {
 						getSelf().body.getRandomAss(),
 						Global.random(5) + getSelf().get(Attribute.Perception),
 						c);
-				if (!target.has(Trait.strapped))
+				if (!target.has(Trait.strapped)) {
 					target.body.pleasure(getSelf(),
 							getSelf().body.getRandomAss(),
 							target.body.getRandomCock(), Global.random(5)
 									+ getSelf().get(Attribute.Perception),
 							c);
+				}
 			}
 		} else {
 			assert getSelf().hasDick() && target.hasPussy();

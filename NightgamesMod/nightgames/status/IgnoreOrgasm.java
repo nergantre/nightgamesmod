@@ -16,7 +16,8 @@ public class IgnoreOrgasm extends DurationStatus {
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
 		if (affected.getArousal().isFull()) {
-			return affected.subjectAction("are", "is") + " overpowering the urge to cum";
+			return affected.subjectAction("are", "is")
+					+ " overpowering the urge to cum";
 		}
 		return "";
 	}
@@ -24,13 +25,14 @@ public class IgnoreOrgasm extends DurationStatus {
 	@Override
 	public String describe(Combat c) {
 		if (affected.getArousal().isFull()) {
-			return affected.subjectAction("are", "is") + " overpowering the urge to cum";
+			return affected.subjectAction("are", "is")
+					+ " overpowering the urge to cum";
 		}
 		return "";
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return 0;
 	}
 
@@ -47,7 +49,7 @@ public class IgnoreOrgasm extends DurationStatus {
 	@Override
 	public double pleasure(Combat c, double x) {
 		if (affected.getArousal().isFull()) {
-			return -x*9/10;
+			return -x * 9 / 10;
 		}
 		return 0;
 	}
@@ -86,7 +88,9 @@ public class IgnoreOrgasm extends DurationStatus {
 	public int counter() {
 		return 0;
 	}
-	public String toString(){
+
+	@Override
+	public String toString() {
 		return "Orgasm Ignored";
 	}
 
@@ -94,11 +98,13 @@ public class IgnoreOrgasm extends DurationStatus {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new IgnoreOrgasm(newAffected, getDuration());
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -107,6 +113,7 @@ public class IgnoreOrgasm extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new IgnoreOrgasm(null, JSONUtils.readInteger(obj, "duration"));
 	}

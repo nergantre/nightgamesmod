@@ -1,13 +1,12 @@
 package nightgames.skills;
 
-import nightgames.global.Global;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.global.Global;
 import nightgames.status.Charmed;
 import nightgames.status.Stsflag;
-import nightgames.skills.Tactics;
 
 public class Beg extends Skill {
 
@@ -32,9 +31,9 @@ public class Beg extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if ((Global.random(30) <= getSelf().get(Attribute.Submissive)
-				- target.get(Attribute.Cunning) / 2)
-				&& (!target.is(Stsflag.cynical))) {
+		if (Global.random(30) <= getSelf().get(Attribute.Submissive)
+				- target.get(Attribute.Cunning) / 2
+				&& !target.is(Stsflag.cynical)) {
 			target.add(new Charmed(target));
 			if (getSelf().human()) {
 				c.write(deal(c, 0, Result.normal, target));

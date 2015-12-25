@@ -23,7 +23,7 @@ public class TemptressHandjob extends Handjob {
 	public String describe(Combat c) {
 		return "Rub your opponent's dick with supreme skill.";
 	}
-	
+
 	@Override
 	public String getName() {
 		return "Skillful Handjob";
@@ -56,7 +56,7 @@ public class TemptressHandjob extends Handjob {
 				c.write(getSelf(), deal(c, stack, Result.normal, target));
 				target.body.pleasure(getSelf(),
 						getSelf().body.getRandom("hands"),
-						target.body.getRandomCock(), m + (m * stack) / 2, c);
+						target.body.getRandomCock(), m + m * stack / 2, c);
 				getSelf().add(c, new FiredUp(getSelf(), target, "hands"));
 			}
 		} else {

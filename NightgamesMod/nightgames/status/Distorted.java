@@ -16,21 +16,22 @@ public class Distorted extends DurationStatus {
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
+		if (affected.human()) {
 			return "Your image is distorted, making you hard to hit.";
-		}
-		else{
-			return "Multiple "+affected.name()+"s appear in front of you. When you focus, you can tell which one is real, but it's still screwing up your accuracy.";
+		} else {
+			return "Multiple " + affected.name()
+					+ "s appear in front of you. When you focus, you can tell which one is real, but it's still screwing up your accuracy.";
 		}
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s image is now distorted.\n", affected.nameOrPossessivePronoun());
+		return String.format("%s image is now distorted.\n",
+				affected.nameOrPossessivePronoun());
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return 1;
 	}
 
@@ -42,7 +43,7 @@ public class Distorted extends DurationStatus {
 	@Override
 	public int regen(Combat c) {
 		super.regen(c);
-		affected.emote(Emotion.confident,5);
+		affected.emote(Emotion.confident, 5);
 		return 0;
 	}
 
@@ -95,11 +96,13 @@ public class Distorted extends DurationStatus {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Distorted(newAffected, getDuration());
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -108,6 +111,7 @@ public class Distorted extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Distorted(null, JSONUtils.readInteger(obj, "duration"));
 	}

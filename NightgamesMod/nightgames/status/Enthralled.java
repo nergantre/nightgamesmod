@@ -11,10 +11,10 @@ import nightgames.global.Global;
 import nightgames.global.JSONUtils;
 
 public class Enthralled extends DurationStatus {
-	private int timesRefreshed;
-	public Character master;
-	
-	public Enthralled(Character self,Character master, int duration) {
+	private int			timesRefreshed;
+	public Character	master;
+
+	public Enthralled(Character self, Character master, int duration) {
 		super("Enthralled", self, duration);
 		timesRefreshed = 0;
 		this.master = master;
@@ -24,24 +24,29 @@ public class Enthralled extends DurationStatus {
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
 		if (replaced) {
-			return String.format("%s %s control of %s.\n", master.subjectAction("reinforce", "reinforces"), master.possessivePronoun(), affected.nameDirectObject());
-		} else {	
-			return String.format("%s now enthralled by %s.\n", affected.subjectAction("are", "is"), master.subject());
+			return String.format("%s %s control of %s.\n",
+					master.subjectAction("reinforce", "reinforces"),
+					master.possessivePronoun(), affected.nameDirectObject());
+		} else {
+			return String.format("%s now enthralled by %s.\n",
+					affected.subjectAction("are", "is"), master.subject());
 		}
 	}
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human())
-		  return "You feel a constant pull on your mind, forcing you to obey " + master.possessivePronoun() + " every command.";
-		else{
-			return affected.name()+" looks dazed and compliant, ready to follow your orders.";
+		if (affected.human()) {
+			return "You feel a constant pull on your mind, forcing you to obey "
+					+ master.possessivePronoun() + " every command.";
+		} else {
+			return affected.name()
+					+ " looks dazed and compliant, ready to follow your orders.";
 		}
 	}
 
 	@Override
 	public String getVariant() {
-			return "enthralled by " + master.name();
+		return "enthralled by " + master.name();
 	}
 
 	@Override
@@ -51,41 +56,44 @@ public class Enthralled extends DurationStatus {
 
 	@Override
 	public void replace(Status s) {
-		assert (s instanceof Enthralled);
-		Enthralled other = (Enthralled)s;
-		setDuration(Math.max(getDuration() + 1, other.getDuration() - 2 * (timesRefreshed + 1)));
+		assert s instanceof Enthralled;
+		Enthralled other = (Enthralled) s;
+		setDuration(Math.max(getDuration() + 1,
+				other.getDuration() - 2 * (timesRefreshed + 1)));
 		timesRefreshed += 1;
 	}
 
 	@Override
-	public boolean mindgames(){
+	public boolean mindgames() {
 		return true;
 	}
-	
+
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return -getDuration() * 5;
 	}
-	
+
 	@Override
 	public int mod(Attribute a) {
-		if (a == Attribute.Perception)
+		if (a == Attribute.Perception) {
 			return -5;
+		}
 		return -2;
 	}
-
 
 	@Override
 	public void onRemove(Combat c, Character other) {
 		affected.addlist.add(new Cynical(affected));
 		if (c != null && affected.human()) {
-			c.write(affected, "Everything around you suddenly seems much clearer,"
-					+ " like a lens snapped into focus. You don't really remember why"
-					+ " you were heading in the direction you where...");
+			c.write(affected,
+					"Everything around you suddenly seems much clearer,"
+							+ " like a lens snapped into focus. You don't really remember why"
+							+ " you were heading in the direction you where...");
 		} else if (affected.human()) {
-			Global.gui().message("Everything around you suddenly seems much clearer,"
-					+ " like a lens snapped into focus. You don't really remember why"
-					+ " you were heading in the direction you where...");
+			Global.gui().message(
+					"Everything around you suddenly seems much clearer,"
+							+ " like a lens snapped into focus. You don't really remember why"
+							+ " you were heading in the direction you where...");
 		}
 	}
 
@@ -94,10 +102,14 @@ public class Enthralled extends DurationStatus {
 		super.regen(c);
 		return 0;
 	}
-	
+
 	@Override
 	public void tick(Combat c) {
-		if (affected.check(Attribute.Cunning, master.get(Attribute.Seduction)/2 +master.get(Attribute.Arcane)/2 + master.get(Attribute.Dark)/2 + 10+10*(getDuration() - timesRefreshed))) {
+		if (affected.check(Attribute.Cunning,
+				master.get(Attribute.Seduction) / 2
+						+ master.get(Attribute.Arcane) / 2
+						+ master.get(Attribute.Dark) / 2 + 10
+						+ 10 * (getDuration() - timesRefreshed))) {
 			if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
 				System.out.println("Escaped from Enthralled");
 			}
@@ -105,7 +117,7 @@ public class Enthralled extends DurationStatus {
 		}
 		affected.loseMojo(c, 5, " (Enthralled)");
 		affected.loseWillpower(c, 1, 0, false, " (Enthralled)");
-		affected.emote(Emotion.horny,15);
+		affected.emote(Emotion.horny, 15);
 	}
 
 	@Override
@@ -115,7 +127,7 @@ public class Enthralled extends DurationStatus {
 
 	@Override
 	public double pleasure(Combat c, double paramInt) {
-		return paramInt/4;
+		return paramInt / 4;
 	}
 
 	@Override
@@ -125,7 +137,7 @@ public class Enthralled extends DurationStatus {
 
 	@Override
 	public int tempted(int paramInt) {
-		return paramInt/4;
+		return paramInt / 4;
 	}
 
 	@Override
@@ -157,11 +169,13 @@ public class Enthralled extends DurationStatus {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Enthralled(newAffected, newOther, getDuration());
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -170,7 +184,9 @@ public class Enthralled extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
-		return new Enthralled(null, null, JSONUtils.readInteger(obj, "duration"));
+		return new Enthralled(null, null,
+				JSONUtils.readInteger(obj, "duration"));
 	}
 }

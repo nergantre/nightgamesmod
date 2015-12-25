@@ -7,7 +7,6 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.status.Horny;
 import nightgames.status.Shamed;
-import nightgames.skills.ShamefulDisplay;
 
 public class ShamefulDisplay extends Skill {
 
@@ -22,7 +21,7 @@ public class ShamefulDisplay extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (getSelf().canAct()) && (c.getStance().mobile(getSelf()))
+		return getSelf().canAct() && c.getStance().mobile(getSelf())
 				&& getSelf().crotchAvailable()
 				&& (getSelf().hasDick() || getSelf().hasPussy());
 	}

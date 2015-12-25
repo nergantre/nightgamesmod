@@ -10,7 +10,7 @@ import nightgames.global.JSONUtils;
 
 public class CockChoked extends DurationStatus {
 	Character other;
-	
+
 	public CockChoked(Character affected, Character other, int duration) {
 		super("Cock Choked", affected, duration);
 		this.other = other;
@@ -19,16 +19,18 @@ public class CockChoked extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now preventing %s from cumming\n", other.subjectAction("are", "is"), affected.subject());
+		return String.format("%s now preventing %s from cumming\n",
+				other.subjectAction("are", "is"), affected.subject());
 	}
 
 	@Override
 	public String describe(Combat c) {
-		return String.format("%s preventing %s from cumming\n", other.subjectAction("are", "is"), affected.subject());
+		return String.format("%s preventing %s from cumming\n",
+				other.subjectAction("are", "is"), affected.subject());
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		if (affected.getArousal().percent() > 80) {
 			return -10;
 		}
@@ -54,6 +56,7 @@ public class CockChoked extends DurationStatus {
 		}
 		return 0;
 	}
+
 	@Override
 	public int damage(Combat c, int x) {
 		return 0;
@@ -83,7 +86,7 @@ public class CockChoked extends DurationStatus {
 	public int escape() {
 		return 0;
 	}
-	
+
 	@Override
 	public int gainmojo(int x) {
 		return 0;
@@ -98,7 +101,9 @@ public class CockChoked extends DurationStatus {
 	public int counter() {
 		return 0;
 	}
-	public String toString(){
+
+	@Override
+	public String toString() {
 		return "Cock Choked";
 	}
 
@@ -112,6 +117,7 @@ public class CockChoked extends DurationStatus {
 		return new CockChoked(newAffected, newOther, getDuration());
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -120,7 +126,9 @@ public class CockChoked extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
-		return new CockChoked(null, null, JSONUtils.readInteger(obj, "duration"));
+		return new CockChoked(null, null,
+				JSONUtils.readInteger(obj, "duration"));
 	}
 }

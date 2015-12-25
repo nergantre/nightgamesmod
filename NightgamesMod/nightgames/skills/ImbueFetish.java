@@ -13,11 +13,11 @@ import nightgames.status.BodyFetish;
 
 public class ImbueFetish extends Skill {
 
-	private static final List<String> POSSIBLE_FETISHES = Collections
+	private static final List<String>	POSSIBLE_FETISHES	= Collections
 			.unmodifiableList(
 					Arrays.asList("pussy", "breasts", "feet", "ass", "cock"));
 
-	private String chosenFetish;
+	private String						chosenFetish;
 
 	public ImbueFetish(Character self) {
 		super("Imbue Fetish", self, 3);
@@ -47,7 +47,8 @@ public class ImbueFetish extends Skill {
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		chosenFetish = Global.pickRandom(POSSIBLE_FETISHES.stream()
-				.filter(part -> getSelf().body.has(part)).toArray(String[]::new));
+				.filter(part -> getSelf().body.has(part))
+				.toArray(String[]::new));
 		if (getSelf().human()) {
 			c.write(getSelf(), deal(c, 0, Result.normal, target));
 		} else {

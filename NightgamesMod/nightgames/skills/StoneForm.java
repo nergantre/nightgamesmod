@@ -4,12 +4,10 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.status.Alert;
 import nightgames.status.StoneStance;
 import nightgames.status.Stsflag;
-import nightgames.status.WaterStance;
 
-public class StoneForm extends Skill{
+public class StoneForm extends Skill {
 
 	public StoneForm(Character self) {
 		super("Stone Form", self);
@@ -17,12 +15,13 @@ public class StoneForm extends Skill{
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Ki)>=12;
+		return user.get(Attribute.Ki) >= 12;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&!c.getStance().sub(getSelf())&&!getSelf().is(Stsflag.form);
+		return getSelf().canAct() && !c.getStance().sub(getSelf())
+				&& !getSelf().is(Stsflag.form);
 	}
 
 	@Override
@@ -32,11 +31,10 @@ public class StoneForm extends Skill{
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(getSelf().human()){
-			c.write(getSelf(),deal(c,0,Result.normal, target));
-		}
-		else if(target.human()){
-			c.write(getSelf(),receive(c,0,Result.normal, target));
+		if (getSelf().human()) {
+			c.write(getSelf(), deal(c, 0, Result.normal, target));
+		} else if (target.human()) {
+			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
 		getSelf().add(c, new StoneStance(getSelf()));
 		return true;
@@ -53,13 +51,15 @@ public class StoneForm extends Skill{
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
 		return "You tense your body to absorb and shrug off attacks.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return getSelf().name()+" braces herself to resist your attacks.";
+	public String receive(Combat c, int damage, Result modifier,
+			Character target) {
+		return getSelf().name() + " braces herself to resist your attacks.";
 	}
 
 }

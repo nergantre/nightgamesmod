@@ -1,35 +1,29 @@
 package nightgames.gui;
-import nightgames.characters.Player;
-import nightgames.combat.Combat;
-import nightgames.global.Global;
-import nightgames.skills.Skill;
-import nightgames.skills.Tactics;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
 
 import java.awt.Color;
 import java.awt.Font;
 
+import javax.swing.JButton;
 
-public class SubSkillButton extends JButton{
-	protected Skill action;
-	protected Combat combat;
-	public SubSkillButton(final Skill action, final String choice, Combat c){
+import nightgames.combat.Combat;
+import nightgames.skills.Skill;
+
+public class SubSkillButton extends JButton {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3177604366435328960L;
+	protected Skill		action;
+	protected Combat	combat;
+
+	public SubSkillButton(final Skill action, final String choice, Combat c) {
 		super(choice);
 		setOpaque(true);
 		setBorderPainted(false);
 		setFont(new Font("Baskerville Old Face", Font.PLAIN, 18));
-		this.action=action;
-		setBackground(new Color(200,200,200));
-		this.combat=c;
-		addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				SubSkillButton.this.combat.act(action.user(), action, choice);
-			}
-		});
+		this.action = action;
+		setBackground(new Color(200, 200, 200));
+		combat = c;
+		addActionListener(arg0 -> combat.act(action.user(), action, choice));
 	}
 }

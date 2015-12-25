@@ -8,13 +8,14 @@ import java.util.Map;
 import nightgames.items.clothing.Clothing;
 
 public class CombatantData implements Cloneable {
-	private List<Clothing> clothespile;
-	private Map<String, Number> flags;
+	private List<Clothing>		clothespile;
+	private Map<String, Number>	flags;
+
 	public CombatantData() {
 		clothespile = new ArrayList<>();
 		flags = new HashMap<String, Number>();
 	}
-	
+
 	@Override
 	public Object clone() {
 		CombatantData newData = new CombatantData();
@@ -22,12 +23,13 @@ public class CombatantData implements Cloneable {
 		newData.flags = new HashMap<>(flags);
 		return newData;
 	}
-	
+
 	public void addToClothesPile(Clothing article) {
-		if (article != null)
+		if (article != null) {
 			clothespile.add(article);
+		}
 	}
-	
+
 	public List<Clothing> getClothespile() {
 		return clothespile;
 	}
@@ -49,7 +51,7 @@ public class CombatantData implements Cloneable {
 	}
 
 	public boolean getBooleanFlag(String key) {
-		return flags.containsKey(key) ? (flags.get(key).intValue() != 0) : false;
+		return flags.containsKey(key) ? flags.get(key).intValue() != 0 : false;
 	}
 
 	public float getFloatFlag(String key) {
