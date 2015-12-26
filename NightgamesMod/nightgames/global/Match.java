@@ -17,13 +17,13 @@ import nightgames.modifier.Modifier;
 import nightgames.status.BodyFetish;
 
 public class Match {
-	private int							time;
-	private int							dropOffTime;
-	private HashMap<String, Area>		map;
+	protected int							time;
+	protected int							dropOffTime;
+	protected HashMap<String, Area>		map;
 	public ArrayList<Character>			combatants;
-	private HashMap<Character, Integer>	score;
-	private int							index;
-	private boolean						pause;
+	protected HashMap<Character, Integer>	score;
+	protected int							index;
+	protected boolean						pause;
 	public Modifier						condition;
 
 	public Match(Collection<Character> combatants, Modifier condition) {

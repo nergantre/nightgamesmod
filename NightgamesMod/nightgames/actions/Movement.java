@@ -35,7 +35,24 @@ public enum Movement {
 	masturbate(
 			" starts to pleasure herself, while trying not to make much noise. It's quite a show."),
 	mana(" doing something with a large book. When she's finished, you can see a sort of aura coming from her."),
-	retire(" has left the match.");
+	retire(" has left the match."), 
+	ftcNorthBase(" head to the north camp."), 
+	ftcWestBase(" move to the west camp."), 
+	ftcSouthBase(" go to the south camp."), 
+	ftcEastBase(" walk to the east camp."),
+	ftcCenter(" head to the central clearing."),
+	ftcPond(" wade through the bushes to the pool."),
+	ftcGlade(" head into the shaded glade."),
+	ftcCabin(" walk into the cabin."),
+	ftcTrail(" move to the trail."),
+	ftcLodge(" head into the lodge."),
+	ftcHill(" climb up the small hill."),
+	ftcPath(" head down the path."),
+	ftcOak(" move towards the tall oak."),
+	ftcPass(" head into the narrow pass."),
+	ftcWaterfall(" head to the waterfall."),
+	ftcMonument(" go to the stone monument."),
+	ftcDump(" walk to the dumpsite.");
 
 	private String desc;
 

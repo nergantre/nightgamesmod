@@ -312,7 +312,8 @@ public enum Item implements Loot {
 									Attribute.Seduction, -5, 10)),
 					new AddTraitEffect("drink", "throw", Trait.lacedjuices),
 					new AddTraitEffect("drink", "throw", Trait.aikidoNovice)),
-			10);
+			10),
+	Flag("Flag", 0, "A small red ribbon. Worth points.", "The ");
 
 	/**
 	 * The Item's display name.
