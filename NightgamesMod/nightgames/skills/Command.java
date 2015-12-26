@@ -376,7 +376,7 @@ public class Command extends Skill {
 						String.format(
 								"%s stares deeply into your soul and tells"
 										+ " you that you should lay down on the ground. You obey the order"
-										+ " without hesitation."));
+										+ " without hesitation.", getSelf().name()));
 				c.setStance(new StandingOver(getSelf(), target));
 				break;
 			case WORSHIP_COCK:
