@@ -93,8 +93,12 @@ public class Prematch implements Scene {
 			}
 			type = offer(player);
 			message += type.intro();
-			choice.add(new SceneButton("Do it"));
-			choice.add(new SceneButton("Not interested"));
+			if (type.name().equals("normal")) {
+				choice.add(new SceneButton("Start The Match"));
+			} else {
+				choice.add(new SceneButton("Do it"));
+				choice.add(new SceneButton("Not interested"));
+			}
 		}
 
 		choice.add(new SaveButton());

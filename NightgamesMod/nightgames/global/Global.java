@@ -76,6 +76,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.StraponPart;
 import nightgames.characters.custom.CustomNPC;
 import nightgames.characters.custom.JSONSourceNPCDataLoader;
+import nightgames.combat.Combat;
 import nightgames.daytime.Daytime;
 import nightgames.gui.GUI;
 import nightgames.gui.NullGUI;
@@ -131,7 +132,7 @@ public class Global {
 			.values().length];
 	public static int						debugSimulation	= 0;
 	public static double					moneyRate		= 1.0;
-	public static double					xpRate			= 1.0;
+	public static double					xpRate			= .75;
 	public static ContextFactory			factory;
 	public static Context					cx;
 
@@ -1324,5 +1325,11 @@ public class Global {
 
 	public static HashSet<Modifier> getModifierPool() {
 		return modifierPool;
+	}
+	
+	public static HashSet<Skill> getByTactics(Combat c, Tactics tact) {
+		HashSet<Skill> result = new HashSet<>(skillPool);
+		result.removeIf(skill -> skill.type(c) != tact);
+		return result;
 	}
 }

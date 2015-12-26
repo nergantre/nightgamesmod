@@ -909,7 +909,7 @@
 	  "layer":0,
  	  "slots" : ["bottom"],
 	  "shops" : [],
-   	  "sex" : ["female"],
+   	  "sex" : ["all"],
    	  "hotness":0.65,
       "name":"tentaclebottom",
       "toughness":25,

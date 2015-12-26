@@ -71,3 +71,6 @@ Added Assjob - Descriptions written by CharredNewt
 Added TailSuck and a status it can cause; Only usable by succubi (Reyka, or by using a draft)
 Fixed LevelDrain giving the target Satiated instead of the user
 Fixed EnthrallingTrap not having a string representation for use in the button (You can only see this under the influence of a Succubus Draft)
+Generalized the structure for match modifiers (like underwear only, hypersensitivity cream, etc.) so they are easier to add. They can be created in JSON, too, though not with full functionality yet.
+Completely remade the way NPCs handle enthralled opponents. It's now less powerful and more random.
+Fixed stripping checks causing a crash if the character is naked.
