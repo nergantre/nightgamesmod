@@ -2,7 +2,7 @@ package nightgames.trap;
 
 import nightgames.areas.Deployable;
 import nightgames.characters.Character;
-import nightgames.combat.Encounter;
+import nightgames.combat.IEncounter;
 
 public interface Trap extends Deployable {
 	public void trigger(Character target);
@@ -21,5 +21,5 @@ public interface Trap extends Deployable {
 	@Override
 	public String toString();
 
-	public void capitalize(Character attacker, Character victim, Encounter enc);
+	public void capitalize(Character attacker, Character victim, IEncounter enc);
 }

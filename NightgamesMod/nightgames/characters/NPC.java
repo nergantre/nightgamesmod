@@ -14,9 +14,10 @@ import nightgames.characters.body.BodyPart;
 import nightgames.characters.custom.RecruitmentData;
 import nightgames.characters.custom.effect.CustomEffect;
 import nightgames.combat.Combat;
-import nightgames.combat.Encounter;
+import nightgames.combat.IEncounter;
 import nightgames.combat.Result;
 import nightgames.global.DebugFlags;
+import nightgames.global.Encs;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
@@ -429,14 +430,16 @@ public class NPC extends Character {
 	}
 
 	@Override
-	public void faceOff(Character opponent, Encounter enc) {
-		enc.fightOrFlight(this, ai.fightFlight(opponent));
+	public void faceOff(Character opponent, IEncounter enc) {
+		//enc.fightOrFlight(this, ai.fightFlight(opponent));
+		enc.parse(ai.fightFlight(opponent) ? Encs.fight : Encs.flee, this, opponent);
 	}
 
 	@Override
-	public void spy(Character opponent, Encounter enc) {
+	public void spy(Character opponent, IEncounter enc) {
 		if (ai.attack(opponent)) {
-			enc.ambush(this, opponent);
+			//enc.ambush(this, opponent);
+			enc.parse(Encs.ambush, this, opponent);
 		} else {
 			location.endEncounter();
 		}
@@ -453,18 +456,23 @@ public class NPC extends Character {
 	}
 
 	@Override
-	public void showerScene(Character target, Encounter encounter) {
+	public void showerScene(Character target, IEncounter encounter) {
+		Encs response;
 		if (this.has(Item.Aphrodisiac)) {
-			encounter.aphrodisiactrick(this, target);
+			//encounter.aphrodisiactrick(this, target);
+			response = Encs.aphrodisiactrick;
 		} else if (!target.mostlyNude() && Global.random(3) >= 2) {
-			encounter.steal(this, target);
+			//encounter.steal(this, target);
+			response = Encs.stealclothes;
 		} else {
-			encounter.showerambush(this, target);
+			//encounter.showerambush(this, target);
+			response = Encs.showerattack;
 		}
+		encounter.parse(response, this, target);
 	}
 
 	@Override
-	public void intervene(Encounter enc, Character p1, Character p2) {
+	public void intervene(IEncounter enc, Character p1, Character p2) {
 		if (Global.random(20) + getAffection(p1)
 				+ (p1.has(Trait.sympathetic) ? 10 : 0) >= Global.random(20)
 						+ getAffection(p2)
@@ -481,7 +489,7 @@ public class NPC extends Character {
 	}
 
 	@Override
-	public void promptTrap(Encounter enc, Character target, Trap trap) {
+	public void promptTrap(IEncounter enc, Character target, Trap trap) {
 		if (ai.attack(target)) {
 			enc.trap(this, target, trap);
 		} else {

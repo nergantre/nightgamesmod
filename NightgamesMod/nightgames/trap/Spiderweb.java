@@ -3,7 +3,7 @@ package nightgames.trap;
 import nightgames.characters.Character;
 import nightgames.characters.State;
 import nightgames.characters.Trait;
-import nightgames.combat.Encounter;
+import nightgames.combat.IEncounter;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.ClothingSlot;
@@ -68,7 +68,7 @@ public class Spiderweb implements Trap {
 
 	@Override
 	public void capitalize(Character attacker, Character victim,
-			Encounter enc) {
+			IEncounter enc) {
 		if (attacker.human()) {
 			Global.gui().message(victim.name()
 					+ " is naked and helpless in the giant rope web. You approach slowly, taking in the lovely view of her body. You trail your fingers "

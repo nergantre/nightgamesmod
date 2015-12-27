@@ -7,6 +7,7 @@ import java.util.HashSet;
 import nightgames.actions.Movement;
 import nightgames.characters.Character;
 import nightgames.combat.Encounter;
+import nightgames.combat.IEncounter;
 import nightgames.global.Global;
 import nightgames.trap.Trap;
 
@@ -20,7 +21,7 @@ public class Area implements Serializable {
 	public HashSet<Area>			shortcut;
 	public ArrayList<Character>		present;
 	public String					description;
-	public Encounter				fight;
+	public IEncounter				fight;
 	public boolean					alarm;
 	public Trap						trap;
 	public ArrayList<Deployable>	env;
@@ -101,8 +102,7 @@ public class Area implements Serializable {
 	}
 
 	public boolean encounter(Character p) {
-		if (fight != null && fight.getCombat() != null
-				&& fight.getPlayer(1) != p && fight.getPlayer(2) != p) {
+		if (fight != null && fight.checkIntrude(p)) {
 			p.intervene(fight, fight.getPlayer(1), fight.getPlayer(2));
 		} else if (present.size() > 1) {
 			for (Character opponent : Global.getMatch().combatants) {

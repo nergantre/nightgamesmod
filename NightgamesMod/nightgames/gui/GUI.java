@@ -53,7 +53,7 @@ import nightgames.characters.Meter;
 import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
-import nightgames.combat.Encounter;
+import nightgames.combat.IEncounter;
 import nightgames.daytime.Activity;
 import nightgames.daytime.Store;
 import nightgames.debug.DebugGUIPanel;
@@ -1083,7 +1083,7 @@ public class GUI extends JFrame implements Observer {
 		commandPanel.revalidate();
 	}
 
-	public void promptFF(Encounter enc, Character target) {
+	public void promptFF(IEncounter enc, Character target) {
 		clearCommand();
 		commandPanel.add(new EncounterButton("Fight", enc, target, Encs.fight));
 		commandPanel.add(new EncounterButton("Flee", enc, target, Encs.flee));
@@ -1091,7 +1091,7 @@ public class GUI extends JFrame implements Observer {
 		commandPanel.revalidate();
 	}
 
-	public void promptAmbush(Encounter enc, Character target) {
+	public void promptAmbush(IEncounter enc, Character target) {
 		clearCommand();
 		commandPanel.add(new EncounterButton("Attack " + target.name(), enc,
 				target, Encs.ambush));
@@ -1100,7 +1100,7 @@ public class GUI extends JFrame implements Observer {
 		commandPanel.revalidate();
 	}
 
-	public void promptOpportunity(Encounter enc, Character target, Trap trap) {
+	public void promptOpportunity(IEncounter enc, Character target, Trap trap) {
 		clearCommand();
 		commandPanel.add(new EncounterButton("Attack " + target.name(), enc,
 				target, Encs.capitalize, trap));
@@ -1109,7 +1109,7 @@ public class GUI extends JFrame implements Observer {
 		commandPanel.revalidate();
 	}
 
-	public void promptShower(Encounter encounter, Character target) {
+	public void promptShower(IEncounter encounter, Character target) {
 		clearCommand();
 		commandPanel.add(new EncounterButton("Suprise Her", encounter, target,
 				Encs.showerattack));
@@ -1127,7 +1127,7 @@ public class GUI extends JFrame implements Observer {
 		commandPanel.revalidate();
 	}
 
-	public void promptIntervene(Encounter enc, Character p1, Character p2) {
+	public void promptIntervene(IEncounter enc, Character p1, Character p2) {
 		clearCommand();
 		commandPanel.add(new InterveneButton(enc, p1));
 		commandPanel.add(new InterveneButton(enc, p2));
@@ -1524,13 +1524,13 @@ public class GUI extends JFrame implements Observer {
 		 * 
 		 */
 		private static final long serialVersionUID = 7410615523447227147L;
-		private Encounter	enc;
+		private IEncounter	enc;
 		private Character	assist;
 
-		public InterveneButton(Encounter enc, Character assist) {
+		public InterveneButton(IEncounter enc2, Character assist) {
 			super();
 			setFont(new Font("Baskerville Old Face", 0, 18));
-			this.enc = enc;
+			this.enc = enc2;
 			this.assist = assist;
 			setText("Help " + assist.name());
 			addActionListener(arg0 -> GUI.InterveneButton.this.enc
