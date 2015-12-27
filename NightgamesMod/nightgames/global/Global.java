@@ -78,6 +78,7 @@ import nightgames.characters.custom.CustomNPC;
 import nightgames.characters.custom.JSONSourceNPCDataLoader;
 import nightgames.combat.Combat;
 import nightgames.daytime.Daytime;
+import nightgames.ftc.FTCMatch;
 import nightgames.gui.GUI;
 import nightgames.gui.NullGUI;
 import nightgames.items.Item;
@@ -643,9 +644,9 @@ public class Global {
 					resting.add(player);
 				}
 			}
-			match = new Match(lineup, matchmod);
+			match = buildMatch(lineup, matchmod);
 		} else {
-			match = new Match(participants, matchmod);
+			match = buildMatch(participants, matchmod);
 		}
 		startMatch();
 	}
@@ -1331,5 +1332,14 @@ public class Global {
 		HashSet<Skill> result = new HashSet<>(skillPool);
 		result.removeIf(skill -> skill.type(c) != tact);
 		return result;
+	}
+	
+	private static Match buildMatch(Collection<Character> combatants, Modifier mod) {
+		if (true) {
+			flag(Flag.FTC);
+			return new FTCMatch(combatants, (Character) pickRandom(combatants.toArray()));
+		} else {
+			return new Match(combatants, mod);
+		}
 	}
 }

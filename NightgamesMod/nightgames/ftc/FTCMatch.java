@@ -9,7 +9,10 @@ import java.util.Map;
 import nightgames.actions.Movement;
 import nightgames.areas.Area;
 import nightgames.characters.Character;
+import nightgames.global.Flag;
+import nightgames.global.Global;
 import nightgames.global.Match;
+import nightgames.items.Item;
 import nightgames.modifier.standard.NoModifier;
 
 public class FTCMatch extends Match {
@@ -28,7 +31,36 @@ public class FTCMatch extends Match {
 		bases.forEach(Character::place);
 		
 	}
+	
+	public boolean isPrey(Character ch) {
+		return prey.equals(ch);
+	}
+	
+	public boolean inGracePeriod() {
+		return gracePeriod > 0;
+	}
+	
+	@Override
+	public void end() {
+		super.end();
+		Global.unflag(Flag.FTC);
+	}
 
+	@Override
+	public void manageConditions(Character ch) {
+		super.manageConditions(ch);
+		if (ch.equals(prey)) {
+			if (gracePeriod > 0)
+				gracePeriod--;
+			if (ch.has(Item.Flag) && gracePeriod == 0) {
+				score(ch, 1);
+				if (ch.human()) {
+					Global.gui().message("You scored one point for holding the flag.");
+				}
+			}
+		}
+	}
+	
 	private void buildFTCMap(Character north, Character west, Character south,
 			Character east, Character prey) {
 		map.clear();
@@ -36,32 +68,32 @@ public class FTCMatch extends Match {
 				String.format(
 						"You are in a small camp on the northern edge of the forest. "
 								+ "%s has %s base here.",
-						north.subject(), north.possessivePronoun()),
+						north.subjectAction("have", "has"), north.possessivePronoun()),
 				Movement.ftcNorthBase);
 		Area wBase = new Area("West Base",
 				String.format(
 						"You are in a small camp on the western edge of the forest. "
 								+ "%s has %s base here.",
-						west.subject(), west.possessivePronoun()),
+						west.subjectAction("have", "has"), west.possessivePronoun()),
 				Movement.ftcWestBase);
 		Area sBase = new Area("South Base",
 				String.format(
 						"You are in a small camp on the southern edge of the forest. "
 								+ "%s has %s base here.",
-						south.subject(), south.possessivePronoun()),
+						south.subjectAction("have", "has"), south.possessivePronoun()),
 				Movement.ftcSouthBase);
 		Area eBase = new Area("East Base",
 				String.format(
 						"You are in a small camp on the eastern edge of the forest. "
 								+ "%s has %s base here.",
-						east.subject(), east.possessivePronoun()),
+						east.subjectAction("have", "has"), east.possessivePronoun()),
 				Movement.ftcEastBase);
 		Area pBase = new Area("Central Camp",
 				String.format(
 						"You are in a clearing in the middle of the forest. There are no"
 								+ " trees here, just a small camp where %s can "
 								+ "get a new Flag if it gets captured",
-						prey.subject()),
+						prey.subjectAction("have", "has")),
 				Movement.ftcCenter);
 		map.put("North Base", nBase);
 		map.put("West Base", wBase);

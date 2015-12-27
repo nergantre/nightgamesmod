@@ -28,6 +28,7 @@ import nightgames.characters.custom.AiModifiers;
 import nightgames.combat.Combat;
 import nightgames.combat.Encounter;
 import nightgames.combat.Result;
+import nightgames.ftc.FTCMatch;
 import nightgames.global.Challenge;
 import nightgames.global.DebugFlags;
 import nightgames.global.Flag;
@@ -1954,7 +1955,12 @@ public abstract class Character extends Observable implements Cloneable {
 	}
 
 	public boolean eligible(Character p2) {
-		return !mercy.contains(p2) && state != State.resupplying;
+		boolean ftc = true;
+		if (Global.checkFlag(Flag.FTC)) {
+			FTCMatch match = (FTCMatch) Global.getMatch();
+			ftc = !match.inGracePeriod() || (!match.isPrey(this) && !match.isPrey(p2));
+		}
+		return ftc && !mercy.contains(p2) && state != State.resupplying;
 	}
 
 	public void setTrophy(Item trophy) {
