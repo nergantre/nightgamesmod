@@ -121,7 +121,7 @@ public class Daytime {
 			if (Global.checkFlag(Flag.autosave)) {
 				Global.save(true);
 			}
-			new Prematch(player);
+			Global.decideMatchType().buildPrematch(player);
 		}
 	}
 

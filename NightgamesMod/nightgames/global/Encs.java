@@ -9,5 +9,10 @@ public enum Encs {
 	fight,
 	flee,
 	wait,
-
+	
+	//FTC-specific
+	treeAmbush,
+	bushAmbush,
+	passAmbush,
+	;
 }

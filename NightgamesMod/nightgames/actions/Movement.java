@@ -52,7 +52,10 @@ public enum Movement {
 	ftcPass(" head into the narrow pass."),
 	ftcWaterfall(" head to the waterfall."),
 	ftcMonument(" go to the stone monument."),
-	ftcDump(" walk to the dumpsite.");
+	ftcDump(" walk to the dumpsite."),
+	ftcTreeAmbush(" climb up a tree."),
+	ftcBushAmbush(" dive into some bushes."),
+	ftcPassAmbush(" slip into an alcove.");
 
 	private String desc;
 

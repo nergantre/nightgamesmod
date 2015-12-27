@@ -49,24 +49,30 @@ public class Area implements Serializable {
 	}
 
 	public boolean open() {
-		return enumerator == Movement.quad;
+		return enumerator == Movement.quad || enumerator == Movement.ftcCenter;
 	}
 
 	public boolean corridor() {
-		return enumerator == Movement.bridge || enumerator == Movement.tunnel;
+		return enumerator == Movement.bridge || enumerator == Movement.tunnel
+				|| enumerator == Movement.ftcTrail || enumerator == Movement.ftcPass
+				|| enumerator == Movement.ftcPath;
 	}
 
 	public boolean materials() {
 		return enumerator == Movement.workshop
-				|| enumerator == Movement.storage;
+				|| enumerator == Movement.storage
+				|| enumerator == Movement.ftcCabin
+				|| enumerator == Movement.ftcDump;
 	}
 
 	public boolean potions() {
-		return enumerator == Movement.lab || enumerator == Movement.kitchen;
+		return enumerator == Movement.lab || enumerator == Movement.kitchen
+				|| enumerator == Movement.ftcLodge;
 	}
 
 	public boolean bath() {
-		return enumerator == Movement.shower || enumerator == Movement.pool;
+		return enumerator == Movement.shower || enumerator == Movement.pool
+				|| enumerator == Movement.ftcPond || enumerator == Movement.ftcWaterfall;
 	}
 
 	public boolean resupply() {
@@ -74,11 +80,11 @@ public class Area implements Serializable {
 	}
 
 	public boolean recharge() {
-		return enumerator == Movement.workshop;
+		return enumerator == Movement.workshop || enumerator == Movement.ftcCabin;
 	}
 
 	public boolean mana() {
-		return enumerator == Movement.la;
+		return enumerator == Movement.la || enumerator == Movement.ftcOak;
 	}
 
 	public boolean ping(int perception) {
@@ -107,7 +113,7 @@ public class Area implements Serializable {
 		} else if (present.size() > 1) {
 			for (Character opponent : Global.getMatch().combatants) {
 				if (present.contains(opponent) && opponent != p) {
-					fight = new Encounter(p, opponent, this);
+					fight = Global.getMatch().getType().buildEncounter(p, opponent, this);
 					return fight.spotCheck();
 				}
 			}
@@ -121,7 +127,7 @@ public class Area implements Serializable {
 				if (opponent != target) {
 					if (target.eligible(opponent) && opponent.eligible(target)
 							&& fight == null) {
-						fight = new Encounter(opponent, target, this);
+						fight = Global.getMatch().getType().buildEncounter(opponent, target, this);
 						opponent.promptTrap(fight, target, trap);
 						return true;
 					}

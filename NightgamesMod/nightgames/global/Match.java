@@ -77,6 +77,10 @@ public class Match {
 		}
 	}
 
+	public MatchType getType() {
+		return MatchType.NORMAL;
+	}
+	
 	public void round() {
 		while (time < 36) {
 			if (index >= combatants.size()) {

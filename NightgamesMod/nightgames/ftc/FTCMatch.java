@@ -13,6 +13,7 @@ import nightgames.characters.Character;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.global.Match;
+import nightgames.global.MatchType;
 import nightgames.items.Item;
 import nightgames.modifier.standard.NoModifier;
 
@@ -20,6 +21,7 @@ public class FTCMatch extends Match {
 	private Map<Character, Area>	bases;
 	private Character				prey;
 	private int						gracePeriod;
+	private boolean					flagInCenter;
 
 	public FTCMatch(Collection<Character> combatants, Character prey) {
 		super(combatants, new NoModifier());
@@ -28,19 +30,29 @@ public class FTCMatch extends Match {
 		List<Character> hunters = new ArrayList<>(combatants);
 		hunters.remove(prey);
 		Collections.shuffle(hunters);
-		buildFTCMap(hunters.get(0), hunters.get(1), hunters.get(2), hunters.get(3), prey);
+		buildFTCMap(hunters.get(0), hunters.get(1), hunters.get(2),
+				hunters.get(3), prey);
 		bases.forEach(Character::place);
-		
+		flagInCenter = false;
 	}
-	
+
+	@Override
+	public MatchType getType() {
+		return MatchType.FTC;
+	}
+
 	public boolean isPrey(Character ch) {
 		return prey.equals(ch);
 	}
-	
+
+	public boolean isBase(Character ch, Area loc) {
+		return bases.get(ch).equals(loc);
+	}
+
 	public boolean inGracePeriod() {
 		return gracePeriod > 0;
 	}
-	
+
 	@Override
 	public void end() {
 		super.end();
@@ -56,12 +68,13 @@ public class FTCMatch extends Match {
 			if (ch.has(Item.Flag) && gracePeriod == 0) {
 				score(ch, 1);
 				if (ch.human()) {
-					Global.gui().message("You scored one point for holding the flag.");
+					Global.gui().message(
+							"You scored one point for holding the flag.");
 				}
 			}
 		}
 	}
-	
+
 	private void buildFTCMap(Character north, Character west, Character south,
 			Character east, Character prey) {
 		map.clear();
@@ -69,25 +82,29 @@ public class FTCMatch extends Match {
 				String.format(
 						"You are in a small camp on the northern edge of the forest. "
 								+ "%s has %s base here.",
-						north.subjectAction("have", "has"), north.possessivePronoun()),
+						north.subjectAction("have", "has"),
+						north.possessivePronoun()),
 				Movement.ftcNorthBase);
 		Area wBase = new Area("West Base",
 				String.format(
 						"You are in a small camp on the western edge of the forest. "
 								+ "%s has %s base here.",
-						west.subjectAction("have", "has"), west.possessivePronoun()),
+						west.subjectAction("have", "has"),
+						west.possessivePronoun()),
 				Movement.ftcWestBase);
 		Area sBase = new Area("South Base",
 				String.format(
 						"You are in a small camp on the southern edge of the forest. "
 								+ "%s has %s base here.",
-						south.subjectAction("have", "has"), south.possessivePronoun()),
+						south.subjectAction("have", "has"),
+						south.possessivePronoun()),
 				Movement.ftcSouthBase);
 		Area eBase = new Area("East Base",
 				String.format(
 						"You are in a small camp on the eastern edge of the forest. "
 								+ "%s has %s base here.",
-						east.subjectAction("have", "has"), east.possessivePronoun()),
+						east.subjectAction("have", "has"),
+						east.possessivePronoun()),
 				Movement.ftcEastBase);
 		Area pBase = new Area("Central Camp",
 				String.format(
@@ -189,11 +206,38 @@ public class FTCMatch extends Match {
 		link(dump, waterfall);
 		link(glade, lodge);
 	}
-	
-	private void link(Area hub, Area...areas) {
+
+	private void link(Area hub, Area... areas) {
 		for (Area area : areas) {
 			hub.link(area);
 			area.link(hub);
 		}
+	}
+
+	public void turnInFlag(Character ch) {
+		flagInCenter = true;
+		score(ch, 5);
+		Global.gui()
+				.message(Global.format(
+						"{self:subject-action:turn|turns} in the flag and "
+						+ "{self:action:gain|gains} five points.",
+						ch, Global.noneCharacter()));
+		ch.remove(Item.Flag);
+	}
+	
+	public boolean canCollectFlag(Character ch) {
+		return isPrey(ch) && flagInCenter && ch.location().id() == Movement.ftcCenter;
+	}
+	
+	public void grabFlag() {
+		flagInCenter = false;
+		gracePeriod = 2;
+		Global.gui()
+		.message(Global.format(
+				"{self:subject-action:grab|grabs} a new flag from the stash. That means"
+				+ " {self:pronoun} cannot be attacked for two turns, so {self:pronoun}"
+				+ " {self:action:have:has} a chance to hide.",
+				prey, Global.noneCharacter()));
+		prey.gain(Item.Flag);
 	}
 }

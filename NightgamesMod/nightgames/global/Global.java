@@ -43,16 +43,19 @@ import com.cedarsoftware.util.io.JsonWriter;
 import nightgames.Resources.ResourceLoader;
 import nightgames.actions.Action;
 import nightgames.actions.Bathe;
+import nightgames.actions.BushAmbush;
 import nightgames.actions.Craft;
 import nightgames.actions.Energize;
 import nightgames.actions.Hide;
 import nightgames.actions.Locate;
 import nightgames.actions.MasturbateAction;
 import nightgames.actions.Movement;
+import nightgames.actions.PassAmbush;
 import nightgames.actions.Recharge;
 import nightgames.actions.Resupply;
 import nightgames.actions.Scavenge;
 import nightgames.actions.SetTrap;
+import nightgames.actions.TreeAmbush;
 import nightgames.actions.Use;
 import nightgames.actions.Wait;
 import nightgames.areas.Area;
@@ -84,6 +87,7 @@ import nightgames.gui.NullGUI;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.modifier.Modifier;
+import nightgames.modifier.standard.FTCModifier;
 import nightgames.modifier.standard.NoItemsModifier;
 import nightgames.modifier.standard.NoModifier;
 import nightgames.modifier.standard.NoRecoveryModifier;
@@ -460,6 +464,9 @@ public class Global {
 		actionPool.add(new Locate());
 		actionPool.add(new MasturbateAction());
 		actionPool.add(new Energize());
+		actionPool.add(new BushAmbush());
+		actionPool.add(new PassAmbush());
+		actionPool.add(new TreeAmbush());
 		buildTrapPool();
 		for (Trap t : trapPool) {
 			actionPool.add(new SetTrap(t));
@@ -627,8 +634,16 @@ public class Global {
 			maya.gain(Item.Dildo2);
 			maya.gain(Item.Strapon2);
 			match = new Match(lineup, matchmod);
-		}
-		if (participants.size() > 5) {
+		} else if (matchmod.name().equals("ftc")) {
+			Character prey = ((FTCModifier) matchmod).getPrey();
+			lineup.add(prey);
+			if (!prey.human())
+				lineup.add(human);
+			while (lineup.size() < 5)
+				lineup.add((Character) pickRandom(participants.toArray()));
+			resting.addAll(participants);
+			resting.removeIf(lineup::contains);
+		} else if (participants.size() > 5) {
 			ArrayList<Character> randomizer = new ArrayList<Character>();
 			if (lover != null) {
 				lineup.add(lover);
@@ -1327,17 +1342,25 @@ public class Global {
 	public static HashSet<Modifier> getModifierPool() {
 		return modifierPool;
 	}
-	
+
 	public static HashSet<Skill> getByTactics(Combat c, Tactics tact) {
 		HashSet<Skill> result = new HashSet<>(skillPool);
 		result.removeIf(skill -> skill.type(c) != tact);
 		return result;
 	}
-	
-	private static Match buildMatch(Collection<Character> combatants, Modifier mod) {
-		if (true) {
+
+	public static MatchType decideMatchType() {
+		if (human.getLevel() < 15)
+			return MatchType.NORMAL;
+		return isDebugOn(DebugFlags.DEBUG_FTC) || Global.random(10) == 0
+				? MatchType.FTC : MatchType.NORMAL;
+	}
+
+	private static Match buildMatch(Collection<Character> combatants,
+			Modifier mod) {
+		if (mod.name().equals("ftc")) {
 			flag(Flag.FTC);
-			return new FTCMatch(combatants, (Character) pickRandom(combatants.toArray()));
+			return new FTCMatch(combatants, ((FTCModifier) mod).getPrey());
 		} else {
 			return new Match(combatants, mod);
 		}
