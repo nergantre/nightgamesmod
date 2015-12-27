@@ -32,6 +32,10 @@ public class Undress extends Skill {
 	}
 
 	@Override
+	public float priorityMod(Combat c) {
+		return -5.0f;
+	}
+	@Override
 	public boolean resolve(Combat c, Character target) {
 		Result res = Result.normal;
 		int difficulty = getSelf().stripDifficulty(target);

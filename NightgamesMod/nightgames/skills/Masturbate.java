@@ -29,7 +29,7 @@ public class Masturbate extends Skill {
 
 	@Override
 	public float priorityMod(Combat c) {
-		return 0;
+		return -10.0f;
 	}
 
 	public BodyPart getSelfOrgan() {

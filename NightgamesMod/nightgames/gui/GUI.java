@@ -400,6 +400,7 @@ public class GUI extends JFrame implements Observer {
 				} else {
 					Global.flag(Flag.noportraits);
 					portraitPanel.remove(portrait);
+					portraitPanel.remove(map);
 					portraitPanel.repaint();
 				}
 				if (rdimgon.isSelected()) {
