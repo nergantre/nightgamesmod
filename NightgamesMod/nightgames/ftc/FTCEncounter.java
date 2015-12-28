@@ -1,8 +1,11 @@
-package nightgames.combat;
+package nightgames.ftc;
 
 import nightgames.areas.Area;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.State;
+import nightgames.combat.Combat;
+import nightgames.combat.Encounter;
 import nightgames.global.Encs;
 import nightgames.global.Global;
 import nightgames.items.Item;
@@ -20,6 +23,28 @@ public class FTCEncounter extends Encounter {
 		super(first, second, location);
 	}
 
+	@Override
+	public boolean spotCheck() {
+		if (!(p1.eligible(p2) && p2.eligible(p1)))
+			return super.spotCheck();
+		if (p1.state == State.inTree) {
+			treeAmbush(p1, p2);
+		} else if (p2.state == State.inTree) {
+			treeAmbush(p2, p1);
+		} else if (p1.state == State.inBushes) {
+			bushAmbush(p1, p2);
+		} else if (p2.state == State.inBushes) {
+			bushAmbush(p2, p1);
+		} else if (p1.state == State.inPass) {
+			passAmbush(p1, p2);
+		} else if (p2.state == State.inPass) {
+			passAmbush(p2, p1);
+		} else {
+			return super.spotCheck();
+		}
+		return true;
+	}
+	
 	private void treeAmbush(Character attacker, Character victim) {
 		fightTime = 2;
 		victim.add(new Flatfooted(victim, 3));

@@ -4,8 +4,8 @@ import nightgames.areas.Area;
 import nightgames.characters.Character;
 import nightgames.characters.Player;
 import nightgames.combat.Encounter;
-import nightgames.combat.FTCEncounter;
 import nightgames.combat.IEncounter;
+import nightgames.ftc.FTCEncounter;
 import nightgames.ftc.FTCPrematch;
 
 public enum MatchType {
