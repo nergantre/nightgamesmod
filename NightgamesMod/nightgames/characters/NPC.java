@@ -16,8 +16,10 @@ import nightgames.characters.custom.effect.CustomEffect;
 import nightgames.combat.Combat;
 import nightgames.combat.IEncounter;
 import nightgames.combat.Result;
+import nightgames.ftc.FTCMatch;
 import nightgames.global.DebugFlags;
 import nightgames.global.Encs;
+import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
@@ -401,16 +403,23 @@ public class NPC extends Character {
 			if (!location.encounter(this)) {
 				HashSet<Action> available = new HashSet<Action>();
 				HashSet<Movement> radar = new HashSet<Movement>();
-				if (!has(Trait.immobile)) {
-					for (Area path : location.adjacent) {
-						available.add(new Move(path));
-						if (path.ping(get(Attribute.Perception))) {
-							radar.add(path.id());
+				FTCMatch match;
+				if (Global.checkFlag(Flag.FTC)
+						&& (match = (FTCMatch) Global.getMatch()).isPrey(this)
+						&& match.getFlagHolder() == null) {
+					available.add(findPath(match.gps("Central Camp")));
+				} else {
+					if (!has(Trait.immobile)) {
+						for (Area path : location.adjacent) {
+							available.add(new Move(path));
+							if (path.ping(get(Attribute.Perception))) {
+								radar.add(path.id());
+							}
 						}
-					}
-					if (getPure(Attribute.Cunning) >= 28) {
-						for (Area path : location.shortcut) {
-							available.add(new Shortcut(path));
+						if (getPure(Attribute.Cunning) >= 28) {
+							for (Area path : location.shortcut) {
+								available.add(new Shortcut(path));
+							}
 						}
 					}
 				}
@@ -431,14 +440,15 @@ public class NPC extends Character {
 
 	@Override
 	public void faceOff(Character opponent, IEncounter enc) {
-		//enc.fightOrFlight(this, ai.fightFlight(opponent));
-		enc.parse(ai.fightFlight(opponent) ? Encs.fight : Encs.flee, this, opponent);
+		// enc.fightOrFlight(this, ai.fightFlight(opponent));
+		enc.parse(ai.fightFlight(opponent) ? Encs.fight : Encs.flee, this,
+				opponent);
 	}
 
 	@Override
 	public void spy(Character opponent, IEncounter enc) {
 		if (ai.attack(opponent)) {
-			//enc.ambush(this, opponent);
+			// enc.ambush(this, opponent);
 			enc.parse(Encs.ambush, this, opponent);
 		} else {
 			location.endEncounter();
@@ -459,13 +469,13 @@ public class NPC extends Character {
 	public void showerScene(Character target, IEncounter encounter) {
 		Encs response;
 		if (this.has(Item.Aphrodisiac)) {
-			//encounter.aphrodisiactrick(this, target);
+			// encounter.aphrodisiactrick(this, target);
 			response = Encs.aphrodisiactrick;
 		} else if (!target.mostlyNude() && Global.random(3) >= 2) {
-			//encounter.steal(this, target);
+			// encounter.steal(this, target);
 			response = Encs.stealclothes;
 		} else {
-			//encounter.showerambush(this, target);
+			// encounter.showerambush(this, target);
 			response = Encs.showerattack;
 		}
 		encounter.parse(response, this, target);

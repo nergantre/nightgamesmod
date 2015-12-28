@@ -173,6 +173,7 @@ public class Global {
 
 		debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
 		debug[DebugFlags.DEBUG_LOADING.ordinal()] = true;
+		debug[DebugFlags.DEBUG_FTC.ordinal()] = true;
 		// debug[DebugFlags.DEBUG_DAMAGE.ordinal()] = true;
 		// debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
 		// debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
@@ -564,6 +565,7 @@ public class Global {
 		Character lover = null;
 		int maxaffection = 0;
 		day = null;
+		unflag(Flag.FTC);
 		for (Character player : players) {
 			player.getStamina().fill();
 			player.getArousal().empty();
@@ -643,6 +645,7 @@ public class Global {
 				lineup.add((Character) pickRandom(participants.toArray()));
 			resting.addAll(participants);
 			resting.removeIf(lineup::contains);
+			match = buildMatch(lineup, matchmod);
 		} else if (participants.size() > 5) {
 			ArrayList<Character> randomizer = new ArrayList<Character>();
 			if (lover != null) {
@@ -1080,7 +1083,7 @@ public class Global {
 		if (dawn) {
 			dawn();
 		} else {
-			new Prematch(human);
+			decideMatchType().buildPrematch(human);
 		}
 	}
 
@@ -1352,6 +1355,8 @@ public class Global {
 	public static MatchType decideMatchType() {
 		if (human.getLevel() < 15)
 			return MatchType.NORMAL;
+		if (!checkFlag(Flag.didFTC))
+			return MatchType.FTC;
 		return isDebugOn(DebugFlags.DEBUG_FTC) || Global.random(10) == 0
 				? MatchType.FTC : MatchType.NORMAL;
 	}
@@ -1364,5 +1369,9 @@ public class Global {
 		} else {
 			return new Match(combatants, mod);
 		}
+	}
+	
+	public static HashSet<Character> getCharacters() {
+		return new HashSet<>(players);
 	}
 }

@@ -2,6 +2,8 @@ package nightgames.modifier.standard;
 
 import nightgames.modifier.BaseModifier;
 import nightgames.modifier.clothing.NudeModifier;
+import nightgames.modifier.item.FlagOnlyModifier;
+import nightgames.modifier.item.ItemModifier;
 import nightgames.characters.Character;
 import nightgames.ftc.FTCMatch;
 import nightgames.global.Global;
@@ -13,6 +15,7 @@ public class FTCModifier extends BaseModifier {
 
 	public FTCModifier(Character prey) {
 		nudeMod = new NudeModifier();
+		this.items = new FlagOnlyModifier();
 		this.prey = prey;
 	}
 
@@ -27,7 +30,7 @@ public class FTCModifier extends BaseModifier {
 			nudeMod.apply(c.outfit);
 		}
 	}
-
+	
 	@Override
 	public String name() {
 		return "ftc";

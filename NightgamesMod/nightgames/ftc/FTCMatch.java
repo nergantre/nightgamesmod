@@ -15,6 +15,7 @@ import nightgames.global.Global;
 import nightgames.global.Match;
 import nightgames.global.MatchType;
 import nightgames.items.Item;
+import nightgames.modifier.standard.FTCModifier;
 import nightgames.modifier.standard.NoModifier;
 
 public class FTCMatch extends Match {
@@ -22,11 +23,13 @@ public class FTCMatch extends Match {
 	private Character				prey;
 	private int						gracePeriod;
 	private boolean					flagInCenter;
+	private int						flagCounter;
 
 	public FTCMatch(Collection<Character> combatants, Character prey) {
-		super(combatants, new NoModifier());
+		super(combatants, new FTCModifier(prey));
 		this.prey = prey;
-		this.gracePeriod = 2;
+		this.gracePeriod = 3;
+		this.flagCounter = 0;
 		List<Character> hunters = new ArrayList<>(combatants);
 		hunters.remove(prey);
 		Collections.shuffle(hunters);
@@ -34,6 +37,7 @@ public class FTCMatch extends Match {
 				hunters.get(3), prey);
 		bases.forEach(Character::place);
 		flagInCenter = false;
+		prey.gain(Item.Flag);
 	}
 
 	@Override
@@ -43,6 +47,10 @@ public class FTCMatch extends Match {
 
 	public boolean isPrey(Character ch) {
 		return prey.equals(ch);
+	}
+	
+	public Character getFlagHolder() {
+		return combatants.stream().filter(c -> c.has(Item.Flag)).findAny().orElse(null);
 	}
 
 	public boolean isBase(Character ch, Area loc) {
@@ -57,6 +65,7 @@ public class FTCMatch extends Match {
 	public void end() {
 		super.end();
 		Global.unflag(Flag.FTC);
+		combatants.forEach(c -> c.remove(Item.Flag));
 	}
 
 	@Override
@@ -65,7 +74,7 @@ public class FTCMatch extends Match {
 		if (ch.equals(prey)) {
 			if (gracePeriod > 0)
 				gracePeriod--;
-			if (ch.has(Item.Flag) && gracePeriod == 0) {
+			if (ch.has(Item.Flag) && gracePeriod == 0 && (++flagCounter % 3) == 0) {
 				score(ch, 1);
 				if (ch.human()) {
 					Global.gui().message(
@@ -219,8 +228,8 @@ public class FTCMatch extends Match {
 		score(ch, 5);
 		Global.gui()
 				.message(Global.format(
-						"{self:subject-action:turn|turns} in the flag and "
-						+ "{self:action:gain|gains} five points.",
+						"<b>{self:SUBJECT-ACTION:turn|turns} in the flag and "
+						+ "{self:action:gain|gains} five points.</b>",
 						ch, Global.noneCharacter()));
 		ch.remove(Item.Flag);
 	}
@@ -231,7 +240,8 @@ public class FTCMatch extends Match {
 	
 	public void grabFlag() {
 		flagInCenter = false;
-		gracePeriod = 2;
+		gracePeriod = 3;
+		flagCounter = 0;
 		Global.gui()
 		.message(Global.format(
 				"{self:subject-action:grab|grabs} a new flag from the stash. That means"

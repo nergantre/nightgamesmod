@@ -13,6 +13,8 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.IEncounter;
 import nightgames.combat.Result;
+import nightgames.ftc.FTCMatch;
+import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.gui.GUI;
 import nightgames.items.Item;
@@ -283,6 +285,12 @@ public class Player extends Character {
 		} else if (state == State.masturbating) {
 			masturbate();
 		} else {
+			if (Global.checkFlag(Flag.FTC)) {
+				Character holder = ((FTCMatch) Global.getMatch()).getFlagHolder();
+				if (!holder.human()) {
+					gui.message("<b>" + holder.name + " currently holds the Flag.</b></br>");
+				}
+			}
 			gui.message(location.description + "<p>");
 			for (Deployable trap : location.env) {
 				if (trap.owner() == this) {

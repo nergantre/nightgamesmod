@@ -217,6 +217,14 @@ public class Combat extends Observable implements Serializable, Cloneable {
 		}
 		victor.getWillpower().fill();
 		loser.getWillpower().fill();
+		
+		if (Global.checkFlag(Flag.FTC) && loser.has(Item.Flag)) {
+			write(victor, 
+					Global.format("<br><b>{self:SUBJECT-ACTION:take|takes} the "
+							+ "Flag from {other:subject}!</b>", victor, loser));
+			loser.remove(Item.Flag);
+			victor.gain(Item.Flag);
+		}
 	}
 
 	public void turn() {
