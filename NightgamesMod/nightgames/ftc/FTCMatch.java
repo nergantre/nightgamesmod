@@ -49,6 +49,10 @@ public class FTCMatch extends Match {
 		return prey.equals(ch);
 	}
 	
+	public Area getBase(Character ch) {
+		return bases.get(ch);
+	}
+	
 	public Character getFlagHolder() {
 		return combatants.stream().filter(c -> c.has(Item.Flag)).findAny().orElse(null);
 	}

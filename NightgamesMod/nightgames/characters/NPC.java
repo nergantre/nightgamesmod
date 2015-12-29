@@ -404,22 +404,29 @@ public class NPC extends Character {
 				HashSet<Action> available = new HashSet<Action>();
 				HashSet<Movement> radar = new HashSet<Movement>();
 				FTCMatch match;
-				if (Global.checkFlag(Flag.FTC)
-						&& (match = (FTCMatch) Global.getMatch()).isPrey(this)
-						&& match.getFlagHolder() == null) {
-					available.add(findPath(match.gps("Central Camp")));
-				} else {
-					if (!has(Trait.immobile)) {
-						for (Area path : location.adjacent) {
-							available.add(new Move(path));
-							if (path.ping(get(Attribute.Perception))) {
-								radar.add(path.id());
-							}
+				if (Global.checkFlag(Flag.FTC)) {
+					match = (FTCMatch) Global.getMatch();
+					if (match.isPrey(this) && match.getFlagHolder() == null) {
+						available.add(findPath(match.gps("Central Camp")));
+						if (Global.isDebugOn(DebugFlags.DEBUG_FTC))
+							System.out.println(name() + " moving to get flag (prey)");
+					} else if (!match.isPrey(this) && has(Item.Flag)
+							&& !match.isBase(this, location)) {
+						available.add(findPath(match.getBase(this)));
+						if (Global.isDebugOn(DebugFlags.DEBUG_FTC))
+							System.out.println(name() + " moving to deliver flag (hunter)");
+					}
+				} 
+				if (!has(Trait.immobile) && available.isEmpty()) {
+					for (Area path : location.adjacent) {
+						available.add(new Move(path));
+						if (path.ping(get(Attribute.Perception))) {
+							radar.add(path.id());
 						}
-						if (getPure(Attribute.Cunning) >= 28) {
-							for (Area path : location.shortcut) {
-								available.add(new Shortcut(path));
-							}
+					}
+					if (getPure(Attribute.Cunning) >= 28) {
+						for (Area path : location.shortcut) {
+							available.add(new Shortcut(path));
 						}
 					}
 				}
