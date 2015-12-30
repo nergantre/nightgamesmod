@@ -352,6 +352,7 @@ public class Command extends Skill {
 				target.pain(c, 10 + Global.random(20));
 			case STRIP_MASTER:
 				Clothing removed = getSelf().getRandomStrippable();
+				if (removed == null) return;
 				getSelf().getOutfit().unequip(removed);
 				c.write(getSelf(),
 						String.format(
@@ -363,6 +364,7 @@ public class Command extends Skill {
 				break;
 			case STRIP_SLAVE:
 				removed = target.getRandomStrippable();
+				if (removed == null) return;
 				target.getOutfit().unequip(removed);
 				c.write(getSelf(),
 						String.format(

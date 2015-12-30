@@ -943,8 +943,10 @@ public class NPC extends Character {
 		forbidden.removeAll(applicable);
 		Map<CommentSituation, String> comments = ai.getComments(c);
 		forbidden.forEach(comments::remove);
-		if (comments.isEmpty())
+		if (comments.isEmpty() || comments.size() == 1
+				&& comments.containsKey(CommentSituation.NO_COMMENT))
 			return Optional.empty();
-		return Optional.of((String) Global.pickRandom(comments.values().toArray()));
+		return Optional
+				.of((String) Global.pickRandom(comments.values().toArray()));
 	}
 }

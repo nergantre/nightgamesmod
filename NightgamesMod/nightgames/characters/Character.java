@@ -1266,7 +1266,8 @@ public abstract class Character extends Observable implements Cloneable {
 
 	public abstract String taunt(Combat c);
 
-	public abstract void intervene(IEncounter fight, Character p1, Character p2);
+	public abstract void intervene(IEncounter fight, Character p1,
+			Character p2);
 
 	public abstract void showerScene(Character target, IEncounter encounter);
 
@@ -1886,7 +1887,7 @@ public abstract class Character extends Observable implements Cloneable {
 
 	public void resupply() {
 		for (Character victor : mercy) {
-			victor.bounty(has(Trait.event) ? 5 : 1);
+			victor.bounty(has(Trait.event) ? 5 : 1, victor);
 		}
 		mercy.clear();
 		change();
@@ -1928,7 +1929,7 @@ public abstract class Character extends Observable implements Cloneable {
 
 	public void finishMatch() {
 		for (Character victor : mercy) {
-			victor.bounty(has(Trait.event) ? 5 : 1);
+			victor.bounty(has(Trait.event) ? 5 : 1, victor);
 		}
 		Global.gui().clearImage();
 		mercy.clear();
@@ -1950,15 +1951,27 @@ public abstract class Character extends Observable implements Cloneable {
 		}
 	}
 
-	public void bounty(int points) {
-		Global.getMatch().score(this, points);
+	public void bounty(int points, Character victor) {
+		int score = points;
+		if (Global.checkFlag(Flag.FTC) && points == 1) {
+			FTCMatch match = (FTCMatch) Global.getMatch();
+			if (match.isPrey(this)) {
+				score = 3;
+			} else if (!match.isPrey(victor)){
+				score = 2;
+			} else {
+				score = 0; // Hunter beating prey gets no points, only for flag.
+			}
+		}
+		Global.getMatch().score(this, score);
 	}
 
 	public boolean eligible(Character p2) {
 		boolean ftc = true;
 		if (Global.checkFlag(Flag.FTC)) {
 			FTCMatch match = (FTCMatch) Global.getMatch();
-			ftc = !match.inGracePeriod() || (!match.isPrey(this) && !match.isPrey(p2));
+			ftc = !match.inGracePeriod()
+					|| (!match.isPrey(this) && !match.isPrey(p2));
 		}
 		return ftc && !mercy.contains(p2) && state != State.resupplying;
 	}
@@ -2060,7 +2073,8 @@ public abstract class Character extends Observable implements Cloneable {
 		busy += i;
 	}
 
-	public abstract void promptTrap(IEncounter fight, Character target, Trap trap);
+	public abstract void promptTrap(IEncounter fight, Character target,
+			Trap trap);
 
 	public int lvlBonus(Character opponent) {
 		if (opponent.getLevel() > getLevel()) {

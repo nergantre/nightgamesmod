@@ -340,8 +340,8 @@ public class Combat extends Observable implements Serializable, Cloneable {
 			NPC commenter = (NPC) getOther(Global.getPlayer());
 			Optional<String> comment = commenter.getComment(this);
 			if (comment.isPresent()) {
-				write(commenter, "<i>" + Global.format(comment.get(), commenter,
-						Global.getPlayer()) + "</i>");
+				write(commenter, "<i>\"" + Global.format(comment.get(), commenter,
+						Global.getPlayer()) + "\"</i>");
 			}
 		}
 
