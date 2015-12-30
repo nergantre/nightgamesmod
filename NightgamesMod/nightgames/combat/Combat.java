@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
+import java.util.Optional;
 
 import nightgames.areas.Area;
 import nightgames.characters.Attribute;
@@ -217,11 +218,13 @@ public class Combat extends Observable implements Serializable, Cloneable {
 		}
 		victor.getWillpower().fill();
 		loser.getWillpower().fill();
-		
+
 		if (Global.checkFlag(Flag.FTC) && loser.has(Item.Flag)) {
-			write(victor, 
-					Global.format("<br><b>{self:SUBJECT-ACTION:take|takes} the "
-							+ "Flag from {other:subject}!</b>", victor, loser));
+			write(victor,
+					Global.format(
+							"<br><b>{self:SUBJECT-ACTION:take|takes} the "
+									+ "Flag from {other:subject}!</b>",
+							victor, loser));
 			loser.remove(Item.Flag);
 			victor.gain(Item.Flag);
 		}
@@ -332,6 +335,16 @@ public class Combat extends Observable implements Serializable, Cloneable {
 		p1act = null;
 		p2act = null;
 		p1.act(this);
+
+		if (Global.random(3) == 0 && (p1.human() || p2.human())) {
+			NPC commenter = (NPC) getOther(Global.getPlayer());
+			Optional<String> comment = commenter.getComment(this);
+			if (comment.isPresent()) {
+				write(commenter, "<i>" + Global.format(comment.get(), commenter,
+						Global.getPlayer()) + "</i>");
+			}
+		}
+
 		updateAndClearMessage();
 	}
 

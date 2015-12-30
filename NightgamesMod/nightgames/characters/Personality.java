@@ -2,10 +2,12 @@ package nightgames.characters;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Map;
 
 import nightgames.actions.Action;
 import nightgames.actions.Movement;
 import nightgames.characters.custom.AiModifiers;
+import nightgames.characters.custom.CommentSituation;
 import nightgames.characters.custom.RecruitmentData;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -73,4 +75,6 @@ public interface Personality extends Serializable {
 	public AiModifiers getAiModifiers();
 
 	public String resist3p(Combat combat, Character target, Character assist);
+	
+	public Map<CommentSituation, String> getComments(Combat c);
 }

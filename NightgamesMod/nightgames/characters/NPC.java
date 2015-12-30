@@ -2,8 +2,12 @@
 package nightgames.characters;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 import nightgames.actions.Action;
 import nightgames.actions.Move;
@@ -12,6 +16,7 @@ import nightgames.actions.Resupply;
 import nightgames.actions.Shortcut;
 import nightgames.areas.Area;
 import nightgames.characters.body.BodyPart;
+import nightgames.characters.custom.CommentSituation;
 import nightgames.characters.custom.RecruitmentData;
 import nightgames.characters.custom.effect.CustomEffect;
 import nightgames.combat.Combat;
@@ -410,20 +415,23 @@ public class NPC extends Character {
 					if (match.isPrey(this) && match.getFlagHolder() == null) {
 						available.add(findPath(match.gps("Central Camp")));
 						if (Global.isDebugOn(DebugFlags.DEBUG_FTC))
-							System.out.println(name() + " moving to get flag (prey)");
+							System.out.println(
+									name() + " moving to get flag (prey)");
 					} else if (!match.isPrey(this) && has(Item.Flag)
 							&& !match.isBase(this, location)) {
 						available.add(findPath(match.getBase(this)));
 						if (Global.isDebugOn(DebugFlags.DEBUG_FTC))
-							System.out.println(name() + " moving to deliver flag (hunter)");
+							System.out.println(name()
+									+ " moving to deliver flag (hunter)");
 					} else if (!match.isPrey(this) && has(Item.Flag)
 							&& match.isBase(this, location)) {
 						if (Global.isDebugOn(DebugFlags.DEBUG_FTC))
-							System.out.println(name() + " delivering flag (hunter)");
+							System.out.println(
+									name() + " delivering flag (hunter)");
 						new Resupply().execute(this);
 						return;
 					}
-				} 
+				}
 				if (!has(Trait.immobile) && available.isEmpty()) {
 					for (Area path : location.adjacent) {
 						available.add(new Move(path));
@@ -926,5 +934,17 @@ public class NPC extends Character {
 	@Override
 	public double dickPreference() {
 		return ai instanceof Eve ? 10.0 : super.dickPreference();
+	}
+
+	public Optional<String> getComment(Combat c) {
+		Set<CommentSituation> applicable = CommentSituation
+				.getApplicableComments(c, this, c.getOther(this));
+		Set<CommentSituation> forbidden = EnumSet.allOf(CommentSituation.class);
+		forbidden.removeAll(applicable);
+		Map<CommentSituation, String> comments = ai.getComments(c);
+		forbidden.forEach(comments::remove);
+		if (comments.isEmpty())
+			return Optional.empty();
+		return Optional.of((String) Global.pickRandom(comments.values().toArray()));
 	}
 }
