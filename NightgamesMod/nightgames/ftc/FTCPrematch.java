@@ -78,7 +78,7 @@ public class FTCPrematch implements Scene {
 							+ " You can't help but feel slightly uncomfortable, despite the fact that"
 							+ " you have been sexfighting these girls for a while now. After about 20"
 							+ " minutes, the van pulls to a stop, and everyone goes to their designated"
-							+ " starting positions. Yours is right in a clearing in the center of the "
+							+ " starting positions. Yours is in a clearing right in the center of the "
 							+ "forest. There is a crate filled with ribbons here, so you pick one up"
 							+ " and bind it around your left arm. The sharp sound of a whistle signals"
 							+ " the start of the match, so you had best get going quickly.";

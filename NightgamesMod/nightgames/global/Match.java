@@ -2,6 +2,7 @@ package nightgames.global;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Deque;
 import java.util.HashMap;
@@ -326,5 +327,9 @@ public class Match {
 		human.travel(new Area("Retirement", "", Movement.retire));
 		human.state = State.quit;
 		resume();
+	}
+	
+	public Collection<Movement> getResupplyAreas(Character ch) {
+		return Arrays.asList(Movement.union, Movement.dorm);
 	}
 }

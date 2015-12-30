@@ -287,7 +287,7 @@ public class Player extends Character {
 		} else {
 			if (Global.checkFlag(Flag.FTC)) {
 				Character holder = ((FTCMatch) Global.getMatch()).getFlagHolder();
-				if (!holder.human()) {
+				if (holder != null && !holder.human()) {
 					gui.message("<b>" + holder.name + " currently holds the Flag.</b></br>");
 				}
 			}

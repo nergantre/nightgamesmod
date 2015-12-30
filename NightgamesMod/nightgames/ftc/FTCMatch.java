@@ -248,10 +248,16 @@ public class FTCMatch extends Match {
 		flagCounter = 0;
 		Global.gui()
 		.message(Global.format(
-				"{self:subject-action:grab|grabs} a new flag from the stash. That means"
+				"{self:SUBJECT-ACTION:grab|grabs} a new flag from the stash. That means"
 				+ " {self:pronoun} cannot be attacked for two turns, so {self:pronoun}"
-				+ " {self:action:have:has} a chance to hide.",
+				+ " {self:action:have|has} a chance to hide.",
 				prey, Global.noneCharacter()));
 		prey.gain(Item.Flag);
+	}
+	
+	@Override
+	public Collection<Movement> getResupplyAreas(Character ch) {
+		Area base = bases.get(ch);
+		return Collections.singleton(Movement.ftcBaseMovement(base));
 	}
 }

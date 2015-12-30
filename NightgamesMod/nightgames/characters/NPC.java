@@ -8,6 +8,7 @@ import java.util.HashSet;
 import nightgames.actions.Action;
 import nightgames.actions.Move;
 import nightgames.actions.Movement;
+import nightgames.actions.Resupply;
 import nightgames.actions.Shortcut;
 import nightgames.areas.Area;
 import nightgames.characters.body.BodyPart;
@@ -415,6 +416,12 @@ public class NPC extends Character {
 						available.add(findPath(match.getBase(this)));
 						if (Global.isDebugOn(DebugFlags.DEBUG_FTC))
 							System.out.println(name() + " moving to deliver flag (hunter)");
+					} else if (!match.isPrey(this) && has(Item.Flag)
+							&& match.isBase(this, location)) {
+						if (Global.isDebugOn(DebugFlags.DEBUG_FTC))
+							System.out.println(name() + " delivering flag (hunter)");
+						new Resupply().execute(this);
+						return;
 					}
 				} 
 				if (!has(Trait.immobile) && available.isEmpty()) {

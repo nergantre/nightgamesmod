@@ -1,5 +1,7 @@
 package nightgames.actions;
 
+import nightgames.areas.Area;
+
 public enum Movement {
 	quad(" head outside, toward the quad."),
 	kitchen(" move into the kitchen."),
@@ -68,5 +70,22 @@ public enum Movement {
 
 	private Movement(String desc) {
 		this.desc = desc;
+	}
+	
+	public static Movement ftcBaseMovement(Area base) {
+		switch (base.name) {
+			case "North Base":
+				return ftcNorthBase;
+			case "East Base":
+				return ftcEastBase;
+			case "South Base":
+				return ftcSouthBase;
+			case "West Base":
+				return ftcWestBase;
+			case "Central Camp":
+				return ftcCenter;
+			default:
+				throw new IllegalArgumentException("Not an FTC base: " + base.name);
+		}
 	}
 }

@@ -31,5 +31,5 @@ public enum MatchType {
 			default:
 				throw new Error();
 		}
-	}
+	}	
 }
