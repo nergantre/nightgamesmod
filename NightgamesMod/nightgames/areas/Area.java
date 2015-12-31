@@ -6,7 +6,6 @@ import java.util.HashSet;
 
 import nightgames.actions.Movement;
 import nightgames.characters.Character;
-import nightgames.combat.Encounter;
 import nightgames.combat.IEncounter;
 import nightgames.global.Global;
 import nightgames.trap.Trap;

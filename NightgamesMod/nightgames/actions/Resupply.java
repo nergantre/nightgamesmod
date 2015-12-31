@@ -2,10 +2,10 @@ package nightgames.actions;
 
 import nightgames.characters.Character;
 import nightgames.characters.State;
+import nightgames.ftc.FTCMatch;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
-import nightgames.ftc.FTCMatch;
 
 public class Resupply extends Action {
 

@@ -16,7 +16,6 @@ import nightgames.global.Match;
 import nightgames.global.MatchType;
 import nightgames.items.Item;
 import nightgames.modifier.standard.FTCModifier;
-import nightgames.modifier.standard.NoModifier;
 
 public class FTCMatch extends Match {
 	private Map<Character, Area>	bases;

@@ -8,7 +8,6 @@ import nightgames.characters.NPC;
 import nightgames.characters.Player;
 import nightgames.global.Flag;
 import nightgames.global.Global;
-import nightgames.global.Prematch;
 
 public class Daytime {
 	private ArrayList<Activity>	activities;

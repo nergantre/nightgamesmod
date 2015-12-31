@@ -1,12 +1,9 @@
 package nightgames.modifier.standard;
 
+import nightgames.characters.Character;
 import nightgames.modifier.BaseModifier;
 import nightgames.modifier.clothing.NudeModifier;
 import nightgames.modifier.item.FlagOnlyModifier;
-import nightgames.modifier.item.ItemModifier;
-import nightgames.characters.Character;
-import nightgames.ftc.FTCMatch;
-import nightgames.global.Global;
 
 public class FTCModifier extends BaseModifier {
 

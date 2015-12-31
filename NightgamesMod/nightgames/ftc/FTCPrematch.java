@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 
-import nightgames.characters.Player;
 import nightgames.characters.Character;
+import nightgames.characters.Player;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.global.Scene;
