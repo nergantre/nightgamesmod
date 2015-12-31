@@ -297,6 +297,14 @@ public class Player extends Character {
 					gui.message("You've set a " + trap.toString() + " here.");
 				}
 			}
+			if (state == State.inTree)
+				gui.message("You are hiding in a tree, waiting to drop down on an unwitting foe.");
+			else if (state == State.inBushes)
+				gui.message("You are hiding in dense bushes, waiting for someone to pass by.");
+			else if (state == State.inPass)
+				gui.message("You are hiding in an alcove in the pass.");
+			else if (state == State.hidden)
+				gui.message("You have found a hiding spot and are waiting for someone to pounce upon.");
 			detect();
 			if (!location.encounter(this)) {
 				for (Area path : location.adjacent) {

@@ -17,7 +17,8 @@ public class TreeAmbush extends Action {
 	public boolean usable(Character user) {
 		return user.location().id() == Movement.ftcTrail
 				&& (user.get(Attribute.Power) >= 20
-						|| user.get(Attribute.Animism) >= 10);
+						|| user.get(Attribute.Animism) >= 10)
+				 && user.state != State.inTree;
 	}
 
 	@Override
