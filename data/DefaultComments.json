@@ -238,15 +238,56 @@
 				"situation": "BEHIND_DOM_WIN",
 				"comment":"Shall I use hy hands to finish you off now? You know how good I am with them..."
 			},{
-				"situation": "VAG_DOM_CATCH_WIN",
-				"comment":"Do you like it inside of me, {other:name}? Is she being a good host?"
+				"situation": "SELF_BOUND",
+				"comment":"Pff, I'll have my hands free in just a second, and then I'll use them on you!"
 			},{
-				"situation": "VAG_DOM_CATCH_WIN",
-				"comment":"Do you like it inside of me, {other:name}? Is she being a good host?"
+				"situation": "OTHER_BOUND",
+				"comment":"Do you like being tied up, {other:name}? I am happy to oblige."
 			},{
-				"situation": "VAG_DOM_CATCH_WIN",
-				"comment":"Do you like it inside of me, {other:name}? Is she being a good host?"
+				"situation": "SIXTYNINE_DOM_WIN",
+				"comment":"Come on {other:name}! Try a little harder down there!"
 			},
+		]
+	},{
+		"characters":"Reyka"
+		"comments": [
+		{
+				"situation": "VAG_DOM_CATCH_WIN",
+				"comment":"Ah, yes! Give me more!"
+			},{
+				"situation": "VAG_DOM_CATCH_LOSE",
+				"comment":"I can't lose! Not like this!"
+			},{
+				"situation": "VAG_SUB_CATCH_WIN",
+				"comment":"Are you regretting fucking me now? It's time for you to cum now."
+			},{
+				"situation": "VAG_SUB_CATCH_LOSE",
+				"comment":"{other:name}! How did you get this good?!"
+			},{
+				"situation": "ANAL_SUB_CATCH_WIN",
+				"comment":"Thought my ass would be harmless, did you?"
+			},{
+				"situation": "FACESIT_DOM_WIN",
+				"comment":"Ahhh, yes! Lick me more! Drink me!"
+			},{
+				"situation": "FACESIT_DOM_LOSE",
+				"comment":"Shit! That's some tongue you've got there!"
+			},{
+				"situation": "MOUNT_DOM_WIN",
+				"comment":"Mmmm. I wonder if you'll cum right away if I put it in. Shall we find out?"
+			},{
+				"situation": "MOUNT_SUB_WIN",
+				"comment":"Hah! Even on top it's hopeless! Now fuck me and finish it!"
+			},{
+				"situation": "MOUNT_SUB_LOSE",
+				"comment":"Please... At least feed me..."
+			},{
+				"situation": "OTHER_ENTHRALLED",
+				"comment":"You're a good little slave aren't you?"
+			},{
+				"situation": "OTHER_HORNY",
+				"comment":"You really just can't resist me, can you?"
+			}
 		]
 	}
 ]
