@@ -28,14 +28,14 @@ import nightgames.skills.SpiralThrust;
 import nightgames.skills.Thrust;
 import nightgames.skills.WildThrust;
 
-public class BodyFetish extends Status {
+public class BodyFetish extends DurationStatus {
 	Character		origin;
 	public String	part;
 	public double	magnitude;
 
 	public BodyFetish(Character affected, Character origin, String part,
 			double magnitude) {
-		super(Global.capitalizeFirstLetter(part) + " Fetish", affected);
+		super(Global.capitalizeFirstLetter(part) + " Fetish", affected, 10);
 		flag(Stsflag.bodyfetish);
 		this.origin = origin;
 		this.part = part;
@@ -133,6 +133,7 @@ public class BodyFetish extends Status {
 		BodyFetish other = (BodyFetish) s;
 		assert other.part.equals(part);
 		magnitude = Math.min(3.0, magnitude + other.magnitude);
+		this.setDuration(Math.max(getDuration(), other.getDuration()));
 	}
 
 	@Override

@@ -450,6 +450,7 @@ public class NPC extends Character {
 						available.add(act);
 					}
 				}
+				available.removeIf(a -> a == null);
 				if (location.humanPresent()) {
 					Global.gui().message("You notice " + name() + ai
 							.move(available, radar).execute(this).describe());

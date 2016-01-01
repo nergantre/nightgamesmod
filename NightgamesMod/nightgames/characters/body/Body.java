@@ -658,6 +658,7 @@ public class Body implements Cloneable {
 		newBody.replacements = new ArrayList<PartReplacement>();
 		replacements.forEach(
 				rep -> newBody.replacements.add(new PartReplacement(rep)));
+		newBody.bodyParts = new LinkedHashSet<>(bodyParts);
 		return newBody;
 	}
 
