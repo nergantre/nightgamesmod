@@ -157,8 +157,7 @@ public abstract class Skill {
 	}
 
 	@Override
-	public boolean equals(Object other) { // $codepro.audit.disable
-											// com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.obeyEqualsContract.obeyGeneralContractOfEquals
+	public boolean equals(Object other) { 											// com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.obeyEqualsContract.obeyGeneralContractOfEquals
 		return toString().equals(other.toString());
 	}
 

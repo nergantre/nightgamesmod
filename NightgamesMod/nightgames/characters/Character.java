@@ -1798,8 +1798,7 @@ public abstract class Character extends Observable implements Cloneable {
 
 	public String debugMessage(Combat c, Position p) {
 		String mood;
-		if (this instanceof NPC) { // $codepro.audit.disable
-									// useOfInstanceOfWithThis
+		if (this instanceof NPC) { 									// useOfInstanceOfWithThis
 			mood = "mood: " + ((NPC) this).mood.toString();
 		} else {
 			mood = "";
