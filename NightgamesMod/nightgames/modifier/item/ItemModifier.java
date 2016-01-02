@@ -30,8 +30,8 @@ public abstract class ItemModifier {
 		return Collections.emptyMap();
 	}
 
-	public boolean itemIsBanned(Item i) {
-		return bannedItems().contains(i);
+	public boolean itemIsBanned(Character c, Item i) {
+		return !playerOnly() || c.human() && bannedItems().contains(i);
 	}
 
 	public void giveRequiredItems(Character c) {
@@ -59,8 +59,8 @@ public abstract class ItemModifier {
 			}
 
 			@Override
-			public boolean itemIsBanned(Item i) {
-				return mod.itemIsBanned(i);
+			public boolean itemIsBanned(Character c, Item i) {
+				return mod.itemIsBanned(c, i);
 			}
 
 			@Override
@@ -80,8 +80,8 @@ public abstract class ItemModifier {
 			}
 
 			@Override
-			public boolean itemIsBanned(Item i) {
-				return me.itemIsBanned(i) || other.itemIsBanned(i);
+			public boolean itemIsBanned(Character c, Item i) {
+				return me.itemIsBanned(c, i) || other.itemIsBanned(c, i);
 			}
 
 			@Override

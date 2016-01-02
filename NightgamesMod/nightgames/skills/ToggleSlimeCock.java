@@ -29,8 +29,7 @@ public class ToggleSlimeCock extends Skill {
 
 	@Override
 	public float priorityMod(Combat c) {
-		// [-2.5, 2.5], depending on dickPreference and whether or not user already has a dick
-		return (float) ((getSelf().dickPreference() - 5) * (hasSlimeCock() ? -.5 : .5));
+		return (float) ((getSelf().dickPreference() - 5) * (hasSlimeCock() ? -.3 : .3));
 	}
 	
 	@Override

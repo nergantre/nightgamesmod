@@ -563,7 +563,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
 			opponent.loseWillpower(c, 5);
 		}
 		if (this == gooey) {
-			c.write(self, Global.format("The slimy filaments inside {self:body-part:pussy} constantly massage"
+			c.write(self, Global.format("The slimy filaments inside {self:possessive} {self:body-part:pussy} constantly massage"
 					+ " {other:possessive} {other:body-part:cock}, filling every inch of it with pleasure.", self, opponent));
 			opponent.body.pleasure(self, this, otherOrgan, 1 + Global.random(7), c);
 		}

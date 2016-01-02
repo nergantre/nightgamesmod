@@ -23,14 +23,15 @@ public class Airi extends BasePersonality {
 		character.setTrophy(Item.AiriTrophy);
 		preferredCockMod = CockMod.slimy;
 
-		character.set(Attribute.Power, 3);
-		character.set(Attribute.Bio, 5);
-		character.set(Attribute.Cunning, 12);
-		character.set(Attribute.Speed, 5);
-		character.set(Attribute.Seduction, 15);
-		character.getStamina().setMax(50);
-		character.getArousal().setMax(80);
+		character.set(Attribute.Power, 6);
+		character.set(Attribute.Bio, 20);
+		character.set(Attribute.Cunning, 15);
+		character.set(Attribute.Speed, 4);
+		character.set(Attribute.Seduction, 17);
+		character.getStamina().setMax(80);
+		character.getArousal().setMax(200);
 		character.getMojo().setMax(60);
+		character.getWillpower().setMax(500);
 		character.add(Trait.dexterous);
 		character.add(Trait.slime);
 		character.add(Trait.imagination);

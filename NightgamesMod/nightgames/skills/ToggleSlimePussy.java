@@ -35,8 +35,7 @@ public class ToggleSlimePussy extends Skill {
 
 	@Override
 	public float priorityMod(Combat c) {
-		// [-2.5, 2.5], depending on dickPreference and whether or not user already has a dick
-		return (float) ((getSelf().dickPreference() - 5) * (hasSlimePussy() ? .5 : -.5));
+		return (float) ((getSelf().dickPreference() - 5) * (hasSlimePussy() ? .3 : -.3));
 	}
 	
 	@Override
@@ -66,7 +65,7 @@ public class ToggleSlimePussy extends Skill {
 			getSelf().body.removeAll("pussy");
 		} else {
 			if (getSelf().crotchAvailable() || getSelf().human()) {
-				msg += "a slit forms in {self:possessive} slime. The new pussy's lips shudder invitingly.";
+				msg += "and a slit forms in {self:possessive} slime. The new pussy's lips shudder invitingly.";
 			} else {
 				msg += "but you see no outside changs. Perhaps they are hidden under {self:possessive} clothes?";
 			}

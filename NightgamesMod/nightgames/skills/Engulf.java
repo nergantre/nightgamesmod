@@ -111,7 +111,7 @@ public class Engulf extends CounterBase {
 					+ " {other:possessive} clothes to dissolve without a trace.";
 		}
 		msg += "As {self:pronoun} {self:action:reform|reforms} {self:possessive} body around {other:direct-object},"
-				+ " {self:possessive} head appears besides {other:possessive}. {self:SUBJECT-ACTION:giggle:giggles}"
+				+ " {self:possessive} head appears besides {other:possessive}. {self:SUBJECT-ACTION:giggle|giggles}"
 				+ " softly into {other:possessive} ear as {self:possessive} slime massages {other:possessive} ";
 		if (target.hasDick())
 			msg += "cock, ";

@@ -43,9 +43,10 @@ public class Aggressive extends DurationStatus {
 
 	@Override
 	public Collection<Skill> allowedSkills(Combat c) {
-		return CONTACT_SKILLS;
+		return CONTACT_SKILLS.stream().filter(s -> Skill.skillIsUsable(c, s, c.getOther(affected)))
+				.collect(Collectors.toSet());
 	}
-	
+
 	@Override
 	public int mod(Attribute a) {
 		if (a == Attribute.Cunning)

@@ -8,10 +8,15 @@ import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 
 public class Engulfed extends Position {
+
+	private boolean slimePitches;
+	
 	public Engulfed(Character top, Character bottom) {
 		super(top, bottom, Stance.engulfed);
+		slimePitches = slimePitches();
 	}
 
 	@Override
@@ -73,6 +78,7 @@ public class Engulfed extends Position {
 	public boolean prone(Character c) {
 		return false;
 	}
+	
 
 	@Override
 	public boolean feet(Character c) {
@@ -96,7 +102,7 @@ public class Engulfed extends Position {
 
 	@Override
 	public boolean inserted(Character c) {
-		return c.hasDick();
+		return slimePitches == (c == top);
 	}
 
 	@Override
@@ -119,18 +125,24 @@ public class Engulfed extends Position {
 	@Override
 	public List<BodyPart> topParts() {
 		List<BodyPart> parts = new ArrayList<>();
-		parts.addAll(top.body.get("cock"));
-		parts.addAll(top.body.get("pussy"));
-		parts.addAll(top.body.get("ass"));
+		if (slimePitches) {
+			parts.addAll(top.body.get("cock"));
+		} else {
+			parts.addAll(top.body.get("pussy"));
+			parts.addAll(top.body.get("ass"));
+		}
 		return parts.stream().filter(part -> part != null && part.present()).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<BodyPart> bottomParts() {
 		List<BodyPart> parts = new ArrayList<>();
-		parts.addAll(bottom.body.get("cock"));
-		parts.addAll(bottom.body.get("pussy"));
-		parts.addAll(bottom.body.get("ass"));
+		if (!slimePitches) {
+			parts.addAll(bottom.body.get("cock"));
+		} else {
+			parts.addAll(bottom.body.get("pussy"));
+			parts.addAll(bottom.body.get("ass"));
+		}
 		return parts.stream().filter(part -> part != null && part.present()).collect(Collectors.toList());
 	}
 
@@ -142,5 +154,13 @@ public class Engulfed extends Position {
 	@Override
 	public double pheromoneMod(Character self) {
 		return 10;
+	}
+
+	private boolean slimePitches() {
+		if (!top.hasDick())
+			return false;
+		if (!bottom.hasDick())
+			return true;
+		return Global.random(2) == 0;
 	}
 }
