@@ -48,5 +48,6 @@ public enum Stsflag {
 	firedup,
 	tied,
 	drowsy,
-	tailsucked,
+	tailsucked, 
+	aggressive,
 }

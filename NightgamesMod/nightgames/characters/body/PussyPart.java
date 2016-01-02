@@ -176,6 +176,11 @@ public enum PussyPart implements BodyPart,BodyPartMod {
 										+ "relax around your dick bringing you waves of pleasure.",
 								self, opponent));
 			}
+		} else if (this == gooey && target.isErogenous()) {
+			c.write(self, Global.format("{self:NAME-POSSESSIVE} {self:body-part:pussy} envelops"
+					+ " {other:possessive} {other:body-part:cock} in a sticky grip, making extraction more"
+					+ " difficult.", self, opponent));
+			opponent.add(new CockBound(opponent, 7, self.nameOrPossessivePronoun() + " gooey pussy"));
 		}
 	}
 
@@ -557,6 +562,11 @@ public enum PussyPart implements BodyPart,BodyPartMod {
 			opponent.drainStaminaAsMojo(c, self, 20, 1.25f);
 			opponent.loseWillpower(c, 5);
 		}
+		if (this == gooey) {
+			c.write(self, Global.format("The slimy filaments inside {self:body-part:pussy} constantly massage"
+					+ " {other:possessive} {other:body-part:cock}, filling every inch of it with pleasure.", self, opponent));
+			opponent.body.pleasure(self, this, otherOrgan, 1 + Global.random(7), c);
+		}
 	}
 
 	@Override
@@ -608,5 +618,17 @@ public enum PussyPart implements BodyPart,BodyPartMod {
 	@Override
 	public String getModType() {
 		return name();
+	}
+	
+	@Override
+	public void onOrgasm(Combat c, Character self, Character opponent,
+			BodyPart target, boolean selfCame) {
+		if (this == gooey && target.isErogenous() && !selfCame) {
+			c.write(self, Global.format("{self:NAME-POSSESSIVE} {self:body-part:pussy} clenches down hard"
+					+ " on {other:name-possessive} {other:body-part:cock}. The suction is so strong that the cum"
+					+ " leaves the shaft in a constant flow rather than spurts. When {other:possessive} orgasm is"
+					+ " over, {other:possessive} is much more drained of cum than usual.", self, opponent));
+			opponent.loseWillpower(c, 10 + Global.random(Math.min(20, self.get(Attribute.Bio))));
+		}
 	}
 }

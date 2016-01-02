@@ -74,3 +74,7 @@ Fixed EnthrallingTrap not having a string representation for use in the button (
 Generalized the structure for match modifiers (like underwear only, hypersensitivity cream, etc.) so they are easier to add. They can be created in JSON, too, though not with full functionality yet.
 Completely remade the way NPCs handle enthralled opponents. It's now less powerful and more random.
 Fixed stripping checks causing a crash if the character is naked.
+
+Slime characteristics:
+	Enhanced slap - chance of knockdown.
+	

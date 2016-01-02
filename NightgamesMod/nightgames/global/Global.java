@@ -443,6 +443,8 @@ public class Global {
 		getSkillPool().add(new ImbueFetish(p));
 		getSkillPool().add(new AssJob(p));
 		getSkillPool().add(new TailSuck(p));
+		getSkillPool().add(new ToggleSlimeCock(p));
+		getSkillPool().add(new ToggleSlimePussy(p));
 
 		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 			getSkillPool().add(new SelfStun(p));
