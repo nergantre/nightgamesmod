@@ -43,8 +43,10 @@ public class Aggressive extends DurationStatus {
 
 	@Override
 	public Collection<Skill> allowedSkills(Combat c) {
-		return CONTACT_SKILLS.stream().filter(s -> Skill.skillIsUsable(c, s, c.getOther(affected)))
-				.collect(Collectors.toSet());
+		return CONTACT_SKILLS.stream()
+				.filter(s -> s.requirements(c, affected, c.getOther(affected))
+						&& Skill.skillIsUsable(c, s, c.getOther(affected)))
+				.map(s -> s.copy(affected)).collect(Collectors.toSet());
 	}
 
 	@Override
