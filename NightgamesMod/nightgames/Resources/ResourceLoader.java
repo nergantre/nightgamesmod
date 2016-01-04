@@ -1,4 +1,3 @@
-// $codepro.audit.disable emptyCatchClause, logExceptions
 package nightgames.Resources;
 
 import java.io.File;

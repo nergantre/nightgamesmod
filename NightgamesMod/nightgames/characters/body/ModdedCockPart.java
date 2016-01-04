@@ -162,6 +162,12 @@ public class ModdedCockPart implements CockPart {
 			BodyPart target) {
 		mod.onStartPenetration(c, self, opponent, target, this);
 	}
+	
+	@Override
+	public void onEndPenetration(Combat c, Character self,
+			Character opponent, BodyPart target) {
+		mod.onEndPenetration(c, self, opponent, target, this);
+	}
 
 	@Override
 	public int counterValue(BodyPart other) {

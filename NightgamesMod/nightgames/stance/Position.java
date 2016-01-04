@@ -1,4 +1,3 @@
-// $codepro.audit.disable logExceptions
 package nightgames.stance;
 
 import java.util.Collection;

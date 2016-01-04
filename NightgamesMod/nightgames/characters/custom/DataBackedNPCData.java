@@ -1,4 +1,3 @@
-// $codepro.audit.disable logExceptions
 package nightgames.characters.custom;
 
 import java.util.ArrayList;

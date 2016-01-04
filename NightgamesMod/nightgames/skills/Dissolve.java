@@ -1,9 +1,12 @@
 package nightgames.skills;
 
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
 
 public class Dissolve extends Skill {
 
@@ -19,35 +22,42 @@ public class Dissolve extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return c.getStance().mobile(getSelf()) && getSelf().canAct()
-				&& getSelf().has(Item.DisSol)
-				&& target.outfit.getRandomShreddableSlot() != null
-				&& !c.getStance().prone(getSelf());
+				&& (getSelf().has(Item.DisSol) || getSelf().has(Trait.slime))
+				&& target.outfit.getRandomShreddableSlot() != null && !c.getStance().prone(getSelf());
 	}
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		getSelf().consume(Item.DisSol, 1);
-		if (getSelf().has(Item.Aersolizer)) {
-			if (getSelf().human()) {
-				c.write(getSelf(), deal(c, 0, Result.special, target));
-			} else if (target.human()) {
-				c.write(getSelf(), receive(c, 0, Result.special, getSelf()));
-			}
-			target.shredRandom();
-		} else if (target.roll(this, c, accuracy(c))) {
-			if (getSelf().human()) {
-				c.write(getSelf(), deal(c, 0, Result.normal, target));
-			} else if (target.human()) {
-				c.write(getSelf(), receive(c, 0, Result.normal, getSelf()));
-			}
-			target.shredRandom();
+		if (getSelf().has(Trait.slime)) {
+			Clothing destroyed = target.shredRandom();
+			String msg = "{self:SUBJECT-ACTION:reach|reaches} out with a slimy hand and"
+					+ " {self:action:caress|caresses} {other:possessive} " + destroyed.getName()
+					+ ". Slowly, it dissolves away beneath {self:possessive} touch.";
+			c.write(getSelf(), Global.format(msg, getSelf(), target));
 		} else {
-			if (getSelf().human()) {
-				c.write(getSelf(), deal(c, 0, Result.miss, target));
-			} else if (target.human()) {
-				c.write(getSelf(), receive(c, 0, Result.miss, target));
+			getSelf().consume(Item.DisSol, 1);
+			if (getSelf().has(Item.Aersolizer)) {
+				if (getSelf().human()) {
+					c.write(getSelf(), deal(c, 0, Result.special, target));
+				} else if (target.human()) {
+					c.write(getSelf(), receive(c, 0, Result.special, getSelf()));
+				}
+				target.shredRandom();
+			} else if (target.roll(this, c, accuracy(c))) {
+				if (getSelf().human()) {
+					c.write(getSelf(), deal(c, 0, Result.normal, target));
+				} else if (target.human()) {
+					c.write(getSelf(), receive(c, 0, Result.normal, getSelf()));
+				}
+				target.shredRandom();
+			} else {
+				if (getSelf().human()) {
+					c.write(getSelf(), deal(c, 0, Result.miss, target));
+				} else if (target.human()) {
+					c.write(getSelf(), receive(c, 0, Result.miss, target));
+				}
+				return false;
 			}
-			return false;
 		}
 		return true;
 	}
@@ -63,31 +73,26 @@ public class Dissolve extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.special) {
-			return "You pop a Dissolving Solution into your Aerosolizer and spray "
-					+ target.name()
+			return "You pop a Dissolving Solution into your Aerosolizer and spray " + target.name()
 					+ " with a cloud of mist. She emerges from the cloud with her clothes rapidly "
 					+ "melting off her body.";
 		} else if (modifier == Result.miss) {
 			return "You throw a Dissolving Solution at " + target.name()
 					+ ", but she avoids most of it. Only a couple drops burn through her outfit.";
 		} else {
-			return "You throw a Dissolving Solution at " + target.name()
-					+ ", which eats away her clothes.";
+			return "You throw a Dissolving Solution at " + target.name() + ", which eats away her clothes.";
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character attacker) {
+	public String receive(Combat c, int damage, Result modifier, Character attacker) {
 		if (modifier == Result.special) {
 			return getSelf().name()
 					+ " inserts a bottle into the attachment on her arm. You're suddenly surrounded by a cloud of mist. Your clothes begin to disintegrate immediately.";
 		} else if (modifier == Result.miss) {
-			return getSelf().name()
-					+ " splashes a bottle of liquid in your direction, but none of it hits you.";
+			return getSelf().name() + " splashes a bottle of liquid in your direction, but none of it hits you.";
 		} else {
 			return getSelf().name()
 					+ " covers you with a clear liquid. Your clothes dissolve away, but it doesn't do anything to your skin.";
@@ -96,6 +101,8 @@ public class Dissolve extends Skill {
 
 	@Override
 	public String describe(Combat c) {
+		if (getSelf().has(Trait.slime))
+			return "Use your slime to dissolve your opponent's clothes";
 		return "Throws dissolving solution to destroy opponent's clothes";
 	}
 

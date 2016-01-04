@@ -15,6 +15,7 @@ public class TentaclePart extends GenericBodyPart {
 	private static final BodyPartMod	TentacleMod				= () -> "TentacleMod";
 	public String						attachpoint;
 	String								fluids;
+	private boolean						printSynonym;
 	static String						allowedAttachTypes[]	= { "ass",
 			"mouth", "pussy", "hands", "feet", "tail", "cock" };
 
@@ -46,23 +47,30 @@ public class TentaclePart extends GenericBodyPart {
 
 	public TentaclePart(String desc, String attachpoint, String fluids,
 			double hotness, double pleasure, double sensitivity) {
+		this(desc, attachpoint, fluids, hotness, pleasure, sensitivity, true);
+	}
+	
+	public TentaclePart(String desc, String attachpoint, String fluids, 
+			double hotness, double pleasure, double sensitivity, boolean printSynonym) {
 		super(desc, "", hotness, pleasure, sensitivity, true, "tentacles", "");
 		this.attachpoint = attachpoint;
 		this.fluids = fluids;
+		this.printSynonym = printSynonym;
 	}
 
 	public static String synonyms[] = { "mass", "clump", "nest", "group", };
 
 	@Override
 	public void describeLong(StringBuilder b, Character c) {
-		if (c.body.has(attachpoint)) {
+		if (printSynonym)
 			b.append("A " + Global.pickRandom(synonyms) + " of ");
-			b.append(describe(c));
+		else
+			b.append("A ");
+		b.append(describe(c));
+		if (c.body.has(attachpoint)) {
 			b.append(" sprouts from " + c.nameOrPossessivePronoun() + " "
 					+ attachpoint + ".");
 		} else {
-			b.append("A " + Global.pickRandom(synonyms) + " of ");
-			b.append(describe(c));
 			b.append(" sprouts from " + c.nameOrPossessivePronoun() + " back.");
 		}
 	}

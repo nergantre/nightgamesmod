@@ -1,4 +1,3 @@
-// $codepro.audit.disable emptyCatchClause, logExceptions
 package nightgames.global;
 
 import java.io.File;
@@ -173,7 +172,7 @@ public class Global {
 
 		debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
 		debug[DebugFlags.DEBUG_LOADING.ordinal()] = true;
-		debug[DebugFlags.DEBUG_FTC.ordinal()] = true;
+		// debug[DebugFlags.DEBUG_FTC.ordinal()] = true;
 		// debug[DebugFlags.DEBUG_DAMAGE.ordinal()] = true;
 		// debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
 		// debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
@@ -444,6 +443,10 @@ public class Global {
 		getSkillPool().add(new ImbueFetish(p));
 		getSkillPool().add(new AssJob(p));
 		getSkillPool().add(new TailSuck(p));
+		getSkillPool().add(new ToggleSlimeCock(p));
+		getSkillPool().add(new ToggleSlimePussy(p));
+		getSkillPool().add(new Spores(p));
+		getSkillPool().add(new EngulfedFuck(p));
 
 		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 			getSkillPool().add(new SelfStun(p));

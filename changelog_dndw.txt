@@ -76,3 +76,22 @@ Completely remade the way NPCs handle enthralled opponents. It's now less powerf
 Fixed stripping checks causing a crash if the character is naked.
 (Probably) Fixed body modification skills causing changes in simulation. (Temporary changes were prevented, permanent ones weren't)
 Added a duration to fetishes.
+
+Slime characteristics:
+	Enhanced Slap - chance of knockdown.
+	Enhanced Trip - higher success chance.
+	Enhanced Dissolve - does not require items.
+	Lower pain taken
+	Can grow/remove genitals for a small amount of Mojo.
+	Can use Spores, which force the opponent to use skills that can trigger counters
+	Can use Engulf, which is a counter similar to Rosea's: it only hits on the turn after it is deployed.
+		-It is a very, very bad idea to attack a slime the turn after they use Engulf
+		-The Engulfed position dissolves all of the target's clothes and it's a fucking stance.
+		-Aside from regular fucking skills, Multi Fuck allows the slime to use all genitals the two combatants have at once.
+	Slimy Cock:
+		-Can 'burn' through underwear, so you can use insertion skills while the opponent is wearing underwear.
+		-Causes Horny when it is pulled out, due to some slime remaining inside.
+	Gooey Pussy:
+		-Weakly binds any cock inside of it. (Not as strong as vaginal tongue, for example)
+		-Causes passive damage per turn. Like autonomous pussy, but not as powerful.
+		-Causes greater Willpower loss if a cock cums inside of it.
