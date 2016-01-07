@@ -1,0 +1,55 @@
+Setup [level=15, extraChars=[nightgames.characters.Reyka@5f323fdd, nightgames.characters.Kat@76a68492]]
+Jewel: 0.4043234587670136
+Record [subject=Jewel
+	 totalPlayed=1249
+	 totalWins=505
+	 totalLosses=736
+	 totalDraws=8
+	 wins={Angel=0, Mara=12, Cassie=80, Kat=231, Reyka=182}
+	 losses={Angel=250, Mara=238, Cassie=170, Kat=15, Reyka=63}
+	 draws={Angel=0, Mara=0, Cassie=0, Kat=4, Reyka=4}]
+Angel: 0.832
+Record [subject=Angel
+	 totalPlayed=1250
+	 totalWins=1040
+	 totalLosses=208
+	 totalDraws=2
+	 wins={Jewel=250, Mara=108, Cassie=183, Kat=249, Reyka=250}
+	 losses={Jewel=0, Mara=140, Cassie=67, Kat=1, Reyka=0}
+	 draws={Jewel=0, Mara=2, Cassie=0, Kat=0, Reyka=0}]
+Mara: 0.6637309847878302
+Record [subject=Mara
+	 totalPlayed=1249
+	 totalWins=829
+	 totalLosses=417
+	 totalDraws=3
+	 wins={Jewel=238, Angel=140, Cassie=22, Kat=237, Reyka=192}
+	 losses={Jewel=12, Angel=108, Cassie=228, Kat=12, Reyka=57}
+	 draws={Jewel=0, Angel=2, Cassie=0, Kat=1, Reyka=0}]
+Cassie: 0.72
+Record [subject=Cassie
+	 totalPlayed=1250
+	 totalWins=900
+	 totalLosses=346
+	 totalDraws=4
+	 wins={Jewel=170, Angel=67, Mara=228, Kat=250, Reyka=185}
+	 losses={Jewel=80, Angel=183, Mara=22, Kat=0, Reyka=61}
+	 draws={Jewel=0, Angel=0, Mara=0, Kat=0, Reyka=4}]
+Kat: 0.0456
+Record [subject=Kat
+	 totalPlayed=1250
+	 totalWins=57
+	 totalLosses=1184
+	 totalDraws=9
+	 wins={Jewel=15, Angel=1, Mara=12, Cassie=0, Reyka=29}
+	 losses={Jewel=231, Angel=249, Mara=237, Cassie=250, Reyka=217}
+	 draws={Jewel=4, Angel=0, Mara=1, Cassie=0, Reyka=4}]
+Reyka: 0.3189102564102564
+Record [subject=Reyka
+	 totalPlayed=1248
+	 totalWins=398
+	 totalLosses=838
+	 totalDraws=12
+	 wins={Jewel=63, Angel=0, Mara=57, Cassie=61, Kat=217}
+	 losses={Jewel=182, Angel=250, Mara=192, Cassie=185, Kat=29}
+	 draws={Jewel=4, Angel=0, Mara=0, Cassie=4, Kat=4}]

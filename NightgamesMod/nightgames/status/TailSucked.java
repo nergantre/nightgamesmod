@@ -36,6 +36,10 @@ public class TailSucked extends Status {
 
 	@Override
 	public String describe(Combat c) {
+		if (!affected.hasDick()){
+			affected.removelist.add(this);
+			return "";
+		}
 		return String.format(
 				"%s tail keeps churning around %s "
 						+ "%s, sucking in %s vital energies.",

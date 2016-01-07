@@ -1084,8 +1084,8 @@ public abstract class Character extends Observable implements Cloneable {
 	public boolean rollPheromones(Combat c) {
 		double chance = getPheromonesChance(c);
 		double roll = Global.randomdouble();
-		System.out.println("Pheromones: rolled " + Global.formatDecimal(roll)
-				+ " vs " + chance + ".");
+		//System.out.println("Pheromones: rolled " + Global.formatDecimal(roll)
+		//		+ " vs " + chance + ".");
 		return roll < chance;
 	}
 

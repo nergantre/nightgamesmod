@@ -393,7 +393,7 @@ public class Command extends Skill {
 								getSelf().name(), getSelf().possessivePronoun(),
 								getSelf().pronoun(), getSelf()
 										.possessivePronoun(),
-						getSelf().body.getRandomCock().describe(getSelf())));
+						target.body.getRandomCock().describe(target)));
 				getSelf().body.pleasure(target, target.body.getRandom("mouth"),
 						getSelf().body.getRandomCock(), 10 + Global.random(8),
 						c);
