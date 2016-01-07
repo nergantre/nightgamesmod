@@ -48,6 +48,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 	public CombatantData			p1Data;
 	public Character				p2;
 	public CombatantData			p2Data;
+	public Optional<Character>		winner;
 	public int						phase;
 	private Skill					p1act;
 	private Skill					p2act;
@@ -74,6 +75,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 		images = new HashMap<String, String>();
 		p1.state = State.combat;
 		p2.state = State.combat;
+		winner = Optional.empty();
 	}
 
 	public Combat(Character p1, Character p2, Area loc, Position starting) {
@@ -238,6 +240,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 			p2.draw(this, state);
 			phase = 2;
 			updateMessage();
+			winner = Optional.of(Global.noneCharacter());
 			if (!(p1.human() || p2.human())) {
 				end();
 			}
@@ -249,6 +252,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 			p2.evalChallenges(this, p2);
 			p2.victory(this, state);
 			doVictory(p2, p1);
+			winner = Optional.of(p2);
 			phase = 2;
 			updateMessage();
 			if (!(p1.human() || p2.human())) {
@@ -262,6 +266,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 			p2.evalChallenges(this, p1);
 			p1.victory(this, state);
 			doVictory(p1, p2);
+			winner = Optional.of(p1);
 			phase = 2;
 			updateMessage();
 			if (!(p1.human() || p2.human())) {
@@ -476,6 +481,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 			p1.evalChallenges(this, null);
 			p2.evalChallenges(this, null);
 			p2.draw(this, state);
+			winner = Optional.of(Global.noneCharacter());
 			end();
 			return;
 		}
@@ -485,6 +491,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 			p2.evalChallenges(this, p2);
 			p2.victory(this, state);
 			doVictory(p2, p1);
+			winner = Optional.of(p2);
 			end();
 			return;
 		}
@@ -494,6 +501,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 			p2.evalChallenges(this, p1);
 			p1.victory(this, state);
 			doVictory(p1, p2);
+			winner = Optional.of(p1);
 			end();
 			return;
 		}

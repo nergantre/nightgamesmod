@@ -87,17 +87,19 @@ public class CombatStats {
 		cbt.automate();
 		counter.incrementAndGet();
 		synchronized (recordLock) {
-			if (c1.has(c2.getTrophy()) && c2.has(c1.getTrophy())) {
+			if (!cbt.winner.isPresent()) {
+				System.err.println("Error - winner is empty");				
+			} else if (cbt.winner.get().equals(Global.noneCharacter())) {
 				recordOf(c1).draw(c2);
 				recordOf(c2).draw(c1);
-			} else if (c1.has(c2.getTrophy())) {
+			} else if (cbt.winner.get().equals(c1)) {
 				recordOf(c1).win(c2);
 				recordOf(c2).lose(c1);
-			} else if (c2.has(c1.getTrophy())) {
+			} else if (cbt.winner.get().equals(c2)) {
 				recordOf(c1).lose(c2);
 				recordOf(c2).win(c1);
 			} else {
-				System.err.println("Error");
+				System.err.println("Error - unknown causes");
 			}
 		}
 	}

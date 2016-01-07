@@ -195,7 +195,7 @@ public class Command extends Skill {
 
 			if (target.body.getFetish("pussy").isPresent()
 					&& getSelf().hasPussy())
-				available.add(CommandType.WORSHIP_COCK);
+				available.add(CommandType.WORSHIP_PUSSY);
 
 			if (getSelf().hasDick())
 				available.add(CommandType.GIVE_BLOWJOB);
