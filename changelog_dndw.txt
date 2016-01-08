@@ -68,7 +68,7 @@ CockGrowth now has an actual accuracy calculation instead of a flat 0
 Escape is somewhat more likely to work in escaping stances
 Added Imbue Fetish, which bestows a somewhat-random fetish on the target. Requires Fetish >= 10
 Added Assjob - Descriptions written by CharredNewt
-Added TailSuck and a status it can cause; Only usable by succubi (Reyka, or by using a draft)
+Added TailSuck and a status it can cause; Requires the EnergyDrain trait
 Fixed LevelDrain giving the target Satiated instead of the user
 Fixed EnthrallingTrap not having a string representation for use in the button (You can only see this under the influence of a Succubus Draft)
 Generalized the structure for match modifiers (like underwear only, hypersensitivity cream, etc.) so they are easier to add. They can be created in JSON, too, though not with full functionality yet.
