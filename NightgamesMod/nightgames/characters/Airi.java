@@ -153,7 +153,33 @@ public class Airi extends BasePersonality {
 
 	@Override
 	public String defeat(Combat c, Result flag) {
-		return "You made Airi cum. She puddles.";
+		return "Fighting Airi is not easy. Her stickiness makes it"
+				+ " quite difficult for you to accomplish much of anything. Still, "
+				+ "considering her incoherent babbling she's probably not got much fight left in her. "
+				+ "In a desperate attempt, she launces herself at you, knocking you both to the ground."
+				+ " You react quickly, rolling over and getting on top before she can stick you to the "
+				+ "floor. Her slime crawls up your sides, seeking to engulf and immobilize you, but you "
+				+ "raise yourself up slightly, out of her reach. You reach down with one hand and deftly"
+				+ " get to work on the area of slime shaped like a pussy. It's very different from a "
+				+ "regular girl's, considering that your fingers actually <i>sink in</i> rather than graze"
+				+ " over, and that she is sticky enough to prevent them from moving very fast. Still, "
+				+ "it's clearly having the desired effect. You redouble your efforts, even leaning in to "
+				+ "kiss her, not caring about the effects her slime has when ingested. Before long, Airi's "
+				+ "mumbling reaches a crescendo, and she wraps her gooey limbs around you. Her body loses"
+				+ " shapes as she cums, as if it's melting around you. Within a few seconds you are lying "
+				+ "half-embedded in an amorphous heap of slime. Worried for Airi's safety, you jump up and call her name."
+				+ " Fortunately, it is not long before she reassumes her human form with a look of ecstasy still"
+				+ " on her face. <i>\"Wonderful... Reward...\"</i> she mutters, even breathier than usual. "
+				+ "She gently pulls you back down onto her. Since you've already won, you do not resist as Airi "
+				+ "lets you sink in to her body slightly. Nor when every bit of her body starts vibrating against "
+				+ "your skin. The full-body massage is wonderful, especially when it starts focussing more and more "
+				+ "on your dick. It's somehow ended up in her pussy, which is milking you greedily. Seeing no reason"
+				+ " to stop her, you just relax in her embrace and let her slowly drive you closer. Right before you "
+				+ "cum, she kisses you again, pushing you over the edge. There is no frantic milking this time, just "
+				+ "a great orgasm. When you have both recovered, you get up and she hands you a small bit of slime "
+				+ "that she separated from her body. <i>\"Trophy... No clothes... Will grow back...\"</i> You take "
+				+ "the slime from her, examining it before stashing it away. It tingles in your hand, and you "
+				+ "wonder just how much control she still has over it as she glides away.";
 	}
 
 	@Override
