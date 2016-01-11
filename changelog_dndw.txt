@@ -1,3 +1,5 @@
+The Silver Bard's changes:
+
 Some statuses can now stack, intensifying their effect and extending their duration
 Buzzed status now stacks and persists after fights
 Energy Drinks now stack
@@ -55,6 +57,7 @@ Merged in invalidcharacter's GUI changes
 
 __________________________________________________________________________________________________
 Original changes:
+
 Added special text for Eve using AssFuck
 Added trait AnalFanatic - boosts pleasure to both parties when having anal sex and makes the holder Frenzied for the duration (Surprise, Eve gets this)
 Frenzied now boosts Power and Animism more than before, and reduces damage taken
@@ -76,6 +79,7 @@ Completely remade the way NPCs handle enthralled opponents. It's now less powerf
 Fixed stripping checks causing a crash if the character is naked.
 (Probably) Fixed body modification skills causing changes in simulation. (Temporary changes were prevented, permanent ones weren't)
 Added a duration to fetishes.
+Finished Airi, who has been partially implemented for a long time. She's a slime, and will appear when you reach level 10.
 
 Slime characteristics:
 	Enhanced Slap - chance of knockdown.
@@ -95,3 +99,18 @@ Slime characteristics:
 		-Weakly binds any cock inside of it. (Not as strong as vaginal tongue, for example)
 		-Causes passive damage per turn. Like autonomous pussy, but not as powerful.
 		-Causes greater Willpower loss if a cock cums inside of it.
+
+Added a new match type, the FTC Match (Fuck the Carrier). It will trigger for the first time after reaching level 15, at then randomly (rarely) after that.
+		
+FTC Match:
+-There are four hunters and one prey.
+-The prey is naked and cannot have items.
+-At the start of the match, the prey gets a Flag.
+-The prey gets one point for every three turns they hold the Flag.
+-If whoever is holding the Flag gets defeated, the winner takes the Flag.
+-Each player has one base where they can resupply.
+-The hunters can turn in the Flag at their base for five points.
+-If the prey beats a hunter, they gain three points.
+-Hunters get two points for beating other hunters, but no points for beating the prey.
+-When a hunter turns in the Flag, the prey can collect a new one at their base.
+-When the prey gets a new Flag, they cannot be attacked for a short time.

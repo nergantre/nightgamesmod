@@ -187,6 +187,7 @@ public class Global {
 		buildActionPool();
 		buildFeatPool();
 		buildModifierPool();
+		flag(Flag.AiriEnabled);
 		if (headless) {
 			gui = new NullGUI();
 		} else {
