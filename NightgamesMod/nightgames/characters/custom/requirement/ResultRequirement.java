@@ -13,7 +13,9 @@ public class ResultRequirement implements CustomRequirement {
 
 	@Override
 	public boolean meets(Combat c, Character self, Character other) {
-		if (c == null) { return false; }
+		if (c == null) {
+			return false;
+		}
 		return c.state == result;
 	}
 }

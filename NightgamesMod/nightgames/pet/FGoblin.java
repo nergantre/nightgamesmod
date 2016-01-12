@@ -1,7 +1,6 @@
 package nightgames.pet;
 
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 
 public class FGoblin extends Pet {
@@ -18,28 +17,24 @@ public class FGoblin extends Pet {
 
 	@Override
 	public void act(Combat c, Character target) {
-		if(target.human()){
-			
-		}
-		else{
-			
+		if (target.human()) {
+
+		} else {
+
 		}
 	}
 
 	@Override
 	public void vanquish(Combat c, Pet opponent) {
-		switch(opponent.type()){
-		
-		}
+
 	}
 
 	@Override
 	public void caught(Combat c, Character captor) {
-		if(owner().human()){
-			
-		}
-		else{
-			
+		if (owner().human()) {
+
+		} else {
+
 		}
 	}
 
@@ -47,6 +42,7 @@ public class FGoblin extends Pet {
 	public boolean hasDick() {
 		return true;
 	}
+
 	@Override
 	public boolean hasPussy() {
 		return true;

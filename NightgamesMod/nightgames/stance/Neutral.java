@@ -1,34 +1,33 @@
 package nightgames.stance;
 
-
 import nightgames.characters.Character;
 import nightgames.global.Global;
-import nightgames.skills.Carry;
 
 public class Neutral extends Position {
 
 	public Neutral(Character top, Character bottom) {
-		super(top, bottom,Stance.neutral);
+		super(top, bottom, Stance.neutral);
 	}
 
 	@Override
 	public String describe() {
-		if(top.human()){
-			return "You and "+bottom.name()+" circle each other cautiously";
-		}
-		else{
-			return "You and "+top.name()+" circle each other cautiously";
+		if (top.human()) {
+			return "You and " + bottom.name() + " circle each other cautiously";
+		} else {
+			return "You and " + top.name() + " circle each other cautiously";
 		}
 	}
-	
+
+	@Override
 	public String image() {
-			return "neutral.jpg";
+		return "neutral.jpg";
 	}
-	
+
 	@Override
 	public boolean inserted(Character c) {
 		return false;
 	}
+
 	@Override
 	public boolean mobile(Character c) {
 		return true;
@@ -90,10 +89,10 @@ public class Neutral extends Position {
 			} else {
 				return new Jumped(dom, other);
 			}
-		} else if(fuckPossible) {
-			return new Standing(dom,other);
-		} else if(reversePossible) {
-			return new Jumped(dom,other);
+		} else if (fuckPossible) {
+			return new Standing(dom, other);
+		} else if (reversePossible) {
+			return new Jumped(dom, other);
 		} else {
 			return this;
 		}
@@ -108,17 +107,20 @@ public class Neutral extends Position {
 			return this;
 		}
 		if (pitcher == dom) {
-			// guy is holding girl down, and is the dominant one in the new stance
+			// guy is holding girl down, and is the dominant one in the new
+			// stance
 			return new Standing(pitcher, catcher);
 		}
 		if (pitcher == sub) {
-			// guy is holding girl down, and is the submissive one in the new stance
+			// guy is holding girl down, and is the submissive one in the new
+			// stance
 			return new Jumped(catcher, pitcher);
 		}
 		return this;
 	}
 
-	public double pheromoneMod (Character self) {
+	@Override
+	public double pheromoneMod(Character self) {
 		return .5;
 	}
 }

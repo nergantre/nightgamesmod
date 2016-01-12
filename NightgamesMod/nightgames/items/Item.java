@@ -1,14 +1,19 @@
 package nightgames.items;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.BasicCockPart;
+import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.EarPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
-import nightgames.characters.body.TentaclePart;
 import nightgames.characters.body.WingsPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
@@ -23,15 +28,7 @@ import nightgames.status.Horny;
 import nightgames.status.Oiled;
 import nightgames.status.Shamed;
 import nightgames.status.Shield;
-import nightgames.status.Status;
 import nightgames.status.Trance;
-import nightgames.status.Winded;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Arrays;
-import java.util.List;
 
 public enum Item implements Loot {
 	Tripwire	( "Trip Wire",10, "A strong wire used to trigger traps","a "	),
@@ -61,6 +58,7 @@ public enum Item implements Loot {
 	KatTrophy	("Kat's Panties",0,"Cute pink panties",""),
 	AiriTrophy	("A piece of hardened gel",0,"Not sure what else to take",""),
 	YuiTrophy	("Yui's Panties",0,"",""),
+	MayaTrophy("Maya's Panties", 0, "Lacy, stylish, and coveted by all", ""),
 	RoseaTrophy	("Rosea's Vine Thong",0,"",""),
 	SamanthaTrophy("Samantha's Lacy Thong",0 ,"A lacy red thong, translucent in all but the most delicate areas.", ""),
 	MiscTrophy	("Someone's underwear",0,"",""),
@@ -176,6 +174,11 @@ public enum Item implements Loot {
 					10),
 	Ward		( "Dark Ward",100,"","a "),
 	FaeScroll	( "Summoning Scroll",150,"","a "),
+	MinorScroll("Minor Summoning Scroll", 50,
+			"Less potent than usual, can be used in combat if you know magic",
+			"a "),
+	Talisman("Dark Talisman", 100,
+			"An innocent-looking carving imbued with dark magic", "a "),
 	Totem		( "Fetish Totem",150,"A small penis shaped totem that can summon tentacles","a "),
 	Capacitor	( "Capacitor",30,"","a "),
 	TinyDraft	( "Tiny Draft", 100, "Temporarily shrink a penis", "a ", Collections.singleton((ItemEffect)new BodyModEffect("drink", "throw", BasicCockPart.average, BodyModEffect.Effect.downgrade)), 15),
@@ -226,40 +229,47 @@ public enum Item implements Loot {
 	/**
 	 * The Item's display name.
 	 */
-	private String desc;
-	private String name;
-	private String prefix;
-	private int price;
-	private List<ItemEffect> effect;
-	int duration;
+	private String				desc;
+	private String				name;
+	private String				prefix;
+	private int					price;
+	private List<ItemEffect>	effect;
+	int							duration;
 
 	/**
 	 * @return the Item name
 	 */
-	public String getDesc()
-	{
+	public String getDesc() {
 		return desc;
 	}
-	public int getPrice(){
+
+	@Override
+	public int getPrice() {
 		return price;
 	}
-	public String getName(){
+
+	@Override
+	public String getName() {
 		return name;
 	}
-	public String pre(){
+
+	@Override
+	public String pre() {
 		return prefix;
 	}
+
 	@Override
 	public void pickup(Character owner) {
 		owner.gain(this);
 	}
-	private Item( String name, int price, String desc,String prefix )
-	{
-		this(name, price, desc, prefix, Collections.singleton(new ItemEffect()), 0);
+
+	private Item(String name, int price, String desc, String prefix) {
+		this(name, price, desc, prefix, Collections.singleton(new ItemEffect()),
+				0);
 	}
 
-	private Item( String name, int price, String desc,String prefix, Collection<ItemEffect> effect, int duration)
-	{
+	private Item(String name, int price, String desc, String prefix,
+			Collection<ItemEffect> effect, int duration) {
 		this.name = name;
 		this.price = price;
 		this.desc = desc;
@@ -271,7 +281,7 @@ public enum Item implements Loot {
 	public List<ItemEffect> getEffects() {
 		return effect;
 	}
-	
+
 	@Override
 	public String getID() {
 		return name();

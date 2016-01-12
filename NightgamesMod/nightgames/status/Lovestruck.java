@@ -9,6 +9,7 @@ import nightgames.combat.Combat;
 
 public class Lovestruck extends DurationStatus {
 	Character other;
+
 	public Lovestruck(Character affected, Character other, int duration) {
 		super("Lovestruck", affected, duration);
 		this.other = other;
@@ -18,22 +19,23 @@ public class Lovestruck extends DurationStatus {
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
-			return "You feel an irresistable attraction to " + other.nameDirectObject() + ".";
-		}
-		else{
-			return affected.name()+" is looking at you like a lovestruck teenager.";
+		if (affected.human()) {
+			return "You feel an irresistable attraction to "
+					+ other.nameDirectObject() + ".";
+		} else {
+			return affected.name()
+					+ " is looking at you like a lovestruck teenager.";
 		}
 	}
 
 	@Override
-	public boolean mindgames(){
+	public boolean mindgames() {
 		return true;
 	}
-	
+
 	@Override
-	public float fitnessModifier () {
-		return - (2 + getDuration() / 2.0f);
+	public float fitnessModifier() {
+		return -(2 + getDuration() / 2.0f);
 	}
 
 	@Override
@@ -63,7 +65,8 @@ public class Lovestruck extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now lovestruck.\n", affected.subjectAction("are", "is"));
+		return String.format("%s now lovestruck.\n",
+				affected.subjectAction("are", "is"));
 	}
 
 	@Override
@@ -95,6 +98,7 @@ public class Lovestruck extends DurationStatus {
 	public int spendmojo(int x) {
 		return 0;
 	}
+
 	@Override
 	public int counter() {
 		return -10;
@@ -104,10 +108,13 @@ public class Lovestruck extends DurationStatus {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Lovestruck(newAffected, null, getDuration());
 	}
+
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -115,6 +122,7 @@ public class Lovestruck extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Lovestruck(null, null, getDuration());
 	}

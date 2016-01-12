@@ -16,32 +16,32 @@ public class Hypersensitive extends DurationStatus {
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
+		if (affected.human()) {
 			return "Your skin tingles and feels extremely sensitive to touch.";
-		}
-		else{
+		} else {
 			return "She shivers from the breeze hitting her skin and has goosebumps";
 		}
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now hypersensitive.\n", affected.subjectAction("are", "is"));
+		return String.format("%s now hypersensitive.\n",
+				affected.subjectAction("are", "is"));
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return -1;
 	}
 
 	@Override
 	public int mod(Attribute a) {
-		if(a == Attribute.Perception){
+		if (a == Attribute.Perception) {
 			return 4;
 		}
 		return 0;
 	}
-	
+
 	@Override
 	public int regen(Combat c) {
 		super.regen(c);
@@ -55,7 +55,7 @@ public class Hypersensitive extends DurationStatus {
 
 	@Override
 	public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x) {
-		return x/3;
+		return x / 3;
 	}
 
 	@Override
@@ -87,11 +87,14 @@ public class Hypersensitive extends DurationStatus {
 	public int spendmojo(int x) {
 		return 0;
 	}
+
 	@Override
 	public int counter() {
 		return 0;
 	}
-	public boolean lingering(){
+
+	@Override
+	public boolean lingering() {
 		return true;
 	}
 
@@ -99,11 +102,13 @@ public class Hypersensitive extends DurationStatus {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Hypersensitive(newAffected);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -111,6 +116,7 @@ public class Hypersensitive extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Hypersensitive(null);
 	}

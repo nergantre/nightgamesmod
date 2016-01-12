@@ -9,41 +9,44 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 
 public class Buzzed extends DurationStatus {
+
+	private int magnitude;
+
 	public Buzzed(Character affected) {
 		super("Buzzed", affected, 20);
 		flag(Stsflag.purgable);
+		magnitude = 1;
 	}
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
+		if (affected.human()) {
 			return "You feel a pleasant buzz, which makes you a bit sluggish, but also takes the edge of your sense of touch.";
-		}
-		else{
-			return affected.name()+" looks mildly buzzed, probably trying to dull her senses.";
+		} else {
+			return affected.name()
+					+ " looks mildly buzzed, probably trying to dull her senses.";
 		}
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now buzzed.\n", affected.subjectAction("are", "is"));
+		return String.format("%s now buzzed.\n",
+				affected.subjectAction("are", "is"));
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return 0.0f;
 	}
 
 	@Override
 	public int mod(Attribute a) {
-		if(a == Attribute.Perception){
-			return -3;
-		}
-		else if(a == Attribute.Power){
-			return -1;
-		}
-		else if(a == Attribute.Cunning){
-			return -2;
+		if (a == Attribute.Perception) {
+			return -3 * magnitude;
+		} else if (a == Attribute.Power) {
+			return -magnitude;
+		} else if (a == Attribute.Cunning) {
+			return -2 * magnitude;
 		}
 		return 0;
 	}
@@ -51,7 +54,7 @@ public class Buzzed extends DurationStatus {
 	@Override
 	public int regen(Combat c) {
 		super.regen(c);
-		affected.emote(Emotion.confident,15);
+		affected.emote(Emotion.confident, 15);
 		return 0;
 	}
 
@@ -62,7 +65,7 @@ public class Buzzed extends DurationStatus {
 
 	@Override
 	public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x) {
-		return -x/10;
+		return -x / (10.0 / magnitude);
 	}
 
 	@Override
@@ -77,7 +80,7 @@ public class Buzzed extends DurationStatus {
 
 	@Override
 	public int evade() {
-		return -5;
+		return -5 * magnitude;
 	}
 
 	@Override
@@ -104,10 +107,26 @@ public class Buzzed extends DurationStatus {
 	public int value() {
 		return 0;
 	}
+
+	@Override
+	public boolean lingering() {
+		return true;
+	}
+
+	@Override
+	public void replace(Status newStatus) {
+		assert newStatus instanceof Buzzed;
+		Buzzed other = (Buzzed) newStatus;
+		setDuration(Math.max(other.getDuration(), getDuration()));
+		magnitude += other.magnitude;
+	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Buzzed(newAffected);
 	}
+
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -115,6 +134,7 @@ public class Buzzed extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Buzzed(null);
 	}

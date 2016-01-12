@@ -11,10 +11,11 @@ import nightgames.global.Global;
 import nightgames.global.JSONUtils;
 
 public class Horny extends DurationStatus {
-	private float magnitude;
-	private String source;
+	private float	magnitude;
+	private String	source;
 
-	public Horny(Character affected, float magnitude, int duration, String source) {
+	public Horny(Character affected, float magnitude, int duration,
+			String source) {
 		super("Horny", affected, duration);
 		this.source = source;
 		this.magnitude = magnitude;
@@ -22,22 +23,26 @@ public class Horny extends DurationStatus {
 		flag(Stsflag.purgable);
 	}
 
+	@Override
 	public String toString() {
-		return "Aroused from " + source + " ("+ Global.formatDecimal(magnitude) +" x "+ getDuration() + ")";
+		return "Aroused from " + source + " (" + Global.formatDecimal(magnitude)
+				+ " x " + getDuration() + ")";
 	}
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
-			return "Your heart pounds in your chest as you try to surpress your arousal from contacting " + source + ".";
-		}
-		else{
-			return affected.name()+" is flushed and her nipples are noticeably hard from contacting " + source + ".";
+		if (affected.human()) {
+			return "Your heart pounds in your chest as you try to surpress your arousal from contacting "
+					+ source + ".";
+		} else {
+			return affected.name()
+					+ " is flushed and her nipples are noticeably hard from contacting "
+					+ source + ".";
 		}
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return -Math.min(.5f, magnitude * getDuration());
 	}
 
@@ -54,18 +59,21 @@ public class Horny extends DurationStatus {
 
 	@Override
 	public void tick(Combat c) {
-		affected.arouse(Math.round(magnitude), c, " ("+ source +")");
-		affected.emote(Emotion.horny,20);		
+		affected.arouse(Math.round(magnitude), c, " (" + source + ")");
+		affected.emote(Emotion.horny, 20);
 	}
 
 	@Override
 	public String getVariant() {
-			return source;
+		return source;
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s %saroused by %s.\n", affected.subjectAction("are", "is"), replaced ? "" : "now ", source + " ("+ Global.formatDecimal(magnitude) +" x "+ getDuration()+ ")");
+		return String.format("%s %saroused by %s.\n",
+				affected.subjectAction("are", "is"), replaced ? "" : "now ",
+				source + " (" + Global.formatDecimal(magnitude) + " x "
+						+ getDuration() + ")");
 	}
 
 	@Override
@@ -75,11 +83,11 @@ public class Horny extends DurationStatus {
 
 	@Override
 	public void replace(Status s) {
-		assert (s instanceof Horny);
-		Horny other = (Horny)s;
-		assert (other.source.equals(source));
+		assert s instanceof Horny;
+		Horny other = (Horny) s;
+		assert other.source.equals(source);
 		setDuration(Math.max(other.getDuration(), getDuration()));
-		this.magnitude += other.magnitude;
+		magnitude += other.magnitude;
 	}
 
 	@Override
@@ -126,7 +134,9 @@ public class Horny extends DurationStatus {
 	public int counter() {
 		return 0;
 	}
-	public boolean lingering(){
+
+	@Override
+	public boolean lingering() {
 		return true;
 	}
 
@@ -140,6 +150,7 @@ public class Horny extends DurationStatus {
 		return new Horny(newAffected, magnitude, getDuration(), source);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -150,9 +161,9 @@ public class Horny extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
-		return new Horny(null, 
-				JSONUtils.readFloat(obj, "magnitude"),
+		return new Horny(null, JSONUtils.readFloat(obj, "magnitude"),
 				JSONUtils.readInteger(obj, "duration"),
 				JSONUtils.readString(obj, "source"));
 	}

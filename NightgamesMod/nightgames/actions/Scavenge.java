@@ -2,10 +2,13 @@ package nightgames.actions;
 
 import nightgames.characters.Character;
 import nightgames.characters.State;
-import nightgames.global.Global;
-import nightgames.items.Item;
 
 public class Scavenge extends Action {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6692555226745083699L;
 
 	public Scavenge() {
 		super("Scavenge Items");
@@ -18,7 +21,7 @@ public class Scavenge extends Action {
 
 	@Override
 	public Movement execute(Character user) {
-		user.state=State.searching;
+		user.state = State.searching;
 		return Movement.scavenge;
 	}
 

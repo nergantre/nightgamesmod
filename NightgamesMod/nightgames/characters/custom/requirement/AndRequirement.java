@@ -14,6 +14,7 @@ public class AndRequirement implements CustomRequirement {
 
 	@Override
 	public boolean meets(Combat c, Character self, Character other) {
-		return reqs.stream().allMatch(subs -> subs.stream().allMatch(r -> r.meets(c, self, other)));
+		return reqs.stream().allMatch(
+				subs -> subs.stream().allMatch(r -> r.meets(c, self, other)));
 	}
 }

@@ -27,9 +27,11 @@ public class Engulf extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && c.getStance().en != Stance.engulfed && target.mostlyNude();
+		return getSelf().canAct() && c.getStance().en != Stance.engulfed
+				&& target.mostlyNude();
 	}
 
+	@Override
 	public int getMojoCost(Combat c) {
 		return 30;
 	}
@@ -50,11 +52,16 @@ public class Engulf extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
 		if (modifier == Result.miss) {
-			return Global.format("You will your slime to rush at {other:name} and pull her down, but she dodges away at the last second.\n", getSelf(), target);			
+			return Global.format(
+					"You will your slime to rush at {other:name} and pull her down, but she dodges away at the last second.\n",
+					getSelf(), target);
 		} else {
-			return Global.format("You will your slime to rush at {other:name} and manage to entrap her inside of yourself.\n", getSelf(), target);
+			return Global.format(
+					"You will your slime to rush at {other:name} and manage to entrap her inside of yourself.\n",
+					getSelf(), target);
 		}
 	}
 
@@ -62,17 +69,26 @@ public class Engulf extends Skill {
 	public String receive(Combat c, int damage, Result modifier,
 			Character target) {
 		if (modifier == Result.miss) {
-			return Global.format("{self:NAME}'s fluid body squirms violently and suddenly rushes at you. You manage to dodge out of the way and avoid being trapped.\n", getSelf(), target);			
+			return Global.format(
+					"{self:NAME}'s fluid body squirms violently and suddenly rushes at you. You manage to dodge out of the way and avoid being trapped.\n",
+					getSelf(), target);
 		} else {
-			return Global.format("{self:NAME}'s fluid body squirms violently and suddenly rushes at you. You don't react in time, and before you know it, {self:name-possessive} slime firmly locks you in inside {self:direct-object}", getSelf(), target);
+			return Global.format(
+					"{self:NAME}'s fluid body squirms violently and suddenly rushes at you. You don't react in time, and before you know it, {self:name-possessive} slime firmly locks you in inside {self:direct-object}",
+					getSelf(), target);
 		}
 	}
+
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		int difficulty = target.getLevel() - (target.getStamina().get() * 10 / target.getStamina().max()) + target.get(Attribute.Cunning) / 2;
-		int strength = getSelf().getLevel() + getSelf().get(Attribute.Cunning) + getSelf().get(Attribute.Bio);
+		int difficulty = target.getLevel()
+				- target.getStamina().get() * 10 / target.getStamina().max()
+				+ target.get(Attribute.Cunning) / 2;
+		int strength = getSelf().getLevel() + getSelf().get(Attribute.Cunning)
+				+ getSelf().get(Attribute.Bio);
 
-		boolean success = Global.random(Math.min(Math.max(difficulty - strength, 1), 10)) == 0;
+		boolean success = Global
+				.random(Math.min(Math.max(difficulty - strength, 1), 10)) == 0;
 		Result result = Result.normal;
 		if (!success) {
 			result = Result.miss;

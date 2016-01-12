@@ -8,7 +8,6 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.custom.requirement.EitherInsertedRequirement;
-import nightgames.characters.custom.requirement.InsertedRequirement;
 import nightgames.characters.custom.requirement.ReverseRequirement;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
@@ -22,7 +21,8 @@ public class DivineCharge extends Status {
 		flag(Stsflag.divinecharge);
 		flag(Stsflag.purgable);
 		this.magnitude = magnitude;
-		requirements.add(new ReverseRequirement(Arrays.asList(new EitherInsertedRequirement(true))));
+		requirements.add(new ReverseRequirement(
+				Arrays.asList(new EitherInsertedRequirement(true))));
 	}
 
 	private String getPart(Combat c) {
@@ -37,10 +37,14 @@ public class DivineCharge extends Status {
 		}
 		return part;
 	}
+
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		if (!replaced)
-			return String.format("%s concentrating divine energy in %s %s.\n", affected.subjectAction("are", "is"), affected.possessivePronoun(), getPart(c));
+		if (!replaced) {
+			return String.format("%s concentrating divine energy in %s %s.\n",
+					affected.subjectAction("are", "is"),
+					affected.possessivePronoun(), getPart(c));
+		}
 		return "";
 	}
 
@@ -50,7 +54,7 @@ public class DivineCharge extends Status {
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return (float) (3 * magnitude);
 	}
 
@@ -66,14 +70,17 @@ public class DivineCharge extends Status {
 
 	@Override
 	public void replace(Status s) {
-		assert (s instanceof DivineCharge);
-		DivineCharge other = (DivineCharge)s;
-		this.magnitude = this.magnitude + other.magnitude;
-		// every 10 divinity past 10, you are allowed to add another stack of divine charge.
-		// this will get out of hand super quick, but eh, you shouldn't let it get
+		assert s instanceof DivineCharge;
+		DivineCharge other = (DivineCharge) s;
+		magnitude = magnitude + other.magnitude;
+		// every 10 divinity past 10, you are allowed to add another stack of
+		// divine charge.
+		// this will get out of hand super quick, but eh, you shouldn't let it
+		// get
 		// that far.
 		double maximum = Math.max(2, Math.pow(2., affected.get(Attribute.Divinity) / 5.0) * .25);
 		this.magnitude = Math.min(maximum, this.magnitude);
+
 	}
 
 	@Override
@@ -125,11 +132,13 @@ public class DivineCharge extends Status {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new DivineCharge(newAffected, magnitude);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -138,6 +147,7 @@ public class DivineCharge extends Status {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new DivineCharge(null, JSONUtils.readFloat(obj, "magnitude"));
 	}

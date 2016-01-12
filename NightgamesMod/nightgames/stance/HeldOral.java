@@ -1,31 +1,32 @@
 package nightgames.stance;
 
-
-import java.util.ArrayList;
-import java.util.List;
-
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 
 public class HeldOral extends AbstractFacingStance {
 	public HeldOral(Character top, Character bottom) {
-		super(top, bottom,Stance.oralpin);
+		super(top, bottom, Stance.oralpin);
 	}
 
 	@Override
 	public String describe() {
-		return Global.format("{self:SUBJECT-ACTION:are|is} holding {other:name-do} down with {self:possessive} face nested between {other:possessive} legs.", top, bottom);
+		return Global.format(
+				"{self:SUBJECT-ACTION:are|is} holding {other:name-do} down with {self:possessive} face nested between {other:possessive} legs.",
+				top, bottom);
 	}
 
 	@Override
 	public boolean mobile(Character c) {
 		return false;
 	}
+
+	@Override
 	public boolean getUp(Character c) {
-		return c==top;
+		return c == top;
 	}
+
+	@Override
 	public String image() {
 		if (bottom.hasDick()) {
 			return "oralhold_fm.jpg";
@@ -44,12 +45,12 @@ public class HeldOral extends AbstractFacingStance {
 
 	@Override
 	public boolean dom(Character c) {
-		return c==top;
+		return c == top;
 	}
 
 	@Override
 	public boolean sub(Character c) {
-		return c==bottom;
+		return c == bottom;
 	}
 
 	@Override
@@ -64,7 +65,7 @@ public class HeldOral extends AbstractFacingStance {
 
 	@Override
 	public boolean prone(Character c) {
-		return c==bottom;
+		return c == bottom;
 	}
 
 	@Override
@@ -74,7 +75,7 @@ public class HeldOral extends AbstractFacingStance {
 
 	@Override
 	public boolean oral(Character c) {
-		return c==top;
+		return c == top;
 	}
 
 	@Override
@@ -94,6 +95,7 @@ public class HeldOral extends AbstractFacingStance {
 		return bonus;
 	}
 
+	@Override
 	public Position reverse(Combat c) {
 		return new Mount(bottom, top);
 	}
@@ -103,7 +105,8 @@ public class HeldOral extends AbstractFacingStance {
 		return target == bottom;
 	}
 
-	public double pheromoneMod (Character self) {
+	@Override
+	public double pheromoneMod(Character self) {
 		if (self == bottom) {
 			return 10;
 		}

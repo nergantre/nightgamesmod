@@ -9,8 +9,8 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.JSONUtils;
 
-public class Energized extends DurationStatus{
-	public Energized(Character affected,int duration) {
+public class Energized extends DurationStatus {
+	public Energized(Character affected, int duration) {
 		super("Energized", affected, duration);
 		flag(Stsflag.energized);
 		flag(Stsflag.purgable);
@@ -22,10 +22,10 @@ public class Energized extends DurationStatus{
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return 2;
 	}
-	
+
 	@Override
 	public int mod(Attribute a) {
 		return 0;
@@ -37,10 +37,11 @@ public class Energized extends DurationStatus{
 		return 0;
 	}
 
+	@Override
 	public void tick(Combat c) {
 		affected.buildMojo(c, 10, " (Energized)");
-		affected.emote(Emotion.confident,5);
-		affected.emote(Emotion.dominant,10);		
+		affected.emote(Emotion.confident, 5);
+		affected.emote(Emotion.dominant, 10);
 	}
 
 	@Override
@@ -60,7 +61,8 @@ public class Energized extends DurationStatus{
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s with energy.\n", affected.subjectAction("now pulse", "now pulses"));
+		return String.format("%s with energy.\n",
+				affected.subjectAction("now pulse", "now pulses"));
 	}
 
 	@Override
@@ -92,7 +94,9 @@ public class Energized extends DurationStatus{
 	public int counter() {
 		return 0;
 	}
-	public boolean lingering(){
+
+	@Override
+	public boolean lingering() {
 		return true;
 	}
 
@@ -100,11 +104,13 @@ public class Energized extends DurationStatus{
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Energized(newAffected, getDuration());
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -113,6 +119,7 @@ public class Energized extends DurationStatus{
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Energized(null, JSONUtils.readInteger(obj, "duration"));
 	}

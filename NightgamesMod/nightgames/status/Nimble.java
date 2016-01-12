@@ -18,24 +18,24 @@ public class Nimble extends DurationStatus {
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
+		if (affected.human()) {
 			return "You're as quick and nimble as a cat.";
-		}
-		else{
-			return affected.name()+" darts around gracefully.";
+		} else {
+			return affected.name() + " darts around gracefully.";
 		}
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now more nimble.\n", affected.subjectAction("are", "is"));
+		return String.format("%s now more nimble.\n",
+				affected.subjectAction("are", "is"));
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return affected.get(Attribute.Animism) / 10.0f;
 	}
-	
+
 	@Override
 	public int mod(Attribute a) {
 		switch (a) {
@@ -50,7 +50,7 @@ public class Nimble extends DurationStatus {
 	@Override
 	public int regen(Combat c) {
 		super.regen(c);
-		affected.emote(Emotion.confident,5);
+		affected.emote(Emotion.confident, 5);
 		return 0;
 	}
 
@@ -76,12 +76,14 @@ public class Nimble extends DurationStatus {
 
 	@Override
 	public int evade() {
-		return affected.get(Attribute.Animism)*affected.getArousal().percent()/100;
+		return affected.get(Attribute.Animism) * affected.getArousal().percent()
+				/ 100;
 	}
 
 	@Override
 	public int escape() {
-		return affected.get(Attribute.Animism)*affected.getArousal().percent()/100;
+		return affected.get(Attribute.Animism) * affected.getArousal().percent()
+				/ 100;
 	}
 
 	@Override
@@ -96,18 +98,21 @@ public class Nimble extends DurationStatus {
 
 	@Override
 	public int counter() {
-		return affected.get(Attribute.Animism)*affected.getArousal().percent()/100;
+		return affected.get(Attribute.Animism) * affected.getArousal().percent()
+				/ 100;
 	}
 
 	@Override
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Nimble(newAffected, getDuration());
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -116,6 +121,7 @@ public class Nimble extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Nimble(null, JSONUtils.readInteger(obj, "duration"));
 	}

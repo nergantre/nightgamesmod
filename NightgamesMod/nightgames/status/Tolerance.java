@@ -17,24 +17,25 @@ public class Tolerance extends DurationStatus {
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
+		if (affected.human()) {
 			return "You've built up a tolerance to addictive fluids.";
-		}
-		else{
-			return affected.name()+" has built up a tolerance to your addictive fluids.";
+		} else {
+			return affected.name()
+					+ " has built up a tolerance to your addictive fluids.";
 		}
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s built a tolerance to addictive fluids.\n", affected.subjectAction("have", "has"));
+		return String.format("%s built a tolerance to addictive fluids.\n",
+				affected.subjectAction("have", "has"));
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return 1;
 	}
-	
+
 	@Override
 	public int mod(Attribute a) {
 		return 0;
@@ -89,12 +90,13 @@ public class Tolerance extends DurationStatus {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Tolerance(newAffected, getDuration());
 	}
-	
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -103,6 +105,7 @@ public class Tolerance extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Tolerance(null, JSONUtils.readInteger(obj, "duration"));
 	}

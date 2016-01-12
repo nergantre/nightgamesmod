@@ -1,33 +1,29 @@
 package nightgames.characters.body;
 
+import java.util.Arrays;
+import java.util.Optional;
+
+import org.json.simple.JSONObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.status.Abuff;
-import nightgames.status.CockBound;
-import nightgames.status.Enthralled;
-import nightgames.status.FluidAddiction;
-import nightgames.status.Horny;
-import nightgames.status.Hypersensitive;
 import nightgames.status.Sensitized;
-import nightgames.status.Stsflag;
-import nightgames.status.Winded;
-
-import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.Scanner;
-import org.json.simple.JSONObject;
 
 public enum BasicCockPart implements CockPart {
-	tiny("tiny", 3), small("smallish", 4), average("average-sized", 6), big("big", 8), huge("huge", 9), massive("massive",
-			10);
+	tiny("tiny", 3),
+	small("smallish", 4),
+	average("average-sized", 6),
+	big("big", 8),
+	huge("huge", 9),
+	massive("massive", 10);
 
-	public String desc;
-	public double size;
-	public static String synonyms[] = { "cock", "dick", "shaft", "phallus" };
+	public String			desc;
+	public double			size;
+	public static String	synonyms[]	= { "cock", "dick", "shaft",
+			"phallus" };
 
 	BasicCockPart(String desc, double size) {
 		this.desc = desc;
@@ -44,12 +40,13 @@ public enum BasicCockPart implements CockPart {
 	@Override
 	public String describe(Character c) {
 		String syn = Global.pickRandom(synonyms);
-		return Global.maybeString(desc + " ") + (c.hasPussy() ? "girl-" : "") + syn;
+		return Global.maybeString(desc + " ") + (c.hasPussy() ? "girl-" : "")
+				+ syn;
 	}
 
 	@Override
 	public double priority(Character c) {
-		return this.getPleasure(c, null);
+		return getPleasure(c, null);
 	}
 
 	@Override
@@ -58,6 +55,7 @@ public enum BasicCockPart implements CockPart {
 		return desc + " " + (c.hasPussy() ? "girl-" : "") + syn;
 	}
 
+	@Override
 	public boolean isType(String type) {
 		return type.equalsIgnoreCase("cock");
 	}
@@ -99,16 +97,19 @@ public enum BasicCockPart implements CockPart {
 		return Math.log(size / 5 + 1) / Math.log(2);
 	}
 
+	@Override
 	public boolean isReady(Character self) {
 		return self.has(Trait.alwaysready) || self.getArousal().percent() >= 15;
 	}
 
+	@Override
 	public BodyPart upgrade() {
 		BasicCockPart values[] = BasicCockPart.values();
-		if (ordinal() < massive.ordinal())
+		if (ordinal() < massive.ordinal()) {
 			return values[ordinal() + 1];
-		else
+		} else {
 			return this;
+		}
 	}
 
 	public static BasicCockPart maximumSize() {
@@ -121,26 +122,29 @@ public enum BasicCockPart implements CockPart {
 		return max;
 	}
 
+	@Override
 	public BodyPart downgrade() {
-		if (ordinal() > 0 && ordinal() <= massive.ordinal())
+		if (ordinal() > 0 && ordinal() <= massive.ordinal()) {
 			return BasicCockPart.values()[ordinal() - 1];
-		else
+		} else {
 			return this;
+		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public JSONObject save() {
 		JSONObject obj = new JSONObject();
-		obj.put("enum", this.name());
+		obj.put("enum", name());
 		return obj;
 	}
 
 	@Override
 	public BodyPart load(JSONObject obj) {
-		String enumName = (String)obj.get("enum");
+		String enumName = (String) obj.get("enum");
 		// some compatibility for old versions
-		Optional<CockMod> mod = Arrays.stream(CockMod.values()).filter(modVal -> modVal.name().equals(enumName)).findAny();
+		Optional<CockMod> mod = Arrays.stream(CockMod.values())
+				.filter(modVal -> modVal.name().equals(enumName)).findAny();
 		if (mod.isPresent()) {
 			return new ModdedCockPart(big, mod.get());
 		}
@@ -148,19 +152,19 @@ public enum BasicCockPart implements CockPart {
 	}
 
 	@Override
-	public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
+	public double applyBonuses(Character self, Character opponent,
+			BodyPart target, double damage, Combat c) {
 		double bonus = 0;
 		if (self.has(Trait.polecontrol)) {
 			String desc = "";
 			if (self.has(Trait.polecontrol)) {
 				desc += "expert ";
 			}
-			c.write(self,
-					Global.format(
-							"{self:SUBJECT-ACTION:use|uses} {self:possessive} " + desc
-									+ "cock control to grind against {other:name-possessive} inner walls, making {other:possessive} knuckles whiten as {other:pronoun} {other:action:moan|moans} uncontrollably.",
-							self, opponent));
-			bonus += (self.has(Trait.polecontrol)) ? 8 : 0;
+			c.write(self, Global.format(
+					"{self:SUBJECT-ACTION:use|uses} {self:possessive} " + desc
+							+ "cock control to grind against {other:name-possessive} inner walls, making {other:possessive} knuckles whiten as {other:pronoun} {other:action:moan|moans} uncontrollably.",
+					self, opponent));
+			bonus += self.has(Trait.polecontrol) ? 8 : 0;
 		}
 		return bonus;
 	}
@@ -181,7 +185,8 @@ public enum BasicCockPart implements CockPart {
 	}
 
 	@Override
-	public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
+	public double applyReceiveBonuses(Character self, Character opponent,
+			BodyPart target, double damage, Combat c) {
 		double bonus = 0;
 		if (opponent.has(Trait.dickhandler) || opponent.has(Trait.anatomyknowledge)) {
 			c.write(opponent,
@@ -221,25 +226,26 @@ public enum BasicCockPart implements CockPart {
 	}
 
 	@Override
-	public double applySubBonuses(Character self, Character opponent, BodyPart with, BodyPart target, double damage,
-			Combat c) {
+	public double applySubBonuses(Character self, Character opponent,
+			BodyPart with, BodyPart target, double damage, Combat c) {
 		return 0;
 	}
 
 	@Override
 	public int mod(Attribute a, int total) {
 		switch (a) {
-		case Speed:
-			return (int) -Math.round(Math.max(size - 6, 0));
-		case Seduction:
-			return (int) Math.round(Math.max(size - 6, 0));
-		default:
-			return 0;
+			case Speed:
+				return (int) -Math.round(Math.max(size - 6, 0));
+			case Seduction:
+				return (int) Math.round(Math.max(size - 6, 0));
+			default:
+				return 0;
 		}
 	}
 
 	@Override
-	public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {
+	public void tickHolding(Combat c, Character self, Character opponent,
+			BodyPart otherOrgan) {
 	}
 
 	@Override

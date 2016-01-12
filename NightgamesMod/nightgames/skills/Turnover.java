@@ -7,8 +7,6 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.stance.Behind;
 import nightgames.stance.Stance;
-import nightgames.status.Braced;
-import nightgames.status.Stsflag;
 
 public class Turnover extends Skill {
 
@@ -18,12 +16,14 @@ public class Turnover extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Power)>=4;
+		return user.get(Attribute.Power) >= 4;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().enumerate()==Stance.standingover&&c.getStance().dom(getSelf());
+		return getSelf().canAct()
+				&& c.getStance().enumerate() == Stance.standingover
+				&& c.getStance().dom(getSelf());
 	}
 
 	@Override
@@ -33,13 +33,12 @@ public class Turnover extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(getSelf().human()){
-			c.write(getSelf(),deal(c,0,Result.normal, target));
+		if (getSelf().human()) {
+			c.write(getSelf(), deal(c, 0, Result.normal, target));
+		} else if (target.human()) {
+			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
-		else if(target.human()){
-			c.write(getSelf(),receive(c,0,Result.normal, target));
-		}
-		c.setStance(new Behind(getSelf(),target));
+		c.setStance(new Behind(getSelf(), target));
 		target.emote(Emotion.dominant, 20);
 		return true;
 	}
@@ -55,13 +54,17 @@ public class Turnover extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
-		return "You turn "+target.name()+" onto her hands and knees. You move behind her while she slowly gets up.";
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
+		return "You turn " + target.name()
+				+ " onto her hands and knees. You move behind her while she slowly gets up.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return getSelf().name()+" rolls you onto your stomach. You push yourself back up, but she takes the opportunity to get behind you.";
+	public String receive(Combat c, int damage, Result modifier,
+			Character target) {
+		return getSelf().name()
+				+ " rolls you onto your stomach. You push yourself back up, but she takes the opportunity to get behind you.";
 	}
 
 	@Override

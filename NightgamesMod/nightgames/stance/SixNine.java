@@ -1,11 +1,10 @@
 package nightgames.stance;
 
-
 import nightgames.characters.Character;
 
 public class SixNine extends AbstractBehindStance {
 	public SixNine(Character top, Character bottom) {
-		super(top, bottom,Stance.sixnine);
+		super(top, bottom, Stance.sixnine);
 	}
 
 	@Override
@@ -17,23 +16,26 @@ public class SixNine extends AbstractBehindStance {
 
 	@Override
 	public String describe() {
-		if(top.human()){
-			return "You are on top of "+bottom.name()+" in the 69 position. Her pussy is right in front of your face and you can feel her breath on your dick.";
+		if (top.human()) {
+			return "You are on top of " + bottom.name()
+					+ " in the 69 position. Her pussy is right in front of your face and you can feel her breath on your dick.";
 		} else {
-			return "You and "+top.name()+" are on the floor in 69 position. She's sitting on top of you with her pussy right in front of your face and your dick in her mouth.";
+			return "You and " + top.name()
+					+ " are on the floor in 69 position. She's sitting on top of you with her pussy right in front of your face and your dick in her mouth.";
 		}
 	}
 
 	@Override
 	public boolean mobile(Character c) {
-		return c==top;
+		return c == top;
 	}
 
 	@Override
 	public boolean kiss(Character c) {
 		return false;
 	}
-	
+
+	@Override
 	public String image() {
 		if (bottom.hasDick() || top.hasDick()) {
 			return "69.jpg";
@@ -49,12 +51,12 @@ public class SixNine extends AbstractBehindStance {
 
 	@Override
 	public boolean dom(Character c) {
-		return c==top;
+		return c == top;
 	}
 
 	@Override
 	public boolean sub(Character c) {
-		return c==bottom;
+		return c == bottom;
 	}
 
 	@Override
@@ -102,7 +104,8 @@ public class SixNine extends AbstractBehindStance {
 		return false;
 	}
 
-	public double pheromoneMod (Character self) {
+	@Override
+	public double pheromoneMod(Character self) {
 		return 10;
 	}
 }

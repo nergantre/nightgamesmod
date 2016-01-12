@@ -7,13 +7,12 @@ import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.custom.requirement.EitherInsertedRequirement;
-import nightgames.characters.custom.requirement.InsertedRequirement;
 import nightgames.combat.Combat;
 import nightgames.global.JSONUtils;
 
 public class LegLocked extends Status {
 	private float toughness;
-	
+
 	public LegLocked(Character affected, float dc) {
 		super("Leg Locked", affected);
 		requirements.add(new EitherInsertedRequirement(true));
@@ -24,7 +23,7 @@ public class LegLocked extends Status {
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
+		if (affected.human()) {
 			return "Her legs are locked around your waist, preventing you from pulling out.";
 		} else {
 			return "Your legs are wrapped around her waist, preventing her from pulling out.";
@@ -33,11 +32,12 @@ public class LegLocked extends Status {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s being held down.\n", affected.subjectAction("are", "is"));
+		return String.format("%s being held down.\n",
+				affected.subjectAction("are", "is"));
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return -toughness / 10.0f;
 	}
 
@@ -52,6 +52,7 @@ public class LegLocked extends Status {
 		toughness -= 2;
 		return 0;
 	}
+
 	@Override
 	public int damage(Combat c, int x) {
 		return 0;
@@ -81,10 +82,12 @@ public class LegLocked extends Status {
 	public int escape() {
 		return Math.round(-toughness);
 	}
+
 	@Override
 	public void struggle(Character self) {
 		toughness = Math.round(toughness * .5f);
 	}
+
 	@Override
 	public int gainmojo(int x) {
 		return 0;
@@ -99,7 +102,9 @@ public class LegLocked extends Status {
 	public int counter() {
 		return -10;
 	}
-	public String toString(){
+
+	@Override
+	public String toString() {
 		return "Bound by legs";
 	}
 
@@ -107,10 +112,13 @@ public class LegLocked extends Status {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new LegLocked(newAffected, toughness);
 	}
+
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -119,6 +127,7 @@ public class LegLocked extends Status {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new LegLocked(null, JSONUtils.readFloat(obj, "toughness"));
 	}

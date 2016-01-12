@@ -16,24 +16,24 @@ public class IceStance extends DurationStatus {
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
+		if (affected.human()) {
 			return "You're as frigid as a glacier";
-		}
-		else{
-			return affected.name()+" is cool as ice.";
+		} else {
+			return affected.name() + " is cool as ice.";
 		}
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now in a ice stance.\n", affected.subjectAction("are", "is"));
+		return String.format("%s now in a ice stance.\n",
+				affected.subjectAction("are", "is"));
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return 1;
 	}
-	
+
 	@Override
 	public int mod(Attribute a) {
 		return 0;
@@ -42,8 +42,8 @@ public class IceStance extends DurationStatus {
 	@Override
 	public int regen(Combat c) {
 		super.regen(c);
-		affected.emote(Emotion.confident,5);
-		affected.emote(Emotion.dominant,5);
+		affected.emote(Emotion.confident, 5);
+		affected.emote(Emotion.dominant, 5);
 		return 0;
 	}
 
@@ -64,7 +64,7 @@ public class IceStance extends DurationStatus {
 
 	@Override
 	public int tempted(int x) {
-		return -x/2;
+		return -x / 2;
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class IceStance extends DurationStatus {
 
 	@Override
 	public int gainmojo(int x) {
-		return -x*3/4;
+		return -x * 3 / 4;
 	}
 
 	@Override
@@ -96,11 +96,13 @@ public class IceStance extends DurationStatus {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new IceStance(newAffected);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -108,6 +110,7 @@ public class IceStance extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new IceStance(null);
 	}

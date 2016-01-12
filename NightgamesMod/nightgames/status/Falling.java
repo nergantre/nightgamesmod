@@ -6,7 +6,6 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
-import nightgames.global.JSONUtils;
 import nightgames.stance.StandingOver;
 
 public class Falling extends Status {
@@ -21,7 +20,7 @@ public class Falling extends Status {
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return -20;
 	}
 
@@ -32,7 +31,8 @@ public class Falling extends Status {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s knocked off balance.\n", affected.subjectAction("are", "is"));
+		return String.format("%s knocked off balance.\n",
+				affected.subjectAction("are", "is"));
 	}
 
 	@Override
@@ -91,11 +91,13 @@ public class Falling extends Status {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Falling(newAffected);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -103,6 +105,7 @@ public class Falling extends Status {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Falling(null);
 	}

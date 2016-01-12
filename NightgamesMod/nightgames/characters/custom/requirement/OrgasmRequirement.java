@@ -5,6 +5,7 @@ import nightgames.combat.Combat;
 
 public class OrgasmRequirement implements CustomRequirement {
 	int number;
+
 	public OrgasmRequirement(int number) {
 		this.number = number;
 	}

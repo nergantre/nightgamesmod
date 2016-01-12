@@ -7,11 +7,14 @@ import nightgames.combat.Combat;
 
 public class MouthPussyPart extends MouthPart {
 	/**
-	 * 
+	 *
 	 */
 	public static BodyPartMod MouthPussyMod = () -> "MouthPussyMod";
+
 	public MouthPussyPart() {
-		super("mouth pussy", "When she opens her mouth, you can see soft pulsating folds lining her inner mouth, tailor made to suck cocks.", .5, 1.5, 2, true, "a ");
+		super("mouth pussy",
+				"When she opens her mouth, you can see soft pulsating folds lining her inner mouth, tailor made to suck cocks.",
+				.5, 1.5, 2, true, "a ");
 	}
 
 	@Override
@@ -41,7 +44,7 @@ public class MouthPussyPart extends MouthPart {
 	@Override
 	public BodyPart loadFromDict(JSONObject dict) {
 		try {
-		GenericBodyPart part = new MouthPussyPart();
+			GenericBodyPart part = new MouthPussyPart();
 			return part;
 		} catch (ClassCastException e) {
 			System.err.println(e.getMessage());

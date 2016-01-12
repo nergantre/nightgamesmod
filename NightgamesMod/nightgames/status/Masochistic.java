@@ -17,20 +17,22 @@ public class Masochistic extends DurationStatus {
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
+		if (affected.human()) {
 			return "Arousing fantasies of being hurt continue to tempt you.";
+		} else {
+			return affected.name()
+					+ " is still flushed with arousal at the idea of being struck.";
 		}
-		else{
-			return affected.name()+" is still flushed with arousal at the idea of being struck.";
-		}
-	}
-	@Override
-	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now affected by masochistic tendencies.\n", affected.subjectAction("are", "is"));
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public String initialMessage(Combat c, boolean replaced) {
+		return String.format("%s now affected by masochistic tendencies.\n",
+				affected.subjectAction("are", "is"));
+	}
+
+	@Override
+	public float fitnessModifier() {
 		return -.5f;
 	}
 
@@ -96,11 +98,13 @@ public class Masochistic extends DurationStatus {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Masochistic(newAffected);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -108,6 +112,7 @@ public class Masochistic extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Masochistic(null);
 	}

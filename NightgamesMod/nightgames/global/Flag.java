@@ -59,4 +59,10 @@ public enum Flag {
 	systemMessages,
 	malePref,
 	masturbationSemen,
+	AliceAvailable,
+	metAlice,
+	victory,
+	catspirit,
+	Clue1,
+	Maya,
 }

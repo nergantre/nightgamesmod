@@ -17,22 +17,40 @@ import nightgames.items.clothing.Clothing;
 
 public interface NPCData {
 	String getName();
+
 	Stats getStats();
+
 	Stack<Clothing> getTopOutfit();
+
 	Stack<Clothing> getBottomOutfit();
+
 	Growth getGrowth();
+
 	List<PreferredAttribute> getPreferredAttributes();
+
 	List<ItemAmount> getStartingItems();
+
 	List<ItemAmount> getPurchasedItems();
+
 	String getLine(String string, Combat c, Character self, Character other);
+
 	Item getTrophy();
+
 	boolean checkMood(Character self, Emotion mood, int value);
+
 	Body getBody();
+
 	CharacterSex getSex();
+
 	String getPortraitName(Combat c, Character self, Character other);
+
 	String getDefaultPortraitName();
+
 	Plan getPlan();
+
 	String getType();
+
 	RecruitmentData getRecruitment();
+
 	AiModifiers getAiModifiers();
 }

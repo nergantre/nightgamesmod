@@ -1,0 +1,39 @@
+[
+	{
+	  "displayName":"loose camisole",
+      "buffs":[
+      ],
+      "price":600,
+      "prefix":"a ",
+      "attributes":[
+	      "flexible",
+		  "stylish"
+      ],
+      "layer":2,
+	  "slots" : ["top", "bottom"],
+	  "shops" : ["Boutique"],
+	  "sex" : ["female"],
+	  "hotness":0.75,
+      "name":"camisole",
+      "toughness":7,
+      "exposure":0.7
+	},{
+	  "displayName":"lace panties",
+      "buffs":[
+      ],
+      "price":400,
+      "prefix":"a pair of ",
+      "attributes":[
+			"flexible",
+			"stylish"
+      ],
+      "layer":0,
+	  "slots" : ["bottom"],
+	  "shops" : ["Boutique"],
+	  "sex" : ["all"],
+	  "hotness":0.8,
+      "name":"lacepanties",
+      "toughness":5,
+      "exposure":0.9
+	}
+]

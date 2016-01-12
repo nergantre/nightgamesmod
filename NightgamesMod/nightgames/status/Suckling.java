@@ -25,33 +25,34 @@ public class Suckling extends DurationStatus {
 	}
 
 	@Override
-	public Collection<Skill> allowedSkills(Combat c){
-		return Collections.singleton((Skill)new Suckle(affected));
+	public Collection<Skill> allowedSkills(Combat c) {
+		return Collections.singleton((Skill) new Suckle(affected));
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s fighting an urge to drink from %s nipples.\n", affected.subjectAction("are", "is"), skill.getSelf().nameOrPossessivePronoun());
+		return String.format("%s fighting an urge to drink from %s nipples.\n",
+				affected.subjectAction("are", "is"),
+				skill.getSelf().nameOrPossessivePronoun());
 	}
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
+		if (affected.human()) {
 			return "You feel an irresistable urge to suck on her nipples.";
-		}
-		else{
-			return affected.name()+" is looking intently at your breasts.";
+		} else {
+			return affected.name() + " is looking intently at your breasts.";
 		}
 	}
 
 	@Override
-	public boolean mindgames(){
+	public boolean mindgames() {
 		return true;
 	}
-	
+
 	@Override
-	public float fitnessModifier () {
-		return - (2 + getDuration() / 2.0f);
+	public float fitnessModifier() {
+		return -(2 + getDuration() / 2.0f);
 	}
 
 	@Override
@@ -62,7 +63,7 @@ public class Suckling extends DurationStatus {
 	@Override
 	public int regen(Combat c) {
 		super.regen(c);
-		affected.emote(Emotion.horny,5);
+		affected.emote(Emotion.horny, 5);
 		return 0;
 	}
 
@@ -105,6 +106,7 @@ public class Suckling extends DurationStatus {
 	public int spendmojo(int x) {
 		return 0;
 	}
+
 	@Override
 	public int counter() {
 		return -10;
@@ -125,6 +127,7 @@ public class Suckling extends DurationStatus {
 		return new Suckling(newAffected, newOther, getDuration());
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -133,6 +136,7 @@ public class Suckling extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Suckling(null, null, JSONUtils.readInteger(obj, "duration"));
 	}

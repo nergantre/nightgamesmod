@@ -1,22 +1,19 @@
 package nightgames.stance;
 
-
-import java.util.ArrayList;
-import java.util.List;
-
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 
 public class BehindFootjob extends AbstractBehindStance {
 	public BehindFootjob(Character top, Character bottom) {
-		super(top, bottom,Stance.behindfootjob);
+		super(top, bottom, Stance.behindfootjob);
 	}
 
 	@Override
 	public String describe() {
-		return Global.format("{self:SUBJECT-ACTION:are|is} holding {other:name-do} from behind with {self:possessive} legs wrapped around {other:direct-object}", top, bottom);
+		return Global.format(
+				"{self:SUBJECT-ACTION:are|is} holding {other:name-do} from behind with {self:possessive} legs wrapped around {other:direct-object}",
+				top, bottom);
 	}
 
 	@Override
@@ -26,9 +23,10 @@ public class BehindFootjob extends AbstractBehindStance {
 
 	@Override
 	public boolean mobile(Character c) {
-		return c==top;
+		return c == top;
 	}
 
+	@Override
 	public String image() {
 		if (bottom.hasDick()) {
 			return "behind_footjob.jpg";
@@ -44,17 +42,17 @@ public class BehindFootjob extends AbstractBehindStance {
 
 	@Override
 	public boolean dom(Character c) {
-		return c==top;
+		return c == top;
 	}
 
 	@Override
 	public boolean sub(Character c) {
-		return c==bottom;
+		return c == bottom;
 	}
 
 	@Override
 	public boolean reachTop(Character c) {
-		return c==top;
+		return c == top;
 	}
 
 	@Override
@@ -69,7 +67,7 @@ public class BehindFootjob extends AbstractBehindStance {
 
 	@Override
 	public boolean feet(Character c) {
-		return c==top;
+		return c == top;
 	}
 
 	@Override
@@ -79,7 +77,7 @@ public class BehindFootjob extends AbstractBehindStance {
 
 	@Override
 	public boolean behind(Character c) {
-		return c==top;
+		return c == top;
 	}
 
 	@Override
@@ -92,12 +90,17 @@ public class BehindFootjob extends AbstractBehindStance {
 		return getSubDomBonus(self, 4.0f);
 	}
 
+	@Override
 	public Position reverse(Combat c) {
-		c.write(bottom, Global.format("{self:SUBJECT-ACTION:summon what little willpower you have left and grab|grabs} {other:name-possessive} feet and pull them off {self:name-possessive} crotch. Taking advantage of the momentum, {self:subject} push {other:direct-object} back with {self:name-possessive} body and hold {other:direct-object} down while sitting on top of {other:direct-object}.", bottom, top));
+		c.write(bottom,
+				Global.format(
+						"{self:SUBJECT-ACTION:summon what little willpower you have left and grab|grabs} {other:name-possessive} feet and pull them off {self:name-possessive} crotch. Taking advantage of the momentum, {self:subject} push {other:direct-object} back with {self:name-possessive} body and hold {other:direct-object} down while sitting on top of {other:direct-object}.",
+						bottom, top));
 		return new ReverseMount(bottom, top);
 	}
 
-	public double pheromoneMod (Character self) {
+	@Override
+	public double pheromoneMod(Character self) {
 		return 1.5;
 	}
 }

@@ -17,7 +17,8 @@ public class TemptressRide extends Thrust {
 
 	@Override
 	public BodyPart getSelfOrgan(Combat c) {
-		if (c.getStance().vaginallyPenetratedBy(getSelf(), c.getOther(getSelf()))) {
+		if (c.getStance().vaginallyPenetratedBy(getSelf(),
+				c.getOther(getSelf()))) {
 			return getSelf().body.getRandomPussy();
 		}
 		return null;
@@ -40,7 +41,7 @@ public class TemptressRide extends Thrust {
 	public String getLabel(Combat c) {
 		return "Skillful Ride";
 	}
-	
+
 	@Override
 	public int getMojoBuilt(Combat c) {
 		return 5;
@@ -48,13 +49,15 @@ public class TemptressRide extends Thrust {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if (c.getStance().anallyPenetrated(getSelf()))
+		if (c.getStance().anallyPenetrated(getSelf())) {
 			return super.resolve(c, target);
+		}
 		int targetDmg = 10 + Global
 				.random(Math.max(10, getSelf().get(Attribute.Technique)));
-		int selfDmg = (int) Math.max(1f, (float) targetDmg / 3f);
-		if (getSelf().has(Trait.experienced))
+		int selfDmg = (int) Math.max(1f, targetDmg / 3f);
+		if (getSelf().has(Trait.experienced)) {
 			selfDmg *= 0.67;
+		}
 		FiredUp status = (FiredUp) getSelf().status.stream()
 				.filter(s -> s instanceof FiredUp).findAny().orElse(null);
 		int stack = status == null || !status.getPart().equals("pussy") ? 0
@@ -67,7 +70,8 @@ public class TemptressRide extends Thrust {
 		}
 
 		target.body.pleasure(getSelf(), getSelf().body.getRandomPussy(),
-				target.body.getRandomCock(), targetDmg + (targetDmg * stack) / 2, c);
+				target.body.getRandomCock(), targetDmg + targetDmg * stack / 2,
+				c);
 
 		getSelf().body.pleasure(getSelf(), target.body.getRandomCock(),
 				getSelf().body.getRandomPussy(), selfDmg, c);

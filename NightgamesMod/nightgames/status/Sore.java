@@ -12,24 +12,27 @@ import nightgames.global.JSONUtils;
 public class Sore extends DurationStatus {
 	public Sore(Character affected, int duration) {
 		super("Sore", affected, duration);
-		this.flag(Stsflag.sore);
+
 		flag(Stsflag.purgable);
+		flag(Stsflag.sore);
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now sore.\n", affected.subjectAction("are", "is"));
+		return String.format("%s now sore.\n",
+				affected.subjectAction("are", "is"));
 	}
+
 	@Override
 	public String describe(Combat c) {
 		return "";
 	}
 
 	@Override
-	public float fitnessModifier () {
-		return -3f;
+	public float fitnessModifier() {
+		return -1f;
 	}
-	
+
 	@Override
 	public int mod(Attribute a) {
 		return 0;
@@ -39,7 +42,7 @@ public class Sore extends DurationStatus {
 	public int regen(Combat c) {
 		super.regen(c);
 		affected.emote(Emotion.nervous,10);
-		return -affected.getStamina().max()/20;		
+		return -affected.getStamina().max()/20;
 	}
 
 	@Override
@@ -86,7 +89,9 @@ public class Sore extends DurationStatus {
 	public int counter() {
 		return 0;
 	}
-	public boolean lingering(){
+
+	@Override
+	public boolean lingering() {
 		return true;
 	}
 
@@ -94,11 +99,13 @@ public class Sore extends DurationStatus {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Sore(newAffected, getDuration());
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -107,7 +114,9 @@ public class Sore extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Sore(null, JSONUtils.readInteger(obj, "duration"));
 	}
+
 }

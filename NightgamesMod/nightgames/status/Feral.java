@@ -18,44 +18,48 @@ public class Feral extends Status {
 
 	@Override
 	public String describe(Combat c) {
-		return String.format("%s seems beyond reason in %s feral lust.\n", affected.subjectAction("have", "has"), affected.possessivePronoun());
+		return String.format("%s seems beyond reason in %s feral lust.\n",
+				Global.capitalizeFirstLetter(affected.subject()),
+				affected.possessivePronoun());
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return 4;
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s turned feral.\n", affected.subjectAction("have", "has"));
+		return String.format("%s turned feral.\n",
+				affected.subjectAction("have", "has"));
 	}
 
 	@Override
 	public int mod(Attribute a) {
-		switch(a){
-		case Power:
-			return 1 + affected.getPure(Attribute.Animism) / 2;
-		case Cunning:
-			return 3;
-		case Seduction:
-			return 2;
-		case Animism:
-			return affected.getPure(Attribute.Animism) / 2;
-		case Speed:
-			return 2;
-		default:
-			break;
+		switch (a) {
+			case Power:
+				return 1 + affected.getPure(Attribute.Animism) / 2;
+			case Cunning:
+				return 3;
+			case Seduction:
+				return 2;
+			case Animism:
+				return affected.getPure(Attribute.Animism) / 2;
+			case Speed:
+				return 2;
+			default:
+				break;
 		}
 		return 0;
 	}
 
 	@Override
 	public int regen(Combat c) {
-		if(affected.getArousal().percent()<40){
+		if (affected.getArousal().percent() < 40) {
 			affected.removelist.add(this);
 		}
-		int ignoreOrgasmChance = Math.min(5, 2 + affected.get(Attribute.Animism) / 10);
+		int ignoreOrgasmChance = Math.min(5,
+				2 + affected.get(Attribute.Animism) / 10);
 		if (Global.random(ignoreOrgasmChance) != 0) {
 			affected.addlist.add(new IgnoreOrgasm(affected, 0));
 		}
@@ -111,11 +115,13 @@ public class Feral extends Status {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Feral(newAffected);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -123,6 +129,7 @@ public class Feral extends Status {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Feral(null);
 	}

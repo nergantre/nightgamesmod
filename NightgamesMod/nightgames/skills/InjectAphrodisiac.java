@@ -6,7 +6,6 @@ import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
 import nightgames.items.Item;
 import nightgames.status.InducedEuphoria;
 import nightgames.status.Horny;
@@ -22,7 +21,7 @@ public class InjectAphrodisiac extends Skill {
 
 	public boolean usable(Combat c, Character target) {
 		return (c.getStance().mobile(this.getSelf()))
-				&& (this.getSelf().has(Item.Aphrodisiac)&&(!getSelf().human()||Global.getMatch().condition!=Modifier.noitems))
+				&& (this.getSelf().has(Item.Aphrodisiac)&&(!getSelf().human()))
 				&& (this.getSelf().canAct())
 				&& getSelf().has(Item.MedicalSupplies, 1)
 				&& (!c.getStance().mobile(this.getSelf()) || !target.canAct());

@@ -10,8 +10,8 @@ import nightgames.combat.Combat;
 import nightgames.global.JSONUtils;
 
 public class Bound extends Status {
-	private float toughness;
-	private String binding;
+	private float	toughness;
+	private String	binding;
 
 	public Bound(Character affected, float dc, String binding) {
 		super("Bound", affected);
@@ -22,21 +22,21 @@ public class Bound extends Status {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now bound by %s.\n", affected.subjectAction("are", "is"), binding);
+		return String.format("%s now bound by %s.\n",
+				affected.subjectAction("are", "is"), binding);
 	}
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
-			return "Your hands are bound by "+binding+".";
-		}
-		else{
-			return "Her hands are restrained by "+binding+".";
+		if (affected.human()) {
+			return "Your hands are bound by " + binding + ".";
+		} else {
+			return "Her hands are restrained by " + binding + ".";
 		}
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return -(5 + Math.min(20, toughness) / 2);
 	}
 
@@ -51,6 +51,7 @@ public class Bound extends Status {
 		affected.emote(Emotion.nervous, 10);
 		return 0;
 	}
+
 	@Override
 	public int damage(Combat c, int x) {
 		return 0;
@@ -80,13 +81,14 @@ public class Bound extends Status {
 	public int escape() {
 		return -Math.round(toughness);
 	}
-	
+
 	@Override
 	public void struggle(Character self) {
-		if (toughness > 50) 
+		if (toughness > 50) {
 			toughness = Math.max(Math.round(toughness * .33f), 25);
-		else
+		} else {
 			toughness = Math.round(toughness * .5f);
+		}
 	}
 
 	@Override
@@ -103,7 +105,9 @@ public class Bound extends Status {
 	public int counter() {
 		return -10;
 	}
-	public String toString(){
+
+	@Override
+	public String toString() {
 		return "Bound by " + binding;
 	}
 
@@ -116,6 +120,8 @@ public class Bound extends Status {
 	public Status instance(Character newAffected, Character newOther) {
 		return new Bound(newAffected, toughness, binding);
 	}
+
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -125,7 +131,9 @@ public class Bound extends Status {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
-		return new Bound(null, JSONUtils.readFloat(obj, "toughness"), JSONUtils.readString(obj, "binding"));
+		return new Bound(null, JSONUtils.readFloat(obj, "toughness"),
+				JSONUtils.readString(obj, "binding"));
 	}
 }
