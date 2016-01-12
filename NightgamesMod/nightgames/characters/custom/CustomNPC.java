@@ -21,22 +21,20 @@ public class CustomNPC extends BasePersonality {
 	/**
 	 *
 	 */
-	private NPCData				data;
-	private static final long	serialVersionUID	= -8169646189131720872L;
+	private NPCData data;
+	private static final long serialVersionUID = -8169646189131720872L;
 
 	public CustomNPC(NPCData data) {
 		super();
 		this.data = data;
 		growth = data.getGrowth();
-		preferredAttributes = new ArrayList<PreferredAttribute>(
-				data.getPreferredAttributes());
+		preferredAttributes = new ArrayList<PreferredAttribute>(data.getPreferredAttributes());
 		character = new NPC(data.getName(), data.getStats().level, this);
 		character.outfitPlan.addAll(data.getTopOutfit());
 		character.outfitPlan.addAll(data.getBottomOutfit());
 		character.closet.addAll(character.outfitPlan);
 		character.change();
-		character.att = new HashMap<Attribute, Integer>(
-				data.getStats().attributes);
+		character.att = new HashMap<Attribute, Integer>(data.getStats().attributes);
 		character.traits = new HashSet<Trait>(data.getStats().traits);
 		character.getArousal().setMax(data.getStats().arousal);
 		character.getStamina().setMax(data.getStats().stamina);
@@ -147,8 +145,7 @@ public class CustomNPC extends BasePersonality {
 
 	@Override
 	public boolean fit() {
-		return !character.mostlyNude()
-				&& character.getStamina().percent() >= 50;
+		return !character.mostlyNude() && character.getStamina().percent() >= 50;
 	}
 
 	@Override
@@ -195,14 +192,12 @@ public class CustomNPC extends BasePersonality {
 	public AiModifiers getAiModifiers() {
 		return data.getAiModifiers();
 	}
-	
+
 	@Override
 	public Map<CommentSituation, String> getComments(Combat c) {
 		Map<CommentSituation, String> all = data.getComments();
 		Map<CommentSituation, String> applicable = new HashMap<>();
-		all.entrySet().stream()
-				.filter(e -> e.getKey().isApplicable(c, character,
-						c.getOther(character)))
+		all.entrySet().stream().filter(e -> e.getKey().isApplicable(c, character, c.getOther(character)))
 				.forEach(e -> applicable.put(e.getKey(), e.getValue()));
 		return applicable;
 	}

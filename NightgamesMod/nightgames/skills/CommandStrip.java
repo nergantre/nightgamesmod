@@ -42,17 +42,13 @@ public class CommandStrip extends PlayerCommand {
 	}
 
 	@Override
-	public String deal(Combat c, int magnitude, Result modifier,
-			Character target) {
-		return "You look " + target.name()
-				+ " in the eye, sending a psychic command for"
-				+ " her to strip. She complies without question, standing before you nude only"
-				+ " seconds later.";
+	public String deal(Combat c, int magnitude, Result modifier, Character target) {
+		return "You look " + target.name() + " in the eye, sending a psychic command for"
+				+ " her to strip. She complies without question, standing before you nude only" + " seconds later.";
 	}
 
 	@Override
-	public String receive(Combat c, int magnitude, Result modifier,
-			Character target) {
+	public String receive(Combat c, int magnitude, Result modifier, Character target) {
 		return "<<This should not be displayed, please inform The Silver Bard: CommandStrip-receive>>";
 	}
 

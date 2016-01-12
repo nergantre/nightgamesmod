@@ -21,9 +21,7 @@ public class Turnover extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()
-				&& c.getStance().enumerate() == Stance.standingover
-				&& c.getStance().dom(getSelf());
+		return getSelf().canAct() && c.getStance().enumerate() == Stance.standingover && c.getStance().dom(getSelf());
 	}
 
 	@Override
@@ -54,15 +52,12 @@ public class Turnover extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
-		return "You turn " + target.name()
-				+ " onto her hands and knees. You move behind her while she slowly gets up.";
+	public String deal(Combat c, int damage, Result modifier, Character target) {
+		return "You turn " + target.name() + " onto her hands and knees. You move behind her while she slowly gets up.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().name()
 				+ " rolls you onto your stomach. You push yourself back up, but she takes the opportunity to get behind you.";
 	}

@@ -11,42 +11,35 @@ import nightgames.skills.TailSuck;
 
 public class TailSucked extends Status {
 
-	private Character	sucker;
-	private int			power;
+	private Character sucker;
+	private int power;
 
 	public TailSucked(Character affected, Character sucker, int power) {
 		super("Tail Sucked", affected);
 		this.sucker = sucker;
 		this.power = power;
-		requirements.add((c, self, other) -> c != null && self != null
-				&& other != null && new TailSuck(other).usable(c, self));
+		requirements.add(
+				(c, self, other) -> c != null && self != null && other != null && new TailSuck(other).usable(c, self));
 		flag(Stsflag.bound);
 		flag(Stsflag.tailsucked);
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format(
-				"%s tail is sucking %s energy straight from %s %s.",
-				sucker.nameOrPossessivePronoun(),
-				affected.nameOrPossessivePronoun(),
-				affected.possessivePronoun(),
+		return String.format("%s tail is sucking %s energy straight from %s %s.", sucker.nameOrPossessivePronoun(),
+				affected.nameOrPossessivePronoun(), affected.possessivePronoun(),
 				affected.body.getRandomCock().describe(affected));
 	}
 
 	@Override
 	public String describe(Combat c) {
-		if (!affected.hasDick()){
+		if (!affected.hasDick()) {
 			affected.removelist.add(this);
 			return "";
 		}
-		return String.format(
-				"%s tail keeps churning around %s "
-						+ "%s, sucking in %s vital energies.",
-				sucker.nameOrPossessivePronoun(),
-				affected.nameOrPossessivePronoun(),
-				affected.body.getRandomCock().describe(affected),
-				affected.possessivePronoun());
+		return String.format("%s tail keeps churning around %s " + "%s, sucking in %s vital energies.",
+				sucker.nameOrPossessivePronoun(), affected.nameOrPossessivePronoun(),
+				affected.body.getRandomCock().describe(affected), affected.possessivePronoun());
 	}
 
 	@Override
@@ -59,16 +52,12 @@ public class TailSucked extends Status {
 		}
 
 		c.write(sucker,
-				String.format(
-						"%s tail sucks powerfully, and %s"
-								+ " some of %s strength being drawn in.",
-						sucker.nameOrPossessivePronoun(),
-						affected.subjectAction("feel", "feels"),
+				String.format("%s tail sucks powerfully, and %s" + " some of %s strength being drawn in.",
+						sucker.nameOrPossessivePronoun(), affected.subjectAction("feel", "feels"),
 						affected.possessivePronoun()));
 
-		Attribute toDrain = Global.pickRandom(
-				affected.att.entrySet().stream().filter(e -> e.getValue() != 0)
-						.map(e -> e.getKey()).toArray(Attribute[]::new));
+		Attribute toDrain = Global.pickRandom(affected.att.entrySet().stream().filter(e -> e.getValue() != 0)
+				.map(e -> e.getKey()).toArray(Attribute[]::new));
 		affected.addlist.add(new Abuff(affected, toDrain, -power, 20));
 		sucker.addlist.add(new Abuff(sucker, toDrain, power, 20));
 		affected.drain(c, sucker, 1 + Global.random(power * 3));

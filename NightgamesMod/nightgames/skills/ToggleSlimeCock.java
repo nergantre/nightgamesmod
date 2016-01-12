@@ -31,7 +31,7 @@ public class ToggleSlimeCock extends Skill {
 	public float priorityMod(Combat c) {
 		return (float) ((getSelf().dickPreference() - 5) * (hasSlimeCock() ? -.3 : .3));
 	}
-	
+
 	@Override
 	public String getLabel(Combat c) {
 		return hasSlimeCock() ? "Retract Cock" : "Form Cock";

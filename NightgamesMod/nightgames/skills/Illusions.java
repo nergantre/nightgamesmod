@@ -20,8 +20,7 @@ public class Illusions extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && c.getStance().mobile(getSelf())
-				&& !c.getStance().prone(getSelf());
+		return getSelf().canAct() && c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf());
 	}
 
 	@Override
@@ -57,14 +56,12 @@ public class Illusions extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You cast an illusion spell to create several images of yourself. At the same time, you add a charm to make yourself irresistible.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().name()
 				+ " casts a brief spell and your vision is filled with naked copies of her. You can still tell which "
 				+ getSelf().name()

@@ -20,8 +20,7 @@ public class CatsGrace extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !getSelf().is(Stsflag.nimble) && getSelf().canAct()
-				&& c.getStance().mobile(getSelf())
+		return !getSelf().is(Stsflag.nimble) && getSelf().canAct() && c.getStance().mobile(getSelf())
 				&& getSelf().getArousal().percent() >= 20;
 	}
 
@@ -52,14 +51,12 @@ public class CatsGrace extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You rely on your animal instincts to quicken your movements and avoid attacks.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().name()
 				+ " focuses for a moment and her movements start to speed up and become more animalistic.";
 	}

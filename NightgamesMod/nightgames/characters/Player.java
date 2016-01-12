@@ -36,10 +36,10 @@ public class Player extends Character {
 	/**
 	 *
 	 */
-	public GUI		gui;
-	public String	sex;
-	private Growth	growth;
-	public int		traitPoints;
+	public GUI gui;
+	public String sex;
+	private Growth growth;
+	public int traitPoints;
 
 	public Player(String name, CharacterSex sex) {
 		super(name, 1);
@@ -82,17 +82,14 @@ public class Player extends Character {
 		if (getTraits().size() > 0) {
 			b.append("<br>Traits:<br>");
 			List<Trait> traits = new ArrayList<>(getTraits());
-			traits.sort((first, second) -> first.toString()
-					.compareTo(second.toString()));
-			b.append(traits.stream().map(Object::toString)
-					.collect(Collectors.joining(", ")));
+			traits.sort((first, second) -> first.toString().compareTo(second.toString()));
+			b.append(traits.stream().map(Object::toString).collect(Collectors.joining(", ")));
 		}
 		if (status.size() > 0) {
 			b.append("<br><br>Statuses:<br>");
 			List<Status> statuses = new ArrayList<>(status);
 			statuses.sort((first, second) -> first.name.compareTo(second.name));
-			b.append(statuses.stream().map(s -> s.name)
-					.collect(Collectors.joining(", ")));
+			b.append(statuses.stream().map(s -> s.name).collect(Collectors.joining(", ")));
 		}
 		return b.toString();
 	}
@@ -189,8 +186,7 @@ public class Player extends Character {
 	public void detect() {
 		for (Area adjacent : location.adjacent) {
 			if (adjacent.ping(get(Attribute.Perception))) {
-				Global.gui().message("You hear something in the <b>"
-						+ adjacent.name + "</b>.");
+				Global.gui().message("You hear something in the <b>" + adjacent.name + "</b>.");
 			}
 		}
 	}
@@ -214,10 +210,8 @@ public class Player extends Character {
 			gui.message("She is level " + opponent.getLevel());
 		}
 		if (get(Attribute.Perception) >= 8) {
-			gui.message("Her Power is " + opponent.get(Attribute.Power)
-					+ ", her Cunning is " + opponent.get(Attribute.Cunning)
-					+ ", and her Seduction is "
-					+ opponent.get(Attribute.Seduction));
+			gui.message("Her Power is " + opponent.get(Attribute.Power) + ", her Cunning is "
+					+ opponent.get(Attribute.Cunning) + ", and her Seduction is " + opponent.get(Attribute.Seduction));
 		}
 		if (opponent.mostlyNude() || opponent.state == State.shower) {
 			gui.message("She is completely naked.");
@@ -263,9 +257,7 @@ public class Player extends Character {
 			master = ((Enthralled) getStatus(Stsflag.enthralled)).master;
 			if (master != null) {
 				Move compelled = findPath(master.location());
-				gui.message(
-						"You feel an irresistible compulsion to head to the <b>"
-								+ master.location().name + "</b>");
+				gui.message("You feel an irresistible compulsion to head to the <b>" + master.location().name + "</b>");
 				if (compelled != null) {
 					gui.addAction(compelled, this);
 				}
@@ -316,8 +308,7 @@ public class Player extends Character {
 					}
 				}
 				for (Action act : Global.getActions()) {
-					if (act.usable(this) && Global.getMatch().condition
-							.allowAction(act, this, Global.getMatch())) {
+					if (act.usable(this) && Global.getMatch().condition.allowAction(act, this, Global.getMatch())) {
 						gui.addAction(act, this);
 					}
 				}
@@ -333,10 +324,8 @@ public class Player extends Character {
 		getMojo().gain(growth.mojo);
 		availableAttributePoints += growth.attributes[rank];
 		getMojo().gain(1);
-		gui.message(
-				"You've gained a Level!<br>Select which attributes to increase.");
-		if (getLevel() % 3 == 0 && level < 10
-				|| (getLevel() + 1) % 2 == 0 && level > 10) {
+		gui.message("You've gained a Level!<br>Select which attributes to increase.");
+		if (getLevel() % 3 == 0 && level < 10 || (getLevel() + 1) % 2 == 0 && level > 10) {
 			traitPoints += 1;
 		}
 		gui.ding();
@@ -344,11 +333,9 @@ public class Player extends Character {
 
 	@Override
 	public void flee(Area location2) {
-		Area[] adjacent = location2.adjacent
-				.toArray(new Area[location2.adjacent.size()]);
+		Area[] adjacent = location2.adjacent.toArray(new Area[location2.adjacent.size()]);
 		Area destination = adjacent[Global.random(adjacent.length)];
-		gui.message("You dash away and escape into the <b>" + destination.name
-				+ "</b>");
+		gui.message("You dash away and escape into the <b>" + destination.name + "</b>");
 		travel(destination);
 		location2.endEncounter();
 	}
@@ -358,16 +345,14 @@ public class Player extends Character {
 		status.clear();
 		stamina.fill();
 		if (location.name.equals("Showers")) {
-			gui.message(
-					"You let the hot water wash away your exhaustion and soon you're back to peak condition");
+			gui.message("You let the hot water wash away your exhaustion and soon you're back to peak condition");
 		}
 		if (location.name.equals("Pool")) {
 			gui.message(
 					"The hot water soothes and relaxes your muscles. You feel a bit exposed, skinny-dipping in such an open area. You decide it's time to get moving.");
 		}
 		if (state == State.lostclothes) {
-			gui.message(
-					"Your clothes aren't where you left them. Someone must have come by and taken them.");
+			gui.message("Your clothes aren't where you left them. Someone must have come by and taken them.");
 		}
 		state = State.ready;
 	}
@@ -427,26 +412,26 @@ public class Player extends Character {
 	public void search() {
 		int roll = Global.random(10);
 		switch (roll) {
-			case 9:
-				gain(Item.Tripwire);
-				gain(Item.Tripwire);
-				break;
-			case 8:
-				gain(Item.ZipTie);
-				gain(Item.ZipTie);
-				gain(Item.ZipTie);
-				break;
-			case 7:
-				gain(Item.Phone);
-				break;
-			case 6:
-				gain(Item.Rope);
-				break;
-			case 5:
-				gain(Item.Spring);
-				break;
-			default:
-				gui.message("You don't find anything useful");
+		case 9:
+			gain(Item.Tripwire);
+			gain(Item.Tripwire);
+			break;
+		case 8:
+			gain(Item.ZipTie);
+			gain(Item.ZipTie);
+			gain(Item.ZipTie);
+			break;
+		case 7:
+			gain(Item.Phone);
+			break;
+		case 6:
+			gain(Item.Rope);
+			break;
+		case 5:
+			gain(Item.Spring);
+			break;
+		default:
+			gui.message("You don't find anything useful");
 		}
 		state = State.ready;
 	}
@@ -465,8 +450,7 @@ public class Player extends Character {
 		if (target.location().name.equals("Showers")) {
 			gui.message(
 					"You hear running water coming from the first floor showers. There shouldn't be any residents on this floor right now, so it's likely one "
-							+ "of your opponents. You peek inside and sure enough, <b>"
-							+ target.name()
+							+ "of your opponents. You peek inside and sure enough, <b>" + target.name()
 							+ "</b> is taking a shower and looking quite vulnerable. Do you take advantage "
 							+ "of her carelessness?");
 		} else if (target.location().name.equals("Pool")) {
@@ -489,9 +473,8 @@ public class Player extends Character {
 		gainXP(getAssistXP(target));
 		target.defeated(this);
 		assist.gainAttraction(this, 1);
-		c.write("You take your time, approaching " + target.name() + " and "
-				+ assist.name() + " stealthily. " + assist.name()
-				+ " notices you first and before her reaction "
+		c.write("You take your time, approaching " + target.name() + " and " + assist.name() + " stealthily. "
+				+ assist.name() + " notices you first and before her reaction "
 				+ "gives you away, you quickly lunge and grab " + target.name()
 				+ " from behind. She freezes in surprise for just a second, but that's all you need to "
 				+ "restrain her arms and leave her completely helpless. Both your hands are occupied holding her, so you focus on kissing and licking the "
@@ -511,27 +494,21 @@ public class Player extends Character {
 		gainTrophy(c, target);
 		target.defeated(this);
 		if (target.hasDick()) {
-			c.write(String.format(
-					"You position yourself between %s's legs, gently "
-							+ "forcing them open with your knees. %s dick stands erect, fully "
-							+ "exposed and ready for attention. You grip the needy member and "
-							+ "start jerking it with a practiced hand. %s moans softly, but seems"
-							+ " to be able to handle this level of stimulation. You need to turn "
-							+ "up the heat some more. Well, if you weren't prepared to suck a cock"
-							+ " or two, you may have joined the wrong competition. You take just "
-							+ "the glans into your mouth, attacking the most senstitive area with "
-							+ "your tongue. %s lets out a gasp and shudders. That's a more promising "
-							+ "reaction.<p>You continue your oral assault until you hear a breathy "
-							+ "moan, <i>\"I'm gonna cum!\"</i> You hastily remove %s dick out of "
-							+ "your mouth and pump it rapidly. %s shoots %s load into the air, barely "
-							+ "missing you.",
-					new Object[] { target.name(),
-							Global.capitalizeFirstLetter(
-									target.possessivePronoun()),
-							target.name(),
-							Global.capitalizeFirstLetter(target.pronoun()),
-							target.possessivePronoun(), target.name(),
-							target.possessivePronoun() }));
+			c.write(String.format("You position yourself between %s's legs, gently "
+					+ "forcing them open with your knees. %s dick stands erect, fully "
+					+ "exposed and ready for attention. You grip the needy member and "
+					+ "start jerking it with a practiced hand. %s moans softly, but seems"
+					+ " to be able to handle this level of stimulation. You need to turn "
+					+ "up the heat some more. Well, if you weren't prepared to suck a cock"
+					+ " or two, you may have joined the wrong competition. You take just "
+					+ "the glans into your mouth, attacking the most senstitive area with "
+					+ "your tongue. %s lets out a gasp and shudders. That's a more promising "
+					+ "reaction.<p>You continue your oral assault until you hear a breathy "
+					+ "moan, <i>\"I'm gonna cum!\"</i> You hastily remove %s dick out of "
+					+ "your mouth and pump it rapidly. %s shoots %s load into the air, barely " + "missing you.",
+					new Object[] { target.name(), Global.capitalizeFirstLetter(target.possessivePronoun()),
+							target.name(), Global.capitalizeFirstLetter(target.pronoun()), target.possessivePronoun(),
+							target.name(), target.possessivePronoun() }));
 		} else {
 			c.write(target.name()
 					+ "'s arms are firmly pinned, so she tries to kick you ineffectually. You catch her ankles and slowly begin kissing and licking your way "
@@ -545,8 +522,7 @@ public class Player extends Character {
 
 	@Override
 	public void gain(Item item) {
-		Global.gui().message(
-				"<b>You've gained " + item.pre() + item.getName() + "</b>");
+		Global.gui().message("<b>You've gained " + item.pre() + item.getName() + "</b>");
 		super.gain(item);
 	}
 
@@ -557,8 +533,7 @@ public class Player extends Character {
 
 	@Override
 	public void promptTrap(IEncounter enc, Character target, Trap trap) {
-		Global.gui().message("Do you want to take the opportunity to ambush <b>"
-				+ target.name() + "</b>?");
+		Global.gui().message("Do you want to take the opportunity to ambush <b>" + target.name() + "</b>?");
 		assessOpponent(target);
 		gui.promptOpportunity(enc, target, trap);
 	}
@@ -572,130 +547,98 @@ public class Player extends Character {
 	@Override
 	public void counterattack(Character target, Tactics type, Combat c) {
 		switch (type) {
-			case damage:
-				c.write(this, "You dodge " + target.name()
-						+ "'s slow attack and hit her sensitive tit to stagger her.");
-				target.pain(c,
-						4 + Math.min(Global.random(get(Attribute.Power)), 20));
-				break;
-			case pleasure:
-				if (!target.crotchAvailable() || !target.hasPussy()) {
-					c.write(this, "You pull " + target.name()
-							+ " off balance and lick her sensitive ear. She trembles as you nibble on her earlobe.");
-					target.body
-							.pleasure(this, body.getRandom("tongue"),
-									target.body.getRandom("ears"),
-									4 + Math.min(
-											Global.random(
-													get(Attribute.Seduction)),
-											20),
-									c);
+		case damage:
+			c.write(this, "You dodge " + target.name() + "'s slow attack and hit her sensitive tit to stagger her.");
+			target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
+			break;
+		case pleasure:
+			if (!target.crotchAvailable() || !target.hasPussy()) {
+				c.write(this, "You pull " + target.name()
+						+ " off balance and lick her sensitive ear. She trembles as you nibble on her earlobe.");
+				target.body.pleasure(this, body.getRandom("tongue"), target.body.getRandom("ears"),
+						4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
+			} else {
+				c.write(this, "You pull " + target.name() + " to you and rub your thigh against her girl parts.");
+				target.body.pleasure(this, body.getRandom("feet"), target.body.getRandomPussy(),
+						4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
+			}
+			break;
+		case fucking:
+			if (c.getStance().sub(this)) {
+				Position reverse = c.getStance().reverse(c);
+				if (reverse != c.getStance() && !BodyPart.hasOnlyType(reverse.bottomParts(), "strapon")) {
+					c.setStance(reverse);
 				} else {
-					c.write(this, "You pull " + target.name()
-							+ " to you and rub your thigh against her girl parts.");
-					target.body
-							.pleasure(this, body.getRandom("feet"),
-									target.body.getRandomPussy(),
-									4 + Math.min(
-											Global.random(
-													get(Attribute.Seduction)),
-											20),
-									c);
-				}
-				break;
-			case fucking:
-				if (c.getStance().sub(this)) {
-					Position reverse = c.getStance().reverse(c);
-					if (reverse != c.getStance() && !BodyPart
-							.hasOnlyType(reverse.bottomParts(), "strapon")) {
-						c.setStance(reverse);
-					} else {
-						c.write(this,
-								Global.format(
-										"{self:NAME-POSSESSIVE} quick wits find a gap in {other:name-possessive} hold and {self:action:slip|slips} away.",
-										this, target));
-						c.setStance(new Neutral(this, target));
-					}
-				} else {
-					target.body
-							.pleasure(this, body.getRandom("hands"),
-									target.body.getRandomBreasts(),
-									4 + Math.min(
-											Global.random(
-													get(Attribute.Seduction)),
-											20),
-									c);
 					c.write(this,
 							Global.format(
-									"{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} nipples with {self:possessive} hands as {other:subject-action:try|tries} to fuck {self:direct-object}. "
-											+ "While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:take|takes} the chance to pleasure {other:possessive} body",
+									"{self:NAME-POSSESSIVE} quick wits find a gap in {other:name-possessive} hold and {self:action:slip|slips} away.",
 									this, target));
+					c.setStance(new Neutral(this, target));
 				}
-				break;
-			case stripping:
-				Clothing clothes = target.stripRandom(c);
-				if (clothes != null) {
-					c.write(this,
-							"You manage to catch " + target.possessivePronoun()
-									+ " hands groping your clothing, and in a swift motion you strip off her "
-									+ clothes.getName() + " instead.");
-				} else {
-					c.write(this, "You manage to dodge "
-							+ target.possessivePronoun()
-							+ " groping hands and give a retaliating slap in return");
-					target.pain(c, 4 + Math
-							.min(Global.random(get(Attribute.Power)), 20));
-				}
-				break;
-			case positioning:
-				if (c.getStance().dom(this)) {
-					c.write(this, "You outmanuever " + target.name()
-							+ " and you exhausted her from the struggle.");
-					target.weaken(c, 10);
-				} else {
-					c.write(this, target.name()
-							+ " loses her balance while grappling with you. Before she can fall to the floor, you catch her from behind and hold her up.");
-					c.setStance(new Behind(this, target));
-				}
-				break;
-			default:
-				c.write(this, "You manage to dodge "
-						+ target.possessivePronoun()
-						+ " attack and give a retaliating slap in return");
-				target.pain(c,
-						4 + Math.min(Global.random(get(Attribute.Power)), 20));
+			} else {
+				target.body.pleasure(this, body.getRandom("hands"), target.body.getRandomBreasts(),
+						4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
+				c.write(this,
+						Global.format(
+								"{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} nipples with {self:possessive} hands as {other:subject-action:try|tries} to fuck {self:direct-object}. "
+										+ "While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:take|takes} the chance to pleasure {other:possessive} body",
+								this, target));
+			}
+			break;
+		case stripping:
+			Clothing clothes = target.stripRandom(c);
+			if (clothes != null) {
+				c.write(this,
+						"You manage to catch " + target.possessivePronoun()
+								+ " hands groping your clothing, and in a swift motion you strip off her "
+								+ clothes.getName() + " instead.");
+			} else {
+				c.write(this, "You manage to dodge " + target.possessivePronoun()
+						+ " groping hands and give a retaliating slap in return");
+				target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
+			}
+			break;
+		case positioning:
+			if (c.getStance().dom(this)) {
+				c.write(this, "You outmanuever " + target.name() + " and you exhausted her from the struggle.");
+				target.weaken(c, 10);
+			} else {
+				c.write(this, target.name()
+						+ " loses her balance while grappling with you. Before she can fall to the floor, you catch her from behind and hold her up.");
+				c.setStance(new Behind(this, target));
+			}
+			break;
+		default:
+			c.write(this, "You manage to dodge " + target.possessivePronoun()
+					+ " attack and give a retaliating slap in return");
+			target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
 		}
 	}
 
 	@Override
 	public void eot(Combat c, Character opponent, Skill last) {
 		super.eot(c, opponent, last);
-		if (opponent.pet != null && canAct() && c.getStance().mobile(this)
-				&& !c.getStance().prone(this)) {
+		if (opponent.pet != null && canAct() && c.getStance().mobile(this) && !c.getStance().prone(this)) {
 			if (get(Attribute.Speed) > opponent.pet.ac() * Global.random(20)) {
 				opponent.pet.caught(c, this);
 			}
 		}
-		if (opponent.has(Trait.pheromones)
-				&& opponent.getArousal().percent() >= 20
-				&& opponent.rollPheromones(c)) {
+		if (opponent.has(Trait.pheromones) && opponent.getArousal().percent() >= 20 && opponent.rollPheromones(c)) {
 			c.write(opponent, "<br>Whenever you're near " + opponent.name()
 					+ ", you feel your body heat up. Something in her scent is making you extremely horny.");
 			add(c, new Horny(this, opponent.getPheromonePower(), 10,
 					opponent.nameOrPossessivePronoun() + " pheromones"));
 		}
 		if (opponent.has(Trait.smqueen) && !is(Stsflag.masochism)) {
-			c.write(Global.capitalizeFirstLetter(String.format(
-					"<br>%s seem to shudder in arousal at the thought of pain.",
-					subject())));
+			c.write(Global.capitalizeFirstLetter(
+					String.format("<br>%s seem to shudder in arousal at the thought of pain.", subject())));
 			add(c, new Masochistic(this));
 		}
 		if (has(Trait.RawSexuality)) {
 			tempt(c, opponent, arousal.max() / 25);
 			opponent.tempt(c, this, opponent.arousal.max() / 25);
 		}
-		if (getPure(Attribute.Animism) >= 4 && getArousal().percent() >= 50
-				&& !is(Stsflag.feral)) {
+		if (getPure(Attribute.Animism) >= 4 && getArousal().percent() >= 50 && !is(Stsflag.feral)) {
 			add(c, new Feral(this));
 		}
 	}

@@ -54,22 +54,18 @@ public class Surrender extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return String.format(
 				"After giving up on the fight, %s start fantasizing about %s body. %s quickly find %s at the edge.",
-				getSelf().subject(), target.possessivePronoun(),
-				Global.capitalizeFirstLetter(getSelf().pronoun()),
+				getSelf().subject(), target.possessivePronoun(), Global.capitalizeFirstLetter(getSelf().pronoun()),
 				getSelf().reflectivePronoun());
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return String.format(
 				"After giving up on the fight, %s start fantasizing about %s body. %s quickly find %s at the edge.",
-				getSelf().subject(), target.possessivePronoun(),
-				Global.capitalizeFirstLetter(getSelf().pronoun()),
+				getSelf().subject(), target.possessivePronoun(), Global.capitalizeFirstLetter(getSelf().pronoun()),
 				getSelf().reflectivePronoun());
 	}
 

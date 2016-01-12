@@ -31,8 +31,7 @@ public class Beg extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if (Global.random(30) <= getSelf().get(Attribute.Submissive)
-				- target.get(Attribute.Cunning) / 2
+		if (Global.random(30) <= getSelf().get(Attribute.Submissive) - target.get(Attribute.Cunning) / 2
 				&& !target.is(Stsflag.cynical)) {
 			target.add(new Charmed(target));
 			if (getSelf().human()) {
@@ -60,11 +59,9 @@ public class Beg extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return "You throw away your pride and ask " + target.name()
-					+ " for mercy. This just seems to encourage "
+			return "You throw away your pride and ask " + target.name() + " for mercy. This just seems to encourage "
 					+ target.possessivePronoun() + " sadistic side.";
 		}
 		return "You put yourself completely at " + target.name() + "'s mercy. "
@@ -73,18 +70,13 @@ public class Beg extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return getSelf().name()
-					+ " gives you a pleading look and asks you to go light on "
-					+ getSelf().directObject() + ". "
-					+ Global.capitalizeFirstLetter(getSelf().pronoun())
-					+ "'s cute, but " + getSelf().pronoun()
-					+ "'s not getting away that easily.";
+			return getSelf().name() + " gives you a pleading look and asks you to go light on "
+					+ getSelf().directObject() + ". " + Global.capitalizeFirstLetter(getSelf().pronoun())
+					+ "'s cute, but " + getSelf().pronoun() + "'s not getting away that easily.";
 		}
-		return getSelf().name()
-				+ " begs you for mercy, looking ready to cry. Maybe you should give "
+		return getSelf().name() + " begs you for mercy, looking ready to cry. Maybe you should give "
 				+ getSelf().directObject() + " a break.";
 
 	}

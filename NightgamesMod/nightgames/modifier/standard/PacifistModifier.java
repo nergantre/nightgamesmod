@@ -25,8 +25,8 @@ public class PacifistModifier extends BaseModifier {
 	public String intro() {
 		return "Lilly gives you a long, appraising look. <i>\"I'm trying to decide what sort of man you are. You strike me as a good guy, probably not the type "
 				+ "to hit a girl outside a match. I propose you try being a perfect gentleman by refusing to hit anyone during tonight's match too. So no slapping, "
-				+ "kicking, anything intended to purely cause pain. If you agree, I'll add $"
-				+ bonus() + " to each point. What do you say?\"</i>";
+				+ "kicking, anything intended to purely cause pain. If you agree, I'll add $" + bonus()
+				+ " to each point. What do you say?\"</i>";
 	}
 
 	@Override

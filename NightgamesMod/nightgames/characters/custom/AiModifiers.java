@@ -21,21 +21,18 @@ import nightgames.status.Stsflag;
 
 public class AiModifiers {
 
-	public static final Map<String, AiModifiers>	DEFAULTS;
-	public static final double						AI_MOD_WEIGHT	= 1.0;
+	public static final Map<String, AiModifiers> DEFAULTS;
+	public static final double AI_MOD_WEIGHT = 1.0;
 
 	static {
 		Map<String, AiModifiers> temp = new HashMap<>();
-		InputStream is = ResourceLoader
-				.getFileResourceAsStream("data/DefaultAiModifications.json");
+		InputStream is = ResourceLoader.getFileResourceAsStream("data/DefaultAiModifications.json");
 		JSONArray root = (JSONArray) JSONValue.parse(new InputStreamReader(is));
 		for (Object obj : root) {
 			JSONObject jobj = (JSONObject) obj;
 			String pers = JSONUtils.readString(jobj, "personality");
 			Optional<Double> malePref = jobj.containsKey("male-pref")
-					? Optional
-							.of((double) JSONUtils.readFloat(jobj, "male-pref"))
-					: Optional.empty();
+					? Optional.of((double) JSONUtils.readFloat(jobj, "male-pref")) : Optional.empty();
 			AiModifiers mods = readMods((JSONArray) jobj.get("mods"));
 			mods.setMalePref(malePref);
 			temp.put(pers, mods);
@@ -43,21 +40,18 @@ public class AiModifiers {
 		DEFAULTS = Collections.unmodifiableMap(temp);
 	}
 
-	private Map<Class<? extends Skill>, Double>	attackMods;
-	private Map<Stance, Double>					positionMods;
-	private Map<Stsflag, Double>				selfStatusMods;
-	private Map<Stsflag, Double>				oppStatusMods;
-	private Optional<Double>					malePref;
+	private Map<Class<? extends Skill>, Double> attackMods;
+	private Map<Stance, Double> positionMods;
+	private Map<Stsflag, Double> selfStatusMods;
+	private Map<Stsflag, Double> oppStatusMods;
+	private Optional<Double> malePref;
 
 	public AiModifiers() {
-		this(new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(),
-				Optional.empty());
+		this(new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(), Optional.empty());
 	}
 
-	public AiModifiers(Map<Class<? extends Skill>, Double> attackMods,
-			Map<Stance, Double> positionMods,
-			Map<Stsflag, Double> selfStatusMods,
-			Map<Stsflag, Double> oppStatusMods, Optional<Double> malePref) {
+	public AiModifiers(Map<Class<? extends Skill>, Double> attackMods, Map<Stance, Double> positionMods,
+			Map<Stsflag, Double> selfStatusMods, Map<Stsflag, Double> oppStatusMods, Optional<Double> malePref) {
 		this.attackMods = attackMods;
 		this.positionMods = positionMods;
 		this.selfStatusMods = selfStatusMods;
@@ -123,8 +117,7 @@ public class AiModifiers {
 
 	public static AiModifiers getDefaultModifiers(String personality) {
 		if (!DEFAULTS.containsKey(personality)) {
-			System.err.println(
-					"No default AI modifications for " + personality + "!");
+			System.err.println("No default AI modifications for " + personality + "!");
 		}
 		return DEFAULTS.getOrDefault(personality, new AiModifiers());
 	}
@@ -138,24 +131,23 @@ public class AiModifiers {
 			String value = JSONUtils.readString(mod, "value");
 			double weight = JSONUtils.readFloat(mod, "weight");
 			switch (type) {
-				case "skill":
-					try {
-						Class<? extends Skill> clazz = (Class<? extends Skill>) Class
-								.forName(value);
-						mods.attackMods.put(clazz, weight);
-					} catch (ClassNotFoundException e) {
-						e.printStackTrace();
-					}
-					break;
-				case "position":
-					mods.positionMods.put(Stance.valueOf(value), weight);
-					break;
-				case "self-status":
-					mods.selfStatusMods.put(Stsflag.valueOf(value), weight);
-					break;
-				case "opp-status":
-					mods.oppStatusMods.put(Stsflag.valueOf(value), weight);
-					break;
+			case "skill":
+				try {
+					Class<? extends Skill> clazz = (Class<? extends Skill>) Class.forName(value);
+					mods.attackMods.put(clazz, weight);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+				break;
+			case "position":
+				mods.positionMods.put(Stance.valueOf(value), weight);
+				break;
+			case "self-status":
+				mods.selfStatusMods.put(Stsflag.valueOf(value), weight);
+				break;
+			case "opp-status":
+				mods.oppStatusMods.put(Stsflag.valueOf(value), weight);
+				break;
 			}
 		}
 		return mods;

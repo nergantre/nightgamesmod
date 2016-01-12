@@ -11,9 +11,7 @@ import nightgames.stance.Missionary;
 public class CounterDrain extends CounterBase {
 	public CounterDrain(Character self) {
 		super("Counter Vortex", self, 6,
-				Global.format(
-						"{self:SUBJECT-ACTION:glow|glows} with a purple light.",
-						self, self));
+				Global.format("{self:SUBJECT-ACTION:glow|glows} with a purple light.", self, self));
 	}
 
 	@Override
@@ -44,11 +42,9 @@ public class CounterDrain extends CounterBase {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !c.getStance().dom(getSelf()) && !c.getStance().dom(target)
-				&& getSelf().canAct() && getSelf().crotchAvailable()
-				&& target.crotchAvailable()
-				&& (getSelf().hasDick() && target.hasPussy()
-						|| getSelf().hasPussy() && target.hasDick());
+		return !c.getStance().dom(getSelf()) && !c.getStance().dom(target) && getSelf().canAct()
+				&& getSelf().crotchAvailable() && target.crotchAvailable()
+				&& (getSelf().hasDick() && target.hasPussy() || getSelf().hasPussy() && target.hasDick());
 	}
 
 	@Override
@@ -72,37 +68,31 @@ public class CounterDrain extends CounterBase {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.setup) {
 			return Global.format(
 					"You drop your stance, take a deep breath and close your eyes. A purple glow starts radiating from your core.",
 					getSelf(), target);
 		} else {
-			return Global.format(
-					"You suddenly open your eyes as you sense {other:name} approaching. "
-							+ "The purple light that surrounds you suddenly flies into {other:direct-object}, "
-							+ "eliciting a cry out of her. She collapses like a puppet with her strings cut and falls to the ground. "
-							+ "Seeing the opportunity, you smirk and leisurely mount her.",
-					getSelf(), target);
+			return Global.format("You suddenly open your eyes as you sense {other:name} approaching. "
+					+ "The purple light that surrounds you suddenly flies into {other:direct-object}, "
+					+ "eliciting a cry out of her. She collapses like a puppet with her strings cut and falls to the ground. "
+					+ "Seeing the opportunity, you smirk and leisurely mount her.", getSelf(), target);
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.setup) {
 			return Global.format(
 					"She drops her stance, takes a deep breath and closes her eyes. You notice a purple glow begin to radiate from her core.",
 					getSelf(), target);
 		} else {
-			return Global.format(
-					"{self:SUBJECT} suddenly opens her eyes as you approach. "
-							+ "The purple light that was orbiting around her suddenly reverses directions and flies into you. "
-							+ "The purple energy seems to paralyze your muscles and you collapse like a puppet with your strings cut."
-							+ "You can't help but fall to the ground with a cry. "
-							+ "Seeing the opportunity, she smirks and leisurely mounts you.",
-					getSelf(), target);
+			return Global.format("{self:SUBJECT} suddenly opens her eyes as you approach. "
+					+ "The purple light that was orbiting around her suddenly reverses directions and flies into you. "
+					+ "The purple energy seems to paralyze your muscles and you collapse like a puppet with your strings cut."
+					+ "You can't help but fall to the ground with a cry. "
+					+ "Seeing the opportunity, she smirks and leisurely mounts you.", getSelf(), target);
 		}
 	}
 }

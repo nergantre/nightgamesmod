@@ -42,15 +42,14 @@ public class KatTime extends BaseNPCTime {
 		primalCock.ingredients.put(Item.Aphrodisiac, 50);
 		primalCock.requirements.add(new BodyPartRequirement("cock"));
 		primalCock.requirements.add((c, self, other) -> {
-			return self.body.get("cock").stream()
-					.anyMatch(cock -> ((CockPart) cock).isGeneric());
+			return self.body.get("cock").stream().anyMatch(cock -> ((CockPart) cock).isGeneric());
 		});
 		primalCock.additionalRequirements = "A normal cock";
 		primalCock.option = "Primal Cock";
 		primalCock.scene = "[Placeholder]<br>Kat uses her totemic magic to convert your penis into a primal cock.";
 		primalCock.effect = (c, self, other) -> {
-			Optional<BodyPart> optPart = self.body.get("cock").stream()
-					.filter(cock -> ((CockPart) cock).isGeneric()).findAny();
+			Optional<BodyPart> optPart = self.body.get("cock").stream().filter(cock -> ((CockPart) cock).isGeneric())
+					.findAny();
 			BasicCockPart target = (BasicCockPart) optPart.get();
 			self.body.remove(target);
 			self.body.add(new ModdedCockPart(target, CockMod.primal));
@@ -64,8 +63,7 @@ public class KatTime extends BaseNPCTime {
 		feralPussy.ingredients.put(Item.FemDraft, 10);
 		feralPussy.requirements.add(new BodyPartRequirement("pussy"));
 		feralPussy.requirements.add((c, self, other) -> {
-			return self.body.get("pussy").stream()
-					.anyMatch(pussy -> pussy == PussyPart.normal);
+			return self.body.get("pussy").stream().anyMatch(pussy -> pussy == PussyPart.normal);
 		});
 		feralPussy.option = "Feral Pussy";
 		feralPussy.scene = "[Placeholder]<br>Kat uses her totemic magic to convert your pussy into a feral one.";
@@ -78,11 +76,9 @@ public class KatTime extends BaseNPCTime {
 		TransformationOption catTail = new TransformationOption();
 		catTail.ingredients.put(Item.Rope, 10);
 		catTail.ingredients.put(Item.Aphrodisiac, 50);
-		catTail.requirements.add(new NotRequirement(
-				Arrays.asList(new BodyPartRequirement("tail"))));
+		catTail.requirements.add(new NotRequirement(Arrays.asList(new BodyPartRequirement("tail"))));
 		catTail.requirements.add((c, self, other) -> {
-			return self.body.get("tail").stream().anyMatch(
-					part -> part != TailPart.cat) || !self.body.has("tail");
+			return self.body.get("tail").stream().anyMatch(part -> part != TailPart.cat) || !self.body.has("tail");
 		});
 		catTail.option = "Cat Tail";
 		catTail.scene = "[Placeholder]<br>Kat uses her totemic magic to grow you a cat tail.";
@@ -96,8 +92,7 @@ public class KatTime extends BaseNPCTime {
 		catEars.ingredients.put(Item.Aphrodisiac, 50);
 		catEars.requirements.add(new BodyPartRequirement("ears"));
 		catEars.requirements.add((c, self, other) -> {
-			return self.body.get("ears").stream().anyMatch(
-					part -> part != EarPart.cat) || !self.body.has("ears");
+			return self.body.get("ears").stream().anyMatch(part -> part != EarPart.cat) || !self.body.has("ears");
 		});
 		catEars.option = "Cat Ears";
 		catEars.scene = "[Placeholder]<br>Kat uses her totemic magic to grow you cat ears.";
@@ -123,8 +118,7 @@ public class KatTime extends BaseNPCTime {
 			Global.gui().choose(this, "Games");
 			Global.gui().choose(this, "Sparring");
 			Global.gui().choose(this, "Sex");
-			if (Global.checkFlag(Flag.metAisha)
-					&& !Global.checkFlag(Flag.catspirit)
+			if (Global.checkFlag(Flag.metAisha) && !Global.checkFlag(Flag.catspirit)
 					&& Global.getNPC("Kat").getAffection(player) >= 5) {
 				Global.gui().choose(this, "Ask about Animal Spirit");
 			}
@@ -338,8 +332,8 @@ public class KatTime extends BaseNPCTime {
 			player.gainAffection(npc, 1);
 		} else if (choice.startsWith("Ask about Animal Spirit")) {
 			Global.flag(Flag.catspirit);
-			Global.gui().message(
-					"You know that Kat's power comes from an animal spirit "
+			Global.gui()
+					.message("You know that Kat's power comes from an animal spirit "
 							+ "inside her, but she never mentioned how that came to be. It seems like "
 							+ "that might be a useful ability, so you decide to ask her about it. <i>"
 							+ "\"Hmm? My cat spirit? It's something I got from my friend, Aisha. Have "

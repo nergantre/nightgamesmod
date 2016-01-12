@@ -52,16 +52,13 @@ public class Stunned extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You're unable to move.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
-		return getSelf().name()
-				+ " is on the floor, trying to catch her breath.";
+	public String receive(Combat c, int damage, Result modifier, Character target) {
+		return getSelf().name() + " is on the floor, trying to catch her breath.";
 	}
 
 	@Override

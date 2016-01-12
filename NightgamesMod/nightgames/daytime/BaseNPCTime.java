@@ -12,16 +12,16 @@ import nightgames.items.Loot;
 import nightgames.items.clothing.Clothing;
 
 public abstract class BaseNPCTime extends Activity {
-	protected NPC	npc;
-	String			knownFlag					= "";
-	String			noRequestedItems			= "{self:SUBJECT} frowns when {self:pronoun} sees that you don't have the requested items.";
-	String			giftedString				= "\"Awww thanks!\"";
-	String			giftString					= "\"A present? You shouldn't have!\"";
-	String			transformationOptionString	= "Transformations";
-	String			loveIntro					= "[Placeholder]<br>LoveIntro";
-	String			transformationIntro			= "[Placeholder]<br>TransformationIntro";
-	String			transformationFlag			= "";
-	Trait			advTrait					= null;
+	protected NPC npc;
+	String knownFlag = "";
+	String noRequestedItems = "{self:SUBJECT} frowns when {self:pronoun} sees that you don't have the requested items.";
+	String giftedString = "\"Awww thanks!\"";
+	String giftString = "\"A present? You shouldn't have!\"";
+	String transformationOptionString = "Transformations";
+	String loveIntro = "[Placeholder]<br>LoveIntro";
+	String transformationIntro = "[Placeholder]<br>TransformationIntro";
+	String transformationFlag = "";
+	Trait advTrait = null;
 
 	public BaseNPCTime(Character player, NPC npc) {
 		super(npc.getName(), player);
@@ -40,8 +40,7 @@ public abstract class BaseNPCTime extends Activity {
 
 	public List<Loot> getGiftables() {
 		List<Loot> giftables = new ArrayList<>();
-		player.closet.stream().filter(article -> !npc.has(article))
-				.forEach(article -> giftables.add(article));
+		player.closet.stream().filter(article -> !npc.has(article)).forEach(article -> giftables.add(article));
 		return giftables;
 	}
 
@@ -55,26 +54,23 @@ public abstract class BaseNPCTime extends Activity {
 		Global.gui().clearCommand();
 		List<Loot> giftables = getGiftables();
 
-		Optional<TransformationOption> optionalOption = options.stream()
-				.filter(opt -> choice.equals(opt.option)).findFirst();
-		Optional<Loot> optionalGiftOption = giftables.stream()
-				.filter(gift -> choice
-						.equals(Global.capitalizeFirstLetter(gift.getName())))
+		Optional<TransformationOption> optionalOption = options.stream().filter(opt -> choice.equals(opt.option))
 				.findFirst();
+		Optional<Loot> optionalGiftOption = giftables.stream()
+				.filter(gift -> choice.equals(Global.capitalizeFirstLetter(gift.getName()))).findFirst();
 
 		if (optionalOption.isPresent()) {
 			TransformationOption option = optionalOption.get();
-			boolean hasAll = option.ingredients.entrySet().stream().allMatch(
-					entry -> player.has(entry.getKey(), entry.getValue()));
+			boolean hasAll = option.ingredients.entrySet().stream()
+					.allMatch(entry -> player.has(entry.getKey(), entry.getValue()));
 			if (hasAll) {
 				Global.gui().message(Global.format(option.scene, npc, player));
-				option.ingredients.entrySet().stream().forEach(entry -> player
-						.consume(entry.getKey(), entry.getValue(), false));
+				option.ingredients.entrySet().stream()
+						.forEach(entry -> player.consume(entry.getKey(), entry.getValue(), false));
 				option.effect.execute(null, player, npc);
 				Global.gui().choose(this, "Leave");
 			} else {
-				Global.gui()
-						.message(Global.format(noRequestedItems, npc, player));
+				Global.gui().message(Global.format(noRequestedItems, npc, player));
 				Global.gui().choose(this, "Back");
 			}
 		} else if (optionalGiftOption.isPresent()) {
@@ -90,22 +86,19 @@ public abstract class BaseNPCTime extends Activity {
 			Global.gui().choose(this, "Back");
 		} else if (choice.equals("Gift")) {
 			Global.gui().message(Global.format(giftString, npc, player));
-			giftables.stream().forEach(loot -> Global.gui().choose(this,
-					Global.capitalizeFirstLetter(loot.getName())));
+			giftables.stream().forEach(loot -> Global.gui().choose(this, Global.capitalizeFirstLetter(loot.getName())));
 			Global.gui().choose(this, "Back");
 		} else if (choice.equals("Change Outfit")) {
 			Global.gui().changeClothes(npc, this, "Back");
 		} else if (choice.equals(transformationOptionString)) {
-			Global.gui()
-					.message(Global.format(transformationIntro, npc, player));
+			Global.gui().message(Global.format(transformationIntro, npc, player));
 			if (!transformationFlag.equals("")) {
 				Global.flag(transformationFlag);
 			}
 			options.forEach(opt -> {
 				Global.gui().message(opt.option + ":");
 				opt.ingredients.entrySet().forEach((entry) -> {
-					Global.gui().message(
-							entry.getValue() + " " + entry.getKey().getName());
+					Global.gui().message(entry.getValue() + " " + entry.getKey().getName());
 				});
 				if (!opt.additionalRequirements.isEmpty()) {
 					Global.gui().message(opt.additionalRequirements);
@@ -113,15 +106,13 @@ public abstract class BaseNPCTime extends Activity {
 				Global.gui().message("<br>");
 			});
 			options.forEach(opt -> {
-				if (opt.requirements.stream()
-						.allMatch(req -> req.meets(null, player, npc))) {
+				if (opt.requirements.stream().allMatch(req -> req.meets(null, player, npc))) {
 					Global.gui().choose(this, opt.option);
 				}
 			});
 			Global.gui().choose(this, "Back");
 		} else if (choice.equals("Start") || choice.equals("Back")) {
-			if (npc.getAffection(player) > 25
-					&& (advTrait == null || npc.has(advTrait))) {
+			if (npc.getAffection(player) > 25 && (advTrait == null || npc.has(advTrait))) {
 				Global.gui().message(Global.format(loveIntro, npc, player));
 				Global.gui().choose(this, "Games");
 				Global.gui().choose(this, "Sparring");

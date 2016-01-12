@@ -8,9 +8,9 @@ public class Meter implements Serializable, Cloneable {
 	/**
 	 *
 	 */
-	private static final long	serialVersionUID	= 2L;
-	private int					current;
-	private float				max;
+	private static final long serialVersionUID = 2L;
+	private int current;
+	private float max;
 
 	public Meter(int max) {
 		this.max = max;
@@ -102,7 +102,6 @@ public class Meter implements Serializable, Cloneable {
 
 	@Override
 	public String toString() {
-		return String.format("current: %s / max: %s",
-				Global.formatDecimal(current), Global.formatDecimal(max));
+		return String.format("current: %s / max: %s", Global.formatDecimal(current), Global.formatDecimal(max));
 	}
 }

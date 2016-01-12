@@ -19,8 +19,8 @@ public class Barrier extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !c.getStance().sub(getSelf()) && !c.getStance().prone(getSelf())
-				&& !c.getStance().prone(target) && getSelf().canAct();
+		return !c.getStance().sub(getSelf()) && !c.getStance().prone(getSelf()) && !c.getStance().prone(target)
+				&& getSelf().canAct();
 	}
 
 	@Override
@@ -55,14 +55,12 @@ public class Barrier extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You conjure a simple magic barrier around yourself, reducing physical damage. Unfortunately, it will do nothing against a gentle caress.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().name()
 				+ " holds a hand in front of her and you see a magical barrier appear briefly, before it becomes invisible.";
 	}

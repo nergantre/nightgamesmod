@@ -23,8 +23,7 @@ public class Shield extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now shielded.\n",
-				affected.subjectAction("are", "is"));
+		return String.format("%s now shielded.\n", affected.subjectAction("are", "is"));
 	}
 
 	@Override
@@ -116,7 +115,6 @@ public class Shield extends DurationStatus {
 
 	@Override
 	public Status loadFromJSON(JSONObject obj) {
-		return new Shield(null, JSONUtils.readInteger(obj, "strength"),
-				JSONUtils.readInteger(obj, "duration"));
+		return new Shield(null, JSONUtils.readInteger(obj, "strength"), JSONUtils.readInteger(obj, "duration"));
 	}
 }

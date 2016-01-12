@@ -20,8 +20,7 @@ public class FireForm extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && !c.getStance().sub(getSelf())
-				&& !getSelf().is(Stsflag.form);
+		return getSelf().canAct() && !c.getStance().sub(getSelf()) && !getSelf().is(Stsflag.form);
 	}
 
 	@Override
@@ -51,16 +50,13 @@ public class FireForm extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You let your ki burn, wearing down your body, but enhancing your spirit.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
-		return getSelf().name()
-				+ " powers up and you can almost feel the energy radiating from her.";
+	public String receive(Combat c, int damage, Result modifier, Character target) {
+		return getSelf().name() + " powers up and you can almost feel the energy radiating from her.";
 	}
 
 }

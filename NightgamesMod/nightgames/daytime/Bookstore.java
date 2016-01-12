@@ -31,13 +31,12 @@ public class Bookstore extends Store {
 		}
 		checkSale(choice);
 		if (player.human()) {
-			Global.gui().message(
-					"In addition to textbooks, the campus bookstore sells assorted items for everyday use.");
+			Global.gui()
+					.message("In addition to textbooks, the campus bookstore sells assorted items for everyday use.");
 			for (Item i : stock.keySet()) {
 				Global.gui().message(i.getName() + ": " + i.getPrice());
 			}
-			Global.gui().message(
-					"You have: $" + player.money + " available to spend.");
+			Global.gui().message("You have: $" + player.money + " available to spend.");
 			displayGoods();
 			Global.gui().choose(this, "Leave");
 		}

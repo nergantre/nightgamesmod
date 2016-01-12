@@ -13,8 +13,7 @@ public class Mount extends AbstractFacingStance {
 		if (top.human()) {
 			return "You're on top of " + bottom.name() + ".";
 		} else {
-			return top.name()
-					+ " is straddling you, with her enticing breasts right in front of you.";
+			return top.name() + " is straddling you, with her enticing breasts right in front of you.";
 		}
 	}
 

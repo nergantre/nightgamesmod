@@ -21,8 +21,7 @@ public class Resupply extends Action {
 	@Override
 	public boolean usable(Character user) {
 		return user.location().resupply()
-				|| (Global.checkFlag(Flag.FTC) && ((FTCMatch) Global.getMatch())
-						.isBase(user, user.location()));
+				|| (Global.checkFlag(Flag.FTC) && ((FTCMatch) Global.getMatch()).isBase(user, user.location()));
 	}
 
 	@Override
@@ -43,8 +42,7 @@ public class Resupply extends Action {
 					Global.gui().message(
 							"You check in so you're eligible to fight again, but you still don't get any clothes.");
 				} else {
-					Global.gui().message(
-							"You pick up a change of clothes and prepare to get back in the fray.");
+					Global.gui().message("You pick up a change of clothes and prepare to get back in the fray.");
 				}
 			}
 		}

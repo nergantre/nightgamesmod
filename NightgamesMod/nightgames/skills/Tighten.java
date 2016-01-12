@@ -20,8 +20,7 @@ public class Tighten extends Thrust {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canRespond()
-				&& c.getStance().penetratedBy(getSelf(), target)
+		return getSelf().canRespond() && c.getStance().penetratedBy(getSelf(), target)
 				&& c.getStance().havingSexNoStrapped() && target.hasDick();
 	}
 
@@ -29,8 +28,7 @@ public class Tighten extends Thrust {
 	public int[] getDamage(Combat c, Character target) {
 		int[] result = new int[2];
 
-		int m = 5 + Global.random(10)
-				+ Math.min(getSelf().get(Attribute.Power) / 3, 20);
+		int m = 5 + Global.random(10) + Math.min(getSelf().get(Attribute.Power) / 3, 20);
 		result[0] = m;
 		result[1] = 0;
 
@@ -48,8 +46,7 @@ public class Tighten extends Thrust {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (c.getStance().en == Stance.anal) {
 			return Global.format(
 					"{self:SUBJECT-ACTION:rhythmically squeeze|rhythmically squeezes} {self:possessive} {self:body-part:ass} around {other:possessive} dick, milking {other:direct-object} for all that {self:subject-action:are|is} worth.",
@@ -62,8 +59,7 @@ public class Tighten extends Thrust {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return deal(c, damage, modifier, target);
 	}
 

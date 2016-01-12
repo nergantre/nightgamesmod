@@ -28,11 +28,11 @@ public abstract class BasePersonality implements Personality {
 	/**
 	 *
 	 */
-	private static final long			serialVersionUID	= 2279220186754458082L;
-	public NPC							character;
-	protected Growth					growth;
-	protected List<PreferredAttribute>	preferredAttributes;
-	protected CockMod					preferredCockMod;
+	private static final long serialVersionUID = 2279220186754458082L;
+	public NPC character;
+	protected Growth growth;
+	protected List<PreferredAttribute> preferredAttributes;
+	protected CockMod preferredCockMod;
 
 	public interface PreferredAttribute {
 		Optional<Attribute> getPreferred(Character c);
@@ -52,8 +52,7 @@ public abstract class BasePersonality implements Personality {
 	public void rest(int time) {
 		if (preferredCockMod != CockMod.error && character.rank > 0) {
 			Optional<BodyPart> optDick = character.body.get("cock").stream()
-					.filter(part -> part.getMod() != preferredCockMod)
-					.findAny();
+					.filter(part -> part.getMod() != preferredCockMod).findAny();
 			if (optDick.isPresent()) {
 				CockPart part = (CockPart) optDick.get();
 				character.body.remove(part);
@@ -78,8 +77,7 @@ public abstract class BasePersonality implements Personality {
 	public Skill act(HashSet<Skill> available, Combat c) {
 		HashSet<Skill> tactic = new HashSet<Skill>();
 		Skill chosen;
-		ArrayList<WeightedSkill> priority = Decider.parseSkills(available, c,
-				character);
+		ArrayList<WeightedSkill> priority = Decider.parseSkills(available, c, character);
 		if (!Global.checkFlag(Flag.dumbmode)) {
 			chosen = character.prioritizeNew(priority, c);
 		} else {
@@ -111,14 +109,12 @@ public abstract class BasePersonality implements Personality {
 		if (available.size() == 0) {
 			return;
 		}
-		character.add(
-				(Trait) available.toArray()[Global.random(available.size())]);
+		character.add((Trait) available.toArray()[Global.random(available.size())]);
 	}
 
 	@Override
 	public String image(Combat c) {
-		String fname = character.name().toLowerCase() + "_"
-				+ character.mood.name() + ".jpg";
+		String fname = character.name().toLowerCase() + "_" + character.mood.name() + ".jpg";
 		return fname;
 	}
 
@@ -161,11 +157,9 @@ public abstract class BasePersonality implements Personality {
 			return;
 		}
 		ArrayList<Attribute> avail = new ArrayList<Attribute>();
-		Deque<PreferredAttribute> preferred = new ArrayDeque<PreferredAttribute>(
-				preferredAttributes);
+		Deque<PreferredAttribute> preferred = new ArrayDeque<PreferredAttribute>(preferredAttributes);
 		for (Attribute a : character.att.keySet()) {
-			if (Attribute.isTrainable(a, character)
-					&& (character.getPure(a) > 0 || Attribute.isBasic(a))) {
+			if (Attribute.isTrainable(a, character) && (character.getPure(a) > 0 || Attribute.isBasic(a))) {
 				avail.add(a);
 			}
 		}
@@ -182,8 +176,7 @@ public abstract class BasePersonality implements Personality {
 				return att.isPresent() && avail.contains(att.get());
 			}).collect(Collectors.toList()));
 			if (preferred.size() > 0) {
-				Optional<Attribute> pref = preferred.removeFirst()
-						.getPreferred(character);
+				Optional<Attribute> pref = preferred.removeFirst().getPreferred(character);
 				if (pref.isPresent()) {
 					selected = pref.get();
 				}
@@ -214,12 +207,9 @@ public abstract class BasePersonality implements Personality {
 
 	@Override
 	public Map<CommentSituation, String> getComments(Combat c) {
-		Map<CommentSituation, String> all = CommentSituation
-				.getDefaultComments(getType());
+		Map<CommentSituation, String> all = CommentSituation.getDefaultComments(getType());
 		Map<CommentSituation, String> applicable = new HashMap<>();
-		all.entrySet().stream()
-				.filter(e -> e.getKey().isApplicable(c, character,
-						c.getOther(character)))
+		all.entrySet().stream().filter(e -> e.getKey().isApplicable(c, character, c.getOther(character)))
 				.forEach(e -> applicable.put(e.getKey(), e.getValue()));
 		return applicable;
 	}

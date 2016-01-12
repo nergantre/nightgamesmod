@@ -11,16 +11,15 @@ import nightgames.items.Item;
 
 public abstract class ItemModifier {
 
-	public static final List<ItemModifier>	TYPES			= Collections
-			.unmodifiableList(Arrays.asList(new BanToysModifier(),
-					new BanConsumablesModifier()));
+	public static final List<ItemModifier> TYPES = Collections
+			.unmodifiableList(Arrays.asList(new BanToysModifier(), new BanConsumablesModifier()));
 
-	public static final ItemModifier		NULL_MODIFIER	= new ItemModifier() {
-																@Override
-																public String toString() {
-																	return "null-item-modifier";
-																}
-															};
+	public static final ItemModifier NULL_MODIFIER = new ItemModifier() {
+		@Override
+		public String toString() {
+			return "null-item-modifier";
+		}
+	};
 
 	public Set<Item> bannedItems() {
 		return Collections.emptySet();

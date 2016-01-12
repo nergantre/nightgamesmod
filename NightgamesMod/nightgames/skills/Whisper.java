@@ -17,8 +17,7 @@ public class Whisper extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().kiss(getSelf()) && getSelf().canAct()
-				&& !getSelf().has(Trait.direct);
+		return c.getStance().kiss(getSelf()) && getSelf().canAct() && !getSelf().has(Trait.direct);
 	}
 
 	@Override
@@ -33,8 +32,7 @@ public class Whisper extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		int roll = Global.centeredrandom(4, getSelf().get(Attribute.Dark) / 5.0,
-				2);
+		int roll = Global.centeredrandom(4, getSelf().get(Attribute.Dark) / 5.0, 2);
 		int m = 4 + Global.random(6);
 
 		if (target.has(Trait.imagination)) {
@@ -43,8 +41,7 @@ public class Whisper extends Skill {
 		if (getSelf().has(Trait.darkpromises)) {
 			m += 3;
 		}
-		if (getSelf().has(Trait.darkpromises) && roll == 4
-				&& getSelf().canSpend(15) && !target.wary()) {
+		if (getSelf().has(Trait.darkpromises) && roll == 4 && getSelf().canSpend(15) && !target.wary()) {
 			getSelf().spendMojo(c, 15);
 			if (getSelf().human()) {
 				c.write(getSelf(), deal(c, 0, Result.special, target));
@@ -85,8 +82,7 @@ public class Whisper extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.special) {
 			return "You whisper words of domination in " + target.name()
 					+ "'s ear, filling her with your darkness. The spirit in her eyes seems to dim as she submits to your will.";
@@ -97,16 +93,13 @@ public class Whisper extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.special) {
-			return getSelf().name()
-					+ " whispers in your ear in some eldritch language."
+			return getSelf().name() + " whispers in your ear in some eldritch language."
 					+ " Her words echo through your head and you feel a"
 					+ " strong compulsion to do what she tells you";
 		} else {
-			return getSelf().name()
-					+ " whispers some deliciously seductive suggestions in your ear.";
+			return getSelf().name() + " whispers some deliciously seductive suggestions in your ear.";
 		}
 	}
 

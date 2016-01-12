@@ -17,10 +17,8 @@ public class PussyWorship extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.crotchAvailable() && target.hasDick()
-				&& c.getStance().oral(getSelf())
-				&& c.getStance().front(getSelf()) && getSelf().canAct()
-				&& !c.getStance().vaginallyPenetrated(target);
+		return target.crotchAvailable() && target.hasDick() && c.getStance().oral(getSelf())
+				&& c.getStance().front(getSelf()) && getSelf().canAct() && !c.getStance().vaginallyPenetrated(target);
 	}
 
 	@Override
@@ -44,21 +42,14 @@ public class PussyWorship extends Skill {
 		} else if (getSelf().human()) {
 			c.write(getSelf(), deal(c, m, Result.normal, target));
 		}
-		target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"),
-				target.body.getRandom("pussy"), m, c);
-		if (getSelf().hasDick()
-				&& (!getSelf().hasPussy() || Global.random(2) == 0)) {
-			getSelf().body.pleasure(getSelf(),
-					getSelf().body.getRandom("hands"),
-					getSelf().body.getRandomCock(), m, c);
+		target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("pussy"), m, c);
+		if (getSelf().hasDick() && (!getSelf().hasPussy() || Global.random(2) == 0)) {
+			getSelf().body.pleasure(getSelf(), getSelf().body.getRandom("hands"), getSelf().body.getRandomCock(), m, c);
 		} else if (getSelf().hasPussy()) {
-			getSelf().body.pleasure(getSelf(),
-					getSelf().body.getRandom("hands"),
-					getSelf().body.getRandomPussy(), m, c);
+			getSelf().body.pleasure(getSelf(), getSelf().body.getRandom("hands"), getSelf().body.getRandomPussy(), m,
+					c);
 		} else {
-			getSelf().body.pleasure(getSelf(),
-					getSelf().body.getRandom("hands"),
-					getSelf().body.getRandomHole(), m, c);
+			getSelf().body.pleasure(getSelf(), getSelf().body.getRandom("hands"), getSelf().body.getRandomHole(), m, c);
 		}
 
 		target.buildMojo(c, 20);
@@ -92,8 +83,7 @@ public class PussyWorship extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return Global.format(
 				"You ecstatically crawl towards {other:name-do} and bring your face up to {other:possessive} {other:body-part:pussy}. "
 						+ "You carefully form a seal with your mouth and {other:possessive} netherlips, and stick your tongue into {other:possessive} moist slit. "
@@ -104,8 +94,7 @@ public class PussyWorship extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return Global.format(
 				"{self:subject} ecstatically crawls to you on {self:possessive} knees and attaches {self:possessive} {self:body-part:mouth} to "
 						+ "{other:possessive} {other:body-part:pussy} while holding onto your legs. {self:SUBJECT} carefully takes a few licks of {other:possessive} slit before "

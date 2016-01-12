@@ -22,15 +22,13 @@ public class Shamed extends DurationStatus {
 		if (affected.human()) {
 			return "You're a little distracted by self-consciousness, and it's throwing you off your game.";
 		} else {
-			return affected.name()
-					+ " is red faced from embarrassment as much as arousal.";
+			return affected.name() + " is red faced from embarrassment as much as arousal.";
 		}
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now shamed.\n",
-				affected.subjectAction("are", "is"));
+		return String.format("%s now shamed.\n", affected.subjectAction("are", "is"));
 	}
 
 	@Override
@@ -51,10 +49,8 @@ public class Shamed extends DurationStatus {
 	@Override
 	public int mod(Attribute a) {
 		if (a == Attribute.Seduction || a == Attribute.Cunning) {
-			return Math.min(-2 * magnitude,
-					-affected.getPure(a) * magnitude / 5);
-		} else if (a == Attribute.Submissive
-				&& affected.getPure(Attribute.Submissive) > 0) {
+			return Math.min(-2 * magnitude, -affected.getPure(a) * magnitude / 5);
+		} else if (a == Attribute.Submissive && affected.getPure(Attribute.Submissive) > 0) {
 			return magnitude;
 		} else {
 			return 0;

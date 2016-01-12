@@ -20,9 +20,8 @@ public class FlowerSex extends FemdomSexStance {
 			return "You're coiled around " + bottom.nameOrPossessivePronoun()
 					+ " body with his cock inside you and the petals of your flower wrapped around both of you like a cocoon.";
 		} else {
-			return "You're trapped in a giant flower bulb surrounding you and "
-					+ top.name() + ". Inside, you're on top of "
-					+ top.nameDirectObject()
+			return "You're trapped in a giant flower bulb surrounding you and " + top.name()
+					+ ". Inside, you're on top of " + top.nameDirectObject()
 					+ " with your cock trapped in her pussy and your face smothered in her cleavage.";
 		}
 	}

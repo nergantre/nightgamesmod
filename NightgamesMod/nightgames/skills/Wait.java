@@ -73,21 +73,18 @@ public class Wait extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.special) {
 			return "You force yourself to look less tired and horny than you actually are. You even start to believe it yourself.";
 		} else if (modifier == Result.strong) {
 			return "You take a moment to clear your thoughts, focusing your mind and calming your body.";
 		} else {
-			return "You bide your time, waiting to see what " + target.name()
-					+ " will do.";
+			return "You bide your time, waiting to see what " + target.name() + " will do.";
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.special) {
 			return "Despite your best efforts, " + getSelf().name()
 					+ " is still looking as calm and composed as ever. Either you aren't getting to her at all, or she's good at hiding it.";
@@ -118,8 +115,6 @@ public class Wait extends Skill {
 	}
 
 	private boolean focused() {
-		return getSelf().get(Attribute.Cunning) >= 15
-				&& !getSelf().has(Trait.undisciplined)
-				&& getSelf().canRespond();
+		return getSelf().get(Attribute.Cunning) >= 15 && !getSelf().has(Trait.undisciplined) && getSelf().canRespond();
 	}
 }

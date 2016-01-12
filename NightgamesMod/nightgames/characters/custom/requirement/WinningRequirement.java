@@ -6,7 +6,7 @@ import nightgames.combat.Combat;
 public class WinningRequirement implements CustomRequirement {
 
 	private static final int INITIAL_WINNING_SCORE = 10;
-	
+
 	@Override
 	public boolean meets(Combat c, Character self, Character other) {
 		if (c == null)

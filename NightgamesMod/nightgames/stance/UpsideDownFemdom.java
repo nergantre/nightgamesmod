@@ -20,8 +20,7 @@ public class UpsideDownFemdom extends FemdomSexStance {
 			return "You are holding " + bottom.name()
 					+ " upsidedown by her legs while fucking her cock with your slit.";
 		} else {
-			return top.name()
-					+ " is holding you upsidedown by your legs while fucking your cock with her slit.";
+			return top.name() + " is holding you upsidedown by your legs while fucking your cock with her slit.";
 		}
 	}
 

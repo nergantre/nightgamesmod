@@ -18,9 +18,8 @@ public class MutualUndress extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		if (getSelf().stripDifficulty(target) == 0 && getSelf().canAct()
-				&& c.getStance().mobile(getSelf()) && !getSelf().mostlyNude()
-				&& !target.mostlyNude()) {
+		if (getSelf().stripDifficulty(target) == 0 && getSelf().canAct() && c.getStance().mobile(getSelf())
+				&& !getSelf().mostlyNude() && !target.mostlyNude()) {
 			return true;
 		}
 		return false;
@@ -64,8 +63,7 @@ public class MutualUndress extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "During a brief respite in the fight as " + target.name()
 				+ " is catching her breath, you ask if we can finish the fight naked. "
 				+ "Without waiting for an answer, you slowly strip off all your clothing."
@@ -73,8 +71,7 @@ public class MutualUndress extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().name()
 				+ " asks for a quick time out and starts sexily slipping her her clothes off. Although there are no time outs in the rules, you can't help staring "
 				+ "at the seductive display until she finishes with a cute wiggle of her naked ass. She asks you if you want to join her in feeling good, and before you realize it "

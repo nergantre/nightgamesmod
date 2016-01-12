@@ -20,8 +20,7 @@ public class FireStance extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now in a fire stance.\n",
-				affected.subjectAction("are", "is"));
+		return String.format("%s now in a fire stance.\n", affected.subjectAction("are", "is"));
 	}
 
 	@Override

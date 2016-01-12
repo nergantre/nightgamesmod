@@ -18,11 +18,9 @@ public class Lovestruck extends DurationStatus {
 	@Override
 	public String describe(Combat c) {
 		if (affected.human()) {
-			return "You feel an irresistable attraction to "
-					+ other.nameDirectObject() + ".";
+			return "You feel an irresistable attraction to " + other.nameDirectObject() + ".";
 		} else {
-			return affected.name()
-					+ " is looking at you like a lovestruck teenager.";
+			return affected.name() + " is looking at you like a lovestruck teenager.";
 		}
 	}
 
@@ -63,8 +61,7 @@ public class Lovestruck extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now lovestruck.\n",
-				affected.subjectAction("are", "is"));
+		return String.format("%s now lovestruck.\n", affected.subjectAction("are", "is"));
 	}
 
 	@Override

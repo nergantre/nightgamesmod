@@ -21,10 +21,8 @@ public class DenyOrgasm extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canRespond() && !target.is(Stsflag.orgasmseal)
-				&& target.getArousal().percent() > 50
-				&& c.getStance().penetratedBy(getSelf(), target)
-				&& !target.has(Trait.strapped);
+		return getSelf().canRespond() && !target.is(Stsflag.orgasmseal) && target.getArousal().percent() > 50
+				&& c.getStance().penetratedBy(getSelf(), target) && !target.has(Trait.strapped);
 	}
 
 	@Override
@@ -59,20 +57,16 @@ public class DenyOrgasm extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
-		return "You give " + target.subject()
-				+ " a quick smirk and tighten yourself around "
-				+ target.possessivePronoun() + " cock, keeping "
-				+ target.possessivePronoun() + " boiling cum from escaping";
+	public String deal(Combat c, int damage, Result modifier, Character target) {
+		return "You give " + target.subject() + " a quick smirk and tighten yourself around "
+				+ target.possessivePronoun() + " cock, keeping " + target.possessivePronoun()
+				+ " boiling cum from escaping";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
-		return getSelf().subject() + " gives " + target.subject()
-				+ " a quick smirk and tightens down on "
-				+ target.possessivePronoun() + " cock, keeping "
-				+ target.possessivePronoun() + " boiling cum from escaping";
+	public String receive(Combat c, int damage, Result modifier, Character target) {
+		return getSelf().subject() + " gives " + target.subject() + " a quick smirk and tightens down on "
+				+ target.possessivePronoun() + " cock, keeping " + target.possessivePronoun()
+				+ " boiling cum from escaping";
 	}
 }

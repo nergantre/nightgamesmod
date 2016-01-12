@@ -20,8 +20,7 @@ public class Masochism extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && c.getStance().mobile(getSelf())
-				&& getSelf().getArousal().get() >= 15
+		return getSelf().canAct() && c.getStance().mobile(getSelf()) && getSelf().getArousal().get() >= 15
 				&& !getSelf().is(Stsflag.masochism);
 	}
 
@@ -53,15 +52,13 @@ public class Masochism extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You fantasize about the pleasure that exquisite pain can bring. You share this pleasure with "
 				+ target.name() + ".";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().name()
 				+ " shivers in arousal. You're suddenly bombarded with thoughts of letting her hurt you in wonderful ways.";
 	}

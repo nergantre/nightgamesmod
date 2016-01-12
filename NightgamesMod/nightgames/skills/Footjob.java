@@ -21,22 +21,18 @@ public class Footjob extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (target.hasDick() || target.hasPussy())
-				&& c.getStance().feet(getSelf()) && target.crotchAvailable()
-				&& c.getStance().prone(getSelf()) != c.getStance().prone(target)
-				&& getSelf().canAct() && !c.getStance().inserted()
-				&& getSelf().outfit.hasNoShoes();
+		return (target.hasDick() || target.hasPussy()) && c.getStance().feet(getSelf()) && target.crotchAvailable()
+				&& c.getStance().prone(getSelf()) != c.getStance().prone(target) && getSelf().canAct()
+				&& !c.getStance().inserted() && getSelf().outfit.hasNoShoes();
 	}
 
 	@Override
 	public float priorityMod(Combat c) {
 		BodyPart feet = getSelf().body.getRandom("feet");
 		Character other = c.p1 == getSelf() ? c.p2 : c.p1;
-		BodyPart otherpart = other.hasDick() ? other.body.getRandomCock()
-				: other.body.getRandomPussy();
+		BodyPart otherpart = other.hasDick() ? other.body.getRandomCock() : other.body.getRandomPussy();
 		if (feet != null) {
-			return (float) Math.max(0,
-					feet.getPleasure(getSelf(), otherpart) - 1);
+			return (float) Math.max(0, feet.getPleasure(getSelf(), otherpart) - 1);
 		}
 		return 0;
 	}
@@ -51,32 +47,23 @@ public class Footjob extends Skill {
 		if (target.roll(this, c, accuracy(c))) {
 			int m = 8 + Global.random(6);
 			if (getSelf().human()) {
-				c.write(getSelf(), Global.format(
-						deal(c, m, Result.normal, target), getSelf(), target));
+				c.write(getSelf(), Global.format(deal(c, m, Result.normal, target), getSelf(), target));
 			} else if (target.human()) {
-				c.write(getSelf(),
-						Global.format(receive(c, m, Result.normal, target),
-								getSelf(), target));
+				c.write(getSelf(), Global.format(receive(c, m, Result.normal, target), getSelf(), target));
 			}
 			if (target.hasDick()) {
-				target.body.pleasure(getSelf(),
-						getSelf().body.getRandom("feet"),
-						target.body.getRandom("cock"), m, c);
+				target.body.pleasure(getSelf(), getSelf().body.getRandom("feet"), target.body.getRandom("cock"), m, c);
 			} else {
-				target.body.pleasure(getSelf(),
-						getSelf().body.getRandom("feet"),
-						target.body.getRandom("pussy"), m, c);
+				target.body.pleasure(getSelf(), getSelf().body.getRandom("feet"), target.body.getRandom("pussy"), m, c);
 			}
 			if (Global.random(100) < 15 + 2 * getSelf().get(Attribute.Fetish)) {
 				target.add(c, new BodyFetish(target, getSelf(), "feet", .25));
 			}
 		} else {
 			if (getSelf().human()) {
-				c.write(getSelf(), Global.format(
-						deal(c, 0, Result.miss, target), getSelf(), target));
+				c.write(getSelf(), Global.format(deal(c, 0, Result.miss, target), getSelf(), target));
 			} else if (target.human()) {
-				c.write(getSelf(), Global.format(
-						receive(c, 0, Result.miss, target), getSelf(), target));
+				c.write(getSelf(), Global.format(receive(c, 0, Result.miss, target), getSelf(), target));
 			}
 			return false;
 		}
@@ -100,11 +87,9 @@ public class Footjob extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return "You attempt to place your foot between "
-					+ target.nameOrPossessivePronoun() + " legs, but "
+			return "You attempt to place your foot between " + target.nameOrPossessivePronoun() + " legs, but "
 					+ target.pronoun() + " moves away at the last second.";
 		} else {
 			String message = "";
@@ -134,11 +119,9 @@ public class Footjob extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return getSelf().name()
-					+ " swings her foot at your groin, but misses.";
+			return getSelf().name() + " swings her foot at your groin, but misses.";
 		} else {
 			if (target.hasDick()) {
 				return getSelf().name()

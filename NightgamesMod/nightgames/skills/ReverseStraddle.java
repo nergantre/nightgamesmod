@@ -14,8 +14,8 @@ public class ReverseStraddle extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().mobile(getSelf()) && c.getStance().mobile(target)
-				&& c.getStance().prone(target) && getSelf().canAct();
+		return c.getStance().mobile(getSelf()) && c.getStance().mobile(target) && c.getStance().prone(target)
+				&& getSelf().canAct();
 	}
 
 	@Override
@@ -50,14 +50,12 @@ public class ReverseStraddle extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You straddle " + target.name() + ", facing her feet.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().name() + " sits on your chest, facing your crotch.";
 	}
 

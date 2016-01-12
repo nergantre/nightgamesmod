@@ -21,12 +21,9 @@ public class HeightenSenses extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && c.getStance().mobile(getSelf())
-				&& !c.getStance().behind(getSelf())
-				&& !c.getStance().behind(target)
-				&& !c.getStance().sub(getSelf()) && target.is(Stsflag.charmed)
-				&& (!target.is(Stsflag.hypersensitive)
-						|| target.getPure(Attribute.Perception) < 9);
+		return getSelf().canAct() && c.getStance().mobile(getSelf()) && !c.getStance().behind(getSelf())
+				&& !c.getStance().behind(target) && !c.getStance().sub(getSelf()) && target.is(Stsflag.charmed)
+				&& (!target.is(Stsflag.hypersensitive) || target.getPure(Attribute.Perception) < 9);
 	}
 
 	@Override
@@ -65,25 +62,20 @@ public class HeightenSenses extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.strong) {
-			return String
-					.format("You plant a suggestion in %s's head to increase %s sensitivity. %s accepts the suggestion so easily and strongly that you suspect it may have had a permanent effect.",
-							new Object[] { target.name(),
-									target.possessivePronoun(),
-									target.pronoun() });
+			return String.format(
+					"You plant a suggestion in %s's head to increase %s sensitivity. %s accepts the suggestion so easily and strongly that you suspect it may have had a permanent effect.",
+					new Object[] { target.name(), target.possessivePronoun(), target.pronoun() });
 		}
-		return String
-				.format("You plant a suggestion in %s's head to increase %s sensitivity. %s shivers as %s sense of touch is amplified",
-						new Object[] { getSelf().name(),
-								target.possessivePronoun(), target.pronoun(),
-								target.possessivePronoun() });
+		return String.format(
+				"You plant a suggestion in %s's head to increase %s sensitivity. %s shivers as %s sense of touch is amplified",
+				new Object[] { getSelf().name(), target.possessivePronoun(), target.pronoun(),
+						target.possessivePronoun() });
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.strong) {
 			return String.format(
 					"%s explains to you that your body, especially your erogenous zones, have become more sensitive. %s's right. All your senses feel heightened. You feel almost like a superhero. It's ok if this is permanent, right?",

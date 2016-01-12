@@ -20,10 +20,8 @@ public class UseDildo extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (getSelf().has(Item.Dildo) || getSelf().has(Item.Dildo2))
-				&& getSelf().canAct() && target.hasPussy()
-				&& c.getStance().reachBottom(getSelf())
-				&& target.crotchAvailable()
+		return (getSelf().has(Item.Dildo) || getSelf().has(Item.Dildo2)) && getSelf().canAct() && target.hasPussy()
+				&& c.getStance().reachBottom(getSelf()) && target.crotchAvailable()
 				&& !c.getStance().vaginallyPenetrated(target);
 	}
 
@@ -36,10 +34,8 @@ public class UseDildo extends Skill {
 				} else if (target.human()) {
 					c.write(getSelf(), receive(c, 0, Result.upgrade, target));
 				}
-				int m = 5 + Global.random(15)
-						+ target.get(Attribute.Perception);
-				target.body.pleasure(getSelf(), null,
-						target.body.getRandom("pussy"), m, c);
+				int m = 5 + Global.random(15) + target.get(Attribute.Perception);
+				target.body.pleasure(getSelf(), null, target.body.getRandom("pussy"), m, c);
 			} else {
 				if (getSelf().human()) {
 					c.write(getSelf(), deal(c, 0, Result.normal, target));
@@ -47,8 +43,7 @@ public class UseDildo extends Skill {
 					c.write(getSelf(), receive(c, 0, Result.normal, target));
 				}
 				int m = Global.random(10) + target.get(Attribute.Perception);
-				target.body.pleasure(getSelf(), null,
-						target.body.getRandom("pussy"), m, c);
+				target.body.pleasure(getSelf(), null, target.body.getRandom("pussy"), m, c);
 			}
 		} else {
 			if (getSelf().human()) {
@@ -72,29 +67,23 @@ public class UseDildo extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return "You try to slip a dildo into " + target.name()
-					+ ", but she blocks it.";
+			return "You try to slip a dildo into " + target.name() + ", but she blocks it.";
 		} else if (modifier == Result.upgrade) {
-			return "You touch the imperceptibly vibrating dildo to "
-					+ target.name()
+			return "You touch the imperceptibly vibrating dildo to " + target.name()
 					+ "'s love button and she jumps as if shocked. Before she can defend herself, you "
-					+ "slip it into her "
-					+ target.body.getRandomPussy().describe(target)
+					+ "slip it into her " + target.body.getRandomPussy().describe(target)
 					+ ". She starts moaning in pleasure immediately.";
 		} else {
 			return "You rub the dildo against " + target.name()
 					+ "'s lower lips to lubricate it before you thrust it inside her. She can't help moaning a little as you "
-					+ "pump the rubber toy in and out of her "
-					+ target.body.getRandomPussy().describe(target) + ".";
+					+ "pump the rubber toy in and out of her " + target.body.getRandomPussy().describe(target) + ".";
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			return Global.format(
 					"{self:SUBJECT-ACTION:try|tries} to slip a dildo into {other:direct-object}, but {other:subject} block it.",

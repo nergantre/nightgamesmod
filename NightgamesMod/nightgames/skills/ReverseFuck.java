@@ -36,16 +36,14 @@ public class ReverseFuck extends Fuck {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		BodyPart selfO = getSelfOrgan();
 		BodyPart targetO = getTargetOrgan(target);
 		if (modifier == Result.normal) {
-			return Global.format(
-					"{self:subject-action:rub|rubs} {self:possessive} {self:body-part:pussy} against {other:possessive} {other:body-part:cock}, "
+			return Global
+					.format("{self:subject-action:rub|rubs} {self:possessive} {self:body-part:pussy} against {other:possessive} {other:body-part:cock}, "
 							+ "causing {other:direct-object} to shiver with anticipation. In one swift motion, {self:subject-action:plunge|plunges} {other:possessive} {other:body-part:cock} "
-							+ "into {self:possessive} depths.",
-					getSelf(), target);
+							+ "into {self:possessive} depths.", getSelf(), target);
 		} else if (modifier == Result.miss) {
 			if (!selfO.isReady(getSelf()) && !targetO.isReady(target)) {
 				return Global.format(
@@ -62,23 +60,19 @@ public class ReverseFuck extends Fuck {
 								+ "but {self:subject-action|find:finds} that {self:subject-action:are:is} not nearly wet enough to allow a comfortable insertion.",
 						getSelf(), target);
 			}
-			return Global.format(
-					"{self:subject-action:manage|manages} to miss the mark.",
-					getSelf(), target);
+			return Global.format("{self:subject-action:manage|manages} to miss the mark.", getSelf(), target);
 		}
 		return "Bad stuff happened";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return deal(c, damage, modifier, target);
 	}
 
 	@Override
 	public String describe(Combat c) {
-		return "Straddle your opponent and ride "
-				+ c.getOther(getSelf()).possessivePronoun() + " cock";
+		return "Straddle your opponent and ride " + c.getOther(getSelf()).possessivePronoun() + " cock";
 	}
 
 	@Override

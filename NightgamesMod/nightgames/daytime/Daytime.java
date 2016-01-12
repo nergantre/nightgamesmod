@@ -10,11 +10,11 @@ import nightgames.global.Flag;
 import nightgames.global.Global;
 
 public class Daytime {
-	private ArrayList<Activity>	activities;
-	private Player				player;
-	private int					time;
-	private Threesomes			threesome;
-	private int					daylength;
+	private ArrayList<Activity> activities;
+	private Player player;
+	private int time;
+	private Threesomes threesome;
+	private int daylength;
 
 	public Daytime(Player player) {
 		this.player = player;
@@ -58,8 +58,7 @@ public class Daytime {
 			Global.gui().clearText();
 			Global.gui().message(
 					"In the morning, you receive a call from a restricted number. You are not at all surprised to hear the voice of your anonymous Benefactor again. It did seem about time for him to call again. <i>\"Hello "
-							+ player.name()
-							+ ". Have you been keeping busy? You've been putting "
+							+ player.name() + ". Have you been keeping busy? You've been putting "
 							+ "on a good show in your matches, but when we last spoke, you had many questions. Are you any closer to finding your answers?\"</i><p>"
 							+ "That's an odd question since it depends on whether or not he has become more willing to talk. Who else is going to fill you in about this "
 							+ "apparently clandestine organization. <i>\"Oh don't become lazy now. I chose you for this Game, in part, for your drive and initiative. Are "
@@ -90,8 +89,7 @@ public class Daytime {
 	public void plan() {
 		String threescene;
 		if (time < 22) {
-			Global.gui().message("It is currently " + displayTime()
-					+ ". Your next match starts at 10:00.");
+			Global.gui().message("It is currently " + displayTime() + ". Your next match starts at 10:00.");
 			Global.gui().refresh();
 			Global.gui().clearCommand();
 			if (!Global.checkFlag(Flag.threesome)) {
@@ -109,8 +107,7 @@ public class Daytime {
 		} else {
 			for (Character npc : Global.everyone()) {
 				if (!npc.human()) {
-					if (npc.getLevel() >= 10 && npc.getRank() == 0
-							|| npc.getLevel() >= 20 && npc.getRank() == 1) {
+					if (npc.getLevel() >= 10 && npc.getRank() == 0 || npc.getLevel() >= 20 && npc.getRank() == 1) {
 						npc.rankup();
 					}
 					((NPC) npc).daytime(daylength);

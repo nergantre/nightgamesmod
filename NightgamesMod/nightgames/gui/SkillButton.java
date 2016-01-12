@@ -16,9 +16,9 @@ import nightgames.skills.Tactics;
 public class SkillButton extends JPanel {
 
 	private static final long serialVersionUID = -1253735466299929203L;
-	protected Skill		action;
-	protected Combat	combat;
-	private JButton		button;
+	protected Skill action;
+	protected Combat combat;
+	private JButton button;
 
 	public SkillButton(final Skill action, Combat c) {
 		super();
@@ -43,8 +43,7 @@ public class SkillButton extends JPanel {
 			button.setForeground(Color.WHITE);
 		} else if (action.type(c) == Tactics.debuff) {
 			button.setBackground(Color.CYAN);
-		} else if (action.type(c) == Tactics.recovery
-				|| action.type(c) == Tactics.calming) {
+		} else if (action.type(c) == Tactics.recovery || action.type(c) == Tactics.calming) {
 			button.setBackground(Color.WHITE);
 		} else if (action.type(c) == Tactics.summoning) {
 			button.setBackground(Color.YELLOW);
@@ -63,8 +62,7 @@ public class SkillButton extends JPanel {
 		}
 		if (!action.user().cooldownAvailable(action)) {
 			button.setEnabled(false);
-			text += String.format("<br>Remaining Cooldown: %d turns",
-					action.user().getCooldown(action));
+			text += String.format("<br>Remaining Cooldown: %d turns", action.user().getCooldown(action));
 			button.setForeground(Color.WHITE);
 			button.setBackground(getBackground().darker());
 		}
@@ -74,13 +72,11 @@ public class SkillButton extends JPanel {
 		combat = c;
 		button.addActionListener(arg0 -> {
 			if (action.subChoices().size() == 0) {
-				combat.act(SkillButton.this.action.user(),
-						SkillButton.this.action, "");
+				combat.act(SkillButton.this.action.user(), SkillButton.this.action, "");
 			} else {
 				Global.gui().commandPanel.removeAll();
 				for (String choice : action.subChoices()) {
-					Global.gui().commandPanel
-							.add(new SubSkillButton(action, choice, combat));
+					Global.gui().commandPanel.add(new SubSkillButton(action, choice, combat));
 				}
 				Global.gui().commandPanel.repaint();
 				Global.gui().commandPanel.revalidate();

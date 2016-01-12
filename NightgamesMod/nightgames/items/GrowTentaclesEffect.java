@@ -17,16 +17,13 @@ public class GrowTentaclesEffect extends ItemEffect {
 	}
 
 	@Override
-	public boolean use(Combat c, Character user, Character opponent,
-			Item item) {
+	public boolean use(Combat c, Character user, Character opponent, Item item) {
 		int duration = selfDuration >= 0 ? selfDuration : item.duration;
-		TentaclePart part = TentaclePart.randomTentacle("tentacles", user.body,
-				"tentacle-semen", 0, 1, 1);
-		BodyModEffect effect = new BodyModEffect(getSelfVerb(), getOtherVerb(),
-				part, BodyModEffect.Effect.growMultiple, duration);
+		TentaclePart part = TentaclePart.randomTentacle("tentacles", user.body, "tentacle-semen", 0, 1, 1);
+		BodyModEffect effect = new BodyModEffect(getSelfVerb(), getOtherVerb(), part, BodyModEffect.Effect.growMultiple,
+				duration);
 		effect.use(null, user, opponent, item);
-		c.write(part.describe(user) + " sprout from "
-				+ user.nameOrPossessivePronoun() + " " + part.attachpoint);
+		c.write(part.describe(user) + " sprout from " + user.nameOrPossessivePronoun() + " " + part.attachpoint);
 		return true;
 	}
 }

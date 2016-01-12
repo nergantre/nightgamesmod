@@ -19,8 +19,7 @@ public class Energize extends Action {
 
 	@Override
 	public boolean usable(Character user) {
-		return user.get(Attribute.Arcane) >= 1 && user.location().mana()
-				&& !user.is(Stsflag.energized);
+		return user.get(Attribute.Arcane) >= 1 && user.location().mana() && !user.is(Stsflag.energized);
 	}
 
 	@Override

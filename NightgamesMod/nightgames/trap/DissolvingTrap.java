@@ -14,8 +14,7 @@ public class DissolvingTrap implements Trap {
 
 	@Override
 	public void trigger(Character target) {
-		if (!target.check(Attribute.Perception,
-				20 - target.get(Attribute.Perception) + target.baseDisarm())) {
+		if (!target.check(Attribute.Perception, 20 - target.get(Attribute.Perception) + target.baseDisarm())) {
 			if (target.human()) {
 				Global.gui().message(
 						"You spot a liquid spray trap in time to avoid setting it off. You carefully manage to disarm the trap and pocket the potion.");
@@ -56,8 +55,8 @@ public class DissolvingTrap implements Trap {
 
 	@Override
 	public boolean recipe(Character owner) {
-		return owner.has(Item.Tripwire) && owner.has(Item.DisSol)
-				&& owner.has(Item.Sprayer) && !owner.has(Trait.direct);
+		return owner.has(Item.Tripwire) && owner.has(Item.DisSol) && owner.has(Item.Sprayer)
+				&& !owner.has(Trait.direct);
 	}
 
 	@Override
@@ -85,8 +84,7 @@ public class DissolvingTrap implements Trap {
 	}
 
 	@Override
-	public void capitalize(Character attacker, Character victim,
-			IEncounter enc) {
+	public void capitalize(Character attacker, Character victim, IEncounter enc) {
 		victim.add(new Flatfooted(victim, 1));
 		enc.engage(new Combat(attacker, victim, attacker.location()));
 		attacker.location().trap = null;

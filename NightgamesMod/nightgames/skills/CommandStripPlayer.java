@@ -40,18 +40,14 @@ public class CommandStripPlayer extends PlayerCommand {
 	}
 
 	@Override
-	public String deal(Combat c, int magnitude, Result modifier,
-			Character target) {
+	public String deal(Combat c, int magnitude, Result modifier, Character target) {
 		return "With an elated gleam in her eyes, " + target.name()
-				+ " moves her hands with nigh-inhuman dexterity, stripping all"
-				+ " of your clothes in just a second.";
+				+ " moves her hands with nigh-inhuman dexterity, stripping all" + " of your clothes in just a second.";
 	}
 
 	@Override
-	public String receive(Combat c, int magnitude, Result modifier,
-			Character target) {
-		return "<<This should not be displayed, please inform The"
-				+ " Silver Bard: CommandStripPlayer-receive>>";
+	public String receive(Combat c, int magnitude, Result modifier, Character target) {
+		return "<<This should not be displayed, please inform The" + " Silver Bard: CommandStripPlayer-receive>>";
 	}
 
 	@Override

@@ -12,8 +12,8 @@ import nightgames.global.Global;
 import nightgames.global.JSONUtils;
 
 public class TailFucked extends Status {
-	private String		target;
-	private Character	other;
+	private String target;
+	private Character other;
 
 	public TailFucked(Character affected, Character other, String hole) {
 		super(hole.equals("ass") ? "Tail Pegged" : "Tail Fucked", affected);
@@ -31,10 +31,8 @@ public class TailFucked extends Status {
 		if (hole == null || tail == null) {
 			return "";
 		}
-		return Global.capitalizeFirstLetter(String.format(
-				"%s now fucking %s %s with %s %s\n",
-				other.subjectAction("are", "is"),
-				affected.nameOrPossessivePronoun(), hole.describe(affected),
+		return Global.capitalizeFirstLetter(String.format("%s now fucking %s %s with %s %s\n",
+				other.subjectAction("are", "is"), affected.nameOrPossessivePronoun(), hole.describe(affected),
 				other.possessivePronoun(), tail.describe(other)));
 	}
 
@@ -46,16 +44,12 @@ public class TailFucked extends Status {
 			return "";
 		}
 		if (affected.human()) {
-			return Global.capitalizeFirstLetter(String.format(
-					"%s fucking %s %s with %s %s\n",
-					other.subjectAction("are", "is"),
-					affected.nameOrPossessivePronoun(), hole.describe(affected),
+			return Global.capitalizeFirstLetter(String.format("%s fucking %s %s with %s %s\n",
+					other.subjectAction("are", "is"), affected.nameOrPossessivePronoun(), hole.describe(affected),
 					other.possessivePronoun(), tail.describe(other)));
 		} else {
-			return Global.capitalizeFirstLetter(String.format(
-					"%s fucking %s %s with %s %s\n",
-					other.subjectAction("are", "is"),
-					affected.nameOrPossessivePronoun(), hole.describe(affected),
+			return Global.capitalizeFirstLetter(String.format("%s fucking %s %s with %s %s\n",
+					other.subjectAction("are", "is"), affected.nameOrPossessivePronoun(), hole.describe(affected),
 					other.possessivePronoun(), tail.describe(other)));
 		}
 	}

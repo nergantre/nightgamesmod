@@ -18,15 +18,13 @@ import nightgames.global.JSONUtils;
 import nightgames.global.Match;
 import nightgames.modifier.ModifierComponent;
 
-public class BanActionModifier extends ActionModifier
-		implements ModifierComponent<BanActionModifier> {
+public class BanActionModifier extends ActionModifier implements ModifierComponent<BanActionModifier> {
 
-	private final Set<Action>									absolutes;
-	private final Map<Action, BiPredicate<Character, Match>>	conditionals;
+	private final Set<Action> absolutes;
+	private final Map<Action, BiPredicate<Character, Match>> conditionals;
 
 	public BanActionModifier(Action... actions) {
-		absolutes = Collections
-				.unmodifiableSet(new HashSet<>(Arrays.asList(actions)));
+		absolutes = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(actions)));
 		conditionals = Collections.emptyMap();
 	}
 
@@ -35,8 +33,7 @@ public class BanActionModifier extends ActionModifier
 		conditionals = Collections.singletonMap(act, pred);
 	}
 
-	public BanActionModifier(Set<Action> absolutes,
-			Map<Action, BiPredicate<Character, Match>> conditionals) {
+	public BanActionModifier(Set<Action> absolutes, Map<Action, BiPredicate<Character, Match>> conditionals) {
 		this.absolutes = absolutes;
 		this.conditionals = conditionals;
 	}
@@ -65,23 +62,17 @@ public class BanActionModifier extends ActionModifier
 	public BanActionModifier instance(JSONObject obj) {
 		if (obj.containsKey("action")) {
 			String name = JSONUtils.readString(obj, "action");
-			Action act = identify(name)
-					.orElseThrow(() -> new IllegalArgumentException(
-							"No such action: " + name));
+			Action act = identify(name).orElseThrow(() -> new IllegalArgumentException("No such action: " + name));
 			return new BanActionModifier(act);
 		} else if (obj.containsKey("actions")) {
 			List<String> names = JSONUtils.loadStringsFromArr(obj, "actions");
-			Action[] acts = names.stream().map(this::identify)
-					.toArray(Action[]::new);
+			Action[] acts = names.stream().map(this::identify).toArray(Action[]::new);
 			return new BanActionModifier(acts);
 		}
-		throw new IllegalArgumentException(
-				"Invalid ban-action; it must have 'action' or 'actions'.");
+		throw new IllegalArgumentException("Invalid ban-action; it must have 'action' or 'actions'.");
 	}
 
 	private Optional<Action> identify(String name) {
-		return Global.getActions().stream()
-				.filter(a -> a.getClass().getSimpleName().equals(name))
-				.findAny();
+		return Global.getActions().stream().filter(a -> a.getClass().getSimpleName().equals(name)).findAny();
 	}
 }

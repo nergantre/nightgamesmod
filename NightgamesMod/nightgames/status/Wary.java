@@ -24,8 +24,7 @@ public class Wary extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now wary.\n",
-				affected.subjectAction("are", "is"));
+		return String.format("%s now wary.\n", affected.subjectAction("are", "is"));
 	}
 
 	@Override

@@ -47,9 +47,10 @@ public class TentacleTrap implements Trap {
 								+ "it seems futile. the tentacles approach you from all sides, poking at you tentatively. As suddenly as they appeared, the tentacles vanish back into the floor. "
 								+ "\n...Is that it? You're safe... you guess?");
 			} else if (target.location().humanPresent()) {
-				Global.gui().message(target.name()
-						+ " stumbles into range of the fetish totem. A cage of phallic tentacles appear around her. They apparently aren't interested in her and "
-						+ "they disappear, leaving her slightly bewildered.");
+				Global.gui()
+						.message(target.name()
+								+ " stumbles into range of the fetish totem. A cage of phallic tentacles appear around her. They apparently aren't interested in her and "
+								+ "they disappear, leaving her slightly bewildered.");
 			}
 		}
 	}
@@ -83,8 +84,7 @@ public class TentacleTrap implements Trap {
 	}
 
 	@Override
-	public void capitalize(Character attacker, Character victim,
-			IEncounter enc) {
+	public void capitalize(Character attacker, Character victim, IEncounter enc) {
 		enc.engage(new Combat(attacker, victim, attacker.location()));
 		attacker.location().remove(this);
 	}

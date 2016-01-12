@@ -6,7 +6,7 @@ import nightgames.combat.Combat;
 public class AnalRequirement implements CustomRequirement {
 
 	private final boolean anal;
-	
+
 	public AnalRequirement(boolean anal) {
 		this.anal = anal;
 	}

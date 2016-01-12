@@ -18,8 +18,7 @@ public class Sedate extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().mobile(getSelf()) && getSelf().canAct()
-				&& getSelf().has(Item.Sedative)
+		return c.getStance().mobile(getSelf()) && getSelf().canAct() && getSelf().has(Item.Sedative)
 				&& !c.getStance().prone(getSelf());
 	}
 
@@ -64,11 +63,9 @@ public class Sedate extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.special) {
-			return "You pop a sedative into your Aerosolizer and spray "
-					+ target.name()
+			return "You pop a sedative into your Aerosolizer and spray " + target.name()
 					+ " with a cloud of mist. She stumbles out of the cloud looking drowsy and unfocused.";
 		} else if (modifier == Result.miss) {
 			return "You throw a bottle of sedative at " + target.name()
@@ -80,14 +77,12 @@ public class Sedate extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.special) {
 			return getSelf().name()
 					+ " inserts a bottle into the attachment on her arm. You're suddenly surrounded by a cloud of dense fog. The fog seems to fill your head and your body feels heavy.";
 		} else if (modifier == Result.miss) {
-			return getSelf().name()
-					+ " splashes a bottle of liquid in your direction, but none of it hits you.";
+			return getSelf().name() + " splashes a bottle of liquid in your direction, but none of it hits you.";
 		} else {
 			return getSelf().name()
 					+ " hits you with a flask of liquid. Even the fumes make you feel sluggish and your limbs become heavy.";
@@ -96,7 +91,6 @@ public class Sedate extends Skill {
 
 	@Override
 	public String describe(Combat c) {
-		return "Throw a sedative at your opponent, weakening "
-				+ c.getOther(getSelf()).directObject();
+		return "Throw a sedative at your opponent, weakening " + c.getOther(getSelf()).directObject();
 	}
 }

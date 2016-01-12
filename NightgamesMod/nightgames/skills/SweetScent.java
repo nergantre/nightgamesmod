@@ -60,22 +60,18 @@ public class SweetScent extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier != Result.miss) {
-			return "You breathe out a dizzying pink gas which spreads through the area. "
-					+ target.getName()
+			return "You breathe out a dizzying pink gas which spreads through the area. " + target.getName()
 					+ " quickly succumbs to the coying scent as her whole body flushes with arousal.";
 		} else {
-			return "You breathe out a dizzying pink gas, but "
-					+ target.getName()
+			return "You breathe out a dizzying pink gas, but " + target.getName()
 					+ " covers her face and dodges out of the cloud.";
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier != Result.miss) {
 			return getSelf().getName()
 					+ " breathes out a dizzying pink gas which spreads through the area. You quickly succumbs to the coying scent as your whole body flushes with arousal.";

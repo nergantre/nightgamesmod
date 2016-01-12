@@ -20,8 +20,7 @@ public class Alert extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now more alert\n",
-				affected.subjectAction("are", "is"));
+		return String.format("%s now more alert\n", affected.subjectAction("are", "is"));
 	}
 
 	@Override

@@ -10,11 +10,10 @@ import nightgames.global.Global;
 import nightgames.global.JSONUtils;
 
 public class Horny extends DurationStatus {
-	private float	magnitude;
-	private String	source;
+	private float magnitude;
+	private String source;
 
-	public Horny(Character affected, float magnitude, int duration,
-			String source) {
+	public Horny(Character affected, float magnitude, int duration, String source) {
 		super("Horny", affected, duration);
 		this.source = source;
 		this.magnitude = magnitude;
@@ -23,19 +22,16 @@ public class Horny extends DurationStatus {
 
 	@Override
 	public String toString() {
-		return "Aroused from " + source + " (" + Global.formatDecimal(magnitude)
-				+ " x " + getDuration() + ")";
+		return "Aroused from " + source + " (" + Global.formatDecimal(magnitude) + " x " + getDuration() + ")";
 	}
 
 	@Override
 	public String describe(Combat c) {
 		if (affected.human()) {
-			return "Your heart pounds in your chest as you try to surpress your arousal from contacting "
-					+ source + ".";
+			return "Your heart pounds in your chest as you try to surpress your arousal from contacting " + source
+					+ ".";
 		} else {
-			return affected.name()
-					+ " is flushed and her nipples are noticeably hard from contacting "
-					+ source + ".";
+			return affected.name() + " is flushed and her nipples are noticeably hard from contacting " + source + ".";
 		}
 	}
 
@@ -68,10 +64,8 @@ public class Horny extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s %saroused by %s.\n",
-				affected.subjectAction("are", "is"), replaced ? "" : "now ",
-				source + " (" + Global.formatDecimal(magnitude) + " x "
-						+ getDuration() + ")");
+		return String.format("%s %saroused by %s.\n", affected.subjectAction("are", "is"), replaced ? "" : "now ",
+				source + " (" + Global.formatDecimal(magnitude) + " x " + getDuration() + ")");
 	}
 
 	@Override
@@ -161,8 +155,7 @@ public class Horny extends DurationStatus {
 
 	@Override
 	public Status loadFromJSON(JSONObject obj) {
-		return new Horny(null, JSONUtils.readFloat(obj, "magnitude"),
-				JSONUtils.readInteger(obj, "duration"),
+		return new Horny(null, JSONUtils.readFloat(obj, "magnitude"), JSONUtils.readInteger(obj, "duration"),
 				JSONUtils.readString(obj, "source"));
 	}
 }

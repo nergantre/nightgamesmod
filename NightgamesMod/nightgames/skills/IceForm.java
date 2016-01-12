@@ -20,8 +20,7 @@ public class IceForm extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && !c.getStance().sub(getSelf())
-				&& !getSelf().is(Stsflag.form);
+		return getSelf().canAct() && !c.getStance().sub(getSelf()) && !getSelf().is(Stsflag.form);
 	}
 
 	@Override
@@ -51,14 +50,12 @@ public class IceForm extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You visualize yourself at the center of a raging snow storm. You can already feel yourself start to go numb.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().name()
 				+ " takes a deep breath and her expression turns so frosty that you're not sure you can ever thaw her out.";
 	}

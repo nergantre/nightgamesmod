@@ -21,10 +21,8 @@ public class DarkTalisman extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && c.getStance().mobile(getSelf())
-				&& !c.getStance().prone(getSelf())
-				&& !target.is(Stsflag.enthralled)
-				&& getSelf().has(Item.Talisman);
+		return getSelf().canAct() && c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf())
+				&& !target.is(Stsflag.enthralled) && getSelf().has(Item.Talisman);
 	}
 
 	@Override
@@ -55,15 +53,13 @@ public class DarkTalisman extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You brandish the dark talisman, which seems to glow with power. The trinket crumbles to dust, but you see the image remain in the reflection of "
 				+ target.name() + "'s eyes.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().name()
 				+ " holds up a strange talisman. You feel compelled to look at the thing, captivated by its unholy nature.";
 	}

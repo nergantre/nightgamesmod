@@ -24,8 +24,8 @@ public class SpawnFaerie extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && c.getStance().mobile(getSelf())
-				&& !c.getStance().prone(getSelf()) && getSelf().pet == null;
+		return getSelf().canAct() && c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf())
+				&& getSelf().pet == null;
 	}
 
 	@Override
@@ -81,8 +81,7 @@ public class SpawnFaerie extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (gender == Ptype.fairyfem) {
 			return "You start a summoning chant and in your mind, seek out a familiar. A pretty little faerie girl appears in front of you and gives you a friendly wave before "
 					+ "landing softly on your shoulder.";
@@ -93,8 +92,7 @@ public class SpawnFaerie extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().name()
 				+ " casts a spell as she extends her hand. In a flash of magic, a small, naked girl with butterfly wings appears in her palm.";
 	}

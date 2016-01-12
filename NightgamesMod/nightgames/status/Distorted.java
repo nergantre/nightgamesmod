@@ -26,8 +26,7 @@ public class Distorted extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s image is now distorted.\n",
-				affected.nameOrPossessivePronoun());
+		return String.format("%s image is now distorted.\n", affected.nameOrPossessivePronoun());
 	}
 
 	@Override

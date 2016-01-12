@@ -18,8 +18,7 @@ public class MouthPussyPart extends MouthPart {
 	}
 
 	@Override
-	public double applyBonuses(Character self, Character opponent,
-			BodyPart target, double damage, Combat c) {
+	public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		double bonus = 0;
 		bonus = super.applyBonuses(self, opponent, target, damage, c);
 		return bonus;

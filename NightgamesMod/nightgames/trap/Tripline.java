@@ -14,22 +14,19 @@ public class Tripline implements Trap {
 	@Override
 	public void trigger(Character target) {
 		if (target.human()) {
-			if (!target.check(Attribute.Perception, 20
-					- target.get(Attribute.Perception) + target.baseDisarm())) {
-				Global.gui().message(
-						"You trip over a line of cord and fall on your face.");
+			if (!target.check(Attribute.Perception, 20 - target.get(Attribute.Perception) + target.baseDisarm())) {
+				Global.gui().message("You trip over a line of cord and fall on your face.");
 				target.pain(null, 5);
 				target.location().opportunity(target, this);
 			} else {
-				Global.gui().message(
-						"You spot a line strung across the corridor and carefully step over it.");
+				Global.gui().message("You spot a line strung across the corridor and carefully step over it.");
 				target.location().remove(this);
 			}
 		} else {
 			if (!target.check(Attribute.Perception, 15)) {
 				if (target.location().humanPresent()) {
-					Global.gui().message(target.name()
-							+ " carelessly stumbles over the tripwire and lands with an audible thud.");
+					Global.gui().message(
+							target.name() + " carelessly stumbles over the tripwire and lands with an audible thud.");
 				}
 				target.pain(null, 5);
 				target.location().opportunity(target, this);
@@ -70,10 +67,8 @@ public class Tripline implements Trap {
 	}
 
 	@Override
-	public void capitalize(Character attacker, Character victim,
-			IEncounter enc) {
-		enc.engage(new Combat(attacker, victim, attacker.location(),
-				new StandingOver(attacker, victim)));
+	public void capitalize(Character attacker, Character victim, IEncounter enc) {
+		enc.engage(new Combat(attacker, victim, attacker.location(), new StandingOver(attacker, victim)));
 		victim.location().remove(this);
 	}
 

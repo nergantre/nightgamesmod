@@ -21,10 +21,8 @@ public class Dominate extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && !c.getStance().sub(getSelf())
-				&& !c.getStance().prone(getSelf())
-				&& !c.getStance().prone(target) && getSelf().canAct()
-				&& !getSelf().has(Trait.submissive);
+		return !target.wary() && !c.getStance().sub(getSelf()) && !c.getStance().prone(getSelf())
+				&& !c.getStance().prone(target) && getSelf().canAct() && !getSelf().has(Trait.submissive);
 	}
 
 	@Override
@@ -62,8 +60,7 @@ public class Dominate extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You take a deep breathe, gathering dark energy into your lungs. You expend the power to command "
 				+ target.name() + " to submit. The demonic command renders her "
 				+ "unable to resist and she drops to floor, spreading her legs open to you. As you approach, she comes to her senses and quickly closes her legs. Looks like her "
@@ -71,8 +68,7 @@ public class Dominate extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().name()
 				+ " forcefully orders you to \"Kneel!\" Your body complies without waiting for your brain and you drop to your knees in front of her. She smiles and "
 				+ "pushes you onto your back. By the time you break free of her suggestion, you're flat on the floor with her foot planted on your chest.";

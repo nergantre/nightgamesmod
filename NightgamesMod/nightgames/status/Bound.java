@@ -9,8 +9,8 @@ import nightgames.combat.Combat;
 import nightgames.global.JSONUtils;
 
 public class Bound extends Status {
-	private float	toughness;
-	private String	binding;
+	private float toughness;
+	private String binding;
 
 	public Bound(Character affected, float dc, String binding) {
 		super("Bound", affected);
@@ -21,8 +21,7 @@ public class Bound extends Status {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now bound by %s.\n",
-				affected.subjectAction("are", "is"), binding);
+		return String.format("%s now bound by %s.\n", affected.subjectAction("are", "is"), binding);
 	}
 
 	@Override
@@ -132,7 +131,6 @@ public class Bound extends Status {
 
 	@Override
 	public Status loadFromJSON(JSONObject obj) {
-		return new Bound(null, JSONUtils.readFloat(obj, "toughness"),
-				JSONUtils.readString(obj, "binding"));
+		return new Bound(null, JSONUtils.readFloat(obj, "toughness"), JSONUtils.readString(obj, "binding"));
 	}
 }

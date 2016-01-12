@@ -16,8 +16,7 @@ public class IgnoreOrgasm extends DurationStatus {
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
 		if (affected.getArousal().isFull()) {
-			return affected.subjectAction("are", "is")
-					+ " overpowering the urge to cum";
+			return affected.subjectAction("are", "is") + " overpowering the urge to cum";
 		}
 		return "";
 	}
@@ -25,8 +24,7 @@ public class IgnoreOrgasm extends DurationStatus {
 	@Override
 	public String describe(Combat c) {
 		if (affected.getArousal().isFull()) {
-			return affected.subjectAction("are", "is")
-					+ " overpowering the urge to cum";
+			return affected.subjectAction("are", "is") + " overpowering the urge to cum";
 		}
 		return "";
 	}

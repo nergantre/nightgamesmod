@@ -15,17 +15,14 @@ public class TailJob extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		boolean enough = getSelf().get(Attribute.Seduction) >= 20
-				|| getSelf().get(Attribute.Animism) >= 1;
+		boolean enough = getSelf().get(Attribute.Seduction) >= 20 || getSelf().get(Attribute.Animism) >= 1;
 		return enough && user.body.get("tail").size() > 0;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && target.crotchAvailable()
-				&& c.getStance().mobile(getSelf())
-				&& !c.getStance().mobile(target)
-				&& !c.getStance().inserted(target);
+		return getSelf().canAct() && target.crotchAvailable() && c.getStance().mobile(getSelf())
+				&& !c.getStance().mobile(target) && !c.getStance().inserted(target);
 	}
 
 	@Override
@@ -40,8 +37,7 @@ public class TailJob extends Skill {
 		} else if (target.human()) {
 			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
-		int m = (5 + Global.random(10))
-				* (100 + getSelf().getArousal().percent()) / 100;
+		int m = (5 + Global.random(10)) * (100 + getSelf().getArousal().percent()) / 100;
 		String receiver;
 		if (target.hasDick()) {
 			receiver = "cock";
@@ -51,8 +47,7 @@ public class TailJob extends Skill {
 		if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
 			target.add(c, new BodyFetish(target, getSelf(), "tail", .25));
 		}
-		target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"),
-				target.body.getRandom(receiver), m, c);
+		target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom(receiver), m, c);
 		return true;
 	}
 
@@ -67,27 +62,20 @@ public class TailJob extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (target.hasDick()) {
-			return "You skillfully use your flexible "
-					+ getSelf().body.getRandom("tail").describe(getSelf())
-					+ " to stroke and tease " + target.name()
-					+ "'s sensitive girl-cock.";
+			return "You skillfully use your flexible " + getSelf().body.getRandom("tail").describe(getSelf())
+					+ " to stroke and tease " + target.name() + "'s sensitive girl-cock.";
 		} else {
-			return "You skillfully use your flexible "
-					+ getSelf().body.getRandom("tail").describe(getSelf())
-					+ " to stroke and tease " + target.name()
-					+ "'s sensitive girl parts.";
+			return "You skillfully use your flexible " + getSelf().body.getRandom("tail").describe(getSelf())
+					+ " to stroke and tease " + target.name() + "'s sensitive girl parts.";
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (target.hasDick()) {
-			return getSelf().name()
-					+ " teases your sensitive dick and balls with her "
+			return getSelf().name() + " teases your sensitive dick and balls with her "
 					+ getSelf().body.getRandom("tail").describe(getSelf())
 					+ ". It wraps completely around your shaft and strokes firmly.";
 		} else {

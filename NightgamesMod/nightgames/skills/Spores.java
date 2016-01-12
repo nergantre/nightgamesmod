@@ -40,16 +40,14 @@ public class Spores extends Skill {
 			c.write(getSelf(),
 					Global.format(
 							"{self:SUBJECT-ACTION:release|releases} a mass of tiny particles, but "
-							+ "{other:subject-action:avoid|avoids} breathing any of them in.",
+									+ "{other:subject-action:avoid|avoids} breathing any of them in.",
 							getSelf(), target));
 			return false;
 		} else {
 			c.write(getSelf(),
-					Global.format(
-							"{self:SUBJECT-ACTION:release|releases} a mass of tiny particles, and "
+					Global.format("{self:SUBJECT-ACTION:release|releases} a mass of tiny particles, and "
 							+ "{other:subject-action:are|is} forced to breathe them in. The scent"
-							+ " drives {other:pronoun} into a frenzy.",
-							getSelf(), target));
+							+ " drives {other:pronoun} into a frenzy.", getSelf(), target));
 			target.add(new Aggressive(target, getSelf().nameOrPossessivePronoun() + " spores", 5));
 		}
 		return true;

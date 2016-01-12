@@ -20,9 +20,9 @@ import nightgames.skills.Skill;
 import nightgames.skills.Suckle;
 
 public class FluidAddiction extends DurationStatus {
-	protected int	stacks;
-	private int		activated;
-	Character		target;
+	protected int stacks;
+	private int activated;
+	Character target;
 
 	public FluidAddiction(Character affected, Character target, int duration) {
 		super("Addicted", affected, duration);
@@ -40,8 +40,7 @@ public class FluidAddiction extends DurationStatus {
 	public String describe(Combat c) {
 		if (isActive()) {
 			if (affected.human()) {
-				return "You feel a desperate need to taste more of "
-						+ target.nameOrPossessivePronoun() + " fluids.";
+				return "You feel a desperate need to taste more of " + target.nameOrPossessivePronoun() + " fluids.";
 			} else {
 				return affected.name() + " is eyeing you like a junkie.";
 			}
@@ -119,12 +118,10 @@ public class FluidAddiction extends DurationStatus {
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
 		if (replaced) {
-			return String.format("%s is still %s to %s fluids.\n",
-					affected.subjectAction("are", "is"),
+			return String.format("%s is still %s to %s fluids.\n", affected.subjectAction("are", "is"),
 					toString().toLowerCase(), target.nameOrPossessivePronoun());
 		}
-		return String.format("%s now %s to %s fluids.\n",
-				affected.subjectAction("are", "is"), toString().toLowerCase(),
+		return String.format("%s now %s to %s fluids.\n", affected.subjectAction("are", "is"), toString().toLowerCase(),
 				target.nameOrPossessivePronoun());
 	}
 
@@ -183,12 +180,10 @@ public class FluidAddiction extends DurationStatus {
 		if (!isActive()) {
 			return Collections.emptySet();
 		} else if (target.has(Trait.lactating)) {
-			return Arrays.asList((Skill) new Suckle(affected),
-					new LickNipples(affected), new Kiss(affected),
+			return Arrays.asList((Skill) new Suckle(affected), new LickNipples(affected), new Kiss(affected),
 					new Cunnilingus(affected), new Blowjob(affected));
 		} else {
-			return Arrays.asList((Skill) new Kiss(affected),
-					new Cunnilingus(affected), new Blowjob(affected));
+			return Arrays.asList((Skill) new Kiss(affected), new Cunnilingus(affected), new Blowjob(affected));
 		}
 	}
 
@@ -217,7 +212,6 @@ public class FluidAddiction extends DurationStatus {
 
 	@Override
 	public Status loadFromJSON(JSONObject obj) {
-		return new FluidAddiction(null, null,
-				JSONUtils.readInteger(obj, "duration"));
+		return new FluidAddiction(null, null, JSONUtils.readInteger(obj, "duration"));
 	}
 }

@@ -26,8 +26,7 @@ public class FTCPrematch implements Scene {
 			message += "When you get to the student union, you find it deserted save for"
 					+ " a note telling you to go to the parking lot instead. Once you get"
 					+ " there, the others, including Lilly, are already waiting next to a van. "
-					+ "\"Nice of you to join us, " + player.name()
-					+ ". I've been working for a while"
+					+ "\"Nice of you to join us, " + player.name() + ". I've been working for a while"
 					+ " on devising an alternative match format, and tonight the lot"
 					+ " of you get to be my guniea pigs.\" That sounds patently"
 					+ " uncomfortable, but you listen on anyway. \"The idea is this: I drop"
@@ -85,31 +84,24 @@ public class FTCPrematch implements Scene {
 				} else {
 					message += "You volunteer for the position of Prey, and strip down accordingly."
 							+ " After a brief ride, you arrive at the forest and make your way to"
-							+ " the center. You take a Flag from the box and await the starting"
-							+ " signal.";
+							+ " the center. You take a Flag from the box and await the starting" + " signal.";
 				}
 			} else {
 				do {
-					prey = (Character) Global
-							.pickRandom(Global.getCharacters().toArray());
+					prey = (Character) Global.pickRandom(Global.getCharacters().toArray());
 				} while (prey.human());
 				if (!Global.checkFlag(Flag.didFTC)) {
-					message += "\"No one? Really? Fine, then I'll pick someone. Let's see... "
-							+ prey.name()
+					message += "\"No one? Really? Fine, then I'll pick someone. Let's see... " + prey.name()
 							+ "! You have the honors tonight. Oh and just so"
-							+ " you know, the Prey competes naked and without items. Get to it!\" "
-							+ prey.name()
-							+ " briefly seems nervous, but then shrugs and ditches all of "
-							+ prey.possessivePronoun()
+							+ " you know, the Prey competes naked and without items. Get to it!\" " + prey.name()
+							+ " briefly seems nervous, but then shrugs and ditches all of " + prey.possessivePronoun()
 							+ " clothing and gets in the van. The rest of you pile in as well,"
 							+ " and a short ride later you arrive at the edge of the forest."
 							+ " Lilly gives everyone their starting positions, and you make"
 							+ " your way to yours, ready for the match to begin.";
 				} else {
-					message += "\"No one? Really? Fine, then I'll pick someone. Let's see..."
-							+ prey.name()
-							+ "! You have the honors tonight.\" Everyone gets into the van, and "
-							+ prey.name()
+					message += "\"No one? Really? Fine, then I'll pick someone. Let's see..." + prey.name()
+							+ "! You have the honors tonight.\" Everyone gets into the van, and " + prey.name()
 							+ " quickly strips naked. Once at the forest, you all "
 							+ "get to your bases and await Lilly's signal.";
 				}

@@ -25,8 +25,7 @@ public class Nimble extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now more nimble.\n",
-				affected.subjectAction("are", "is"));
+		return String.format("%s now more nimble.\n", affected.subjectAction("are", "is"));
 	}
 
 	@Override
@@ -37,10 +36,10 @@ public class Nimble extends DurationStatus {
 	@Override
 	public int mod(Attribute a) {
 		switch (a) {
-			case Speed:
-				return 2;
-			default:
-				break;
+		case Speed:
+			return 2;
+		default:
+			break;
 		}
 		return 0;
 	}
@@ -74,14 +73,12 @@ public class Nimble extends DurationStatus {
 
 	@Override
 	public int evade() {
-		return affected.get(Attribute.Animism) * affected.getArousal().percent()
-				/ 100;
+		return affected.get(Attribute.Animism) * affected.getArousal().percent() / 100;
 	}
 
 	@Override
 	public int escape() {
-		return affected.get(Attribute.Animism) * affected.getArousal().percent()
-				/ 100;
+		return affected.get(Attribute.Animism) * affected.getArousal().percent() / 100;
 	}
 
 	@Override
@@ -96,8 +93,7 @@ public class Nimble extends DurationStatus {
 
 	@Override
 	public int counter() {
-		return affected.get(Attribute.Animism) * affected.getArousal().percent()
-				/ 100;
+		return affected.get(Attribute.Animism) * affected.getArousal().percent() / 100;
 	}
 
 	@Override

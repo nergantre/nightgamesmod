@@ -54,6 +54,6 @@ public interface NPCData {
 	RecruitmentData getRecruitment();
 
 	AiModifiers getAiModifiers();
-	
+
 	Map<CommentSituation, String> getComments();
 }

@@ -15,16 +15,13 @@ public class PinAndBlow extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Seduction) >= 22
-				&& user.get(Attribute.Power) >= 15;
+		return user.get(Attribute.Seduction) >= 22 && user.get(Attribute.Power) >= 15;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().mobile(getSelf()) && c.getStance().prone(target)
-				&& target.crotchAvailable() && getSelf().canAct()
-				&& !c.getStance().connected()
-				&& c.getStance().en != Stance.oralpin;
+		return c.getStance().mobile(getSelf()) && c.getStance().prone(target) && target.crotchAvailable()
+				&& getSelf().canAct() && !c.getStance().connected() && c.getStance().en != Stance.oralpin;
 	}
 
 	@Override
@@ -76,14 +73,12 @@ public class PinAndBlow extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return receive(c, damage, modifier, target);
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return Global.format(
 				"{self:SUBJECT-ACTION:bow|bows} {other:name-do} over, and {self:action:settle|settles} {self:possessive} head between {other:possessive} legs.",
 				getSelf(), target);

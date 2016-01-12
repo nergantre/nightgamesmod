@@ -7,8 +7,8 @@ import nightgames.modifier.item.FlagOnlyModifier;
 
 public class FTCModifier extends BaseModifier {
 
-	private final NudeModifier	nudeMod;
-	private final Character		prey;
+	private final NudeModifier nudeMod;
+	private final Character prey;
 
 	public FTCModifier(Character prey) {
 		nudeMod = new NudeModifier();
@@ -27,12 +27,12 @@ public class FTCModifier extends BaseModifier {
 			nudeMod.apply(c.outfit);
 		}
 	}
-	
+
 	@Override
 	public String name() {
 		return "ftc";
 	}
-	
+
 	public Character getPrey() {
 		return prey;
 	}

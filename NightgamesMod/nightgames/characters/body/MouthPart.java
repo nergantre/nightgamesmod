@@ -16,52 +16,39 @@ public class MouthPart extends GenericBodyPart {
 	 */
 	public static final MouthPart generic = new MouthPart("mouth", 0, 1, 1);
 
-	public MouthPart(String desc, String descLong, double hotness,
-			double pleasure, double sensitivity, boolean notable,
+	public MouthPart(String desc, String descLong, double hotness, double pleasure, double sensitivity, boolean notable,
 			String prefix) {
-		super(desc, descLong, hotness, pleasure, sensitivity, notable, "mouth",
-				prefix);
+		super(desc, descLong, hotness, pleasure, sensitivity, notable, "mouth", prefix);
 	}
 
-	public MouthPart(String desc, double hotness, double pleasure,
-			double sensitivity) {
+	public MouthPart(String desc, double hotness, double pleasure, double sensitivity) {
 		super(desc, hotness, pleasure, sensitivity, "mouth", "a ");
 	}
 
 	@Override
-	public double applyBonuses(Character self, Character opponent,
-			BodyPart target, double damage, Combat c) {
+	public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		double bonus = 0;
 		if (target.isErogenous() && opponent.has(Trait.lickable)) {
-			c.write(opponent,
-					Global.capitalizeFirstLetter(
-							opponent.subjectAction("shudder", "shudders"))
+			c.write(opponent, Global.capitalizeFirstLetter(opponent.subjectAction("shudder", "shudders"))
 					+ " when licked by " + self.directObject() + ".");
 			bonus += Global.random(4) + 5;
 		}
 		String fluid = target.getFluids(opponent);
 		if (!fluid.isEmpty() && opponent.has(Trait.lacedjuices)) {
-			c.write(self,
-					Global.capitalizeFirstLetter(
-							opponent.nameOrPossessivePronoun()) + " drug-laced "
-					+ fluid + " leaves " + self.nameOrPossessivePronoun()
-					+ " entire body tingling with arousal.");
+			c.write(self, Global.capitalizeFirstLetter(opponent.nameOrPossessivePronoun()) + " drug-laced " + fluid
+					+ " leaves " + self.nameOrPossessivePronoun() + " entire body tingling with arousal.");
 			self.arouse(Math.max(opponent.getArousal().get() / 10, 5), c);
 		}
-		if (!fluid.isEmpty() && opponent.has(Trait.addictivefluids)
-				&& !self.is(Stsflag.tolerance)) {
+		if (!fluid.isEmpty() && opponent.has(Trait.addictivefluids) && !self.is(Stsflag.tolerance)) {
 			self.add(c, new FluidAddiction(self, opponent, 5));
-			FluidAddiction st = (FluidAddiction) self
-					.getStatus(Stsflag.fluidaddiction);
+			FluidAddiction st = (FluidAddiction) self.getStatus(Stsflag.fluidaddiction);
 			if (st.activated()) {
 				if (self.human()) {
-					c.write(self,
-							Global.capitalizeFirstLetter(Global.format(
-									"As {other:name-possessive} " + fluid
-											+ " flow down your throat, your entire mind fogs up. "
-											+ "You forget where you are, why you're here, and what you're doing. "
-											+ "The only thing left in you is an primal need to obtain more of {other:possessive} fluids.",
-									self, opponent)));
+					c.write(self, Global.capitalizeFirstLetter(Global.format(
+							"As {other:name-possessive} " + fluid + " flow down your throat, your entire mind fogs up. "
+									+ "You forget where you are, why you're here, and what you're doing. "
+									+ "The only thing left in you is an primal need to obtain more of {other:possessive} fluids.",
+							self, opponent)));
 				} else {
 					c.write(self,
 							Global.capitalizeFirstLetter(Global.format(
@@ -72,27 +59,21 @@ public class MouthPart extends GenericBodyPart {
 				}
 			} else if (!st.isActive()) {
 				if (self.human()) {
-					c.write(self,
-							Global.capitalizeFirstLetter(
-									Global.format(
-											"You feel a strange desire to drink down more of {other:name-possessive} "
-													+ fluid + ".",
-											self, opponent)));
+					c.write(self, Global.capitalizeFirstLetter(Global.format(
+							"You feel a strange desire to drink down more of {other:name-possessive} " + fluid + ".",
+							self, opponent)));
 				} else {
 					c.write(self,
-							Global.capitalizeFirstLetter(Global.format(
-									"{self:name} drinks down your " + fluid
-											+ " and seems to want more.",
-									self, opponent)));
+							Global.capitalizeFirstLetter(
+									Global.format("{self:name} drinks down your " + fluid + " and seems to want more.",
+											self, opponent)));
 				}
 			}
 		}
 		if (self.has(Trait.experttongue)) {
-			if (Global.random(3) == 0 && self.canSpend(10) && !opponent.wary()
-					&& damage > 5) {
+			if (Global.random(3) == 0 && self.canSpend(10) && !opponent.wary() && damage > 5) {
 				if (!self.human()) {
-					c.write(opponent,
-							"<br>Your mind falls into a pink colored fog from the tongue lashing.");
+					c.write(opponent, "<br>Your mind falls into a pink colored fog from the tongue lashing.");
 				} else {
 					c.write(opponent, "<br>" + opponent.name()
 							+ "'s mind falls into a pink colored fog from the tongue lashing.");
@@ -106,12 +87,12 @@ public class MouthPart extends GenericBodyPart {
 			if (!self.human()) {
 				c.write(opponent,
 						"<br>You feel faint as her lips touch your body, as if your will to fight is being sucked out through your "
-								+ target.describe(opponent)
-								+ " into her mouth.");
+								+ target.describe(opponent) + " into her mouth.");
 			} else {
-				c.write(opponent, "<br>As your lips touch " + opponent.getName()
-						+ ", you instinctively draw in her spirit, forcing her energy through "
-						+ target.describe(opponent) + " into your mouth.");
+				c.write(opponent,
+						"<br>As your lips touch " + opponent.getName()
+								+ ", you instinctively draw in her spirit, forcing her energy through "
+								+ target.describe(opponent) + " into your mouth.");
 			}
 			bonus += Global.random(3) + 2;
 			opponent.loseWillpower(c, Global.random(5) + 2);
@@ -137,9 +118,8 @@ public class MouthPart extends GenericBodyPart {
 	@Override
 	public BodyPart loadFromDict(JSONObject dict) {
 		try {
-			GenericBodyPart part = new MouthPart((String) dict.get("desc"),
-					(Double) dict.get("hotness"), (Double) dict.get("pleasure"),
-					(Double) dict.get("sensitivity"));
+			GenericBodyPart part = new MouthPart((String) dict.get("desc"), (Double) dict.get("hotness"),
+					(Double) dict.get("pleasure"), (Double) dict.get("sensitivity"));
 			return part;
 		} catch (ClassCastException e) {
 			System.err.println(e.getMessage());

@@ -41,8 +41,7 @@ public class Meditation extends Activity {
 								+ "session.\"</i> Her expression darkens as she bites her lip. <i>\"My father is not in good health and he can't take students. I need money to keep the dojo open, and "
 								+ "I know you're making plenty in the games.\"</i>");
 				Global.flag(Flag.metSuzume);
-				Global.gui().choose(this,
-						"Train: $" + 1000 * (player.get(Attribute.Ki) + 1));
+				Global.gui().choose(this, "Train: $" + 1000 * (player.get(Attribute.Ki) + 1));
 				Global.gui().choose(this, "Sharpen Senses");
 				Global.gui().choose(this, "Shut Out Sensation");
 				Global.gui().choose(this, "Leave");
@@ -50,8 +49,7 @@ public class Meditation extends Activity {
 				Global.gui().message(
 						"You go to the Suzuki dojo and remove your shoes out of respect. Suzume (or Suzuki-shisho as she's instructed you to call her) give you a friendly "
 								+ "smile as you bow. <i>\"Welcome apprentice. Are you ready to continue your training or are you here to meditate?\"</i>");
-				Global.gui().choose(this,
-						"Train: $" + 1000 * (player.get(Attribute.Ki) + 1));
+				Global.gui().choose(this, "Train: $" + 1000 * (player.get(Attribute.Ki) + 1));
 				Global.gui().choose(this, "Sharpen Senses");
 				Global.gui().choose(this, "Shut Out Sensation");
 				Global.gui().choose(this, "Leave");
@@ -84,8 +82,7 @@ public class Meditation extends Activity {
 				}
 				Global.gui().choose(this, "Leave");
 			} else {
-				Global.gui()
-						.message("You don't have enough money for training.");
+				Global.gui().message("You don't have enough money for training.");
 				Global.gui().choose(this, "Sharpen Senses");
 				Global.gui().choose(this, "Shut Out Sensation");
 				Global.gui().choose(this, "Leave");
@@ -112,8 +109,7 @@ public class Meditation extends Activity {
 								+ "before you hit your peak and cum in your pants. Suzume giggles when she realizes what happened. <i>\"I probably should have warned you to bring a change of underwear with you. Don't worry, "
 								+ "your hypersensitivity will level out over the next hour or so. You'll be a bit more perceptive, but not like you are now.\"</i>");
 				if (player.getPure(Attribute.Perception) < 9) {
-					player.set(Attribute.Perception,
-							player.getPure(Attribute.Perception) + 1);
+					player.set(Attribute.Perception, player.getPure(Attribute.Perception) + 1);
 				}
 			} else {
 				Global.gui().message(
@@ -145,8 +141,7 @@ public class Meditation extends Activity {
 								+ "genitals, helps you to your feet, and hands you your missing clothes. <i>\"Your sensitivity should already be starting to return. You'll keep some of your endurance, but you'll probably "
 								+ "feel it when someone undresses you.\"</i>");
 				if (player.getPure(Attribute.Perception) > 1) {
-					player.set(Attribute.Perception,
-							player.getPure(Attribute.Perception) - 1);
+					player.set(Attribute.Perception, player.getPure(Attribute.Perception) - 1);
 				}
 			} else {
 				Global.gui().message(
@@ -174,8 +169,7 @@ public class Meditation extends Activity {
 
 	@Override
 	public void shop(Character npc, int budget) {
-		if (npc.getPure(Attribute.Ki) > 0
-				&& budget >= 1000 * (npc.getPure(Attribute.Ki) + 1)) {
+		if (npc.getPure(Attribute.Ki) > 0 && budget >= 1000 * (npc.getPure(Attribute.Ki) + 1)) {
 			if (budget >= 2000 * (npc.getPure(Attribute.Ki) + 2)) {
 				npc.money -= 1000 * (npc.getPure(Attribute.Ki) + 1);
 				budget -= 1000 * (npc.getPure(Attribute.Ki) + 1);

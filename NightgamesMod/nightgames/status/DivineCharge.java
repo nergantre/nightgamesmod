@@ -18,8 +18,7 @@ public class DivineCharge extends Status {
 		super("Divine Charge", affected);
 		flag(Stsflag.divinecharge);
 		this.magnitude = magnitude;
-		requirements.add(new ReverseRequirement(
-				Arrays.asList(new EitherInsertedRequirement(true))));
+		requirements.add(new ReverseRequirement(Arrays.asList(new EitherInsertedRequirement(true))));
 	}
 
 	private String getPart(Combat c) {
@@ -38,8 +37,7 @@ public class DivineCharge extends Status {
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
 		if (!replaced) {
-			return String.format("%s concentrating divine energy in %s %s.\n",
-					affected.subjectAction("are", "is"),
+			return String.format("%s concentrating divine energy in %s %s.\n", affected.subjectAction("are", "is"),
 					affected.possessivePronoun(), getPart(c));
 		}
 		return "";
@@ -47,8 +45,8 @@ public class DivineCharge extends Status {
 
 	@Override
 	public String describe(Combat c) {
-		return "Concentrated divine energy surges through "
-				+ affected.nameOrPossessivePronoun() + " " + getPart(c) + ".";
+		return "Concentrated divine energy surges through " + affected.nameOrPossessivePronoun() + " " + getPart(c)
+				+ ".";
 	}
 
 	@Override
@@ -76,8 +74,7 @@ public class DivineCharge extends Status {
 		// this will get out of hand super quick, but eh, you shouldn't let it
 		// get
 		// that far.
-		double maximum = Math.max(1,
-				Math.pow(2., affected.get(Attribute.Divinity) / 5.0) * .25);
+		double maximum = Math.max(1, Math.pow(2., affected.get(Attribute.Divinity) / 5.0) * .25);
 		magnitude = Math.min(maximum, magnitude);
 	}
 

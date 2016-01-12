@@ -21,10 +21,8 @@ public class LewdSuggestion extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && c.getStance().mobile(getSelf())
-				&& !c.getStance().behind(getSelf())
-				&& !c.getStance().behind(target)
-				&& !c.getStance().sub(getSelf()) && target.is(Stsflag.charmed);
+		return getSelf().canAct() && c.getStance().mobile(getSelf()) && !c.getStance().behind(getSelf())
+				&& !c.getStance().behind(target) && !c.getStance().sub(getSelf()) && target.is(Stsflag.charmed);
 	}
 
 	@Override
@@ -62,21 +60,18 @@ public class LewdSuggestion extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.strong) {
 			return String.format(
 					"You take advantage of the erotic fantasies already swirling through %s's head, whispering ideas that fan the flame of %s lust.",
 					new Object[] { target.name(), target.possessivePronoun() });
 		}
-		return String.format(
-				"You plant an erotic suggestion in %s's mind, distracting %s with lewd fantasies.",
+		return String.format("You plant an erotic suggestion in %s's mind, distracting %s with lewd fantasies.",
 				new Object[] { target.name(), target.directObject() });
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.strong) {
 			return String.format(
 					"%s whispers a lewd suggestion to you, intensifying the fantasies you were trying to ignore and enflaming your arousal.",

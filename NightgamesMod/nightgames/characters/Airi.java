@@ -42,16 +42,11 @@ public class Airi extends BasePersonality {
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.b);
 		character.body.add(PussyPart.gooey);
-		character.body.add(
-				new GenericBodyPart("gooey skin", .5, 1.5, .8, "skin", ""));
-		character.body.add(new TentaclePart("slime pseudopod", "back", "slime",
-				0.0, 1.0, 1.0));
-		character.body.add(new TentaclePart("gooey feelers", "hands", "slime",
-				0.0, 1.0, 1.0));
-		character.body.add(new TentaclePart("gooey feelers", "feet", "slime",
-				0.0, 1.0, 1.0));
-		character.body.add(new TentaclePart("slime filaments", "pussy", "slime",
-				0.0, 1.0, 1.0));
+		character.body.add(new GenericBodyPart("gooey skin", .5, 1.5, .8, "skin", ""));
+		character.body.add(new TentaclePart("slime pseudopod", "back", "slime", 0.0, 1.0, 1.0));
+		character.body.add(new TentaclePart("gooey feelers", "hands", "slime", 0.0, 1.0, 1.0));
+		character.body.add(new TentaclePart("gooey feelers", "feet", "slime", 0.0, 1.0, 1.0));
+		character.body.add(new TentaclePart("slime filaments", "pussy", "slime", 0.0, 1.0, 1.0));
 		character.body.finishBody(CharacterSex.female);
 	}
 
@@ -257,12 +252,12 @@ public class Airi extends BasePersonality {
 	@Override
 	public boolean checkMood(Combat c, Emotion mood, int value) {
 		switch (mood) {
-			case confident:
-				return value >= 50;
-			case desperate:
-				return value >= 150;
-			default:
-				return value >= 100;
+		case confident:
+			return value >= 50;
+		case desperate:
+			return value >= 150;
+		default:
+			return value >= 100;
 		}
 	}
 

@@ -72,59 +72,59 @@ public class GUI extends JFrame implements Observer {
 	 * 
 	 */
 	private static final long serialVersionUID = 451431916952047183L;
-	protected Combat							combat;
-	private Player								player;
-	private ArrayList<ArrayList<SkillButton>>	skills;
-	JPanel										commandPanel;
-	private JTextPane							textPane;
-	private JLabel								stamina;
-	private JLabel								arousal;
-	private JLabel								mojo;
-	private JLabel								willpower;
-	private JLabel								lvl;
-	private JLabel								xp;
-	private JProgressBar						staminaBar;
-	private JProgressBar						arousalBar;
-	private JProgressBar						mojoBar;
-	private JProgressBar						willpowerBar;
-	private JPanel								topPanel;
-	private JLabel								loclbl;
-	private JLabel								timeLabel;
-	private JLabel								cashLabel;
-	private Panel								panel0;
-	private CreationGUI							creation;
-	private JScrollPane							textScroll;
-	private JPanel								mainpanel;
-	private JToggleButton						stsbtn;
-	private JPanel								statusPanel;
-	private JPanel								centerPanel;
-	private JPanel								clothesPanel;
-	private JPanel								optionsPanel;
-	private JPanel								portraitPanel;
-	private JLabel								portrait;
-	private JLabel								map;
-	private JPanel								imgPanel;
-	private JLabel								imgLabel;
-	private JRadioButton						rdnormal;
-	private JRadioButton						rddumb;
-	private JRadioButton						rdeasy;
-	private JRadioButton						rdhard;
-	private JRadioButton						rdMsgOn;
-	private JRadioButton						rdMsgOff;
-	private JRadioButton						rdautosaveon;
-	private JRadioButton						rdautosaveoff;
-	private JRadioButton						rdporon;
-	private JRadioButton						rdporoff;
-	private JRadioButton						rdimgon;
-	private JRadioButton						rdimgoff;
-	private JRadioButton						rdfntnorm;
-	private JRadioButton						rdnfntlrg;
-	private JSlider								malePrefSlider;
-	private int									width;
-	private int									height;
-	public int									fontsize;
-	private JMenuItem							mntmQuitMatch;
-	private boolean								skippedFeat;
+	protected Combat combat;
+	private Player player;
+	private ArrayList<ArrayList<SkillButton>> skills;
+	JPanel commandPanel;
+	private JTextPane textPane;
+	private JLabel stamina;
+	private JLabel arousal;
+	private JLabel mojo;
+	private JLabel willpower;
+	private JLabel lvl;
+	private JLabel xp;
+	private JProgressBar staminaBar;
+	private JProgressBar arousalBar;
+	private JProgressBar mojoBar;
+	private JProgressBar willpowerBar;
+	private JPanel topPanel;
+	private JLabel loclbl;
+	private JLabel timeLabel;
+	private JLabel cashLabel;
+	private Panel panel0;
+	private CreationGUI creation;
+	private JScrollPane textScroll;
+	private JPanel mainpanel;
+	private JToggleButton stsbtn;
+	private JPanel statusPanel;
+	private JPanel centerPanel;
+	private JPanel clothesPanel;
+	private JPanel optionsPanel;
+	private JPanel portraitPanel;
+	private JLabel portrait;
+	private JLabel map;
+	private JPanel imgPanel;
+	private JLabel imgLabel;
+	private JRadioButton rdnormal;
+	private JRadioButton rddumb;
+	private JRadioButton rdeasy;
+	private JRadioButton rdhard;
+	private JRadioButton rdMsgOn;
+	private JRadioButton rdMsgOff;
+	private JRadioButton rdautosaveon;
+	private JRadioButton rdautosaveoff;
+	private JRadioButton rdporon;
+	private JRadioButton rdporoff;
+	private JRadioButton rdimgon;
+	private JRadioButton rdimgoff;
+	private JRadioButton rdfntnorm;
+	private JRadioButton rdnfntlrg;
+	private JSlider malePrefSlider;
+	private int width;
+	private int height;
+	public int fontsize;
+	private JMenuItem mntmQuitMatch;
+	private boolean skippedFeat;
 
 	public GUI() {
 
@@ -136,10 +136,8 @@ public class GUI extends JFrame implements Observer {
 
 		// resolution resolver
 
-		height = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight()
-				* 0.85);
-		width = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth()
-				* 0.85);
+		height = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.85);
+		width = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.85);
 
 		setPreferredSize(new Dimension(width, height));
 
@@ -174,9 +172,8 @@ public class GUI extends JFrame implements Observer {
 		mntmNewgame.addActionListener(arg0 -> {
 			if (Global.inGame()) {
 				int result = JOptionPane.showConfirmDialog(GUI.this,
-						"Do you want to restart the game? You'll lose any unsaved progress.",
-						"Start new game?", JOptionPane.OK_CANCEL_OPTION,
-						JOptionPane.INFORMATION_MESSAGE);
+						"Do you want to restart the game? You'll lose any unsaved progress.", "Start new game?",
+						JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 				if (result == JOptionPane.OK_OPTION) {
 					Global.reset();
 				}
@@ -323,11 +320,9 @@ public class GUI extends JFrame implements Observer {
 			}
 		});
 		malePrefSlider.setValue(Math.round(Global.getValue(Flag.malePref)));
-		malePrefSlider.setToolTipText(
-				"This setting affects the gender your opponents will gravitate towards once that"
-						+ " option becomes available.");
-		malePrefSlider.addChangeListener(e -> Global.setCounter(Flag.malePref,
-				malePrefSlider.getValue()));
+		malePrefSlider.setToolTipText("This setting affects the gender your opponents will gravitate towards once that"
+				+ " option becomes available.");
+		malePrefSlider.addChangeListener(e -> Global.setCounter(Flag.malePref, malePrefSlider.getValue()));
 
 		// malePrefPanel - options submenu - visible
 		optionsPanel.add(malePrefSlider);
@@ -370,8 +365,7 @@ public class GUI extends JFrame implements Observer {
 				rdfntnorm.setSelected(true);
 			}
 			malePrefSlider.setValue(Math.round(Global.getValue(Flag.malePref)));
-			int result = JOptionPane.showConfirmDialog(GUI.this, optionsPanel,
-					"Options", JOptionPane.OK_CANCEL_OPTION,
+			int result = JOptionPane.showConfirmDialog(GUI.this, optionsPanel, "Options", JOptionPane.OK_CANCEL_OPTION,
 					JOptionPane.INFORMATION_MESSAGE);
 			if (result == JOptionPane.OK_OPTION) {
 				if (rdMsgOn.isSelected()) {
@@ -436,8 +430,7 @@ public class GUI extends JFrame implements Observer {
 		mntmQuitMatch.addActionListener(arg0 -> {
 			int result = JOptionPane.showConfirmDialog(GUI.this,
 					"Do you want to quit for the night? Your opponents will continue to fight and gain exp.",
-					"Retire early?", JOptionPane.OK_CANCEL_OPTION,
-					JOptionPane.INFORMATION_MESSAGE);
+					"Retire early?", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			if (result == JOptionPane.OK_OPTION) {
 				Global.getMatch().quit();
 			}
@@ -445,37 +438,26 @@ public class GUI extends JFrame implements Observer {
 		menuBar.add(mntmQuitMatch);
 		mntmCredits.addActionListener(arg0 -> {
 			JPanel panel = new JPanel();
-			panel.add(new JLabel(
-					"<html>Night Games created by The Silver Bard<br>"
-							+ "Reyka and Samantha created by DNDW<br>"
-							+ "Upgraded Strapon created by ElfBoyEni<br>"
-							+ "Strapon victory scenes created by Legion<br>"
-							+ "Advanced AI by Jos<br>"
-							+ "Magic Training scenes by Legion<br>"
-							+ "Jewel 2nd Victory scene by Legion<br>"
-							+ "Video Games scenes 1-9 by Onyxdime<br>"
-							+ "Kat Penetration Victory and Defeat scenes by Onyxdime<br>"
-							+ "Kat Non-Penetration Draw scene by Onyxdime<br>"
-							+ "Mara/Angel threesome scene by Onyxdime<br>"
-							+ "Footfetish expansion scenes by Sakruff<br>"
-							+ "Mod by Nergantre<br>"
-							+ "A ton of testing by Bronzechair</html>"));
+			panel.add(new JLabel("<html>Night Games created by The Silver Bard<br>"
+					+ "Reyka and Samantha created by DNDW<br>" + "Upgraded Strapon created by ElfBoyEni<br>"
+					+ "Strapon victory scenes created by Legion<br>" + "Advanced AI by Jos<br>"
+					+ "Magic Training scenes by Legion<br>" + "Jewel 2nd Victory scene by Legion<br>"
+					+ "Video Games scenes 1-9 by Onyxdime<br>"
+					+ "Kat Penetration Victory and Defeat scenes by Onyxdime<br>"
+					+ "Kat Non-Penetration Draw scene by Onyxdime<br>" + "Mara/Angel threesome scene by Onyxdime<br>"
+					+ "Footfetish expansion scenes by Sakruff<br>" + "Mod by Nergantre<br>"
+					+ "A ton of testing by Bronzechair</html>"));
 			Object[] options = { "OK", "DEBUG" };
 			Object[] okOnly = { "OK" };
-			int results = JOptionPane.showOptionDialog(GUI.this, panel,
-					"Credits", JOptionPane.DEFAULT_OPTION,
+			int results = JOptionPane.showOptionDialog(GUI.this, panel, "Credits", JOptionPane.DEFAULT_OPTION,
 					JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 			if (results == 1 && Global.inGame()) {
 				JPanel debugPanel = new DebugGUIPanel();
-				JOptionPane.showOptionDialog(GUI.this, debugPanel, "Debug",
-						JOptionPane.PLAIN_MESSAGE,
-						JOptionPane.INFORMATION_MESSAGE, null, okOnly,
-						okOnly[0]);
+				JOptionPane.showOptionDialog(GUI.this, debugPanel, "Debug", JOptionPane.PLAIN_MESSAGE,
+						JOptionPane.INFORMATION_MESSAGE, null, okOnly, okOnly[0]);
 			} else if (results == 1) {
-				JOptionPane.showOptionDialog(GUI.this, "Not in game", "Debug",
-						JOptionPane.PLAIN_MESSAGE,
-						JOptionPane.INFORMATION_MESSAGE, null, okOnly,
-						okOnly[0]);
+				JOptionPane.showOptionDialog(GUI.this, "Not in game", "Debug", JOptionPane.PLAIN_MESSAGE,
+						JOptionPane.INFORMATION_MESSAGE, null, okOnly, okOnly[0]);
 			}
 		});
 
@@ -605,8 +587,7 @@ public class GUI extends JFrame implements Observer {
 	public void displayImage(String path, String artist) {
 		BufferedImage pic = null;
 		try {
-			pic = ImageIO.read(
-					ResourceLoader.getFileResourceAsStream("assets/" + path));
+			pic = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" + path));
 		} catch (IOException localIOException9) {
 		} catch (IllegalArgumentException e) {
 		}
@@ -645,8 +626,7 @@ public class GUI extends JFrame implements Observer {
 	// portrait loader
 
 	public void loadPortrait(Combat c, Character player, Character enemy) {
-		if (!Global.checkFlag(Flag.noimage)
-				&& !Global.checkFlag(Flag.noportraits)) {
+		if (!Global.checkFlag(Flag.noimage) && !Global.checkFlag(Flag.noportraits)) {
 			String imagepath = null;
 			if (!player.human()) {
 				imagepath = player.getPortrait(c);
@@ -656,16 +636,14 @@ public class GUI extends JFrame implements Observer {
 			if (imagepath != null) {
 				BufferedImage face = null;
 				try {
-					face = ImageIO.read(ResourceLoader
-							.getFileResourceAsStream("assets/" + imagepath));
+					face = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" + imagepath));
 				} catch (IOException localIOException9) {
 				} catch (IllegalArgumentException badArg) {
 
 				}
 				if (face != null) {
 					if (Global.isDebugOn(DebugFlags.DEBUG_IMAGES)) {
-						System.out.println(
-								"Loading Portrait " + imagepath + " \n");
+						System.out.println("Loading Portrait " + imagepath + " \n");
 					}
 					portrait.setIcon(null);
 					portraitPanel.remove(portrait);
@@ -674,8 +652,7 @@ public class GUI extends JFrame implements Observer {
 						portrait = new JLabel(new ImageIcon(face));
 						portrait.setVerticalAlignment(SwingConstants.TOP);
 					} else {
-						Image scaledFace = face.getScaledInstance(width / 6,
-								height / 4, Image.SCALE_SMOOTH);
+						Image scaledFace = face.getScaledInstance(width / 6, height / 4, Image.SCALE_SMOOTH);
 						portrait = new JLabel(new ImageIcon(scaledFace));
 						portrait.setVerticalAlignment(SwingConstants.TOP);
 						System.out.println("Portrait resizing active.");
@@ -695,8 +672,7 @@ public class GUI extends JFrame implements Observer {
 		if (!Global.checkFlag(Flag.noimage)) {
 			BufferedImage mapPath = null;
 			try {
-				mapPath = ImageIO.read(ResourceLoader
-						.getFileResourceAsStream("assets//map.png"));
+				mapPath = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets//map.png"));
 			} catch (IOException localIOException10) {
 			} catch (IllegalArgumentException badArg) {
 
@@ -709,8 +685,7 @@ public class GUI extends JFrame implements Observer {
 				}
 
 				else {
-					Image scaledMap = mapPath.getScaledInstance(width / 6,
-							height / 4, Image.SCALE_SMOOTH);
+					Image scaledMap = mapPath.getScaledInstance(width / 6, height / 4, Image.SCALE_SMOOTH);
 					map = new JLabel(new ImageIcon(scaledMap));
 					map.setVerticalAlignment(SwingConstants.BOTTOM);
 				}
@@ -721,8 +696,7 @@ public class GUI extends JFrame implements Observer {
 				}
 
 				else {
-					Image scaledMap = mapPath.getScaledInstance(width / 6,
-							height / 4, Image.SCALE_SMOOTH);
+					Image scaledMap = mapPath.getScaledInstance(width / 6, height / 4, Image.SCALE_SMOOTH);
 					map = new JLabel(new ImageIcon(scaledMap));
 					map.setVerticalAlignment(SwingConstants.BOTTOM);
 				}
@@ -740,8 +714,7 @@ public class GUI extends JFrame implements Observer {
 		if (!Global.checkFlag(Flag.noimage)) {
 			BufferedImage mapPath = null;
 			try {
-				mapPath = ImageIO.read(ResourceLoader
-						.getFileResourceAsStream("assets//map.png"));
+				mapPath = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets//map.png"));
 			} catch (IOException localIOException10) {
 			} catch (IllegalArgumentException badArg) {
 
@@ -777,8 +750,7 @@ public class GUI extends JFrame implements Observer {
 
 	public String getLabelString(Meter meter) {
 		if (meter.getOverflow() > 0) {
-			return "(" + Integer.toString(meter.get() + meter.getOverflow())
-					+ ")/" + meter.max();
+			return "(" + Integer.toString(meter.get() + meter.getOverflow()) + ")/" + meter.max();
 		}
 		return Integer.toString(meter.get()) + "/" + meter.max();
 	}
@@ -824,13 +796,11 @@ public class GUI extends JFrame implements Observer {
 				"Mojo is the abstract representation of your momentum and style. It increases with normal techniques and is used to power special moves");
 		meter.add(mojo);
 
-		willpower = new JLabel(
-				"Willpower: " + getLabelString(player.getWillpower()));
+		willpower = new JLabel("Willpower: " + getLabelString(player.getWillpower()));
 		willpower.setFont(new Font("Sylfaen", 1, 15));
 		willpower.setHorizontalAlignment(0);
 		willpower.setForeground(new Color(68, 170, 85));
-		willpower.setToolTipText(
-				"Willpower is a representation of your will to fight. When this reaches 0, you lose.");
+		willpower.setToolTipText("Willpower is a representation of your will to fight. When this reaches 0, you lose.");
 		meter.add(willpower);
 
 		staminaBar = new JProgressBar();
@@ -956,11 +926,9 @@ public class GUI extends JFrame implements Observer {
 		HTMLDocument doc = (HTMLDocument) textPane.getDocument();
 		HTMLEditorKit editorKit = (HTMLEditorKit) textPane.getEditorKit();
 		try {
-			editorKit
-					.insertHTML(doc, doc.getLength(),
-							"<font face='Georgia'><font color='white'><font size='"
-									+ fontsize + "'>" + text + "<br>",
-							0, 0, null);
+			editorKit.insertHTML(doc, doc.getLength(),
+					"<font face='Georgia'><font color='white'><font size='" + fontsize + "'>" + text + "<br>", 0, 0,
+					null);
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -976,11 +944,9 @@ public class GUI extends JFrame implements Observer {
 		HTMLDocument doc = (HTMLDocument) textPane.getDocument();
 		HTMLEditorKit editorKit = (HTMLEditorKit) textPane.getEditorKit();
 		try {
-			editorKit
-					.insertHTML(doc, doc.getLength(),
-							"<font face='Georgia'><font color='white'><font size='"
-									+ fontsize + "'>" + text + "<br>",
-							0, 0, null);
+			editorKit.insertHTML(doc, doc.getLength(),
+					"<font face='Georgia'><font color='white'><font size='" + fontsize + "'>" + text + "<br>", 0, 0,
+					null);
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1092,8 +1058,7 @@ public class GUI extends JFrame implements Observer {
 
 	public void promptAmbush(IEncounter enc, Character target) {
 		clearCommand();
-		commandPanel.add(new EncounterButton("Attack " + target.name(), enc,
-				target, Encs.ambush));
+		commandPanel.add(new EncounterButton("Attack " + target.name(), enc, target, Encs.ambush));
 		commandPanel.add(new EncounterButton("Wait", enc, target, Encs.wait));
 		Global.getMatch().pause();
 		commandPanel.revalidate();
@@ -1101,8 +1066,7 @@ public class GUI extends JFrame implements Observer {
 
 	public void promptOpportunity(IEncounter enc, Character target, Trap trap) {
 		clearCommand();
-		commandPanel.add(new EncounterButton("Attack " + target.name(), enc,
-				target, Encs.capitalize, trap));
+		commandPanel.add(new EncounterButton("Attack " + target.name(), enc, target, Encs.capitalize, trap));
 		commandPanel.add(new EncounterButton("Wait", enc, target, Encs.wait));
 		Global.getMatch().pause();
 		commandPanel.revalidate();
@@ -1110,18 +1074,14 @@ public class GUI extends JFrame implements Observer {
 
 	public void promptShower(IEncounter encounter, Character target) {
 		clearCommand();
-		commandPanel.add(new EncounterButton("Suprise Her", encounter, target,
-				Encs.showerattack));
+		commandPanel.add(new EncounterButton("Suprise Her", encounter, target, Encs.showerattack));
 		if (!target.mostlyNude()) {
-			commandPanel.add(new EncounterButton("Steal Clothes", encounter,
-					target, Encs.stealclothes));
+			commandPanel.add(new EncounterButton("Steal Clothes", encounter, target, Encs.stealclothes));
 		}
 		if (player.has(Item.Aphrodisiac)) {
-			commandPanel.add(new EncounterButton("Use Aphrodisiac", encounter,
-					target, Encs.aphrodisiactrick));
+			commandPanel.add(new EncounterButton("Use Aphrodisiac", encounter, target, Encs.aphrodisiactrick));
 		}
-		commandPanel.add(new EncounterButton("Do Nothing", encounter, target,
-				Encs.wait));
+		commandPanel.add(new EncounterButton("Do Nothing", encounter, target, Encs.wait));
 		Global.getMatch().pause();
 		commandPanel.revalidate();
 	}
@@ -1146,12 +1106,10 @@ public class GUI extends JFrame implements Observer {
 
 	public void ding() {
 		if (player.availableAttributePoints > 0) {
-			message(player.availableAttributePoints
-					+ " Attribute Points remain.\n");
+			message(player.availableAttributePoints + " Attribute Points remain.\n");
 			clearCommand();
 			for (Attribute att : player.att.keySet()) {
-				if (Attribute.isTrainable(att, player)
-						&& player.getPure(att) > 0) {
+				if (Attribute.isTrainable(att, player) && player.getPure(att) > 0) {
 					commandPanel.add(new AttributeButton(att));
 				}
 			}
@@ -1223,8 +1181,7 @@ public class GUI extends JFrame implements Observer {
 		stamina.setText("Stamina: " + getLabelString(player.getStamina()));
 		arousal.setText("Arousal: " + getLabelString(player.getArousal()));
 		mojo.setText("Mojo: " + getLabelString(player.getMojo()));
-		willpower
-				.setText("Willpower: " + getLabelString(player.getWillpower()));
+		willpower.setText("Willpower: " + getLabelString(player.getWillpower()));
 		lvl.setText("Lvl: " + player.getLevel());
 		xp.setText("XP: " + player.getXP());
 		staminaBar.setMaximum(player.getStamina().max());
@@ -1256,8 +1213,7 @@ public class GUI extends JFrame implements Observer {
 	public void displayStatus() {
 		statusPanel.removeAll();
 		statusPanel.repaint();
-		statusPanel
-				.setPreferredSize(new Dimension(400, centerPanel.getHeight()));
+		statusPanel.setPreferredSize(new Dimension(400, centerPanel.getHeight()));
 
 		if (width < 720) {
 			statusPanel.setMaximumSize(new Dimension(height, width / 6));
@@ -1301,8 +1257,7 @@ public class GUI extends JFrame implements Observer {
 		for (Item i : items.keySet()) {
 			if (items.get(i) > 0) {
 
-				JLabel dirtyTrick = new JLabel(
-						i.getName() + ": " + items.get(i) + "\n");
+				JLabel dirtyTrick = new JLabel(i.getName() + ": " + items.get(i) + "\n");
 
 				dirtyTrick.setForeground(new Color(240, 240, 255));
 
@@ -1344,20 +1299,17 @@ public class GUI extends JFrame implements Observer {
 		statusText.setBackground(new Color(18, 30, 49));
 		statusText.setEditable(false);
 		statusText.setContentType("text/html");
-		statusText.setPreferredSize(
-				new Dimension(400, centerPanel.getHeight() / 2));
-		statusText.setMaximumSize(
-				new Dimension(400, centerPanel.getHeight() / 2));
+		statusText.setPreferredSize(new Dimension(400, centerPanel.getHeight() / 2));
+		statusText.setMaximumSize(new Dimension(400, centerPanel.getHeight() / 2));
 		if (width < 720) {
 			statusText.setSize(new Dimension(height, width / 6));
 		}
 		HTMLDocument doc = (HTMLDocument) statusText.getDocument();
 		HTMLEditorKit editorKit = (HTMLEditorKit) statusText.getEditorKit();
 		try {
-			editorKit.insertHTML(doc, doc.getLength(),
-					"<font face='Georgia'><font color='white'><font size='3'>"
-							+ player.getOutfit().describe(player) + "<br>"
-							+ player.describeStatus() + "<br>",
+			editorKit.insertHTML(doc,
+					doc.getLength(), "<font face='Georgia'><font color='white'><font size='3'>"
+							+ player.getOutfit().describe(player) + "<br>" + player.describeStatus() + "<br>",
 					0, 0, null);
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
@@ -1385,8 +1337,7 @@ public class GUI extends JFrame implements Observer {
 				combatMessage(combat.getMessage());
 				combat.combatMessageChanged = false;
 			}
-			if (Global.getMatch() != null && combat.phase == 0
-					|| combat.phase == 2) {
+			if (Global.getMatch() != null && combat.phase == 0 || combat.phase == 2) {
 				next(combat);
 			}
 		}
@@ -1394,8 +1345,8 @@ public class GUI extends JFrame implements Observer {
 
 	private class NextButton extends JButton {
 
-		private static final long	serialVersionUID	= 6773730244369679822L;
-		private Combat				combat;
+		private static final long serialVersionUID = 6773730244369679822L;
+		private Combat combat;
 
 		public NextButton(Combat combat) {
 			super();
@@ -1420,9 +1371,9 @@ public class GUI extends JFrame implements Observer {
 
 	private class EventButton extends JButton {
 
-		private static final long	serialVersionUID	= 7130158464211753531L;
-		protected Activity			event;
-		protected String			choice;
+		private static final long serialVersionUID = 7130158464211753531L;
+		protected Activity event;
+		protected String choice;
 
 		public EventButton(Activity event, String choice) {
 			super();
@@ -1430,8 +1381,7 @@ public class GUI extends JFrame implements Observer {
 			this.event = event;
 			this.choice = choice;
 			setText(choice);
-			addActionListener(arg0 -> GUI.EventButton.this.event
-					.visit(GUI.EventButton.this.choice));
+			addActionListener(arg0 -> GUI.EventButton.this.event.visit(GUI.EventButton.this.choice));
 		}
 	}
 
@@ -1523,8 +1473,8 @@ public class GUI extends JFrame implements Observer {
 		 * 
 		 */
 		private static final long serialVersionUID = 7410615523447227147L;
-		private IEncounter	enc;
-		private Character	assist;
+		private IEncounter enc;
+		private Character assist;
 
 		public InterveneButton(IEncounter enc2, Character assist) {
 			super();
@@ -1532,8 +1482,7 @@ public class GUI extends JFrame implements Observer {
 			this.enc = enc2;
 			this.assist = assist;
 			setText("Help " + assist.name());
-			addActionListener(arg0 -> GUI.InterveneButton.this.enc
-					.intrude(player, GUI.InterveneButton.this.assist));
+			addActionListener(arg0 -> GUI.InterveneButton.this.enc.intrude(player, GUI.InterveneButton.this.assist));
 		}
 	}
 
@@ -1549,8 +1498,7 @@ public class GUI extends JFrame implements Observer {
 			setFont(new Font("Baskerville Old Face", 0, 18));
 			this.act = act;
 			setText(act.toString());
-			addActionListener(
-					arg0 -> GUI.ActivityButton.this.act.visit("Start"));
+			addActionListener(arg0 -> GUI.ActivityButton.this.act.visit("Start"));
 		}
 	}
 
@@ -1592,13 +1540,11 @@ public class GUI extends JFrame implements Observer {
 		 */
 		private static final long serialVersionUID = 8284888109704181827L;
 
-		public LocatorButton(final Action event, final String choice,
-				final Character self) {
+		public LocatorButton(final Action event, final String choice, final Character self) {
 			super();
 			setFont(new Font("Baskerville Old Face", 0, 18));
 			setText(choice);
-			addActionListener(
-					evt -> ((Locate) event).handleEvent(self, choice));
+			addActionListener(evt -> ((Locate) event).handleEvent(self, choice));
 		}
 	}
 
@@ -1621,12 +1567,10 @@ public class GUI extends JFrame implements Observer {
 		}
 	}
 
-	public void changeClothes(Character player, Activity event,
-			String backOption) {
+	public void changeClothes(Character player, Activity event, String backOption) {
 		clothesPanel.removeAll();
 		clothesPanel.add(new ClothesChangeGUI(player, event, backOption));
-		centerPanel.remove(((BorderLayout) centerPanel.getLayout())
-				.getLayoutComponent(BorderLayout.CENTER));
+		centerPanel.remove(((BorderLayout) centerPanel.getLayout()).getLayoutComponent(BorderLayout.CENTER));
 		centerPanel.add(clothesPanel, BorderLayout.CENTER);
 		clothesPanel.setVisible(true);
 		clothesPanel.repaint();
@@ -1636,8 +1580,7 @@ public class GUI extends JFrame implements Observer {
 
 	public void removeClosetGUI() {
 		clothesPanel.removeAll();
-		centerPanel.remove(((BorderLayout) centerPanel.getLayout())
-				.getLayoutComponent(BorderLayout.CENTER));
+		centerPanel.remove(((BorderLayout) centerPanel.getLayout()).getLayoutComponent(BorderLayout.CENTER));
 		centerPanel.add(portraitPanel, BorderLayout.CENTER);
 		clothesPanel.setVisible(false);
 		centerPanel.repaint();

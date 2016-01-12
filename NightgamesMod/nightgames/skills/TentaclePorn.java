@@ -23,10 +23,8 @@ public class TentaclePorn extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && !c.getStance().sub(getSelf())
-				&& !c.getStance().prone(getSelf())
-				&& !c.getStance().prone(target) && getSelf().canAct()
-				&& getSelf().getArousal().get() >= 20;
+		return !target.wary() && !c.getStance().sub(getSelf()) && !c.getStance().prone(getSelf())
+				&& !c.getStance().prone(target) && getSelf().canAct() && getSelf().getArousal().get() >= 20;
 	}
 
 	@Override
@@ -48,26 +46,19 @@ public class TentaclePorn extends Skill {
 					if (getSelf().human()) {
 						c.write(getSelf(), deal(c, 0, Result.special, target));
 					} else if (target.human()) {
-						c.write(getSelf(),
-								receive(c, 0, Result.special, target));
+						c.write(getSelf(), receive(c, 0, Result.special, target));
 					}
-					target.body.pleasure(null, null,
-							target.body.getRandom("cock"), m, c);
-					target.body.pleasure(null, null,
-							target.body.getRandom("pussy"), m, c);
-					target.body.pleasure(null, null,
-							target.body.getRandom("breasts"), m, c);
-					target.body.pleasure(null, null,
-							target.body.getRandom("ass"), m, c);
+					target.body.pleasure(null, null, target.body.getRandom("cock"), m, c);
+					target.body.pleasure(null, null, target.body.getRandom("pussy"), m, c);
+					target.body.pleasure(null, null, target.body.getRandom("breasts"), m, c);
+					target.body.pleasure(null, null, target.body.getRandom("ass"), m, c);
 					target.emote(Emotion.horny, 10);
 				} else if (getSelf().human()) {
 					c.write(getSelf(), deal(c, 0, Result.normal, target));
-					target.body.pleasure(null, null,
-							target.body.getRandom("skin"), m, c);
+					target.body.pleasure(null, null, target.body.getRandom("skin"), m, c);
 				} else if (target.human()) {
 					c.write(getSelf(), receive(c, 0, Result.normal, target));
-					target.body.pleasure(null, null,
-							target.body.getRandom("skin"), m, c);
+					target.body.pleasure(null, null, target.body.getRandom("skin"), m, c);
 				}
 				if (!target.is(Stsflag.oiled)) {
 					target.add(c, new Oiled(target));
@@ -80,10 +71,7 @@ public class TentaclePorn extends Skill {
 					c.write(getSelf(), receive(c, 0, Result.weak, target));
 				}
 			}
-			target.add(c,
-					new Bound(target, Math
-							.min(10 + 3 * getSelf().get(Attribute.Fetish), 50),
-					"tentacles"));
+			target.add(c, new Bound(target, Math.min(10 + 3 * getSelf().get(Attribute.Fetish), 50), "tentacles"));
 		} else {
 			if (getSelf().human()) {
 				c.write(getSelf(), deal(c, 0, Result.miss, target));
@@ -106,17 +94,15 @@ public class TentaclePorn extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return "You summon a mass of tentacles that try to snare "
-					+ target.name() + ", but she nimbly dodges them.";
+			return "You summon a mass of tentacles that try to snare " + target.name()
+					+ ", but she nimbly dodges them.";
 		} else if (modifier == Result.weak) {
-			return "You summon a mass of phallic tentacles that wrap around "
-					+ target.name() + "'s arms, holding her in place.";
+			return "You summon a mass of phallic tentacles that wrap around " + target.name()
+					+ "'s arms, holding her in place.";
 		} else if (modifier == Result.normal) {
-			return "You summon a mass of phallic tentacles that wrap around "
-					+ target.name()
+			return "You summon a mass of phallic tentacles that wrap around " + target.name()
 					+ "'s naked body. They squirm against her and squirt slimy fluids on her body.";
 		} else {
 			return "You summon tentacles to toy with " + target.name()
@@ -125,8 +111,7 @@ public class TentaclePorn extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			return getSelf().name()
 					+ " stomps on the ground and a bundle of tentacles erupt from the ground. You're barely able to avoid them.";

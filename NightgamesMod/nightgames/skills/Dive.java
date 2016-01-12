@@ -50,16 +50,13 @@ public class Dive extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You take evasive action and dive to the floor. Ok, you're on the floor now. That's as far as you planned.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
-		return getSelf().name()
-				+ " dives dramatically away and lands flat on the floor.";
+	public String receive(Combat c, int damage, Result modifier, Character target) {
+		return getSelf().name() + " dives dramatically away and lands flat on the floor.";
 	}
 
 }

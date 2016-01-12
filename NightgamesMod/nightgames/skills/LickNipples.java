@@ -19,9 +19,8 @@ public class LickNipples extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.breastsAvailable() && c.getStance().reachTop(getSelf())
-				&& c.getStance().front(getSelf()) && getSelf().canAct()
-				&& c.getStance().facing();
+		return target.breastsAvailable() && c.getStance().reachTop(getSelf()) && c.getStance().front(getSelf())
+				&& getSelf().canAct() && c.getStance().facing();
 	}
 
 	@Override
@@ -42,8 +41,7 @@ public class LickNipples extends Skill {
 			if (getSelf().has(Trait.silvertongue)) {
 				m += 4;
 			}
-			target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"),
-					target.body.getRandom("breasts"), m, c);
+			target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("breasts"), m, c);
 
 		} else {
 			if (getSelf().human()) {
@@ -72,24 +70,19 @@ public class LickNipples extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return "You go after " + target.name()
-					+ "'s nipples, but she pushes you away.";
+			return "You go after " + target.name() + "'s nipples, but she pushes you away.";
 		} else {
-			return "You slowly circle your tongue around each of "
-					+ target.name()
+			return "You slowly circle your tongue around each of " + target.name()
 					+ "'s nipples, making her moan and squirm in pleasure.";
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return getSelf().name()
-					+ " tries to suck on your chest, but you avoid her.";
+			return getSelf().name() + " tries to suck on your chest, but you avoid her.";
 		} else {
 			return getSelf().name()
 					+ " licks and sucks your nipples, sending a surge of excitement straight to your groin.";

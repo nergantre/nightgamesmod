@@ -25,8 +25,7 @@ public class CommandMasturbate extends PlayerCommand {
 	public boolean resolve(Combat c, Character target) {
 		boolean lowStart = target.getArousal().get() < 15;
 		int m = 5 + Global.random(10);
-		target.body.pleasure(target, target.body.getRandom("hands"),
-				target.body.getRandom("cock"), m, c);
+		target.body.pleasure(target, target.body.getRandom("hands"), target.body.getRandom("cock"), m, c);
 
 		boolean lowEnd = target.getArousal().get() < 15;
 		if (getSelf().human()) {
@@ -54,31 +53,24 @@ public class CommandMasturbate extends PlayerCommand {
 	}
 
 	@Override
-	public String deal(Combat c, int magnitude, Result modifier,
-			Character target) {
+	public String deal(Combat c, int magnitude, Result modifier, Character target) {
 		switch (modifier) {
-			case normal:
-				return target.name()
-						+ " seems more than happy to do as you tell her, "
-						+ "as she starts fingering herself in abandon.";
-			case special:
-				return "Looking at you lustily, " + target.name()
-						+ " rubs her clit as she gets wetter and wetter.";
-			case weak:
-				return target.name()
-						+ " follows your command to the letter, but"
-						+ " it doesn't seem to have that much of an effect on her.";
-			default:
-				return "<<This should not be displayed, please inform The"
-						+ " Silver Bard: CommandMasturbate-deal>>";
+		case normal:
+			return target.name() + " seems more than happy to do as you tell her, "
+					+ "as she starts fingering herself in abandon.";
+		case special:
+			return "Looking at you lustily, " + target.name() + " rubs her clit as she gets wetter and wetter.";
+		case weak:
+			return target.name() + " follows your command to the letter, but"
+					+ " it doesn't seem to have that much of an effect on her.";
+		default:
+			return "<<This should not be displayed, please inform The" + " Silver Bard: CommandMasturbate-deal>>";
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int magnitude, Result modifier,
-			Character target) {
-		return "<<This should not be displayed, please inform The"
-				+ " Silver Bard: CommandMasturbate-receive>>";
+	public String receive(Combat c, int magnitude, Result modifier, Character target) {
+		return "<<This should not be displayed, please inform The" + " Silver Bard: CommandMasturbate-receive>>";
 	}
 
 }

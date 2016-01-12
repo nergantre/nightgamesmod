@@ -13,8 +13,8 @@ public class StandUp extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && c.getStance().getUp(getSelf())
-				&& !c.getStance().mobile(target) && !c.getStance().inserted();
+		return getSelf().canAct() && c.getStance().getUp(getSelf()) && !c.getStance().mobile(target)
+				&& !c.getStance().inserted();
 	}
 
 	@Override
@@ -54,17 +54,13 @@ public class StandUp extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
-		return "You relinquish your hold on " + target.name()
-				+ " and stand back up.";
+	public String deal(Combat c, int damage, Result modifier, Character target) {
+		return "You relinquish your hold on " + target.name() + " and stand back up.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
-		return getSelf().getName()
-				+ " relinquishes her hold on you and stands back up.";
+	public String receive(Combat c, int damage, Result modifier, Character target) {
+		return getSelf().getName() + " relinquishes her hold on you and stands back up.";
 	}
 
 	@Override

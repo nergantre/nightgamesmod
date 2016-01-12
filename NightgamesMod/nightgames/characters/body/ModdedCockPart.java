@@ -7,8 +7,8 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 
 public class ModdedCockPart implements CockPart {
-	private BasicCockPart	base;
-	private CockMod			mod;
+	private BasicCockPart base;
+	private CockMod mod;
 
 	public ModdedCockPart(BasicCockPart bodyPart, CockMod mod) {
 		setBase(bodyPart);
@@ -60,16 +60,14 @@ public class ModdedCockPart implements CockPart {
 	}
 
 	@Override
-	public double applyBonuses(Character self, Character opponent,
-			BodyPart target, double damage, Combat c) {
+	public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		return mod.applyBonuses(self, opponent, target, damage, c, this);
 	}
 
 	@Override
-	public double applySubBonuses(Character self, Character opponent,
-			BodyPart with, BodyPart target, double damage, Combat c) {
-		return mod.applySubBonuses(self, opponent, with, target, damage, c,
-				this);
+	public double applySubBonuses(Character self, Character opponent, BodyPart with, BodyPart target, double damage,
+			Combat c) {
+		return mod.applySubBonuses(self, opponent, with, target, damage, c, this);
 	}
 
 	@Override
@@ -117,8 +115,7 @@ public class ModdedCockPart implements CockPart {
 	}
 
 	@Override
-	public double applyReceiveBonuses(Character self, Character opponent,
-			BodyPart target, double damage, Combat c) {
+	public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		return mod.applyReceiveBonuses(self, opponent, target, damage, c, this);
 	}
 
@@ -152,44 +149,36 @@ public class ModdedCockPart implements CockPart {
 	}
 
 	@Override
-	public void tickHolding(Combat c, Character self, Character opponent,
-			BodyPart otherOrgan) {
+	public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {
 		mod.tickHolding(c, self, opponent, otherOrgan, this);
 	}
 
 	@Override
-	public void onStartPenetration(Combat c, Character self, Character opponent,
-			BodyPart target) {
+	public void onStartPenetration(Combat c, Character self, Character opponent, BodyPart target) {
 		mod.onStartPenetration(c, self, opponent, target, this);
 	}
-	
+
 	@Override
-	public void onEndPenetration(Combat c, Character self,
-			Character opponent, BodyPart target) {
+	public void onEndPenetration(Combat c, Character self, Character opponent, BodyPart target) {
 		mod.onEndPenetration(c, self, opponent, target, this);
 	}
 
 	@Override
 	public int counterValue(BodyPart other) {
 		if (mod == CockMod.primal) {
-			return other == PussyPart.fiery ? 1
-					: other == PussyPart.arcane ? -1 : 0;
+			return other == PussyPart.fiery ? 1 : other == PussyPart.arcane ? -1 : 0;
 		}
 		if (mod == CockMod.runic) {
-			return other == PussyPart.succubus ? 1
-					: other == PussyPart.feral ? -1 : 0;
+			return other == PussyPart.succubus ? 1 : other == PussyPart.feral ? -1 : 0;
 		}
 		if (mod == CockMod.incubus) {
-			return other == PussyPart.feral ? 1
-					: other == PussyPart.cybernetic ? -1 : 0;
+			return other == PussyPart.feral ? 1 : other == PussyPart.cybernetic ? -1 : 0;
 		}
 		if (mod == CockMod.bionic) {
-			return other == PussyPart.arcane ? 1
-					: other == PussyPart.fiery ? -1 : 0;
+			return other == PussyPart.arcane ? 1 : other == PussyPart.fiery ? -1 : 0;
 		}
 		if (mod == CockMod.enlightened) {
-			return other == PussyPart.cybernetic ? 1
-					: other == PussyPart.succubus ? -1 : 0;
+			return other == PussyPart.cybernetic ? 1 : other == PussyPart.succubus ? -1 : 0;
 		}
 		if (other.isGeneric()) {
 			return 1;
@@ -221,8 +210,7 @@ public class ModdedCockPart implements CockPart {
 	}
 
 	@Override
-	public void onOrgasm(Combat c, Character self, Character opponent,
-			BodyPart target, boolean selfCame) {
+	public void onOrgasm(Combat c, Character self, Character opponent, BodyPart target, boolean selfCame) {
 		mod.onOrgasm(c, self, opponent, target, selfCame, this);
 	}
 

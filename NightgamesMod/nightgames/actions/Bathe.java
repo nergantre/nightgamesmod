@@ -24,11 +24,9 @@ public class Bathe extends Action {
 	public Movement execute(Character user) {
 		if (user.human()) {
 			if (user.location().name.equals("Showers")) {
-				Global.gui().message(
-						"It's a bit dangerous, but a shower sounds especially inviting right now.");
+				Global.gui().message("It's a bit dangerous, but a shower sounds especially inviting right now.");
 			} else if (user.location().name.equals("Pool")) {
-				Global.gui().message(
-						"There's a jacuzzi in the pool area and you decide to risk a quick soak.");
+				Global.gui().message("There's a jacuzzi in the pool area and you decide to risk a quick soak.");
 			}
 		}
 		user.state = State.shower;

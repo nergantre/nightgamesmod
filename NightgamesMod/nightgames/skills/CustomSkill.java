@@ -17,14 +17,12 @@ public class CustomSkill extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return data.skillRequirements.stream()
-				.allMatch(req -> req.meets(c, user, target));
+		return data.skillRequirements.stream().allMatch(req -> req.meets(c, user, target));
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return data.usableRequirements.stream()
-				.allMatch(req -> req.meets(c, getSelf(), target));
+		return data.usableRequirements.stream().allMatch(req -> req.meets(c, getSelf(), target));
 	}
 
 	@Override
@@ -80,9 +78,7 @@ public class CustomSkill extends Skill {
 	@Override
 	public String getLabel(Combat c) {
 		Optional<CustomStringEntry> picked = data.labels.stream()
-				.filter(entry -> entry.meetsRequirements(c, getSelf(),
-						c.getOther(getSelf())))
-				.findFirst();
+				.filter(entry -> entry.meetsRequirements(c, getSelf(), c.getOther(getSelf()))).findFirst();
 		if (picked.isPresent()) {
 			return picked.get().getLine(c, getSelf(), c.getOther(getSelf()));
 		}
@@ -90,14 +86,12 @@ public class CustomSkill extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return null;
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return null;
 	}
 }

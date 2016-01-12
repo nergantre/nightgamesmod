@@ -62,8 +62,7 @@ public class CounterFlower extends CounterBase {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !c.getStance().dom(getSelf()) && !c.getStance().dom(target)
-				&& getSelf().canAct() && getSelf().hasPussy()
+		return !c.getStance().dom(getSelf()) && !c.getStance().dom(target) && getSelf().canAct() && getSelf().hasPussy()
 				&& target.hasDick();
 	}
 
@@ -88,11 +87,9 @@ public class CounterFlower extends CounterBase {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.setup) {
-			return Global.format(
-					"You open up the flower at the base of your legs and get ready for a counter.",
+			return Global.format("You open up the flower at the base of your legs and get ready for a counter.",
 					getSelf(), target);
 		} else if (modifier == Result.miss) {
 			return Global.format(
@@ -109,8 +106,7 @@ public class CounterFlower extends CounterBase {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.setup) {
 			return Global.format(
 					"{self:SUBJECT} giggles softly and opens the flower at the base of {self:possessive} legs invitingly.",

@@ -113,8 +113,10 @@ public class Trip extends Skill {
 		if (modifier == Result.miss) {
 			return getSelf().name() + " hooks your ankle, but you recover without falling.";
 		} else if (modifier == Result.special) {
-			return String.format("%s shoves a mass of %s slime under your feet, destabilizing you. With a few"
-					+ " pulls, %s throws you onto your back.", getSelf().name(), getSelf().pronoun(), getSelf().pronoun());
+			return String.format(
+					"%s shoves a mass of %s slime under your feet, destabilizing you. With a few"
+							+ " pulls, %s throws you onto your back.",
+					getSelf().name(), getSelf().pronoun(), getSelf().pronoun());
 		} else if (modifier == Result.weak) {
 			return String.format(
 					"%s forms some of %s slime into a sheet and slides it towards your feet."

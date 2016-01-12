@@ -82,8 +82,7 @@ public class Frenzied extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format(
-				"%s mind blanks, leaving only the bestial need to breed.",
+		return String.format("%s mind blanks, leaving only the bestial need to breed.",
 				affected.nameOrPossessivePronoun());
 	}
 
@@ -92,8 +91,7 @@ public class Frenzied extends DurationStatus {
 		if (affected.human()) {
 			return "You cannot think about anything other than fucking all those around.";
 		} else {
-			return String.format(
-					"%s has a frenzied look in %s eyes, interested in nothing but raw, hard sex.",
+			return String.format("%s has a frenzied look in %s eyes, interested in nothing but raw, hard sex.",
 					affected.name(), affected.possessivePronoun());
 		}
 	}
@@ -198,8 +196,7 @@ public class Frenzied extends DurationStatus {
 	public Collection<Skill> allowedSkills(Combat c) {
 		// Gather the preferred skills for which the character meets the
 		// requirements
-		return FUCK_SKILLS.stream()
-				.filter(s -> s.requirements(c, affected, c.getOther(affected)))
+		return FUCK_SKILLS.stream().filter(s -> s.requirements(c, affected, c.getOther(affected)))
 				.map(s -> s.copy(affected)).collect(Collectors.toSet());
 	}
 

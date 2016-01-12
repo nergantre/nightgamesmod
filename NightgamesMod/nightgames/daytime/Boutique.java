@@ -32,14 +32,12 @@ public class Boutique extends Store {
 		}
 		checkSale(choice);
 		if (player.human()) {
-			Global.gui().message(
-					"This is a higher end store for women's clothing. Things may get a bit expensive here.");
+			Global.gui()
+					.message("This is a higher end store for women's clothing. Things may get a bit expensive here.");
 			for (Clothing i : clothing().keySet()) {
-				Global.gui().message(i.getName() + ": " + i.getPrice()
-						+ (player.has(i) ? " (Owned)" : ""));
+				Global.gui().message(i.getName() + ": " + i.getPrice() + (player.has(i) ? " (Owned)" : ""));
 			}
-			Global.gui().message(
-					"You have: $" + player.money + " available to spend.");
+			Global.gui().message("You have: $" + player.money + " available to spend.");
 			displayGoods();
 			Global.gui().choose(this, "Leave");
 		}

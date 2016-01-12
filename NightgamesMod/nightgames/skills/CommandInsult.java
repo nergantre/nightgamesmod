@@ -38,18 +38,14 @@ public class CommandInsult extends PlayerCommand {
 	}
 
 	@Override
-	public String deal(Combat c, int magnitude, Result modifier,
-			Character target) {
-		return "Your words nearly drive " + target.name()
-				+ " to tears with their ferocity and psychic backup. Luckily,"
+	public String deal(Combat c, int magnitude, Result modifier, Character target) {
+		return "Your words nearly drive " + target.name() + " to tears with their ferocity and psychic backup. Luckily,"
 				+ " she won't remember any of it later.";
 	}
 
 	@Override
-	public String receive(Combat c, int magnitude, Result modifier,
-			Character target) {
-		return "<<This should not be displayed, please inform The"
-				+ " Silver Bard: CommandInsult-receive>>";
+	public String receive(Combat c, int magnitude, Result modifier, Character target) {
+		return "<<This should not be displayed, please inform The" + " Silver Bard: CommandInsult-receive>>";
 	}
 
 }

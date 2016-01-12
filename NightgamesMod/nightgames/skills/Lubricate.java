@@ -20,9 +20,8 @@ public class Lubricate extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().mobile(getSelf()) && getSelf().canAct()
-				&& getSelf().has(Item.Lubricant) && target.mostlyNude()
-				&& !target.is(Stsflag.oiled) && !c.getStance().prone(getSelf());
+		return c.getStance().mobile(getSelf()) && getSelf().canAct() && getSelf().has(Item.Lubricant)
+				&& target.mostlyNude() && !target.is(Stsflag.oiled) && !c.getStance().prone(getSelf());
 	}
 
 	@Override
@@ -48,14 +47,12 @@ public class Lubricate extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You cover " + target.name() + " with an oily Lubricant.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().name()
 				+ " throws an oily liquid at you. The liquid clings to you and makes your whole body slippery.";
 	}

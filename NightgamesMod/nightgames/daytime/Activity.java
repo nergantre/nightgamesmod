@@ -4,10 +4,10 @@ import nightgames.characters.Character;
 import nightgames.global.Global;
 
 public abstract class Activity {
-	protected String	name;
-	protected int		time;
-	protected Character	player;
-	protected int		page;
+	protected String name;
+	protected int time;
+	protected Character player;
+	protected int page;
 
 	public Activity(String name, Character player) {
 		this.name = name;

@@ -42,16 +42,15 @@ public class Use extends Action {
 			return Movement.oil;
 		} else if (item == Item.EnergyDrink) {
 			if (user.human()) {
-				Global.gui().message(
-						"You chug down the unpleasant drink. Your tiredness immediately starts to recede.");
+				Global.gui()
+						.message("You chug down the unpleasant drink. Your tiredness immediately starts to recede.");
 			}
 			user.heal(null, 10 + Global.random(10));
 			user.consume(Item.EnergyDrink, 1);
 			return Movement.enerydrink;
 		} else if (item == Item.Beer) {
 			if (user.human()) {
-				Global.gui().message(
-						"You pop open a beer and chug it down, feeling buzzed and a bit slugish.");
+				Global.gui().message("You pop open a beer and chug it down, feeling buzzed and a bit slugish.");
 			}
 			user.add(new Buzzed(user));
 			user.consume(Item.Beer, 1);

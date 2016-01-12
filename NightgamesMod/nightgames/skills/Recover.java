@@ -14,8 +14,7 @@ public class Recover extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().prone(getSelf()) && c.getStance().mobile(getSelf())
-				&& getSelf().canAct();
+		return c.getStance().prone(getSelf()) && c.getStance().mobile(getSelf()) && getSelf().canAct();
 	}
 
 	@Override
@@ -51,14 +50,12 @@ public class Recover extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You pull yourself up, taking a deep breath to restore your focus.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().name() + " scrambles back to her feet.";
 	}
 

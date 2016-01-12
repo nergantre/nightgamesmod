@@ -21,8 +21,7 @@ public class MagicMissile extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && c.getStance().mobile(getSelf())
-				&& !c.getStance().prone(getSelf());
+		return getSelf().canAct() && c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf());
 	}
 
 	@Override
@@ -47,8 +46,7 @@ public class MagicMissile extends Skill {
 				if (target.has(Trait.achilles)) {
 					target.pain(c, Global.random(6));
 				}
-				target.pain(c, Math.min(9 + Global
-						.random(2 * getSelf().get(Attribute.Arcane) + 1), 100));
+				target.pain(c, Math.min(9 + Global.random(2 * getSelf().get(Attribute.Arcane) + 1), 100));
 				target.emote(Emotion.angry, 10);
 			} else {
 				if (getSelf().human()) {
@@ -56,8 +54,7 @@ public class MagicMissile extends Skill {
 				} else if (target.human()) {
 					c.write(getSelf(), receive(c, 0, Result.normal, target));
 				}
-				target.pain(c, Math.min(100, 6
-						+ Global.random(getSelf().get(Attribute.Arcane) + 2)));
+				target.pain(c, Math.min(100, 6 + Global.random(getSelf().get(Attribute.Arcane) + 2)));
 				target.emote(Emotion.angry, 5);
 			}
 		} else {
@@ -92,11 +89,9 @@ public class MagicMissile extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return "You fire a bolt of magical energy, but " + target.name()
-					+ " narrowly dodges out of the way.";
+			return "You fire a bolt of magical energy, but " + target.name() + " narrowly dodges out of the way.";
 		} else if (modifier == Result.critical) {
 			if (target.hasBalls()) {
 				return "You cast and fire a magic missile at " + target.name()
@@ -107,14 +102,12 @@ public class MagicMissile extends Skill {
 						+ "with a whimper, holding her bruised parts.";
 			}
 		} else {
-			return "You hurl a magic missile at " + target.name()
-					+ ", hitting and staggering her a step.";
+			return "You hurl a magic missile at " + target.name() + ", hitting and staggering her a step.";
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			return "You see " + getSelf().name()
 					+ " start to cast a spell and you dive to the left, just in time to avoid the missile.";

@@ -4,8 +4,8 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 
 public class ResourceEffect extends ItemEffect {
-	private String	type;
-	private int		amt;
+	private String type;
+	private int amt;
 
 	public ResourceEffect(String type, int amt) {
 		super("", "", true, true);
@@ -14,8 +14,7 @@ public class ResourceEffect extends ItemEffect {
 	}
 
 	@Override
-	public boolean use(Combat c, Character user, Character opponent,
-			Item item) {
+	public boolean use(Combat c, Character user, Character opponent, Item item) {
 		if (type.equals("arouse")) {
 			user.arouse(amt, c);
 		} else if (type.equals("calm")) {

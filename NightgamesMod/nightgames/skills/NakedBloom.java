@@ -19,8 +19,8 @@ public class NakedBloom extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && c.getStance().mobile(getSelf())
-				&& !c.getStance().prone(getSelf()) && !target.reallyNude();
+		return getSelf().canAct() && c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf())
+				&& !target.reallyNude();
 	}
 
 	@Override
@@ -57,15 +57,13 @@ public class NakedBloom extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You chant a short spell and turn " + target.name()
 				+ "'s clothes into a burst of flowers. The cloud of flower petals flutters to the ground, exposing her nude body.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().name()
 				+ " mumbles a spell and you're suddenly surrounded by an eruption of flower petals. As the petals settle, you realize you've been stripped completely "
 				+ "naked.";

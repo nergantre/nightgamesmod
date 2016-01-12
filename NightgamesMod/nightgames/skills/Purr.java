@@ -21,9 +21,8 @@ public class Purr extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !(target.is(Stsflag.wary) || target.is(Stsflag.charmed))
-				&& getSelf().canAct() && c.getStance().mobile(getSelf())
-				&& getSelf().getArousal().percent() >= 20;
+		return !(target.is(Stsflag.wary) || target.is(Stsflag.charmed)) && getSelf().canAct()
+				&& c.getStance().mobile(getSelf()) && getSelf().getArousal().percent() >= 20;
 	}
 
 	@Override
@@ -33,8 +32,8 @@ public class Purr extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if (Global.random(target.getLevel()) <= getSelf().get(Attribute.Animism)
-				* getSelf().getArousal().percent() / 100 && !target.wary()) {
+		if (Global.random(target.getLevel()) <= getSelf().get(Attribute.Animism) * getSelf().getArousal().percent()
+				/ 100 && !target.wary()) {
 			if (getSelf().human()) {
 				c.write(getSelf(), deal(c, 0, Result.normal, target));
 			} else if (target.human()) {
@@ -63,8 +62,7 @@ public class Purr extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			return "You let out a soft purr and give " + target.name()
 					+ " your best puppy dog eyes. She smiles, but then aims a quick punch at your groin, which you barely avoid. "
@@ -77,8 +75,7 @@ public class Purr extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			return getSelf().name()
 					+ " slumps submissively and purrs. It's cute, but she's not going to get the better of you.";

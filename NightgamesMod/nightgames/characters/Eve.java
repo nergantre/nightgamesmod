@@ -57,45 +57,37 @@ public class Eve extends BasePersonality {
 		growth.bonusStamina = 1;
 		growth.bonusArousal = 3;
 		growth.bonusMojo = 2;
-		preferredAttributes.add(c -> c.get(Attribute.Fetish) < 80
-				? Optional.of(Attribute.Fetish) : Optional.empty());
+		preferredAttributes.add(c -> c.get(Attribute.Fetish) < 80 ? Optional.of(Attribute.Fetish) : Optional.empty());
 		preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
 	}
 
 	@Override
 	public void rest(int time) {
 		super.rest(time);
-		if (!(character.has(Item.Dildo) || character.has(Item.Dildo2))
-				&& character.money >= 250) {
+		if (!(character.has(Item.Dildo) || character.has(Item.Dildo2)) && character.money >= 250) {
 			character.gain(Item.Dildo);
 			character.money -= 250;
 		}
-		if (!(character.has(Item.Onahole) || character.has(Item.Onahole2))
-				&& character.money >= 300) {
+		if (!(character.has(Item.Onahole) || character.has(Item.Onahole2)) && character.money >= 300) {
 			character.gain(Item.Onahole);
 			character.money -= 300;
 		}
-		if (!character.has(Item.Onahole2) && character.has(Item.Onahole)
-				&& character.money >= 300) {
+		if (!character.has(Item.Onahole2) && character.has(Item.Onahole) && character.money >= 300) {
 			character.remove(Item.Onahole);
 			character.gain(Item.Onahole2);
 			character.money -= 300;
 		}
 		if (character.money > 0) {
-			Global.getDay().visit("XXX Store", character,
-					Global.random(character.money));
+			Global.getDay().visit("XXX Store", character, Global.random(character.money));
 		}
 		if (character.money > 0) {
-			Global.getDay().visit("Black Market", character,
-					Global.random(character.money));
+			Global.getDay().visit("Black Market", character, Global.random(character.money));
 		}
 		if (character.money > 0) {
-			Global.getDay().visit("Bookstore", character,
-					Global.random(character.money));
+			Global.getDay().visit("Bookstore", character, Global.random(character.money));
 		}
 		if (character.money > 0) {
-			Global.getDay().visit("Hardware Store", character,
-					Global.random(character.money));
+			Global.getDay().visit("Hardware Store", character, Global.random(character.money));
 		}
 		Decider.visit(character);
 		int r;
@@ -324,8 +316,7 @@ public class Eve extends BasePersonality {
 				+ "here first.\"</i> She thrusts her hips several times for emphasis. <i>\"You could always go for the back door.\"</i> "
 				+ target.name() + " frantically shakes her "
 				+ "head in protest, though she's moaning too much to speak. <i>\"Aww... She doesn't want to be double penetrated. You'll just have to settle for this.</i>\" <br>"
-				+ "Without slowing down her thrusts, she pushes the other girl into your lap. Suddenly "
-				+ target.name()
+				+ "Without slowing down her thrusts, she pushes the other girl into your lap. Suddenly " + target.name()
 				+ "'s soft butt is rubbing firmly and pleasurably against your erection. "
 				+ "Shit. She's going to make you cum too, even when you're helping her. <i>\"Don't let go of her, or you won't get credit for her orgasm.\"</i> Unable to struggle "
 				+ "free, the sensation of " + target.name()
@@ -351,8 +342,7 @@ public class Eve extends BasePersonality {
 		"Your fight with " + target.name()
 				+ " quickly renders you both naked and aroused. She manages to trip you, dropping you solidly to the floor. She wastes no time "
 				+ "and bends down to suck on your defenseless dick. You groan in pleasure as her tongue plays with your glans. Suddenly, she yelps in surprise and loses her balance. "
-				+ "You spot Eve standing behind her, fondling her exposed girl parts. "
-				+ target.name()
+				+ "You spot Eve standing behind her, fondling her exposed girl parts. " + target.name()
 				+ " tries to get back to her feet, but Eve easily forces her onto her back. "
 				+ "<i>\"When I saw your sexy ass waving in front of me, I thought about giving you a good fucking, but then I noticed how enthusiastically you were blowing that boy.\"</i> "
 				+ "She straddles the other girl's face and presses her girl-cock against her lips. <i>\"Let's see you put those skills to better use.\"</i><br>"
@@ -363,14 +353,13 @@ public class Eve extends BasePersonality {
 
 	@Override
 	public String startBattle(Character other) {
-		return "Eve gives you a dominant grin and cracks her knuckles. <i>\"Come on "
-				+ other.boyOrGirl() + ", let's play.\"</i>";
+		return "Eve gives you a dominant grin and cracks her knuckles. <i>\"Come on " + other.boyOrGirl()
+				+ ", let's play.\"</i>";
 	}
 
 	@Override
 	public boolean fit() {
-		return !character.mostlyNude()
-				&& character.getStamina().percent() >= 50;
+		return !character.mostlyNude() && character.getStamina().percent() >= 50;
 	}
 
 	@Override
@@ -385,14 +374,14 @@ public class Eve extends BasePersonality {
 	@Override
 	public boolean checkMood(Combat c, Emotion mood, int value) {
 		switch (mood) {
-			case horny:
-			case dominant:
-				return value >= 50;
-			case nervous:
-			case desperate:
-				return value >= 150;
-			default:
-				return value >= 100;
+		case horny:
+		case dominant:
+			return value >= 50;
+		case nervous:
+		case desperate:
+			return value >= 150;
+		default:
+			return value >= 100;
 		}
 	}
 
@@ -402,8 +391,7 @@ public class Eve extends BasePersonality {
 			return "<i>\"Oh fuck! You are one tight little cum bucket! Let's go again!\"<i>"
 					+ " Eve immediately resumes her thrusting.";
 		}
-		return "<i>\"Ahhh shit! Wouldn't it have been sooo much better to have "
-				+ "taken that load up your ass?\"</i>";
+		return "<i>\"Ahhh shit! Wouldn't it have been sooo much better to have " + "taken that load up your ass?\"</i>";
 	}
 
 	@Override

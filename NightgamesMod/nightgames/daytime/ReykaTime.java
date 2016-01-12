@@ -49,8 +49,7 @@ public class ReykaTime extends BaseNPCTime {
 		incubusCock.ingredients.put(Item.semen, 10);
 		incubusCock.requirements.add(new BodyPartRequirement("cock"));
 		incubusCock.requirements.add((c, self, other) -> {
-			return self.body.get("cock").stream()
-					.anyMatch(cock -> ((CockPart) cock).isGeneric());
+			return self.body.get("cock").stream().anyMatch(cock -> ((CockPart) cock).isGeneric());
 		});
 		incubusCock.additionalRequirements = "A normal cock";
 		incubusCock.option = "Incubus Cock";
@@ -84,8 +83,8 @@ public class ReykaTime extends BaseNPCTime {
 				+ "we're done, I have to get some rest. Even if it doesn't look like it, that ritual took a lot out of me.\" "
 				+ "Recognizing that you are being shooed away, you profusely thank Reyka and leave her chapel with your new incubus cock.</i>";
 		incubusCock.effect = (c, self, other) -> {
-			Optional<BodyPart> optPart = self.body.get("cock").stream()
-					.filter(cock -> ((CockPart) cock).isGeneric()).findAny();
+			Optional<BodyPart> optPart = self.body.get("cock").stream().filter(cock -> ((CockPart) cock).isGeneric())
+					.findAny();
 			BasicCockPart target = (BasicCockPart) optPart.get();
 			self.body.remove(target);
 			self.body.add(new ModdedCockPart(target, CockMod.incubus));
@@ -95,8 +94,7 @@ public class ReykaTime extends BaseNPCTime {
 		TransformationOption demonWings = new TransformationOption();
 		demonWings.ingredients.put(Item.SuccubusDraft, 20);
 		demonWings.ingredients.put(Item.semen, 10);
-		demonWings.requirements.add(new NotRequirement(
-				Arrays.asList(new BodyPartRequirement("wings"))));
+		demonWings.requirements.add(new NotRequirement(Arrays.asList(new BodyPartRequirement("wings"))));
 		demonWings.option = "Demonic Wings";
 		demonWings.scene = "Reyka smiles and crushes the ingredients together and draws a magic formation on your back and shoulders. "
 				+ "After telling you to sit down across from her, she starts masturbating. Dumbfounded at her sudden action, you start getting up from your chair. "
@@ -111,11 +109,9 @@ public class ReykaTime extends BaseNPCTime {
 		TransformationOption demonTail = new TransformationOption();
 		demonTail.ingredients.put(Item.SuccubusDraft, 20);
 		demonTail.ingredients.put(Item.semen, 10);
-		demonTail.requirements.add(new NotRequirement(
-				Arrays.asList(new BodyPartRequirement("tail"))));
+		demonTail.requirements.add(new NotRequirement(Arrays.asList(new BodyPartRequirement("tail"))));
 		demonTail.requirements.add((c, self, other) -> {
-			return self.body.get("tail").stream().anyMatch(
-					part -> part != TailPart.demonic) || !self.body.has("tail");
+			return self.body.get("tail").stream().anyMatch(part -> part != TailPart.demonic) || !self.body.has("tail");
 		});
 		demonTail.option = "Spade Tail";
 		demonTail.scene = "[Placeholder]<br>Reyka marks the top of you ass with a magic symbol and fingers your ass until you grow a demonic tail.";
@@ -129,8 +125,7 @@ public class ReykaTime extends BaseNPCTime {
 		pointedEars.ingredients.put(Item.semen, 10);
 		pointedEars.requirements.add(new BodyPartRequirement("ears"));
 		pointedEars.requirements.add((c, self, other) -> {
-			return self.body.get("ears").stream().anyMatch(
-					part -> part != EarPart.cat) || !self.body.has("ears");
+			return self.body.get("ears").stream().anyMatch(part -> part != EarPart.cat) || !self.body.has("ears");
 		});
 		pointedEars.option = "Pointed Ears";
 		pointedEars.scene = "Reyka fetches the ingredients from your pockets with her tail and mixes them together with her palm. She mutters something unintelligible under her breath and suddenly a "
@@ -151,8 +146,7 @@ public class ReykaTime extends BaseNPCTime {
 		succubusPussy.ingredients.put(Item.semen, 10);
 		succubusPussy.requirements.add(new BodyPartRequirement("pussy"));
 		succubusPussy.requirements.add((c, self, other) -> {
-			return self.body.get("pussy").stream()
-					.anyMatch(pussy -> pussy == PussyPart.normal);
+			return self.body.get("pussy").stream().anyMatch(pussy -> pussy == PussyPart.normal);
 		});
 		succubusPussy.additionalRequirements = "A normal pussy";
 		succubusPussy.option = "Succubus Pussy";
@@ -167,34 +161,31 @@ public class ReykaTime extends BaseNPCTime {
 	@Override
 	public List<Loot> getGiftables() {
 		List<Loot> giftables = new ArrayList<>();
-		player.closet.stream().filter(article -> !npc.has(article))
-				.forEach(article -> giftables.add(article));
+		player.closet.stream().filter(article -> !npc.has(article)).forEach(article -> giftables.add(article));
 		return giftables;
 	}
 
 	@Override
 	public void subVisitIntro(String choice) {
 		if (npc.getAffection(player) > 0) {
-			Global.gui().message(
-					"You go over to the chapel, wondering if Her Demonic Highness would deign to "
-							+ "see you. As you enter, the priest notices you and quickly shuffles away, apparently "
-							+ "a little skittish around anyone who would want to visit a demon. You walk towards "
-							+ "the back and descend the basement stairs. Strangely, Reyka isn't there, it's just "
-							+ "the creepy decor greeting you. You look around for a moment, but decide not to pry, "
-							+ "there are probably a few dozen things in here that could kill you. If not, Reyka probably "
-							+ "will. As you turn to go back up, Reyka appears in the doorway. <i>\"Oh hello "
-							+ player.name()
-							+ ", how nice of you to come visit me! I was just out getting some... supplies.\"</i> She "
-							+ "gives the room a once-over and looks at you darkly, seeming to bore straight into your "
-							+ "soul with her menacing eyes: <i>\"You didn't touch anything, did you?\"</i> "
-							+ "Quickly shaking your head, you emphatically declare your innocence. You're only here to spend some time "
-							+ "with your favorite demoness. <i>\"Is that so, and what might you be planning then?\"</i>");
+			Global.gui().message("You go over to the chapel, wondering if Her Demonic Highness would deign to "
+					+ "see you. As you enter, the priest notices you and quickly shuffles away, apparently "
+					+ "a little skittish around anyone who would want to visit a demon. You walk towards "
+					+ "the back and descend the basement stairs. Strangely, Reyka isn't there, it's just "
+					+ "the creepy decor greeting you. You look around for a moment, but decide not to pry, "
+					+ "there are probably a few dozen things in here that could kill you. If not, Reyka probably "
+					+ "will. As you turn to go back up, Reyka appears in the doorway. <i>\"Oh hello " + player.name()
+					+ ", how nice of you to come visit me! I was just out getting some... supplies.\"</i> She "
+					+ "gives the room a once-over and looks at you darkly, seeming to bore straight into your "
+					+ "soul with her menacing eyes: <i>\"You didn't touch anything, did you?\"</i> "
+					+ "Quickly shaking your head, you emphatically declare your innocence. You're only here to spend some time "
+					+ "with your favorite demoness. <i>\"Is that so, and what might you be planning then?\"</i>");
 			Global.gui().choose(this, "Games");
 			Global.gui().choose(this, "Sparring");
 			Global.gui().choose(this, "Sex");
 		} else if (npc.getAttraction(player) < 10) {
-			Global.gui().message(
-					"You were going to ask Aesop where to find Reyka, but while on your way "
+			Global.gui()
+					.message("You were going to ask Aesop where to find Reyka, but while on your way "
 							+ "there you noticed a dim pink haze protruding from a window leading into "
 							+ "the campus chapel's basement. The irony of a demon living beneath a church "
 							+ "is definitely Reyka's style, so you go over to investigate.<p>"
@@ -222,24 +213,23 @@ public class ReykaTime extends BaseNPCTime {
 		} else {
 			player.gainAffection(npc, 1);
 			npc.gainAffection(player, 1);
-			Global.gui().message(
-					"Deciding you'd rather have lunch instead, you head for the cafeteria. Halfway there, "
-							+ "you are pushed to the wall by a surprisingly wing-less but still strikingly beautiful Reyka. "
-							+ "\"So listen, I love playing around at night and all, but the days do tend to get a bit dull. "
-							+ "Usually, I'd go and have a little fun with some random coeds, nothing serious of course. "
-							+ "I just go around discreetly getting people all hot and bothered in a variety of ways and "
-							+ "observe the results. It breaks a few relationships here and there and even creates a few "
-							+ "new ones, I'm a regular Cupid. Then I thought, 'well, "
-							+ player.name() + " is pretty nice, perhaps "
-							+ "I could have some fun with him.', so here I am. Are you interested?\"<p>"
-							+ "You are frozen for a moment, staring into those deep eyes of hers. 'Pretty nice'? "
-							+ "What's that supposed to mean? As you ponder this, she apparantly gets slightly annoyed by "
-							+ "your inaction and presses herself into you even harder. She leans over and whispers in you ear: "
-							+ "<i>\"We really could have some very... good... fun... you know....\"</i> Those last words are punctuated "
-							+ "by her gently squeezing your crotch. You maintain enough composure to agree. She immediately jumps back, smiling. "
-							+ "<i>\"Excellent. Now you never really had a choice of course, but as a reward for coming willingly, "
-							+ "I'll let you choose what we are going to do! Who knows, I might even let you into my home.\"</i> "
-							+ "You are not sure whether to be relieved or worried about this, but you have a choice to make.");
+			Global.gui().message("Deciding you'd rather have lunch instead, you head for the cafeteria. Halfway there, "
+					+ "you are pushed to the wall by a surprisingly wing-less but still strikingly beautiful Reyka. "
+					+ "\"So listen, I love playing around at night and all, but the days do tend to get a bit dull. "
+					+ "Usually, I'd go and have a little fun with some random coeds, nothing serious of course. "
+					+ "I just go around discreetly getting people all hot and bothered in a variety of ways and "
+					+ "observe the results. It breaks a few relationships here and there and even creates a few "
+					+ "new ones, I'm a regular Cupid. Then I thought, 'well, " + player.name()
+					+ " is pretty nice, perhaps "
+					+ "I could have some fun with him.', so here I am. Are you interested?\"<p>"
+					+ "You are frozen for a moment, staring into those deep eyes of hers. 'Pretty nice'? "
+					+ "What's that supposed to mean? As you ponder this, she apparantly gets slightly annoyed by "
+					+ "your inaction and presses herself into you even harder. She leans over and whispers in you ear: "
+					+ "<i>\"We really could have some very... good... fun... you know....\"</i> Those last words are punctuated "
+					+ "by her gently squeezing your crotch. You maintain enough composure to agree. She immediately jumps back, smiling. "
+					+ "<i>\"Excellent. Now you never really had a choice of course, but as a reward for coming willingly, "
+					+ "I'll let you choose what we are going to do! Who knows, I might even let you into my home.\"</i> "
+					+ "You are not sure whether to be relieved or worried about this, but you have a choice to make.");
 			Global.gui().choose(this, "Games");
 			Global.gui().choose(this, "Sparring");
 			Global.gui().choose(this, "Sex");
@@ -250,9 +240,7 @@ public class ReykaTime extends BaseNPCTime {
 	@Override
 	public void subVisit(String choice) {
 		if (choice.equals("Sex")) {
-			if (npc.getAffection(player) >= 8
-					&& (!player.has(Trait.desensitized)
-							|| Global.random(2) == 1)) {
+			if (npc.getAffection(player) >= 8 && (!player.has(Trait.desensitized) || Global.random(2) == 1)) {
 				Global.gui().message(
 						"You hesitated for a bit too long, and again Reyka's eyes flash red. Again, your mind fogs over, "
 								+ "ready to do whatever your mistress wants. Again, Reyka, hauls you off. You don't seem to "
@@ -363,12 +351,10 @@ public class ReykaTime extends BaseNPCTime {
 			npc.gainAffection(player, 1);
 			player.gainAffection(npc, 1);
 		} else if (choice.equals("Sparring")) {
-			if (npc.getAffection(player) >= 12
-					&& (!player.has(Trait.clairvoyance)
-							|| Global.random(2) == 1)) {
+			if (npc.getAffection(player) >= 12 && (!player.has(Trait.clairvoyance) || Global.random(2) == 1)) {
 				if (!player.has(Trait.clairvoyance)) {
-					Global.gui().message(
-							"<i>\"Are you that eager to get your ass... kicked, shall we say... again? I must "
+					Global.gui()
+							.message("<i>\"Are you that eager to get your ass... kicked, shall we say... again? I must "
 									+ "say I admire your courage. Tell you what, if you do a little something for me, "
 									+ "I'll teach you a little trick, give you a fighting chance. Come with me.\"</i> "
 									+ "You are certainly intrigued and the prospect of learning something is more appealing "
@@ -457,8 +443,8 @@ public class ReykaTime extends BaseNPCTime {
 									+ "you think.");
 				}
 			} else {
-				Global.gui().message(
-						"<i>\"So basically, you want to practice sexfighting, just more the fighting than "
+				Global.gui()
+						.message("<i>\"So basically, you want to practice sexfighting, just more the fighting than "
 								+ "the sex, yes?\"</i> Reyka asks you. <i>\"How dull, but I'm sure "
 								+ "we can make it fun!\"</i> Soon you are in a relatively small practice room in the far "
 								+ "corner of the gym with nothing but a mat in it. Reyka spins around to face you, her "
@@ -495,8 +481,7 @@ public class ReykaTime extends BaseNPCTime {
 			npc.gainAffection(player, 1);
 			player.gainAffection(npc, 1);
 		} else if (choice.equals("Games")) {
-			if (npc.getAffection(player) >= 16
-					&& (!player.has(Trait.locator) || Global.random(2) == 1)) {
+			if (npc.getAffection(player) >= 16 && (!player.has(Trait.locator) || Global.random(2) == 1)) {
 
 				if (!player.has(Trait.locator)) {
 					Global.gui().message(

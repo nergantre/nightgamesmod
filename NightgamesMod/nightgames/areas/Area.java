@@ -14,17 +14,17 @@ public class Area implements Serializable {
 	/**
 	 *
 	 */
-	private static final long		serialVersionUID	= -1372128249588089014L;
-	public String					name;
-	public HashSet<Area>			adjacent;
-	public HashSet<Area>			shortcut;
-	public ArrayList<Character>		present;
-	public String					description;
-	public IEncounter				fight;
-	public boolean					alarm;
-	public Trap						trap;
-	public ArrayList<Deployable>	env;
-	private Movement				enumerator;
+	private static final long serialVersionUID = -1372128249588089014L;
+	public String name;
+	public HashSet<Area> adjacent;
+	public HashSet<Area> shortcut;
+	public ArrayList<Character> present;
+	public String description;
+	public IEncounter fight;
+	public boolean alarm;
+	public Trap trap;
+	public ArrayList<Deployable> env;
+	private Movement enumerator;
 
 	public Area(String name, String description, Movement enumerator) {
 		this.name = name;
@@ -52,26 +52,22 @@ public class Area implements Serializable {
 	}
 
 	public boolean corridor() {
-		return enumerator == Movement.bridge || enumerator == Movement.tunnel
-				|| enumerator == Movement.ftcTrail || enumerator == Movement.ftcPass
-				|| enumerator == Movement.ftcPath;
+		return enumerator == Movement.bridge || enumerator == Movement.tunnel || enumerator == Movement.ftcTrail
+				|| enumerator == Movement.ftcPass || enumerator == Movement.ftcPath;
 	}
 
 	public boolean materials() {
-		return enumerator == Movement.workshop
-				|| enumerator == Movement.storage
-				|| enumerator == Movement.ftcCabin
+		return enumerator == Movement.workshop || enumerator == Movement.storage || enumerator == Movement.ftcCabin
 				|| enumerator == Movement.ftcDump;
 	}
 
 	public boolean potions() {
-		return enumerator == Movement.lab || enumerator == Movement.kitchen
-				|| enumerator == Movement.ftcLodge;
+		return enumerator == Movement.lab || enumerator == Movement.kitchen || enumerator == Movement.ftcLodge;
 	}
 
 	public boolean bath() {
-		return enumerator == Movement.shower || enumerator == Movement.pool
-				|| enumerator == Movement.ftcPond || enumerator == Movement.ftcWaterfall;
+		return enumerator == Movement.shower || enumerator == Movement.pool || enumerator == Movement.ftcPond
+				|| enumerator == Movement.ftcWaterfall;
 	}
 
 	public boolean resupply() {
@@ -124,8 +120,7 @@ public class Area implements Serializable {
 		if (present.size() > 1) {
 			for (Character opponent : present) {
 				if (opponent != target) {
-					if (target.eligible(opponent) && opponent.eligible(target)
-							&& fight == null) {
+					if (target.eligible(opponent) && opponent.eligible(target) && fight == null) {
 						fight = Global.getMatch().getType().buildEncounter(opponent, target, this);
 						opponent.promptTrap(fight, target, trap);
 						return true;

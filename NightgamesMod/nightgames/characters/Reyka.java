@@ -61,14 +61,11 @@ public class Reyka extends BasePersonality {
 		growth.bonusStamina = 1;
 		growth.bonusArousal = 3;
 		growth.bonusMojo = 2;
-		preferredAttributes.add(c -> c.get(Attribute.Dark) < 50
-				&& c.get(Attribute.Dark) <= c.get(Attribute.Fetish) + 10
-						? Optional.of(Attribute.Dark) : Optional.empty());
+		preferredAttributes.add(c -> c.get(Attribute.Dark) < 50 && c.get(Attribute.Dark) <= c.get(Attribute.Fetish) + 10
+				? Optional.of(Attribute.Dark) : Optional.empty());
 		preferredAttributes
-				.add(c -> c.get(Attribute.Dark) > c.get(Attribute.Fetish) + 10
-						&& c.get(Attribute.Fetish) < 50
-								? Optional.of(Attribute.Fetish)
-								: Optional.empty());
+				.add(c -> c.get(Attribute.Dark) > c.get(Attribute.Fetish) + 10 && c.get(Attribute.Fetish) < 50
+						? Optional.of(Attribute.Fetish) : Optional.empty());
 		preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
 		growth.addTrait(2, Trait.pussyTraining1);
 		growth.addTrait(5, Trait.tongueTraining1);
@@ -94,32 +91,26 @@ public class Reyka extends BasePersonality {
 	@Override
 	public void rest(int time) {
 		super.rest(time);
-		if (!(character.has(Item.Dildo) || character.has(Item.Dildo2))
-				&& character.money >= 250) {
+		if (!(character.has(Item.Dildo) || character.has(Item.Dildo2)) && character.money >= 250) {
 			character.gain(Item.Dildo);
 			character.money -= 250;
 		}
-		if (!(character.has(Item.Tickler) || character.has(Item.Tickler2))
-				&& character.money >= 300) {
+		if (!(character.has(Item.Tickler) || character.has(Item.Tickler2)) && character.money >= 300) {
 			character.gain(Item.Tickler);
 			character.money -= 300;
 		}
-		if (!(character.has(Item.Strapon) || character.has(Item.Strapon2))
-				&& character.money >= 600) {
+		if (!(character.has(Item.Strapon) || character.has(Item.Strapon2)) && character.money >= 600) {
 			character.gain(Item.Strapon);
 			character.money -= 600;
 		}
 		if (character.money > 0) {
-			Global.getDay().visit("Body Shop", character,
-					Global.random(character.money));
+			Global.getDay().visit("Body Shop", character, Global.random(character.money));
 		}
 		if (character.money > 0) {
-			Global.getDay().visit("XXX Store", character,
-					Global.random(character.money));
+			Global.getDay().visit("XXX Store", character, Global.random(character.money));
 		}
 		if (character.money > 0) {
-			Global.getDay().visit("Black Market", character,
-					Global.random(character.money));
+			Global.getDay().visit("Black Market", character, Global.random(character.money));
 		}
 		Decider.visit(character);
 		int r;
@@ -157,20 +148,17 @@ public class Reyka extends BasePersonality {
 		return "<i>\"You could have just asked, you know.\"</i> As you gaze upon her naked form,"
 				+ " noticing the radiant ruby ardorning her bellybutton, you feel"
 				+ " sorely tempted to just give in to your desires. The hungry look"
-				+ " on her face as she licks her lips, though, quickly dissuades you"
-				+ " from doing so";
+				+ " on her face as she licks her lips, though, quickly dissuades you" + " from doing so";
 	}
 
 	@Override
 	public String stunLiner(Combat c) {
-		return "Reyka is laying on the floor, her wings spread out behind her,"
-				+ " panting for breath";
+		return "Reyka is laying on the floor, her wings spread out behind her," + " panting for breath";
 	}
 
 	@Override
 	public String taunt(Combat c) {
-		return "\"You look like you will taste nice. Maybe if let me have "
-				+ "a taste, I will be nice to you too.\"";
+		return "\"You look like you will taste nice. Maybe if let me have " + "a taste, I will be nice to you too.\"";
 	}
 
 	@Override
@@ -208,12 +196,9 @@ public class Reyka extends BasePersonality {
 				+ " in a dark, warm cocoon.<p> After what seems like an eternity,"
 				+ " but what actually lasted for only a few minutes, you wake up and"
 				+ " drowsily look around. You can see Reyka sitting cross-legged a few feet"
-				+ " away, her wings folded neatly behind her back and her eyes fixed on"
-				+ " yours."
-				+ (opponent.hasDick()
-						? " You notice a bottle of pearly"
-								+ " white liquid behind her and can only guess where it came from."
-						: "")
+				+ " away, her wings folded neatly behind her back and her eyes fixed on" + " yours."
+				+ (opponent.hasDick() ? " You notice a bottle of pearly"
+						+ " white liquid behind her and can only guess where it came from." : "")
 				+ " <i>\"You tasted heavenly\"</i>, she says, while you are still too"
 				+ " far gone to catch on to the irony of the statement, <i>\"So here I was,"
 				+ " drinking in your delicous energy, and it struck me that if I claimed"
@@ -228,8 +213,7 @@ public class Reyka extends BasePersonality {
 	@Override
 	public String defeat(Combat paramCombat, Result flag) {
 		character.arousal.empty();
-		if (character.has(Trait.succubus)
-				&& character.get(Attribute.Dark) >= 6) {
+		if (character.has(Trait.succubus) && character.get(Attribute.Dark) >= 6) {
 			return "Reyka shivers as she approaches her climax and her legs fall open defenselessly. You can't resist taking advantage of this opening to deliver the "
 					+ "coup de grace. You grab hold of her thighs and run your tongue across her wet pussy. Her love juice is surprisingly sweet and almost intoxicating, "
 					+ "but you stay focused on your goal. You ravage her vulnerable love button with your tongue and a flood of tasty wetness hits you as she cums. You "
@@ -274,16 +258,14 @@ public class Reyka extends BasePersonality {
 				+ " certainly hope we meet again soon, that treatment you gave me is well"
 				+ " worth the trouble of fighting through the others to get at you.\"</i>"
 				+ " As she walks away into the distance you can't help but feel like"
-				+ " 'winning' is not quite the word you would use to describe what you"
-				+ " just went through.";
+				+ " 'winning' is not quite the word you would use to describe what you" + " just went through.";
 	}
 
 	@Override
 	public String victory3p(Combat c, Character target, Character assist) {
 		if (target.human()) {
 			return "<i>\"How kind of you to hold him for me, dear.\"</i> Reyka bows her head ever so slightly towards "
-					+ assist.name()
-					+ " and then turns her gaze upon you prone form. "
+					+ assist.name() + " and then turns her gaze upon you prone form. "
 					+ "She pulls a blindfold out of a small pocket in her miniskirt and secures it tightly over your eyes. <i>\"Wouldn't want to spoil the surprise, would we?\"</i> For "
 					+ "just a moment, you feel a slight pull on you mind, but the sensation passes quickly, replaced by that of one of her slender fingers invading your mouth. "
 					+ "It is covered with a fragrant liquid and given what you already know about her, there is little doubt in your mind of its origins. Your suspicions "
@@ -301,23 +283,20 @@ public class Reyka extends BasePersonality {
 					+ "your embarrassment. Ah, well.";
 		}
 		return "<i>\"My my, what a cute little offering you have caught for me tonight\"</i>, Reyka says, looking you at you with a satisfied grin on her face. <i>\"Not very nutricious, "
-				+ "but certainly a good deal of fun.\"</i> With that, she starts gently undressing "
-				+ target.name()
+				+ "but certainly a good deal of fun.\"</i> With that, she starts gently undressing " + target.name()
 				+ ". When she is finished she squats down in front of her, bringing "
-				+ "her tail up between them. <i>\"Where would you prefer it dear?\"</i>, she asks "
-				+ target.name()
+				+ "her tail up between them. <i>\"Where would you prefer it dear?\"</i>, she asks " + target.name()
 				+ ", whose eyes grow wide in shock. She manages to stammer out a "
 				+ "few syllables, but nothing quite coherent. \"No preference? Then I guess I will simply choose for you\" She brings her spade-tipped tail between "
 				+ target.name() + "s "
 				+ "legs and starts running the very tip rapidly across her labia. When it is sufficiently wet, she moves it slightly upwards and moves it briskly back and forth over "
 				+ target.name() + "'s clit.<p>" + target.name()
 				+ ", at first scared, now has her eyes closed and begins moaning feverishly. Just when she has almost reached her climax, "
-				+ "Reyka digs her tail deep into " + target.name()
-				+ "'s drooling pussy. This sends " + target.name()
+				+ "Reyka digs her tail deep into " + target.name() + "'s drooling pussy. This sends " + target.name()
 				+ " loudly over the edge. Her screams of pleasure are almost deafening, "
 				+ "and you have to work really hard to restrain her convlusing body. After a minute or so, the orgasm subsides and "
-				+ target.name() + " falls asleep and you gently lay her "
-				+ "down. When you turn to look at " + character.name()
+				+ target.name() + " falls asleep and you gently lay her " + "down. When you turn to look at "
+				+ character.name()
 				+ ", you are startled by the predatory look in her eyes. <i>\"I'm afraid all the excitement has left me a tad peckish. Be a "
 				+ "dear and help me out with that, will you?\"</i> You ponder whether or not you made a mistake in helping her.";
 	}
@@ -325,33 +304,26 @@ public class Reyka extends BasePersonality {
 	@Override
 	public String intervene3p(Combat c, Character target, Character assist) {
 		if (target.human()) {
-			return "Your fight with " + assist.name()
-					+ " starts out poorly; she already"
+			return "Your fight with " + assist.name() + " starts out poorly; she already"
 					+ " has you naked and aroused, wheras she seems as cool and calm as when"
 					+ " you started. You haven't lost yet though, you just need to find an opening "
 					+ "and turn things around. A noise behind you causes you to turn and your vision is "
 					+ "filled with two piercing red eyes. <i>\"Kneel.\"</i> You drop to your knees involuntarily. "
 					+ "The rational part of your brain is telling you that Reyka is trying to dominate your "
 					+ "mind and you should resist, but what's the point? Reyka's tail binds your wrists and "
-					+ "she forces you to turn back to a bewildered "
-					+ assist.name() + ". <i>\"I'm not poaching "
+					+ "she forces you to turn back to a bewildered " + assist.name() + ". <i>\"I'm not poaching "
 					+ "your prey,\"</i> you hear her say. <i>\"He's all yours.\"</i>";
 		}
 
-		return "Your fight with " + target.name
-				+ " starts out poorly; she already"
+		return "Your fight with " + target.name + " starts out poorly; she already"
 				+ " has you naked and aroused, wheras she seems as cool and calm as when"
 				+ " you started. Fortune, though, seems to have a strange sense of humor as"
-				+ " your salvation comes in the form of a winged demon swooping down on "
-				+ target.name
+				+ " your salvation comes in the form of a winged demon swooping down on " + target.name
 				+ ". The two are briefly entangled in a ball of limbs and wings,"
-				+ " but soon Reyka comes out on top. She is pinning "
-				+ target.name
+				+ " but soon Reyka comes out on top. She is pinning " + target.name
 				+ " helplessly to the ground, holding her arms behind her back and"
-				+ " locking her shoulders in place with her wings. The struggle has "
-				+ "left " + target.name
-				+ " completely naked and ready for you to"
-				+ " take advantage of.";
+				+ " locking her shoulders in place with her wings. The struggle has " + "left " + target.name
+				+ " completely naked and ready for you to" + " take advantage of.";
 	}
 
 	@Override
@@ -405,14 +377,12 @@ public class Reyka extends BasePersonality {
 	public String startBattle(Character other) {
 		return "<i>\"Yum, I was just looking for a tasty little morsel.\"</i><p>"
 				+ "Reyka strikes a seductive pose and the devilish smile"
-				+ " on her face reveals just what, or more specifically,"
-				+ " who she intends that morsel to be.";
+				+ " on her face reveals just what, or more specifically," + " who she intends that morsel to be.";
 	}
 
 	@Override
 	public boolean fit() {
-		return (!character.mostlyNude() || Global.random(3) == 1)
-				&& character.getStamina().percent() >= 50
+		return (!character.mostlyNude() || Global.random(3) == 1) && character.getStamina().percent() >= 50
 				&& character.getArousal().percent() <= 50;
 	}
 
@@ -441,12 +411,12 @@ public class Reyka extends BasePersonality {
 	@Override
 	public boolean checkMood(Combat c, Emotion mood, int value) {
 		switch (mood) {
-			case dominant:
-				return value >= 50;
-			case nervous:
-				return value >= 150;
-			default:
-				return value >= 100;
+		case dominant:
+			return value >= 50;
+		case nervous:
+			return value >= 150;
+		default:
+			return value >= 100;
 		}
 	}
 

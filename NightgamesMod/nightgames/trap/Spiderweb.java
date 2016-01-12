@@ -42,8 +42,7 @@ public class Spiderweb implements Trap {
 
 	@Override
 	public boolean recipe(Character owner) {
-		return owner.has(Item.Rope, 4) && owner.has(Item.Spring, 2)
-				&& owner.has(Item.Tripwire);
+		return owner.has(Item.Rope, 4) && owner.has(Item.Spring, 2) && owner.has(Item.Tripwire);
 	}
 
 	@Override
@@ -67,32 +66,29 @@ public class Spiderweb implements Trap {
 	}
 
 	@Override
-	public void capitalize(Character attacker, Character victim,
-			IEncounter enc) {
+	public void capitalize(Character attacker, Character victim, IEncounter enc) {
 		if (attacker.human()) {
-			Global.gui().message(victim.name()
-					+ " is naked and helpless in the giant rope web. You approach slowly, taking in the lovely view of her body. You trail your fingers "
-					+ "down her front, settling between her legs to tease her sensitive pussy lips. She moans and squirms, but is completely unable to do anything in her own defense. "
-					+ "You are going to make her cum, that's just a given. If you weren't such a nice guy, you would leave her in that trap afterward to be everyone else's prey "
-					+ "instead of helping her down. You kiss and lick her neck, turning her on further. Her entrance is wet enough that you can easily work two fingers into her "
-					+ "and begin pumping. You gradually lick your way down her body, lingering at her nipples and bellybutton, until you find yourself eye level with her groin. "
-					+ "You can see her clitoris, swollen with arousal, practically begging to be touched. You trap the sensitive bud between your lips and attack it with your tongue. "
-					+ "The intense stimulation, coupled with your fingers inside her, quickly brings her to orgasm. While she's trying to regain her strength, you untie the ropes "
-					+ "binding her hands and feet and ease her out of the web.");
+			Global.gui()
+					.message(victim.name()
+							+ " is naked and helpless in the giant rope web. You approach slowly, taking in the lovely view of her body. You trail your fingers "
+							+ "down her front, settling between her legs to tease her sensitive pussy lips. She moans and squirms, but is completely unable to do anything in her own defense. "
+							+ "You are going to make her cum, that's just a given. If you weren't such a nice guy, you would leave her in that trap afterward to be everyone else's prey "
+							+ "instead of helping her down. You kiss and lick her neck, turning her on further. Her entrance is wet enough that you can easily work two fingers into her "
+							+ "and begin pumping. You gradually lick your way down her body, lingering at her nipples and bellybutton, until you find yourself eye level with her groin. "
+							+ "You can see her clitoris, swollen with arousal, practically begging to be touched. You trap the sensitive bud between your lips and attack it with your tongue. "
+							+ "The intense stimulation, coupled with your fingers inside her, quickly brings her to orgasm. While she's trying to regain her strength, you untie the ropes "
+							+ "binding her hands and feet and ease her out of the web.");
 		} else if (victim.human()) {
-			Global.gui().message(
-					"You're trying to figure out a way to free yourself, when you see "
-							+ attacker.name()
+			Global.gui()
+					.message("You're trying to figure out a way to free yourself, when you see " + attacker.name()
 							+ " approach. You groan in resignation. There's no way you're "
 							+ "going to get free before she finishes you off. She smiles as she enjoys your vulnerable state. She grabs your dangling penis and puts it in her mouth, licking "
 							+ "and sucking it until it's completely hard. Then the teasing starts. She strokes you, rubs you, and licks the head of your dick. She uses every technique to "
 							+ "pleasure you, but stops just short of letting you ejaculate. It's maddening. Finally you have to swallow your pride and beg to cum. She pumps you dick in earnest "
 							+ "now and fondles your balls. When you cum, you shoot your load onto her face and chest. You hang in the rope web, literally and figuratively drained. "
-							+ attacker.name() + " "
-							+ "gratiously unties you and helps you down.");
+							+ attacker.name() + " " + "gratiously unties you and helps you down.");
 		}
-		if (victim.getOutfit().getBottomOfSlot(ClothingSlot.bottom)
-				.getLayer() == 0) {
+		if (victim.getOutfit().getBottomOfSlot(ClothingSlot.bottom).getLayer() == 0) {
 			attacker.gain(victim.getTrophy());
 		}
 		victim.nudify();

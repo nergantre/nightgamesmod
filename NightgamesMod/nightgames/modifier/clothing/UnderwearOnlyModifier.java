@@ -7,8 +7,7 @@ import org.json.simple.JSONObject;
 
 import nightgames.modifier.ModifierComponent;
 
-public class UnderwearOnlyModifier extends ClothingModifier
-		implements ModifierComponent<UnderwearOnlyModifier> {
+public class UnderwearOnlyModifier extends ClothingModifier implements ModifierComponent<UnderwearOnlyModifier> {
 
 	@Override
 	public Set<Integer> allowedLayers() {

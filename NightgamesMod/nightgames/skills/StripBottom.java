@@ -16,9 +16,8 @@ public class StripBottom extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (c.getStance().oral(getSelf())
-				|| c.getStance().reachBottom(getSelf()))
-				&& !target.crotchAvailable() && getSelf().canAct();
+		return (c.getStance().oral(getSelf()) || c.getStance().reachBottom(getSelf())) && !target.crotchAvailable()
+				&& getSelf().canAct();
 	}
 
 	@Override
@@ -28,14 +27,10 @@ public class StripBottom extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		int difficulty = target.getOutfit().getTopOfSlot(ClothingSlot.bottom)
-				.dc()
-				+ target.getLevel()
-				+ (target.getStamina().percent() / 4
-						- target.getArousal().percent()) / 5
+		int difficulty = target.getOutfit().getTopOfSlot(ClothingSlot.bottom).dc() + target.getLevel()
+				+ (target.getStamina().percent() / 4 - target.getArousal().percent()) / 5
 				- (!target.canAct() || c.getStance().sub(target) ? 20 : 0);
-		if (getSelf().check(Attribute.Cunning, difficulty)
-				|| !target.canAct()) {
+		if (getSelf().check(Attribute.Cunning, difficulty) || !target.canAct()) {
 			if (getSelf().human()) {
 				c.write(getSelf(), deal(c, 0, Result.normal, target));
 			} else if (target.human()) {
@@ -45,13 +40,11 @@ public class StripBottom extends Skill {
 			if (getSelf().human() && target.mostlyNude()) {
 				c.write(target, target.nakedLiner(c));
 			}
-			if (target.human() && target.crotchAvailable()
-					&& target.hasDick()) {
+			if (target.human() && target.crotchAvailable() && target.hasDick()) {
 				if (target.getArousal().get() >= 15) {
 					c.write("Your boner springs out, no longer restrained by your pants.");
 				} else {
-					c.write(getSelf().name()
-							+ " giggles as your flaccid dick is exposed");
+					c.write(getSelf().name() + " giggles as your flaccid dick is exposed");
 				}
 			}
 			target.emote(Emotion.nervous, 10);
@@ -61,8 +54,7 @@ public class StripBottom extends Skill {
 			} else if (target.human()) {
 				c.write(getSelf(), receive(c, 0, Result.miss, target));
 			}
-			target.weaken(c,
-					Global.random(6) + getSelf().get(Attribute.Power) / 4);
+			target.weaken(c, Global.random(6) + getSelf().get(Attribute.Power) / 4);
 			return false;
 		}
 		return true;
@@ -89,34 +81,24 @@ public class StripBottom extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return "You grab " + target.name() + "'s "
-					+ target.getOutfit().getTopOfSlot(ClothingSlot.bottom)
-							.getName()
+			return "You grab " + target.name() + "'s " + target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName()
 					+ ", but she scrambles away before you can strip her.";
 		} else {
-			return "After a brief struggle, you manage to pull off "
-					+ target.name() + "'s " + target.getOutfit()
-							.getTopOfSlot(ClothingSlot.bottom).getName()
-					+ ".";
+			return "After a brief struggle, you manage to pull off " + target.name() + "'s "
+					+ target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName() + ".";
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return getSelf().name()
-					+ " tries to pull down your " + target.getOutfit()
-							.getTopOfSlot(ClothingSlot.bottom).getName()
-					+ ", but you hold them up.";
+			return getSelf().name() + " tries to pull down your "
+					+ target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName() + ", but you hold them up.";
 		} else {
-			return getSelf().name()
-					+ " grabs the waistband of your " + target.getOutfit()
-							.getTopOfSlot(ClothingSlot.bottom).getName()
-					+ " and pulls them down.";
+			return getSelf().name() + " grabs the waistband of your "
+					+ target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName() + " and pulls them down.";
 		}
 	}
 

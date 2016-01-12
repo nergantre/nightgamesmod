@@ -9,8 +9,8 @@ import nightgames.combat.Combat;
 import nightgames.global.JSONUtils;
 
 public class CockBound extends Status {
-	private float	toughness;
-	public String	binding;
+	private float toughness;
+	public String binding;
 
 	public CockBound(Character affected, float dc, String binding) {
 		super("Cock Bound", affected);
@@ -62,8 +62,7 @@ public class CockBound extends Status {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s cock is now bound by %s.\n",
-				affected.nameOrPossessivePronoun(), binding);
+		return String.format("%s cock is now bound by %s.\n", affected.nameOrPossessivePronoun(), binding);
 	}
 
 	@Override
@@ -134,7 +133,6 @@ public class CockBound extends Status {
 
 	@Override
 	public Status loadFromJSON(JSONObject obj) {
-		return new CockBound(null, JSONUtils.readFloat(obj, "toughness"),
-				JSONUtils.readString(obj, "binding"));
+		return new CockBound(null, JSONUtils.readFloat(obj, "toughness"), JSONUtils.readString(obj, "binding"));
 	}
 }

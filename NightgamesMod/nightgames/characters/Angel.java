@@ -69,8 +69,8 @@ public class Angel extends BasePersonality {
 		growth.addTrait(51, Trait.pussyTraining3);
 		growth.addTrait(54, Trait.desensitized2);
 
-		preferredAttributes.add(c -> c.get(Attribute.Divinity) < 50
-				? Optional.of(Attribute.Divinity) : Optional.empty());
+		preferredAttributes
+				.add(c -> c.get(Attribute.Divinity) < 50 ? Optional.of(Attribute.Divinity) : Optional.empty());
 		preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
 	}
 
@@ -81,34 +81,28 @@ public class Angel extends BasePersonality {
 				advance();
 			}
 		}
-		if (character.has(Trait.demigoddess)
-				&& !character.has(Trait.divinity)) {
+		if (character.has(Trait.demigoddess) && !character.has(Trait.divinity)) {
 			character.add(Trait.divinity);
 		}
 		super.rest(time);
-		if (!(character.has(Item.Dildo) || character.has(Item.Dildo2))
-				&& character.money >= 250) {
+		if (!(character.has(Item.Dildo) || character.has(Item.Dildo2)) && character.money >= 250) {
 			character.gain(Item.Dildo);
 			character.money -= 250;
 		}
-		if (!(character.has(Item.Onahole) || character.has(Item.Onahole2))
-				&& character.money >= 300) {
+		if (!(character.has(Item.Onahole) || character.has(Item.Onahole2)) && character.money >= 300) {
 			character.gain(Item.Onahole);
 			character.money -= 300;
 		}
-		if (!character.has(Item.Onahole2) && character.has(Item.Onahole)
-				&& character.money >= 300) {
+		if (!character.has(Item.Onahole2) && character.has(Item.Onahole) && character.money >= 300) {
 			character.remove(Item.Onahole);
 			character.gain(Item.Onahole2);
 			character.money -= 300;
 		}
-		if (!(character.has(Item.Strapon) || character.has(Item.Strapon2))
-				&& character.money >= 500) {
+		if (!(character.has(Item.Strapon) || character.has(Item.Strapon2)) && character.money >= 500) {
 			character.gain(Item.Strapon);
 			character.money -= 500;
 		}
-		if (!character.has(Item.Strapon2) && character.has(Item.Strapon)
-				&& character.money >= 500) {
+		if (!character.has(Item.Strapon2) && character.has(Item.Strapon) && character.money >= 500) {
 			character.remove(Item.Strapon);
 			character.gain(Item.Strapon2);
 			character.money -= 500;
@@ -120,33 +114,26 @@ public class Angel extends BasePersonality {
 				character.add(Trait.lacedjuices);
 			}
 			if (character.money > 0) {
-				Global.getDay().visit("Body Shop", character,
-						Global.random(character.money));
+				Global.getDay().visit("Body Shop", character, Global.random(character.money));
 			}
 			if (character.money > 0) {
-				Global.getDay().visit("Black Market", character,
-						Global.random(character.money));
+				Global.getDay().visit("Black Market", character, Global.random(character.money));
 			}
 			if (character.money > 0) {
-				Global.getDay().visit("Workshop", character,
-						Global.random(character.money));
+				Global.getDay().visit("Workshop", character, Global.random(character.money));
 			}
 		}
 		if (character.money > 0) {
-			Global.getDay().visit("XXX Store", character,
-					Global.random(character.money));
+			Global.getDay().visit("XXX Store", character, Global.random(character.money));
 		}
 		if (character.money > 0) {
-			Global.getDay().visit("Black Market", character,
-					Global.random(character.money));
+			Global.getDay().visit("Black Market", character, Global.random(character.money));
 		}
 		if (character.money > 0) {
-			Global.getDay().visit("Bookstore", character,
-					Global.random(character.money));
+			Global.getDay().visit("Bookstore", character, Global.random(character.money));
 		}
 		if (character.money > 0) {
-			Global.getDay().visit("Hardware Store", character,
-					Global.random(character.money));
+			Global.getDay().visit("Hardware Store", character, Global.random(character.money));
 		}
 		Decider.visit(character);
 		int r;
@@ -206,12 +193,9 @@ public class Angel extends BasePersonality {
 					+ "no way could you live it down if you came while you had something in your ass. Angel frowns and gives your ass a firm slap. <i>\"No reach around for you "
 					+ "then,\"</i> she snaps. <i>\"We'll just do this the old fashion way.\"</i> She renews her assault on your poor ass and you feel your will slipping. Another solid slap "
 					+ "to ass sends you into a shuddering orgasm. Angel's triumphant laughter rings in your head as the shame makes you flush bright read.<p>Pulling her "
-					+ (character.hasDick()
-							? character.body.getRandomCock().describe(character)
-							: "strapon")
+					+ (character.hasDick() ? character.body.getRandomCock().describe(character) : "strapon")
 					+ " from your ass with a wet slurp Angel flips you over"
-					+ (!character.hasDick() ? " and removes the strapon."
-							: ". ")
+					+ (!character.hasDick() ? " and removes the strapon." : ". ")
 					+ "She then squats down and lines your cock up with her now soaked pussy, <i>\"Do "
 					+ "a good enough good job and I might not tell my friends how you came like a whore while I fucked your ass.\"</i> She gloats with a smug grin on her face. "
 					+ "Appalled at the idea that she might share that information with anyone, you strengthen your resolve to fuck the woman above you.<p>Several minutes later, "
@@ -360,22 +344,18 @@ public class Angel extends BasePersonality {
 							+ " energy to control %s who is violently shaking in the throes of orgasm."
 							+ " You ease %s to the floor as %s goes completely limp, while Angel licks"
 							+ " the cum from her fingers.",
-					target.name(), target.name(), target.name(),
-					target.possessivePronoun(), target.name(), target.name(),
-					target.pronoun(), target.name(), target.directObject(),
-					target.pronoun());
+					target.name(), target.name(), target.name(), target.possessivePronoun(), target.name(),
+					target.name(), target.pronoun(), target.name(), target.directObject(), target.pronoun());
 		}
 		return "You present " + target.name()
 				+ "'s naked, helpless form to Angel's tender minstrations. Angel licks her lips and begins licking and stroking "
-				+ target.name() + "'s body. She's "
-				+ "hitting all the right spots, because soon " + target.name()
+				+ target.name() + "'s body. She's " + "hitting all the right spots, because soon " + target.name()
 				+ " is squirming and moaning in pleasure, and Angel hasn't even touched her pussy yet. "
 				+ "Angel meets your eyes to focus your attention and slowly moves her fingers down the front of "
 				+ target.name() + "'s body. You can't see her hands from "
-				+ "this position, but you know when she reaches her target, because "
+				+ "this position, but you know when she reaches her target, because " + target.name()
+				+ " immediately jumps as if she's been shocked. Soon it takes all of " + "your energy to control "
 				+ target.name()
-				+ " immediately jumps as if she's been shocked. Soon it takes all of "
-				+ "your energy to control " + target.name()
 				+ " who is violently shaking in the throes of orgasm. You ease her to the floor as she goes completely limp, "
 				+ "while Angel licks the juice from her fingers.";
 
@@ -386,8 +366,7 @@ public class Angel extends BasePersonality {
 		if (target.human()) {
 			return "You manage to overwhelm " + assist.name()
 					+ " and bring her to the floor. You're able to grab both her arms and pin her helplessly beneath you. "
-					+ "Before you can take advantage of your position, pain explodes below your waist. "
-					+ assist.name()
+					+ "Before you can take advantage of your position, pain explodes below your waist. " + assist.name()
 					+ " shouldn't have been able to reach your groin "
 					+ "from her position, but you're in too much pain to think about it. You are still lucid enough to feel large, perky breasts press against your back "
 					+ "and a soft whisper in your ear. <i>\"Surprise, lover.\"</i> The voice is unmistakably Angel's. She rolls you onto your back and positions herself over your face,"
@@ -398,9 +377,8 @@ public class Angel extends BasePersonality {
 					+ " grapple back and forth for several minutes. Soon you're both tired, sweaty, and aroused. You catch her hands for a moment and "
 					+ "run your tongue along her neck and collarbone. Recognizing her disadvantage, she jumps out of your grasp and directly into Angel. Neither of you "
 					+ "noticed Angel approach. Before " + target.name()
-					+ " can react, Angel pulls her into a passionate kiss. "
-					+ target.name() + " forgets to resist and goes limp "
-					+ "long enough for Angel to pin her arms.<p>";
+					+ " can react, Angel pulls her into a passionate kiss. " + target.name()
+					+ " forgets to resist and goes limp " + "long enough for Angel to pin her arms.<p>";
 		}
 	}
 
@@ -411,8 +389,7 @@ public class Angel extends BasePersonality {
 
 	@Override
 	public boolean fit() {
-		return !character.mostlyNude()
-				&& character.getStamina().percent() >= 50;
+		return !character.mostlyNude() && character.getStamina().percent() >= 50;
 	}
 
 	@Override
@@ -443,12 +420,12 @@ public class Angel extends BasePersonality {
 	@Override
 	public boolean checkMood(Combat c, Emotion mood, int value) {
 		switch (mood) {
-			case horny:
-				return value >= 50;
-			case nervous:
-				return value >= 150;
-			default:
-				return value >= 100;
+		case horny:
+			return value >= 50;
+		case nervous:
+			return value >= 150;
+		default:
+			return value >= 100;
 		}
 	}
 

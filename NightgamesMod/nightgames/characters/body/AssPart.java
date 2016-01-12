@@ -15,14 +15,11 @@ public class AssPart extends GenericBodyPart {
 	 */
 	public static AssPart generic = new AssPart("ass", 0, 1.2, 1);
 
-	public AssPart(String desc, String longDesc, double hotness,
-			double pleasure, double sensitivity, boolean notable) {
-		super(desc, longDesc, hotness, pleasure, sensitivity, notable, "ass",
-				"a ");
+	public AssPart(String desc, String longDesc, double hotness, double pleasure, double sensitivity, boolean notable) {
+		super(desc, longDesc, hotness, pleasure, sensitivity, notable, "ass", "a ");
 	}
 
-	public AssPart(String desc, double hotness, double pleasure,
-			double sensitivity) {
+	public AssPart(String desc, double hotness, double pleasure, double sensitivity) {
 		super(desc, "", hotness, pleasure, sensitivity, false, "ass", "a ");
 	}
 
@@ -36,8 +33,7 @@ public class AssPart extends GenericBodyPart {
 	}
 
 	@Override
-	public double applyBonuses(Character self, Character opponent,
-			BodyPart target, double damage, Combat c) {
+	public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		double bonus = 0;
 		if (self.has(Trait.oiledass)) {
 			c.write(self,
@@ -55,12 +51,12 @@ public class AssPart extends GenericBodyPart {
 			if (self.has(Trait.holecontrol)) {
 				desc += "well-trained ";
 			}
-			c.write(self, Global.format(
-					"{self:SUBJECT-ACTION:use|uses} {self:possessive} " + desc
-							+ "sphincter muscles to milk {other:name-possessive} cock, adding to the pleasure.",
-					self, opponent));
-			bonus += self.has(Trait.tight) && self.has(Trait.holecontrol) ? 10
-					: 5;
+			c.write(self,
+					Global.format(
+							"{self:SUBJECT-ACTION:use|uses} {self:possessive} " + desc
+									+ "sphincter muscles to milk {other:name-possessive} cock, adding to the pleasure.",
+							self, opponent));
+			bonus += self.has(Trait.tight) && self.has(Trait.holecontrol) ? 10 : 5;
 			if (self.has(Trait.tight)) {
 				opponent.pain(c, Math.min(30, self.get(Attribute.Power)));
 			}
@@ -69,15 +65,12 @@ public class AssPart extends GenericBodyPart {
 	}
 
 	@Override
-	public void tickHolding(Combat c, Character self, Character opponent,
-			BodyPart otherOrgan) {
+	public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {
 		if (self.has(Trait.autonomousAss)) {
-			c.write(self,
-					Global.format(
-							"{self:NAME-POSSESSIVE} " + fullDescribe(self)
-									+ " churns against {other:name-possessive} cock, "
-									+ "seemingly with a mind of its own. Her internal muscles feel like a hot fleshy hand inside her asshole, jerking {other:possessive} shaft.",
-							self, opponent));
+			c.write(self, Global.format(
+					"{self:NAME-POSSESSIVE} " + fullDescribe(self) + " churns against {other:name-possessive} cock, "
+							+ "seemingly with a mind of its own. Her internal muscles feel like a hot fleshy hand inside her asshole, jerking {other:possessive} shaft.",
+					self, opponent));
 			opponent.body.pleasure(self, this, otherOrgan, 10, c);
 		}
 	}
@@ -104,10 +97,8 @@ public class AssPart extends GenericBodyPart {
 	@Override
 	public BodyPart loadFromDict(JSONObject dict) {
 		try {
-			GenericBodyPart part = new AssPart((String) dict.get("desc"),
-					(String) dict.get("descLong"),
-					((Number) dict.get("hotness")).doubleValue(),
-					((Number) dict.get("pleasure")).doubleValue(),
+			GenericBodyPart part = new AssPart((String) dict.get("desc"), (String) dict.get("descLong"),
+					((Number) dict.get("hotness")).doubleValue(), ((Number) dict.get("pleasure")).doubleValue(),
 					((Number) dict.get("sensitivity")).doubleValue(), false);
 			return part;
 		} catch (ClassCastException e) {
@@ -118,8 +109,7 @@ public class AssPart extends GenericBodyPart {
 
 	@Override
 	public double priority(Character c) {
-		return (c.has(Trait.tight) ? 1 : 0) + (c.has(Trait.holecontrol) ? 1 : 0)
-				+ (c.has(Trait.oiledass) ? 1 : 0)
+		return (c.has(Trait.tight) ? 1 : 0) + (c.has(Trait.holecontrol) ? 1 : 0) + (c.has(Trait.oiledass) ? 1 : 0)
 				+ (c.has(Trait.autonomousAss) ? 4 : 0);
 	}
 

@@ -14,10 +14,8 @@ public class TribadismStance extends Position {
 
 	@Override
 	public String describe() {
-		return top.subjectAction("are", "is") + " holding "
-				+ bottom.nameOrPossessivePronoun() + " legs across "
-				+ top.possessivePronoun() + " chest while grinding "
-				+ top.possessivePronoun() + " soaked cunt into "
+		return top.subjectAction("are", "is") + " holding " + bottom.nameOrPossessivePronoun() + " legs across "
+				+ top.possessivePronoun() + " chest while grinding " + top.possessivePronoun() + " soaked cunt into "
 				+ bottom.possessivePronoun() + " pussy.";
 	}
 
@@ -88,15 +86,13 @@ public class TribadismStance extends Position {
 
 	@Override
 	public List<BodyPart> bottomParts() {
-		return Arrays.asList(bottom.body.getRandomPussy()).stream()
-				.filter(part -> part != null && part.present())
+		return Arrays.asList(bottom.body.getRandomPussy()).stream().filter(part -> part != null && part.present())
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<BodyPart> topParts() {
-		return Arrays.asList(top.body.getRandomPussy()).stream()
-				.filter(part -> part != null && part.present())
+		return Arrays.asList(top.body.getRandomPussy()).stream().filter(part -> part != null && part.present())
 				.collect(Collectors.toList());
 	}
 

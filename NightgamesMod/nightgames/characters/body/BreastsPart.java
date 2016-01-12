@@ -10,18 +10,12 @@ import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
 
 public enum BreastsPart implements BodyPart {
-	flat("flat", "", 0),
-	a("A Cup", "tiny", 1),
-	b("B Cup", "smallish", 2),
-	c("C Cup", "modest", 3),
-	d("D Cup", "round", 4),
-	dd("DD Cup", "large", 5),
-	e("E Cup", "huge", 6),
-	f("F Cup", "glorious", 7);
+	flat("flat", "", 0), a("A Cup", "tiny", 1), b("B Cup", "smallish", 2), c("C Cup", "modest", 3), d("D Cup", "round",
+			4), dd("DD Cup", "large", 5), e("E Cup", "huge", 6), f("F Cup", "glorious", 7);
 
-	public String	desc;
-	public String	name;
-	public int		size;
+	public String desc;
+	public String name;
+	public int size;
 
 	BreastsPart(String name, String desc, int size) {
 		this.desc = desc;
@@ -52,8 +46,7 @@ public enum BreastsPart implements BodyPart {
 				return (first ? desc + ' ' : "") + (second ? name + ' ' : "")
 						+ synonyms[Global.random(synonyms.length)];
 			} else {
-				return Global.maybeString(desc + ' ')
-						+ Global.maybeString(name + ' ')
+				return Global.maybeString(desc + ' ') + Global.maybeString(name + ' ')
 						+ synonyms[Global.random(synonyms.length)];
 			}
 		} else {
@@ -96,8 +89,7 @@ public enum BreastsPart implements BodyPart {
 
 	@Override
 	public double getHotness(Character self, Character opponent) {
-		double hotness = -.25
-				+ size * .3 * self.getOutfit().getExposure(ClothingSlot.top);
+		double hotness = -.25 + size * .3 * self.getOutfit().getExposure(ClothingSlot.top);
 		if (!opponent.hasDick()) {
 			hotness /= 2;
 		}
@@ -157,8 +149,7 @@ public enum BreastsPart implements BodyPart {
 	}
 
 	@Override
-	public double applyBonuses(Character self, Character opponent,
-			BodyPart target, double damage, Combat c) {
+	public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		return Math.max(5, size) + Global.random(Math.min(0, size - 4));
 	}
 
@@ -178,8 +169,7 @@ public enum BreastsPart implements BodyPart {
 	}
 
 	@Override
-	public double applyReceiveBonuses(Character self, Character opponent,
-			BodyPart target, double damage, Combat c) {
+	public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		return 0;
 	}
 
@@ -202,26 +192,25 @@ public enum BreastsPart implements BodyPart {
 	}
 
 	@Override
-	public double applySubBonuses(Character self, Character opponent,
-			BodyPart with, BodyPart target, double damage, Combat c) {
+	public double applySubBonuses(Character self, Character opponent, BodyPart with, BodyPart target, double damage,
+			Combat c) {
 		return 0;
 	}
 
 	@Override
 	public int mod(Attribute a, int total) {
 		switch (a) {
-			case Speed:
-				return -Math.max(size - 3, 0);
-			case Seduction:
-				return Math.max(size - 3, 0);
-			default:
-				return 0;
+		case Speed:
+			return -Math.max(size - 3, 0);
+		case Seduction:
+			return Math.max(size - 3, 0);
+		default:
+			return 0;
 		}
 	}
 
 	@Override
-	public void tickHolding(Combat c, Character self, Character opponent,
-			BodyPart otherOrgan) {
+	public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {
 
 	}
 

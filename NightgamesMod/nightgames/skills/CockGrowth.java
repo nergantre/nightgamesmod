@@ -22,8 +22,7 @@ public class CockGrowth extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && c.getStance().mobile(getSelf())
-				&& !c.getStance().prone(getSelf());
+		return getSelf().canAct() && c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf());
 	}
 
 	@Override
@@ -43,14 +42,12 @@ public class CockGrowth extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		Result res = target.roll(this, c, accuracy(c)) ? Result.normal
-				: Result.miss;
+		Result res = target.roll(this, c, accuracy(c)) ? Result.normal : Result.miss;
 		if (res == Result.normal && !target.hasDick()) {
 			res = Result.special;
 		}
 
-		boolean permanent = Global.random(20) == 0
-				&& (getSelf().human() || target.human())
+		boolean permanent = Global.random(20) == 0 && (getSelf().human() || target.human())
 				&& !target.has(Trait.stableform);
 		if (getSelf().human()) {
 			c.write(getSelf(), deal(c, permanent ? 1 : 0, res, target));
@@ -59,8 +56,7 @@ public class CockGrowth extends Skill {
 		}
 		if (res != Result.miss) {
 			target.add(c, new Hypersensitive(target));
-			CockPart part = target.body
-					.getCockBelow(BasicCockPart.massive.size);
+			CockPart part = target.body.getCockBelow(BasicCockPart.massive.size);
 			if (permanent) {
 				if (part != null) {
 					target.body.addReplace(part.upgrade(), 1);
@@ -69,8 +65,7 @@ public class CockGrowth extends Skill {
 				}
 			} else {
 				if (part != null) {
-					target.body.temporaryAddOrReplacePartWithType(
-							part.upgrade(), 10);
+					target.body.temporaryAddOrReplacePartWithType(part.upgrade(), 10);
 				} else {
 					target.body.temporaryAddPart(BasicCockPart.small, 10);
 				}
@@ -90,24 +85,18 @@ public class CockGrowth extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		String message;
 		if (modifier == Result.miss) {
-			message = "You attempt to channel your arcane energies into "
-					+ target.name()
+			message = "You attempt to channel your arcane energies into " + target.name()
 					+ "'s crotch, but she dodges out of the way, causing your spell to fail.";
 		} else {
 			if (modifier == Result.special) {
-				message = "You channel your arcane energies into "
-						+ target.name() + "'s groin. A moment later, "
-						+ target.name()
-						+ " yelps as her clitoris rapidly enlarges into a small girl-cock!";
+				message = "You channel your arcane energies into " + target.name() + "'s groin. A moment later, "
+						+ target.name() + " yelps as her clitoris rapidly enlarges into a small girl-cock!";
 			} else {
-				message = "You channel your arcane energies into "
-						+ target.name() + "'s dick. A moment later, "
-						+ target.name()
-						+ " yelps as her cock rapidly enlarges!";
+				message = "You channel your arcane energies into " + target.name() + "'s dick. A moment later, "
+						+ target.name() + " yelps as her cock rapidly enlarges!";
 			}
 			if (damage > 0) {
 				message += " You realize the effects are permanent!";
@@ -117,8 +106,7 @@ public class CockGrowth extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		String message;
 		if (modifier == Result.miss) {
 			message = getSelf().name()

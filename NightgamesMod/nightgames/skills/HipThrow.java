@@ -22,10 +22,8 @@ public class HipThrow extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && c.getStance().mobile(getSelf())
-				&& c.getStance().mobile(target)
-				&& !c.getStance().prone(getSelf())
-				&& !c.getStance().prone(target) && getSelf().canAct()
+		return !target.wary() && c.getStance().mobile(getSelf()) && c.getStance().mobile(target)
+				&& !c.getStance().prone(getSelf()) && !c.getStance().prone(target) && getSelf().canAct()
 				&& !c.getStance().connected();
 	}
 
@@ -68,8 +66,7 @@ public class HipThrow extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.normal) {
 			return target.name()
 					+ " rushes toward you, but you step in close and pull her towards you, using her momentum to throw her across your hip and onto the floor.";
@@ -80,8 +77,7 @@ public class HipThrow extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.normal) {
 			return "You see a momentary weakness in " + getSelf().name()
 					+ "'s guard and lunge toward her to take advantage of it. The next thing you know, you're hitting the floor behind her.";

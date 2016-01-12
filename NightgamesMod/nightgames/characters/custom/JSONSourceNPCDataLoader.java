@@ -55,11 +55,9 @@ public class JSONSourceNPCDataLoader {
 	}
 
 	private static CustomStringEntry readLine(JSONObject obj) {
-		CustomStringEntry entry = new CustomStringEntry(
-				(String) obj.get("text"));
+		CustomStringEntry entry = new CustomStringEntry((String) obj.get("text"));
 		if (obj.containsKey("requirements")) {
-			loadRequirement((JSONObject) obj.get("requirements"),
-					entry.requirements);
+			loadRequirement((JSONObject) obj.get("requirements"), entry.requirements);
 		}
 		return entry;
 	}
@@ -71,8 +69,7 @@ public class JSONSourceNPCDataLoader {
 		stats.willpower = JSONUtils.readFloat(resources, "willpower");
 	}
 
-	public static NPCData load(InputStream in)
-			throws ParseException, IOException {
+	public static NPCData load(InputStream in) throws ParseException, IOException {
 		Object value = JSONValue.parseWithException(new InputStreamReader(in));
 		DataBackedNPCData data = new DataBackedNPCData();
 		try {
@@ -102,44 +99,36 @@ public class JSONSourceNPCDataLoader {
 			JSONObject attributes = (JSONObject) baseStats.get("attributes");
 			for (Object attributeString : attributes.keySet()) {
 				Attribute att = Attribute.valueOf((String) attributeString);
-				data.stats.attributes.put(att,
-						((Number) attributes.get(attributeString)).intValue());
+				data.stats.attributes.put(att, ((Number) attributes.get(attributeString)).intValue());
 			}
 			loadResources((JSONObject) baseStats.get("resources"), data.stats);
 			loadTraits((JSONArray) baseStats.get("traits"), data.stats.traits);
 			loadGrowth((JSONObject) stats.get("growth"), data.growth);
-			loadPreferredAttributes(
-					(JSONArray) ((JSONObject) stats.get("growth"))
-							.get("preferredAttributes"),
-					data);
+			loadPreferredAttributes((JSONArray) ((JSONObject) stats.get("growth")).get("preferredAttributes"), data);
 			loadItems((JSONObject) object.get("items"), data);
 			loadAllLines((JSONObject) object.get("lines"), data.characterLines);
 			loadLines((JSONArray) object.get("portraits"), data.portraits);
-			loadRecruitment((JSONObject) object.get("recruitment"),
-					data.recruitment);
+			loadRecruitment((JSONObject) object.get("recruitment"), data.recruitment);
 			data.body = Body.load((JSONObject) object.get("body"), null);
 			data.sex = JSONUtils.readString(object, "sex");
 
 			if (object.containsKey("ai-modifiers")) {
-				loadAiModifiers((JSONArray) object.get("ai-modifiers"),
-						data.aiModifiers);
+				loadAiModifiers((JSONArray) object.get("ai-modifiers"), data.aiModifiers);
 			}
 
 			if (object.containsKey("male-pref")) {
-				data.aiModifiers.setMalePref(Optional
-						.of((double) JSONUtils.readFloat(object, "male-pref")));
+				data.aiModifiers.setMalePref(Optional.of((double) JSONUtils.readFloat(object, "male-pref")));
 			} else {
 				data.aiModifiers.setMalePref(Optional.empty());
 			}
-			
+
 			if (object.containsKey("comments")) {
 				loadComments((JSONArray) object.get("comments"), data);
 			}
 
 		} catch (ClassCastException e) {
 			e.printStackTrace();
-			throw new IOException(
-					"Badly formatted JSON character: " + e.getMessage());
+			throw new IOException("Badly formatted JSON character: " + e.getMessage());
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 			throw new IOException("Nonexistent value: " + e.getMessage());
@@ -147,36 +136,30 @@ public class JSONSourceNPCDataLoader {
 		return data;
 	}
 
-	private static void loadRecruitment(JSONObject obj,
-			RecruitmentData recruitment) {
+	private static void loadRecruitment(JSONObject obj, RecruitmentData recruitment) {
 		recruitment.introduction = JSONUtils.readString(obj, "introduction");
 		recruitment.action = JSONUtils.readString(obj, "action");
 		recruitment.confirm = JSONUtils.readString(obj, "confirm");
-		loadRequirement((JSONObject) obj.get("requirements"),
-				recruitment.requirement);
+		loadRequirement((JSONObject) obj.get("requirements"), recruitment.requirement);
 		loadEffects((JSONArray) obj.get("cost"), recruitment.effects);
 	}
 
-	private static void loadEffects(JSONArray jsonArray,
-			List<CustomEffect> effects) {
+	private static void loadEffects(JSONArray jsonArray, List<CustomEffect> effects) {
 		for (Object obj : jsonArray) {
 			JSONObject jsonObj = (JSONObject) obj;
 			if (jsonObj.containsKey("modMoney")) {
-				effects.add(new MoneyModEffect(
-						JSONUtils.readInteger(jsonObj, "modMoney")));
+				effects.add(new MoneyModEffect(JSONUtils.readInteger(jsonObj, "modMoney")));
 			}
 		}
 	}
 
-	private static void loadLines(JSONArray linesArr,
-			List<CustomStringEntry> entries) {
+	private static void loadLines(JSONArray linesArr, List<CustomStringEntry> entries) {
 		for (Object obj : linesArr) {
 			entries.add(readLine((JSONObject) obj));
 		}
 	}
 
-	private static void loadRequirement(JSONObject obj,
-			List<CustomRequirement> reqs) {
+	private static void loadRequirement(JSONObject obj, List<CustomRequirement> reqs) {
 		// reverse reverses the self/other, so you can apply the requirement to
 		// the opponent
 		if (obj.containsKey("reverse")) {
@@ -216,8 +199,7 @@ public class JSONSourceNPCDataLoader {
 		}
 		// trait requires the character to have the trait
 		if (obj.containsKey("trait")) {
-			reqs.add(new TraitRequirement(
-					Trait.valueOf(JSONUtils.readString(obj, "trait"))));
+			reqs.add(new TraitRequirement(Trait.valueOf(JSONUtils.readString(obj, "trait"))));
 		}
 		// dom requires the character to be in a dominant stance. Invalid out of
 		// combat
@@ -231,14 +213,12 @@ public class JSONSourceNPCDataLoader {
 		}
 		// inserted requires the character to be inserted. Invalid out of combat
 		if (obj.containsKey("inserted")) {
-			reqs.add(new InsertedRequirement(
-					JSONUtils.readBoolean(obj, "inserted")));
+			reqs.add(new InsertedRequirement(JSONUtils.readBoolean(obj, "inserted")));
 		}
 		// body part requires the character to have at least one of the type of
 		// body part specified
 		if (obj.containsKey("bodypart")) {
-			reqs.add(new BodyPartRequirement(
-					JSONUtils.readString(obj, "bodypart")));
+			reqs.add(new BodyPartRequirement(JSONUtils.readString(obj, "bodypart")));
 		}
 		// level requires the character to be at least that level
 		if (obj.containsKey("level")) {
@@ -246,32 +226,27 @@ public class JSONSourceNPCDataLoader {
 		}
 		// item requires the character to have at least that many items
 		if (obj.containsKey("item")) {
-			reqs.add(new ItemRequirement(
-					readItem((JSONObject) obj.get("item"))));
+			reqs.add(new ItemRequirement(readItem((JSONObject) obj.get("item"))));
 		}
 		// mood requires the character to be in that mood. Does not work on the
 		// player
 		if (obj.containsKey("mood")) {
-			reqs.add(new MoodRequirement(
-					Emotion.valueOf(JSONUtils.readString(obj, "mood"))));
+			reqs.add(new MoodRequirement(Emotion.valueOf(JSONUtils.readString(obj, "mood"))));
 		}
 		// stance requires the character to be in that stance. Invalid out of
 		// combat
 		if (obj.containsKey("stance")) {
-			reqs.add(
-					new StanceRequirement(JSONUtils.readString(obj, "stance")));
+			reqs.add(new StanceRequirement(JSONUtils.readString(obj, "stance")));
 		}
 		// result requires the battle to be in that result state. Invalid out of
 		// combat
 		if (obj.containsKey("result")) {
-			reqs.add(new ResultRequirement(
-					Result.valueOf(JSONUtils.readString(obj, "result"))));
+			reqs.add(new ResultRequirement(Result.valueOf(JSONUtils.readString(obj, "result"))));
 		}
 		// level requires the character to have had that many orgasms in the
 		// combat
 		if (obj.containsKey("orgasms")) {
-			reqs.add(new OrgasmRequirement(
-					JSONUtils.readInteger(obj, "orgasms")));
+			reqs.add(new OrgasmRequirement(JSONUtils.readInteger(obj, "orgasms")));
 		}
 		// level requires the character to have had that many orgasms in the
 		// combat
@@ -280,13 +255,11 @@ public class JSONSourceNPCDataLoader {
 		}
 	}
 
-	private static void loadAllLines(JSONObject linesObj,
-			Map<String, List<CustomStringEntry>> characterLines) {
+	private static void loadAllLines(JSONObject linesObj, Map<String, List<CustomStringEntry>> characterLines) {
 		for (Object key : linesObj.keySet()) {
 			String keyString = (String) key;
 			characterLines.put(keyString, new ArrayList<>());
-			loadLines((JSONArray) linesObj.get(keyString),
-					characterLines.get(keyString));
+			loadLines((JSONArray) linesObj.get(keyString), characterLines.get(keyString));
 		}
 	}
 
@@ -329,8 +302,7 @@ public class JSONSourceNPCDataLoader {
 		loadGrowthTraits((JSONArray) obj.get("traits"), growth);
 	}
 
-	private static void loadPreferredAttributes(JSONArray arr,
-			DataBackedNPCData data) {
+	private static void loadPreferredAttributes(JSONArray arr, DataBackedNPCData data) {
 		for (Object mem : arr) {
 			JSONObject obj = (JSONObject) mem;
 			Attribute att = Attribute.valueOf((String) obj.get("attribute"));
@@ -353,8 +325,7 @@ public class JSONSourceNPCDataLoader {
 	private static void loadGrowthTraits(JSONArray arr, Growth growth) {
 		for (Object mem : arr) {
 			JSONObject obj = (JSONObject) mem;
-			growth.addTrait(JSONUtils.readInteger(obj, "level"),
-					Trait.valueOf((String) obj.get("trait")));
+			growth.addTrait(JSONUtils.readInteger(obj, "level"), Trait.valueOf((String) obj.get("trait")));
 		}
 	}
 
@@ -372,37 +343,30 @@ public class JSONSourceNPCDataLoader {
 			String value = JSONUtils.readString(obj, "value");
 			double weight = JSONUtils.readFloat(obj, "weight");
 			switch (JSONUtils.readString(obj, "type")) {
-				case "skill":
-					try {
-						mods.getAttackMods().put(
-								(Class<? extends Skill>) Class.forName(value),
-								weight);
-					} catch (ClassNotFoundException e) {
-						throw new IllegalArgumentException(
-								"Skill not found: " + value);
-					}
-					break;
-				case "position":
-					mods.getPositionMods().put(Stance.valueOf(value), weight);
-					break;
-				case "self-status":
-					mods.getSelfStatusMods().put(Stsflag.valueOf(value),
-							weight);
-					break;
-				case "opponent-status":
-					mods.getOppStatusMods().put(Stsflag.valueOf(value), weight);
-					break;
-				default:
-					throw new IllegalArgumentException(
-							"Type of AiModifier must be one of \"skill\", "
-									+ "\"position\", \"self-status\" or \"opponent-status\", "
-									+ "but was \""
-									+ JSONUtils.readString(obj, "type")
-									+ "\".");
+			case "skill":
+				try {
+					mods.getAttackMods().put((Class<? extends Skill>) Class.forName(value), weight);
+				} catch (ClassNotFoundException e) {
+					throw new IllegalArgumentException("Skill not found: " + value);
+				}
+				break;
+			case "position":
+				mods.getPositionMods().put(Stance.valueOf(value), weight);
+				break;
+			case "self-status":
+				mods.getSelfStatusMods().put(Stsflag.valueOf(value), weight);
+				break;
+			case "opponent-status":
+				mods.getOppStatusMods().put(Stsflag.valueOf(value), weight);
+				break;
+			default:
+				throw new IllegalArgumentException("Type of AiModifier must be one of \"skill\", "
+						+ "\"position\", \"self-status\" or \"opponent-status\", " + "but was \""
+						+ JSONUtils.readString(obj, "type") + "\".");
 			}
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private static void loadComments(JSONArray arr, DataBackedNPCData data) {
 		arr.forEach(obj -> CommentSituation.parseComment((JSONObject) obj, data.comments));

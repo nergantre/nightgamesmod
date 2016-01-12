@@ -11,8 +11,7 @@ public class ReverseMount extends AbstractBehindStance {
 	@Override
 	public String describe() {
 		if (top.human()) {
-			return "You are straddling " + bottom.name()
-					+ ", with your back to her.";
+			return "You are straddling " + bottom.name() + ", with your back to her.";
 		} else {
 			return top.name() + " is sitting on your chest, facing your groin.";
 		}

@@ -24,8 +24,8 @@ public class SpawnImp extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && c.getStance().mobile(getSelf())
-				&& !c.getStance().prone(getSelf()) && getSelf().pet == null;
+		return getSelf().canAct() && c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf())
+				&& getSelf().pet == null;
 	}
 
 	@Override
@@ -82,8 +82,7 @@ public class SpawnImp extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (gender == Ptype.impfem) {
 			return "You focus your dark energy and summon a minion to fight for you. A naked, waist high, female imp steps out of a small burst of flame. She stirs up her honey "
 					+ "pot and despite yourself, you're slightly affected by the pheromones she's releasing.";
@@ -95,8 +94,7 @@ public class SpawnImp extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().name()
 				+ " spreads out her dark aura and a demonic imp appears next to her in a burst of flame. The imp stands about waist height, with bright red hair, "
 				+ "silver skin and a long flexible tail. It's naked, clearly female, and surprisingly attractive given its inhuman features.";

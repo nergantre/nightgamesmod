@@ -22,8 +22,7 @@ public class ReverseAssFuck extends Fuck {
 	@Override
 	public float priorityMod(Combat c) {
 		return 0.0f + (getSelf().getMood() == Emotion.dominant ? 1.0f : 0)
-				+ (getSelf().has(Trait.autonomousAss) ? 4.0f : 0)
-				+ (getSelf().has(Trait.oiledass) ? 2.0f : 0);
+				+ (getSelf().has(Trait.autonomousAss) ? 4.0f : 0) + (getSelf().has(Trait.oiledass) ? 2.0f : 0);
 	}
 
 	@Override
@@ -38,33 +37,26 @@ public class ReverseAssFuck extends Fuck {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return fuckable(c, target) && c.getStance().mobile(getSelf())
-				&& c.getStance().prone(target) && !c.getStance().mobile(target)
-				&& getSelf().canAct() && getTargetOrgan(target).isReady(target)
-				&& (getSelfOrgan().isReady(getSelf())
-						|| getSelf().has(Item.Lubricant)
-						|| getSelf().getArousal().percent() > 50
-						|| getSelf().has(Trait.alwaysready));
+		return fuckable(c, target) && c.getStance().mobile(getSelf()) && c.getStance().prone(target)
+				&& !c.getStance().mobile(target) && getSelf().canAct() && getTargetOrgan(target).isReady(target)
+				&& (getSelfOrgan().isReady(getSelf()) || getSelf().has(Item.Lubricant)
+						|| getSelf().getArousal().percent() > 50 || getSelf().has(Trait.alwaysready));
 	}
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		String premessage = premessage(c, target);
-		if (!getSelf().hasStatus(Stsflag.oiled)
-				&& getSelf().getArousal().percent() > 50
+		if (!getSelf().hasStatus(Stsflag.oiled) && getSelf().getArousal().percent() > 50
 				|| getSelf().has(Trait.alwaysready)) {
-			String fluids = getSelf().hasDick() ? "copious pre-cum"
-					: "own juices";
+			String fluids = getSelf().hasDick() ? "copious pre-cum" : "own juices";
 			if (premessage.isEmpty()) {
 				premessage = "{self:subject-action:lube|lubes}";
 			} else {
 				premessage += "{self:action:lube|lubes}";
 			}
-			premessage += " up {self:possessive} ass with {self:possessive} "
-					+ fluids + ".";
+			premessage += " up {self:possessive} ass with {self:possessive} " + fluids + ".";
 			getSelf().add(c, new Oiled(getSelf()));
-		} else if (!getSelf().hasStatus(Stsflag.oiled)
-				&& getSelf().has(Item.Lubricant)) {
+		} else if (!getSelf().hasStatus(Stsflag.oiled) && getSelf().has(Item.Lubricant)) {
 			if (premessage.isEmpty()) {
 				premessage = "{self:subject-action:lube|lubes}";
 			} else {
@@ -87,10 +79,8 @@ public class ReverseAssFuck extends Fuck {
 		if (getSelf().has(Trait.insertion)) {
 			otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
 		}
-		target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target),
-				m, c);
-		getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(),
-				otherm, c);
+		target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c);
+		getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c);
 		c.setStance(new AnalCowgirl(getSelf(), target));
 		getSelf().emote(Emotion.dominant, 30);
 		if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
@@ -120,22 +110,17 @@ public class ReverseAssFuck extends Fuck {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return String.format(
 				"You make sure your %s is sufficiently lubricated and you push %s %s into your greedy hole.",
-				getSelfOrgan().describe(getSelf()),
-				target.nameOrPossessivePronoun(),
+				getSelfOrgan().describe(getSelf()), target.nameOrPossessivePronoun(),
 				getTargetOrgan(target).describe(target));
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
-		return String.format(
-				"%s makes sure her %s is sufficiently lubricated and pushes %s %s into her greedy hole.",
-				getSelf().name(), getSelfOrgan().describe(getSelf()),
-				target.nameOrPossessivePronoun(),
+	public String receive(Combat c, int damage, Result modifier, Character target) {
+		return String.format("%s makes sure her %s is sufficiently lubricated and pushes %s %s into her greedy hole.",
+				getSelf().name(), getSelfOrgan().describe(getSelf()), target.nameOrPossessivePronoun(),
 				getTargetOrgan(target).describe(target));
 	}
 

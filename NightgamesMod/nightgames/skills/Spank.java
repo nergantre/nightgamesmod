@@ -18,15 +18,14 @@ public class Spank extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.crotchAvailable() && !c.getStance().prone(target)
-				&& c.getStance().reachBottom(getSelf()) && getSelf().canAct();
+		return target.crotchAvailable() && !c.getStance().prone(target) && c.getStance().reachBottom(getSelf())
+				&& getSelf().canAct();
 	}
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		if (getSelf().has(Trait.disciplinarian) && !c.getStance().inserted()) {
-			boolean shamed = Global.random(10) >= 5
-					|| !target.is(Stsflag.shamed) && getSelf().canSpend(5);
+			boolean shamed = Global.random(10) >= 5 || !target.is(Stsflag.shamed) && getSelf().canSpend(5);
 			if (shamed) {
 				getSelf().spendMojo(c, 5);
 			}
@@ -43,9 +42,7 @@ public class Spank extends Skill {
 			if (target.has(Trait.achilles)) {
 				target.pain(c, 4);
 			}
-			target.pain(c,
-					Global.random(6 + target.get(Attribute.Perception) / 2)
-							+ 3);
+			target.pain(c, Global.random(6 + target.get(Attribute.Perception) / 2) + 3);
 		} else {
 			if (getSelf().human()) {
 				c.write(getSelf(), deal(c, 0, Result.normal, target));
@@ -86,11 +83,9 @@ public class Spank extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return "You try to spank " + target.name()
-					+ ", but she dodges away.";
+			return "You try to spank " + target.name() + ", but she dodges away.";
 		}
 		if (modifier == Result.special) {
 			return "You bend " + target.name()
@@ -102,19 +97,16 @@ public class Spank extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return getSelf().name()
-					+ " aims a slap at your ass, but you dodge it.";
+			return getSelf().name() + " aims a slap at your ass, but you dodge it.";
 		}
 		if (modifier == Result.special) {
 			return getSelf().name()
 					+ " bends you over like a misbehaving child and spanks your ass twice. The third spank aims lower and connects solidly with your ballsack, "
 					+ "injuring your manhood along with your pride.";
 		} else {
-			return getSelf().name()
-					+ " lands a stinging slap on your bare ass.";
+			return getSelf().name() + " lands a stinging slap on your bare ass.";
 		}
 
 	}

@@ -142,7 +142,7 @@ public class Slap extends Skill {
 		} else if (modifier == Result.special) {
 			return getSelf().name() + "'s palm hits you in a savage strike that makes your head ring.";
 		} else if (modifier == Result.critical) {
-			return getSelf().name() + "'s hand grows significantly, and then " + getSelf().pronoun() 
+			return getSelf().name() + "'s hand grows significantly, and then " + getSelf().pronoun()
 					+ " swings it powerfully into your face.";
 		} else {
 			return getSelf().name() + " slaps you across the face, leaving a stinging heat on your cheek.";

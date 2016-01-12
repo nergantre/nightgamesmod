@@ -15,18 +15,15 @@ import nightgames.skills.Tactics;
 
 public abstract class SkillModifier {
 
-	public static final List<SkillModifier>	TYPES			= Collections
-			.unmodifiableList(Arrays.asList(new BanSkillsModifier(),
-					new BanTacticsModifier(),
-					new EncourageSkillsModifier(null, 0),
-					new EncourageTacticsModifier(null, 0)));
+	public static final List<SkillModifier> TYPES = Collections.unmodifiableList(Arrays.asList(new BanSkillsModifier(),
+			new BanTacticsModifier(), new EncourageSkillsModifier(null, 0), new EncourageTacticsModifier(null, 0)));
 
-	public static final SkillModifier		NULL_MODIFIER	= new SkillModifier() {
-																@Override
-																public String toString() {
-																	return "null-skill-modifier";
-																}
-															};
+	public static final SkillModifier NULL_MODIFIER = new SkillModifier() {
+		@Override
+		public String toString() {
+			return "null-skill-modifier";
+		}
+	};
 
 	public Set<Skill> bannedSkills() {
 		return Collections.emptySet();

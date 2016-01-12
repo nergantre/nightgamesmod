@@ -21,15 +21,13 @@ public class Buzzed extends DurationStatus {
 		if (affected.human()) {
 			return "You feel a pleasant buzz, which makes you a bit sluggish, but also takes the edge of your sense of touch.";
 		} else {
-			return affected.name()
-					+ " looks mildly buzzed, probably trying to dull her senses.";
+			return affected.name() + " looks mildly buzzed, probably trying to dull her senses.";
 		}
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now buzzed.\n",
-				affected.subjectAction("are", "is"));
+		return String.format("%s now buzzed.\n", affected.subjectAction("are", "is"));
 	}
 
 	@Override

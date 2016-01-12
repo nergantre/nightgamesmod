@@ -19,9 +19,8 @@ public class Defabricator extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && c.getStance().mobile(getSelf())
-				&& !c.getStance().prone(getSelf()) && !target.mostlyNude()
-				&& getSelf().has(Item.Battery, 8);
+		return getSelf().canAct() && c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf())
+				&& !target.mostlyNude() && getSelf().has(Item.Battery, 8);
 	}
 
 	@Override
@@ -52,16 +51,13 @@ public class Defabricator extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
-		return "You charge up your Defabricator and point it in "
-				+ target.name()
+	public String deal(Combat c, int damage, Result modifier, Character target) {
+		return "You charge up your Defabricator and point it in " + target.name()
 				+ "'s general direction. A bright light engulfs her and her clothes are disintegrated in moment.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().name()
 				+ " points a device at you and light shines from it like it's a simple flashlight. The device's function is immediately revealed as your clothes just vanish "
 				+ "in the light. You're left naked in seconds.";

@@ -49,15 +49,14 @@ public class CassieTime extends BaseNPCTime {
 		runicCock.ingredients.put(Item.FaeScroll, 1);
 		runicCock.requirements.add(new BodyPartRequirement("cock"));
 		runicCock.requirements.add((c, self, other) -> {
-			return self.body.get("cock").stream()
-					.anyMatch(cock -> ((CockPart) cock).isGeneric());
+			return self.body.get("cock").stream().anyMatch(cock -> ((CockPart) cock).isGeneric());
 		});
 		runicCock.additionalRequirements = "A normal cock";
 		runicCock.option = "Runic Cock";
 		runicCock.scene = "[Placeholder]<br>Cassie enchants your cock with the power of the fairies.";
 		runicCock.effect = (c, self, other) -> {
-			Optional<BodyPart> optPart = self.body.get("cock").stream()
-					.filter(cock -> ((CockPart) cock).isGeneric()).findAny();
+			Optional<BodyPart> optPart = self.body.get("cock").stream().filter(cock -> ((CockPart) cock).isGeneric())
+					.findAny();
 			BasicCockPart target = (BasicCockPart) optPart.get();
 			self.body.remove(target);
 			self.body.add(target.applyMod(CockMod.runic));
@@ -70,8 +69,7 @@ public class CassieTime extends BaseNPCTime {
 		arcanePussy.ingredients.put(Item.FaeScroll, 1);
 		arcanePussy.requirements.add(new BodyPartRequirement("pussy"));
 		arcanePussy.requirements.add((c, self, other) -> {
-			return self.body.get("pussy").stream()
-					.anyMatch(pussy -> pussy == PussyPart.normal);
+			return self.body.get("pussy").stream().anyMatch(pussy -> pussy == PussyPart.normal);
 		});
 		arcanePussy.additionalRequirements = "A normal pussy";
 		arcanePussy.option = "Arcane Pussy";
@@ -88,12 +86,10 @@ public class CassieTime extends BaseNPCTime {
 		mouthPussy.ingredients.put(Item.FaeScroll, 1);
 		mouthPussy.requirements.add(new BodyPartRequirement("mouth"));
 		mouthPussy.requirements.add((c, self, other) -> {
-			return self.body.get("mouth").stream()
-					.anyMatch(mouth -> mouth.isGeneric());
+			return self.body.get("mouth").stream().anyMatch(mouth -> mouth.isGeneric());
 		});
 		mouthPussy.requirements.add((c, self, other) -> {
-			return other.body.get("mouth").stream()
-					.anyMatch(mouth -> mouth instanceof MouthPussyPart);
+			return other.body.get("mouth").stream().anyMatch(mouth -> mouth instanceof MouthPussyPart);
 		});
 		mouthPussy.additionalRequirements = "A normal mouth";
 		mouthPussy.option = "Mouth Pussy";
@@ -174,9 +170,7 @@ public class CassieTime extends BaseNPCTime {
 	@Override
 	public void subVisit(String choice) {
 		if (choice.equals("Sex")) {
-			if (npc.getAffection(player) >= 12
-					&& (!player.has(Trait.silvertongue)
-							|| Global.random(2) == 1)) {
+			if (npc.getAffection(player) >= 12 && (!player.has(Trait.silvertongue) || Global.random(2) == 1)) {
 				Global.gui().message(
 						"Cassie eagerly invites you to her room for some intimate time. The room is quite tidy, though you're surprised to see a couple anime "
 								+ "posters on the wall. Cassie gets a little embarrassed as you look around, but she kisses you softly and leads you to the bed. You quickly strip each other "
@@ -233,9 +227,7 @@ public class CassieTime extends BaseNPCTime {
 			npc.gainAffection(player, 1);
 			player.gainAffection(npc, 1);
 		} else if (choice.equals("Games")) {
-			if (npc.getAffection(player) >= 16
-					&& (!player.has(Trait.misdirection)
-							|| Global.random(2) == 1)) {
+			if (npc.getAffection(player) >= 16 && (!player.has(Trait.misdirection) || Global.random(2) == 1)) {
 				Global.gui().message(
 						"Cassie continues to impress you with her gaming prowess, but right now, you've got a decisive advantage. You're at match point, so if either of you can "
 								+ "score again, that'll almost certainly be the game. Unfortunately for her, you've got her R&D completely locked down. If she doesn't have the agenda she needs in her "
@@ -283,8 +275,7 @@ public class CassieTime extends BaseNPCTime {
 			npc.gainAffection(player, 1);
 			player.gainAffection(npc, 1);
 		} else if (choice.equals("Sparring")) {
-			if (npc.getAffection(player) >= 8 && (!player.has(Trait.judonovice)
-					|| Global.random(2) == 1)) {
+			if (npc.getAffection(player) >= 8 && (!player.has(Trait.judonovice) || Global.random(2) == 1)) {
 				Global.gui().message(
 						"You and Cassie manage to procure an actual fitness room with actual wrestling mats for your sparring practice. No more rolling around in couch cushions and pillows. "
 								+ "the downside it that you don't have the same level of privacy as in your dorm room, so today you'll need to stick with just sparring. Cassie seems a lot more confident than usual "
@@ -299,8 +290,7 @@ public class CassieTime extends BaseNPCTime {
 								+ "is my answer to that.\"</i><p>She extends her hand to help you up, but instead you pull her down on top of you and kiss her tenderly. She blushes and grins at you when you break the kiss. "
 								+ "<i>\"That's not a judo technique.\"</i> She stands back up and motions for you to do the same. <i>\"Come on, I'll show you what I've learned.\"</i>");
 				if (!player.has(Trait.judonovice)) {
-					Global.gui().message(
-							"<p><b>By training with Cassie, you learned the Hip Throw skill.</b>");
+					Global.gui().message("<p><b>By training with Cassie, you learned the Hip Throw skill.</b>");
 					player.add(Trait.judonovice);
 					npc.add(Trait.judonovice);
 				}

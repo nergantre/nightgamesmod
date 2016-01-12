@@ -18,15 +18,13 @@ public class Hide extends Action {
 
 	@Override
 	public boolean usable(Character user) {
-		return !(user.location().open() || user.location().corridor()
-				|| user.state == State.hidden);
+		return !(user.location().open() || user.location().corridor() || user.state == State.hidden);
 	}
 
 	@Override
 	public Movement execute(Character user) {
 		if (user.human()) {
-			Global.gui().message(
-					"You find a decent hiding place and wait for unwary opponents.");
+			Global.gui().message("You find a decent hiding place and wait for unwary opponents.");
 		}
 		user.state = State.hidden;
 		return Movement.hide;

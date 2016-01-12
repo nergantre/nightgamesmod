@@ -22,23 +22,20 @@ import nightgames.global.Global;
 import nightgames.items.Loot;
 
 public class Clothing implements Loot {
-	public static final int				N_LAYERS	= 5;
-	public static Map<String, Clothing>	clothingTable;
+	public static final int N_LAYERS = 5;
+	public static Map<String, Clothing> clothingTable;
 
 	public static void buildClothingTable() {
 		clothingTable = new HashMap<String, Clothing>();
 		try {
-			JSONArray value = (JSONArray) JSONValue
-					.parseWithException(new InputStreamReader(
-							ResourceLoader.getFileResourceAsStream(
-									"data/clothing/defaults.json")));
-			JSONClothingLoader.loadClothingListFromJSON(value)
-					.forEach(article -> {
-						clothingTable.put(article.id, article);
-						if (Global.isDebugOn(DebugFlags.DEBUG_LOADING)) {
-							System.out.println("Loaded " + article.id);
-						}
-					});
+			JSONArray value = (JSONArray) JSONValue.parseWithException(
+					new InputStreamReader(ResourceLoader.getFileResourceAsStream("data/clothing/defaults.json")));
+			JSONClothingLoader.loadClothingListFromJSON(value).forEach(article -> {
+				clothingTable.put(article.id, article);
+				if (Global.isDebugOn(DebugFlags.DEBUG_LOADING)) {
+					System.out.println("Loaded " + article.id);
+				}
+			});
 		} catch (ClassCastException e) {
 			e.printStackTrace();
 		} catch (ParseException e) {
@@ -46,42 +43,38 @@ public class Clothing implements Loot {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		ResourceLoader.getFileResourcesFromDirectory("data/clothing")
-				.forEach(inputstream -> {
-					try {
-						JSONArray value = (JSONArray) JSONValue
-								.parseWithException(
-										new InputStreamReader(inputstream));
-						JSONClothingLoader.loadClothingListFromJSON(value)
-								.forEach(article -> {
-							clothingTable.put(article.id, article);
-							if (Global.isDebugOn(DebugFlags.DEBUG_LOADING)) {
-								System.out.println("Loaded " + article.id);
-							}
-						});
-					} catch (ClassCastException e) {
-						e.printStackTrace();
-					} catch (ParseException e) {
-						e.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
+		ResourceLoader.getFileResourcesFromDirectory("data/clothing").forEach(inputstream -> {
+			try {
+				JSONArray value = (JSONArray) JSONValue.parseWithException(new InputStreamReader(inputstream));
+				JSONClothingLoader.loadClothingListFromJSON(value).forEach(article -> {
+					clothingTable.put(article.id, article);
+					if (Global.isDebugOn(DebugFlags.DEBUG_LOADING)) {
+						System.out.println("Loaded " + article.id);
 					}
 				});
+			} catch (ClassCastException e) {
+				e.printStackTrace();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
 	}
 
-	String						name;
-	int							dc;
-	String						prefix;
-	List<ClothingTrait>			attributes;
-	List<String>				stores;
-	List<Trait>					buffs;
-	private List<ClothingSlot>	slots;
-	List<CharacterSex>			sex;
-	int							price;
-	double						exposure;
-	String						id;
-	double						hotness;
-	private int					layer;
+	String name;
+	int dc;
+	String prefix;
+	List<ClothingTrait> attributes;
+	List<String> stores;
+	List<Trait> buffs;
+	private List<ClothingSlot> slots;
+	List<CharacterSex> sex;
+	int price;
+	double exposure;
+	String id;
+	double hotness;
+	private int layer;
 
 	Clothing() {
 	}
@@ -92,12 +85,10 @@ public class Clothing implements Loot {
 	}
 
 	public int dc(Character attacker) {
-		if (attacker != null && attacker.has(Trait.bramaster) && layer == 0
-				&& slots.contains(ClothingSlot.top)) {
+		if (attacker != null && attacker.has(Trait.bramaster) && layer == 0 && slots.contains(ClothingSlot.top)) {
 			return dc / 2;
 		}
-		if (attacker != null && attacker.has(Trait.pantymaster) && layer == 0
-				&& slots.contains(ClothingSlot.bottom)) {
+		if (attacker != null && attacker.has(Trait.pantymaster) && layer == 0 && slots.contains(ClothingSlot.bottom)) {
 			return dc / 2;
 		}
 		return dc;
@@ -141,8 +132,7 @@ public class Clothing implements Loot {
 	public static Clothing getByID(String key) {
 		Clothing results = clothingTable.get(key);
 		if (results == null) {
-			throw new IllegalArgumentException(
-					key + " is not a valid clothing key");
+			throw new IllegalArgumentException(key + " is not a valid clothing key");
 		}
 		return results;
 	}

@@ -27,9 +27,10 @@ public class AphrodisiacTrap implements Trap {
 						"There's a sudden spray of gas in your face and the room seems to get much hotter. Your dick goes rock-hard and you realize you've been "
 								+ "hit with an aphrodisiac.");
 			} else if (target.location().humanPresent()) {
-				Global.gui().message(target.name()
-						+ " is caught in your trap and sprayed with aphrodisiac. She flushes bright red and presses a hand against her crotch. It seems like "
-						+ "she'll start masturbating even if you don't do anything.");
+				Global.gui()
+						.message(target.name()
+								+ " is caught in your trap and sprayed with aphrodisiac. She flushes bright red and presses a hand against her crotch. It seems like "
+								+ "she'll start masturbating even if you don't do anything.");
 			}
 			target.tempt(40);
 			target.location().opportunity(target, this);
@@ -43,8 +44,8 @@ public class AphrodisiacTrap implements Trap {
 
 	@Override
 	public boolean recipe(Character owner) {
-		return owner.has(Item.Aphrodisiac) && owner.has(Item.Tripwire)
-				&& owner.has(Item.Sprayer) && !owner.has(Trait.direct);
+		return owner.has(Item.Aphrodisiac) && owner.has(Item.Tripwire) && owner.has(Item.Sprayer)
+				&& !owner.has(Trait.direct);
 	}
 
 	@Override
@@ -72,8 +73,7 @@ public class AphrodisiacTrap implements Trap {
 	}
 
 	@Override
-	public void capitalize(Character attacker, Character victim,
-			IEncounter enc) {
+	public void capitalize(Character attacker, Character victim, IEncounter enc) {
 		victim.add(new Flatfooted(victim, 1));
 		enc.engage(new Combat(attacker, victim, attacker.location()));
 		attacker.location().remove(this);

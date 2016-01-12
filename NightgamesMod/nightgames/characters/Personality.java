@@ -75,6 +75,6 @@ public interface Personality extends Serializable {
 	public AiModifiers getAiModifiers();
 
 	public String resist3p(Combat combat, Character target, Character assist);
-	
+
 	public Map<CommentSituation, String> getComments(Combat c);
 }

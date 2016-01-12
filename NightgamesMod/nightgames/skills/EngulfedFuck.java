@@ -10,7 +10,7 @@ import nightgames.global.Global;
 import nightgames.stance.Stance;
 
 public class EngulfedFuck extends Skill {
-	
+
 	public EngulfedFuck(Character self) {
 		super("Multi Fuck", self);
 	}

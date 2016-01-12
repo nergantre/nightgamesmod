@@ -58,8 +58,8 @@ public class Masturbate extends Skill {
 		return parts.get(Global.random(parts.size()));
 	}
 
-	private BodyPart	withO	= Body.nonePart;
-	private BodyPart	targetO	= Body.nonePart;
+	private BodyPart withO = Body.nonePart;
+	private BodyPart targetO = Body.nonePart;
 
 	@Override
 	public int getMojoBuilt(Combat c) {
@@ -98,8 +98,7 @@ public class Masturbate extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (targetO == null) {
 			return "You play with yourself, building up your own arousal.";
 		}
@@ -119,8 +118,7 @@ public class Masturbate extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (targetO == null) {
 			return "She starts playing with herself, building up her own arousal.";
 		}

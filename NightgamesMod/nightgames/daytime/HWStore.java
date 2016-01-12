@@ -40,8 +40,7 @@ public class HWStore extends Store {
 			for (Item i : stock.keySet()) {
 				Global.gui().message(i.getName() + ": " + i.getPrice());
 			}
-			Global.gui().message(
-					"You have: $" + player.money + " available to spend.");
+			Global.gui().message("You have: $" + player.money + " available to spend.");
 			displayGoods();
 			Global.gui().choose(this, "Leave");
 		}
@@ -62,10 +61,8 @@ public class HWStore extends Store {
 		int bored = 0;
 		while (remaining > 10 && bored < 10) {
 			for (Item i : stock.keySet()) {
-				boolean emptyBottleCheck = npc.has(Trait.madscientist)
-						|| i != Item.EmptyBottle;
-				if (remaining > i.getPrice() && !npc.has(i, 20)
-						&& emptyBottleCheck) {
+				boolean emptyBottleCheck = npc.has(Trait.madscientist) || i != Item.EmptyBottle;
+				if (remaining > i.getPrice() && !npc.has(i, 20) && emptyBottleCheck) {
 					npc.gain(i);
 					npc.money -= i.getPrice();
 					remaining -= i.getPrice();

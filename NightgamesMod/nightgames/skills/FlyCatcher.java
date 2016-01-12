@@ -18,8 +18,7 @@ public class FlyCatcher extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.pet != null && getSelf().canAct()
-				&& c.getStance().mobile(getSelf())
+		return target.pet != null && getSelf().canAct() && c.getStance().mobile(getSelf())
 				&& !c.getStance().prone(getSelf());
 	}
 
@@ -54,15 +53,13 @@ public class FlyCatcher extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		// TODO Auto-generated method stub
 		return null;
 	}

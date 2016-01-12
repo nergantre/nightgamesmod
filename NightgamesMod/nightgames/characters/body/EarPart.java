@@ -8,14 +8,12 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 
 public enum EarPart implements BodyPart,BodyPartMod {
-	pointed("pointed ", .2, 1.2, 1),
-	cat("cat ", .4, 1.5, 1.5),
-	normal("normal ", 0, 1, 1);
+	pointed("pointed ", .2, 1.2, 1), cat("cat ", .4, 1.5, 1.5), normal("normal ", 0, 1, 1);
 
-	public String	desc;
-	public double	hotness;
-	public double	pleasure;
-	public double	sensitivity;
+	public String desc;
+	public double hotness;
+	public double pleasure;
+	public double sensitivity;
 
 	EarPart(String desc, double hotness, double pleasure, double sensitivity) {
 		this.desc = desc;
@@ -27,13 +25,11 @@ public enum EarPart implements BodyPart,BodyPartMod {
 	@Override
 	public void describeLong(StringBuilder b, Character c) {
 		switch (this) {
-			case cat:
-				b.append("Cute " + fullDescribe(c) + " tops "
-						+ c.possessivePronoun() + " head.");
-				break;
-			default:
-				b.append(Global.capitalizeFirstLetter(fullDescribe(c))
-						+ " frames " + c.possessivePronoun() + " face.");
+		case cat:
+			b.append("Cute " + fullDescribe(c) + " tops " + c.possessivePronoun() + " head.");
+			break;
+		default:
+			b.append(Global.capitalizeFirstLetter(fullDescribe(c)) + " frames " + c.possessivePronoun() + " face.");
 		}
 	}
 
@@ -104,8 +100,7 @@ public enum EarPart implements BodyPart,BodyPartMod {
 	}
 
 	@Override
-	public double applyBonuses(Character self, Character opponent,
-			BodyPart target, double damage, Combat c) {
+	public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		return 0;
 	}
 
@@ -125,8 +120,7 @@ public enum EarPart implements BodyPart,BodyPartMod {
 	}
 
 	@Override
-	public double applyReceiveBonuses(Character self, Character opponent,
-			BodyPart target, double damage, Combat c) {
+	public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		return 0;
 	}
 
@@ -156,8 +150,8 @@ public enum EarPart implements BodyPart,BodyPartMod {
 	}
 
 	@Override
-	public double applySubBonuses(Character self, Character opponent,
-			BodyPart with, BodyPart target, double damage, Combat c) {
+	public double applySubBonuses(Character self, Character opponent, BodyPart with, BodyPart target, double damage,
+			Combat c) {
 		return 0;
 	}
 
@@ -165,20 +159,19 @@ public enum EarPart implements BodyPart,BodyPartMod {
 	public int mod(Attribute a, int total) {
 		if (a == Attribute.Seduction) {
 			switch (this) {
-				case pointed:
-					return 2;
-				case cat:
-					return 3;
-				default:
-					return 0;
+			case pointed:
+				return 2;
+			case cat:
+				return 3;
+			default:
+				return 0;
 			}
 		}
 		return 0;
 	}
 
 	@Override
-	public void tickHolding(Combat c, Character self, Character opponent,
-			BodyPart otherOrgan) {
+	public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {
 
 	}
 

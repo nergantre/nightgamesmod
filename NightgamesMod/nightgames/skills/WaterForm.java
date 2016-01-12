@@ -20,8 +20,7 @@ public class WaterForm extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && !c.getStance().sub(getSelf())
-				&& !getSelf().is(Stsflag.form);
+		return getSelf().canAct() && !c.getStance().sub(getSelf()) && !getSelf().is(Stsflag.form);
 	}
 
 	@Override
@@ -51,17 +50,13 @@ public class WaterForm extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
-		return "You relax your muscles, prepared to flow with and counter "
-				+ target.name() + "'s attacks.";
+	public String deal(Combat c, int damage, Result modifier, Character target) {
+		return "You relax your muscles, prepared to flow with and counter " + target.name() + "'s attacks.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
-		return getSelf().name()
-				+ " takes a deep breath and her movements become much more fluid.";
+	public String receive(Combat c, int damage, Result modifier, Character target) {
+		return getSelf().name() + " takes a deep breath and her movements become much more fluid.";
 	}
 
 }

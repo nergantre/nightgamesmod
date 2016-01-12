@@ -57,8 +57,7 @@ public class Gaussian {
 	}
 
 	// bisection search
-	private static double PhiInverse(double y, double delta, double lo,
-			double hi) {
+	private static double PhiInverse(double y, double delta, double lo, double hi) {
 		double mid = lo + (hi - lo) / 2;
 		if (hi - lo < delta) {
 			return mid;

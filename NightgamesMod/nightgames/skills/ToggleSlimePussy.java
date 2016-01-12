@@ -37,7 +37,7 @@ public class ToggleSlimePussy extends Skill {
 	public float priorityMod(Combat c) {
 		return (float) ((getSelf().dickPreference() - 5) * (hasSlimePussy() ? .3 : -.3));
 	}
-	
+
 	@Override
 	public int getMojoCost(Combat c) {
 		return 15;

@@ -13,7 +13,7 @@ import nightgames.global.Global;
 public class Engulfed extends Position {
 
 	private boolean slimePitches;
-	
+
 	public Engulfed(Character top, Character bottom) {
 		super(top, bottom, Stance.engulfed);
 		slimePitches = slimePitches();
@@ -78,7 +78,6 @@ public class Engulfed extends Position {
 	public boolean prone(Character c) {
 		return false;
 	}
-	
 
 	@Override
 	public boolean feet(Character c) {

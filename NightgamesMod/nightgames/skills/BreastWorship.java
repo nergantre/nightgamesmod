@@ -17,18 +17,14 @@ public class BreastWorship extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.breastsAvailable() && c.getStance().reachTop(getSelf())
-				&& c.getStance().front(getSelf())
-				&& (getSelf().canAct()
-						|| c.getStance().enumerate() == Stance.nursing
-								&& getSelf().canRespond())
+		return target.breastsAvailable() && c.getStance().reachTop(getSelf()) && c.getStance().front(getSelf())
+				&& (getSelf().canAct() || c.getStance().enumerate() == Stance.nursing && getSelf().canRespond())
 				&& c.getStance().facing();
 	}
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		Result results = target.has(Trait.lactating) ? Result.special
-				: Result.normal;
+		Result results = target.has(Trait.lactating) ? Result.special : Result.normal;
 		int m = 8 + Global.random(6);
 		if (getSelf().human()) {
 			c.write(getSelf(), deal(c, 0, results, target));
@@ -38,25 +34,17 @@ public class BreastWorship extends Skill {
 		if (getSelf().has(Trait.silvertongue)) {
 			m += 4;
 		}
-		target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"),
-				target.body.getRandom("breasts"), m, c);
-		if (getSelf().hasDick()
-				&& (!getSelf().hasPussy() || Global.random(2) == 0)) {
-			getSelf().body.pleasure(getSelf(),
-					getSelf().body.getRandom("hands"),
-					getSelf().body.getRandomCock(), m, c);
+		target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("breasts"), m, c);
+		if (getSelf().hasDick() && (!getSelf().hasPussy() || Global.random(2) == 0)) {
+			getSelf().body.pleasure(getSelf(), getSelf().body.getRandom("hands"), getSelf().body.getRandomCock(), m, c);
 		} else if (getSelf().hasPussy()) {
-			getSelf().body.pleasure(getSelf(),
-					getSelf().body.getRandom("hands"),
-					getSelf().body.getRandomPussy(), m, c);
+			getSelf().body.pleasure(getSelf(), getSelf().body.getRandom("hands"), getSelf().body.getRandomPussy(), m,
+					c);
 		} else {
-			getSelf().body.pleasure(getSelf(),
-					getSelf().body.getRandom("hands"),
-					getSelf().body.getRandomHole(), m, c);
+			getSelf().body.pleasure(getSelf(), getSelf().body.getRandom("hands"), getSelf().body.getRandomHole(), m, c);
 		}
 		if (results == Result.special) {
-			getSelf().tempt(c, target, target.body.getRandomBreasts(),
-					(3 + target.body.getRandomBreasts().size) * 2);
+			getSelf().tempt(c, target, target.body.getRandomBreasts(), (3 + target.body.getRandomBreasts().size) * 2);
 			target.buildMojo(c, 10);
 		} else {
 			target.buildMojo(c, 5);
@@ -86,23 +74,19 @@ public class BreastWorship extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.normal) {
-			return "You worshipfully circle your tongue around each of "
-					+ target.name()
+			return "You worshipfully circle your tongue around each of " + target.name()
 					+ "'s nipples, and start sucking like a newborn while furiously masturbating.";
 		} else {
-			return "You worshipfully circle your tongue around each of "
-					+ target.name()
+			return "You worshipfully circle your tongue around each of " + target.name()
 					+ "'s nipples, and start sucking like a newborn while furiously masturbating. "
 					+ "Her milk slides smoothly down your throat, and you're left with a warm comfortable feeling.";
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.normal) {
 			return getSelf().name()
 					+ " worshipfully licks and sucks your nipples while uncontrollably playing with herself.";

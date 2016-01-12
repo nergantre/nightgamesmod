@@ -8,8 +8,8 @@ import java.util.Map;
 import nightgames.items.clothing.Clothing;
 
 public class CombatantData implements Cloneable {
-	private List<Clothing>		clothespile;
-	private Map<String, Number>	flags;
+	private List<Clothing> clothespile;
+	private Map<String, Number> flags;
 
 	public CombatantData() {
 		clothespile = new ArrayList<>();

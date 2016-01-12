@@ -57,8 +57,8 @@ public final class CustomModifierLoader {
 		} else {
 			item = ItemModifier.NULL_MODIFIER;
 		}
-		return new BaseModifier(clothing, item, StatusModifier.NULL_MODIFIER,
-				skill, action, BaseModifier.EMPTY_CONSUMER) {
+		return new BaseModifier(clothing, item, StatusModifier.NULL_MODIFIER, skill, action,
+				BaseModifier.EMPTY_CONSUMER) {
 
 			@Override
 			public int bonus() {
@@ -86,15 +86,10 @@ public final class CustomModifierLoader {
 	private static ActionModifier readActionModifier(JSONObject obj) {
 		String type = JSONUtils.readString(obj, "type");
 		ModifierComponent<? extends ActionModifier> template = (ModifierComponent<? extends ActionModifier>) ActionModifier.TYPES
-				.stream()
-				.filter(t -> ((ModifierComponent<? extends ActionModifier>) t)
-						.name().equals(type))
-				.findAny().orElseThrow(() -> new IllegalArgumentException(
-						"Unkown modifier type " + type));
-		if (!obj.containsKey("value")
-				|| !(obj.get("value") instanceof JSONObject)) {
-			throw new IllegalArgumentException(
-					"All modifiers must have an object 'value'");
+				.stream().filter(t -> ((ModifierComponent<? extends ActionModifier>) t).name().equals(type)).findAny()
+				.orElseThrow(() -> new IllegalArgumentException("Unkown modifier type " + type));
+		if (!obj.containsKey("value") || !(obj.get("value") instanceof JSONObject)) {
+			throw new IllegalArgumentException("All modifiers must have an object 'value'");
 		}
 		JSONObject value = (JSONObject) obj.get("value");
 		return template.instance(value);
@@ -104,15 +99,10 @@ public final class CustomModifierLoader {
 	private static SkillModifier readSkillModifier(JSONObject obj) {
 		String type = JSONUtils.readString(obj, "type");
 		ModifierComponent<? extends SkillModifier> template = (ModifierComponent<? extends SkillModifier>) SkillModifier.TYPES
-				.stream()
-				.filter(t -> ((ModifierComponent<? extends SkillModifier>) t)
-						.name().equals(type))
-				.findAny().orElseThrow(() -> new IllegalArgumentException(
-						"Unkown modifier type " + type));
-		if (!obj.containsKey("value")
-				|| !(obj.get("value") instanceof JSONObject)) {
-			throw new IllegalArgumentException(
-					"All modifiers must have an object 'value'");
+				.stream().filter(t -> ((ModifierComponent<? extends SkillModifier>) t).name().equals(type)).findAny()
+				.orElseThrow(() -> new IllegalArgumentException("Unkown modifier type " + type));
+		if (!obj.containsKey("value") || !(obj.get("value") instanceof JSONObject)) {
+			throw new IllegalArgumentException("All modifiers must have an object 'value'");
 		}
 		JSONObject value = (JSONObject) obj.get("value");
 		return template.instance(value);
@@ -122,15 +112,10 @@ public final class CustomModifierLoader {
 	private static ClothingModifier readClothingModifier(JSONObject obj) {
 		String type = JSONUtils.readString(obj, "type");
 		ModifierComponent<? extends ClothingModifier> template = (ModifierComponent<? extends ClothingModifier>) ClothingModifier.TYPES
-				.stream()
-				.filter(t -> ((ModifierComponent<? extends ClothingModifier>) t)
-						.name().equals(type))
-				.findAny().orElseThrow(() -> new IllegalArgumentException(
-						"Unkown modifier type " + type));
-		if (!obj.containsKey("value")
-				|| !(obj.get("value") instanceof JSONObject)) {
-			throw new IllegalArgumentException(
-					"All modifiers must have an object 'value'");
+				.stream().filter(t -> ((ModifierComponent<? extends ClothingModifier>) t).name().equals(type)).findAny()
+				.orElseThrow(() -> new IllegalArgumentException("Unkown modifier type " + type));
+		if (!obj.containsKey("value") || !(obj.get("value") instanceof JSONObject)) {
+			throw new IllegalArgumentException("All modifiers must have an object 'value'");
 		}
 		JSONObject value = (JSONObject) obj.get("value");
 		return template.instance(value);
@@ -140,15 +125,10 @@ public final class CustomModifierLoader {
 	private static ItemModifier readItemModifier(JSONObject obj) {
 		String type = JSONUtils.readString(obj, "type");
 		ModifierComponent<? extends ItemModifier> template = (ModifierComponent<? extends ItemModifier>) ItemModifier.TYPES
-				.stream()
-				.filter(t -> ((ModifierComponent<? extends ItemModifier>) t)
-						.name().equals(type))
-				.findAny().orElseThrow(() -> new IllegalArgumentException(
-						"Unkown modifier type " + type));
-		if (!obj.containsKey("value")
-				|| !(obj.get("value") instanceof JSONObject)) {
-			throw new IllegalArgumentException(
-					"All modifiers must have an object 'value'");
+				.stream().filter(t -> ((ModifierComponent<? extends ItemModifier>) t).name().equals(type)).findAny()
+				.orElseThrow(() -> new IllegalArgumentException("Unkown modifier type " + type));
+		if (!obj.containsKey("value") || !(obj.get("value") instanceof JSONObject)) {
+			throw new IllegalArgumentException("All modifiers must have an object 'value'");
 		}
 		JSONObject value = (JSONObject) obj.get("value");
 		return template.instance(value);
@@ -191,10 +171,8 @@ public final class CustomModifierLoader {
 	}
 
 	public static void main(String[] args) throws IOException, ParseException {
-		InputStream in = ResourceLoader
-				.getFileResourceAsStream("test_modifier.json");
-		JSONObject obj = (JSONObject) JSONValue
-				.parseWithException(new InputStreamReader(in));
+		InputStream in = ResourceLoader.getFileResourceAsStream("test_modifier.json");
+		JSONObject obj = (JSONObject) JSONValue.parseWithException(new InputStreamReader(in));
 		Clothing.buildClothingTable();
 		Global.buildParser();
 		Global.buildModifierPool();

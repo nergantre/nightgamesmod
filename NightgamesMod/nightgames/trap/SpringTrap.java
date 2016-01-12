@@ -16,16 +16,14 @@ public class SpringTrap implements Trap {
 
 	@Override
 	public void trigger(Character target) {
-		if (!target.check(Attribute.Perception,
-				24 - target.get(Attribute.Perception) + target.baseDisarm())) {
+		if (!target.check(Attribute.Perception, 24 - target.get(Attribute.Perception) + target.baseDisarm())) {
 			if (target.human()) {
 				Global.gui().message(
 						"As you're walking, your foot hits something and there's a sudden debilitating pain in your groin. Someone has set up a spring-loaded rope designed "
 								+ "to shoot up into your nuts, which is what just happened. You collapse into the fetal position and pray that there's no one nearby.");
 			} else if (target.location().humanPresent()) {
 				Global.gui()
-						.message("You hear a sudden yelp as your trap catches "
-								+ target.name()
+						.message("You hear a sudden yelp as your trap catches " + target.name()
 								+ " right in the cooch. She eventually manages to extract the rope from between her legs "
 								+ "and collapses to the floor in pain.");
 			}
@@ -81,10 +79,8 @@ public class SpringTrap implements Trap {
 	}
 
 	@Override
-	public void capitalize(Character attacker, Character victim,
-			IEncounter enc) {
-		enc.engage(new Combat(attacker, victim, attacker.location(),
-				new StandingOver(attacker, victim)));
+	public void capitalize(Character attacker, Character victim, IEncounter enc) {
+		enc.engage(new Combat(attacker, victim, attacker.location(), new StandingOver(attacker, victim)));
 		attacker.location().remove(this);
 	}
 

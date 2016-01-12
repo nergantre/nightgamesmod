@@ -13,8 +13,8 @@ public class ActionButton extends JButton {
 	 * 
 	 */
 	private static final long serialVersionUID = 2822534455509003521L;
-	protected Action	action;
-	protected Character	user;
+	protected Action action;
+	protected Character user;
 
 	public ActionButton(Action action, Character user) {
 		super(action.toString());

@@ -27,14 +27,12 @@ public class StripSelf extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		boolean hasClothes = subChoices().size() > 0;
-		return hasClothes && getSelf().canAct()
-				&& c.getStance().mobile(getSelf());
+		return hasClothes && getSelf().canAct() && c.getStance().mobile(getSelf());
 	}
 
 	@Override
 	public Collection<String> subChoices() {
-		return getSelf().getOutfit().getAllStrippable().stream()
-				.map(clothing -> clothing.getName())
+		return getSelf().getOutfit().getAllStrippable().stream().map(clothing -> clothing.getName())
 				.collect(Collectors.toList());
 	}
 
@@ -47,10 +45,8 @@ public class StripSelf extends Skill {
 	public boolean resolve(Combat c, Character target) {
 		Clothing clothing = null;
 		if (getSelf().human()) {
-			Optional<Clothing> stripped = getSelf().getOutfit().getEquipped()
-					.stream()
-					.filter(article -> article.getName().equals(choice))
-					.findAny();
+			Optional<Clothing> stripped = getSelf().getOutfit().getEquipped().stream()
+					.filter(article -> article.getName().equals(choice)).findAny();
 			if (stripped.isPresent()) {
 				clothing = getSelf().getOutfit().unequip(stripped.get());
 				c.getCombatantData(getSelf()).addToClothesPile(clothing);
@@ -60,19 +56,16 @@ public class StripSelf extends Skill {
 			HashMap<Clothing, Float> checks = new HashMap<>();
 			float selfFit = self.getFitness(c);
 			float otherFit = self.getOtherFitness(c, target);
-			getSelf().getOutfit().getAllStrippable().stream()
-					.forEach(article -> {
-						float rating = self.rateAction(c, selfFit, otherFit,
-								(newCombat, newSelf, newOther) -> {
-							newSelf.strip(article, newCombat);
-							return true;
-						});
-						checks.put(article, rating);
-					});
+			getSelf().getOutfit().getAllStrippable().stream().forEach(article -> {
+				float rating = self.rateAction(c, selfFit, otherFit, (newCombat, newSelf, newOther) -> {
+					newSelf.strip(article, newCombat);
+					return true;
+				});
+				checks.put(article, rating);
+			});
 			if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 				checks.entrySet().stream().forEach(entry -> {
-					System.out.println("Stripping " + entry.getKey() + ": "
-							+ entry.getValue());
+					System.out.println("Stripping " + entry.getKey() + ": " + entry.getValue());
 				});
 			}
 			Clothing best = checks.entrySet().stream().max((first, second) -> {
@@ -91,11 +84,8 @@ public class StripSelf extends Skill {
 		if (clothing == null) {
 			c.write(getSelf(), "Skill failed...");
 		} else {
-			c.write(getSelf(),
-					Global.format(String.format(
-							"{self:SUBJECT-ACTION:strip|strips} off %s %s.",
-							getSelf().possessivePronoun(), clothing.getName()),
-					getSelf(), target));
+			c.write(getSelf(), Global.format(String.format("{self:SUBJECT-ACTION:strip|strips} off %s %s.",
+					getSelf().possessivePronoun(), clothing.getName()), getSelf(), target));
 		}
 		return true;
 	}
@@ -111,14 +101,12 @@ public class StripSelf extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return "";
 	}
 

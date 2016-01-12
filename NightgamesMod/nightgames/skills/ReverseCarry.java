@@ -36,29 +36,23 @@ public class ReverseCarry extends Carry {
 
 		if (target.roll(this, c, accuracy(c))) {
 			if (getSelf().human()) {
-				c.write(getSelf(), premessage
-						+ deal(c, premessage.length(), Result.normal, target));
+				c.write(getSelf(), premessage + deal(c, premessage.length(), Result.normal, target));
 			} else if (target.human()) {
-				c.write(getSelf(), premessage + receive(c, premessage.length(),
-						Result.normal, getSelf()));
+				c.write(getSelf(), premessage + receive(c, premessage.length(), Result.normal, getSelf()));
 			}
 			int m = 5 + Global.random(5);
 			int otherm = m;
 			if (getSelf().has(Trait.insertion)) {
 				otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
 			}
-			target.body.pleasure(getSelf(), getSelfOrgan(),
-					getTargetOrgan(target), m, c);
-			getSelf().body.pleasure(target, getTargetOrgan(target),
-					getSelfOrgan(), otherm, c);
+			target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c);
+			getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c);
 			c.setStance(new Jumped(getSelf(), target));
 		} else {
 			if (getSelf().human()) {
-				c.write(getSelf(), premessage
-						+ deal(c, premessage.length(), Result.miss, target));
+				c.write(getSelf(), premessage + deal(c, premessage.length(), Result.miss, target));
 			} else if (target.human()) {
-				c.write(getSelf(), premessage
-						+ receive(c, premessage.length(), Result.miss, target));
+				c.write(getSelf(), premessage + receive(c, premessage.length(), Result.miss, target));
 			}
 			getSelf().add(c, new Falling(getSelf()));
 			return false;
@@ -72,11 +66,9 @@ public class ReverseCarry extends Carry {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return (damage > 0 ? "" : "You ") + "leap into "
-					+ target.possessivePronoun()
+			return (damage > 0 ? "" : "You ") + "leap into " + target.possessivePronoun()
 					+ " arms, but she deposits you back onto the floor.";
 		} else {
 			return Global.format(
@@ -88,8 +80,7 @@ public class ReverseCarry extends Carry {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			return (damage > 0 ? "" : target.subject() + " ")
 					+ "jumps onto you, but you deposit her back onto the floor.";

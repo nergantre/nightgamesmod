@@ -35,18 +35,15 @@ public class CommandHurt extends PlayerCommand {
 	}
 
 	@Override
-	public String deal(Combat c, int magnitude, Result modifier,
-			Character target) {
+	public String deal(Combat c, int magnitude, Result modifier, Character target) {
 		return "Grinning, you point towards the nearest wall. " + target.name()
 				+ " seems confused for a moment, but soon she understands your"
 				+ " meaning and runs headfirst into it.";
 	}
 
 	@Override
-	public String receive(Combat c, int magnitude, Result modifier,
-			Character target) {
-		return "<<This should not be displayed, please inform The"
-				+ " Silver Bard: CommandHurt-receive>>";
+	public String receive(Combat c, int magnitude, Result modifier, Character target) {
+		return "<<This should not be displayed, please inform The" + " Silver Bard: CommandHurt-receive>>";
 	}
 
 }

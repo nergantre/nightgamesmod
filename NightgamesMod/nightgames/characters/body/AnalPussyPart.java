@@ -9,8 +9,8 @@ public class AnalPussyPart extends AssPart {
 	/**
 	 *
 	 */
-	public static AnalPussyPart		generic			= new AnalPussyPart();
-	public static final BodyPartMod	AnalPussyMod	= () -> "AnalPussy";
+	public static AnalPussyPart generic = new AnalPussyPart();
+	public static final BodyPartMod AnalPussyMod = () -> "AnalPussy";
 
 	public AnalPussyPart() {
 		super("anal pussy",
@@ -20,8 +20,7 @@ public class AnalPussyPart extends AssPart {
 
 	@Override
 	public boolean isReady(Character c) {
-		return c.getArousal().percent() > 15 || c.has(Trait.alwaysready)
-				|| super.isReady(c);
+		return c.getArousal().percent() > 15 || c.has(Trait.alwaysready) || super.isReady(c);
 	}
 
 	@Override

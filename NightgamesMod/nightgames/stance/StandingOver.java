@@ -12,11 +12,9 @@ public class StandingOver extends AbstractFacingStance {
 	@Override
 	public String describe() {
 		if (top.human()) {
-			return "You are standing over " + bottom.name()
-					+ ", who is helpless on the ground.";
+			return "You are standing over " + bottom.name() + ", who is helpless on the ground.";
 		} else {
-			return "You are flat on your back, while " + top.name()
-					+ " stands over you.";
+			return "You are flat on your back, while " + top.name() + " stands over you.";
 		}
 	}
 

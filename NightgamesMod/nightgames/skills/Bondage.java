@@ -20,8 +20,7 @@ public class Bondage extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canRespond() && c.getStance().mobile(getSelf())
-				&& getSelf().getArousal().get() >= 5
+		return getSelf().canRespond() && c.getStance().mobile(getSelf()) && getSelf().getArousal().get() >= 5
 				&& !getSelf().is(Stsflag.bondage);
 	}
 
@@ -53,15 +52,13 @@ public class Bondage extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You imagine the exhilarating feeling of ropes digging into your skin and binding you. You push this feeling into "
 				+ target.name() + "'s libido.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().name()
 				+ " flushes and wraps her arms around herself tightly. Suddenly the thought of being tied up and dominated slips into your head.";
 	}

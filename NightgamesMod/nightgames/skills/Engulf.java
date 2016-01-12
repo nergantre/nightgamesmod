@@ -23,7 +23,7 @@ public class Engulf extends CounterBase {
 			return String.format("%s spread %s thin, arms open invitingly.", self.name(), self.reflectivePronoun());
 		}
 	}
-	
+
 	@Override
 	public float priorityMod(Combat c) {
 		return 2;
@@ -36,8 +36,7 @@ public class Engulf extends CounterBase {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && c.getStance().en != Stance.engulfed
-				&& target.mostlyNude();
+		return getSelf().canAct() && c.getStance().en != Stance.engulfed && target.mostlyNude();
 	}
 
 	@Override
@@ -54,10 +53,10 @@ public class Engulf extends CounterBase {
 	public String getBlockedString(Combat c, Character target) {
 		return Global.format(
 				"{self:SUBJECT-ACTION:move:moves} to engulf {other:subject} "
-				+ "in {self:possessive} slime, but {other:pronoun} stays out of {self:possessive} reach.",
+						+ "in {self:possessive} slime, but {other:pronoun} stays out of {self:possessive} reach.",
 				getSelf(), target);
 	}
-	
+
 	@Override
 	public String describe(Combat c) {
 		return "Set up a counter to engulf the opponent in your slime";
@@ -74,8 +73,7 @@ public class Engulf extends CounterBase {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			return Global.format(
 					"You will your slime to rush at {other:name} and pull her down, but she dodges away at the last second.\n",
@@ -88,8 +86,7 @@ public class Engulf extends CounterBase {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			return Global.format(
 					"{self:NAME}'s fluid body squirms violently and suddenly rushes at you. You manage to dodge out of the way and avoid being trapped.\n",

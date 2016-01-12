@@ -20,8 +20,8 @@ public class PassAmbush extends Action {
 	@Override
 	public Movement execute(Character user) {
 		if (user.human()) {
-			Global.gui().message("You try to find a decent hiding place in the irregular"
-					+ " rock faces lining the pass.");
+			Global.gui()
+					.message("You try to find a decent hiding place in the irregular" + " rock faces lining the pass.");
 		}
 		user.state = State.inPass;
 		return Movement.ftcPassAmbush;

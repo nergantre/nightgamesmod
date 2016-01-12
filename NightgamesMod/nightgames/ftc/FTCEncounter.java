@@ -44,7 +44,7 @@ public class FTCEncounter extends Encounter {
 		}
 		return true;
 	}
-	
+
 	private void treeAmbush(Character attacker, Character victim) {
 		fightTime = 2;
 		victim.add(new Flatfooted(victim, 3));
@@ -79,8 +79,7 @@ public class FTCEncounter extends Encounter {
 				} else {
 					message += "zip-tie, ";
 				}
-				message += " you bind {other:possessive} hands together. There are worse"
-						+ " ways to start a match.";
+				message += " you bind {other:possessive} hands together. There are worse" + " ways to start a match.";
 			}
 			Global.gui().message(Global.format(message, attacker, victim));
 		} else {
@@ -127,10 +126,9 @@ public class FTCEncounter extends Encounter {
 	}
 
 	private void passAmbush(Character attacker, Character victim) {
-		int attackerScore = 30 + attacker.get(Attribute.Speed) * 10
-				+ attacker.get(Attribute.Perception) * 5 + Global.random(30);
-		int victimScore = victim.get(Attribute.Speed) * 10
-				+ victim.get(Attribute.Perception) * 5 + Global.random(30);
+		int attackerScore = 30 + attacker.get(Attribute.Speed) * 10 + attacker.get(Attribute.Perception) * 5
+				+ Global.random(30);
+		int victimScore = victim.get(Attribute.Speed) * 10 + victim.get(Attribute.Perception) * 5 + Global.random(30);
 		String message = "";
 		if (attackerScore > victimScore) {
 			if (attacker.human()) {
@@ -139,12 +137,11 @@ public class FTCEncounter extends Encounter {
 						+ " As soon as {other:name} comes into view, you jump out and push"
 						+ " {other:pronoun} against the opposite wall. The impact seems to"
 						+ " daze {other:direct-object}, giving you an edge in the ensuing fight.";
-			} else if (victim.human()){
+			} else if (victim.human()) {
 				message += "Of course you know that walking through a narrow pass is a"
 						+ " strategic risk, but you do so anyway. Suddenly, {self:name}"
 						+ " flies out of an alcove, pushing you against the wall on the"
-						+ " other side. The impact knocks the wind out of you, putting you"
-						+ " at a disadvantage.";
+						+ " other side. The impact knocks the wind out of you, putting you" + " at a disadvantage.";
 			}
 			fight = Global.gui().beginCombat(attacker, victim);
 			victim.add(new Flatfooted(victim, 3));
@@ -157,7 +154,7 @@ public class FTCEncounter extends Encounter {
 						+ " to prevent {other:direct-object} from throwing you to the ground,"
 						+ " and {other:pronoun} saunters over. \"Were you waiting for me,"
 						+ " {self:name}? Well, here I am.\"";
-			} else if (victim.human()){
+			} else if (victim.human()) {
 				message += "You are walking through the pass when you see {self:name}"
 						+ " crouched behind a rock. Since {self:pronoun} is very focused"
 						+ " in looking the other way, {self:pronoun} does not see you coming."
@@ -172,7 +169,7 @@ public class FTCEncounter extends Encounter {
 		if (attacker.human() || victim.human()) {
 			Global.gui().message(Global.format(message, attacker, victim));
 		} else {
-			
+
 		}
 	}
 
@@ -182,29 +179,27 @@ public class FTCEncounter extends Encounter {
 	}
 
 	@Override
-	public void parse(Encs choice, Character self, Character target,
-			Trap trap) {
+	public void parse(Encs choice, Character self, Character target, Trap trap) {
 		assert trap != null || choice != Encs.capitalize;
 		if (!isFTCSpecific(choice)) {
 			super.parse(choice, self, target, trap);
 		} else {
 			switch (choice) {
-				case treeAmbush:
-					treeAmbush(self, target);
-					break;
-				case bushAmbush:
-					bushAmbush(self, target);
-					break;
-				case passAmbush:
-					passAmbush(self, target);
-					break;
-				default:
+			case treeAmbush:
+				treeAmbush(self, target);
+				break;
+			case bushAmbush:
+				bushAmbush(self, target);
+				break;
+			case passAmbush:
+				passAmbush(self, target);
+				break;
+			default:
 			}
 		}
 	}
 
 	private static boolean isFTCSpecific(Encs enc) {
-		return enc == Encs.treeAmbush || enc == Encs.bushAmbush
-				|| enc == Encs.passAmbush;
+		return enc == Encs.treeAmbush || enc == Encs.bushAmbush || enc == Encs.passAmbush;
 	}
 }

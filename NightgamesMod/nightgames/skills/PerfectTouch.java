@@ -14,9 +14,8 @@ public class PerfectTouch extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().mobile(getSelf()) && !target.torsoNude()
-				&& !c.getStance().prone(getSelf()) && getSelf().canAct()
-				&& !c.getStance().connected();
+		return c.getStance().mobile(getSelf()) && !target.torsoNude() && !c.getStance().prone(getSelf())
+				&& getSelf().canAct() && !c.getStance().connected();
 	}
 
 	@Override
@@ -63,9 +62,9 @@ public class PerfectTouch extends Skill {
 
 	@Override
 	public int accuracy(Combat c) {
-		return Math.round(Math.max(Math.min(150,
-				2.5f * (getSelf().get(Attribute.Cunning)
-						- c.getOther(getSelf()).get(Attribute.Cunning)) + 65),
+		return Math.round(Math.max(
+				Math.min(150,
+						2.5f * (getSelf().get(Attribute.Cunning) - c.getOther(getSelf()).get(Attribute.Cunning)) + 65),
 				40));
 	}
 
@@ -75,14 +74,11 @@ public class PerfectTouch extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return "You try to steal " + target.name()
-					+ "'s clothes off of her, but she catches you.";
+			return "You try to steal " + target.name() + "'s clothes off of her, but she catches you.";
 		} else {
-			return "You feint to the left while your right hand makes quick work of "
-					+ target.name()
+			return "You feint to the left while your right hand makes quick work of " + target.name()
 					+ "'s clothes. By the time she realizes what's happening, you've "
 					+ "already stripped all her clothes off.";
 		}
@@ -90,8 +86,7 @@ public class PerfectTouch extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			return getSelf().name()
 					+ " lunges toward you, but you catch her hands before she can get ahold of your clothes.";

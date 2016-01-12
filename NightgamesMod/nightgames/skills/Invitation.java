@@ -11,8 +11,8 @@ import nightgames.status.ArmLocked;
 import nightgames.status.LegLocked;
 
 public class Invitation extends Skill {
-	private static final String	divineStringFemale	= "Goddess's Invitation";
-	private static final String	divineStringMale	= "Goddess's Invitation";
+	private static final String divineStringFemale = "Goddess's Invitation";
+	private static final String divineStringMale = "Goddess's Invitation";
 
 	public Invitation(Character self) {
 		super("Invitation", self, 6);
@@ -30,13 +30,10 @@ public class Invitation extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		boolean insertable = c.getStance().insert(getSelf(), getSelf()) != c
-				.getStance()
+		boolean insertable = c.getStance().insert(getSelf(), getSelf()) != c.getStance()
 				|| c.getStance().insert(target, getSelf()) != c.getStance();
-		return insertable && getSelf().canRespond()
-				&& getSelf().crotchAvailable() && target.crotchAvailable()
-				&& (getSelf().hasDick() && target.hasPussy()
-						|| getSelf().hasPussy() && target.hasDick());
+		return insertable && getSelf().canRespond() && getSelf().crotchAvailable() && target.crotchAvailable()
+				&& (getSelf().hasDick() && target.hasPussy() || getSelf().hasPussy() && target.hasDick());
 	}
 
 	@Override
@@ -60,16 +57,14 @@ public class Invitation extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			if (hasDivinity()) {
 				return Global.format(
 						"You command {other:name} to embrace you. {other:SUBJECT} moves to walk towards you for a second before snapping out of it.",
 						getSelf(), target);
 			}
-			return Global.format(
-					"You try to hug {other:name} and pull her down, but she twists out of your grasp.\n",
+			return Global.format("You try to hug {other:name} and pull her down, but she twists out of your grasp.\n",
 					getSelf(), target);
 		} else if (!c.getStance().inserted(getSelf())) {
 			if (hasDivinity()) {
@@ -93,8 +88,7 @@ public class Invitation extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			if (hasDivinity()) {
 				return Global.format(
@@ -127,15 +121,12 @@ public class Invitation extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		int difficulty = target.getLevel()
-				- target.getArousal().get() * 10 / target.getArousal().max()
+		int difficulty = target.getLevel() - target.getArousal().get() * 10 / target.getArousal().max()
 				+ target.get(Attribute.Seduction);
 		int strength = getSelf().getLevel() + getSelf().get(Attribute.Seduction)
-				* (getSelf().has(Trait.submissive) ? 2 : 1)
-				* (hasDivinity() ? 2 : 1);
+				* (getSelf().has(Trait.submissive) ? 2 : 1) * (hasDivinity() ? 2 : 1);
 
-		boolean success = Global
-				.random(Math.min(Math.max(difficulty - strength, 1), 10)) == 0;
+		boolean success = Global.random(Math.min(Math.max(difficulty - strength, 1), 10)) == 0;
 		Result result = Result.normal;
 		if (!success) {
 			result = Result.miss;
@@ -153,11 +144,9 @@ public class Invitation extends Skill {
 		}
 		if (success) {
 			if (c.getStance().en == Stance.missionary) {
-				target.add(c, new LegLocked(target,
-						4 * getSelf().get(Attribute.Power)));
+				target.add(c, new LegLocked(target, 4 * getSelf().get(Attribute.Power)));
 			} else {
-				target.add(c, new ArmLocked(target,
-						4 * getSelf().get(Attribute.Power)));
+				target.add(c, new ArmLocked(target, 4 * getSelf().get(Attribute.Power)));
 			}
 			new Thrust(target).resolve(c, getSelf());
 		}

@@ -18,8 +18,7 @@ public class WildThrust extends Thrust {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && c.getStance().havingSex()
-				&& c.getStance().inserted();
+		return getSelf().canAct() && c.getStance().havingSex() && c.getStance().inserted();
 	}
 
 	@Override
@@ -46,8 +45,7 @@ public class WildThrust extends Thrust {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.anal || modifier == Result.upgrade) {
 			return "You wildly pound " + target.name()
 					+ " in the ass with no regard to technique. She whimpers in pleasure and can barely summon the strength to hold herself off the floor.";
@@ -63,24 +61,19 @@ public class WildThrust extends Thrust {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.anal) {
-			return getSelf().name()
-					+ " passionately pegs you in the ass as you groan and try to endure the sensation.";
+			return getSelf().name() + " passionately pegs you in the ass as you groan and try to endure the sensation.";
 		} else if (modifier == Result.upgrade) {
-			return getSelf().name()
-					+ " pistons wildly into you while pushing your shoulders on the ground; "
+			return getSelf().name() + " pistons wildly into you while pushing your shoulders on the ground; "
 					+ getSelf().name()
 					+ "'s tits are shaking above your head while her strapon stimulates your prostate.";
 		} else if (modifier == Result.reverse) {
-			return getSelf().name()
-					+ " frenziedly bounces on your cock, relentlessly driving you both toward orgasm.";
+			return getSelf().name() + " frenziedly bounces on your cock, relentlessly driving you both toward orgasm.";
 		} else {
-			return Global.format(
-					"{self:SUBJECT-ACTION:rapidly pound|rapidly pounds} {self:possessive} {self:body-part:cock} into {other:possessive} {other:body-part:pussy}, "
-							+ "relentlessly driving you both toward orgasm",
-					getSelf(), target);
+			return Global
+					.format("{self:SUBJECT-ACTION:rapidly pound|rapidly pounds} {self:possessive} {self:body-part:cock} into {other:possessive} {other:body-part:pussy}, "
+							+ "relentlessly driving you both toward orgasm", getSelf(), target);
 		}
 	}
 

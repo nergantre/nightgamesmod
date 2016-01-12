@@ -21,8 +21,7 @@ public class DarkTendrils extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && !c.getStance().sub(getSelf())
-				&& !c.getStance().prone(getSelf())
+		return !target.wary() && !c.getStance().sub(getSelf()) && !c.getStance().prone(getSelf())
 				&& !c.getStance().prone(target) && getSelf().canAct();
 	}
 
@@ -41,11 +40,8 @@ public class DarkTendrils extends Skill {
 				} else if (target.human()) {
 					c.write(getSelf(), receive(c, 0, Result.normal, target));
 				}
-				target.add(c, new Bound(target,
-						Math.min(10 + 3 * getSelf().get(Attribute.Dark), 55),
-						"shadows"));
-			} else if (getSelf().check(Attribute.Dark,
-					target.knockdownDC() - getSelf().getMojo().get())) {
+				target.add(c, new Bound(target, Math.min(10 + 3 * getSelf().get(Attribute.Dark), 55), "shadows"));
+			} else if (getSelf().check(Attribute.Dark, target.knockdownDC() - getSelf().getMojo().get())) {
 				if (getSelf().human()) {
 					c.write(getSelf(), deal(c, 0, Result.weak, target));
 				} else if (target.human()) {
@@ -86,31 +82,26 @@ public class DarkTendrils extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return "You summon dark tentacles to hold " + target.name()
-					+ ", but she twists away.";
+			return "You summon dark tentacles to hold " + target.name() + ", but she twists away.";
 		} else if (modifier == Result.weak) {
-			return "You summon dark tentacles that take " + target.name()
-					+ " feet out from under her.";
+			return "You summon dark tentacles that take " + target.name() + " feet out from under her.";
 		} else {
-			return "You summon a mass of shadow tendrils that entangle "
-					+ target.name() + " and pin her arms in place.";
+			return "You summon a mass of shadow tendrils that entangle " + target.name()
+					+ " and pin her arms in place.";
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			return getSelf().name()
 					+ " makes a gesture and evil looking tentacles pop up around you. You dive out of the way as they try to grab you.";
 		} else if (modifier == Result.weak) {
 			return "Your shadow seems to come to life as dark tendrils wrap around your legs and bring you to the floor.";
 		} else {
-			return getSelf().name()
-					+ " summons shadowy tentacles that snare your arms and hold you in place.";
+			return getSelf().name() + " summons shadowy tentacles that snare your arms and hold you in place.";
 		}
 	}
 

@@ -10,10 +10,8 @@ import nightgames.stance.Missionary;
 
 public class CounterRide extends CounterBase {
 	public CounterRide(Character self) {
-		super("Sex Counter", self, 5,
-				Global.format(
-						"{self:SUBJECT-ACTION:invite|invites} the opponent with {self:possessive} body.",
-						self, self));
+		super("Sex Counter", self, 5, Global
+				.format("{self:SUBJECT-ACTION:invite|invites} the opponent with {self:possessive} body.", self, self));
 	}
 
 	@Override
@@ -44,11 +42,9 @@ public class CounterRide extends CounterBase {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !c.getStance().dom(getSelf()) && !c.getStance().dom(target)
-				&& getSelf().canAct() && getSelf().crotchAvailable()
-				&& target.crotchAvailable()
-				&& (getSelf().hasDick() && target.hasPussy()
-						|| getSelf().hasPussy() && target.hasDick());
+		return !c.getStance().dom(getSelf()) && !c.getStance().dom(target) && getSelf().canAct()
+				&& getSelf().crotchAvailable() && target.crotchAvailable()
+				&& (getSelf().hasDick() && target.hasPussy() || getSelf().hasPussy() && target.hasDick());
 	}
 
 	@Override
@@ -72,8 +68,7 @@ public class CounterRide extends CounterBase {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.setup && getSelf().hasPussy()) {
 			return Global.format(
 					"You turn around and bend over with your ass seductively waving in the air. You slowly "
@@ -97,8 +92,7 @@ public class CounterRide extends CounterBase {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.setup && getSelf().hasPussy()) {
 			return Global.format(
 					"{self:SUBJECT} turns around and bends over her ass seductively waving in the air. She slowly "
