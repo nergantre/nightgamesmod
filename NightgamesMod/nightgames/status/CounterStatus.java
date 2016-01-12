@@ -7,26 +7,28 @@ import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.skills.CounterBase;
-import nightgames.skills.Skill;
 
 public class CounterStatus extends DurationStatus {
-	private CounterBase skill;
-	private String desc;
+	private CounterBase	skill;
+	private String		desc;
 
-	public CounterStatus(Character affected, CounterBase skill, String description) {
+	public CounterStatus(Character affected, CounterBase skill,
+			String description) {
 		this(affected, skill, description, 0);
 	}
 
-	public CounterStatus(Character affected, CounterBase skill, String description, int duration) {
+	public CounterStatus(Character affected, CounterBase skill,
+			String description, int duration) {
 		super("Counter", affected, duration);
 		this.skill = skill;
-		this.desc = description;
+		desc = description;
 		flag(Stsflag.counter);
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s ready for a counter.\n", affected.subjectAction("get", "gets"));
+		return String.format("%s ready for a counter.\n",
+				affected.subjectAction("get", "gets"));
 	}
 
 	@Override
@@ -35,10 +37,10 @@ public class CounterStatus extends DurationStatus {
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return .5f;
 	}
-	
+
 	@Override
 	public int mod(Attribute a) {
 		return 0;
@@ -98,7 +100,7 @@ public class CounterStatus extends DurationStatus {
 		affected.removelist.add(this);
 		skill.resolveCounter(c, target);
 	}
-	
+
 	public CounterBase getCounterSkill() {
 		return skill;
 	}
@@ -113,16 +115,18 @@ public class CounterStatus extends DurationStatus {
 		return new CounterStatus(newAffected, skill, desc, getDuration());
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
-		//TODO Support this once skill loading is in the game
+		// TODO Support this once skill loading is in the game
 		obj.put("type", getClass().getSimpleName());
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
-		//TODO Support this once skill loading is in the game
+		// TODO Support this once skill loading is in the game
 		throw new UnsupportedOperationException();
 	}
 }

@@ -23,10 +23,10 @@ public class Bookstore extends Store {
 	public void visit(String choice) {
 		Global.gui().clearText();
 		Global.gui().clearCommand();
-		if(choice=="Start"){
+		if (choice.equals("Start")) {
 			acted = false;
 		}
-		if(choice=="Leave"){
+		if (choice.equals("Leave")) {
 			done(acted);
 			return;
 		}
@@ -43,22 +43,23 @@ public class Bookstore extends Store {
 				}
 			}
 			Global.gui().message("You have : $"+player.money+" to spend.");
+
 			displayGoods();
-			Global.gui().choose(this,"Leave");
+			Global.gui().choose(this, "Leave");
 		}
 	}
+
 	@Override
 	public void shop(Character npc, int budget) {
 		int remaining = budget;
 		int bored = 0;
-		while(remaining>25&&bored<5){
-			for(Item i:stock.keySet()){
-				if(remaining>i.getPrice()&&!npc.has(i,10)){
+		while (remaining > 25 && bored < 5) {
+			for (Item i : stock.keySet()) {
+				if (remaining > i.getPrice() && !npc.has(i, 10)) {
 					npc.gain(i);
-					npc.money-=i.getPrice();
-					remaining-=i.getPrice();
-				}
-				else{
+					npc.money -= i.getPrice();
+					remaining -= i.getPrice();
+				} else {
 					bored++;
 				}
 			}

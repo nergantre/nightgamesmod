@@ -1,10 +1,9 @@
 package nightgames.skills;
+
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-
-
 
 public class Stunned extends Skill {
 
@@ -19,15 +18,13 @@ public class Stunned extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(getSelf().human()){
-			c.write(getSelf(),deal(c,0,Result.normal, target));
-		}
-		else if(target.human()){
-			if(Global.random(3)>=2){
-				c.write(getSelf(),getSelf().stunLiner(c));
-			}
-			else{
-				c.write(getSelf(),receive(c,0,Result.normal, target));
+		if (getSelf().human()) {
+			c.write(getSelf(), deal(c, 0, Result.normal, target));
+		} else if (target.human()) {
+			if (Global.random(3) >= 2) {
+				c.write(getSelf(), getSelf().stunLiner(c));
+			} else {
+				c.write(getSelf(), receive(c, 0, Result.normal, target));
 			}
 		}
 		return true;
@@ -43,21 +40,28 @@ public class Stunned extends Skill {
 	public Skill copy(Character user) {
 		return new Stunned(user);
 	}
-	public int speed(){
+
+	@Override
+	public int speed() {
 		return 0;
 	}
+
+	@Override
 	public Tactics type(Combat c) {
 		return Tactics.misc;
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
 		return "You're unable to move.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return getSelf().name()+" is on the floor, trying to catch her breath.";
+	public String receive(Combat c, int damage, Result modifier,
+			Character target) {
+		return getSelf().name()
+				+ " is on the floor, trying to catch her breath.";
 	}
 
 	@Override

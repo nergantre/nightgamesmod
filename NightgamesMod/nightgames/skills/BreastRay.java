@@ -4,13 +4,11 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BreastsPart;
-import nightgames.characters.body.BasicCockPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.status.Hypersensitive;
-import nightgames.status.Shamed;
 
 public class BreastRay extends Skill {
 	public BreastRay(Character self) {
@@ -19,14 +17,16 @@ public class BreastRay extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Science)>=12;
+		return user.get(Attribute.Science) >= 12;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf())&&target.mostlyNude()&&getSelf().has(Item.Battery, 2);
+		return getSelf().canAct() && c.getStance().mobile(getSelf())
+				&& !c.getStance().prone(getSelf()) && target.mostlyNude()
+				&& getSelf().has(Item.Battery, 2);
 	}
-	
+
 	@Override
 	public float priorityMod(Combat c) {
 		return 2.f;
@@ -41,11 +41,15 @@ public class BreastRay extends Skill {
 	public boolean resolve(Combat c, Character target) {
 		getSelf().consume(Item.Battery, 2);
 
-		boolean permanent = Global.random(20) == 0 && (getSelf().human() || target.human())&& !target.has(Trait.stableform);
-		if(getSelf().human()){
-			c.write(getSelf(),deal(c,permanent ? 1 : 0, Result.normal, target));
-		} else if(target.human()) {		
-			c.write(getSelf(),receive(c,permanent ? 1 : 0, Result.normal, target));
+		boolean permanent = Global.random(20) == 0
+				&& (getSelf().human() || target.human())
+				&& !target.has(Trait.stableform);
+		if (getSelf().human()) {
+			c.write(getSelf(),
+					deal(c, permanent ? 1 : 0, Result.normal, target));
+		} else if (target.human()) {
+			c.write(getSelf(),
+					receive(c, permanent ? 1 : 0, Result.normal, target));
 		}
 		target.add(c, new Hypersensitive(target));
 		BreastsPart part = target.body.getBreastsBelow(BreastsPart.f.size);
@@ -55,7 +59,8 @@ public class BreastRay extends Skill {
 			}
 		} else {
 			if (part != null) {
-				target.body.temporaryAddOrReplacePartWithType(part.upgrade(), 10);
+				target.body.temporaryAddOrReplacePartWithType(part.upgrade(),
+						10);
 			}
 		}
 		return true;
@@ -72,21 +77,28 @@ public class BreastRay extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
 		String message;
-		message = "You point your growth ray at "+target.name()+"'s breasts and fire. Her breasts balloon up and the new sensitivity causes her to moan.";
-		if (damage > 0)
+		message = "You point your growth ray at " + target.name()
+				+ "'s breasts and fire. Her breasts balloon up and the new sensitivity causes her to moan.";
+		if (damage > 0) {
 			message += " The change in " + target.name() + " looks permanent!";
+		}
 		return message;
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
+	public String receive(Combat c, int damage, Result modifier,
+			Character target) {
 		String message;
-		message = getSelf().name()+" points a device at your chest and giggles as your " + getSelf().body.getRandomBreasts().describe(getSelf())
-					+ " starts ballooning up. You flush and cover yourself, but the increased sensitivity distracts you in a delicious way.";
-		if (damage > 0)
+		message = getSelf().name()
+				+ " points a device at your chest and giggles as your "
+				+ getSelf().body.getRandomBreasts().describe(getSelf())
+				+ " starts ballooning up. You flush and cover yourself, but the increased sensitivity distracts you in a delicious way.";
+		if (damage > 0) {
 			message += " You realize the effects are permanent!";
+		}
 		return message;
 	}
 

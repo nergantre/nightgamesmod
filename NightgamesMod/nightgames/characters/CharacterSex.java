@@ -13,6 +13,8 @@ public enum CharacterSex {
 	CharacterSex(String desc) {
 		this.desc = desc;
 	}
+
+	@Override
 	public String toString() {
 		return Global.capitalizeFirstLetter(desc);
 	}

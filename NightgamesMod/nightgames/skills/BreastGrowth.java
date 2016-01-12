@@ -4,13 +4,10 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BreastsPart;
-import nightgames.characters.body.BasicCockPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.items.Item;
 import nightgames.status.Hypersensitive;
-import nightgames.status.Shamed;
 
 public class BreastGrowth extends Skill {
 	public BreastGrowth(Character self) {
@@ -19,14 +16,15 @@ public class BreastGrowth extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Arcane)>=12;
+		return user.get(Attribute.Arcane) >= 12;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct()&&c.getStance().mobile(getSelf())&&!c.getStance().prone(getSelf());
+		return getSelf().canAct() && c.getStance().mobile(getSelf())
+				&& !c.getStance().prone(getSelf());
 	}
-	
+
 	@Override
 	public float priorityMod(Combat c) {
 		return 0;
@@ -46,13 +44,15 @@ public class BreastGrowth extends Skill {
 	public boolean resolve(Combat c, Character target) {
 		Result res = target.roll(this, c, 0) ? Result.normal : Result.miss;
 
-		boolean permanent = Global.random(20) == 0 && (getSelf().human() || target.human()) && !target.has(Trait.stableform);
-		if(getSelf().human()){
-			c.write(getSelf(),deal(c,permanent ? 1 : 0, res, target));
-		} else if(target.human()) {		
-			c.write(getSelf(),receive(c,permanent ? 1 : 0, res, target));
+		boolean permanent = Global.random(20) == 0
+				&& (getSelf().human() || target.human())
+				&& !target.has(Trait.stableform);
+		if (getSelf().human()) {
+			c.write(getSelf(), deal(c, permanent ? 1 : 0, res, target));
+		} else if (target.human()) {
+			c.write(getSelf(), receive(c, permanent ? 1 : 0, res, target));
 		}
-		if ( res != Result.miss) {
+		if (res != Result.miss) {
 			target.add(c, new Hypersensitive(target));
 			BreastsPart part = target.body.getBreastsBelow(BreastsPart.f.size);
 			if (permanent) {
@@ -61,7 +61,8 @@ public class BreastGrowth extends Skill {
 				}
 			} else {
 				if (part != null) {
-					target.body.temporaryAddOrReplacePartWithType(part.upgrade(), 10);
+					target.body.temporaryAddOrReplacePartWithType(
+							part.upgrade(), 10);
 				}
 			}
 		}
@@ -79,29 +80,38 @@ public class BreastGrowth extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
 		String message;
 		if (modifier != Result.miss) {
-			message = "You channel your arcane energies into "+target.name()+"'s breasts, causing them to grow rapidly. Her knees buckle with the new sensitivity you bestowed on her boobs.";
-			if (damage > 0)
+			message = "You channel your arcane energies into " + target.name()
+					+ "'s breasts, causing them to grow rapidly. Her knees buckle with the new sensitivity you bestowed on her boobs.";
+			if (damage > 0) {
 				message += " You realize the effects are permanent!";
+			}
 		} else {
-			message = "You attempt to channel your arcane energies into "+target.name()+"'s breasts, but she dodges out of the way, causing your spell to fail.";
+			message = "You attempt to channel your arcane energies into "
+					+ target.name()
+					+ "'s breasts, but she dodges out of the way, causing your spell to fail.";
 		}
 		return message;
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
+	public String receive(Combat c, int damage, Result modifier,
+			Character target) {
 		String message;
 		if (modifier != Result.miss) {
-			message = getSelf().name() + " stops moving and begins chanting. You feel your breasts grow hot, and start expanding! "
+			message = getSelf().name()
+					+ " stops moving and begins chanting. You feel your breasts grow hot, and start expanding! "
 					+ "You try to hold them back with your hands, but the growth continues until you're a full cup size bigger than before. "
 					+ "The new sensations from your substantially larger breasts make you tremble.";
-			if (damage > 0)
+			if (damage > 0) {
 				message += " You realize the effects are permanent!";
+			}
 		} else {
-			message = getSelf().name() + " stops moving and begins chanting. You start feeling some tingling in your breasts, but it quickly subsides as you dodge out of the way.";
+			message = getSelf().name()
+					+ " stops moving and begins chanting. You start feeling some tingling in your breasts, but it quickly subsides as you dodge out of the way.";
 		}
 		return message;
 	}

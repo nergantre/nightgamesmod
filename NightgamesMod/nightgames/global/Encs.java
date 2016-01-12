@@ -9,5 +9,5 @@ public enum Encs {
 	fight,
 	flee,
 	wait,
-	
+
 }

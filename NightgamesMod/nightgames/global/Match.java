@@ -1,5 +1,11 @@
 package nightgames.global;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Deque;
+import java.util.HashMap;
+
 import nightgames.actions.Movement;
 import nightgames.areas.Area;
 import nightgames.areas.Cache;
@@ -7,35 +13,25 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.State;
 import nightgames.characters.Trait;
-import nightgames.items.Item;
+import nightgames.modifier.Modifier;
 import nightgames.status.BodyFetish;
-import nightgames.status.Hypersensitive;
-import nightgames.status.Stsflag;
-
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 
 public class Match {
-	private int time;
-	private int dropOffTime;
-	private HashMap<String, Area> map;
-	public ArrayList<Character> combatants;
-	private HashMap<Character, Integer> score;
-	private int index;
-	private boolean pause;
-	public Modifier condition;
+	private int							time;
+	private int							dropOffTime;
+	private HashMap<String, Area>		map;
+	public ArrayList<Character>			combatants;
+	private HashMap<Character, Integer>	score;
+	private int							index;
+	private boolean						pause;
+	public Modifier						condition;
 
 	public Match(Collection<Character> combatants, Modifier condition) {
 		this.combatants = new ArrayList<Character>();
 		for (Character c : combatants) {
 			this.combatants.add(c);
 		}
-		this.score = new HashMap<Character, Integer>();
+		score = new HashMap<Character, Integer>();
 		this.condition = condition;
 		Global.gui().startMatch();
 		for (Character combatant : combatants) {
@@ -77,6 +73,7 @@ public class Match {
 			if (player.has(Trait.footfetishist)) {
 				player.add(new BodyFetish(player, null, "feet", .25));
 			}
+			manageConditions(player);
 		}
 	}
 
@@ -88,7 +85,8 @@ public class Match {
 					dropPackage();
 					dropOffTime = 0;
 				}
-				if (Global.checkFlag(Flag.challengeAccepted) && (time == 6 || time == 12 || time == 18 || time == 24)) {
+				if (Global.checkFlag(Flag.challengeAccepted) && (time == 6
+						|| time == 12 || time == 18 || time == 24)) {
 					dropChallenge();
 				}
 				time++;
@@ -98,13 +96,13 @@ public class Match {
 				Global.gui().refresh();
 				if (combatants.get(index).state != State.quit) {
 					combatants.get(index).upkeep();
-					if (combatants.get(index).human()) {
-						manageConditions(combatants.get(index));
-					}
+					manageConditions(combatants.get(index));
 					combatants.get(index).move();
-					if (Global.isDebugOn(DebugFlags.DEBUG_SCENE) && index < combatants.size()) {
-						System.out.println(
-								combatants.get(index).name() + " is in " + combatants.get(index).location().name);
+					if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)
+							&& index < combatants.size()) {
+						System.out.println(combatants.get(index).name()
+								+ " is in "
+								+ combatants.get(index).location().name);
 					}
 				}
 				index++;
@@ -136,7 +134,8 @@ public class Match {
 		Character player = null;
 		Character winner = null;
 		for (Character combatant : score.keySet()) {
-			Global.gui().message(combatant.name() + " scored " + score.get(combatant) + " victories.");
+			Global.gui().message(combatant.name() + " scored "
+					+ score.get(combatant) + " victories.");
 			combatant.modMoney(score.get(combatant) * combatant.prize());
 			if (winner == null || score.get(combatant) >= score.get(winner)) {
 				winner = combatant;
@@ -146,7 +145,7 @@ public class Match {
 			}
 			for (Character other : combatants) {
 				while (combatant.has(other.getTrophy())) {
-					combatant.consume(other.getTrophy(), 1);
+					combatant.consume(other.getTrophy(), 1, false);
 					combatant.modMoney(other.prize());
 					if (combatant.human()) {
 						cloth++;
@@ -163,33 +162,41 @@ public class Match {
 			}
 			combatant.challenges.clear();
 			combatant.state = State.ready;
-			combatant.change(Modifier.normal);
+			condition.undoItems(combatant);
+			combatant.change();
 		}
-		Global.gui().message("You made $" + score.get(player) * player.prize() + " for defeating opponents.");
+		Global.gui().message("You made $" + score.get(player) * player.prize()
+				+ " for defeating opponents.");
 		int bonus = score.get(player) * condition.bonus();
 		winner.modMoney(bonus);
 		if (bonus > 0) {
-			Global.gui().message("You earned an additional $" + bonus + " for accepting the handicap.");
+			Global.gui().message("You earned an additional $" + bonus
+					+ " for accepting the handicap.");
 		}
 		if (winner == player) {
-			Global.gui().message("You also earned a bonus of $" + 5 * player.prize() + " for placing first.");
+			Global.gui().message("You also earned a bonus of $"
+					+ 5 * player.prize() + " for placing first.");
+			Global.flag(Flag.victory);
 		}
 		winner.modMoney(5 * winner.prize());
 		Global.gui()
-				.message("You traded in " + cloth + " sets of clothes for a total of $" + cloth * player.prize() + ".");
+				.message("You traded in " + cloth
+						+ " sets of clothes for a total of $"
+						+ cloth * player.prize() + ".");
 		if (creward > 0) {
-			Global.gui().message("You also discover an envelope with $" + creward
+			Global.gui().message("You also discover an envelope with $"
+					+ creward
 					+ " slipped under the door to your room. Presumably it's payment for completed challenges.");
 		}
-		Character closest = null;
 		int maxaffection = 0;
 		for (Character rival : combatants) {
 			if (rival.getAffection(player) > maxaffection) {
-				closest = rival;
 				maxaffection = rival.getAffection(player);
 			}
 		}
-		if (Global.checkFlag(Flag.metLilly) && !Global.checkFlag(Flag.challengeAccepted) && Global.random(10) >= 7) {
+		if (Global.checkFlag(Flag.metLilly)
+				&& !Global.checkFlag(Flag.challengeAccepted)
+				&& Global.random(10) >= 7) {
 			Global.gui().message(
 					"\nWhen you gather after the match to collect your reward money, you notice Jewel is holding a crumpled up piece of paper and ask about it. "
 							+ "<i>\"This? I found it lying on the ground during the match. It seems to be a worthless piece of trash, but I didn't want to litter.\"</i> Jewel's face is expressionless, "
@@ -203,22 +210,27 @@ public class Match {
 							+ "you will.\"</i><br>");
 			Global.flag(Flag.challengeAccepted);
 		}
+		/*
 		if (maxaffection >= 15 && closest != null) {
 			closest.afterParty();
 		} else {
 			Global.gui().message("You walk back to your dorm and get yourself cleaned up.");
 		}
+		*/
 		for (Character character : combatants) {
-			if (character.getFlag("heelsTraining") >= 50 && !character.hasPure(Trait.proheels)) {
+			if (character.getFlag("heelsTraining") >= 50
+					&& !character.hasPure(Trait.proheels)) {
 				if (character.human()) {
 					Global.gui().message(
 							"<br>You've gotten comfortable at fighting in heels.<br><b>Gained Trait: Heels Pro</b>");
 				}
 				character.add(Trait.proheels);
 			}
-			if (character.getFlag("heelsTraining") >= 100 && !character.hasPure(Trait.masterheels)) {
+			if (character.getFlag("heelsTraining") >= 100
+					&& !character.hasPure(Trait.masterheels)) {
 				if (character.human()) {
-					Global.gui().message("<br>You've mastered fighting in heels.<br><b>Gained Trait: Heels Master</b>");
+					Global.gui().message(
+							"<br>You've mastered fighting in heels.<br><b>Gained Trait: Heels Master</b>");
 				}
 				character.add(Trait.masterheels);
 			}
@@ -226,17 +238,18 @@ public class Match {
 		if (Global.checkFlag(Flag.autosave)) {
 			Global.save(true);
 		}
-		Global.gui().endMatch();
+		new Postmatch(Global.getPlayer(), combatants);
 	}
 
 	public String getTime() {
 		int hour = 10 + time / 12;
-		if (hour > 12)
-			hour = (hour % 12);
+		if (hour > 12) {
+			hour = hour % 12;
+		}
 		if (time % 12 < 2) {
-			return (hour) + ":0" + (time % 12) * 5;
+			return hour + ":0" + time % 12 * 5;
 		} else {
-			return (hour) + ":" + (time % 12) * 5;
+			return hour + ":" + time % 12 * 5;
 		}
 	}
 
@@ -247,18 +260,23 @@ public class Match {
 		return null;
 	}
 
-	public void score(Character character) {
-		score.put(character, score.get(character) + 1);
+	public void score(Character character, int points) {
+		score.put(character,
+				Integer.valueOf(score.get(character).intValue() + points));
 	}
 
 	public void manageConditions(Character player) {
-		if (condition == Modifier.vibration) {
+		/*if (condition == DefaultModifier.vibration) {
 			player.tempt(5);
-		} else if (condition == Modifier.vulnerable) {
+		} else if (condition == DefaultModifier.vulnerable) {
 			if (!player.is(Stsflag.hypersensitive)) {
 				player.add(new Hypersensitive(player));
 			}
-		}
+		}*/
+		condition.handleOutfit(player);
+		condition.handleItems(player);
+		condition.handleStatus(player);
+		condition.handleTurn(player, this);
 	}
 
 	public int meanLvl() {
@@ -276,7 +294,9 @@ public class Match {
 			Area target = areas.get(Global.random(areas.size()));
 			if (!target.corridor() && !target.open() && target.env.size() < 5) {
 				target.place(new Cache(meanLvl() + Global.random(11) - 4));
-				Global.gui().message("<br><b>A new cache has been dropped off at " + target.name + "!</b>");
+				Global.gui()
+						.message("<br><b>A new cache has been dropped off at "
+								+ target.name + "!</b>");
 				break;
 			}
 		}

@@ -7,12 +7,9 @@ import nightgames.characters.Emotion;
 import nightgames.characters.Trait;
 import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
-import nightgames.characters.body.GenericBodyPart;
-import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
 
 public class Masturbate extends Skill {
 	public Masturbate(Character self) {
@@ -26,12 +23,13 @@ public class Masturbate extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canMasturbate()&&c.getStance().mobile(getSelf())&&Global.getMatch().condition!=Modifier.norecovery&& getTargetOrgan(c, getSelf()) != Body.nonePart;
+		return getSelf().canMasturbate() && c.getStance().mobile(getSelf())
+				&& getTargetOrgan(c, getSelf()) != Body.nonePart;
 	}
-	
+
 	@Override
 	public float priorityMod(Combat c) {
-		return 0;
+		return -10.0f;
 	}
 
 	public BodyPart getSelfOrgan() {
@@ -43,18 +41,25 @@ public class Masturbate extends Skill {
 		BodyPart cock = target.body.getRandomCock();
 		BodyPart pussy = target.body.getRandomPussy();
 		BodyPart ass = target.body.getRandom("ass");
-		if (cock != null && !c.getStance().inserted(target)) {parts.add(cock);}
-		if (pussy != null && !c.getStance().vaginallyPenetrated(target)) {parts.add(pussy);}
-		if ((parts.isEmpty() || getSelf().has(Trait.shameless)) && ass != null && !c.getStance().anallyPenetrated(target)) {
+		if (cock != null && !c.getStance().inserted(target)) {
+			parts.add(cock);
+		}
+		if (pussy != null && !c.getStance().vaginallyPenetrated(target)) {
+			parts.add(pussy);
+		}
+		if ((parts.isEmpty() || getSelf().has(Trait.shameless)) && ass != null
+				&& !c.getStance().anallyPenetrated(target)) {
 			parts.add(ass);
 		}
-		if (parts.isEmpty()) { return Body.nonePart; }
+		if (parts.isEmpty()) {
+			return Body.nonePart;
+		}
 
 		return parts.get(Global.random(parts.size()));
 	}
 
-	private BodyPart withO = Body.nonePart;
-	private BodyPart targetO = Body.nonePart;
+	private BodyPart	withO	= Body.nonePart;
+	private BodyPart	targetO	= Body.nonePart;
 
 	@Override
 	public int getMojoBuilt(Combat c) {
@@ -65,17 +70,15 @@ public class Masturbate extends Skill {
 	public boolean resolve(Combat c, Character target) {
 		withO = getSelfOrgan();
 		targetO = getTargetOrgan(c, getSelf());
-		
-		if(getSelf().human()){
-			if(getSelf().getArousal().get()<=15){
-				c.write(getSelf(),deal(c,0,Result.weak, target));
+
+		if (getSelf().human()) {
+			if (getSelf().getArousal().get() <= 15) {
+				c.write(getSelf(), deal(c, 0, Result.weak, target));
+			} else {
+				c.write(getSelf(), deal(c, 0, Result.normal, target));
 			}
-			else{
-				c.write(getSelf(),deal(c,0,Result.normal, target));
-			}
-		}
-		else if(target.human()){
-			c.write(getSelf(),receive(c,0,Result.normal, target));
+		} else if (target.human()) {
+			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
 		int pleasure;
 
@@ -95,14 +98,15 @@ public class Masturbate extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
 		if (targetO == null) {
-			return "You play with yourself, building up your own arousal.";			
-		} if (targetO.isType("cock")) {
-			if(modifier == Result.weak){
+			return "You play with yourself, building up your own arousal.";
+		}
+		if (targetO.isType("cock")) {
+			if (modifier == Result.weak) {
 				return "You take hold of your flaccid dick, tugging and rubbing it into a full erection.";
-			}
-			else{
+			} else {
 				return "You jerk off, building up your own arousal.";
 			}
 		} else if (targetO.isType("pussy")) {
@@ -115,14 +119,15 @@ public class Masturbate extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
+	public String receive(Combat c, int damage, Result modifier,
+			Character target) {
 		if (targetO == null) {
 			return "She starts playing with herself, building up her own arousal.";
-		} if (targetO.isType("cock")) {
-			if(modifier == Result.weak){
+		}
+		if (targetO.isType("cock")) {
+			if (modifier == Result.weak) {
 				return "She takes hold of her flaccid dick, tugging and rubbing it into a full erection.";
-			}
-			else{
+			} else {
 				return "She jerks off, building up your own arousal.";
 			}
 		} else if (targetO.isType("pussy")) {

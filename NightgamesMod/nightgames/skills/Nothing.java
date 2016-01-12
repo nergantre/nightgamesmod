@@ -35,7 +35,8 @@ public class Nothing extends Skill {
 		return new Nothing(user);
 	}
 
-	public int speed(){
+	@Override
+	public int speed() {
 		return 0;
 	}
 
@@ -45,13 +46,15 @@ public class Nothing extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
-			return "You are unable to do anything.";
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
+		return "You are unable to do anything.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
-			return getSelf().subject() + "is unable to do anything.";
+	public String receive(Combat c, int damage, Result modifier,
+			Character target) {
+		return getSelf().subject() + "is unable to do anything.";
 	}
 
 	@Override

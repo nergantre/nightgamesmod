@@ -16,13 +16,16 @@ public enum Attribute {
 	Divinity,
 	Willpower,
 	Medicine,
-	Technique;
+	Technique,
+	Submissive,
+	Hypnosis;
 
 	public static boolean isBasic(Attribute a) {
 		return a == Power || a == Seduction || a == Perception;
 	}
 
 	public static boolean isTrainable(Attribute a, Character self) {
-		return a != Speed && a != Perception && (self.has(Trait.divinity) || a != Divinity);
+		return a != Speed && a != Perception
+				&& (self.has(Trait.divinity) || a != Divinity);
 	}
 }

@@ -15,22 +15,22 @@ public class FireStance extends DurationStatus {
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return 1;
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now in a fire stance.\n", affected.subjectAction("are", "is"));
+		return String.format("%s now in a fire stance.\n",
+				affected.subjectAction("are", "is"));
 	}
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
+		if (affected.human()) {
 			return "Your spirit burns in you, feeding your power";
-		}
-		else{
-			return affected.name()+" is all fired up.";
+		} else {
+			return affected.name() + " is all fired up.";
 		}
 	}
 
@@ -42,8 +42,8 @@ public class FireStance extends DurationStatus {
 	@Override
 	public int regen(Combat c) {
 		super.regen(c);
-		affected.emote(Emotion.confident,5);
-		affected.emote(Emotion.dominant,5);
+		affected.emote(Emotion.confident, 5);
+		affected.emote(Emotion.dominant, 5);
 		return -5;
 	}
 
@@ -84,7 +84,7 @@ public class FireStance extends DurationStatus {
 
 	@Override
 	public int spendmojo(int x) {
-		return -x/2;
+		return -x / 2;
 	}
 
 	@Override
@@ -96,11 +96,13 @@ public class FireStance extends DurationStatus {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new FireStance(newAffected);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -108,6 +110,7 @@ public class FireStance extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new FireStance(null);
 	}

@@ -4,6 +4,7 @@ import nightgames.characters.Character;
 
 public interface CockPart extends BodyPart {
 	double getSize();
+
 	BodyPart applyMod(CockMod mod);
 
 	@Override

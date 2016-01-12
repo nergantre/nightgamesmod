@@ -9,34 +9,40 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 
 public class Shamed extends DurationStatus {
+
+	private int magnitude;
+
 	public Shamed(Character affected) {
 		super("Shamed", affected, 4);
 		flag(Stsflag.shamed);
 		flag(Stsflag.purgable);
+		magnitude = 1;
 	}
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
+		if (affected.human()) {
 			return "You're a little distracted by self-consciousness, and it's throwing you off your game.";
-		}
-		else{
-			return affected.name()+" is red faced from embarrassment as much as arousal.";
+		} else {
+			return affected.name()
+					+ " is red faced from embarrassment as much as arousal.";
 		}
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now shamed.\n", affected.subjectAction("are", "is"));
+		return String.format("%s now shamed.\n",
+				affected.subjectAction("are", "is"));
 	}
+
 	@Override
-	public boolean mindgames(){
+	public boolean mindgames() {
 		return true;
 	}
-	
+
 	@Override
-	public float fitnessModifier () {
-		return -1.0f;
+	public float fitnessModifier() {
+		return -1.0f * magnitude;
 	}
 
 	@Override
@@ -46,18 +52,25 @@ public class Shamed extends DurationStatus {
 
 	@Override
 	public int mod(Attribute a) {
-		if(a==Attribute.Seduction || a==Attribute.Cunning){
-			return Math.min(-2, -affected.getPure(a) / 5);
-		}
-		else{
+		if (a == Attribute.Seduction || a == Attribute.Cunning) {
+			return Math.min(-2 * magnitude,
+					-affected.getPure(a) * magnitude / 5);
+		} else if (a == Attribute.Submissive
+				&& affected.getPure(Attribute.Submissive) > 0) {
+			return magnitude;
+		} else {
 			return 0;
 		}
 	}
 
 	@Override
 	public void tick(Combat c) {
-		affected.emote(Emotion.nervous,20);
-		affected.loseMojo(c, 5, " (Shamed)");
+		affected.emote(Emotion.nervous, 20);
+		if (affected.getPure(Attribute.Submissive) > 0) {
+			affected.buildMojo(c, 3 * magnitude, " (Shamed)");
+		} else {
+			affected.loseMojo(c, 5 * magnitude, " (Shamed)");
+		}
 	}
 
 	@Override
@@ -72,12 +85,12 @@ public class Shamed extends DurationStatus {
 
 	@Override
 	public int weakened(int x) {
-		return 1;
+		return magnitude;
 	}
 
 	@Override
 	public int tempted(int x) {
-		return 2;
+		return 2 * magnitude;
 	}
 
 	@Override
@@ -87,18 +100,19 @@ public class Shamed extends DurationStatus {
 
 	@Override
 	public int escape() {
-		return -2;
+		return -2 * magnitude;
 	}
 
 	@Override
 	public int gainmojo(int x) {
-		return -x/2;
+		return -x * magnitude / 2;
 	}
 
 	@Override
 	public int spendmojo(int x) {
 		return 0;
 	}
+
 	@Override
 	public int counter() {
 		return 0;
@@ -108,11 +122,21 @@ public class Shamed extends DurationStatus {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Shamed(newAffected);
 	}
 
+	@Override
+	public void replace(Status newStatus) {
+		assert newStatus instanceof Shamed;
+		Shamed other = (Shamed) newStatus;
+		setDuration(Math.max(other.getDuration(), getDuration()));
+		magnitude += other.magnitude;
+	}
+
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -120,6 +144,7 @@ public class Shamed extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Shamed(null);
 	}

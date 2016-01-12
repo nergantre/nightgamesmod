@@ -21,36 +21,40 @@ public class Trance extends DurationStatus {
 		flag(Stsflag.trance);
 		flag(Stsflag.purgable);
 	}
+
 	public Trance(Character affected) {
 		this(affected, 3);
 	}
+
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
+		if (affected.human()) {
 			return "You know that you should be fighting back, but it's so much easier to just surrender.";
-		}
-		else{
-			return affected.name()+" is flush with desire and doesn't seem interested in fighting back.";
+		} else {
+			return affected.name()
+					+ " is flush with desire and doesn't seem interested in fighting back.";
 		}
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
 		if (!replaced) {
-			return String.format("%s now entranced.\n", affected.subjectAction("are", "is"));
+			return String.format("%s now entranced.\n",
+					affected.subjectAction("are", "is"));
 		} else {
-			return String.format("%s already entranced.\n", affected.subjectAction("are", "is"));
+			return String.format("%s already entranced.\n",
+					affected.subjectAction("are", "is"));
 		}
 	}
 
 	@Override
-	public boolean mindgames(){
+	public boolean mindgames() {
 		return true;
 	}
-	
+
 	@Override
-	public float fitnessModifier () {
-		return - (2 + getDuration() / 2.0f);
+	public float fitnessModifier() {
+		return -(2 + getDuration() / 2.0f);
 	}
 
 	@Override
@@ -61,7 +65,7 @@ public class Trance extends DurationStatus {
 	@Override
 	public void tick(Combat c) {
 		affected.loseWillpower(c, 1, 0, false, " (Trance)");
-		affected.emote(Emotion.horny,15);
+		affected.emote(Emotion.horny, 15);
 	}
 
 	@Override
@@ -75,10 +79,9 @@ public class Trance extends DurationStatus {
 	}
 
 	@Override
-	public Collection<Skill> allowedSkills(Combat c){
-		return Arrays.asList((Skill)new Masturbate(affected),
-				new Thrust(affected),
-				new Piston(affected));
+	public Collection<Skill> allowedSkills(Combat c) {
+		return Arrays.asList((Skill) new Masturbate(affected),
+				new Thrust(affected), new Piston(affected));
 	}
 
 	@Override
@@ -121,6 +124,7 @@ public class Trance extends DurationStatus {
 	public int spendmojo(int x) {
 		return 0;
 	}
+
 	@Override
 	public int counter() {
 		return -10;
@@ -130,11 +134,13 @@ public class Trance extends DurationStatus {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Trance(newAffected);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -142,6 +148,7 @@ public class Trance extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Trance(null);
 	}

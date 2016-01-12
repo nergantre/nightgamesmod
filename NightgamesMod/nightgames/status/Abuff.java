@@ -9,8 +9,9 @@ import nightgames.combat.Combat;
 import nightgames.global.JSONUtils;
 
 public class Abuff extends DurationStatus {
-	private Attribute modded;
-	private int value;
+	private Attribute	modded;
+	private int			value;
+
 	public Abuff(Character affected, Attribute att, int value, int duration) {
 		super(String.format("%s %+d", att.toString(), value), affected, duration);
 		flag(Stsflag.purgable);
@@ -23,7 +24,7 @@ public class Abuff extends DurationStatus {
 		String person, adjective, modification;
 		person = affected.nameOrPossessivePronoun();
 
-		if (Math.abs(value) > 5){
+		if (Math.abs(value) > 5) {
 			adjective = "greatly";
 		} else {
 			adjective = "";
@@ -33,29 +34,29 @@ public class Abuff extends DurationStatus {
 		} else {
 			modification = "sapped.";
 		}
-		
-		return String.format("%s %s is now %s %s\n", person, modded, adjective, modification);
+
+		return String.format("%s %s is now %s %s\n", person, modded, adjective,
+				modification);
 	}
 
 	@Override
-	public float fitnessModifier () {
-		return value / (2.0f * Math.min(1.0f, Math.max(1, affected.getPure(modded)) / 10.0f));
+	public float fitnessModifier() {
+		return value / (2.0f * Math.min(1.0f,
+				Math.max(1, affected.getPure(modded)) / 10.0f));
 	}
 
 	@Override
 	public String describe(Combat c) {
 		String person, adjective, modification;
 
-		if (affected.human()){
+		if (affected.human()) {
 			person = "You feel your";
+		} else {
+			person = affected.name() + "'s";
 		}
-		else{
-			person = affected.name()+"'s";
-		}
-		if (Math.abs(value) > 5){
+		if (Math.abs(value) > 5) {
 			adjective = "greatly";
-		}
-		else {
+		} else {
 			adjective = "";
 		}
 		if (value > 0) {
@@ -63,13 +64,14 @@ public class Abuff extends DurationStatus {
 		} else {
 			modification = "sapped.";
 		}
-		
-		return String.format("%s %s is %s %s\n", person, modded, adjective, modification);
+
+		return String.format("%s %s is %s %s\n", person, modded, adjective,
+				modification);
 	}
 
 	@Override
 	public int mod(Attribute a) {
-		if(a==modded){
+		if (a == modded) {
 			return value;
 		}
 		return 0;
@@ -77,7 +79,7 @@ public class Abuff extends DurationStatus {
 
 	@Override
 	public String getVariant() {
-			return modded.toString();
+		return modded.toString();
 	}
 
 	@Override
@@ -87,12 +89,12 @@ public class Abuff extends DurationStatus {
 
 	@Override
 	public void replace(Status s) {
-		assert (s instanceof Abuff);
-		Abuff other = (Abuff)s;
-		assert (other.modded == modded);
+		assert s instanceof Abuff;
+		Abuff other = (Abuff) s;
+		assert other.modded == modded;
 		setDuration(Math.max(other.getDuration(), getDuration()));
-		this.value += other.value;
-		this.name = String.format("%s %+d", modded.toString(), value);
+		value += other.value;
+		name = String.format("%s %+d", modded.toString(), value);
 	}
 
 	@Override
@@ -145,7 +147,9 @@ public class Abuff extends DurationStatus {
 	public int counter() {
 		return 0;
 	}
-	public boolean lingering(){
+
+	@Override
+	public boolean lingering() {
 		return true;
 	}
 
@@ -158,7 +162,8 @@ public class Abuff extends DurationStatus {
 	public Status instance(Character newAffected, Character newOther) {
 		return new Abuff(newAffected, modded, value, getDuration());
 	}
-	
+
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -169,10 +174,11 @@ public class Abuff extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Abuff(null,
 				Attribute.valueOf(JSONUtils.readString(obj, "modded")),
-						JSONUtils.readInteger(obj, "value"),
-						JSONUtils.readInteger(obj, "duration"));
+				JSONUtils.readInteger(obj, "value"),
+				JSONUtils.readInteger(obj, "duration"));
 	}
 }

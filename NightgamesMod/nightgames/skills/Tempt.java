@@ -22,13 +22,12 @@ public class Tempt extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if(getSelf().human()) {
-			c.write(getSelf(),deal(c,0,Result.normal, target));
+		if (getSelf().human()) {
+			c.write(getSelf(), deal(c, 0, Result.normal, target));
+		} else if (target.human()) {
+			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
-		else if(target.human()) {
-			c.write(getSelf(),receive(c,0,Result.normal, target));
-		}
-		double m = (int) Math.round(4+Global.random(4));
+		double m = Math.round(4 + Global.random(4));
 		if (c.getStance().front(getSelf())) {
 			// opponent can see self
 			m += 3 * getSelf().body.getCharismaBonus(target);
@@ -37,17 +36,21 @@ public class Tempt extends Skill {
 			m *= 1.5;
 		}
 
-		int n = (int)Math.round(m);
+		int n = (int) Math.round(m);
 
 		boolean tempted = Global.random(5) == 0;
-		if(getSelf().has(Trait.darkpromises)&& tempted && !target.wary() && getSelf().canSpend(15)) {
+		if (getSelf().has(Trait.darkpromises) && tempted && !target.wary()
+				&& getSelf().canSpend(15)) {
 			getSelf().spendMojo(c, 15);
-			c.write(getSelf(), Global.format("{self:NAME-POSSESSIVE} words fall on fertile grounds. {other:NAME-POSSESSIVE} will to resist crumbles in light of {self:possessive} temptation.", getSelf(), target));
+			c.write(getSelf(),
+					Global.format(
+							"{self:NAME-POSSESSIVE} words fall on fertile grounds. {other:NAME-POSSESSIVE} will to resist crumbles in light of {self:possessive} temptation.",
+							getSelf(), target));
 			target.add(c, new Enthralled(target, getSelf(), 3));
 		}
 
 		target.tempt(c, getSelf(), n);
-		target.emote(Emotion.horny,10);
+		target.emote(Emotion.horny, 10);
 		getSelf().emote(Emotion.confident, 10);
 		return true;
 	}
@@ -61,20 +64,26 @@ public class Tempt extends Skill {
 	public Skill copy(Character user) {
 		return new Tempt(user);
 	}
-	public int speed(){
+
+	@Override
+	public int speed() {
 		return 9;
 	}
+
+	@Override
 	public Tactics type(Combat c) {
 		return Tactics.pleasure;
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
+	public String deal(Combat c, int damage, Result modifier,
+			Character target) {
 		return getSelf().temptLiner(c);
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
+	public String receive(Combat c, int damage, Result modifier,
+			Character target) {
 		return getSelf().temptLiner(c);
 	}
 

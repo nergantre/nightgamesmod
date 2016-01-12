@@ -6,14 +6,14 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 
-public enum TailPart implements BodyPart, BodyPartMod {
-	demonic("demonic ", .2, 1.2, 1),
-	cat("cat's ", .3, 1.5, 1.5);
+public enum TailPart implements BodyPart,BodyPartMod {
+	demonic("demonic ", .2, 1.2, 1), cat("cat's ", .3, 1.5, 1.5);
 
-	public String desc;
-	public double hotness;
-	public double pleasure;
-	public double sensitivity;
+	public String	desc;
+	public double	hotness;
+	public double	pleasure;
+	public double	sensitivity;
+
 	TailPart(String desc, double hotness, double pleasure, double sensitivity) {
 		this.desc = desc;
 		this.hotness = hotness;
@@ -23,7 +23,8 @@ public enum TailPart implements BodyPart, BodyPartMod {
 
 	@Override
 	public void describeLong(StringBuilder b, Character c) {
-		b.append("A lithe " + describe(c) + " swings lazily behind " + c.nameOrPossessivePronoun() + " back.");
+		b.append("A lithe " + describe(c) + " swings lazily behind "
+				+ c.nameOrPossessivePronoun() + " back.");
 	}
 
 	@Override
@@ -33,19 +34,20 @@ public enum TailPart implements BodyPart, BodyPartMod {
 
 	@Override
 	public double priority(Character c) {
-		return this.getPleasure(c, null);
+		return getPleasure(c, null);
 	}
 
 	@Override
 	public String fullDescribe(Character c) {
 		return desc + "tail";
 	}
-	
+
 	@Override
 	public String toString() {
 		return desc + "tail";
 	}
-	
+
+	@Override
 	public boolean isType(String type) {
 		return type.equalsIgnoreCase("tail");
 	}
@@ -69,7 +71,7 @@ public enum TailPart implements BodyPart, BodyPartMod {
 	public double getSensitivity(BodyPart target) {
 		return sensitivity;
 	}
-	
+
 	@Override
 	public boolean isReady(Character self) {
 		return true;
@@ -79,13 +81,13 @@ public enum TailPart implements BodyPart, BodyPartMod {
 	@Override
 	public JSONObject save() {
 		JSONObject obj = new JSONObject();
-		obj.put("enum", this.name());
+		obj.put("enum", name());
 		return obj;
 	}
 
 	@Override
 	public BodyPart load(JSONObject obj) {
-		return TailPart.valueOf((String)obj.get("enum"));
+		return TailPart.valueOf((String) obj.get("enum"));
 	}
 
 	@Override
@@ -103,12 +105,12 @@ public enum TailPart implements BodyPart, BodyPartMod {
 	public boolean isErogenous() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isNotable() {
 		return true;
 	}
-	
+
 	@Override
 	public double applyReceiveBonuses(Character self, Character opponent,
 			BodyPart target, double damage, Combat c) {
@@ -124,14 +126,17 @@ public enum TailPart implements BodyPart, BodyPartMod {
 	public BodyPart downgrade() {
 		return this;
 	}
+
 	@Override
 	public String prefix() {
 		return "a ";
 	}
+
 	@Override
 	public int compare(BodyPart other) {
 		return 0;
 	}
+
 	@Override
 	public boolean isVisible(Character c) {
 		return true;
@@ -148,9 +153,10 @@ public enum TailPart implements BodyPart, BodyPartMod {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+
 	@Override
-	public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {
+	public void tickHolding(Combat c, Character self, Character opponent,
+			BodyPart otherOrgan) {
 
 	}
 

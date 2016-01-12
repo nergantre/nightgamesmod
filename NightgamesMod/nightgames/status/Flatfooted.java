@@ -17,29 +17,29 @@ public class Flatfooted extends DurationStatus {
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
+		if (affected.human()) {
 			return "You are caught off-guard.";
-		}
-		else{
-			return affected.name()+" is flat-footed and not ready to fight.";
+		} else {
+			return affected.name() + " is flat-footed and not ready to fight.";
 		}
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now flatfooted.\n", affected.subjectAction("are", "is"));
+		return String.format("%s now flatfooted.\n",
+				affected.subjectAction("are", "is"));
 	}
 
 	@Override
-	public boolean mindgames(){
+	public boolean mindgames() {
 		return false;
 	}
-	
+
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return -3;
 	}
-	
+
 	@Override
 	public int mod(Attribute a) {
 		return 0;
@@ -53,7 +53,7 @@ public class Flatfooted extends DurationStatus {
 	@Override
 	public int regen(Combat c) {
 		super.regen(c);
-		affected.emote(Emotion.nervous,5);
+		affected.emote(Emotion.nervous, 5);
 		return 0;
 	}
 
@@ -96,6 +96,7 @@ public class Flatfooted extends DurationStatus {
 	public int spendmojo(int x) {
 		return 0;
 	}
+
 	@Override
 	public int counter() {
 		return -3;
@@ -105,11 +106,13 @@ public class Flatfooted extends DurationStatus {
 	public int value() {
 		return 0;
 	}
+
 	@Override
 	public Status instance(Character newAffected, Character newOther) {
 		return new Flatfooted(newAffected, getDuration());
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -118,6 +121,7 @@ public class Flatfooted extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Flatfooted(null, JSONUtils.readInteger(obj, "duration"));
 	}

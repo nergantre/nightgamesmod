@@ -1,11 +1,12 @@
 package nightgames.daytime;
 
+import java.util.Map;
+
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
-import java.util.Map;
 
 public class HWStore extends Store {
 	public HWStore(Character player) {
@@ -26,10 +27,10 @@ public class HWStore extends Store {
 	public void visit(String choice) {
 		Global.gui().clearText();
 		Global.gui().clearCommand();
-		if(choice=="Start"){
-			acted=false;
+		if (choice.equals("Start")) {
+			acted = false;
 		}
-		if(choice=="Leave"){
+		if (choice.equals("Leave")) {
 			done(acted);
 			return;
 		}
@@ -48,29 +49,33 @@ public class HWStore extends Store {
 			}
 			Global.gui().message("You have : $"+player.money+" to spend.");
 			displayGoods();
-			Global.gui().choose(this,"Leave");
+			Global.gui().choose(this, "Leave");
 		}
 	}
 
+	@Override
 	protected void displayItems() {
-		for(Item i:stock.keySet()){
-			if (i != Item.EmptyBottle || player.getRank() > 0)
+		for (Item i : stock.keySet()) {
+			if (i != Item.EmptyBottle || player.getRank() > 0) {
 				Global.gui().sale(this, i);
+			}
 		}
 	}
+
 	@Override
 	public void shop(Character npc, int budget) {
 		int remaining = budget;
 		int bored = 0;
-		while(remaining>10&&bored<10){
-			for(Item i:stock.keySet()){
-				boolean emptyBottleCheck = npc.has(Trait.madscientist) || i != Item.EmptyBottle;
-				if(remaining>i.getPrice()&&!npc.has(i,20) && emptyBottleCheck){
+		while (remaining > 10 && bored < 10) {
+			for (Item i : stock.keySet()) {
+				boolean emptyBottleCheck = npc.has(Trait.madscientist)
+						|| i != Item.EmptyBottle;
+				if (remaining > i.getPrice() && !npc.has(i, 20)
+						&& emptyBottleCheck) {
 					npc.gain(i);
-					npc.money-=i.getPrice();
-					remaining-=i.getPrice();
-				}
-				else{
+					npc.money -= i.getPrice();
+					remaining -= i.getPrice();
+				} else {
 					bored++;
 				}
 			}

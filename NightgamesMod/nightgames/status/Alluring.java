@@ -8,7 +8,6 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.JSONUtils;
 
-
 public class Alluring extends DurationStatus {
 	public Alluring(Character affected, int duration) {
 		super("Alluring", affected, duration);
@@ -22,13 +21,15 @@ public class Alluring extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now alluring.\n", affected.subjectAction("are", "is"));
+		return String.format("%s now alluring.\n",
+				affected.subjectAction("are", "is"));
 	}
 
 	@Override
 	public String describe(Combat c) {
 		if (!affected.human()) {
-			return affected.name()+" looks impossibly beautiful to your eyes, you can't bear to hurt her.";
+			return affected.name()
+					+ " looks impossibly beautiful to your eyes, you can't bear to hurt her.";
 		}
 		return "";
 	}
@@ -39,10 +40,10 @@ public class Alluring extends DurationStatus {
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return 4.0f;
 	}
-	
+
 	@Override
 	public int damage(Combat c, int x) {
 		return 0;
@@ -82,6 +83,7 @@ public class Alluring extends DurationStatus {
 	public int spendmojo(int x) {
 		return 0;
 	}
+
 	@Override
 	public int counter() {
 		return 0;
@@ -96,6 +98,8 @@ public class Alluring extends DurationStatus {
 	public Status instance(Character newAffected, Character newOther) {
 		return new Alluring(newAffected, getDuration());
 	}
+
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -104,6 +108,7 @@ public class Alluring extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
 		return new Alluring(null, JSONUtils.readInteger(obj, "duration"));
 	}

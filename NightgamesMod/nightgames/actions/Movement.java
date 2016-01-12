@@ -24,28 +24,29 @@ public enum Movement {
 	scavenge(" begin scrounging through some boxes in the corner."),
 	craft(" start mixing various liquids. Whatever it is doesn't look healthy."),
 	wait(" loitering nearby"),
-	resupply(" heads for one of the safe rooms, probably to get a change of clothes."),
+	resupply(
+			" heads for one of the safe rooms, probably to get a change of clothes."),
 	oil(" rubbing body oil on her every inch of her skin. Wow, you wouldn't mind watching that again."),
 	enerydrink(" opening an energy drink and downing the whole thing."),
 	beer(" opening a beer and downing the whole thing."),
 	recharge(" plugging a battery pack into a nearby charging station."),
-	locating(" is holding someone's underwear in her hands and breathing deeply. Strange."),
-	masturbate(" starts to pleasure herself, while trying not to make much noise. It's quite a show."),
+	locating(
+			" is holding someone's underwear in her hands and breathing deeply. Strange."),
+	masturbate(
+			" starts to pleasure herself, while trying not to make much noise. It's quite a show."),
 	mana(" doing something with a large book. When she's finished, you can see a sort of aura coming from her."),
 	retire(" has left the match.");
-	
+
 	private String desc;
 
 	/**
 	 * @return the Item name
 	 */
-	public String describe()
-	{
+	public String describe() {
 		return desc;
 	}
 
-	private Movement( String desc )
-	{
+	private Movement(String desc) {
 		this.desc = desc;
 	}
 }

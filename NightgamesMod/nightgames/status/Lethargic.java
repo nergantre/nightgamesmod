@@ -11,6 +11,7 @@ import nightgames.global.JSONUtils;
 
 public class Lethargic extends DurationStatus {
 	double magnitude;
+
 	public Lethargic(Character affected, int duration, double magnitude) {
 		super("Lethargic", affected, duration);
 		this.magnitude = magnitude;
@@ -18,18 +19,18 @@ public class Lethargic extends DurationStatus {
 		flag(Stsflag.purgable);
 	}
 
-	public boolean lingering(){
+	@Override
+	public boolean lingering() {
 		return true;
 	}
 
 	@Override
 	public String describe(Combat c) {
-		if(affected.human()){
+		if (affected.human()) {
 			return "Your mojo gain is stopped.";
-		}
-		else if (affected.has(Trait.lethargic)) {
+		} else if (affected.has(Trait.lethargic)) {
 			if (affected.getMojo().get() < 40) {
-				return affected.name() + " looks lethargic."; 
+				return affected.name() + " looks lethargic.";
 			} else {
 				return affected.name() + " looks energized";
 			}
@@ -40,11 +41,12 @@ public class Lethargic extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s lethargic.\n", affected.subjectAction("are", "is"));
+		return String.format("%s lethargic.\n",
+				affected.subjectAction("are", "is"));
 	}
 
 	@Override
-	public float fitnessModifier () {
+	public float fitnessModifier() {
 		return -3f;
 	}
 
@@ -90,7 +92,7 @@ public class Lethargic extends DurationStatus {
 
 	@Override
 	public int gainmojo(int x) {
-		return (int) Math.round(-x*magnitude);
+		return (int) Math.round(-x * magnitude);
 	}
 
 	@Override
@@ -113,6 +115,7 @@ public class Lethargic extends DurationStatus {
 		return new Lethargic(newAffected, getDuration(), magnitude);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public JSONObject saveToJSON() {
 		JSONObject obj = new JSONObject();
@@ -122,8 +125,9 @@ public class Lethargic extends DurationStatus {
 		return obj;
 	}
 
+	@Override
 	public Status loadFromJSON(JSONObject obj) {
-		return new Lethargic(null,JSONUtils.readInteger(obj, "duration"),
-		JSONUtils.readFloat(obj, "magnitude"));
+		return new Lethargic(null, JSONUtils.readInteger(obj, "duration"),
+				JSONUtils.readFloat(obj, "magnitude"));
 	}
 }

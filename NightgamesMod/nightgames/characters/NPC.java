@@ -1,17 +1,16 @@
+// $codepro.audit.disable logExceptions
 package nightgames.characters;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 
 import nightgames.actions.Action;
 import nightgames.actions.Move;
 import nightgames.actions.Movement;
+import nightgames.actions.Shortcut;
 import nightgames.areas.Area;
 import nightgames.characters.body.BodyPart;
-import nightgames.characters.body.StraponPart;
 import nightgames.characters.custom.RecruitmentData;
 import nightgames.characters.custom.effect.CustomEffect;
 import nightgames.combat.Combat;
@@ -19,7 +18,6 @@ import nightgames.combat.Encounter;
 import nightgames.combat.Result;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
-import nightgames.global.Modifier;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
@@ -37,21 +35,17 @@ import nightgames.status.Stsflag;
 import nightgames.trap.Trap;
 
 public class NPC extends Character {
-	/**
-	 * 
-	 */
-	@SuppressWarnings("unused")
-	private static final long serialVersionUID = -7213318631528080442L;
-	public Personality ai;
-	public HashMap<Emotion, Integer> emotes;
-	public Emotion mood;
-	public Plan plan;
-	private boolean fakeHuman;
+
+	public Personality					ai;
+	public HashMap<Emotion, Integer>	emotes;
+	public Emotion						mood;
+	public Plan							plan;
+	private boolean						fakeHuman;
 
 	public NPC(String name, int level, Personality ai) {
 		super(name, level);
 		this.ai = ai;
-		this.fakeHuman = false;
+		fakeHuman = false;
 		emotes = new HashMap<Emotion, Integer>();
 		for (Emotion e : Emotion.values()) {
 			emotes.put(e, 0);
@@ -137,9 +131,9 @@ public class NPC extends Character {
 			}
 		}
 
-		if (per >= 6 && this.status.size() > 0) {
+		if (per >= 6 && status.size() > 0) {
 			visible += "List of statuses:<br><i>";
-			for (Status s : this.status) {
+			for (Status s : status) {
 				visible += s + ", ";
 			}
 			visible += "</i><br>";
@@ -155,7 +149,7 @@ public class NPC extends Character {
 		} else {
 			target = c.p1;
 		}
-		this.gainXP(getVictoryXP(target));
+		gainXP(getVictoryXP(target));
 		target.gainXP(getDefeatXP(this));
 		if (c.getStance().inserted() && c.getStance().dom(this)) {
 			getMojo().gain(2);
@@ -185,37 +179,39 @@ public class NPC extends Character {
 		} else {
 			target = c.p1;
 		}
-		this.gainXP(getDefeatXP(target));
+		gainXP(getDefeatXP(target));
 		target.gainXP(getVictoryXP(this));
-		this.arousal.empty();
+		arousal.empty();
 		if (!target.human()
-				|| Global.getMatch().condition != Modifier.norecovery) {
+				|| !Global.getMatch().condition.name().equals("norecovery")) {
 			target.arousal.empty();
 		}
 		if (this.has(Trait.insatiable)) {
-			this.arousal.restore((int) (arousal.max() * .2));
+			arousal.restore((int) (arousal.max() * .2));
 		}
 		if (target.has(Trait.insatiable)) {
 			target.arousal.restore((int) (arousal.max() * .2));
 		}
 		target.dress(c);
-		this.undress(c);
+		undress(c);
 		target.gainTrophy(c, this);
-		this.defeated(target);
+		defeated(target);
 		c.write(ai.defeat(c, flag));
 		gainAttraction(target, 2);
 		target.gainAttraction(this, 1);
 	}
 
+	@Override
 	public void intervene3p(Combat c, Character target, Character assist) {
-		this.gainXP(getAssistXP(target));
+		gainXP(getAssistXP(target));
 		target.defeated(this);
 		c.write(ai.intervene3p(c, target, assist));
 		assist.gainAttraction(this, 1);
 	}
 
+	@Override
 	public void victory3p(Combat c, Character target, Character assist) {
-		this.gainXP(getVictoryXP(target));
+		gainXP(getVictoryXP(target));
 		target.gainXP(getDefeatXP(this));
 		target.arousal.empty();
 		if (target.has(Trait.insatiable)) {
@@ -230,6 +226,16 @@ public class NPC extends Character {
 	}
 
 	@Override
+	public boolean resist3p(Combat combat, Character intruder,
+			Character assist) {
+		if (has(Trait.cursed)) {
+			Global.gui().message(ai.resist3p(combat, intruder, assist));
+			return true;
+		}
+		return false;
+	}
+
+	@Override
 	public void act(Combat c) {
 		HashSet<Skill> available = new HashSet<Skill>();
 		Character target;
@@ -238,7 +244,8 @@ public class NPC extends Character {
 		} else {
 			target = c.p1;
 		}
-		if (target.human() && Global.isDebugOn(DebugFlags.DEBUG_SKILL_CHOICES)) {
+		if (target.human()
+				&& Global.isDebugOn(DebugFlags.DEBUG_SKILL_CHOICES)) {
 			pickSkillsWithGUI(c, target);
 		} else {
 			for (Skill act : skills) {
@@ -292,29 +299,30 @@ public class NPC extends Character {
 		} else {
 			target = c.p1;
 		}
-		this.gainXP(getVictoryXP(target));
+		gainXP(getVictoryXP(target));
 		target.gainXP(getVictoryXP(this));
-		this.arousal.empty();
+		arousal.empty();
 		target.arousal.empty();
 		if (this.has(Trait.insatiable)) {
-			this.arousal.restore((int) (arousal.max() * .2));
+			arousal.restore((int) (arousal.max() * .2));
 		}
 		if (target.has(Trait.insatiable)) {
 			target.arousal.restore((int) (arousal.max() * .2));
 		}
 		target.undress(c);
-		this.undress(c);
+		undress(c);
 		target.gainTrophy(c, this);
-		this.gainTrophy(c, target);
+		gainTrophy(c, target);
 		target.defeated(this);
-		this.defeated(target);
+		defeated(target);
 		c.write(ai.draw(c, flag));
 		gainAttraction(target, 4);
 		target.gainAttraction(this, 4);
 		if (getAffection(target) > 0) {
 			gainAffection(target, 1);
 			target.gainAffection(this, 1);
-			if (this.has(Trait.affectionate) || target.has(Trait.affectionate)) {
+			if (this.has(Trait.affectionate)
+					|| target.has(Trait.affectionate)) {
 				gainAffection(target, 2);
 				target.gainAffection(this, 2);
 			}
@@ -399,6 +407,11 @@ public class NPC extends Character {
 							radar.add(path.id());
 						}
 					}
+					if (getPure(Attribute.Cunning) >= 28) {
+						for (Area path : location.shortcut) {
+							available.add(new Shortcut(path));
+						}
+					}
 				}
 				for (Action act : Global.getActions()) {
 					if (act.usable(this)) {
@@ -406,11 +419,8 @@ public class NPC extends Character {
 					}
 				}
 				if (location.humanPresent()) {
-					Global.gui().message(
-							"You notice "
-									+ name()
-									+ ai.move(available, radar).execute(this)
-											.describe());
+					Global.gui().message("You notice " + name() + ai
+							.move(available, radar).execute(this).describe());
 				} else {
 					ai.move(available, radar).execute(this);
 				}
@@ -432,12 +442,14 @@ public class NPC extends Character {
 		}
 	}
 
+	@Override
 	public void ding() {
 		level++;
 		ai.ding();
 		String message = Global.gainSkills(this);
-		if (human())
+		if (human()) {
 			Global.gui().message(message);
+		}
 	}
 
 	@Override
@@ -455,7 +467,8 @@ public class NPC extends Character {
 	public void intervene(Encounter enc, Character p1, Character p2) {
 		if (Global.random(20) + getAffection(p1)
 				+ (p1.has(Trait.sympathetic) ? 10 : 0) >= Global.random(20)
-				+ getAffection(p2) + (p2.has(Trait.sympathetic) ? 10 : 0)) {
+						+ getAffection(p2)
+						+ (p2.has(Trait.sympathetic) ? 10 : 0)) {
 			enc.intrude(this, p1);
 		} else {
 			enc.intrude(this, p2);
@@ -481,10 +494,11 @@ public class NPC extends Character {
 		Global.gui().message(ai.night());
 	}
 
-	public void daytime() {
-		ai.rest();
+	public void daytime(int time) {
+		ai.rest(time);
 	}
 
+	@Override
 	public Emotion getMood() {
 		return mood;
 	}
@@ -492,105 +506,111 @@ public class NPC extends Character {
 	@Override
 	public void counterattack(Character target, Tactics type, Combat c) {
 		switch (type) {
-		case damage:
-			c.write(this,
-					name()
-							+ " avoids your clumsy attack and swings her fist into your nuts.");
-			target.pain(c,
-					4 + Math.min(Global.random(get(Attribute.Power)), 20));
-			break;
-		case pleasure:
-			if (target.hasDick()) {
-				if (target.crotchAvailable()) {
-					c.write(this,
-							name()
-									+ " catches you by the penis and rubs your sensitive glans.");
-					target.body
-							.pleasure(this, body.getRandom("hands"),
-									target.body.getRandom("cock"),
-									4 + Math.min(Global
-											.random(get(Attribute.Seduction)),
-											20), c);
-				} else {
-					c.write(this,
-							name()
-									+ " catches you as you approach and grinds her knee into the tent in your "
-									+ target.getOutfit().getTopOfSlot(
-											ClothingSlot.bottom));
-					target.body
-							.pleasure(this, body.getRandom("legs"), target.body
-									.getRandom("cock"),
-									4 + Math.min(Global
-											.random(get(Attribute.Seduction)),
-											20), c);
-				}
-			} else {
-				c.write(this,
-						name()
-								+ " pulls you off balance and licks your sensitive ear. You tremble as she nibbles on your earlobe.");
-				target.body
-						.pleasure(this, body.getRandom("tongue"), target.body
-								.getRandom("ears"), 4 + Math.min(
-								Global.random(get(Attribute.Seduction)), 20), c);
-			}
-			break;
-		case fucking:
-			if (c.getStance().sub(this)) {
-				Position reverse = c.getStance().reverse(c);
-				if (reverse != c.getStance() && !BodyPart.hasOnlyType(reverse.bottomParts(), "strapon")) {
-					c.setStance(reverse);
-				} else {
-					c.write(this,
-							Global.format(
-									"{self:NAME-POSSESSIVE} quick wits find a gap in {other:name-possessive} hold and {self:action:slip|slips} away.",
-									this, target));
-					c.setStance(new Neutral(this, target));
-				}
-			} else {
-				target.body.pleasure(this, body.getRandom("hands"), target.body.getRandomBreasts(),
-						4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
-				c.write(this,
-						Global.format(
-								"{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} nipples with {self:possessive} hands as {other:subject-action:try|tries} to fuck {self:direct-object}. "
-										+ "While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:take|takes} the chance to pleasure {other:possessive} body",
-								this, target));
-			}
-
-			break;
-		case stripping:
-			Clothing clothes = target.stripRandom(c);
-			if (clothes != null) {
-				c.write(this,
-						name()
-								+ " manages to catch you groping her clothing, and in a swift motion strips off your "
-								+ clothes.getName());
-			} else {
-				c.write(this,
-						name()
-								+ " manages to dodge your groping hands and gives a retaliating slap in return");
+			case damage:
+				c.write(this, name()
+						+ " avoids your clumsy attack and swings her fist into your nuts.");
 				target.pain(c,
 						4 + Math.min(Global.random(get(Attribute.Power)), 20));
-			}
-			break;
-		case positioning:
-			if (c.getStance().dom(this)) {
-				c.write(this,
-						name()
-								+ " outmanuevers you and you're exhausted from the struggle.");
-				target.weaken(c, 10);
-			} else {
-				c.write(this,
-						name()
-								+ " outmanuevers you and catches you from behind when you stumble.");
-				c.setStance(new Behind(this, target));
-			}
-			break;
-		default:
-			c.write(this,
-					name()
-							+ " manages to dodge your attack and gives a retaliating slap in return");
-			target.pain(c,
-					4 + Math.min(Global.random(get(Attribute.Power)), 20));
+				break;
+			case pleasure:
+				if (target.hasDick()) {
+					if (target.crotchAvailable()) {
+						c.write(this, name()
+								+ " catches you by the penis and rubs your sensitive glans.");
+						target.body
+								.pleasure(this, body.getRandom("hands"),
+										target.body.getRandom("cock"),
+										4 + Math.min(
+												Global.random(
+														get(Attribute.Seduction)),
+												20),
+										c);
+					} else {
+						c.write(this,
+								name() + " catches you as you approach and grinds her knee into the tent in your "
+										+ target.getOutfit().getTopOfSlot(
+												ClothingSlot.bottom));
+						target.body
+								.pleasure(this, body.getRandom("legs"),
+										target.body.getRandom("cock"),
+										4 + Math.min(
+												Global.random(
+														get(Attribute.Seduction)),
+												20),
+										c);
+					}
+				} else {
+					c.write(this, name()
+							+ " pulls you off balance and licks your sensitive ear. You tremble as she nibbles on your earlobe.");
+					target.body
+							.pleasure(this, body.getRandom("tongue"),
+									target.body.getRandom("ears"),
+									4 + Math.min(
+											Global.random(
+													get(Attribute.Seduction)),
+											20),
+									c);
+				}
+				break;
+			case fucking:
+				if (c.getStance().sub(this)) {
+					Position reverse = c.getStance().reverse(c);
+					if (reverse != c.getStance() && !BodyPart
+							.hasOnlyType(reverse.bottomParts(), "strapon")) {
+						c.setStance(reverse);
+					} else {
+						c.write(this,
+								Global.format(
+										"{self:NAME-POSSESSIVE} quick wits find a gap in {other:name-possessive} hold and {self:action:slip|slips} away.",
+										this, target));
+						c.setStance(new Neutral(this, target));
+					}
+				} else {
+					target.body
+							.pleasure(this, body.getRandom("hands"),
+									target.body.getRandomBreasts(),
+									4 + Math.min(
+											Global.random(
+													get(Attribute.Seduction)),
+											20),
+									c);
+					c.write(this,
+							Global.format(
+									"{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} nipples with {self:possessive} hands as {other:subject-action:try|tries} to fuck {self:direct-object}. "
+											+ "While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:take|takes} the chance to pleasure {other:possessive} body",
+									this, target));
+				}
+
+				break;
+			case stripping:
+				Clothing clothes = target.stripRandom(c);
+				if (clothes != null) {
+					c.write(this,
+							name() + " manages to catch you groping her clothing, and in a swift motion strips off your "
+									+ clothes.getName());
+				} else {
+					c.write(this, name()
+							+ " manages to dodge your groping hands and gives a retaliating slap in return");
+					target.pain(c, 4 + Math
+							.min(Global.random(get(Attribute.Power)), 20));
+				}
+				break;
+			case positioning:
+				if (c.getStance().dom(this)) {
+					c.write(this, name()
+							+ " outmanuevers you and you're exhausted from the struggle.");
+					target.weaken(c, 10);
+				} else {
+					c.write(this, name()
+							+ " outmanuevers you and catches you from behind when you stumble.");
+					c.setStance(new Behind(this, target));
+				}
+				break;
+			default:
+				c.write(this, name()
+						+ " manages to dodge your attack and gives a retaliating slap in return");
+				target.pain(c,
+						4 + Math.min(Global.random(get(Attribute.Power)), 20));
 		}
 	}
 
@@ -603,8 +623,9 @@ public class NPC extends Character {
 		for (WeightedSkill wskill : plist) {
 			sum += wskill.weight;
 			wlist.add(new WeightedSkill(sum, wskill.skill));
-			if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS))
+			if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 				System.out.printf("%.1f %s\n", sum, wskill.skill);
+			}
 		}
 
 		if (wlist.isEmpty()) {
@@ -612,9 +633,10 @@ public class NPC extends Character {
 		}
 		float s = Global.randomfloat() * sum;
 		for (WeightedSkill wskill : wlist) {
-			if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS))
+			if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 				System.out.printf("%.1f/%.1f %s\n", wskill.weight, s,
 						wskill.skill);
+			}
 			if (wskill.weight > s) {
 				return wskill.skill;
 			}
@@ -622,6 +644,7 @@ public class NPC extends Character {
 		return plist.get(plist.size() - 1).skill;
 	}
 
+	@Override
 	public void emote(Emotion emo, int amt) {
 		if (Global.isDebugOn(DebugFlags.DEBUG_MOOD)) {
 			System.out.printf("%s: %+d %s", getName(), amt, emo.name());
@@ -648,8 +671,9 @@ public class NPC extends Character {
 					System.out.printf("Moodswing: %s is now %s\n", name,
 							mood.name());
 				}
-				if (c.p1.human() || c.p2.human())
+				if (c.p1.human() || c.p2.human()) {
 					Global.gui().loadPortrait(c, c.p1, c.p2);
+				}
 				return e;
 			}
 		}
@@ -668,18 +692,15 @@ public class NPC extends Character {
 		if (opponent.has(Trait.pheromones)
 				&& opponent.getArousal().percent() >= 20
 				&& opponent.rollPheromones(c)) {
-			c.write(opponent,
-					"<br>You see "
-							+ name()
-							+ " swoon slightly as she gets close to you. Seems like she's starting to feel the effects of your musk.");
-			add(c,
-					new Horny(this, opponent.getPheromonePower(), 10, opponent.nameOrPossessivePronoun()
-							+ " pheromones"));
+			c.write(opponent, "<br>You see " + name()
+					+ " swoon slightly as she gets close to you. Seems like she's starting to feel the effects of your musk.");
+			add(c, new Horny(this, opponent.getPheromonePower(), 10,
+					opponent.nameOrPossessivePronoun() + " pheromones"));
 		}
 		if (opponent.has(Trait.smqueen) && !is(Stsflag.masochism)) {
-			c.write(Global.capitalizeFirstLetter(String
-					.format("<br>%s seems to shudder in arousal at the thought of pain.",
-							subject())));
+			c.write(Global.capitalizeFirstLetter(String.format(
+					"<br>%s seems to shudder in arousal at the thought of pain.",
+					subject())));
 			add(c, new Masochistic(this));
 		}
 		if (has(Trait.RawSexuality)) {
@@ -730,6 +751,7 @@ public class NPC extends Character {
 		moodSwing(c);
 	}
 
+	@Override
 	public NPC clone() throws CloneNotSupportedException {
 		return (NPC) super.clone();
 	}
@@ -769,7 +791,8 @@ public class NPC extends Character {
 		return selfFitnessDelta - otherFitnessDelta;
 	}
 
-	private float rateMove(Skill skill, Combat c, float selfFit, float otherFit) {
+	private float rateMove(Skill skill, Combat c, float selfFit,
+			float otherFit) {
 		// Clone ourselves a new combat... This should clone our characters, too
 		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS_RATING)
 				&& (c.p1.human() || c.p2.human())) {
@@ -804,7 +827,8 @@ public class NPC extends Character {
 		for (WeightedSkill wskill : plist) {
 			// Run it a couple of times
 			float rating, raw_rating = 0;
-			if (wskill.skill.type(c) == Tactics.fucking && has(Trait.experienced)) {
+			if (wskill.skill.type(c) == Tactics.fucking
+					&& has(Trait.experienced)) {
 				wskill.weight += 1.0;
 			}
 			if (wskill.skill.type(c) == Tactics.damage && has(Trait.smqueen)) {
@@ -814,28 +838,38 @@ public class NPC extends Character {
 				raw_rating += rateMove(wskill.skill, c, selfFit, otherFit);
 			}
 
-	        wskill.weight += ai.getAiModifiers().modAttack(wskill.skill.getClass());
+			wskill.weight += ai.getAiModifiers()
+					.modAttack(wskill.skill.getClass());
 			// Sum up rating, add to map
-			rating = (float) Math.exp(RATING_FACTOR * raw_rating + wskill.weight + wskill.skill.priorityMod(c));
+			rating = (float) Math.exp(RATING_FACTOR * raw_rating + wskill.weight
+					+ wskill.skill.priorityMod(c)
+					+ Global.getMatch().condition.getSkillModifier()
+							.encouragement(wskill.skill, c, this));
 			sum += rating;
-			moveList.add(new WeightedSkill(sum, raw_rating, rating, wskill.skill));
+			moveList.add(
+					new WeightedSkill(sum, raw_rating, rating, wskill.skill));
 		}
-		if (sum == 0 || moveList.size() == 0)
+		if (sum == 0 || moveList.size() == 0) {
 			return null;
+		}
 		// Debug
 		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 			String s = "AI choices: ";
 			for (WeightedSkill entry : moveList) {
-				s += String.format("\n(%.1f\t\t%.1f\t\tculm: %.1f\t\t/ %.1f)\t\t-> %s", entry.raw_rating, entry.rating,
-						entry.weight, entry.rating * 100.0f / sum, entry.skill.getLabel(c));
+				s += String.format(
+						"\n(%.1f\t\t%.1f\t\tculm: %.1f\t\t/ %.1f)\t\t-> %s",
+						entry.raw_rating, entry.rating, entry.weight,
+						entry.rating * 100.0f / sum, entry.skill.getLabel(c));
 			}
 			System.out.println(s);
 		}
 		// Select
 		float s = Global.randomfloat() * sum;
 		for (WeightedSkill entry : moveList) {
-			if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS))
-				System.out.printf("%.1f/%.1f %s\n", entry.weight, s, entry.skill.toString());
+			if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
+				System.out.printf("%.1f/%.1f %s\n", entry.weight, s,
+						entry.skill.toString());
+			}
 			if (entry.weight > s) {
 				return entry.skill;
 			}
@@ -857,4 +891,8 @@ public class NPC extends Character {
 		return ai.getRecruitmentData();
 	}
 
+	@Override
+	public double dickPreference() {
+		return ai instanceof Eve ? 10.0 : super.dickPreference();
+	}
 }

@@ -19,28 +19,29 @@ public enum BreastsPart implements BodyPart {
 	e("E Cup", "huge", 6),
 	f("F Cup", "glorious", 7);
 
-	public String desc;
-	public String name;
-	public int size;
+	public String	desc;
+	public String	name;
+	public int		size;
+
 	BreastsPart(String name, String desc, int size) {
 		this.desc = desc;
 		this.name = name;
 		this.size = size;
 	}
-	public static String synonyms[] = {
-		"breasts", "tits", "boobs",
-	};
+
+	public static String synonyms[] = { "breasts", "tits", "boobs", };
+
 	@Override
 	public void describeLong(StringBuilder b, Character c) {
 		if (c.hasPussy() || size > 0) {
-			b.append(Global.capitalizeFirstLetter(describe(c,true)));
+			b.append(Global.capitalizeFirstLetter(describe(c, true)));
 			b.append(" adorn " + c.nameOrPossessivePronoun() + " chest.");
 		}
 	}
-	
+
 	@Override
 	public double priority(Character c) {
-		return this.getPleasure(c, null);
+		return getPleasure(c, null);
 	}
 
 	public String describe(Character c, boolean forceAdjective) {
@@ -48,9 +49,12 @@ public enum BreastsPart implements BodyPart {
 			if (forceAdjective) {
 				boolean first = Global.random(2) == 0;
 				boolean second = first ? Global.random(2) == 0 : true;
-				return (first ? desc + ' ' : "") + (second ? name + ' ' : "") + synonyms[Global.random(synonyms.length)];
+				return (first ? desc + ' ' : "") + (second ? name + ' ' : "")
+						+ synonyms[Global.random(synonyms.length)];
 			} else {
-				return Global.maybeString(desc + ' ') + Global.maybeString(name + ' ') + synonyms[Global.random(synonyms.length)];
+				return Global.maybeString(desc + ' ')
+						+ Global.maybeString(name + ' ')
+						+ synonyms[Global.random(synonyms.length)];
 			}
 		} else {
 			if (c.get(Attribute.Power) > 25) {
@@ -70,6 +74,7 @@ public enum BreastsPart implements BodyPart {
 		return describe(c, true);
 	}
 
+	@Override
 	public boolean isType(String type) {
 		return type.equalsIgnoreCase("breasts");
 	}
@@ -83,15 +88,16 @@ public enum BreastsPart implements BodyPart {
 	public String toString() {
 		return desc + ' ' + name;
 	}
-	
+
 	@Override
 	public boolean isReady(Character self) {
 		return true;
-	}	
+	}
 
 	@Override
 	public double getHotness(Character self, Character opponent) {
-		double hotness = -.25 + size * .3 * self.getOutfit().getExposure(ClothingSlot.top);
+		double hotness = -.25
+				+ size * .3 * self.getOutfit().getExposure(ClothingSlot.top);
 		if (!opponent.hasDick()) {
 			hotness /= 2;
 		}
@@ -108,9 +114,10 @@ public enum BreastsPart implements BodyPart {
 		return .75 + size * .2;
 	}
 
+	@Override
 	public BodyPart upgrade() {
 		BreastsPart values[] = BreastsPart.values();
-		if (ordinal() < values.length - 1) { 
+		if (ordinal() < values.length - 1) {
 			return values[ordinal() + 1];
 		} else {
 			return this;
@@ -132,24 +139,26 @@ public enum BreastsPart implements BodyPart {
 		return max;
 	}
 
+	@Override
 	public BodyPart downgrade() {
-		if (ordinal() > 0)
+		if (ordinal() > 0) {
 			return BreastsPart.values()[ordinal() - 1];
-		else
+		} else {
 			return this;
+		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public JSONObject save() {
 		JSONObject obj = new JSONObject();
-		obj.put("enum", this.name());
+		obj.put("enum", name());
 		return obj;
 	}
 
 	@Override
 	public BodyPart load(JSONObject obj) {
-		return BreastsPart.valueOf((String)obj.get("enum"));
+		return BreastsPart.valueOf((String) obj.get("enum"));
 	}
 
 	@Override
@@ -183,11 +192,11 @@ public enum BreastsPart implements BodyPart {
 	public String prefix() {
 		return "";
 	}
-	
+
 	@Override
 	public int compare(BodyPart other) {
 		if (other instanceof BreastsPart) {
-			return size - ((BreastsPart)other).size;
+			return size - ((BreastsPart) other).size;
 		}
 		return 0;
 	}
@@ -206,17 +215,18 @@ public enum BreastsPart implements BodyPart {
 	@Override
 	public int mod(Attribute a, int total) {
 		switch (a) {
-		case Speed:
-			return -Math.max(size - 3, 0);
-		case Seduction:
-			return Math.max(size - 3, 0);
-		default:
-			return 0;
+			case Speed:
+				return -Math.max(size - 3, 0);
+			case Seduction:
+				return Math.max(size - 3, 0);
+			default:
+				return 0;
 		}
 	}
 
 	@Override
-	public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {
+	public void tickHolding(Combat c, Character self, Character opponent,
+			BodyPart otherOrgan) {
 
 	}
 

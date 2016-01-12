@@ -1,4 +1,5 @@
 package nightgames.characters.custom.effect;
+
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 

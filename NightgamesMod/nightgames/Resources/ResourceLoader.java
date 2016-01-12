@@ -1,3 +1,4 @@
+// $codepro.audit.disable emptyCatchClause, logExceptions
 package nightgames.Resources;
 
 import java.io.File;
@@ -5,15 +6,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
-import java.util.zip.ZipEntry;
 
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
@@ -21,7 +16,7 @@ import nightgames.global.Global;
 public class ResourceLoader {
 	public static List<InputStream> getFileResourcesFromDirectory(String path) {
 		File dir = new File(path);
-		if (dir.exists() && dir.isDirectory()){
+		if (dir.exists() && dir.isDirectory()) {
 			List<InputStream> streams = new ArrayList<InputStream>();
 			try {
 				for (File f : dir.listFiles()) {
@@ -39,14 +34,17 @@ public class ResourceLoader {
 		}
 		return Collections.emptyList();
 	}
+
 	public static InputStream getFileResourceAsStream(String path) {
 		// first check in the working directory
 		File f = new File(path);
 		try {
 			InputStream res = new FileInputStream(f);
 			return res;
-		} catch (FileNotFoundException e) {}
-		// then check in the class directory		
-		return ResourceLoader.class.getClassLoader().getResourceAsStream("resources/" + path);
+		} catch (FileNotFoundException e) {
+		}
+		// then check in the class directory
+		return ResourceLoader.class.getClassLoader()
+				.getResourceAsStream("resources/" + path);
 	}
 }
