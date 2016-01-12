@@ -10,9 +10,9 @@
 		"base" : {
 			"level" : 10,
 			"attributes" : {
-				"Seduction" : 10,
-				"Cunning" : 7,
-				"Power" : 5,
+				"Seduction" : 18,
+				"Cunning" : 13,
+				"Power" : 7,
 				"Bio" : 5
 			},
 			"resources" : {
@@ -24,7 +24,9 @@
 			"traits" : [
 				"dryad",
 				"immobile",
-				"lethargic"
+				"lethargic",
+				"naturalgrowth",
+				"alwaysready"
 			]
 		},
 		"growth" : {
@@ -43,6 +45,70 @@
 			"traits" : [{
 					"level" : 12,
 					"trait" : "silvertongue"
+				},
+				{
+					"level" : 15,
+					"trait" : "pussyTraining1"
+				},
+				{
+					"level" : 18,
+					"trait" : "tight"
+				},
+				{
+					"level" : 21,
+					"trait" : "limbTraining1"
+				},
+				{
+					"level" : 24,
+					"trait" : "augmentedPheromones"
+				},
+				{
+					"level" : 27,
+					"trait" : "exhibitionist"
+				},
+				{
+					"level" : 30,
+					"trait" : "pussyTraining2"
+				},
+				{
+					"level" : 33,
+					"trait" : "tongueTraining1"
+				},
+				{
+					"level" : 36,
+					"trait" : "autonomousPussy"
+				},
+				{
+					"level" : 39,
+					"trait" : "limbTraining2"
+				},
+				{
+					"level" : 42,
+					"trait" : "holecontrol"
+				},
+				{
+					"level" : 45,
+					"trait" : "pussyTraining3"
+				},
+				{
+					"level" : 48,
+					"trait" : "magicEyeFrenzy"
+				},
+				{
+					"level" : 51,
+					"trait" : "lactating"
+				},
+				{
+					"level" : 54,
+					"trait" : "insertion"
+				},
+				{
+					"level" : 57,
+					"trait" : "tongueTraining2"
+				},
+				{
+					"level" : 60,
+					"trait" : "frenzyingjuices"
 				}
 			],
 			"preferredAttributes" : [{
@@ -198,35 +264,6 @@
 					}
 				,
 				"text" : "She wins by fucking you"
-			}, {
-				"requirements" :
-				{
-					"and" : [
-							{"bodypart" : "pussy"},
-							{"bodypart" : "tail"}
-						]
-				}
-				,
-				"text" : "She wins by... having a pussy and a tail?"
-			}, {
-				"requirements" :
-				{
-					"or": [
-						{"dom" : ""},
-						{"item" : {
-								"item" : "Dildo",
-								"amount" : 1
-							}
-						}
-					]
-				},
-				"text" : "She wins by... either being in a dominant position OR having a dildo?"
-			}, {
-				"requirements" :
-				{
-					"not": {"stance" : "Neutral"}
-				},
-				"text" : "She wins while not being in the neutral stance."
 			}, {
 				"text" : "Default NPC victory scene"
 			}

@@ -1,9 +1,7 @@
 package nightgames.skills;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Deque;
 import java.util.List;
 
 import nightgames.characters.Attribute;
@@ -62,7 +60,7 @@ public class LeechEnergy extends Skill {
 				+ " feel like tiny mouths nibbling on your skin as they suck the energy from {other:possessive} body.", getSelf(), target));
 			} else if (part.isType("mouth")) {
 				c.write(getSelf(), Global.format("A thick " + partStringSingular
-				+ " latches onto {other:name-possessive} mouth and violates {other:possessive} oral cavity. {other:name-possessive} feels as if the "
+				+ " latches onto {other:name-possessive} mouth and violates {other:possessive} oral cavity. {other:NAME-POSSESSIVE} mouth feels as if the "
 				+ partStringSingular + " is deep kissing {other:direct-object} as {other:possessive} energy flows through the connection.", getSelf(), target));
 			} else if (part.isType("cock")) {
 				c.write(getSelf(), Global.format("A particularly thick " + partStringSingular

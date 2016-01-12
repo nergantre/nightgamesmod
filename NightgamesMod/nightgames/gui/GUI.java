@@ -41,7 +41,6 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -69,7 +68,6 @@ import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 public class GUI extends JFrame implements Observer {
 
@@ -766,6 +764,15 @@ public class GUI extends JFrame implements Observer {
 		textPane.select(x, x);
 	}
 
+	public void message(Combat c, Character character, String text) {
+		if (c == null) {
+			message(text);
+		} else if (character == null) {
+			c.write(text);
+		} else {
+			c.write(character, text);
+		}
+	}
 	public void message(String text)
 	{
 		if (text.trim().length() == 0)

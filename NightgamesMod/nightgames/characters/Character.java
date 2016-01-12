@@ -50,6 +50,7 @@ import nightgames.stance.Stance;
 import nightgames.status.Alluring;
 import nightgames.status.DivineCharge;
 import nightgames.status.Enthralled;
+import nightgames.status.Frenzied;
 import nightgames.status.Resistance;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
@@ -973,7 +974,7 @@ public abstract class Character extends Observable implements Cloneable {
 		return roll < chance;
 	}
 	public int getPheromonePower() {
-		return 1 + get(Attribute.Animism) / 10;
+		return 1 + (get(Attribute.Animism) + get(Attribute.Bio)) / 10;
 	}
 	public void dropStatus(Combat c, Character opponent){
 		Set<Status> removedStatuses = status.stream().filter(s -> !s.meetsRequirements(c, this, opponent)).collect(Collectors.toSet()); 
@@ -1464,6 +1465,10 @@ public abstract class Character extends Observable implements Cloneable {
 		if(opponent.has(Trait.magicEyeTrance)&&getArousal().percent()>=50&& c.getStance().facing() &&Global.random(10)==0){
 			c.write(opponent,Global.format("<br>{other:NAME-POSSESSIVE} eyes start glowing and sends {self:subject} straight into a trance.", this, opponent));
 			add(c, new Trance(this));
+		}
+		if(opponent.has(Trait.magicEyeFrenzy)&&getArousal().percent()>=50&& c.getStance().facing() &&Global.random(10)==0){
+			c.write(opponent,Global.format("<br>{other:NAME-POSSESSIVE} eyes start glowing and sends {self:subject} into a frenzy.", this, opponent));
+			add(c, new Frenzied(this, 3));
 		}
 		if(opponent.has(Trait.magicEyeArousal)&&getArousal().percent()>=50&& c.getStance().facing() &&Global.random(5)==0){
 			c.write(opponent,Global.format("<br>{other:NAME-POSSESSIVE} eyes start glowing and {self:subject-action:feel|feels} a strong pleasure wherever {other:possessive} gaze lands. {self:SUBJECT-ACTION:are|is} literally being raped by {other:name-possessive} eyes!", this, opponent));

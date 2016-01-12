@@ -53,6 +53,7 @@ public class Body implements Cloneable {
 		prototypes.put(AnalPussyPart.class.getCanonicalName(), new AnalPussyPart());
 		prototypes.put(MouthPussyPart.class.getCanonicalName(), new MouthPussyPart());
 		prototypes.put(GenericBodyPart.class.getCanonicalName(), new GenericBodyPart("", 0, 1, 1, "none", "none"));
+		prototypes.put(FacePart.class.getCanonicalName(), new FacePart(.1, 2.3));
 	}
 
 	// yeah i know :(
@@ -466,6 +467,7 @@ public class Body implements Cloneable {
 		for(Status s: character.status){
 			bonusDamage+=s.pleasure(c, with, target, origBase);
 		}
+		bonusDamage = Math.max(0, bonusDamage);
 		double base = (magnitude + bonusDamage);
 		double multiplier = Math.max(0, 1 + ((sensitivity - 1) + (pleasure - 1) + (perceptionBonus - 1)));
 		double damage = base * multiplier;

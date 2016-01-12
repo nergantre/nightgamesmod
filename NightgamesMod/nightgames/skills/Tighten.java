@@ -3,10 +3,12 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.Stance;
+import nightgames.status.BodyFetish;
 
 public class Tighten extends Thrust {
 	public Tighten(Character self) {
@@ -29,11 +31,43 @@ public class Tighten extends Thrust {
 
 		int m = 5 + Global.random(10) + Math.min(getSelf().get(Attribute.Power)/3, 20);
 		result[0] = m;
-		result[1] = 0;
+		result[1] = 1;
 
 		return result;
 	}
 	
+	@Override
+	public boolean resolve(Combat c, Character target) {
+		BodyPart selfO = getSelfOrgan(c);
+		BodyPart targetO = getTargetOrgan(c, target);
+		Result result;
+		if(c.getStance().inserted(target)) {
+			result = Result.reverse;
+		} else if(c.getStance().en==Stance.anal){
+			result = Result.anal;
+		} else {
+			result = Result.normal;
+		}
+
+		if(getSelf().human()){
+			c.write(getSelf(),deal(c,0,result, target));
+		} else if(target.human()) {
+			c.write(getSelf(),receive(c,0,result, target));
+		}
+
+		int[] m = getDamage(c, target);
+		assert(m.length >= 2);
+
+		if (m[0] != 0)
+			target.body.pleasure(getSelf(), selfO, targetO, m[0], c);
+		if (m[1] != 0)
+			getSelf().body.pleasure(target, targetO, selfO, m[1], -10000, c, false);
+		if (selfO.isType("ass") && Global.random(100) < 2 + getSelf().get(Attribute.Fetish)) {
+			target.add(c, new BodyFetish(target, getSelf(), "ass", .25));
+		}
+		return true;
+	}
+
 	@Override
 	public int getMojoBuilt(Combat c) {
 		return 0;

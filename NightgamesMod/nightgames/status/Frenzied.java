@@ -50,8 +50,6 @@ public class Frenzied extends DurationStatus {
 		Character p = Global.noneCharacter();
 		FUCK_SKILLS.add(new AssFuck(p));
 		FUCK_SKILLS.add(new Carry(p));
-		FUCK_SKILLS.add(new CounterDrain(p));
-		FUCK_SKILLS.add(new CounterRide(p));
 		FUCK_SKILLS.add(new Shove(p));
 		FUCK_SKILLS.add(new Tackle(p));
 		FUCK_SKILLS.add(new Straddle(p));

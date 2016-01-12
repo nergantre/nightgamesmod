@@ -198,7 +198,9 @@ public class Global {
 		players.add(getNPC("Mara"));
 		match = new Match(players,Modifier.normal);
 	}
-	
+	public static int random(int start, int end) {
+		return rng.nextInt(end - start) + start;
+	}
 	public static int random(int d)
 	{
 		return d <= 0 ? 0 : rng.nextInt(d);
@@ -404,6 +406,7 @@ public class Global {
 		getSkillPool().add(new TemptressRide(p));
 		getSkillPool().add(new TemptressStripTease(p));
 		getSkillPool().add(new Blindside(p));
+		getSkillPool().add(new LeechSeed(p));
 
 		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 			getSkillPool().add(new SelfStun(p));	
@@ -483,15 +486,26 @@ public class Global {
 	public static void dawn(){
 		match=null;
 		double level = 0;
+		int maxLevelTracker = 0;
+
 		for(Character player: players){
 			player.getStamina().fill();
 			player.getArousal().empty();
 			player.getMojo().empty();
 			player.change(Modifier.normal);
 			level += player.getLevel();
+			maxLevelTracker = Math.max(player.getLevel(), maxLevelTracker);
 		}
+		final int maxLevel = maxLevelTracker;
+		players.stream().filter(c -> c.has(Trait.naturalgrowth)).filter(c -> c.getLevel() < maxLevel + 2)
+		.forEach(c -> {
+			while (c.getLevel() < maxLevel + 2) {
+				c.ding();
+			}
+		});
+
 		level /= players.size();
-		for(Character rested: resting){
+		for(Character rested: resting) {
 			rested.gainXP(100+Math.max(0, (int)Math.round(10*(level-rested.getLevel()))));
 		}
 		date++;
@@ -1142,9 +1156,10 @@ public class Global {
 		});
 	}
 	
-	public static String format(String format, Character self, Character target) {
+	public static String format(String format, Character self, Character target, Object... strings) {
 		//pattern to find stuff like {word:otherword:finalword} in strings
 		Pattern p = Pattern.compile("\\{((?:self)|(?:other))(?::([^:}]+))?(?::([^:}]+))?\\}");
+		format = String.format(format, strings);
 		Matcher matcher = p.matcher(format);
 		StringBuffer b = new StringBuffer();
 		while (matcher.find()) {

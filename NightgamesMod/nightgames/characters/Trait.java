@@ -73,8 +73,10 @@ public enum Trait {
 	magicEyeArousal("Magic Eyes: Arouse", "Eyes have a chance to arouse"),
 	magicEyeEnthrall("Magic Eyes: Enthrall", "Eyes have a chance to enthrall"),
 	magicEyeTrance("Magic Eyes: Trance", "Eyes have a chance to entrance"),
+	magicEyeFrenzy("Magic Eyes: Frenzy", "Eyes have a chance to cause frenzy"),
 	soulsucker("Soulsucker", "Soul sucking lips"),
 	entrallingjuices("Enthralling cum", "Enthralling juices"),
+	frenzyingjuices("Frenzying juices", "Frenzying juices"),
 	lacedjuices("Laced Juices", "Intoxicating bodily fluids"), //opponents take temptation when using oral skills
 	addictivefluids("Addictive Fluids", "Addictive bodily fluids"), //opponents can only use oral skills if available
 	lactating("Lactating","Breasts produces milk", new TraitDescription() {
@@ -118,6 +120,7 @@ public enum Trait {
 	insertion("Insertion Master","More pleasure on insertion"), //more damage on insertion.
 	proheels("Heels Pro", "Pro at walking around in heels"), //no speed penalty from heels
 	masterheels("Heels Master", "Master at moving in heels, resists knockdowns"), //graceful when wearing heels
+	naturalgrowth("Natural Growth", "Always keeps up on levels"), //levels up to highest level + 2 after each night
 
 	//training perks
 	analTraining1("Anal Training 1", "Refined ass control."),

@@ -5,6 +5,7 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.status.FluidAddiction;
+import nightgames.status.Frenzied;
 import nightgames.status.Stsflag;
 import nightgames.status.Trance;
 
@@ -35,6 +36,10 @@ public class MouthPart extends GenericBodyPart {
 		if (!fluid.isEmpty() && opponent.has(Trait.lacedjuices)) {
 			c.write(self, Global.capitalizeFirstLetter(opponent.nameOrPossessivePronoun()) + " drug-laced " + fluid + " leaves " + self.nameOrPossessivePronoun() + " entire body tingling with arousal.");
 			self.arouse(Math.max(opponent.getArousal().get() / 10, 5), c);
+		}
+		if (!fluid.isEmpty() && opponent.has(Trait.frenzyingjuices) && Global.random(5) == 0) {
+			c.write(self, Global.capitalizeFirstLetter(opponent.nameOrPossessivePronoun()) + " madness-inducing " + fluid + " leaves " + self.nameOrPossessivePronoun() + " in a state of frenzy.");
+			self.add(c, new Frenzied(self, 3));
 		}
 		if (!fluid.isEmpty() && opponent.has(Trait.addictivefluids) && !self.is(Stsflag.tolerance)) {
 			self.add(c, new FluidAddiction(self, opponent, 5));

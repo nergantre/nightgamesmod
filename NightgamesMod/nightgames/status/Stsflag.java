@@ -49,4 +49,5 @@ public enum Stsflag {
 	aphrodisiac,
 	sensitized,
 	purgable,
+	seeded,
 }

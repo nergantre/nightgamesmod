@@ -11,6 +11,7 @@ import nightgames.characters.custom.requirement.EitherInsertedRequirement;
 import nightgames.characters.custom.requirement.InsertedRequirement;
 import nightgames.characters.custom.requirement.ReverseRequirement;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 import nightgames.global.JSONUtils;
 
 public class DivineCharge extends Status {
@@ -45,7 +46,7 @@ public class DivineCharge extends Status {
 
 	@Override
 	public String describe(Combat c) {
-		return "Concentrated divine energy surges through " + affected.nameOrPossessivePronoun() + " "+ getPart(c)+".";
+		return "Concentrated divine energy surges through " + affected.nameOrPossessivePronoun() + " "+ getPart(c)+" (" + Global.formatDecimal(magnitude) + ").";
 	}
 
 	@Override
@@ -71,7 +72,7 @@ public class DivineCharge extends Status {
 		// every 10 divinity past 10, you are allowed to add another stack of divine charge.
 		// this will get out of hand super quick, but eh, you shouldn't let it get
 		// that far.
-		double maximum = Math.max(1, Math.pow(2., affected.get(Attribute.Divinity) / 5.0) * .25);
+		double maximum = Math.max(2, Math.pow(2., affected.get(Attribute.Divinity) / 5.0) * .25);
 		this.magnitude = Math.min(maximum, this.magnitude);
 	}
 
