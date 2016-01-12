@@ -16,15 +16,13 @@ public class EyesOfTemptation extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Seduction) >= 45
-				|| user.get(Attribute.Dark) >= 20
+		return user.get(Attribute.Seduction) >= 45 || user.get(Attribute.Dark) >= 20
 				|| user.get(Attribute.Arcane) >= 10;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canRespond() && c.getStance().facing()
-				&& !target.wary();
+		return getSelf().canRespond() && c.getStance().facing() && !target.wary();
 	}
 
 	@Override
@@ -34,8 +32,7 @@ public class EyesOfTemptation extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		Result result = target.roll(this, c, accuracy(c)) ? Result.normal
-				: Result.miss;
+		Result result = target.roll(this, c, accuracy(c)) ? Result.normal : Result.miss;
 		if (getSelf().human()) {
 			c.write(getSelf(), deal(c, 0, result, target));
 		} else if (target.human()) {
@@ -69,8 +66,7 @@ public class EyesOfTemptation extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.normal) {
 			return Global.format(
 					"As {other:subject-action:gaze|gazes} into {self:name-possessive} eyes, {other:subject-action:feel|feels} {other:possessive} will slipping into the abyss.",
@@ -83,8 +79,7 @@ public class EyesOfTemptation extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return deal(c, damage, modifier, target);
 	}
 

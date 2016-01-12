@@ -1,4 +1,3 @@
-// $codepro.audit.disable logExceptions
 package nightgames.characters;
 
 import java.io.File;
@@ -25,8 +24,8 @@ public class LoadablePersonality extends BasePersonality {
 	/**
 	 *
 	 */
-	private static final long	serialVersionUID	= -5611239045633826129L;
-	Scriptable					scope;
+	private static final long serialVersionUID = -5611239045633826129L;
+	Scriptable scope;
 
 	public LoadablePersonality(String path) {
 		super();
@@ -34,34 +33,24 @@ public class LoadablePersonality extends BasePersonality {
 		try {
 			Reader reader = new FileReader(new File(path));
 			scope = Global.cx.initStandardObjects(null, true);
-			Object result = Global.cx.evaluateReader(scope, reader, path, 1,
-					null);
+			Object result = Global.cx.evaluateReader(scope, reader, path, 1, null);
 			System.out.println(Context.toString(result));
-			Object name = Global.cx.evaluateString(scope, "getName()", path, 1,
-					null);
+			Object name = Global.cx.evaluateString(scope, "getName()", path, 1, null);
 			character = new NPC(Context.toString(name), 1, this);
-			ScriptableObject.putProperty(scope, "character",
-					Context.javaToJS(character, scope));
-			ScriptableObject.defineProperty(scope, "Trait",
-					new NativeJavaClass(scope, Trait.class),
+			ScriptableObject.putProperty(scope, "character", Context.javaToJS(character, scope));
+			ScriptableObject.defineProperty(scope, "Trait", new NativeJavaClass(scope, Trait.class),
 					ScriptableObject.READONLY);
-			ScriptableObject.defineProperty(scope, "Result",
-					new NativeJavaClass(scope, Result.class),
+			ScriptableObject.defineProperty(scope, "Result", new NativeJavaClass(scope, Result.class),
 					ScriptableObject.READONLY);
-			ScriptableObject.defineProperty(scope, "Attribute",
-					new NativeJavaClass(scope, Attribute.class),
+			ScriptableObject.defineProperty(scope, "Attribute", new NativeJavaClass(scope, Attribute.class),
 					ScriptableObject.READONLY);
-			ScriptableObject.defineProperty(scope, "Emotion",
-					new NativeJavaClass(scope, Emotion.class),
+			ScriptableObject.defineProperty(scope, "Emotion", new NativeJavaClass(scope, Emotion.class),
 					ScriptableObject.READONLY);
-			ScriptableObject.defineProperty(scope, "Item",
-					new NativeJavaClass(scope, Item.class),
+			ScriptableObject.defineProperty(scope, "Item", new NativeJavaClass(scope, Item.class),
 					ScriptableObject.READONLY);
-			ScriptableObject.defineProperty(scope, "Clothing",
-					new NativeJavaClass(scope, Clothing.class),
+			ScriptableObject.defineProperty(scope, "Clothing", new NativeJavaClass(scope, Clothing.class),
 					ScriptableObject.READONLY);
-			ScriptableObject.defineProperty(scope, "Flag",
-					new NativeJavaClass(scope, Flag.class),
+			ScriptableObject.defineProperty(scope, "Flag", new NativeJavaClass(scope, Flag.class),
 					ScriptableObject.READONLY);
 			character.add(Trait.witch);
 		} catch (FileNotFoundException e) {
@@ -115,51 +104,38 @@ public class LoadablePersonality extends BasePersonality {
 	@Override
 	public String temptLiner(Combat c) {
 		Character target = c.getOther(character);
-		ScriptableObject.putProperty(scope, "target",
-				Context.javaToJS(target, scope));
+		ScriptableObject.putProperty(scope, "target", Context.javaToJS(target, scope));
 		return execute("taunt(target)", "taunt");
 	}
 
 	@Override
 	public String victory(Combat c, Result flag) {
-		ScriptableObject.putProperty(scope, "combatVar",
-				Context.javaToJS(c, scope));
-		ScriptableObject.putProperty(scope, "flagVar",
-				Context.javaToJS(flag, scope));
+		ScriptableObject.putProperty(scope, "combatVar", Context.javaToJS(c, scope));
+		ScriptableObject.putProperty(scope, "flagVar", Context.javaToJS(flag, scope));
 		return execute("victory(combatVar, flagVar)", "victory");
 	}
 
 	@Override
 	public String defeat(Combat c, Result flag) {
-		ScriptableObject.putProperty(scope, "combatVar",
-				Context.javaToJS(c, scope));
-		ScriptableObject.putProperty(scope, "flagVar",
-				Context.javaToJS(flag, scope));
+		ScriptableObject.putProperty(scope, "combatVar", Context.javaToJS(c, scope));
+		ScriptableObject.putProperty(scope, "flagVar", Context.javaToJS(flag, scope));
 		return execute("defeat(combatVar, flagVar)", "defeat");
 	}
 
 	@Override
 	public String victory3p(Combat c, Character target, Character assist) {
-		ScriptableObject.putProperty(scope, "combatVar",
-				Context.javaToJS(c, scope));
-		ScriptableObject.putProperty(scope, "targetVar",
-				Context.javaToJS(target, scope));
-		ScriptableObject.putProperty(scope, "assistVar",
-				Context.javaToJS(assist, scope));
-		return execute("victory3p(combatVar, targetVar, assistVar)",
-				"victory3p");
+		ScriptableObject.putProperty(scope, "combatVar", Context.javaToJS(c, scope));
+		ScriptableObject.putProperty(scope, "targetVar", Context.javaToJS(target, scope));
+		ScriptableObject.putProperty(scope, "assistVar", Context.javaToJS(assist, scope));
+		return execute("victory3p(combatVar, targetVar, assistVar)", "victory3p");
 	}
 
 	@Override
 	public String intervene3p(Combat c, Character target, Character assist) {
-		ScriptableObject.putProperty(scope, "combatVar",
-				Context.javaToJS(c, scope));
-		ScriptableObject.putProperty(scope, "targetVar",
-				Context.javaToJS(target, scope));
-		ScriptableObject.putProperty(scope, "assistVar",
-				Context.javaToJS(assist, scope));
-		return execute("intervene3p(combatVar, targetVar, assistVar)",
-				"intervene3p");
+		ScriptableObject.putProperty(scope, "combatVar", Context.javaToJS(c, scope));
+		ScriptableObject.putProperty(scope, "targetVar", Context.javaToJS(target, scope));
+		ScriptableObject.putProperty(scope, "assistVar", Context.javaToJS(assist, scope));
+		return execute("intervene3p(combatVar, targetVar, assistVar)", "intervene3p");
 	}
 
 	@Override
@@ -169,25 +145,20 @@ public class LoadablePersonality extends BasePersonality {
 
 	@Override
 	public String draw(Combat c, Result flag) {
-		ScriptableObject.putProperty(scope, "combatVar",
-				Context.javaToJS(c, scope));
-		ScriptableObject.putProperty(scope, "flagVar",
-				Context.javaToJS(flag, scope));
+		ScriptableObject.putProperty(scope, "combatVar", Context.javaToJS(c, scope));
+		ScriptableObject.putProperty(scope, "flagVar", Context.javaToJS(flag, scope));
 		return execute("draw(combatVar, flagVar)", "draw");
 	}
 
 	@Override
 	public boolean fightFlight(Character opponent) {
-		ScriptableObject.putProperty(scope, "opponentVar",
-				Context.javaToJS(opponent, scope));
-		return Boolean
-				.valueOf(execute("fightFlight(opponentVar)", "fightFlight"));
+		ScriptableObject.putProperty(scope, "opponentVar", Context.javaToJS(opponent, scope));
+		return Boolean.valueOf(execute("fightFlight(opponentVar)", "fightFlight"));
 	}
 
 	@Override
 	public boolean attack(Character opponent) {
-		ScriptableObject.putProperty(scope, "opponentVar",
-				Context.javaToJS(opponent, scope));
+		ScriptableObject.putProperty(scope, "opponentVar", Context.javaToJS(opponent, scope));
 		return Boolean.valueOf(execute("attack(opponentVar)", "fightFlight"));
 	}
 
@@ -208,12 +179,9 @@ public class LoadablePersonality extends BasePersonality {
 
 	@Override
 	public boolean checkMood(Combat c, Emotion mood, int value) {
-		ScriptableObject.putProperty(scope, "moodVar",
-				Context.javaToJS(mood, scope));
-		ScriptableObject.putProperty(scope, "valueVar",
-				Context.javaToJS(value, scope));
-		return Boolean
-				.valueOf(execute("checkMood(moodVar, valueVar)", "checkMood"));
+		ScriptableObject.putProperty(scope, "moodVar", Context.javaToJS(mood, scope));
+		ScriptableObject.putProperty(scope, "valueVar", Context.javaToJS(value, scope));
+		return Boolean.valueOf(execute("checkMood(moodVar, valueVar)", "checkMood"));
 	}
 
 	@Override

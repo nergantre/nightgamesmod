@@ -13,8 +13,8 @@ import nightgames.global.Flag;
 import nightgames.global.Global;
 
 public class Informant extends Activity {
-	boolean						acted;
-	private Map<String, NPC>	customNPCChoices;
+	boolean acted;
+	private Map<String, NPC> customNPCChoices;
 
 	public Informant(Character player) {
 		super("Information Broker", player);
@@ -250,8 +250,7 @@ public class Informant extends Activity {
 		}
 		if (choice.equals("Body Shop: $2500")) {
 			if (player.money >= 2500) {
-				Global.gui().message(
-						"Aesop looks at you strangely then slips you a piece of paper.");
+				Global.gui().message("Aesop looks at you strangely then slips you a piece of paper.");
 				Global.flag(Flag.bodyShop);
 				player.money -= 2500;
 				Global.gui().choose(this, "Leave");
@@ -319,8 +318,7 @@ public class Informant extends Activity {
 			}
 		}
 		if (choice.equals("More Competitors")) {
-			if (!Global.checkFlag(Flag.Reyka)
-					&& Global.checkFlag(Flag.blackMarketPlus)) {
+			if (!Global.checkFlag(Flag.Reyka) && Global.checkFlag(Flag.blackMarketPlus)) {
 				Global.gui().message(
 						"<i>\"Let me tell you the story of a succubus named Reyka. So a while back a competitor decides it's a good idea to save up a bunch of money and buy the most "
 								+ "powerful summoning scroll on the black market and feed the demon enough mana to keep her fighting for several matches. You can imagine how well that worked. He summoned "
@@ -330,8 +328,7 @@ public class Informant extends Activity {
 								+ "banish her and someone's paying her living expenses. She's pretty aggressive, but probably not actually dangerous... probably.\"</i><p>");
 				Global.gui().choose(this, "Reyka: $1000");
 			}
-			if (!Global.checkFlag(Flag.Kat)
-					&& Global.checkFlag(Flag.magicstore)) {
+			if (!Global.checkFlag(Flag.Kat) && Global.checkFlag(Flag.magicstore)) {
 				Global.gui().message(
 						"<i>\"So last year Kat (funny name, you'll see why later) was responsible for a couple of all time firsts. The first 'first'.... The first unprecedented event "
 								+ "was an actual virgin joining in a match. She had never had sex before and may not have even masturbated before if the rumors are true. Her first match, she became everyone's toy. Absolutely everyone "
@@ -347,34 +344,28 @@ public class Informant extends Activity {
 				if (c.isCustomNPC() && !Global.everyone().contains(c)) {
 					NPC npc = (NPC) c;
 					RecruitmentData data = npc.getRecruitmentData();
-					if (data.requirement.stream()
-							.allMatch((req) -> req.meets(null, player, null))) {
-						Global.gui().message(
-								"<i>\"" + data.introduction + "\"</i><p>");
+					if (data.requirement.stream().allMatch((req) -> req.meets(null, player, null))) {
+						Global.gui().message("<i>\"" + data.introduction + "\"</i><p>");
 						customNPCChoices.put(data.action, npc);
 						Global.gui().choose(this, data.action);
 					}
 				}
 			}
-			if (!Global.checkFlag(Flag.Eve)
-					&& Global.checkFlag(Flag.blackMarketPlus)
-					&& player.getRank() >= 2) {
-				Global.gui().message(
-						"<i>\"Eve Ranger is... a lot of things, but mostly a cautionary tale. "
-								+ "She started the same year I did. From the beginning, it was obvious"
-								+ " she had more potential than any of us, She could have become a "
-								+ "dominant player, if she cared about actually winning, but instead "
-								+ "she focused almost obsessively on enhancing her own pleasure. She "
-								+ "spent most of her winnings on giving herself a bunch of new fetishes"
-								+ " so she can get off on almost anything. She got herself a black"
-								+ " market cock and even a set of testicles. They're a liability, as "
-								+ "I'm sure you've experienced more than once (not that I'd ever consider"
-								+ " lopping mine off), but she added them just to make her ejaculations "
-								+ "more satisfying. She's never taken the matches seriously and only "
-								+ "tries to win to indulge in her sadism. I'm mentioning her because "
-								+ "you guys can probably compete with her if she's just fucking around. "
-								+ "To be honest though, I'd be perfectly happy to never deal with her "
-								+ "again.\"</i><p>");
+			if (!Global.checkFlag(Flag.Eve) && Global.checkFlag(Flag.blackMarketPlus) && player.getRank() >= 2) {
+				Global.gui().message("<i>\"Eve Ranger is... a lot of things, but mostly a cautionary tale. "
+						+ "She started the same year I did. From the beginning, it was obvious"
+						+ " she had more potential than any of us, She could have become a "
+						+ "dominant player, if she cared about actually winning, but instead "
+						+ "she focused almost obsessively on enhancing her own pleasure. She "
+						+ "spent most of her winnings on giving herself a bunch of new fetishes"
+						+ " so she can get off on almost anything. She got herself a black"
+						+ " market cock and even a set of testicles. They're a liability, as "
+						+ "I'm sure you've experienced more than once (not that I'd ever consider"
+						+ " lopping mine off), but she added them just to make her ejaculations "
+						+ "more satisfying. She's never taken the matches seriously and only "
+						+ "tries to win to indulge in her sadism. I'm mentioning her because "
+						+ "you guys can probably compete with her if she's just fucking around. "
+						+ "To be honest though, I'd be perfectly happy to never deal with her " + "again.\"</i><p>");
 
 				Global.gui().choose(this, "Eve: $1000");
 			}
@@ -387,10 +378,8 @@ public class Informant extends Activity {
 			try {
 				Character copy = player.clone();
 				copy.finishClone(null);
-				if (data.effects.stream().allMatch(
-						(effect) -> effect.execute(null, copy, null))) {
-					data.effects.stream().forEach(
-							(effect) -> effect.execute(null, player, null));
+				if (data.effects.stream().allMatch((effect) -> effect.execute(null, copy, null))) {
+					data.effects.stream().forEach((effect) -> effect.execute(null, player, null));
 					Global.gui().message("<i>\"" + data.confirm + "\"</i>");
 					acted = true;
 					Global.newChallenger(npc.ai);
@@ -407,8 +396,7 @@ public class Informant extends Activity {
 				Global.gui().message(
 						"<i>\"Ok, I'll talk to Reyka. She spends a lot of nights surfing the internet, but I'm sure she wouldn't mind an opportunity for some free prey.\"</i>");
 				acted = true;
-				Global.newChallenger(
-						Global.getNPCByType(new Reyka().getType()).ai);
+				Global.newChallenger(Global.getNPCByType(new Reyka().getType()).ai);
 				Global.flag(Flag.Reyka);
 			} else {
 				Global.gui().message("You don't have enough money<p>");
@@ -421,8 +409,7 @@ public class Informant extends Activity {
 						"<i>\"Pleasure doing business with you. Just be nice to Kat. She's very catlike and confident when she's turned on, but during the day or after climax, she's "
 								+ "just an ordinary girl. Besides, if her fans hear that you've been mean to her, they'll probably kick your ass. That includes me, by the way.\"</i>");
 				acted = true;
-				Global.newChallenger(
-						Global.getNPCByType(new Kat().getType()).ai);
+				Global.newChallenger(Global.getNPCByType(new Kat().getType()).ai);
 				Global.flag(Flag.Kat);
 			} else {
 				Global.gui().message("You don't have enough money<p>");
@@ -431,15 +418,14 @@ public class Informant extends Activity {
 		if (choice.equals("Eve: $1000")) {
 			if (player.money >= 1000) {
 				player.money -= 1000;
-				Global.gui().message(
-						"You think you see Aesop flinch slightly, but he does a "
+				Global.gui()
+						.message("You think you see Aesop flinch slightly, but he does a "
 								+ "decent job hiding it. <i>\"I was kinda hoping not to have to talk to"
 								+ " her anytime soon. Nah, don't worry about it. It's what you're paying"
 								+ " for after all.\"</i>");
 
 				acted = true;
-				Global.newChallenger(
-						Global.getNPCByType(new Eve().getType()).ai);
+				Global.newChallenger(Global.getNPCByType(new Eve().getType()).ai);
 				Global.flag(Flag.Eve);
 			} else {
 				Global.gui().message("You don't have enough money<p>");
@@ -463,36 +449,29 @@ public class Informant extends Activity {
 		if (!Global.checkFlag(Flag.meditation)) {
 			Global.gui().choose(this, "Sharpening the mind: $200");
 		}
-		if (Global.checkFlag(Flag.basicStores)
-				&& !Global.checkFlag(Flag.blackMarket)) {
+		if (Global.checkFlag(Flag.basicStores) && !Global.checkFlag(Flag.blackMarket)) {
 			Global.gui().choose(this, "Black Market: $400");
 		}
-		if (Global.checkFlag(Flag.girlAdvice)
-				&& !Global.checkFlag(Flag.CassieKnown)) {
+		if (Global.checkFlag(Flag.girlAdvice) && !Global.checkFlag(Flag.CassieKnown)) {
 			Global.gui().choose(this, "Cassie: $300");
 		}
-		if (Global.checkFlag(Flag.girlAdvice)
-				&& !Global.checkFlag(Flag.AngelKnown)) {
+		if (Global.checkFlag(Flag.girlAdvice) && !Global.checkFlag(Flag.AngelKnown)) {
 			Global.gui().choose(this, "Angel: $300");
 		}
-		if (Global.checkFlag(Flag.girlAdvice)
-				&& !Global.checkFlag(Flag.MaraKnown)) {
+		if (Global.checkFlag(Flag.girlAdvice) && !Global.checkFlag(Flag.MaraKnown)) {
 			Global.gui().choose(this, "Mara: $300");
 		}
-		if (Global.checkFlag(Flag.girlAdvice)
-				&& !Global.checkFlag(Flag.JewelKnown)) {
+		if (Global.checkFlag(Flag.girlAdvice) && !Global.checkFlag(Flag.JewelKnown)) {
 			Global.gui().choose(this, "Jewel: $300");
 		}
 		if (Global.checkFlag(Flag.rank1)) {
-			if (Global.checkFlag(Flag.blackMarket)
-					&& !Global.checkFlag(Flag.blackMarketPlus)) {
+			if (Global.checkFlag(Flag.blackMarket) && !Global.checkFlag(Flag.blackMarketPlus)) {
 				Global.gui().choose(this, "Exotic Artifacts: $2500");
 			}
 			if (!Global.checkFlag(Flag.bodyShop)) {
 				Global.gui().choose(this, "Body Shop: $2500");
 			}
-			if (Global.checkFlag(Flag.meditation)
-					&& !Global.checkFlag(Flag.dojo)) {
+			if (Global.checkFlag(Flag.meditation) && !Global.checkFlag(Flag.dojo)) {
 				Global.gui().choose(this, "Martial Arts: $2500");
 			}
 			if (!Global.checkFlag(Flag.workshop)) {

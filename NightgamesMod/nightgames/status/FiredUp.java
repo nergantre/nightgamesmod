@@ -10,9 +10,9 @@ import nightgames.global.JSONUtils;
 
 public class FiredUp extends DurationStatus {
 
-	private int			stack;
-	private Character	other;
-	private String		part;
+	private int stack;
+	private Character other;
+	private String part;
 
 	public FiredUp(Character affected, Character other, String part) {
 		super("Fired Up", affected, 2);
@@ -31,8 +31,7 @@ public class FiredUp extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s really getting into using %s %s.",
-				affected.subjectAction("are", "is"),
+		return String.format("%s really getting into using %s %s.", affected.subjectAction("are", "is"),
 				affected.possessivePronoun(), part);
 	}
 
@@ -40,34 +39,28 @@ public class FiredUp extends DurationStatus {
 	public String describe(Combat c) {
 		if (affected.human()) {
 			if (stack == 1) {
-				return "You are getting a good sense of how to best use your "
-						+ part + ".";
+				return "You are getting a good sense of how to best use your " + part + ".";
 			} else if (stack == 2) {
-				return String.format(
-						"The movements of your %s are growing ever more attuned to %s reactions.",
-						part, other.nameOrPossessivePronoun());
+				return String.format("The movements of your %s are growing ever more attuned to %s reactions.", part,
+						other.nameOrPossessivePronoun());
 			} else {
 				return String.format(
 						"You have completely mapped out %s body, and you are finding all of %s most sensitive areas as if by magic.",
-						affected.nameOrPossessivePronoun(),
-						affected.possessivePronoun());
+						affected.nameOrPossessivePronoun(), affected.possessivePronoun());
 			}
 		} else {
 			if (stack == 1) {
 				return Global.capitalizeFirstLetter(String.format(
 						"%s has a big grin on %s face at the prospect of further pleasuring you with %s %s.",
-						affected.pronoun(), affected.possessivePronoun(),
-						affected.possessivePronoun(), part));
+						affected.pronoun(), affected.possessivePronoun(), affected.possessivePronoun(), part));
 			} else if (stack == 2) {
-				return Global.capitalizeFirstLetter(String.format(
-						"%s looks as if %s is enjoying working %s %s almost as much as you are.",
-						affected.pronoun(), affected.possessivePronoun(),
-						affected.pronoun(), part));
+				return Global.capitalizeFirstLetter(
+						String.format("%s looks as if %s is enjoying working %s %s almost as much as you are.",
+								affected.pronoun(), affected.possessivePronoun(), affected.pronoun(), part));
 			} else {
 				return Global.capitalizeFirstLetter(String.format(
 						"%s is focused almost exclusively on using %s %s to the greatest possible effect, and it's working.",
-						affected.pronoun(), affected.possessivePronoun(),
-						part));
+						affected.pronoun(), affected.possessivePronoun(), part));
 			}
 		}
 	}

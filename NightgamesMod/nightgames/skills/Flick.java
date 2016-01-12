@@ -16,8 +16,8 @@ public class Flick extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.crotchAvailable() && c.getStance().reachBottom(getSelf())
-				&& getSelf().canAct() && !getSelf().has(Trait.shy);
+		return target.crotchAvailable() && c.getStance().reachBottom(getSelf()) && getSelf().canAct()
+				&& !getSelf().has(Trait.shy);
 	}
 
 	@Override
@@ -48,8 +48,7 @@ public class Flick extends Skill {
 					c.write(getSelf(), receive(c, m, Result.normal, target));
 				}
 				if (target.has(Trait.achilles)) {
-					m += 2 + Global
-							.random(target.get(Attribute.Perception) / 2);
+					m += 2 + Global.random(target.get(Attribute.Perception) / 2);
 					mojoLost = 40;
 				}
 				target.pain(c, m);
@@ -71,8 +70,7 @@ public class Flick extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Seduction) >= 17
-				&& !user.has(Trait.softheart);
+		return user.get(Attribute.Seduction) >= 17 && !user.has(Trait.softheart);
 	}
 
 	@Override
@@ -91,18 +89,14 @@ public class Flick extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return "You flick your finger between " + target.name()
-					+ "'s legs, but don't hit anything sensitive.";
+			return "You flick your finger between " + target.name() + "'s legs, but don't hit anything sensitive.";
 		} else if (modifier == Result.weak) {
-			return "You flick " + target.name() + "'s balls, but "
-					+ target.pronoun() + " seems utterly unfazed.";
+			return "You flick " + target.name() + "'s balls, but " + target.pronoun() + " seems utterly unfazed.";
 		} else {
 			if (target.hasBalls()) {
-				return "You use two fingers to simultaneously flick both of "
-						+ target.name()
+				return "You use two fingers to simultaneously flick both of " + target.name()
 						+ " dangling balls. She tries to stifle a yelp and jerks her hips away reflexively. "
 						+ "You feel a twinge of empathy, but she's done far worse.";
 			} else {
@@ -114,14 +108,11 @@ public class Flick extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return getSelf().name()
-					+ " flicks at your balls, but hits only air.";
+			return getSelf().name() + " flicks at your balls, but hits only air.";
 		} else if (modifier == Result.weak) {
-			return getSelf().name() + " flicks your balls, but "
-					+ " you barely feel a thing.";
+			return getSelf().name() + " flicks your balls, but " + " you barely feel a thing.";
 		} else {
 			return getSelf().name()
 					+ " gives you a mischievous grin and flicks each of your balls with her finger. It startles you more than anything, but it does hurt and "

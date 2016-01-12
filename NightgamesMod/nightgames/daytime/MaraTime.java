@@ -51,15 +51,14 @@ public class MaraTime extends BaseNPCTime {
 		bionicCock.ingredients.put(Item.Dildo, 1);
 		bionicCock.requirements.add(new BodyPartRequirement("cock"));
 		bionicCock.requirements.add((c, self, other) -> {
-			return self.body.get("cock").stream()
-					.anyMatch(cock -> ((CockPart) cock).isGeneric());
+			return self.body.get("cock").stream().anyMatch(cock -> ((CockPart) cock).isGeneric());
 		});
 		bionicCock.additionalRequirements = "A normal cock";
 		bionicCock.option = "Bionic Cock";
 		bionicCock.scene = "[Placeholder]<br>Mara installs a bionic cock on you";
 		bionicCock.effect = (c, self, other) -> {
-			Optional<BodyPart> optPart = self.body.get("cock").stream()
-					.filter(cock -> ((CockPart) cock).isGeneric()).findAny();
+			Optional<BodyPart> optPart = self.body.get("cock").stream().filter(cock -> ((CockPart) cock).isGeneric())
+					.findAny();
 			BasicCockPart target = (BasicCockPart) optPart.get();
 			self.body.remove(target);
 			self.body.add(new ModdedCockPart(target, CockMod.bionic));
@@ -73,8 +72,7 @@ public class MaraTime extends BaseNPCTime {
 		cyberneticPussy.ingredients.put(Item.Onahole, 1);
 		cyberneticPussy.requirements.add(new BodyPartRequirement("pussy"));
 		cyberneticPussy.requirements.add((c, self, other) -> {
-			return self.body.get("pussy").stream()
-					.anyMatch(part -> part == PussyPart.normal);
+			return self.body.get("pussy").stream().anyMatch(part -> part == PussyPart.normal);
 		});
 		cyberneticPussy.additionalRequirements = "A normal pussy";
 		cyberneticPussy.option = "Cybernetic Pussy";
@@ -105,8 +103,7 @@ public class MaraTime extends BaseNPCTime {
 							+ "lab as having rows of fully functional computers and enough clear floorspace to walk through. Most of the computers here are only half assembled and "
 							+ "every surface is covered with assorted electronics. Mara is the only one in the small room, unless someone is buried in the PLCs and cords. She's focused "
 							+ "intensely on her work and doesn't even notice you until you call out to her.<p><i>\"Oh, hi "
-							+ player.name()
-							+ ".\"</i> She glances up at you, but continues typing "
+							+ player.name() + ".\"</i> She glances up at you, but continues typing "
 							+ "on one of the keyboards in front of her. <i>\"How are you doing?\"</i> You ask her if she'd like to take a break and hang out for a while.<br><i>\"Sounds fun, but I really "
 							+ "need to finish this tonight and it's not being cooperative.\"</i> She lets out a long yawn and picks up a nearby energy drink, but tosses it away when she realizes it's "
 							+ "empty. <i>\"I'm probably going to be stuck here right up to the start of tonight's match. If you could do me a favor and get me something with some caffeine, "
@@ -143,9 +140,7 @@ public class MaraTime extends BaseNPCTime {
 	@Override
 	public void subVisit(String choice) {
 		if (choice.equals("Sex")) {
-			if (npc.getAffection(player) >= 8
-					&& (!player.has(Trait.ticklemonster)
-							|| Global.random(2) == 1)) {
+			if (npc.getAffection(player) >= 8 && (!player.has(Trait.ticklemonster) || Global.random(2) == 1)) {
 				Global.gui().message(
 						"You invite Mara to your room some fun. As soon as you get there she walks up behind you, shoves her hand down the front of your pants, and grabs you penis. "
 								+ "You're taken by surprise, but it doesn't stop you from getting hard in her hand. <i>\"You said we're here to have fun and I've decided you're my toy today,\"</i> she whispers "
@@ -214,8 +209,7 @@ public class MaraTime extends BaseNPCTime {
 			npc.gainAffection(player, 1);
 			player.gainAffection(npc, 1);
 		} else if (choice.equals("Games")) {
-			if (npc.getAffection(player) >= 16
-					&& (!player.has(Trait.spider) || Global.random(2) == 1)) {
+			if (npc.getAffection(player) >= 16 && (!player.has(Trait.spider) || Global.random(2) == 1)) {
 				Global.gui().message(
 						"Mara is too damn good at these games. She moves her third spider next to your queen, trapping it in place. You don't lose until she fills in all six spaces "
 								+ "adjacent to your queen, but even with just those three pieces, you don't have enough room to move out of there. For the rest of the game, you try to block off her access "
@@ -280,8 +274,7 @@ public class MaraTime extends BaseNPCTime {
 			npc.gainAffection(player, 1);
 			player.gainAffection(npc, 1);
 		} else if (choice.equals("Sparring")) {
-			if (npc.getAffection(player) >= 12
-					&& (!player.has(Trait.heeldrop) || Global.random(2) == 1)) {
+			if (npc.getAffection(player) >= 12 && (!player.has(Trait.heeldrop) || Global.random(2) == 1)) {
 				Global.gui().message(
 						"You and Mara prepare for some sparring practice by getting undressed. She tosses her clothes aside and is so eager that she's actually bouncing noticeably, "
 								+ "unconcerned about her nudity. You finish stretching and square off with her, but she raises a hand to stop you. <i>\"Wait! Can I have a kiss before we start?\"</i> You hesitate "

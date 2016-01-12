@@ -15,8 +15,7 @@ public class StoneStance extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now in a Stone stance.\n",
-				affected.subjectAction("are", "is"));
+		return String.format("%s now in a Stone stance.\n", affected.subjectAction("are", "is"));
 	}
 
 	@Override

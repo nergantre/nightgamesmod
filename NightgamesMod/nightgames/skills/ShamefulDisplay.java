@@ -21,8 +21,7 @@ public class ShamefulDisplay extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && c.getStance().mobile(getSelf())
-				&& getSelf().crotchAvailable()
+		return getSelf().canAct() && c.getStance().mobile(getSelf()) && getSelf().crotchAvailable()
 				&& (getSelf().hasDick() || getSelf().hasPussy());
 	}
 
@@ -39,8 +38,7 @@ public class ShamefulDisplay extends Skill {
 			c.write(receive(c, 0, Result.normal, target));
 		}
 		getSelf().add(new Shamed(getSelf()));
-		target.add(new Horny(target, getSelf().get(Attribute.Submissive) / 4, 2,
-				" (Dominant Thrill)"));
+		target.add(new Horny(target, getSelf().get(Attribute.Submissive) / 4, 2, " (Dominant Thrill)"));
 		return true;
 	}
 
@@ -55,15 +53,13 @@ public class ShamefulDisplay extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (getSelf().hasDick()) {
 			return String.format(
 					"You spread your legs, exposing your naked %s and balls, and thrust your hips"
 							+ " out in a show of submission. %s practically drools at the sight, "
 							+ "while you struggle to bear the shame.",
-					getSelf().body.getRandomCock().describe(getSelf()),
-					Global.capitalizeFirstLetter(target.pronoun()));
+					getSelf().body.getRandomCock().describe(getSelf()), Global.capitalizeFirstLetter(target.pronoun()));
 		} else {
 			return String.format(
 					"You spread your legs and dip a hand between them. You stare lustfully"
@@ -74,21 +70,18 @@ public class ShamefulDisplay extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (getSelf().hasDick()) {
 			return String.format(
 					"%s fondles %s %s while looking at you with an almost daring look."
 							+ " %s seems to find the situation arousing, and so do you.",
-					getSelf().name(), getSelf().possessivePronoun(),
-					getSelf().body.getRandomCock().describe(getSelf()),
+					getSelf().name(), getSelf().possessivePronoun(), getSelf().body.getRandomCock().describe(getSelf()),
 					Global.capitalizeFirstLetter(getSelf().pronoun()));
 		} else {
 			return String.format(
 					"%s lifts %s hips and spreads %s pussy lips open. %s's "
 							+ "bright red with shame, but the sight is lewd enough to drive you wild.",
-					getSelf().name(), getSelf().possessivePronoun(),
-					getSelf().possessivePronoun(),
+					getSelf().name(), getSelf().possessivePronoun(), getSelf().possessivePronoun(),
 					Global.capitalizeFirstLetter(getSelf().pronoun()));
 		}
 	}

@@ -32,11 +32,10 @@ public interface BodyPart {
 
 	public JSONObject save();
 
-	public double applyBonuses(Character self, Character opponent,
-			BodyPart target, double damage, Combat c);
+	public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c);
 
-	public double applySubBonuses(Character self, Character opponent,
-			BodyPart with, BodyPart target, double damage, Combat c);
+	public double applySubBonuses(Character self, Character opponent, BodyPart with, BodyPart target, double damage,
+			Combat c);
 
 	public String getFluids(Character c);
 
@@ -52,8 +51,7 @@ public interface BodyPart {
 
 	public BodyPart downgrade();
 
-	double applyReceiveBonuses(Character self, Character opponent,
-			BodyPart target, double damage, Combat c);
+	double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c);
 
 	public String prefix();
 
@@ -65,8 +63,7 @@ public interface BodyPart {
 
 	public BodyPart load(JSONObject obj);
 
-	public void tickHolding(Combat c, Character self, Character opponent,
-			BodyPart otherOrgan);
+	public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan);
 
 	public default boolean present() {
 		return !isType("none");
@@ -88,32 +85,28 @@ public interface BodyPart {
 	public int counterValue(BodyPart other);
 
 	// Should be called whenever a combatant is penetrated in any way
-	public default void onStartPenetration(Combat c, Character self,
-			Character opponent, BodyPart target) {
+	public default void onStartPenetration(Combat c, Character self, Character opponent, BodyPart target) {
 		// Do nothing, may be overridden in implementing classes.
 		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-			System.out.printf("Starting Penetration for %s -> (%s, %s, %s)\n",
-					describe(self), self, opponent, target.describe(opponent));
+			System.out.printf("Starting Penetration for %s -> (%s, %s, %s)\n", describe(self), self, opponent,
+					target.describe(opponent));
 		}
 	}
 
 	// Should be called when penetration ends
-	public default void onEndPenetration(Combat c, Character self,
-			Character opponent, BodyPart target) {
+	public default void onEndPenetration(Combat c, Character self, Character opponent, BodyPart target) {
 		// Do nothing, may be overridden in implementing classes.
 		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-			System.out.printf("Ending Penetration for %s -> (%s, %s, %s)\n",
-					describe(self), self, opponent, target.describe(opponent));
+			System.out.printf("Ending Penetration for %s -> (%s, %s, %s)\n", describe(self), self, opponent,
+					target.describe(opponent));
 		}
 	}
 
 	// Should be called when either combatant orgasms
-	public default void onOrgasm(Combat c, Character self, Character opponent,
-			BodyPart other, boolean selfCame) {
+	public default void onOrgasm(Combat c, Character self, Character opponent, BodyPart other, boolean selfCame) {
 		if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-			System.out.printf("Processing Orgasm for %s -> (%s, %s, %s, %s)\n",
-					describe(self), self, opponent, other.describe(opponent),
-					Boolean.toString(selfCame));
+			System.out.printf("Processing Orgasm for %s -> (%s, %s, %s, %s)\n", describe(self), self, opponent,
+					other.describe(opponent), Boolean.toString(selfCame));
 		}
 	}
 

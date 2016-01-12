@@ -46,16 +46,14 @@ public class Prematch implements Scene {
 					+ "you'll make more money for every fight you do win, "
 					+ "so it's better for everyone.\"</i> That's.... You're not entirely sure how to respond to that. <i>\"For the first rule, I'll start with something simple: for "
 					+ "tonight's match, you're only allowed to wear your underwear. Even when you come back here for a change of clothes, you'll only get your underwear. If you "
-					+ "agree to this, I'll throw an extra $"
-					+ new UnderwearOnlyModifier().bonus()
+					+ "agree to this, I'll throw an extra $" + new UnderwearOnlyModifier().bonus()
 					+ " on top of your normal prize for each point you score. Interested?\"</i>";
 			type = new UnderwearOnlyModifier();
 			Global.flag(Flag.metLilly);
 			choice.add(new SceneButton("Do it"));
 			choice.add(new SceneButton("Not interested"));
 		} else if (player.getRank() > 0 && Global.getDate() % 30 == 0) {
-			message = message
-					+ "When you arrive at the student union, you notice the girls have all "
+			message = message + "When you arrive at the student union, you notice the girls have all "
 					+ "gathered around Lilly. As you get closer, you notice Maya, the recruiter"
 					+ ", standing next to her. She isn't usually present during a match, or at"
 					+ " least you haven't seen her, so this must be a special occasion. Lilly"
@@ -83,8 +81,7 @@ public class Prematch implements Scene {
 		} else {
 			message += "You arrive at the student union with about 10 minutes to spare before the start of the match. You greet each of the girls and make some idle chatter with "
 					+ "them before you check in with Lilly to see if she has any custom rules for you.<p>";
-			if (player.getRank() > 0 && Global.checkFlag(Flag.AiriEnabled)
-					&& !Global.checkFlag(Flag.Airi)) {
+			if (player.getRank() > 0 && Global.checkFlag(Flag.AiriEnabled) && !Global.checkFlag(Flag.Airi)) {
 				message += "Before you have a chance to ask though, Lilly mentions to you that there is a new competitor. However, when you ask her for details, she only mentions that her "
 						+ "name is Airi, and that she's a Biology student, while holding a visible smirk. Your instincts tells you something is wrong, but you decide to ignore it for now.<p>"
 						+ "<b>Airi has entered the games.</b><p>";
@@ -110,8 +107,7 @@ public class Prematch implements Scene {
 			return new NoModifier();
 		}
 		HashSet<Modifier> modifiers = Global.getModifierPool();
-		modifiers.removeIf(
-				mod -> !mod.isApplicable() || mod.name().equals("normal"));
+		modifiers.removeIf(mod -> !mod.isApplicable() || mod.name().equals("normal"));
 		return Global.pickRandom(modifiers.toArray(new Modifier[] {}));
 	}
 

@@ -24,8 +24,8 @@ public class VulnerableModifier extends BaseModifier {
 	public String intro() {
 		return "<i>\"I've got a simple handicap for you tonight. You've probably come across some sensitization potions that temporarily enhance your sense of touch, right? "
 				+ "There's a cream that has basically the same effect, but it'll last for several hours. The deal is that I'll rub the cream into your penis, making you much "
-				+ "more vulnerable during the match, and you'll get an extra $"
-				+ bonus() + " per victory. Interested?\"</i>";
+				+ "more vulnerable during the match, and you'll get an extra $" + bonus()
+				+ " per victory. Interested?\"</i>";
 	}
 
 	@Override

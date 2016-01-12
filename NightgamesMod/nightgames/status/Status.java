@@ -15,10 +15,10 @@ import nightgames.combat.Combat;
 import nightgames.skills.Skill;
 
 public abstract class Status implements Cloneable {
-	public String						name;
-	public Character					affected;
-	protected HashSet<Stsflag>			flags;
-	protected List<CustomRequirement>	requirements;
+	public String name;
+	public Character affected;
+	protected HashSet<Stsflag> flags;
+	protected List<CustomRequirement> requirements;
 
 	public Status(String name, Character affected) {
 		this.name = name;
@@ -36,10 +36,8 @@ public abstract class Status implements Cloneable {
 		return Collections.emptySet();
 	}
 
-	public boolean meetsRequirements(Combat c, Character self,
-			Character other) {
-		return requirements.stream()
-				.allMatch((req) -> req.meets(c, self, other));
+	public boolean meetsRequirements(Combat c, Character self, Character other) {
+		return requirements.stream().allMatch((req) -> req.meets(c, self, other));
 	}
 
 	public abstract String initialMessage(Combat c, boolean replaced);

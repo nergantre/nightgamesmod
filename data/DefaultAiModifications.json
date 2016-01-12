@@ -1135,5 +1135,150 @@
 				"weight" : -1.0
 			}
 		]
+	},{
+		"personality":"Airi",
+		"mods": [
+			{
+				"type" : "skill",
+				"value" : "nightgames.skills.AssFuck",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Blowjob",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.CounterPin",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.CounterRide",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.CounterDrain",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Cunnilingus",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Dissolve",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Drain",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Engulf",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.FootPump",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Fuck",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Grind",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.HeelGrind",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Invitation",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.LeechEnergy",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Piston",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.ReverseAssFuck",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.ReverseFuck",
+				"weight" : 2.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.ReverseStraddle",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Slap",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Spores",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Straddle",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.SweetScent",
+				"weight" : 1.0
+			},{
+				"type" : "skill",
+				"value" : "nightgames.skills.Tighten",
+				"weight" : 1.0
+			},{
+				"type" : "position",
+				"value" : "engulfed",
+				"weight" : 8.0
+			},{
+				"type" : "position",
+				"value" : "cowgirl",
+				"weight" : 4.0
+			},{
+				"type" : "position",
+				"value" : "missionary",
+				"weight" : 4.0
+			},{
+				"type" : "position",
+				"value" : "doggy",
+				"weight" : 4.0
+			},{
+				"type" : "position",
+				"value" : "anal",
+				"weight" : 4.0
+			},{
+				"type" : "self-status",
+				"value" : "counter",
+				"weight" : 2.0
+			},{
+				"type" : "opponent-status",
+				"value" : "wary",
+				"weight" : 2.0
+			},{
+				"type" : "opponent-status",
+				"value" : "cockbound",
+				"weight" : 2.0
+			},{
+				"type" : "opponent-status",
+				"value" : "aggressive",
+				"weight" : 2.0
+			},{
+				"type" : "opponent-status",
+				"value" : "fucked",
+				"weight" : 2.0
+			},{
+				"type" : "opponent-status",
+				"value" : "pegged",
+				"weight" : 2.0
+			}
+		]
 	}
 ]

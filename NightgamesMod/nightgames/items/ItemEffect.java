@@ -4,15 +4,14 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 
 public class ItemEffect {
-	private String	selfVerb, otherVerb;
-	private boolean	drinkable, throwable;
+	private String selfVerb, otherVerb;
+	private boolean drinkable, throwable;
 
 	public ItemEffect() {
 		this("", "", false, false);
 	}
 
-	public ItemEffect(String verb, String otherverb, boolean drinkable,
-			boolean throwable) {
+	public ItemEffect(String verb, String otherverb, boolean drinkable, boolean throwable) {
 		selfVerb = verb;
 		otherVerb = otherverb;
 		this.drinkable = drinkable;
@@ -27,8 +26,7 @@ public class ItemEffect {
 		return otherVerb;
 	}
 
-	public boolean use(Combat c, Character user, Character opponent,
-			Item item) {
+	public boolean use(Combat c, Character user, Character opponent, Item item) {
 		return false;
 	}
 

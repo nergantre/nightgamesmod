@@ -5,8 +5,8 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 
 public class MaybeEffect extends ItemEffect {
-	private ItemEffect	effect;
-	private double		probability;
+	private ItemEffect effect;
+	private double probability;
 
 	public MaybeEffect(ItemEffect other, double probability) {
 		super("", "", true, true);
@@ -15,8 +15,7 @@ public class MaybeEffect extends ItemEffect {
 	}
 
 	@Override
-	public boolean use(Combat c, Character user, Character opponent,
-			Item item) {
+	public boolean use(Combat c, Character user, Character opponent, Item item) {
 		if (Global.randomdouble() < probability) {
 			return effect.use(c, user, opponent, item);
 		}

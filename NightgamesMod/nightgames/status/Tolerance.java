@@ -18,15 +18,13 @@ public class Tolerance extends DurationStatus {
 		if (affected.human()) {
 			return "You've built up a tolerance to addictive fluids.";
 		} else {
-			return affected.name()
-					+ " has built up a tolerance to your addictive fluids.";
+			return affected.name() + " has built up a tolerance to your addictive fluids.";
 		}
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s built a tolerance to addictive fluids.\n",
-				affected.subjectAction("have", "has"));
+		return String.format("%s built a tolerance to addictive fluids.\n", affected.subjectAction("have", "has"));
 	}
 
 	@Override

@@ -55,13 +55,10 @@ public class Jewel extends BasePersonality {
 		growth.bonusArousal = 1;
 		growth.bonusMojo = 1;
 		growth.willpower = .7f;
-		preferredAttributes.add(c -> c.get(Attribute.Ki) < 15
-				? Optional.of(Attribute.Ki) : Optional.empty());
-		preferredAttributes.add(
-				c -> c.get(Attribute.Ki) >= 15 && c.get(Attribute.Fetish) < 100
-						? Optional.of(Attribute.Fetish) : Optional.empty());
-		preferredAttributes.add(c -> c.get(Attribute.Power) < 80
-				? Optional.of(Attribute.Power) : Optional.empty());
+		preferredAttributes.add(c -> c.get(Attribute.Ki) < 15 ? Optional.of(Attribute.Ki) : Optional.empty());
+		preferredAttributes.add(c -> c.get(Attribute.Ki) >= 15 && c.get(Attribute.Fetish) < 100
+				? Optional.of(Attribute.Fetish) : Optional.empty());
+		preferredAttributes.add(c -> c.get(Attribute.Power) < 80 ? Optional.of(Attribute.Power) : Optional.empty());
 		growth.addTrait(1, Trait.fitnessNut);
 		growth.addTrait(4, Trait.QuickRecovery);
 		growth.addTrait(7, Trait.analTraining1);
@@ -91,45 +88,36 @@ public class Jewel extends BasePersonality {
 			}
 		}
 		super.rest(time);
-		if (!(character.has(Item.Crop) || character.has(Item.Crop2))
-				&& character.money >= 200) {
+		if (!(character.has(Item.Crop) || character.has(Item.Crop2)) && character.money >= 200) {
 			character.gain(Item.Crop);
 			character.money -= 200;
 		}
-		if (!(character.has(Item.Strapon) || character.has(Item.Strapon2))
-				&& character.money >= 600) {
+		if (!(character.has(Item.Strapon) || character.has(Item.Strapon2)) && character.money >= 600) {
 			character.gain(Item.Strapon);
 			character.money -= 600;
 		}
 
 		if (character.rank >= 1) {
 			if (character.money > 0) {
-				Global.getDay().visit("Dojo", character,
-						Global.random(character.money));
-				Global.getDay().visit("Meditation", character,
-						Global.random(character.money));
+				Global.getDay().visit("Dojo", character, Global.random(character.money));
+				Global.getDay().visit("Meditation", character, Global.random(character.money));
 			}
 			if (character.money > 0) {
-				Global.getDay().visit("Body Shop", character,
-						Global.random(character.money));
+				Global.getDay().visit("Body Shop", character, Global.random(character.money));
 			}
 			if (character.money > 0) {
-				Global.getDay().visit("Workshop", character,
-						Global.random(character.money));
+				Global.getDay().visit("Workshop", character, Global.random(character.money));
 			}
 		}
 
 		if (character.money > 0) {
-			Global.getDay().visit("Bookstore", character,
-					Global.random(character.money));
+			Global.getDay().visit("Bookstore", character, Global.random(character.money));
 		}
 		if (character.money > 0) {
-			Global.getDay().visit("XXX Store", character,
-					Global.random(character.money));
+			Global.getDay().visit("XXX Store", character, Global.random(character.money));
 		}
 		if (character.money > 0) {
-			Global.getDay().visit("Black Market", character,
-					Global.random(character.money));
+			Global.getDay().visit("Black Market", character, Global.random(character.money));
 		}
 		int r;
 		for (int i = 0; i < time; i++) {
@@ -187,19 +175,16 @@ public class Jewel extends BasePersonality {
 		Collection<BodyPart> otherOrgans = c.getStance().partsFor(other);
 		if (BodyPart.hasType(otherOrgans, "ass")) {
 			BodyPart insertable = character.body.getRandomInsertable();
-			String selfODesc = insertable == null ? "[none]"
-					: insertable.describe(character);
+			String selfODesc = insertable == null ? "[none]" : insertable.describe(character);
 			return "You gasp as Jewel pounds away at your ass without mercy. You're going to cum, you realize. "
 					+ (other.hasDick()
-							? "She isn't even touching your dick but the sensation of her "
-									+ selfODesc
+							? "She isn't even touching your dick but the sensation of her " + selfODesc
 									+ " moving over your prostate is mind blowing. "
 							: "The sensation of the " + selfODesc
 									+ " moving in and out of your rectum is mind blowing. ")
 					+ "<i>\"Stop pretending to resist. Cum for me!\"</i> she grunts as she humps your backdoor. Your hands ball up and your toes curl in as you "
 					+ "feel yourself hit the edge. Jewel must feel you tighten up as she redoubles her speed. A loud moan escapes your mouth as your resistance finally shatters "
-					+ (other.hasDick() ? "and cum spurts from your cock. "
-							: "and you cum hard. ")
+					+ (other.hasDick() ? "and cum spurts from your cock. " : "and you cum hard. ")
 					+ "<i>\"Man, that was hot.\"</i> Jewel whispers almost to herself as she pulls away. She doesn't give you long to collect yourself before she rolls "
 					+ "you over and sits on your face. <i>\"Come on,\"</i> she chuckles in a gloating manner. <i>\"You seemed to enjoy that, so its only fair you return "
 					+ "the favor.\"</i> You sigh mentally and resign yourself to licking her out. Its not long before she is moaning above you. After Jewel collects your clothes she "
@@ -212,8 +197,7 @@ public class Jewel extends BasePersonality {
 			String message = "Your duel with Jewel is rapidly reaching its conclusion and it's not going that well for you. Something seems different about her, her moves have an additional level of "
 					+ "coordination that is made worse by her already monstrous strength. But the worst thing is the see is throwing powerful moves at you like they were nothing!<p>"
 					+ "All of this has culminated in the situation you find yourself in now, namely pinned to the ground by Jewel as "
-					+ (other.hasDick() ? "she jerks you off,"
-							: "she fingers you,")
+					+ (other.hasDick() ? "she jerks you off," : "she fingers you,")
 					+ " her teasing bringing you very rapidly to orgasm.<p>"
 					+ "You give one more push against the woman on top of you trying to dislodge her but with another firm shove you find yourself once more pinned by Jewel. With "
 					+ "this you are unable to stop Jewel from bringing you to climax and you groan in pleasure as you do so.<p>"
@@ -263,8 +247,7 @@ public class Jewel extends BasePersonality {
 					+ "hurricane that just passed by.";
 			return message;
 		}
-		if (BodyPart.hasType(selfOrgans, "pussy")
-				&& BodyPart.hasType(otherOrgans, "cock")) {
+		if (BodyPart.hasType(selfOrgans, "pussy") && BodyPart.hasType(otherOrgans, "cock")) {
 			return "Jewel rocks her hips on top of you, full of confidence and in complete control. She reaches behind her with one hand to play with your balls, as if to prove "
 					+ "you're completely at her mercy. Her powerful inner muscles squeeze your cock in time with her movements, creating an irresistable sensation. You moan as "
 					+ "you pass the point of no return, but in one swift motion, she moves off your dick and finishes you off by hand. Your semen spills onto your stomach fruitlessly, "
@@ -287,8 +270,7 @@ public class Jewel extends BasePersonality {
 						+ "For a moment, she just looks at you as you're panting from exertion as if considering asking for more. Then she looks away and sighs. "
 						+ "<i>\"That's disappointing. I was hoping you would be a real challenge. I suppose I'm just too strong for you. </i>";
 			}
-			if (character.orgasms > 0
-					|| character.getArousal().percent() > 50) {
+			if (character.orgasms > 0 || character.getArousal().percent() > 50) {
 				character.arousal.empty();
 				if (other.hasDick()) {
 					message += "<i>\"Still, you were at least able to turn me on this much. Maybe you deserve a "
@@ -444,19 +426,16 @@ public class Jewel extends BasePersonality {
 							+ "</i> You feel a chill run down your back, watching Jewel's display of"
 							+ " dominance, but you're also rock hard. %s lets out a loud moan and "
 							+ "covers Jewel's foot with cum.",
-					target.name(), target.directObject(),
-					target.possessivePronoun(), target.name(), target.name());
+					target.name(), target.directObject(), target.possessivePronoun(), target.name(), target.name());
 		}
 		return "Jewel looks over " + target.name()
 				+ ", trying to decide what to do with her. She leans in and kisses the helpless girl firmly on the lips. Breaking the kiss, "
 				+ "she starts to probe and inspect " + target.name()
-				+ "'s other lips, making her twitch and whimper with each touch. "
-				+ target.name() + " apparently passes the inspection, "
-				+ "because Jewel slides her hips forward and presses her own wet pussy against "
-				+ target.name()
+				+ "'s other lips, making her twitch and whimper with each touch. " + target.name()
+				+ " apparently passes the inspection, "
+				+ "because Jewel slides her hips forward and presses her own wet pussy against " + target.name()
 				+ "'s. Both girls moan softly as Jewel begins moving her hips, grinding their lips and clits together. For a moment, "
-				+ "you think Jewel's plan may backfire and she may cum first, but "
-				+ target.name()
+				+ "you think Jewel's plan may backfire and she may cum first, but " + target.name()
 				+ " soon shudders to climax in your arms. Jewel doesn't stop until she reaches "
 				+ "her own orgasm too.";
 	}
@@ -468,15 +447,13 @@ public class Jewel extends BasePersonality {
 					+ " to the floor and begin pleasuring her into submission. You rub and finger her pussy until she's shivering and "
 					+ "juices flow down her thighs. Before you finish her off, you hear a whistle behind you. You turn and see Jewel standing behind you. Before you can do "
 					+ "anything, she sweeps you legs out from under you and deposits you on the floor next to "
-					+ assist.name()
-					+ ". She traps your arms in her thighs, leaving "
+					+ assist.name() + ". She traps your arms in her thighs, leaving "
 					+ "you defenseless. By this time, " + assist.name()
 					+ " has recovered and looks ready to take revenge.<br>";
 		} else {
 			return "You wrestle with " + target.name()
 					+ " until you're both naked and sweaty. You seem to have a slight advantage until she manages to get a free hand between "
-					+ "your legs and slap your balls. You fall to the floor in pain, but "
-					+ target.name()
+					+ "your legs and slap your balls. You fall to the floor in pain, but " + target.name()
 					+ " doesn't have a chance to follow up. Jewel has arrived, seemingly out "
 					+ "of nowhere, and before " + target.name()
 					+ " can react, Jewel slaps her on the pussy. She crumples in pain, almost mirroring you, and can't put up any defense "
@@ -519,13 +496,13 @@ public class Jewel extends BasePersonality {
 	@Override
 	public boolean checkMood(Combat c, Emotion mood, int value) {
 		switch (mood) {
-			case angry:
-				return value >= 10;
-			case dominant:
-				return value >= 50;
-			case nervous:
-			default:
-				return value >= 100;
+		case angry:
+			return value >= 10;
+		case dominant:
+			return value >= 50;
+		case nervous:
+		default:
+			return value >= 100;
 		}
 	}
 
@@ -536,8 +513,7 @@ public class Jewel extends BasePersonality {
 
 	@Override
 	public String makeOrgasmLiner(Combat c) {
-		return "<i>\"Heh, no matter what, you're just a horny "
-				+ c.getOther(character).boyOrGirl()
+		return "<i>\"Heh, no matter what, you're just a horny " + c.getOther(character).boyOrGirl()
 				+ " aren'tcha? Come on, no time for rest, let's see how many times in a row you can cum\"</i>";
 	}
 }

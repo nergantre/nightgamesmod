@@ -13,16 +13,15 @@ public class CustomStringEntry {
 	 * Lines that a character can say. Can have requirements attached
 	 */
 
-	String					line;
-	List<CustomRequirement>	requirements;
+	String line;
+	List<CustomRequirement> requirements;
 
 	public CustomStringEntry(String line) {
 		this.line = line;
 		requirements = new ArrayList<>();
 	}
 
-	public boolean meetsRequirements(Combat c, Character self,
-			Character other) {
+	public boolean meetsRequirements(Combat c, Character self, Character other) {
 		for (CustomRequirement req : requirements) {
 			if (!req.meets(c, self, other)) {
 				return false;

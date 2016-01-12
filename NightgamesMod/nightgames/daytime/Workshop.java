@@ -38,14 +38,12 @@ public class Workshop extends Activity {
 							+ "and I'm not helping you for free. No offence, but I'm rooting for your opponents. Male solidarity is fine and well, but they're a lot more attractive than you.\"</i>");
 			Global.flag(Flag.metJett);
 			acted = true;
-			Global.gui().choose(this, "Lecture: $"
-					+ 1000 * (player.getPure(Attribute.Science) + 1));
+			Global.gui().choose(this, "Lecture: $" + 1000 * (player.getPure(Attribute.Science) + 1));
 		} else if (choice.equals("Start")) {
 			Global.gui().message(
 					"You head to Jett's workshop. He sets down the parts he was working on and turns to face you. <i>\"You need something? I hope you brought your "
 							+ "wallet.\"</i>");
-			Global.gui().choose(this, "Lecture: $"
-					+ 1000 * (player.getPure(Attribute.Science) + 1));
+			Global.gui().choose(this, "Lecture: $" + 1000 * (player.getPure(Attribute.Science) + 1));
 			acted = false;
 		} else if (choice.equals("Upgrade Dildo: $2000")) {
 			if (player.money >= Item.Dildo2.getPrice()) {
@@ -124,8 +122,7 @@ public class Workshop extends Activity {
 			done(acted);
 			return;
 		} else if (choice.startsWith("Lecture")) {
-			if (player.money >= 1000
-					* (player.getPure(Attribute.Science) + 1)) {
+			if (player.money >= 1000 * (player.getPure(Attribute.Science) + 1)) {
 				Global.gui().message(
 						"They say that geniuses make poor teachers, but Jett disproves that theory. He explains the principles behind his work in a way that you "
 								+ "can easily follow. Despite his unfriendly demeanor, he answers any questions you have without complaint. After about an hour of intense lecture, you "
@@ -139,14 +136,12 @@ public class Workshop extends Activity {
 				if (!player.has(Clothing.getByID("labcoat"))) {
 					player.gain(Clothing.getByID("labcoat"));
 				}
-				if (player.getPure(Attribute.Science) >= 4
-						&& !player.has(Item.Aersolizer)) {
+				if (player.getPure(Attribute.Science) >= 4 && !player.has(Item.Aersolizer)) {
 					player.gain(Item.Aersolizer);
 				}
 				acted = true;
 			} else {
-				Global.gui().message(
-						"You don't have enough money for Jett's lecture.");
+				Global.gui().message("You don't have enough money for Jett's lecture.");
 			}
 			acted = true;
 		}

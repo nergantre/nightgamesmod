@@ -14,8 +14,7 @@ public class CommandOral extends PlayerCommand {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return super.usable(c, target) && getSelf().crotchAvailable()
-				&& c.getStance().oral(target);
+		return super.usable(c, target) && getSelf().crotchAvailable() && c.getStance().oral(target);
 	}
 
 	@Override
@@ -44,8 +43,7 @@ public class CommandOral extends PlayerCommand {
 				c.write(getSelf(), deal(c, 0, Result.normal, target));
 			}
 		}
-		getSelf().body.pleasure(target, target.body.getRandom("mouth"),
-				getSelf().body.getRandom("cock"), m, c);
+		getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("cock"), m, c);
 		return true;
 	}
 
@@ -60,35 +58,27 @@ public class CommandOral extends PlayerCommand {
 	}
 
 	@Override
-	public String deal(Combat c, int magnitude, Result modifier,
-			Character target) {
+	public String deal(Combat c, int magnitude, Result modifier, Character target) {
 		switch (modifier) {
-			case normal:
-				return target.name()
-						+ " is ecstatic at being given the privilege of"
-						+ " pleasuring you and does a fairly good job at it, too. She"
-						+ " sucks your hard dick powerfully while massaging your balls.";
-			case strong:
-				return target.name()
-						+ " seems delighted to 'help' you, and makes short work"
-						+ " of taking your flaccid length into her mouth and getting it "
-						+ "nice and hard.";
-			case weak:
-				return target.name()
-						+ " tries her very best to get you ready by running"
-						+ " her tongue all over your groin, but even"
-						+ " her psychically induced enthusiasm can't get you hard.";
-			default:
-				return "<<This should not be displayed, please inform The"
-						+ " Silver Bard: CommandOral-deal>>";
+		case normal:
+			return target.name() + " is ecstatic at being given the privilege of"
+					+ " pleasuring you and does a fairly good job at it, too. She"
+					+ " sucks your hard dick powerfully while massaging your balls.";
+		case strong:
+			return target.name() + " seems delighted to 'help' you, and makes short work"
+					+ " of taking your flaccid length into her mouth and getting it " + "nice and hard.";
+		case weak:
+			return target.name() + " tries her very best to get you ready by running"
+					+ " her tongue all over your groin, but even"
+					+ " her psychically induced enthusiasm can't get you hard.";
+		default:
+			return "<<This should not be displayed, please inform The" + " Silver Bard: CommandOral-deal>>";
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int magnitude, Result modifier,
-			Character target) {
-		return "<<This should not be displayed, please inform The"
-				+ " Silver Bard: CommandOral-receive>>";
+	public String receive(Combat c, int magnitude, Result modifier, Character target) {
+		return "<<This should not be displayed, please inform The" + " Silver Bard: CommandOral-receive>>";
 	}
 
 	@Override

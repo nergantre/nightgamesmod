@@ -29,19 +29,16 @@ public class Trance extends DurationStatus {
 		if (affected.human()) {
 			return "You know that you should be fighting back, but it's so much easier to just surrender.";
 		} else {
-			return affected.name()
-					+ " is flush with desire and doesn't seem interested in fighting back.";
+			return affected.name() + " is flush with desire and doesn't seem interested in fighting back.";
 		}
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
 		if (!replaced) {
-			return String.format("%s now entranced.\n",
-					affected.subjectAction("are", "is"));
+			return String.format("%s now entranced.\n", affected.subjectAction("are", "is"));
 		} else {
-			return String.format("%s already entranced.\n",
-					affected.subjectAction("are", "is"));
+			return String.format("%s already entranced.\n", affected.subjectAction("are", "is"));
 		}
 	}
 
@@ -78,8 +75,7 @@ public class Trance extends DurationStatus {
 
 	@Override
 	public Collection<Skill> allowedSkills(Combat c) {
-		return Arrays.asList((Skill) new Masturbate(affected),
-				new Thrust(affected), new Piston(affected));
+		return Arrays.asList((Skill) new Masturbate(affected), new Thrust(affected), new Piston(affected));
 	}
 
 	@Override

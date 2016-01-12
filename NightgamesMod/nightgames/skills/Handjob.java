@@ -19,11 +19,9 @@ public class Handjob extends Skill {
 	public boolean usable(Combat c, Character target) {
 		return c.getStance().reachBottom(getSelf())
 				&& (target.crotchAvailable() || getSelf().has(Trait.dexterous)
-						&& target.getOutfit().getTopOfSlot(ClothingSlot.bottom)
-								.getLayer() <= 1)
+						&& target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getLayer() <= 1)
 				&& target.hasDick() && getSelf().canAct()
-				&& (!c.getStance().inserted(target)
-						|| c.getStance().en == Stance.anal);
+				&& (!c.getStance().inserted(target) || c.getStance().en == Stance.anal);
 	}
 
 	@Override
@@ -43,18 +41,14 @@ public class Handjob extends Skill {
 				} else if (target.human()) {
 					c.write(getSelf(), receive(c, m, Result.normal, target));
 				}
-				target.body.pleasure(getSelf(),
-						getSelf().body.getRandom("hands"),
-						target.body.getRandom("cock"), m, c);
+				target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("cock"), m, c);
 			} else {
 				if (getSelf().human()) {
 					c.write(getSelf(), deal(c, m, Result.normal, target));
 				} else if (target.human()) {
 					c.write(getSelf(), receive(c, m, Result.weak, target));
 				}
-				target.body.pleasure(getSelf(),
-						getSelf().body.getRandom("hands"),
-						target.body.getRandom("cock"), m, c);
+				target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("cock"), m, c);
 			}
 		} else {
 			if (getSelf().human()) {
@@ -83,8 +77,7 @@ public class Handjob extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			return "You reach for " + target.name() + "'s dick but miss.";
 		} else {
@@ -94,17 +87,14 @@ public class Handjob extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			return getSelf().name() + " grabs for your dick and misses.";
 		}
 		int r;
 		if (!target.crotchAvailable()) {
-			return getSelf().name()
-					+ " slips her hand into your " + target.getOutfit()
-							.getTopOfSlot(ClothingSlot.bottom).getName()
-					+ " and strokes your dick.";
+			return getSelf().name() + " slips her hand into your "
+					+ target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName() + " and strokes your dick.";
 		} else if (modifier == Result.weak) {
 			return getSelf().name()
 					+ " clumsily fondles your crotch. It's not skillful by any means, but it's also not entirely ineffective.";
@@ -115,14 +105,11 @@ public class Handjob extends Skill {
 			}
 
 			else if ((r = Global.random(3)) == 0) {
-				return getSelf().name()
-						+ " strokes and teases your dick, sending shivers of pleasure up your spine.";
+				return getSelf().name() + " strokes and teases your dick, sending shivers of pleasure up your spine.";
 			} else if (r == 1) {
-				return getSelf().name()
-						+ " rubs the sensitive head of your penis and fondles your balls.";
+				return getSelf().name() + " rubs the sensitive head of your penis and fondles your balls.";
 			} else {
-				return getSelf().name()
-						+ " jerks you off like she's trying to milk every drop of your cum.";
+				return getSelf().name() + " jerks you off like she's trying to milk every drop of your cum.";
 			}
 		}
 	}

@@ -3,7 +3,7 @@ package nightgames.trap;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
-import nightgames.combat.Encounter;
+import nightgames.combat.IEncounter;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.status.Bound;
@@ -13,11 +13,9 @@ public class Snare implements Trap {
 
 	@Override
 	public void trigger(Character target) {
-		if (target.check(Attribute.Perception,
-				20 - target.get(Attribute.Perception) + target.baseDisarm())) {
+		if (target.check(Attribute.Perception, 20 - target.get(Attribute.Perception) + target.baseDisarm())) {
 			if (target.human()) {
-				Global.gui().message(
-						"You notice a snare on the floor in front of you and manage to disarm it safely");
+				Global.gui().message("You notice a snare on the floor in front of you and manage to disarm it safely");
 			}
 			target.location().remove(this);
 		} else {
@@ -67,8 +65,7 @@ public class Snare implements Trap {
 	}
 
 	@Override
-	public void capitalize(Character attacker, Character victim,
-			Encounter enc) {
+	public void capitalize(Character attacker, Character victim, IEncounter enc) {
 		enc.engage(new Combat(attacker, victim, attacker.location()));
 		attacker.location().remove(this);
 	}

@@ -15,16 +15,14 @@ public class StripTease extends Skill {
 	}
 
 	public static boolean hasRequirements(Character user) {
-		return user.get(Attribute.Seduction) >= 24 && !user.has(Trait.direct)
-				&& !user.has(Trait.shy) && !user.has(Trait.temptress);
+		return user.get(Attribute.Seduction) >= 24 && !user.has(Trait.direct) && !user.has(Trait.shy)
+				&& !user.has(Trait.temptress);
 	}
 
 	public static boolean isUsable(Combat c, Character self, Character target) {
-		return self.stripDifficulty(target) == 0 && !self.has(Trait.strapped)
-				&& self.canAct() && c.getStance().mobile(self)
-				&& !self.mostlyNude() && !c.getStance().prone(self)
-				&& c.getStance().front(self)
-				&& (!self.breastsAvailable() || !self.crotchAvailable());
+		return self.stripDifficulty(target) == 0 && !self.has(Trait.strapped) && self.canAct()
+				&& c.getStance().mobile(self) && !self.mostlyNude() && !c.getStance().prone(self)
+				&& c.getStance().front(self) && (!self.breastsAvailable() || !self.crotchAvailable());
 	}
 
 	@Override
@@ -70,16 +68,14 @@ public class StripTease extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "During a brief respite in the fight as " + target.name()
 				+ " is catching her breath, you make a show of seductively removing your clothes. "
 				+ "By the time you finish, she's staring with undisguised arousal, pressing a hand unconsciously against her groin.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().name()
 				+ " asks for a quick time out and starts sexily slipping her her clothes off. Although there are no time outs in the rules, you can't help staring "
 				+ "at the seductive display until she finishes with a cute wiggle of her naked ass.";

@@ -10,8 +10,8 @@ import nightgames.global.Global;
 import nightgames.status.Lovestruck;
 
 public class Kiss extends Skill {
-	private static final String	divineString	= "Kiss of Baptism";
-	private static final int	divineCost		= 30;
+	private static final String divineString = "Kiss of Baptism";
+	private static final int divineCost = 30;
 
 	public Kiss(Character self) {
 		super("Kiss", self);
@@ -86,14 +86,12 @@ public class Kiss extends Skill {
 			target.add(c, new Lovestruck(target, getSelf(), 2));
 		}
 		BodyPart selfMouth = getSelf().body.getRandom("mouth");
-		target.body.pleasure(getSelf(), selfMouth,
-				target.body.getRandom("mouth"), m, c);
+		target.body.pleasure(getSelf(), selfMouth, target.body.getRandom("mouth"), m, c);
 		int selfDamage = Math.max(1, m / 4);
 		if (selfMouth.isErogenous()) {
 			selfDamage = m / 2;
 		}
-		getSelf().body.pleasure(target, target.body.getRandom("mouth"),
-				selfMouth, selfDamage, c);
+		getSelf().body.pleasure(target, target.body.getRandom("mouth"), selfMouth, selfDamage, c);
 		return true;
 	}
 
@@ -118,8 +116,7 @@ public class Kiss extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.divine) {
 			return "You pull " + target.name()
 					+ " to you and kiss her passionately, sending your divine aura into her body though her mouth. "
@@ -140,28 +137,27 @@ public class Kiss extends Skill {
 					+ " on the lips. It catches her off guard for a moment, but she soon responds approvingly.";
 		} else {
 			switch (Global.random(4)) {
-				case 0:
-					return "You pull " + target.name()
-							+ " close and capture her lips. She returns the kiss enthusiastically and lets out a soft noise of approval when you "
-							+ "push your tongue into her mouth.";
-				case 1:
-					return "You press your lips to " + target.name()
-							+ "'s in a romantic kiss. You tease out her tongue and meet it with your own.";
-				case 2:
-					return "You kiss " + target.name()
-							+ " deeply, overwhelming her senses and swapping quite a bit of saliva.";
-				default:
-					return "You steal a quick kiss from " + target.name()
-							+ ", pulling back before she can respond. As she hesitates in confusion, you kiss her twice more, "
-							+ "lingering on the last to run your tongue over her lips.";
+			case 0:
+				return "You pull " + target.name()
+						+ " close and capture her lips. She returns the kiss enthusiastically and lets out a soft noise of approval when you "
+						+ "push your tongue into her mouth.";
+			case 1:
+				return "You press your lips to " + target.name()
+						+ "'s in a romantic kiss. You tease out her tongue and meet it with your own.";
+			case 2:
+				return "You kiss " + target.name()
+						+ " deeply, overwhelming her senses and swapping quite a bit of saliva.";
+			default:
+				return "You steal a quick kiss from " + target.name()
+						+ ", pulling back before she can respond. As she hesitates in confusion, you kiss her twice more, "
+						+ "lingering on the last to run your tongue over her lips.";
 			}
 
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.divine) {
 			return getSelf().name()
 					+ " seductively pulls you into a deep kiss. As first you try to match her enthusiastic tongue with your own, but she starts using her divine energy to directly attack your soul. "
@@ -183,15 +179,15 @@ public class Kiss extends Skill {
 					+ " presses her lips against yours in a passionate, if not particularly skillful, kiss.";
 		} else {
 			switch (Global.random(3)) {
-				case 0:
-					return getSelf().name()
-							+ " grabs you and kisses you passionately on the mouth. As you break for air, she gently nibbles on your bottom lip.";
-				case 1:
-					return getSelf().name()
-							+ " peppers quick little kisses around your mouth before suddenly taking your lips forcefully and invading your mouth with her tongue.";
-				default:
-					return getSelf().name()
-							+ " kisses you softly and romantically, slowly drawing you into her embrace. As you part, she teasingly brushes her lips against yours.";
+			case 0:
+				return getSelf().name()
+						+ " grabs you and kisses you passionately on the mouth. As you break for air, she gently nibbles on your bottom lip.";
+			case 1:
+				return getSelf().name()
+						+ " peppers quick little kisses around your mouth before suddenly taking your lips forcefully and invading your mouth with her tongue.";
+			default:
+				return getSelf().name()
+						+ " kisses you softly and romantically, slowly drawing you into her embrace. As you part, she teasingly brushes her lips against yours.";
 			}
 		}
 	}
@@ -208,8 +204,7 @@ public class Kiss extends Skill {
 
 	@Override
 	public String getLabel(Combat c) {
-		if (getSelf().get(Attribute.Divinity) >= 1
-				&& getSelf().canSpend(divineCost)) {
+		if (getSelf().get(Attribute.Divinity) >= 1 && getSelf().canSpend(divineCost)) {
 			return divineString;
 		} else if (getSelf().has(Trait.soulsucker)) {
 			return "Drain Kiss";

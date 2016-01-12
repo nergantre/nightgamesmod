@@ -24,17 +24,13 @@ public class VibrationModifier extends BaseModifier {
 		if (Global.getPlayer().hasDick()) {
 			return "<i>\"Do you like toys, " + Global.getPlayer().name()
 					+ "? I thought of a way to make your matches harder that you'll still enjoy.\"</i> She holds up a small plastic ring. "
-					+ "<i>\"Vibrating cock-ring,\"</i> she explains. <i>\"I'll give you a $"
-					+ bonus()
-					+ " for each fight you win while this little fellow keeps you horny and ready to "
-					+ "burst.\"</i>";
+					+ "<i>\"Vibrating cock-ring,\"</i> she explains. <i>\"I'll give you a $" + bonus()
+					+ " for each fight you win while this little fellow keeps you horny and ready to " + "burst.\"</i>";
 		} else if (Global.getPlayer().hasPussy()) {
 			return "<i>\"Do you like toys, " + Global.getPlayer().name()
 					+ "? I thought of a way to make your matches harder that you'll still enjoy.\"</i> She holds up a small plastic ring. "
-					+ "<i>\"Vibrating clit-ring,\"</i> she explains. <i>\"I'll give you a $"
-					+ bonus()
-					+ " for each fight you win while this little fellow keeps you horny and ready to "
-					+ "burst.\"</i>";
+					+ "<i>\"Vibrating clit-ring,\"</i> she explains. <i>\"I'll give you a $" + bonus()
+					+ " for each fight you win while this little fellow keeps you horny and ready to " + "burst.\"</i>";
 		}
 		return null;
 	}

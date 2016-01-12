@@ -23,8 +23,7 @@ public class Cynical extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now cynical towards future mind games.\n",
-				affected.subjectAction("are", "is"));
+		return String.format("%s now cynical towards future mind games.\n", affected.subjectAction("are", "is"));
 	}
 
 	@Override

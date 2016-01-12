@@ -23,8 +23,7 @@ public class Grind extends Thrust {
 	@Override
 	public boolean usable(Combat c, Character target) {
 		return getSelf().canAct() && c.getStance().canthrust(getSelf())
-				&& c.getStance().havingSexOtherNoStrapped(getSelf())
-				&& c.getStance().en != Stance.anal;
+				&& c.getStance().havingSexOtherNoStrapped(getSelf()) && c.getStance().en != Stance.anal;
 	}
 
 	@Override
@@ -75,8 +74,7 @@ public class Grind extends Thrust {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.reverse) {
 			if (getLabel(c).equals(divineName)) {
 				return Global.format(
@@ -105,8 +103,7 @@ public class Grind extends Thrust {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character attacker) {
+	public String receive(Combat c, int damage, Result modifier, Character attacker) {
 		return deal(c, damage, modifier, attacker);
 	}
 

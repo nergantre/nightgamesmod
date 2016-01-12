@@ -1,4 +1,3 @@
-// $codepro.audit.disable logExceptions
 package nightgames.characters.custom;
 
 import java.util.ArrayList;
@@ -20,25 +19,26 @@ import nightgames.items.ItemAmount;
 import nightgames.items.clothing.Clothing;
 
 public class DataBackedNPCData implements NPCData {
-	List<PreferredAttribute>				preferredAttributes;
-	List<ItemAmount>						purchasedItems;
-	List<ItemAmount>						startingItems;
-	List<CustomStringEntry>					portraits;
-	Map<Emotion, Integer>					moodThresholds;
-	Map<String, List<CustomStringEntry>>	characterLines;
-	Stack<Clothing>							top;
-	Stack<Clothing>							bottom;
-	Stats									stats;
-	Growth									growth;
-	Item									trophy;
-	String									name;
-	String									sex;
-	String									defaultPortraitName;
-	Plan									plan;
-	String									type;
-	RecruitmentData							recruitment;
-	Body									body;
-	AiModifiers								aiModifiers;
+	List<PreferredAttribute> preferredAttributes;
+	List<ItemAmount> purchasedItems;
+	List<ItemAmount> startingItems;
+	List<CustomStringEntry> portraits;
+	Map<Emotion, Integer> moodThresholds;
+	Map<String, List<CustomStringEntry>> characterLines;
+	Stack<Clothing> top;
+	Stack<Clothing> bottom;
+	Stats stats;
+	Growth growth;
+	Item trophy;
+	String name;
+	String sex;
+	String defaultPortraitName;
+	Plan plan;
+	String type;
+	RecruitmentData recruitment;
+	Body body;
+	AiModifiers aiModifiers;
+	Map<CommentSituation, String> comments;
 
 	public DataBackedNPCData() {
 		preferredAttributes = new ArrayList<>();
@@ -58,6 +58,7 @@ public class DataBackedNPCData implements NPCData {
 		defaultPortraitName = "";
 		recruitment = new RecruitmentData();
 		aiModifiers = new AiModifiers();
+		comments = new HashMap<>();
 	}
 
 	@Override
@@ -101,8 +102,7 @@ public class DataBackedNPCData implements NPCData {
 	}
 
 	@Override
-	public String getLine(String type, Combat c, Character self,
-			Character other) {
+	public String getLine(String type, Combat c, Character self, Character other) {
 		if (!characterLines.containsKey(type)) {
 			return "";
 		}
@@ -176,5 +176,10 @@ public class DataBackedNPCData implements NPCData {
 	@Override
 	public AiModifiers getAiModifiers() {
 		return aiModifiers;
+	}
+
+	@Override
+	public Map<CommentSituation, String> getComments() {
+		return comments;
 	}
 }

@@ -23,8 +23,7 @@ public class SpiralThrust extends Thrust {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && c.getStance().canthrust(getSelf())
-				&& c.getStance().inserted()
+		return getSelf().canAct() && c.getStance().canthrust(getSelf()) && c.getStance().inserted()
 				&& c.getStance().havingSexOtherNoStrapped(getSelf());
 	}
 
@@ -73,18 +72,15 @@ public class SpiralThrust extends Thrust {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.anal) {
 			return "You unleash your strongest technique into " + target.name()
 					+ "'s ass, spiraling your hips and stretching her tight sphincter.";
 		} else if (modifier == Result.reverse) {
-			return Global.format(
-					"As you bounce on " + target.name()
-							+ "'s steaming pole, you feel a power welling up inside you. You put everything you have into moving your hips circularly, "
-							+ "rubbing every inch of her cock with your hot slippery "
-							+ getSelfOrgan(c).fullDescribe(getSelf()) + ".",
-					getSelf(), target);
+			return Global.format("As you bounce on " + target.name()
+					+ "'s steaming pole, you feel a power welling up inside you. You put everything you have into moving your hips circularly, "
+					+ "rubbing every inch of her cock with your hot slippery " + getSelfOrgan(c).fullDescribe(getSelf())
+					+ ".", getSelf(), target);
 		} else {
 			return "As you thrust into " + target.name()
 					+ "'s hot pussy, you feel a power welling up inside you. You put everything you have into moving your hips circularly "
@@ -93,8 +89,7 @@ public class SpiralThrust extends Thrust {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		BodyPart selfO = getSelfOrgan(c);
 		if (modifier == Result.anal) {
 			return getSelf().name()
@@ -107,10 +102,8 @@ public class SpiralThrust extends Thrust {
 		} else {
 			return getSelf().name()
 					+ " begins to move her hips wildly in circles, rubbing every inch of your cock with her hot, "
-					+ (selfO.isType("pussy") ? "slippery pussy walls"
-							: " steaming asshole")
-					+ ", bringing you more pleasure "
-					+ "than you thought possible.";
+					+ (selfO.isType("pussy") ? "slippery pussy walls" : " steaming asshole")
+					+ ", bringing you more pleasure " + "than you thought possible.";
 		}
 	}
 

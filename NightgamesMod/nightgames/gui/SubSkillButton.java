@@ -13,8 +13,8 @@ public class SubSkillButton extends JButton {
 	 * 
 	 */
 	private static final long serialVersionUID = -3177604366435328960L;
-	protected Skill		action;
-	protected Combat	combat;
+	protected Skill action;
+	protected Combat combat;
 
 	public SubSkillButton(final Skill action, final String choice, Combat c) {
 		super(choice);

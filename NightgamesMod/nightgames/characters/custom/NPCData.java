@@ -1,6 +1,7 @@
 package nightgames.characters.custom;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 import nightgames.characters.BasePersonality.PreferredAttribute;
@@ -53,4 +54,6 @@ public interface NPCData {
 	RecruitmentData getRecruitment();
 
 	AiModifiers getAiModifiers();
+
+	Map<CommentSituation, String> getComments();
 }

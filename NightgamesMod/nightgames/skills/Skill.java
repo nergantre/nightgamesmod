@@ -18,12 +18,12 @@ public abstract class Skill {
 	/**
 	 *
 	 */
-	private String		name;
-	private Character	self;
-	protected String	image;
-	protected String	artist;
-	private int			cooldown;
-	public String		choice;
+	private String name;
+	private Character self;
+	protected String image;
+	protected String artist;
+	private int cooldown;
+	public String choice;
 
 	public Skill(String name, Character self) {
 		this(name, self, 0);
@@ -42,14 +42,11 @@ public abstract class Skill {
 		return requirements(c, getSelf(), target);
 	}
 
-	public abstract boolean requirements(Combat c, Character user,
-			Character target);
+	public abstract boolean requirements(Combat c, Character user, Character target);
 
-	public static void filterAllowedSkills(Combat c, Set<Skill> skills,
-			Character user, Character target) {
+	public static void filterAllowedSkills(Combat c, Set<Skill> skills, Character user, Character target) {
 		boolean filtered = false;
-		Set<Skill> stanceSkills = new HashSet<Skill>(
-				c.getStance().availSkills(user));
+		Set<Skill> stanceSkills = new HashSet<Skill>(c.getStance().availSkills(user));
 
 		if (stanceSkills.size() > 0) {
 			skills.retainAll(stanceSkills);
@@ -81,16 +78,12 @@ public abstract class Skill {
 	}
 
 	public static boolean skillIsUsable(Combat c, Skill s, Character target) {
-		boolean charmRestricted = (s.getSelf().is(Stsflag.charmed)
-				|| s.getSelf().is(Stsflag.lovestruck))
-				&& s.type(c) != Tactics.fucking && s.type(c) != Tactics.pleasure
-				&& s.type(c) != Tactics.misc;
+		boolean charmRestricted = (s.getSelf().is(Stsflag.charmed) || s.getSelf().is(Stsflag.lovestruck))
+				&& s.type(c) != Tactics.fucking && s.type(c) != Tactics.pleasure && s.type(c) != Tactics.misc;
 		boolean allureRestricted = target.is(Stsflag.alluring)
 				&& (s.type(c) == Tactics.damage || s.type(c) == Tactics.debuff);
-		boolean modifierRestricted = !Global.getMatch().condition
-				.getSkillModifier().allowedSkills(c).contains(s);
-		boolean usable = s.usable(c, target)
-				&& s.getSelf().canSpend(s.getMojoCost(c)) && !charmRestricted
+		boolean modifierRestricted = !Global.getMatch().condition.getSkillModifier().allowedSkills(c).contains(s);
+		boolean usable = s.usable(c, target) && s.getSelf().canSpend(s.getMojoCost(c)) && !charmRestricted
 				&& !allureRestricted && !modifierRestricted;
 		return usable;
 	}
@@ -113,11 +106,9 @@ public abstract class Skill {
 
 	public abstract Tactics type(Combat c);
 
-	public abstract String deal(Combat c, int damage, Result modifier,
-			Character target);
+	public abstract String deal(Combat c, int damage, Result modifier, Character target);
 
-	public abstract String receive(Combat c, int damage, Result modifier,
-			Character target);
+	public abstract String receive(Combat c, int damage, Result modifier, Character target);
 
 	public boolean isReverseFuck(Character target) {
 		return target.hasDick() && getSelf().hasPussy();
@@ -157,8 +148,7 @@ public abstract class Skill {
 	}
 
 	@Override
-	public boolean equals(Object other) { // $codepro.audit.disable
-											// com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.obeyEqualsContract.obeyGeneralContractOfEquals
+	public boolean equals(Object other) {
 		return toString().equals(other.toString());
 	}
 
@@ -192,15 +182,12 @@ public abstract class Skill {
 		// Horrendously ugly, I know.
 		// But you were the one who removed getWithOrganType...
 		if (skill.user().has(Trait.temptress)) {
-			FiredUp status = (FiredUp) skill.user().status.stream()
-					.filter(s -> s instanceof FiredUp).findAny().orElse(null);
+			FiredUp status = (FiredUp) skill.user().status.stream().filter(s -> s instanceof FiredUp).findAny()
+					.orElse(null);
 			if (status != null) {
-				if (status.getPart().equals("hands")
-						&& skill.getClass() != TemptressHandjob.class
-						|| status.getPart().equals("mouth")
-								&& skill.getClass() != TemptressBlowjob.class
-						|| status.getPart().equals("pussy")
-								&& skill.getClass() != TemptressRide.class) {
+				if (status.getPart().equals("hands") && skill.getClass() != TemptressHandjob.class
+						|| status.getPart().equals("mouth") && skill.getClass() != TemptressBlowjob.class
+						|| status.getPart().equals("pussy") && skill.getClass() != TemptressRide.class) {
 					skill.user().removeStatus(Stsflag.firedup);
 				}
 			}

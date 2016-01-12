@@ -15,8 +15,7 @@ public class Reversal extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && !c.getStance().mobile(getSelf())
-				&& c.getStance().sub(getSelf()) && getSelf().canAct();
+		return !target.wary() && !c.getStance().mobile(getSelf()) && c.getStance().sub(getSelf()) && getSelf().canAct();
 	}
 
 	@Override
@@ -64,9 +63,9 @@ public class Reversal extends Skill {
 
 	@Override
 	public int accuracy(Combat c) {
-		return Math.round(Math.max(Math.min(150,
-				2.5f * (getSelf().get(Attribute.Cunning)
-						- c.getOther(getSelf()).get(Attribute.Cunning)) + 75),
+		return Math.round(Math.max(
+				Math.min(150,
+						2.5f * (getSelf().get(Attribute.Cunning) - c.getOther(getSelf()).get(Attribute.Cunning)) + 75),
 				40));
 	}
 
@@ -76,23 +75,19 @@ public class Reversal extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			return "You try to get on top of " + target.name()
 					+ ", but she's apparently more ready for it than you realized.";
 		} else {
-			return "You take advantage of " + target.name()
-					+ "'s distraction and put her in a pin.";
+			return "You take advantage of " + target.name() + "'s distraction and put her in a pin.";
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return getSelf().name()
-					+ " tries to reverse your hold, but you stop her.";
+			return getSelf().name() + " tries to reverse your hold, but you stop her.";
 		} else {
 			return getSelf().name() + " rolls you over and ends up on top.";
 		}

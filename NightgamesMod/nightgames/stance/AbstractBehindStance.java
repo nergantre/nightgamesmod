@@ -7,8 +7,7 @@ import nightgames.characters.Character;
 import nightgames.global.Global;
 
 public abstract class AbstractBehindStance extends Position {
-	public AbstractBehindStance(Character top, Character bottom,
-			Stance stance) {
+	public AbstractBehindStance(Character top, Character bottom, Stance stance) {
 		super(top, bottom, stance);
 	}
 

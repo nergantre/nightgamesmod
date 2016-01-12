@@ -3,10 +3,7 @@ package nightgames.characters;
 import nightgames.global.Global;
 
 public enum CharacterSex {
-	male("male"),
-	female("female"),
-	herm("hermaphrodite"),
-	asexual("asexual (warning: untested)");
+	male("male"), female("female"), herm("hermaphrodite"), asexual("asexual (warning: untested)");
 
 	private String desc;
 

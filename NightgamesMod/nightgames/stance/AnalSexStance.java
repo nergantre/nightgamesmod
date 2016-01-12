@@ -26,15 +26,13 @@ public abstract class AnalSexStance extends Position {
 
 	@Override
 	public List<BodyPart> topParts() {
-		return Arrays.asList(top.body.getRandomInsertable()).stream()
-				.filter(part -> part != null && part.present())
+		return Arrays.asList(top.body.getRandomInsertable()).stream().filter(part -> part != null && part.present())
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<BodyPart> bottomParts() {
-		return Arrays.asList(bottom.body.getRandomAss()).stream()
-				.filter(part -> part != null && part.present())
+		return Arrays.asList(bottom.body.getRandomAss()).stream().filter(part -> part != null && part.present())
 				.collect(Collectors.toList());
 	}
 

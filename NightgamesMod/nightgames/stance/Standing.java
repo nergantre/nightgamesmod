@@ -12,11 +12,9 @@ public class Standing extends MaledomSexStance {
 	@Override
 	public String describe() {
 		if (top.human()) {
-			return "You are holding " + bottom.name()
-					+ " in the air while buried deep in her pussy";
+			return "You are holding " + bottom.name() + " in the air while buried deep in her pussy";
 		} else {
-			return top.name()
-					+ " is holding you in her arms while pumping into your girl parts.";
+			return top.name() + " is holding you in her arms while pumping into your girl parts.";
 		}
 	}
 
@@ -95,12 +93,11 @@ public class Standing extends MaledomSexStance {
 	public void checkOngoing(Combat c) {
 		if (top.getStamina().get() < 10) {
 			if (top.human()) {
-				c.write("Your legs give out and you fall on the floor. "
-						+ bottom.name() + " lands heavily on your lap.");
+				c.write("Your legs give out and you fall on the floor. " + bottom.name()
+						+ " lands heavily on your lap.");
 				c.setStance(new Cowgirl(bottom, top));
 			} else {
-				c.write(top.name()
-						+ " loses her balance and falls, pulling you down on top of her.");
+				c.write(top.name() + " loses her balance and falls, pulling you down on top of her.");
 				c.setStance(new Cowgirl(bottom, top));
 			}
 		} else {

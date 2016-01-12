@@ -36,9 +36,7 @@ public class TemptressHandjob extends Handjob {
 		if (target.roll(this, c, accuracy(c))) {
 			if (!target.body.getRandomCock().isReady(target)) {
 				m -= 7;
-				target.body.pleasure(getSelf(),
-						getSelf().body.getRandom("hands"),
-						target.body.getRandomCock(), m, c);
+				target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandomCock(), m, c);
 				if (target.body.getRandomCock().isReady(target)) {
 					// Was flaccid, got hard
 					c.write(getSelf(), deal(c, 0, Result.special, target));
@@ -48,15 +46,12 @@ public class TemptressHandjob extends Handjob {
 					c.write(getSelf(), deal(c, 0, Result.weak, target));
 				}
 			} else {
-				FiredUp status = (FiredUp) getSelf().status.stream()
-						.filter(s -> s instanceof FiredUp).findAny()
+				FiredUp status = (FiredUp) getSelf().status.stream().filter(s -> s instanceof FiredUp).findAny()
 						.orElse(null);
-				int stack = status == null || !status.getPart().equals("hands")
-						? 0 : status.getStack();
+				int stack = status == null || !status.getPart().equals("hands") ? 0 : status.getStack();
 				c.write(getSelf(), deal(c, stack, Result.normal, target));
-				target.body.pleasure(getSelf(),
-						getSelf().body.getRandom("hands"),
-						target.body.getRandomCock(), m + m * stack / 2, c);
+				target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandomCock(),
+						m + m * stack / 2, c);
 				getSelf().add(c, new FiredUp(getSelf(), target, "hands"));
 			}
 		} else {
@@ -71,64 +66,46 @@ public class TemptressHandjob extends Handjob {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		switch (modifier) {
-			case miss:
-				return String.format(
-						"%s down to %s groin, but %s pulls %s hips back.",
-						getSelf().subjectAction("reach", "reaches"),
-						target.nameOrPossessivePronoun(), target.pronoun(),
-						target.possessivePronoun());
-			case weak:
-				return String.format(
-						"%s %s limp %s and %s it expertly, but it remains flaccid despite %s best efforts",
-						getSelf().subjectAction("grab", "grabs"),
-						target.nameOrPossessivePronoun(),
-						target.body.getRandomCock().describe(target),
-						getSelf().action("fondle", "fondles"),
+		case miss:
+			return String.format("%s down to %s groin, but %s pulls %s hips back.",
+					getSelf().subjectAction("reach", "reaches"), target.nameOrPossessivePronoun(), target.pronoun(),
+					target.possessivePronoun());
+		case weak:
+			return String.format("%s %s limp %s and %s it expertly, but it remains flaccid despite %s best efforts",
+					getSelf().subjectAction("grab", "grabs"), target.nameOrPossessivePronoun(),
+					target.body.getRandomCock().describe(target), getSelf().action("fondle", "fondles"),
+					getSelf().possessivePronoun());
+		case special:
+			return String.format("%s %s limp %s and %s it expertly, and it grows fully hard under %s skilled touch.",
+					getSelf().subjectAction("grab", "grabs"), target.nameOrPossessivePronoun(),
+					target.body.getRandomCock().describe(target), getSelf().action("massage", "massages"),
+					getSelf().possessivePronoun());
+		default: // should be Result.normal
+			// already hard
+			switch (damage) {
+			case 0:
+				return String.format("%s hold of %s %s and %s %s fingers over it briskly, hitting all the right spots.",
+						getSelf().subjectAction("take", "takes"), target.nameOrPossessivePronoun(),
+						target.body.getRandomCock().describe(target), getSelf().action("run", "runs"),
 						getSelf().possessivePronoun());
-			case special:
+			case 1:
 				return String.format(
-						"%s %s limp %s and %s it expertly, and it grows fully hard under %s skilled touch.",
-						getSelf().subjectAction("grab", "grabs"),
-						target.nameOrPossessivePronoun(),
-						target.body.getRandomCock().describe(target),
-						getSelf().action("massage", "massages"),
-						getSelf().possessivePronoun());
-			default: // should be Result.normal
-				// already hard
-				switch (damage) {
-					case 0:
-						return String
-								.format("%s hold of %s %s and %s %s fingers over it briskly, hitting all the right spots.",
-										getSelf()
-												.subjectAction("take", "takes"),
-										target.nameOrPossessivePronoun(),
-										target.body.getRandomCock()
-												.describe(target),
-								getSelf().action("run", "runs"),
-								getSelf().possessivePronoun());
-					case 1:
-						return String.format(
-								"%s hold on %s %s tightens, and where once there were gentle touches there are now firm jerks.",
-								getSelf().nameOrPossessivePronoun(),
-								target.nameOrPossessivePronoun(),
-								target.body.getRandomCock().describe(target));
-					default:
-						return String.format(
-								"%s latched on to %s %s with both hands now, twisting them in a fierce milking movement and eliciting pleasured groans from %s.",
-								getSelf().subjectAction("have", "has"),
-								target.nameOrPossessivePronoun(),
-								target.body.getRandomCock().describe(target),
-								target.directObject());
-				}
+						"%s hold on %s %s tightens, and where once there were gentle touches there are now firm jerks.",
+						getSelf().nameOrPossessivePronoun(), target.nameOrPossessivePronoun(),
+						target.body.getRandomCock().describe(target));
+			default:
+				return String.format(
+						"%s latched on to %s %s with both hands now, twisting them in a fierce milking movement and eliciting pleasured groans from %s.",
+						getSelf().subjectAction("have", "has"), target.nameOrPossessivePronoun(),
+						target.body.getRandomCock().describe(target), target.directObject());
+			}
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		// use formatted strings in deal
 		return deal(c, damage, modifier, target);
 	}

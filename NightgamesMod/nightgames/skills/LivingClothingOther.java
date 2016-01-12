@@ -20,9 +20,8 @@ public class LivingClothingOther extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && !c.getStance().mobile(target)
-				&& c.getStance().mobile(getSelf()) && !c.getStance().inserted()
-				&& target.torsoNude() && getSelf().has(Item.Battery, 3);
+		return getSelf().canAct() && !c.getStance().mobile(target) && c.getStance().mobile(getSelf())
+				&& !c.getStance().inserted() && target.torsoNude() && getSelf().has(Item.Battery, 3);
 	}
 
 	@Override
@@ -54,25 +53,19 @@ public class LivingClothingOther extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		String message;
 		message = "You power up your fabricator and dial the knob to the emergency reclothing setting. "
-				+ "You hit the button and dark tentacles squirm out of the device. "
-				+ "You hold " + target.subject()
-				+ " down and point the tentacles at her body. "
-				+ "The undulating tentacles coils around "
-				+ target.possessivePronoun()
-				+ " body and wraps itself into a living suit.";
+				+ "You hit the button and dark tentacles squirm out of the device. " + "You hold " + target.subject()
+				+ " down and point the tentacles at her body. " + "The undulating tentacles coils around "
+				+ target.possessivePronoun() + " body and wraps itself into a living suit.";
 		return message;
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		String message;
-		message = "While holding you down, " + getSelf().subject()
-				+ " powers up " + getSelf().possessivePronoun()
+		message = "While holding you down, " + getSelf().subject() + " powers up " + getSelf().possessivePronoun()
 				+ " fabricator and dials the knob to the emergency reclothing setting. "
 				+ Global.capitalizeFirstLetter(getSelf().pronoun())
 				+ " hits the button and dark tentacles squirm out of the device."

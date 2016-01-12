@@ -14,12 +14,10 @@ public class Anal extends AnalSexStance {
 	@Override
 	public String describe() {
 		if (top.human()) {
-			return "You're behind " + bottom.name()
-					+ " and your cock in buried in "
-					+ bottom.possessivePronoun() + " ass.";
+			return "You're behind " + bottom.name() + " and your cock in buried in " + bottom.possessivePronoun()
+					+ " ass.";
 		} else if (top.has(Trait.strapped)) {
-			return top.name()
-					+ " is pegging you with her strapon dildo from behind.";
+			return top.name() + " is pegging you with her strapon dildo from behind.";
 		} else {
 			return top.name() + " is fucking you in the ass from behind";
 		}
@@ -101,22 +99,18 @@ public class Anal extends AnalSexStance {
 
 		if (!inserter.hasInsertable()) {
 			if (inserted.human()) {
-				c.write("With " + inserter.name()
-						+ "'s pole gone, your ass gets a respite.");
+				c.write("With " + inserter.name() + "'s pole gone, your ass gets a respite.");
 			} else {
-				c.write(inserted.name()
-						+ " sighs with relief with your phallus gone.");
+				c.write(inserted.name() + " sighs with relief with your phallus gone.");
 			}
 			c.setStance(insertRandom());
 		}
 		if (inserted.body.getRandom("ass") == null) {
 			if (inserted.human()) {
-				c.write("With your asshole suddenly disappearing, "
-						+ inserter.name()
+				c.write("With your asshole suddenly disappearing, " + inserter.name()
 						+ "'s dick pops out of what was once your sphincter.");
 			} else {
-				c.write("Your dick pops out of " + inserted.name()
-						+ " as her asshole shrinks and disappears.");
+				c.write("Your dick pops out of " + inserted.name() + " as her asshole shrinks and disappears.");
 			}
 			c.setStance(insertRandom());
 		}

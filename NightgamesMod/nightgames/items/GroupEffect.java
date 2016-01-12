@@ -9,8 +9,7 @@ public class GroupEffect extends ItemEffect {
 	private Collection<ItemEffect> others;
 
 	interface EffectCondition {
-		boolean operation(Combat c, Character user, Character opponent,
-				Item item);
+		boolean operation(Combat c, Character user, Character opponent, Item item);
 	}
 
 	public GroupEffect(Collection<ItemEffect> others) {
@@ -19,8 +18,7 @@ public class GroupEffect extends ItemEffect {
 	}
 
 	@Override
-	public boolean use(Combat c, Character user, Character opponent,
-			Item item) {
+	public boolean use(Combat c, Character user, Character opponent, Item item) {
 		boolean changed = false;
 		for (ItemEffect effect : others) {
 			changed = effect.use(c, user, opponent, item) || changed;

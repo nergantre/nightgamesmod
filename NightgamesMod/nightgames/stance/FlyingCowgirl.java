@@ -19,10 +19,8 @@ public class FlyingCowgirl extends FemdomSexStance {
 		return String.format(
 				"You are flying some twenty feet up in the air,"
 						+ " joinned to your partner by your hips. %s on top of %s and %s %s is strangling %s %s",
-				top.subjectAction("are", "is"), bottom.subject(),
-				top.possessivePronoun(),
-				top.body.getRandomPussy().describe(top),
-				bottom.possessivePronoun(),
+				top.subjectAction("are", "is"), bottom.subject(), top.possessivePronoun(),
+				top.body.getRandomPussy().describe(top), bottom.possessivePronoun(),
 				bottom.body.getRandomInsertable().describe(bottom));
 	}
 
@@ -95,8 +93,7 @@ public class FlyingCowgirl extends FemdomSexStance {
 	public void checkOngoing(Combat c) {
 		if (top.getStamina().get() < 5) {
 			if (top.human()) {
-				c.write("You're too tired to stay in the air. You plummet to the ground and "
-						+ bottom.name()
+				c.write("You're too tired to stay in the air. You plummet to the ground and " + bottom.name()
 						+ " drops on you heavily, knocking the wind out of you.");
 			} else {
 				c.write(top.name()

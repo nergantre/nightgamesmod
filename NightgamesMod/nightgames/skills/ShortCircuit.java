@@ -21,9 +21,8 @@ public class ShortCircuit extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && c.getStance().mobile(getSelf())
-				&& !c.getStance().prone(getSelf()) && target.mostlyNude()
-				&& getSelf().has(Item.Battery, 3);
+		return getSelf().canAct() && c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf())
+				&& target.mostlyNude() && getSelf().has(Item.Battery, 3);
 	}
 
 	@Override
@@ -54,15 +53,13 @@ public class ShortCircuit extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You send a light electrical current through " + target.name()
 				+ "'s body, disrupting her nerve endings. She'll temporarily feel pleasure as pain and pain as pleasure.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().name()
 				+ " aims a devices at you and you feel a strange shiver run across your skin. You feel indescribably weird. She's done something to your sense of touch.";
 	}

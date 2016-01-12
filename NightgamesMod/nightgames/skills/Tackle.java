@@ -16,16 +16,14 @@ public class Tackle extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && c.getStance().mobile(getSelf())
-				&& c.getStance().mobile(target)
+		return !target.wary() && c.getStance().mobile(getSelf()) && c.getStance().mobile(target)
 				&& !c.getStance().prone(getSelf()) && getSelf().canAct();
 	}
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if (target.roll(this, c, accuracy(c)) && getSelf().check(
-				Attribute.Power,
-				target.knockdownDC() - getSelf().get(Attribute.Animism))) {
+		if (target.roll(this, c, accuracy(c))
+				&& getSelf().check(Attribute.Power, target.knockdownDC() - getSelf().get(Attribute.Animism))) {
 			if (getSelf().get(Attribute.Animism) >= 1) {
 				if (getSelf().human()) {
 					c.write(getSelf(), deal(c, 0, Result.special, target));
@@ -60,8 +58,7 @@ public class Tackle extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Power) >= 26 && !user.has(Trait.petite)
-				|| user.get(Attribute.Animism) >= 1;
+		return user.get(Attribute.Power) >= 26 && !user.has(Trait.petite) || user.get(Attribute.Animism) >= 1;
 	}
 
 	@Override
@@ -84,9 +81,9 @@ public class Tackle extends Skill {
 		if (getSelf().get(Attribute.Animism) >= 1) {
 			base = 120;
 		}
-		return Math.round(Math.max(Math.min(150,
-				2.5f * (getSelf().get(Attribute.Power)
-						- c.getOther(getSelf()).get(Attribute.Power)) + base),
+		return Math.round(Math.max(
+				Math.min(150,
+						2.5f * (getSelf().get(Attribute.Power) - c.getOther(getSelf()).get(Attribute.Power)) + base),
 				40));
 	}
 
@@ -105,33 +102,26 @@ public class Tackle extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.special) {
-			return "You let your instincts take over and you pounce on "
-					+ target.name() + " like a predator catching your prey.";
+			return "You let your instincts take over and you pounce on " + target.name()
+					+ " like a predator catching your prey.";
 		} else if (modifier == Result.normal) {
-			return "You tackle " + target.name()
-					+ " to the ground and straddle her.";
+			return "You tackle " + target.name() + " to the ground and straddle her.";
 		} else {
-			return "You lunge at " + target.name()
-					+ ", but she dodges out of the way.";
+			return "You lunge at " + target.name() + ", but she dodges out of the way.";
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.special) {
-			return getSelf().name()
-					+ " wiggles her butt cutely before leaping at you and pinning you to the floor.";
+			return getSelf().name() + " wiggles her butt cutely before leaping at you and pinning you to the floor.";
 		}
 		if (modifier == Result.miss) {
-			return getSelf().name()
-					+ " tries to tackle you, but you sidestep out of the way.";
+			return getSelf().name() + " tries to tackle you, but you sidestep out of the way.";
 		} else {
-			return getSelf().name()
-					+ " bowls you over and sits triumphantly on your chest.";
+			return getSelf().name() + " bowls you over and sits triumphantly on your chest.";
 		}
 	}
 

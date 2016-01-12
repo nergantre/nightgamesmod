@@ -15,8 +15,8 @@ public class Straddle extends Skill {
 	@Override
 	public boolean usable(Combat c, Character target) {
 
-		return c.getStance().mobile(getSelf()) && c.getStance().mobile(target)
-				&& c.getStance().prone(target) && getSelf().canAct();
+		return c.getStance().mobile(getSelf()) && c.getStance().mobile(target) && c.getStance().prone(target)
+				&& getSelf().canAct();
 	}
 
 	@Override
@@ -51,15 +51,12 @@ public class Straddle extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
-		return "You straddle " + target.name()
-				+ " using your body weight to hold her down.";
+	public String deal(Combat c, int damage, Result modifier, Character target) {
+		return "You straddle " + target.name() + " using your body weight to hold her down.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().name() + " plops herself down on top of your stomach.";
 	}
 

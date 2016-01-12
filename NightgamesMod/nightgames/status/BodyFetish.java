@@ -28,14 +28,13 @@ import nightgames.skills.SpiralThrust;
 import nightgames.skills.Thrust;
 import nightgames.skills.WildThrust;
 
-public class BodyFetish extends Status {
-	Character		origin;
-	public String	part;
-	public double	magnitude;
+public class BodyFetish extends DurationStatus {
+	Character origin;
+	public String part;
+	public double magnitude;
 
-	public BodyFetish(Character affected, Character origin, String part,
-			double magnitude) {
-		super(Global.capitalizeFirstLetter(part) + " Fetish", affected);
+	public BodyFetish(Character affected, Character origin, String part, double magnitude) {
+		super(Global.capitalizeFirstLetter(part) + " Fetish", affected, 10);
 		flag(Stsflag.bodyfetish);
 		this.origin = origin;
 		this.part = part;
@@ -50,11 +49,9 @@ public class BodyFetish extends Status {
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
 		if (replaced) {
-			return String.format("%s %s fetish has grown.\n",
-					affected.nameOrPossessivePronoun(), part);
+			return String.format("%s %s fetish has grown.\n", affected.nameOrPossessivePronoun(), part);
 		} else {
-			return String.format("%s now affected by a %s fetish.\n",
-					affected.subjectAction("are", "is"), part);
+			return String.format("%s now affected by a %s fetish.\n", affected.subjectAction("are", "is"), part);
 		}
 	}
 
@@ -73,18 +70,15 @@ public class BodyFetish extends Status {
 		String magString = Global.formatDecimal(magnitude);
 		if (affected.human()) {
 			if (origin != null && c != null && c.getOther(affected) == origin) {
-				return Global.capitalizeFirstLetter(desc
-						+ "fantasies of worshipping "
-						+ origin.nameOrPossessivePronoun() + " " + part
-						+ " run through your mind (" + magString + ").");
+				return Global
+						.capitalizeFirstLetter(desc + "fantasies of worshipping " + origin.nameOrPossessivePronoun()
+								+ " " + part + " run through your mind (" + magString + ").");
 			} else {
-				return Global.capitalizeFirstLetter(desc
-						+ "fantasies of worshipping " + part
-						+ " run through your mind (" + magString + ").");
+				return Global.capitalizeFirstLetter(
+						desc + "fantasies of worshipping " + part + " run through your mind (" + magString + ").");
 			}
 		} else {
-			return affected.name() + " is affected by " + desc + part
-					+ " fetish (" + magString + ").";
+			return affected.name() + " is affected by " + desc + part + " fetish (" + magString + ").";
 		}
 	}
 
@@ -101,12 +95,10 @@ public class BodyFetish extends Status {
 		} else if (part.equals("ass")) {
 			return Arrays.asList((Skill) new Anilingus(affected));
 		} else if (part.equals("cock")) {
-			return Arrays.asList((Skill) new Blowjob(affected),
-					new ReverseAssFuck(affected), new ReverseFly(affected),
-					new ReverseCarry(affected), new Invitation(affected),
-					new Thrust(affected), new Piston(affected),
-					new Grind(affected), new SpiralThrust(affected),
-					new CockWorship(affected), new WildThrust(affected));
+			return Arrays.asList((Skill) new Blowjob(affected), new ReverseAssFuck(affected), new ReverseFly(affected),
+					new ReverseCarry(affected), new Invitation(affected), new Thrust(affected), new Piston(affected),
+					new Grind(affected), new SpiralThrust(affected), new CockWorship(affected),
+					new WildThrust(affected));
 		} else {
 			return Collections.emptySet();
 		}
@@ -133,6 +125,7 @@ public class BodyFetish extends Status {
 		BodyFetish other = (BodyFetish) s;
 		assert other.part.equals(part);
 		magnitude = Math.min(3.0, magnitude + other.magnitude);
+		this.setDuration(Math.max(getDuration(), other.getDuration()));
 	}
 
 	@Override
@@ -202,8 +195,7 @@ public class BodyFetish extends Status {
 
 	@Override
 	public Status loadFromJSON(JSONObject obj) {
-		return new BodyFetish(null, null, JSONUtils.readString(obj, "part"),
-				JSONUtils.readFloat(obj, "magnitude"));
+		return new BodyFetish(null, null, JSONUtils.readString(obj, "part"), JSONUtils.readFloat(obj, "magnitude"));
 	}
 
 	@Override

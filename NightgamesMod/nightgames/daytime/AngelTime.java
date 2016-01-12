@@ -28,8 +28,7 @@ public class AngelTime extends BaseNPCTime {
 		transformationIntro = "[Placeholder]<br>Angel says she may be able to try a few things with her new divine powers.";
 		loveIntro = "You meet Angel at her room, but for once, she doesn't seem eager to get to sex. You can tell she has something on her mind, so you let her lean "
 				+ "against you on the futon while she thinks. It's quiet. You aren't used to your time with Angel being quiet, mostly because you so rarely meet her alone. You "
-				+ "lose track of time sitting there before she breaks the silence. <i>\""
-				+ player.name()
+				+ "lose track of time sitting there before she breaks the silence. <i>\"" + player.name()
 				+ ", what do you think about my friends?\"</i> That's not the question you expected. "
 				+ "You've gotten along with her friends quite well so far. Angel shifts her position so you can't see her face. <i>\"I've had several lovers who couldn't get along with "
 				+ "my friends. Some of them pretended they did for awhile, some of them wanted me to spend less time with them.\"</i> Her friends are very socially and sexually aggressive. "
@@ -52,8 +51,7 @@ public class AngelTime extends BaseNPCTime {
 			blessedCock.ingredients.put(Item.HolyWater, 10);
 			blessedCock.requirements.add(new BodyPartRequirement("cock"));
 			blessedCock.requirements.add((c, self, other) -> {
-				return self.body.get("cock").stream()
-						.anyMatch(cock -> ((CockPart) cock).isGeneric());
+				return self.body.get("cock").stream().anyMatch(cock -> ((CockPart) cock).isGeneric());
 			});
 			blessedCock.requirements.add((c, self, other) -> {
 				return self.get(Attribute.Divinity) >= 10;
@@ -63,8 +61,7 @@ public class AngelTime extends BaseNPCTime {
 			blessedCock.scene = "[Placeholder]<br>Angel performs a sacrament on your cock, imbuing it with holy powers.";
 			blessedCock.effect = (c, self, other) -> {
 				Optional<BodyPart> optPart = self.body.get("cock").stream()
-						.filter(cock -> ((CockPart) cock).isGeneric())
-						.findAny();
+						.filter(cock -> ((CockPart) cock).isGeneric()).findAny();
 				BasicCockPart target = (BasicCockPart) optPart.get();
 				self.body.remove(target);
 				self.body.add(new ModdedCockPart(target, CockMod.blessed));
@@ -77,8 +74,7 @@ public class AngelTime extends BaseNPCTime {
 			divinePussy.ingredients.put(Item.HolyWater, 10);
 			divinePussy.requirements.add(new BodyPartRequirement("pussy"));
 			divinePussy.requirements.add((c, self, other) -> {
-				return self.body.get("pussy").stream()
-						.anyMatch(part -> part == PussyPart.normal);
+				return self.body.get("pussy").stream().anyMatch(part -> part == PussyPart.normal);
 			});
 			divinePussy.requirements.add((c, self, other) -> {
 				return self.get(Attribute.Divinity) >= 10;
@@ -187,9 +183,7 @@ public class AngelTime extends BaseNPCTime {
 	@Override
 	public void subVisit(String choice) {
 		if (choice.equals("Sex")) {
-			if (npc.getAffection(player) >= 12
-					&& (!player.has(Trait.experttongue)
-							|| Global.random(2) == 1)) {
+			if (npc.getAffection(player) >= 12 && (!player.has(Trait.experttongue) || Global.random(2) == 1)) {
 				Global.gui().message(
 						"You're in Angel's room, naked and feeling a little overwhelmed. She embraces your from behind and you can feel her soft, heavy breasts pressed against "
 								+ "your back. She nibbles lightly on your ear while motioning toward the naked girl on her bed. <i>\"She's all yours. Show me what you can do.\"</i> As for how you got here... "
@@ -265,8 +259,7 @@ public class AngelTime extends BaseNPCTime {
 			npc.gainAffection(player, 1);
 			player.gainAffection(npc, 1);
 		} else if (choice.equals("Games")) {
-			if (npc.getAffection(player) >= 8 && (!player.has(Trait.pokerface)
-					|| Global.random(2) == 1)) {
+			if (npc.getAffection(player) >= 8 && (!player.has(Trait.pokerface) || Global.random(2) == 1)) {
 				Global.gui().message(
 						"Today all the girls left the responsibility of choosing a game to you, with Angel's stipulation that it had to including stripping. You picked a simple, but intense "
 								+ "bluffing game with stripping rules slotted in so naturally it's like the game was designed for them. Not to be immodest, but clearly your genius knows no bounds. The first five "
@@ -296,8 +289,7 @@ public class AngelTime extends BaseNPCTime {
 								+ "bite her lip and shudder. You realize she's having multiple little orgasms and trying to hide it. After Sarah climaxes (loudly), Angel speeds up her handjob and whispers in your ear, <i>\"Cum for me. "
 								+ "You have my permission.\"</i> You couldn't hold back even if you wanted to. You shoot your load so far that some of it even hits Caroline, who is standing quite a ways away.");
 				if (!player.has(Trait.pokerface)) {
-					Global.gui().message(
-							"<p><b>You've mastered the art of bluffing.</b>");
+					Global.gui().message("<p><b>You've mastered the art of bluffing.</b>");
 					player.add(Trait.pokerface);
 					npc.add(Trait.pokerface);
 				}
@@ -331,9 +323,7 @@ public class AngelTime extends BaseNPCTime {
 			npc.gainAffection(player, 1);
 			player.gainAffection(npc, 1);
 		} else if (choice.equals("Sparring")) {
-			if (npc.getAffection(player) >= 16
-					&& (!player.has(Trait.disciplinarian)
-							|| Global.random(2) == 1)) {
+			if (npc.getAffection(player) >= 16 && (!player.has(Trait.disciplinarian) || Global.random(2) == 1)) {
 				Global.gui().message(
 						"Your strip wrestling with Angel has become a routine secondary version of your nightly competitions. Unfortunately, in this venue, Angel has a a much better "
 								+ "win rate than you. You've also gotten used to your three girl audience. Mei's sadistic side comes to the fore as she cheers on Angel whenever she's got the upper hand. Caroline, "

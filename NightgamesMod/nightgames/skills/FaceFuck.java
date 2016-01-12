@@ -24,12 +24,9 @@ public class FaceFuck extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && c.getStance().dom(getSelf())
-				&& c.getStance().reachTop(getSelf())
-				&& (getSelf().crotchAvailable() && getSelf().hasDick()
-						|| getSelf().has(Trait.strapped))
-				&& !c.getStance().inserted(getSelf())
-				&& c.getStance().front(getSelf())
+		return getSelf().canAct() && c.getStance().dom(getSelf()) && c.getStance().reachTop(getSelf())
+				&& (getSelf().crotchAvailable() && getSelf().hasDick() || getSelf().has(Trait.strapped))
+				&& !c.getStance().inserted(getSelf()) && c.getStance().front(getSelf())
 				&& !c.getStance().behind(target);
 	}
 
@@ -71,15 +68,12 @@ public class FaceFuck extends Skill {
 		target.add(c, new Shamed(target));
 
 		if (selfDamage > 0) {
-			getSelf().body.pleasure(target, targetMouth,
-					getSelf().body.getRandom("cock"), selfDamage, c);
+			getSelf().body.pleasure(target, targetMouth, getSelf().body.getRandom("cock"), selfDamage, c);
 		}
 		if (targetDamage > 0) {
-			target.body.pleasure(target, getSelf().body.getRandomInsertable(),
-					targetMouth, targetDamage, c);
+			target.body.pleasure(target, getSelf().body.getRandomInsertable(), targetMouth, targetDamage, c);
 		}
-		if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)
-				&& !getSelf().has(Trait.strapped)) {
+		if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish) && !getSelf().has(Trait.strapped)) {
 			target.add(c, new BodyFetish(target, getSelf(), "cock", .25));
 		}
 		target.loseMojo(c, 2 * getSelf().get(Attribute.Seduction));
@@ -98,8 +92,7 @@ public class FaceFuck extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		String m = "";
 		if (modifier == Result.strapon || modifier == Result.upgrade) {
 			m = "You grab hold of " + target.name()
@@ -135,14 +128,12 @@ public class FaceFuck extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		String m;
 		if (modifier == Result.strapon) {
 			m = getSelf().name()
 					+ " forces her strapon cock into your mouth and fucks your face with it. It's only rubber, but your position is still humiliating. You struggle not "
-					+ "to gag on the artificial member while "
-					+ getSelf().name() + " revels in her dominance.";
+					+ "to gag on the artificial member while " + getSelf().name() + " revels in her dominance.";
 		} else if (modifier == Result.upgrade) {
 			m = getSelf().name()
 					+ " slightly moves forward on you, pushing her strapon against your lips. You try to keep your mouth closed but "
@@ -153,8 +144,7 @@ public class FaceFuck extends Skill {
 			m = getSelf().name()
 					+ " forces your mouth open and shoves her sizable girl-cock into it. You're momentarily overwhelmed by the strong, musky smell and the taste, but "
 					+ "she quickly starts moving her hips, fucking your mouth. However, your modified oral orifice was literally designed to squeeze cum; soon "
-					+ getSelf().name()
-					+ " finds herself ramming with little more than her own enjoyment in mind.";
+					+ getSelf().name() + " finds herself ramming with little more than her own enjoyment in mind.";
 		} else {
 			m = getSelf().name()
 					+ " forces your mouth open and shoves her sizable girl-cock into it. You're momentarily overwhelmed by the strong, musky smell and the taste, but "

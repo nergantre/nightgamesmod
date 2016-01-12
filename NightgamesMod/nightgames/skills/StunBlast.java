@@ -22,8 +22,7 @@ public class StunBlast extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && c.getStance().mobile(getSelf())
-				&& c.getStance().front(getSelf())
+		return getSelf().canAct() && c.getStance().mobile(getSelf()) && c.getStance().front(getSelf())
 				&& getSelf().has(Item.Battery, 4);
 	}
 
@@ -66,20 +65,18 @@ public class StunBlast extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			return "You overload the emitter on your arm, but " + target.name()
 					+ " shields her face to avoid the flash.";
 		} else {
-			return "You overload the emitter on your arm, duplicating the effect of a flashbang. "
-					+ target.name() + " staggers as the blast disorients her.";
+			return "You overload the emitter on your arm, duplicating the effect of a flashbang. " + target.name()
+					+ " staggers as the blast disorients her.";
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			return getSelf().name()
 					+ " covers her face and points a device in your direction. Sensing danger, you shield you eyes just as the flashbang goes off.";

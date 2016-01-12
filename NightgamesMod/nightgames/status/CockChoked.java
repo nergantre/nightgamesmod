@@ -19,14 +19,13 @@ public class CockChoked extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now preventing %s from cumming\n",
-				other.subjectAction("are", "is"), affected.subject());
+		return String.format("%s now preventing %s from cumming\n", other.subjectAction("are", "is"),
+				affected.subject());
 	}
 
 	@Override
 	public String describe(Combat c) {
-		return String.format("%s preventing %s from cumming\n",
-				other.subjectAction("are", "is"), affected.subject());
+		return String.format("%s preventing %s from cumming\n", other.subjectAction("are", "is"), affected.subject());
 	}
 
 	@Override
@@ -128,7 +127,6 @@ public class CockChoked extends DurationStatus {
 
 	@Override
 	public Status loadFromJSON(JSONObject obj) {
-		return new CockChoked(null, null,
-				JSONUtils.readInteger(obj, "duration"));
+		return new CockChoked(null, null, JSONUtils.readInteger(obj, "duration"));
 	}
 }

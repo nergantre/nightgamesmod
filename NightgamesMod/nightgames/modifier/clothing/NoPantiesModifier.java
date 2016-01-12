@@ -13,17 +13,14 @@ import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.modifier.ModifierComponent;
 
-public class NoPantiesModifier extends ClothingModifier
-		implements ModifierComponent<NoPantiesModifier> {
+public class NoPantiesModifier extends ClothingModifier implements ModifierComponent<NoPantiesModifier> {
 
 	private static final Set<Integer> ALL_BUT_ZERO = Collections
-			.unmodifiableSet(IntStream.range(1, Clothing.N_LAYERS).boxed()
-					.collect(Collectors.toSet()));
+			.unmodifiableSet(IntStream.range(1, Clothing.N_LAYERS).boxed().collect(Collectors.toSet()));
 
 	@Override
 	public Map<ClothingSlot, Set<Integer>> allowedSlotLayerCombos() {
-		Map<ClothingSlot, Set<Integer>> combos = new HashMap<>(
-				ALL_SLOT_LAYER_COMBOS);
+		Map<ClothingSlot, Set<Integer>> combos = new HashMap<>(ALL_SLOT_LAYER_COMBOS);
 		combos.replace(ClothingSlot.bottom, ALL_BUT_ZERO);
 		return combos;
 	}

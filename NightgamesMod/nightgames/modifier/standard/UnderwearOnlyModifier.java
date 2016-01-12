@@ -38,10 +38,8 @@ public class UnderwearOnlyModifier extends BaseModifier {
 
 	@Override
 	public boolean isApplicable() {
-		return Global.getPlayer().outfitPlan.stream()
-				.anyMatch(article -> article.getLayer() == 0 && (article
-						.getSlots().contains(ClothingSlot.top)
-						|| article.getSlots().contains(ClothingSlot.bottom)));
+		return Global.getPlayer().outfitPlan.stream().anyMatch(article -> article.getLayer() == 0
+				&& (article.getSlots().contains(ClothingSlot.top) || article.getSlots().contains(ClothingSlot.bottom)));
 	}
 
 }

@@ -61,8 +61,7 @@ public class Cassie extends BasePersonality {
 		growth.bonusStamina = 1;
 		growth.bonusArousal = 3;
 		growth.bonusMojo = 1;
-		preferredAttributes.add(c -> c.get(Attribute.Arcane) < 80
-				? Optional.of(Attribute.Arcane) : Optional.empty());
+		preferredAttributes.add(c -> c.get(Attribute.Arcane) < 80 ? Optional.of(Attribute.Arcane) : Optional.empty());
 		growth.addTrait(2, Trait.silvertongue);
 		growth.addTrait(5, Trait.mojoMaster);
 		growth.addTrait(8, Trait.tongueTraining1);
@@ -106,24 +105,20 @@ public class Cassie extends BasePersonality {
 			}
 		}
 		super.rest(time);
-		if (!(character.has(Item.Tickler) || character.has(Item.Tickler2))
-				&& character.money >= 300) {
+		if (!(character.has(Item.Tickler) || character.has(Item.Tickler2)) && character.money >= 300) {
 			character.gain(Item.Tickler);
 			character.money -= 300;
 		}
-		if (!(character.has(Item.Onahole) || character.has(Item.Onahole2))
-				&& character.money >= 300) {
+		if (!(character.has(Item.Onahole) || character.has(Item.Onahole2)) && character.money >= 300) {
 			character.gain(Item.Onahole);
 			character.money -= 300;
 		}
-		if (!character.has(Item.Onahole2) && character.has(Item.Onahole)
-				&& character.money >= 300) {
+		if (!character.has(Item.Onahole2) && character.has(Item.Onahole) && character.money >= 300) {
 			character.remove(Item.Onahole);
 			character.gain(Item.Onahole2);
 			character.money -= 300;
 		}
-		while (character.money > Item.Lactaid.getPrice()
-				&& !character.has(Trait.lactating)
+		while (character.money > Item.Lactaid.getPrice() && !character.has(Trait.lactating)
 				&& character.count(Item.Lactaid) < 3) {
 			character.money -= Item.Lactaid.getPrice();
 			character.gain(Item.Lactaid);
@@ -134,34 +129,27 @@ public class Cassie extends BasePersonality {
 				character.add(Trait.lactating);
 			}
 			if (character.money > 0) {
-				Global.getDay().visit("Magic Training", character,
-						Global.random(character.money));
+				Global.getDay().visit("Magic Training", character, Global.random(character.money));
 			}
 			if (character.money > 0) {
-				Global.getDay().visit("Body Shop", character,
-						Global.random(character.money));
+				Global.getDay().visit("Body Shop", character, Global.random(character.money));
 			}
 			if (character.money > 0) {
-				Global.getDay().visit("Workshop", character,
-						Global.random(character.money));
+				Global.getDay().visit("Workshop", character, Global.random(character.money));
 			}
 		}
 
 		if (character.money > 0) {
-			Global.getDay().visit("XXX Store", character,
-					Global.random(character.money));
+			Global.getDay().visit("XXX Store", character, Global.random(character.money));
 		}
 		if (character.money > 0) {
-			Global.getDay().visit("Bookstore", character,
-					Global.random(character.money));
+			Global.getDay().visit("Bookstore", character, Global.random(character.money));
 		}
 		if (character.money > 0) {
-			Global.getDay().visit("Hardware Store", character,
-					Global.random(character.money));
+			Global.getDay().visit("Hardware Store", character, Global.random(character.money));
 		}
 		if (character.money > 0) {
-			Global.getDay().visit("Black Market", character,
-					Global.random(character.money));
+			Global.getDay().visit("Black Market", character, Global.random(character.money));
 		}
 		int r;
 		for (int i = 0; i < time; i++) {
@@ -217,8 +205,7 @@ public class Cassie extends BasePersonality {
 					+ "I'd enjoy that so much.\"</i> Her grin widens in a way that makes you nervous. <i>\"I might need to try that again in the future.\"</i> Your decide to bid a hasty retreat leaving your "
 					+ "clothes behind to the victor.";
 		}
-		if (character.has(Trait.witch) && character.has(Trait.silvertongue)
-				&& Global.random(3) == 0) {
+		if (character.has(Trait.witch) && character.has(Trait.silvertongue) && Global.random(3) == 0) {
 			character.arousal.empty();
 			return "Cassie's efforts to pleasure you finally break your resistance and you find yourself completely unable to stop her. She slips between your legs and takes your straining "
 					+ "dick into her mouth. She eagerly sucks on your cock, while glancing up to meet your eyes. Her talented oral technique blows away your endurance and you spill your seed "
@@ -408,18 +395,14 @@ public class Cassie extends BasePersonality {
 							+ "technique has obviously gotten quite good. It only takes a few minutes"
 							+ " for her to milk out a mouthful of semen. You can't help feeling a "
 							+ "bit envious, maybe you should go a round with her before the match ends.",
-					target.name(), target.possessivePronoun(), target.name(),
-					target.possessivePronoun());
+					target.name(), target.possessivePronoun(), target.name(), target.possessivePronoun());
 		}
 		return "Cassie settles herself in front of " + target.name()
 				+ " and tenderly kisses her on the lips. <i>\"I don't really swing this way, but setting the mood is "
-				+ "important.\"</i> She leans in to lick and suck "
-				+ target.name()
-				+ " neck, before moving down to her breasts. She gives each nipple attention until "
-				+ target.name()
-				+ " is panting with desire. She continues downward to "
-				+ target.name() + "'s pussy and starts eating her out. "
-				+ target.name() + " moans loudly and arches her back against "
+				+ "important.\"</i> She leans in to lick and suck " + target.name()
+				+ " neck, before moving down to her breasts. She gives each nipple attention until " + target.name()
+				+ " is panting with desire. She continues downward to " + target.name()
+				+ "'s pussy and starts eating her out. " + target.name() + " moans loudly and arches her back against "
 				+ "you. You gently lower her to the floor as she recovers from her climax, while Cassie wipes the juices from her mouth and looks satisfied at her work.";
 	}
 
@@ -429,20 +412,16 @@ public class Cassie extends BasePersonality {
 			return "You grapple with " + assist.name()
 					+ ", but neither of you can find an opening. She loses her balance while trying to grab you and you manage to trip her. "
 					+ "Before you can follow up, a warm body presses against your back and a soft hand gently grasps your erection. Cassie whispers playfully in your ear. <i>\"Hello "
-					+ target.name()
-					+ ". How about a threesome?\"</i> You start to break away from Cassie, but "
-					+ assist.name()
-					+ " is already back on her feet. You struggle valiantly, "
+					+ target.name() + ". How about a threesome?\"</i> You start to break away from Cassie, but "
+					+ assist.name() + " is already back on her feet. You struggle valiantly, "
 					+ "but you're quickly overwhelmed by the two groping and grappling girls. Cassie manages to force both your arms under her, leaving you helpless.<br>";
 		} else {
 			return "You wrestle " + target.name()
 					+ " to the floor, but she slips away and gets to her feet before you. You roll away to a safe distance before you notice that "
 					+ "she's not coming after you. She seems more occupied by the hands that have suddenly grabbed her breasts from behind. You cautiously approach and realize "
-					+ "it's Cassie who is holding onto the flailing "
-					+ target.name()
-					+ ". Releasing her boobs, Cassie starts tickling "
-					+ target.name() + " into submission and pins her "
-					+ "arms while she catches her breath.<br>";
+					+ "it's Cassie who is holding onto the flailing " + target.name()
+					+ ". Releasing her boobs, Cassie starts tickling " + target.name()
+					+ " into submission and pins her " + "arms while she catches her breath.<br>";
 		}
 	}
 
@@ -487,12 +466,12 @@ public class Cassie extends BasePersonality {
 	@Override
 	public boolean checkMood(Combat c, Emotion mood, int value) {
 		switch (mood) {
-			case nervous:
-				return value >= 50;
-			case angry:
-				return value >= 150;
-			default:
-				return value >= 100;
+		case nervous:
+			return value >= 50;
+		case angry:
+			return value >= 150;
+		default:
+			return value >= 100;
 		}
 	}
 

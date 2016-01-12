@@ -58,14 +58,12 @@ public class Bluff extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You force yourself to look less tired and horny than you actually are. You even start to believe it yourself.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return "Despite your best efforts, " + getSelf().name()
 				+ " is still looking as calm and composed as ever. Either you aren't getting to her at all, or she's good at hiding it.";
 	}

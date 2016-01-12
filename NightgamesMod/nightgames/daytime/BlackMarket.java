@@ -72,10 +72,8 @@ public class BlackMarket extends Store {
 					Global.flag(Flag.darkness);
 					acted = true;
 				} else if (choice.startsWith("Dark Power")) {
-					if (player.money >= 1000
-							* (player.getPure(Attribute.Dark) + 1)) {
-						player.money -= 1000
-								* (player.getPure(Attribute.Dark) + 1);
+					if (player.money >= 1000 * (player.getPure(Attribute.Dark) + 1)) {
+						player.money -= 1000 * (player.getPure(Attribute.Dark) + 1);
 						Global.gui().message(
 								"Rin lights some incense and has you lie down on the couch with one of the cursed artifacts on your chest. As she performs a lengthy "
 										+ "ritual, you feel your body heat up and an overwhelming sense of danger flood through you. You're certain something powerful is trying to take control "
@@ -99,10 +97,8 @@ public class BlackMarket extends Store {
 					Global.flag(Flag.fetishism);
 					acted = true;
 				} else if (choice.startsWith("Fetishism")) {
-					if (player.money >= 1000
-							* (player.getPure(Attribute.Fetish) + 1)) {
-						player.money -= 1000
-								* (player.getPure(Attribute.Fetish) + 1);
+					if (player.money >= 1000 * (player.getPure(Attribute.Fetish) + 1)) {
+						player.money -= 1000 * (player.getPure(Attribute.Fetish) + 1);
 						Global.gui().message(
 								"You select one of the S&M toys and pay Rin for it. She picks up the toy - a leather riding crop - and gives you a small wicked smile. <i>\"Good "
 										+ "choice. This one will grant you the masochism fetish if used properly. I'm quite good with these. Get undressed and we'll get started.\"</i> Your trepidation "
@@ -123,14 +119,12 @@ public class BlackMarket extends Store {
 					if (!Global.checkFlag(Flag.darkness)) {
 						Global.gui().choose(this, "Cursed Artifacts");
 					} else {
-						Global.gui().choose(this, "Dark Power: $"
-								+ 1000 * (player.getPure(Attribute.Dark) + 1));
+						Global.gui().choose(this, "Dark Power: $" + 1000 * (player.getPure(Attribute.Dark) + 1));
 					}
 					if (!Global.checkFlag(Flag.fetishism)) {
 						Global.gui().choose(this, "S&M Gear");
 					} else {
-						Global.gui().choose(this, "Fetishism: $" + 1000
-								* (player.getPure(Attribute.Fetish) + 1));
+						Global.gui().choose(this, "Fetishism: $" + 1000 * (player.getPure(Attribute.Fetish) + 1));
 					}
 				}
 			} else {
@@ -152,8 +146,7 @@ public class BlackMarket extends Store {
 	@Override
 	public void shop(Character npc, int budget) {
 		int remaining = budget;
-		if (npc.getPure(Attribute.Dark) > 0
-				&& remaining >= 1000 * (npc.getPure(Attribute.Dark) + 1)) {
+		if (npc.getPure(Attribute.Dark) > 0 && remaining >= 1000 * (npc.getPure(Attribute.Dark) + 1)) {
 			if (remaining >= 2000 * (npc.getPure(Attribute.Dark) + 2)) {
 				npc.money -= 1000 * (npc.getPure(Attribute.Dark) + 1);
 				remaining -= 1000 * (npc.getPure(Attribute.Dark) + 1);
@@ -163,8 +156,7 @@ public class BlackMarket extends Store {
 			remaining -= 1000 * (npc.get(Attribute.Dark) + 1);
 			npc.mod(Attribute.Dark, 1);
 		}
-		if (npc.getPure(Attribute.Fetish) > 0
-				&& remaining >= 1000 * (npc.getPure(Attribute.Fetish) + 1)) {
+		if (npc.getPure(Attribute.Fetish) > 0 && remaining >= 1000 * (npc.getPure(Attribute.Fetish) + 1)) {
 			if (remaining >= 2000 * (npc.getPure(Attribute.Fetish) + 2)) {
 				npc.money -= 1000 * (npc.getPure(Attribute.Fetish) + 1);
 				remaining -= 1000 * (npc.getPure(Attribute.Fetish) + 1);

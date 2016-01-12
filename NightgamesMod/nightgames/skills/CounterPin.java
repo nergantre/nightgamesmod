@@ -8,8 +8,7 @@ import nightgames.global.Global;
 
 public class CounterPin extends CounterBase {
 	public CounterPin(Character self) {
-		super("Counter", self, 4, Global.format(
-				"{self:SUBJECT-ACTION:hold|holds} a low stance.", self, self));
+		super("Counter", self, 4, Global.format("{self:SUBJECT-ACTION:hold|holds} a low stance.", self, self));
 	}
 
 	@Override
@@ -30,8 +29,7 @@ public class CounterPin extends CounterBase {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !c.getStance().dom(getSelf()) && !c.getStance().dom(target)
-				&& getSelf().canAct();
+		return !c.getStance().dom(getSelf()) && !c.getStance().dom(target) && getSelf().canAct();
 	}
 
 	@Override
@@ -55,24 +53,18 @@ public class CounterPin extends CounterBase {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.setup && getSelf().hasPussy()) {
-			return Global.format(
-					"You shift into a low stance, beckoning her inside your reach.",
-					getSelf(), target);
+			return Global.format("You shift into a low stance, beckoning her inside your reach.", getSelf(), target);
 		} else {
 			return "";
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.setup && getSelf().hasPussy()) {
-			return Global.format(
-					"Eyeing you carefully, {self:SUBJECT} shifts to a low stance.",
-					getSelf(), target);
+			return Global.format("Eyeing you carefully, {self:SUBJECT} shifts to a low stance.", getSelf(), target);
 		} else {
 			return "";
 		}

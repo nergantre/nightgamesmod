@@ -19,10 +19,8 @@ public class FlashStep extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && c.getStance().mobile(getSelf())
-				&& !c.getStance().prone(getSelf())
-				&& !c.getStance().prone(target)
-				&& !c.getStance().behind(getSelf()) && getSelf().canAct()
+		return !target.wary() && c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf())
+				&& !c.getStance().prone(target) && !c.getStance().behind(getSelf()) && getSelf().canAct()
 				&& !c.getStance().inserted();
 	}
 
@@ -60,15 +58,13 @@ public class FlashStep extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
-		return "You channel your ki into your feet and dash behind "
-				+ target.name() + " faster than her eyes can follow.";
+	public String deal(Combat c, int damage, Result modifier, Character target) {
+		return "You channel your ki into your feet and dash behind " + target.name()
+				+ " faster than her eyes can follow.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().name()
 				+ " starts to move and suddenly vanishes. You hesitate for a second and feel her grab you from behind.";
 	}

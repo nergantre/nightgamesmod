@@ -35,16 +35,14 @@ public abstract class MaledomSexStance extends Position {
 			if (inserter.human()) {
 				c.write("With your phallus gone, you groan in frustration and cease your merciless movements.");
 			} else {
-				c.write(inserter.name()
-						+ " groans with frustration with the sudden disappearance of "
+				c.write(inserter.name() + " groans with frustration with the sudden disappearance of "
 						+ inserter.possessivePronoun() + " pole.");
 			}
 			c.setStance(insertRandom());
 		}
 		if (!inserted.hasPussy()) {
 			if (inserted.human()) {
-				c.write("With your pussy suddenly disappearing, "
-						+ inserter.subject()
+				c.write("With your pussy suddenly disappearing, " + inserter.subject()
 						+ " can't continue fucking you anymore.");
 			} else {
 				c.write("You groan with frustration with the sudden disappearance of "
@@ -61,15 +59,13 @@ public abstract class MaledomSexStance extends Position {
 
 	@Override
 	public List<BodyPart> topParts() {
-		return Arrays.asList(top.body.getRandomInsertable()).stream()
-				.filter(part -> part != null && part.present())
+		return Arrays.asList(top.body.getRandomInsertable()).stream().filter(part -> part != null && part.present())
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<BodyPart> bottomParts() {
-		return Arrays.asList(bottom.body.getRandomPussy()).stream()
-				.filter(part -> part != null && part.present())
+		return Arrays.asList(bottom.body.getRandomPussy()).stream().filter(part -> part != null && part.present())
 				.collect(Collectors.toList());
 	}
 

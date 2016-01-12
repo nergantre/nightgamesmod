@@ -19,10 +19,8 @@ public class FlyingCarry extends MaledomSexStance {
 		return String.format(
 				"You are flying some twenty feet up in the air,"
 						+ " joinned to your partner by your hips. %s is on top of %s and %s %s is pumping into %s %s",
-				top.subject(), bottom.subject(), top.possessivePronoun(),
-				top.body.getRandomInsertable().describe(top),
-				bottom.possessivePronoun(),
-				bottom.body.getRandomPussy().describe(bottom));
+				top.subject(), bottom.subject(), top.possessivePronoun(), top.body.getRandomInsertable().describe(top),
+				bottom.possessivePronoun(), bottom.body.getRandomPussy().describe(bottom));
 	}
 
 	@Override
@@ -99,8 +97,7 @@ public class FlyingCarry extends MaledomSexStance {
 	public void checkOngoing(Combat c) {
 		if (top.getStamina().get() < 5) {
 			if (top.human()) {
-				c.write("You're too tired to stay in the air. You plummet to the ground and "
-						+ bottom.name()
+				c.write("You're too tired to stay in the air. You plummet to the ground and " + bottom.name()
 						+ " drops on you heavily, knocking the wind out of you.");
 				top.pain(c, 50);
 				c.setStance(new Mount(bottom, top));

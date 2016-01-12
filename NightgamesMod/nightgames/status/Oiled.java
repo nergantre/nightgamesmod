@@ -17,15 +17,13 @@ public class Oiled extends Status {
 		if (affected.human()) {
 			return "Your skin is slick with oil and kinda feels weird.";
 		} else {
-			return affected.name()
-					+ " is shiny with lubricant, making you more tempted to touch and rub her skin.";
+			return affected.name() + " is shiny with lubricant, making you more tempted to touch and rub her skin.";
 		}
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now lubricated.\n",
-				affected.subjectAction("are", "is"));
+		return String.format("%s now lubricated.\n", affected.subjectAction("are", "is"));
 	}
 
 	@Override

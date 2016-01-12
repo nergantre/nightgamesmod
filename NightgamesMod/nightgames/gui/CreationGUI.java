@@ -35,49 +35,49 @@ public class CreationGUI extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = -101675245609325067L;
-	private JTextField			powerfield;
-	private JTextField			seductionfield;
-	private JTextField			cunningfield;
-	private JTextField			attPoints;
-	private JTextField			namefield;
-	private int					power;
-	private int					seduction;
-	private int					cunning;
-	private int					remaining;
-	private JButton				btnPowMin;
-	private JButton				btnPowPlus;
-	private JButton				btnSedMin;
-	private JButton				btnSedPlus;
-	private JButton				btnCunMin;
-	private JButton				btnCunPlus;
-	private JSeparator			separator;
-	private JTextPane			textPane;
-	private JScrollPane			scrollPane;
-	private JRadioButton		rdbtnNormal;
-	private JRadioButton		rdbtnDumb;
+	private JTextField powerfield;
+	private JTextField seductionfield;
+	private JTextField cunningfield;
+	private JTextField attPoints;
+	private JTextField namefield;
+	private int power;
+	private int seduction;
+	private int cunning;
+	private int remaining;
+	private JButton btnPowMin;
+	private JButton btnPowPlus;
+	private JButton btnSedMin;
+	private JButton btnSedPlus;
+	private JButton btnCunMin;
+	private JButton btnCunPlus;
+	private JSeparator separator;
+	private JTextPane textPane;
+	private JScrollPane scrollPane;
+	private JRadioButton rdbtnNormal;
+	private JRadioButton rdbtnDumb;
 	@SuppressWarnings("unused")
-	private JRadioButton		rdbtnEasy;
-	private JCheckBox			rdbtnHard;
-	private JSeparator			separator_1;
-	private Box					verticalBox;
-	private Box					horizontalBox;
-	private JLabel				lblStrength;
-	private JComboBox<Trait>	StrengthBox;
-	private JTextPane			StrengthDescription;
-	private JSeparator			separator_2;
-	private JLabel				lblWeakness;
-	private JComboBox<Trait>	WeaknessBox;
-	private JTextPane			WeaknessDescription;
-	private JPanel				panel_1;
-	private JPanel				panel_4;
-	private JPanel				panel_5;
-	private JPanel				panel_6;
-	private JPanel				panel_7;
-	private JPanel				panel_8;
-	private JPanel				panel_9;
-	private JPanel				panel_10;
-	private JPanel				panel_11;
-	private JPanel				panel_12;
+	private JRadioButton rdbtnEasy;
+	private JCheckBox rdbtnHard;
+	private JSeparator separator_1;
+	private Box verticalBox;
+	private Box horizontalBox;
+	private JLabel lblStrength;
+	private JComboBox<Trait> StrengthBox;
+	private JTextPane StrengthDescription;
+	private JSeparator separator_2;
+	private JLabel lblWeakness;
+	private JComboBox<Trait> WeaknessBox;
+	private JTextPane WeaknessDescription;
+	private JPanel panel_1;
+	private JPanel panel_4;
+	private JPanel panel_5;
+	private JPanel panel_6;
+	private JPanel panel_7;
+	private JPanel panel_8;
+	private JPanel panel_9;
+	private JPanel panel_10;
+	private JPanel panel_11;
+	private JPanel panel_12;
 
 	public CreationGUI() {
 		setLayout(new BorderLayout(0, 0));
@@ -128,8 +128,7 @@ public class CreationGUI extends JPanel {
 		});
 
 		scrollPane = new JScrollPane();
-		scrollPane.setHorizontalScrollBarPolicy(
-				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		add(scrollPane, BorderLayout.CENTER);
 
 		textPane = new JTextPane();
@@ -354,8 +353,8 @@ public class CreationGUI extends JPanel {
 		StrengthBox.addItem(Trait.brassballs);
 		StrengthBox.addItem(Trait.bramaster);
 		StrengthBox.addItem(Trait.pantymaster);
-		StrengthBox.addActionListener(arg0 -> StrengthDescription
-				.setText(((Trait) StrengthBox.getSelectedItem()).getDesc()));
+		StrengthBox.addActionListener(
+				arg0 -> StrengthDescription.setText(((Trait) StrengthBox.getSelectedItem()).getDesc()));
 		verticalBox.add(StrengthBox);
 
 		StrengthDescription = new JTextPane();
@@ -363,8 +362,7 @@ public class CreationGUI extends JPanel {
 		StrengthDescription.setEditable(false);
 		StrengthDescription.setBackground(new Color(18, 30, 49));
 		StrengthDescription.setForeground(new Color(240, 240, 255));
-		StrengthDescription
-				.setText(((Trait) StrengthBox.getSelectedItem()).getDesc());
+		StrengthDescription.setText(((Trait) StrengthBox.getSelectedItem()).getDesc());
 		verticalBox.add(StrengthDescription);
 
 		separator_2 = new JSeparator();
@@ -386,8 +384,8 @@ public class CreationGUI extends JPanel {
 		WeaknessBox.addItem(Trait.naive);
 		WeaknessBox.addItem(Trait.footfetishist);
 		WeaknessBox.addItem(Trait.hairtrigger);
-		WeaknessBox.addActionListener(arg0 -> WeaknessDescription
-				.setText(((Trait) WeaknessBox.getSelectedItem()).getDesc()));
+		WeaknessBox.addActionListener(
+				arg0 -> WeaknessDescription.setText(((Trait) WeaknessBox.getSelectedItem()).getDesc()));
 		verticalBox.add(WeaknessBox);
 
 		WeaknessDescription = new JTextPane();
@@ -395,8 +393,7 @@ public class CreationGUI extends JPanel {
 		WeaknessDescription.setForeground(new Color(240, 240, 255));
 		WeaknessDescription.setPreferredSize(new Dimension(100, 100));
 		WeaknessDescription.setEditable(false);
-		WeaknessDescription
-				.setText(((Trait) WeaknessBox.getSelectedItem()).getDesc());
+		WeaknessDescription.setText(((Trait) WeaknessBox.getSelectedItem()).getDesc());
 		verticalBox.add(WeaknessDescription);
 
 		separator_1 = new JSeparator();

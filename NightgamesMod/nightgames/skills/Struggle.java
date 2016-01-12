@@ -22,16 +22,13 @@ public class Struggle extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		if (target.hasStatus(Stsflag.cockbound)
-				|| target.hasStatus(Stsflag.knotted)) {
+		if (target.hasStatus(Stsflag.cockbound) || target.hasStatus(Stsflag.knotted)) {
 			return false;
 		}
-		if (getSelf().hasStatus(Stsflag.cockbound)
-				|| getSelf().hasStatus(Stsflag.knotted)) {
+		if (getSelf().hasStatus(Stsflag.cockbound) || getSelf().hasStatus(Stsflag.knotted)) {
 			return true;
 		}
-		return (!c.getStance().mobile(getSelf())
-				&& !c.getStance().dom(getSelf()) || getSelf().bound())
+		return (!c.getStance().mobile(getSelf()) && !c.getStance().dom(getSelf()) || getSelf().bound())
 				&& getSelf().canRespond();
 	}
 
@@ -42,16 +39,13 @@ public class Struggle extends Skill {
 			if (getSelf().check(Attribute.Power, -getSelf().escape(c))) {
 				if (getSelf().human()) {
 					if (status != null) {
-						c.write(getSelf(), "You manage to break free from the "
-								+ status + ".");
+						c.write(getSelf(), "You manage to break free from the " + status + ".");
 					} else {
-						c.write(getSelf(),
-								"You manage to snap the restraints that are binding your hands.");
+						c.write(getSelf(), "You manage to snap the restraints that are binding your hands.");
 					}
 				} else if (target.human()) {
 					if (status != null) {
-						c.write(getSelf(), getSelf().name()
-								+ " slips free from the " + status + ".");
+						c.write(getSelf(), getSelf().name() + " slips free from the " + status + ".");
 					} else {
 						c.write(getSelf(), getSelf().name() + " breaks free.");
 					}
@@ -60,21 +54,16 @@ public class Struggle extends Skill {
 			} else {
 				if (getSelf().human()) {
 					if (status != null) {
-						c.write(getSelf(), "You struggle against the " + status
-								+ ", but can't get free.");
+						c.write(getSelf(), "You struggle against the " + status + ", but can't get free.");
 					} else {
-						c.write(getSelf(),
-								"You struggle against your restraints, but can't get free.");
+						c.write(getSelf(), "You struggle against your restraints, but can't get free.");
 					}
 				} else if (target.human()) {
 					if (status != null) {
 						c.write(getSelf(),
-								getSelf().name() + " struggles against the "
-										+ status
-										+ ", but can't free her hands.");
+								getSelf().name() + " struggles against the " + status + ", but can't free her hands.");
 					} else {
-						c.write(getSelf(), getSelf().name()
-								+ " struggles, but can't free her hands.");
+						c.write(getSelf(), getSelf().name() + " struggles, but can't free her hands.");
 					}
 				}
 				getSelf().struggle();
@@ -85,22 +74,17 @@ public class Struggle extends Skill {
 			if (c.getStance().enumerate() == Stance.anal) {
 				int diffMod = knotted ? 50 : 0;
 				if (getSelf().check(Attribute.Power,
-						target.getStamina().get() / 2
-								- getSelf().getStamina().get() / 2
-								+ target.get(Attribute.Power)
-								- getSelf().get(Attribute.Power)
-								- getSelf().escape(c) + diffMod)) {
+						target.getStamina().get() / 2 - getSelf().getStamina().get() / 2 + target.get(Attribute.Power)
+								- getSelf().get(Attribute.Power) - getSelf().escape(c) + diffMod)) {
 					if (getSelf().human()) {
 						if (knotted) {
 							c.write(getSelf(),
-									"With a herculean effort, you painfully force "
-											+ target.possessivePronoun()
+									"With a herculean effort, you painfully force " + target.possessivePronoun()
 											+ " knot through your asshole, and the rest of her dick soon follows.");
 							getSelf().removeStatus(Stsflag.knotted);
 							getSelf().pain(c, 10);
 						} else {
-							c.write(getSelf(), "You manage to break away from "
-									+ target.name() + ".");
+							c.write(getSelf(), "You manage to break away from " + target.name() + ".");
 						}
 					} else if (target.human()) {
 						if (knotted) {
@@ -109,29 +93,27 @@ public class Struggle extends Skill {
 							getSelf().removeStatus(Stsflag.knotted);
 							getSelf().pain(c, 10);
 						} else {
-							c.write(getSelf(), getSelf().name()
-									+ " pulls away from you and your dick slides out of her butt.");
+							c.write(getSelf(),
+									getSelf().name() + " pulls away from you and your dick slides out of her butt.");
 						}
 					}
 					c.setStance(new Neutral(getSelf(), target));
 				} else {
 					if (getSelf().human()) {
 						if (knotted) {
-							c.write(getSelf(), "You try to force "
-									+ target.possessivePronoun()
+							c.write(getSelf(), "You try to force " + target.possessivePronoun()
 									+ " dick out of your ass, but the knot at its base is utterly unyielding.");
 						} else {
-							c.write(getSelf(), "You try to pull free, but "
-									+ target.name()
-									+ " has a good grip on your waist.");
+							c.write(getSelf(),
+									"You try to pull free, but " + target.name() + " has a good grip on your waist.");
 						}
 					} else if (target.human()) {
 						if (knotted) {
 							c.write(getSelf(),
 									" frantically attempts to get your cock out of her ass, but your knot is keeping it inside her warm depths.");
 						} else {
-							c.write(getSelf(), getSelf().name()
-									+ " tries to squirm away, but you have better leverage.");
+							c.write(getSelf(),
+									getSelf().name() + " tries to squirm away, but you have better leverage.");
 						}
 					}
 					getSelf().struggle();
@@ -139,32 +121,24 @@ public class Struggle extends Skill {
 				}
 			} else {
 				int diffMod = 0;
-				if (CockMod.enlightened.partHasThisMod(
-						c.getStance().insertedPartFor(target))) {
+				if (CockMod.enlightened.partHasThisMod(c.getStance().insertedPartFor(target))) {
 					diffMod = 15;
-				} else if (CockMod.enlightened.partHasThisMod(
-						c.getStance().insertedPartFor(getSelf()))) {
+				} else if (CockMod.enlightened.partHasThisMod(c.getStance().insertedPartFor(getSelf()))) {
 					diffMod = -15;
 				}
 				if (getSelf().check(Attribute.Power,
-						target.getStamina().get() / 2
-								- getSelf().getStamina().get() / 2
-								+ target.get(Attribute.Power)
-								- getSelf().get(Attribute.Power)
-								- getSelf().escape(c) + diffMod)) {
+						target.getStamina().get() / 2 - getSelf().getStamina().get() / 2 + target.get(Attribute.Power)
+								- getSelf().get(Attribute.Power) - getSelf().escape(c) + diffMod)) {
 					if (getSelf().hasStatus(Stsflag.cockbound)) {
-						CockBound s = (CockBound) getSelf()
-								.getStatus(Stsflag.cockbound);
+						CockBound s = (CockBound) getSelf().getStatus(Stsflag.cockbound);
 						c.write(getSelf(),
 								Global.format(
 										"With a strong pull, {self:subject} somehow managed to wiggle out of {other:possessive} iron grip on {self:possessive} dick. "
-												+ "However the sensations of "
-												+ s.binding
+												+ "However the sensations of " + s.binding
 												+ " sliding against {self:possessive} cockskin leaves {self:direct-object} gasping.",
 										getSelf(), target));
 						int m = 15;
-						getSelf().body.pleasure(target,
-								target.body.getRandom("pussy"),
+						getSelf().body.pleasure(target, target.body.getRandom("pussy"),
 								getSelf().body.getRandom("cock"), m, c);
 						getSelf().removeStatus(Stsflag.cockbound);
 					}
@@ -176,8 +150,7 @@ public class Struggle extends Skill {
 						getSelf().removeStatus(Stsflag.knotted);
 						getSelf().pain(c, 10);
 					}
-					boolean reverseStrapped = BodyPart.hasOnlyType(
-							c.getStance().partsFor(target), "strapon");
+					boolean reverseStrapped = BodyPart.hasOnlyType(c.getStance().partsFor(target), "strapon");
 					boolean reversedStance = false;
 					if (reverseStrapped) {
 						Position reversed = c.getStance().reverse(c);
@@ -195,8 +168,7 @@ public class Struggle extends Skill {
 					}
 				} else {
 					if (getSelf().hasStatus(Stsflag.cockbound)) {
-						CockBound s = (CockBound) getSelf()
-								.getStatus(Stsflag.cockbound);
+						CockBound s = (CockBound) getSelf().getStatus(Stsflag.cockbound);
 						c.write(getSelf(),
 								Global.format(
 										"{self:SUBJECT-ACTION:try|tries} to escape {other:possessive} iron grip on {self:possessive} dick. However, {other:possessive} "
@@ -205,8 +177,7 @@ public class Struggle extends Skill {
 												+ s.binding
 												+ " up and down {self:possessive} cock and leaves {self:direct-object} gasping with pleasure.",
 										getSelf(), target));
-						getSelf().body.pleasure(target,
-								target.body.getRandom("pussy"),
+						getSelf().body.pleasure(target, target.body.getRandom("pussy"),
 								getSelf().body.getRandom("cock"), 8, c);
 					} else if (getSelf().human()) {
 						if (c.getStance().inserted(getSelf())) {
@@ -214,15 +185,11 @@ public class Struggle extends Skill {
 									+ " off balance, but she drops her hips firmly, pushing your cock deep inside her and pinning you to the floor.");
 						} else {
 							if (knotted) {
-								c.write(getSelf(),
-										"You struggle fruitlessly against the lump of "
-												+ target.nameOrPossessivePronoun()
-												+ " knot.");
+								c.write(getSelf(), "You struggle fruitlessly against the lump of "
+										+ target.nameOrPossessivePronoun() + " knot.");
 							} else {
-								c.write(getSelf(),
-										"You attempt to get away from "
-												+ target.name()
-												+ ", but she drives her cock into you to the hilt, pinning you down.");
+								c.write(getSelf(), "You attempt to get away from " + target.name()
+										+ ", but she drives her cock into you to the hilt, pinning you down.");
 							}
 						}
 					} else if (target.human()) {
@@ -239,23 +206,18 @@ public class Struggle extends Skill {
 				}
 			}
 		} else {
-			if (getSelf().check(Attribute.Power, target.getStamina().get() / 2
-					- getSelf().getStamina().get() / 2
-					+ target.get(Attribute.Power)
-					- getSelf().get(Attribute.Power) - getSelf().escape(c))) {
+			if (getSelf().check(Attribute.Power, target.getStamina().get() / 2 - getSelf().getStamina().get() / 2
+					+ target.get(Attribute.Power) - getSelf().get(Attribute.Power) - getSelf().escape(c))) {
 				if (getSelf().human()) {
-					c.write(getSelf(), "You manage to scrabble out of "
-							+ target.name() + "'s grip.");
+					c.write(getSelf(), "You manage to scrabble out of " + target.name() + "'s grip.");
 				} else if (target.human()) {
-					c.write(getSelf(),
-							getSelf().name() + " squirms out from under you.");
+					c.write(getSelf(), getSelf().name() + " squirms out from under you.");
 				}
 				c.setStance(new Neutral(getSelf(), target));
 			} else {
 				if (c.getStance().enumerate() == Stance.facesitting) {
 					if (getSelf().human()) {
-						c.write(getSelf(), "You try to free yourself from "
-								+ target.name()
+						c.write(getSelf(), "You try to free yourself from " + target.name()
 								+ ", but she drops her ass over your face again, forcing you to service her.");
 					} else if (target.human()) {
 						c.write(getSelf(), getSelf().name()
@@ -266,21 +228,18 @@ public class Struggle extends Skill {
 					} else {
 						new Anilingus(getSelf()).resolve(c, target);
 					}
-					target.weaken(c, 5 + Global.random(5)
-							+ getSelf().get(Attribute.Power) / 2);
+					target.weaken(c, 5 + Global.random(5) + getSelf().get(Attribute.Power) / 2);
 					getSelf().struggle();
 					return false;
 				} else {
 					if (getSelf().human()) {
-						c.write(getSelf(), "You try to free yourself from "
-								+ target.name()
+						c.write(getSelf(), "You try to free yourself from " + target.name()
 								+ "'s grasp, but she has you pinned too well.");
 					} else if (target.human()) {
-						c.write(getSelf(), getSelf().name()
-								+ " struggles against you, but you maintain your position.");
+						c.write(getSelf(),
+								getSelf().name() + " struggles against you, but you maintain your position.");
 					}
-					target.weaken(c, 5 + Global.random(5)
-							+ getSelf().get(Attribute.Power) / 2);
+					target.weaken(c, 5 + Global.random(5) + getSelf().get(Attribute.Power) / 2);
 					getSelf().struggle();
 					return false;
 				}
@@ -310,14 +269,12 @@ public class Struggle extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return null;
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return null;
 	}
 

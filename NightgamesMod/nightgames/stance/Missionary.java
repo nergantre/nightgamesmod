@@ -14,8 +14,7 @@ public class Missionary extends MaledomSexStance {
 	@Override
 	public String describe() {
 		if (top.human()) {
-			return "You are penetrating " + bottom.name()
-					+ " in traditional Missionary position.";
+			return "You are penetrating " + bottom.name() + " in traditional Missionary position.";
 		} else {
 			return top.name() + "";
 		}

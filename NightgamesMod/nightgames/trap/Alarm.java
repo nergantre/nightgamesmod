@@ -2,7 +2,7 @@ package nightgames.trap;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.combat.Encounter;
+import nightgames.combat.IEncounter;
 import nightgames.global.Global;
 import nightgames.items.Item;
 
@@ -16,8 +16,7 @@ public class Alarm implements Trap {
 					"You're walking through the eerily quiet campus, when a loud beeping almost makes you jump out of your skin. You realize the beeping is "
 							+ "coming from a cell phone on the floor. You shut it off as quickly as you can, but it's likely everyone nearby heard it already.");
 		} else if (target.location().humanPresent()) {
-			Global.gui().message(target.name()
-					+ " Sets off your alarm, giving away her presence.");
+			Global.gui().message(target.name() + " Sets off your alarm, giving away her presence.");
 		}
 		target.location().alarm = true;
 		target.location().remove(this);
@@ -61,8 +60,7 @@ public class Alarm implements Trap {
 	}
 
 	@Override
-	public void capitalize(Character attacker, Character victim,
-			Encounter enc) {
+	public void capitalize(Character attacker, Character victim, IEncounter enc) {
 		// TODO Auto-generated method stub
 
 	}

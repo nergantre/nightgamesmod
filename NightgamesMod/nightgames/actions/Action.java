@@ -8,8 +8,8 @@ public abstract class Action implements Serializable {
 	/**
 	 *
 	 */
-	private static final long	serialVersionUID	= 4981682001213276175L;
-	protected String			name;
+	private static final long serialVersionUID = 4981682001213276175L;
+	protected String name;
 
 	public Action(String name) {
 		this.name = name;
@@ -39,8 +39,7 @@ public abstract class Action implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object obj) { // $codepro.audit.disable
-										// com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.obeyEqualsContract.obeyGeneralContractOfEquals
+	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}

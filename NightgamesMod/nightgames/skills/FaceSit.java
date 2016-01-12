@@ -26,20 +26,15 @@ public class FaceSit extends Skill {
 
 	@Override
 	public float priorityMod(Combat c) {
-		return getSelf().has(Trait.lacedjuices)
-				|| getSelf().has(Trait.addictivefluids)
-				|| getSelf().body.getRandomPussy() == PussyPart.feral ? 3.0f
-						: 0;
+		return getSelf().has(Trait.lacedjuices) || getSelf().has(Trait.addictivefluids)
+				|| getSelf().body.getRandomPussy() == PussyPart.feral ? 3.0f : 0;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().crotchAvailable() && getSelf().canAct()
-				&& c.getStance().dom(getSelf())
-				&& c.getStance().reachTop(getSelf())
-				&& !c.getStance().penetrated(getSelf())
-				&& !c.getStance().inserted(getSelf())
-				&& c.getStance().prone(target) && !getSelf().has(Trait.shy);
+		return getSelf().crotchAvailable() && getSelf().canAct() && c.getStance().dom(getSelf())
+				&& c.getStance().reachTop(getSelf()) && !c.getStance().penetrated(getSelf())
+				&& !c.getStance().inserted(getSelf()) && c.getStance().prone(target) && !getSelf().has(Trait.shy);
 	}
 
 	@Override
@@ -49,8 +44,7 @@ public class FaceSit extends Skill {
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		if (getSelf().has(Trait.entrallingjuices) && Global.random(4) == 0
-				&& !target.wary()) {
+		if (getSelf().has(Trait.entrallingjuices) && Global.random(4) == 0 && !target.wary()) {
 			if (getSelf().human()) {
 				c.write(getSelf(), deal(c, 0, Result.special, target));
 			} else if (target.human()) {
@@ -76,11 +70,9 @@ public class FaceSit extends Skill {
 			m = m * 3 / 2;
 		}
 		if (getSelf().hasBalls()) {
-			getSelf().body.pleasure(target, target.body.getRandom("mouth"),
-					getSelf().body.getRandom("balls"), m, c);
+			getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("balls"), m, c);
 		} else {
-			getSelf().body.pleasure(target, target.body.getRandom("mouth"),
-					getSelf().body.getRandom("pussy"), m, c);
+			getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("pussy"), m, c);
 		}
 		double n = Math.round(4 + Global.random(4));
 		if (c.getStance().front(getSelf())) {
@@ -91,10 +83,8 @@ public class FaceSit extends Skill {
 			n *= 1.5;
 		}
 
-		target.tempt(c, getSelf(), getSelf().body.getRandom("ass"),
-				(int) Math.round(n / 2));
-		target.tempt(c, getSelf(), getSelf().body.getRandom("pussy"),
-				(int) Math.round(n / 2));
+		target.tempt(c, getSelf(), getSelf().body.getRandom("ass"), (int) Math.round(n / 2));
+		target.tempt(c, getSelf(), getSelf().body.getRandom("pussy"), (int) Math.round(n / 2));
 
 		target.loseWillpower(c, 5);
 		target.add(c, new Shamed(target));
@@ -142,8 +132,7 @@ public class FaceSit extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (getSelf().hasBalls()) {
 			if (modifier == Result.special) {
 				return "You crouch over " + target.nameOrPossessivePronoun()
@@ -176,8 +165,7 @@ public class FaceSit extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (getSelf().hasBalls()) {
 			if (modifier == Result.special) {
 				return getSelf().name()

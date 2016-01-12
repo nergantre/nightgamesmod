@@ -21,8 +21,7 @@ public class BreastGrowth extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && c.getStance().mobile(getSelf())
-				&& !c.getStance().prone(getSelf());
+		return getSelf().canAct() && c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf());
 	}
 
 	@Override
@@ -44,8 +43,7 @@ public class BreastGrowth extends Skill {
 	public boolean resolve(Combat c, Character target) {
 		Result res = target.roll(this, c, 0) ? Result.normal : Result.miss;
 
-		boolean permanent = Global.random(20) == 0
-				&& (getSelf().human() || target.human())
+		boolean permanent = Global.random(20) == 0 && (getSelf().human() || target.human())
 				&& !target.has(Trait.stableform);
 		if (getSelf().human()) {
 			c.write(getSelf(), deal(c, permanent ? 1 : 0, res, target));
@@ -61,8 +59,7 @@ public class BreastGrowth extends Skill {
 				}
 			} else {
 				if (part != null) {
-					target.body.temporaryAddOrReplacePartWithType(
-							part.upgrade(), 10);
+					target.body.temporaryAddOrReplacePartWithType(part.upgrade(), 10);
 				}
 			}
 		}
@@ -80,8 +77,7 @@ public class BreastGrowth extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		String message;
 		if (modifier != Result.miss) {
 			message = "You channel your arcane energies into " + target.name()
@@ -90,16 +86,14 @@ public class BreastGrowth extends Skill {
 				message += " You realize the effects are permanent!";
 			}
 		} else {
-			message = "You attempt to channel your arcane energies into "
-					+ target.name()
+			message = "You attempt to channel your arcane energies into " + target.name()
 					+ "'s breasts, but she dodges out of the way, causing your spell to fail.";
 		}
 		return message;
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		String message;
 		if (modifier != Result.miss) {
 			message = getSelf().name()

@@ -16,12 +16,9 @@ public class Maneuver extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && c.getStance().mobile(getSelf())
-				&& !c.getStance().prone(getSelf())
-				&& !c.getStance().prone(target)
-				&& !c.getStance().behind(getSelf()) && getSelf().canAct()
-				&& !getSelf().has(Trait.undisciplined)
-				&& !c.getStance().connected();
+		return !target.wary() && c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf())
+				&& !c.getStance().prone(target) && !c.getStance().behind(getSelf()) && getSelf().canAct()
+				&& !getSelf().has(Trait.undisciplined) && !c.getStance().connected();
 	}
 
 	@Override
@@ -78,23 +75,18 @@ public class Maneuver extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return "You try to get behind " + target.name()
-					+ " but are unable to.";
+			return "You try to get behind " + target.name() + " but are unable to.";
 		} else {
-			return "You dodge past " + target.name()
-					+ "'s guard and grab her from behind.";
+			return "You dodge past " + target.name() + "'s guard and grab her from behind.";
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return getSelf().name()
-					+ " tries to slip behind you, but you're able to keep her in sight.";
+			return getSelf().name() + " tries to slip behind you, but you're able to keep her in sight.";
 		} else {
 			return getSelf().name()
 					+ " lunges at you, but when you try to grab her, she ducks out of sight. Suddenly her arms are wrapped around you. How did she get behind you?";

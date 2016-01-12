@@ -36,8 +36,7 @@ public class JSONUtils {
 		return arr;
 	}
 
-	public static <T extends Enum<T>> Set<T> loadEnumsFromArr(JSONObject obj,
-			String name, Class<T> enumClass) {
+	public static <T extends Enum<T>> Set<T> loadEnumsFromArr(JSONObject obj, String name, Class<T> enumClass) {
 		Set<T> arr = new HashSet<>();
 		JSONArray savedArr = (JSONArray) obj.get(name);
 		for (Object elem : savedArr) {
@@ -47,9 +46,8 @@ public class JSONUtils {
 		return arr;
 	}
 
-	public static <T extends Enum<T>> Set<T> loadEnumsFromArrWithExtras(
-			JSONObject obj, String name, Map<String, List<T>> extras,
-			Class<T> enumClass) {
+	public static <T extends Enum<T>> Set<T> loadEnumsFromArrWithExtras(JSONObject obj, String name,
+			Map<String, List<T>> extras, Class<T> enumClass) {
 		Set<T> res = new HashSet<>();
 		JSONArray savedArr = (JSONArray) obj.get(name);
 		for (Object elem : savedArr) {

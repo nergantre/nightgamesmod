@@ -22,9 +22,8 @@ public class TortoiseWrap extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && c.getStance().reachTop(getSelf())
-				&& !c.getStance().reachTop(target) && getSelf().has(Item.Rope)
-				&& c.getStance().dom(getSelf()) && !target.is(Stsflag.tied)
+		return getSelf().canAct() && c.getStance().reachTop(getSelf()) && !c.getStance().reachTop(target)
+				&& getSelf().has(Item.Rope) && c.getStance().dom(getSelf()) && !target.is(Stsflag.tied)
 				&& getSelf().is(Stsflag.bondage);
 	}
 
@@ -57,27 +56,20 @@ public class TortoiseWrap extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return String.format(
 				"You skillfully tie a rope around %s's torso "
-						+ "in a traditional bondage wrap. %s moans softly as the "
-						+ "rope digs into %s supple skin.",
-				target.name(), nightgames.global.Global.capitalizeFirstLetter(
-						target.pronoun()),
+						+ "in a traditional bondage wrap. %s moans softly as the " + "rope digs into %s supple skin.",
+				target.name(), nightgames.global.Global.capitalizeFirstLetter(target.pronoun()),
 				target.possessivePronoun());
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
-		return String.format(
-				"%s ties you up with a complex series of knots. "
-						+ "Surprisingly, instead of completely incapacitating you, "
-						+ "%s wraps you in a way that only "
-						+ "slightly hinders your movement. However, the discomfort of "
-						+ "the rope wrapping around you seems to make your sense of "
-						+ "touch more pronounced.",
+	public String receive(Combat c, int damage, Result modifier, Character target) {
+		return String.format("%s ties you up with a complex series of knots. "
+				+ "Surprisingly, instead of completely incapacitating you, " + "%s wraps you in a way that only "
+				+ "slightly hinders your movement. However, the discomfort of "
+				+ "the rope wrapping around you seems to make your sense of " + "touch more pronounced.",
 				getSelf().name(), getSelf().pronoun());
 	}
 

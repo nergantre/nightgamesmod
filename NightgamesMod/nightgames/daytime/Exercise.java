@@ -29,8 +29,7 @@ public class Exercise extends Activity {
 			}
 			showScene(pickScene(gain));
 			player.getStamina().gain(gain);
-			Global.gui().message("<b>Your maximum stamina has increased by "
-					+ gain + ".</b>");
+			Global.gui().message("<b>Your maximum stamina has increased by " + gain + ".</b>");
 		} else {
 			done(true);
 		}
@@ -43,35 +42,33 @@ public class Exercise extends Activity {
 
 	private void showScene(Scene chosen) {
 		switch (chosen) {
-			case basic1:
-				Global.gui().message(
-						"You're about halfway through your jog when a sudden downpour leaves you completely soaked. You squelch your way back to the dorm, looking like a drowned rat.");
-				break;
-			case basic2:
-				Global.gui().message(
-						"You head to the campus gym and spend some time in a variety of exercises.");
-				break;
-			case basic3:
-				Global.gui().message(
-						"You decide to take a brief jog around campus to improve your strength and stamina.");
-				break;
-			case fail1:
-				Global.gui().message(
-						"Maybe you didn't stretch well enough before you started, but a few minutes into your run you feel like you've pulled a muscle in your leg. Better take a break rather than injure yourself before the match.");
-				break;
-			case cassie1:
-				Global.gui().message(
-						"You head over to the campus gym and coincidentally run into Cassie there. <i>\"Hi. I'm not really much of a fitness enthusiast, but I need to get into better shape if I'm going to stay competitive.\"</i><br>The two of you spend some time doing light exercise and chatting.");
+		case basic1:
+			Global.gui().message(
+					"You're about halfway through your jog when a sudden downpour leaves you completely soaked. You squelch your way back to the dorm, looking like a drowned rat.");
+			break;
+		case basic2:
+			Global.gui().message("You head to the campus gym and spend some time in a variety of exercises.");
+			break;
+		case basic3:
+			Global.gui().message("You decide to take a brief jog around campus to improve your strength and stamina.");
+			break;
+		case fail1:
+			Global.gui().message(
+					"Maybe you didn't stretch well enough before you started, but a few minutes into your run you feel like you've pulled a muscle in your leg. Better take a break rather than injure yourself before the match.");
+			break;
+		case cassie1:
+			Global.gui().message(
+					"You head over to the campus gym and coincidentally run into Cassie there. <i>\"Hi. I'm not really much of a fitness enthusiast, but I need to get into better shape if I'm going to stay competitive.\"</i><br>The two of you spend some time doing light exercise and chatting.");
 
-				Global.getNPC("Cassie").gainAffection(player, 1);
-				player.gainAffection(Global.getNPC("Cassie"), 1);
-				break;
-			case jewel1:
-				Global.gui().message(
-						"You're going for a run around the campus and run into Jewel doing the same. She makes an immediate beeline towards you. <i>\"You're not getting out of running today, no matter how tempting the alternative is. We're going to get some real exercise.\"</i> She pushes you a lot harder than you had planned and you're exhausted by the end of it, but you did manage to keep up with her.");
+			Global.getNPC("Cassie").gainAffection(player, 1);
+			player.gainAffection(Global.getNPC("Cassie"), 1);
+			break;
+		case jewel1:
+			Global.gui().message(
+					"You're going for a run around the campus and run into Jewel doing the same. She makes an immediate beeline towards you. <i>\"You're not getting out of running today, no matter how tempting the alternative is. We're going to get some real exercise.\"</i> She pushes you a lot harder than you had planned and you're exhausted by the end of it, but you did manage to keep up with her.");
 
-				Global.getNPC("Jewel").gainAffection(player, 1);
-				player.gainAffection(Global.getNPC("Jewel"), 1);
+			Global.getNPC("Jewel").gainAffection(player, 1);
+			player.gainAffection(Global.getNPC("Jewel"), 1);
 		}
 	}
 
@@ -86,8 +83,7 @@ public class Exercise extends Activity {
 			if (Global.getNPC("Cassie").getAffection(player) >= 5) {
 				available.add(Scene.cassie1);
 			}
-			if (Global.getNPC("Jewel").getAffection(player) >= 5
-					&& player.getStamina().max() >= 35) {
+			if (Global.getNPC("Jewel").getAffection(player) >= 5 && player.getStamina().max() >= 35) {
 				available.add(Scene.jewel1);
 			}
 		}

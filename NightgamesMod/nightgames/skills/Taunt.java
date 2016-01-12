@@ -17,8 +17,7 @@ public class Taunt extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.mostlyNude() && !c.getStance().sub(getSelf())
-				&& getSelf().canAct() && !getSelf().has(Trait.shy);
+		return target.mostlyNude() && !c.getStance().sub(getSelf()) && getSelf().canAct() && !getSelf().has(Trait.shy);
 	}
 
 	@Override
@@ -33,8 +32,7 @@ public class Taunt extends Skill {
 		} else if (target.human()) {
 			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
-		double m = (6 + Global.random(4)
-				+ getSelf().body.getHotness(getSelf(), target))
+		double m = (6 + Global.random(4) + getSelf().body.getHotness(getSelf(), target))
 				* Math.min(2, 1 + getSelf().getExposure());
 		if (target.has(Trait.imagination)) {
 			m += 4;
@@ -76,15 +74,13 @@ public class Taunt extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You tell " + target.name()
 				+ " that if she's so eager to be fucked senseless, you're available during off hours.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().taunt(c);
 	}
 

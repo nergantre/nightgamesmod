@@ -8,16 +8,14 @@ import nightgames.combat.Combat;
 import nightgames.skills.CounterBase;
 
 public class CounterStatus extends DurationStatus {
-	private CounterBase	skill;
-	private String		desc;
+	private CounterBase skill;
+	private String desc;
 
-	public CounterStatus(Character affected, CounterBase skill,
-			String description) {
+	public CounterStatus(Character affected, CounterBase skill, String description) {
 		this(affected, skill, description, 0);
 	}
 
-	public CounterStatus(Character affected, CounterBase skill,
-			String description, int duration) {
+	public CounterStatus(Character affected, CounterBase skill, String description, int duration) {
 		super("Counter", affected, duration);
 		this.skill = skill;
 		desc = description;
@@ -26,8 +24,7 @@ public class CounterStatus extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s ready for a counter.\n",
-				affected.subjectAction("get", "gets"));
+		return String.format("%s ready for a counter.\n", affected.subjectAction("get", "gets"));
 	}
 
 	@Override

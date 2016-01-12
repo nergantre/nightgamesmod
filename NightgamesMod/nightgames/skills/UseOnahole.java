@@ -19,10 +19,8 @@ public class UseOnahole extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (getSelf().has(Item.Onahole) || getSelf().has(Item.Onahole2))
-				&& getSelf().canAct() && target.hasDick()
-				&& c.getStance().reachBottom(getSelf())
-				&& target.crotchAvailable() && !c.getStance().inserted(target);
+		return (getSelf().has(Item.Onahole) || getSelf().has(Item.Onahole2)) && getSelf().canAct() && target.hasDick()
+				&& c.getStance().reachBottom(getSelf()) && target.crotchAvailable() && !c.getStance().inserted(target);
 	}
 
 	@Override
@@ -37,16 +35,14 @@ public class UseOnahole extends Skill {
 				} else {
 					c.write(getSelf(), deal(c, 0, Result.upgrade, target));
 				}
-				target.body.pleasure(getSelf(), null,
-						target.body.getRandomCock(), m, c);
+				target.body.pleasure(getSelf(), null, target.body.getRandomCock(), m, c);
 			} else {
 				if (target.human()) {
 					c.write(getSelf(), receive(c, 0, Result.normal, target));
 				} else {
 					c.write(getSelf(), deal(c, 0, Result.upgrade, target));
 				}
-				target.body.pleasure(getSelf(), null,
-						target.body.getRandomCock(), m, c);
+				target.body.pleasure(getSelf(), null, target.body.getRandomCock(), m, c);
 			}
 		} else {
 			if (getSelf().human()) {
@@ -70,11 +66,9 @@ public class UseOnahole extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return "You try to stick your onahole onto " + target.name()
-					+ "'s dick, but she manages to avoid it.";
+			return "You try to stick your onahole onto " + target.name() + "'s dick, but she manages to avoid it.";
 		} else if (modifier == Result.upgrade) {
 			return "You slide your onahole over " + target.name()
 					+ "'s dick. The well-lubricated toy covers her member with minimal resistance. As you pump it, she moans in "
@@ -86,11 +80,9 @@ public class UseOnahole extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return getSelf().name()
-					+ " tries to stick a cocksleeve on your dick, but you manage to avoid it.";
+			return getSelf().name() + " tries to stick a cocksleeve on your dick, but you manage to avoid it.";
 		} else if (modifier == Result.upgrade) {
 			return getSelf().name()
 					+ " slides her cocksleeve over your dick and starts pumping it. The sensation is the same as if she was riding you, but you're the only "

@@ -11,11 +11,9 @@ import nightgames.items.Item;
 
 public class CommandGive extends PlayerCommand {
 
-	public static final List<Item>	TRANSFERABLES	= Arrays.asList(
-			Item.EnergyDrink, Item.SPotion, Item.Aphrodisiac, Item.Sedative,
-			Item.Battery, Item.Beer, Item.Lubricant, Item.Rope, Item.ZipTie,
-			Item.Tripwire, Item.Spring);
-	private Item					transfer;
+	public static final List<Item> TRANSFERABLES = Arrays.asList(Item.EnergyDrink, Item.SPotion, Item.Aphrodisiac,
+			Item.Sedative, Item.Battery, Item.Beer, Item.Lubricant, Item.Rope, Item.ZipTie, Item.Tripwire, Item.Spring);
+	private Item transfer;
 
 	public CommandGive(Character self) {
 		super("Take Item", self);
@@ -66,17 +64,13 @@ public class CommandGive extends PlayerCommand {
 	}
 
 	@Override
-	public String deal(Combat c, int magnitude, Result modifier,
-			Character target) {
-		return target.name() + " takes out " + transfer.pre()
-				+ transfer.getName() + " and hands it to you.";
+	public String deal(Combat c, int magnitude, Result modifier, Character target) {
+		return target.name() + " takes out " + transfer.pre() + transfer.getName() + " and hands it to you.";
 	}
 
 	@Override
-	public String receive(Combat c, int magnitude, Result modifier,
-			Character target) {
-		return "<<This should not be displayed, please inform The"
-				+ " Silver Bard: CommandGive-receive>>";
+	public String receive(Combat c, int magnitude, Result modifier, Character target) {
+		return "<<This should not be displayed, please inform The" + " Silver Bard: CommandGive-receive>>";
 	}
 
 }

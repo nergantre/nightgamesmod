@@ -9,18 +9,18 @@ import nightgames.global.Flag;
 import nightgames.global.Global;
 
 public class Growth {
-	public float						arousal;
-	public float						stamina;
-	public float						mojo;
-	public float						bonusArousal;
-	public float						bonusStamina;
-	public float						bonusMojo;
-	public int							attributes[];
-	public int							bonusAttributes;
-	public float						willpower;
-	public float						bonusWillpower;
-	private Map<Integer, List<Trait>>	traits;
-	public Map<Integer, Runnable>		actions;
+	public float arousal;
+	public float stamina;
+	public float mojo;
+	public float bonusArousal;
+	public float bonusStamina;
+	public float bonusMojo;
+	public int attributes[];
+	public int bonusAttributes;
+	public float willpower;
+	public float bonusWillpower;
+	private Map<Integer, List<Trait>> traits;
+	public Map<Integer, Runnable> actions;
 
 	public Growth() {
 		stamina = 2;
@@ -57,8 +57,7 @@ public class Growth {
 		if (character.rank < attributes.length) {
 			character.availableAttributePoints += attributes[character.rank];
 		} else {
-			character.availableAttributePoints += attributes[attributes.length
-					- 1];
+			character.availableAttributePoints += attributes[attributes.length - 1];
 		}
 
 		if (Global.checkFlag(Flag.hardmode)) {
@@ -68,13 +67,11 @@ public class Growth {
 			character.getWillpower().gain(bonusWillpower);
 			character.availableAttributePoints += bonusAttributes;
 		}
-		traits.keySet().stream().filter(i -> i <= character.level)
-				.forEach(i -> {
-					traits.get(i).forEach(trait -> character.add(trait));
-				});
-		actions.keySet().stream().filter(i -> i <= character.level)
-				.forEach(i -> {
-					actions.get(i).run();
-				});
+		traits.keySet().stream().filter(i -> i <= character.level).forEach(i -> {
+			traits.get(i).forEach(trait -> character.add(trait));
+		});
+		actions.keySet().stream().filter(i -> i <= character.level).forEach(i -> {
+			actions.get(i).run();
+		});
 	}
 }

@@ -5,15 +5,15 @@ import nightgames.status.Status;
 
 public class StatusModifier {
 
-	public static final StatusModifier	NULL_MODIFIER	= new StatusModifier() {
-															@Override
-															public String toString() {
-																return "null-status-modifier";
-															}
-														};
+	public static final StatusModifier NULL_MODIFIER = new StatusModifier() {
+		@Override
+		public String toString() {
+			return "null-status-modifier";
+		}
+	};
 
-	private final Status				status;
-	private final boolean				playerOnly;
+	private final Status status;
+	private final boolean playerOnly;
 
 	public StatusModifier(Status status, boolean playerOnly) {
 		this.status = status;

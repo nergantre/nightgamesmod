@@ -18,10 +18,8 @@ public class CockWorship extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.crotchAvailable() && target.hasDick()
-				&& c.getStance().oral(getSelf())
-				&& c.getStance().front(getSelf()) && getSelf().canAct()
-				&& !c.getStance().vaginallyPenetrated(target);
+		return target.crotchAvailable() && target.hasDick() && c.getStance().oral(getSelf())
+				&& c.getStance().front(getSelf()) && getSelf().canAct() && !c.getStance().vaginallyPenetrated(target);
 	}
 
 	@Override
@@ -48,19 +46,13 @@ public class CockWorship extends Skill {
 		BodyPart mouth = getSelf().body.getRandom("mouth");
 		BodyPart cock = target.body.getRandom("cock");
 		target.body.pleasure(getSelf(), mouth, cock, m, c);
-		if (getSelf().hasDick()
-				&& (!getSelf().hasPussy() || Global.random(2) == 0)) {
-			getSelf().body.pleasure(getSelf(),
-					getSelf().body.getRandom("hands"),
-					getSelf().body.getRandomCock(), m, c);
+		if (getSelf().hasDick() && (!getSelf().hasPussy() || Global.random(2) == 0)) {
+			getSelf().body.pleasure(getSelf(), getSelf().body.getRandom("hands"), getSelf().body.getRandomCock(), m, c);
 		} else if (getSelf().hasPussy()) {
-			getSelf().body.pleasure(getSelf(),
-					getSelf().body.getRandom("hands"),
-					getSelf().body.getRandomPussy(), m, c);
+			getSelf().body.pleasure(getSelf(), getSelf().body.getRandom("hands"), getSelf().body.getRandomPussy(), m,
+					c);
 		} else {
-			getSelf().body.pleasure(getSelf(),
-					getSelf().body.getRandom("hands"),
-					getSelf().body.getRandomHole(), m, c);
+			getSelf().body.pleasure(getSelf(), getSelf().body.getRandom("hands"), getSelf().body.getRandomHole(), m, c);
 		}
 		if (mouth.isErogenous()) {
 			getSelf().body.pleasure(getSelf(), cock, mouth, m, c);
@@ -97,8 +89,7 @@ public class CockWorship extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return Global.format(
 				"You ecstatically crawl towards {other:name-do} and reverently hold {other:possessive} {other:body-part:cock} with your hands. "
 						+ "You carefully take {other:possessive} member into your {self:body-part:mouth} and start blowing {other:direct-object} for all you are worth. "
@@ -108,8 +99,7 @@ public class CockWorship extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return Global.format(
 				"{self:subject} ecstatically crawls to you on {self:possessive} knees and reverently cups {other:possessive} {other:body-part:cock}"
 						+ "with {self:possessive} hands. She carefully takes {other:possessive} member into {other:possessive} {self:body-part:mouth} and start sucking on it "

@@ -33,8 +33,7 @@ public class PussyGrind extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return fuckable(c, target) && c.getStance().mobile(getSelf())
-				&& getSelf().canAct();
+		return fuckable(c, target) && c.getStance().mobile(getSelf()) && getSelf().canAct();
 	}
 
 	@Override
@@ -75,25 +74,21 @@ public class PussyGrind extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.normal) {
-			return Global.format(
-					"You rock your tangled bodies back and forth, grinding your loins into hers. {other:subject} passionately gasps as the stimulation overwhelms her. "
-							+ "Soon the floor is drenched with the fruits of your combined labor.",
-					getSelf(), target);
+			return Global
+					.format("You rock your tangled bodies back and forth, grinding your loins into hers. {other:subject} passionately gasps as the stimulation overwhelms her. "
+							+ "Soon the floor is drenched with the fruits of your combined labor.", getSelf(), target);
 		}
 		return "Bad stuff happened";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.normal) {
-			return Global.format(
-					"{self:SUBJECT} rocks your tangled bodies back and forth, grinding her crotch into yours. You moan passionately as the stimulation overwhelms you. "
-							+ "Soon the floor is drenched with the fruits of your combined labor.",
-					getSelf(), target);
+			return Global
+					.format("{self:SUBJECT} rocks your tangled bodies back and forth, grinding her crotch into yours. You moan passionately as the stimulation overwhelms you. "
+							+ "Soon the floor is drenched with the fruits of your combined labor.", getSelf(), target);
 		}
 		return "Bad stuff happened";
 	}

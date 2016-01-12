@@ -19,14 +19,12 @@ public class ToggleKnot extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.body.get("cock").stream()
-				.anyMatch(cock -> cock.getMod() == CockMod.primal);
+		return user.body.get("cock").stream().anyMatch(cock -> cock.getMod() == CockMod.primal);
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return isActive(target)
-				|| getSelf().canAct() && c.getStance().inserted(getSelf());
+		return isActive(target) || getSelf().canAct() && c.getStance().inserted(getSelf());
 	}
 
 	@Override
@@ -49,28 +47,22 @@ public class ToggleKnot extends Skill {
 				c.write(getSelf(),
 						"Deciding she's had enough for now, you let your cock return to its regular shape, once again permitting movement.");
 			} else if (target.human()) {
-				String part = c.getStance().insertedPartFor(target)
-						.describe(target);
-				c.write(getSelf(),
-						"You feel the intense pressure in your " + part
-								+ " recede as " + target.name()
-								+ " allows her knot to deflate.");
+				String part = c.getStance().insertedPartFor(target).describe(target);
+				c.write(getSelf(), "You feel the intense pressure in your " + part + " recede as " + target.name()
+						+ " allows her knot to deflate.");
 			}
 			target.removeStatus(Stsflag.knotted);
 		} else {
 			if (getSelf().human()) {
 				c.write(getSelf(),
-						"You'd like to stay inside " + target.name()
-								+ " for a bit, so you "
-								+ (c.getStance().canthrust(getSelf()) ? "thrust"
-										: "buck up")
+						"You'd like to stay inside " + target.name() + " for a bit, so you "
+								+ (c.getStance().canthrust(getSelf()) ? "thrust" : "buck up")
 								+ " as deep inside of her as you can and send a mental command to the base of your cock, where your"
 								+ " knot soon swells up, locking you inside,");
 			} else if (target.human()) {
 				String firstPart;
 				if (c.getStance().dom(getSelf())) {
-					firstPart = getSelf().name()
-							+ " bottoms out inside of you, and something quickly feels off.";
+					firstPart = getSelf().name() + " bottoms out inside of you, and something quickly feels off.";
 				} else {
 					firstPart = getSelf().name()
 							+ " pulls you all the way onto her cock. As soon as your pelvis touches hers, something starts happening.";
@@ -80,8 +72,7 @@ public class ToggleKnot extends Skill {
 								+ " A ball swells up at the base of her dick, growing to the size of a small apple. You're not"
 								+ " getting it out of you any time soon...");
 			}
-			target.add(c, new Knotted(target, getSelf(),
-					c.getStance().anallyPenetrated(target)));
+			target.add(c, new Knotted(target, getSelf(), c.getStance().anallyPenetrated(target)));
 		}
 		return true;
 	}
@@ -97,14 +88,12 @@ public class ToggleKnot extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return null;
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return null;
 	}
 

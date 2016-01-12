@@ -125,8 +125,7 @@ public class Drowsy extends DurationStatus {
 
 	@Override
 	public Status loadFromJSON(JSONObject obj) {
-		return new Drowsy(null, JSONUtils.readInteger(obj, "magnitude"),
-				JSONUtils.readInteger(obj, "duration"));
+		return new Drowsy(null, JSONUtils.readInteger(obj, "magnitude"), JSONUtils.readInteger(obj, "duration"));
 	}
 
 }

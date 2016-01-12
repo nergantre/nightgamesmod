@@ -20,10 +20,8 @@ public class Tie extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && getSelf().canAct()
-				&& c.getStance().reachTop(getSelf())
-				&& !c.getStance().reachTop(target)
-				&& (getSelf().has(Item.ZipTie) || getSelf().has(Item.Handcuffs))
+		return !target.wary() && getSelf().canAct() && c.getStance().reachTop(getSelf())
+				&& !c.getStance().reachTop(target) && (getSelf().has(Item.ZipTie) || getSelf().has(Item.Handcuffs))
 				&& c.getStance().dom(getSelf()) && !target.is(Stsflag.bound);
 	}
 
@@ -79,29 +77,22 @@ public class Tie extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return "You try to catch " + target.name()
-					+ "'s hands, but she squirms too much to keep your grip on her.";
+			return "You try to catch " + target.name() + "'s hands, but she squirms too much to keep your grip on her.";
 		} else if (modifier == Result.special) {
-			return "You catch " + target.name()
-					+ "'s wrists and slap a pair of cuffs on her.";
+			return "You catch " + target.name() + "'s wrists and slap a pair of cuffs on her.";
 		} else {
-			return "You catch both of " + target.name()
-					+ " hands and wrap a ziptie around her wrists.";
+			return "You catch both of " + target.name() + " hands and wrap a ziptie around her wrists.";
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return getSelf().name()
-					+ " tries to tie you down, but you keep your arms free.";
+			return getSelf().name() + " tries to tie you down, but you keep your arms free.";
 		} else if (modifier == Result.special) {
-			return getSelf().name()
-					+ " restrains you with a pair of handcuffs.";
+			return getSelf().name() + " restrains you with a pair of handcuffs.";
 		} else {
 			return getSelf().name() + " secures your hands with a ziptie.";
 		}

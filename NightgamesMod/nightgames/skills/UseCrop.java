@@ -22,10 +22,9 @@ public class UseCrop extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return (getSelf().has(Item.Crop) || getSelf().has(Item.Crop2))
-				&& getSelf().canAct() && c.getStance().mobile(getSelf())
-				&& (c.getStance().reachTop(getSelf())
-						|| c.getStance().reachBottom(getSelf()));
+		return (getSelf().has(Item.Crop) || getSelf().has(Item.Crop2)) && getSelf().canAct()
+				&& c.getStance().mobile(getSelf())
+				&& (c.getStance().reachTop(getSelf()) || c.getStance().reachBottom(getSelf()));
 	}
 
 	@Override
@@ -36,31 +35,25 @@ public class UseCrop extends Skill {
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		if (target.roll(this, c, accuracy(c))) {
-			if (target.crotchAvailable()
-					&& c.getStance().reachBottom(getSelf())) {
-				if (getSelf().has(Item.Crop2) && Global.random(10) > 7
-						&& !target.has(Trait.brassballs)) {
+			if (target.crotchAvailable() && c.getStance().reachBottom(getSelf())) {
+				if (getSelf().has(Item.Crop2) && Global.random(10) > 7 && !target.has(Trait.brassballs)) {
 					if (getSelf().human()) {
 						c.write(getSelf(), deal(c, 0, Result.critical, target));
 					} else if (target.human()) {
-						c.write(getSelf(),
-								receive(c, 0, Result.critical, target));
+						c.write(getSelf(), receive(c, 0, Result.critical, target));
 					}
 					if (target.has(Trait.achilles)) {
 						target.pain(c, 6);
 					}
 					target.emote(Emotion.angry, 10);
-					target.pain(c, 8 + Global.random(14)
-							+ target.get(Attribute.Perception));
+					target.pain(c, 8 + Global.random(14) + target.get(Attribute.Perception));
 				} else {
 					if (getSelf().human()) {
 						c.write(getSelf(), deal(c, 0, Result.normal, target));
 					} else if (target.human()) {
-						c.write(getSelf(),
-								receive(c, 0, Result.normal, target));
+						c.write(getSelf(), receive(c, 0, Result.normal, target));
 					}
-					target.pain(c, 5 + Global.random(12)
-							+ target.get(Attribute.Perception) / 2);
+					target.pain(c, 5 + Global.random(12) + target.get(Attribute.Perception) / 2);
 				}
 			} else {
 				if (getSelf().human()) {
@@ -93,14 +86,12 @@ public class UseCrop extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			if (!target.has(Item.Crop)) {
 				return "You lash out with your riding crop, but it fails to connect.";
 			} else {
-				return "You try to hit " + target.name()
-						+ " with your riding crop, but she deflects it with her own.";
+				return "You try to hit " + target.name() + " with your riding crop, but she deflects it with her own.";
 			}
 		} else if (modifier == Result.critical) {
 			if (target.hasBalls()) {
@@ -121,15 +112,12 @@ public class UseCrop extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			if (!target.has(Item.Crop)) {
-				return "You duck out of the way, as " + getSelf().name()
-						+ " swings her riding crop at you.";
+				return "You duck out of the way, as " + getSelf().name() + " swings her riding crop at you.";
 			} else {
-				return getSelf().name()
-						+ " swings her riding crop, but you draw your own crop and parry it.";
+				return getSelf().name() + " swings her riding crop, but you draw your own crop and parry it.";
 			}
 		} else if (modifier == Result.critical) {
 			return getSelf().name()
@@ -138,8 +126,7 @@ public class UseCrop extends Skill {
 		} else if (modifier == Result.weak) {
 			return getSelf().name() + " strikes you with a riding crop.";
 		} else {
-			return getSelf().name()
-					+ " hits your bare ass with a riding crop hard enough to leave a painful welt.";
+			return getSelf().name() + " hits your bare ass with a riding crop hard enough to leave a painful welt.";
 		}
 	}
 

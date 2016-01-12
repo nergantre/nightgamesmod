@@ -9,8 +9,7 @@ import org.json.simple.JSONObject;
 import nightgames.items.Item;
 import nightgames.modifier.ModifierComponent;
 
-public class BanConsumablesModifier extends ItemModifier
-		implements ModifierComponent<BanConsumablesModifier> {
+public class BanConsumablesModifier extends ItemModifier implements ModifierComponent<BanConsumablesModifier> {
 
 	static final Set<Item> CONSUMABLES;
 

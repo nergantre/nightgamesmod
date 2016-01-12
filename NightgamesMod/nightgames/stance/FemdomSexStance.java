@@ -33,8 +33,7 @@ public abstract class FemdomSexStance extends Position {
 
 		if (!inserter.hasInsertable()) {
 			if (inserter.human()) {
-				c.write(inserted.name()
-						+ " groans with frustration with the sudden disappearance of your pole.");
+				c.write(inserted.name() + " groans with frustration with the sudden disappearance of your pole.");
 			} else {
 				c.write("With " + inserter.nameOrPossessivePronoun()
 						+ " phallus gone, you groan in frustration and cease your merciless riding.");
@@ -43,11 +42,10 @@ public abstract class FemdomSexStance extends Position {
 		}
 		if (!inserted.hasPussy()) {
 			if (inserted.human()) {
-				c.write("With your pussy suddenly disappearing, you can't continue riding "
-						+ inserter.name() + " anymore.");
+				c.write("With your pussy suddenly disappearing, you can't continue riding " + inserter.name()
+						+ " anymore.");
 			} else {
-				c.write(inserted.name()
-						+ " groans with frustration with the sudden disappearance of her pussy.");
+				c.write(inserted.name() + " groans with frustration with the sudden disappearance of her pussy.");
 			}
 			c.setStance(insertRandom());
 		}
@@ -60,15 +58,13 @@ public abstract class FemdomSexStance extends Position {
 
 	@Override
 	public List<BodyPart> topParts() {
-		return Arrays.asList(top.body.getRandomPussy()).stream()
-				.filter(part -> part != null && part.present())
+		return Arrays.asList(top.body.getRandomPussy()).stream().filter(part -> part != null && part.present())
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<BodyPart> bottomParts() {
-		return Arrays.asList(bottom.body.getRandomInsertable()).stream()
-				.filter(part -> part != null && part.present())
+		return Arrays.asList(bottom.body.getRandomInsertable()).stream().filter(part -> part != null && part.present())
 				.collect(Collectors.toList());
 	}
 

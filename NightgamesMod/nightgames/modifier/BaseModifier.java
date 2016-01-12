@@ -15,22 +15,20 @@ import nightgames.modifier.skill.SkillModifier;
 
 public abstract class BaseModifier implements Modifier {
 
-	protected static final BiConsumer<Character, Match>	EMPTY_CONSUMER	= (c,
-			m) -> {
-																		};
+	protected static final BiConsumer<Character, Match> EMPTY_CONSUMER = (c, m) -> {
+	};
 
-	protected ClothingModifier							clothing;
-	protected ItemModifier								items;
-	protected StatusModifier							status;
-	protected SkillModifier								skills;
-	protected ActionModifier							actions;
-	protected BiConsumer<Character, Match>				custom;
+	protected ClothingModifier clothing;
+	protected ItemModifier items;
+	protected StatusModifier status;
+	protected SkillModifier skills;
+	protected ActionModifier actions;
+	protected BiConsumer<Character, Match> custom;
 
-	protected Map<Character, Map<Item, Integer>>		moddedItems;
+	protected Map<Character, Map<Item, Integer>> moddedItems;
 
-	protected BaseModifier(ClothingModifier clothing, ItemModifier items,
-			StatusModifier status, SkillModifier skills, ActionModifier actions,
-			BiConsumer<Character, Match> custom) {
+	protected BaseModifier(ClothingModifier clothing, ItemModifier items, StatusModifier status, SkillModifier skills,
+			ActionModifier actions, BiConsumer<Character, Match> custom) {
 		this.clothing = clothing;
 		this.items = items;
 		this.status = status;
@@ -41,9 +39,8 @@ public abstract class BaseModifier implements Modifier {
 	}
 
 	protected BaseModifier() {
-		this(ClothingModifier.NULL_MODIFIER, ItemModifier.NULL_MODIFIER,
-				StatusModifier.NULL_MODIFIER, SkillModifier.NULL_MODIFIER,
-				ActionModifier.NULL_MODIFIER, EMPTY_CONSUMER);
+		this(ClothingModifier.NULL_MODIFIER, ItemModifier.NULL_MODIFIER, StatusModifier.NULL_MODIFIER,
+				SkillModifier.NULL_MODIFIER, ActionModifier.NULL_MODIFIER, EMPTY_CONSUMER);
 	}
 
 	@Override
@@ -58,7 +55,7 @@ public abstract class BaseModifier implements Modifier {
 		moddedItems.putIfAbsent(c, new HashMap<>());
 		Map<Item, Integer> inventory = new HashMap<>(c.getInventory());
 		inventory.forEach((item, count) -> {
-			if (items.itemIsBanned(item)) {
+			if (items.itemIsBanned(c, item)) {
 				c.getInventory().remove(item);
 				moddedItems.get(c).putIfAbsent(item, 0);
 				moddedItems.get(c).compute(item, (i, cnt) -> cnt - count);
@@ -108,10 +105,8 @@ public abstract class BaseModifier implements Modifier {
 	@Override
 	public String toString() {
 		return String.format(
-				"Modifier\n\tClothing: %s\n\tItems: %s\n\t"
-						+ "Status: %s\n\tSkills: %s\n\tActions: %s\n\tCustom: %s\n",
-				clothing.toString(), items.toString(), status.toString(),
-				skills.toString(), actions.toString(),
+				"Modifier\n\tClothing: %s\n\tItems: %s\n\t" + "Status: %s\n\tSkills: %s\n\tActions: %s\n\tCustom: %s\n",
+				clothing.toString(), items.toString(), status.toString(), skills.toString(), actions.toString(),
 				custom == EMPTY_CONSUMER ? "no" : "yes");
 	}
 }

@@ -23,8 +23,7 @@ public class Charmed extends DurationStatus {
 		if (affected.human()) {
 			return "You feel an irresistible attraction to her and can't imagine harming her.";
 		} else {
-			return affected.name()
-					+ " is looking at you like a lovestruck teenager.";
+			return affected.name() + " is looking at you like a lovestruck teenager.";
 		}
 	}
 
@@ -66,8 +65,7 @@ public class Charmed extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now charmed.\n",
-				affected.subjectAction("are", "is"));
+		return String.format("%s now charmed.\n", affected.subjectAction("are", "is"));
 	}
 
 	@Override

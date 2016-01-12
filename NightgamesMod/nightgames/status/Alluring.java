@@ -19,15 +19,13 @@ public class Alluring extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now alluring.\n",
-				affected.subjectAction("are", "is"));
+		return String.format("%s now alluring.\n", affected.subjectAction("are", "is"));
 	}
 
 	@Override
 	public String describe(Combat c) {
 		if (!affected.human()) {
-			return affected.name()
-					+ " looks impossibly beautiful to your eyes, you can't bear to hurt her.";
+			return affected.name() + " looks impossibly beautiful to your eyes, you can't bear to hurt her.";
 		}
 		return "";
 	}

@@ -14,17 +14,14 @@ public class AnalProne extends AnalSexStance {
 	@Override
 	public String describe() {
 		if (top.human()) {
-			return String.format(
-					"You're holding %s legs over your shoulder while your cock in buried in %s's ass.",
-					bottom.nameOrPossessivePronoun(),
-					bottom.possessivePronoun());
+			return String.format("You're holding %s legs over your shoulder while your cock in buried in %s's ass.",
+					bottom.nameOrPossessivePronoun(), bottom.possessivePronoun());
 		} else if (top.has(Trait.strapped)) {
-			return "You're flat on your back with your feet over your head while "
-					+ top.name() + " pegs you with her strapon dildo.";
+			return "You're flat on your back with your feet over your head while " + top.name()
+					+ " pegs you with her strapon dildo.";
 		} else {
-			return "You're flat on your back with your feet over your head while "
-					+ top.name() + " pegs you with " + top.possessivePronoun()
-					+ " " + top.body.getRandomInsertable().describe(top) + ".";
+			return "You're flat on your back with your feet over your head while " + top.name() + " pegs you with "
+					+ top.possessivePronoun() + " " + top.body.getRandomInsertable().describe(top) + ".";
 		}
 	}
 
@@ -95,22 +92,18 @@ public class AnalProne extends AnalSexStance {
 
 		if (!inserter.hasInsertable()) {
 			if (inserted.human()) {
-				c.write("With " + inserter.name()
-						+ "'s pole gone, your ass gets a respite.");
+				c.write("With " + inserter.name() + "'s pole gone, your ass gets a respite.");
 			} else {
-				c.write(inserted.name()
-						+ " sighs with relief with your dick gone.");
+				c.write(inserted.name() + " sighs with relief with your dick gone.");
 			}
 			c.setStance(insertRandom());
 		}
 		if (inserted.body.getRandom("ass") == null) {
 			if (inserted.human()) {
-				c.write("With your asshole suddenly disappearing, "
-						+ inserter.name()
+				c.write("With your asshole suddenly disappearing, " + inserter.name()
 						+ "'s dick pops out of what was once your sphincter.");
 			} else {
-				c.write("Your dick pops out of " + inserted.name()
-						+ " as her asshole shrinks and disappears.");
+				c.write("Your dick pops out of " + inserted.name() + " as her asshole shrinks and disappears.");
 			}
 			c.setStance(insertRandom());
 		}

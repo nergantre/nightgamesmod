@@ -20,8 +20,7 @@ public class Cowardice extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && target.canAct()
-				&& c.getStance().en == Stance.neutral;
+		return getSelf().canAct() && target.canAct() && c.getStance().en == Stance.neutral;
 	}
 
 	@Override
@@ -51,18 +50,14 @@ public class Cowardice extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
-		return "You try to run away, but " + target.name()
-				+ " catches you and grabs you from behind.";
+	public String deal(Combat c, int damage, Result modifier, Character target) {
+		return "You try to run away, but " + target.name() + " catches you and grabs you from behind.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
-		return getSelf().name() + " tries to sprint away, but you quickly grab "
-				+ getSelf().directObject() + " from behind before "
-				+ getSelf().pronoun() + " can escape.";
+	public String receive(Combat c, int damage, Result modifier, Character target) {
+		return getSelf().name() + " tries to sprint away, but you quickly grab " + getSelf().directObject()
+				+ " from behind before " + getSelf().pronoun() + " can escape.";
 	}
 
 }

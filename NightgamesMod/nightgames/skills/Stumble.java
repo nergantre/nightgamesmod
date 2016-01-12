@@ -56,20 +56,16 @@ public class Stumble extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
-		return "You slip and fall to the ground, pulling " + target.name()
-				+ " awkwardly on top of you.";
+	public String deal(Combat c, int damage, Result modifier, Character target) {
+		return "You slip and fall to the ground, pulling " + target.name() + " awkwardly on top of you.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return String.format(
 				"%s stumbles and falls, grabbing you to catch %sself. Unfortunately, "
 						+ "you can't keep your balance and you fall on top of %s. Maybe that's not so unfortunate.",
-				getSelf().name(), getSelf().directObject(),
-				getSelf().directObject());
+				getSelf().name(), getSelf().directObject(), getSelf().directObject());
 	}
 
 }

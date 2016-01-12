@@ -40,8 +40,7 @@ public class ReverseFly extends Fly {
 	public boolean resolve(Combat c, Character target) {
 		String premessage = premessage(c, target);
 
-		Result result = target.roll(this, c, accuracy(c)) ? Result.normal
-				: Result.miss;
+		Result result = target.roll(this, c, accuracy(c)) ? Result.normal : Result.miss;
 		if (getSelf().human()) {
 			c.write(getSelf(), premessage + deal(c, 0, result, target));
 		} else if (target.human()) {
@@ -58,10 +57,8 @@ public class ReverseFly extends Fly {
 			if (getSelf().has(Trait.insertion)) {
 				otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
 			}
-			target.body.pleasure(getSelf(), getSelfOrgan(),
-					getTargetOrgan(target), m, c);
-			getSelf().body.pleasure(target, getTargetOrgan(target),
-					getSelfOrgan(), otherm, c);
+			target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c);
+			getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c);
 			c.setStance(new FlyingCowgirl(getSelf(), target));
 		} else {
 			getSelf().add(c, new Falling(getSelf()));
@@ -71,32 +68,24 @@ public class ReverseFly extends Fly {
 	}
 
 	@Override
-	public String deal(Combat c, int amount, Result modifier,
-			Character target) {
+	public String deal(Combat c, int amount, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return "you grab " + target.name()
-					+ " tightly and try to take off. However "
-					+ target.pronoun()
+			return "you grab " + target.name() + " tightly and try to take off. However " + target.pronoun()
 					+ " has other ideas. She knees your crotch as you approach and sends you sprawling to the ground.";
 		} else {
-			return "you grab " + target.name() + " tightly and take off, "
-					+ "inserting his dick into your hungry "
+			return "you grab " + target.name() + " tightly and take off, " + "inserting his dick into your hungry "
 					+ getSelf().body.getRandomPussy().describe(getSelf()) + ".";
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int amount, Result modifier,
-			Character target) {
+	public String receive(Combat c, int amount, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			return target.name()
 					+ " lunges for you with a hungry look in her eyes. However you have other ideas. You trip her as she approaches and send her sprawling to the floor.";
 		} else {
-			return "suddenly, " + getSelf().name()
-					+ " leaps at you, embracing you tightly"
-					+ ". She then flaps her "
-					+ getSelf().body.getRandomWings().describe(target)
-					+ " hard and before you know it"
+			return "suddenly, " + getSelf().name() + " leaps at you, embracing you tightly" + ". She then flaps her "
+					+ getSelf().body.getRandomWings().describe(target) + " hard and before you know it"
 					+ " you are twenty feet in the sky held up by her arms and legs."
 					+ " Somehow, your dick ended up inside of her in the process and"
 					+ " the rhythmic movements of her flying arouse you to no end";

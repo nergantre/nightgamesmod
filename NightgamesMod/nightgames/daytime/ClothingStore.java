@@ -9,8 +9,7 @@ public class ClothingStore extends Store {
 
 	public ClothingStore(Character player) {
 		super("Clothing Store", player);
-		Clothing.getAllBuyableFrom("ClothingStore")
-				.forEach(article -> add(article));
+		Clothing.getAllBuyableFrom("ClothingStore").forEach(article -> add(article));
 	}
 
 	@Override
@@ -34,11 +33,9 @@ public class ClothingStore extends Store {
 			Global.gui().message(
 					"This is a normal retail clothing outlet. For obvious reasons, you'll need to buy anything you want to wear at night in bulk.");
 			for (Clothing i : clothing().keySet()) {
-				Global.gui().message(i.getName() + ": " + i.getPrice()
-						+ (player.has(i) ? " (Owned)" : ""));
+				Global.gui().message(i.getName() + ": " + i.getPrice() + (player.has(i) ? " (Owned)" : ""));
 			}
-			Global.gui().message(
-					"You have: $" + player.money + " available to spend.");
+			Global.gui().message("You have: $" + player.money + " available to spend.");
 			displayGoods();
 			Global.gui().choose(this, "Leave");
 		}

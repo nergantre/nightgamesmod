@@ -14,8 +14,7 @@ public class OrgasmSeal extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Arcane) >= 15
-				|| user.get(Attribute.Dark) >= 5;
+		return user.get(Attribute.Arcane) >= 15 || user.get(Attribute.Dark) >= 5;
 	}
 
 	@Override
@@ -55,21 +54,16 @@ public class OrgasmSeal extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You focus your energy onto " + target.nameOrPossessivePronoun()
 				+ " abdomen, coalescing it into a blood red mark that prevents her from cumming.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
-		return getSelf().name()
-				+ " makes a complicated gesture and envelopes her finger tips in a blood red glow. "
-				+ "With a nasty grin, she jams her finger into your "
-				+ (target.hasBalls() ? "balls" : "lower abdomen")
-				+ ". Strangely it doesn't hurt at all, but when "
-				+ getSelf().subject()
+	public String receive(Combat c, int damage, Result modifier, Character target) {
+		return getSelf().name() + " makes a complicated gesture and envelopes her finger tips in a blood red glow. "
+				+ "With a nasty grin, she jams her finger into your " + (target.hasBalls() ? "balls" : "lower abdomen")
+				+ ". Strangely it doesn't hurt at all, but when " + getSelf().subject()
 				+ " withdraws her finger, she leaves a glowing pentagram on you.";
 	}
 }

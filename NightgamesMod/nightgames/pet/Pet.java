@@ -4,11 +4,11 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 
 public abstract class Pet {
-	private String		name;
-	private Character	owner;
-	private Ptype		type;
-	protected int		power;
-	protected int		ac;
+	private String name;
+	private Character owner;
+	private Ptype type;
+	protected int power;
+	protected int ac;
 
 	public Pet(String name, Character owner, Ptype type, int power, int ac) {
 		this.owner = owner;

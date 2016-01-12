@@ -42,16 +42,13 @@ public class Distracted extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You miss your opportunity to act.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character attacker) {
-		return attacker.name()
-				+ " looks a little unfocused and makes no attempt to defend herself.";
+	public String receive(Combat c, int damage, Result modifier, Character attacker) {
+		return attacker.name() + " looks a little unfocused and makes no attempt to defend herself.";
 	}
 
 	@Override

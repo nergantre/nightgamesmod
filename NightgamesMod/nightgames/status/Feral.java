@@ -17,8 +17,7 @@ public class Feral extends Status {
 	@Override
 	public String describe(Combat c) {
 		return String.format("%s seems beyond reason in %s feral lust.\n",
-				Global.capitalizeFirstLetter(affected.subject()),
-				affected.possessivePronoun());
+				Global.capitalizeFirstLetter(affected.subject()), affected.possessivePronoun());
 	}
 
 	@Override
@@ -28,25 +27,24 @@ public class Feral extends Status {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s turned feral.\n",
-				affected.subjectAction("have", "has"));
+		return String.format("%s turned feral.\n", affected.subjectAction("have", "has"));
 	}
 
 	@Override
 	public int mod(Attribute a) {
 		switch (a) {
-			case Power:
-				return 1 + affected.getPure(Attribute.Animism) / 2;
-			case Cunning:
-				return 3;
-			case Seduction:
-				return 2;
-			case Animism:
-				return affected.getPure(Attribute.Animism) / 2;
-			case Speed:
-				return 2;
-			default:
-				break;
+		case Power:
+			return 1 + affected.getPure(Attribute.Animism) / 2;
+		case Cunning:
+			return 3;
+		case Seduction:
+			return 2;
+		case Animism:
+			return affected.getPure(Attribute.Animism) / 2;
+		case Speed:
+			return 2;
+		default:
+			break;
 		}
 		return 0;
 	}
@@ -56,8 +54,7 @@ public class Feral extends Status {
 		if (affected.getArousal().percent() < 40) {
 			affected.removelist.add(this);
 		}
-		int ignoreOrgasmChance = Math.min(5,
-				2 + affected.get(Attribute.Animism) / 10);
+		int ignoreOrgasmChance = Math.min(5, 2 + affected.get(Attribute.Animism) / 10);
 		if (Global.random(ignoreOrgasmChance) != 0) {
 			affected.addlist.add(new IgnoreOrgasm(affected, 0));
 		}

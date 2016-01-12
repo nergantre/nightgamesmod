@@ -25,15 +25,13 @@ public class Satiated extends DurationStatus {
 		if (affected.human()) {
 			return "You feel immensely powerful after feeding on your opponent's essence\n";
 		} else {
-			return affected.name()
-					+ " feels immensely satisfied after feeding on your essence\n";
+			return affected.name() + " feels immensely satisfied after feeding on your essence\n";
 		}
 	}
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now satiated.\n",
-				affected.subjectAction("are", "is"));
+		return String.format("%s now satiated.\n", affected.subjectAction("are", "is"));
 	}
 
 	@Override

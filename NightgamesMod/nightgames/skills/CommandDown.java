@@ -44,17 +44,14 @@ public class CommandDown extends PlayerCommand {
 	}
 
 	@Override
-	public String deal(Combat c, int magnitude, Result modifier,
-			Character target) {
+	public String deal(Combat c, int magnitude, Result modifier, Character target) {
 		return "Trembling under the weight of your command, " + target.name()
 				+ " lies down. You follow her down and mount her, facing her head.";
 	}
 
 	@Override
-	public String receive(Combat c, int magnitude, Result modifier,
-			Character target) {
-		return "<<This should not be displayed, please inform The"
-				+ " Silver Bard: CommandDown-receive>>";
+	public String receive(Combat c, int magnitude, Result modifier, Character target) {
+		return "<<This should not be displayed, please inform The" + " Silver Bard: CommandDown-receive>>";
 	}
 
 }

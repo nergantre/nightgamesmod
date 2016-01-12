@@ -18,10 +18,8 @@ public class Stomp extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !c.getStance().prone(getSelf()) && c.getStance().prone(target)
-				&& c.getStance().feet(getSelf()) && getSelf().canAct()
-				&& !getSelf().has(Trait.softheart)
-				&& !c.getStance().inserted(target);
+		return !c.getStance().prone(getSelf()) && c.getStance().prone(target) && c.getStance().feet(getSelf())
+				&& getSelf().canAct() && !getSelf().has(Trait.softheart) && !c.getStance().inserted(target);
 	}
 
 	@Override
@@ -32,8 +30,7 @@ public class Stomp extends Skill {
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		if (target.has(Trait.brassballs)) {
-			if (getSelf().has(Trait.heeldrop) && target.crotchAvailable()
-					&& target.hasBalls()) {
+			if (getSelf().has(Trait.heeldrop) && target.crotchAvailable() && target.hasBalls()) {
 				if (getSelf().human()) {
 					c.write(getSelf(), deal(c, 0, Result.strong, target));
 				} else if (target.human()) {
@@ -42,8 +39,8 @@ public class Stomp extends Skill {
 						c.write(getSelf(), getSelf().bbLiner(c));
 					}
 				}
-				target.pain(c, 15 - (int) Math.round((5 + Global.random(5))
-						* target.getOutfit().getExposure(ClothingSlot.bottom)));
+				target.pain(c, 15 - (int) Math
+						.round((5 + Global.random(5)) * target.getOutfit().getExposure(ClothingSlot.bottom)));
 			} else {
 				if (getSelf().human()) {
 					c.write(getSelf(), deal(c, 0, Result.weak2, target));
@@ -63,16 +60,16 @@ public class Stomp extends Skill {
 			if (target.has(Trait.achilles)) {
 				target.pain(c, 20);
 			}
-			target.pain(c, 30 - (int) Math.round((10 + Global.random(10))
-					* target.getOutfit().getExposure(ClothingSlot.bottom)));
+			target.pain(c, 30
+					- (int) Math.round((10 + Global.random(10)) * target.getOutfit().getExposure(ClothingSlot.bottom)));
 		} else if (target.has(ClothingTrait.armored)) {
 			if (getSelf().human()) {
 				c.write(getSelf(), deal(c, 0, Result.weak, target));
 			} else if (target.human()) {
 				c.write(getSelf(), receive(c, 0, Result.weak, target));
 			}
-			target.pain(c, 5 - (int) Math.round((2 + Global.random(3))
-					* target.getOutfit().getExposure(ClothingSlot.bottom)));
+			target.pain(c,
+					5 - (int) Math.round((2 + Global.random(3)) * target.getOutfit().getExposure(ClothingSlot.bottom)));
 		} else {
 			if (getSelf().human()) {
 				c.write(getSelf(), deal(c, 0, Result.normal, target));
@@ -85,8 +82,8 @@ public class Stomp extends Skill {
 			if (target.has(Trait.achilles)) {
 				target.pain(c, 20);
 			}
-			target.pain(c, 20 - (int) Math.round((10 + Global.random(10))
-					* target.getOutfit().getExposure(ClothingSlot.bottom)));
+			target.pain(c, 20
+					- (int) Math.round((10 + Global.random(10)) * target.getOutfit().getExposure(ClothingSlot.bottom)));
 		}
 		target.emote(Emotion.angry, 25);
 		return true;
@@ -122,8 +119,7 @@ public class Stomp extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.special) {
 			if (target.hasBalls()) {
 				return "You push " + target.name()
@@ -142,10 +138,8 @@ public class Stomp extends Skill {
 							+ "%s does not seem to realize what you are planning before your foot is already plunging down towards them."
 							+ " When it lands, you feel a sympathetic jolt run up your spine as %s gonads are crushed beneath your foot."
 							+ " %s whimpers in pain, but not as much as you'd expect from such a magnificent impact.",
-					target.name(), target.body.getRandomCock().describe(target),
-					target.possessivePronoun(),
-					Global.capitalizeFirstLetter(target.pronoun()),
-					target.possessivePronoun(),
+					target.name(), target.body.getRandomCock().describe(target), target.possessivePronoun(),
+					Global.capitalizeFirstLetter(target.pronoun()), target.possessivePronoun(),
 					Global.capitalizeFirstLetter(target.pronoun()));
 		} else if (modifier == Result.weak) {
 			return "You step between " + target.name()
@@ -154,8 +148,7 @@ public class Stomp extends Skill {
 			return String.format(
 					"You step between %s's legs and stomp down on %s groin."
 							+ "%s exhales sharply, but does not seem hurt much at all. Somehow.",
-					target.name(), target.possessivePronoun(),
-					Global.capitalizeFirstLetter(target.pronoun()));
+					target.name(), target.possessivePronoun(), Global.capitalizeFirstLetter(target.pronoun()));
 		} else {
 			if (target.hasBalls()) {
 				return "You pull " + target.name()
@@ -168,8 +161,7 @@ public class Stomp extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.special) {
 			return getSelf().name()
 					+ " forces your legs open and begins prodding your genitals with her foot. You're slightly aroused by her attention, but she's not giving "
@@ -182,16 +174,13 @@ public class Stomp extends Skill {
 							+ " worse, when %s suddenly lifts the foot up and slams it back down with"
 							+ " great force. You don't often feel much pain from your balls, but the"
 							+ " enormous impact still hurts a lot.",
-					getSelf().name(), getSelf().possessivePronoun(),
-					target.body.getRandomCock().describe(target),
+					getSelf().name(), getSelf().possessivePronoun(), target.body.getRandomCock().describe(target),
 					getSelf().pronoun());
 		} else if (modifier == Result.weak2) {
-			return getSelf().name()
-					+ " forces your legs open and brutally stomps your "
+			return getSelf().name() + " forces your legs open and brutally stomps your "
 					+ "balls. Despite the great blow, you don't feel much pain.";
 		} else if (modifier == Result.weak) {
-			return getSelf().name()
-					+ " grabs your ankles and stomps down on your armored groin, doing little damage.";
+			return getSelf().name() + " grabs your ankles and stomps down on your armored groin, doing little damage.";
 		} else {
 			return getSelf().name()
 					+ " grabs your ankles and stomps down on your unprotected jewels. You curl up in the fetal position, groaning in agony.";

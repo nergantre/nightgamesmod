@@ -1,4 +1,3 @@
-// $codepro.audit.disable emptyCatchClause, logExceptions
 package nightgames.Resources;
 
 import java.io.File;
@@ -44,7 +43,6 @@ public class ResourceLoader {
 		} catch (FileNotFoundException e) {
 		}
 		// then check in the class directory
-		return ResourceLoader.class.getClassLoader()
-				.getResourceAsStream("resources/" + path);
+		return ResourceLoader.class.getClassLoader().getResourceAsStream("resources/" + path);
 	}
 }

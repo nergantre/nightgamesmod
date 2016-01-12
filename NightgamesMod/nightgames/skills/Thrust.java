@@ -26,16 +26,14 @@ public class Thrust extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelfOrgan(c) != null && getTargetOrgan(c, target) != null
-				&& getSelf().canAct() && c.getStance().canthrust(getSelf())
-				&& c.getStance().havingSexOtherNoStrapped(getSelf());
+		return getSelfOrgan(c) != null && getTargetOrgan(c, target) != null && getSelf().canAct()
+				&& c.getStance().canthrust(getSelf()) && c.getStance().havingSexOtherNoStrapped(getSelf());
 	}
 
 	public BodyPart getSelfOrgan(Combat c) {
 		if (c.getStance().inserted(getSelf())) {
 			return getSelf().body.getRandomInsertable();
-		} else if (c.getStance().anallyPenetratedBy(getSelf(),
-				c.getOther(getSelf()))) {
+		} else if (c.getStance().anallyPenetratedBy(getSelf(), c.getOther(getSelf()))) {
 			return getSelf().body.getRandom("ass");
 		} else {
 			return getSelf().body.getRandomPussy();
@@ -45,8 +43,7 @@ public class Thrust extends Skill {
 	public BodyPart getTargetOrgan(Combat c, Character target) {
 		if (c.getStance().inserted(target)) {
 			return target.body.getRandomInsertable();
-		} else if (c.getStance().anallyPenetratedBy(c.getOther(getSelf()),
-				getSelf())) {
+		} else if (c.getStance().anallyPenetratedBy(c.getOther(getSelf()), getSelf())) {
 			return target.body.getRandom("ass");
 		} else {
 			return target.body.getRandomPussy();
@@ -57,8 +54,7 @@ public class Thrust extends Skill {
 		int results[] = new int[2];
 
 		int m = 5 + Global.random(14);
-		if (c.getStance().anallyPenetrated(target)
-				&& getSelf().has(Trait.assmaster)) {
+		if (c.getStance().anallyPenetrated(target) && getSelf().has(Trait.assmaster)) {
 			m *= 1.5;
 		}
 
@@ -103,8 +99,7 @@ public class Thrust extends Skill {
 		if (m[1] != 0) {
 			getSelf().body.pleasure(target, targetO, selfO, m[1], c);
 		}
-		if (selfO.isType("ass")
-				&& Global.random(100) < 2 + getSelf().get(Attribute.Fetish)) {
+		if (selfO.isType("ass") && Global.random(100) < 2 + getSelf().get(Attribute.Fetish)) {
 			target.add(c, new BodyFetish(target, getSelf(), "ass", .25));
 		}
 		return true;
@@ -126,11 +121,9 @@ public class Thrust extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.anal) {
-			return "You thrust steadily into " + target.name()
-					+ "'s ass, eliciting soft groans of pleasure.";
+			return "You thrust steadily into " + target.name() + "'s ass, eliciting soft groans of pleasure.";
 		} else if (modifier == Result.reverse) {
 			return Global.format(
 					"You rock your hips against {other:direct-object}, riding her smoothly. "
@@ -144,8 +137,7 @@ public class Thrust extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.anal) {
 			if (getSelf().has(Trait.strapped)) {
 				String res = getSelf().name()
@@ -156,8 +148,7 @@ public class Thrust extends Skill {
 				}
 				return res;
 			} else {
-				return getSelf().name()
-						+ "'s cock slowly pumps the inside of your rectum.";
+				return getSelf().name() + "'s cock slowly pumps the inside of your rectum.";
 			}
 		} else if (modifier == Result.reverse) {
 			return getSelf().name()

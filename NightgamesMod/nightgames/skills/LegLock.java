@@ -16,10 +16,8 @@ public class LegLock extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().dom(getSelf())
-				&& c.getStance().reachBottom(getSelf())
-				&& c.getStance().prone(target) && getSelf().canAct()
-				&& !c.getStance().connected();
+		return c.getStance().dom(getSelf()) && c.getStance().reachBottom(getSelf()) && c.getStance().prone(target)
+				&& getSelf().canAct() && !c.getStance().connected();
 	}
 
 	@Override
@@ -65,25 +63,20 @@ public class LegLock extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			return "You grab " + target.name() + "'s leg, but she kicks free.";
 		} else {
-			return "You take hold of " + target.name()
-					+ "'s ankle and force her leg to extend painfully.";
+			return "You take hold of " + target.name() + "'s ankle and force her leg to extend painfully.";
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return getSelf().name()
-					+ " tries to put you in a leglock, but you slip away.";
+			return getSelf().name() + " tries to put you in a leglock, but you slip away.";
 		} else {
-			return getSelf().name()
-					+ " pulls your leg across her in a painful submission hold.";
+			return getSelf().name() + " pulls your leg across her in a painful submission hold.";
 		}
 	}
 

@@ -17,8 +17,7 @@ public class Knee extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().mobile(getSelf())
-				&& !c.getStance().prone(getSelf()) && getSelf().canAct()
+		return c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf()) && getSelf().canAct()
 				&& c.getStance().front(target) && !c.getStance().connected();
 	}
 
@@ -42,18 +41,13 @@ public class Knee extends Skill {
 					c.write(getSelf(), getSelf().bbLiner(c));
 				}
 			}
-			if (target.has(Trait.achilles)
-					&& !target.has(ClothingTrait.armored)) {
-				target.pain(c, 20 + Global.random(6)
-						+ Math.min(getSelf().get(Attribute.Power), 50));
+			if (target.has(Trait.achilles) && !target.has(ClothingTrait.armored)) {
+				target.pain(c, 20 + Global.random(6) + Math.min(getSelf().get(Attribute.Power), 50));
 			}
-			if (target.has(ClothingTrait.armored)
-					|| target.has(Trait.brassballs)) {
-				target.pain(c, Global.random(6)
-						+ Math.min(getSelf().get(Attribute.Power) / 2, 50));
+			if (target.has(ClothingTrait.armored) || target.has(Trait.brassballs)) {
+				target.pain(c, Global.random(6) + Math.min(getSelf().get(Attribute.Power) / 2, 50));
 			} else {
-				target.pain(c, 4 + Global.random(11)
-						+ Math.min(getSelf().get(Attribute.Power), 50));
+				target.pain(c, 4 + Global.random(11) + Math.min(getSelf().get(Attribute.Power), 50));
 			}
 
 			target.emote(Emotion.angry, 20);
@@ -89,8 +83,7 @@ public class Knee extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			return target.name() + " blocks your knee strike.";
 		}
@@ -99,11 +92,9 @@ public class Knee extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return getSelf().name()
-					+ " tries to knee you in the balls, but you block it.";
+			return getSelf().name() + " tries to knee you in the balls, but you block it.";
 		}
 		if (modifier == Result.special) {
 			return getSelf().name()

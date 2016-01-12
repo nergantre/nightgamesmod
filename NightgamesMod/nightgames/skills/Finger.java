@@ -18,10 +18,8 @@ public class Finger extends Skill {
 	public boolean usable(Combat c, Character target) {
 		return c.getStance().reachBottom(getSelf())
 				&& (target.crotchAvailable() || getSelf().has(Trait.dexterous)
-						&& target.getOutfit().getTopOfSlot(ClothingSlot.bottom)
-								.getLayer() <= 1)
-				&& target.hasPussy() && getSelf().canAct()
-				&& !c.getStance().vaginallyPenetrated(target);
+						&& target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getLayer() <= 1)
+				&& target.hasPussy() && getSelf().canAct() && !c.getStance().vaginallyPenetrated(target);
 	}
 
 	@Override
@@ -35,18 +33,16 @@ public class Finger extends Skill {
 				} else {
 					c.write(getSelf(), receive(c, 0, Result.normal, target));
 				}
-				target.body.pleasure(getSelf(),
-						getSelf().body.getRandom("hands"),
-						target.body.getRandom("pussy"), m, c);
+				target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("pussy"), m,
+						c);
 			} else {
 				if (getSelf().human()) {
 					c.write(getSelf(), deal(c, m, Result.weak, target));
 				} else {
 					c.write(getSelf(), receive(c, 0, Result.weak, target));
 				}
-				target.body.pleasure(getSelf(),
-						getSelf().body.getRandom("hands"),
-						target.body.getRandom("pussy"), m, c);
+				target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("pussy"), m,
+						c);
 			}
 		} else {
 			if (getSelf().human()) {
@@ -85,8 +81,7 @@ public class Finger extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			return "You grope at " + target.name() + "'s pussy, but miss.";
 		}
@@ -96,8 +91,7 @@ public class Finger extends Skill {
 					+ "stroke every bit of moist flesh under your fingers.";
 		} else {
 			if (target.getArousal().get() <= 15) {
-				return "You softly rub the petals of " + target.name()
-						+ "'s closed flower.";
+				return "You softly rub the petals of " + target.name() + "'s closed flower.";
 			} else if (target.getArousal().percent() < 50) {
 				return target.name()
 						+ "'s sensitive lower lips start to open up under your skilled touch and you can feel her becoming wet.";
@@ -112,8 +106,7 @@ public class Finger extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			return "She gropes at your pussy, but misses the mark.";
 		}

@@ -50,8 +50,7 @@ public class Piston extends Thrust {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.anal || modifier == Result.upgrade) {
 			return "You pound " + target.name()
 					+ " in the ass. She whimpers in pleasure and can barely summon the strength to hold herself off the floor.";
@@ -67,24 +66,19 @@ public class Piston extends Thrust {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.anal) {
-			return getSelf().name()
-					+ " relentlessly pegs you in the ass as you groan and try to endure the sensation.";
+			return getSelf().name() + " relentlessly pegs you in the ass as you groan and try to endure the sensation.";
 		} else if (modifier == Result.upgrade) {
-			return getSelf().name()
-					+ " pistons into you while pushing your shoulders on the ground; "
+			return getSelf().name() + " pistons into you while pushing your shoulders on the ground; "
 					+ getSelf().name()
 					+ "'s tits are shaking above your head while her strapon stimulates your prostate.";
 		} else if (modifier == Result.reverse) {
-			return getSelf().name()
-					+ " bounces on your cock, relentlessly driving you both toward orgasm.";
+			return getSelf().name() + " bounces on your cock, relentlessly driving you both toward orgasm.";
 		} else {
-			return Global.format(
-					"{self:SUBJECT-ACTION:rapidly pound|rapidly pounds} {self:possessive} {self:body-part:cock} into {other:possessive} {other:body-part:pussy}, "
-							+ "relentlessly driving you both toward orgasm",
-					getSelf(), target);
+			return Global
+					.format("{self:SUBJECT-ACTION:rapidly pound|rapidly pounds} {self:possessive} {self:body-part:cock} into {other:possessive} {other:body-part:pussy}, "
+							+ "relentlessly driving you both toward orgasm", getSelf(), target);
 		}
 	}
 

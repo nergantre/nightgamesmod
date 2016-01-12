@@ -9,10 +9,10 @@ import nightgames.combat.Combat;
 public enum TailPart implements BodyPart,BodyPartMod {
 	demonic("demonic ", .2, 1.2, 1), cat("cat's ", .3, 1.5, 1.5);
 
-	public String	desc;
-	public double	hotness;
-	public double	pleasure;
-	public double	sensitivity;
+	public String desc;
+	public double hotness;
+	public double pleasure;
+	public double sensitivity;
 
 	TailPart(String desc, double hotness, double pleasure, double sensitivity) {
 		this.desc = desc;
@@ -23,8 +23,7 @@ public enum TailPart implements BodyPart,BodyPartMod {
 
 	@Override
 	public void describeLong(StringBuilder b, Character c) {
-		b.append("A lithe " + describe(c) + " swings lazily behind "
-				+ c.nameOrPossessivePronoun() + " back.");
+		b.append("A lithe " + describe(c) + " swings lazily behind " + c.nameOrPossessivePronoun() + " back.");
 	}
 
 	@Override
@@ -91,8 +90,7 @@ public enum TailPart implements BodyPart,BodyPartMod {
 	}
 
 	@Override
-	public double applyBonuses(Character self, Character opponent,
-			BodyPart target, double damage, Combat c) {
+	public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		return 0;
 	}
 
@@ -112,8 +110,7 @@ public enum TailPart implements BodyPart,BodyPartMod {
 	}
 
 	@Override
-	public double applyReceiveBonuses(Character self, Character opponent,
-			BodyPart target, double damage, Combat c) {
+	public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		return 0;
 	}
 
@@ -143,8 +140,8 @@ public enum TailPart implements BodyPart,BodyPartMod {
 	}
 
 	@Override
-	public double applySubBonuses(Character self, Character opponent,
-			BodyPart with, BodyPart target, double damage, Combat c) {
+	public double applySubBonuses(Character self, Character opponent, BodyPart with, BodyPart target, double damage,
+			Combat c) {
 		return 0;
 	}
 
@@ -155,8 +152,7 @@ public enum TailPart implements BodyPart,BodyPartMod {
 	}
 
 	@Override
-	public void tickHolding(Combat c, Character self, Character opponent,
-			BodyPart otherOrgan) {
+	public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {
 
 	}
 

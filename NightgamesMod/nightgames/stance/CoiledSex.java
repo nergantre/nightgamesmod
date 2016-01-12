@@ -18,8 +18,7 @@ public class CoiledSex extends FemdomSexStance {
 	@Override
 	public String describe() {
 		if (top.human()) {
-			return "Your limbs are coiled around "
-					+ bottom.nameOrPossessivePronoun() + " body and "
+			return "Your limbs are coiled around " + bottom.nameOrPossessivePronoun() + " body and "
 					+ bottom.possessivePronoun() + " cock is inside you.";
 		} else {
 			return "You're on top of " + top.nameDirectObject()

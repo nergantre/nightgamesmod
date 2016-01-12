@@ -20,8 +20,7 @@ public class StoneForm extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && !c.getStance().sub(getSelf())
-				&& !getSelf().is(Stsflag.form);
+		return getSelf().canAct() && !c.getStance().sub(getSelf()) && !getSelf().is(Stsflag.form);
 	}
 
 	@Override
@@ -51,14 +50,12 @@ public class StoneForm extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You tense your body to absorb and shrug off attacks.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().name() + " braces herself to resist your attacks.";
 	}
 

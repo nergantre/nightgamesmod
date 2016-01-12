@@ -1,4 +1,3 @@
-// $codepro.audit.disable logExceptions
 package nightgames.stance;
 
 import java.util.Collection;
@@ -14,10 +13,10 @@ import nightgames.skills.Skill;
 import nightgames.status.Stsflag;
 
 public abstract class Position implements Cloneable {
-	public Character	top;
-	public Character	bottom;
-	public int			time;
-	public Stance		en;
+	public Character top;
+	public Character bottom;
+	public int time;
+	public Stance en;
 
 	public Position(Character top, Character bottom, Stance stance) {
 		this.top = top;
@@ -131,12 +130,9 @@ public abstract class Position implements Cloneable {
 		} else {
 			target = top;
 		}
-		return (self.crotchAvailable()
-				|| self.has(Trait.strapped) && target.hasPussy())
-				&& target.crotchAvailable() && mobile(self) && !mobile(target)
-				&& ((self.hasDick() || self.has(Trait.strapped))
-						&& !behind(target) || !behind(self))
-				&& self.canAct();
+		return (self.crotchAvailable() || self.has(Trait.strapped) && target.hasPussy()) && target.crotchAvailable()
+				&& mobile(self) && !mobile(target)
+				&& ((self.hasDick() || self.has(Trait.strapped)) && !behind(target) || !behind(self)) && self.canAct();
 	}
 
 	public Stance enumerate() {
@@ -198,28 +194,23 @@ public abstract class Position implements Cloneable {
 
 	public List<BodyPart> topParts() {
 		if (inserted()) {
-			throw new UnsupportedOperationException(
-					"Attempted to get topPart in position "
-							+ getClass().getSimpleName()
-							+ ", but that position does not override the appropriate method.");
+			throw new UnsupportedOperationException("Attempted to get topPart in position " + getClass().getSimpleName()
+					+ ", but that position does not override the appropriate method.");
 		}
 		return Collections.emptyList();
 	}
 
 	public List<BodyPart> bottomParts() {
 		if (inserted()) {
-			throw new UnsupportedOperationException(
-					"Attempted to get bottomPart in position "
-							+ getClass().getSimpleName()
-							+ ", but that position does not override the appropriate method.");
+			throw new UnsupportedOperationException("Attempted to get bottomPart in position "
+					+ getClass().getSimpleName() + ", but that position does not override the appropriate method.");
 		}
 		return Collections.emptyList();
 	}
 
 	public BodyPart insertedPartFor(Character c) {
-		return partsFor(c).stream()
-				.filter(part -> part.isType("cock") || part.isType("strapon"))
-				.findAny().orElse(Body.nonePart);
+		return partsFor(c).stream().filter(part -> part.isType("cock") || part.isType("strapon")).findAny()
+				.orElse(Body.nonePart);
 	}
 
 	public BodyPart insertablePartFor(Character c) {
@@ -232,13 +223,11 @@ public abstract class Position implements Cloneable {
 	}
 
 	public BodyPart pussyPartFor(Character c) {
-		return partsFor(c).stream().filter(part -> part.isType("pussy"))
-				.findAny().orElse(Body.nonePart);
+		return partsFor(c).stream().filter(part -> part.isType("pussy")).findAny().orElse(Body.nonePart);
 	}
 
 	public BodyPart assPartFor(Character c) {
-		return partsFor(c).stream().filter(part -> part.isType("ass")).findAny()
-				.orElse(Body.nonePart);
+		return partsFor(c).stream().filter(part -> part.isType("ass")).findAny().orElse(Body.nonePart);
 	}
 
 	public List<BodyPart> partsFor(Character c) {
@@ -260,8 +249,7 @@ public abstract class Position implements Cloneable {
 
 	public boolean havingSexOtherNoStrapped(Character c) {
 		Character other = getOther(c);
-		return penetratedBy(other, c)
-				|| penetratedBy(c, other) && !other.has(Trait.strapped);
+		return penetratedBy(other, c) || penetratedBy(c, other) && !other.has(Trait.strapped);
 	}
 
 	public boolean havingSexNoStrapped() {
@@ -274,8 +262,7 @@ public abstract class Position implements Cloneable {
 	}
 
 	public boolean penetratedBy(Character inserted, Character inserter) {
-		return vaginallyPenetratedBy(inserted, inserter)
-				|| anallyPenetratedBy(inserted, inserter);
+		return vaginallyPenetratedBy(inserted, inserter) || anallyPenetratedBy(inserted, inserter);
 	}
 
 	public boolean vaginallyPenetratedBy(Character self, Character other) {
@@ -285,8 +272,7 @@ public abstract class Position implements Cloneable {
 		List<BodyPart> parts = partsFor(self);
 		List<BodyPart> otherParts = partsFor(other);
 		return BodyPart.hasType(parts, "pussy")
-				&& (BodyPart.hasType(otherParts, "cock")
-						|| BodyPart.hasType(otherParts, "strapon"));
+				&& (BodyPart.hasType(otherParts, "cock") || BodyPart.hasType(otherParts, "strapon"));
 	}
 
 	public boolean anallyPenetratedBy(Character self, Character other) {
@@ -296,8 +282,7 @@ public abstract class Position implements Cloneable {
 		List<BodyPart> parts = partsFor(self);
 		List<BodyPart> otherParts = partsFor(other);
 		return BodyPart.hasType(parts, "ass")
-				&& (BodyPart.hasType(otherParts, "cock")
-						|| BodyPart.hasType(otherParts, "strapon"));
+				&& (BodyPart.hasType(otherParts, "cock") || BodyPart.hasType(otherParts, "strapon"));
 	}
 
 	public boolean connected() {
@@ -309,8 +294,9 @@ public abstract class Position implements Cloneable {
 	}
 
 	/*
-	 * returns likelihood modification of applying pheromones.
-	 * 1 is normal, 2 is twice as likely, .5 is half as likely, 0 is never */
+	 * returns likelihood modification of applying pheromones. 1 is normal, 2 is
+	 * twice as likely, .5 is half as likely, 0 is never
+	 */
 	public double pheromoneMod(Character self) {
 		return 1;
 	}

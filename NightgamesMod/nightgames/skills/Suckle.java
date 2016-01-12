@@ -15,20 +15,15 @@ public class Suckle extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return target.breastsAvailable() && c.getStance().reachTop(getSelf())
-				&& c.getStance().front(getSelf())
-				&& (getSelf().canAct()
-						|| c.getStance().enumerate() == Stance.nursing
-								&& getSelf().canRespond())
+		return target.breastsAvailable() && c.getStance().reachTop(getSelf()) && c.getStance().front(getSelf())
+				&& (getSelf().canAct() || c.getStance().enumerate() == Stance.nursing && getSelf().canRespond())
 				&& c.getStance().facing();
 	}
 
 	@Override
 	public boolean resolve(Combat c, Character target) {
-		Result results = target.has(Trait.lactating) ? Result.special
-				: Result.normal;
-		int m = (getSelf().get(Attribute.Seduction) > 10 ? 8 : 4)
-				+ Global.random(6);
+		Result results = target.has(Trait.lactating) ? Result.special : Result.normal;
+		int m = (getSelf().get(Attribute.Seduction) > 10 ? 8 : 4) + Global.random(6);
 		if (getSelf().human()) {
 			c.write(getSelf(), deal(c, 0, results, target));
 		} else if (target.human()) {
@@ -38,11 +33,9 @@ public class Suckle extends Skill {
 			m += 4;
 		}
 
-		target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"),
-				target.body.getRandom("breasts"), m, c);
+		target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("breasts"), m, c);
 		if (results == Result.special) {
-			getSelf().tempt(c, target, target.body.getRandomBreasts(),
-					(3 + target.body.getRandomBreasts().size) * 2);
+			getSelf().tempt(c, target, target.body.getRandomBreasts(), (3 + target.body.getRandomBreasts().size) * 2);
 			target.buildMojo(c, 10);
 		} else {
 			target.buildMojo(c, 5);
@@ -66,23 +59,19 @@ public class Suckle extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.normal) {
-			return "You slowly circle your tongue around each of "
-					+ target.name()
+			return "You slowly circle your tongue around each of " + target.name()
 					+ "'s nipples, and start sucking like a newborn.";
 		} else {
-			return "You slowly circle your tongue around each of "
-					+ target.name()
+			return "You slowly circle your tongue around each of " + target.name()
 					+ "'s nipples, and start sucking like a newborn. "
 					+ "Her milk slides smoothly down your throat, and you're left with a warm comfortable feeling.";
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.normal) {
 			return getSelf().name()
 					+ " licks and sucks your nipples, sending a surge of excitement straight to your groin.";

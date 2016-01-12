@@ -1,16 +1,7 @@
 package nightgames.modifier.standard;
 
-import java.util.function.BiConsumer;
-
-import nightgames.characters.Character;
-import nightgames.global.Match;
 import nightgames.modifier.BaseModifier;
-import nightgames.modifier.StatusModifier;
-import nightgames.modifier.action.ActionModifier;
-import nightgames.modifier.clothing.ClothingModifier;
 import nightgames.modifier.clothing.ForceClothingModifier;
-import nightgames.modifier.item.ItemModifier;
-import nightgames.modifier.skill.SkillModifier;
 
 public class TentacleUnderwearModifier extends BaseModifier {
 

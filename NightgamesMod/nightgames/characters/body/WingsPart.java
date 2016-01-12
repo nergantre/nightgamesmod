@@ -8,13 +8,12 @@ import nightgames.combat.Combat;
 
 public enum WingsPart implements BodyPart,BodyPartMod {
 	demonic("demonic ", .2, 1.3, 1.2), angelic("angelic ", .3, 1.4, 1.3);
-	public String	desc;
-	public double	hotness;
-	public double	pleasure;
-	public double	sensitivity;
+	public String desc;
+	public double hotness;
+	public double pleasure;
+	public double sensitivity;
 
-	WingsPart(String desc, double hotness, double pleasure,
-			double sensitivity) {
+	WingsPart(String desc, double hotness, double pleasure, double sensitivity) {
 		this.desc = desc;
 		this.hotness = hotness;
 		this.sensitivity = sensitivity;
@@ -23,8 +22,8 @@ public enum WingsPart implements BodyPart,BodyPartMod {
 
 	@Override
 	public void describeLong(StringBuilder b, Character c) {
-		b.append("A pair of " + describe(c) + " sits gracefully between "
-				+ c.nameOrPossessivePronoun() + " shoulder blades.");
+		b.append("A pair of " + describe(c) + " sits gracefully between " + c.nameOrPossessivePronoun()
+				+ " shoulder blades.");
 	}
 
 	@Override
@@ -91,8 +90,7 @@ public enum WingsPart implements BodyPart,BodyPartMod {
 	}
 
 	@Override
-	public double applyBonuses(Character self, Character opponent,
-			BodyPart target, double damage, Combat c) {
+	public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		return 0;
 	}
 
@@ -112,8 +110,7 @@ public enum WingsPart implements BodyPart,BodyPartMod {
 	}
 
 	@Override
-	public double applyReceiveBonuses(Character self, Character opponent,
-			BodyPart target, double damage, Combat c) {
+	public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		return 0;
 	}
 
@@ -143,24 +140,23 @@ public enum WingsPart implements BodyPart,BodyPartMod {
 	}
 
 	@Override
-	public double applySubBonuses(Character self, Character opponent,
-			BodyPart with, BodyPart target, double damage, Combat c) {
+	public double applySubBonuses(Character self, Character opponent, BodyPart with, BodyPart target, double damage,
+			Combat c) {
 		return 0;
 	}
 
 	@Override
 	public int mod(Attribute a, int total) {
 		switch (a) {
-			case Speed:
-				return 2;
-			default:
-				return 0;
+		case Speed:
+			return 2;
+		default:
+			return 0;
 		}
 	}
 
 	@Override
-	public void tickHolding(Combat c, Character self, Character opponent,
-			BodyPart otherOrgan) {
+	public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {
 
 	}
 

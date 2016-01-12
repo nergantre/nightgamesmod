@@ -22,16 +22,14 @@ public class Anilingus extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return getSelf().has(Trait.shameless)
-				|| getSelf().get(Attribute.Seduction) >= 30;
+		return getSelf().has(Trait.shameless) || getSelf().get(Attribute.Seduction) >= 30;
 	}
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		boolean canUse = c.getStance().enumerate() == Stance.facesitting
-				&& getSelf().canRespond() || getSelf().canAct();
-		return target.crotchAvailable() && target.body.has("ass")
-				&& c.getStance().oral(getSelf()) && canUse
+		boolean canUse = c.getStance().enumerate() == Stance.facesitting && getSelf().canRespond()
+				|| getSelf().canAct();
+		return target.crotchAvailable() && target.body.has("ass") && c.getStance().oral(getSelf()) && canUse
 				&& !c.getStance().anallyPenetrated(target);
 	}
 
@@ -56,8 +54,7 @@ public class Anilingus extends Skill {
 			result = Result.reverse;
 			m += Global.random(6);
 			n = 10;
-		} else if (c.getStance().mobile(target)
-				&& target.roll(this, c, accuracy(c))) {
+		} else if (c.getStance().mobile(target) && target.roll(this, c, accuracy(c))) {
 			m += Global.random(6);
 			if (getSelf().has(Trait.silvertongue)) {
 				m += 4;
@@ -74,8 +71,7 @@ public class Anilingus extends Skill {
 			c.write(getSelf(), receive(c, m, result, target));
 		}
 		if (m > 0) {
-			target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"),
-					targetAss, m, c);
+			target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), targetAss, m, c);
 		}
 		if (n > 0) {
 			target.buildMojo(c, n);
@@ -107,14 +103,11 @@ public class Anilingus extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return "You try to lick " + target.name()
-					+ "'s rosebud, but she pushes your head away.";
+			return "You try to lick " + target.name() + "'s rosebud, but she pushes your head away.";
 		} else if (modifier == Result.special) {
-			return "You gently rim " + target.name()
-					+ "'s asshole with your tongue, sending shivers through her body.";
+			return "You gently rim " + target.name() + "'s asshole with your tongue, sending shivers through her body.";
 		} else if (modifier == Result.reverse) {
 			return "With " + target.nameOrPossessivePronoun()
 					+ " ass pressing into your face, you helplessly give in and take an experimental lick at her pucker.";
@@ -123,33 +116,26 @@ public class Anilingus extends Skill {
 					+ target.nameOrPossessivePronoun()
 					+ " rear cheeks and plunge your tongue repeatedly in and out of her "
 					+ target.body.getRandom("ass").describe(target) + ". "
-					+ "You dimly realize that this is probably arousing you as much as "
-					+ target.getName()
+					+ "You dimly realize that this is probably arousing you as much as " + target.getName()
 					+ ", but worshipping her sublime derriere seems much higher on your priorities than winning.";
 		}
-		return "You thrust your tongue into " + target.name()
-				+ "'s ass and lick it, making her yelp in surprise.";
+		return "You thrust your tongue into " + target.name() + "'s ass and lick it, making her yelp in surprise.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return getSelf().name()
-					+ " closes in on your behind, but you manage to push her head away.";
+			return getSelf().name() + " closes in on your behind, but you manage to push her head away.";
 		} else if (modifier == Result.special) {
-			return getSelf().name()
-					+ " gently rims your asshole with her tongue, sending shivers through your body.";
+			return getSelf().name() + " gently rims your asshole with her tongue, sending shivers through your body.";
 		} else if (modifier == Result.reverse) {
-			return "With your ass pressing into "
-					+ getSelf().nameOrPossessivePronoun()
+			return "With your ass pressing into " + getSelf().nameOrPossessivePronoun()
 					+ " face, she helplessly gives in and starts licking your ass.";
 		} else if (modifier == Result.sub) {
 			return "As if entranced, " + getSelf().subject()
 					+ " buries her face inside your ass cheeks, licking your crack, and worshipping your anus.";
 		}
-		return getSelf().name()
-				+ " licks your tight asshole, both surprising and arousing you.";
+		return getSelf().name() + " licks your tight asshole, both surprising and arousing you.";
 	}
 
 	@Override
@@ -162,7 +148,6 @@ public class Anilingus extends Skill {
 		Optional<BodyFetish> fetish = getSelf().body.getFetish("ass");
 		boolean worship = c.getOther(getSelf()).has(Trait.objectOfWorship);
 		boolean enthralled = getSelf().is(Stsflag.enthralled);
-		return fetish.isPresent() || worship || enthralled ? worshipString
-				: "Lick Ass";
+		return fetish.isPresent() || worship || enthralled ? worshipString : "Lick Ass";
 	}
 }

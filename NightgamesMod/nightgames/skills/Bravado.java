@@ -58,16 +58,13 @@ public class Bravado extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You grit your teeth and put all your willpower into the fight.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character attacker) {
-		return getSelf().name()
-				+ " gives you a determined glare as she seems to gain a second wind.";
+	public String receive(Combat c, int damage, Result modifier, Character attacker) {
+		return getSelf().name() + " gives you a determined glare as she seems to gain a second wind.";
 	}
 
 	@Override

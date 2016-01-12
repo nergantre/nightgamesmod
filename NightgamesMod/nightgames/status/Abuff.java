@@ -8,12 +8,11 @@ import nightgames.combat.Combat;
 import nightgames.global.JSONUtils;
 
 public class Abuff extends DurationStatus {
-	private Attribute	modded;
-	private int			value;
+	private Attribute modded;
+	private int value;
 
 	public Abuff(Character affected, Attribute att, int value, int duration) {
-		super(String.format("%s %+d", att.toString(), value), affected,
-				duration);
+		super(String.format("%s %+d", att.toString(), value), affected, duration);
 		modded = att;
 		this.value = value;
 	}
@@ -34,14 +33,12 @@ public class Abuff extends DurationStatus {
 			modification = "sapped.";
 		}
 
-		return String.format("%s %s is now %s %s\n", person, modded, adjective,
-				modification);
+		return String.format("%s %s is now %s %s\n", person, modded, adjective, modification);
 	}
 
 	@Override
 	public float fitnessModifier() {
-		return value / (2.0f * Math.min(1.0f,
-				Math.max(1, affected.getPure(modded)) / 10.0f));
+		return value / (2.0f * Math.min(1.0f, Math.max(1, affected.getPure(modded)) / 10.0f));
 	}
 
 	@Override
@@ -64,8 +61,7 @@ public class Abuff extends DurationStatus {
 			modification = "sapped.";
 		}
 
-		return String.format("%s %s is %s %s\n", person, modded, adjective,
-				modification);
+		return String.format("%s %s is %s %s\n", person, modded, adjective, modification);
 	}
 
 	@Override
@@ -175,9 +171,7 @@ public class Abuff extends DurationStatus {
 
 	@Override
 	public Status loadFromJSON(JSONObject obj) {
-		return new Abuff(null,
-				Attribute.valueOf(JSONUtils.readString(obj, "modded")),
-				JSONUtils.readInteger(obj, "value"),
-				JSONUtils.readInteger(obj, "duration"));
+		return new Abuff(null, Attribute.valueOf(JSONUtils.readString(obj, "modded")),
+				JSONUtils.readInteger(obj, "value"), JSONUtils.readInteger(obj, "duration"));
 	}
 }

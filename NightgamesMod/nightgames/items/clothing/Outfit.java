@@ -24,8 +24,8 @@ import nightgames.global.Global;
 import nightgames.modifier.Modifier;
 
 public class Outfit {
-	private Map<ClothingSlot, List<Clothing>>	outfit;
-	private Set<Clothing>						equipped;
+	private Map<ClothingSlot, List<Clothing>> outfit;
+	private Set<Clothing> equipped;
 
 	public Outfit() {
 		outfit = new EnumMap<>(ClothingSlot.class);
@@ -39,32 +39,27 @@ public class Outfit {
 
 	public Outfit(Outfit other) {
 		outfit = new EnumMap<>(ClothingSlot.class);
-		Arrays.stream(ClothingSlot.values()).forEach(slot -> outfit.put(slot,
-				new ArrayList<Clothing>(other.outfit.get(slot))));
+		Arrays.stream(ClothingSlot.values())
+				.forEach(slot -> outfit.put(slot, new ArrayList<Clothing>(other.outfit.get(slot))));
 		equipped = new HashSet<>(other.equipped);
 	}
 
 	/* public information api */
 	public boolean slotOpen(ClothingSlot slot) {
-		return outfit.get(slot).isEmpty() || !outfit.get(slot).stream()
-				.anyMatch(article -> article != null
-						&& !article.is(ClothingTrait.open));
+		return outfit.get(slot).isEmpty()
+				|| !outfit.get(slot).stream().anyMatch(article -> article != null && !article.is(ClothingTrait.open));
 	}
 
 	public boolean slotEmpty(ClothingSlot slot) {
-		return outfit.get(slot).isEmpty() || !outfit.get(slot).stream()
-				.anyMatch(article -> article != null);
+		return outfit.get(slot).isEmpty() || !outfit.get(slot).stream().anyMatch(article -> article != null);
 	}
 
 	public boolean slotUnshreddable(ClothingSlot slot) {
-		return slotEmpty(slot)
-				|| getTopOfSlot(slot).is(ClothingTrait.indestructible);
+		return slotEmpty(slot) || getTopOfSlot(slot).is(ClothingTrait.indestructible);
 	}
 
-	public boolean slotEmptyOrMeetsCondition(ClothingSlot slot,
-			Predicate<? super Clothing> condition) {
-		Stream<Clothing> clothes = outfit.get(slot).stream()
-				.filter(article -> article != null);
+	public boolean slotEmptyOrMeetsCondition(ClothingSlot slot, Predicate<? super Clothing> condition) {
+		Stream<Clothing> clothes = outfit.get(slot).stream().filter(article -> article != null);
 		List<Clothing> clothesList = clothes.collect(Collectors.toList());
 		boolean isEmpty = clothesList.stream().allMatch(condition);
 		return isEmpty;
@@ -85,10 +80,8 @@ public class Outfit {
 	}
 
 	public List<Clothing> getAllStrippable() {
-		return Arrays.stream(ClothingSlot.values())
-				.map(slot -> getTopOfSlot(slot))
-				.filter(article -> article != null).distinct()
-				.collect(Collectors.toList());
+		return Arrays.stream(ClothingSlot.values()).map(slot -> getTopOfSlot(slot)).filter(article -> article != null)
+				.distinct().collect(Collectors.toList());
 	}
 
 	public Clothing getBottomOfSlot(ClothingSlot slot) {
@@ -106,8 +99,8 @@ public class Outfit {
 	}
 
 	public ClothingSlot getRandomNakedSlot() {
-		List<ClothingSlot> slotsAvailable = Arrays.stream(ClothingSlot.values())
-				.filter(slot -> !slotOpen(slot)).collect(Collectors.toList());
+		List<ClothingSlot> slotsAvailable = Arrays.stream(ClothingSlot.values()).filter(slot -> !slotOpen(slot))
+				.collect(Collectors.toList());
 		if (slotsAvailable.isEmpty()) {
 			return null;
 		}
@@ -116,8 +109,7 @@ public class Outfit {
 	}
 
 	public ClothingSlot getRandomShreddableSlot() {
-		List<ClothingSlot> slotsAvailable = Arrays.stream(ClothingSlot.values())
-				.filter(slot -> !slotUnshreddable(slot))
+		List<ClothingSlot> slotsAvailable = Arrays.stream(ClothingSlot.values()).filter(slot -> !slotUnshreddable(slot))
 				.collect(Collectors.toList());
 		if (slotsAvailable.isEmpty()) {
 			return null;
@@ -127,8 +119,8 @@ public class Outfit {
 	}
 
 	public ClothingSlot getRandomEquippedSlot() {
-		List<ClothingSlot> slotsAvailable = Arrays.stream(ClothingSlot.values())
-				.filter(slot -> !slotEmpty(slot)).collect(Collectors.toList());
+		List<ClothingSlot> slotsAvailable = Arrays.stream(ClothingSlot.values()).filter(slot -> !slotEmpty(slot))
+				.collect(Collectors.toList());
 		if (slotsAvailable.isEmpty()) {
 			return null;
 		}
@@ -152,14 +144,12 @@ public class Outfit {
 
 	public List<Clothing> undress() {
 		List<Clothing> copy = new ArrayList<>(equipped);
-		return copy.stream().map(article -> unequip(article))
-				.collect(Collectors.toList());
+		return copy.stream().map(article -> unequip(article)).collect(Collectors.toList());
 	}
 
 	public List<Clothing> undressOnly(Predicate<? super Clothing> requirement) {
 		List<Clothing> copy = new ArrayList<>(equipped);
-		return copy.stream().filter(requirement)
-				.map(article -> unequip(article)).collect(Collectors.toList());
+		return copy.stream().filter(requirement).map(article -> unequip(article)).collect(Collectors.toList());
 	}
 
 	public Clothing unequip(Clothing article) {
@@ -167,19 +157,15 @@ public class Outfit {
 			return null;
 		}
 		equipped.remove(article);
-		article.getSlots().forEach(
-				slot -> outfit.get(slot).set(article.getLayer(), null));
+		article.getSlots().forEach(slot -> outfit.get(slot).set(article.getLayer(), null));
 		return article;
 	}
 
 	public List<Clothing> equip(Clothing article) {
 		// get a list of things that will be unequipped by this
-		List<Clothing> unequipped = article.getSlots().stream()
-				.map(slot -> outfit.get(slot).get(article.getLayer()))
-				.filter(c -> c != null).map(c -> unequip(c))
-				.collect(Collectors.toList());
-		article.getSlots().forEach(
-				slot -> outfit.get(slot).set(article.getLayer(), article));
+		List<Clothing> unequipped = article.getSlots().stream().map(slot -> outfit.get(slot).get(article.getLayer()))
+				.filter(c -> c != null).map(c -> unequip(c)).collect(Collectors.toList());
+		article.getSlots().forEach(slot -> outfit.get(slot).set(article.getLayer(), article));
 		equipped.add(article);
 		return unequipped;
 	}
@@ -200,8 +186,7 @@ public class Outfit {
 				continue;
 			}
 			exposure *= article.getExposure();
-			if (article.is(ClothingTrait.skimpy)
-					|| article.is(ClothingTrait.open)) {
+			if (article.is(ClothingTrait.skimpy) || article.is(ClothingTrait.open)) {
 				continue;
 			} else {
 				break;
@@ -221,23 +206,16 @@ public class Outfit {
 		return exposure / totalWeight;
 	}
 
-	public double getFitness(Combat c, double bottomFitness,
-			double topFitness) {
+	public double getFitness(Combat c, double bottomFitness, double topFitness) {
 		double fitness = 0;
-		fitness += outfit.get(ClothingSlot.top).stream()
-				.filter(article -> article != null)
-				.filter(article -> !article.is(ClothingTrait.skimpy)
-						&& !article.is(ClothingTrait.flexible)
+		fitness += outfit.get(ClothingSlot.top).stream().filter(article -> article != null)
+				.filter(article -> !article.is(ClothingTrait.skimpy) && !article.is(ClothingTrait.flexible)
 						&& !article.is(ClothingTrait.open))
-				.mapToDouble(article -> topFitness * (1 + article.dc() * .1))
-				.sum();
-		fitness += outfit.get(ClothingSlot.bottom).stream()
-				.filter(article -> article != null)
-				.filter(article -> !article.is(ClothingTrait.skimpy)
-						&& !article.is(ClothingTrait.flexible)
+				.mapToDouble(article -> topFitness * (1 + article.dc() * .1)).sum();
+		fitness += outfit.get(ClothingSlot.bottom).stream().filter(article -> article != null)
+				.filter(article -> !article.is(ClothingTrait.skimpy) && !article.is(ClothingTrait.flexible)
 						&& !article.is(ClothingTrait.open))
-				.mapToDouble(article -> bottomFitness * (1 + article.dc() * .1))
-				.sum();
+				.mapToDouble(article -> bottomFitness * (1 + article.dc() * .1)).sum();
 		return fitness;
 	}
 
@@ -273,14 +251,12 @@ public class Outfit {
 				if (top == null) {
 					sb.append("{self:subject-action:are|is} topless");
 				} else {
-					sb.append("{self:subject-action:are|is} wearing "
-							+ top.pre() + top.getName() + "");
+					sb.append("{self:subject-action:are|is} wearing " + top.pre() + top.getName() + "");
 					addedTop = true;
 					described.add(top);
 				}
 				if (bottom == null) {
-					sb.append(
-							" but {self:possessive} crotch is clearly visible.<br>");
+					sb.append(" but {self:possessive} crotch is clearly visible.<br>");
 				} else {
 					if (bottom != top) {
 						sb.append(" and ");
@@ -315,8 +291,7 @@ public class Outfit {
 					index += 1;
 				}
 				if (top == null && bottom == null) {
-					sb.append(
-							" while {self:possessive} chest and crotch are clearly visible.");
+					sb.append(" while {self:possessive} chest and crotch are clearly visible.");
 				} else {
 					sb.append('.');
 				}
@@ -339,16 +314,13 @@ public class Outfit {
 	// strips to fuck
 	public List<Clothing> strip() {
 		return undressOnly(article -> !article.is(ClothingTrait.open)
-				&& (article.getSlots().contains(ClothingSlot.top)
-						|| article.getSlots().contains(ClothingSlot.bottom)));
+				&& (article.getSlots().contains(ClothingSlot.top) || article.getSlots().contains(ClothingSlot.bottom)));
 	}
 
 	// strips to fuck, but can't get rid of indestructables
 	public List<Clothing> forcedstrip() {
-		return undressOnly(article -> (!article.is(ClothingTrait.indestructible)
-				|| !article.is(ClothingTrait.open))
-				&& (article.getSlots().contains(ClothingSlot.top)
-						|| article.getSlots().contains(ClothingSlot.bottom)));
+		return undressOnly(article -> (!article.is(ClothingTrait.indestructible) || !article.is(ClothingTrait.open))
+				&& (article.getSlots().contains(ClothingSlot.top) || article.getSlots().contains(ClothingSlot.bottom)));
 	}
 
 	private void getHotness(ClothingSlot slot, Map<Clothing, Double> seen) {
@@ -362,8 +334,7 @@ public class Outfit {
 				} else if (!seen.containsKey(article)) {
 					seen.put(article, exposure);
 				}
-				if (!article.is(ClothingTrait.open)
-						|| !article.is(ClothingTrait.skimpy)) {
+				if (!article.is(ClothingTrait.open) || !article.is(ClothingTrait.skimpy)) {
 					return;
 				}
 				exposure *= article.getExposure();
@@ -373,11 +344,9 @@ public class Outfit {
 
 	public double getHotness() {
 		Map<Clothing, Double> maximumExposure = new HashMap<Clothing, Double>();
-		Arrays.stream(ClothingSlot.values())
-				.forEach(slot -> getHotness(slot, maximumExposure));
-		return maximumExposure.keySet().stream().mapToDouble(
-				article -> maximumExposure.get(article) * article.getHotness())
-				.sum();
+		Arrays.stream(ClothingSlot.values()).forEach(slot -> getHotness(slot, maximumExposure));
+		return maximumExposure.keySet().stream()
+				.mapToDouble(article -> maximumExposure.get(article) * article.getHotness()).sum();
 	}
 
 	@Override
@@ -392,8 +361,7 @@ public class Outfit {
 			return b;
 		}).get());
 		sb.append(']');
-		return String.format("%s@%s", sb.toString(),
-				Integer.toHexString(hashCode()));
+		return String.format("%s@%s", sb.toString(), Integer.toHexString(hashCode()));
 	}
 
 	public boolean hasNoShoes() {

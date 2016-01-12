@@ -39,8 +39,7 @@ public class Tempt extends Skill {
 		int n = (int) Math.round(m);
 
 		boolean tempted = Global.random(5) == 0;
-		if (getSelf().has(Trait.darkpromises) && tempted && !target.wary()
-				&& getSelf().canSpend(15)) {
+		if (getSelf().has(Trait.darkpromises) && tempted && !target.wary() && getSelf().canSpend(15)) {
 			getSelf().spendMojo(c, 15);
 			c.write(getSelf(),
 					Global.format(
@@ -76,14 +75,12 @@ public class Tempt extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().temptLiner(c);
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().temptLiner(c);
 	}
 

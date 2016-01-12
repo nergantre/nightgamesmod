@@ -18,12 +18,9 @@ public class Paizuri extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().hasBreasts()
-				&& getSelf().body
-						.getLargestBreasts().size >= MIN_REQUIRED_BREAST_SIZE
-				&& target.hasDick() && getSelf().breastsAvailable()
-				&& target.crotchAvailable() && c.getStance().paizuri(getSelf())
-				&& c.getStance().front(getSelf()) && getSelf().canAct()
+		return getSelf().hasBreasts() && getSelf().body.getLargestBreasts().size >= MIN_REQUIRED_BREAST_SIZE
+				&& target.hasDick() && getSelf().breastsAvailable() && target.crotchAvailable()
+				&& c.getStance().paizuri(getSelf()) && c.getStance().front(getSelf()) && getSelf().canAct()
 				&& !c.getStance().inserted(target);
 	}
 
@@ -49,11 +46,9 @@ public class Paizuri extends Skill {
 		if (target.human()) {
 			c.write(getSelf(), receive(0, Result.normal, target, breasts));
 		}
-		target.body.pleasure(getSelf(), getSelf().body.getRandom("breasts"),
-				target.body.getRandom("cock"), m, c);
+		target.body.pleasure(getSelf(), getSelf().body.getRandom("breasts"), target.body.getRandom("cock"), m, c);
 		if (Global.random(100) < 2 + getSelf().get(Attribute.Fetish)) {
-			target.add(c, new BodyFetish(target, getSelf(),
-					BreastsPart.a.getType(), .25));
+			target.add(c, new BodyFetish(target, getSelf(), BreastsPart.a.getType(), .25));
 		}
 		return true;
 	}
@@ -79,19 +74,16 @@ public class Paizuri extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public String receive(int damage, Result modifier, Character target,
-			BreastsPart breasts) {
+	public String receive(int damage, Result modifier, Character target, BreastsPart breasts) {
 		StringBuilder b = new StringBuilder();
 		b.append(getSelf().name() + " squeezes your dick between her ");
 		b.append(breasts.describe(getSelf()));
-		b.append(
-				". She rubs them up and down your shaft and teasingly licks your tip.");
+		b.append(". She rubs them up and down your shaft and teasingly licks your tip.");
 		return b.toString();
 	}
 
@@ -101,8 +93,7 @@ public class Paizuri extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		// TODO Auto-generated method stub
 		return null;
 	}

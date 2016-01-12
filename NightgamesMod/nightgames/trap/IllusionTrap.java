@@ -3,7 +3,7 @@ package nightgames.trap;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.combat.Encounter;
+import nightgames.combat.IEncounter;
 import nightgames.global.Global;
 
 public class IllusionTrap implements Trap {
@@ -17,8 +17,7 @@ public class IllusionTrap implements Trap {
 							+ "she immediately presses her warm, soft body against you and kisses you passionately. She slips down a hand to grope your crotch, and suddenly vanishes after a few strokes. "
 							+ "She was just an illusion, but your arousal is very real.");
 		} else if (target.location().humanPresent()) {
-			Global.gui().message("There's a flash of pink light and "
-					+ target.name() + " flushes with arousal.");
+			Global.gui().message("There's a flash of pink light and " + target.name() + " flushes with arousal.");
 		}
 		if (target.has(Trait.imagination)) {
 			target.tempt(25);
@@ -60,8 +59,7 @@ public class IllusionTrap implements Trap {
 	}
 
 	@Override
-	public void capitalize(Character attacker, Character victim,
-			Encounter enc) {
+	public void capitalize(Character attacker, Character victim, IEncounter enc) {
 		victim.location().remove(this);
 	}
 

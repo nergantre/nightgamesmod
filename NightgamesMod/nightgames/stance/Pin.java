@@ -12,8 +12,7 @@ public class Pin extends AbstractFacingStance {
 	@Override
 	public String describe() {
 		if (top.human()) {
-			return "You're sitting on " + bottom.name()
-					+ ", holding her arms in place.";
+			return "You're sitting on " + bottom.name() + ", holding her arms in place.";
 		} else {
 			return top.name() + " is pinning you down, leaving you helpless.";
 		}

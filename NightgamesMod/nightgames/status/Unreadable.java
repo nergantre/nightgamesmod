@@ -14,8 +14,7 @@ public class Unreadable extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now unreadable.\n",
-				affected.subjectAction("are", "is"));
+		return String.format("%s now unreadable.\n", affected.subjectAction("are", "is"));
 	}
 
 	@Override

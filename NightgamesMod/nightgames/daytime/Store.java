@@ -8,9 +8,9 @@ import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 
 public abstract class Store extends Activity {
-	protected HashMap<Item, Integer>		stock;
-	protected HashMap<Clothing, Integer>	clothingstock;
-	protected boolean						acted;
+	protected HashMap<Item, Integer> stock;
+	protected HashMap<Clothing, Integer> clothingstock;
+	protected boolean acted;
 
 	public Store(String name, Character player) {
 		super(name, player);
@@ -84,8 +84,7 @@ public abstract class Store extends Activity {
 			acted = true;
 			Global.gui().refresh();
 		} else {
-			Global.gui()
-					.message("You don't have enough money to purchase that.");
+			Global.gui().message("You don't have enough money to purchase that.");
 		}
 	}
 
@@ -97,8 +96,7 @@ public abstract class Store extends Activity {
 			acted = true;
 			Global.gui().refresh();
 		} else {
-			Global.gui()
-					.message("You don't have enough money to purchase that.");
+			Global.gui().message("You don't have enough money to purchase that.");
 		}
 
 	}

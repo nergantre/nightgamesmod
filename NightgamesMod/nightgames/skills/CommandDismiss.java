@@ -38,18 +38,14 @@ public class CommandDismiss extends PlayerCommand {
 	}
 
 	@Override
-	public String deal(Combat c, int magnitude, Result modifier,
-			Character target) {
+	public String deal(Combat c, int magnitude, Result modifier, Character target) {
 		return "You think you briefly see a pang of regret in " + target.name()
-				+ "'s eyes, but she quickly dismisses her "
-				+ target.pet.toString().toLowerCase() + ".";
+				+ "'s eyes, but she quickly dismisses her " + target.pet.toString().toLowerCase() + ".";
 	}
 
 	@Override
-	public String receive(Combat c, int magnitude, Result modifier,
-			Character target) {
-		return "<<This should not be displayed, please inform The"
-				+ " Silver Bard: CommandDismiss-receive>>";
+	public String receive(Combat c, int magnitude, Result modifier, Character target) {
+		return "<<This should not be displayed, please inform The" + " Silver Bard: CommandDismiss-receive>>";
 	}
 
 }

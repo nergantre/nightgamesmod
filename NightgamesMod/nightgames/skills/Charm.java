@@ -16,8 +16,7 @@ public class Charm extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canRespond() && c.getStance().facing()
-				&& !target.wary();
+		return getSelf().canRespond() && c.getStance().facing() && !target.wary();
 	}
 
 	@Override
@@ -32,8 +31,7 @@ public class Charm extends Skill {
 		} else if (target.human()) {
 			c.write(getSelf(), receive(c, 0, Result.normal, target));
 		}
-		double mag = 2 + Global.random(4)
-				+ 5 * getSelf().body.getCharismaBonus(target);
+		double mag = 2 + Global.random(4) + 5 * getSelf().body.getCharismaBonus(target);
 		if (target.has(Trait.imagination)) {
 			mag += 4;
 		}
@@ -53,8 +51,7 @@ public class Charm extends Skill {
 
 	@Override
 	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Cunning) >= 8
-				&& user.get(Attribute.Seduction) > 16;
+		return user.get(Attribute.Cunning) >= 8 && user.get(Attribute.Seduction) > 16;
 	}
 
 	@Override
@@ -73,14 +70,12 @@ public class Charm extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You flash a dazzling smile at " + target.getName() + ".";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		return getSelf().getName() + " flashes a dazzling smile at you.";
 	}
 

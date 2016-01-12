@@ -39,8 +39,7 @@ public class Lethargic extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s lethargic.\n",
-				affected.subjectAction("are", "is"));
+		return String.format("%s lethargic.\n", affected.subjectAction("are", "is"));
 	}
 
 	@Override
@@ -125,7 +124,6 @@ public class Lethargic extends DurationStatus {
 
 	@Override
 	public Status loadFromJSON(JSONObject obj) {
-		return new Lethargic(null, JSONUtils.readInteger(obj, "duration"),
-				JSONUtils.readFloat(obj, "magnitude"));
+		return new Lethargic(null, JSONUtils.readInteger(obj, "duration"), JSONUtils.readFloat(obj, "magnitude"));
 	}
 }

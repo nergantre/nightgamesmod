@@ -25,8 +25,7 @@ public class Tied extends DurationStatus {
 			return "The rope wrapped around you digs into your body, but only slows you down a bit.";
 		}
 
-		return affected.name()
-				+ " squirms against the rope, but you know you tied it well.";
+		return affected.name() + " squirms against the rope, but you know you tied it well.";
 	}
 
 	@Override
@@ -115,8 +114,7 @@ public class Tied extends DurationStatus {
 
 	@Override
 	public String initialMessage(Combat c, boolean replaced) {
-		return String.format("%s now partially tied up.\n",
-				affected.subjectAction("are", "is"));
+		return String.format("%s now partially tied up.\n", affected.subjectAction("are", "is"));
 	}
 
 	@Override

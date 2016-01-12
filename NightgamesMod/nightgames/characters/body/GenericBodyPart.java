@@ -12,18 +12,17 @@ public class GenericBodyPart implements BodyPart {
 	/**
 	 *
 	 */
-	public String	type;
-	public String	desc;
-	public String	prefix;
-	public double	hotness;
-	public double	sensitivity;
-	public double	pleasure;
-	public String	descLong;
-	private boolean	notable;
+	public String type;
+	public String desc;
+	public String prefix;
+	public double hotness;
+	public double sensitivity;
+	public double pleasure;
+	public String descLong;
+	private boolean notable;
 
-	public GenericBodyPart(String desc, String descLong, double hotness,
-			double pleasure, double sensitivity, boolean notable, String type,
-			String prefix) {
+	public GenericBodyPart(String desc, String descLong, double hotness, double pleasure, double sensitivity,
+			boolean notable, String type, String prefix) {
 		this.desc = desc;
 		this.descLong = descLong;
 		this.hotness = hotness;
@@ -34,13 +33,13 @@ public class GenericBodyPart implements BodyPart {
 		this.prefix = prefix;
 	}
 
-	public GenericBodyPart(String desc, double hotness, double pleasure,
-			double sensitivity, String type, String prefix) {
+	public GenericBodyPart(String desc, double hotness, double pleasure, double sensitivity, String type,
+			String prefix) {
 		this(desc, "", hotness, pleasure, sensitivity, false, type, prefix);
 	}
 
-	public GenericBodyPart(String desc, double hotness, double pleasure,
-			double sensitivity, boolean notable, String type, String prefix) {
+	public GenericBodyPart(String desc, double hotness, double pleasure, double sensitivity, boolean notable,
+			String type, String prefix) {
 		this(desc, "", hotness, pleasure, sensitivity, notable, type, prefix);
 	}
 
@@ -115,8 +114,7 @@ public class GenericBodyPart implements BodyPart {
 	}
 
 	@Override
-	public boolean equals(Object other) // $codepro.audit.disable
-										// com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.obeyEqualsContract.obeyGeneralContractOfEquals
+	public boolean equals(Object other) // com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.obeyEqualsContract.obeyGeneralContractOfEquals
 	{
 		return toString().equals(other.toString());
 	}
@@ -148,13 +146,10 @@ public class GenericBodyPart implements BodyPart {
 			if (!dict.containsKey("generic")) {
 				dict.put("generic", true);
 			}
-			GenericBodyPart part = new GenericBodyPart(
-					(String) dict.get("desc"), (String) dict.get("descLong"),
-					((Number) dict.get("hotness")).doubleValue(),
-					((Number) dict.get("pleasure")).doubleValue(),
-					((Number) dict.get("sensitivity")).doubleValue(),
-					(Boolean) dict.get("notable"), (String) dict.get("type"),
-					(String) dict.get("prefix"));
+			GenericBodyPart part = new GenericBodyPart((String) dict.get("desc"), (String) dict.get("descLong"),
+					((Number) dict.get("hotness")).doubleValue(), ((Number) dict.get("pleasure")).doubleValue(),
+					((Number) dict.get("sensitivity")).doubleValue(), (Boolean) dict.get("notable"),
+					(String) dict.get("type"), (String) dict.get("prefix"));
 			return part;
 		} catch (ClassCastException e) {
 			System.err.println(e.getMessage());
@@ -173,8 +168,7 @@ public class GenericBodyPart implements BodyPart {
 	}
 
 	@Override
-	public double applyBonuses(Character self, Character opponent,
-			BodyPart target, double damage, Combat c) {
+	public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		return 0;
 	}
 
@@ -194,8 +188,7 @@ public class GenericBodyPart implements BodyPart {
 	}
 
 	@Override
-	public double applyReceiveBonuses(Character self, Character opponent,
-			BodyPart target, double damage, Combat c) {
+	public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
 		return 0;
 	}
 
@@ -225,8 +218,8 @@ public class GenericBodyPart implements BodyPart {
 	}
 
 	@Override
-	public double applySubBonuses(Character self, Character opponent,
-			BodyPart with, BodyPart target, double damage, Combat c) {
+	public double applySubBonuses(Character self, Character opponent, BodyPart with, BodyPart target, double damage,
+			Combat c) {
 		return 0;
 	}
 
@@ -236,8 +229,7 @@ public class GenericBodyPart implements BodyPart {
 	}
 
 	@Override
-	public void tickHolding(Combat c, Character self, Character opponent,
-			BodyPart otherOrgan) {
+	public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {
 
 	}
 

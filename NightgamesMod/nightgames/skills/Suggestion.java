@@ -20,10 +20,8 @@ public class Suggestion extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && c.getStance().mobile(getSelf())
-				&& !c.getStance().behind(getSelf())
-				&& !c.getStance().behind(target)
-				&& !c.getStance().sub(getSelf()) && !target.is(Stsflag.charmed)
+		return getSelf().canAct() && c.getStance().mobile(getSelf()) && !c.getStance().behind(getSelf())
+				&& !c.getStance().behind(target) && !c.getStance().sub(getSelf()) && !target.is(Stsflag.charmed)
 				&& getSelf().canSpend(5);
 	}
 
@@ -62,8 +60,7 @@ public class Suggestion extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			return String.format(
 					"You attempt to put %s under hypnotic suggestion, but %s doesn't appear to be affected.",
@@ -75,8 +72,7 @@ public class Suggestion extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			return getSelf().name()
 					+ " attempts to put you under hypnotic suggestion, but you manage to regain control of your consciousness.";

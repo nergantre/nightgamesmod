@@ -15,10 +15,9 @@ public class Restrain extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return !target.wary() && c.getStance().mobile(getSelf())
-				&& c.getStance().prone(target)
-				&& c.getStance().reachTop(getSelf()) && getSelf().canAct()
-				&& c.getStance().reachTop(target) && !c.getStance().connected();
+		return !target.wary() && c.getStance().mobile(getSelf()) && c.getStance().prone(target)
+				&& c.getStance().reachTop(getSelf()) && getSelf().canAct() && c.getStance().reachTop(target)
+				&& !c.getStance().connected();
 	}
 
 	@Override
@@ -74,26 +73,20 @@ public class Restrain extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return "You try to catch " + target.name()
-					+ "'s hands, but she squirms too much to keep your grip on her.";
+			return "You try to catch " + target.name() + "'s hands, but she squirms too much to keep your grip on her.";
 		} else {
-			return "You manage to restrain " + target.name()
-					+ ", leaving her helpless and vulnerable beneath you.";
+			return "You manage to restrain " + target.name() + ", leaving her helpless and vulnerable beneath you.";
 		}
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return getSelf().name()
-					+ " tries to pin you down, but you keep your arms free.";
+			return getSelf().name() + " tries to pin you down, but you keep your arms free.";
 		} else {
-			return getSelf().name()
-					+ " pounces on you and pins your arms in place, leaving you at her mercy.";
+			return getSelf().name() + " pounces on you and pins your arms in place, leaving you at her mercy.";
 		}
 	}
 

@@ -52,13 +52,11 @@ public class Mara extends BasePersonality {
 		growth.bonusStamina = 1;
 		growth.bonusArousal = 2;
 		growth.bonusMojo = 2;
-		preferredAttributes.add(c -> c.get(Attribute.Science) < 15
-				? Optional.of(Attribute.Science) : Optional.empty());
-		preferredAttributes.add(c -> c.get(Attribute.Science) >= 15
-				&& c.get(Attribute.Fetish) < 50 ? Optional.of(Attribute.Fetish)
-						: Optional.empty());
-		preferredAttributes.add(c -> c.get(Attribute.Cunning) < 100
-				? Optional.of(Attribute.Cunning) : Optional.empty());
+		preferredAttributes.add(c -> c.get(Attribute.Science) < 15 ? Optional.of(Attribute.Science) : Optional.empty());
+		preferredAttributes.add(c -> c.get(Attribute.Science) >= 15 && c.get(Attribute.Fetish) < 50
+				? Optional.of(Attribute.Fetish) : Optional.empty());
+		preferredAttributes
+				.add(c -> c.get(Attribute.Cunning) < 100 ? Optional.of(Attribute.Cunning) : Optional.empty());
 
 		growth.addTrait(3, Trait.cautious);
 		growth.addTrait(6, Trait.freeSpirit);
@@ -86,54 +84,43 @@ public class Mara extends BasePersonality {
 			}
 		}
 		super.rest(time);
-		if (!(character.has(Item.Onahole) || character.has(Item.Onahole2))
-				&& character.money >= 300) {
+		if (!(character.has(Item.Onahole) || character.has(Item.Onahole2)) && character.money >= 300) {
 			character.gain(Item.Onahole);
 			character.money -= 300;
 		}
-		if (!(character.has(Item.Tickler) || character.has(Item.Tickler))
-				&& character.money >= 300) {
+		if (!(character.has(Item.Tickler) || character.has(Item.Tickler)) && character.money >= 300) {
 			character.gain(Item.Tickler);
 			character.money -= 300;
 		}
-		if (!(character.has(Item.Dildo) || character.has(Item.Dildo))
-				&& character.money >= 250) {
+		if (!(character.has(Item.Dildo) || character.has(Item.Dildo)) && character.money >= 250) {
 			character.gain(Item.Dildo);
 			character.money -= 250;
 		}
-		if (!(character.has(Item.Crop) || character.has(Item.Crop))
-				&& character.money >= 200) {
+		if (!(character.has(Item.Crop) || character.has(Item.Crop)) && character.money >= 200) {
 			character.gain(Item.Crop);
 			character.money -= 200;
 		}
-		if (!(character.has(Item.Strapon) || character.has(Item.Strapon))
-				&& character.money >= 600) {
+		if (!(character.has(Item.Strapon) || character.has(Item.Strapon)) && character.money >= 600) {
 			character.gain(Item.Strapon);
 			character.money -= 600;
 		}
 		if (character.money > 0 && character.rank >= 1) {
-			Global.getDay().visit("Body Shop", character,
-					Global.random(character.money));
+			Global.getDay().visit("Body Shop", character, Global.random(character.money));
 		}
 		if (character.money > 0 && character.rank >= 1) {
-			Global.getDay().visit("Workshop", character,
-					Global.random(character.money));
+			Global.getDay().visit("Workshop", character, Global.random(character.money));
 		}
 		if (character.money > 0) {
-			Global.getDay().visit("Hardware Store", character,
-					Global.random(character.money));
+			Global.getDay().visit("Hardware Store", character, Global.random(character.money));
 		}
 		if (character.money > 0) {
-			Global.getDay().visit("Black Market", character,
-					Global.random(character.money));
+			Global.getDay().visit("Black Market", character, Global.random(character.money));
 		}
 		if (character.money > 0) {
-			Global.getDay().visit("XXX Store", character,
-					Global.random(character.money));
+			Global.getDay().visit("XXX Store", character, Global.random(character.money));
 		}
 		if (character.money > 0) {
-			Global.getDay().visit("Bookstore", character,
-					Global.random(character.money));
+			Global.getDay().visit("Bookstore", character, Global.random(character.money));
 		}
 		Decider.visit(character);
 		int r;
@@ -203,8 +190,7 @@ public class Mara extends BasePersonality {
 					+ "know how to give as well as take.\"</i> She jokes as she begins to work up a steady rhythm. Not to be outdone you quickly shift yourself and begin to thrust into her "
 					+ "earnestly, intent on showing just how well you can 'give'. Soon Mara is collapsed on top of you breathing hard and her eyes unfocused. You stand and take your leave. You may have lost the battle but the war is far from over.";
 		}
-		if (character.has(Trait.madscientist)
-				&& character.has(Item.Lubricant)) {
+		if (character.has(Trait.madscientist) && character.has(Item.Lubricant)) {
 			target.add(c, new Oiled(target));
 			return "You've fallen completely into Mara's hands now. Her nimble fingers dance over your dick and balls, playing you like an instrument. You grit your teeth and "
 					+ "try to endure her touch until your can finger her to orgasm. It's a lost cause though, groan as you inevitably feel your pleasure building to a peak. Just before "
@@ -329,8 +315,7 @@ public class Mara extends BasePersonality {
 					+ "rides you passionately, too aroused to prevent her own orgasm, but eager to take you with her. It works. He already tight pussy squeezes your cock as she orgasms, "
 					+ "milking you. Pleasure overwhelms you as you fill her womb with your seed.<p>Mara absentmindedly rubs her abdomen as you both enjoy the afterglow. <i>\"You came so much "
 					+ "inside me. It'll be a wonder if I'm not knocked up. If we have a boy, should we name him after you? "
-					+ target.name()
-					+ " jr. has a nice ring to it.\"</i> Pregnant?! You "
+					+ target.name() + " jr. has a nice ring to it.\"</i> Pregnant?! You "
 					+ "feel a cold panic grip you as you try to imagine balancing college and caring for a baby. Mara, on the other hand lets out a relaxed giggle. <i>\"You don't need to look "
 					+ "so nervous. I was just making a joke. Do you think they'd let us do this without birth control?\"</i> That's right. You do vaguely remember that being mentioned when the "
 					+ "competition was explained to you.<p>You relax, but Mara has gone quiet as she stares at your face thoughtfully. <i>\"You might actually make a good father.\"</i> "
@@ -389,28 +374,20 @@ public class Mara extends BasePersonality {
 							+ " and shudders in your arms. You release %s and %s collapses, completely"
 							+ " exhausted. Mara grins at you mischievously. <i>\"%s obviously enjoyed "
 							+ "that. Do you want to be next?\"</i>",
-					target.name(), target.name(), target.name(),
-					target.possessivePronoun(), target.possessivePronoun(),
-					target.possessivePronoun(), target.name(), target.pronoun(),
-					target.possessivePronoun(), target.possessivePronoun(),
-					target.possessivePronoun(), target.name(),
-					target.possessivePronoun(), target.directObject(),
-					target.pronoun(),
-					Global.capitalizeFirstLetter(target.possessivePronoun()));
+					target.name(), target.name(), target.name(), target.possessivePronoun(), target.possessivePronoun(),
+					target.possessivePronoun(), target.name(), target.pronoun(), target.possessivePronoun(),
+					target.possessivePronoun(), target.possessivePronoun(), target.name(), target.possessivePronoun(),
+					target.directObject(), target.pronoun(), Global.capitalizeFirstLetter(target.possessivePronoun()));
 		}
 		return "Mara approaches " + target.name()
-				+ " like a panther claiming its prey. She runs her fingers down the length of "
-				+ target.name() + "'s body, eliciting a shiver "
-				+ "each time she hits a ticklish spot. Her probing fingers avoid "
-				+ target.name()
-				+ "'s nipples and pussy, focusing instead on the ticklish areas under her arms, "
-				+ "behind her knees and on her inner thighs. You struggle to hold onto "
-				+ target.name()
+				+ " like a panther claiming its prey. She runs her fingers down the length of " + target.name()
+				+ "'s body, eliciting a shiver " + "each time she hits a ticklish spot. Her probing fingers avoid "
+				+ target.name() + "'s nipples and pussy, focusing instead on the ticklish areas under her arms, "
+				+ "behind her knees and on her inner thighs. You struggle to hold onto " + target.name()
 				+ " as she squirms and pleads for mercy. After a few minutes, her pleas "
 				+ "shift in tone and you realise Mara's dancing fingers have moved to her pussy and clit. Her entire body trembles as if unable to decide whether it's being "
 				+ "tickled into submission or fingered to ecstasy. You finally hear a breathless gasp as "
-				+ target.name()
-				+ " hits her climax and shudders in your arms. You release "
+				+ target.name() + " hits her climax and shudders in your arms. You release "
 				+ "her and she collapses, completely exhausted. Mara grins at you mischeviously. <i>\"She obviously enjoyed that. Do you want to be next?\"</i>";
 	}
 
@@ -425,14 +402,12 @@ public class Mara extends BasePersonality {
 					+ "not really necessary since Mara literally has you by the balls. She releases your abused jewels once the fight has left you and focuses on holding your arms, "
 					+ "while " + assist.name() + " moves to your front.<br>";
 		} else {
-			return "So far this hasn't been your proudest fight. "
-					+ target.name()
+			return "So far this hasn't been your proudest fight. " + target.name()
 					+ " was able to pin you early on and is currently rubbing your dick between her thighs. "
 					+ "You've almost given up hope of victory, until you spot Mara creeping up behind her. She seems thoroughly amused by your predicament and make no "
 					+ "move to help you, dispite being easily in reach. You give her your best puppy-dog eyes, silently pleading while trying not to give away her presence. "
-					+ "Mara lets you squirm a little longer before winking at you and tickling "
-					+ target.name() + " under her arms. " + target.name()
-					+ " lets out a startled yelp "
+					+ "Mara lets you squirm a little longer before winking at you and tickling " + target.name()
+					+ " under her arms. " + target.name() + " lets out a startled yelp "
 					+ "and jumps in surprise. You use the moment of distraction to push her off balance and Mara immediately secures her arms.<br>";
 		}
 	}
@@ -444,8 +419,7 @@ public class Mara extends BasePersonality {
 
 	@Override
 	public boolean fit() {
-		return character.getStamina().percent() >= 75
-				&& character.getArousal().percent() <= 10
+		return character.getStamina().percent() >= 75 && character.getArousal().percent() <= 10
 				&& !character.mostlyNude();
 	}
 
@@ -481,12 +455,12 @@ public class Mara extends BasePersonality {
 	@Override
 	public boolean checkMood(Combat c, Emotion mood, int value) {
 		switch (mood) {
-			case confident:
-				return value >= 50;
-			case desperate:
-				return value >= 75;
-			default:
-				return value >= 100;
+		case confident:
+			return value >= 50;
+		case desperate:
+			return value >= 75;
+		default:
+			return value >= 100;
 		}
 	}
 

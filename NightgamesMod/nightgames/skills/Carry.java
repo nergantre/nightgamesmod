@@ -26,12 +26,9 @@ public class Carry extends Fuck {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return fuckable(c, target) && !target.wary()
-				&& getTargetOrgan(target).isReady(target) && getSelf().canAct()
-				&& c.getStance().mobile(getSelf())
-				&& !c.getStance().prone(getSelf())
-				&& !c.getStance().prone(target) && c.getStance().facing()
-				&& getSelf().getStamina().get() >= 15;
+		return fuckable(c, target) && !target.wary() && getTargetOrgan(target).isReady(target) && getSelf().canAct()
+				&& c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf()) && !c.getStance().prone(target)
+				&& c.getStance().facing() && getSelf().getStamina().get() >= 15;
 	}
 
 	@Override
@@ -44,29 +41,25 @@ public class Carry extends Fuck {
 		String premessage = premessage(c, target);
 		if (target.roll(this, c, accuracy(c))) {
 			if (getSelf().human()) {
-				c.write(getSelf(), Global.capitalizeFirstLetter(premessage
-						+ deal(c, premessage.length(), Result.normal, target)));
+				c.write(getSelf(),
+						Global.capitalizeFirstLetter(premessage + deal(c, premessage.length(), Result.normal, target)));
 			} else if (target.human()) {
-				c.write(getSelf(), premessage + receive(c, premessage.length(),
-						Result.normal, getSelf()));
+				c.write(getSelf(), premessage + receive(c, premessage.length(), Result.normal, getSelf()));
 			}
 			int m = 5 + Global.random(5);
 			int otherm = m;
 			if (getSelf().has(Trait.insertion)) {
 				otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
 			}
-			target.body.pleasure(getSelf(), getSelfOrgan(),
-					getTargetOrgan(target), m, c);
-			getSelf().body.pleasure(target, getTargetOrgan(target),
-					getSelfOrgan(), otherm, c);
+			target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c);
+			getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c);
 			c.setStance(new Standing(getSelf(), target));
 		} else {
 			if (getSelf().human()) {
-				c.write(getSelf(), Global.capitalizeFirstLetter(premessage
-						+ deal(c, premessage.length(), Result.miss, target)));
+				c.write(getSelf(),
+						Global.capitalizeFirstLetter(premessage + deal(c, premessage.length(), Result.miss, target)));
 			} else if (target.human()) {
-				c.write(getSelf(), premessage
-						+ receive(c, premessage.length(), Result.miss, target));
+				c.write(getSelf(), premessage + receive(c, premessage.length(), Result.miss, target));
 			}
 			getSelf().add(c, new Falling(getSelf()));
 			return false;
@@ -90,11 +83,9 @@ public class Carry extends Fuck {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return "you pick up " + target.name()
-					+ ", but she flips out of your arms and manages to trip you.";
+			return "you pick up " + target.name() + ", but she flips out of your arms and manages to trip you.";
 		} else {
 			return "you scoop up " + target.name()
 					+ ", lifting her into the air and simultaneously thrusting your dick into her hot depths. She lets out a noise that's "
@@ -103,8 +94,7 @@ public class Carry extends Fuck {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			return Global.format(
 					(damage > 0 ? "" : "{self:subject} ")

@@ -26,8 +26,7 @@ public class Threesomes implements Scene {
 							+ "stock of the situation. You can't turn your head far enough to see her face, but based on her build and the bright red hair you can see out of the corner of your eye, "
 							+ "your attacker is probably Jewel.<p>"
 							+ "<i>\"Boy acquired!\"</i> You hear her call out. Cassie steps into the room, looking nervous and apologetic. <br><i>\"I still don't know "
-							+ "what this accomplishes. It's not like "
-							+ player.name()
+							+ "what this accomplishes. It's not like " + player.name()
 							+ " was avoiding us. We could have just knocked on the door. Also you should be careful with what you're holding. "
 							+ "Those are a couple of anatomically vital parts.\"</i> <br>You hear Jewel chuckle as she gently plays with your sack. <i>\"Don't worry. I'm being very nice to all "
 							+ "of " + player.name()
@@ -65,8 +64,7 @@ public class Threesomes implements Scene {
 							+ "she likes you too. Do you mind if she joins in?\"</i> <br>"
 							+ "Jewel looks hesitant for the first time. <i>\"Are you sure? The point of this was to give you two some alone time. I can wait.\"</i><br>"
 							+ "Cassie shakes her head. <i>\"I just said I wouldn't get jealous. I want to thank you for your help. "
-							+ player.name()
-							+ " is very good with his tongue, I can personally vouch "
+							+ player.name() + " is very good with his tongue, I can personally vouch "
 							+ "for that.\"</i> Jewel glances at you for confirmation and you lick your lips suggestively. She strips off her clothes and straddles your face. You grab Jewel's hips and thrust "
 							+ "you tongue into her slit, making her moan and almost lose her balance. You've been at Jewel's mercy since she ambushed you, so it's pretty satisfying to break her composure "
 							+ "with a lick.<p>"
@@ -143,8 +141,7 @@ public class Threesomes implements Scene {
 							+ "door, perhaps she's gotten herself into trouble somehow. A few minutes later you arrive, completely out of breath knocking at Mara's door. You hear "
 							+ "some giggling from within and the door opens a few seconds later.<p>"
 							+ "Your salutation is cut short as you are pulled into the room by the neck of your shirt. Mara forces her silky, dark lips upon your own, making your "
-							+ "heart race at this unexpected sign of affection.<p>"
-							+ "*Thud*<p>"
+							+ "heart race at this unexpected sign of affection.<p>" + "*Thud*<p>"
 							+ "The door closes behind you, and as Mara breaks her kiss you turn your head to see Angel standing there, a devious smirk painted upon her creamy face. "
 							+ "She is dressed in raunchy black lingerie, with a push-up bra that further accentuates her already voluptuous breasts. A pair of thigh-high stockings "
 							+ "complete the set, enveloping each of her slender legs.<p>"
@@ -161,8 +158,7 @@ public class Threesomes implements Scene {
 							+ "it aside. Now shirtless, Mara continues to massage the front of your body, trailing her fingernails lightly down your chest. Angel works from behind, "
 							+ "her lips planting a series of kisses up your spine, making your legs tremble at each sensual peck.<p>"
 							+ "As Angel reaches the nape of your neck she veers right to your earlobe and teasingly nibbles at it. Mara's fingers are barely an inch from your waistband "
-							+ "now, any second and they'll-<p>"
-							+ "She suddenly withdraws her hand.<br>"
+							+ "now, any second and they'll-<p>" + "She suddenly withdraws her hand.<br>"
 							+ "<i>\"Get on the bed, and strip off your bottoms. We've got a show for you\"</i> Mara winks, slapping you playfully on the cheek.<p>"
 							+ "You undress and move to the bed, laying back on a couple of pillows and spreading your legs for the girls. You aren't quite hard yet, but that isn't an "
 							+ "immediate problem. Mara and Angel face each other a few feet in front of you and lock their lips. Their hands dance over each others backs, Angel's fingers "
@@ -201,23 +197,17 @@ public class Threesomes implements Scene {
 		if (Global.random(5) == 0) {
 			ArrayList<String> available = new ArrayList<String>();
 			available.add("");
-			if (Global.getNPC("Cassie").getAffection(player) >= 20
-					&& Global.getNPC("Jewel").getAffection(player) >= 20
-					&& Global.getNPC("Jewel")
-							.getAffection(Global.getNPC("Cassie")) >= 5
+			if (Global.getNPC("Cassie").getAffection(player) >= 20 && Global.getNPC("Jewel").getAffection(player) >= 20
+					&& Global.getNPC("Jewel").getAffection(Global.getNPC("Cassie")) >= 5
 					&& Global.getValue(Flag.CassieLoneliness) >= 5) {
 				available.add("CassieJewel");
 			}
-			if (Global.getNPC("Mara").getAffection(player) >= 20
-					&& Global.getNPC("Jewel").getAffection(player) >= 20
-					&& Global.getNPC("Jewel")
-							.getAffection(Global.getNPC("Mara")) >= 5) {
+			if (Global.getNPC("Mara").getAffection(player) >= 20 && Global.getNPC("Jewel").getAffection(player) >= 20
+					&& Global.getNPC("Jewel").getAffection(Global.getNPC("Mara")) >= 5) {
 				available.add("MaraJewel");
 			}
-			if (Global.getNPC("Mara").getAffection(player) >= 15
-					&& Global.getNPC("Angel").getAffection(player) >= 15
-					&& Global.getNPC("Angel")
-							.getAffection(Global.getNPC("Mara")) >= 10) {
+			if (Global.getNPC("Mara").getAffection(player) >= 15 && Global.getNPC("Angel").getAffection(player) >= 15
+					&& Global.getNPC("Angel").getAffection(Global.getNPC("Mara")) >= 10) {
 				available.add("AngelMara");
 			}
 			return available.get(Global.random(available.size()));

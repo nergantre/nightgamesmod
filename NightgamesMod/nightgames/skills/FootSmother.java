@@ -19,12 +19,9 @@ public class FootSmother extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return getSelf().footAvailable() && getSelf().body.has("feet")
-				&& c.getStance().mobile(getSelf())
-				&& c.getStance().dom(getSelf()) && getSelf().canAct()
-				&& c.getStance().prone(target)
-				&& !c.getStance().behind(getSelf())
-				&& getSelf().outfit.hasNoShoes();
+		return getSelf().footAvailable() && getSelf().body.has("feet") && c.getStance().mobile(getSelf())
+				&& c.getStance().dom(getSelf()) && getSelf().canAct() && c.getStance().prone(target)
+				&& !c.getStance().behind(getSelf()) && getSelf().outfit.hasNoShoes();
 	}
 
 	@Override
@@ -38,11 +35,9 @@ public class FootSmother extends Skill {
 		int m = 0;
 		m = 8 + Global.random(6);
 		if (getSelf().human()) {
-			c.write(getSelf(), Global.format(deal(c, 0, Result.normal, target),
-					getSelf(), target));
+			c.write(getSelf(), Global.format(deal(c, 0, Result.normal, target), getSelf(), target));
 		} else {
-			c.write(getSelf(), Global.format(
-					receive(c, 0, Result.normal, target), getSelf(), target));
+			c.write(getSelf(), Global.format(receive(c, 0, Result.normal, target), getSelf(), target));
 		}
 		target.tempt(c, getSelf(), getSelf().body.getRandom("feet"), m);
 		if (Global.random(100) < 30 + 2 * getSelf().get(Attribute.Fetish)) {
@@ -67,14 +62,12 @@ public class FootSmother extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		return "You place the soles of your feet over top of {other:name-possessive} face and press down, keeping {other:direct-object} in place and giving {other:direct-object} no choice but to worship your feet.";
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		String message = "{self:SUBJECT} presses {self:possessive} soles in to your face causing you to inhale {self:possessive} scent deeply. As you start to worship {self:possessive} {self:body-part:feet}, ";
 		String parts = "";
 		if (target.hasDick()) {
@@ -83,8 +76,7 @@ public class FootSmother extends Skill {
 			} else if (target.getArousal().percent() < 60) {
 				parts += "your {other:body-part:cock} starts to throb";
 			} else {
-				parts += "your {other:body-part:cock} start to leak "
-						+ target.body.getRandomCock().getFluids(target);
+				parts += "your {other:body-part:cock} start to leak " + target.body.getRandomCock().getFluids(target);
 			}
 		}
 		if (target.hasPussy()) {
@@ -97,8 +89,7 @@ public class FootSmother extends Skill {
 				parts += "you feel your wetness start to run down your leg";
 			} else {
 				parts += "your {other:body-part:pussy} starts to spasm as your "
-						+ target.body.getRandomPussy().getFluids(target)
-						+ " puddles underneath you";
+						+ target.body.getRandomPussy().getFluids(target) + " puddles underneath you";
 			}
 		}
 		return message + parts + ".";
