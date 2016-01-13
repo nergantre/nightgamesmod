@@ -1,41 +1,41 @@
 package nightgames.items.clothing;
 
 public enum ClothingTrait {
-	open("Open", "Shows what's beneath"),
-	bulky("Bulky","Speed penalty"),
-	skimpy("Skimpy","Better temptation daamage"),
-	flexible("Flexible","Can fuck by pulling it aside"),
-	indestructible("Indestructible","Cannot be destroyed"),
-	geeky("Geeky","Science bonus"),
-	armored("Armored","Protects the delicate bits"),
-	mystic("Mystic","Arcane bonus"),
-	martial("Martial","Ki bonus"),
-	broody("Broody","Dark bonus"),
-	kinky("Kinky","Fetish bonus"),
-	shoes("Shoes","Easy to move in"),
-	heels("Heels","Hard to run in unless you're used to it"),
-	highheels("High Heels","Very hard to run in unless you're used to it"),
-	higherheels("Higher Heels","Impossible to run in unless you're used to it"),
-	tentacleUnderwear("Tentacle Underwear","Wearing tentacle underwear"),
-	tentacleSuit("Tentacle Suit","Wearing a tentacle suit"),
-	nursegloves("Nurse's Gloves","Wearing a pair of rubber nitrile gloves."),
-	stylish("Stylish","Better mojo gain"),
-	lame("Lame","Small mojo penalty"),
-	none("","");
-	
-	private String name;
-	private String desc;
+    open("Open", "Shows what's beneath"),
+    bulky("Bulky", "Speed penalty"),
+    skimpy("Skimpy", "Better temptation daamage"),
+    flexible("Flexible", "Can fuck by pulling it aside"),
+    indestructible("Indestructible", "Cannot be destroyed"),
+    geeky("Geeky", "Science bonus"),
+    armored("Armored", "Protects the delicate bits"),
+    mystic("Mystic", "Arcane bonus"),
+    martial("Martial", "Ki bonus"),
+    broody("Broody", "Dark bonus"),
+    kinky("Kinky", "Fetish bonus"),
+    shoes("Shoes", "Easy to move in"),
+    heels("Heels", "Hard to run in unless you're used to it"),
+    highheels("High Heels", "Very hard to run in unless you're used to it"),
+    higherheels("Higher Heels", "Impossible to run in unless you're used to it"),
+    tentacleUnderwear("Tentacle Underwear", "Wearing tentacle underwear"),
+    tentacleSuit("Tentacle Suit", "Wearing a tentacle suit"),
+    nursegloves("Nurse's Gloves", "Wearing a pair of rubber nitrile gloves."),
+    stylish("Stylish", "Better mojo gain"),
+    lame("Lame", "Small mojo penalty"),
+    none("", "");
 
-	ClothingTrait(String name, String desc) {
-		this.name = name;
-		this.desc = desc;
-	}
+    private String name;
+    private String desc;
 
-	public String getName() {
-		return name;
-	}
+    ClothingTrait(String name, String desc) {
+        this.name = name;
+        this.desc = desc;
+    }
 
-	public String getDesc() {
-		return desc;
-	}
+    public String getName() {
+        return name;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
 }

@@ -43,177 +43,174 @@ import nightgames.skills.WildThrust;
 
 public class Frenzied extends DurationStatus {
 
-	private static final Collection<Skill> FUCK_SKILLS = new HashSet<>();
+    private static final Collection<Skill> FUCK_SKILLS = new HashSet<>();
 
-	static {
-		// Skills that either lead to penetration, or can be used during it.
-		Character p = Global.noneCharacter();
-		FUCK_SKILLS.add(new AssFuck(p));
-		FUCK_SKILLS.add(new Carry(p));
-		FUCK_SKILLS.add(new Shove(p));
-		FUCK_SKILLS.add(new Tackle(p));
-		FUCK_SKILLS.add(new Straddle(p));
-		FUCK_SKILLS.add(new Tear(p));
-		FUCK_SKILLS.add(new Undress(p));
-		FUCK_SKILLS.add(new Engulf(p)); // Probably?
-		FUCK_SKILLS.add(new Fly(p));
-		FUCK_SKILLS.add(new Fuck(p));
-		FUCK_SKILLS.add(new Grind(p));
-		FUCK_SKILLS.add(new Invitation(p));
-		FUCK_SKILLS.add(new LegLock(p));
-		FUCK_SKILLS.add(new Piston(p));
-		FUCK_SKILLS.add(new WildThrust(p));
-		FUCK_SKILLS.add(new ReverseAssFuck(p));
-		FUCK_SKILLS.add(new ReverseCarry(p));
-		FUCK_SKILLS.add(new ReverseFly(p));
-		FUCK_SKILLS.add(new ReverseFuck(p));
-		FUCK_SKILLS.add(new SpiralThrust(p));
-		FUCK_SKILLS.add(new SubmissiveHold(p));
-		FUCK_SKILLS.add(new Thrust(p));
-		FUCK_SKILLS.add(new Tighten(p));
-		FUCK_SKILLS.add(new ToggleKnot(p));
-	}
+    static {
+        // Skills that either lead to penetration, or can be used during it.
+        Character p = Global.noneCharacter();
+        FUCK_SKILLS.add(new AssFuck(p));
+        FUCK_SKILLS.add(new Carry(p));
+        FUCK_SKILLS.add(new Shove(p));
+        FUCK_SKILLS.add(new Tackle(p));
+        FUCK_SKILLS.add(new Straddle(p));
+        FUCK_SKILLS.add(new Tear(p));
+        FUCK_SKILLS.add(new Undress(p));
+        FUCK_SKILLS.add(new Engulf(p)); // Probably?
+        FUCK_SKILLS.add(new Fly(p));
+        FUCK_SKILLS.add(new Fuck(p));
+        FUCK_SKILLS.add(new Grind(p));
+        FUCK_SKILLS.add(new Invitation(p));
+        FUCK_SKILLS.add(new LegLock(p));
+        FUCK_SKILLS.add(new Piston(p));
+        FUCK_SKILLS.add(new WildThrust(p));
+        FUCK_SKILLS.add(new ReverseAssFuck(p));
+        FUCK_SKILLS.add(new ReverseCarry(p));
+        FUCK_SKILLS.add(new ReverseFly(p));
+        FUCK_SKILLS.add(new ReverseFuck(p));
+        FUCK_SKILLS.add(new SpiralThrust(p));
+        FUCK_SKILLS.add(new SubmissiveHold(p));
+        FUCK_SKILLS.add(new Thrust(p));
+        FUCK_SKILLS.add(new Tighten(p));
+        FUCK_SKILLS.add(new ToggleKnot(p));
+    }
 
-	public Frenzied(Character affected, int duration) {
-		super("Frenzied", affected, duration);
-		flag(Stsflag.frenzied);
-		flag(Stsflag.purgable);
-	}
+    public Frenzied(Character affected, int duration) {
+        super("Frenzied", affected, duration);
+        flag(Stsflag.frenzied);
+        flag(Stsflag.purgable);
+    }
 
-	@Override
-	public String initialMessage(Combat c, boolean replaced) {
-		return String.format(
-				"%s mind blanks, leaving only the bestial need to breed.",
-				affected.nameOrPossessivePronoun());
-	}
+    @Override
+    public String initialMessage(Combat c, boolean replaced) {
+        return String.format("%s mind blanks, leaving only the bestial need to breed.",
+                        affected.nameOrPossessivePronoun());
+    }
 
-	@Override
-	public String describe(Combat c) {
-		if (affected.human()) {
-			return "You cannot think about anything other than fucking all those around.";
-		} else {
-			return String.format(
-					"%s has a frenzied look in %s eyes, interested in nothing but raw, hard sex.",
-					affected.name(), affected.possessivePronoun());
-		}
-	}
+    @Override
+    public String describe(Combat c) {
+        if (affected.human()) {
+            return "You cannot think about anything other than fucking all those around.";
+        } else {
+            return String.format("%s has a frenzied look in %s eyes, interested in nothing but raw, hard sex.",
+                            affected.name(), affected.possessivePronoun());
+        }
+    }
 
-	@Override
-	public int mod(Attribute a) {
-		if (a == Attribute.Cunning) {
-			return -5;
-		}
-		if (a == Attribute.Power) {
-			return 8;
-		}
-		if (a == Attribute.Animism) {
-			return 8;
-		}
-		return 0;
-	}
+    @Override
+    public int mod(Attribute a) {
+        if (a == Attribute.Cunning) {
+            return -5;
+        }
+        if (a == Attribute.Power) {
+            return 8;
+        }
+        if (a == Attribute.Animism) {
+            return 8;
+        }
+        return 0;
+    }
 
-	@Override
-	public void onRemove(Combat c, Character other) {
-		affected.addlist.add(new Cynical(affected));
-	}
+    @Override
+    public void onRemove(Combat c, Character other) {
+        affected.addlist.add(new Cynical(affected));
+    }
 
-	@Override
-	public boolean mindgames() {
-		return true;
-	}
+    @Override
+    public boolean mindgames() {
+        return true;
+    }
 
-	@Override
-	public int regen(Combat c) {
-		super.regen(c);
-		affected.buildMojo(c, 25);
-		affected.emote(Emotion.horny, 15);
-		return 0;
-	}
+    @Override
+    public int regen(Combat c) {
+        super.regen(c);
+        affected.buildMojo(c, 25);
+        affected.emote(Emotion.horny, 15);
+        return 0;
+    }
 
-	@Override
-	public int damage(Combat c, int x) {
-		return (int) (-x * 0.2);
-	}
+    @Override
+    public int damage(Combat c, int x) {
+        return (int) (-x * 0.2);
+    }
 
-	@Override
-	public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x) {
-		return 0;
-	}
+    @Override
+    public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x) {
+        return 0;
+    }
 
-	@Override
-	public int weakened(int x) {
-		return (int) (-x * 0.2);
-	}
+    @Override
+    public int weakened(int x) {
+        return (int) (-x * 0.2);
+    }
 
-	@Override
-	public int tempted(int x) {
-		return (int) (x * 0.2);
-	}
+    @Override
+    public int tempted(int x) {
+        return (int) (x * 0.2);
+    }
 
-	@Override
-	public int evade() {
-		return -10;
-	}
+    @Override
+    public int evade() {
+        return -10;
+    }
 
-	@Override
-	public int escape() {
-		return -10;
-	}
+    @Override
+    public int escape() {
+        return -10;
+    }
 
-	@Override
-	public int gainmojo(int x) {
-		return (int) (x * 1.25);
-	}
+    @Override
+    public int gainmojo(int x) {
+        return (int) (x * 1.25);
+    }
 
-	@Override
-	public int spendmojo(int x) {
-		return 0;
-	}
+    @Override
+    public int spendmojo(int x) {
+        return 0;
+    }
 
-	@Override
-	public int counter() {
-		return -20;
-	}
+    @Override
+    public int counter() {
+        return -20;
+    }
 
-	@Override
-	public int value() {
-		return 0;
-	}
+    @Override
+    public int value() {
+        return 0;
+    }
 
-	@Override
-	public void tick(Combat c) {
-		if (!c.getStance().inserted(affected)) {
-			affected.removelist.add(this);
-		} else {
-			setDuration(getDuration() + 2);
-		}
-	}
+    @Override
+    public void tick(Combat c) {
+        if (!c.getStance().inserted(affected)) {
+            affected.removelist.add(this);
+        } else {
+            setDuration(getDuration() + 2);
+        }
+    }
 
-	@Override
-	public Status instance(Character newAffected, Character newOther) {
-		return new Frenzied(newAffected, getDuration());
-	}
+    @Override
+    public Status instance(Character newAffected, Character newOther) {
+        return new Frenzied(newAffected, getDuration());
+    }
 
-	@Override
-	public Collection<Skill> allowedSkills(Combat c) {
-		// Gather the preferred skills for which the character meets the
-		// requirements
-		return FUCK_SKILLS.stream()
-				.filter(s -> s.requirements(c, affected, c.getOther(affected)))
-				.map(s -> s.copy(affected)).collect(Collectors.toSet());
-	}
+    @Override
+    public Collection<Skill> allowedSkills(Combat c) {
+        // Gather the preferred skills for which the character meets the
+        // requirements
+        return FUCK_SKILLS.stream().filter(s -> s.requirements(c, affected, c.getOther(affected)))
+                        .map(s -> s.copy(affected)).collect(Collectors.toSet());
+    }
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public JSONObject saveToJSON() {
-		JSONObject obj = new JSONObject();
-		obj.put("type", getClass().getSimpleName());
-		obj.put("duration", getDuration());
-		return obj;
-	}
+    @Override
+    @SuppressWarnings("unchecked")
+    public JSONObject saveToJSON() {
+        JSONObject obj = new JSONObject();
+        obj.put("type", getClass().getSimpleName());
+        obj.put("duration", getDuration());
+        return obj;
+    }
 
-	@Override
-	public Status loadFromJSON(JSONObject obj) {
-		return new Frenzied(null, JSONUtils.readInteger(obj, "duration"));
-	}
+    @Override
+    public Status loadFromJSON(JSONObject obj) {
+        return new Frenzied(null, JSONUtils.readInteger(obj, "duration"));
+    }
 }

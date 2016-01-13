@@ -6,18 +6,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TeeStream extends OutputStream {
-	private ArrayList<OutputStream> streams;
+    private ArrayList<OutputStream> streams;
 
-	public TeeStream(OutputStream... args) {
-		streams = new ArrayList<OutputStream>();
-		streams.addAll(Arrays.asList(args));
-	}
+    public TeeStream(OutputStream... args) {
+        streams = new ArrayList<OutputStream>();
+        streams.addAll(Arrays.asList(args));
+    }
 
-	@Override
-	public void write(int arg0) throws IOException {
-		for (OutputStream stream : streams) {
-			stream.write(arg0);
-		}
-	}
+    @Override
+    public void write(int arg0) throws IOException {
+        for (OutputStream stream : streams) {
+            stream.write(arg0);
+        }
+    }
 
 }

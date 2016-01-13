@@ -4,14 +4,14 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 
 public class OrgasmRequirement implements CustomRequirement {
-	int number;
+    int number;
 
-	public OrgasmRequirement(int number) {
-		this.number = number;
-	}
+    public OrgasmRequirement(int number) {
+        this.number = number;
+    }
 
-	@Override
-	public boolean meets(Combat c, Character self, Character other) {
-		return self.orgasms >= number;
-	}
+    @Override
+    public boolean meets(Combat c, Character self, Character other) {
+        return self.orgasms >= number;
+    }
 }

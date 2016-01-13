@@ -1,5 +1,10 @@
 package nightgames.characters;
 
 public enum Emotion {
-	confident, angry, nervous, desperate, horny, dominant
+    confident,
+    angry,
+    nervous,
+    desperate,
+    horny,
+    dominant
 }

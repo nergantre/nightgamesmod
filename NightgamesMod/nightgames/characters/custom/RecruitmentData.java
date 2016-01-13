@@ -7,17 +7,17 @@ import nightgames.characters.custom.effect.CustomEffect;
 import nightgames.characters.custom.requirement.CustomRequirement;
 
 public class RecruitmentData {
-	public String					introduction;
-	public String					confirm;
-	public String					action;
-	public List<CustomRequirement>	requirement;
-	public List<CustomEffect>		effects;
+    public String introduction;
+    public String confirm;
+    public String action;
+    public List<CustomRequirement> requirement;
+    public List<CustomEffect> effects;
 
-	public RecruitmentData() {
-		introduction = "default introduction";
-		confirm = "default confirm";
-		action = "default action";
-		requirement = new ArrayList<>();
-		effects = new ArrayList<>();
-	}
+    public RecruitmentData() {
+        introduction = "default introduction";
+        confirm = "default confirm";
+        action = "default action";
+        requirement = new ArrayList<>();
+        effects = new ArrayList<>();
+    }
 }

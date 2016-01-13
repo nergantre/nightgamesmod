@@ -10,21 +10,21 @@ import nightgames.characters.custom.requirement.CustomRequirement;
 import nightgames.items.Item;
 
 public class TransformationOption {
-	String					option;
-	Map<Item, Integer>		ingredients;
-	List<CustomRequirement>	requirements;
-	String					scene;
-	String					additionalRequirements;
-	CustomEffect			effect;
+    String option;
+    Map<Item, Integer> ingredients;
+    List<CustomRequirement> requirements;
+    String scene;
+    String additionalRequirements;
+    CustomEffect effect;
 
-	public TransformationOption() {
-		option = "";
-		ingredients = new HashMap<Item, Integer>();
-		scene = "";
-		additionalRequirements = "";
-		requirements = new ArrayList<>();
-		effect = (c, self, other) -> {
-			return true;
-		};
-	}
+    public TransformationOption() {
+        option = "";
+        ingredients = new HashMap<Item, Integer>();
+        scene = "";
+        additionalRequirements = "";
+        requirements = new ArrayList<>();
+        effect = (c, self, other) -> {
+            return true;
+        };
+    }
 }

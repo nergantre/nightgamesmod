@@ -5,14 +5,14 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 
 public class SpecificBodyPartRequirement implements CustomRequirement {
-	private BodyPart part;
+    private BodyPart part;
 
-	public SpecificBodyPartRequirement(BodyPart part) {
-		this.part = part;
-	}
+    public SpecificBodyPartRequirement(BodyPart part) {
+        this.part = part;
+    }
 
-	@Override
-	public boolean meets(Combat c, Character self, Character other) {
-		return self.body.contains(part);
-	}
+    @Override
+    public boolean meets(Combat c, Character self, Character other) {
+        return self.body.contains(part);
+    }
 }
