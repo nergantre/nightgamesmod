@@ -5,7 +5,7 @@ import java.util.stream.IntStream;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
-import nightgames.combat.Encounter;
+import nightgames.combat.IEncounter;
 import nightgames.global.Global;
 import nightgames.items.Item;
 
@@ -68,7 +68,7 @@ public class StripMine implements Trap {
 
 	@Override
 	public void capitalize(Character attacker, Character victim,
-			Encounter enc) {
+			IEncounter enc) {
 		enc.engage(new Combat(attacker, victim, attacker.location()));
 		attacker.location().remove(this);
 	}

@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
@@ -194,7 +195,7 @@ public class Command extends Skill {
 
 			if (target.body.getFetish("pussy").isPresent()
 					&& getSelf().hasPussy())
-				available.add(CommandType.WORSHIP_COCK);
+				available.add(CommandType.WORSHIP_PUSSY);
 
 			if (getSelf().hasDick())
 				available.add(CommandType.GIVE_BLOWJOB);
@@ -351,6 +352,7 @@ public class Command extends Skill {
 				target.pain(c, 10 + Global.random(20));
 			case STRIP_MASTER:
 				Clothing removed = getSelf().getRandomStrippable();
+				if (removed == null) return;
 				getSelf().getOutfit().unequip(removed);
 				c.write(getSelf(),
 						String.format(
@@ -362,6 +364,7 @@ public class Command extends Skill {
 				break;
 			case STRIP_SLAVE:
 				removed = target.getRandomStrippable();
+				if (removed == null) return;
 				target.getOutfit().unequip(removed);
 				c.write(getSelf(),
 						String.format(
@@ -390,7 +393,7 @@ public class Command extends Skill {
 								getSelf().name(), getSelf().possessivePronoun(),
 								getSelf().pronoun(), getSelf()
 										.possessivePronoun(),
-						getSelf().body.getRandomCock().describe(getSelf())));
+						target.body.getRandomCock().describe(target)));
 				getSelf().body.pleasure(target, target.body.getRandom("mouth"),
 						getSelf().body.getRandomCock(), 10 + Global.random(8),
 						c);

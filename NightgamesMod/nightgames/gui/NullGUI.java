@@ -5,7 +5,7 @@ import java.util.Observable;
 import nightgames.characters.Character;
 import nightgames.characters.Player;
 import nightgames.combat.Combat;
-import nightgames.combat.Encounter;
+import nightgames.combat.IEncounter;
 import nightgames.skills.Skill;
 
 public class NullGUI extends GUI {
@@ -54,11 +54,11 @@ public class NullGUI extends GUI {
 	public void next(Combat combat) {
 	}
 
-	public void promptFF(Encounter enc) {
+	public void promptFF(IEncounter enc) {
 	}
 
 	@Override
-	public void promptAmbush(Encounter enc, Character target) {
+	public void promptAmbush(IEncounter enc, Character target) {
 	}
 
 	@Override

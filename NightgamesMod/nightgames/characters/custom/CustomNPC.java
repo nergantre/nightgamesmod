@@ -3,6 +3,7 @@ package nightgames.characters.custom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.BasePersonality;
@@ -191,5 +192,16 @@ public class CustomNPC extends BasePersonality {
 	@Override
 	public AiModifiers getAiModifiers() {
 		return data.getAiModifiers();
+	}
+	
+	@Override
+	public Map<CommentSituation, String> getComments(Combat c) {
+		Map<CommentSituation, String> all = data.getComments();
+		Map<CommentSituation, String> applicable = new HashMap<>();
+		all.entrySet().stream()
+				.filter(e -> e.getKey().isApplicable(c, character,
+						c.getOther(character)))
+				.forEach(e -> applicable.put(e.getKey(), e.getValue()));
+		return applicable;
 	}
 }

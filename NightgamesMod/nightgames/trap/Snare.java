@@ -3,7 +3,7 @@ package nightgames.trap;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
-import nightgames.combat.Encounter;
+import nightgames.combat.IEncounter;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.status.Bound;
@@ -68,7 +68,7 @@ public class Snare implements Trap {
 
 	@Override
 	public void capitalize(Character attacker, Character victim,
-			Encounter enc) {
+			IEncounter enc) {
 		enc.engage(new Combat(attacker, victim, attacker.location()));
 		attacker.location().remove(this);
 	}

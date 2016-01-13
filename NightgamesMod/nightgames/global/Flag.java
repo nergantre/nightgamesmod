@@ -65,4 +65,7 @@ public enum Flag {
 	catspirit,
 	Clue1,
 	Maya,
+	FTC,
+	didFTC,
+	;
 }

@@ -39,8 +39,7 @@ public abstract class Action implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object obj) { // $codepro.audit.disable
-										// com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.obeyEqualsContract.obeyGeneralContractOfEquals
+	public boolean equals(Object obj) { 
 		if (this == obj) {
 			return true;
 		}

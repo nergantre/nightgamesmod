@@ -1,5 +1,7 @@
 package nightgames.actions;
 
+import nightgames.areas.Area;
+
 public enum Movement {
 	quad(" head outside, toward the quad."),
 	kitchen(" move into the kitchen."),
@@ -35,7 +37,27 @@ public enum Movement {
 	masturbate(
 			" starts to pleasure herself, while trying not to make much noise. It's quite a show."),
 	mana(" doing something with a large book. When she's finished, you can see a sort of aura coming from her."),
-	retire(" has left the match.");
+	retire(" has left the match."), 
+	ftcNorthBase(" head to the north camp."), 
+	ftcWestBase(" move to the west camp."), 
+	ftcSouthBase(" go to the south camp."), 
+	ftcEastBase(" walk to the east camp."),
+	ftcCenter(" head to the central clearing."),
+	ftcPond(" wade through the bushes to the pool."),
+	ftcGlade(" head into the shaded glade."),
+	ftcCabin(" walk into the cabin."),
+	ftcTrail(" move to the trail."),
+	ftcLodge(" head into the lodge."),
+	ftcHill(" climb up the small hill."),
+	ftcPath(" head down the path."),
+	ftcOak(" move towards the tall oak."),
+	ftcPass(" head into the narrow pass."),
+	ftcWaterfall(" head to the waterfall."),
+	ftcMonument(" go to the stone monument."),
+	ftcDump(" walk to the dumpsite."),
+	ftcTreeAmbush(" climb up a tree."),
+	ftcBushAmbush(" dive into some bushes."),
+	ftcPassAmbush(" slip into an alcove.");
 
 	private String desc;
 
@@ -48,5 +70,22 @@ public enum Movement {
 
 	private Movement(String desc) {
 		this.desc = desc;
+	}
+	
+	public static Movement ftcBaseMovement(Area base) {
+		switch (base.name) {
+			case "North Base":
+				return ftcNorthBase;
+			case "East Base":
+				return ftcEastBase;
+			case "South Base":
+				return ftcSouthBase;
+			case "West Base":
+				return ftcWestBase;
+			case "Central Camp":
+				return ftcCenter;
+			default:
+				throw new IllegalArgumentException("Not an FTC base: " + base.name);
+		}
 	}
 }

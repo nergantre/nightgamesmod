@@ -3,8 +3,10 @@ package nightgames.characters;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -14,6 +16,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.custom.AiModifiers;
+import nightgames.characters.custom.CommentSituation;
 import nightgames.characters.custom.RecruitmentData;
 import nightgames.combat.Combat;
 import nightgames.global.Flag;
@@ -208,5 +211,17 @@ public abstract class BasePersonality implements Personality {
 	@Override
 	public String resist3p(Combat c, Character target, Character assist) {
 		return null;
+	}
+
+	@Override
+	public Map<CommentSituation, String> getComments(Combat c) {
+		Map<CommentSituation, String> all = CommentSituation
+				.getDefaultComments(getType());
+		Map<CommentSituation, String> applicable = new HashMap<>();
+		all.entrySet().stream()
+				.filter(e -> e.getKey().isApplicable(c, character,
+						c.getOther(character)))
+				.forEach(e -> applicable.put(e.getKey(), e.getValue()));
+		return applicable;
 	}
 }

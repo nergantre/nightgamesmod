@@ -131,6 +131,10 @@ public class JSONSourceNPCDataLoader {
 			} else {
 				data.aiModifiers.setMalePref(Optional.empty());
 			}
+			
+			if (object.containsKey("comments")) {
+				loadComments((JSONArray) object.get("comments"), data);
+			}
 
 		} catch (ClassCastException e) {
 			e.printStackTrace();
@@ -397,5 +401,10 @@ public class JSONSourceNPCDataLoader {
 									+ "\".");
 			}
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static void loadComments(JSONArray arr, DataBackedNPCData data) {
+		arr.forEach(obj -> CommentSituation.parseComment((JSONObject) obj, data.comments));
 	}
 }

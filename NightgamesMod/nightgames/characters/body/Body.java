@@ -420,6 +420,12 @@ public class Body implements Cloneable {
 		return removed.size();
 	}
 
+	public int removeTemporaryParts(String type) {
+		List<BodyPart> removed = new ArrayList<BodyPart>();
+		replacements.removeIf(rep -> rep.added.stream().anyMatch(part -> part.getType().equals(type)));
+		return removed.size();
+	}
+	
 	public CockPart getRandomCock() {
 		return (CockPart) getRandom("cock");
 	}
@@ -690,6 +696,7 @@ public class Body implements Cloneable {
 		newBody.replacements = new ArrayList<PartReplacement>();
 		replacements.forEach(
 				rep -> newBody.replacements.add(new PartReplacement(rep)));
+		newBody.bodyParts = new LinkedHashSet<>(bodyParts);
 		return newBody;
 	}
 

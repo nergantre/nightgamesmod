@@ -11,8 +11,10 @@ import nightgames.areas.Area;
 import nightgames.areas.Deployable;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
-import nightgames.combat.Encounter;
+import nightgames.combat.IEncounter;
 import nightgames.combat.Result;
+import nightgames.ftc.FTCMatch;
+import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.gui.GUI;
 import nightgames.items.Item;
@@ -194,7 +196,7 @@ public class Player extends Character {
 	}
 
 	@Override
-	public void faceOff(Character opponent, Encounter enc) {
+	public void faceOff(Character opponent, IEncounter enc) {
 		gui.message("You run into <b>" + opponent.name
 				+ "</b> and you both hesitate for a moment, deciding whether to attack or retreat.");
 		assessOpponent(opponent);
@@ -240,7 +242,7 @@ public class Player extends Character {
 	}
 
 	@Override
-	public void spy(Character opponent, Encounter enc) {
+	public void spy(Character opponent, IEncounter enc) {
 		gui.message("You spot <b>" + opponent.name
 				+ "</b> but she hasn't seen you yet. You could probably catch her off guard, or you could remain hidden and hope she doesn't notice you.");
 		assessOpponent(opponent);
@@ -284,12 +286,26 @@ public class Player extends Character {
 		} else if (state == State.masturbating) {
 			masturbate();
 		} else {
+			if (Global.checkFlag(Flag.FTC)) {
+				Character holder = ((FTCMatch) Global.getMatch()).getFlagHolder();
+				if (holder != null && !holder.human()) {
+					gui.message("<b>" + holder.name + " currently holds the Flag.</b></br>");
+				}
+			}
 			gui.message(location.description + "<p>");
 			for (Deployable trap : location.env) {
 				if (trap.owner() == this) {
 					gui.message("You've set a " + trap.toString() + " here.");
 				}
 			}
+			if (state == State.inTree)
+				gui.message("You are hiding in a tree, waiting to drop down on an unwitting foe.");
+			else if (state == State.inBushes)
+				gui.message("You are hiding in dense bushes, waiting for someone to pass by.");
+			else if (state == State.inPass)
+				gui.message("You are hiding in an alcove in the pass.");
+			else if (state == State.hidden)
+				gui.message("You have found a hiding spot and are waiting for someone to pounce upon.");
 			detect();
 			if (!location.encounter(this)) {
 				for (Area path : location.adjacent) {
@@ -446,7 +462,7 @@ public class Player extends Character {
 	}
 
 	@Override
-	public void showerScene(Character target, Encounter encounter) {
+	public void showerScene(Character target, IEncounter encounter) {
 		if (target.location().name.equals("Showers")) {
 			gui.message(
 					"You hear running water coming from the first floor showers. There shouldn't be any residents on this floor right now, so it's likely one "
@@ -463,7 +479,7 @@ public class Player extends Character {
 	}
 
 	@Override
-	public void intervene(Encounter enc, Character p1, Character p2) {
+	public void intervene(IEncounter enc, Character p1, Character p2) {
 		gui.message("You find <b>" + p1.name() + "</b> and <b>" + p2.name()
 				+ "</b> fighting too intensely to notice your arrival. If you intervene now, it'll essentially decide the winner.");
 		gui.promptIntervene(enc, p1, p2);
@@ -541,7 +557,7 @@ public class Player extends Character {
 	}
 
 	@Override
-	public void promptTrap(Encounter enc, Character target, Trap trap) {
+	public void promptTrap(IEncounter enc, Character target, Trap trap) {
 		Global.gui().message("Do you want to take the opportunity to ambush <b>"
 				+ target.name() + "</b>?");
 		assessOpponent(target);

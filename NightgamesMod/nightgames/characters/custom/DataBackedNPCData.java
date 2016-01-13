@@ -1,4 +1,3 @@
-// $codepro.audit.disable logExceptions
 package nightgames.characters.custom;
 
 import java.util.ArrayList;
@@ -39,6 +38,7 @@ public class DataBackedNPCData implements NPCData {
 	RecruitmentData							recruitment;
 	Body									body;
 	AiModifiers								aiModifiers;
+	Map<CommentSituation, String>			comments;
 
 	public DataBackedNPCData() {
 		preferredAttributes = new ArrayList<>();
@@ -58,6 +58,7 @@ public class DataBackedNPCData implements NPCData {
 		defaultPortraitName = "";
 		recruitment = new RecruitmentData();
 		aiModifiers = new AiModifiers();
+		comments = new HashMap<>();
 	}
 
 	@Override
@@ -176,5 +177,10 @@ public class DataBackedNPCData implements NPCData {
 	@Override
 	public AiModifiers getAiModifiers() {
 		return aiModifiers;
+	}
+
+	@Override
+	public Map<CommentSituation, String> getComments() {
+		return comments;
 	}
 }

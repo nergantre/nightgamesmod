@@ -26,8 +26,9 @@ import nightgames.characters.body.CockMod;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.custom.AiModifiers;
 import nightgames.combat.Combat;
-import nightgames.combat.Encounter;
+import nightgames.combat.IEncounter;
 import nightgames.combat.Result;
+import nightgames.ftc.FTCMatch;
 import nightgames.global.Challenge;
 import nightgames.global.DebugFlags;
 import nightgames.global.Flag;
@@ -1076,8 +1077,8 @@ public abstract class Character extends Observable implements Cloneable {
 	public boolean rollPheromones(Combat c) {
 		double chance = getPheromonesChance(c);
 		double roll = Global.randomdouble();
-		System.out.println("Pheromones: rolled " + Global.formatDecimal(roll)
-				+ " vs " + chance + ".");
+		//System.out.println("Pheromones: rolled " + Global.formatDecimal(roll)
+		//		+ " vs " + chance + ".");
 		return roll < chance;
 	}
 
@@ -1223,9 +1224,9 @@ public abstract class Character extends Observable implements Cloneable {
 
 	public abstract void detect();
 
-	public abstract void faceOff(Character opponent, Encounter enc);
+	public abstract void faceOff(Character opponent, IEncounter enc);
 
-	public abstract void spy(Character opponent, Encounter enc);
+	public abstract void spy(Character opponent, IEncounter enc);
 
 	public abstract String describe(int per, Combat c);
 
@@ -1258,9 +1259,10 @@ public abstract class Character extends Observable implements Cloneable {
 
 	public abstract String taunt(Combat c);
 
-	public abstract void intervene(Encounter enc, Character p1, Character p2);
+	public abstract void intervene(IEncounter fight, Character p1,
+			Character p2);
 
-	public abstract void showerScene(Character target, Encounter encounter);
+	public abstract void showerScene(Character target, IEncounter encounter);
 
 	public boolean humanControlled(Combat c) {
 		return human() || Global.isDebugOn(DebugFlags.DEBUG_SKILL_CHOICES)
@@ -1796,8 +1798,7 @@ public abstract class Character extends Observable implements Cloneable {
 
 	public String debugMessage(Combat c, Position p) {
 		String mood;
-		if (this instanceof NPC) { // $codepro.audit.disable
-									// useOfInstanceOfWithThis
+		if (this instanceof NPC) { 									// useOfInstanceOfWithThis
 			mood = "mood: " + ((NPC) this).mood.toString();
 		} else {
 			mood = "";
@@ -1885,7 +1886,7 @@ public abstract class Character extends Observable implements Cloneable {
 
 	public void resupply() {
 		for (Character victor : mercy) {
-			victor.bounty(has(Trait.event) ? 5 : 1);
+			victor.bounty(has(Trait.event) ? 5 : 1, victor);
 		}
 		mercy.clear();
 		change();
@@ -1927,7 +1928,7 @@ public abstract class Character extends Observable implements Cloneable {
 
 	public void finishMatch() {
 		for (Character victor : mercy) {
-			victor.bounty(has(Trait.event) ? 5 : 1);
+			victor.bounty(has(Trait.event) ? 5 : 1, victor);
 		}
 		Global.gui().clearImage();
 		mercy.clear();
@@ -1949,12 +1950,29 @@ public abstract class Character extends Observable implements Cloneable {
 		}
 	}
 
-	public void bounty(int points) {
-		Global.getMatch().score(this, points);
+	public void bounty(int points, Character victor) {
+		int score = points;
+		if (Global.checkFlag(Flag.FTC) && points == 1) {
+			FTCMatch match = (FTCMatch) Global.getMatch();
+			if (match.isPrey(this)) {
+				score = 3;
+			} else if (!match.isPrey(victor)){
+				score = 2;
+			} else {
+				score = 0; // Hunter beating prey gets no points, only for flag.
+			}
+		}
+		Global.getMatch().score(this, score);
 	}
 
 	public boolean eligible(Character p2) {
-		return !mercy.contains(p2) && state != State.resupplying;
+		boolean ftc = true;
+		if (Global.checkFlag(Flag.FTC)) {
+			FTCMatch match = (FTCMatch) Global.getMatch();
+			ftc = !match.inGracePeriod()
+					|| (!match.isPrey(this) && !match.isPrey(p2));
+		}
+		return ftc && !mercy.contains(p2) && state != State.resupplying;
 	}
 
 	public void setTrophy(Item trophy) {
@@ -2054,7 +2072,8 @@ public abstract class Character extends Observable implements Cloneable {
 		busy += i;
 	}
 
-	public abstract void promptTrap(Encounter enc, Character target, Trap trap);
+	public abstract void promptTrap(IEncounter fight, Character target,
+			Trap trap);
 
 	public int lvlBonus(Character opponent) {
 		if (opponent.getLevel() > getLevel()) {

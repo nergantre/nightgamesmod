@@ -2,7 +2,6 @@ package nightgames.characters;
 
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
-import nightgames.characters.body.FacePart;
 import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TentaclePart;
@@ -10,27 +9,28 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
-import nightgames.modifier.Modifier;
 
 public class Airi extends BasePersonality {
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = -8169646189131720872L;
-	public Airi(){
-		super("Airi",10);
+
+	public Airi() {
+		super("Airi", 10);
 		character.change();
 		character.setTrophy(Item.AiriTrophy);
 		preferredCockMod = CockMod.slimy;
 
-		character.set(Attribute.Power, 3);
-		character.set(Attribute.Bio, 5);
-		character.set(Attribute.Cunning, 12);
-		character.set(Attribute.Speed, 5);
-		character.set(Attribute.Seduction, 15);
-		character.getStamina().setMax(50);
-		character.getArousal().setMax(80);
+		character.set(Attribute.Power, 6);
+		character.set(Attribute.Bio, 20);
+		character.set(Attribute.Cunning, 15);
+		character.set(Attribute.Speed, 4);
+		character.set(Attribute.Seduction, 17);
+		character.getStamina().setMax(80);
+		character.getArousal().setMax(200);
 		character.getMojo().setMax(60);
+		character.getWillpower().setMax(500);
 		character.add(Trait.dexterous);
 		character.add(Trait.slime);
 		character.add(Trait.imagination);
@@ -41,7 +41,6 @@ public class Airi extends BasePersonality {
 		character.mood = Emotion.confident;
 		character.body.add(BreastsPart.b);
 		character.body.add(PussyPart.gooey);
-
 		character.body.add(
 				new GenericBodyPart("gooey skin", .5, 1.5, .8, "skin", ""));
 		character.body.add(new TentaclePart("slime pseudopod", "back", "slime",
@@ -153,7 +152,33 @@ public class Airi extends BasePersonality {
 
 	@Override
 	public String defeat(Combat c, Result flag) {
-		return "You made Airi cum. She puddles.";
+		return "Fighting Airi is not easy. Her stickiness makes it"
+				+ " quite difficult for you to accomplish much of anything. Still, "
+				+ "considering her incoherent babbling she's probably not got much fight left in her. "
+				+ "In a desperate attempt, she launces herself at you, knocking you both to the ground."
+				+ " You react quickly, rolling over and getting on top before she can stick you to the "
+				+ "floor. Her slime crawls up your sides, seeking to engulf and immobilize you, but you "
+				+ "raise yourself up slightly, out of her reach. You reach down with one hand and deftly"
+				+ " get to work on the area of slime shaped like a pussy. It's very different from a "
+				+ "regular girl's, considering that your fingers actually <i>sink in</i> rather than graze"
+				+ " over, and that she is sticky enough to prevent them from moving very fast. Still, "
+				+ "it's clearly having the desired effect. You redouble your efforts, even leaning in to "
+				+ "kiss her, not caring about the effects her slime has when ingested. Before long, Airi's "
+				+ "mumbling reaches a crescendo, and she wraps her gooey limbs around you. Her body loses"
+				+ " shapes as she cums, as if it's melting around you. Within a few seconds you are lying "
+				+ "half-embedded in an amorphous heap of slime. Worried for Airi's safety, you jump up and call her name."
+				+ " Fortunately, it is not long before she reassumes her human form with a look of ecstasy still"
+				+ " on her face. <i>\"Wonderful... Reward...\"</i> she mutters, even breathier than usual. "
+				+ "She gently pulls you back down onto her. Since you've already won, you do not resist as Airi "
+				+ "lets you sink in to her body slightly. Nor when every bit of her body starts vibrating against "
+				+ "your skin. The full-body massage is wonderful, especially when it starts focussing more and more "
+				+ "on your dick. It's somehow ended up in her pussy, which is milking you greedily. Seeing no reason"
+				+ " to stop her, you just relax in her embrace and let her slowly drive you closer. Right before you "
+				+ "cum, she kisses you again, pushing you over the edge. There is no frantic milking this time, just "
+				+ "a great orgasm. When you have both recovered, you get up and she hands you a small bit of slime "
+				+ "that she separated from her body. <i>\"Trophy... No clothes... Will grow back...\"</i> You take "
+				+ "the slime from her, examining it before stashing it away. It tingles in your hand, and you "
+				+ "wonder just how much control she still has over it as she glides away.";
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.CockMod;
 import nightgames.characters.body.StraponPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -67,7 +68,15 @@ public class Fuck extends Skill {
 		stancePossible &= !c.getStance().havingSex();
 		return possible && ready && stancePossible
 				&& getSelf().clothingFuckable(selfO)
-				&& target.crotchAvailable();
+				&& canGetToCrotch(target);
+	}
+	
+	private boolean canGetToCrotch(Character target) {
+		if (target.crotchAvailable())
+			return true;
+		if (!CockMod.slimy.partHasThisMod(getSelfOrgan()))
+			return false;
+		return target.outfit.getBottomOfSlot(ClothingSlot.bottom).getLayer() == 0;
 	}
 
 	@Override
@@ -107,6 +116,21 @@ public class Fuck extends Skill {
 					"{self:SUBJECT-ACTION:pull|pulls} {self:possessive} %s to the side and ",
 					bottomMessage);
 		}
+		
+		if (!target.crotchAvailable() && getSelfOrgan().getMod().equals(CockMod.slimy)) {
+			Clothing destroyed = target.strip(ClothingSlot.bottom, c);
+			assert target.outfit.slotEmpty(ClothingSlot.bottom);
+			String start;
+			if (premessage.isEmpty()) {
+				start = "{self:SUBJECT-ACTION:place|places}";
+			} else {
+				start = "{self:action:place|places} ";
+			}
+			premessage += start + " the head of {self:possessive} {self:body-part:cock}"
+					+ " against {other:name-possessive} " + destroyed.getName() + ". The corrosive slime burns"
+					+ " right through them, but leaves the skin beneath untouched. Then, ";
+		}
+		
 		return Global.format(premessage, getSelf(), target);
 	}
 

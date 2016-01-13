@@ -2,6 +2,7 @@ package nightgames.global;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Deque;
 import java.util.HashMap;
@@ -17,13 +18,13 @@ import nightgames.modifier.Modifier;
 import nightgames.status.BodyFetish;
 
 public class Match {
-	private int							time;
-	private int							dropOffTime;
-	private HashMap<String, Area>		map;
+	protected int							time;
+	protected int							dropOffTime;
+	protected HashMap<String, Area>		map;
 	public ArrayList<Character>			combatants;
-	private HashMap<Character, Integer>	score;
-	private int							index;
-	private boolean						pause;
+	protected HashMap<Character, Integer>	score;
+	protected int							index;
+	protected boolean						pause;
 	public Modifier						condition;
 
 	public Match(Collection<Character> combatants, Modifier condition) {
@@ -77,6 +78,10 @@ public class Match {
 		}
 	}
 
+	public MatchType getType() {
+		return MatchType.NORMAL;
+	}
+	
 	public void round() {
 		while (time < 36) {
 			if (index >= combatants.size()) {
@@ -322,5 +327,9 @@ public class Match {
 		human.travel(new Area("Retirement", "", Movement.retire));
 		human.state = State.quit;
 		resume();
+	}
+	
+	public Collection<Movement> getResupplyAreas(Character ch) {
+		return Arrays.asList(Movement.union, Movement.dorm);
 	}
 }

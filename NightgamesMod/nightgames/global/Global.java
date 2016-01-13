@@ -1,4 +1,3 @@
-// $codepro.audit.disable emptyCatchClause, logExceptions
 package nightgames.global;
 
 import java.io.File;
@@ -43,16 +42,19 @@ import com.cedarsoftware.util.io.JsonWriter;
 import nightgames.Resources.ResourceLoader;
 import nightgames.actions.Action;
 import nightgames.actions.Bathe;
+import nightgames.actions.BushAmbush;
 import nightgames.actions.Craft;
 import nightgames.actions.Energize;
 import nightgames.actions.Hide;
 import nightgames.actions.Locate;
 import nightgames.actions.MasturbateAction;
 import nightgames.actions.Movement;
+import nightgames.actions.PassAmbush;
 import nightgames.actions.Recharge;
 import nightgames.actions.Resupply;
 import nightgames.actions.Scavenge;
 import nightgames.actions.SetTrap;
+import nightgames.actions.TreeAmbush;
 import nightgames.actions.Use;
 import nightgames.actions.Wait;
 import nightgames.areas.Area;
@@ -78,11 +80,13 @@ import nightgames.characters.custom.CustomNPC;
 import nightgames.characters.custom.JSONSourceNPCDataLoader;
 import nightgames.combat.Combat;
 import nightgames.daytime.Daytime;
+import nightgames.ftc.FTCMatch;
 import nightgames.gui.GUI;
 import nightgames.gui.NullGUI;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.modifier.Modifier;
+import nightgames.modifier.standard.FTCModifier;
 import nightgames.modifier.standard.NoItemsModifier;
 import nightgames.modifier.standard.NoModifier;
 import nightgames.modifier.standard.NoRecoveryModifier;
@@ -168,6 +172,7 @@ public class Global {
 
 		debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
 		debug[DebugFlags.DEBUG_LOADING.ordinal()] = true;
+		// debug[DebugFlags.DEBUG_FTC.ordinal()] = true;
 		// debug[DebugFlags.DEBUG_DAMAGE.ordinal()] = true;
 		// debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
 		// debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
@@ -182,6 +187,7 @@ public class Global {
 		buildActionPool();
 		buildFeatPool();
 		buildModifierPool();
+		flag(Flag.AiriEnabled);
 		if (headless) {
 			gui = new NullGUI();
 		} else {
@@ -442,6 +448,10 @@ public class Global {
 		getSkillPool().add(new ImbueFetish(p));
 		getSkillPool().add(new AssJob(p));
 		getSkillPool().add(new TailSuck(p));
+		getSkillPool().add(new ToggleSlimeCock(p));
+		getSkillPool().add(new ToggleSlimePussy(p));
+		getSkillPool().add(new Spores(p));
+		getSkillPool().add(new EngulfedFuck(p));
 
 		if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
 			getSkillPool().add(new SelfStun(p));
@@ -463,6 +473,9 @@ public class Global {
 		actionPool.add(new Locate());
 		actionPool.add(new MasturbateAction());
 		actionPool.add(new Energize());
+		actionPool.add(new BushAmbush());
+		actionPool.add(new PassAmbush());
+		actionPool.add(new TreeAmbush());
 		buildTrapPool();
 		for (Trap t : trapPool) {
 			actionPool.add(new SetTrap(t));
@@ -572,6 +585,7 @@ public class Global {
 		Character lover = null;
 		int maxaffection = 0;
 		day = null;
+		unflag(Flag.FTC);
 		for (Character player : players) {
 			player.getStamina().fill();
 			player.getArousal().empty();
@@ -642,8 +656,17 @@ public class Global {
 			maya.gain(Item.Dildo2);
 			maya.gain(Item.Strapon2);
 			match = new Match(lineup, matchmod);
-		}
-		if (participants.size() > 5) {
+		} else if (matchmod.name().equals("ftc")) {
+			Character prey = ((FTCModifier) matchmod).getPrey();
+			lineup.add(prey);
+			if (!prey.human())
+				lineup.add(human);
+			while (lineup.size() < 5)
+				lineup.add((Character) pickRandom(participants.toArray()));
+			resting.addAll(participants);
+			resting.removeIf(lineup::contains);
+			match = buildMatch(lineup, matchmod);
+		} else if (participants.size() > 5) {
 			ArrayList<Character> randomizer = new ArrayList<Character>();
 			if (lover != null) {
 				lineup.add(lover);
@@ -659,9 +682,9 @@ public class Global {
 					resting.add(player);
 				}
 			}
-			match = new Match(lineup, matchmod);
+			match = buildMatch(lineup, matchmod);
 		} else {
-			match = new Match(participants, matchmod);
+			match = buildMatch(participants, matchmod);
 		}
 		startMatch();
 	}
@@ -1080,7 +1103,7 @@ public class Global {
 		if (dawn) {
 			dawn();
 		} else {
-			new Prematch(human);
+			decideMatchType().buildPrematch(human);
 		}
 	}
 
@@ -1357,10 +1380,33 @@ public class Global {
 	public static HashSet<Modifier> getModifierPool() {
 		return modifierPool;
 	}
-	
+
 	public static HashSet<Skill> getByTactics(Combat c, Tactics tact) {
 		HashSet<Skill> result = new HashSet<>(skillPool);
 		result.removeIf(skill -> skill.type(c) != tact);
 		return result;
+	}
+
+	public static MatchType decideMatchType() {
+		if (human.getLevel() < 15)
+			return MatchType.NORMAL;
+		if (!checkFlag(Flag.didFTC))
+			return MatchType.FTC;
+		return isDebugOn(DebugFlags.DEBUG_FTC) || Global.random(10) == 0
+				? MatchType.FTC : MatchType.NORMAL;
+	}
+
+	private static Match buildMatch(Collection<Character> combatants,
+			Modifier mod) {
+		if (mod.name().equals("ftc")) {
+			flag(Flag.FTC);
+			return new FTCMatch(combatants, ((FTCModifier) mod).getPrey());
+		} else {
+			return new Match(combatants, mod);
+		}
+	}
+	
+	public static HashSet<Character> getCharacters() {
+		return new HashSet<>(players);
 	}
 }

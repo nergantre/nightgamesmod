@@ -1,22 +1,30 @@
-// $codepro.audit.disable logExceptions
 package nightgames.characters;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 import nightgames.actions.Action;
 import nightgames.actions.Move;
 import nightgames.actions.Movement;
+import nightgames.actions.Resupply;
 import nightgames.actions.Shortcut;
 import nightgames.areas.Area;
 import nightgames.characters.body.BodyPart;
+import nightgames.characters.custom.CommentSituation;
 import nightgames.characters.custom.RecruitmentData;
 import nightgames.characters.custom.effect.CustomEffect;
 import nightgames.combat.Combat;
-import nightgames.combat.Encounter;
+import nightgames.combat.IEncounter;
 import nightgames.combat.Result;
+import nightgames.ftc.FTCMatch;
 import nightgames.global.DebugFlags;
+import nightgames.global.Encs;
+import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
@@ -400,7 +408,30 @@ public class NPC extends Character {
 			if (!location.encounter(this)) {
 				HashSet<Action> available = new HashSet<Action>();
 				HashSet<Movement> radar = new HashSet<Movement>();
-				if (!has(Trait.immobile)) {
+				FTCMatch match;
+				if (Global.checkFlag(Flag.FTC)) {
+					match = (FTCMatch) Global.getMatch();
+					if (match.isPrey(this) && match.getFlagHolder() == null) {
+						available.add(findPath(match.gps("Central Camp")));
+						if (Global.isDebugOn(DebugFlags.DEBUG_FTC))
+							System.out.println(
+									name() + " moving to get flag (prey)");
+					} else if (!match.isPrey(this) && has(Item.Flag)
+							&& !match.isBase(this, location)) {
+						available.add(findPath(match.getBase(this)));
+						if (Global.isDebugOn(DebugFlags.DEBUG_FTC))
+							System.out.println(name()
+									+ " moving to deliver flag (hunter)");
+					} else if (!match.isPrey(this) && has(Item.Flag)
+							&& match.isBase(this, location)) {
+						if (Global.isDebugOn(DebugFlags.DEBUG_FTC))
+							System.out.println(
+									name() + " delivering flag (hunter)");
+						new Resupply().execute(this);
+						return;
+					}
+				}
+				if (!has(Trait.immobile) && available.isEmpty()) {
 					for (Area path : location.adjacent) {
 						available.add(new Move(path));
 						if (path.ping(get(Attribute.Perception))) {
@@ -418,6 +449,7 @@ public class NPC extends Character {
 						available.add(act);
 					}
 				}
+				available.removeIf(a -> a == null);
 				if (location.humanPresent()) {
 					Global.gui().message("You notice " + name() + ai
 							.move(available, radar).execute(this).describe());
@@ -429,14 +461,17 @@ public class NPC extends Character {
 	}
 
 	@Override
-	public void faceOff(Character opponent, Encounter enc) {
-		enc.fightOrFlight(this, ai.fightFlight(opponent));
+	public void faceOff(Character opponent, IEncounter enc) {
+		// enc.fightOrFlight(this, ai.fightFlight(opponent));
+		enc.parse(ai.fightFlight(opponent) ? Encs.fight : Encs.flee, this,
+				opponent);
 	}
 
 	@Override
-	public void spy(Character opponent, Encounter enc) {
+	public void spy(Character opponent, IEncounter enc) {
 		if (ai.attack(opponent)) {
-			enc.ambush(this, opponent);
+			// enc.ambush(this, opponent);
+			enc.parse(Encs.ambush, this, opponent);
 		} else {
 			location.endEncounter();
 		}
@@ -453,18 +488,23 @@ public class NPC extends Character {
 	}
 
 	@Override
-	public void showerScene(Character target, Encounter encounter) {
+	public void showerScene(Character target, IEncounter encounter) {
+		Encs response;
 		if (this.has(Item.Aphrodisiac)) {
-			encounter.aphrodisiactrick(this, target);
+			// encounter.aphrodisiactrick(this, target);
+			response = Encs.aphrodisiactrick;
 		} else if (!target.mostlyNude() && Global.random(3) >= 2) {
-			encounter.steal(this, target);
+			// encounter.steal(this, target);
+			response = Encs.stealclothes;
 		} else {
-			encounter.showerambush(this, target);
+			// encounter.showerambush(this, target);
+			response = Encs.showerattack;
 		}
+		encounter.parse(response, this, target);
 	}
 
 	@Override
-	public void intervene(Encounter enc, Character p1, Character p2) {
+	public void intervene(IEncounter enc, Character p1, Character p2) {
 		if (Global.random(20) + getAffection(p1)
 				+ (p1.has(Trait.sympathetic) ? 10 : 0) >= Global.random(20)
 						+ getAffection(p2)
@@ -481,7 +521,7 @@ public class NPC extends Character {
 	}
 
 	@Override
-	public void promptTrap(Encounter enc, Character target, Trap trap) {
+	public void promptTrap(IEncounter enc, Character target, Trap trap) {
 		if (ai.attack(target)) {
 			enc.trap(this, target, trap);
 		} else {
@@ -894,5 +934,19 @@ public class NPC extends Character {
 	@Override
 	public double dickPreference() {
 		return ai instanceof Eve ? 10.0 : super.dickPreference();
+	}
+
+	public Optional<String> getComment(Combat c) {
+		Set<CommentSituation> applicable = CommentSituation
+				.getApplicableComments(c, this, c.getOther(this));
+		Set<CommentSituation> forbidden = EnumSet.allOf(CommentSituation.class);
+		forbidden.removeAll(applicable);
+		Map<CommentSituation, String> comments = ai.getComments(c);
+		forbidden.forEach(comments::remove);
+		if (comments.isEmpty() || comments.size() == 1
+				&& comments.containsKey(CommentSituation.NO_COMMENT))
+			return Optional.empty();
+		return Optional
+				.of((String) Global.pickRandom(comments.values().toArray()));
 	}
 }

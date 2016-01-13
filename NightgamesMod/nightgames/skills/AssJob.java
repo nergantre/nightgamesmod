@@ -24,7 +24,8 @@ public class AssJob extends Skill {
 	public boolean usable(Combat c, Character target) {
 		return getSelf().canAct() && target.hasDick() && selfNakedOrUnderwear()
 				&& (c.getStance().behind(target)
-						|| c.getStance().en == Stance.reversemount
+						|| (c.getStance().en == Stance.reversemount
+								&& c.getStance().dom(getSelf()))
 						|| c.getStance().mobile(getSelf())
 								&& !c.getStance().prone(getSelf())
 								&& !c.getStance().behind(getSelf()));
@@ -43,14 +44,14 @@ public class AssJob extends Skill {
 			} else if (target.human()) {
 				c.write(getSelf(), receive(c, 0, Result.special, target));
 			}
-			int m = 5 + Global.random(4);
-			int fetishChance = 40 + getSelf().get(Attribute.Fetish) / 2;
+			int m = 4 + Global.random(4);
+			int fetishChance = 20 + getSelf().get(Attribute.Fetish) / 2;
 			if (target.crotchAvailable()) {
 				if (getSelf().crotchAvailable()) {
-					m += 8;
+					m += 6;
 					fetishChance += 30;
 				} else {
-					m += 4;
+					m += 3;
 					fetishChance += 15;
 				}
 			}
@@ -68,14 +69,14 @@ public class AssJob extends Skill {
 				} else if (target.human()) {
 					c.write(getSelf(), receive(c, 0, Result.strong, target));
 				}
-				int m = 5 + Global.random(4);
-				int fetishChance = 40 + getSelf().get(Attribute.Fetish) / 2;
+				int m = 4 + Global.random(4);
+				int fetishChance = 20 + getSelf().get(Attribute.Fetish) / 2;
 				if (target.crotchAvailable()) {
 					if (getSelf().crotchAvailable()) {
-						m += 8;
+						m += 6;
 						fetishChance += 30;
 					} else {
-						m += 4;
+						m += 3;
 						fetishChance += 15;
 					}
 				}

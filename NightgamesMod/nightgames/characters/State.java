@@ -12,4 +12,9 @@ public enum State {
 	webbed,
 	masturbating,
 	quit,
+	
+	//FTC-specific
+	inTree,
+	inBushes,
+	inPass,
 }

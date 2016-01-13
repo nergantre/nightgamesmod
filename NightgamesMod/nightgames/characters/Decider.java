@@ -8,6 +8,7 @@ import nightgames.actions.Move;
 import nightgames.actions.Movement;
 import nightgames.combat.Combat;
 import nightgames.daytime.Daytime;
+import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.skills.Skill;
@@ -212,7 +213,8 @@ public class Decider {
 					return act;
 				}
 			}
-			Move path = character.findPath(Global.getMatch().gps("Workshop"));
+			String workshop = Global.checkFlag(Flag.FTC) ? "Cabin" : "Workshop";
+			Move path = character.findPath(Global.getMatch().gps(workshop));
 			if (path != null) {
 				return path;
 			}

@@ -314,8 +314,8 @@ public enum CockMod implements BodyPartMod {
 							opponent.directObject());
 					if (target == PussyPart.feral) {
 						message += String.format(
-								" %s offers no resistance to the subversive seed.",
-								opponent.subject());
+								" %s no resistance to the subversive seed.",
+								Global.capitalizeFirstLetter(opponent.subjectAction("offer", "offers")));
 						duration += 2;
 					}
 					opponent.add(c, new Enthralled(opponent, self, duration));
@@ -388,6 +388,16 @@ public enum CockMod implements BodyPartMod {
 										+ "feels like pure ecstasy. {self:SUBJECT} hasn't even begun moving yet, but {self:possessive} cock simply sitting within you radiates a heat that has you squirming uncontrollably.",
 								self, opponent));
 			}
+		}
+	}
+	
+	public void onEndPenetration(Combat c, Character self,
+			Character opponent, BodyPart target, ModdedCockPart moddedCockPart) {
+		if (this == slimy) {
+			c.write(self, Global.format("As {self:possessive} {self:body-part:cock} leaves {other:possessive} " 
+					+ target.describe(opponent) + ", a small bit of slime stays behind, vibrating inside of {other:direct-object}.",
+					self, opponent));
+			opponent.add(new Horny(opponent, 4f, 10, self.nameOrPossessivePronoun() + " slimy residue"));
 		}
 	}
 }

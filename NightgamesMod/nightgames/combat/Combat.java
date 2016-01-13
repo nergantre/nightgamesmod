@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
+import java.util.Optional;
 
 import nightgames.areas.Area;
 import nightgames.characters.Attribute;
@@ -47,6 +48,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 	public CombatantData			p1Data;
 	public Character				p2;
 	public CombatantData			p2Data;
+	public Optional<Character>		winner;
 	public int						phase;
 	private Skill					p1act;
 	private Skill					p2act;
@@ -73,6 +75,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 		images = new HashMap<String, String>();
 		p1.state = State.combat;
 		p2.state = State.combat;
+		winner = Optional.empty();
 	}
 
 	public Combat(Character p1, Character p2, Area loc, Position starting) {
@@ -217,6 +220,16 @@ public class Combat extends Observable implements Serializable, Cloneable {
 		}
 		victor.getWillpower().fill();
 		loser.getWillpower().fill();
+
+		if (Global.checkFlag(Flag.FTC) && loser.has(Item.Flag)) {
+			write(victor,
+					Global.format(
+							"<br><b>{self:SUBJECT-ACTION:take|takes} the "
+									+ "Flag from {other:subject}!</b>",
+							victor, loser));
+			loser.remove(Item.Flag);
+			victor.gain(Item.Flag);
+		}
 	}
 
 	public void turn() {
@@ -227,6 +240,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 			p2.draw(this, state);
 			phase = 2;
 			updateMessage();
+			winner = Optional.of(Global.noneCharacter());
 			if (!(p1.human() || p2.human())) {
 				end();
 			}
@@ -238,6 +252,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 			p2.evalChallenges(this, p2);
 			p2.victory(this, state);
 			doVictory(p2, p1);
+			winner = Optional.of(p2);
 			phase = 2;
 			updateMessage();
 			if (!(p1.human() || p2.human())) {
@@ -251,6 +266,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 			p2.evalChallenges(this, p1);
 			p1.victory(this, state);
 			doVictory(p1, p2);
+			winner = Optional.of(p1);
 			phase = 2;
 			updateMessage();
 			if (!(p1.human() || p2.human())) {
@@ -324,6 +340,16 @@ public class Combat extends Observable implements Serializable, Cloneable {
 		p1act = null;
 		p2act = null;
 		p1.act(this);
+
+		if (Global.random(3) == 0 && (p1.human() || p2.human())) {
+			NPC commenter = (NPC) getOther(Global.getPlayer());
+			Optional<String> comment = commenter.getComment(this);
+			if (comment.isPresent()) {
+				write(commenter, "<i>\"" + Global.format(comment.get(), commenter,
+						Global.getPlayer()) + "\"</i>");
+			}
+		}
+
 		updateAndClearMessage();
 	}
 
@@ -455,6 +481,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 			p1.evalChallenges(this, null);
 			p2.evalChallenges(this, null);
 			p2.draw(this, state);
+			winner = Optional.of(Global.noneCharacter());
 			end();
 			return;
 		}
@@ -464,6 +491,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 			p2.evalChallenges(this, p2);
 			p2.victory(this, state);
 			doVictory(p2, p1);
+			winner = Optional.of(p2);
 			end();
 			return;
 		}
@@ -473,6 +501,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
 			p2.evalChallenges(this, p1);
 			p1.victory(this, state);
 			doVictory(p1, p2);
+			winner = Optional.of(p1);
 			end();
 			return;
 		}

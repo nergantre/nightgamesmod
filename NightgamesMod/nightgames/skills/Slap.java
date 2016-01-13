@@ -7,6 +7,8 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.stance.Stance;
+import nightgames.stance.StandingOver;
 
 public class Slap extends Skill {
 
@@ -16,8 +18,7 @@ public class Slap extends Skill {
 
 	@Override
 	public boolean usable(Combat c, Character target) {
-		return c.getStance().reachTop(getSelf()) && getSelf().canAct()
-				&& !getSelf().has(Trait.softheart)
+		return c.getStance().reachTop(getSelf()) && getSelf().canAct() && !getSelf().has(Trait.softheart)
 				&& c.getStance().front(getSelf());
 	}
 
@@ -29,22 +30,33 @@ public class Slap extends Skill {
 	@Override
 	public boolean resolve(Combat c, Character target) {
 		if (target.roll(this, c, accuracy(c))) {
-			if (getSelf().get(Attribute.Animism) >= 8) {
+			if (getSelf().has(Trait.slime)) {
+				if (getSelf().human()) {
+					c.write(getSelf(), deal(c, 0, Result.critical, target));
+				} else if (target.human()) {
+					c.write(getSelf(), receive(c, 0, Result.critical, target));
+				}
+				target.pain(c, Global.random(10) + getSelf().get(Attribute.Power) / 2);
+				if (c.getStance().en == Stance.neutral && Global.random(5) == 0) {
+					c.setStance(new StandingOver(getSelf(), target));
+					c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:slap|slaps} {other:direct-object} hard"
+							+ " enough to throw {other:pronoun} to the ground.", getSelf(), target));
+				}
+				target.emote(Emotion.nervous, 40);
+				target.emote(Emotion.angry, 30);
+			} else if (getSelf().get(Attribute.Animism) >= 8) {
 				if (getSelf().human()) {
 					c.write(getSelf(), deal(c, 0, Result.special, target));
 				} else if (target.human()) {
 					c.write(getSelf(), receive(c, 0, Result.special, target));
 				}
 				if (getSelf().has(Trait.pimphand)) {
-					target.pain(c,
-							Global.random(
-									16 * getSelf().getArousal().percent() / 100)
-									+ getSelf().get(Attribute.Power) / 2);
+					target.pain(c, Global.random(16 * getSelf().getArousal().percent() / 100)
+							+ getSelf().get(Attribute.Power) / 2);
 					target.emote(Emotion.nervous, 40);
 					target.emote(Emotion.angry, 30);
 				} else {
-					target.pain(c, Global.random(
-							12 * getSelf().getArousal().percent() / 100 + 1)
+					target.pain(c, Global.random(12 * getSelf().getArousal().percent() / 100 + 1)
 							+ getSelf().get(Attribute.Power) / 2);
 					target.emote(Emotion.nervous, 25);
 					target.emote(Emotion.angry, 30);
@@ -56,8 +68,7 @@ public class Slap extends Skill {
 					c.write(getSelf(), receive(c, 0, Result.normal, target));
 				}
 				if (getSelf().has(Trait.pimphand)) {
-					target.pain(c, Global.random(8) + 5
-							+ target.get(Attribute.Perception));
+					target.pain(c, Global.random(8) + 5 + target.get(Attribute.Perception));
 					target.emote(Emotion.nervous, 20);
 					target.emote(Emotion.angry, 30);
 				} else {
@@ -100,7 +111,9 @@ public class Slap extends Skill {
 
 	@Override
 	public String getLabel(Combat c) {
-		if (getSelf().get(Attribute.Animism) >= 8) {
+		if (getSelf().has(Trait.slime)) {
+			return "Clobber";
+		} else if (getSelf().get(Attribute.Animism) >= 8) {
 			return "Tiger Claw";
 		} else {
 			return "Slap";
@@ -108,13 +121,14 @@ public class Slap extends Skill {
 	}
 
 	@Override
-	public String deal(Combat c, int damage, Result modifier,
-			Character target) {
+	public String deal(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
 			return target.name() + " avoids your slap.";
 		} else if (modifier == Result.special) {
-			return "You channel your bestial power and strike" + target.name()
-					+ " with a solid open hand strike.";
+			return "You channel your bestial power and strike" + target.name() + " with a solid open hand strike.";
+		} else if (modifier == Result.critical) {
+			return "You let more of your slime flow to your hand, tripling it in size. Then, you lash out and slam "
+					+ target.name() + " in the face.";
 		} else {
 			return "You slap " + target.name()
 					+ "'s cheek; not hard enough to really hurt her, but enough to break her concentration.";
@@ -122,17 +136,16 @@ public class Slap extends Skill {
 	}
 
 	@Override
-	public String receive(Combat c, int damage, Result modifier,
-			Character target) {
+	public String receive(Combat c, int damage, Result modifier, Character target) {
 		if (modifier == Result.miss) {
-			return getSelf().name()
-					+ " tries to slap you but you catch her wrist.";
+			return getSelf().name() + " tries to slap you but you catch her wrist.";
 		} else if (modifier == Result.special) {
-			return getSelf().name()
-					+ "'s palm hits you in a savage strike that makes your head ring.";
+			return getSelf().name() + "'s palm hits you in a savage strike that makes your head ring.";
+		} else if (modifier == Result.critical) {
+			return getSelf().name() + "'s hand grows significantly, and then " + getSelf().pronoun() 
+					+ " swings it powerfully into your face.";
 		} else {
-			return getSelf().name()
-					+ " slaps you across the face, leaving a stinging heat on your cheek.";
+			return getSelf().name() + " slaps you across the face, leaving a stinging heat on your cheek.";
 		}
 	}
 

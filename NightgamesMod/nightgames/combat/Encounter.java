@@ -19,19 +19,17 @@ import nightgames.status.Stsflag;
 import nightgames.trap.Spiderweb;
 import nightgames.trap.Trap;
 
-public class Encounter implements Serializable {
-	/**
-	 *
-	 */
+public class Encounter implements Serializable, IEncounter {
+
 	private static final long	serialVersionUID	= 3122246133619156539L;
-	private Character			p1;
-	private Character			p2;
-	private boolean				p1ff;
-	private boolean				p2ff;
-	private Area				location;
-	private Combat				fight;
-	private int					checkin;
-	private int					fightTime;
+	protected Character			p1;
+	protected Character			p2;
+	protected boolean			p1ff;
+	protected boolean			p2ff;
+	protected Area				location;
+	protected Combat			fight;
+	protected int				checkin;
+	protected int				fightTime;
 
 	public Encounter(Character first, Character second, Area location) {
 		this.location = location;
@@ -43,7 +41,7 @@ public class Encounter implements Serializable {
 		checkEnthrall(p2, p1);
 	}
 
-	private void checkEnthrall(Character p1, Character p2) {
+	protected void checkEnthrall(Character p1, Character p2) {
 		Status enthrall = p1.getStatus(Stsflag.enthralled);
 		if (enthrall != null) {
 			if (((Enthralled) enthrall).master != p2) {
@@ -154,7 +152,7 @@ public class Encounter implements Serializable {
 		}
 	}
 
-	public void fightOrFlight(Character p, boolean fight) {
+	protected void fightOrFlight(Character p, boolean fight) {
 		if (p == p1) {
 			p1ff = fight;
 			checkin++;
@@ -254,7 +252,7 @@ public class Encounter implements Serializable {
 		}
 	}
 
-	public void ambush(Character attacker, Character target) {
+	protected void ambush(Character attacker, Character target) {
 		fightTime = 2;
 		target.add(new Flatfooted(target, 3));
 		if (p1.human() || p2.human()) {
@@ -270,7 +268,7 @@ public class Encounter implements Serializable {
 		}
 	}
 
-	public void showerambush(Character attacker, Character target) {
+	protected void showerambush(Character attacker, Character target) {
 		fightTime = 2;
 		if (target.human()) {
 			if (location.id() == Movement.shower) {
@@ -307,7 +305,7 @@ public class Encounter implements Serializable {
 		}
 	}
 
-	public void aphrodisiactrick(Character attacker, Character target) {
+	protected void aphrodisiactrick(Character attacker, Character target) {
 		attacker.consume(Item.Aphrodisiac, 1);
 		attacker.gainXP(attacker.getVictoryXP(target));
 		target.gainXP(target.getDefeatXP(attacker));
@@ -368,7 +366,7 @@ public class Encounter implements Serializable {
 		location.endEncounter();
 	}
 
-	public void caught(Character attacker, Character target) {
+	protected void caught(Character attacker, Character target) {
 		attacker.gainXP(attacker.getVictoryXP(target));
 		target.gainXP(target.getDefeatXP(attacker));
 		if (target.human()) {
@@ -402,7 +400,7 @@ public class Encounter implements Serializable {
 		location.endEncounter();
 	}
 
-	public void spider(Character attacker, Character target) {
+	protected void spider(Character attacker, Character target) {
 		attacker.gainXP(attacker.getVictoryXP(target));
 		target.gainXP(target.getDefeatXP(attacker));
 		if (attacker.human()) {
@@ -467,15 +465,7 @@ public class Encounter implements Serializable {
 		}
 	}
 
-	public Character getOther(Character notthis) {
-		if (p1 == notthis) {
-			return p2;
-		} else {
-			return p1;
-		}
-	}
-
-	public void steal(Character thief, Character target) {
+	protected void steal(Character thief, Character target) {
 		if (thief.human()) {
 			Global.gui().message("You quietly swipe " + target.name()
 					+ "'s clothes while she's occupied. It's a little underhanded, but you can still turn them in for cash just as if you defeated her.");
@@ -505,56 +495,62 @@ public class Encounter implements Serializable {
 		}
 	}
 
-	public void parse(Encs choice, Character target) {
+	public void parse(Encs choice, Character self, Character target) {
 		switch (choice) {
 			case ambush:
-				ambush(Global.getPlayer(), target);
+				ambush(self, target);
 				break;
 			case showerattack:
-				showerambush(Global.getPlayer(), target);
+				showerambush(self, target);
 				break;
 			case aphrodisiactrick:
-				aphrodisiactrick(Global.getPlayer(), target);
+				aphrodisiactrick(self, target);
 				break;
 			case stealclothes:
-				steal(Global.getPlayer(), target);
+				steal(self, target);
 				break;
 			case fight:
-				fightOrFlight(Global.getPlayer(), true);
+				fightOrFlight(self, true);
 				break;
 			case flee:
-				fightOrFlight(Global.getPlayer(), false);
+				fightOrFlight(self, false);
 				break;
 			default:
 				return;
 		}
 	}
 
-	public void parse(Encs choice, Character target, Trap trap) {
+	public void parse(Encs choice, Character self, Character target,
+			Trap trap) {
 		switch (choice) {
 			case ambush:
-				ambush(Global.getPlayer(), target);
+				ambush(self, target);
 				break;
 			case capitalize:
-				trap(Global.getPlayer(), target, trap);
+				trap(self, target, trap);
 				break;
 			case showerattack:
-				showerambush(Global.getPlayer(), target);
+				showerambush(self, target);
 				break;
 			case aphrodisiactrick:
-				aphrodisiactrick(Global.getPlayer(), target);
+				aphrodisiactrick(self, target);
 				break;
 			case stealclothes:
 				steal(Global.getPlayer(), target);
 				break;
 			case fight:
-				fightOrFlight(Global.getPlayer(), true);
+				fightOrFlight(self, true);
 				break;
 			case flee:
-				fightOrFlight(Global.getPlayer(), false);
+				fightOrFlight(self, false);
 				break;
 			default:
 				return;
 		}
+	}
+
+	@Override
+	public boolean checkIntrude(Character c) {
+		return fight != null && !c.equals(p1) && !c.equals(p2);
 	}
 }
