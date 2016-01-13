@@ -1163,7 +1163,7 @@ public class GUI extends JFrame implements Observer {
                 timeLabel.setText(Global.getMatch().getTime() + " am");
             }
 
-            timeLabel.setForeground(new Color(0, 51, 102));
+            timeLabel.setForeground(new Color(51, 101, 202));
         }
         if (Global.getDay() != null) { // not updating correctly during daytime
             timeLabel.setText(Global.getDay().getTime() + " pm");
