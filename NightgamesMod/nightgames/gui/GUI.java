@@ -130,7 +130,7 @@ public class GUI extends JFrame implements Observer {
     public GUI() {
 
         // frame title
-        setTitle("NightGames Mod Preview Version");
+        setTitle("NightGames Mod");
 
         // closing operation
         setDefaultCloseOperation(3);

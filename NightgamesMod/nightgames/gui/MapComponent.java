@@ -40,7 +40,7 @@ public class MapComponent extends JComponent {
         if (drawHint.vertical && g instanceof Graphics2D) {
             Graphics2D g2d = (Graphics2D) g;
             orig = g2d.getTransform();
-            g2d.rotate(Math.PI/2, (r.x + a) + rWidth * .5, r.y + b - rHeight /4);
+            g2d.rotate(Math.PI / 2, (r.x + a) + rWidth * .5, r.y + b - rHeight / 4);
         }
         g.setFont(font);
         g.drawString(drawHint.label, r.x + a, r.y + b);
