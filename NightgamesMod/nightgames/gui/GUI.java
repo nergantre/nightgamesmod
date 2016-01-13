@@ -1156,6 +1156,9 @@ public class GUI extends JFrame implements Observer {
         willpowerBar.setValue(player.getWillpower().get());
         loclbl.setText(player.location().name);
         cashLabel.setText("$" + player.money);
+        if (map != null) {
+            map.repaint();
+        }
         if (Global.getMatch() != null) {
             timeLabel.setText(Global.getMatch().getTime() + " pm");
 

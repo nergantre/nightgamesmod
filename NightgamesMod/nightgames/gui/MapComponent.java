@@ -85,7 +85,7 @@ public class MapComponent extends JComponent {
             Rectangle rect = new Rectangle(area.drawHint.rect.x * multiplier + mapBorder,
                             area.drawHint.rect.y * multiplier + mapBorder, area.drawHint.rect.width * multiplier,
                             area.drawHint.rect.height * multiplier);
-            g.setColor(Color.BLACK);
+            g.setColor(new Color(50, 100, 200));
             g.drawRect(rect.x, rect.y, rect.width, rect.height);
         });
         rooms.stream().forEach(area -> {
