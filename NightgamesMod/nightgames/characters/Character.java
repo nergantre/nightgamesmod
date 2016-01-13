@@ -2563,9 +2563,6 @@ public abstract class Character extends Observable implements Cloneable {
     public abstract String getPortrait(Combat c);
 
     public void modMoney(int i) {
-        if (human() && i > 0) {
-            Global.gui().message("You've gained $" + Math.round(i * Global.moneyRate) + ".");
-        }
         setMoney((int) (money + Math.round(i * Global.moneyRate)));
     }
 
