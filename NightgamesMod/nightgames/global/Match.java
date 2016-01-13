@@ -34,7 +34,6 @@ public class Match {
         }
         score = new HashMap<Character, Integer>();
         this.condition = condition;
-        Global.gui().startMatch();
         for (Character combatant : combatants) {
             score.put(combatant, 0);
             Global.gui().message(Global.gainSkills(combatant));
@@ -305,5 +304,9 @@ public class Match {
 
     public Collection<Movement> getResupplyAreas(Character ch) {
         return Arrays.asList(Movement.union, Movement.dorm);
+    }
+
+    public Collection<Area> getAreas() {
+        return map.values();
     }
 }

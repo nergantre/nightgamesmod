@@ -1,5 +1,6 @@
 package nightgames.areas;
 
+import java.awt.Rectangle;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -24,9 +25,14 @@ public class Area implements Serializable {
     public boolean alarm;
     public Trap trap;
     public ArrayList<Deployable> env;
+    public MapDrawHint drawHint;
     private Movement enumerator;
 
     public Area(String name, String description, Movement enumerator) {
+        this(name, description, enumerator, new MapDrawHint());
+    }
+
+    public Area(String name, String description, Movement enumerator, MapDrawHint drawHint) {
         this.name = name;
         this.description = description;
         this.enumerator = enumerator;
@@ -37,6 +43,7 @@ public class Area implements Serializable {
         alarm = false;
         trap = null;
         fight = null;
+        this.drawHint = drawHint;
     }
 
     public void link(Area adj) {

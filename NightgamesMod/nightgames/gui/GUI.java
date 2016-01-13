@@ -21,6 +21,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
@@ -102,7 +103,7 @@ public class GUI extends JFrame implements Observer {
     private JPanel optionsPanel;
     private JPanel portraitPanel;
     private JLabel portrait;
-    private JLabel map;
+    private JComponent map;
     private JPanel imgPanel;
     private JLabel imgLabel;
     private JRadioButton rdnormal;
@@ -668,65 +669,14 @@ public class GUI extends JFrame implements Observer {
         }
     }
 
-    // Map loader
-
     public void loadMap() {
-        if (!Global.checkFlag(Flag.noimage)) {
-            BufferedImage mapPath = null;
-            try {
-                mapPath = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets//map.png"));
-            } catch (IOException localIOException10) {
-            } catch (IllegalArgumentException badArg) {
-
-            }
-
-            if (mapPath != null) {
-                if (width > 720) {
-                    map = new JLabel(new ImageIcon(mapPath));
-                    map.setVerticalAlignment(SwingConstants.BOTTOM);
-                }
-
-                else {
-                    Image scaledMap = mapPath.getScaledInstance(width / 6, height / 4, Image.SCALE_SMOOTH);
-                    map = new JLabel(new ImageIcon(scaledMap));
-                    map.setVerticalAlignment(SwingConstants.BOTTOM);
-                }
-
-                if (width > 720) {
-                    map = new JLabel(new ImageIcon(mapPath));
-                    map.setVerticalAlignment(SwingConstants.BOTTOM);
-                }
-
-                else {
-                    Image scaledMap = mapPath.getScaledInstance(width / 6, height / 4, Image.SCALE_SMOOTH);
-                    map = new JLabel(new ImageIcon(scaledMap));
-                    map.setVerticalAlignment(SwingConstants.BOTTOM);
-                }
-
-                portraitPanel.add(map, BorderLayout.WEST);
-
-            }
-
-        }
+        map = new MapComponent(Global.getMatch().getAreas());
+        map.setPreferredSize(new Dimension(300, 385));
+        portraitPanel.add(map, BorderLayout.WEST);
     }
 
-    // Map unloader
-
     public void unloadMap() {
-        if (!Global.checkFlag(Flag.noimage)) {
-            BufferedImage mapPath = null;
-            try {
-                mapPath = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets//map.png"));
-            } catch (IOException localIOException10) {
-            } catch (IllegalArgumentException badArg) {
-
-            }
-
-            if (mapPath != null) {
-                portraitPanel.remove(map);
-            }
-        }
-
+        portraitPanel.remove(map);
     }
 
     // Combat GUI
