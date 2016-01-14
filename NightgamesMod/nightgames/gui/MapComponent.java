@@ -60,6 +60,7 @@ public class MapComponent extends JComponent {
         int width = Math.max(getWidth(), 25 * multiplier);
         int height = Math.max(getHeight(), 19 * multiplier);
         int mapBorder = 12;
+        int yOffset = 0;
         g.setColor(new Color(0, 14, 60));
         g.fillRect(0, 0, getWidth(), getHeight());
         g.setColor(Color.WHITE);
@@ -69,7 +70,7 @@ public class MapComponent extends JComponent {
                 return;
             }
             Rectangle rect = new Rectangle(area.drawHint.rect.x * multiplier + mapBorder,
-                            area.drawHint.rect.y * multiplier + mapBorder, area.drawHint.rect.width * multiplier,
+                            area.drawHint.rect.y * multiplier + yOffset + mapBorder, area.drawHint.rect.width * multiplier,
                             area.drawHint.rect.height * multiplier);
             if (!area.humanPresent()) {
                 g.setColor(new Color(0, 34, 100));
@@ -83,7 +84,7 @@ public class MapComponent extends JComponent {
                 return;
             }
             Rectangle rect = new Rectangle(area.drawHint.rect.x * multiplier + mapBorder,
-                            area.drawHint.rect.y * multiplier + mapBorder, area.drawHint.rect.width * multiplier,
+                            area.drawHint.rect.y * multiplier + yOffset + mapBorder, area.drawHint.rect.width * multiplier,
                             area.drawHint.rect.height * multiplier);
             g.setColor(new Color(50, 100, 200));
             g.drawRect(rect.x, rect.y, rect.width, rect.height);
@@ -93,7 +94,7 @@ public class MapComponent extends JComponent {
                 return;
             }
             Rectangle rect = new Rectangle(area.drawHint.rect.x * multiplier + mapBorder,
-                            area.drawHint.rect.y * multiplier + mapBorder, area.drawHint.rect.width * multiplier,
+                            area.drawHint.rect.y * multiplier + yOffset + mapBorder, area.drawHint.rect.width * multiplier,
                             area.drawHint.rect.height * multiplier);
             g.setColor(Color.WHITE);
             centerString(g, rect, area.drawHint, font);

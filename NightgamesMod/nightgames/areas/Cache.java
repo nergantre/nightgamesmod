@@ -13,6 +13,7 @@ import nightgames.items.clothing.Clothing;
 
 public class Cache implements Deployable {
     private int dc;
+    private int level;
     private Attribute test;
     private Attribute secondary;
     private ArrayList<Loot> reward;
@@ -20,6 +21,7 @@ public class Cache implements Deployable {
     public Cache(int level) {
         reward = new ArrayList<Loot>();
         dc = 10 + level;
+        this.level = level;
         switch (Global.random(4)) {
             case 3:
                 test = Attribute.Seduction;
@@ -40,6 +42,14 @@ public class Cache implements Deployable {
                 break;
         }
         calcReward(level);
+    }
+    
+    public void gainMoney(Character active) {
+        int reward = 500 + level * 50;
+        active.modMoney(reward);
+        if (active.human()) {
+            Global.gui().message("You have found " + reward + "$!");
+        }
     }
 
     @Override
