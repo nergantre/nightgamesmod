@@ -220,7 +220,7 @@ public class Command extends Skill {
                 getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandomAss(),
                                 7 + Global.random(m), c);
                 if (Global.random(50) < getSelf().get(Attribute.Fetish) + 10) {
-                    target.add(new BodyFetish(target, getSelf(), "ass", .1));
+                    target.add(c, new BodyFetish(target, getSelf(), "ass", .1));
                 }
                 getSelf().buildMojo(c, 15);
                 break;
@@ -234,7 +234,7 @@ public class Command extends Skill {
                 getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandomCock(),
                                 7 + Global.random(m), c);
                 if (Global.random(50) < getSelf().get(Attribute.Fetish) + 10) {
-                    target.add(new BodyFetish(target, getSelf(), "cock", .1));
+                    target.add(c, new BodyFetish(target, getSelf(), "cock", .1));
                 }
                 getSelf().buildMojo(c, 15);
                 break;
@@ -248,7 +248,7 @@ public class Command extends Skill {
                 getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandomPussy(),
                                 7 + Global.random(m), c);
                 if (Global.random(50) < getSelf().get(Attribute.Fetish) + 10) {
-                    target.add(new BodyFetish(target, getSelf(), "pussy", .1));
+                    target.add(c, new BodyFetish(target, getSelf(), "pussy", .1));
                 }
                 getSelf().buildMojo(c, 15);
                 break;

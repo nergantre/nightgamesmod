@@ -196,7 +196,7 @@ public enum BasicCockPart implements CockPart {
             }
         }
         if (self.has(Trait.druglacedprecum) && !opponent.isPartProtected(target)) {
-            opponent.add(new Sensitized(opponent, target, .2, 2.0, 20));
+            opponent.add(c, new Sensitized(opponent, target, .2, 2.0, 20));
             c.write(self, Global.format("{self:NAME-POSSESSIVE} drug-laced precum is affecting {other:direct-object}.",
                             self, opponent));
         }

@@ -39,7 +39,7 @@ public class Suggestion extends Skill {
             } else {
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             }
-            target.add(new Charmed(target));
+            target.add(c, new Charmed(target));
             return true;
         } else if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.miss, target));

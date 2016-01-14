@@ -176,7 +176,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
             c.write(self, Global.format("{self:NAME-POSSESSIVE} {self:body-part:pussy} envelops"
                             + " {other:possessive} {other:body-part:cock} in a sticky grip, making extraction more"
                             + " difficult.", self, opponent));
-            opponent.add(new CockBound(opponent, 7, self.nameOrPossessivePronoun() + " gooey pussy"));
+            opponent.add(c, new CockBound(opponent, 7, self.nameOrPossessivePronoun() + " gooey pussy"));
         }
     }
 

@@ -46,7 +46,7 @@ public class FootWorship extends Skill {
         if (getSelf().human()) {
             c.write(getSelf(), Global.format(deal(c, 0, Result.normal, target), getSelf(), target));
         } else {
-            c.write(getSelf(), Global.format(deal(c, 0, Result.normal, target), getSelf(), target));
+            c.write(getSelf(), Global.format(receive(c, 0, Result.normal, target), getSelf(), target));
         }
         if (m > 0) {
             target.body.pleasure(getSelf(), mouth, feet, m, c);

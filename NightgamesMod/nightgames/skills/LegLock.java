@@ -28,7 +28,7 @@ public class LegLock extends Skill {
             } else if (target.human()) {
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             }
-            target.add(new Abuff(target, Attribute.Speed, -2, 5));
+            target.add(c, new Abuff(target, Attribute.Speed, -2, 5));
             target.pain(c, Global.random(10) + 7);
             target.emote(Emotion.angry, 15);
         } else {

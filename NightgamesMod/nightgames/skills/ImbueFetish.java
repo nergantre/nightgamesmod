@@ -52,7 +52,7 @@ public class ImbueFetish extends Skill {
         } else {
             c.write(getSelf(), receive(c, 0, Result.normal, target));
         }
-        target.add(new BodyFetish(target, getSelf(), chosenFetish,
+        target.add(c, new BodyFetish(target, getSelf(), chosenFetish,
                         Global.randomdouble() * .2 + getSelf().get(Attribute.Fetish) * .01));
         chosenFetish = null;
         return true;

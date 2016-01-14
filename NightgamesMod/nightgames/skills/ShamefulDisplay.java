@@ -38,8 +38,8 @@ public class ShamefulDisplay extends Skill {
         } else if (target.human()) {
             c.write(receive(c, 0, Result.normal, target));
         }
-        getSelf().add(new Shamed(getSelf()));
-        target.add(new Horny(target, getSelf().get(Attribute.Submissive) / 4, 2, " (Dominant Thrill)"));
+        getSelf().add(c, new Shamed(getSelf()));
+        target.add(c, new Horny(target, getSelf().get(Attribute.Submissive) / 4, 2, " (Dominant Thrill)"));
         return true;
     }
 

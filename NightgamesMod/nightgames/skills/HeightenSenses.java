@@ -46,7 +46,7 @@ public class HeightenSenses extends Skill {
             } else {
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             }
-            target.add(new Hypersensitive(target));
+            target.add(c, new Hypersensitive(target));
         }
         return true;
     }

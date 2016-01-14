@@ -40,8 +40,8 @@ public class TortoiseWrap extends Skill {
         } else if (target.human()) {
             c.write(getSelf(), receive(c, 0, Result.normal, target));
         }
-        target.add(new Tied(target));
-        target.add(new Hypersensitive(target));
+        target.add(c, new Tied(target));
+        target.add(c, new Hypersensitive(target));
         return true;
     }
 

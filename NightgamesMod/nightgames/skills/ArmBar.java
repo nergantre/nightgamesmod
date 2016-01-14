@@ -31,7 +31,7 @@ public class ArmBar extends Skill {
                 c.write(getSelf(), receive(c, m, Result.normal, target));
             }
             target.pain(c, m);
-            target.add(new Abuff(target, Attribute.Power, -4, 5));
+            target.add(c, new Abuff(target, Attribute.Power, -4, 5));
             target.emote(Emotion.angry, 15);
         } else {
             if (getSelf().human()) {

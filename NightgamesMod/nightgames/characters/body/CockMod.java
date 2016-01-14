@@ -346,7 +346,7 @@ public enum CockMod implements BodyPartMod {
                                             + target.describe(opponent)
                                             + ", a small bit of slime stays behind, vibrating inside of {other:direct-object}.",
                             self, opponent));
-            opponent.add(new Horny(opponent, 4f, 10, self.nameOrPossessivePronoun() + " slimy residue"));
+            opponent.add(c, new Horny(opponent, 4f, 10, self.nameOrPossessivePronoun() + " slimy residue"));
         }
     }
 }

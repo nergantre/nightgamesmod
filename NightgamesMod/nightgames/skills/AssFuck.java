@@ -112,7 +112,7 @@ public class AssFuck extends Fuck {
                             getSelf().possessivePronoun(), getSelf().body.getRandomCock().describe(getSelf()),
                             target.nameOrPossessivePronoun(), getSelf().nameOrPossessivePronoun(),
                             target.directObject()));
-            getSelf().add(new Frenzied(getSelf(), 6));
+            getSelf().add(c, new Frenzied(getSelf(), 6));
         }
         return true;
     }
