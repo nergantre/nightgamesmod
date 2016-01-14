@@ -1,7 +1,14 @@
 package nightgames.characters.body;
 
-public interface CockPart extends BodyPart {
-	double getSize();
+import nightgames.characters.Character;
 
-	BodyPart applyMod(CockMod mod);
+public interface CockPart extends BodyPart {
+    double getSize();
+
+    BodyPart applyMod(CockMod mod);
+
+    @Override
+    public default double getFemininity(Character self) {
+        return -3;
+    }
 }

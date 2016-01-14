@@ -6,23 +6,23 @@ import nightgames.trap.Trap;
 
 // C# naming convention, I know, I know
 public interface IEncounter {
-	boolean battle();
+    boolean battle();
 
-	void engage(Combat c);
+    void engage(Combat c);
 
-	Combat getCombat();
+    Combat getCombat();
 
-	boolean checkIntrude(Character c);
+    boolean checkIntrude(Character c);
 
-	void intrude(Character intruder, Character assist);
+    void intrude(Character intruder, Character assist);
 
-	void trap(Character opportunist, Character target, Trap trap);
+    void trap(Character opportunist, Character target, Trap trap);
 
-	boolean spotCheck();
+    boolean spotCheck();
 
-	Character getPlayer(int idx);
+    Character getPlayer(int idx);
 
-	void parse(Encs choice, Character primary, Character opponent);
+    void parse(Encs choice, Character primary, Character opponent);
 
-	void parse(Encs choice, Character primary, Character opponent, Trap trap);
+    void parse(Encs choice, Character primary, Character opponent, Trap trap);
 }

@@ -7,14 +7,14 @@ import nightgames.characters.Character;
 
 public class FlagOnlyModifier extends ItemModifier {
 
-	@Override
-	public boolean itemIsBanned(Character c, Item i) {
-		return ((FTCMatch) Global.getMatch()).isPrey(c) && i != Item.Flag;
-	}
+    @Override
+    public boolean itemIsBanned(Character c, Item i) {
+        return ((FTCMatch) Global.getMatch()).isPrey(c) && i != Item.Flag;
+    }
 
-	@Override
-	public String toString() {
-		return "flag-only";
-	}
+    @Override
+    public String toString() {
+        return "flag-only";
+    }
 
 }

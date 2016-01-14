@@ -17,43 +17,43 @@ import nightgames.items.ItemAmount;
 import nightgames.items.clothing.Clothing;
 
 public interface NPCData {
-	String getName();
+    String getName();
 
-	Stats getStats();
+    Stats getStats();
 
-	Stack<Clothing> getTopOutfit();
+    Stack<Clothing> getTopOutfit();
 
-	Stack<Clothing> getBottomOutfit();
+    Stack<Clothing> getBottomOutfit();
 
-	Growth getGrowth();
+    Growth getGrowth();
 
-	List<PreferredAttribute> getPreferredAttributes();
+    List<PreferredAttribute> getPreferredAttributes();
 
-	List<ItemAmount> getStartingItems();
+    List<ItemAmount> getStartingItems();
 
-	List<ItemAmount> getPurchasedItems();
+    List<ItemAmount> getPurchasedItems();
 
-	String getLine(String string, Combat c, Character self, Character other);
+    String getLine(String string, Combat c, Character self, Character other);
 
-	Item getTrophy();
+    Item getTrophy();
 
-	boolean checkMood(Character self, Emotion mood, int value);
+    boolean checkMood(Character self, Emotion mood, int value);
 
-	Body getBody();
+    Body getBody();
 
-	CharacterSex getSex();
+    CharacterSex getSex();
 
-	String getPortraitName(Combat c, Character self, Character other);
+    String getPortraitName(Combat c, Character self, Character other);
 
-	String getDefaultPortraitName();
+    String getDefaultPortraitName();
 
-	Plan getPlan();
+    Plan getPlan();
 
-	String getType();
+    String getType();
 
-	RecruitmentData getRecruitment();
+    RecruitmentData getRecruitment();
 
-	AiModifiers getAiModifiers();
+    AiModifiers getAiModifiers();
 
-	Map<CommentSituation, String> getComments();
+    Map<CommentSituation, String> getComments();
 }

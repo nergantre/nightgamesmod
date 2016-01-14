@@ -7,32 +7,32 @@ import nightgames.items.Item;
 
 public class Recharge extends Action {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2089054062272510717L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 2089054062272510717L;
 
-	public Recharge() {
-		super("Recharge");
-	}
+    public Recharge() {
+        super("Recharge");
+    }
 
-	@Override
-	public boolean usable(Character user) {
-		return user.location().recharge() && user.get(Attribute.Science) > 0 && user.count(Item.Battery) < 20;
-	}
+    @Override
+    public boolean usable(Character user) {
+        return user.location().recharge() && user.get(Attribute.Science) > 0 && user.count(Item.Battery) < 20;
+    }
 
-	@Override
-	public Movement execute(Character user) {
-		if (user.human()) {
-			Global.gui().message("You find a power supply and restore your batteries to full.");
-		}
-		user.chargeBattery();
-		return Movement.recharge;
-	}
+    @Override
+    public Movement execute(Character user) {
+        if (user.human()) {
+            Global.gui().message("You find a power supply and restore your batteries to full.");
+        }
+        user.chargeBattery();
+        return Movement.recharge;
+    }
 
-	@Override
-	public Movement consider() {
-		return Movement.recharge;
-	}
+    @Override
+    public Movement consider() {
+        return Movement.recharge;
+    }
 
 }

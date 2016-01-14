@@ -9,28 +9,28 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 
 public class CustomStringEntry {
-	/**
-	 * Lines that a character can say. Can have requirements attached
-	 */
+    /**
+     * Lines that a character can say. Can have requirements attached
+     */
 
-	String line;
-	List<CustomRequirement> requirements;
+    String line;
+    List<CustomRequirement> requirements;
 
-	public CustomStringEntry(String line) {
-		this.line = line;
-		requirements = new ArrayList<>();
-	}
+    public CustomStringEntry(String line) {
+        this.line = line;
+        requirements = new ArrayList<>();
+    }
 
-	public boolean meetsRequirements(Combat c, Character self, Character other) {
-		for (CustomRequirement req : requirements) {
-			if (!req.meets(c, self, other)) {
-				return false;
-			}
-		}
-		return true;
-	}
+    public boolean meetsRequirements(Combat c, Character self, Character other) {
+        for (CustomRequirement req : requirements) {
+            if (!req.meets(c, self, other)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-	public String getLine(Combat c, Character self, Character other) {
-		return Global.format(line, self, other);
-	}
+    public String getLine(Combat c, Character self, Character other) {
+        return Global.format(line, self, other);
+    }
 }

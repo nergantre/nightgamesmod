@@ -77,6 +77,7 @@ Fixed EnthrallingTrap not having a string representation for use in the button (
 Generalized the structure for match modifiers (like underwear only, hypersensitivity cream, etc.) so they are easier to add. They can be created in JSON, too, though not with full functionality yet.
 Completely remade the way NPCs handle enthralled opponents. It's now less powerful and more random.
 Fixed stripping checks causing a crash if the character is naked.
+<<<<<<< HEAD
 Made Undress and Masturbate much less likely to be picked by the AI
 (Probably) Fixed body modification skills causing changes in simulation. (Temporary changes were prevented, permanent ones weren't)
 Added a duration to fetishes.
@@ -115,3 +116,4 @@ FTC Match:
 -Hunters get two points for beating other hunters, but no points for beating the prey.
 -When a hunter turns in the Flag, the prey can collect a new one at their base.
 -When the prey gets a new Flag, they cannot be attacked for a short time.
+>>>>>>> 9fe7224

@@ -3,16 +3,19 @@ package nightgames.characters;
 import nightgames.global.Global;
 
 public enum CharacterSex {
-	male("male"), female("female"), herm("hermaphrodite"), asexual("asexual (warning: untested)");
+    male("male"),
+    female("female"),
+    herm("hermaphrodite"),
+    asexual("asexual");
 
-	private String desc;
+    private String desc;
 
-	CharacterSex(String desc) {
-		this.desc = desc;
-	}
+    CharacterSex(String desc) {
+        this.desc = desc;
+    }
 
-	@Override
-	public String toString() {
-		return Global.capitalizeFirstLetter(desc);
-	}
+    @Override
+    public String toString() {
+        return Global.capitalizeFirstLetter(desc);
+    }
 }

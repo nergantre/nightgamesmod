@@ -9,54 +9,54 @@ import nightgames.status.WaterStance;
 
 public class WaterForm extends Skill {
 
-	public WaterForm(Character self) {
-		super("Water Form", self);
-	}
+    public WaterForm(Character self) {
+        super("Water Form", self);
+    }
 
-	@Override
-	public boolean requirements(Combat c, Character user, Character target) {
-		return user.get(Attribute.Ki) >= 3;
-	}
+    @Override
+    public boolean requirements(Combat c, Character user, Character target) {
+        return user.get(Attribute.Ki) >= 3;
+    }
 
-	@Override
-	public boolean usable(Combat c, Character target) {
-		return getSelf().canAct() && !c.getStance().sub(getSelf()) && !getSelf().is(Stsflag.form);
-	}
+    @Override
+    public boolean usable(Combat c, Character target) {
+        return getSelf().canAct() && !c.getStance().sub(getSelf()) && !getSelf().is(Stsflag.form);
+    }
 
-	@Override
-	public String describe(Combat c) {
-		return "Improves evasion and counterattack rate at expense of Power";
-	}
+    @Override
+    public String describe(Combat c) {
+        return "Improves evasion and counterattack rate at expense of Power";
+    }
 
-	@Override
-	public boolean resolve(Combat c, Character target) {
-		if (getSelf().human()) {
-			c.write(getSelf(), deal(c, 0, Result.normal, target));
-		} else if (target.human()) {
-			c.write(getSelf(), receive(c, 0, Result.normal, target));
-		}
-		getSelf().add(c, new WaterStance(getSelf()));
-		return true;
-	}
+    @Override
+    public boolean resolve(Combat c, Character target) {
+        if (getSelf().human()) {
+            c.write(getSelf(), deal(c, 0, Result.normal, target));
+        } else if (target.human()) {
+            c.write(getSelf(), receive(c, 0, Result.normal, target));
+        }
+        getSelf().add(c, new WaterStance(getSelf()));
+        return true;
+    }
 
-	@Override
-	public Skill copy(Character user) {
-		return new WaterForm(user);
-	}
+    @Override
+    public Skill copy(Character user) {
+        return new WaterForm(user);
+    }
 
-	@Override
-	public Tactics type(Combat c) {
-		return Tactics.debuff;
-	}
+    @Override
+    public Tactics type(Combat c) {
+        return Tactics.debuff;
+    }
 
-	@Override
-	public String deal(Combat c, int damage, Result modifier, Character target) {
-		return "You relax your muscles, prepared to flow with and counter " + target.name() + "'s attacks.";
-	}
+    @Override
+    public String deal(Combat c, int damage, Result modifier, Character target) {
+        return "You relax your muscles, prepared to flow with and counter " + target.name() + "'s attacks.";
+    }
 
-	@Override
-	public String receive(Combat c, int damage, Result modifier, Character target) {
-		return getSelf().name() + " takes a deep breath and her movements become much more fluid.";
-	}
+    @Override
+    public String receive(Combat c, int damage, Result modifier, Character target) {
+        return getSelf().name() + " takes a deep breath and her movements become much more fluid.";
+    }
 
 }

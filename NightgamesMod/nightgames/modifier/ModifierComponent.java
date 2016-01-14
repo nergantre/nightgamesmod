@@ -4,8 +4,8 @@ import org.json.simple.JSONObject;
 
 public interface ModifierComponent<T extends ModifierComponent<T>> {
 
-	String name();
+    String name();
 
-	T instance(JSONObject obj);
+    T instance(JSONObject obj);
 
 }
