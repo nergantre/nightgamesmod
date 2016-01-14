@@ -10,20 +10,19 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.Collection;
+
 import javax.swing.JComponent;
 
 import nightgames.areas.Area;
 import nightgames.areas.MapDrawHint;
+import nightgames.global.Global;
 
 @SuppressWarnings("serial")
 public class MapComponent extends JComponent {
-    private Collection<Area> rooms;
     private static Font font = new Font("Courier", 1, 11);
     private int borderWidth = 3;
 
-    public MapComponent(Collection<Area> areas) {
-        rooms = areas;
-    }
+    public MapComponent(Collection<Area> areas) {}
 
     public void centerString(Graphics g, Rectangle r, MapDrawHint drawHint, Font font) {
         FontRenderContext frc = new FontRenderContext(null, true, true);
@@ -52,10 +51,12 @@ public class MapComponent extends JComponent {
     }
 
     public void paint(Graphics g) {
+
         if (g instanceof Graphics2D) {
             Graphics2D graphics2D = (Graphics2D) g;
             graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         }
+
         int multiplier = 11;
         int width = Math.max(getWidth(), 25 * multiplier);
         int height = Math.max(getHeight(), 19 * multiplier);
@@ -65,13 +66,17 @@ public class MapComponent extends JComponent {
         g.fillRect(0, 0, getWidth(), getHeight());
         g.setColor(Color.WHITE);
         g.drawRect(borderWidth, borderWidth, width - borderWidth * 2, height - borderWidth * 2);
+        if (Global.getMatch() == null) {
+            return;
+        }
+        Collection<Area> rooms = Global.getMatch().getAreas();
         rooms.stream().forEach(area -> {
             if (area.drawHint.rect.width == 0 || area.drawHint.rect.height == 0) {
                 return;
             }
             Rectangle rect = new Rectangle(area.drawHint.rect.x * multiplier + mapBorder,
-                            area.drawHint.rect.y * multiplier + yOffset + mapBorder, area.drawHint.rect.width * multiplier,
-                            area.drawHint.rect.height * multiplier);
+                            area.drawHint.rect.y * multiplier + yOffset + mapBorder,
+                            area.drawHint.rect.width * multiplier, area.drawHint.rect.height * multiplier);
             if (!area.humanPresent()) {
                 g.setColor(new Color(0, 34, 100));
             } else {
@@ -84,8 +89,8 @@ public class MapComponent extends JComponent {
                 return;
             }
             Rectangle rect = new Rectangle(area.drawHint.rect.x * multiplier + mapBorder,
-                            area.drawHint.rect.y * multiplier + yOffset + mapBorder, area.drawHint.rect.width * multiplier,
-                            area.drawHint.rect.height * multiplier);
+                            area.drawHint.rect.y * multiplier + yOffset + mapBorder,
+                            area.drawHint.rect.width * multiplier, area.drawHint.rect.height * multiplier);
             g.setColor(new Color(50, 100, 200));
             g.drawRect(rect.x, rect.y, rect.width, rect.height);
         });
@@ -94,8 +99,8 @@ public class MapComponent extends JComponent {
                 return;
             }
             Rectangle rect = new Rectangle(area.drawHint.rect.x * multiplier + mapBorder,
-                            area.drawHint.rect.y * multiplier + yOffset + mapBorder, area.drawHint.rect.width * multiplier,
-                            area.drawHint.rect.height * multiplier);
+                            area.drawHint.rect.y * multiplier + yOffset + mapBorder,
+                            area.drawHint.rect.width * multiplier, area.drawHint.rect.height * multiplier);
             g.setColor(Color.WHITE);
             centerString(g, rect, area.drawHint, font);
         });
