@@ -139,9 +139,9 @@ public class Challenge implements Deployable {
             }
             goal = pick();
             if (active.human()) {
-                Global.gui().message(
-                                "You find a gold envelope sitting conspicously in the middle of the room. You open it up and read the note inside.\n'"
-                                                + message() + "'\n");
+                Global.gui().message("You find a gold envelope sitting conspicously in the middle of the "
+                                + Global.getMatch().genericRoomDescription()
+                                + ". You open it up and read the note inside.\n'" + message() + "'\n");
             }
             active.location().remove(this);
             active.accept(this);

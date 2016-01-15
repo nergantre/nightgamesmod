@@ -43,7 +43,7 @@ public class Cache implements Deployable {
         }
         calcReward(level);
     }
-    
+
     public void gainMoney(Character active) {
         int reward = 500 + level * 50;
         active.modMoney(reward);
@@ -68,9 +68,10 @@ public class Cache implements Deployable {
                                                             + "It would probably be a problem to someone less clever. You quickly solve the puzzle and the box opens.<p>");
                             break;
                         case Perception:
-                            Global.gui().message(
-                                            "<p>Something is off in this room, but it's hard to put your finger on it. A trap? No, it's not that. You spot a carefully hidden, but "
-                                                            + "nonetheless out-of-place package. It's not sealed and the contents seem like they could be useful, so you help yourself.<p>");
+                            Global.gui().message("<p>Something is off in this "
+                                            + Global.getMatch().genericRoomDescription()
+                                            + ", but it's hard to put your finger on it. A trap? No, it's not that. You spot a carefully hidden, but "
+                                            + "nonetheless out-of-place package. It's not sealed and the contents seem like they could be useful, so you help yourself.<p>");
                             break;
                         case Power:
                             Global.gui().message(
@@ -101,9 +102,10 @@ public class Cache implements Deployable {
                                                             + "Looks unneccessarily complicated. You pull off the touchscreen instead and short the connectors, causing the box to open so you can collect the contents.<p>");
                             break;
                         case Perception:
-                            Global.gui().message(
-                                            "<p>Something is off in this room, but it's hard to put your finger on it. A trap? No, it's not that. You summon a minor spirit to search the "
-                                                            + "area. It's not much good in a fight, but pretty decent at finding hidden objects. It leads you to a small hidden box of goodies.<p>");
+                            Global.gui().message("<p>Something is off in this "
+                                            + Global.getMatch().genericRoomDescription()
+                                            + ", but it's hard to put your finger on it. A trap? No, it's not that. You summon a minor spirit to search the "
+                                            + "area. It's not much good in a fight, but pretty decent at finding hidden objects. It leads you to a small hidden box of goodies.<p>");
                             break;
                         case Power:
                             Global.gui().message(
@@ -134,8 +136,8 @@ public class Cache implements Deployable {
                                                         + "You do your best to decode it, but after a couple failed attempts, the screen turns off and stops responding.<p>");
                         break;
                     case Perception:
-                        Global.gui().message(
-                                        "<p>Something is off in this room, but it's hard to put your finger on it. A trap? No, it's not that. Probably nothing.<p>");
+                        Global.gui().message("<p>Something is off in this " + Global.getMatch().genericRoomDescription()
+                                        + ", but it's hard to put your finger on it. A trap? No, it's not that. Probably nothing.<p>");
                         break;
                     case Power:
                         Global.gui().message(

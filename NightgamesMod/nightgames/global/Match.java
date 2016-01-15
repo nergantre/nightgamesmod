@@ -309,4 +309,8 @@ public class Match {
     public Collection<Area> getAreas() {
         return map.values();
     }
+    
+    public String genericRoomDescription() {
+        return "room";
+    }
 }
