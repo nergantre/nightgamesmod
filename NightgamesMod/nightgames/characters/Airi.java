@@ -30,7 +30,7 @@ public class Airi extends BasePersonality {
         character.getStamina().setMax(80);
         character.getArousal().setMax(200);
         character.getMojo().setMax(60);
-        character.getWillpower().setMax(500);
+        character.getWillpower().setMax(50);
         character.add(Trait.dexterous);
         character.add(Trait.slime);
         character.add(Trait.imagination);
