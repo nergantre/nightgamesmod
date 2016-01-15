@@ -97,7 +97,7 @@ public class FootWorship extends Skill {
             return getSelf().name() + " throws herself at your feet. She worshipfully grasps your feet "
                             + "and start licking between your toes, all while her face displays a mask of ecstasy.";
         }
-        return "{self:SUBJECT} can’t seem to get enough of your feet as {self:pronoun} continues to lick along the bottom of your soles, {self:possessive} face further lost in {self:possessive} servitude as {self:pronoun} is careful not to miss a spot.";
+        return "{self:SUBJECT} can't seem to get enough of your feet as {self:pronoun} continues to lick along the bottom of your soles, {self:possessive} face further lost in {self:possessive} servitude as {self:pronoun} is careful not to miss a spot.";
     }
 
     @Override
