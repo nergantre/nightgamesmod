@@ -278,7 +278,7 @@ public class Angel extends BasePersonality {
                             + "You're not sure what happened exactly, but it's clear to you that she's somehow become a goddess of sexuality. "
                             + "Angel's entire being seems to radiate sex and you struggle to ignore an overwhelming urge to prostrate yourself and beg to worship her body.";
         } else {
-            return "Angel has long, straight blonde hair that almost reaches her waist."
+            return "Angel has long, straight blonde hair that almost reaches her waist. "
                             + "Beautiful, refined features complete the set, making her utterly irresistable. Her personality is prideful and overbearing, as though you belong to "
                             + "her, but you don't know it yet.";
         }

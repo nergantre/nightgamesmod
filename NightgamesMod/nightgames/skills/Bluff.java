@@ -32,7 +32,7 @@ public class Bluff extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        int m = Global.random(25);
+        int m = 20 + Global.random(25);
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, m, Result.normal, target));
         } else {

@@ -142,7 +142,7 @@ public class AssFuck extends Fuck {
         if (modifier == Result.normal) {
             return String.format(
                             (damage == 0 ? "You" : "After you")
-                                            + " make sure %s ass is sufficiently lubricated and you push your %s into her %s.",
+                                            + " make sure %s ass is sufficiently lubricated, you push your %s into her %s.",
                             target.nameOrPossessivePronoun(), getSelfOrgan().describe(getSelf()),
                             getTargetOrgan(target).describe(target));
         } else {
@@ -154,7 +154,7 @@ public class AssFuck extends Fuck {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.upgrade) {
             return getSelf().name()
-                            + " spreads your legs apart and teasingly pokes the strap-on against your anus. Your try to struggle away but "
+                            + " spreads your legs apart and teasingly pokes the strap-on against your anus. You try to struggle away but "
                             + getSelf().name() + " pulls your hips closer and slowly pushes the dildo inside your ass.";
         }
         if (modifier == Result.normal) {

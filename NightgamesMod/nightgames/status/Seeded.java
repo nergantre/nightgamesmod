@@ -93,12 +93,12 @@ public class Seeded extends Status {
                 Global.gui().message(c, affected,
                                 Global.format("{other:name-possessive} seedling has finally flowered. A brilliant white lilly now covers {self:name-possessive} %s, displaying {self:possessive} verdant submission for everyone to see. "
                                                 + "While the little seedling has finally stopped sapping your vitality, the now-matured root network has somehow integrated with your nervous system and bloodsteam. As pulses of chemical and electrical obedience wrack {self:possessive} body, "
-                                                + "{self:SUBJECT-ACTION:know|knows} that {self:SUBJECT-ACTION:have|has} lost this fight.",
+                                                + "{self:subject-action:know|knows} that {self:pronoun} {self:action:have|has} lost this fight.",
                                 affected, other, hole.describe(affected), hole.describe(affected)));
             }
             Global.gui().message(c, affected,
-                            Global.format("The seedling churns against {self:POSSESSIVE} inner walls, while sending a chemical cocktail of aphrodisiacs and narcotics directly into {self:possessive} bloodstream. "
-                                            + "{self:POSSESSIVE} mind blanks out as every thought is replaced with a feral need to mate.",
+                            Global.format("The seedling churns against {self:possessive} inner walls, while sending a chemical cocktail of aphrodisiacs and narcotics directly into {self:possessive} bloodstream. "
+                                            + "{self:possessive} mind blanks out as every thought is replaced with a feral need to mate.",
                             affected, other, hole.describe(affected)));
             affected.heal(c, 100);
             affected.arouse(Math.max(Global.random(50, 100), affected.getArousal().max() / 4), c,

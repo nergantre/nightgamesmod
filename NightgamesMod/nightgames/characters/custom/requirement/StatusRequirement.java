@@ -5,11 +5,14 @@ import nightgames.combat.Combat;
 import nightgames.status.Stsflag;
 
 public class StatusRequirement implements CustomRequirement {
-
     private final Stsflag flag;
 
     public StatusRequirement(String flag) {
         this.flag = Stsflag.valueOf(flag);
+    }
+
+    public StatusRequirement(Stsflag flag) {
+        this.flag = flag;
     }
 
     @Override

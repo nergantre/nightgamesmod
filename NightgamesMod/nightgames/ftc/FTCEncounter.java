@@ -135,7 +135,7 @@ public class FTCEncounter extends Encounter {
                 message += "You wait in a small alcove, waiting for someone to pass you."
                                 + " Eventually, you hear footsteps approaching and you get ready."
                                 + " As soon as {other:name} comes into view, you jump out and push"
-                                + " {other:pronoun} against the opposite wall. The impact seems to"
+                                + " {other:direct-object} against the opposite wall. The impact seems to"
                                 + " daze {other:direct-object}, giving you an edge in the ensuing fight.";
             } else if (victim.human()) {
                 message += "Of course you know that walking through a narrow pass is a"

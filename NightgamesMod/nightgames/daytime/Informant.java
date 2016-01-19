@@ -57,7 +57,7 @@ public class Informant extends Activity {
             Global.gui().choose(this, "Leave");
             acted = true;
             return;
-        } else if (player.getRank() == 1 && !Global.checkFlag(Flag.rank1)) {
+        } else if (player.getRank() >= 1 && !Global.checkFlag(Flag.rank1)) {
             Global.gui().message(
                             "You go to meet Aesop at the usual spot, but today he's not alone. The woman who initially recruited you - named Maya, if you remember correctly - is waiting "
                                             + "for you. Looking at her next to Aesop, she's probably not much older than he is, but something about her makes her seem more mature. She has modest clothes, glasses and long "

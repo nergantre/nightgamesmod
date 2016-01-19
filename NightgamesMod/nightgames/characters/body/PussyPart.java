@@ -405,7 +405,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                             + opponent.nameOrPossessivePronoun() + " " + target.describe(opponent)
                             + ", preventing any escape.\n");
         }
-        if (self.has(Trait.tight) || self.has(Trait.holecontrol)) {
+        if ((self.has(Trait.tight) || self.has(Trait.holecontrol)) && c.getStance().vaginallyPenetrated(self)) {
             String desc = "";
             if (self.has(Trait.tight)) {
                 desc += "powerful ";

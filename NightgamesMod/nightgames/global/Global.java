@@ -558,14 +558,22 @@ public class Global {
             player.getMojo().empty();
             player.change();
             level += player.getLevel();
-            maxLevelTracker = Math.max(player.getLevel(), maxLevelTracker);
+            if (!player.has(Trait.unnaturalgrowth) && !player.has(Trait.naturalgrowth)) {
+                maxLevelTracker = Math.max(player.getLevel(), maxLevelTracker);
+            }
         }
-        final int maxLevel = maxLevelTracker;
+        final int maxLevel = maxLevelTracker / players.size();
         players.stream().filter(c -> c.has(Trait.naturalgrowth)).filter(c -> c.getLevel() < maxLevel + 2).forEach(c -> {
             while (c.getLevel() < maxLevel + 2) {
                 c.ding();
             }
         });
+        players.stream().filter(c -> c.has(Trait.unnaturalgrowth)).filter(c -> c.getLevel() < maxLevel + 5)
+                        .forEach(c -> {
+                            while (c.getLevel() < maxLevel + 5) {
+                                c.ding();
+                            }
+                        });
 
         level /= players.size();
 
@@ -779,8 +787,8 @@ public class Global {
         Area pool = new Area("Pool",
                         "You are by the indoor <b>Pool</b>, which is connected to the Student Union for reasons that no one has ever really explained. There pool is quite "
                                         + "large and there is even a jacuzzi. A quick soak would feel good, but the lack of privacy is a concern. The side doors are locked at this time of night, but the "
-                                        + "door to the Student Union is open and there's a back door that exits near the Liberal Arts building.",
-                        Movement.pool, new MapDrawHint(new Rectangle(6, 12, 4, 3), "Pool", false));
+                                        + "door to the Student Union is open and there's a back door that exits near the Liberal Arts building. Across the water in the other direction is the Courtyard.",
+                        Movement.pool, new MapDrawHint(new Rectangle(6, 12, 4, 2), "Pool", false));
         Area library = new Area("Library",
                         "You are in the <b>Library</b>. It's a two floor building with an open staircase connecting the first and second floors. The front entrance leads to "
                                         + "the Liberal Arts building. The second floor has a Bridge connecting to the Chemistry Lab in the Science and Engineering building.",
@@ -811,11 +819,11 @@ public class Global {
         Area sau = new Area("Student Union",
                         "You are in the <b>Student Union</b>, which doubles as base of operations during match hours. You and the other competitors can pick up "
                                         + "a change of clothing here.",
-                        Movement.union, new MapDrawHint(new Rectangle(10, 12, 3, 5), "SUnion", true));
+                        Movement.union, new MapDrawHint(new Rectangle(10, 12, 3, 5), "S.Union", true));
         Area courtyard = new Area("Courtyard",
                         "You are in the <b>Courtyard</b>. "
-                                        + "It's a small opening between four buildings. There's not much to see here except a tidy garden maintained by the botany department.",
-                        Movement.courtyard);
+                                        + "It's a small clearing behind the school pool. There's not much to see here except a tidy garden maintained by the botany department.",
+                        Movement.courtyard, new MapDrawHint(new Rectangle(6, 14, 3, 6), "Courtyard", true));
         quad.link(dorm);
         quad.link(engineering);
         quad.link(libarts);

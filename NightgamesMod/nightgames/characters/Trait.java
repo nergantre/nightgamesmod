@@ -124,6 +124,7 @@ public enum Trait {
     magicEyeEnthrall("Magic Eyes: Enthrall", "Eyes have a chance to enthrall"),
     magicEyeTrance("Magic Eyes: Trance", "Eyes have a chance to entrance"),
     magicEyeFrenzy("Magic Eyes: Frenzy", "Eyes have a chance to cause frenzy"),
+    enchantingVoice("Enchanting Voice", "Willbending voice, can occasionally force a command."),
     soulsucker("Soulsucker", "Soul sucking lips"),
     entrallingjuices("Enthralling cum", "Enthralling juices"),
     frenzyingjuices("Frenzying juices", "Frenzying juices"),
@@ -169,6 +170,7 @@ public enum Trait {
     proheels("Heels Pro", "Pro at walking around in heels"), // no speed penalty from heels
     masterheels("Heels Master", "Master at moving in heels, resists knockdowns"), // graceful when wearing heels
     naturalgrowth("Natural Growth", "Always keeps up on levels"), // levels up to highest level + 2 after each night
+    unnaturalgrowth("Unnatural Growth", "Always keeps up on levels"), // levels up to highest level + 5 after each night
 
     // training perks
     analTraining1("Anal Training 1", "Refined ass control."),
@@ -271,7 +273,7 @@ public enum Trait {
     sprinter("Sprinter", "Better at escaping combat"),
     QuickRecovery("Quick Recovery", "Regain stamina rapidly out of combat"),
     Sneaky("Sneaky", "Easier time hiding and ambushing competitors"),
-    PersonalInertia("Personal Inertia", "status effects (positive and negative) last 50% longer"),
+    PersonalInertia("Personal Inertia", "Status effects (positive and negative) last 50% longer"),
     Confident("Confident", "Mojo decays slower out of combat"),
     SexualGroove("Sexual Groove", "Passive mojo gain every turn in combat"),
     BoundlessEnergy("Boundless Energy", "Increased passive stamina gain in battle"),

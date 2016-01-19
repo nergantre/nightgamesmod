@@ -15,7 +15,7 @@ import nightgames.stance.Stance;
 public class Strapon extends Skill {
 
     public Strapon(Character self) {
-        super("Strap On", self);
+        super("Strap On", self, 6);
     }
 
     @Override

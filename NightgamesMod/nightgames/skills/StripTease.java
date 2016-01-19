@@ -77,7 +77,7 @@ public class StripTease extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return getSelf().name()
-                        + " asks for a quick time out and starts sexily slipping her her clothes off. Although there are no time outs in the rules, you can't help staring "
+                        + " asks for a quick time out and starts sexily slipping her clothes off. Although there are no time outs in the rules, you can't help staring "
                         + "at the seductive display until she finishes with a cute wiggle of her naked ass.";
     }
 

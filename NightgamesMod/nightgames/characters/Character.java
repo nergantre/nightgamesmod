@@ -41,6 +41,7 @@ import nightgames.items.clothing.ClothingSlot;
 import nightgames.items.clothing.ClothingTrait;
 import nightgames.items.clothing.Outfit;
 import nightgames.pet.Pet;
+import nightgames.skills.Command;
 import nightgames.skills.Nothing;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
@@ -738,6 +739,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void change() {
+        outfit.undress();
         outfit.dress(outfitPlan);
         if (Global.getMatch() != null) {
             Global.getMatch().condition.handleOutfit(this);
@@ -1630,6 +1632,26 @@ public abstract class Character extends Observable implements Cloneable {
                                             this, opponent));
             tempt(c, opponent, opponent.get(Attribute.Seduction) / 2);
         }
+
+        if (opponent.has(Trait.enchantingVoice)) {
+            int voiceCount = c.getCombatantData(opponent).getIntegerFlag("enchantingvoice-count");
+            if (voiceCount >= 1) {
+                if (!opponent.human()) {
+                    c.write(opponent,
+                                    Global.format("{other:SUBJECT} winks at you and verbalizes a few choice words that pass straight through your mental barriers.",
+                                                    this, opponent));
+                } else {
+                    c.write(opponent,
+                                    Global.format("Sensing a moment of distraction, you use the power in your voice to force {self:subject} to your will.",
+                                                    this, opponent));
+                }
+                (new Command(opponent)).resolve(c, this);
+                int cooldown = Math.max(1, 6 - (opponent.getLevel() - getLevel() / 5));
+                c.getCombatantData(opponent).setIntegerFlag("enchantingvoice-count", -cooldown);
+            } else {
+                c.getCombatantData(opponent).setIntegerFlag("enchantingvoice-count", voiceCount + 1);
+            }
+        }
         pleasured = false;
     }
 
@@ -2116,11 +2138,11 @@ public abstract class Character extends Observable implements Cloneable {
 
         // with no level or hit differences and an default accuracy of 80, 80%
         // hit rate
-        // each level the attacker is below the target will reduce this by 5%,
-        // to a maximum of 25%
+        // each level the attacker is below the target will reduce this by 2%,
+        // to a maximum of 10%
         // each point in accuracy of skill affects changes the hit chance by 1%
         // each point in speed and perception will increase hit by 5%
-        int chanceToHit = 5 * levelDiff + accuracy + 5 * (hitDiff - evasionBonus());
+        int chanceToHit = 2 * levelDiff + accuracy + 5 * (hitDiff - evasionBonus());
         if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
             System.out.printf("Rolled %s against %s, base accuracy: %s, hit difference: %s, level difference: %s\n",
                             attackroll, chanceToHit, accuracy, hitDiff, levelDiff);
@@ -2162,7 +2184,9 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public Integer prize() {
-        if (getRank() == 1) {
+        if (getRank() >= 2) {
+            return 500;
+        } else if (getRank() == 1) {
             return 200;
         } else {
             return 50;
@@ -2606,7 +2630,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     private boolean useFemalePronouns() {
-        return hasPussy();
+        return hasPussy() || !hasDick();
     }
 
     public String nameDirectObject() {

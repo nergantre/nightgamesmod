@@ -56,6 +56,8 @@ public class Maya extends BasePersonality {
         character.add(Trait.responsive);
         character.add(Trait.powerfulhips);
 
+        character.add(Trait.enchantingVoice);
+        character.add(Trait.unnaturalgrowth);
         character.add(Trait.event);
         character.add(Trait.cursed);
         Global.gainSkills(character);
@@ -69,6 +71,17 @@ public class Maya extends BasePersonality {
         character.body.add(PussyPart.normal);
         character.body.finishBody(CharacterSex.female);
         preferredCockMod = CockMod.error;
+    }
+
+    @Override
+    public void setGrowth() {
+        growth.stamina = 2;
+        growth.arousal = 5;
+        growth.mojo = 5;
+        growth.willpower = 1;
+        growth.bonusStamina = 2;
+        growth.bonusArousal = 5;
+        growth.bonusMojo = 5;
     }
 
     @Override
@@ -94,7 +107,7 @@ public class Maya extends BasePersonality {
     @Override
     public String victory(Combat c, Result flag) {
         Character target = c.getOther(character);
-        target.add(new Drowsy(target));
+        target.add(c, new Drowsy(target));
         character.arousal.empty();
         character.add(new Energized(character, 10));
         return "Maya completely outmatches you. How were you suppose to deal with"
@@ -302,7 +315,7 @@ public class Maya extends BasePersonality {
 
     @Override
     public String night() {
-        return null;
+        return "";
     }
 
     @Override

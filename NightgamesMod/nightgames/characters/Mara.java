@@ -469,7 +469,7 @@ public class Mara extends BasePersonality {
 
     @Override
     public String orgasmLiner(Combat c) {
-        return "<i>\"Aw man, that one didn't count! Come on, lets go, I'll fuck your brains out!\"</i>";
+        return "<i>\"Aw man, that one didn't count! Come on, let's go, I'll fuck your brains out!\"</i>";
     }
 
     @Override

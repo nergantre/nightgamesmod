@@ -30,7 +30,7 @@ public class Airi extends BasePersonality {
         character.getStamina().setMax(80);
         character.getArousal().setMax(200);
         character.getMojo().setMax(60);
-        character.getWillpower().setMax(500);
+        character.getWillpower().setMax(150);
         character.add(Trait.dexterous);
         character.add(Trait.slime);
         character.add(Trait.imagination);
@@ -54,6 +54,7 @@ public class Airi extends BasePersonality {
         growth.stamina = 1;
         growth.arousal = 2;
         growth.mojo = 2;
+        growth.willpower = 5;
         growth.bonusStamina = 1;
         growth.bonusArousal = 1;
         growth.bonusMojo = 2;
@@ -178,8 +179,9 @@ public class Airi extends BasePersonality {
 
     @Override
     public String describe(Combat c) {
-        return "A crystal blue figure stands in front of you. Well, \"stands\" might be an exaggeration. Airi sports a cute face, and a tight body, but her thighs end in a giant"
-                        + "ball of slime. Indeed, while her body might look human at a distance, she seems to be composed of a soft translucent gel.";
+        return "A crystal blue figure stands in front of you. Well, \"stands\" might be an exaggeration. "
+                        + "Airi sports a cute face and a tight body, but her thighs end in a giant ball of slime. "
+                        + "Indeed, while her body might look human at a distance, she seems to be composed of a soft, translucent gel.";
     }
 
     @Override

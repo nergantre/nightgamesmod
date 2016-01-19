@@ -263,7 +263,7 @@ public class Command extends Skill {
             case MASTER_MOUNT:
                 c.write(getSelf(),
                                 String.format("%s tells you to remain still and"
-                                                + " gracefully lays down on you, %s face right above yours.",
+                                                + " gracefully lies down on you, %s face right above yours.",
                                 getSelf().name(), getSelf().possessivePronoun()));
                 c.setStance(new Mount(getSelf(), target));
                 getSelf().buildMojo(c, 5);
@@ -332,7 +332,7 @@ public class Command extends Skill {
             case SUBMIT:
                 c.write(getSelf(),
                                 String.format("%s stares deeply into your soul and tells"
-                                                + " you that you should lay down on the ground. You obey the order"
+                                                + " you that you should lie down on the ground. You obey the order"
                                                 + " without hesitation.", getSelf().name()));
                 c.setStance(new StandingOver(getSelf(), target));
                 break;

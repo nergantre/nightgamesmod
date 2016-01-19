@@ -28,7 +28,7 @@ public class MaraTime extends BaseNPCTime {
                         "[Placeholder]<br>Mara explains that she may be able to modify your body with her new equipment.";
         loveIntro = "Mara's computer lab has once again become a clusterfuck of electronics equipment. Not just electronics either. The back corner houses a "
                         + "small chemical lab, and there are welding and metal cutting tools probably borrowed from the mechanical engineering building. You can only identify "
-                        + "about 20% of the junk in here. It looks like some mad scientist's laboratory.<p>Mara notices your presence and jumps up eagerly from her workstation to greet you. <i>\"Are you here to have some fun? I've "
+                        + "about 20%% of the junk in here. It looks like some mad scientist's laboratory.<p>Mara notices your presence and jumps up eagerly from her workstation to greet you. <i>\"Are you here to have some fun? I've "
                         + "got a couple of toys I've been working on that I'd like your help to test before tonight's match. My classwork has gotten really easy, so I've had a lot "
                         + "of free time to develop prototype tools and traps. Well, technically the classwork hasn't actually changed very much, I guess I just never realized how... "
                         + "basic it all was.\"</i> She can't seem to sit still while she's talking. She keeps fiddling with half completed electronics devices. She doesn't seem sleep "

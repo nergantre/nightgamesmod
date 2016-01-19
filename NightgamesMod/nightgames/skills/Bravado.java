@@ -38,7 +38,7 @@ public class Bravado extends Skill {
         } else if (target.human()) {
             c.write(getSelf(), receive(c, x, Result.normal, target));
         }
-        getSelf().calm(c, x / 2);
+        getSelf().calm(c, 20 + x / 2);
         getSelf().heal(c, x);
         getSelf().emote(Emotion.confident, 30);
         getSelf().emote(Emotion.dominant, 20);

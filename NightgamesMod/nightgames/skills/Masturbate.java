@@ -126,7 +126,7 @@ public class Masturbate extends Skill {
             if (modifier == Result.weak) {
                 return "She takes hold of her flaccid dick, tugging and rubbing it into a full erection.";
             } else {
-                return "She jerks off, building up your own arousal.";
+                return "She jerks off, building up her own arousal.";
             }
         } else if (targetO.isType("pussy")) {
             return "She slowly teases her own labia and starts playing with herself.";

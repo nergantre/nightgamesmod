@@ -161,7 +161,7 @@ public class Tickle extends Skill {
             return "You try to tickle " + target.name() + ", but she squirms away.";
         } else if (modifier == Result.special) {
             return "You work your fingers across " + target.name()
-                            + "'s most ticklish and most erogenous zones until she's a writhing in pleasure and can't even make coherent words.";
+                            + "'s most ticklish and most erogenous zones until she is writhing in pleasure and can't even make coherent words.";
         } else if (modifier == Result.critical) {
             return "You brush your tickler over " + target.name()
                             + "'s body, causing her to shiver and retreat. When you tickle her again, she yelps and almost falls down. "
@@ -186,7 +186,7 @@ public class Tickle extends Skill {
             return getSelf().name() + " tries to tickle you, but fails to find a sensitive spot.";
         } else if (modifier == Result.special) {
             return getSelf().name()
-                            + " tickles your nude body mercilessly, gradually working her way to your dick and balls. As her fingers start tormenting you privates, you struggle to "
+                            + " tickles your nude body mercilessly, gradually working her way to your dick and balls. As her fingers start tormenting your privates, you struggle to "
                             + "clear your head enough to keep from ejaculating immediately.";
         } else if (modifier == Result.critical) {
             return getSelf().name()

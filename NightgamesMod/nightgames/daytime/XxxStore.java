@@ -104,8 +104,6 @@ public class XxxStore extends Store {
 
             if (player.has(Item.Dildo)) {
                 Global.gui().message("You already have a perfectly serviceable dildo. You don't need another.");
-            } else if (player.has(Item.Dildo2)) {
-                Global.gui().message("You already have a much better dildo. You don't need an average one.");
             } else {
                 Global.gui().sale(this, Item.Dildo);
             }

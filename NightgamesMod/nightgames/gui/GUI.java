@@ -1159,10 +1159,11 @@ public class GUI extends JFrame implements Observer {
             map.repaint();
         }
         if (Global.getMatch() != null) {
-            timeLabel.setText(Global.getMatch().getTime() + " pm");
-
-            if (Global.getMatch().getTime().equals("11")) {
+            // yup... silverbard pls :D
+            if (Global.getMatch().getHour() == 12 || Global.getMatch().getHour() < 10) {
                 timeLabel.setText(Global.getMatch().getTime() + " am");
+            } else {
+                timeLabel.setText(Global.getMatch().getTime() + " pm");
             }
 
             timeLabel.setForeground(new Color(51, 101, 202));

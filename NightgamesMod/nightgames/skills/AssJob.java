@@ -176,7 +176,7 @@ public class AssJob extends Skill {
             case special:
                 String res = String.format(
                                 "You hold %s tight, thinking %s intends to break "
-                                                + "free your hold. But instead %s pushes %s firm asscheeks"
+                                                + "free from your hold. But instead %s pushes %s firm asscheeks"
                                                 + " against your cock and grinds them against you. ",
                                 getSelf().name(), getSelf().pronoun(), getSelf().pronoun(),
                                 getSelf().possessivePronoun());

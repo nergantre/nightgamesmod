@@ -1,3 +1,44 @@
+1.9.1 changelog
+
+Balance:
+- Reduced Airi's starting willpower from 500 to 150.
+	- Increased her willpower growth to 5 per level, since it's actually kind of cool that she has a ridiculously high will power for a contestant.
+- Wear Strapon now has a 6 turn cooldown, so you cannot just spam it
+- Bluff and Determination now has a minimum calming effect of 20.
+- Mystery NPC:
+	- Added trait unnatural growth:
+		- Always 5 levels higher than the highest level player, not counting anyone with natural growth or unnatural growth.
+	- Added trait Enchanting Voice
+		- Once every (2 + level difference / 5) turns, starting on turn 2, she gets a free command (same effect as the one in enthrall).
+	- Made both LewdSuggestion and HeightenSenses usable when the target is not charmed, but they have a 1/3 chance of failing.
+	- Gave her per level stat growths
+- Reduced level influence on accuracy from 5% per level to 2% a level. Maximum is now 10% more accurate if you're 5 levels above, and 10% less accurate if you're 5 levels below.
+	
+Minor:
+- Upgrading the dildo will still allow you to buy another one for transformations
+- Use female pronouns if target has no genitals (stopgap feature because Airi sometimes makes both disappear...)
+- Added courtyard to the map, and a bit of description to make it connected with the pool.
+
+Bug fixes:
+- Fixed a bug that would make tight and hole control apply to ass jobs and tribbing.
+- Fixed a bug that was causing combatants with natural growth (Rosea) to have ridiculously high levels (now will always be at least max contestant levels + 2)
+- Fixed a bug causing the remove all button to not work in the closet UI
+- Fixed a bug causing you to receive rank 0 rewards at rank 2
+- Fixed a bug causing a message to not display if you edited your rank to 2 without ever hitting 1
+- Fixed a bug where Mara's high affection intro would crash the game. (Note: be careful with %)
+- Fixed a bunch of typos. Unfortunately, I did not get to fix a lot of small plural verb agreement stuff, because that would need me to do a lot more work making sure that things like balls are plural and other stuff aren't... :\
+
+1.9 changelog
+New:
+- Merged in UI update from InvalidCharacter
+- Merged in FTC match from dndw
+- Merged in a few updates to Airi from dndw
+- Merged in RotSF from Silverbard (thanks dndw!)
+- Added in a new map (sorry this may be buggy for now)
+
+Bug fixes:
+- many miscellaneous ones (sorry, can't keep track of every one of them this time around)
+
 1.8.3.2 changelog
 
 Bug fixes:

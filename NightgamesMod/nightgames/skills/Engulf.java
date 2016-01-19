@@ -105,7 +105,7 @@ public class Engulf extends CounterBase {
         if (!target.outfit.isNude()) {
             target.nudify();
             msg += "{self:name-possessive} slime vibrates wildly around {other:pronoun}, causing"
-                            + " {other:possessive} clothes to dissolve without a trace.";
+                            + " {other:possessive} clothes to dissolve without a trace. ";
         }
         msg += "As {self:pronoun} {self:action:reform|reforms} {self:possessive} body around {other:direct-object},"
                         + " {self:possessive} head appears besides {other:possessive}. {self:SUBJECT-ACTION:giggle|giggles}"
@@ -116,7 +116,7 @@ public class Engulf extends CounterBase {
             msg += "balls, ";
         if (target.hasPussy())
             msg += "pussy, ";
-        msg += "ass and every other inch of {other:possessive} skin.";
+        msg += "ass and every other inch of {other:possessive} skin. ";
         if (getSelf().getType().equals("Airi"))
             msg += "\n<i>\"It's done... over... stop struggling... cum.\"</i>";
         c.write(getSelf(), Global.format(msg, getSelf(), target));

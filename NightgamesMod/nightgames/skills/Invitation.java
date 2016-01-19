@@ -105,7 +105,7 @@ public class Invitation extends Skill {
                                 getSelf(), target);
             }
             return Global.format(
-                            "{self:NAME} embraces you and smoothly slide your cock into her folds while you're distracted. She then pulls you to the ground on top of her and softly wrap her legs around your waist preventing your escape.",
+                            "{self:NAME} embraces you and smoothly slide your cock into her folds while you're distracted. She then pulls you to the ground on top of her and softly wraps her legs around your waist preventing your escape.",
                             getSelf(), target);
         } else {
             if (hasDivinity()) {

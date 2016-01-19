@@ -226,8 +226,12 @@ public class Match {
         new Postmatch(Global.getPlayer(), combatants);
     }
 
+    public int getHour() {
+        return 10 + time / 12;
+    }
+
     public String getTime() {
-        int hour = 10 + time / 12;
+        int hour = getHour();
         if (hour > 12) {
             hour = hour % 12;
         }

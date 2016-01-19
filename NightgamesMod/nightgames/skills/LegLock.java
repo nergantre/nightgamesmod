@@ -76,7 +76,7 @@ public class LegLock extends Skill {
         if (modifier == Result.miss) {
             return getSelf().name() + " tries to put you in a leglock, but you slip away.";
         } else {
-            return getSelf().name() + " pulls your leg across her in a painful submission hold.";
+            return getSelf().name() + " pulls your leg across her body in a painful submission hold.";
         }
     }
 

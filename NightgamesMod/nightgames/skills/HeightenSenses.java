@@ -22,7 +22,7 @@ public class HeightenSenses extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().canAct() && c.getStance().mobile(getSelf()) && !c.getStance().behind(getSelf())
-                        && !c.getStance().behind(target) && !c.getStance().sub(getSelf()) && target.is(Stsflag.charmed)
+                        && !c.getStance().behind(target) && !c.getStance().sub(getSelf())
                         && (!target.is(Stsflag.hypersensitive) || target.getPure(Attribute.Perception) < 9);
     }
 
@@ -33,7 +33,16 @@ public class HeightenSenses extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.is(Stsflag.hypersensitive) && Global.random(2) == 0) {
+        boolean alreadyTranced =
+                        target.is(Stsflag.charmed) || target.is(Stsflag.enthralled) || target.is(Stsflag.trance);
+        if (!alreadyTranced && Global.random(3) == 0) {
+            if (getSelf().human()) {
+                c.write(getSelf(), deal(c, 0, Result.miss, target));
+            } else {
+                c.write(getSelf(), receive(c, 0, Result.miss, target));
+            }
+            return false;
+        } else if (target.is(Stsflag.hypersensitive) && Global.random(2) == 0) {
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.strong, target));
             } else {
@@ -68,6 +77,11 @@ public class HeightenSenses extends Skill {
                             "You plant a suggestion in %s's head to increase %s sensitivity. %s accepts the suggestion so easily and strongly that you suspect it may have had a permanent effect.",
                             new Object[] {target.name(), target.possessivePronoun(), target.pronoun()});
         }
+        if (modifier == Result.miss) {
+            return String.format(
+                            "You plant a suggestion in %s's head to increase %s sensitivity. Unfortunately, it didn't seem to affect %s much.",
+                            new Object[] {target.name(), target.possessivePronoun(), target.directObject()});
+        }
         return String.format(
                         "You plant a suggestion in %s's head to increase %s sensitivity. %s shivers as %s sense of touch is amplified",
                         new Object[] {getSelf().name(), target.possessivePronoun(), target.pronoun(),
@@ -79,15 +93,16 @@ public class HeightenSenses extends Skill {
         if (modifier == Result.strong) {
             return String.format(
                             "%s explains to you that your body, especially your erogenous zones, have become more sensitive. %s's right. All your senses feel heightened. You feel almost like a superhero. It's ok if this is permanent, right?",
-                            new Object[] {
-
-                                            getSelf().name(), getSelf().pronoun()});
+                            new Object[] {getSelf().name(), getSelf().pronoun()});
+        }
+        if (modifier == Result.miss) {
+            return String.format(
+                            "%s explains to you that your body, especially your erogenous zones, have become more sensitive. You aren't really feeling it though.",
+                            new Object[] {getSelf().name()});
         }
         return String.format(
                         "%s explains to you that your body, especially your erogenous zones, have become more sensitive. You feel goosebumps cover your skin as if you've been hit by a Sensitivity Flask. Maybe you were and just didn't notice",
-                        new Object[] {
-
-                                        getSelf().name()});
+                        new Object[] {getSelf().name()});
     }
 
 }

@@ -45,18 +45,17 @@ public class Tear extends Skill {
         if (c.getStance().reachTop(getSelf()) && !target.getOutfit().slotEmpty(ClothingSlot.top)) {
             Clothing article = target.getOutfit().getTopOfSlot(ClothingSlot.top);
             if (!article.is(ClothingTrait.indestructible) && isMedical
-                            && (getSelf().check(Attribute.Power,
+                            && (((getSelf().check(Attribute.Power,
                                             article.dc() + (target.getStamina().percent()
                                                             - (target.getArousal().percent()) / 4)
-                                            + getSelf().get(Attribute.Medicine) * 4))
-                            || !target.canAct()) {
+                                            + getSelf().get(Attribute.Medicine) * 4)) || !target.canAct()))) {
                 if (getSelf().human()) {
                     c.write(getSelf(),
-                                    Global.format("{self:SUBJECT} leaps forward. {self:POSSESSIVE} hand is a blur but you spot the glint of steel in them. Reflexively, you cover yourself with your arms to prevent as much damage as possible. When nothing happens you open your eyes to see {self:subject} grinning at you, a scalpel still in {self:POSSESSIVE} hands. Looking down you see that some of your clothes have been cut to ribbons!",
+                                    Global.format("Grabbing your scalpel, you jump forward. The sharp blade makes quick work of {other:possessive}} clothing and your skill with the blade allows you avoid harming them completely. {other:SUBJECT} can only look at you with shock as {other:possessive} shredded clothes float to the ground between you.",
                                                     getSelf(), target));
                 } else if (target.human()) {
                     c.write(getSelf(),
-                                    Global.format("Grabbing your scalpel, you jump forward. The sharp blade makes quick work of {other:possessive}} clothing and your skill with the blade allows you avoid harming them completely. {other:SUBJECT} can only look at you with shock as {other:possessive} shredded clothes float to the ground between you.",
+                                    Global.format("{self:SUBJECT} leaps forward. {self:POSSESSIVE} hand is a blur but you spot the glint of steel in them. Reflexively, you cover yourself with your arms to prevent as much damage as possible. When nothing happens you open your eyes to see {self:subject} grinning at you, a scalpel still in {self:POSSESSIVE} hands. Looking down you see that some of your clothes have been cut to ribbons!",
                                                     getSelf(), target));
                 }
                 target.shred(ClothingSlot.top);
@@ -125,11 +124,11 @@ public class Tear extends Skill {
                             || !target.canAct()) {
                 if (getSelf().human()) {
                     c.write(getSelf(),
-                                    Global.format("{self:SUBJECT} leaps forward. {self:POSSESSIVE} hand is a blur but you spot the glint of steel in them. Reflexively, you cover yourself with your arms to prevent as much damage as possible. When nothing happens you open your eyes to see {self:subject} grinning at you, a scalpel still in {self:POSSESSIVE} hands. Looking down you see that some of your clothes have been cut to ribbons!",
+                                    Global.format("Grabbing your scalpel, you jump forward. The sharp blade makes quick work of {other:possessive} clothing and your skill with the blade allows you avoid harming them completely. {other:SUBJECT} can only look at you with shock as {other:possessive} shredded clothes float to the ground between you.",
                                                     getSelf(), target));
                 } else if (target.human()) {
                     c.write(getSelf(),
-                                    Global.format("Grabbing your scalpel, you jump forward. The sharp blade makes quick work of {other:possessive}} clothing and your skill with the blade allows you avoid harming them completely. {other:SUBJECT} can only look at you with shock as {other:possessive} shredded clothes float to the ground between you.",
+                                    Global.format("{self:SUBJECT} leaps forward. {self:POSSESSIVE} hand is a blur but you spot the glint of steel in them. Reflexively, you cover yourself with your arms to prevent as much damage as possible. When nothing happens you open your eyes to see {self:subject} grinning at you, a scalpel still in {self:POSSESSIVE} hands. Looking down you see that some of your clothes have been cut to ribbons!",
                                                     getSelf(), target));
                 }
                 target.shred(ClothingSlot.bottom);

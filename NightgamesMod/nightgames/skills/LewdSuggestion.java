@@ -5,6 +5,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.global.Global;
 import nightgames.status.Horny;
 import nightgames.status.Stsflag;
 
@@ -22,7 +23,7 @@ public class LewdSuggestion extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().canAct() && c.getStance().mobile(getSelf()) && !c.getStance().behind(getSelf())
-                        && !c.getStance().behind(target) && !c.getStance().sub(getSelf()) && target.is(Stsflag.charmed);
+                        && !c.getStance().behind(target) && !c.getStance().sub(getSelf());
     }
 
     @Override
@@ -32,7 +33,16 @@ public class LewdSuggestion extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.is(Stsflag.horny)) {
+        boolean alreadyTranced =
+                        target.is(Stsflag.charmed) || target.is(Stsflag.enthralled) || target.is(Stsflag.trance);
+        if (!alreadyTranced && Global.random(3) == 0) {
+            if (getSelf().human()) {
+                c.write(getSelf(), deal(c, 0, Result.miss, target));
+            } else {
+                c.write(getSelf(), receive(c, 0, Result.miss, target));
+            }
+            return false;
+        } else if (target.is(Stsflag.horny)) {
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.strong, target));
             } else {
@@ -66,6 +76,11 @@ public class LewdSuggestion extends Skill {
                             "You take advantage of the erotic fantasies already swirling through %s's head, whispering ideas that fan the flame of %s lust.",
                             new Object[] {target.name(), target.possessivePronoun()});
         }
+        if (modifier == Result.miss) {
+            return String.format(
+                            "You whisper ideas that attempt to fan the flame of %s lust, but it doesn't seem to do much",
+                            new Object[] {target.nameOrPossessivePronoun()});
+        }
         return String.format("You plant an erotic suggestion in %s's mind, distracting %s with lewd fantasies.",
                         new Object[] {target.name(), target.directObject()});
     }
@@ -75,6 +90,11 @@ public class LewdSuggestion extends Skill {
         if (modifier == Result.strong) {
             return String.format(
                             "%s whispers a lewd suggestion to you, intensifying the fantasies you were trying to ignore and enflaming your arousal.",
+                            new Object[] {getSelf().name()});
+        }
+        if (modifier == Result.miss) {
+            return String.format(
+                            "%s whispers a lewd suggestion to you, but you just ignore it, and try to concentrate on the fight.",
                             new Object[] {getSelf().name()});
         }
         return String.format(

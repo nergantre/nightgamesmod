@@ -189,7 +189,7 @@ public class TailPeg extends Skill {
                 return "Smiling down on you, " + getSelf().name()
                                 + " spreads your legs and tickles your butt with her tail."
                                 + " You notice how the tail itself is slick and wet as it"
-                                + " slowly pushes through your anus, spreading your cheeks a part. " + getSelf().name()
+                                + " slowly pushes through your anus, spreading your cheeks apart. " + getSelf().name()
                                 + " pumps it in and out a for a few times before taking " + "it out again.";
             case miss:
                 return getSelf().name() + " tries to peg you with her tail but you manage to push"
