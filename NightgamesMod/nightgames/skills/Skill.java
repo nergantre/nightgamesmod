@@ -130,7 +130,7 @@ public abstract class Skill {
         return getName(c);
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
@@ -198,6 +198,7 @@ public abstract class Skill {
         if (success) {
             skill.user().buildMojo(c, generated);
         }
+        c.getCombatantData(skill.user()).setLastUsedSkillName(skill.getName());
     }
 
     public int getCooldown() {

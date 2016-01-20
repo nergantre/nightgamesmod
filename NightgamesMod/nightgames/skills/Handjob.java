@@ -15,6 +15,10 @@ public class Handjob extends Skill {
         super("Handjob", self);
     }
 
+    public Handjob(String string, Character self) {
+        super(string, self);
+    }
+
     @Override
     public boolean usable(Combat c, Character target) {
         return c.getStance().reachBottom(getSelf())

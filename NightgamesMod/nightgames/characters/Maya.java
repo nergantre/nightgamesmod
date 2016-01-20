@@ -109,7 +109,7 @@ public class Maya extends BasePersonality {
         Character target = c.getOther(character);
         target.add(c, new Drowsy(target));
         character.arousal.empty();
-        character.add(new Energized(character, 10));
+        character.add(c, new Energized(character, 10));
         return "Maya completely outmatches you. How were you suppose to deal with"
                         + " someone this skilled? Your cock spurts a sticky white flag in her hands "
                         + "as you cum. You slump down to the floor as you catch your breath. Maya "

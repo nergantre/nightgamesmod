@@ -2,24 +2,33 @@ package nightgames.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Panel;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
+import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -35,6 +44,7 @@ import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.CompoundBorder;
@@ -572,6 +582,50 @@ public class GUI extends JFrame implements Observer {
         createCharacter();
         setVisible(true);
         pack();
+        AbstractAction a = new AbstractAction() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void actionPerformed(ActionEvent event) {
+
+            }
+        };
+        JPanel panel = (JPanel) getContentPane();
+        panel.setFocusable(true);
+        panel.addKeyListener(new KeyListener() {
+            private final Set<String> defaultActions = new HashSet<String>(Arrays.asList("Next", "Leave"));
+
+            /**
+             * Space bar will select the first option, unless they are in the default actions list.
+             */
+            @Override
+            public void keyTyped(KeyEvent e) {
+                Component children[] = commandPanel.getComponents();
+                ArrayList<JButton> choices = new ArrayList<>();
+                for (Component child : children) {
+                    if (!(child instanceof JButton || child instanceof SkillButton)) {
+                        return;
+                    }
+                    JButton button = child instanceof JButton ? (JButton) child : ((SkillButton) child).getButton();
+                    if (defaultActions.contains(button.getText())) {
+                        button.doClick();
+                        return;
+                    } else if (button.isEnabled()) {
+                        choices.add(button);
+                    }
+                }
+                if (choices.size() > 0) {
+                    JButton choice = choices.get(0);
+                    choice.doClick();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {}
+
+            @Override
+            public void keyPressed(KeyEvent e) {}
+        });
     }
 
     // combat GUI

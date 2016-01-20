@@ -14,17 +14,12 @@ import nightgames.status.Charmed;
 public class TemptressStripTease extends StripTease {
 
     public TemptressStripTease(Character self) {
-        super(self);
+        super("Skillful Strip Tease", self);
     }
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
         return user.has(Trait.temptress) && user.get(Attribute.Technique) >= 8;
-    }
-
-    @Override
-    public String getName() {
-        return "Skillful Strip Tease";
     }
 
     @Override

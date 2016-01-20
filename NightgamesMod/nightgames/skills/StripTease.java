@@ -14,6 +14,10 @@ public class StripTease extends Skill {
         super("Strip Tease", self);
     }
 
+    public StripTease(String string, Character self) {
+        super(string, self);
+    }
+
     public static boolean hasRequirements(Character user) {
         return user.get(Attribute.Seduction) >= 24 && !user.has(Trait.direct) && !user.has(Trait.shy)
                         && !user.has(Trait.temptress);

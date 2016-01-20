@@ -11,7 +11,7 @@ import nightgames.status.FiredUp;
 public class TemptressBlowjob extends Blowjob {
 
     public TemptressBlowjob(Character user) {
-        super(user);
+        super("Skillful Blowjob", user);
     }
 
     @Override
@@ -27,11 +27,6 @@ public class TemptressBlowjob extends Blowjob {
     @Override
     public String describe(Combat c) {
         return "Use your supreme oral skills on your opponent's dick.";
-    }
-
-    @Override
-    public String getName() {
-        return "Skillful Blowjob";
     }
 
     @Override

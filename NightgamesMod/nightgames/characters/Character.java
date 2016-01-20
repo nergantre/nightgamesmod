@@ -2362,8 +2362,12 @@ public abstract class Character extends Observable implements Cloneable {
             available.add(new Nothing(this));
         }
         available.addAll(cds);
+        Global.gui().clearCommand();
+        Skill lastUsed = null;
         for (Skill a : available) {
-            if (a.type(c) == Tactics.damage) {
+            if (a.getName().equals(c.getCombatantData(this).getLastUsedSkillName())) {
+                lastUsed = a;
+            } else if (a.type(c) == Tactics.damage) {
                 damage.add(a);
             } else if (a.type(c) == Tactics.pleasure) {
                 pleasure.add(a);
@@ -2383,7 +2387,9 @@ public abstract class Character extends Observable implements Cloneable {
                 misc.add(a);
             }
         }
-        Global.gui().clearCommand();
+        if (lastUsed != null) {
+            Global.gui().addSkill(lastUsed, c);
+        }
         for (Skill a : stripping) {
             Global.gui().addSkill(a, c);
         }

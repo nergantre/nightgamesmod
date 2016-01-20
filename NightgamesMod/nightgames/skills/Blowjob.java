@@ -12,9 +12,12 @@ import nightgames.stance.SixNine;
 import nightgames.stance.Stance;
 
 public class Blowjob extends Skill {
+    public Blowjob(String name, Character self) {
+        super(name, self);
+    }
 
     public Blowjob(Character self) {
-        super("Blow", self);
+        this("Blow", self);
     }
 
     @Override

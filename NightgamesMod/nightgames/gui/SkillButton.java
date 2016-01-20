@@ -22,33 +22,33 @@ public class SkillButton extends JPanel {
 
     public SkillButton(final Skill action, Combat c) {
         super();
-        button = new JButton(action.getLabel(c));
-        button.setBorderPainted(false);
-        button.setOpaque(true);
-        button.setFont(new Font("Baskerville Old Face", Font.PLAIN, 18));
+        setButton(new JButton(action.getLabel(c)));
+        getButton().setBorderPainted(false);
+        getButton().setOpaque(true);
+        getButton().setFont(new Font("Baskerville Old Face", Font.PLAIN, 18));
         this.action = action;
         String text = "<html>" + action.describe(c);
         if (action.type(c) == Tactics.damage) {
-            button.setBackground(new Color(150, 0, 0));
-            button.setForeground(Color.WHITE);
+            getButton().setBackground(new Color(150, 0, 0));
+            getButton().setForeground(Color.WHITE);
         } else if (action.type(c) == Tactics.pleasure) {
-            button.setBackground(Color.PINK);
+            getButton().setBackground(Color.PINK);
         } else if (action.type(c) == Tactics.fucking) {
-            button.setBackground(new Color(255, 100, 200));
+            getButton().setBackground(new Color(255, 100, 200));
         } else if (action.type(c) == Tactics.positioning) {
-            button.setBackground(new Color(0, 100, 0));
-            button.setForeground(Color.WHITE);
+            getButton().setBackground(new Color(0, 100, 0));
+            getButton().setForeground(Color.WHITE);
         } else if (action.type(c) == Tactics.stripping) {
-            button.setBackground(new Color(0, 100, 0));
-            button.setForeground(Color.WHITE);
+            getButton().setBackground(new Color(0, 100, 0));
+            getButton().setForeground(Color.WHITE);
         } else if (action.type(c) == Tactics.debuff) {
-            button.setBackground(Color.CYAN);
+            getButton().setBackground(Color.CYAN);
         } else if (action.type(c) == Tactics.recovery || action.type(c) == Tactics.calming) {
-            button.setBackground(Color.WHITE);
+            getButton().setBackground(Color.WHITE);
         } else if (action.type(c) == Tactics.summoning) {
-            button.setBackground(Color.YELLOW);
+            getButton().setBackground(Color.YELLOW);
         } else {
-            button.setBackground(new Color(200, 200, 200));
+            getButton().setBackground(new Color(200, 200, 200));
         }
 
         if (action.getMojoCost(c) > 0) {
@@ -58,19 +58,19 @@ public class SkillButton extends JPanel {
             setBorder(new LineBorder(new Color(53, 201, 255), 3));
             text += "<br>Mojo generated: " + action.getMojoBuilt(c) + "%";
         } else {
-            setBorder(new LineBorder(button.getBackground(), 3));
+            setBorder(new LineBorder(getButton().getBackground(), 3));
         }
         if (!action.user().cooldownAvailable(action)) {
-            button.setEnabled(false);
+            getButton().setEnabled(false);
             text += String.format("<br>Remaining Cooldown: %d turns", action.user().getCooldown(action));
-            button.setForeground(Color.WHITE);
-            button.setBackground(getBackground().darker());
+            getButton().setForeground(Color.WHITE);
+            getButton().setBackground(getBackground().darker());
         }
 
         text += "</html>";
-        button.setToolTipText(text);
+        getButton().setToolTipText(text);
         combat = c;
-        button.addActionListener(arg0 -> {
+        getButton().addActionListener(arg0 -> {
             if (action.subChoices().size() == 0) {
                 combat.act(SkillButton.this.action.user(), SkillButton.this.action, "");
             } else {
@@ -83,6 +83,14 @@ public class SkillButton extends JPanel {
             }
         });
         setLayout(new BorderLayout());
-        add(button);
+        add(getButton());
+    }
+
+    public JButton getButton() {
+        return button;
+    }
+
+    public void setButton(JButton button) {
+        this.button = button;
     }
 }
