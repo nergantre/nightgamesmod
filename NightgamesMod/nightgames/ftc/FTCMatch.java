@@ -107,7 +107,7 @@ public class FTCMatch extends Match {
         Area pBase = new Area("Central Camp",
                         String.format("You are in a clearing in the middle of the forest. There are no"
                                         + " trees here, just a small camp where %s can "
-                                        + "get a new Flag if it gets captured", prey.subject()),
+                                        + "get a new Flag if it gets captured.", prey.subject()),
                         Movement.ftcCenter);
         map.put("North Base", nBase);
         map.put("West Base", wBase);
@@ -236,5 +236,10 @@ public class FTCMatch extends Match {
     public Collection<Movement> getResupplyAreas(Character ch) {
         Area base = bases.get(ch);
         return Collections.singleton(Movement.ftcBaseMovement(base));
+    }
+    
+    @Override
+    public String genericRoomDescription() {
+        return "area";
     }
 }

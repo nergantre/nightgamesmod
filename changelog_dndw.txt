@@ -79,7 +79,6 @@ Completely remade the way NPCs handle enthralled opponents. It's now less powerf
 Fixed stripping checks causing a crash if the character is naked.
 <<<<<<< HEAD
 Made Undress and Masturbate much less likely to be picked by the AI
-=======
 (Probably) Fixed body modification skills causing changes in simulation. (Temporary changes were prevented, permanent ones weren't)
 Added a duration to fetishes.
 Finished Airi, who has been partially implemented for a long time. She's a slime, and will appear when you reach level 10.
