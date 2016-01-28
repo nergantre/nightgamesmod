@@ -18,10 +18,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
+import java.util.TooManyListenersException;
+import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
@@ -1238,14 +1241,17 @@ public class GUI extends JFrame implements Observer {
             statusPanel.setMaximumSize(new Dimension(height, width / 6));
             System.out.println("STATUS PANEL");
         }
-
-        JPanel inventoryPanel = new JPanel();
-
         JPanel statsPanel = new JPanel();
 
         JPanel currentStatusPanel = new JPanel();
-
-        statusPanel.add(inventoryPanel);
+        JPanel inventoryPane = new JPanel();
+        inventoryPane.setSize(400, 1000);
+        
+        List<Item> availItems = player.getInventory().entrySet().stream().filter(entry -> (entry.getValue() > 0)).map(entry -> entry.getKey()).collect(Collectors.toList());
+        
+        JScrollPane scrollInventory = new JScrollPane(inventoryPane);
+        inventoryPane.setLayout(new GridLayout(availItems.size()/3, 3));
+        statusPanel.add(scrollInventory);
 
         JSeparator sep = new JSeparator();
         sep.setMaximumSize(new Dimension(statusPanel.getWidth(), 2));
@@ -1262,33 +1268,22 @@ public class GUI extends JFrame implements Observer {
 
         currentStatusPanel.setBackground(new Color(0, 10, 30));
         statsPanel.setBackground(new Color(18, 30, 49));
-        inventoryPanel.setBackground(new Color(18, 30, 49));
-
-        if (width < 720) {
-            inventoryPanel.setSize(new Dimension(height, width / 6));
-            System.out.println("Oh god so tiny");
-        }
+        inventoryPane.setBackground(new Color(18, 30, 49));
 
         Map<Item, Integer> items = player.getInventory();
         int count = 0;
 
         ArrayList<JLabel> itmlbls = new ArrayList<JLabel>();
-        for (Item i : items.keySet()) {
-            if (items.get(i) > 0) {
+        for (Item i : availItems) {
+            JLabel dirtyTrick = new JLabel(i.getName() + ": " + items.get(i) + "\n");
 
-                JLabel dirtyTrick = new JLabel(i.getName() + ": " + items.get(i) + "\n");
+            dirtyTrick.setForeground(new Color(240, 240, 255));
 
-                dirtyTrick.setForeground(new Color(240, 240, 255));
+            itmlbls.add(count, dirtyTrick);
 
-                itmlbls.add(count, dirtyTrick);
-
-                // itmlbls.add(count, new JLabel(i.getName() + ": " +
-                // items.get(i) + "\n"));
-
-                itmlbls.get(count).setToolTipText(i.getDesc());
-                inventoryPanel.add(itmlbls.get(count));
-                count++;
-            }
+            itmlbls.get(count).setToolTipText(i.getDesc());
+            inventoryPane.add(itmlbls.get(count));
+            count++;
         }
 
         count = 0;

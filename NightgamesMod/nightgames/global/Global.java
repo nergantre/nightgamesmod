@@ -381,7 +381,6 @@ public class Global {
         getSkillPool().add(new FaceSit(p));
         getSkillPool().add(new Purr(p));
         getSkillPool().add(new MutualUndress(p));
-        getSkillPool().add(new Submit(p));
         getSkillPool().add(new Surrender(p));
         getSkillPool().add(new ReverseFuck(p));
         getSkillPool().add(new ReverseCarry(p));
@@ -801,7 +800,7 @@ public class Global {
                         "You are in the <b>Kitchen</b> where student meals are prepared each day. The industrial fridge and surrounding cabinets are full of the "
                                         + "ingredients for any sort of bland cafeteria food you can imagine. Fortunately, you aren't very hungry. There's a chance you might be able to cook up some "
                                         + "of the more obscure items into something useful.",
-                        Movement.kitchen, new MapDrawHint(new Rectangle(17, 12, 4, 3), "Kitchen", false));
+                        Movement.kitchen, new MapDrawHint(new Rectangle(18, 12, 4, 2), "Kitchen", false));
         Area storage = new Area("Storage Room",
                         "You are in a <b>Storage Room</b> under the Dining Hall. It's always unlocked and receives a fair bit of foot traffic from students "
                                         + "using the tunnel to and from the Dorm, so no one keeps anything important in here. There's enough junk down here to provide some hiding places and there's a chance "

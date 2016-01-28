@@ -1,9 +1,44 @@
+1.9.2 changelog
+Balance:
+- Wild Thrust's base damage is now increased by your current arousal / 30, up to your maximum Animism
+- Nimble's speed bonus is now increase by your current arousal / 100.
+- Accuracy influence from speed now maxes out at 5. (So if you have 1 speed, and your opponent has 5000 speed, your counter chance and initiative will only take into account a difference of 5)
+- Purr now has a base temptation damage of your current arousal / 10.
+- Pounce now increases in accuracy by 1% for each 10 current arousal
+- Tailjob's base damage is now increased by your current arousal / 20, up to your maximum Animism
+- Feral pussy now applies pheromones on orgasm, dealing 50% of your current arousal over 5 turns.
+- Also, the chance for Feral pussy applying Frenzied has been increased based on your current arousal. It now also gives you the ability to ignore orgasms for 3 turns after applying it.
+- Kat now gets the trait nymphomania at level 25, which restores some will power upon cumming.
+
+- Angel and Divine skills got a bit of a nerf.
+	- Using her divinity can now apply the debuff "Divine Recoil" which will increase her sensitivity for 5 turns.
+	- This will stack infinitely if it gets refreshed.
+
+- Eve now actually gets some traits as she levels.
+	- Most of it is focused on cock talents and staying power
+	- Anal Fanatic has been reworked
+		- Used to apply frenzy for 6 turns after ass fucking
+		- Now applies frenzy for 4 turns and Ignore Orgasm for 4 turns
+
+- Cassie now get a few more Traits after lvl 50
+
+Minor:
+- Removed the skill submit, since that is now covered by the submissive dive skill
+- Changed how the inventory is displayed and added a scrollbar
+- Changed the map for the kitchen to better show that it's not connected to the dorms or the laundry.
+
 1.9.1 changelog
+
+New:
+- Pressing spacebar will pick "Leave", "Next", or the left-most option if neither of those choices exist.
+- The last used skill if it's available will always be on the left now.
+- Added temporary portraits for the mysterious challenger.
+	- I *really* don't like how they turned out so I probably will redo them at some point... :(
 
 Balance:
 - Reduced Airi's starting willpower from 500 to 150.
 	- Increased her willpower growth to 5 per level, since it's actually kind of cool that she has a ridiculously high will power for a contestant.
-- Wear Strapon now has a 6 turn cooldown, so you cannot just spam it
+- Wear Strapon now has a 6 turn cooldown, so you cannot just spam it	
 - Bluff and Determination now has a minimum calming effect of 20.
 - Mystery NPC:
 	- Added trait unnatural growth:
@@ -13,7 +48,7 @@ Balance:
 	- Made both LewdSuggestion and HeightenSenses usable when the target is not charmed, but they have a 1/3 chance of failing.
 	- Gave her per level stat growths
 - Reduced level influence on accuracy from 5% per level to 2% a level. Maximum is now 10% more accurate if you're 5 levels above, and 10% less accurate if you're 5 levels below.
-	
+
 Minor:
 - Upgrading the dildo will still allow you to buy another one for transformations
 - Use female pronouns if target has no genitals (stopgap feature because Airi sometimes makes both disappear...)

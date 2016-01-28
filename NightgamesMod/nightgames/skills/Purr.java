@@ -34,11 +34,16 @@ public class Purr extends Skill {
     public boolean resolve(Combat c, Character target) {
         if (Global.random(target.getLevel()) <= getSelf().get(Attribute.Animism) * getSelf().getArousal().percent()
                         / 100 && !target.wary()) {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.normal, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.normal, target));
+            int damage = getSelf().getArousal().getReal() / 10;
+            if (damage < 10) {
+                damage = 0;
             }
+            if (getSelf().human()) {
+                c.write(getSelf(), deal(c, damage, Result.normal, target));
+            } else if (target.human()) {
+                c.write(getSelf(), receive(c, damage, Result.normal, target));
+            }
+            target.tempt(c, getSelf(), damage);
             target.add(c, new Charmed(target));
         } else {
             if (getSelf().human()) {
@@ -68,9 +73,13 @@ public class Purr extends Skill {
                             + " your best puppy dog eyes. She smiles, but then aims a quick punch at your groin, which you barely avoid. "
                             + "Maybe you shouldn't have mixed your animal metaphors.";
         } else {
-            return "You give " + target.name()
+            String message = "You give " + target.name()
                             + " an affectionate purr and your most disarming smile. Her battle aura melts away and she pats your head, completely taken with your "
                             + "endearing behavior.";
+            if (damage > 0) {
+                message += "\nSome of your apparent arousal seems to have affected her, her breath seems shallower than before.";
+            }
+            return message;
         }
     }
 
@@ -80,10 +89,13 @@ public class Purr extends Skill {
             return getSelf().name()
                             + " slumps submissively and purrs. It's cute, but she's not going to get the better of you.";
         } else {
-            return getSelf().name()
+            String message = getSelf().name()
                             + " purrs cutely, and looks up at you with sad eyes. Oh God, she's so adorable! It'd be mean to beat her too quickly. Maybe you should let her get some "
                             + "attacks in while you enjoy watching her earnest efforts.";
+            if (damage > 0) {
+                message += "\nYou're not sure if this was intentional, but her flushed face and ragged breathing makes the act a lot more erotic than you would expect. You try to contain your need to fuck the little kitty in heat.";
+            }
+            return message;
         }
     }
-
 }

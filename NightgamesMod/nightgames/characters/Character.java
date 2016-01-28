@@ -49,7 +49,9 @@ import nightgames.stance.Position;
 import nightgames.stance.Stance;
 import nightgames.status.Alluring;
 import nightgames.status.DivineCharge;
+import nightgames.status.DivineRecoil;
 import nightgames.status.Enthralled;
+import nightgames.status.Feral;
 import nightgames.status.Frenzied;
 import nightgames.status.Resistance;
 import nightgames.status.Status;
@@ -989,6 +991,7 @@ public abstract class Character extends Observable implements Cloneable {
     public void add(Combat c, Status status) {
         boolean cynical = false;
         String message = "";
+        Status effectiveStatus = status;
         for (Status s : getStatuses()) {
             if (s.flags().contains(Stsflag.cynical)) {
                 cynical = true;
@@ -1012,6 +1015,7 @@ public abstract class Character extends Observable implements Cloneable {
                 if (s.getVariant().equals(status.getVariant())) {
                     s.replace(status);
                     message = s.initialMessage(c, false);
+                    effectiveStatus = s;
                     break;
                 }
                 if (s.overrides(status)) {
@@ -1027,8 +1031,10 @@ public abstract class Character extends Observable implements Cloneable {
             message = Global.capitalizeFirstLetter(message);
             if (c != null) {
                 c.write(this, "<b>" + message + "</b>");
+                effectiveStatus.onApply(c, c.getOther(this));
             } else if (human() || location() != null && location().humanPresent()) {
                 Global.gui().message("<b>" + message + "</b>");
+                effectiveStatus.onApply(null, null);
             }
             if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
                 System.out.println(message);
@@ -1446,12 +1452,13 @@ public abstract class Character extends Observable implements Cloneable {
                         overflow));
 
         if (selfPart != null && opponentPart != null) {
-            selfPart.onOrgasm(c, this, opponent, opponentPart, true);
-            opponentPart.onOrgasm(c, opponent, this, selfPart, false);
+            selfPart.onOrgasmWith(c, this, opponent, opponentPart, true);
+            opponentPart.onOrgasmWith(c, opponent, this, selfPart, false);
         } else if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
             System.out.printf("Could not process %s's orgasm against %s: self=%s, opp=%s, pos=%s", this, opponent,
                             selfPart, opponentPart, c.getStance());
         }
+        body.getCurrentParts().forEach(part -> part.onOrgasm(c, this, opponent));
 
         if (opponent.has(Trait.erophage)) {
             c.write(Global.capitalizeFirstLetter("<br><b>" + opponent.subjectAction("flush", "flushes")
@@ -1480,6 +1487,14 @@ public abstract class Character extends Observable implements Cloneable {
         float extra = 25.0f * overflow / (arousal.max() / 2.0f);
 
         loseWillpower(c, getOrgasmWillpowerLoss(), Math.round(extra), true, "");
+        if (has(Trait.nymphomania)) {
+            if (human()) {
+                c.write("Cumming actually made you feel kind of refreshed, albeit with a burning desire for more.");
+            } else {
+                c.write(Global.format("After {self:subject} comes down from {self:possessive} orgasmic high, {self:pronoun} doesn't look satisfied at all. There's a mad glint in {self:possesive} eye that seems to be endlessly asking for more.", this, opponent));
+            }
+            restoreWillpower(c, 5 + Math.max((get(Attribute.Animism) + get(Attribute.Nymphomania))/5, 15));
+        }
         orgasms += 1;
     }
 
@@ -1651,6 +1666,9 @@ public abstract class Character extends Observable implements Cloneable {
             } else {
                 c.getCombatantData(opponent).setIntegerFlag("enchantingvoice-count", voiceCount + 1);
             }
+        }
+        if (getPure(Attribute.Animism) >= 4 && getArousal().percent() >= 50 && !is(Stsflag.feral)) {
+            add(c, new Feral(this));
         }
         pleasured = false;
     }
@@ -2112,7 +2130,7 @@ public abstract class Character extends Observable implements Cloneable {
         int counter = 0;
         counter += Math.max(0, get(Attribute.Cunning) - opponent.get(Attribute.Cunning)) / 2;
         counter += get(Attribute.Perception);
-        counter += (get(Attribute.Speed) - opponent.get(Attribute.Speed)) / 2;
+        counter += getSpeedDifference(opponent) / 2;
         counter += 5 - skill.accuracy(c);
         for (Status s : getStatuses()) {
             counter += s.counter();
@@ -2129,9 +2147,13 @@ public abstract class Character extends Observable implements Cloneable {
         return Math.max(0, counter);
     }
 
+    private int getSpeedDifference(Character opponent) {
+        return Math.min(Math.max(get(Attribute.Speed) - opponent.get(Attribute.Speed), -5), 5);
+    }
+
     public boolean roll(Skill attack, Combat c, int accuracy) {
-        int hitDiff = attack.user().get(Attribute.Speed) + attack.user().get(Attribute.Perception)
-                        - (get(Attribute.Perception) + get(Attribute.Speed));
+        int hitDiff = attack.user().getSpeedDifference(this) + (attack.user().get(Attribute.Perception)
+                        - get(Attribute.Perception));
         int levelDiff = Math.min(attack.user().level - level, 5);
         levelDiff = Math.max(attack.user().level - level, -5);
         int attackroll = Global.random(100);
@@ -2825,10 +2847,10 @@ public abstract class Character extends Observable implements Cloneable {
         return disarm;
     }
 
-    public int baseRecoilPleasure() {
+    public float modRecoilPleasure(float mt) {
         int total = get(Attribute.Submissive) / 2;
         if (has(Trait.responsive)) {
-            total += 3;
+            total += mt / 2;
         }
         return total;
     }
@@ -2846,5 +2868,18 @@ public abstract class Character extends Observable implements Cloneable {
         body.purge(c);
         status = new HashSet<Status>(
                         status.stream().filter(s -> !s.flags().contains(Stsflag.purgable)).collect(Collectors.toSet()));
+    }
+
+    /**
+     * applies bonuses and penalties for using an attribute.
+     * 
+     * @param c
+     * @param magnitude
+     */
+    public void usedAttribute(Attribute att, Combat c, double baseChance) {
+        // divine recoil applies at 20% per magnitude
+        if (att == Attribute.Divinity && Global.randomdouble() < baseChance) {
+            add(c, new DivineRecoil(this, 1));
+        }
     }
 }

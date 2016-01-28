@@ -72,10 +72,10 @@ public class Kat extends BasePersonality {
         growth.addTrait(16, Trait.powerfulhips);
         growth.addTrait(19, Trait.alwaysready);
         growth.addTrait(22, Trait.cute);
-        growth.addTrait(25, Trait.tongueTraining1);
-        growth.addTrait(28, Trait.tight);
+        growth.addTrait(25, Trait.nymphomania);
+        growth.addTrait(28, Trait.tongueTraining1);
         growth.addTrait(31, Trait.lacedjuices);
-        growth.addTrait(34, Trait.analTraining2);
+        growth.addTrait(34, Trait.tight);
         growth.addTrait(37, Trait.experttongue);
         growth.addTrait(40, Trait.graceful);
         growth.addTrait(43, Trait.tongueTraining2);

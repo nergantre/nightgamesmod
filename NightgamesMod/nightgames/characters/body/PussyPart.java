@@ -13,6 +13,7 @@ import nightgames.status.DivineCharge;
 import nightgames.status.Enthralled;
 import nightgames.status.Frenzied;
 import nightgames.status.Horny;
+import nightgames.status.IgnoreOrgasm;
 import nightgames.status.Shamed;
 import nightgames.status.Stsflag;
 
@@ -390,10 +391,12 @@ public enum PussyPart implements BodyPart,BodyPartMod {
         }
 
         if (this == feral) {
-            if (target.isType("cock") && Global.random(10) == 0) {
+            int chance = Math.max(3, 10 - self.getArousal().getReal() / 50);
+            if (!self.is(Stsflag.frenzied) && !self.is(Stsflag.cynical) && target.isType("cock") && Global.random(chance) == 0) {
                 c.write(self, String.format(
                                 "A cloud of lust descends over %s and %s, clearing both your thoughts of all matters except to fuck. Hard.",
                                 opponent.subject(), self.subject()));
+                self.add(c, new IgnoreOrgasm(opponent, 3));
                 self.add(c, new Frenzied(self, 3));
                 opponent.add(c, new Frenzied(opponent, 3));
             }
@@ -550,10 +553,21 @@ public enum PussyPart implements BodyPart,BodyPartMod {
     public String getModType() {
         return name();
     }
+    
+    @Override
+    public void onOrgasm(Combat c, Character self, Character opponent) {
+        if (this == feral) {
+            c.write(self, Global.format(
+                            "As {self:SUBJECT-ACTION:cum|cums} hard, an literal explosion of pheromones hits {other:name-do}. {other:POSSESSIVE} entire body flushes in arousal; {other:subject} better finish this fast!",
+                            self, opponent));
+            opponent.add(c, new Horny(opponent, self.getArousal().getReal() / 10, 5,
+                            self.nameOrPossessivePronoun() + " orgasmic pheromones"));
+        }
+    }
 
     @Override
-    public void onOrgasm(Combat c, Character self, Character opponent, BodyPart target, boolean selfCame) {
-        if (this == gooey && target.isErogenous() && !selfCame) {
+    public void onOrgasmWith(Combat c, Character self, Character opponent, BodyPart target, boolean selfCame) {
+        if (this == gooey && target.isType("cock") && !selfCame) {
             c.write(self, Global.format(
                             "{self:NAME-POSSESSIVE} {self:body-part:pussy} clenches down hard"
                                             + " on {other:name-possessive} {other:body-part:cock}. The suction is so strong that the cum"

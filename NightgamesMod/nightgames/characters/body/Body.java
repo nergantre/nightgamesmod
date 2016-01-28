@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -465,6 +466,10 @@ public class Body implements Cloneable {
         if (target.isErogenous() && opponent != null && opponent.has(Trait.hairtrigger)) {
             sensitivity += 1;
         }
+
+        final double moddedSensitivity = sensitivity;
+        sensitivity += character.status.stream().mapToDouble(status -> status.sensitivity(moddedSensitivity)).sum();
+
         double pleasure = 1;
         if (!with.isType("none")) {
             pleasure = with.getPleasure(opponent, target);

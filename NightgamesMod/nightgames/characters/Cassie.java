@@ -81,6 +81,9 @@ public class Cassie extends BasePersonality {
         growth.addTrait(44, Trait.soulsucker);
         growth.addTrait(47, Trait.pussyTraining2);
         growth.addTrait(50, Trait.desensitized2);
+        growth.addTrait(53, Trait.lacedjuices);
+        growth.addTrait(56, Trait.responsive);
+        growth.addTrait(60, Trait.enchantingVoice);
         // mostly feminine face, cute but not quite at Angel's level
         character.body.add(new FacePart(.1, 2.9));
         growth.actions.put(20, () -> {

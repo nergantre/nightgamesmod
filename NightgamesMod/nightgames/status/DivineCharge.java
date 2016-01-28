@@ -17,7 +17,7 @@ public class DivineCharge extends Status {
     public double magnitude;
 
     public DivineCharge(Character affected, double magnitude) {
-        super("Divine Charge", affected);
+        super("Divine Energy", affected);
         flag(Stsflag.divinecharge);
         flag(Stsflag.purgable);
         this.magnitude = magnitude;
@@ -45,6 +45,11 @@ public class DivineCharge extends Status {
         }
         return "";
     }
+    
+    @Override
+    public void onApply(Combat c, Character other) {
+        affected.usedAttribute(Attribute.Divinity, c, .25);
+    };
 
     @Override
     public String describe(Combat c) {

@@ -25,6 +25,10 @@ public class Meter implements Serializable, Cloneable {
         }
     }
 
+    public int getReal() {
+        return current;
+    }
+
     public int getOverflow() {
         return Math.max(0, current - max());
     }

@@ -634,9 +634,6 @@ public class Player extends Character {
             tempt(c, opponent, arousal.max() / 25);
             opponent.tempt(c, this, opponent.arousal.max() / 25);
         }
-        if (getPure(Attribute.Animism) >= 4 && getArousal().percent() >= 50 && !is(Stsflag.feral)) {
-            add(c, new Feral(this));
-        }
     }
 
     @Override

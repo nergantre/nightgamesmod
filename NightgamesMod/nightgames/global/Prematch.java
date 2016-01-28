@@ -74,7 +74,7 @@ public class Prematch implements Scene {
                             + "Lilly takes the lead again. <i>\"If any of you actually manage to make "
                             + "Maya cum, I'll give you multiple points for it. Otherwise you can just"
                             + " consider this a learning opportunity and a chance to experience an "
-                            + "orgasm at the hands of a master.\"</i><p>\n\nTODO: FIX CONDITION";
+                            + "orgasm at the hands of a master.\"</i><p>\n\n";
 
             type = new MayaModifier();
             choice.add(new SceneButton("Start The Match"));

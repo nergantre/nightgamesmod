@@ -84,11 +84,11 @@ public class Clothing implements Loot {
     }
 
     public int dc(Character attacker) {
-        if (attacker != null && attacker.has(Trait.bramaster) && layer == 0 && slots.contains(ClothingSlot.top)) {
-            return dc / 2;
+        if (attacker != null && attacker.has(Trait.bramaster) && layer <=1 && slots.contains(ClothingSlot.top)) {
+            return dc / 4;
         }
-        if (attacker != null && attacker.has(Trait.pantymaster) && layer == 0 && slots.contains(ClothingSlot.bottom)) {
-            return dc / 2;
+        if (attacker != null && attacker.has(Trait.pantymaster) && layer <= 1 && slots.contains(ClothingSlot.bottom)) {
+            return dc / 4;
         }
         return dc;
     }

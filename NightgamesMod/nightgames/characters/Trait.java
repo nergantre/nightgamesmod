@@ -288,6 +288,7 @@ public enum Trait {
     mojoMaster("Mojo Master", "Max Mojo increases faster"),
     powerfulhips("Powerful Hips", "Can grind from submissive positions"),
     strongwilled("Strong Willed", "Halves willpower loss"),
+    nymphomania("Nymphomania", "Restores willpower upon orgasm"),
     alwaysready("Always Ready", "Always ready for penetration", (b, c, t) -> {
         if (!c.hasDick() && c.crotchAvailable()) {
             b.append("Juices constainly drool from ");

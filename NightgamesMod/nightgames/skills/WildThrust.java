@@ -30,7 +30,7 @@ public class WildThrust extends Thrust {
     public int[] getDamage(Combat c, Character target) {
         int results[] = new int[2];
 
-        int m = 15 + Global.random(20);
+        int m = 15 + Global.random(20) + Math.min(getSelf().get(Attribute.Animism), getSelf().getArousal().getReal() / 30);
         int mt = 15 + Global.random(20);
         mt = Math.max(1, mt);
         results[0] = m;

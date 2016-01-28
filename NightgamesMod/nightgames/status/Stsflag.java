@@ -54,4 +54,5 @@ public enum Stsflag {
     drowsy,
     tailsucked,
     aggressive,
+    divinerecoil,
 }

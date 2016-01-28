@@ -13,6 +13,7 @@ import nightgames.stance.Anal;
 import nightgames.stance.AnalProne;
 import nightgames.status.Flatfooted;
 import nightgames.status.Frenzied;
+import nightgames.status.IgnoreOrgasm;
 import nightgames.status.Oiled;
 import nightgames.status.Stsflag;
 
@@ -112,7 +113,8 @@ public class AssFuck extends Fuck {
                             getSelf().possessivePronoun(), getSelf().body.getRandomCock().describe(getSelf()),
                             target.nameOrPossessivePronoun(), getSelf().nameOrPossessivePronoun(),
                             target.directObject()));
-            getSelf().add(c, new Frenzied(getSelf(), 6));
+            getSelf().add(c, new Frenzied(getSelf(), 4));
+            getSelf().add(c, new IgnoreOrgasm(getSelf(), 4));
         }
         return true;
     }

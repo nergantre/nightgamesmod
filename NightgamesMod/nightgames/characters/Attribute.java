@@ -18,7 +18,8 @@ public enum Attribute {
     Medicine,
     Technique,
     Submissive,
-    Hypnosis;
+    Hypnosis,
+    Nymphomania;
 
     public static boolean isBasic(Attribute a) {
         return a == Power || a == Seduction || a == Perception;
