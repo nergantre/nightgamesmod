@@ -1246,11 +1246,12 @@ public class GUI extends JFrame implements Observer {
         JPanel currentStatusPanel = new JPanel();
         JPanel inventoryPane = new JPanel();
         inventoryPane.setSize(400, 1000);
-        
-        List<Item> availItems = player.getInventory().entrySet().stream().filter(entry -> (entry.getValue() > 0)).map(entry -> entry.getKey()).collect(Collectors.toList());
-        
+
+        List<Item> availItems = player.getInventory().entrySet().stream().filter(entry -> (entry.getValue() > 0))
+                        .map(entry -> entry.getKey()).collect(Collectors.toList());
+
         JScrollPane scrollInventory = new JScrollPane(inventoryPane);
-        inventoryPane.setLayout(new GridLayout(availItems.size()/3, 3));
+        inventoryPane.setLayout(new GridLayout(availItems.size() / 3, 3));
         statusPanel.add(scrollInventory);
 
         JSeparator sep = new JSeparator();

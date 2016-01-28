@@ -45,7 +45,7 @@ public class DivineCharge extends Status {
         }
         return "";
     }
-    
+
     @Override
     public void onApply(Combat c, Character other) {
         affected.usedAttribute(Attribute.Divinity, c, .25);

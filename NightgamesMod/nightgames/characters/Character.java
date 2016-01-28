@@ -1491,9 +1491,11 @@ public abstract class Character extends Observable implements Cloneable {
             if (human()) {
                 c.write("Cumming actually made you feel kind of refreshed, albeit with a burning desire for more.");
             } else {
-                c.write(Global.format("After {self:subject} comes down from {self:possessive} orgasmic high, {self:pronoun} doesn't look satisfied at all. There's a mad glint in {self:possesive} eye that seems to be endlessly asking for more.", this, opponent));
+                c.write(Global.format(
+                                "After {self:subject} comes down from {self:possessive} orgasmic high, {self:pronoun} doesn't look satisfied at all. There's a mad glint in {self:possesive} eye that seems to be endlessly asking for more.",
+                                this, opponent));
             }
-            restoreWillpower(c, 5 + Math.max((get(Attribute.Animism) + get(Attribute.Nymphomania))/5, 15));
+            restoreWillpower(c, 5 + Math.max((get(Attribute.Animism) + get(Attribute.Nymphomania)) / 5, 15));
         }
         orgasms += 1;
     }
@@ -2152,8 +2154,8 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public boolean roll(Skill attack, Combat c, int accuracy) {
-        int hitDiff = attack.user().getSpeedDifference(this) + (attack.user().get(Attribute.Perception)
-                        - get(Attribute.Perception));
+        int hitDiff = attack.user().getSpeedDifference(this)
+                        + (attack.user().get(Attribute.Perception) - get(Attribute.Perception));
         int levelDiff = Math.min(attack.user().level - level, 5);
         levelDiff = Math.max(attack.user().level - level, -5);
         int attackroll = Global.random(100);

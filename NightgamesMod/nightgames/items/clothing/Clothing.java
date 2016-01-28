@@ -84,7 +84,7 @@ public class Clothing implements Loot {
     }
 
     public int dc(Character attacker) {
-        if (attacker != null && attacker.has(Trait.bramaster) && layer <=1 && slots.contains(ClothingSlot.top)) {
+        if (attacker != null && attacker.has(Trait.bramaster) && layer <= 1 && slots.contains(ClothingSlot.top)) {
             return dc / 4;
         }
         if (attacker != null && attacker.has(Trait.pantymaster) && layer <= 1 && slots.contains(ClothingSlot.bottom)) {

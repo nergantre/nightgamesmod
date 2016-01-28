@@ -37,7 +37,8 @@ public class TailJob extends Skill {
         } else if (target.human()) {
             c.write(getSelf(), receive(c, 0, Result.normal, target));
         }
-        int m = (5 + Global.random(10)) + Math.min(getSelf().getArousal().getReal() / 20, getSelf().get(Attribute.Animism));
+        int m = (5 + Global.random(10))
+                        + Math.min(getSelf().getArousal().getReal() / 20, getSelf().get(Attribute.Animism));
         String receiver;
         if (target.hasDick()) {
             receiver = "cock";

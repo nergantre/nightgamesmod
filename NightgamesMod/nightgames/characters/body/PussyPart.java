@@ -392,7 +392,8 @@ public enum PussyPart implements BodyPart,BodyPartMod {
 
         if (this == feral) {
             int chance = Math.max(3, 10 - self.getArousal().getReal() / 50);
-            if (!self.is(Stsflag.frenzied) && !self.is(Stsflag.cynical) && target.isType("cock") && Global.random(chance) == 0) {
+            if (!self.is(Stsflag.frenzied) && !self.is(Stsflag.cynical) && target.isType("cock")
+                            && Global.random(chance) == 0) {
                 c.write(self, String.format(
                                 "A cloud of lust descends over %s and %s, clearing both your thoughts of all matters except to fuck. Hard.",
                                 opponent.subject(), self.subject()));
@@ -553,7 +554,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
     public String getModType() {
         return name();
     }
-    
+
     @Override
     public void onOrgasm(Combat c, Character self, Character opponent) {
         if (this == feral) {

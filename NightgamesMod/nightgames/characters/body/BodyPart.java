@@ -107,8 +107,7 @@ public interface BodyPart {
     }
 
     // Should be called when either combatant orgasms
-    public default void onOrgasm(Combat c, Character self, Character opponent) {
-    }
+    public default void onOrgasm(Combat c, Character self, Character opponent) {}
 
     // Should be called when either combatant orgasms in/with body parts
     public default void onOrgasmWith(Combat c, Character self, Character opponent, BodyPart other, boolean selfCame) {
