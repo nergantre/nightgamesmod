@@ -2923,7 +2923,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public boolean isDemonic() {
-        return has(Trait.succubus) || body.get("cock").stream().anyMatch(part -> part.getMod() == PussyPart.succubus)
+        return has(Trait.succubus) || body.get("pussy").stream().anyMatch(part -> part.getMod() == PussyPart.succubus)
                         || body.get("cock").stream().anyMatch(part -> part.getMod() == CockMod.incubus);
     }
 
