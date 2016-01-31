@@ -63,7 +63,8 @@ public class DarkTalisman extends Skill {
             return "You brandish the dark talisman, which seems to glow with power. The trinket crumbles to dust, but you see the image remain in the reflection of "
                             + target.name() + "'s eyes.";
         } else {
-            return "You brandish the dark talisman, which seems to glow with power. The trinket crumbles to dust, with " + target + " seemingly unimpressed.";
+            return "You brandish the dark talisman, which seems to glow with power. The trinket crumbles to dust, with "
+                            + target + " seemingly unimpressed.";
         }
     }
 

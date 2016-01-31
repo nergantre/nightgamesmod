@@ -534,6 +534,7 @@ public abstract class Character extends Observable implements Cloneable {
     public void pleasure(int i, Combat c, Character source) {
         pleasure(i, c, source, Body.nonePart, Body.nonePart);
     }
+
     public void pleasure(int i, Combat c, Character source, BodyPart selfPart, BodyPart opponentPart) {
         int pleasure = i;
 
@@ -1446,12 +1447,13 @@ public abstract class Character extends Observable implements Cloneable {
 
     public void doOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart) {
         int total = this != opponent && opponent.has(Trait.carnalvirtuoso) ? 2 : 1;
-        for (int i = 1 ; i <= total; i++ ) {
+        for (int i = 1; i <= total; i++) {
             resolveOrgasm(c, opponent, selfPart, opponentPart, i, total);
         }
     }
 
-    private void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times, int totalTimes) {
+    private void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
+                    int totalTimes) {
         orgasmed = true;
         if (times == 1) {
             c.write(this, "<br>");
@@ -1462,8 +1464,7 @@ public abstract class Character extends Observable implements Cloneable {
             resolvePreOrgasmForOpponent(c, opponent, selfPart, opponentPart, times, totalTimes);
         }
         int overflow = arousal.getOverflow();
-        c.write(this, String.format("<font color='rgb(255,50,200)'>%s<font color='white'> arousal overflow",
-                        overflow));
+        c.write(this, String.format("<font color='rgb(255,50,200)'>%s<font color='white'> arousal overflow", overflow));
         if (this != opponent) {
             resolvePostOrgasmForOpponent(c, opponent, selfPart, opponentPart);
         }

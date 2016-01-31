@@ -40,7 +40,8 @@ public class Stomp extends Skill {
                         c.write(getSelf(), getSelf().bbLiner(c));
                     }
                 }
-                pain = 15 - (int) Math.round((5 + Global.random(5)) * target.getOutfit().getExposure(ClothingSlot.bottom));
+                pain = 15 - (int) Math
+                                .round((5 + Global.random(5)) * target.getOutfit().getExposure(ClothingSlot.bottom));
             } else {
                 if (getSelf().human()) {
                     c.write(getSelf(), deal(c, 0, Result.weak2, target));
@@ -78,7 +79,8 @@ public class Stomp extends Skill {
                 }
             }
             pain += 20;
-            pain += 20 - (int) Math.round((10 + Global.random(10)) * target.getOutfit().getExposure(ClothingSlot.bottom));
+            pain += 20 - (int) Math
+                            .round((10 + Global.random(10)) * target.getOutfit().getExposure(ClothingSlot.bottom));
         }
         target.emote(Emotion.angry, 25);
         return true;

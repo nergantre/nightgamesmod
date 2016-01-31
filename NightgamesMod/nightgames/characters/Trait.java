@@ -19,8 +19,9 @@ public enum Trait {
         }
     }),
 
-    smqueen("SM Queen", "Skilled at providing pleasure alongside pain", (b, c, t) -> b.append(
-                    Global.capitalizeFirstLetter(String.format("%s sneers in a way like an SM queen.", c.subject())))),
+    smqueen("SM Queen", "Skilled at providing pleasure alongside pain",
+                    (b, c, t) -> b.append(Global.capitalizeFirstLetter(
+                                    String.format("%s sneers in a way like an SM queen.", c.subject())))),
 
     // Perks
     ticklemonster("Tickle Monster", "Skilled at tickling in unconventional areas"), // Mara Sex perk,

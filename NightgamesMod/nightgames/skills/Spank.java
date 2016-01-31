@@ -18,8 +18,7 @@ public class Spank extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return !c.getStance().prone(target) && c.getStance().reachBottom(getSelf())
-                        && getSelf().canAct();
+        return !c.getStance().prone(target) && c.getStance().reachBottom(getSelf()) && getSelf().canAct();
     }
 
     @Override

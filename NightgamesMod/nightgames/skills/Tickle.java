@@ -34,7 +34,7 @@ public class Tickle extends Skill {
                 int bonus = 0;
                 int weak = 0;
                 Result result = Result.normal;
-                
+
                 if (getSelf().has(Item.Tickler2) && Global.random(2) == 1 && getSelf().canSpend(10)) {
                     getSelf().spendMojo(c, 10);
                     result = Result.special;

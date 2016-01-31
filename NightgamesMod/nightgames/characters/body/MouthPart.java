@@ -86,10 +86,12 @@ public class MouthPart extends GenericBodyPart {
                 }
                 opponent.add(c, new Trance(opponent));
             }
-            bonus += Global.random(3) + Global.clamp(self.get(Attribute.Seduction) / 3, 10, 30) * self.getArousal().percent() / 100.0;
+            bonus += Global.random(3) + Global.clamp(self.get(Attribute.Seduction) / 3, 10, 30)
+                            * self.getArousal().percent() / 100.0;
         }
         if (self.has(Trait.catstongue)) {
-            c.write(opponent, Global.format("<br>{self:name-possessive} abbrasive tongue produces an unique sensation.", self, opponent));
+            c.write(opponent, Global.format("<br>{self:name-possessive} abbrasive tongue produces an unique sensation.",
+                            self, opponent));
 
             bonus += Global.random(3) + 4;
             opponent.pain(c, 8 + Global.random(10), false, true);

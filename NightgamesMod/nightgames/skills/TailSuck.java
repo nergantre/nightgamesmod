@@ -56,7 +56,7 @@ public class TailSuck extends Skill {
                             Global.random(10) + 10, c);
             drain(c, target);
             target.add(c, new TailSucked(target, getSelf(), power()));
-        } else if (target.hasBalls()){
+        } else if (target.hasBalls()) {
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.weak, target));
             } else if (target.human()) {
@@ -150,13 +150,11 @@ public class TailSuck extends Skill {
                             getSelf().name(), getSelf().possessivePronoun(),
                             target.body.getRandomCock().describe(target), getSelf().name());
         } else {
-            return String.format(
-                            "%s grabs %s tail with both hands and aims it at"
-                                            + " your groin. The tip opens up like a flower, revealing a hollow"
-                                            + " inside shaped suspiciously like a pussy. That cannot be good, so"
-                                            + " you twist your hips just in time to evade the tail as it suddenly"
-                                            + " launches forward..",
-                            getSelf().name(), getSelf().possessivePronoun());
+            return String.format("%s grabs %s tail with both hands and aims it at"
+                            + " your groin. The tip opens up like a flower, revealing a hollow"
+                            + " inside shaped suspiciously like a pussy. That cannot be good, so"
+                            + " you twist your hips just in time to evade the tail as it suddenly"
+                            + " launches forward..", getSelf().name(), getSelf().possessivePronoun());
         }
     }
 

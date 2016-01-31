@@ -1,4 +1,4 @@
-1.9.2.2 changelog
+1.9.3 changelog
 
 New: 
 - The minimap will now color areas of interest
