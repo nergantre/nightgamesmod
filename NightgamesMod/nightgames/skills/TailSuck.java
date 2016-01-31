@@ -56,19 +56,21 @@ public class TailSuck extends Skill {
                             Global.random(10) + 10, c);
             drain(c, target);
             target.add(c, new TailSucked(target, getSelf(), power()));
+        } else if (target.hasBalls()){
+            if (getSelf().human()) {
+                c.write(getSelf(), deal(c, 0, Result.weak, target));
+            } else if (target.human()) {
+                c.write(getSelf(), receive(c, 0, Result.weak, target));
+            }
+            target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom("balls"),
+                            Global.random(5) + 5, c);
+            return true;
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.miss, target));
             } else if (target.human()) {
                 c.write(getSelf(), receive(c, 0, Result.miss, target));
             }
-            if (target.hasBalls()) {
-                target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom("balls"),
-                                Global.random(5) + 5, c);
-            } else {
-                target.pleasure(Global.random(5) + 5, c);
-            }
-            return false;
         }
         return true;
     }
@@ -100,14 +102,21 @@ public class TailSuck extends Skill {
                                             + " your nose.",
                             target.nameOrPossessivePronoun(), target.body.getRandomCock().describe(target),
                             target.directObject());
+        } else if (modifier == Result.weak) {
+            return String.format(
+                            "You shoot out your tail towards %s unprotected groin, but %s"
+                                            + " twists away slightly causing you to just miss %s %s. Instead, your tail"
+                                            + " latches onto %s balls. You can't do much with those in this way, so"
+                                            + " after a little fondling you let go.",
+                            target.nameOrPossessivePronoun(), target.pronoun(), target.possessivePronoun(),
+                            target.body.getRandomCock().describe(target), target.possessivePronoun());
+        } else {
+            return String.format(
+                            "You shoot out your tail towards %s unprotected groin, but %s"
+                                            + " twists away slightly causing you to just miss %s %s.",
+                            target.nameOrPossessivePronoun(), target.pronoun(), target.possessivePronoun(),
+                            target.body.getRandomCock().describe(target));
         }
-        return String.format(
-                        "You shoot out your tail towards %s unprotected groin, but %s"
-                                        + " twists away slightly causing you to just miss %s %s. Instead, your tail"
-                                        + " latches onto %s balls. You can't do much with those in this way, so"
-                                        + " after a little fondling you let go.",
-                        target.nameOrPossessivePronoun(), target.pronoun(), target.possessivePronoun(),
-                        target.body.getRandomCock().describe(target), target.possessivePronoun());
     }
 
     @Override
@@ -128,18 +137,27 @@ public class TailSuck extends Skill {
                                             + " sucks on you. That is not good.",
                             getSelf().name(), getSelf().possessivePronoun(),
                             target.body.getRandomCock().describe(target));
+        } else if (modifier == Result.weak) {
+            return String.format(
+                            "%s grabs %s tail with both hands and aims it at"
+                                            + " your groin. The tip opens up like a flower, revealing a hollow"
+                                            + " inside shaped suspiciously like a pussy. That cannot be good, so"
+                                            + " you twist your hips just in time to evade the tail as it suddenly"
+                                            + " launches forward. Evade may be too strong a term, though, as it"
+                                            + " misses your %s but finds your balls instead. %s does not seem"
+                                            + " to interested in them, though, and leaves them alone after"
+                                            + " massaging them a bit.",
+                            getSelf().name(), getSelf().possessivePronoun(),
+                            target.body.getRandomCock().describe(target), getSelf().name());
+        } else {
+            return String.format(
+                            "%s grabs %s tail with both hands and aims it at"
+                                            + " your groin. The tip opens up like a flower, revealing a hollow"
+                                            + " inside shaped suspiciously like a pussy. That cannot be good, so"
+                                            + " you twist your hips just in time to evade the tail as it suddenly"
+                                            + " launches forward..",
+                            getSelf().name(), getSelf().possessivePronoun());
         }
-        return String.format(
-                        "%s grabs %s tail with both hands and aims it at"
-                                        + " your groin. The tip opens up like a flower, revealing a hollow"
-                                        + " inside shaped suspiciously like a pussy. That cannot be good, so"
-                                        + " you twist your hips just in time to evade the tail as it suddenly"
-                                        + " launches forward. Evade may be too strong a term, though, as it"
-                                        + " misses your %s but finds your balls instead. %s does not seem"
-                                        + " to interested in them, though, and leaves them alone after"
-                                        + " massaging them a bit.",
-                        getSelf().name(), getSelf().possessivePronoun(), target.body.getRandomCock().describe(target),
-                        getSelf().name());
     }
 
     private void drain(Combat c, Character target) {

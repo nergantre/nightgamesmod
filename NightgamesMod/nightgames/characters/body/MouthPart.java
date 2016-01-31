@@ -2,6 +2,7 @@ package nightgames.characters.body;
 
 import org.json.simple.JSONObject;
 
+import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
@@ -76,7 +77,7 @@ public class MouthPart extends GenericBodyPart {
             }
         }
         if (self.has(Trait.experttongue)) {
-            if (Global.random(3) == 0 && self.canSpend(10) && !opponent.wary() && damage > 5) {
+            if (Global.random(6) == 0 && !opponent.wary() && damage > 5) {
                 if (!self.human()) {
                     c.write(opponent, "<br>Your mind falls into a pink colored fog from the tongue lashing.");
                 } else {
@@ -84,9 +85,14 @@ public class MouthPart extends GenericBodyPart {
                                     + "'s mind falls into a pink colored fog from the tongue lashing.");
                 }
                 opponent.add(c, new Trance(opponent));
-                self.spendMojo(c, 10);
             }
+            bonus += Global.random(3) + Global.clamp(self.get(Attribute.Seduction) / 3, 10, 30) * self.getArousal().percent() / 100.0;
+        }
+        if (self.has(Trait.catstongue)) {
+            c.write(opponent, Global.format("<br>{self:name-possessive} abbrasive tongue produces an unique sensation.", self, opponent));
+
             bonus += Global.random(3) + 4;
+            opponent.pain(c, 8 + Global.random(10), false, true);
         }
         if (self.has(Trait.soulsucker)) {
             if (!self.human()) {

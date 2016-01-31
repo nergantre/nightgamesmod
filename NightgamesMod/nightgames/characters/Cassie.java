@@ -62,14 +62,14 @@ public class Cassie extends BasePersonality {
         growth.bonusArousal = 3;
         growth.bonusMojo = 1;
         preferredAttributes.add(c -> c.get(Attribute.Arcane) < 80 ? Optional.of(Attribute.Arcane) : Optional.empty());
-        growth.addTrait(2, Trait.silvertongue);
+        growth.addTrait(2, Trait.SexualGroove);
         growth.addTrait(5, Trait.mojoMaster);
         growth.addTrait(8, Trait.tongueTraining1);
         growth.addTrait(11, Trait.pussyTraining1);
         growth.addTrait(14, Trait.submissive);
         growth.addTrait(17, Trait.cute);
         growth.addTrait(20, Trait.addictivefluids);
-        growth.addTrait(23, Trait.experttongue);
+        growth.addTrait(23, Trait.responsive);
         growth.addTrait(26, Trait.calm);
         growth.addTrait(29, Trait.tongueTraining2);
         growth.addTrait(32, Trait.autonomousPussy);
@@ -82,7 +82,7 @@ public class Cassie extends BasePersonality {
         growth.addTrait(47, Trait.pussyTraining2);
         growth.addTrait(50, Trait.desensitized2);
         growth.addTrait(53, Trait.lacedjuices);
-        growth.addTrait(56, Trait.responsive);
+        growth.addTrait(56, Trait.obsequiousAppeal);
         growth.addTrait(60, Trait.enchantingVoice);
         // mostly feminine face, cute but not quite at Angel's level
         character.body.add(new FacePart(.1, 2.9));

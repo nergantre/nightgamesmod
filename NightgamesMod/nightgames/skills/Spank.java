@@ -18,13 +18,13 @@ public class Spank extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return target.crotchAvailable() && !c.getStance().prone(target) && c.getStance().reachBottom(getSelf())
+        return !c.getStance().prone(target) && c.getStance().reachBottom(getSelf())
                         && getSelf().canAct();
     }
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (getSelf().has(Trait.disciplinarian) && !c.getStance().inserted()) {
+        if (getSelf().has(Trait.disciplinarian)) {
             boolean shamed = Global.random(10) >= 5 || !target.is(Stsflag.shamed) && getSelf().canSpend(5);
             if (shamed) {
                 getSelf().spendMojo(c, 5);
@@ -40,7 +40,7 @@ public class Spank extends Skill {
                 target.emote(Emotion.nervous, 15);
             }
             if (target.has(Trait.achilles)) {
-                target.pain(c, 4);
+                target.pain(c, 5);
             }
             target.pain(c, Global.random(6 + target.get(Attribute.Perception) / 2) + 3);
         } else {

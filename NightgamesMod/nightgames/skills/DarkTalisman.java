@@ -32,14 +32,19 @@ public class DarkTalisman extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        getSelf().consume(Item.Talisman, 1);
+        Result result = target.roll(this, c, accuracy(c)) ? Result.normal : Result.miss;
         if (getSelf().human()) {
-            c.write(deal(c, 0, Result.normal, target));
+            c.write(getSelf(), deal(c, 0, result, target));
         } else if (target.human()) {
-            c.write(receive(c, 0, Result.normal, target));
+            c.write(getSelf(), receive(c, 0, result, target));
         }
-        target.add(c, new Enthralled(target, getSelf(), Global.random(3) + 1));
-        return true;
+        getSelf().consume(Item.Talisman, 1);
+        if (result == Result.normal) {
+            target.add(c, new Enthralled(target, getSelf(), Global.random(3) + 1));
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -54,14 +59,23 @@ public class DarkTalisman extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return "You brandish the dark talisman, which seems to glow with power. The trinket crumbles to dust, but you see the image remain in the reflection of "
-                        + target.name() + "'s eyes.";
+        if (modifier == Result.normal) {
+            return "You brandish the dark talisman, which seems to glow with power. The trinket crumbles to dust, but you see the image remain in the reflection of "
+                            + target.name() + "'s eyes.";
+        } else {
+            return "You brandish the dark talisman, which seems to glow with power. The trinket crumbles to dust, with " + target + " seemingly unimpressed.";
+        }
     }
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name()
-                        + " holds up a strange talisman. You feel compelled to look at the thing, captivated by its unholy nature.";
+        if (modifier == Result.normal) {
+            return getSelf().name()
+                            + " holds up a strange talisman. You feel compelled to look at the thing, captivated by its unholy nature.";
+        } else {
+            return getSelf().name()
+                            + " holds up a strange talisman. You feel a tiny tug on your consciousness, but it doesn't really affect you much.";
+        }
     }
 
 }

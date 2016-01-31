@@ -1,6 +1,7 @@
 package nightgames.gui;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -108,13 +110,14 @@ public class GUI extends JFrame implements Observer {
     private Panel panel0;
     private CreationGUI creation;
     private JScrollPane textScroll;
-    private JPanel mainpanel;
+    private JPanel gamePanel;
     private JToggleButton stsbtn;
     private JPanel statusPanel;
-    private JPanel centerPanel;
+    private JPanel mainPanel;
     private JPanel clothesPanel;
     private JPanel optionsPanel;
     private JPanel portraitPanel;
+    private JPanel centerPanel;
     private JLabel portrait;
     private JComponent map;
     private JPanel imgPanel;
@@ -139,6 +142,12 @@ public class GUI extends JFrame implements Observer {
     public int fontsize;
     private JMenuItem mntmQuitMatch;
     private boolean skippedFeat;
+
+    private final static String USE_PORTRAIT = "PORTRAIT";
+    private final static String USE_MAP = "MAP";
+    private final static String USE_NONE = "NONE";
+    private static final String USE_MAIN_TEXT_UI = "MAIN_TEXT";
+    private static final String USE_CLOSET_UI = "CLOSET";
 
     public GUI() {
 
@@ -180,7 +189,7 @@ public class GUI extends JFrame implements Observer {
         JMenuItem mntmNewgame = new JMenuItem("New Game");
 
         mntmNewgame.setForeground(Color.WHITE);
-        mntmNewgame.setBackground(new Color(35, 35, 35));
+        mntmNewgame.setBackground(GUIColors.bgGrey);
         mntmNewgame.setHorizontalAlignment(SwingConstants.CENTER);
 
         mntmNewgame.addActionListener(arg0 -> {
@@ -202,7 +211,7 @@ public class GUI extends JFrame implements Observer {
         JMenuItem mntmLoad = new JMenuItem("Load"); // Initializer
 
         mntmLoad.setForeground(Color.WHITE); // Formatting
-        mntmLoad.setBackground(new Color(35, 35, 35));
+        mntmLoad.setBackground(GUIColors.bgGrey);
         mntmLoad.setHorizontalAlignment(SwingConstants.CENTER);
 
         mntmLoad.addActionListener(arg0 -> Global.load());
@@ -213,7 +222,7 @@ public class GUI extends JFrame implements Observer {
 
         JMenuItem mntmOptions = new JMenuItem("Options");
         mntmOptions.setForeground(Color.WHITE);
-        mntmOptions.setBackground(new Color(35, 35, 35));
+        mntmOptions.setBackground(GUIColors.bgGrey);
 
         menuBar.add(mntmOptions);
 
@@ -406,8 +415,8 @@ public class GUI extends JFrame implements Observer {
                     Global.unflag(Flag.noportraits);
                 } else {
                     Global.flag(Flag.noportraits);
-                    portraitPanel.remove(portrait);
-                    portraitPanel.repaint();
+                    // TODO I know this removes the map, but I don't want to bother checking for it right now.
+                    showNone();
                 }
                 if (rdimgon.isSelected()) {
                     Global.unflag(Flag.noimage);
@@ -432,7 +441,7 @@ public class GUI extends JFrame implements Observer {
 
         JMenuItem mntmCredits = new JMenuItem("Credits");
         mntmCredits.setForeground(Color.WHITE);
-        mntmCredits.setBackground(new Color(35, 35, 35));
+        mntmCredits.setBackground(GUIColors.bgGrey);
         menuBar.add(mntmCredits);
 
         // menu bar - quit match
@@ -440,7 +449,7 @@ public class GUI extends JFrame implements Observer {
         mntmQuitMatch = new JMenuItem("Quit Match");
         mntmQuitMatch.setEnabled(false);
         mntmQuitMatch.setForeground(Color.WHITE);
-        mntmQuitMatch.setBackground(new Color(35, 35, 35));
+        mntmQuitMatch.setBackground(GUIColors.bgGrey);
         mntmQuitMatch.addActionListener(arg0 -> {
             int result = JOptionPane.showConfirmDialog(GUI.this,
                             "Do you want to quit for the night? Your opponents will continue to fight and gain exp.",
@@ -478,16 +487,16 @@ public class GUI extends JFrame implements Observer {
 
         // panel layouts
 
-        // mainpanel - everything is contained within it
+        // gamePanel - everything is contained within it
 
-        mainpanel = new JPanel();
-        getContentPane().add(mainpanel);
-        mainpanel.setLayout(new BoxLayout(mainpanel, 1));
+        gamePanel = new JPanel();
+        getContentPane().add(gamePanel);
+        gamePanel.setLayout(new BoxLayout(gamePanel, 1));
 
         // panel0 - invisible, only handles topPanel
 
         panel0 = new Panel();
-        mainpanel.add(panel0);
+        gamePanel.add(panel0);
         panel0.setLayout(new BoxLayout(panel0, 0));
 
         // topPanel - invisible, menus
@@ -496,77 +505,74 @@ public class GUI extends JFrame implements Observer {
         panel0.add(topPanel);
         topPanel.setLayout(new GridLayout(0, 1, 0, 0));
 
-        // centerPanel - invisible, body of GUI
+        // mainPanel - body of GUI (not including the top bar and such)
 
-        centerPanel = new JPanel();
-        mainpanel.add(centerPanel);
-        centerPanel.setLayout(new BorderLayout(0, 0));
+        mainPanel = new JPanel();
+        gamePanel.add(mainPanel);
+        mainPanel.setLayout(new BorderLayout(0, 0));
+
 
         // statusPanel - visible, character status
 
         statusPanel = new JPanel();
         statusPanel.setLayout(new BoxLayout(statusPanel, 1));
 
-        // clothesPanel - ??? (invisible & not added, probably to-do)
-
-        clothesPanel = new JPanel();
-        clothesPanel.setLayout(new GridLayout(0, 1));
-        clothesPanel.setVisible(true);
-        clothesPanel.setBackground(new Color(25, 25, 50));
-
         // portraitPanel - invisible, contains imgPanel, west panel
 
         portraitPanel = new JPanel();
-        portraitPanel.setLayout(new BorderLayout(0, 0));
-        if (width < 720) {
-            portraitPanel.setSize(new Dimension(height, width / 6));
-        }
+        mainPanel.add(portraitPanel, BorderLayout.WEST);
 
-        portraitPanel.setBackground(new Color(0, 10, 30));
+        portraitPanel.setLayout(new ShrinkingCardLayout());
+
+        portraitPanel.setBackground(GUIColors.bgDark);
         portrait = new JLabel("");
         portrait.setVerticalAlignment(SwingConstants.TOP);
-        portraitPanel.add(portrait, BorderLayout.WEST);
+        portraitPanel.add(portrait, USE_PORTRAIT);
 
-        // imgPanel - visible, contains imgLabel
+        map = new MapComponent();
+        portraitPanel.add(map, USE_MAP);
+        portraitPanel.add(Box.createGlue(), USE_NONE);
 
-        imgPanel = new JPanel();
-        imgPanel.setLayout(new BorderLayout(0, 0));
-        imgPanel.setBackground(new Color(0, 10, 30)); // probably not doing
-                                                      // anything
-
-        if (width < 720) {
-            portraitPanel.setSize(new Dimension(height, width / 6));
-            System.out.println("Oh god so tiny");
-        }
-        // imgLabel - probably contains the portrait image (?)
-
-        imgLabel = new JLabel("");
-        imgPanel.add(imgLabel, BorderLayout.NORTH);
-        portraitPanel.add(imgPanel, BorderLayout.CENTER);
-
-        if (width < 720) {
-            portraitPanel.setSize(new Dimension(height, width / 6));
-            System.out.println("Oh god so tiny");
-        }
+        // centerPanel, a CardLayout that will flip between the main text and different UIs
+        centerPanel = new JPanel(new ShrinkingCardLayout());
+        mainPanel.add(centerPanel, BorderLayout.CENTER);
 
         // textScroll
-
         textScroll = new JScrollPane();
-        imgPanel.add(textScroll, BorderLayout.CENTER);
-        centerPanel.add(portraitPanel, BorderLayout.CENTER);
 
         // textPane
-
         textPane = new JTextPane();
         DefaultCaret caret = (DefaultCaret) textPane.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-        textPane.setForeground(new Color(240, 240, 255));
-        textPane.setBackground(new Color(18, 30, 49));
+        textPane.setForeground(GUIColors.textColorLight);
+        textPane.setBackground(GUIColors.bgLight);
         textPane.setPreferredSize(new Dimension(width, 400));
         textPane.setEditable(false);
         textPane.setContentType("text/html");
         textScroll.setViewportView(textPane);
         fontsize = 5;
+
+        // imgPanel - visible, contains imgLabel
+        imgPanel = new JPanel();
+
+        // imgLabel - probably contains the in-battle images
+        imgLabel = new JLabel();
+        imgPanel.add(imgLabel, BorderLayout.NORTH);
+        imgLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // textAreaPanel - the area with the main text window and the in-battle stance image if active.
+        JPanel textAreaPanel = new JPanel();
+        textAreaPanel.setLayout(new BoxLayout(textAreaPanel, BoxLayout.PAGE_AXIS));
+        textAreaPanel.add(imgLabel);
+        textAreaPanel.add(textScroll);
+        textAreaPanel.setBackground(GUIColors.bgDark);
+
+        centerPanel.add(textAreaPanel, USE_MAIN_TEXT_UI);
+
+        // clothesPanel - used for closet ui
+        clothesPanel = new JPanel();
+        clothesPanel.setLayout(new GridLayout(0, 1));
+        clothesPanel.setBackground(new Color(25, 25, 50));
+        centerPanel.add(clothesPanel, USE_CLOSET_UI);
 
         JButton debug = new JButton("Debug");
         debug.addActionListener(arg0 -> Global.getMatch().resume());
@@ -574,25 +580,17 @@ public class GUI extends JFrame implements Observer {
         // commandPanel - visible, contains the player's command buttons
 
         commandPanel = new JPanel();
-        commandPanel.setBackground(new Color(0, 10, 30));
+        commandPanel.setBackground(GUIColors.bgDark);
         commandPanel.setPreferredSize(new Dimension(width, 120));
         commandPanel.setMinimumSize(new Dimension(width, 120));
 
         commandPanel.setBorder(new CompoundBorder());
-        mainpanel.add(commandPanel);
+        gamePanel.add(commandPanel);
 
         skills = new ArrayList<ArrayList<SkillButton>>();
         createCharacter();
         setVisible(true);
         pack();
-        AbstractAction a = new AbstractAction() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void actionPerformed(ActionEvent event) {
-
-            }
-        };
         JPanel panel = (JPanel) getContentPane();
         panel.setFocusable(true);
         panel.addKeyListener(new KeyListener() {
@@ -634,16 +632,20 @@ public class GUI extends JFrame implements Observer {
     // combat GUI
 
     public Combat beginCombat(Character player, Character enemy) {
-        unloadMap();
+        showPortrait();
         combat = new Combat(player, enemy, player.location());
         combat.addObserver(this);
         loadPortrait(combat, player, enemy);
+        showPortrait();
         return combat;
     }
 
     // image loader
 
     public void displayImage(String path, String artist) {
+        if (Global.isDebugOn(DebugFlags.DEBUG_GUI)) {
+            System.out.println("Display image: " + path);
+        }
         BufferedImage pic = null;
         try {
             pic = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" + path));
@@ -652,40 +654,27 @@ public class GUI extends JFrame implements Observer {
         }
         clearImage();
         if (pic != null) {
-            imgLabel = new JLabel(new ImageIcon(pic));
+            imgLabel.setIcon(new ImageIcon(pic));
             imgLabel.setHorizontalAlignment(SwingConstants.CENTER);
-            imgPanel.add(imgLabel, BorderLayout.NORTH);
             imgLabel.setToolTipText(artist);
         }
-        centerPanel.revalidate();
-        portraitPanel.revalidate();
-        portraitPanel.repaint();
-
     }
 
     // image unloader
 
     public void clearImage() {
-        if (imgLabel != null) {
-            imgPanel.remove(imgLabel);
-            imgLabel = null;
+        if (Global.isDebugOn(DebugFlags.DEBUG_GUI)) {
+            System.out.println("Reset image");
         }
-    }
-
-    // image reloader (debug mode only)
-
-    public void resetPortrait() {
-        if (Global.isDebugOn(DebugFlags.DEBUG_IMAGES)) {
-            System.out.println("Resetting Images\n");
-        }
-        portrait.setIcon(null);
-        portraitPanel.remove(portrait);
+        imgLabel.setIcon(null);
     }
 
     // portrait loader
-
     public void loadPortrait(Combat c, Character player, Character enemy) {
         if (!Global.checkFlag(Flag.noimage) && !Global.checkFlag(Flag.noportraits)) {
+            if (Global.isDebugOn(DebugFlags.DEBUG_GUI)) {
+                System.out.println("Load portraits");
+            }
             String imagepath = null;
             if (!player.human()) {
                 imagepath = player.getPortrait(c);
@@ -705,53 +694,70 @@ public class GUI extends JFrame implements Observer {
                         System.out.println("Loading Portrait " + imagepath + " \n");
                     }
                     portrait.setIcon(null);
-                    portraitPanel.remove(portrait);
 
                     if (width > 720) {
-                        portrait = new JLabel(new ImageIcon(face));
+                        portrait.setIcon(new ImageIcon(face));
                         portrait.setVerticalAlignment(SwingConstants.TOP);
                     } else {
                         Image scaledFace = face.getScaledInstance(width / 6, height / 4, Image.SCALE_SMOOTH);
-                        portrait = new JLabel(new ImageIcon(scaledFace));
+                        portrait.setIcon(new ImageIcon(scaledFace));
                         portrait.setVerticalAlignment(SwingConstants.TOP);
                         System.out.println("Portrait resizing active.");
                     }
-                    portraitPanel.add(portrait, BorderLayout.WEST);
                 }
             }
-            centerPanel.revalidate();
-            portraitPanel.revalidate();
-            portraitPanel.repaint();
+        } else {
+            if (Global.isDebugOn(DebugFlags.DEBUG_GUI)) {
+                System.out.println("No images/portraits");
+            }
         }
     }
 
-    public void loadMap() {
-        map = new MapComponent(Global.getMatch().getAreas());
+    public void showMap() {
+        if (Global.isDebugOn(DebugFlags.DEBUG_GUI)) {
+            System.out.println("Show map");
+        }
         map.setPreferredSize(new Dimension(300, 385));
-        portraitPanel.add(map, BorderLayout.WEST);
+        CardLayout portraitLayout = (CardLayout) (portraitPanel.getLayout());
+        portraitLayout.show(portraitPanel, USE_MAP);
     }
 
-    public void unloadMap() {
-        portraitPanel.remove(map);
+    public void showPortrait() {
+        if (Global.isDebugOn(DebugFlags.DEBUG_GUI)) {
+            System.out.println("Show portrait");
+        }
+        CardLayout portraitLayout = (CardLayout) (portraitPanel.getLayout());
+        portraitLayout.show(portraitPanel, USE_PORTRAIT);
+    }
+
+    public void showNone() {
+        if (Global.isDebugOn(DebugFlags.DEBUG_GUI)) {
+            System.out.println("Show none");
+        }
+        CardLayout portraitLayout = (CardLayout) (portraitPanel.getLayout());
+        portraitLayout.show(portraitPanel, USE_NONE);
     }
 
     // Combat GUI
 
     public Combat beginCombat(Character player, Character enemy, int code) {
-        unloadMap();
+        showPortrait();
         combat = new Combat(player, enemy, player.location(), code);
         combat.addObserver(this);
         message(combat.getMessage());
         loadPortrait(combat, player, enemy);
+        showPortrait();
         return combat;
     }
 
     // Combat spectate ???
 
     public void watchCombat(Combat c) {
+        showPortrait();
         combat = c;
         combat.addObserver(this);
         loadPortrait(c, c.p1, c.p2);
+        showPortrait();
     }
 
     // getLabelString - handles all the meters (bars)
@@ -770,13 +776,13 @@ public class GUI extends JFrame implements Observer {
             fontsize = 5;
         }
         getContentPane().remove(creation);
-        getContentPane().add(mainpanel);
+        getContentPane().add(gamePanel);
         getContentPane().validate();
         this.player = player;
         player.gui = this;
         player.addObserver(this);
         JPanel meter = new JPanel();
-        meter.setBackground(new Color(0, 10, 30));
+        meter.setBackground(GUIColors.bgDark);
         topPanel.add(meter);
         meter.setLayout(new GridLayout(0, 4, 0, 0));
 
@@ -846,68 +852,68 @@ public class GUI extends JFrame implements Observer {
         JPanel bio = new JPanel();
         topPanel.add(bio);
         bio.setLayout(new GridLayout(2, 0, 0, 0));
-        bio.setBackground(new Color(0, 10, 30));
+        bio.setBackground(GUIColors.bgDark);
 
         JLabel name = new JLabel(player.name());
         name.setHorizontalAlignment(2);
         name.setFont(new Font("Sylfaen", 1, 15));
-        name.setForeground(new Color(240, 240, 255));
+        name.setForeground(GUIColors.textColorLight);
         bio.add(name);
         lvl = new JLabel("Lvl: " + player.getLevel());
         lvl.setFont(new Font("Sylfaen", 1, 15));
-        lvl.setForeground(new Color(240, 240, 255));
+        lvl.setForeground(GUIColors.textColorLight);
 
         bio.add(lvl);
         xp = new JLabel("XP: " + player.getXP());
         xp.setFont(new Font("Sylfaen", 1, 15));
-        xp.setForeground(new Color(240, 240, 255));
+        xp.setForeground(GUIColors.textColorLight);
         bio.add(xp);
 
         UIManager.put("ToggleButton.select", new Color(75, 88, 102));
         stsbtn = new JToggleButton("Status");
         stsbtn.addActionListener(arg0 -> {
             if (stsbtn.isSelected()) {
-                centerPanel.add(statusPanel, "East");
+                mainPanel.add(statusPanel, BorderLayout.EAST);
             } else {
-                centerPanel.remove(statusPanel);
+                mainPanel.remove(statusPanel);
             }
             GUI.this.refresh();
-            centerPanel.validate();
+            mainPanel.validate();
         });
         bio.add(stsbtn);
         loclbl = new JLabel();
         loclbl.setFont(new Font("Sylfaen", 1, 16));
-        loclbl.setForeground(new Color(240, 240, 255));
+        loclbl.setForeground(GUIColors.textColorLight);
 
         stsbtn.setBackground(new Color(85, 98, 112));
-        stsbtn.setForeground(new Color(240, 240, 255));
+        stsbtn.setForeground(GUIColors.textColorLight);
         bio.add(loclbl);
 
         timeLabel = new JLabel();
         timeLabel.setFont(new Font("Sylfaen", 1, 16));
-        timeLabel.setForeground(new Color(240, 240, 255));
+        timeLabel.setForeground(GUIColors.textColorLight);
         bio.add(timeLabel);
         cashLabel = new JLabel();
         cashLabel.setFont(new Font("Sylfaen", 1, 16));
         cashLabel.setForeground(new Color(33, 180, 42));
         bio.add(cashLabel);
         removeClosetGUI();
-
         topPanel.validate();
+        showNone();
     }
 
     public void createCharacter() {
-        getContentPane().remove(mainpanel);
+        getContentPane().remove(gamePanel);
         creation = new CreationGUI();
         getContentPane().add(creation);
         getContentPane().validate();
     }
 
     public void purgePlayer() {
-        getContentPane().remove(mainpanel);
+        getContentPane().remove(gamePanel);
         clearText();
         clearCommand();
-        resetPortrait();
+        showNone();
         clearImage();
         mntmQuitMatch.setEnabled(false);
         combat = null;
@@ -977,6 +983,7 @@ public class GUI extends JFrame implements Observer {
     public void clearCommand() {
         skills.clear();
         commandPanel.removeAll();
+        commandPanel.revalidate();
         commandPanel.repaint();
     }
 
@@ -1164,14 +1171,13 @@ public class GUI extends JFrame implements Observer {
     }
 
     public void endCombat() {
+        if (Global.isDebugOn(DebugFlags.DEBUG_GUI)) {
+            System.out.println("End Combat");
+        }
         combat = null;
         clearText();
-        resetPortrait();
         clearImage();
-        loadMap();
-        centerPanel.revalidate();
-        portraitPanel.revalidate();
-        portraitPanel.repaint();
+        showMap();
         Global.getMatch().resume();
     }
 
@@ -1179,17 +1185,16 @@ public class GUI extends JFrame implements Observer {
 
     public void startMatch() {
         mntmQuitMatch.setEnabled(true);
-        loadMap();
+        showMap();
     }
 
     public void endMatch() {
+        if (Global.isDebugOn(DebugFlags.DEBUG_GUI)) {
+            System.out.println("Match end");
+        }
         clearCommand();
-        resetPortrait();
-        unloadMap();
+        showNone();
         mntmQuitMatch.setEnabled(false);
-        centerPanel.revalidate();
-        portraitPanel.revalidate();
-        portraitPanel.repaint();
         commandPanel.add(new SleepButton());
         commandPanel.add(new SaveButton());
         commandPanel.revalidate();
@@ -1235,7 +1240,7 @@ public class GUI extends JFrame implements Observer {
     public void displayStatus() {
         statusPanel.removeAll();
         statusPanel.repaint();
-        statusPanel.setPreferredSize(new Dimension(400, centerPanel.getHeight()));
+        statusPanel.setPreferredSize(new Dimension(400, mainPanel.getHeight()));
 
         if (width < 720) {
             statusPanel.setMaximumSize(new Dimension(height, width / 6));
@@ -1267,9 +1272,9 @@ public class GUI extends JFrame implements Observer {
         sep = new JSeparator();
         sep.setMaximumSize(new Dimension(statusPanel.getWidth(), 2));
 
-        currentStatusPanel.setBackground(new Color(0, 10, 30));
-        statsPanel.setBackground(new Color(18, 30, 49));
-        inventoryPane.setBackground(new Color(18, 30, 49));
+        currentStatusPanel.setBackground(GUIColors.bgDark);
+        statsPanel.setBackground(GUIColors.bgLight);
+        inventoryPane.setBackground(GUIColors.bgLight);
 
         Map<Item, Integer> items = player.getInventory();
         int count = 0;
@@ -1278,7 +1283,7 @@ public class GUI extends JFrame implements Observer {
         for (Item i : availItems) {
             JLabel dirtyTrick = new JLabel(i.getName() + ": " + items.get(i) + "\n");
 
-            dirtyTrick.setForeground(new Color(240, 240, 255));
+            dirtyTrick.setForeground(GUIColors.textColorLight);
 
             itmlbls.add(count, dirtyTrick);
 
@@ -1295,7 +1300,7 @@ public class GUI extends JFrame implements Observer {
 
                 JLabel dirtyTrick = new JLabel(a.name() + ": " + amt);
 
-                dirtyTrick.setForeground(new Color(240, 240, 255));
+                dirtyTrick.setForeground(GUIColors.textColorLight);
 
                 attlbls.add(count, dirtyTrick);
 
@@ -1311,11 +1316,11 @@ public class GUI extends JFrame implements Observer {
         JTextPane statusText = new JTextPane();
         DefaultCaret caret = (DefaultCaret) statusText.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-        statusText.setBackground(new Color(18, 30, 49));
+        statusText.setBackground(GUIColors.bgLight);
         statusText.setEditable(false);
         statusText.setContentType("text/html");
-        statusText.setPreferredSize(new Dimension(400, centerPanel.getHeight() / 2));
-        statusText.setMaximumSize(new Dimension(400, centerPanel.getHeight() / 2));
+        statusText.setPreferredSize(new Dimension(400, mainPanel.getHeight() / 2));
+        statusText.setMaximumSize(new Dimension(400, mainPanel.getHeight() / 2));
         if (width < 720) {
             statusText.setSize(new Dimension(height, width / 6));
         }
@@ -1340,7 +1345,7 @@ public class GUI extends JFrame implements Observer {
             currentStatusPanel.setSize(new Dimension(height, width / 6));
             System.out.println("Oh god so tiny");
         }
-        centerPanel.revalidate();
+        mainPanel.revalidate();
         statusPanel.revalidate();
         statusPanel.repaint();
     }
@@ -1586,22 +1591,17 @@ public class GUI extends JFrame implements Observer {
     public void changeClothes(Character player, Activity event, String backOption) {
         clothesPanel.removeAll();
         clothesPanel.add(new ClothesChangeGUI(player, event, backOption));
-        centerPanel.remove(((BorderLayout) centerPanel.getLayout()).getLayoutComponent(BorderLayout.CENTER));
-        centerPanel.add(clothesPanel, BorderLayout.CENTER);
-        clothesPanel.setVisible(true);
-        clothesPanel.repaint();
-        centerPanel.repaint();
-        centerPanel.revalidate();
+        CardLayout layout = (CardLayout) centerPanel.getLayout();
+        layout.show(centerPanel, USE_CLOSET_UI);
     }
 
     public void removeClosetGUI() {
+        if (Global.isDebugOn(DebugFlags.DEBUG_GUI)) {
+            System.out.println("remove closet gui");
+        }
         clothesPanel.removeAll();
-        centerPanel.remove(((BorderLayout) centerPanel.getLayout()).getLayoutComponent(BorderLayout.CENTER));
-        centerPanel.add(portraitPanel, BorderLayout.CENTER);
-        clothesPanel.setVisible(false);
-        centerPanel.repaint();
-        centerPanel.revalidate();
-        displayStatus();
+        CardLayout layout = (CardLayout) centerPanel.getLayout();
+        layout.show(centerPanel, USE_MAIN_TEXT_UI);
     }
 
     public void systemMessage(String string) {

@@ -558,7 +558,7 @@ public class Body implements Cloneable {
                 c.writeSystemMessage(battleString);
             }
         }
-        character.pleasure(result, c);
+        character.pleasure(result, c, opponent, target, with);
 
         if (opponent != null && Arrays.asList(fetishParts).contains(with.getType())) {
             if (opponent.has(Trait.fetishTrainer)

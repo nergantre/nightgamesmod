@@ -187,6 +187,7 @@ public class Player extends Character {
         for (Area adjacent : location.adjacent) {
             if (adjacent.ping(get(Attribute.Perception))) {
                 Global.gui().message("You hear something in the <b>" + adjacent.name + "</b>.");
+                adjacent.setPinged(true);
             }
         }
     }

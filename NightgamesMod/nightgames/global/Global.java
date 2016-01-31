@@ -1390,4 +1390,12 @@ public class Global {
     public static HashSet<Character> getCharacters() {
         return new HashSet<>(players);
     }
+
+    public static int clamp(int number, int min, int max) {
+        return Math.min(Math.max(number, min), max);
+    }
+
+    public static double clamp(double number, double min, double max) {
+        return Math.min(Math.max(number, min), max);
+    }
 }

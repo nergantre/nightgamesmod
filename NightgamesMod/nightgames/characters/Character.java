@@ -23,6 +23,7 @@ import nightgames.areas.Area;
 import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
+import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.custom.AiModifiers;
 import nightgames.combat.Combat;
@@ -419,7 +420,7 @@ public abstract class Character extends Observable implements Cloneable {
             if (c != null) {
                 c.writeSystemMessage(message);
             }
-            pleasure(pain, c);
+            arouse(pain, c);
             return;
         }
         if (has(Trait.slime)) {
@@ -434,6 +435,12 @@ public abstract class Character extends Observable implements Cloneable {
                 bonus -= Math.min(get(Attribute.Seduction), 50) * pain / 100;
                 c.write(this, Global.format(
                                 "{self:NAME-POSSESSIVE} innocent appearance throws {other:direct-object} off and {other:subject-action:use|uses} much less strength than intended.",
+                                this, other));
+            }
+            if (other.has(Trait.dirtyfighter) && (c.getStance().prone(other) || c.getStance().sub(other)) && physical) {
+                bonus += 10;
+                c.write(this, Global.format(
+                                "{other:SUBJECT-ACTION:know|knows} how to fight dirty, and manages to give {other:direct-object} a lot more touble than {other:subject} expected despite being in a compromised position.",
                                 this, other));
             }
 
@@ -524,7 +531,10 @@ public abstract class Character extends Observable implements Cloneable {
         return name();
     }
 
-    public void pleasure(int i, Combat c) {
+    public void pleasure(int i, Combat c, Character source) {
+        pleasure(i, c, source, Body.nonePart, Body.nonePart);
+    }
+    public void pleasure(int i, Combat c, Character source, BodyPart selfPart, BodyPart opponentPart) {
         int pleasure = i;
 
         emote(Emotion.horny, i / 4 + 1);
@@ -534,6 +544,9 @@ public abstract class Character extends Observable implements Cloneable {
         pleasured = true;
         // pleasure = 0;
         arousal.restoreNoLimit(Math.round(pleasure));
+        if (checkOrgasm()) {
+            doOrgasm(c, source, selfPart, opponentPart);
+        }
     }
 
     public void tempt(Combat c, int i) {
@@ -562,6 +575,9 @@ public abstract class Character extends Observable implements Cloneable {
     public void tempt(Combat c, Character tempter, int i) {
         if (tempter != null) {
             double temptMultiplier = body.getCharismaBonus(tempter);
+            if (c != null && tempter.has(Trait.obsequiousAppeal) && c.getStance().sub(tempter)) {
+                temptMultiplier *= 2;
+            }
             int dmg = (int) Math.round(i * temptMultiplier);
             tempt(dmg);
             String message = String.format(
@@ -991,6 +1007,7 @@ public abstract class Character extends Observable implements Cloneable {
     public void add(Combat c, Status status) {
         boolean cynical = false;
         String message = "";
+        boolean done = false;
         Status effectiveStatus = status;
         for (Status s : getStatuses()) {
             if (s.flags().contains(Stsflag.cynical)) {
@@ -999,22 +1016,25 @@ public abstract class Character extends Observable implements Cloneable {
         }
         if (cynical && status.mindgames()) {
             message = subjectAction("resist", "resists") + " " + status.name + " (Cynical).";
+            done = true;
         } else {
             for (Resistance r : getResistances()) {
                 String resistReason = "";
                 resistReason = r.resisted(this, status);
                 if (!resistReason.isEmpty()) {
                     message = subjectAction("resist", "resists") + " " + status.name + " (" + resistReason + ").";
+                    done = true;
                     break;
                 }
             }
         }
-        if (message.isEmpty()) {
+        if (!done) {
             boolean unique = true;
             for (Status s : this.status) {
                 if (s.getVariant().equals(status.getVariant())) {
                     s.replace(status);
                     message = s.initialMessage(c, false);
+                    done = true;
                     effectiveStatus = s;
                     break;
                 }
@@ -1022,19 +1042,21 @@ public abstract class Character extends Observable implements Cloneable {
                     unique = false;
                 }
             }
-            if (message.isEmpty() && unique) {
+            if (!done && unique) {
                 this.status.add(status);
                 message = status.initialMessage(c, false);
             }
         }
-        if (!message.isEmpty()) {
-            message = Global.capitalizeFirstLetter(message);
-            if (c != null) {
-                c.write(this, "<b>" + message + "</b>");
-                effectiveStatus.onApply(c, c.getOther(this));
-            } else if (human() || location() != null && location().humanPresent()) {
-                Global.gui().message("<b>" + message + "</b>");
-                effectiveStatus.onApply(null, null);
+        if (done) {
+            if (!message.isEmpty()) {
+                message = Global.capitalizeFirstLetter(message);
+                if (c != null) {
+                    c.write(this, "<b>" + message + "</b>");
+                    effectiveStatus.onApply(c, c.getOther(this));
+                } else if (human() || location() != null && location().humanPresent()) {
+                    Global.gui().message("<b>" + message + "</b>");
+                    effectiveStatus.onApply(null, null);
+                }
             }
             if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
                 System.out.println(message);
@@ -1423,59 +1445,27 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void doOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart) {
+        int total = this != opponent && opponent.has(Trait.carnalvirtuoso) ? 2 : 1;
+        for (int i = 1 ; i <= total; i++ ) {
+            resolveOrgasm(c, opponent, selfPart, opponentPart, i, total);
+        }
+    }
+
+    private void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times, int totalTimes) {
         orgasmed = true;
-        c.write(this, "<br>");
-        if (c.getStance().inserted(this) && !has(Trait.strapped)) {
-            c.write(this, Global.format(
-                            "<b>{self:SUBJECT-ACTION:tense|tenses} up as {self:possessive} hips wildly buck against {other:direct-object}. In no time, {self:possessive} hot seed spills into {other:possessive} pulsing hole.</b>",
-                            this, opponent));
-            if (c.getStance().en == Stance.anal) {
-                opponent.body.receiveCum(c, this, opponent.body.getRandom("ass"));
-            } else {
-                opponent.body.receiveCum(c, this, opponent.body.getRandom("pussy"));
-            }
-        } else if (selfPart != null && selfPart.isType("cock") && opponentPart != null
-                        && !opponentPart.isType("none")) {
-            c.write(this, Global
-                            .format("<b>{self:NAME-POSSESSIVE} back arches as thick ropes of jizz fire from {self:possessive} dick and land on {other:name-possessive} "
-                                            + opponentPart.describe(opponent) + ".</b>", this, opponent));
-            opponent.body.receiveCum(c, this, opponentPart);
+        if (times == 1) {
+            c.write(this, "<br>");
+        }
+        if (opponent == this) {
+            resolvePreOrgasmForSolo(c, opponent, selfPart, times);
         } else {
-            c.write(this, Global.format(
-                            "<b>{self:SUBJECT-ACTION:shudder|shudders} as {other:subject-action:bring|brings} {self:direct-object} to a toe-curling climax.</b>",
-                            this, opponent));
+            resolvePreOrgasmForOpponent(c, opponent, selfPart, opponentPart, times, totalTimes);
         }
-        c.write(this, "<b>" + orgasmLiner(c) + "</b>");
-        c.write(opponent, opponent.makeOrgasmLiner(c));
         int overflow = arousal.getOverflow();
-        c.write(this, String.format("<br><font color='rgb(255,50,200)'>%s<font color='white'> arousal overflow",
+        c.write(this, String.format("<font color='rgb(255,50,200)'>%s<font color='white'> arousal overflow",
                         overflow));
-
-        if (selfPart != null && opponentPart != null) {
-            selfPart.onOrgasmWith(c, this, opponent, opponentPart, true);
-            opponentPart.onOrgasmWith(c, opponent, this, selfPart, false);
-        } else if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-            System.out.printf("Could not process %s's orgasm against %s: self=%s, opp=%s, pos=%s", this, opponent,
-                            selfPart, opponentPart, c.getStance());
-        }
-        body.getCurrentParts().forEach(part -> part.onOrgasm(c, this, opponent));
-
-        if (opponent.has(Trait.erophage)) {
-            c.write(Global.capitalizeFirstLetter("<br><b>" + opponent.subjectAction("flush", "flushes")
-                            + " as the feedback from " + nameOrPossessivePronoun() + " orgasm feeds "
-                            + opponent.possessivePronoun() + " divine power.</b>"));
-            opponent.add(c, new Alluring(opponent, 5));
-            opponent.buildMojo(c, 100);
-            if (c.getStance().inserted(this) && opponent.has(Trait.divinity)) {
-                opponent.add(c, new DivineCharge(opponent, 1));
-            }
-        }
-        if (opponent.has(Trait.sexualmomentum)) {
-            c.write(Global.capitalizeFirstLetter(
-                            "<br><b>" + opponent.subjectAction("are more composed", "seems more composed") + " as "
-                                            + nameOrPossessivePronoun() + " forced orgasm goes straight to "
-                                            + opponent.possessivePronoun() + " ego.</b>"));
-            opponent.restoreWillpower(c, 10 + Global.random(10));
+        if (this != opponent) {
+            resolvePostOrgasmForOpponent(c, opponent, selfPart, opponentPart);
         }
         getArousal().empty();
         if (has(Trait.insatiable)) {
@@ -1487,7 +1477,7 @@ public abstract class Character extends Observable implements Cloneable {
         float extra = 25.0f * overflow / (arousal.max() / 2.0f);
 
         loseWillpower(c, getOrgasmWillpowerLoss(), Math.round(extra), true, "");
-        if (has(Trait.nymphomania)) {
+        if (has(Trait.nymphomania) && !getWillpower().isEmpty() && times == totalTimes) {
             if (human()) {
                 c.write("Cumming actually made you feel kind of refreshed, albeit with a burning desire for more.");
             } else {
@@ -1497,11 +1487,106 @@ public abstract class Character extends Observable implements Cloneable {
             }
             restoreWillpower(c, 5 + Math.max((get(Attribute.Animism) + get(Attribute.Nymphomania)) / 5, 15));
         }
+        if (this != opponent && times == totalTimes) {
+            c.write(this, "<b>" + orgasmLiner(c) + "</b>");
+            c.write(opponent, opponent.makeOrgasmLiner(c));
+        }
         orgasms += 1;
     }
 
-    public void doOrgasm(Combat c, Character opponent, Skill last) {
-        doOrgasm(c, opponent, body.lastPleasured, body.lastPleasuredBy);
+    private void resolvePreOrgasmForSolo(Combat c, Character opponent, BodyPart selfPart, int times) {
+        if (selfPart != null && selfPart.isType("cock")) {
+            if (times == 1) {
+                c.write(this, Global.format(
+                                "<b>{self:NAME-POSSESSIVE} back arches as thick ropes of jizz fire from {self:possessive} dick and land on {self:reflective}.</b>",
+                                this, opponent));
+            } else {
+                c.write(this, Global.format(
+                                "<b>{other:SUBJECT-ACTION:expertly coax|expertly coaxes} yet another orgasm from {self:name-do}, leaving {self:direct-object} completely spent.</b>",
+                                this, opponent));
+            }
+        } else {
+            if (times == 1) {
+                c.write(this, Global.format(
+                                "<b>{self:SUBJECT-ACTION:shudder|shudders} as {self:pronoun} {self:action:bring|brings} {self:reflective} to a toe-curling climax.</b>",
+                                this, opponent));
+            } else {
+                c.write(this, Global.format(
+                                "<b>{other:SUBJECT-ACTION:expertly coax|expertly coaxes} yet another orgasm from {self:name-do}, leaving {self:direct-object} completely spent.</b>",
+                                this, opponent));
+            }
+        }
+    }
+
+    private void resolvePreOrgasmForOpponent(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart,
+                    int times, int total) {
+        if (c.getStance().inserted(this) && !has(Trait.strapped)) {
+            if (times == 1) {
+                c.write(this, Global.format(
+                                "<b>{self:SUBJECT-ACTION:tense|tenses} up as {self:possessive} hips wildly buck against {other:direct-object}. In no time, {self:possessive} hot seed spills into {other:possessive} pulsing hole.</b>",
+                                this, opponent));
+            } else {
+                c.write(this, Global.format(
+                                "<b>{other:NAME-POSSESSIVE} devilish orfice does not let up, and {other:possessive} intense actions somehow force {self:name-do} to cum again instantly.</b>",
+                                this, opponent));
+            }
+            if (c.getStance().en == Stance.anal) {
+                opponent.body.receiveCum(c, this, opponent.body.getRandom("ass"));
+            } else {
+                opponent.body.receiveCum(c, this, opponent.body.getRandom("pussy"));
+            }
+        } else if (selfPart != null && selfPart.isType("cock") && opponentPart != null
+                        && !opponentPart.isType("none")) {
+            if (times == 1) {
+                c.write(this, Global
+                                .format("<b>{self:NAME-POSSESSIVE} back arches as thick ropes of jizz fire from {self:possessive} dick and land on {other:name-possessive} "
+                                                + opponentPart.describe(opponent) + ".</b>", this, opponent));
+            } else {
+                c.write(this, Global.format(
+                                "<b>{other:SUBJECT-ACTION:expertly coax|expertly coaxes} yet another orgasm from {self:name-do}, leaving {self:direct-object} completely spent.</b>",
+                                this, opponent));
+            }
+            opponent.body.receiveCum(c, this, opponentPart);
+        } else {
+            if (times == 1) {
+                c.write(this, Global.format(
+                                "<b>{self:SUBJECT-ACTION:shudder|shudders} as {other:subject-action:bring|brings} {self:direct-object} to a toe-curling climax.</b>",
+                                this, opponent));
+            } else {
+                c.write(this, Global.format(
+                                "<b>{other:SUBJECT-ACTION:expertly coax|expertly coaxes} yet another orgasm from {self:name-do}, leaving {self:direct-object} completely spent.</b>",
+                                this, opponent));
+            }
+        }
+    }
+
+    private void resolvePostOrgasmForOpponent(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart) {
+        if (selfPart != null && opponentPart != null) {
+            selfPart.onOrgasmWith(c, this, opponent, opponentPart, true);
+            opponentPart.onOrgasmWith(c, opponent, this, selfPart, false);
+        } else if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+            System.out.printf("Could not process %s's orgasm against %s: self=%s, opp=%s, pos=%s", this, opponent,
+                            selfPart, opponentPart, c.getStance());
+        }
+        body.getCurrentParts().forEach(part -> part.onOrgasm(c, this, opponent));
+
+        if (opponent.has(Trait.erophage)) {
+            c.write(Global.capitalizeFirstLetter("<b>" + opponent.subjectAction("flush", "flushes")
+                            + " as the feedback from " + nameOrPossessivePronoun() + " orgasm feeds "
+                            + opponent.possessivePronoun() + " divine power.</b>"));
+            opponent.add(c, new Alluring(opponent, 5));
+            opponent.buildMojo(c, 100);
+            if (c.getStance().inserted(this) && opponent.has(Trait.divinity)) {
+                opponent.add(c, new DivineCharge(opponent, 1));
+            }
+        }
+        if (opponent.has(Trait.sexualmomentum)) {
+            c.write(Global.capitalizeFirstLetter(
+                            "<b>" + opponent.subjectAction("are more composed", "seems more composed") + " as "
+                                            + nameOrPossessivePronoun() + " forced orgasm goes straight to "
+                                            + opponent.possessivePronoun() + " ego.</b>"));
+            opponent.restoreWillpower(c, 10 + Global.random(10));
+        }
     }
 
     public void loseWillpower(Combat c, int i) {
@@ -2850,9 +2935,9 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public float modRecoilPleasure(float mt) {
-        int total = get(Attribute.Submissive) / 2;
+        float total = mt + get(Attribute.Submissive) / 2;
         if (has(Trait.responsive)) {
-            total += mt / 2;
+            total += total / 2;
         }
         return total;
     }

@@ -8,6 +8,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.status.Hypersensitive;
+import nightgames.status.Winded;
 
 public class Tickle extends Skill {
 
@@ -28,39 +29,43 @@ public class Tickle extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(this, c, accuracy(c))) {
+        if (getSelf().has(Trait.ticklemonster) || target.roll(this, c, accuracy(c))) {
             if (target.crotchAvailable() && c.getStance().reachBottom(getSelf()) && !c.getStance().havingSex()) {
+                int bonus = 0;
+                int weak = 0;
+                Result result = Result.normal;
+                
                 if (getSelf().has(Item.Tickler2) && Global.random(2) == 1 && getSelf().canSpend(10)) {
                     getSelf().spendMojo(c, 10);
-                    if (getSelf().human()) {
-                        c.write(getSelf(), deal(c, 0, Result.critical, target));
-                    } else if (target.human()) {
-                        c.write(getSelf(), receive(c, 0, Result.critical, target));
-                    }
-                    target.add(c, new Hypersensitive(target));
-                } else if (getSelf().has(Trait.ticklemonster) && target.mostlyNude()) {
+                    result = Result.special;
+                    bonus += 2;
+                    weak += 2;
+                }
+                if (hastickler()) {
+                    result = Result.strong;
+                    bonus += 5 + Global.random(4);
+                    weak += 3 + Global.random(4);
+                }
+                if (getSelf().human()) {
+                    c.write(getSelf(), deal(c, 0, result, target));
+                } else if (target.human()) {
+                    c.write(getSelf(), receive(c, 0, result, target));
+                }
+                if (getSelf().has(Trait.ticklemonster) && target.mostlyNude()) {
                     if (getSelf().human()) {
                         c.write(getSelf(), deal(c, 0, Result.special, target));
                     } else if (target.human()) {
                         c.write(getSelf(), receive(c, 0, Result.special, target));
                     }
-                    target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("skin"),
-                                    6 + Global.random(8), c);
-                    target.weaken(c, Global.random(4));
-                } else if (hastickler()) {
-                    if (getSelf().human()) {
-                        c.write(getSelf(), deal(c, 0, Result.strong, target));
-                    } else if (target.human()) {
-                        c.write(getSelf(), receive(c, 0, Result.strong, target));
-                    }
-                } else {
-                    if (getSelf().human()) {
-                        c.write(getSelf(), deal(c, 0, Result.normal, target));
-                    } else if (target.human()) {
-                        c.write(getSelf(), receive(c, 0, Result.normal, target));
+                    bonus += 5 + Global.random(4);
+                    weak += 3 + Global.random(4);
+                    if (Global.random(4) == 0) {
+                        target.add(c, new Winded(target, 1));
                     }
                 }
-                int bonus = 0;
+                if (result == Result.special) {
+                    target.add(c, new Hypersensitive(target));
+                }
                 if (target.has(Trait.ticklish)) {
                     bonus = 4 + Global.random(3);
                     c.write(target, Global.format(
@@ -69,7 +74,7 @@ public class Tickle extends Skill {
                 }
                 target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("skin"),
                                 2 + Global.random(4), bonus, c);
-                target.weaken(c, bonus / 2 + 2 + target.get(Attribute.Perception) + Global.random(6));
+                target.weaken(c, weak / 2 + 2 + target.get(Attribute.Perception) + Global.random(6));
             } else if (hastickler() && Global.random(2) == 1) {
                 if (target.breastsAvailable() && c.getStance().reachTop(getSelf())) {
                     if (getSelf().human()) {
@@ -190,7 +195,7 @@ public class Tickle extends Skill {
                             + "clear your head enough to keep from ejaculating immediately.";
         } else if (modifier == Result.critical) {
             return getSelf().name()
-                            + " teases your dick and balls with her feather tickler. After she stops, you feel an unnatural sensitivity where the feathers touched you.";
+                            + " teases your privates with her feather tickler. After she stops, you feel an unnatural sensitivity where the feathers touched you.";
         } else if (modifier == Result.strong) {
             return getSelf().name()
                             + " brushes her tickler over your balls and teases the sensitive head of your penis.";

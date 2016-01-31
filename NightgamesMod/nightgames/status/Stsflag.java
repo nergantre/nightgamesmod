@@ -55,4 +55,5 @@ public enum Stsflag {
     tailsucked,
     aggressive,
     divinerecoil,
+    detected,
 }

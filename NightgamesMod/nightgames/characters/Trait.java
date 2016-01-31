@@ -19,9 +19,10 @@ public enum Trait {
         }
     }),
 
-    // Perks
     smqueen("SM Queen", "Skilled at providing pleasure alongside pain", (b, c, t) -> b.append(
                     Global.capitalizeFirstLetter(String.format("%s sneers in a way like an SM queen.", c.subject())))),
+
+    // Perks
     ticklemonster("Tickle Monster", "Skilled at tickling in unconventional areas"), // Mara Sex perk,
                                                                                     // increases
                                                                                     // pleasure from
@@ -202,7 +203,10 @@ public enum Trait {
     autonomousPussy("Autonomous Pussy", "Her pussy instinctively forces anything inside of it to cum."),
     // AI traits
     submissive("Submissive", "Enjoys being the sub."),
+    obsequiousAppeal("Obsequious Appeal", "So tempting when on the bottom."),
+    catstongue("Cat's Tongue", "Rough but sensual."),
     opportunist("Opportunist", "Always ready to stuff someone's backside."),
+    carnalvirtuoso("Carnal Virtuoso", "Opponents cums twice"),
     // Weaknesses
     ticklish("Ticklish", "Can be easily tickled into submission"), // more weaken damage and arousal from tickle
     insatiable("Insatiable", "One orgasm is never enough"), // arousal doesn't completely clear at end of match

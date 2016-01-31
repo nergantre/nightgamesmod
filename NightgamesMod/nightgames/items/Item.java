@@ -179,7 +179,7 @@ public enum Item implements Loot {
     Ward("Dark Ward", 100, "", "a "),
     FaeScroll("Summoning Scroll", 150, "", "a "),
     MinorScroll("Minor Summoning Scroll", 50, "Less potent than usual, can be used in combat if you know magic", "a "),
-    Talisman("Dark Talisman", 100, "An innocent-looking carving imbued with dark magic", "a "),
+    Talisman("Dark Talisman", 500, "An innocent-looking carving imbued with dark magic", "a "),
     Totem("Fetish Totem", 150, "A small penis shaped totem that can summon tentacles", "a "),
     Capacitor("Capacitor", 30, "", "a "),
     TinyDraft("Tiny Draft", 100, "Temporarily shrink a penis", "a ",

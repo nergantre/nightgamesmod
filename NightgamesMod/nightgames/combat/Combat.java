@@ -421,8 +421,8 @@ public class Combat extends Observable implements Serializable, Cloneable {
         while (!(p1.checkLoss() || p2.checkLoss())) {
             // guarantee the fight finishes in a timely manner
             if (turn > 50) {
-                p1.pleasure(turn - 50, null);
-                p1.pleasure(turn - 50, null);
+                p1.pleasure(5 * (turn - 50), this, p2);
+                p2.pleasure(5 * (turn - 50), this, p1);
             }
             turn += 1;
             phase = 1;
@@ -516,16 +516,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
     }
 
     private boolean checkOrgasm(Character user, Character target, Skill skill) {
-        boolean orgasmed = false;
-        if (target.checkOrgasm()) {
-            target.doOrgasm(this, user, skill);
-            orgasmed = true;
-        }
-        if (user.checkOrgasm()) {
-            user.doOrgasm(this, target, skill);
-            orgasmed = true;
-        }
-        return orgasmed;
+        return target.orgasmed || user.orgasmed;
     }
 
     private void useSkills() {
