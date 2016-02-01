@@ -369,7 +369,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                 } else {
                     message = self.nameOrPossessivePronoun() + " tattoos surrounding " + self.possessivePronoun()
                                     + " vagina lights up with arcane energy as " + opponent.subjectAction("are", "is")
-                                    + " inside " + opponent.directObject() + ", channeling some of "
+                                    + " inside " + self.directObject() + ", channeling some of "
                                     + opponent.possessivePronoun() + " energies back to its master.";
                     strength = 5 + self.get(Attribute.Arcane) / 6;
                 }

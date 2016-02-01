@@ -463,7 +463,7 @@ public class Body implements Cloneable {
         if (character.has(Trait.desensitized2)) {
             sensitivity -= .5;
         }
-        if (target.isErogenous() && opponent != null && opponent.has(Trait.hairtrigger)) {
+        if (target.isErogenous() && character.has(Trait.hairtrigger)) {
             sensitivity += 1;
         }
 
@@ -489,9 +489,9 @@ public class Body implements Cloneable {
             }
             // double the base damage if the opponent is submissive and in a
             // submissive stance
-            if (c.getStance().sub(opponent) && opponent.has(Trait.submissive)) {
+            if (c.getStance().sub(opponent) && opponent.has(Trait.submissive) && target.isErogenous()) {
                 bonusDamage += bonusDamage + magnitude;
-            } else if (c.getStance().dom(opponent) && opponent.has(Trait.submissive)) {
+            } else if (c.getStance().dom(opponent) && opponent.has(Trait.submissive) && target.isErogenous()) {
                 bonusDamage -= (bonusDamage + magnitude) * 2. / 3.;
             }
         }

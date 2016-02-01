@@ -1,3 +1,17 @@
+1.9.4 changelog
+Balance:
+- Changed Oral skills to be no longer usable in the neutral stance.
+	- After a few levels, this makes Cassie become extremely silly.
+- Nerfed submissive to only apply on erogenous targets.
+	- No more 400 damage kisses when you're fucking Cassie...
+
+Bug fixes:
+- Fixed the AI so that it actually tries to make you orgasm instead of just keeping you at high arousal all the time.
+- Fixed a bug where the Hair Trigger weakness trait would actually apply to your opponents instead of you. Woops.
+- Fixed a bug where the Nymphomania trait was using max when it was supposed to be using min, making it restore way more willpower than intended.
+- Fixed a bug where being in oral pin or any kind of movement restricted stance would actually always make blowjob and lick ass miss 100% of the time.
+	- It should now hit 100% of the time.
+
 1.9.3 changelog
 
 New: 

@@ -1483,10 +1483,10 @@ public abstract class Character extends Observable implements Cloneable {
                 c.write("Cumming actually made you feel kind of refreshed, albeit with a burning desire for more.");
             } else {
                 c.write(Global.format(
-                                "After {self:subject} comes down from {self:possessive} orgasmic high, {self:pronoun} doesn't look satisfied at all. There's a mad glint in {self:possesive} eye that seems to be endlessly asking for more.",
+                                "After {self:subject} comes down from {self:possessive} orgasmic high, {self:pronoun} doesn't look satisfied at all. There's a mad glint in {self:possessive} eye that seems to be endlessly asking for more.",
                                 this, opponent));
             }
-            restoreWillpower(c, 5 + Math.max((get(Attribute.Animism) + get(Attribute.Nymphomania)) / 5, 15));
+            restoreWillpower(c, 5 + Math.min((get(Attribute.Animism) + get(Attribute.Nymphomania)) / 5, 15));
         }
         if (this != opponent && times == totalTimes) {
             c.write(this, "<b>" + orgasmLiner(c) + "</b>");
@@ -1851,9 +1851,9 @@ public abstract class Character extends Observable implements Cloneable {
         } else {
             mood = "";
         }
-        return String.format("[%s] %s s: %d/%d a: %d/%d m: %d/%d c:%d f:%f", name, mood, stamina.get(), stamina.max(),
-                        arousal.get(), arousal.max(), mojo.get(), mojo.max(), outfit.getEquipped().size(),
-                        getFitness(c));
+        return String.format("[%s] %s s: %d/%d a: %d/%d m: %d/%d w: %d/%d c:%d f:%f", name, mood, stamina.getReal(),
+                        stamina.max(), arousal.getReal(), arousal.max(), mojo.getReal(), mojo.max(),
+                        willpower.getReal(), willpower.max(), outfit.getEquipped().size(), getFitness(c));
     }
 
     public void gain(Item item) {
@@ -2583,8 +2583,7 @@ public abstract class Character extends Observable implements Cloneable {
         if (other.stamina.isEmpty()) {
             fit -= staminaMod * 3;
         }
-        fit += 100.0f * (other.getWillpower().max() - other.getWillpower().get())
-                        / Math.min(100, other.getWillpower().max());
+        fit += other.getWillpower().getReal() * 5.33f;
         // Short-term: Arousal
         fit += arousalMod / usum * 100.0f * (other.getArousal().max() - other.getArousal().get())
                         / Math.min(100, other.getArousal().max());
@@ -2664,7 +2663,7 @@ public abstract class Character extends Observable implements Cloneable {
         if (stamina.isEmpty()) {
             fit -= staminaMod * 3;
         }
-        fit += 100.0f * (getWillpower().max() - getWillpower().get()) / Math.min(100, getWillpower().max());
+        fit += getWillpower().getReal() * 5.3f;
         // Short-term: Arousal
         fit += arousalMod / usum * 100.0f * (getArousal().max() - getArousal().get())
                         / Math.min(100, getArousal().max());

@@ -598,20 +598,11 @@ public class Global {
             if (player.getPure(Attribute.Science) > 0) {
                 player.chargeBattery();
             }
-            if (human.getAffection(player) > maxaffection) {
+            if (human.getAffection(player) > maxaffection && !player.has(Trait.event)) {
                 maxaffection = human.getAffection(player);
                 lover = player;
             }
         }
-        // if (true) {
-        // lineup.add(human);
-        // for (Character c : players) {
-        // if (c.name().equals("Kat")) {
-        // lineup.add(c);
-        // }
-        // }
-        // match=new Match(lineup,matchmod);
-        // } else
         List<Character> participants = new ArrayList<Character>();
         for (Character c : players) {
             Flag disabledFlag = null;
