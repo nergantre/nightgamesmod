@@ -97,7 +97,7 @@ public class Whisper extends Skill {
         if (modifier == Result.special) {
             return getSelf().name() + " whispers in your ear in some eldritch language."
                             + " Her words echo through your head and you feel a"
-                            + " strong compulsion to do what she tells you";
+                            + " strong compulsion to do what she tells you.";
         } else {
             return getSelf().name() + " whispers some deliciously seductive suggestions in your ear.";
         }

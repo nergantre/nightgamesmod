@@ -440,7 +440,7 @@ public abstract class Character extends Observable implements Cloneable {
             if (other.has(Trait.dirtyfighter) && (c.getStance().prone(other) || c.getStance().sub(other)) && physical) {
                 bonus += 10;
                 c.write(this, Global.format(
-                                "{other:SUBJECT-ACTION:know|knows} how to fight dirty, and manages to give {other:direct-object} a lot more touble than {other:subject} expected despite being in a compromised position.",
+                                "{other:SUBJECT-ACTION:know|knows} how to fight dirty, and {other:action:manage|manages} to give {self:direct-object} a lot more trouble than {self:subject} expected despite being in a compromised position.",
                                 this, other));
             }
 
@@ -1446,7 +1446,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void doOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart) {
-        int total = this != opponent && opponent.has(Trait.carnalvirtuoso) ? 2 : 1;
+        int total = this != opponent && opponent != null && opponent.has(Trait.carnalvirtuoso) ? 2 : 1;
         for (int i = 1; i <= total; i++) {
             resolveOrgasm(c, opponent, selfPart, opponentPart, i, total);
         }

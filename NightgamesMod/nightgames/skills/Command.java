@@ -16,6 +16,7 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.stance.Behind;
+import nightgames.stance.FaceSitting;
 import nightgames.stance.Mount;
 import nightgames.stance.ReverseMount;
 import nightgames.stance.Stance;
@@ -303,10 +304,11 @@ public class Command extends Skill {
             case HURT_SELF:
                 c.write(getSelf(),
                                 String.format("Following a voiceless command,"
-                                                + " you slam your elbow into you gut as hard as you can."
+                                                + " you slam your elbow into your gut as hard as you can."
                                                 + " It hurts, but the look of pure amusement on %s face"
                                                 + " makes everything alright.", getSelf().nameOrPossessivePronoun()));
                 target.pain(c, 10 + Global.random(20));
+                break;
             case STRIP_MASTER:
                 Clothing removed = getSelf().getRandomStrippable();
                 if (removed == null)
@@ -384,6 +386,7 @@ public class Command extends Skill {
             case MASTER_FACESIT:
                 c.write(getSelf(), String.format("%s stands over your face and slowly" + " lowers %s down onto it.",
                                 getSelf().name(), getSelf().reflectivePronoun()));
+                c.setStance(new FaceSitting(getSelf(), target));
                 break;
         }
     }
