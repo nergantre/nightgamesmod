@@ -306,7 +306,7 @@ public class Cassie extends BasePersonality {
                             + "of me.\"</i> You don't think she's quite there yet, but you speed up like she asks. In moments, you hit your peak and shoot your load inside her. Cassie lets out a moan and you feel her "
                             + "shudder. Did she just cum again? She giggles again. <i>\"I guess having a cute boy climax inside me is a big turn-on. We should do this more often.\"</i> If she wants to lose to you more "
                             + "often, you aren't going to complain. She sits up and kisses you softly on the cheek. <i>\"Maybe I'll win next time.\"</i>";
-        } else {
+        } else if (opponent.hasDick()){
             return "As Cassie moans and shivers, it's clear she's past the point of no return. <i>\"Please,\"</i> she begs. <i>\"Give me a kiss before I cum.\"</i> You kiss her firmly on the lips and "
                             + "rub her clit relentlessly. She shudders and holds you tight as she rides out an intense orgasm. You wait until she comes down before gently disentangling yourself "
                             + "from her embrace. <p><i>\"Thanks. Not that I'm happy about losing, but that felt amazing.\"</i> Cassie smiles "
@@ -315,6 +315,16 @@ public class Cassie extends BasePersonality {
                             + "only to have another girl make him cum.\"</i> She explains. She sets to licking and stroking your dick, showing no less enthusiasm than she did during the fight. "
                             + "The delightful sensations from her fingers and tongue soon bring you to a messy climax on her face. You thank her as you collect your clothes and hers, "
                             + "leaving her naked, but still in good spirits.";
+        } else {
+            return "As Cassie moans and shivers, it's clear she's past the point of no return. <i>\"Please,\"</i> she begs. <i>\"Give me a kiss before I cum.\"</i> You kiss her firmly on the lips and "
+                            + "rub her clit relentlessly. She shudders and holds you tight as she rides out an intense orgasm. You wait until she comes down before gently disentangling yourself "
+                            + "from her embrace. <p><i>\"Thanks. Not that I'm happy about losing, but that felt amazing.\"</i> Cassie smiles "
+                            + "sheepishly and brushes your wet pussy. <i>\"I'm the one who got you this turned on, right? Then I'm going to take responsibility and finish you off.\"</i> "
+                            + "You're slightly skeptical of her reasoning, not that you're going to turn down her offer. <p><i>\"It would be a disgrace to leave another girl all hot and bothered, "
+                            + "after making me come.\"</i> She explains. She sets to licking and fingering your pussy, and teasing your clit, showing no less enthusiasm than she did during the fight. "
+                            + "The delightful sensations from her fingers and tongue soon bring you to a gasping climax. You thank her as you collect your clothes and hers, "
+                            + "leaving her naked, but still in good spirits.";
+     
         }
     }
 
@@ -417,7 +427,7 @@ public class Cassie extends BasePersonality {
         if (target.human()) {
             return "You grapple with " + assist.name()
                             + ", but neither of you can find an opening. She loses her balance while trying to grab you and you manage to trip her. "
-                            + "Before you can follow up, a warm body presses against your back and a soft hand gently grasps your erection. Cassie whispers playfully in your ear. <i>\"Hello "
+                            + "Before you can follow up, a warm body presses against your back and "+(target.hasDick() ?"a soft hand gently grasps your erection" :"soft hands have gently grabbed your breasts from behind")+". Cassie whispers playfully in your ear. <i>\"Hello "
                             + target.name() + ". How about a threesome?\"</i> You start to break away from Cassie, but "
                             + assist.name() + " is already back on her feet. You struggle valiantly, "
                             + "but you're quickly overwhelmed by the two groping and grappling girls. Cassie manages to force both your arms under her, leaving you helpless.<br>";

@@ -308,7 +308,7 @@ public class Jewel extends BasePersonality {
 
     @Override
     public String defeat(Combat c, Result flag) {
-        c.getOther(character);
+        Character other= c.getOther(character);
         if (character.has(Trait.fighter)) {
             return "Jewel falters as her arousal begins to overwhelm her. You manage to force her to the ground and pin her hands. You press your thigh against her slick pussy, "
                             + "making her moan in pleasure. You rub her with your leg and suck on her neck until she can't resist grinding against you. She climaxes with a scream and you kiss "
@@ -343,7 +343,7 @@ public class Jewel extends BasePersonality {
                             + "seems to be in the same state. You maul her tits and thrust completely into her as you shoot your load. She screams in ecstasy when she cums and you both collapse to "
                             + "the floor. <p>You lie there, enjoying the afterglow. She rolls over and kisses you firmly. She seemed to enjoy that a lot. Is she still going to retaliate tenfold? <i>\"Oh "
                             + "yes, a combination of submission and pleasure. I'm sure I'll think of something good.\"</i>";
-        } else {
+        } else if (other.hasDick()){
             return "Jewel trembles and her moans rapidly increase in pitch. You take a dominant position on top of her with one hand knuckles deep in her flooded pussy and the other groping "
                             + "her beautiful breast. She's obviously on the verge of defeat, but she refuses to give in. She grits her teeth and endures the pleasure while desperately grasping at your "
                             + "erection. You redouble your efforts, stroking and kissing her most sensitive spots. She arches her back and "
@@ -352,6 +352,16 @@ public class Jewel extends BasePersonality {
                             + "entrance. <i>\"Time for round 2.\"</i> She impales herself on your dick, crying out in delight. She leans forward and shakes her breasts in front of you until you grasp "
                             + "and fondle them. As she rides you, you feel your own pleasure building to a peak. "
                             + "Jewel's pussy squeezes your cock as she reaches her second climax, pushing you over the edge. She collapses on top you, both of you satisfied and spent.";
+        } else {
+            return "Jewel trembles and her moans rapidly increase in pitch. You take a dominant position on top of her with one hand knuckles deep in her flooded pussy and the other groping "
+                            + "her beautiful breast. She's obviously on the verge of defeat, but she refuses to give in. She grits her teeth and endures the pleasure while desperately grasping at your "
+                            + "erection. You redouble your efforts, stroking and kissing her most sensitive spots. She arches her back and "
+                            + "shudders in orgasm, then goes limp so suddenly you think she may have passed out. <p>When you lean over her to check that she's ok, she grabs you and rolls "
+                            + "on top of you. She smashes her lips against yours and forces her tongue into your mouth. <i>\"You win round 1,\"</i> she says, pinning hands against the ground. "
+                            + "<i>\"Time for round 2.\"</i> She presses her thigh against your slick pussy, and you find yourself arcing your back with pleasure. "
+                            + "She rubs your sensitive clit with her leg and sucks on your neck until you can't resist grinding against her. She rides you sweetly, her pussy hot against your hip. "
+                            + "When you are losing senses in your climax you feel her burning body sliding down your and she smothers your mouth with "
+                            +" kisses while you climax and shudder. She collapses on top you, both of you satisfied and spent.";
         }
     }
 
@@ -445,6 +455,8 @@ public class Jewel extends BasePersonality {
 
     @Override
     public String intervene3p(Combat c, Character target, Character assist) {
+        Character other= c.getOther(character);
+        String vulnerability= other.hasBalls() ?"balls. You fall to the floor" :other.hasPussy() ?"pussy. You fall to the floor": other.hasBreasts() ?"breasts. You cringe" :"face. You cower";
         if (target.human()) {
             return "You skillfully force " + assist.name()
                             + " to the floor and begin pleasuring her into submission. You rub and finger her pussy until she's shivering and "
@@ -456,7 +468,7 @@ public class Jewel extends BasePersonality {
         } else {
             return "You wrestle with " + target.name()
                             + " until you're both naked and sweaty. You seem to have a slight advantage until she manages to get a free hand between "
-                            + "your legs and slap your balls. You fall to the floor in pain, but " + target.name()
+                            + "your legs and slap your "+vulnerability+" in pain, but " + target.name()
                             + " doesn't have a chance to follow up. Jewel has arrived, seemingly out "
                             + "of nowhere, and before " + target.name()
                             + " can react, Jewel slaps her on the pussy. She crumples in pain, almost mirroring you, and can't put up any defense "

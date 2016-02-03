@@ -245,6 +245,7 @@ public class Angel extends BasePersonality {
 
     @Override
     public String defeat(Combat c, Result flag) {
+        Character opponent = c.getOther(character);
         if (flag == Result.intercourse) {
             return "You thrust your cock continously into Angel's dripping pussy. Her hot insides feel amazing, but you're sure you have enough of an advantage to risk "
                             + "it. She lets out breathy moans in time to your thrusts and her arms are trembling too much to hold herself up. She's clearly about to cum, you just "
@@ -260,14 +261,23 @@ public class Angel extends BasePersonality {
                             + "I had a continuous orgasm for at least two minutes and that's way more exhausting. It's been a long time since anyone's made me do that.\"</i> Wait, what? You'd "
                             + "never have guessed that she came if she hadn't said anything. <i>\"Just because you managed to beat me this time doesn't mean you can suddenly start acting "
                             + "lazy. If you let your guard down, I'm going to turn you into my own personal toy.\"</i> At that, she walks away naked.";
+        } if (opponent.hasDick()) {
+            return "Angel trembles and moans as you guide her closer and closer to orgasm. You pump two fingers in and out of her pussy and lick her sensitive nether lips. "
+                            + "Her swollen clit peeks out from under its hood and you pinch it gently between your teeth. Angel instantly screams in pleasure and arches her back. A "
+                            + "flood of feminine juice sprays you as she loses control of her body.<p>It takes her a little while to catch her breath. She quickly pushes you on your "
+                            + "back and begins blowing you, never once meeting your eyes. What you can see of her face and ears is completely red. If you didn't know better, you'd "
+                            + "say that she's embarrassed about the one-sided orgasm you gave her earlier. You don't have much attention to devote to it though, Angel is a very good "
+                            + "cock-sucker. Her tongue finds all your most sensitive areas and soon you're filling her mouth with your seed.<p>Angel swallows your load and happily "
+                            + "licks the stray drops from her lips. <i>\"Did you enjoy that?\"</i> She asks, looking a lot more composed. <i>\"You weren't bad either.\"</i>";
+        } else {
+            return "Angel trembles and moans as you guide her closer and closer to orgasm. You pump two fingers in and out of her pussy and lick her sensitive nether lips. "
+                            + "Her swollen clit peeks out from under its hood and you pinch it gently between your teeth. Angel instantly screams in pleasure and arches her back. A "
+                            + "flood of feminine juice sprays you as she loses control of her body.<p>It takes her a little while to catch her breath. She quickly pushes you on your "
+                            + "back and begins licking you, never once meeting your eyes. What you can see of her face and ears is completely red. If you didn't know better, you'd "
+                            + "say that she's embarrassed about the one-sided orgasm you gave her earlier. You don't have much attention to devote to it though, Angel is a very good "
+                            + "pussy-licker. Her tongue finds all your most sensitive areas and soon you are shuddering with pleasure.<p>Angel clamps down on your clit and gently "
+                            + "keeps you going until you moan \"enough\". <i>\"Did you enjoy that?\"</i> She asks, looking a lot more composed. <i>\"You weren't bad either.\"</i>";
         }
-        return "Angel trembles and moans as you guide her closer and closer to orgasm. You pump two fingers in and out of her pussy and lick her sensitive nether lips. "
-                        + "Her swollen clit peeks out from under its hood and you pinch it gently between your teeth. Angel instantly screams in pleasure and arches her back. A "
-                        + "flood of feminine juice sprays you as she loses control of her body.<p>It takes her a little while to catch her breath. She quickly pushes you on your "
-                        + "back and begins blowing you, never once meeting your eyes. What you can see of her face and ears is completely red. If you didn't know better, you'd "
-                        + "say that she's embarrassed about the one-sided orgasm you gave her earlier. You don't have much attention to devote to it though, Angel is a very good "
-                        + "cock-sucker. Her tongue finds all your most sensitive areas and soon you're filling her mouth with your seed.<p>Angel swallows your load and happily "
-                        + "licks the stray drops from her lips. <i>\"Did you enjoy that?\"</i> She asks, looking a lot more composed. <i>\"You weren't bad either.\"</i>";
     }
 
     @Override
