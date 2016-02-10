@@ -163,7 +163,6 @@ public abstract class Character extends Observable implements Cloneable {
         c.willpower = willpower.clone();
         c.outfitPlan = new ArrayList<Clothing>(outfitPlan);
         c.outfit = new Outfit(outfit);
-        c.skills = (HashSet<Skill>) skills.clone();
         c.status = new HashSet<Status>();
         c.flags = new HashMap<>(flags);
         for (Status s : status) {
