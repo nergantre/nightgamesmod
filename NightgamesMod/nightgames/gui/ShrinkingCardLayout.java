@@ -7,6 +7,11 @@ import java.awt.Dimension;
 import java.awt.Insets;
 
 public class ShrinkingCardLayout extends CardLayout {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -3647209145047466692L;
+
     @Override
     public Dimension preferredLayoutSize(Container parent) {
 

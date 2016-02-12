@@ -5,9 +5,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import nightgames.areas.Area;
@@ -18,7 +15,6 @@ import nightgames.characters.Player;
 import nightgames.characters.Reyka;
 import nightgames.characters.NPC;
 import nightgames.characters.Personality;
-import nightgames.characters.Airi;
 import nightgames.characters.BasePersonality;
 import nightgames.combat.Combat;
 import nightgames.global.DebugFlags;
