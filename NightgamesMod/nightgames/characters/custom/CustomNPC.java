@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.BasePersonality;
@@ -34,7 +35,7 @@ public class CustomNPC extends BasePersonality {
         character.closet.addAll(character.outfitPlan);
         character.change();
         character.att = new HashMap<Attribute, Integer>(data.getStats().attributes);
-        character.traits = new HashSet<Trait>(data.getStats().traits);
+        character.traits = new CopyOnWriteArrayList<Trait>(data.getStats().traits);
         character.getArousal().setMax(data.getStats().arousal);
         character.getStamina().setMax(data.getStats().stamina);
         character.getMojo().setMax(data.getStats().mojo);

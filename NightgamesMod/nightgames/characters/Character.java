@@ -10,8 +10,8 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Optional;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.Vector;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 import org.json.simple.JSONArray;
@@ -76,15 +76,15 @@ public abstract class Character extends Observable implements Cloneable {
     public Outfit outfit;
     public List<Clothing> outfitPlan;
     protected Area location;
-    protected HashSet<Skill> skills;
+    protected CopyOnWriteArrayList<Skill> skills;
     public HashSet<Status> status;
-    public Set<Trait> traits;
+    public CopyOnWriteArrayList<Trait> traits;
     protected HashMap<Trait, Integer> temporaryAddedTraits;
     protected HashMap<Trait, Integer> temporaryRemovedTraits;
     public HashSet<Status> removelist;
     public HashSet<Status> addlist;
     public HashMap<String, Integer> cooldowns;
-    private HashSet<Character> mercy;
+    private CopyOnWriteArrayList<Character> mercy;
     protected Map<Item, Integer> inventory;
     private HashMap<String, Integer> flags;
     protected Item trophy;
@@ -130,17 +130,17 @@ public abstract class Character extends Observable implements Cloneable {
         outfitPlan = new ArrayList<Clothing>();
 
         closet = new HashSet<Clothing>();
-        skills = new HashSet<Skill>();
+        skills = new CopyOnWriteArrayList<Skill>();
         status = new HashSet<Status>();
-        traits = new TreeSet<Trait>((a, b) -> a.toString().compareTo(b.toString()));
+        traits = new CopyOnWriteArrayList<Trait>();
         temporaryAddedTraits = new HashMap<Trait, Integer>();
         temporaryRemovedTraits = new HashMap<Trait, Integer>();
         removelist = new HashSet<Status>();
         addlist = new HashSet<Status>();
-        mercy = new HashSet<Character>();
+        mercy = new CopyOnWriteArrayList<Character>();
         inventory = new HashMap<Item, Integer>();
-        attractions = new HashMap<Character, Integer>();
-        affections = new HashMap<Character, Integer>();
+        attractions = new HashMap<Character, Integer>(2);
+        affections = new HashMap<Character, Integer>(2);
         challenges = new ArrayList<Challenge>();
         location = new Area("", "", null);
         state = State.ready;
@@ -162,22 +162,18 @@ public abstract class Character extends Observable implements Cloneable {
         c.willpower = willpower.clone();
         c.outfitPlan = new ArrayList<Clothing>(outfitPlan);
         c.outfit = new Outfit(outfit);
-        c.status = new HashSet<Status>();
         c.flags = new HashMap<>(flags);
-        for (Status s : status) {
-            Status clone = s.instance(c, c);
-            c.status.add(clone);
-        }
-        c.traits = new TreeSet<Trait>(traits);
+        c.status = status; // Will be deep-copied in finishClone()
+        c.traits = (CopyOnWriteArrayList<Trait>) traits.clone();
         c.temporaryAddedTraits = new HashMap<Trait, Integer>(temporaryAddedTraits);
         c.temporaryRemovedTraits = new HashMap<Trait, Integer>(temporaryRemovedTraits);
         c.removelist = (HashSet<Status>) removelist.clone();
         c.addlist = (HashSet<Status>) addlist.clone();
-        c.mercy = (HashSet<Character>) mercy.clone();
+        c.mercy = (CopyOnWriteArrayList<Character>) mercy.clone();
         c.inventory = (Map<Item, Integer>) ((HashMap<Item, Integer>) inventory).clone();
         c.attractions = (HashMap<Character, Integer>) attractions.clone();
         c.affections = (HashMap<Character, Integer>) affections.clone();
-        c.skills = (HashSet<Skill>) skills.clone();
+        c.skills = (CopyOnWriteArrayList<Skill>) skills.clone();
         c.body = body.clone();
         c.body.character = c;
         c.orgasmed = orgasmed;
@@ -1390,7 +1386,7 @@ public abstract class Character extends Observable implements Cloneable {
         // End Clothing loading
 
         loadClothingFromArr(obj, closet, "closet");
-        traits = new HashSet<>(JSONUtils.loadEnumsFromArr(obj, "traits", Trait.class));
+        traits = new CopyOnWriteArrayList<>(JSONUtils.loadEnumsFromArr(obj, "traits", Trait.class));
         body = Body.load((JSONObject) obj.get("body"), this);
         {
             JSONObject attObj = (JSONObject) obj.get("attributes");
