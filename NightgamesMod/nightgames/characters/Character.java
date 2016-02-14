@@ -899,7 +899,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void add(Trait t) {
-        traits.add(t);
+        traits.addIfAbsent(t);
     }
 
     public void remove(Trait t) {
@@ -1770,7 +1770,7 @@ public abstract class Character extends Observable implements Cloneable {
     public abstract void emote(Emotion emo, int amt);
 
     public void learn(Skill copy) {
-        skills.add(copy.copy(this));
+        skills.addIfAbsent(copy.copy(this));
     }
 
     public void forget(Skill copy) {
@@ -1921,7 +1921,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void defeated(Character victor) {
-        mercy.add(victor);
+        mercy.addIfAbsent(victor);
     }
 
     public void resupply() {
