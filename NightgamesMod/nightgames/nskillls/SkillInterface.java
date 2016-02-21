@@ -4,8 +4,7 @@ import nightgames.combat.Combat;
 
 import java.util.List;
 
-import nightgames.characters.Character;
-import nightgames.characters.custom.requirement.AttributeRequirement;;
+import nightgames.characters.Character;;
 
 public interface SkillInterface {
     List<SkillResult> getPossibleResults(Combat c, Character user, Character target);

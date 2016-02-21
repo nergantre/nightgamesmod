@@ -3,7 +3,6 @@ package nightgames.skills;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BasicCockPart;
-import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.ModdedCockPart;
 import nightgames.combat.Combat;

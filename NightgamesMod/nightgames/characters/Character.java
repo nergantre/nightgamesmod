@@ -23,7 +23,6 @@ import nightgames.areas.Area;
 import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
-import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.custom.AiModifiers;
 import nightgames.combat.Combat;
@@ -163,7 +162,6 @@ public abstract class Character extends Observable implements Cloneable {
         c.willpower = willpower.clone();
         c.outfitPlan = new ArrayList<Clothing>(outfitPlan);
         c.outfit = new Outfit(outfit);
-        c.skills = (HashSet<Skill>) skills.clone();
         c.status = new HashSet<Status>();
         c.flags = new HashMap<>(flags);
         for (Status s : status) {

@@ -49,6 +49,10 @@ public abstract class SkillModifier {
         return skills;
     }
 
+    public boolean allowedSkill(Combat c, Skill s) {
+        return !(bannedSkills().contains(s) || bannedTactics().contains(s.type(c)));
+    }
+
     public double encouragement(Skill s, Combat c, Character user) {
         return encouragedSkills().getOrDefault(s, 0.0);
     }

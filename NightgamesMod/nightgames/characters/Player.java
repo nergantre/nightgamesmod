@@ -25,7 +25,6 @@ import nightgames.stance.Behind;
 import nightgames.stance.Neutral;
 import nightgames.stance.Position;
 import nightgames.status.Enthralled;
-import nightgames.status.Feral;
 import nightgames.status.Horny;
 import nightgames.status.Masochistic;
 import nightgames.status.Status;
