@@ -29,6 +29,7 @@ public abstract class BasePersonality implements Personality {
      *
      */
     private static final long serialVersionUID = 2279220186754458082L;
+    private String type;
     public NPC character;
     protected Growth growth;
     protected List<PreferredAttribute> preferredAttributes;
@@ -39,6 +40,7 @@ public abstract class BasePersonality implements Personality {
     }
 
     public BasePersonality(String name, int level) {
+        type = getClass().getSimpleName();
         this.character = new NPC(name, level, this);
         growth = new Growth();
         preferredCockMod = CockMod.error;
@@ -70,7 +72,7 @@ public abstract class BasePersonality implements Personality {
 
     @Override
     public String getType() {
-        return getClass().getSimpleName();
+        return type;
     }
 
     @Override
