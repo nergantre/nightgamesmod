@@ -174,12 +174,7 @@ public class Mara extends BasePersonality {
 
     @Override
     public String victory(Combat c, Result flag) {
-        Character target;
-        if (c.p1 == character) {
-            target = c.p2;
-        } else {
-            target = c.p1;
-        }
+        Character target= c.getOther(character);
         character.arousal.empty();
         if (flag == Result.anal) {
             return "The sensations coming from your prostate are too much as your arms give out below you. Mara doesn't let up either, grinding the head of the strap on over your "
@@ -236,6 +231,7 @@ public class Mara extends BasePersonality {
 
     @Override
     public String defeat(Combat c, Result flag) {
+        Character other= c.getOther(character);
         if (character.has(Trait.madscientist) && character.has(Item.SPotion)) {
             character.add(c, new Hypersensitive(character));
             return "Mara begins to panic as she realizes she's on the verge of defeat. She grabs a small bottle of liquid from pouch on her belt, but it slips from her fingers "
@@ -275,18 +271,25 @@ public class Mara extends BasePersonality {
                             + "Her pussy is tight, wet, and feels heavenly. You pound your hips against hers for you mutual pleasure. Mara lets out breathy moans in time to your thrusts and when "
                             + "you finally reach your sweet release, she tenses in orgasm under you.<p>She softly strokes your cheek as you both relish the afterglow. <i>\"You were just like a wild "
                             + "animal there,\"</i> She whispers with a grin. <i>\"You never would have been that intense if I hadn't made you wait.\"</i>";
-        }
+        } if (other.hasDick()) {
         return "You've managed to reduce the ever arrogant and composed Mara to a puddle of whimpering pleasure. You caress and finger her to a shuddering climax. You don't "
                         + "let up, prolonging her orgasm as long as possible. <i>\"Wait! wait! I already came! I'm really sensitive right now!\"</i> You continue toying with her twitching pussy "
                         + "while she moans and pleads for mercy, but you are enjoying this rare opportunity to have the scheming minx at your mercy. Soon she arches her back, hitting her "
-                        + "second peak, and you finally let her catch her breath.<p>After Mara recovers enough to talk, she tells you to lie back and she goes to work, pleasuring "
-                        + "your straining erection. You've given her two orgasms with no relief yourself, so it only takes a bit of stroking and sucking to bring you to the brink. Just as "
-                        + "you feel your ejaculation building, she grips your shaft tightly enough to deny your release. She gives you her most impish smile as you look at her questioningly. "
-                        + "<i>\"I never said I was going to get you off, but feel free to continue on your own.\"</i> She lets go of you and sits back in front of you smugly. <i>\"Just a bit of petty "
-                        + "revenge for taking advantage of me.\"</i><p>It seems unfair that she's the one setting the terms when you won the fight, but she's not actually obliged to do "
-                        + "anything for you. You can't just leave in your current state. If someone else caught you this frustrated and aroused, you wouldn't stand a chance. "
-                        + "You grudgingly take matters into your own hands and begin masturbating while Mara smiles in amusement. Soon you're past your limit and you ejaculate "
-                        + "onto her face and breasts. She giggles and licks the cum from her lips as you claim her clothes as a trophy and walk away.";
+                        + "second peak, and you finally let her catch her breath.<p>After Mara recovers enough to talk, she tells you to lie back and she goes to work, "
+                        + (other.hasDick() ?(" pleasuring your straining erection. You've given her two orgasms with no relief yourself, so it only takes a bit of stroking and sucking to bring you to the brink. Just as "
+                                        + "you feel your ejaculation building, she grips your shaft tightly enough to deny your release. She gives you her most impish smile as you look at her questioningly. "
+                                        + "<i>\"I never said I was going to get you off, but feel free to continue on your own.\"</i> She lets go of you and sits back in front of you smugly. <i>\"Just a bit of petty "
+                                        + "revenge for taking advantage of me.\"</i><p>It seems unfair that she's the one setting the terms when you won the fight, but she's not actually obliged to do "
+                                        + "anything for you. You can't just leave in your current state. If someone else caught you this frustrated and aroused, you wouldn't stand a chance. "
+                                        + "You grudgingly take matters into your own hands and begin masturbating while Mara smiles in amusement. Soon you're past your limit and you ejaculate "
+                                        + "onto her face and breasts. She giggles and licks the cum from her lips as you claim her clothes as a trophy and walk away.")
+                        : (" brushing near your throbbing clit. You've given her two orgasms with no relief yourself, so it only takes a bit of teasing to bring you to the brink. Just as "
+                                        + "you feel your orgasm building, she eases away, denying you your release. She gives you her most impish smile as you look at her questioningly. "
+                                        + "<i>\"I never said I was going to get you off, but feel free to continue on your own.\"</i> She lets go of you and sits back in front of you smugly. <i>\"Just a bit of petty "
+                                        + "revenge for taking advantage of me.\"</i><p>It seems unfair that she's the one setting the terms when you won the fight, but she's not actually obliged to do "
+                                        + "anything for you. But you can't just leave in your current state. If someone else caught you this frustrated and aroused, you wouldn't stand a chance. "
+                                        + "You grudgingly take matters into your own hands and bury your hand in your pussy while Mara smiles in amusement. Soon you're past your limit and you shake "
+                                        + "with pleasure. She giggles as you claim her clothes as a trophy and walk away."));
     }
 
     @Override
@@ -352,13 +355,23 @@ public class Mara extends BasePersonality {
     @Override
     public String victory3p(Combat c, Character target, Character assist) {
         if (target.human()) {
-            return "Mara settles between your legs, holding your dick between her bare feet. Her soft, smooth soles begin to stroke the length of your shaft. She frequently "
-                            + "uses her toes to tease your balls and the head of your penis. As you start to leak pre-cum, she smears it all over your dick, using the lubricant to give "
-                            + "you a more intense footjob. Mindful of her own needs, she reaches between her own legs and starts rubbing her pussy and clit, giving you a sexy show. "
-                            + "For a moment, it crosses your mind that if you can hold out long enough, she may slip up and climax before you. The moment passes, however, when Mara "
-                            + "accelerates her stroking and you realize you won't be able to last more than a few more seconds. Sure enough, your jizz soon shoots into the air like "
-                            + "a fountain and paints her legs and feet. Mara continues to stimulate your oversensitized dick and balls while she finishes herself off, apparently too "
-                            + "caught up in her own enjoyment to notice your discomfort.";
+            if (target.hasDick()) {
+                return "Mara settles between your legs, holding your dick between her bare feet. Her soft, smooth soles begin to stroke the length of your shaft. She frequently "
+                                + "uses her toes to tease your balls and the head of your penis. As you start to leak pre-cum, she smears it all over your dick, using the lubricant to give "
+                                + "you a more intense footjob. Mindful of her own needs, she reaches between her own legs and starts rubbing her pussy and clit, giving you a sexy show. "
+                                + "For a moment, it crosses your mind that if you can hold out long enough, she may slip up and climax before you. The moment passes, however, when Mara "
+                                + "accelerates her stroking and you realize you won't be able to last more than a few more seconds. Sure enough, your jizz soon shoots into the air like "
+                                + "a fountain and paints her legs and feet. Mara continues to stimulate your oversensitized dick and balls while she finishes herself off, apparently too "
+                                + "caught up in her own enjoyment to notice your discomfort.";
+        } else {
+            return "Mara runs her fingers down the length of your body, tickling you mercilessly. Her probing fingers avoid your nipples and pussy, "
+                            +"focusing instead on the ticklish areas under your arms, behind your knees and on your inner thighs. You squirm against "
+                            + assist.name() +" pleading for mercy. After a few minutes of this, sweet electric shivers wrack your body when Mara's "
+                            + "dancing fingers tease your dripping pussy and your clit. You are unable to decide whether you are being tickled into "
+                            + "submission or fingered to ecstasy. Your oversensitized pussy finally can't take any more and trys clamping onto her "
+                            + "teasing fingers. But she keeps you on the edge until you collapse in exhaustion. You dimly hear Mara talking but you "
+                            + "feel too warn out to understand her.";
+            }
         }
         if (target.hasDick()) {
             return String.format(
