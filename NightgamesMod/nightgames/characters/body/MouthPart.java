@@ -46,8 +46,8 @@ public class MouthPart extends GenericBodyPart {
                             + fluid + " leaves " + self.nameOrPossessivePronoun() + " in a state of frenzy.");
             self.add(c, new Frenzied(self, 3));
         }
-        if (!fluid.isEmpty() && opponent.has(Trait.addictivefluids) && !self.is(Stsflag.tolerance)) {
-            self.add(c, new FluidAddiction(self, opponent, 5));
+        if (!fluid.isEmpty() && target.getFluidAddictiveness(opponent) > 0 && !self.is(Stsflag.tolerance)) {
+            self.add(c, new FluidAddiction(self, opponent, target.getFluidAddictiveness(opponent), 5));
             FluidAddiction st = (FluidAddiction) self.getStatus(Stsflag.fluidaddiction);
             if (st.activated()) {
                 if (self.human()) {

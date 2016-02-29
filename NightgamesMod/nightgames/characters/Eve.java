@@ -162,7 +162,7 @@ public class Eve extends BasePersonality {
     @Override
     public String victory(Combat c, Result flag) {
         character.arousal.empty();
-        if (flag == Result.anal) {
+        if (c.getStance().anallyPenetratedBy(c.getOther(character), character)) {
             return "As Eve pounds you mercilessly in the ass, your body is overwhelmed"
                             + " by the strange sensations radiating from your insides. <i>\"How"
                             + " does your prostate feel? I could probably milk you like this, but"

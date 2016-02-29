@@ -95,7 +95,7 @@ public class NursingHold extends AbstractFacingStance {
     public void decay(Combat c) {
         time++;
         bottom.weaken(null, 5);
-        bottom.loseWillpower(c, 3);
+        bottom.loseWillpower(c, 1);
         top.emote(Emotion.dominant, 10);
     }
 

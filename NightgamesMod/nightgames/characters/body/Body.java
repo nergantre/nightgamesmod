@@ -443,15 +443,15 @@ public class Body implements Cloneable {
         return part;
     }
 
-    public int pleasure(Character opponent, BodyPart with, BodyPart target, int magnitude, Combat c) {
+    public int pleasure(Character opponent, BodyPart with, BodyPart target, double magnitude, Combat c) {
         return pleasure(opponent, with, target, magnitude, 0, c, false);
     }
 
-    public int pleasure(Character opponent, BodyPart with, BodyPart target, int magnitude, int bonus, Combat c) {
+    public int pleasure(Character opponent, BodyPart with, BodyPart target, double magnitude, int bonus, Combat c) {
         return pleasure(opponent, with, target, magnitude, bonus, c, false);
     }
 
-    public int pleasure(Character opponent, BodyPart with, BodyPart target, int magnitude, int bonus, Combat c,
+    public int pleasure(Character opponent, BodyPart with, BodyPart target, double magnitude, int bonus, Combat c,
                     boolean sub) {
         if (target == null) {
             target = nonePart;
@@ -565,7 +565,7 @@ public class Body implements Cloneable {
                 c.writeSystemMessage(battleString);
             }
         }
-        character.pleasure(result, c, opponent, target, with);
+        character.resolvePleasure(result, c, opponent, target, with);
 
         if (opponent != null && Arrays.asList(fetishParts).contains(with.getType())) {
             if (opponent.has(Trait.fetishTrainer)

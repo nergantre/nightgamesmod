@@ -175,7 +175,7 @@ public class Jewel extends BasePersonality {
         Character other = c.getOther(character);
         Collection<BodyPart> selfOrgans = c.getStance().partsFor(character);
         Collection<BodyPart> otherOrgans = c.getStance().partsFor(other);
-        if (BodyPart.hasType(otherOrgans, "ass")) {
+        if (BodyPart.hasType(otherOrgans, "ass") && c.getStance().anallyPenetrated(other)) {
             BodyPart insertable = character.body.getRandomInsertable();
             String selfODesc = insertable == null ? "[none]" : insertable.describe(character);
             return "You gasp as Jewel pounds away at your ass without mercy. You're going to cum, you realize. "
@@ -326,7 +326,7 @@ public class Jewel extends BasePersonality {
                             + "being under you.\"</i> She practically hops back to her feet. Jesus, her recovery speed is inhuman. <i>\"Of course, next time I'm going to have to throw you to the ground "
                             + "and ravage you. I promise you'll love it.\"</i>";
         }
-        if (flag == Result.intercourse) {
+        if (c.getStance().vaginallyPenetrated(character)) {
             return "You fuck Jewel passionately, driving her closer to orgasm. She runs her fingers through your hair and wraps her legs tightly around your hips. Judging by her moaning, "
                             + "she must know that she's losing, but that seems to be turning her on even more. Well, there's no reason to go easy on her. You bury your face in her neck and start to "
                             + "lick and suck. You feel a small tremor run through her body in response, followed by a much stronger shudder when she orgasms moments later. Her vaginal walls "

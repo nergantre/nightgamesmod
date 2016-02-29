@@ -1,4 +1,4 @@
-package nightgames.nskillls;
+package nightgames.nskills;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -25,13 +25,13 @@ public class GenericSkill implements SkillInterface {
     }
 
     @Override
-    public List<SkillResult> getPossibleResults(Combat c, Character user, Character target) {
+    public List<SkillResult> getPossibleResults(Combat c, Character user, Character target, int roll) {
         List<SkillResult> possibleResults = new ArrayList<>();
         Deque<SkillResult> edges = new ArrayDeque<>(results.stream()
-                        .filter(res -> res.meetsRequirements(c, user, target)).collect(Collectors.toList()));
+                        .filter(res -> res.meetsRequirements(c, user, target, roll)).collect(Collectors.toList()));
         while (!edges.isEmpty()) {
             SkillResult res = edges.pop();
-            Collection<SkillResult> subResults = res.getSubResults(c, user, target);
+            Collection<SkillResult> subResults = res.getSubResults(c, user, target, roll);
             // only add to the possible result list if the result is a leaf result.
             if (subResults.isEmpty()) {
                 possibleResults.add(res);
@@ -40,13 +40,11 @@ public class GenericSkill implements SkillInterface {
         return possibleResults;
     }
 
+    /**
+     * affects whether this skill is even selectable
+     */
     @Override
-    public boolean isUsable(Combat c, Character user, Character target) {
-        return requirements.stream().allMatch(req -> req.meets(c, user, target));
-    }
-
-    @Override
-    public boolean meetsRequirements(Combat c, Character user, Character target) {
+    public boolean isSelectable(Combat c, Character user, Character target) {
         return usable.stream().allMatch(req -> req.meets(c, user, target));
     }
 
@@ -62,7 +60,7 @@ public class GenericSkill implements SkillInterface {
         results.add(result);
     }
 
-    public String getLabel() {
+    public String getName() {
         return label;
     }
 }

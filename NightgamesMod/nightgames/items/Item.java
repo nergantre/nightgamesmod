@@ -173,7 +173,7 @@ public enum Item implements Loot {
                     Arrays.asList((ItemEffect) new GroupEffect(Arrays.asList(
                                     (ItemEffect) new BuffEffect("drink",
                                                     "throw", new FluidAddiction(Global.noneCharacter(),
-                                                                    Global.noneCharacter(), 10)),
+                                                                    Global.noneCharacter(), 2, 10)),
                                     new ResourceEffect("wprestore", 500)))),
                     10),
     Ward("Dark Ward", 100, "", "a "),

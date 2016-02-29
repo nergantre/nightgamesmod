@@ -1,6 +1,7 @@
 package nightgames.items.clothing;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -28,14 +29,17 @@ public class Clothing implements Loot {
     public static void buildClothingTable() {
         clothingTable = new HashMap<String, Clothing>();
         try {
-            JSONArray value = (JSONArray) JSONValue.parseWithException(new InputStreamReader(
-                            ResourceLoader.getFileResourceAsStream("data/clothing/defaults.json")));
-            JSONClothingLoader.loadClothingListFromJSON(value).forEach(article -> {
-                clothingTable.put(article.id, article);
-                if (Global.isDebugOn(DebugFlags.DEBUG_LOADING)) {
-                    System.out.println("Loaded " + article.id);
-                }
-            });
+            InputStream is = ResourceLoader.getFileResourceAsStream("data/clothing/defaults.json");
+            if (is != null) {
+                JSONArray value = (JSONArray) JSONValue.parseWithException(new InputStreamReader(is));
+                JSONClothingLoader.loadClothingListFromJSON(value)
+                                  .forEach(article -> {
+                                      clothingTable.put(article.id, article);
+                                      if (Global.isDebugOn(DebugFlags.DEBUG_LOADING)) {
+                                          System.out.println("Loaded " + article.id);
+                                      }
+                                  });
+            }
         } catch (ClassCastException e) {
             e.printStackTrace();
         } catch (ParseException e) {
@@ -43,23 +47,26 @@ public class Clothing implements Loot {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ResourceLoader.getFileResourcesFromDirectory("data/clothing").forEach(inputstream -> {
-            try {
-                JSONArray value = (JSONArray) JSONValue.parseWithException(new InputStreamReader(inputstream));
-                JSONClothingLoader.loadClothingListFromJSON(value).forEach(article -> {
-                    clothingTable.put(article.id, article);
-                    if (Global.isDebugOn(DebugFlags.DEBUG_LOADING)) {
-                        System.out.println("Loaded " + article.id);
-                    }
-                });
-            } catch (ClassCastException e) {
-                e.printStackTrace();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        ResourceLoader.getFileResourcesFromDirectory("data/clothing")
+                      .forEach(inputstream -> {
+                          try {
+                              JSONArray value = (JSONArray) JSONValue.parseWithException(
+                                              new InputStreamReader(inputstream));
+                              JSONClothingLoader.loadClothingListFromJSON(value)
+                                                .forEach(article -> {
+                                  clothingTable.put(article.id, article);
+                                  if (Global.isDebugOn(DebugFlags.DEBUG_LOADING)) {
+                                      System.out.println("Loaded " + article.id);
+                                  }
+                              });
+                          } catch (ClassCastException e) {
+                              e.printStackTrace();
+                          } catch (ParseException e) {
+                              e.printStackTrace();
+                          } catch (IOException e) {
+                              e.printStackTrace();
+                          }
+                      });
     }
 
     String name;
@@ -175,9 +182,12 @@ public class Clothing implements Loot {
     }
 
     public static List<Clothing> getAllBuyableFrom(String shopName) {
-        return clothingTable.values().stream().filter(article -> {
-            return article.stores.contains(shopName);
-        }).collect(Collectors.toList());
+        return clothingTable.values()
+                            .stream()
+                            .filter(article -> {
+                                return article.stores.contains(shopName);
+                            })
+                            .collect(Collectors.toList());
     }
 
     public String getToolTip() {
@@ -187,11 +197,14 @@ public class Clothing implements Loot {
         sb.append(getName());
         if (!getSlots().isEmpty()) {
             sb.append("<br>Slots: [");
-            sb.append(getSlots().stream().reduce((a, b) -> {
-                sb.append(a.name());
-                sb.append(", ");
-                return b;
-            }).get().name());
+            sb.append(getSlots().stream()
+                                .reduce((a, b) -> {
+                                    sb.append(a.name());
+                                    sb.append(", ");
+                                    return b;
+                                })
+                                .get()
+                                .name());
             sb.append(']');
         }
         sb.append("<br>Layer: ");
@@ -202,20 +215,26 @@ public class Clothing implements Loot {
         sb.append(format.format(getExposure()));
         if (!attributes().isEmpty()) {
             sb.append("<br>Attributes: [");
-            sb.append(attributes().stream().reduce((a, b) -> {
-                sb.append(a.getName());
-                sb.append(", ");
-                return b;
-            }).get().name());
+            sb.append(attributes().stream()
+                                  .reduce((a, b) -> {
+                                      sb.append(a.getName());
+                                      sb.append(", ");
+                                      return b;
+                                  })
+                                  .get()
+                                  .name());
             sb.append(']');
         }
         if (!buffs().isEmpty()) {
             sb.append("<br>Buffs: [");
-            sb.append(buffs().stream().reduce((a, b) -> {
-                sb.append(a.toString());
-                sb.append(", ");
-                return b;
-            }).get().name());
+            sb.append(buffs().stream()
+                             .reduce((a, b) -> {
+                                 sb.append(a.toString());
+                                 sb.append(", ");
+                                 return b;
+                             })
+                             .get()
+                             .name());
             sb.append(']');
         }
         sb.append("<br>Price: ");

@@ -41,6 +41,7 @@ public class ResourceLoader {
             InputStream res = new FileInputStream(f);
             return res;
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
         // then check in the class directory
         return ResourceLoader.class.getClassLoader().getResourceAsStream("resources/" + path);

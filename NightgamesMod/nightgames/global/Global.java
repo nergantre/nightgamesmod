@@ -23,8 +23,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -124,7 +126,7 @@ public class Global {
     private static HashSet<Trait> featPool;
     private static HashSet<Modifier> modifierPool;
     private static HashSet<Character> players;
-    private static HashSet<Character> resting;
+    private static Set<Character> resting;
     private static HashSet<String> flags;
     private static HashMap<String, Float> counters;
     public static Player human;
@@ -583,9 +585,21 @@ public class Global {
         day = new Daytime(human);
         day.plan();
     }
+    
+    private static Set<Character> pickCharacters(Set<Character> avail, Set<Character> added, int size) {
+        List<Character> randomizer = avail.stream()
+                        .filter(c -> !c.human())
+                        .filter(c -> !c.has(Trait.event))
+                        .filter(c -> !added.contains(c))
+                        .collect(Collectors.toList());
+        Collections.shuffle(randomizer);
+        Set<Character> results = new HashSet<>(added);
+        results.addAll(randomizer.subList(0, Math.min(Math.max(0, size - results.size()), randomizer.size())));
+        return results;
+    }
 
     public static void dusk(Modifier matchmod) {
-        HashSet<Character> lineup = new HashSet<Character>();
+        Set<Character> lineup = new HashSet<Character>();
         Character lover = null;
         int maxaffection = 0;
         day = null;
@@ -611,7 +625,10 @@ public class Global {
             } catch (IllegalArgumentException e) {
             }
             if (disabledFlag == null || !Global.checkFlag(disabledFlag)) {
-                participants.add(c);
+                // TODO: DEBUG
+                if (c.getName().contains("Cassie") || c.human()) {
+                    participants.add(c);
+                }
             }
         }
         if (matchmod.name().equals("maya")) {
@@ -629,12 +646,15 @@ public class Global {
                     resting.add(player);
                 }
             }
+            lineup = pickCharacters(lineup, players, 4);
             if (!checkFlag(Flag.Maya)) {
                 newChallenger(new Maya(human.getLevel()));
                 flag(Flag.Maya);
             }
             NPC maya = getNPC("Maya");
             lineup.add(maya);
+            resting = new HashSet<Character>(players);
+            resting.removeAll(lineup);
             maya.gain(Item.Aphrodisiac, 10);
             maya.gain(Item.DisSol, 10);
             maya.gain(Item.Sedative, 10);
@@ -655,26 +675,18 @@ public class Global {
             lineup.add(prey);
             if (!prey.human())
                 lineup.add(human);
-            while (lineup.size() < 5)
-                lineup.add((Character) pickRandom(participants.toArray()));
-            resting.addAll(participants);
-            resting.removeIf(lineup::contains);
+            lineup = pickCharacters(lineup, players, 4);
+            resting = new HashSet<Character>(players);
+            resting.removeAll(lineup);
             match = buildMatch(lineup, matchmod);
         } else if (participants.size() > 5) {
-            ArrayList<Character> randomizer = new ArrayList<Character>();
             if (lover != null) {
                 lineup.add(lover);
             }
             lineup.add(human);
-            randomizer.addAll(participants);
-            Collections.shuffle(randomizer);
-            for (Character player : randomizer) {
-                if (!lineup.contains(player) && !player.human() && lineup.size() < 5) {
-                    lineup.add(player);
-                } else if (lineup.size() >= 5) {
-                    resting.add(player);
-                }
-            }
+            lineup = pickCharacters(lineup, players, 4);
+            resting = new HashSet<Character>(players);
+            resting.removeAll(lineup);
             match = buildMatch(lineup, matchmod);
         } else {
             match = buildMatch(participants, matchmod);
@@ -1275,6 +1287,19 @@ public class Global {
             }
             return "";
         });
+
+        matchActions.put("main-genitals", (self, first, second, third) -> {
+            if (self != null) {
+                if (self.hasDick()) {
+                    return "dick";
+                } else if (self.hasPussy()) {
+                    return "pussy";
+                } else {
+                    return "crotch";
+                }
+            }
+            return "";
+        });
     }
 
     public static String format(String format, Character self, Character target, Object... strings) {
@@ -1388,5 +1413,9 @@ public class Global {
 
     public static double clamp(double number, double min, double max) {
         return Math.min(Math.max(number, min), max);
+    }
+
+    public static long randomlong() {
+        return rng.nextLong();
     }
 }

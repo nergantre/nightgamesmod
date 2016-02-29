@@ -6,6 +6,7 @@ import org.json.simple.JSONObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
@@ -38,6 +39,14 @@ public interface BodyPart {
                     Combat c);
 
     public String getFluids(Character c);
+
+    public default double getFluidAddictiveness(Character c) {
+        if (getFluids(c).isEmpty()) {
+            return 0;
+        } else {
+            return c.has(Trait.addictivefluids) ? 1 : 0;
+        }
+    }
 
     public boolean isVisible(Character c);
 

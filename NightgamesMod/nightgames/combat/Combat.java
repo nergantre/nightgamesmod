@@ -35,6 +35,7 @@ import nightgames.stance.Stance;
 import nightgames.stance.StandingOver;
 import nightgames.status.Braced;
 import nightgames.status.CounterStatus;
+import nightgames.status.MagicMilkAddiction;
 import nightgames.status.Stsflag;
 import nightgames.status.Wary;
 import nightgames.status.Winded;
@@ -98,6 +99,12 @@ public class Combat extends Observable implements Serializable, Cloneable {
         p1.state = State.combat;
         p2.state = State.combat;
     }
+    
+    private void applyCombatStatuses(Character self, Character other) {
+        if (self.getFlag(MagicMilkAddiction.MAGICMILK_ADDICTION_FLAG) >= 10 && other.has(Trait.magicmilk)) {
+            self.add(this, new MagicMilkAddiction(self, other));
+        }
+    }
 
     public void go() {
         phase = 0;
@@ -107,6 +114,9 @@ public class Combat extends Observable implements Serializable, Cloneable {
         if (p2.mostlyNude() && !p1.mostlyNude()) {
             p2.emote(Emotion.nervous, 20);
         }
+        applyCombatStatuses(p1, p2);
+        applyCombatStatuses(p2, p1);
+        
         if (!(p1.human() || p2.human())) {
             automate();
         }

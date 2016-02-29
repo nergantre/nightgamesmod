@@ -190,7 +190,7 @@ public class Angel extends BasePersonality {
         character.arousal.empty();
         Character opponent = character.equals(c.p1) ? c.p2 : c.p1;
         String message = "";
-        if (flag == Result.anal && c.getStance().inserted(character)) {
+        if (c.getStance().anallyPenetrated(opponent)) {
             message = "Angel leans over you as she grinds her hips against yours. <i>\"You're going to come for me, aren't you?\"</i> she purrs into your ear. You shake your head; "
                             + "no way could you live it down if you came while you had something in your ass. Angel frowns and gives your ass a firm slap. <i>\"No reach around for you "
                             + "then,\"</i> she snaps. <i>\"We'll just do this the old fashion way.\"</i> She renews her assault on your poor ass and you feel your will slipping. Another solid slap "
@@ -206,8 +206,14 @@ public class Angel extends BasePersonality {
                             + "stand and ready yourself to move on. You wouldn't put past Angel to tell her girlfriends regardless of how well you performed, you just hope that's as "
                             + "far as that information goes.";
         } else if (c.getStance().inserted(character)) {
-            message = "Angel stares at you in the eye, while expertly thrusting in and out of your slobbering pussy. Your needy cunt quivers as she leans close and gives you a long steamy kiss, tongue and all. You try to get away from her, but she holds you down and merciless pounds away at your overused pussy. You can tell she is turned on as well, but it'll do you no good, as you're already feeling yourself slip over the edge. "
-                            + "<br><br>Finally it becomes too much, and you cum hard. You wrap your arms and legs unconsciously cling to Angel's body and you seek out a needy kiss from her. Angel takes note of your convulsing body, and smirks, <i>\"I think you need some more training. I could make anyone cum instantly while they're in me.\"</i> After a small pausing, Angel grins devilishly and resumes pumping in and out of pussy in long leisurely strokes. <i>\"Hmm\" in fact, why don't I practice with you a bit? You know what they say, practice makes perfect!\" You groan in frustration as your oversensitive cunt receives her cocks again. "
+            message = "Angel stares at you in the eye, while expertly thrusting in and out of your slobbering pussy. Your needy cunt quivers as she leans close and gives you a long steamy kiss, "
+                            + "tongue and all. You try to get away from her, but she holds you down and merciless pounds away at your overused pussy. You can tell she is turned on as well, but "
+                            + "it'll do you no good, as you're already feeling yourself slip over the edge. "
+                            + "<br><br>Finally it becomes too much, and you cum hard. You wrap your arms and legs unconsciously cling to Angel's body and you seek out "
+                            + "a needy kiss from her. Angel takes note of your convulsing body, and smirks, <i>\"I think you need some more training. I could make "
+                            + "anyone cum instantly while they're in me.\"</i> After a small pausing, Angel grins devilishly and resumes pumping in and out of pussy "
+                            + "in long leisurely strokes. <i>\"Hmm\" in fact, why don't I practice with you a bit? You know what they say, practice makes perfect!\" "
+                            + "You groan in frustration as your oversensitive cunt receives her cocks again. "
                             + "<br><br>This could be a long night.";
         } else if (c.getStance().inserted(opponent)) {
             message = "Angel rides your cock passionately, pushing you inevitably closer to ejaculation. Her hot pussy is wrapped around your shaft like... well, exactly "
@@ -246,7 +252,7 @@ public class Angel extends BasePersonality {
     @Override
     public String defeat(Combat c, Result flag) {
         Character opponent = c.getOther(character);
-        if (flag == Result.intercourse) {
+        if (c.getStance().vaginallyPenetrated(character)) {
             return "You thrust your cock continously into Angel's dripping pussy. Her hot insides feel amazing, but you're sure you have enough of an advantage to risk "
                             + "it. She lets out breathy moans in time to your thrusts and her arms are trembling too much to hold herself up. She's clearly about to cum, you just "
                             + "need to push her over the edge. You maul her soft, heavy boobs and suck on her neck. Angel closes her eyes tightly and whimpers in pleasure. <p>You keep "

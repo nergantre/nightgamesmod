@@ -156,6 +156,7 @@ public enum Trait {
     sexualmomentum("Sexual Momentum", "Causing an orgasm with penetration goes straight to your ego"), // You regain some willpower when you cause a climax while fucking someone
     anatomyknowledge("Anatomical Knowledge", "Advanced medical knowledge; find all the good spots"), // Increased damage when using finger / fuck skills
     druglacedprecum("Drug-laced Precum", "Drugs in your precum are perfect for increasing an enemies sensitivity"), // Anybody part that comes into contact with your precum becomes increasingly sensitive for x turns.
+    magicmilk("Magicked Milk", "Magically augmented milk. It's a a strong addictive aphrodisiac, as well as a subtle hypnotic."), // .
     darkpromises("Dark Promises", "Can enthrall with the right words"), // whisper upgrade, can enthrall
 
     energydrain("Energy Drain", "Drains energy during intercourse"),

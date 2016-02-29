@@ -51,6 +51,7 @@ import nightgames.status.Alluring;
 import nightgames.status.DivineCharge;
 import nightgames.status.DivineRecoil;
 import nightgames.status.Enthralled;
+import nightgames.status.Falling;
 import nightgames.status.Feral;
 import nightgames.status.Frenzied;
 import nightgames.status.Resistance;
@@ -526,10 +527,10 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void pleasure(int i, Combat c, Character source) {
-        pleasure(i, c, source, Body.nonePart, Body.nonePart);
+        resolvePleasure(i, c, source, Body.nonePart, Body.nonePart);
     }
 
-    public void pleasure(int i, Combat c, Character source, BodyPart selfPart, BodyPart opponentPart) {
+    public void resolvePleasure(int i, Combat c, Character source, BodyPart selfPart, BodyPart opponentPart) {
         int pleasure = i;
 
         emote(Emotion.horny, i / 4 + 1);
@@ -548,6 +549,10 @@ public abstract class Character extends Observable implements Cloneable {
         tempt(c, null, i);
     }
 
+    public void tempt(Combat c, Character tempter, int i) {
+            tempt(c, tempter, null, i);
+    }
+
     public void tempt(Combat c, Character tempter, BodyPart with, int i) {
         if (tempter != null && with != null) {
             // triple multiplier for the body part
@@ -564,11 +569,7 @@ public abstract class Character extends Observable implements Cloneable {
             if (c != null) {
                 c.writeSystemMessage(message);
             }
-        }
-    }
-
-    public void tempt(Combat c, Character tempter, int i) {
-        if (tempter != null) {
+        } else if (tempter != null) {
             double temptMultiplier = body.getCharismaBonus(tempter);
             if (c != null && tempter.has(Trait.obsequiousAppeal) && c.getStance().sub(tempter)) {
                 temptMultiplier *= 2;
@@ -594,7 +595,6 @@ public abstract class Character extends Observable implements Cloneable {
             tempt(i);
         }
     }
-
     public void arouse(int i, Combat c) {
         arouse(i, c, "");
     }
@@ -2961,6 +2961,35 @@ public abstract class Character extends Observable implements Cloneable {
         // divine recoil applies at 20% per magnitude
         if (att == Attribute.Divinity && Global.randomdouble() < baseChance) {
             add(c, new DivineRecoil(this, 1));
+        }
+    }
+
+    /**
+     * Attempts to knock down this character
+     * @param c
+     * @param other
+     * @param round
+     */
+    public void knockdown(Combat c, Character other, Set<Attribute> attributes, int strength, int roll) {
+        if (canKnockDown(c, other, attributes, strength, roll)) {
+            add(c, new Falling(this));
+        }
+    }
+
+    public int knockdownBonus() {
+        return 0;
+    }
+
+    public boolean canKnockDown(Combat c, Character other, Set<Attribute> attributes, int strength, double roll) {
+        return knockdownDC() < strength + (roll * 100) + attributes.stream().mapToInt(a -> other.get(a)).sum() + other.knockdownBonus();
+    }
+
+    public boolean checkResists(ResistType type, Character other, double value, double roll) {
+        switch (type) {
+            case mental:
+                return value < roll * 100;
+            default:
+                return false;
         }
     }
 }

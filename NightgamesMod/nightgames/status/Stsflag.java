@@ -56,4 +56,5 @@ public enum Stsflag {
     aggressive,
     divinerecoil,
     detected,
+    magicmilkcraving,
 }
