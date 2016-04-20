@@ -582,7 +582,7 @@ public class Global {
         }
         date++;
         day = new Daytime(human);
-        day.plan();
+        day.plan(false);
     }
 
     public static void dusk(Modifier matchmod) {

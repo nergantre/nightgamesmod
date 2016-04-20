@@ -7,8 +7,8 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
-import nightgames.status.InducedEuphoria;
 import nightgames.status.Horny;
+import nightgames.status.InducedEuphoria;
 
 public class InjectAphrodisiac extends Skill {
     public InjectAphrodisiac(Character self) {

@@ -69,7 +69,7 @@ public class Cynical extends DurationStatus {
 
     @Override
     public int gainmojo(int x) {
-        return -x;
+        return -x/4;
     }
 
     @Override

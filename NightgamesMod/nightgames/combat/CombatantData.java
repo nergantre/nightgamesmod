@@ -5,10 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import nightgames.global.Global;
 import nightgames.items.clothing.Clothing;
-import nightgames.skills.Skill;
-import nightgames.skills.Wait;
 
 public class CombatantData implements Cloneable {
     private List<Clothing> clothespile;

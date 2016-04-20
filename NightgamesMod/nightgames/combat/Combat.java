@@ -114,9 +114,9 @@ public class Combat extends Observable implements Serializable, Cloneable {
     }
 
     public CombatantData getCombatantData(Character character) {
-        if (character == p1) {
+        if (character.equals(p1)) {
             return p1Data;
-        } else if (character == p2) {
+        } else if (character.equals(p2)) {
             return p2Data;
         } else {
             throw new IllegalArgumentException(character + " is not in combat " + this);

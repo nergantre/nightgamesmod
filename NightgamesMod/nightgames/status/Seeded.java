@@ -7,7 +7,6 @@ import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.GenericBodyPart;
-import nightgames.characters.custom.requirement.EitherInsertedRequirement;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.global.JSONUtils;
@@ -90,12 +89,14 @@ public class Seeded extends Status {
         if (time >= 3) {
             if (stage < 3) {
                 stage = 3;
+                if (affected.human() || other.human())
                 Global.gui().message(c, affected,
                                 Global.format("{other:name-possessive} seedling has finally flowered. A brilliant white lilly now covers {self:name-possessive} %s, displaying {self:possessive} verdant submission for everyone to see. "
                                                 + "While the little seedling has finally stopped sapping your vitality, the now-matured root network has somehow integrated with your nervous system and bloodsteam. As pulses of chemical and electrical obedience wrack {self:possessive} body, "
                                                 + "{self:subject-action:know|knows} that {self:pronoun} {self:action:have|has} lost this fight.",
                                 affected, other, hole.describe(affected), hole.describe(affected)));
             }
+            if (affected.human() || other.human())
             Global.gui().message(c, affected,
                             Global.format("The seedling churns against {self:possessive} inner walls, while sending a chemical cocktail of aphrodisiacs and narcotics directly into {self:possessive} bloodstream. "
                                             + "{self:possessive} mind blanks out as every thought is replaced with a feral need to mate.",
@@ -108,6 +109,7 @@ public class Seeded extends Status {
         } else if (time >= 2) {
             if (stage < 2) {
                 stage = 2;
+                if (affected.human() || other.human())
                 Global.gui().message(c, affected,
                                 Global.format("Having drained enough of {self:name-possessive} essence, the seed shows yet more changes. "
                                                 + "The roots growth thicker and more active, now constantly grinding against {self:possessive} walls. "
@@ -115,6 +117,7 @@ public class Seeded extends Status {
                                                 + "{self:SUBJECT-ACTION:worry|worries} about its implications, but the constant piston motion from your %s is making it hard to concentrate.",
                                 affected, other, hole.describe(affected), hole.describe(affected)));
             }
+            if (affected.human() || other.human())
             Global.gui().message(c, affected,
                             Global.format("The thick tuber-like roots inside {self:direct-object} constantly shift and scrape against {self:possessive} %s, leaving {self:direct-object} both horny and lenthargic at the same time.",
                                             affected, other, hole.describe(affected)));
@@ -123,15 +126,18 @@ public class Seeded extends Status {
         } else if (time >= 1) {
             if (stage < 1) {
                 stage = 1;
+                if (affected.human() || other.human())
                 Global.gui().message(c, affected,
                                 Global.format("With a quiet rumble, the seed burried inside {self:name-possessive} %s sprouts thin spindly roots that reach into {self:possessive} innards.",
                                                 affected, other, hole.describe(affected)));
             }
+            if (affected.human() || other.human())
             Global.gui().message(c, affected,
-                            Global.format("{self:SUBJECT-ACTION:feels|feel} slow as the thin threadlike roots latch onto your innerwalls and seem to leech your vigor.",
+                            Global.format("{self:SUBJECT-ACTION:feel|feels} slow as the thin threadlike roots latch onto your inner walls and seem to leech your vigor.",
                                             affected, other, hole.describe(affected)));
             affected.drainStaminaAsMojo(c, other, Global.random(2, 6), 1.0f);
         } else {
+            if (affected.human() || other.human())
             Global.gui().message(c, affected, Global.format("The seed sits uncomfortably in {self:possessive} %s.",
                             affected, other, hole.describe(affected)));
             affected.pain(c, 1, false, false);

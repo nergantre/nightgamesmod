@@ -63,6 +63,7 @@ public class Thrust extends Skill {
         if (getSelf().has(Trait.experienced)) {
             mt = Math.max(1, mt * .66f);
         }
+        
         mt += target.baseRecoilPleasure();
 
         results[0] = m;

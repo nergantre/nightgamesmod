@@ -7,6 +7,7 @@ import java.util.List;
 import org.json.simple.parser.ParseException;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 
 import nightgames.actions.Movement;
 import nightgames.areas.Area;
@@ -15,15 +16,10 @@ import nightgames.characters.NPC;
 import nightgames.characters.Personality;
 import nightgames.characters.Player;
 import nightgames.characters.custom.CustomNPC;
-import nightgames.characters.custom.DataBackedNPCData;
 import nightgames.characters.custom.JSONSourceNPCDataLoader;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.items.clothing.Clothing;
-import nightgames.skills.Engulf;
-import nightgames.skills.FaceSit;
 import nightgames.skills.Skill;
-import nightgames.skills.Tribadism;
 import nightgames.stance.Anal;
 import nightgames.stance.AnalCowgirl;
 import nightgames.stance.AnalProne;
@@ -48,14 +44,11 @@ import nightgames.stance.Position;
 import nightgames.stance.ReverseCowgirl;
 import nightgames.stance.ReverseMount;
 import nightgames.stance.SixNine;
-import nightgames.stance.Stance;
 import nightgames.stance.Standing;
 import nightgames.stance.StandingOver;
 import nightgames.stance.TribadismStance;
 import nightgames.stance.UpsideDownFemdom;
 import nightgames.stance.UpsideDownMaledom;
-
-import org.junit.Test;
 
 public class SkillsTest {
 	List<Personality> npcs1;

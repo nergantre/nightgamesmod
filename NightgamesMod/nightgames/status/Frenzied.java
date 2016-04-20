@@ -15,8 +15,6 @@ import nightgames.global.Global;
 import nightgames.global.JSONUtils;
 import nightgames.skills.AssFuck;
 import nightgames.skills.Carry;
-import nightgames.skills.CounterDrain;
-import nightgames.skills.CounterRide;
 import nightgames.skills.Engulf;
 import nightgames.skills.Fly;
 import nightgames.skills.Fuck;

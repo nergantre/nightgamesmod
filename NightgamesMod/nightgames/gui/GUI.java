@@ -28,7 +28,6 @@ import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -44,7 +43,6 @@ import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
-import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.CompoundBorder;
@@ -1153,7 +1151,7 @@ public class GUI extends JFrame implements Observer {
             } else if (Global.getMatch() != null) {
                 Global.getMatch().resume();
             } else if (Global.day != null) {
-                Global.getDay().plan();
+                Global.getDay().plan(false);
             } else {
                 new Prematch(Global.human);
             }

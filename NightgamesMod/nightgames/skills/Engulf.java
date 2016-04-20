@@ -1,6 +1,5 @@
 package nightgames.skills;
 
-import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.Trait;
@@ -9,7 +8,6 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.Engulfed;
 import nightgames.stance.Stance;
-import nightgames.status.Bound;
 
 public class Engulf extends CounterBase {
     public Engulf(Character self) {

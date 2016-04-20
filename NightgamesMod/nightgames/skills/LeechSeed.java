@@ -6,6 +6,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.items.clothing.ClothingSlot;
 import nightgames.status.Seeded;
 import nightgames.status.Stsflag;
 
@@ -20,14 +21,15 @@ public class LeechSeed extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().canRespond() && getSelf().body.has("tentacles") && !target.is(Stsflag.seeded)
-                        && !(target.is(Stsflag.pegged) && target.is(Stsflag.fucked));
+                        && !(target.is(Stsflag.pegged) && c.getStance().penetrated(target))
+                        && target.outfit.slotOpen(ClothingSlot.bottom);
     }
 
     @Override
-    public int getMojoBuilt(Combat c) {
-        return 0;
+    public int getMojoCost(Combat c) {
+        return 20;
     }
-
+    
     @Override
     public boolean resolve(Combat c, Character target) {
         if (!target.canAct() || target.roll(this, c, accuracy(c))) {
@@ -72,7 +74,7 @@ public class LeechSeed extends Skill {
     }
 
     public int accuracy(Combat c) {
-        return 5;
+        return 15;
     }
 
     public Tactics type(Combat c) {

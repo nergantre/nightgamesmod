@@ -1,6 +1,5 @@
 package nightgames.areas;
 
-import java.awt.Rectangle;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;

@@ -86,7 +86,7 @@ public class Daytime {
         // plan();
     }
 
-    public void plan() {
+    public void plan(boolean headless) {
         String threescene;
         if (time < 22) {
             Global.gui().message("It is currently " + displayTime() + ". Your next match starts at 10:00.");
@@ -113,11 +113,14 @@ public class Daytime {
                     ((NPC) npc).daytime(daylength);
                 }
             }
-            // Global.gui().nextMatch();
-            if (Global.checkFlag(Flag.autosave)) {
-                Global.save(true);
+            if (!headless) {
+                // Global.gui().nextMatch();
+                if (Global.checkFlag(Flag.autosave)) {
+                    Global.save(true);
+                }
+                Global.decideMatchType().buildPrematch(player);
+        
             }
-            Global.decideMatchType().buildPrematch(player);
         }
     }
 

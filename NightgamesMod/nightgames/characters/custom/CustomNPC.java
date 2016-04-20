@@ -9,7 +9,6 @@ import nightgames.characters.Attribute;
 import nightgames.characters.BasePersonality;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.NPC;
 import nightgames.characters.Trait;
 import nightgames.characters.body.Body;
 import nightgames.combat.Combat;
