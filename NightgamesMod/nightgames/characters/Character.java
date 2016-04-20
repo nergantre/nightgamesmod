@@ -2847,7 +2847,7 @@ public abstract class Character extends Observable implements Cloneable {
         status = new HashSet<Status>(
                         status.stream().filter(s -> !s.flags().contains(Stsflag.purgable)).collect(Collectors.toSet()));
     }
-
+/*
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -2872,6 +2872,6 @@ public abstract class Character extends Observable implements Cloneable {
             return false;
         return true;
     }
-    
+*/    
     
 }
