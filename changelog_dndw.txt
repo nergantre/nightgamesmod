@@ -1,3 +1,17 @@
+20/04/16
+
+-Null values in saves do not cause crashes
+-Leech Seed:
+	-Now costs mojo
+	-Requires the pussy/ass to be naked
+-Strapon has a longer timeout (6->15 turns)
+-Struggling while fucking now correctly changes into a dominant position rather than standing
+-Cynical no longer prevents mojo gain, but lowers it by 25%
+-Seeded no longer prints messages when the player is not involved
+-A few uniteresting internal changes
+
+======================================== Old Changelog:
+
 The Silver Bard's changes:
 
 Some statuses can now stack, intensifying their effect and extending their duration
