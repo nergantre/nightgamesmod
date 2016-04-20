@@ -1248,11 +1248,16 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     @SuppressWarnings("unchecked")
-    private static void saveCharIntMap(JSONObject obj, Map<Character, Integer> map, String name) {
+    private void saveCharIntMap(JSONObject obj, Map<Character, Integer> map, String name) {
         JSONObject objMap = new JSONObject();
         for (Character key : map.keySet()) {
             if (key != null) {
-                objMap.put(key.getType(), map.get(key));
+                int val = map.getOrDefault(key, 0);
+                objMap.put(key.getType(), val);
+                if (!map.containsKey(key)) {
+                    System.err.println(String.format("Probable save corruption! %s has no %s entry for %s!", getName(),
+                                    name, key.getName()));
+                }
             }
         }
         obj.put(name, objMap);
@@ -1428,8 +1433,8 @@ public abstract class Character extends Observable implements Cloneable {
             } else {
                 opponent.body.receiveCum(c, this, opponent.body.getRandom("pussy"));
             }
-        } else if (selfPart != null && selfPart.isType("cock") && opponentPart != null
-                        && !opponentPart.isType("none")) {
+        } else
+            if (selfPart != null && selfPart.isType("cock") && opponentPart != null && !opponentPart.isType("none")) {
             c.write(this, Global
                             .format("<b>{self:NAME-POSSESSIVE} back arches as thick ropes of jizz fire from {self:possessive} dick and land on {other:name-possessive} "
                                             + opponentPart.describe(opponent) + ".</b>", this, opponent));
@@ -2847,31 +2852,10 @@ public abstract class Character extends Observable implements Cloneable {
         status = new HashSet<Status>(
                         status.stream().filter(s -> !s.flags().contains(Stsflag.purgable)).collect(Collectors.toSet()));
     }
-/*
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        return result;
-    }
+    /*
+     * @Override public int hashCode() { final int prime = 31; int result = 1; result = prime * result + ((name == null) ? 0 : name.hashCode()); return result; }
+     * 
+     * @Override public boolean equals(Object obj) { if (this == obj) return true; if (obj == null) return false; if (getClass() != obj.getClass()) return false; Character other = (Character) obj; if (name == null) { if (other.name != null) return false; } else if (!name.equals(other.name)) return false; return true; }
+     */
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Character other = (Character) obj;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-        return true;
-    }
-*/    
-    
 }
