@@ -39,7 +39,7 @@ public class Nimble extends DurationStatus {
     public int mod(Attribute a) {
         switch (a) {
             case Speed:
-                return 2;
+                return 2 + affected.getArousal().getReal() / 100;
             default:
                 break;
         }

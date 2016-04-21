@@ -29,6 +29,7 @@ public class Stomp extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
+        int pain = 0;
         if (target.has(Trait.brassballs)) {
             if (getSelf().has(Trait.heeldrop) && target.crotchAvailable() && target.hasBalls()) {
                 if (getSelf().human()) {
@@ -39,8 +40,8 @@ public class Stomp extends Skill {
                         c.write(getSelf(), getSelf().bbLiner(c));
                     }
                 }
-                target.pain(c, 15 - (int) Math
-                                .round((5 + Global.random(5)) * target.getOutfit().getExposure(ClothingSlot.bottom)));
+                pain = 15 - (int) Math
+                                .round((5 + Global.random(5)) * target.getOutfit().getExposure(ClothingSlot.bottom));
             } else {
                 if (getSelf().human()) {
                     c.write(getSelf(), deal(c, 0, Result.weak2, target));
@@ -58,18 +59,16 @@ public class Stomp extends Skill {
                 }
             }
             if (target.has(Trait.achilles)) {
-                target.pain(c, 20);
+                pain += 20;
             }
-            target.pain(c, 30 - (int) Math
-                            .round((10 + Global.random(10)) * target.getOutfit().getExposure(ClothingSlot.bottom)));
+            pain += 30 - (int) Math.round((5 + Global.random(5)) * target.getOutfit().getExposure(ClothingSlot.bottom));
         } else if (target.has(ClothingTrait.armored)) {
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.weak, target));
             } else if (target.human()) {
                 c.write(getSelf(), receive(c, 0, Result.weak, target));
             }
-            target.pain(c, 5 - (int) Math
-                            .round((2 + Global.random(3)) * target.getOutfit().getExposure(ClothingSlot.bottom)));
+            pain += 5 - (int) Math.round((2 + Global.random(3)) * target.getOutfit().getExposure(ClothingSlot.bottom));
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.normal, target));
@@ -79,11 +78,9 @@ public class Stomp extends Skill {
                     c.write(getSelf(), getSelf().bbLiner(c));
                 }
             }
-            if (target.has(Trait.achilles)) {
-                target.pain(c, 20);
-            }
-            target.pain(c, 20 - (int) Math
-                            .round((10 + Global.random(10)) * target.getOutfit().getExposure(ClothingSlot.bottom)));
+            pain += 20;
+            pain += 20 - (int) Math
+                            .round((10 + Global.random(10)) * target.getOutfit().getExposure(ClothingSlot.bottom));
         }
         target.emote(Emotion.angry, 25);
         return true;

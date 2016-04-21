@@ -139,7 +139,7 @@ public class AssJob extends Skill {
                                     target.nameOrPossessivePronoun(), target.body.getRandomCock().describe(target));
                 } else {
                     return String.format("You relax slightly in %s arms and rub your ass" + " into %s crotch.",
-                                    target.nameOrPossessivePronoun(), target.name());
+                                    target.nameOrPossessivePronoun(), target.possessivePronoun());
                 }
             case strong:
                 if (!target.crotchAvailable()) {

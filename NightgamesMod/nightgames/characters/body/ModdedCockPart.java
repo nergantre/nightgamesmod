@@ -210,7 +210,7 @@ public class ModdedCockPart implements CockPart {
     }
 
     @Override
-    public void onOrgasm(Combat c, Character self, Character opponent, BodyPart target, boolean selfCame) {
+    public void onOrgasmWith(Combat c, Character self, Character opponent, BodyPart target, boolean selfCame) {
         mod.onOrgasm(c, self, opponent, target, selfCame, this);
     }
 

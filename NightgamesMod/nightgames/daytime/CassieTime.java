@@ -16,6 +16,7 @@ import nightgames.characters.custom.requirement.BodyPartRequirement;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.status.MagicMilkAddiction;
 
 public class CassieTime extends BaseNPCTime {
     public CassieTime(Character player) {
@@ -138,6 +139,31 @@ public class CassieTime extends BaseNPCTime {
             Global.gui().choose(this, "Games");
             Global.gui().choose(this, "Sparring");
             Global.gui().choose(this, "Sex");
+            if (npc.has(Trait.magicmilk)) {
+                Global.gui().choose(this, "Ask for milk");
+            }
+        } else if (MagicMilkAddiction.getMagicMilkAddictionLevel(player) >= 2) {
+            Global.gui().message(
+                            "You find Cassie studying in the library, a ways out of earshot of the other students. She catches your eye and smiles knowingly. "
+                            + "Putting down her book, she walks to you and whispers in your ear, <i>Give me five minutes, then meet me in the girls bathroom on the third floor. Don't worry, it's always empty.</i>"
+                            + "You're shocked at her unexpected forwardness, but your pulsing need for milk distracts you from her uncharacteristic attitude."
+                            + "You pretend to be interested in a book on Roman history, and stand around the stacks for a while. After roughly five minutes, you put down the literature, and head upstairs."
+                            + "<br>"
+                            + "The third floor of the library is a part of the archives, where old books go to die if they're not asked for, for over 5 years. "
+                            + "You wander around for a bit and find the girls bathroom hidden in a little corner by the classic slavic literature section. No wonder why it's mostly unused. "
+                            + "While idly speculating at why Cassie even knows of such a place, you open the door and step inside. The moment you enter, you see Cassie sitting by the sink. She looks up at the noise and smiles as you step inside. "
+                            + "She looks at you knowingly and teases while cupping her generous chest, <i>\""+player.getName()+", what's up? Was there something... you wanted?\"</i>");
+            if (npc.getAttraction(player) < 15) {
+                npc.gainAttraction(player, 2);
+                player.gainAttraction(npc, 2);
+            } else {
+                npc.gainAffection(player, 1);
+                player.gainAffection(npc, 1);
+                Global.gui().choose(this, "Games");
+                Global.gui().choose(this, "Sparring");
+                Global.gui().choose(this, "Sex");
+            }
+            Global.gui().choose(this, "Ask for milk");
         } else if (npc.getAttraction(player) < 15) {
             Global.gui().message(
                             "You find Cassie studying in the library, a ways out of earshot of the other students. You give her a friendly greeting and sit down next to her. "
@@ -164,13 +190,27 @@ public class CassieTime extends BaseNPCTime {
             Global.gui().choose(this, "Games");
             Global.gui().choose(this, "Sparring");
             Global.gui().choose(this, "Sex");
+            if (npc.has(Trait.magicmilk)) {
+                Global.gui().choose(this, "Ask for milk");
+            }
         }
         Global.gui().choose(this, "Leave");
     }
 
     @Override
     public void subVisit(String choice) {
-        if (choice.equals("Sex")) {
+        if (choice.equals("Ask for milk")) {
+            if (npc.getAffection(player) > 0) {
+                Global.gui().message("Cassie lets you drink from her breasts while you fuck her on her bed -placeholder-");
+            } else {
+                Global.gui().message("Cassie lets you drink from her breasts while she gives you a handjob in the library bathroom -placeholder-");
+            }
+            Global.gui().choose(this, "Leave");
+            player.setFlag(MagicMilkAddiction.MAGICMILK_DRANK_DAYTIME_FLAG, 1);
+            player.setFlag(MagicMilkAddiction.MAGICMILK_ADDICTION_FLAG, player.getFlag(MagicMilkAddiction.MAGICMILK_ADDICTION_FLAG) + 1);
+            npc.gainAffection(player, 1);
+            player.gainAffection(npc, 1);
+        } else if (choice.equals("Sex")) {
             if (npc.getAffection(player) >= 12 && (!player.has(Trait.silvertongue) || Global.random(2) == 1)) {
                 Global.gui().message(
                                 "Cassie eagerly invites you to her room for some intimate time. The room is quite tidy, though you're surprised to see a couple anime "

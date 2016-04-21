@@ -83,7 +83,7 @@ public class Blowjob extends Skill {
             }
             target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("cock"), m, c);
             target.buildMojo(c, 10);
-        } else if (c.getStance().mobile(target) && target.roll(this, c, accuracy(c))) {
+        } else if (!c.getStance().mobile(target) || target.roll(this, c, accuracy(c))) {
             if (getSelf().has(Trait.silvertongue)) {
                 if (target.human()) {
                     c.write(getSelf(), receive(c, m, Result.special, target));

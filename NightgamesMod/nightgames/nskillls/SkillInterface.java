@@ -3,7 +3,8 @@ package nightgames.nskillls;
 import java.util.List;
 
 import nightgames.characters.Character;
-import nightgames.combat.Combat;;
+import nightgames.combat.Combat;
+import nightgames.nskills.SkillResult;
 
 public interface SkillInterface {
     List<SkillResult> getPossibleResults(Combat c, Character user, Character target);

@@ -79,7 +79,7 @@ public class Tackle extends Skill {
     public int accuracy(Combat c) {
         int base = 80;
         if (getSelf().get(Attribute.Animism) >= 1) {
-            base = 120;
+            base = 120 + (getSelf().getArousal().getReal() / 10);
         }
         return Math.round(Math.max(Math.min(150,
                         2.5f * (getSelf().get(Attribute.Power) - c.getOther(getSelf()).get(Attribute.Power)) + base),

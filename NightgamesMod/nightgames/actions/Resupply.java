@@ -2,6 +2,7 @@ package nightgames.actions;
 
 import nightgames.characters.Character;
 import nightgames.characters.State;
+import nightgames.characters.Trait;
 import nightgames.ftc.FTCMatch;
 import nightgames.global.Flag;
 import nightgames.global.Global;
@@ -20,7 +21,7 @@ public class Resupply extends Action {
 
     @Override
     public boolean usable(Character user) {
-        return user.location().resupply()
+        return user.location().resupply() || user.has(Trait.immobile)
                         || (Global.checkFlag(Flag.FTC) && ((FTCMatch) Global.getMatch()).isBase(user, user.location()));
     }
 

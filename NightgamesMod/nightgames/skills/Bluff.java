@@ -7,12 +7,13 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.status.IgnoreOrgasm;
 import nightgames.status.Unreadable;
 
 public class Bluff extends Skill {
 
     public Bluff(Character self) {
-        super("Bluff", self);
+        super("Bluff", self, 5);
     }
 
     @Override
@@ -38,8 +39,11 @@ public class Bluff extends Skill {
         } else {
             c.write(getSelf(), receive(c, m, Result.normal, target));
         }
+        if (!getSelf().getArousal().isFull()) {
+            getSelf().add(c, new IgnoreOrgasm(getSelf(), 2));
+        }
         getSelf().heal(c, m);
-        getSelf().calm(c, 25 - m);
+        getSelf().calm(c, getSelf().getArousal().max() / 4);
         getSelf().add(c, new Unreadable(getSelf()));
         getSelf().emote(Emotion.confident, 30);
         getSelf().emote(Emotion.dominant, 20);

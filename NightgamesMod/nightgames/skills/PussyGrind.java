@@ -14,7 +14,7 @@ public class PussyGrind extends Skill {
     }
 
     public PussyGrind(Character self) {
-        super("Grind", self);
+        super("Pussy Grind", self);
     }
 
     public BodyPart getSelfOrgan() {

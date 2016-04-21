@@ -12,7 +12,7 @@ import nightgames.status.LegLocked;
 
 public class Invitation extends Skill {
     private static final String divineStringFemale = "Goddess's Invitation";
-    private static final String divineStringMale = "Goddess's Invitation";
+    private static final String divineStringMale = "God's Invitation";
 
     public Invitation(Character self) {
         super("Invitation", self, 6);
@@ -149,6 +149,9 @@ public class Invitation extends Skill {
                 target.add(c, new ArmLocked(target, 4 * getSelf().get(Attribute.Power)));
             }
             new Thrust(target).resolve(c, getSelf());
+            if (hasDivinity()) {
+                getSelf().usedAttribute(Attribute.Divinity, c, .5);
+            }
         }
         return success;
     }

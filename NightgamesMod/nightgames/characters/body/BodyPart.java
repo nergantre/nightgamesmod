@@ -6,6 +6,7 @@ import org.json.simple.JSONObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
@@ -38,6 +39,14 @@ public interface BodyPart {
                     Combat c);
 
     public String getFluids(Character c);
+
+    public default double getFluidAddictiveness(Character c) {
+        if (getFluids(c).isEmpty()) {
+            return 0;
+        } else {
+            return c.has(Trait.addictivefluids) ? 1 : 0;
+        }
+    }
 
     public boolean isVisible(Character c);
 
@@ -107,9 +116,12 @@ public interface BodyPart {
     }
 
     // Should be called when either combatant orgasms
-    public default void onOrgasm(Combat c, Character self, Character opponent, BodyPart other, boolean selfCame) {
+    public default void onOrgasm(Combat c, Character self, Character opponent) {}
+
+    // Should be called when either combatant orgasms in/with body parts
+    public default void onOrgasmWith(Combat c, Character self, Character opponent, BodyPart other, boolean selfCame) {
         if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-            System.out.printf("Processing Orgasm for %s -> (%s, %s, %s, %s)\n", describe(self), self, opponent,
+            System.out.printf("Processing OrgasmWith for %s -> (%s, %s, %s, %s)\n", describe(self), self, opponent,
                             other.describe(opponent), Boolean.toString(selfCame));
         }
     }

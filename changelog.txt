@@ -1,9 +1,117 @@
+1.9.4 changelog
+Balance:
+- Changed Oral skills to be no longer usable in the neutral stance.
+	- After a few levels, this makes Cassie become extremely silly.
+- Nerfed submissive to only apply on erogenous targets.
+	- No more 400 damage kisses when you're fucking Cassie...
+
+Bug fixes:
+- Fixed the AI so that it actually tries to make you orgasm instead of just keeping you at high arousal all the time.
+- Fixed a bug where the Hair Trigger weakness trait would actually apply to your opponents instead of you. Woops.
+- Fixed a bug where the Nymphomania trait was using max when it was supposed to be using min, making it restore way more willpower than intended.
+- Fixed a bug where being in oral pin or any kind of movement restricted stance would actually always make blowjob and lick ass miss 100% of the time.
+	- It should now hit 100% of the time.
+
+1.9.3 changelog
+
+New: 
+- The minimap will now color areas of interest
+	- Areas that you have heard sounds from will be marked in light blue
+	- Areas with Detected targets (from the locate action) will be marked in red.
+- Reworked how orgasms happen, so that you immediately orgasm when pleasured and the arousal bar is full.
+	- This will allow for multiple orgasms per turn
+
+Balance:
+- Reworked the locate action (Reyka's Games perk):
+	- Now instead of consuming a trophy, it will consume a Talisman
+	- Now in addition to telling you the target's location, it will mark the target on your map for 10 turns.
+	- Now it will add an arousal over time of 100% of your maximum arousal over 10 turns (intended so that you need to masturbate at least once afterwards).
+	- You can now buy talismans at the Black Market for 500 each.
+	- The skill Dark Talisman has been given an base accuracy of 90 in order to make it a bit more reasonable now that you can buy them.
+- Buffed Mara's Tickle Monster (Sex Perk)
+	- Now gives 100% accurate tickles.
+	- Tickling someone without pants can stun them 25% of the time.
+	- Buffed tickling with ticklers and upgraded ticklers while the opponent has no pants on.
+- Buffed Mara's Heel Drop (Sparring Perk)
+	- Now reduces clothing protection by 50% (not actually that big of a difference, but it was already a fairly strong perk).
+- Removed expert tongue perk from Cassie, Kat and Reyka
+	- Cassie now gets the responsive perk earlier instead
+		- At level 56, instead of responsive, Cassie will get a new Trait "Obsequious Appeal"
+			- Doubles temptation damage if she is in a submissive position.
+	- Kat now gets a new Trait "Cat's Tongue" at level 37.
+		- Increases both pain and pleasure when using her mouth.
+	- Reyka gets Pussy Training 2 at 38, and Pussy Training 3 at 50.
+- Changed Angel's Expert Tongue (Sex Perk)
+	- Now no longer costs mojo to proc
+	- Now only Trances one in 6, instead of one in 3.
+	- Pleasure bonus is now increased by roll(3) + ((1 - arousal%) * clamp(Seduction / 3, 10, 30))
+		- She's more of an "expert" in using her tongue when still able to think clearly.
+- Changed Angel's Disciplinarian (Sparring Perk)
+	- Now works regardless of sex status
+	- Didn't really buff it further, since Shamed is a pretty powerful status
+- Changed Angel's Poker Face (Game Perk)
+	- Bluff now applies Ignore Orgasm for 2 turns if your total arousal is less than 100%
+	- Also calms you for 25% of your total arousal (it was bugged to only calm 0)
+	- Now has a 5 turn cooldown
+- Removed the Silver Tongue (Sex Perk) from Cassie at lvl 2
+	- She now gets SexualGroove instead
+- Buffed Jewel's Dirty Fighter (Sparring Perk)
+	- Now in addition to letting you kick from a prone position, if you are in a submissive stance or prone position, your pain damage is increased.
+- Buffed Jewel's Fearless (Game Perk)
+	- Bravado now also restores a bit of willpower depending on mojo spent (2 + mojo spent / 10)
+- Removed Desensitized (Sex Perk) from Reyka
+	- Now gets Desensitized 2 at level 47
+	- At level 56, Reyka now gets Carnal Virtuoso
+		- Opponents that orgasm when pleasured by her will orgasm twice. (recommended to probably pleasure yourself when you're about to cum when fighting her)
+
+Bug fixes:
+- Fixed a bug where characters with the nymphomania Trait (looking at you Kat...) would never lose because nymphomania restored willpower to at least 10 after every orgasm... Woops.
+- Fixed a bug where the portrait would disappear.
+	- This actually reworked the GUI code a bit, so you may see some weirdness at first. Please report it and I'll try to fix it asap.
+- Fixed a bug where characters with the immobile Trait would never resupply. (not heavily tested however, so please report if it's doing something weird)
+- Set the colors of the closet UI to be in line with the main UI
+
+1.9.2 changelog
+Balance:
+- Wild Thrust's base damage is now increased by your current arousal / 30, up to your maximum Animism
+- Nimble's speed bonus is now increase by your current arousal / 100.
+- Accuracy influence from speed now maxes out at 5. (So if you have 1 speed, and your opponent has 5000 speed, your counter chance and initiative will only take into account a difference of 5)
+- Purr now has a base temptation damage of your current arousal / 10.
+- Pounce now increases in accuracy by 1% for each 10 current arousal
+- Tailjob's base damage is now increased by your current arousal / 20, up to your maximum Animism
+- Feral pussy now applies pheromones on orgasm, dealing 50% of your current arousal over 5 turns.
+- Also, the chance for Feral pussy applying Frenzied has been increased based on your current arousal. It now also gives you the ability to ignore orgasms for 3 turns after applying it.
+- Kat now gets the trait nymphomania at level 25, which restores some will power upon cumming.
+
+- Angel and Divine skills got a bit of a nerf.
+	- Using her divinity can now apply the debuff "Divine Recoil" which will increase her sensitivity for 5 turns.
+	- This will stack infinitely if it gets refreshed.
+
+- Eve now actually gets some traits as she levels.
+	- Most of it is focused on cock talents and staying power
+	- Anal Fanatic has been reworked
+		- Used to apply frenzy for 6 turns after ass fucking
+		- Now applies frenzy for 4 turns and Ignore Orgasm for 4 turns
+
+- Cassie now get a few more Traits after lvl 50
+
+Minor:
+- Removed the skill submit, since that is now covered by the submissive dive skill
+- Changed how the inventory is displayed and added a scrollbar
+- Changed the map for the kitchen to better show that it's not connected to the dorms or the laundry.
+
 1.9.1 changelog
+
+New:
+- Pressing spacebar will pick "Leave", "Next", or the left-most option if neither of those choices exist.
+- The last used skill if it's available will always be on the left now.
+- Added temporary portraits for the mysterious challenger.
+	- I *really* don't like how they turned out so I probably will redo them at some point... :(
 
 Balance:
 - Reduced Airi's starting willpower from 500 to 150.
 	- Increased her willpower growth to 5 per level, since it's actually kind of cool that she has a ridiculously high will power for a contestant.
-- Wear Strapon now has a 6 turn cooldown, so you cannot just spam it
+- Wear Strapon now has a 6 turn cooldown, so you cannot just spam it	
 - Bluff and Determination now has a minimum calming effect of 20.
 - Mystery NPC:
 	- Added trait unnatural growth:
@@ -13,7 +121,7 @@ Balance:
 	- Made both LewdSuggestion and HeightenSenses usable when the target is not charmed, but they have a 1/3 chance of failing.
 	- Gave her per level stat growths
 - Reduced level influence on accuracy from 5% per level to 2% a level. Maximum is now 10% more accurate if you're 5 levels above, and 10% less accurate if you're 5 levels below.
-	
+
 Minor:
 - Upgrading the dildo will still allow you to buy another one for transformations
 - Use female pronouns if target has no genitals (stopgap feature because Airi sometimes makes both disappear...)

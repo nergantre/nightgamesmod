@@ -26,12 +26,14 @@ public class Match {
     protected int index;
     protected boolean pause;
     public Modifier condition;
+    public MatchData matchData;
 
     public Match(Collection<Character> combatants, Modifier condition) {
         this.combatants = new ArrayList<Character>();
         for (Character c : combatants) {
             this.combatants.add(c);
         }
+        matchData = new MatchData(combatants);
         score = new HashMap<Character, Integer>();
         this.condition = condition;
         for (Character combatant : combatants) {
@@ -95,6 +97,7 @@ public class Match {
                 time++;
                 dropOffTime++;
             }
+            getAreas().forEach(area -> area.setPinged(false));
             while (index < combatants.size()) {
                 Global.gui().refresh();
                 if (combatants.get(index).state != State.quit) {
@@ -176,11 +179,11 @@ public class Match {
             Global.flag(Flag.victory);
         }
         winner.modMoney(5 * winner.prize());
-        Global.gui().message(
-                        "You traded in " + cloth + " sets of clothes for a total of $" + cloth * player.prize() + ".");
+        Global.gui().message("You traded in " + cloth + " sets of clothes for a total of $" + cloth * player.prize()
+                        + ".<br>");
         if (creward > 0) {
             Global.gui().message("You also discover an envelope with $" + creward
-                            + " slipped under the door to your room. Presumably it's payment for completed challenges.");
+                            + " slipped under the door to your room. Presumably it's payment for completed challenges.<br>");
         }
         int maxaffection = 0;
         for (Character rival : combatants) {
@@ -316,5 +319,9 @@ public class Match {
     
     public String genericRoomDescription() {
         return "room";
+    }
+    
+    public MatchData getMatchData() {
+        return matchData;
     }
 }

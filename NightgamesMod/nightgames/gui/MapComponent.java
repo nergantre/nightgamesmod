@@ -22,7 +22,7 @@ public class MapComponent extends JComponent {
     private static Font font = new Font("Courier", 1, 11);
     private int borderWidth = 3;
 
-    public MapComponent(Collection<Area> areas) {}
+    public MapComponent() {}
 
     public void centerString(Graphics g, Rectangle r, MapDrawHint drawHint, Font font) {
         FontRenderContext frc = new FontRenderContext(null, true, true);
@@ -51,7 +51,9 @@ public class MapComponent extends JComponent {
     }
 
     public void paint(Graphics g) {
-
+        if (Global.getMatch() == null) {
+            return;
+        }
         if (g instanceof Graphics2D) {
             Graphics2D graphics2D = (Graphics2D) g;
             graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
@@ -66,9 +68,6 @@ public class MapComponent extends JComponent {
         g.fillRect(0, 0, getWidth(), getHeight());
         g.setColor(Color.WHITE);
         g.drawRect(borderWidth, borderWidth, width - borderWidth * 2, height - borderWidth * 2);
-        if (Global.getMatch() == null) {
-            return;
-        }
         Collection<Area> rooms = Global.getMatch().getAreas();
         rooms.stream().forEach(area -> {
             if (area.drawHint.rect.width == 0 || area.drawHint.rect.height == 0) {
@@ -78,7 +77,13 @@ public class MapComponent extends JComponent {
                             area.drawHint.rect.y * multiplier + yOffset + mapBorder,
                             area.drawHint.rect.width * multiplier, area.drawHint.rect.height * multiplier);
             if (!area.humanPresent()) {
-                g.setColor(new Color(0, 34, 100));
+                if (area.isDetected()) {
+                    g.setColor(new Color(150, 45, 60));
+                } else if (area.isPinged()) {
+                    g.setColor(new Color(75, 25, 120));
+                } else {
+                    g.setColor(new Color(0, 34, 100));
+                }
             } else {
                 g.setColor(new Color(25, 74, 120));
             }

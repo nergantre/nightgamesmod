@@ -18,23 +18,18 @@ import nightgames.skills.Carry;
 import nightgames.skills.Engulf;
 import nightgames.skills.Fly;
 import nightgames.skills.Fuck;
-import nightgames.skills.Grind;
 import nightgames.skills.Invitation;
 import nightgames.skills.LegLock;
-import nightgames.skills.Piston;
 import nightgames.skills.ReverseAssFuck;
 import nightgames.skills.ReverseCarry;
 import nightgames.skills.ReverseFly;
 import nightgames.skills.ReverseFuck;
 import nightgames.skills.Shove;
 import nightgames.skills.Skill;
-import nightgames.skills.SpiralThrust;
 import nightgames.skills.Straddle;
 import nightgames.skills.SubmissiveHold;
 import nightgames.skills.Tackle;
 import nightgames.skills.Tear;
-import nightgames.skills.Thrust;
-import nightgames.skills.Tighten;
 import nightgames.skills.ToggleKnot;
 import nightgames.skills.Undress;
 import nightgames.skills.WildThrust;
@@ -56,19 +51,14 @@ public class Frenzied extends DurationStatus {
         FUCK_SKILLS.add(new Engulf(p)); // Probably?
         FUCK_SKILLS.add(new Fly(p));
         FUCK_SKILLS.add(new Fuck(p));
-        FUCK_SKILLS.add(new Grind(p));
         FUCK_SKILLS.add(new Invitation(p));
         FUCK_SKILLS.add(new LegLock(p));
-        FUCK_SKILLS.add(new Piston(p));
         FUCK_SKILLS.add(new WildThrust(p));
         FUCK_SKILLS.add(new ReverseAssFuck(p));
         FUCK_SKILLS.add(new ReverseCarry(p));
         FUCK_SKILLS.add(new ReverseFly(p));
         FUCK_SKILLS.add(new ReverseFuck(p));
-        FUCK_SKILLS.add(new SpiralThrust(p));
         FUCK_SKILLS.add(new SubmissiveHold(p));
-        FUCK_SKILLS.add(new Thrust(p));
-        FUCK_SKILLS.add(new Tighten(p));
         FUCK_SKILLS.add(new ToggleKnot(p));
     }
 

@@ -11,9 +11,11 @@ public class Meter implements Serializable, Cloneable {
     private static final long serialVersionUID = 2L;
     private int current;
     private float max;
+    private int temporaryMax;
 
     public Meter(int max) {
         this.max = max;
+        this.temporaryMax = Integer.MAX_VALUE;
         current = 0;
     }
 
@@ -25,16 +27,20 @@ public class Meter implements Serializable, Cloneable {
         }
     }
 
+    public int getReal() {
+        return current;
+    }
+
     public int getOverflow() {
         return Math.max(0, current - max());
     }
 
     public int max() {
-        return (int) max;
+        return (int) maxFull();
     }
 
     public float maxFull() {
-        return max;
+        return Math.min(max, temporaryMax);
     }
 
     public void reduce(int i) {
@@ -61,7 +67,7 @@ public class Meter implements Serializable, Cloneable {
     }
 
     public boolean isFull() {
-        return current >= max;
+        return current >= max();
     }
 
     public void empty() {
@@ -90,6 +96,14 @@ public class Meter implements Serializable, Cloneable {
         max = i;
         current = max();
     }
+    
+    public void setTemporaryMax(int i) {
+        if (i < 0) {
+            i = Integer.MAX_VALUE;
+        }
+        temporaryMax = i;
+        current = max();
+    }
 
     public int percent() {
         return Math.min(100, 100 * current / max());
@@ -102,6 +116,6 @@ public class Meter implements Serializable, Cloneable {
 
     @Override
     public String toString() {
-        return String.format("current: %s / max: %s", Global.formatDecimal(current), Global.formatDecimal(max));
+        return String.format("current: %s / max: %s", Global.formatDecimal(current), Global.formatDecimal(max()));
     }
 }

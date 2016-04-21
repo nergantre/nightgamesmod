@@ -40,6 +40,7 @@ public class Bravado extends Skill {
         }
         getSelf().calm(c, 20 + x / 2);
         getSelf().heal(c, x);
+        getSelf().restoreWillpower(c, 2 + x / 10);
         getSelf().emote(Emotion.confident, 30);
         getSelf().emote(Emotion.dominant, 20);
         getSelf().emote(Emotion.nervous, -20);

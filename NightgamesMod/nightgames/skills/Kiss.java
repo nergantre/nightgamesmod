@@ -84,6 +84,7 @@ public class Kiss extends Skill {
             target.heal(c, 100);
             target.loseWillpower(c, Global.random(3) + 2, false);
             target.add(c, new Lovestruck(target, getSelf(), 2));
+            getSelf().usedAttribute(Attribute.Divinity, c, .5);
         }
         BodyPart selfMouth = getSelf().body.getRandom("mouth");
         target.body.pleasure(getSelf(), selfMouth, target.body.getRandom("mouth"), m, c);

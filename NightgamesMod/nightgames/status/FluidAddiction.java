@@ -21,21 +21,21 @@ import nightgames.skills.Skill;
 import nightgames.skills.Suckle;
 
 public class FluidAddiction extends DurationStatus {
-    protected int stacks;
+    protected double magnitude;
     private int activated;
     Character target;
 
-    public FluidAddiction(Character affected, Character target, int duration) {
+    public FluidAddiction(Character affected, Character target, double magnitude, int duration) {
         super("Addicted", affected, duration);
         this.target = target;
-        stacks = 1;
+        this.magnitude = magnitude;
         activated = 0;
         flag(Stsflag.fluidaddiction);
         flag(Stsflag.purgable);
     }
 
     public FluidAddiction(Character affected, Character target) {
-        this(affected, target, 4);
+        this(affected, target, 1, 4);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class FluidAddiction extends DurationStatus {
     }
 
     public boolean isActive() {
-        return stacks > 2;
+        return magnitude > 2;
     }
 
     @Override
@@ -72,7 +72,7 @@ public class FluidAddiction extends DurationStatus {
 
     @Override
     public float fitnessModifier() {
-        return -2.0f;
+        return -(float)magnitude;
     }
 
     @Override
@@ -98,7 +98,7 @@ public class FluidAddiction extends DurationStatus {
         if (!isActive()) {
             FluidAddiction other = (FluidAddiction) s;
             setDuration(Math.max(other.getDuration(), getDuration()));
-            stacks += other.stacks;
+            magnitude += other.magnitude;
             if (isActive() && activated == 0) {
                 activated = 1;
             }
@@ -109,9 +109,9 @@ public class FluidAddiction extends DurationStatus {
     public String toString() {
         if (isActive()) {
             return "Addicted";
-        } else if (stacks == 1) {
+        } else if (magnitude >= .99) {
             return "Piqued";
-        } else if (stacks == 2) {
+        } else if (magnitude >= 1.99) {
             return "Hooked";
         }
         return "Addicted?";
@@ -191,7 +191,7 @@ public class FluidAddiction extends DurationStatus {
 
     @Override
     public Status instance(Character newAffected, Character newOther) {
-        return new FluidAddiction(newAffected, newOther, getDuration());
+        return new FluidAddiction(newAffected, newOther, magnitude, getDuration());
     }
 
     public boolean activated() {
@@ -208,12 +208,13 @@ public class FluidAddiction extends DurationStatus {
     public JSONObject saveToJSON() {
         JSONObject obj = new JSONObject();
         obj.put("type", getClass().getSimpleName());
+        obj.put("magnitude", magnitude);
         obj.put("duration", getDuration());
         return obj;
     }
 
     @Override
     public Status loadFromJSON(JSONObject obj) {
-        return new FluidAddiction(null, null, JSONUtils.readInteger(obj, "duration"));
+        return new FluidAddiction(null, null, JSONUtils.readInteger(obj, "magnitude"), JSONUtils.readInteger(obj, "duration"));
     }
 }

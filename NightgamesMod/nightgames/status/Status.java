@@ -57,6 +57,10 @@ public abstract class Status implements Cloneable {
 
     public abstract int tempted(int x);
 
+    public double sensitivity(double x) {
+        return 0;
+    }
+
     public abstract int evade();
 
     public abstract int escape();
@@ -118,6 +122,8 @@ public abstract class Status implements Cloneable {
     public void struggle(Character character) {}
 
     public void onRemove(Combat c, Character other) {}
+
+    public void onApply(Combat c, Character other) {}
 
     public abstract JSONObject saveToJSON();
 

@@ -8,6 +8,7 @@ import nightgames.actions.Movement;
 import nightgames.characters.Character;
 import nightgames.combat.IEncounter;
 import nightgames.global.Global;
+import nightgames.status.Stsflag;
 import nightgames.trap.Trap;
 
 public class Area implements Serializable {
@@ -26,6 +27,7 @@ public class Area implements Serializable {
     public ArrayList<Deployable> env;
     public MapDrawHint drawHint;
     private Movement enumerator;
+    private boolean pinged;
 
     public Area(String name, String description, Movement enumerator) {
         this(name, description, enumerator, new MapDrawHint());
@@ -147,6 +149,10 @@ public class Area implements Serializable {
         return false;
     }
 
+    public boolean isEmpty() {
+        return present.isEmpty();
+    }
+
     public void exit(Character p) {
         present.remove(p);
     }
@@ -186,5 +192,17 @@ public class Area implements Serializable {
             }
         }
         return null;
+    }
+
+    public void setPinged(boolean b) {
+        this.pinged = b;
+    }
+
+    public boolean isPinged() {
+        return pinged;
+    }
+
+    public boolean isDetected() {
+        return present.stream().anyMatch(c -> c.is(Stsflag.detected));
     }
 }

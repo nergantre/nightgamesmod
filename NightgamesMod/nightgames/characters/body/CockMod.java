@@ -139,9 +139,9 @@ public enum CockMod implements BodyPartMod {
                                 opponent.directObject());
                 opponent.add(c, new Hypersensitive(opponent));
                 // Instantly addict
-                opponent.add(c, new FluidAddiction(opponent, self, 2));
-                opponent.add(c, new FluidAddiction(opponent, self, 2));
-                opponent.add(c, new FluidAddiction(opponent, self, 2));
+                opponent.add(c, new FluidAddiction(opponent, self, 1, 2));
+                opponent.add(c, new FluidAddiction(opponent, self, 1, 2));
+                opponent.add(c, new FluidAddiction(opponent, self, 1, 2));
                 bonus -= 3; // Didn't actually move around too much
             } else if (target != PussyPart.fiery) {
                 message += String.format(

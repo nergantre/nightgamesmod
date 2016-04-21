@@ -25,7 +25,6 @@ import nightgames.stance.Behind;
 import nightgames.stance.Neutral;
 import nightgames.stance.Position;
 import nightgames.status.Enthralled;
-import nightgames.status.Feral;
 import nightgames.status.Horny;
 import nightgames.status.Masochistic;
 import nightgames.status.Status;
@@ -187,6 +186,7 @@ public class Player extends Character {
         for (Area adjacent : location.adjacent) {
             if (adjacent.ping(get(Attribute.Perception))) {
                 Global.gui().message("You hear something in the <b>" + adjacent.name + "</b>.");
+                adjacent.setPinged(true);
             }
         }
     }
@@ -633,9 +633,6 @@ public class Player extends Character {
         if (has(Trait.RawSexuality)) {
             tempt(c, opponent, arousal.max() / 25);
             opponent.tempt(c, this, opponent.arousal.max() / 25);
-        }
-        if (getPure(Attribute.Animism) >= 4 && getArousal().percent() >= 50 && !is(Stsflag.feral)) {
-            add(c, new Feral(this));
         }
     }
 

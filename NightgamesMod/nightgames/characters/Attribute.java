@@ -1,5 +1,8 @@
 package nightgames.characters;
 
+import nightgames.nskills.tags.AttributeSkillTag;
+import nightgames.nskills.tags.SkillTag;
+
 public enum Attribute {
     Power,
     Seduction,
@@ -18,7 +21,17 @@ public enum Attribute {
     Medicine,
     Technique,
     Submissive,
-    Hypnosis;
+    Hypnosis,
+    Nymphomania;
+
+    private final SkillTag skillTag;
+    private Attribute() {
+        skillTag = new AttributeSkillTag(this);
+    }
+    
+    public SkillTag getSkillTag() {
+        return skillTag;
+    }
 
     public static boolean isBasic(Attribute a) {
         return a == Power || a == Seduction || a == Perception;

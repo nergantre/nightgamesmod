@@ -498,9 +498,10 @@ public class ReykaTime extends BaseNPCTime {
                                                     + "That kind of defeats the point of the game, but it sure sounds interesting... You ask her to elaborate. "
                                                     + "<i>\"Well, it's quite simple really: I weave a little spell, and you gain a seventh sense!\"</i> You are too "
                                                     + "stunned by the prospect of a demon rummaging in your mind to notice the word 'seventh' where you "
-                                                    + "would have expected 'sixth'. You probably wouldn't want to know, anyway. <i>\"It works like this: everyone "
-                                                    + "leaves a trace of their essence on everything they touch. You'll be able to trace that back to them. "
-                                                    + "It wouldn't be perfect, of course, and the item in question would be destroyed, but it'll give you an "
+                                                    + "would have expected 'sixth'. You probably wouldn't want to know, anyway. <i>\"It works like this: if you're "
+                                                    + "intimate enough with someone, there is a natural connection between you. All you need to do is force that connection "
+                                                    + "open with some outside help. I'm pretty practiced, but you may need a catalyst like a talisman in order to do it. "
+                                                    + "It wouldn't be perfect, of course, and the recoil from forcing it open may make you a bit 'hot', but it'll give you an "
                                                     + "idea of where to look.\"</i> You still aren't too thrilled about all this, but the possibilities are tempting. "
                                                     + "You agree to let her work her magic. Smiling, she holds her hand against your head, and pulls it away again "
                                                     + "after a few seconds. <i>\"What? Were you expecting fireworks? Let's go and give it a try.\"</i>");

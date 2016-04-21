@@ -35,6 +35,7 @@ import nightgames.stance.Stance;
 import nightgames.stance.StandingOver;
 import nightgames.status.Braced;
 import nightgames.status.CounterStatus;
+import nightgames.status.MagicMilkAddiction;
 import nightgames.status.Stsflag;
 import nightgames.status.Wary;
 import nightgames.status.Winded;
@@ -98,6 +99,12 @@ public class Combat extends Observable implements Serializable, Cloneable {
         p1.state = State.combat;
         p2.state = State.combat;
     }
+    
+    private void applyCombatStatuses(Character self, Character other) {
+        if (self.getFlag(MagicMilkAddiction.MAGICMILK_ADDICTION_FLAG) >= 10 && other.has(Trait.magicmilk)) {
+            self.add(this, new MagicMilkAddiction(self, other));
+        }
+    }
 
     public void go() {
         phase = 0;
@@ -107,6 +114,9 @@ public class Combat extends Observable implements Serializable, Cloneable {
         if (p2.mostlyNude() && !p1.mostlyNude()) {
             p2.emote(Emotion.nervous, 20);
         }
+        applyCombatStatuses(p1, p2);
+        applyCombatStatuses(p2, p1);
+        
         if (!(p1.human() || p2.human())) {
             automate();
         }
@@ -421,8 +431,8 @@ public class Combat extends Observable implements Serializable, Cloneable {
         while (!(p1.checkLoss() || p2.checkLoss())) {
             // guarantee the fight finishes in a timely manner
             if (turn > 50) {
-                p1.pleasure(turn - 50, null);
-                p1.pleasure(turn - 50, null);
+                p1.pleasure(5 * (turn - 50), this, p2);
+                p2.pleasure(5 * (turn - 50), this, p1);
             }
             turn += 1;
             phase = 1;
@@ -516,16 +526,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
     }
 
     private boolean checkOrgasm(Character user, Character target, Skill skill) {
-        boolean orgasmed = false;
-        if (target.checkOrgasm()) {
-            target.doOrgasm(this, user, skill);
-            orgasmed = true;
-        }
-        if (user.checkOrgasm()) {
-            user.doOrgasm(this, target, skill);
-            orgasmed = true;
-        }
-        return orgasmed;
+        return target.orgasmed || user.orgasmed;
     }
 
     private void useSkills() {

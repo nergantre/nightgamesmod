@@ -14,6 +14,7 @@ public class Lovestruck extends DurationStatus {
         super("Lovestruck", affected, duration);
         this.other = other;
         flag(Stsflag.lovestruck);
+        flag(Stsflag.charmed);
         flag(Stsflag.purgable);
     }
 

@@ -80,13 +80,13 @@ public class Reyka extends BasePersonality {
         growth.addTrait(29, Trait.dickhandler);
         growth.addTrait(32, Trait.lacedjuices);
         growth.addTrait(35, Trait.energydrain);
-        growth.addTrait(38, Trait.experttongue);
+        growth.addTrait(38, Trait.pussyTraining2);
         growth.addTrait(41, Trait.soulsucker);
         growth.addTrait(44, Trait.analTraining1);
-        growth.addTrait(47, Trait.desensitized);
-        growth.addTrait(50, Trait.pussyTraining2);
+        growth.addTrait(47, Trait.desensitized2);
+        growth.addTrait(50, Trait.pussyTraining3);
         growth.addTrait(53, Trait.vaginaltongue);
-        growth.addTrait(56, Trait.desensitized2);
+        growth.addTrait(56, Trait.carnalvirtuoso);
     }
 
     @Override
@@ -170,7 +170,7 @@ public class Reyka extends BasePersonality {
     @Override
     public String victory(Combat c, Result flag) {
         Character opponent = character.equals(c.p1) ? c.p2 : c.p1;
-        if (flag == Result.anal) {
+        if (c.getStance().anallyPenetrated(opponent)) {
             return "Reyka alternates between long hard thrusts and sensual grinding to keep you from getting used to the stimulation, and the pleasure it is "
                             + "inflicting on you stops you from mustering the resolve to fight back. <i>\"I do love a good bit of pegging.\"</i> Reyka comments as she begins "
                             + "to gently rock the head of the strapon over your prostate, leaving you breathing hard as your mouth hangs open. <i>\"There's a special "
