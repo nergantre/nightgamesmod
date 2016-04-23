@@ -1356,6 +1356,10 @@ public abstract class Character extends Observable implements Cloneable {
         flags.entrySet().stream().forEach(entry -> flagsObj.put(entry.getKey(), entry.getValue()));
         return saveObj;
     }
+    
+    protected void saveInternal(JSONObject obj) {
+        //NOP
+    }
 
     public abstract String getType();
 
@@ -1419,9 +1423,14 @@ public abstract class Character extends Observable implements Cloneable {
                 flags.put(keyString, JSONUtils.readInteger(flagsObj, keyString));
             }
         }
+        loadInternal(obj);
         change();
         Global.gainSkills(this);
         Global.learnSkills(this);
+    }
+    
+    protected void loadInternal(JSONObject obj) {
+        
     }
 
     public abstract void afterParty();
@@ -2997,4 +3006,32 @@ public abstract class Character extends Observable implements Cloneable {
                 return false;
         }
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Character other = (Character) obj;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        return true;
+    }
+
+    
+    
 }

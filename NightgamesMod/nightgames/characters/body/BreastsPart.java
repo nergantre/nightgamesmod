@@ -10,6 +10,8 @@ import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.status.MagicMilkAddiction;
 import nightgames.status.Stsflag;
+import nightgames.status.addiction.Addiction;
+import nightgames.status.addiction.AddictionType;
 
 public enum BreastsPart implements BodyPart {
     flat("flat", "", 0),
@@ -97,7 +99,8 @@ public enum BreastsPart implements BodyPart {
 
     @Override
     public double getHotness(Character self, Character opponent) {
-        double hotness = -.25 + size * .3 * self.getOutfit().getExposure(ClothingSlot.top);
+        double hotness = -.25 + size * .3 * self.getOutfit()
+                                                .getExposure(ClothingSlot.top);
         if (!opponent.hasDick()) {
             hotness /= 2;
         }
@@ -173,11 +176,11 @@ public enum BreastsPart implements BodyPart {
 
     @Override
     public double getFluidAddictiveness(Character c) {
-       if (c.has(Trait.lactating) && c.has(Trait.addictivefluids)) {
-           return 1;
-       } else {
-           return 0;
-       }
+        if (c.has(Trait.lactating) && c.has(Trait.addictivefluids)) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     @Override
@@ -193,67 +196,100 @@ public enum BreastsPart implements BodyPart {
     @Override
     public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
         if (self.has(Trait.magicmilk) && self.has(Trait.lactating) && target.isType("mouth")) {
-            int addictionLevel = opponent.getFlag(MagicMilkAddiction.MAGICMILK_ADDICTION_FLAG);
-            if (addictionLevel < 10) {
+            float addictionLevel;
+            Addiction addiction;
+            if (opponent.human()) {
+                Global.getPlayer().addict(AddictionType.MAGIC_MILK, opponent, Addiction.LOW_INCREASE);
+                addiction = Global.getPlayer()
+                                  .getAddiction(AddictionType.MAGIC_MILK);
+                addictionLevel = addiction.getMagnitude();
+            } else {
+                addictionLevel = 0;
+                addiction = null;
+            }
+            if (addictionLevel < Addiction.LOW_THRESHOLD) {
                 // not addicted
-                c.write(opponent, Global.format("{self:NAME-POSSESSIVE} milk makes the blood surge from {other:name-possessive} head into {other:possessive} crotch, leaving {other:direct-object} light-headed and horny", self, opponent));
-            } else if (addictionLevel < 20) {
+                c.write(opponent,
+                                Global.format("{self:NAME-POSSESSIVE} milk makes the blood surge from {other:name-possessive} head into {other:possessive} crotch, leaving {other:direct-object} light-headed and horny",
+                                                self, opponent));
+            } else if (addictionLevel < .3f) {
                 // starting addiction
-                c.write(opponent, Global.format(
-                                "{self:NAME-POSSESSIVE} milk seems sweeter than usual. While {other:subject} know from experience that {self:possessive} saccharine cream is a powerful aphrodisiac, {other:pronoun} can't but help drinking down more.",
+                c.write(opponent,
+                                Global.format("{self:NAME-POSSESSIVE} milk seems sweeter than usual. While {other:subject} know from experience that {self:possessive} saccharine cream is a powerful aphrodisiac, {other:pronoun} can't but help drinking down more.",
                                                 self, opponent));
-            } else if (addictionLevel < 35) {
+            } else if (addictionLevel < .45f) {
                 // addicted
-                c.write(opponent, Global.format(
-                                "As Cassie's milk dribbles down her breasts, you awake to a powerful need for her cream. Ignoring the potential aphrodisiac effectes, you quickly capture her nipples in your lips and relieve your parched throat with her delicious milk.",
+                c.write(opponent,
+                                Global.format("As Cassie's milk dribbles down her breasts, you awake to a powerful need for her cream. Ignoring the potential aphrodisiac effectes, you quickly capture her nipples in your lips and relieve your parched throat with her delicious milk.",
                                                 self, opponent));
-            } else if (addictionLevel < 50) {
+            } else if (addictionLevel < Addiction.HIGH_THRESHOLD) {
                 // dependent
-                c.write(opponent, Global.format(
-                                "{other:NAME} desperately {other:action:suck|sucks} at {self:name-possessive} milky teats as soon as they're available. {other:POSSESSIVE} burning need to imbibe {self:possessive} sweet milk is overpowering any other thoughts. "
+                c.write(opponent,
+                                Global.format("{other:NAME} desperately {other:action:suck|sucks} at {self:name-possessive} milky teats as soon as they're available. {other:POSSESSIVE} burning need to imbibe {self:possessive} sweet milk is overpowering any other thoughts. "
                                                 + "{self:SUBJECT} smiles at {other:direct-object} and gently cradles {other:possessive} head, rocking {other:direct-object} back and forth while {other:subject} drink. "
                                                 + "The warm milk settles in {other:possessive} belly, slowly setting {other:possessive} body on fire with arousal.",
-                                                self, opponent));
+                                self, opponent));
             } else {
                 // enslaved
-                c.write(opponent, Global.format(
-                                "{other:SUBJECT} slavishly wrap {other:possessive} lips around {self:name-possessive} immaculate teats and start suckling. "
+                c.write(opponent,
+                                Global.format("{other:SUBJECT} slavishly wrap {other:possessive} lips around {self:name-possessive} immaculate teats and start suckling. "
                                                 + "{other:POSSESSIVE} vision darkens around the edges and {other:possessive} world is completely focused on draining {self:possessive} wonderful breasts. "
                                                 + "{self:SUBJECT} smiles at {other:direct-object} and gently cradles {other:possessive} head, rocking {other:direct-object} back and forth while {other:subject} drink. "
                                                 + "The warm milk settles in {other:possessive} belly, slowly setting {other:possessive} body on fire with arousal.",
-                                                self, opponent));
-                
+                                self, opponent));
+
             }
-            opponent.tempt(c, self, this, 5 + MagicMilkAddiction.getMagicMilkAddictionLevel(opponent) * 5);
+            if (addiction != null)
+            opponent.tempt(c, self, this, (int) (5 + addiction.getMagnitude() * 50));
 
             if (opponent.is(Stsflag.magicmilkcraving)) {
                 // temporarily relieve craving
-                opponent.add(c, new MagicMilkAddiction(opponent, self));
+                addiction.alleviateCombat(Addiction.LOW_INCREASE);
+
             }
-            int timesDrank = c.getCombatantData(opponent).getIntegerFlag("drank_magicmilk") + 1;
-            c.getCombatantData(opponent).setIntegerFlag("drank_magicmilk", timesDrank);            
+            int timesDrank = c.getCombatantData(opponent)
+                              .getIntegerFlag("drank_magicmilk")
+                            + 1;
+            c.getCombatantData(opponent)
+             .setIntegerFlag("drank_magicmilk", timesDrank);
             if (timesDrank >= 3) {
-                c.getCombatantData(opponent).setIntegerFlag("drank_magicmilk", 0);            
+                /*c.getCombatantData(opponent)
+                 .setIntegerFlag("drank_magicmilk", 0);
                 addictionLevel += 1;
-                opponent.setFlag(MagicMilkAddiction.MAGICMILK_ADDICTION_FLAG, addictionLevel);
                 if (addictionLevel == 50) {
-                    c.write(opponent, Global.format("<b>{other:subject:action:are|is} now completely and hopelessly enslaved by {self:name-possessive} mind-altering milk. "
-                                    + "It's unlikely that {other:subject} will ever be able to shake this addiction on {other:possessive} own.</b>", self, opponent));
+                    c.write(opponent,
+                                    Global.format("<b>{other:subject:action:are|is} now completely and hopelessly enslaved by {self:name-possessive} mind-altering milk. "
+                                                    + "It's unlikely that {other:subject} will ever be able to shake this addiction on {other:possessive} own.</b>",
+                                    self, opponent));
                 } else if (addictionLevel == 35) {
-                    c.write(opponent, Global.format("<b>{other:SUBJECT-ACTION:are|is} now completely hooked on {self:name-possessive} aphordisiac milk.</b>", self, opponent));
+                    c.write(opponent,
+                                    Global.format("<b>{other:SUBJECT-ACTION:are|is} now completely hooked on {self:name-possessive} aphordisiac milk.</b>",
+                                                    self, opponent));
                 } else if (addictionLevel > 20) {
-                    c.write(opponent, Global.format("<b>{other:NAME-POSSESSIVE} addiction to {self:name-possessive} devilish milk grows.</b>", self, opponent));
+                    c.write(opponent,
+                                    Global.format("<b>{other:NAME-POSSESSIVE} addiction to {self:name-possessive} devilish milk grows.</b>",
+                                                    self, opponent));
                 } else if (addictionLevel == 20) {
-                    c.write(opponent, Global.format("<b>{other:SUBJECT-ACTION:now have|now has} an addiction to {self:name-possessive} devilish milk.</b>", self, opponent));
+                    c.write(opponent,
+                                    Global.format("<b>{other:SUBJECT-ACTION:now have|now has} an addiction to {self:name-possessive} devilish milk.</b>",
+                                                    self, opponent));
                 } else if (addictionLevel > 10) {
-                    c.write(opponent, Global.format("<b>{other:SUBJECT-ACTION:crave|craves} more of {self:name-possessive} milk.</b>", self, opponent));
+                    c.write(opponent,
+                                    Global.format("<b>{other:SUBJECT-ACTION:crave|craves} more of {self:name-possessive} milk.</b>",
+                                                    self, opponent));
                 } else if (addictionLevel == 10) {
-                    c.write(opponent, Global.format("<b>{other:SUBJECT-ACTION:now have|now has} a permanent craving for {self:name-possessive} milk.</b>", self, opponent));
+                    c.write(opponent,
+                                    Global.format("<b>{other:SUBJECT-ACTION:now have|now has} a permanent craving for {self:name-possessive} milk.</b>",
+                                                    self, opponent));
                 } else if (addictionLevel > 1) {
-                    c.write(opponent, Global.format("<b>{other:SUBJECT-ACTION:desire|desires} more of {self:name-possessive} milk.</b>", self, opponent));
+                    c.write(opponent,
+                                    Global.format("<b>{other:SUBJECT-ACTION:desire|desires} more of {self:name-possessive} milk.</b>",
+                                                    self, opponent));
                 } else {
-                    c.write(opponent, Global.format("<b>{other:SUBJECT-ACTION:have|has} a permanent unconscious desire for {self:name-possessive} milk.</b>", self, opponent));
-                }
+                    c.write(opponent,
+                                    Global.format("<b>{other:SUBJECT-ACTION:have|has} a permanent unconscious desire for {self:name-possessive} milk.</b>",
+                                                    self, opponent));
+                }*/
             }
         }
         return 0;

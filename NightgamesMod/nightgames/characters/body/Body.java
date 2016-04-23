@@ -538,7 +538,7 @@ public class Body implements Cloneable {
                             : "";
             String battleString = String.format(
                             "%s%s %s<font color='white'> was pleasured by %s%s<font color='white'> for <font color='rgb(255,50,200)'>%d<font color='white'> "
-                                            + "base:%.1f (%d%s) x multiplier: %.2f (1 + sen:%.1f + ple:%.1f + per:%.1f)\n",
+                                            + "base:%.1f (%.1f%s) x multiplier: %.2f (1 + sen:%.1f + ple:%.1f + per:%.1f)\n",
                             firstColor, Global.capitalizeFirstLetter(character.nameOrPossessivePronoun()),
                             target.describe(character), secondColor, pleasuredBy, result, base, magnitude, bonusString,
                             multiplier, sensitivity - 1, pleasure - 1, perceptionBonus - 1);
@@ -557,7 +557,7 @@ public class Body implements Cloneable {
                             : "";
             String battleString = String.format(
                             "%s%s %s<font color='white'> was pleasured for <font color='rgb(255,50,200)'>%d<font color='white'> "
-                                            + "base:%.1f (%d%s) x multiplier: %.2f (sen:%.1f + ple:%.1f + per:%.1f)\n",
+                                            + "base:%.1f (%.2f%s) x multiplier: %.2f (sen:%.1f + ple:%.1f + per:%.1f)\n",
                             firstColor, Global.capitalizeFirstLetter(character.nameOrPossessivePronoun()),
                             target.describe(character), result, base, magnitude, bonusString, multiplier,
                             sensitivity - 1, pleasure - 1, perceptionBonus - 1);

@@ -179,7 +179,8 @@ public class Global {
         // debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
         // debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
         // debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
-        // debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
+        debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
+        debug[DebugFlags.DEBUG_ADDICTION.ordinal()] = true;
         traitRequirements = new TraitTree(ResourceLoader.getFileResourceAsStream("data/TraitRequirements.xml"));
         current = null;
         factory = new ContextFactory();
@@ -675,7 +676,7 @@ public class Global {
             lineup.add(prey);
             if (!prey.human())
                 lineup.add(human);
-            lineup = pickCharacters(lineup, players, 4);
+            lineup = pickCharacters(players, lineup, 5);
             resting = new HashSet<Character>(players);
             resting.removeAll(lineup);
             match = buildMatch(lineup, matchmod);
@@ -684,7 +685,7 @@ public class Global {
                 lineup.add(lover);
             }
             lineup.add(human);
-            lineup = pickCharacters(lineup, players, 4);
+            lineup = pickCharacters(players, lineup, 4);
             resting = new HashSet<Character>(players);
             resting.removeAll(lineup);
             match = buildMatch(lineup, matchmod);

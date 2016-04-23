@@ -36,7 +36,10 @@ public class Nurse extends Skill {
 
     @Override
     public float priorityMod(Combat c) {
-        return getSelf().has(Trait.lactating) ? 3 : 0;
+        int mod = getSelf().has(Trait.lactating) ? 3 : 0;
+        if (getSelf().has(Trait.magicmilk))
+            mod *= 2;
+        return mod;
     }
 
     @Override

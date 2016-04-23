@@ -16,7 +16,8 @@ import nightgames.characters.custom.requirement.BodyPartRequirement;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
-import nightgames.status.MagicMilkAddiction;
+import nightgames.status.addiction.Addiction;
+import nightgames.status.addiction.AddictionType;
 
 public class CassieTime extends BaseNPCTime {
     public CassieTime(Character player) {
@@ -142,7 +143,7 @@ public class CassieTime extends BaseNPCTime {
             if (npc.has(Trait.magicmilk)) {
                 Global.gui().choose(this, "Ask for milk");
             }
-        } else if (MagicMilkAddiction.getMagicMilkAddictionLevel(player) >= 2) {
+        } else if (Global.getPlayer().checkAddiction(AddictionType.MAGIC_MILK)) {
             Global.gui().message(
                             "You find Cassie studying in the library, a ways out of earshot of the other students. She catches your eye and smiles knowingly. "
                             + "Putting down her book, she walks to you and whispers in your ear, <i>Give me five minutes, then meet me in the girls bathroom on the third floor. Don't worry, it's always empty.</i>"
@@ -203,11 +204,92 @@ public class CassieTime extends BaseNPCTime {
             if (npc.getAffection(player) > 0) {
                 Global.gui().message("Cassie lets you drink from her breasts while you fuck her on her bed -placeholder-");
             } else {
-                Global.gui().message("Cassie lets you drink from her breasts while she gives you a handjob in the library bathroom -placeholder-");
+                String msg;
+                switch (Global.getPlayer().getAddiction(AddictionType.MAGIC_MILK).getSeverity()) {
+                    case HIGH:
+                        msg = "You need her milk so badly you can hardly stammer out the words. She knows,"
+                                        + " of course. She knew the moment you walked in. She's known since the moment"
+                                        + " you first tasted her milk. But still, she waits for you to labor through"
+                                        + " the request. In response, she just wags her finger, grinning, and walks "
+                                        + "to the room you've come to love and dread. You get naked the moment the"
+                                        + " door closes behind you, and Cassie has already removed her shirt. You leap "
+                                        + "towards her, not wanting to wait another second, but she holds you back. "
+                                        + "\"Not yet, dear. I'm going to make you work for it today. Kneel.\" You do, "
+                                        + "and are rewarded with a small spurt of milk as she squeezes a tit. You weren't"
+                                        + " prepared, so most of it missed. After you have licked all of it off of "
+                                        + "yourself and the ground, you once again gaze up at Cassie. \"Now beg. And put"
+                                        + " some effort into it.\" This goes on for a long time, her giving you "
+                                        + "increasingly demeaning tasks and rewarding you with small amounts of milk. "
+                                        + "Not nearly enough to quench your thirst, but you'll take what you can get "
+                                        + "whatever the cost. Eventually you find yourself back in the familiar position, "
+                                        + "with you suckling in her lap and her languidly stroking your dick. Again, she "
+                                        + "pulls you away after you cum. There is still some milk left on the nipple "
+                                        + "you've been drinking from, and a trickle leads down from the other. Down to her "
+                                        + "stomach, where it mixes with your cum. Even in your current state, this gives"
+                                        + " you pause. At a mere nod from Cassie, however, your reservations vanish and you greedily "
+                                        + "lick up all of it. \"Good boy\" is all Cassie says as she gets dressed and heads "
+                                        + "out. You stay a while longer, searching the floor three times for any milk you "
+                                        + "might have missed, before going out yourself.";
+                        break;
+                    case LOW:
+                        msg = "You try to think of something else. Anything else. But faced with the sight of Cassie's breasts, covered"
+                                        + " as they may be, the sweet taste of her milk is back on your mind as if it had never left. You"
+                                        + " know the source of your thirst now, and what you must do to quench it. You nervously ask "
+                                        + "Cassie for a sip. In response, she cups the two mounds and lifts them up. \"You want these, "
+                                        + "do you? Well, that can be arranged.\" She turns, walking towards a private room, and you "
+                                        + "follow without a word. \"Now then,\" she says after settling down in a chair, \"get naked and"
+                                        + " come sit on my knee.\" Hesitantly, you do as she says. Cassie pulls of her shirt, bringing "
+                                        + "you face to face with her uncovered tits. She quickly rattles off some incomprehensible "
+                                        + "spell, and suddenly your spine shrinks a few inches. A quick once-over reveals that you're "
+                                        + "alright, just shorter. Which means you are now staring at the small droplet of milk hanging "
+                                        + "off one of her nipples. The urge is to strong to resist, and you latch on. Your first suck "
+                                        + "is gentle, but as soon as the flow of her nectar starts you get more greedy. Cassie merely "
+                                        + "chuckles softly, and strokes the back of your head lovingly with one hand, as the other grabs"
+                                        + " your rapidly hardening cock. You have been sitting there for ten minutes, you drinking the"
+                                        + " delicious milk and her slowly pumping your cock, when your orgasm suddenly arrives. "
+                                        + "Explosively. You give an extra hard suck as your cum spews all over both of you. \"And"
+                                        + " that's enough for now,\" Cassie declares. She pushes you away, and you barely avoid "
+                                        + "tumbling to the ground. As you stand up, your spine lengthens back to normal and your "
+                                        + "thoughts clear. With the thirst gone, you realize what you just did. You gave in to her! This"
+                                        + " was her plan all along! As you stand there, still naked, Cassie pulls her shirt back on "
+                                        + "and starts for the door. \"Come visit me again if you... Feel you have to. Bye!\" You try "
+                                        + "to think of a retort in your anger, but beneath that anger there is another part already "
+                                        + "looking forward to the next time you get to drink from her. Pondering the implications, you "
+                                        + "get dressed and go home. ";
+                        break;
+                    case MED:
+                        msg = "You hate yourself for it, but you need more milk. You feel like you'll collapse in on yourself "
+                                        + "if you don't get some. Cassie, of course, is more than willing to oblige, and leads "
+                                        + "you back to the same room as before. \"My baby knows the drill,\" she begins once there, "
+                                        + "\"but this time he'll have to ask nicely.\" A new bubble of resistance wells up within "
+                                        + "you. You are not going to let her treat you like a baby. Then again, she does have the "
+                                        + "milk... Gritting your teeth and swallowing your pride, you ask if you can drink from her"
+                                        + " in a soft voice. \"Good, so go ahead.\" Clearly she doesn't intend to do anything"
+                                        + " herself short of sitting down, so you remove her shirt with as much vigor as you can "
+                                        + "manage. Whatever defiance you might have been clinging to before, it vanishes the moment"
+                                        + " you see her breasts, heavy with that oh-so-sweet milk. You hurriedly strip naked and"
+                                        + " settle yourself down on her knee. Before she has even finished her shrinking spell her "
+                                        + "nipple is already in your mouth. Ah! Your entire body relaxes and all your worries seem "
+                                        + "to melt away as you start drinking. You are only vaguely aware of Cassie's gentle caresses "
+                                        + "and slow handjob, since your entire being is focused on the teat between your lips and the "
+                                        + "delicious fluids it spews forth. You don't even notice cumming after a while; the pleasure "
+                                        + "is swallowed up by the greater one of the milk in your stomach. Cassie decides it's been "
+                                        + "enough at that point, and forcefully separates your head from her breasts. You whimper "
+                                        + "pathetically, trying desperately to get to those last few drops, but she will have none of "
+                                        + "it. Instead, she cleans her stomach of your cum with your shirt and walks away without "
+                                        + "another word. After catching your breath, you get dressed and go back to your dorm. "
+                                        + "In your confused high, you don't notice the amused or disgusted looks people give "
+                                        + "you as they see your still-wet shirt. ";
+                        break;
+                    case NONE:
+                    default:
+                        throw new IllegalStateException();                    
+                }
+                Global.gui().message(msg);
             }
             Global.gui().choose(this, "Leave");
-            player.setFlag(MagicMilkAddiction.MAGICMILK_DRANK_DAYTIME_FLAG, 1);
-            player.setFlag(MagicMilkAddiction.MAGICMILK_ADDICTION_FLAG, player.getFlag(MagicMilkAddiction.MAGICMILK_ADDICTION_FLAG) + 1);
+            Global.getPlayer().addict(AddictionType.MAGIC_MILK, npc, Addiction.MED_INCREASE);
+            Global.getPlayer().getAddiction(AddictionType.MAGIC_MILK).flagDaytime();
             npc.gainAffection(player, 1);
             player.gainAffection(npc, 1);
         } else if (choice.equals("Sex")) {

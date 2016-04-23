@@ -6,12 +6,14 @@ import org.json.simple.JSONObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.custom.requirement.EitherInsertedRequirement;
 import nightgames.characters.custom.requirement.ReverseRequirement;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.global.JSONUtils;
+import nightgames.status.addiction.AddictionType;
 
 public class DivineCharge extends Status {
     public double magnitude;
@@ -21,12 +23,14 @@ public class DivineCharge extends Status {
         flag(Stsflag.divinecharge);
         flag(Stsflag.purgable);
         this.magnitude = magnitude;
-        requirements.add(new ReverseRequirement(Arrays.asList(new EitherInsertedRequirement(true))));
+        // requirements.add(new ReverseRequirement(Arrays.asList(new EitherInsertedRequirement(true))));
     }
 
     private String getPart(Combat c) {
-        boolean penetrated = c.getStance().vaginallyPenetrated(affected);
-        boolean inserted = c.getStance().inserted(affected);
+        boolean penetrated = c.getStance()
+                              .vaginallyPenetrated(affected);
+        boolean inserted = c.getStance()
+                            .inserted(affected);
         String part = "body";
         if (penetrated && !inserted) {
             part = "pussy";
@@ -35,6 +39,22 @@ public class DivineCharge extends Status {
             part = "cock";
         }
         return part;
+    }
+
+    @Override
+    public void tick(Combat c) {
+        if (!c.getStance()
+              .vaginallyPenetrated(affected)
+                        && !(affected.has(Trait.zealinspiring) && Global.getPlayer()
+                                                                        .checkAddiction(AddictionType.ZEAL)
+                                        && !Global.getPlayer()
+                                                  .getAddiction(AddictionType.ZEAL)
+                                                  .isInWithdrawal())) {
+            magnitude = magnitude / 2;
+            c.write(affected, "The holy energy seeps out of " + affected.getName() + ".");
+            if (magnitude < .05f)
+                affected.removelist.add(this);
+        }
     }
 
     @Override

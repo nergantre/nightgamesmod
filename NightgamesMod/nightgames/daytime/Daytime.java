@@ -9,6 +9,7 @@ import nightgames.characters.Player;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.status.MagicMilkAddiction;
+import nightgames.status.addiction.Addiction;
 
 public class Daytime {
     private ArrayList<Activity> activities;
@@ -41,34 +42,8 @@ public class Daytime {
     private boolean morning() {
         Global.gui()
               .clearText();
-        player.setFlag(MagicMilkAddiction.MAGICMILK_DRANK_DAYTIME_FLAG, 0);
-        if (MagicMilkAddiction.getMagicMilkAddictionLevel(player) >= 5) {
-            Global.gui()
-                  .message("You wake up in the morning with a burning need for Cassie's milk. The thought of resisting the urge doesn't even enter your mind. You quickly whip out your cellphone and dial Cassie's number. "
-                                  + "Moments later, an amused voice answers. You sob into the phone, begging for Cassie's milk. Luckily, Cassie doesn't seem to want to tease you today, and readily agrees to drop by. "
-                                  + "Fifteen agonizing minutes later, the doorbell rings and you rush to answer. Giving you a quick and dirty kiss at the door way, Cassie enters your room and sits down on your bed. "
-                                  + "She pats her lap and motions for you to strip and lie down. You quickly comply and lay in her lap facing the ceiling, giddy for more milk. <br>"
-                                  + "With a coying grin, Cassie strips off her top and lets her bountiful breasts bounce free of her bra. Your eyes immediately zeroes into her nipples, already dripping with opalescent white fluids. "
-                                  + "Cassie lowers her breasts into your face, and you happily start drinking her mindbending milk. Seconds turn into minutes and minutes turn into hours. "
-                                  + "You don't know how long your were nursing at her teats, but you seemed to have dozed off in the middle of it. You find yourself on the bed by yourself, with a blanket covering you. "
-                                  + "Cassie has already left, but left a note on the kitchen table, <br><i>Hey hun, unfortunately I have to get to class. I made you some lunch that I put in the fridge, and left you a bottle of milk in case the cravings come back. I'll see you tonight at the games okay? Love you baby.</i><br><br>");
-            player.setFlag(MagicMilkAddiction.MAGICMILK_DRANK_DAYTIME_FLAG, 1);
-            player.setFlag(MagicMilkAddiction.MAGICMILK_ADDICTION_FLAG,
-                            player.getFlag(MagicMilkAddiction.MAGICMILK_ADDICTION_FLAG) + 2);
-        } else if (MagicMilkAddiction.getMagicMilkAddictionLevel(player) >= 4) {
-            Global.gui()
-                  .message("When you wake up in the morning, the first thing you think of is Cassie's breasts. And the second. And the third. In fact, you realize that's all you can think of right now. "
-                                  + "You sigh and attempt to take a cold shower to tear your mind from her sinfully sweet milk. Unfortunately, it does you little good. You will have to make a choice between toughing it out, or caving and calling Cassie for a helping of her addictive cream.<br><br>");
-        } else if (MagicMilkAddiction.getMagicMilkAddictionLevel(player) >= 3) {
-            Global.gui()
-                  .message("You wake up in the morning with damp underwear. You realize that you've been dreaming of Cassie's milk the entire night. This can't be healthy... <br>"
-                                  + "You want to immediately head over to Cassie's and ask for another helping, but quickly realize that will just feed the addiction. "
-                                  + "However, at this rate, you will be thinking of her the entire day, and affect your willpower. You will have to make a decision to tough it out or call her up and ask for more.<br><br>");
-        } else if (MagicMilkAddiction.getMagicMilkAddictionLevel(player) >= 2) {
-            Global.gui()
-                  .message("You wake up in the morning with your throat feeling strangely parched. You step into the kitchen and take out a carton of milk to attempt to slake your thirst. "
-                                  + "Five minutes and a empty carton later, you still don't feel much better. You decide to ignore it and head to class.<br><br>");
-        }
+        Global.getPlayer().getAddictions().forEach(Addiction::clearDaytime);
+        Global.getPlayer().getAddictions().stream().map(a -> a.describeMorning()).forEach(s -> Global.gui().message(s));
         if (player.getLevel() >= 10 && player.getRank() == 0) {
             Global.gui()
                   .message("The next day, just after getting out of class you receive call from a restricted number. Normally you'd just ignore it, "
@@ -157,20 +132,7 @@ public class Daytime {
                     ((NPC) npc).daytime(daylength);
                 }
             }
-            int magicmilk_addiction = player.getFlag(MagicMilkAddiction.MAGICMILK_ADDICTION_FLAG);
-            player.getWillpower()
-                  .setTemporaryMax(-1);
-            if (player.getFlag(MagicMilkAddiction.MAGICMILK_DRANK_DAYTIME_FLAG) != 0) {
-                player.setFlag(MagicMilkAddiction.MAGICMILK_DRANK_DAYTIME_FLAG, 0);
-            } else if (magicmilk_addiction > 0) {
-                player.getWillpower()
-                      .setTemporaryMax(player.getWillpower()
-                                             .max()
-                                      / MagicMilkAddiction.getMagicMilkAddictionLevel(player));
-                player.setFlag(MagicMilkAddiction.MAGICMILK_ADDICTION_FLAG, Math.max(0, magicmilk_addiction - 3));
-                Global.gui()
-                      .message("You're in withdraw from abstaining from drinking Cassie's milk. You will have lowered willpower in tonight's match...");
-            }
+           Global.getPlayer().getAddictions().forEach(Addiction::startNight);
             if (!headless) {
                 // Global.gui().nextMatch();
                 if (Global.checkFlag(Flag.autosave)) {

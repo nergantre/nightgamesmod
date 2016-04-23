@@ -9,6 +9,7 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.global.JSONUtils;
 
+@Deprecated
 public class MagicMilkAddiction extends Status {
     public static final String MAGICMILK_DRANK_DAYTIME_FLAG = "magicmilk_drank_daytime";
     public static String MAGICMILK_ADDICTION_FLAG = "magicmilk_addiction";
