@@ -180,23 +180,23 @@ public class CombatStats {
         }
     }
 
-    private static class Setup {
+    public static class Setup {
 
         private int level;
         private List<Personality> extraChars;
 
-        Setup(int level, Personality... extraChars) {
+        public Setup(int level, Personality... extraChars) {
             this.level = level;
             this.extraChars = Arrays.asList(extraChars);
         }
 
-        String outputName() {
+        public String outputName() {
             return String.format("CombatStats-%d-%s-%d.txt", level, extraChars.stream()
                             .map(p -> p.getClass().getSimpleName().substring(0, 1)).collect(Collectors.joining()),
                             MATCH_COUNT);
         }
 
-        List<Character> execute() {
+        public List<Character> execute() {
             extraChars.forEach(Global::newChallenger);
             List<Character> combatants = new ArrayList<>(Global.getCharacters());
             combatants.removeIf(Character::human);
