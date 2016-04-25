@@ -179,7 +179,7 @@ public class Global {
         // debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
         // debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
         // debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
-        debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
+        //debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
         debug[DebugFlags.DEBUG_ADDICTION.ordinal()] = true;
         traitRequirements = new TraitTree(ResourceLoader.getFileResourceAsStream("data/TraitRequirements.xml"));
         current = null;
@@ -454,6 +454,8 @@ public class Global {
         getSkillPool().add(new ToggleSlimePussy(p));
         getSkillPool().add(new Spores(p));
         getSkillPool().add(new EngulfedFuck(p));
+        getSkillPool().add(new Pray(p));
+        getSkillPool().add(new Prostrate(p));
 
         if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
             getSkillPool().add(new SelfStun(p));
@@ -627,9 +629,9 @@ public class Global {
             }
             if (disabledFlag == null || !Global.checkFlag(disabledFlag)) {
                 // TODO: DEBUG
-                if (c.getName().contains("Cassie") || c.human()) {
+               // if (c.getName().contains("Angel") || c.human()) {
                     participants.add(c);
-                }
+              //  }
             }
         }
         if (matchmod.name().equals("maya")) {

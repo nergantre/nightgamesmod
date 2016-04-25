@@ -130,7 +130,7 @@ public class LeechEnergy extends Skill {
 
     @Override
     public int accuracy(Combat c) {
-        return 7;
+        return 70;
     }
 
     @Override

@@ -12,6 +12,7 @@ import nightgames.global.Global;
 import nightgames.stance.Behind;
 import nightgames.stance.Mount;
 import nightgames.stance.Position;
+import nightgames.stance.Stance;
 import nightgames.status.CrisisOfFaith;
 import nightgames.status.Status;
 
@@ -38,7 +39,10 @@ public class ZealAddiction extends Addiction {
     @Override
     public void tick(Combat c) {
         combatMagnitude += magnitude / 10.0;
-        if (Global.randomdouble() < Math.min(.5f, combatMagnitude / 2.0)) {
+        if ((c.getStance().en == Stance.neutral || c.getStance().en == Stance.behind)
+                        && Global.randomdouble() < Math.min(.5f, combatMagnitude / 2.0)) {
+            c.write(Global.getPlayer(), "Overcome by your desire to serve Angel, you get on the ground "
+                            + "and prostrate yourself in front of her.");
             boolean behindPossible = cause.hasDick();
             Position pos;
             if (!behindPossible || Global.random(2) == 0) {
@@ -127,7 +131,7 @@ public class ZealAddiction extends Addiction {
     @Override
     public String describeMorning() {
         // TODO Auto-generated method stub
-        return null;
+        return "";
     }
 
     @Override
@@ -148,8 +152,19 @@ public class ZealAddiction extends Addiction {
 
     @Override
     public String describe(Combat c) {
-        // TODO Auto-generated method stub
-        return null;
+        switch (getCombatSeverity()) {
+            case HIGH:
+                return "Your knees tremble with your desire to offer yourself to your goddess.";
+            case LOW:
+                return cause.name() + " divine presence makes you wonder whether you should really be fighting her.";
+            case MED:
+                return "A part of you is screaming to kneel before " + cause.name()
+                                + ". Perhaps it's better to just give in?";
+            case NONE:
+            default:
+                return "";
+
+        }
     }
 
     @Override

@@ -56,13 +56,13 @@ public class Combat extends Observable implements Serializable, Cloneable {
     public CombatantData p2Data;
     public Optional<Character> winner;
     public int phase;
-    private Skill p1act;
-    private Skill p2act;
+    protected Skill p1act;
+    protected Skill p2act;
     public Area location;
     private String message;
     private Position stance;
     public Character lastTalked;
-    private int timer;
+    protected int timer;
     public Result state;
     private HashMap<String, String> images;
     String imagePath = "";
@@ -121,7 +121,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
                         && !Global.getPlayer()
                                  .getAddiction(AddictionType.ZEAL)
                                  .isInWithdrawal()) {
-            self.add(new DivineCharge(self, .3));
+            self.add(this, new DivineCharge(self, .3));
         }
     }
 
@@ -373,7 +373,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
         updateAndClearMessage();
     }
 
-    private Result eval() {
+    protected Result eval() {
         if (getStance().bottom.human() && getStance().inserted(getStance().top) && getStance().en == Stance.anal) {
             return Result.anal;
         } else if (getStance().inserted()) {
@@ -564,7 +564,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
         return target.orgasmed || user.orgasmed;
     }
 
-    private void useSkills() {
+    protected void useSkills() {
         Skill firstSkill, secondSkill;
         Character firstCharacter, secondCharacter;
         if (p1.init() + p1act.speed() >= p2.init() + p2act.speed()) {

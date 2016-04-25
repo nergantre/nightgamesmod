@@ -22,6 +22,11 @@ public class CrisisOfFaith extends Status {
     }
 
     @Override
+    public boolean lingering() {
+        return true;
+    }
+    
+    @Override
     public String describe(Combat c) {
         return "You are deeply disturbed by the doubt in your heart, limiting mojo gain.";
     }

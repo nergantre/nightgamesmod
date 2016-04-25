@@ -5,5 +5,4 @@ nightgames_log.txt
 *.iml
 .idea
 out
-*.jar
 CombatStats*

@@ -1,6 +1,7 @@
 package nightgames.daytime;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -9,6 +10,7 @@ import nightgames.characters.Player;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.status.MagicMilkAddiction;
+import nightgames.status.Status;
 import nightgames.status.addiction.Addiction;
 
 public class Daytime {
@@ -132,7 +134,10 @@ public class Daytime {
                     ((NPC) npc).daytime(daylength);
                 }
             }
-           Global.getPlayer().getAddictions().forEach(Addiction::startNight);
+           Global.getPlayer().getAddictions().forEach(a -> {
+               Optional<Status> withEffect = a.startNight();
+               withEffect.ifPresent(s -> Global.getPlayer().add(s));
+           });
             if (!headless) {
                 // Global.gui().nextMatch();
                 if (Global.checkFlag(Flag.autosave)) {

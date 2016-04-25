@@ -38,6 +38,9 @@ public class DivineCharge extends Status {
         if (!penetrated && inserted) {
             part = "cock";
         }
+        if (!penetrated && !inserted && affected.has(Trait.zealinspiring)) {
+            part = "pussy";
+        }
         return part;
     }
 

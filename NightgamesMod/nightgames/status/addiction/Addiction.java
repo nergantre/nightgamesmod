@@ -117,6 +117,7 @@ public abstract class Addiction extends Status {
         if (!didDaytime) {
             inWithdrawal = true;
             alleviate(Global.randomfloat()/4.f);
+            Global.gui().message(describeWithdrawal());
             return withdrawalEffects();
         }
         return Optional.empty();
@@ -211,5 +212,9 @@ public abstract class Addiction extends Status {
 
     public boolean isInWithdrawal() {
         return inWithdrawal;
+    }
+
+    public boolean wasCausedBy(Character target) {
+        return target.equals(cause);
     }
 }
