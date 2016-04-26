@@ -597,7 +597,7 @@ public class Global {
                         .collect(Collectors.toList());
         Collections.shuffle(randomizer);
         Set<Character> results = new HashSet<>(added);
-        results.addAll(randomizer.subList(0, Math.min(Math.max(0, size - results.size()), randomizer.size())));
+        results.addAll(randomizer.subList(0, Math.min(Math.max(0, size - results.size())+1, randomizer.size())));
         return results;
     }
 
