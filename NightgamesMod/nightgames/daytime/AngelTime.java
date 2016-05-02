@@ -167,7 +167,7 @@ public class AngelTime extends BaseNPCTime {
         } else if (Global.getPlayer()
                          .checkAddiction(AddictionType.ZEAL)) {
             Global.gui()
-                  .message("Angel zeal intro");
+                  .message("Angel low-affection zeal intro");
             if (npc.getAttraction(player) < 15) {
                 npc.gainAttraction(player, 2);
                 player.gainAttraction(npc, 2);
@@ -231,10 +231,14 @@ public class AngelTime extends BaseNPCTime {
         if (choice.equals("Worship")) {
             if (npc.getAffection(player) > 0) {
                 Global.gui()
-                      .message("angel loving zeal");
+                      .message("Angel allows you to worship her, having you do some simple, menial tasks. This"
+                                      + " is a placeholder. It still increases your addiction, though. You"
+                                      + " won't suffer withdrawal effects tonight.");
             } else {
                 Global.gui()
-                      .message("angel non-loving zeal");
+                      .message("Angel allows you to worship her, but her feelings for you confuse her. This"
+                                      + " is a placeholder. It still increases your addiction, though. You"
+                                      + " won't suffer withdrawal effects tonight.");
             }
             Global.gui().choose(this, "Leave");
             Global.getPlayer().addict(AddictionType.ZEAL, npc, Addiction.MED_INCREASE);

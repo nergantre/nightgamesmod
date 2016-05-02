@@ -158,6 +158,7 @@ public enum Trait {
     druglacedprecum("Drug-laced Precum", "Drugs in your precum are perfect for increasing an enemies sensitivity"), // Anybody part that comes into contact with your precum becomes increasingly sensitive for x turns.
     magicmilk("Magicked Milk", "Magically augmented milk. It's a a strong addictive aphrodisiac, as well as a subtle hypnotic."), // .
     zealinspiring("Zeal Inspiring", "Instills true belief in people, inspiring them to follow her"),
+    corrupting("Corrupting Influence", "Corrupts to the very core."),
     darkpromises("Dark Promises", "Can enthrall with the right words"), // whisper upgrade, can enthrall
 
     energydrain("Energy Drain", "Drains energy during intercourse"),

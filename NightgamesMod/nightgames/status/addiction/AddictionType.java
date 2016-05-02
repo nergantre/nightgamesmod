@@ -5,7 +5,8 @@ import nightgames.characters.Character;
 
 public enum AddictionType {
     MAGIC_MILK(MagicMilkAddiction::new),
-    ZEAL(ZealAddiction::new)
+    ZEAL(ZealAddiction::new),
+    CORRUPTION(Corruption::new)
     ;
     
     private final BiFunction<Character, Float, ? extends Addiction> constructor;

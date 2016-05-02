@@ -100,7 +100,7 @@ public class LeechEnergy extends Skill {
             } else {
                 c.write(getSelf(), "Wtf happened");
             }
-            target.drainStaminaAsMojo(c, getSelf(), 10, 1.5f);
+            target.drainStaminaAsMojo(c, getSelf(), 10 + Global.random(20), 1.5f);
             target.body.pleasure(getSelf(), selfPart, part, 10 + Global.random(20), c);
         } else {
             if (getSelf().human()) {
@@ -130,7 +130,7 @@ public class LeechEnergy extends Skill {
 
     @Override
     public int accuracy(Combat c) {
-        return 70;
+        return 80;
     }
 
     @Override

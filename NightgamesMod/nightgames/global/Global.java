@@ -456,6 +456,7 @@ public class Global {
         getSkillPool().add(new EngulfedFuck(p));
         getSkillPool().add(new Pray(p));
         getSkillPool().add(new Prostrate(p));
+        getSkillPool().add(new DarkKiss(p));
 
         if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
             getSkillPool().add(new SelfStun(p));
@@ -629,9 +630,9 @@ public class Global {
             }
             if (disabledFlag == null || !Global.checkFlag(disabledFlag)) {
                 // TODO: DEBUG
-               // if (c.getName().contains("Angel") || c.human()) {
+               // if (c.getName().contains("Reyka") || c.human()) {
                     participants.add(c);
-              //  }
+              //}
             }
         }
         if (matchmod.name().equals("maya")) {
