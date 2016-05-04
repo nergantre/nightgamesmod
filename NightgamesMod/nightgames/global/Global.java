@@ -174,7 +174,7 @@ public class Global {
 
         debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
         debug[DebugFlags.DEBUG_LOADING.ordinal()] = true;
-        // debug[DebugFlags.DEBUG_FTC.ordinal()] = true;
+        debug[DebugFlags.DEBUG_FTC.ordinal()] = true;
         // debug[DebugFlags.DEBUG_DAMAGE.ordinal()] = true;
         // debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
         // debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
@@ -679,7 +679,7 @@ public class Global {
             lineup.add(prey);
             if (!prey.human())
                 lineup.add(human);
-            lineup = pickCharacters(players, lineup, 5);
+            lineup = pickCharacters(players, lineup, 4);
             resting = new HashSet<Character>(players);
             resting.removeAll(lineup);
             match = buildMatch(lineup, matchmod);

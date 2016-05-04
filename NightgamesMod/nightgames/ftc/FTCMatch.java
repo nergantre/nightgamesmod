@@ -26,6 +26,7 @@ public class FTCMatch extends Match {
 
     public FTCMatch(Collection<Character> combatants, Character prey) {
         super(combatants, new FTCModifier(prey));
+        assert combatants.size() == 5; // 4 hunters + prey = 5
         this.prey = prey;
         this.gracePeriod = 3;
         this.flagCounter = 0;
