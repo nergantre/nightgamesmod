@@ -58,6 +58,8 @@ import nightgames.status.Resistance;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
 import nightgames.status.Trance;
+import nightgames.status.addiction.Addiction;
+import nightgames.status.addiction.AddictionType;
 import nightgames.trap.Trap;
 
 public abstract class Character extends Observable implements Cloneable {
@@ -432,7 +434,7 @@ public abstract class Character extends Observable implements Cloneable {
                                 "{self:NAME-POSSESSIVE} innocent appearance throws {other:direct-object} off and {other:subject-action:use|uses} much less strength than intended.",
                                 this, other));
             }
-            if (other.has(Trait.dirtyfighter) && (c.getStance().prone(other) || c.getStance().sub(other)) && physical) {
+            if (other != null && other.has(Trait.dirtyfighter) && (c.getStance().prone(other) || c.getStance().sub(other)) && physical) {
                 bonus += 10;
                 c.write(this, Global.format(
                                 "{other:SUBJECT-ACTION:know|knows} how to fight dirty, and {other:action:manage|manages} to give {self:direct-object} a lot more trouble than {self:subject} expected despite being in a compromised position.",
@@ -539,7 +541,7 @@ public abstract class Character extends Observable implements Cloneable {
         }
         pleasured = true;
         // pleasure = 0;
-        arousal.restoreNoLimit(Math.round(pleasure));
+        arousal.restoreNoLimit(pleasure);
         if (checkOrgasm()) {
             doOrgasm(c, source, selfPart, opponentPart);
         }
@@ -1499,6 +1501,23 @@ public abstract class Character extends Observable implements Cloneable {
         if (this != opponent && times == totalTimes) {
             c.write(this, "<b>" + orgasmLiner(c) + "</b>");
             c.write(opponent, opponent.makeOrgasmLiner(c));
+        }
+        if (human()) {
+            Player p = (Player) this;
+            
+            if (p.checkAddiction(AddictionType.CORRUPTION) 
+                           && p.getAddiction(AddictionType.CORRUPTION).getCause() == opponent
+                           && c.getCombatantData(this).getIntegerFlag("ChoseToFuck") == 1) {
+                c.write(this, "Your willing sacrifice to " + opponent.getName() + " greatly reinforces"
+                                + " the corruption inside of you.");
+                p.addict(AddictionType.CORRUPTION, opponent, Addiction.HIGH_INCREASE);
+            }
+            if (p.checkAddiction(AddictionType.ZEAL) 
+                            && p.getAddiction(AddictionType.ZEAL).getCause() == opponent) {
+                c.write(this, "Experiencing so much pleasure inside of " + opponent + " reinforces"
+                                + " your faith.");
+                p.addict(AddictionType.ZEAL, opponent, Addiction.MED_INCREASE);
+            }
         }
         orgasms += 1;
     }
@@ -3005,6 +3024,14 @@ public abstract class Character extends Observable implements Cloneable {
             default:
                 return false;
         }
+    }
+    
+    /**
+     * If true, count insertions by this character as voluntary 
+     */
+    public boolean canMakeOwnDecision() {
+        return !is(Stsflag.charmed) && !is(Stsflag.lovestruck)
+                        && !is(Stsflag.frenzied);
     }
 /*
     @Override

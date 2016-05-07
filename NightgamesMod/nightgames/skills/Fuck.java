@@ -139,9 +139,9 @@ public class Fuck extends Skill {
                 c.write(getSelf(), premessage + receive(c, premessage.length(), Result.normal, target));
             }
             if (selfO.isType("pussy")) {
-                c.setStance(c.getStance().insert(target, getSelf()));
+                c.setStance(c.getStance().insert(target, getSelf()), getSelf(), getSelf().canMakeOwnDecision());
             } else {
-                c.setStance(c.getStance().insert(getSelf(), getSelf()));
+                c.setStance(c.getStance().insert(getSelf(), getSelf()), getSelf(), getSelf().canMakeOwnDecision());
             }
             int otherm = m;
             if (getSelf().has(Trait.insertion)) {

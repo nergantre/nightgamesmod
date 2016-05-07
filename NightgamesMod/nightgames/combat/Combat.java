@@ -1,6 +1,5 @@
 package nightgames.combat;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -37,7 +36,6 @@ import nightgames.stance.StandingOver;
 import nightgames.status.Braced;
 import nightgames.status.CounterStatus;
 import nightgames.status.DivineCharge;
-import nightgames.status.MagicMilkAddiction;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
 import nightgames.status.Wary;
@@ -45,11 +43,8 @@ import nightgames.status.Winded;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
-public class Combat extends Observable implements Serializable, Cloneable {
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8279523341570263846L;
+public class Combat extends Observable implements Cloneable {
+
     public Character p1;
     public CombatantData p1Data;
     public Character p2;
@@ -119,8 +114,8 @@ public class Combat extends Observable implements Serializable, Cloneable {
         } else if (other.human() && self.has(Trait.zealinspiring) && Global.getPlayer()
                                                                            .checkAddiction(AddictionType.ZEAL)
                         && !Global.getPlayer()
-                                 .getAddiction(AddictionType.ZEAL)
-                                 .isInWithdrawal()) {
+                                  .getAddiction(AddictionType.ZEAL)
+                                  .isInWithdrawal()) {
             self.add(this, new DivineCharge(self, .3));
         }
     }
@@ -813,6 +808,10 @@ public class Combat extends Observable implements Serializable, Cloneable {
     }
 
     public void setStance(Position newStance) {
+        setStance(newStance, null, true);
+    }
+
+    public void setStance(Position newStance, Character initiator, boolean voluntary) {
         if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
             System.out.printf("Stance Change: %s -> %s\n", stance.getClass()
                                                                  .getName(),
@@ -827,11 +826,26 @@ public class Combat extends Observable implements Serializable, Cloneable {
             List<BodyPart> parts2 = stance.partsFor(p2);
             parts1.forEach(part -> parts2.forEach(other -> part.onEndPenetration(this, p1, p2, other)));
             parts2.forEach(part -> parts1.forEach(other -> part.onEndPenetration(this, p2, p1, other)));
+            getCombatantData(p1).setIntegerFlag("ChoseToFuck", 0);
+            getCombatantData(p2).setIntegerFlag("ChoseToFuck", 0);
         } else if (!stance.inserted() && newStance.inserted()) {
             List<BodyPart> parts1 = newStance.partsFor(p1);
             List<BodyPart> parts2 = newStance.partsFor(p2);
             parts1.forEach(part -> parts2.forEach(other -> part.onStartPenetration(this, p1, p2, other)));
             parts2.forEach(part -> parts1.forEach(other -> part.onStartPenetration(this, p2, p1, other)));
+            if (voluntary && (p1.human() || p2.human()) && Global.getPlayer()
+                                                    .hasAddiction(AddictionType.CORRUPTION)
+                            && Global.getPlayer()
+                                     .getAddiction(AddictionType.CORRUPTION)
+                                     .getCause() == getOther(Global.getPlayer())) {
+                if (initiator != null) {
+                    getCombatantData(initiator).setIntegerFlag("ChoseToFuck", 1);
+                    getCombatantData(getOther(initiator)).setIntegerFlag("ChoseToFuck", -1);
+                }
+                if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+                    System.out.println(initiator + " initiated penetration, voluntary=" + voluntary);
+                }
+            }
         }
 
         stance = newStance;

@@ -53,7 +53,7 @@ public class Carry extends Fuck {
             }
             target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c);
             getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c);
-            c.setStance(new Standing(getSelf(), target));
+            c.setStance(new Standing(getSelf(), target), getSelf(), getSelf().canMakeOwnDecision());
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(), Global

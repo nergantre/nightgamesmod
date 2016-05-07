@@ -1,15 +1,11 @@
 package nightgames.status;
 
-import java.util.Arrays;
-
 import org.json.simple.JSONObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
-import nightgames.characters.custom.requirement.EitherInsertedRequirement;
-import nightgames.characters.custom.requirement.ReverseRequirement;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.global.JSONUtils;

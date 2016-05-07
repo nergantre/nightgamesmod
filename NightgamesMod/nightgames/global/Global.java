@@ -174,7 +174,7 @@ public class Global {
 
         debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
         debug[DebugFlags.DEBUG_LOADING.ordinal()] = true;
-        debug[DebugFlags.DEBUG_FTC.ordinal()] = true;
+        // debug[DebugFlags.DEBUG_FTC.ordinal()] = true;
         // debug[DebugFlags.DEBUG_DAMAGE.ordinal()] = true;
         // debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
         // debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
@@ -1195,6 +1195,7 @@ public class Global {
     }
 
     public static <T> T pickRandom(T[] arr) {
+        if (arr.length == 0) return null;
         return arr[Global.random(arr.length)];
     }
 
@@ -1337,7 +1338,7 @@ public class Global {
             if (action == null) {
                 System.out.println(second);
             }
-            if (matchActions != null && second != null && action != null) {
+            if (second != null && action != null) {
                 replacement = action.replace(character, first, second, third);
                 if (caps) {
                     replacement = Global.capitalizeFirstLetter(replacement);

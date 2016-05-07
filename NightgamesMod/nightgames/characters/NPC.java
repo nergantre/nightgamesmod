@@ -550,7 +550,7 @@ public class NPC extends Character {
                 if (c.getStance().sub(this)) {
                     Position reverse = c.getStance().reverse(c);
                     if (reverse != c.getStance() && !BodyPart.hasOnlyType(reverse.bottomParts(), "strapon")) {
-                        c.setStance(reverse);
+                        c.setStance(reverse, this, false);
                     } else {
                         c.write(this, Global.format(
                                         "{self:NAME-POSSESSIVE} quick wits find a gap in {other:name-possessive} hold and {self:action:slip|slips} away.",

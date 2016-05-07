@@ -86,7 +86,7 @@ public class Corruption extends Addiction {
                 Attribute att;
                 do {
                     att = getDrainAttr();
-                } while (att != null && att == Attribute.Dark || affected.get(att) <= 10);
+                } while (att != null && (att == Attribute.Dark || affected.get(att) < 10));
                 if (noMoreAttrs())
                     break;
                 buffs.add(new Abuff(affected, att, -1, 20));
@@ -219,7 +219,7 @@ public class Corruption extends Addiction {
 
     @Override
     public int mod(Attribute a) {
-        return 0;
+        return a == Attribute.Dark ? 5 : 0;
     }
 
     @Override
@@ -286,6 +286,19 @@ public class Corruption extends Addiction {
     public Status loadFromJSON(JSONObject obj) {
         return new Corruption(Global.getCharacterByType(JSONUtils.readString(obj, "cause")),
                         (float) JSONUtils.readInteger(obj, "magnitude"));
+    }
+
+    @Override
+    public String informantsOverview() {
+        return "Dude. Not cool. I like Reyka shaking her evil ass around at night as much"
+                        + " as the next guy, but the evil should stay there, you know? Now, the"
+                        + " rest of the competitors will not appreciate your new attitude either."
+                        + " I don't see them jumping to your defence any time soon. You should also"
+                        + " worry about this thing inside of you taking over the uncorrupted parts of"
+                        + " your mind. Also, I would imagine that that evil part of you won't appreciate"
+                        + " any efforts to get rid of it. Who knows what chaos it might cause? Of course,"
+                        + " if it's the Dark skills you're interested in, then it's probably a good thing."
+                        + " But you're not like that, are you?";
     }
 
 }

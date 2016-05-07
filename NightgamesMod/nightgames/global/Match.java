@@ -16,6 +16,7 @@ import nightgames.characters.State;
 import nightgames.characters.Trait;
 import nightgames.modifier.Modifier;
 import nightgames.status.BodyFetish;
+import nightgames.status.addiction.Addiction;
 
 public class Match {
     protected int time;
@@ -226,6 +227,7 @@ public class Match {
         if (Global.checkFlag(Flag.autosave)) {
             Global.save(true);
         }
+        Global.getPlayer().getAddictions().forEach(Addiction::endNight);
         new Postmatch(Global.getPlayer(), combatants);
     }
 

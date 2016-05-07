@@ -27,7 +27,7 @@ public class Encounter implements Serializable, IEncounter {
     protected boolean p1ff;
     protected boolean p2ff;
     protected Area location;
-    protected Combat fight;
+    protected transient Combat fight;
     protected int checkin;
     protected int fightTime;
 

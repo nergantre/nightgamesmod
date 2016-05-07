@@ -9,7 +9,6 @@ import nightgames.characters.NPC;
 import nightgames.characters.Player;
 import nightgames.global.Flag;
 import nightgames.global.Global;
-import nightgames.status.MagicMilkAddiction;
 import nightgames.status.Status;
 import nightgames.status.addiction.Addiction;
 
@@ -176,6 +175,7 @@ public class Daytime {
         }
         activities.add(new MagicTraining(player));
         activities.add(new Workshop(player));
+        activities.add(new AddictionRemoval(player));
     }
 
     public String getTime() {

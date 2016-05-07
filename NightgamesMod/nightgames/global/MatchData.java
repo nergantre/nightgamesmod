@@ -3,6 +3,7 @@ package nightgames.global;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
 import nightgames.characters.Character;
 
 /**

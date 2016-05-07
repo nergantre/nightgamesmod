@@ -237,4 +237,16 @@ public class ZealAddiction extends Addiction {
         return null;
     }
 
+    @Override
+    public String informantsOverview() {
+        return "You WHAT?! You actually think " + cause.getName() + " is divine? As in god-like? Are you shitting me?"
+                        + " Man, even I don't know where she got that pussy from, but it's certainly done"
+                        + " a number on you. Well, I suppose that if you're busy worshipping her, you'll"
+                        + " be assuming some submissive positions in the process. That can't help your chances"
+                        + " in a fight. And if you're really serious about this, the soul-searching required to"
+                        + " get rid of it will probably throw you off your game for a while. Not good, man. I"
+                        + " suppose you can draw some spiritual strength from your newfound faith, many people"
+                        + " seem to do so, but is that worth it?";
+    }
+
 }

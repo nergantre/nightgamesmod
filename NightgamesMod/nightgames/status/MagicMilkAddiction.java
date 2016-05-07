@@ -120,8 +120,7 @@ public class MagicMilkAddiction extends Status {
     @Override
     public String initialMessage(Combat c, boolean replaced) {
         if (replaced) {
-            return String.format("%s milk craving is temporarily sated.\n", affected.possessivePronoun(),
-                            toString().toLowerCase(), target.nameOrPossessivePronoun());
+            return String.format("%s milk craving is temporarily sated.\n", affected.possessivePronoun());
         }
         return "";
     }

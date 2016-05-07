@@ -44,6 +44,10 @@ public class LeechEnergy extends Skill {
                     break;
                 }
             }
+            if (part == null) {
+                c.write("<b>ERROR: Could not pick part in LeechEnergy!</b>");
+                return false;
+            }
             String partString = selfPart.describe(getSelf());
             String partStringSingular = partString.substring(0, partString.length() - 1);
             if (part.isType("hands")) {

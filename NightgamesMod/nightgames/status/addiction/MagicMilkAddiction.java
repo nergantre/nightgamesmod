@@ -290,4 +290,16 @@ public class MagicMilkAddiction extends Addiction {
         }
     }
 
+    @Override
+    public String informantsOverview() {
+        return "You let " + cause.getName() + "'s milk get to you? I know those new and improved"
+                        + " boobs are great to look at, but couldn't you be a bit more careful?"
+                        + " Now I'm not at liberty to tell you how I know this, but you'll have noticed that "
+                        + "you're likely to find yourself unwilling to keep fighting if you allow this thing"
+                        + " to grow too bad. At first it'll only be when directly confronted with her directly,"
+                        + " but if you don't drink for long enough, well, you won't do very well. That said, it"
+                        + " does at least mean you won't be affected by any weaker addictive substances, so you've"
+                        + " got that going for you.";
+    }
+
 }

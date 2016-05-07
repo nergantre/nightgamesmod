@@ -68,7 +68,7 @@ public class Fly extends Fuck {
             }
             target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c);
             getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c);
-            c.setStance(new FlyingCarry(getSelf(), target));
+            c.setStance(new FlyingCarry(getSelf(), target), getSelf(), getSelf().canMakeOwnDecision());
         } else {
             getSelf().add(c, new Falling(getSelf()));
         }

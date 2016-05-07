@@ -1,7 +1,9 @@
 package nightgames.characters;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.json.simple.JSONArray;
@@ -35,6 +37,7 @@ import nightgames.status.Masochistic;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
 import nightgames.status.addiction.Addiction;
+import nightgames.status.addiction.Addiction.Severity;
 import nightgames.status.addiction.AddictionType;
 import nightgames.trap.Trap;
 
@@ -594,7 +597,7 @@ public class Player extends Character {
                     Position reverse = c.getStance()
                                         .reverse(c);
                     if (reverse != c.getStance() && !BodyPart.hasOnlyType(reverse.bottomParts(), "strapon")) {
-                        c.setStance(reverse);
+                        c.setStance(reverse, this, false);
                     } else {
                         c.write(this, Global.format(
                                         "{self:NAME-POSSESSIVE} quick wits find a gap in {other:name-possessive} hold and {self:action:slip|slips} away.",
@@ -756,6 +759,10 @@ public class Player extends Character {
                          .findAny()
                          .get();
     }
+    
+    public Optional<Addiction> getStrongestAddiction() {
+        return addictions.stream().max(Comparator.comparing(Addiction::getSeverity));
+    }
 
     public void addict(AddictionType type, Character cause, float mag) {
         boolean dbg = Global.isDebugOn(DebugFlags.DEBUG_ADDICTION);
@@ -834,9 +841,13 @@ public class Player extends Character {
     }
 
     public List<Addiction> getAddictions() {
-        return new ArrayList<>(addictions);
+        return addictions;
     }
 
+    public boolean checkAddiction() {
+        return addictions.stream().anyMatch(a -> a.atLeast(Severity.LOW));
+    }
+    
     public boolean checkAddiction(AddictionType type) {
         return hasAddiction(type) && getAddiction(type).isActive();
     }
@@ -864,4 +875,5 @@ public class Player extends Character {
             this.addictions.add(addiction);
         }
     }
+
 }

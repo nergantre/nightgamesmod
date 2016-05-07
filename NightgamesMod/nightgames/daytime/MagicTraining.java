@@ -353,11 +353,11 @@ public class MagicTraining extends Activity {
         if (npc.getPure(Attribute.Arcane) > 0 && budget >= 1000 * (npc.getPure(Attribute.Arcane) + 1)) {
             if (budget >= 2000 * (npc.getPure(Attribute.Arcane) + 2)) {
                 npc.money -= 1000 * (npc.getPure(Attribute.Arcane) + 1);
-                budget -= 1000 * (npc.getPure(Attribute.Arcane) + 1);
+//                budget -= 1000 * (npc.getPure(Attribute.Arcane) + 1);
                 npc.mod(Attribute.Dark, 1);
             }
             npc.money -= 1000 * (npc.getPure(Attribute.Arcane) + 1);
-            budget -= 1000 * (npc.getPure(Attribute.Arcane) + 1);
+            //budget -= 1000 * (npc.getPure(Attribute.Arcane) + 1);
             npc.mod(Attribute.Arcane, 1);
         }
     }

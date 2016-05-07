@@ -26,6 +26,7 @@ public abstract class Addiction extends Status {
 
     private boolean didDaytime;
     protected boolean inWithdrawal;
+    private boolean overloading;
 
     protected Addiction(String name, Character cause, float magnitude) {
         super(name, Global.getPlayer());
@@ -34,6 +35,8 @@ public abstract class Addiction extends Status {
         this.magnitude = magnitude;
         combatMagnitude = .01f;
         didDaytime = false;
+        inWithdrawal = false;
+        overloading = false;
     }
 
     protected Addiction(String name, Character cause) {
@@ -43,11 +46,11 @@ public abstract class Addiction extends Status {
     public final void clearDaytime() {
         didDaytime = false;
     }
-    
+
     public final void flagDaytime() {
         didDaytime = true;
     }
-    
+
     public final float getMagnitude() {
         return magnitude;
     }
@@ -64,6 +67,10 @@ public abstract class Addiction extends Status {
         }
     }
 
+    public final Character getCause() {
+        return cause;
+    }
+
     public final Severity getCombatSeverity() {
         if (combatMagnitude < LOW_THRESHOLD) {
             return Severity.NONE;
@@ -76,11 +83,11 @@ public abstract class Addiction extends Status {
         }
     }
 
-    protected final boolean atLeast(Severity threshold) {
+    public final boolean atLeast(Severity threshold) {
         return getSeverity().ordinal() >= threshold.ordinal();
     }
 
-    protected final boolean combatAtLeast(Severity threshold) {
+    public final boolean combatAtLeast(Severity threshold) {
         return getCombatSeverity().ordinal() >= threshold.ordinal();
     }
 
@@ -94,7 +101,7 @@ public abstract class Addiction extends Status {
         obj.put("combat", combatMagnitude);
         return obj;
     }
-    
+
     protected abstract Optional<Status> withdrawalEffects();
 
     protected abstract Optional<Status> addictionEffects();
@@ -109,15 +116,24 @@ public abstract class Addiction extends Status {
 
     protected abstract String describeCombatDecrease();
 
+    public abstract String informantsOverview();
+
     public abstract String describeMorning();
-    
+
     public abstract AddictionType getType();
 
+    public void overload() {
+        magnitude = 1.0f;
+        overloading = true;
+    }
+
     public Optional<Status> startNight() {
-        if (!didDaytime) {
+        if (!didDaytime || overloading) {
             inWithdrawal = true;
-            alleviate(Global.randomfloat()/4.f);
-            Global.gui().message(describeWithdrawal());
+            if (!overloading)
+                alleviate(Global.randomfloat() / 4.f);
+            Global.gui()
+                  .message(describeWithdrawal());
             return withdrawalEffects();
         }
         return Optional.empty();
@@ -126,6 +142,13 @@ public abstract class Addiction extends Status {
     public void endNight() {
         inWithdrawal = false;
         clearDaytime();
+        if (overloading) {
+            magnitude = 0.f;
+            overloading = false;
+            Global.gui()
+                  .message("<b>The overload treatment seems to have worked, and you are now rid of all traces of"
+                                  + " your " + name + ".\n</b>");
+        }
     }
 
     public Optional<Status> startCombat(Combat c, Character opp) {
@@ -147,7 +170,7 @@ public abstract class Addiction extends Status {
     public boolean shouldRemove() {
         return magnitude <= 0.f;
     }
-    
+
     public void aggravate(float amt) {
         Severity old = getSeverity();
         magnitude = clamp(magnitude + amt);
@@ -183,7 +206,7 @@ public abstract class Addiction extends Status {
                   .message(describeCombatDecrease());
         }
     }
-    
+
     private float clamp(float amt) {
         if (amt < 0.f)
             return 0.f;
@@ -200,7 +223,8 @@ public abstract class Addiction extends Status {
     }
 
     public void describeInitial() {
-        Global.gui().message(describeIncrease());
+        Global.gui()
+              .message(describeIncrease());
     }
 
     public static Addiction load(AddictionType type, Character cause, float mag, float combat) {

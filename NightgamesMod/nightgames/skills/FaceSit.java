@@ -75,7 +75,7 @@ public class FaceSit extends Skill {
         } else {
             getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("pussy"), m, c);
         }
-        double n = Math.round(4 + Global.random(4));
+        double n = 4 + Global.random(4);
         if (c.getStance().front(getSelf())) {
             // opponent can see self
             n += 3 * getSelf().body.getCharismaBonus(target);

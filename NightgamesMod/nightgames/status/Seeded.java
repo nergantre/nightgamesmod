@@ -42,21 +42,21 @@ public class Seeded extends Status {
     public String describe(Combat c) {
         BodyPart hole = affected.body.getRandom(target);
         if (affected.human()) {
-            if (stage < 4) {
+            if (stage > 4) {
                 return Global.capitalizeFirstLetter(
                                 String.format("A large white lilly grows from your %s\n", hole.describe(affected)));
-            } else if (stage < 3) {
+            } else if (stage > 3) {
                 return Global.capitalizeFirstLetter(
                                 String.format("A small green bud peeks out from your %s\n", hole.describe(affected)));
             }
             return Global.capitalizeFirstLetter(
                             String.format("A lemon-sized seed is lodged firmly in your %s\n", hole.describe(affected)));
         } else {
-            if (stage < 4) {
+            if (stage > 4) {
                 return Global.capitalizeFirstLetter(String.format(
                                 "A large white lilly grows from " + affected.possessivePronoun() + " %s\n",
                                 hole.describe(affected)));
-            } else if (stage < 3) {
+            } else if (stage > 3) {
                 return Global.capitalizeFirstLetter(String.format(
                                 "A small green bud peeks out from " + affected.possessivePronoun() + " %s\n",
                                 hole.describe(affected)));

@@ -1,6 +1,7 @@
 package nightgames.status.addiction;
 
 import java.util.function.BiFunction;
+
 import nightgames.characters.Character;
 
 public enum AddictionType {

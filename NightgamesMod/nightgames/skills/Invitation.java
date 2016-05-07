@@ -135,7 +135,7 @@ public class Invitation extends Skill {
         }
 
         if (success) {
-            c.setStance(c.getStance().insertRandomDom(target));
+            c.setStance(c.getStance().insertRandomDom(target), getSelf(), getSelf().canMakeOwnDecision());
         }
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, result, target));

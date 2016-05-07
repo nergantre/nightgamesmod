@@ -81,7 +81,7 @@ public class ReverseAssFuck extends Fuck {
         }
         target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c);
         getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c);
-        c.setStance(new AnalCowgirl(getSelf(), target));
+        c.setStance(new AnalCowgirl(getSelf(), target), getSelf(), getSelf().canMakeOwnDecision());
         getSelf().emote(Emotion.dominant, 30);
         if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
             target.add(c, new BodyFetish(target, getSelf(), "ass", .25));

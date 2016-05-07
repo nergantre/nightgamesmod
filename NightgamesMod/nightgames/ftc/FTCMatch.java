@@ -19,11 +19,16 @@ import nightgames.modifier.standard.FTCModifier;
 
 public class FTCMatch extends Match {
     private Map<Character, Area> bases;
-    private Character prey;
+    private Character prey; 
     private int gracePeriod;
     private boolean flagInCenter;
     private int flagCounter;
 
+    { // To prevent uninitalized comparison in manageConditions
+        prey = Global.noneCharacter();
+        gracePeriod = -1;
+    }
+    
     public FTCMatch(Collection<Character> combatants, Character prey) {
         super(combatants, new FTCModifier(prey));
         assert combatants.size() == 5; // 4 hunters + prey = 5
