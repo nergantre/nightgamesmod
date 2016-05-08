@@ -85,6 +85,7 @@ public class Player extends Character {
         growth.bonusStamina = 1;
         growth.bonusArousal = 2;
         growth.bonusMojo = 1;
+        growth.attributes = new int[]{2, 3, 3, 3};
     }
 
     public String describeStatus() {

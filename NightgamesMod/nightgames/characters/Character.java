@@ -320,6 +320,8 @@ public abstract class Character extends Observable implements Cloneable {
         if (has(Trait.fastLearner)) {
             rate += .2;
         }
+        if (!human())
+            rate += .5;
         rate *= Global.xpRate;
         xp += Math.round(i * rate);
         update();

@@ -32,7 +32,7 @@ public class Growth {
         bonusAttributes = 1;
         willpower = .5f;
         bonusWillpower = .25f;
-        attributes = new int[] {2, 3, 3, 3,};
+        attributes = new int[] {3, 4, 4, 4,};
         traits = new HashMap<Integer, List<Trait>>();
         actions = new HashMap<Integer, Runnable>();
     }

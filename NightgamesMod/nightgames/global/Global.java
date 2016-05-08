@@ -138,7 +138,7 @@ public class Global {
     public static Scene current;
     public static boolean debug[] = new boolean[DebugFlags.values().length];
     public static int debugSimulation = 0;
-    public static double moneyRate = 1.0;
+    public static double moneyRate = 5.0;
     public static double xpRate = .75;
     public static ContextFactory factory;
     public static Context cx;
