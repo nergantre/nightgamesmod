@@ -532,4 +532,9 @@ public class CassieTime extends BaseNPCTime {
             done(true);
         }
     }
+    
+    @Override
+    public Optional<String> getAddictionOption() {
+        return Global.getPlayer().checkAddiction(AddictionType.MAGIC_MILK) ? Optional.of("Ask for milk") : Optional.empty();
+    }
 }

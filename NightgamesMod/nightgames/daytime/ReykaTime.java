@@ -206,6 +206,9 @@ public class ReykaTime extends BaseNPCTime {
                   .choose(this, "Sparring");
             Global.gui()
                   .choose(this, "Sex");
+            if (Global.getPlayer().checkAddiction(AddictionType.CORRUPTION)) {
+                Global.gui().choose("Strengthen Corruption");
+            }
         } else if (Global.getPlayer()
                          .checkAddiction(AddictionType.CORRUPTION)) {
             Global.gui()
@@ -224,7 +227,7 @@ public class ReykaTime extends BaseNPCTime {
                       .choose(this, "Sex");
             }
             Global.gui()
-                  .choose(this, "Worship");
+                  .choose(this, "Strengthen Corruption");
         } else if (npc.getAttraction(player) < 10) {
             Global.gui()
                   .message("You were going to ask Aesop where to find Reyka, but while on your way "
@@ -286,22 +289,84 @@ public class ReykaTime extends BaseNPCTime {
 
     @Override
     public void subVisit(String choice) {
-        if (choice.equals("Worship")) {
-            if (npc.getAffection(player) > 0) {
+        if (choice.equals("Strengthen Corruption")) {
+            if (npc.getAffection(player) == 0) {
                 Global.gui()
                       .message("Reyka has you perform 'evil' acts to strengthen your corruption. This"
                                       + " is a placeholder. It still increases your addiction, though. You"
                                       + " won't suffer withdrawal effects tonight.");
             } else {
                 Global.gui()
-                      .message("Reyka and you engage in some kinky, 'sinful' sex. Probably with an exhibitionist"
-                                      + " streak so as to corrupt others as well. This"
-                                      + " is a placeholder. It still increases your addiction, though. You"
-                                      + " won't suffer withdrawal effects tonight.");
+                      .message("You tell Reyka about the darkness you've been feeling inside. The thing she put there."
+                                      + " \"Oh, left a little mark, did I? Well, don't worry, you'll be fine. As long as "
+                                      + "you keep it fed, of course.\" You most certainly do not like the sound of that. "
+                                      + "\"Don't fret so much dear, it's unseemly. It's really quite simple: it got there"
+                                      + " because of what I am, so it wants you to be a little like me as well. You know,"
+                                      + " demonic and all.\" What!? She's turning you into a demon? \"No, no, it's not "
+                                      + "that strong. Not yet at least. No, for now, you just need to act the part a bit."
+                                      + " And what could be a better way to do so than some particularly naughty sex?\" "
+                                      + "That's more your language, so you follow Reyka as she leads you to the wonderful"
+                                      + " irony that is her home.\n\nWhen a demon promises to do naughty things to you, "
+                                      + "that should probably worry you. It doesn't. Something about Reyka puts you at "
+                                      + "ease despite her imperious manner. Her wicked smile in the pale light of her "
+                                      + "basement room however, does not. \"So tell me, what do you think would be some "
+                                      + "delightfully bad things for us to stoke that fire of yours with?\" She glances "
+                                      + "meaningfully downward as if to look around you at something... Oh, oh. Butt "
+                                      + "stuff? \"Butt stuff! That always seems to get under some people's nerves. But "
+                                      + "still tame enough for a neophyte such as yourself. So what are you waiting for? "
+                                      + "Get naked.\" You do as she tells you, and she does the same. Your efforts are "
+                                      + "hampered a bit as she reveals her curvy physique, but you manage to get it all "
+                                      + "off anyway. \"I see there is little need to get you ready, \" nope, already "
+                                      + "rock-hard, \"so we just have to take care of lubrication.\" You look around for"
+                                      + " a bottle, but there doesn't seem to be any. \"No, dear. Not that artificial "
+                                      + "nonsense. Your saliva will work perfectly well.\" She gets on her bed on all "
+                                      + "fours and looks back at you. \"Don't worry, I wash myself. Usually. Well? You "
+                                      + "may commence!\" She does look kind of inviting... You hesitantly walk towards "
+                                      + "her and kneel before the bed, looking right at her rosy hole. You grab her "
+                                      + "luscious asscheeks with both hands and give her a massage. \"Mmm, good start. "
+                                      + "But that's not what we're here for, is it?\" Steeling your nerves, you lean in."
+                                      + " Smells nice, too. The first lick is very tentative, but it does uncover that "
+                                      + "she doesn't taste nearly as bad as you feared. In fact, it seems quite pleasant."
+                                      + " Reyka seems to agree, if the little shiver up her spine is any indication. So "
+                                      + "you step up your game, really getting to work on her asshole. Reyka's hips seem"
+                                      + " to take on a life of their own, rotating and grinding back against your face. "
+                                      + "The scents wafting up from her wet slit do not help your concentration at all,"
+                                      + " and you find yourself travelling down every once in a while to have a test. It"
+                                      + " seems to taste better every time, and the lubrication helps as well. \"That'll"
+                                      + " do for now, love, I need something more substantial right now.\" What a "
+                                      + "coincidence. You've got just the thing. You push her forward a bit and take your"
+                                      + " position behind her on the bed. It's a pretty steep angle to line yourself up "
+                                      + "properly, but you are well-motivated. Before giving yourself a chance to have "
+                                      + "second thoughts, you sink all the way down into her. \"Ooooh! It's been too long"
+                                      + " since I had a stud give me a good pounding back there! You'll make up for lost "
+                                      + "time, won't you?\" Oh, fucking yes you will! Not bothering with starting off "
+                                      + "slowly, you immediately begin hammering her tight ass as hard as you can, "
+                                      + "eliciting all kinds of sounds from the demon beneath you. Her tail wraps itself"
+                                      + " around your neck, but luckily doesn't constrict. Just to make sure you don't "
+                                      + "leave, probably. Not that there was any risk of that happening. You don't hold "
+                                      + "up long under the ferocious tempo, and you soon feel you're about to cum. When "
+                                      + "you do, it feels like something snaps inside of you. The orgasm feels even more"
+                                      + " powerful than usual, and there is a distinct sense of something besides cum "
+                                      + "being pumped into Reyka. Her tail, still around your neck, suddenly opens up and"
+                                      + " covers your mouth. Before you can even process what's going on, it blows "
+                                      + "something into you. You break away and start coughing, causing black smoke to "
+                                      + "flow out of your mouth. You can still feel it though. Not in your lungs, "
+                                      + "someplace deeper. \"Willing sacrifices are always more potent that those taken"
+                                      + " by force. Keep this up, and you'll make quite the handsome semi-incubus at some"
+                                      + " point. Are you alright, dear? You look a little pale.\" You feel a little "
+                                      + "pale. You tell her that it's perhaps best if you rested for a while before "
+                                      + "continuing... Whatever it was she just did. She agrees, waving you off. It "
+                                      + "seems a dismissive gesture, but her eyes betray something else. Is that actual"
+                                      + " concern? Pondering the theological implications of a demon showing affection,"
+                                      + " you head home. ");
             }
-            Global.gui().choose(this, "Leave");
-            Global.getPlayer().addict(AddictionType.CORRUPTION, npc, Addiction.MED_INCREASE);
-            Global.getPlayer().getAddiction(AddictionType.CORRUPTION).flagDaytime();
+            Global.gui()
+                  .choose(this, "Leave");
+            Global.getPlayer()
+                  .addict(AddictionType.CORRUPTION, npc, Addiction.MED_INCREASE);
+            Global.getPlayer()
+                  .getAddiction(AddictionType.CORRUPTION)
+                  .flagDaytime();
         } else if (choice.equals("Sex")) {
             if (npc.getAffection(player) >= 8 && (!player.has(Trait.desensitized) || Global.random(2) == 1)) {
                 Global.gui()
@@ -670,5 +735,10 @@ public class ReykaTime extends BaseNPCTime {
         } else {
             done(false);
         }
+    }
+    
+    @Override
+    public Optional<String> getAddictionOption() {
+        return Global.getPlayer().checkAddiction(AddictionType.CORRUPTION) ? Optional.of("Strengthen Corruption") : Optional.empty();
     }
 }

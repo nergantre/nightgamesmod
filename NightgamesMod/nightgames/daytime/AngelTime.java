@@ -160,9 +160,10 @@ public class AngelTime extends BaseNPCTime {
                   .choose(this, "Sparring");
             Global.gui()
                   .choose(this, "Sex");
-            if (npc.has(Trait.zealinspiring)) {
+            if (Global.getPlayer()
+                      .checkAddiction(AddictionType.ZEAL)) {
                 Global.gui()
-                      .choose("Worship");
+                      .choose(this, "Worship");
             }
         } else if (Global.getPlayer()
                          .checkAddiction(AddictionType.ZEAL)) {
@@ -229,20 +230,45 @@ public class AngelTime extends BaseNPCTime {
     @Override
     public void subVisit(String choice) {
         if (choice.equals("Worship")) {
-            if (npc.getAffection(player) > 0) {
+            if (npc.getAffection(player) == 0) {
                 Global.gui()
                       .message("Angel allows you to worship her, having you do some simple, menial tasks. This"
                                       + " is a placeholder. It still increases your addiction, though. You"
                                       + " won't suffer withdrawal effects tonight.");
             } else {
                 Global.gui()
-                      .message("Angel allows you to worship her, but her feelings for you confuse her. This"
-                                      + " is a placeholder. It still increases your addiction, though. You"
-                                      + " won't suffer withdrawal effects tonight.");
+                      .message("You feel very nervous approaching Angel like this. A growing part of you feels a need "
+                                      + "to pay respect to this... Angel? Goddess? The other part finds the idea "
+                                      + "ridiculous. But perhaps it can't hurt to try? You sheepishly ask Angel if there"
+                                      + " is anything you can do for her. \"Do for me? Well, there's always some chores "
+                                      + "to be done, but... Why do you ask? You know you don't have to bribe me into sex."
+                                      + "\" She's not going to make this easy on you, is she? You try to explain your "
+                                      + "predicament as best you can, trying not to appear too needy about the whole "
+                                      + "thing. \"Oh... Oh! I mean... Well... Sure, I guess. Whatever is a girl to do"
+                                      + " when a cute guy comes along, asking to worship her?\" You give a start at the "
+                                      + "word 'worship', but then, it does ring kind of true... \"Oh, yes I am sure I can "
+                                      + "think of some nice tasks for you. Hmm, I might enjoy this. Follow me, altar boy."
+                                      + "\" Whatever confusion she felt clearly did not stand up to her dirty mind. Well,"
+                                      + " what's a sex goddess for?\n\nAs soon as you reach the privacy of Angel's room, "
+                                      + "she regains the divine aura you are used to seeing at night. The sight of the "
+                                      + "plush white wings sprouting from her back drives away the hesitation you felt. "
+                                      + "This is clearly a being worthy of worship. You stand still as she gets "
+                                      + "comfortable, patiently awaiting her for first command. \"Right then, \" she"
+                                      + " starts, wearing only her bra and short skirt, \"first, let's first have you bow "
+                                      + "to me.\" You immediately bend at the waist. The act feels shockingly natural. "
+                                      + "\"Now, kiss my foot.\" That's a bridge too far, isn't it? But no, as she dangles"
+                                      + " a shapely foot in front of you, you find that it isn't. You kneel and kiss the"
+                                      + " upside of her foot. \"Hmm, higher.\" You move up to her ankle. \"Higher still."
+                                      + " No, even higher.\" Continuously spurred on, you work your way up to her thigh "
+                                      + "like this, where you discover a distinct lack of panties beneath her skirt. ");
             }
-            Global.gui().choose(this, "Leave");
-            Global.getPlayer().addict(AddictionType.ZEAL, npc, Addiction.MED_INCREASE);
-            Global.getPlayer().getAddiction(AddictionType.ZEAL).flagDaytime();
+            Global.gui()
+                  .choose(this, "Leave");
+            Global.getPlayer()
+                  .addict(AddictionType.ZEAL, npc, Addiction.MED_INCREASE);
+            Global.getPlayer()
+                  .getAddiction(AddictionType.ZEAL)
+                  .flagDaytime();
         } else if (choice.equals("Sex")) {
             if (npc.getAffection(player) >= 12 && (!player.has(Trait.experttongue) || Global.random(2) == 1)) {
                 Global.gui()
@@ -454,5 +480,10 @@ public class AngelTime extends BaseNPCTime {
         } else if (choice.equals("Leave")) {
             done(true);
         }
+    }
+    
+    @Override
+    public Optional<String> getAddictionOption() {
+        return Global.getPlayer().checkAddiction(AddictionType.ZEAL) ? Optional.of("Worship") : Optional.empty();
     }
 }

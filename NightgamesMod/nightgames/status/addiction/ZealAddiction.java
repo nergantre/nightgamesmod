@@ -14,12 +14,16 @@ import nightgames.stance.Mount;
 import nightgames.stance.Position;
 import nightgames.stance.Stance;
 import nightgames.status.CrisisOfFaith;
+import nightgames.status.DivineCharge;
 import nightgames.status.Status;
 
 public class ZealAddiction extends Addiction {
 
+    private boolean shouldApplyDivineCharge;
+    
     public ZealAddiction(Character cause, float magnitude) {
         super("Zeal", cause, magnitude);
+        shouldApplyDivineCharge = false;
     }
 
     public ZealAddiction(Character cause) {
@@ -34,6 +38,31 @@ public class ZealAddiction extends Addiction {
     @Override
     protected Optional<Status> addictionEffects() {
         return Optional.of(this);
+    }
+    
+    @Override
+    public Optional<Status> startNight() {
+        Optional<Status> s = super.startNight();
+        if (!inWithdrawal) {
+            shouldApplyDivineCharge = true;
+        }
+        return s;
+    }
+    
+    @Override
+    public void endNight() {
+        super.endNight();
+        shouldApplyDivineCharge = false;
+    }
+    
+    @Override
+    public Optional<Status> startCombat(Combat c, Character opp) {
+        Optional<Status> s = super.startCombat(c, opp);
+        if (shouldApplyDivineCharge && opp.equals(cause)) {
+            int sev = getSeverity().ordinal();
+            opp.status.add(new DivineCharge(opp, sev * .75f));
+        }
+        return s;
     }
 
     @Override
