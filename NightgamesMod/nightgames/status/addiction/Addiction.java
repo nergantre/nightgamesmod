@@ -66,11 +66,7 @@ public abstract class Addiction extends Status {
             return Severity.HIGH;
         }
     }
-
-    public final Character getCause() {
-        return cause;
-    }
-
+    
     public final Severity getCombatSeverity() {
         if (combatMagnitude < LOW_THRESHOLD) {
             return Severity.NONE;
@@ -239,6 +235,6 @@ public abstract class Addiction extends Status {
     }
 
     public boolean wasCausedBy(Character target) {
-        return target.equals(cause);
+        return target.getType().equals(cause.getType());
     }
 }

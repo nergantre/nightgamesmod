@@ -1343,7 +1343,7 @@ public abstract class Character extends Observable implements Cloneable {
             resources.put("stamina", stamina.maxFull());
             resources.put("arousal", arousal.maxFull());
             resources.put("mojo", mojo.maxFull());
-            resources.put("willpower", willpower.maxFull());
+            resources.put("willpower", willpower.trueMax());
             saveObj.put("resources", resources);
         }
         saveCharIntMap(saveObj, affections, "affections");
@@ -1508,7 +1508,7 @@ public abstract class Character extends Observable implements Cloneable {
             Player p = (Player) this;
             
             if (p.checkAddiction(AddictionType.CORRUPTION) 
-                           && p.getAddiction(AddictionType.CORRUPTION).getCause() == opponent
+                           && p.getAddiction(AddictionType.CORRUPTION).wasCausedBy(opponent)
                            && opponentPart.isType("pussy")
                            && selfPart.isType("cock")
                            && c.getCombatantData(this).getIntegerFlag("ChoseToFuck") == 1) {
@@ -1517,7 +1517,7 @@ public abstract class Character extends Observable implements Cloneable {
                 p.addict(AddictionType.CORRUPTION, opponent, Addiction.HIGH_INCREASE);
             }
             if (p.checkAddiction(AddictionType.ZEAL) 
-                            && p.getAddiction(AddictionType.ZEAL).getCause() == opponent
+                            && p.getAddiction(AddictionType.ZEAL).wasCausedBy(opponent)
                                             && opponentPart.isType("pussy")
                                             && selfPart.isType("cock")) {
                 c.write(this, "Experiencing so much pleasure inside of " + opponent + " reinforces"

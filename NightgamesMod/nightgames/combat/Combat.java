@@ -837,7 +837,7 @@ public class Combat extends Observable implements Cloneable {
                                                     .hasAddiction(AddictionType.CORRUPTION)
                             && Global.getPlayer()
                                      .getAddiction(AddictionType.CORRUPTION)
-                                     .getCause() == getOther(Global.getPlayer())) {
+                                     .wasCausedBy(getOther(Global.getPlayer()))) {
                 if (initiator != null) {
                     getCombatantData(initiator).setIntegerFlag("ChoseToFuck", 1);
                     getCombatantData(getOther(initiator)).setIntegerFlag("ChoseToFuck", -1);
