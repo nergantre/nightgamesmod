@@ -59,7 +59,7 @@ public class ReverseFly extends Fly {
             }
             target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c);
             getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c);
-            c.setStance(new FlyingCowgirl(getSelf(), target));
+            c.setStance(new FlyingCowgirl(getSelf(), target), getSelf(), getSelf().canMakeOwnDecision());
         } else {
             getSelf().add(c, new Falling(getSelf()));
             return false;

@@ -73,6 +73,10 @@ public interface Personality extends Serializable {
     public RecruitmentData getRecruitmentData();
 
     public AiModifiers getAiModifiers();
+    
+    public void setAiModifiers(AiModifiers mods);
+    
+    public void resetAiModifiers();
 
     public String resist3p(Combat combat, Character target, Character assist);
 

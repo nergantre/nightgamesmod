@@ -116,8 +116,10 @@ public class GenericBodyPart implements BodyPart {
     }
 
     @Override
-    public boolean equals(Object other) // com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.obeyEqualsContract.obeyGeneralContractOfEquals
+    public boolean equals(Object other)
     {
+        if (other == null)
+            return false;
         return toString().equals(other.toString());
     }
 

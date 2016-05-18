@@ -138,7 +138,7 @@ public class Global {
     public static Scene current;
     public static boolean debug[] = new boolean[DebugFlags.values().length];
     public static int debugSimulation = 0;
-    public static double moneyRate = 1.0;
+    public static double moneyRate = 5.0;
     public static double xpRate = .75;
     public static ContextFactory factory;
     public static Context cx;
@@ -179,7 +179,8 @@ public class Global {
         // debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
         // debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
         // debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
-        // debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
+        debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
+        // debug[DebugFlags.DEBUG_ADDICTION.ordinal()] = true;
         traitRequirements = new TraitTree(ResourceLoader.getFileResourceAsStream("data/TraitRequirements.xml"));
         current = null;
         factory = new ContextFactory();
@@ -453,6 +454,9 @@ public class Global {
         getSkillPool().add(new ToggleSlimePussy(p));
         getSkillPool().add(new Spores(p));
         getSkillPool().add(new EngulfedFuck(p));
+        getSkillPool().add(new Pray(p));
+        getSkillPool().add(new Prostrate(p));
+        getSkillPool().add(new DarkKiss(p));
 
         if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
             getSkillPool().add(new SelfStun(p));
@@ -583,7 +587,7 @@ public class Global {
         }
         date++;
         day = new Daytime(human);
-        day.plan();
+        day.plan(false);
     }
     
     private static Set<Character> pickCharacters(Set<Character> avail, Set<Character> added, int size) {
@@ -594,7 +598,7 @@ public class Global {
                         .collect(Collectors.toList());
         Collections.shuffle(randomizer);
         Set<Character> results = new HashSet<>(added);
-        results.addAll(randomizer.subList(0, Math.min(Math.max(0, size - results.size()), randomizer.size())));
+        results.addAll(randomizer.subList(0, Math.min(Math.max(0, size - results.size())+1, randomizer.size())));
         return results;
     }
 
@@ -626,9 +630,9 @@ public class Global {
             }
             if (disabledFlag == null || !Global.checkFlag(disabledFlag)) {
                 // TODO: DEBUG
-                if (c.getName().contains("Cassie") || c.human()) {
+               // if (c.getName().contains("Reyka") || c.human()) {
                     participants.add(c);
-                }
+              //}
             }
         }
         if (matchmod.name().equals("maya")) {
@@ -675,7 +679,7 @@ public class Global {
             lineup.add(prey);
             if (!prey.human())
                 lineup.add(human);
-            lineup = pickCharacters(lineup, players, 4);
+            lineup = pickCharacters(players, lineup, 4);
             resting = new HashSet<Character>(players);
             resting.removeAll(lineup);
             match = buildMatch(lineup, matchmod);
@@ -684,7 +688,7 @@ public class Global {
                 lineup.add(lover);
             }
             lineup.add(human);
-            lineup = pickCharacters(lineup, players, 4);
+            lineup = pickCharacters(players, lineup, 4);
             resting = new HashSet<Character>(players);
             resting.removeAll(lineup);
             match = buildMatch(lineup, matchmod);
@@ -1191,6 +1195,7 @@ public class Global {
     }
 
     public static <T> T pickRandom(T[] arr) {
+        if (arr.length == 0) return null;
         return arr[Global.random(arr.length)];
     }
 
@@ -1333,7 +1338,7 @@ public class Global {
             if (action == null) {
                 System.out.println(second);
             }
-            if (matchActions != null && second != null && action != null) {
+            if (second != null && action != null) {
                 replacement = action.replace(character, first, second, third);
                 if (caps) {
                     replacement = Global.capitalizeFirstLetter(replacement);

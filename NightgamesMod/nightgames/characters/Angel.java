@@ -58,6 +58,7 @@ public class Angel extends BasePersonality {
         growth.addTrait(15, Trait.experienced);
         growth.addTrait(18, Trait.erophage);
         growth.addTrait(20, Trait.skeptical);
+        growth.addTrait(20, Trait.zealinspiring);
         growth.addTrait(21, Trait.holecontrol);
         growth.addTrait(24, Trait.insertion);
         growth.addTrait(27, Trait.lacedjuices);

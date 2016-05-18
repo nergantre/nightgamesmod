@@ -43,7 +43,7 @@ public class CounterFlower extends CounterBase {
             } else {
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             }
-            c.setStance(new FlowerSex(getSelf(), target));
+            c.setStance(new FlowerSex(getSelf(), target), getSelf(), true);
             new Thrust(getSelf()).resolve(c, target);
         } else {
             if (getSelf().human()) {

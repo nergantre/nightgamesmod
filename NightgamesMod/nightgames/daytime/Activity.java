@@ -33,7 +33,7 @@ public abstract class Activity {
             Global.getDay().advance(time);
         }
         page = 0;
-        Global.getDay().plan();
+        Global.getDay().plan(false);
     }
 
     @Override

@@ -2,10 +2,8 @@
 nightgames_log.txt
 *.sav
 *.ngs
-<<<<<<< HEAD
 *.iml
 .idea
 out
-=======
-*.jar
->>>>>>> 574f416db6bdfc02ef32599f64568fd2389c7f79
+CombatStats*
+NightgamesMod/.settings

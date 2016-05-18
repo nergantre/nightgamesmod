@@ -7,6 +7,7 @@ import java.util.List;
 import org.json.simple.parser.ParseException;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 
 import nightgames.actions.Movement;
 import nightgames.areas.Area;
@@ -48,8 +49,6 @@ import nightgames.stance.StandingOver;
 import nightgames.stance.TribadismStance;
 import nightgames.stance.UpsideDownFemdom;
 import nightgames.stance.UpsideDownMaledom;
-
-import org.junit.Test;
 
 public class SkillsTest {
 	List<Personality> npcs1;

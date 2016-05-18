@@ -172,11 +172,11 @@ public class Meditation extends Activity {
         if (npc.getPure(Attribute.Ki) > 0 && budget >= 1000 * (npc.getPure(Attribute.Ki) + 1)) {
             if (budget >= 2000 * (npc.getPure(Attribute.Ki) + 2)) {
                 npc.money -= 1000 * (npc.getPure(Attribute.Ki) + 1);
-                budget -= 1000 * (npc.getPure(Attribute.Ki) + 1);
+//                budget -= 1000 * (npc.getPure(Attribute.Ki) + 1);
                 npc.mod(Attribute.Dark, 1);
             }
             npc.money -= 1000 * (npc.getPure(Attribute.Ki) + 1);
-            budget -= 1000 * (npc.getPure(Attribute.Ki) + 1);
+            //budget -= 1000 * (npc.getPure(Attribute.Ki) + 1);
             npc.mod(Attribute.Ki, 1);
         }
         int r = Global.random(4);

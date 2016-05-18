@@ -152,7 +152,7 @@ public class Struggle extends Skill {
                     }
                     boolean reverseStrapped = BodyPart.hasOnlyType(c.getStance().partsFor(target), "strapon");
                     boolean reversedStance = false;
-                    if (reverseStrapped) {
+                    if (!reverseStrapped) {
                         Position reversed = c.getStance().reverse(c);
                         if (reversed != c.getStance()) {
                             c.setStance(reversed);

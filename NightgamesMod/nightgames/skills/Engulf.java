@@ -118,7 +118,7 @@ public class Engulf extends CounterBase {
         if (getSelf().getType().equals("Airi"))
             msg += "\n<i>\"It's done... over... stop struggling... cum.\"</i>";
         c.write(getSelf(), Global.format(msg, getSelf(), target));
-        c.setStance(new Engulfed(getSelf(), target));
+        c.setStance(new Engulfed(getSelf(), target), getSelf(), true);
         getSelf().emote(Emotion.dominant, 50);
         getSelf().emote(Emotion.horny, 30);
         target.emote(Emotion.nervous, 50);

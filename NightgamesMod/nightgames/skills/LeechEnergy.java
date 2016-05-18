@@ -44,6 +44,10 @@ public class LeechEnergy extends Skill {
                     break;
                 }
             }
+            if (part == null) {
+                c.write("<b>ERROR: Could not pick part in LeechEnergy!</b>");
+                return false;
+            }
             String partString = selfPart.describe(getSelf());
             String partStringSingular = partString.substring(0, partString.length() - 1);
             if (part.isType("hands")) {
@@ -100,7 +104,7 @@ public class LeechEnergy extends Skill {
             } else {
                 c.write(getSelf(), "Wtf happened");
             }
-            target.drainStaminaAsMojo(c, getSelf(), 10, 1.5f);
+            target.drainStaminaAsMojo(c, getSelf(), 10 + Global.random(20), 1.5f);
             target.body.pleasure(getSelf(), selfPart, part, 10 + Global.random(20), c);
         } else {
             if (getSelf().human()) {
@@ -130,7 +134,7 @@ public class LeechEnergy extends Skill {
 
     @Override
     public int accuracy(Combat c) {
-        return 7;
+        return 80;
     }
 
     @Override

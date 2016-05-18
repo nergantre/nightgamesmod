@@ -9,6 +9,7 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.status.FluidAddiction;
 import nightgames.status.Frenzied;
+import nightgames.status.PartiallyCorrupted;
 import nightgames.status.Stsflag;
 import nightgames.status.Trance;
 
@@ -101,6 +102,9 @@ public class MouthPart extends GenericBodyPart {
                 c.write(opponent,
                                 "<br>You feel faint as her lips touch your body, as if your will to fight is being sucked out through your "
                                                 + target.describe(opponent) + " into her mouth.");
+                if (self.has(Trait.corrupting)) {
+                    opponent.add(c, new PartiallyCorrupted(self));
+                }
             } else {
                 c.write(opponent,
                                 "<br>As your lips touch " + opponent.getName()

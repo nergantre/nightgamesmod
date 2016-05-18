@@ -160,7 +160,7 @@ public class XxxStore extends Store {
         if (!npc.has(Item.Lubricant, 10)) {
             int i = Math.min(budget / Item.Lubricant.getPrice(), 10 - npc.count(Item.Lubricant));
             npc.gain(Item.Lubricant, i);
-            budget -= i * Item.Lubricant.getPrice();
+            //budget -= i * Item.Lubricant.getPrice();
             npc.money -= i * Item.Lubricant.getPrice();
         }
     }

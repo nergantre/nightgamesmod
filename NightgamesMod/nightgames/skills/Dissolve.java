@@ -7,6 +7,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.items.clothing.ClothingSlot;
 
 public class Dissolve extends Skill {
 
@@ -28,8 +29,14 @@ public class Dissolve extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
+        ClothingSlot toShred = null;
+        if (!target.outfit.slotOpen(ClothingSlot.bottom) && !target.outfit.slotUnshreddable(ClothingSlot.bottom)) {
+            toShred = ClothingSlot.bottom;
+        } else if (!target.outfit.slotOpen(ClothingSlot.top) && !target.outfit.slotUnshreddable(ClothingSlot.top)) {
+            toShred = ClothingSlot.top;
+        }
         if (getSelf().has(Trait.slime)) {
-            Clothing destroyed = target.shredRandom();
+            Clothing destroyed = shred(target, toShred);
             String msg = "{self:SUBJECT-ACTION:reach|reaches} out with a slimy hand and"
                             + " {self:action:caress|caresses} {other:possessive} " + destroyed.getName()
                             + ". Slowly, it dissolves away beneath {self:possessive} touch.";
@@ -42,14 +49,14 @@ public class Dissolve extends Skill {
                 } else if (target.human()) {
                     c.write(getSelf(), receive(c, 0, Result.special, getSelf()));
                 }
-                target.shredRandom();
+                shred(target, toShred);
             } else if (target.roll(this, c, accuracy(c))) {
                 if (getSelf().human()) {
                     c.write(getSelf(), deal(c, 0, Result.normal, target));
                 } else if (target.human()) {
                     c.write(getSelf(), receive(c, 0, Result.normal, getSelf()));
                 }
-                target.shredRandom();
+                shred(target, toShred);
             } else {
                 if (getSelf().human()) {
                     c.write(getSelf(), deal(c, 0, Result.miss, target));
@@ -62,6 +69,12 @@ public class Dissolve extends Skill {
         return true;
     }
 
+    private Clothing shred(Character target, ClothingSlot slot) {
+        if (slot == null)
+            return target.shredRandom();
+        return target.shred(slot);
+    }
+    
     @Override
     public Skill copy(Character user) {
         return new Dissolve(user);

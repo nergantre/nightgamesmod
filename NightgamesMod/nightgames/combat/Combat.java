@@ -1,6 +1,5 @@
 package nightgames.combat;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,6 +13,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.NPC;
+import nightgames.characters.Player;
 import nightgames.characters.State;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
@@ -35,29 +35,29 @@ import nightgames.stance.Stance;
 import nightgames.stance.StandingOver;
 import nightgames.status.Braced;
 import nightgames.status.CounterStatus;
-import nightgames.status.MagicMilkAddiction;
+import nightgames.status.DivineCharge;
+import nightgames.status.Status;
 import nightgames.status.Stsflag;
 import nightgames.status.Wary;
 import nightgames.status.Winded;
+import nightgames.status.addiction.Addiction;
+import nightgames.status.addiction.AddictionType;
 
-public class Combat extends Observable implements Serializable, Cloneable {
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8279523341570263846L;
+public class Combat extends Observable implements Cloneable {
+
     public Character p1;
     public CombatantData p1Data;
     public Character p2;
     public CombatantData p2Data;
     public Optional<Character> winner;
     public int phase;
-    private Skill p1act;
-    private Skill p2act;
+    protected Skill p1act;
+    protected Skill p2act;
     public Area location;
     private String message;
     private Position stance;
     public Character lastTalked;
-    private int timer;
+    protected int timer;
     public Result state;
     private HashMap<String, String> images;
     String imagePath = "";
@@ -99,10 +99,24 @@ public class Combat extends Observable implements Serializable, Cloneable {
         p1.state = State.combat;
         p2.state = State.combat;
     }
-    
+
     private void applyCombatStatuses(Character self, Character other) {
-        if (self.getFlag(MagicMilkAddiction.MAGICMILK_ADDICTION_FLAG) >= 10 && other.has(Trait.magicmilk)) {
-            self.add(this, new MagicMilkAddiction(self, other));
+        if (self.human()) {
+            Player p = (Player) self;
+            for (Addiction a : p.getAddictions()) {
+                if (a.isActive()) {
+                    Optional<Status> status = a.startCombat(this, other);
+                    if (status.isPresent()) {
+                        self.add(this, status.get());
+                    }
+                }
+            }
+        } else if (other.human() && self.has(Trait.zealinspiring) && Global.getPlayer()
+                                                                           .checkAddiction(AddictionType.ZEAL)
+                        && !Global.getPlayer()
+                                  .getAddiction(AddictionType.ZEAL)
+                                  .isInWithdrawal()) {
+            self.add(this, new DivineCharge(self, .3));
         }
     }
 
@@ -116,7 +130,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
         }
         applyCombatStatuses(p1, p2);
         applyCombatStatuses(p2, p1);
-        
+
         if (!(p1.human() || p2.human())) {
             automate();
         }
@@ -124,9 +138,9 @@ public class Combat extends Observable implements Serializable, Cloneable {
     }
 
     public CombatantData getCombatantData(Character character) {
-        if (character == p1) {
+        if (character.equals(p1)) {
             return p1Data;
-        } else if (character == p2) {
+        } else if (character.equals(p2)) {
             return p2Data;
         } else {
             throw new IllegalArgumentException(character + " is not in combat " + this);
@@ -134,8 +148,9 @@ public class Combat extends Observable implements Serializable, Cloneable {
     }
 
     private boolean checkBottleCollection(Character victor, Character loser, PussyPart mod) {
-        return victor.has(Item.EmptyBottle, 1)
-                        && loser.body.get("pussy").stream().anyMatch(part -> part.getMod() == mod);
+        return victor.has(Item.EmptyBottle, 1) && loser.body.get("pussy")
+                                                            .stream()
+                                                            .anyMatch(part -> part.getMod() == mod);
     }
 
     public void doVictory(Character victor, Character loser) {
@@ -213,10 +228,13 @@ public class Combat extends Observable implements Serializable, Cloneable {
         if (loser.human()) {
             write("<br>Ashamed at your loss, you resolve to win next time.");
             write("<br><b>Gained 1 Willpower</b>.");
-            loser.getWillpower().gain(1);
+            loser.getWillpower()
+                 .gain(1);
         }
-        victor.getWillpower().fill();
-        loser.getWillpower().fill();
+        victor.getWillpower()
+              .fill();
+        loser.getWillpower()
+             .fill();
 
         if (Global.checkFlag(Flag.FTC) && loser.has(Item.Flag)) {
             write(victor, Global.format(
@@ -270,7 +288,9 @@ public class Combat extends Observable implements Serializable, Cloneable {
             return;
         }
         if (!p1.human() && !p2.human() && timer > 15) {
-            if (p1.getArousal().get() > p2.getArousal().get()) {
+            if (p1.getArousal()
+                  .get() > p2.getArousal()
+                             .get()) {
                 state = eval();
                 if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
                     System.out.println(p2.name() + " victory over " + p1.name());
@@ -283,7 +303,9 @@ public class Combat extends Observable implements Serializable, Cloneable {
                     end();
                 }
                 return;
-            } else if (p1.getArousal().get() < p2.getArousal().get()) {
+            } else if (p1.getArousal()
+                         .get() < p2.getArousal()
+                                    .get()) {
                 state = eval();
                 if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
                     System.out.println(p1.name() + " victory over " + p2.name());
@@ -326,8 +348,10 @@ public class Combat extends Observable implements Serializable, Cloneable {
                         + Global.capitalizeFirstLetter(getStance().describe()) + "<p>"
                         + player.describe(other.get(Attribute.Perception), this) + "<p>";
         if ((p1.human() || p2.human()) && !Global.checkFlag(Flag.noimage)) {
-            Global.gui().clearImage();
-            Global.gui().displayImage(imagePath, images.get(imagePath));
+            Global.gui()
+                  .clearImage();
+            Global.gui()
+                  .displayImage(imagePath, images.get(imagePath));
         }
         p1act = null;
         p2act = null;
@@ -344,7 +368,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
         updateAndClearMessage();
     }
 
-    private Result eval() {
+    protected Result eval() {
         if (getStance().bottom.human() && getStance().inserted(getStance().top) && getStance().en == Stance.anal) {
             return Result.anal;
         } else if (getStance().inserted()) {
@@ -366,7 +390,8 @@ public class Combat extends Observable implements Serializable, Cloneable {
                 List<Skill> avail = new ArrayList<Skill>(Arrays.asList(worshipSkills));
                 Collections.shuffle(avail);
                 while (!avail.isEmpty()) {
-                    Skill skill = avail.remove(avail.size() - 1).copy(self);
+                    Skill skill = avail.remove(avail.size() - 1)
+                                       .copy(self);
                     if (Skill.skillIsUsable(this, skill, other)) {
                         write(other, Global.format(
                                         "<b>{other:NAME-POSSESSIVE} divine aura forces {self:subject} to forget what {self:pronoun} {self:action:were|was} doing and crawl to {other:direct-object} on {self:possessive} knees.</b>",
@@ -394,7 +419,8 @@ public class Combat extends Observable implements Serializable, Cloneable {
         } else if (p1act != null && p2act != null) {
             clear();
             if (p1.human() || p2.human()) {
-                Global.gui().clearText();
+                Global.gui()
+                      .clearText();
             }
             p1act = checkWorship(p1, p2, p1act);
             p2act = checkWorship(p2, p1, p2act);
@@ -500,7 +526,8 @@ public class Combat extends Observable implements Serializable, Cloneable {
     private boolean resolveSkill(Skill skill, Character target) {
         boolean orgasmed = false;
         if (Skill.skillIsUsable(this, skill, target)) {
-            write(skill.user().subjectAction("use ", "uses ") + skill.getLabel(this) + ".");
+            write(skill.user()
+                       .subjectAction("use ", "uses ") + skill.getLabel(this) + ".");
             if (skill.makesContact() && !getStance().dom(target) && target.canAct()
                             && checkCounter(skill.user(), target, skill)) {
                 write("Countered!");
@@ -508,8 +535,10 @@ public class Combat extends Observable implements Serializable, Cloneable {
             } else if (target.is(Stsflag.counter) && skill.makesContact()) {
                 write("Countered!");
                 CounterStatus s = (CounterStatus) target.getStatus(Stsflag.counter);
-                if (skill.user().is(Stsflag.wary)) {
-                    write(target, s.getCounterSkill().getBlockedString(this, skill.user()));
+                if (skill.user()
+                         .is(Stsflag.wary)) {
+                    write(target, s.getCounterSkill()
+                                   .getBlockedString(this, skill.user()));
                 } else {
                     s.resolveSkill(this, skill.user());
                 }
@@ -520,7 +549,8 @@ public class Combat extends Observable implements Serializable, Cloneable {
             checkStamina(skill.user());
             orgasmed = checkOrgasm(skill.user(), target, skill);
         } else {
-            write(skill.user().possessivePronoun() + " " + skill.getLabel(this) + " failed.");
+            write(skill.user()
+                       .possessivePronoun() + " " + skill.getLabel(this) + " failed.");
         }
         return orgasmed;
     }
@@ -529,7 +559,7 @@ public class Combat extends Observable implements Serializable, Cloneable {
         return target.orgasmed || user.orgasmed;
     }
 
-    private void useSkills() {
+    protected void useSkills() {
         Skill firstSkill, secondSkill;
         Character firstCharacter, secondCharacter;
         if (p1.init() + p1act.speed() >= p2.init() + p2act.speed()) {
@@ -573,7 +603,8 @@ public class Combat extends Observable implements Serializable, Cloneable {
     }
 
     public void updateAndClearMessage() {
-        Global.gui().clearText();
+        Global.gui()
+              .clearText();
         combatMessageChanged = true;
         setChanged();
         this.notifyObservers();
@@ -596,12 +627,14 @@ public class Combat extends Observable implements Serializable, Cloneable {
     }
 
     public String debugMessage() {
-        return "Stance: " + getStance().getClass().getName() + "\np1: " + p1.debugMessage(this, getStance()) + "\np2: "
-                        + p2.debugMessage(this, getStance());
+        return "Stance: " + getStance().getClass()
+                                       .getName()
+                        + "\np1: " + p1.debugMessage(this, getStance()) + "\np2: " + p2.debugMessage(this, getStance());
     }
 
     public void checkStamina(Character p) {
-        if (p.getStamina().isEmpty() && !p.is(Stsflag.stunned)) {
+        if (p.getStamina()
+             .isEmpty() && !p.is(Stsflag.stunned)) {
             p.add(this, new Winded(p));
             if (!getStance().prone(p)) {
                 Character other;
@@ -624,7 +657,9 @@ public class Combat extends Observable implements Serializable, Cloneable {
                         write(p.name() + " drops to the floor, exhausted.");
                     }
                 }
-                p.loseWillpower(this, Math.min(p.getWillpower().max() / 8, 15), true);
+                p.loseWillpower(this, Math.min(p.getWillpower()
+                                                .max()
+                                / 8, 15), true);
             }
         }
     }
@@ -647,9 +682,13 @@ public class Combat extends Observable implements Serializable, Cloneable {
         if (target.resist3p(this, intruder, assist)) {
             target.gainXP(20 + target.lvlBonus(intruder));
             intruder.gainXP(10 + intruder.lvlBonus(target));
-            intruder.getArousal().empty();
+            intruder.getArousal()
+                    .empty();
             if (intruder.has(Trait.insatiable)) {
-                intruder.getArousal().restore((int) (intruder.getArousal().max() * 0.2D));
+                intruder.getArousal()
+                        .restore((int) (intruder.getArousal()
+                                                .max()
+                                        * 0.2D));
             }
             target.undress(this);
             intruder.defeated(target);
@@ -661,7 +700,8 @@ public class Combat extends Observable implements Serializable, Cloneable {
             if (!(p1.human() || p2.human() || intruder.human())) {
                 end();
             } else if (intruder.human()) {
-                Global.gui().watchCombat(this);
+                Global.gui()
+                      .watchCombat(this);
             }
         }
         updateMessage();
@@ -768,8 +808,15 @@ public class Combat extends Observable implements Serializable, Cloneable {
     }
 
     public void setStance(Position newStance) {
+        setStance(newStance, null, true);
+    }
+
+    public void setStance(Position newStance, Character initiator, boolean voluntary) {
         if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-            System.out.printf("Stance Change: %s -> %s\n", stance.getClass().getName(), newStance.getClass().getName());
+            System.out.printf("Stance Change: %s -> %s\n", stance.getClass()
+                                                                 .getName(),
+                            newStance.getClass()
+                                     .getName());
         }
         checkStanceStatus(p1, stance, newStance);
         checkStanceStatus(p2, stance, newStance);
@@ -779,11 +826,26 @@ public class Combat extends Observable implements Serializable, Cloneable {
             List<BodyPart> parts2 = stance.partsFor(p2);
             parts1.forEach(part -> parts2.forEach(other -> part.onEndPenetration(this, p1, p2, other)));
             parts2.forEach(part -> parts1.forEach(other -> part.onEndPenetration(this, p2, p1, other)));
+            getCombatantData(p1).setIntegerFlag("ChoseToFuck", 0);
+            getCombatantData(p2).setIntegerFlag("ChoseToFuck", 0);
         } else if (!stance.inserted() && newStance.inserted()) {
             List<BodyPart> parts1 = newStance.partsFor(p1);
             List<BodyPart> parts2 = newStance.partsFor(p2);
             parts1.forEach(part -> parts2.forEach(other -> part.onStartPenetration(this, p1, p2, other)));
             parts2.forEach(part -> parts1.forEach(other -> part.onStartPenetration(this, p2, p1, other)));
+            if (voluntary && (p1.human() || p2.human()) && Global.getPlayer()
+                                                    .hasAddiction(AddictionType.CORRUPTION)
+                            && Global.getPlayer()
+                                     .getAddiction(AddictionType.CORRUPTION)
+                                     .wasCausedBy(getOther(Global.getPlayer()))) {
+                if (initiator != null) {
+                    getCombatantData(initiator).setIntegerFlag("ChoseToFuck", 1);
+                    getCombatantData(getOther(initiator)).setIntegerFlag("ChoseToFuck", -1);
+                }
+                if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+                    System.out.println(initiator + " initiated penetration, voluntary=" + voluntary);
+                }
+            }
         }
 
         stance = newStance;

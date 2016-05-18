@@ -25,7 +25,7 @@ public class Area implements Serializable {
     public boolean alarm;
     public Trap trap;
     public ArrayList<Deployable> env;
-    public MapDrawHint drawHint;
+    public transient MapDrawHint drawHint;
     private Movement enumerator;
     private boolean pinged;
 

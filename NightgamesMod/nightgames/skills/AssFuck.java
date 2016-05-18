@@ -84,14 +84,15 @@ public class AssFuck extends Fuck {
                 c.write(getSelf(), receive(c, premessage.length(), Result.normal, target));
             }
         }
+        boolean voluntary = getSelf().canMakeOwnDecision();
         if (c.getStance().behind(getSelf())) {
             if (getSelf().name().equals("Eve")) {
-                c.setStance(new AnalProne(getSelf(), target));
+                c.setStance(new AnalProne(getSelf(), target), getSelf(), voluntary);
             } else {
-                c.setStance(new Anal(getSelf(), target));
+                c.setStance(new Anal(getSelf(), target), getSelf(), voluntary);
             }
         } else {
-            c.setStance(new AnalProne(getSelf(), target));
+            c.setStance(new AnalProne(getSelf(), target), getSelf(), voluntary);
         }
         int otherm = m;
         if (getSelf().has(Trait.insertion)) {

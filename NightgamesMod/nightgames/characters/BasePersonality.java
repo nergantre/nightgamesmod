@@ -34,6 +34,7 @@ public abstract class BasePersonality implements Personality {
     protected Growth growth;
     protected List<PreferredAttribute> preferredAttributes;
     protected CockMod preferredCockMod;
+    protected AiModifiers mods;
 
     public interface PreferredAttribute {
         Optional<Attribute> getPreferred(Character c);
@@ -53,8 +54,10 @@ public abstract class BasePersonality implements Personality {
     @Override
     public void rest(int time) {
         if (preferredCockMod != CockMod.error && character.rank > 0) {
-            Optional<BodyPart> optDick = character.body.get("cock").stream()
-                            .filter(part -> part.getMod() != preferredCockMod).findAny();
+            Optional<BodyPart> optDick = character.body.get("cock")
+                                                       .stream()
+                                                       .filter(part -> part.getMod() != preferredCockMod)
+                                                       .findAny();
             if (optDick.isPresent()) {
                 CockPart part = (CockPart) optDick.get();
                 character.body.remove(part);
@@ -116,12 +119,15 @@ public abstract class BasePersonality implements Personality {
 
     @Override
     public String image(Combat c) {
-        String fname = character.name().toLowerCase() + "_" + character.mood.name() + ".jpg";
+        String fname = character.name()
+                                .toLowerCase()
+                        + "_" + character.mood.name() + ".jpg";
         return fname;
     }
 
     public String defaultImage(Combat c) {
-        return character.name().toLowerCase() + "_confident.jpg";
+        return character.name()
+                        .toLowerCase() + "_confident.jpg";
     }
 
     public Growth getGrowth() {
@@ -173,12 +179,15 @@ public abstract class BasePersonality implements Personality {
         for (; character.availableAttributePoints > 0; character.availableAttributePoints--) {
             Attribute selected = null;
             // remove all the attributes that isn't in avail
-            preferred = new ArrayDeque<>(preferred.stream().filter(p -> {
-                Optional<Attribute> att = p.getPreferred(character);
-                return att.isPresent() && avail.contains(att.get());
-            }).collect(Collectors.toList()));
+            preferred = new ArrayDeque<>(preferred.stream()
+                                                  .filter(p -> {
+                                                      Optional<Attribute> att = p.getPreferred(character);
+                                                      return att.isPresent() && avail.contains(att.get());
+                                                  })
+                                                  .collect(Collectors.toList()));
             if (preferred.size() > 0) {
-                Optional<Attribute> pref = preferred.removeFirst().getPreferred(character);
+                Optional<Attribute> pref = preferred.removeFirst()
+                                                    .getPreferred(character);
                 if (pref.isPresent()) {
                     selected = pref.get();
                 }
@@ -199,9 +208,21 @@ public abstract class BasePersonality implements Personality {
 
     @Override
     public AiModifiers getAiModifiers() {
-        return AiModifiers.getDefaultModifiers(getType());
+        if (mods == null)
+            resetAiModifiers();
+        return mods;
     }
-
+    
+    @Override
+    public void setAiModifiers(AiModifiers mods) {
+        this.mods = mods;
+    }
+    
+    @Override
+    public void resetAiModifiers() {
+        mods = AiModifiers.getDefaultModifiers(getType());
+    }
+    
     @Override
     public String resist3p(Combat c, Character target, Character assist) {
         return null;
@@ -211,8 +232,11 @@ public abstract class BasePersonality implements Personality {
     public Map<CommentSituation, String> getComments(Combat c) {
         Map<CommentSituation, String> all = CommentSituation.getDefaultComments(getType());
         Map<CommentSituation, String> applicable = new HashMap<>();
-        all.entrySet().stream().filter(e -> e.getKey().isApplicable(c, character, c.getOther(character)))
-                        .forEach(e -> applicable.put(e.getKey(), e.getValue()));
+        all.entrySet()
+           .stream()
+           .filter(e -> e.getKey()
+                         .isApplicable(c, character, c.getOther(character)))
+           .forEach(e -> applicable.put(e.getKey(), e.getValue()));
         return applicable;
     }
 }

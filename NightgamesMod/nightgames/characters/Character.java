@@ -58,6 +58,8 @@ import nightgames.status.Resistance;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
 import nightgames.status.Trance;
+import nightgames.status.addiction.Addiction;
+import nightgames.status.addiction.AddictionType;
 import nightgames.trap.Trap;
 
 public abstract class Character extends Observable implements Cloneable {
@@ -318,6 +320,8 @@ public abstract class Character extends Observable implements Cloneable {
         if (has(Trait.fastLearner)) {
             rate += .2;
         }
+        if (!human())
+            rate += .5;
         rate *= Global.xpRate;
         xp += Math.round(i * rate);
         update();
@@ -432,7 +436,7 @@ public abstract class Character extends Observable implements Cloneable {
                                 "{self:NAME-POSSESSIVE} innocent appearance throws {other:direct-object} off and {other:subject-action:use|uses} much less strength than intended.",
                                 this, other));
             }
-            if (other.has(Trait.dirtyfighter) && (c.getStance().prone(other) || c.getStance().sub(other)) && physical) {
+            if (other != null && other.has(Trait.dirtyfighter) && (c.getStance().prone(other) || c.getStance().sub(other)) && physical) {
                 bonus += 10;
                 c.write(this, Global.format(
                                 "{other:SUBJECT-ACTION:know|knows} how to fight dirty, and {other:action:manage|manages} to give {self:direct-object} a lot more trouble than {self:subject} expected despite being in a compromised position.",
@@ -539,7 +543,7 @@ public abstract class Character extends Observable implements Cloneable {
         }
         pleasured = true;
         // pleasure = 0;
-        arousal.restoreNoLimit(Math.round(pleasure));
+        arousal.restoreNoLimit(pleasure);
         if (checkOrgasm()) {
             doOrgasm(c, source, selfPart, opponentPart);
         }
@@ -1271,11 +1275,16 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     @SuppressWarnings("unchecked")
-    private static void saveCharIntMap(JSONObject obj, Map<Character, Integer> map, String name) {
+    private void saveCharIntMap(JSONObject obj, Map<Character, Integer> map, String name) {
         JSONObject objMap = new JSONObject();
         for (Character key : map.keySet()) {
             if (key != null) {
-                objMap.put(key.getType(), map.get(key));
+                int val = map.getOrDefault(key, 0);
+                objMap.put(key.getType(), val);
+                if (!map.containsKey(key)) {
+                    System.err.println(String.format("Probable save corruption! %s has no %s entry for %s!", getName(),
+                                    name, key.getName()));
+                }
             }
         }
         obj.put(name, objMap);
@@ -1334,7 +1343,7 @@ public abstract class Character extends Observable implements Cloneable {
             resources.put("stamina", stamina.maxFull());
             resources.put("arousal", arousal.maxFull());
             resources.put("mojo", mojo.maxFull());
-            resources.put("willpower", willpower.maxFull());
+            resources.put("willpower", willpower.trueMax());
             saveObj.put("resources", resources);
         }
         saveCharIntMap(saveObj, affections, "affections");
@@ -1350,6 +1359,10 @@ public abstract class Character extends Observable implements Cloneable {
         saveObj.put("flags", flagsObj);
         flags.entrySet().stream().forEach(entry -> flagsObj.put(entry.getKey(), entry.getValue()));
         return saveObj;
+    }
+    
+    protected void saveInternal(JSONObject obj) {
+        //NOP
     }
 
     public abstract String getType();
@@ -1414,9 +1427,14 @@ public abstract class Character extends Observable implements Cloneable {
                 flags.put(keyString, JSONUtils.readInteger(flagsObj, keyString));
             }
         }
+        loadInternal(obj);
         change();
         Global.gainSkills(this);
         Global.learnSkills(this);
+    }
+    
+    protected void loadInternal(JSONObject obj) {
+        
     }
 
     public abstract void afterParty();
@@ -1485,6 +1503,27 @@ public abstract class Character extends Observable implements Cloneable {
         if (this != opponent && times == totalTimes) {
             c.write(this, "<b>" + orgasmLiner(c) + "</b>");
             c.write(opponent, opponent.makeOrgasmLiner(c));
+        }
+        if (human()) {
+            Player p = (Player) this;
+            
+            if (p.checkAddiction(AddictionType.CORRUPTION) 
+                           && p.getAddiction(AddictionType.CORRUPTION).wasCausedBy(opponent)
+                           && opponentPart.isType("pussy")
+                           && selfPart.isType("cock")
+                           && c.getCombatantData(this).getIntegerFlag("ChoseToFuck") == 1) {
+                c.write(this, "Your willing sacrifice to " + opponent.getName() + " greatly reinforces"
+                                + " the corruption inside of you.");
+                p.addict(AddictionType.CORRUPTION, opponent, Addiction.HIGH_INCREASE);
+            }
+            if (p.checkAddiction(AddictionType.ZEAL) 
+                            && p.getAddiction(AddictionType.ZEAL).wasCausedBy(opponent)
+                                            && opponentPart.isType("pussy")
+                                            && selfPart.isType("cock")) {
+                c.write(this, "Experiencing so much pleasure inside of " + opponent + " reinforces"
+                                + " your faith.");
+                p.addict(AddictionType.ZEAL, opponent, Addiction.MED_INCREASE);
+            }
         }
         orgasms += 1;
     }
@@ -2992,4 +3031,39 @@ public abstract class Character extends Observable implements Cloneable {
                 return false;
         }
     }
+    
+    /**
+     * If true, count insertions by this character as voluntary 
+     */
+    public boolean canMakeOwnDecision() {
+        return !is(Stsflag.charmed) && !is(Stsflag.lovestruck)
+                        && !is(Stsflag.frenzied);
+    }
+/*
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + cloned;
+        result ^= getClass().hashCode();
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Character other = (Character) obj;
+        if (cloned != other.cloned)
+            return false;
+        return true;
+    }
+*/
+    
+    
+    
 }

@@ -1158,7 +1158,7 @@ public class GUI extends JFrame implements Observer {
             } else if (Global.getMatch() != null) {
                 Global.getMatch().resume();
             } else if (Global.day != null) {
-                Global.getDay().plan();
+                Global.getDay().plan(false);
             } else {
                 new Prematch(Global.human);
             }

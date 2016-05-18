@@ -19,13 +19,19 @@ import nightgames.modifier.standard.FTCModifier;
 
 public class FTCMatch extends Match {
     private Map<Character, Area> bases;
-    private Character prey;
+    private Character prey; 
     private int gracePeriod;
     private boolean flagInCenter;
     private int flagCounter;
 
+    { // To prevent uninitalized comparison in manageConditions
+        prey = Global.noneCharacter();
+        gracePeriod = -1;
+    }
+    
     public FTCMatch(Collection<Character> combatants, Character prey) {
         super(combatants, new FTCModifier(prey));
+        assert combatants.size() == 5; // 4 hunters + prey = 5
         this.prey = prey;
         this.gracePeriod = 3;
         this.flagCounter = 0;
@@ -107,7 +113,7 @@ public class FTCMatch extends Match {
         Area pBase = new Area("Central Camp",
                         String.format("You are in a clearing in the middle of the forest. There are no"
                                         + " trees here, just a small camp where %s can "
-                                        + "get a new Flag if it gets captured", prey.subject()),
+                                        + "get a new Flag if it gets captured.", prey.subject()),
                         Movement.ftcCenter);
         map.put("North Base", nBase);
         map.put("West Base", wBase);
@@ -236,5 +242,10 @@ public class FTCMatch extends Match {
     public Collection<Movement> getResupplyAreas(Character ch) {
         Area base = bases.get(ch);
         return Collections.singleton(Movement.ftcBaseMovement(base));
+    }
+    
+    @Override
+    public String genericRoomDescription() {
+        return "area";
     }
 }

@@ -27,7 +27,7 @@ public class Tempt extends Skill {
         } else if (target.human()) {
             c.write(getSelf(), receive(c, 0, Result.normal, target));
         }
-        double m = Math.round(4 + Global.random(4));
+        double m = 4 + Global.random(4);
         if (c.getStance().front(getSelf())) {
             // opponent can see self
             m += 3 * getSelf().body.getCharismaBonus(target);

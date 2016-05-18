@@ -16,7 +16,8 @@ import nightgames.characters.custom.requirement.BodyPartRequirement;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
-import nightgames.status.MagicMilkAddiction;
+import nightgames.status.addiction.Addiction;
+import nightgames.status.addiction.AddictionType;
 
 public class CassieTime extends BaseNPCTime {
     public CassieTime(Character player) {
@@ -139,10 +140,10 @@ public class CassieTime extends BaseNPCTime {
             Global.gui().choose(this, "Games");
             Global.gui().choose(this, "Sparring");
             Global.gui().choose(this, "Sex");
-            if (npc.has(Trait.magicmilk)) {
+            if (npc.has(Trait.magicmilk) && Global.getPlayer().checkAddiction(AddictionType.MAGIC_MILK)) {
                 Global.gui().choose(this, "Ask for milk");
             }
-        } else if (MagicMilkAddiction.getMagicMilkAddictionLevel(player) >= 2) {
+        } else if (Global.getPlayer().checkAddiction(AddictionType.MAGIC_MILK)) {
             Global.gui().message(
                             "You find Cassie studying in the library, a ways out of earshot of the other students. She catches your eye and smiles knowingly. "
                             + "Putting down her book, she walks to you and whispers in your ear, <i>Give me five minutes, then meet me in the girls bathroom on the third floor. Don't worry, it's always empty.</i>"
@@ -200,16 +201,185 @@ public class CassieTime extends BaseNPCTime {
     @Override
     public void subVisit(String choice) {
         if (choice.equals("Ask for milk")) {
-            int addictionLevel = player.getFlag(MagicMilkAddiction.MAGICMILK_ADDICTION_FLAG);
-            if (addictionLevel == 0) {
-                Global.gui().message("");
+            if (npc.getAffection(player) > 0) {
+                String msg;
+                switch (Global.getPlayer().getAddiction(AddictionType.MAGIC_MILK).getSeverity()) {
+                    case HIGH:
+                        msg = "You haven't been able to think of anything but Cassie all day, whether simply because of"
+                                        + " her milk or because of some deeper feelings. She seems to understand the"
+                                        + " look in your eyes, and sets of for her dorm without a word. She's"
+                                        + " practically skipping. You hurry after her, unsure whether you will be able"
+                                        + " to hold back the thirst. Once inside, Cassie turns to you with a wide grin"
+                                        + " and starts to speak. <i>\"So for today, I was thinking... Hey!\" </i>You don't let"
+                                        + " her finish, instead you pick her up and deposit her swiftly on the dinner "
+                                        + "table. <i>\""+player.getName()+"! What are you doing?\"</i> No time for words. Time for milk. "
+                                        + "You yank her shirt over her head and pull her bra down to expose her tits. "
+                                        + "Then you dive in, drinking greedily. Ah! So alive! The bit she left you was"
+                                        + " great, but nothing compares to drinking straight from the source. Cassie, "
+                                        + "for her part, seems content to just let you have your fill, now that the "
+                                        + "initial shock has passed. Your tongue is a whirlwind on her nipple, trying "
+                                        + "to extract as much of the life-giving fluid as you can. Eventually you just"
+                                        + " can't drink anymore, and sit down in one of the chairs. She sits up on the"
+                                        + " table, not bothering to cover up. <i>\"OK, now I'm really worried. It's only "
+                                        + "been a few hours, but you still were completely out of control just now. If"
+                                        + " I had resisted, would you even have stopped?\"</i> You... aren't too sure, "
+                                        + "honestly, and deeply apologize to Cassie as you say so. <i>\"The only solution"
+                                        + " I can think of, aside from some way to actually fix this thing, is to just"
+                                        + " let you drink more often. I asked at that Body Shop Aesop told us about, "
+                                        + "but they've got nothing. So, more milk for you it is. That will mean we'll"
+                                        + " have to see even more of each other, though. I hope that isn't too much "
+                                        + "of a problem?\"</i> A problem? You can't think of anything you'd like to do"
+                                        + " more! And this time you're sure it's not just the milk, either. You walk"
+                                        + " back up to her and embrace her, telling her this. <i>\"Oh, "+player.getName()
+                                        +"!\"</i> She grabs "
+                                        + "your head and pulls you in for a deep kiss. The kiss grows more and more"
+                                        + " passionate, and she starts leaking milk on your chest. Through supreme "
+                                        + "force of will, you ignore it. Instead you reach down to get rid of her "
+                                        + "skirt and panties. She responds in kind, undoing your zipper and pulling "
+                                        + "your pants and underwear half way down your thighs, enough to expose your"
+                                        + " painfully hard erection. Focused as you are on the kiss and your rampaging "
+                                        + "emotions, it takes a few tries to get yourself lined up. Eventually Cassie "
+                                        + "helps you out, and you slowly but inexorably sink all the way down inside "
+                                        + "of her. You both moan into the other's mouth and hug each other even more "
+                                        + "fiercely. You just stay like that for a while, but then you can't resist "
+                                        + "any longer and start moving. Slowly at first, but growing faster and "
+                                        + "faster. Cassie's moans, at the same time, grow higher and higher, and it's"
+                                        + " not long before they culminate in an orgasmic yell. You join her soon "
+                                        + "after, filling her to the brim with your cum. You lie there on the kitchen "
+                                        + "table for a good long while before either of you has any motivation to get"
+                                        + " up. The thirst rears it's head again after a while, and you are briefly "
+                                        + "worried that you really may be stuck like this. With Cassie... Perhaps that's"
+                                        + " not such a bad thing after all? ";
+                        break;
+                    case LOW:
+                        msg = "Something in Cassie's kind eyes puts you at ease, but you are still nervous at what you "
+                                        + "are about to do. You explain the thirst you've been feeling, about how it's "
+                                        + "getting stronger and stronger. She listens with growing concern, but lets "
+                                        + "you finish completely before responding. <i>\"First off, I'm sorry. They "
+                                        + "told me this stuff would grow my boobs, and that it would make my milk taste "
+                                        + "better. I thought it would be like the other stuff, you know, where you "
+                                        + "really get into it for a while and then shrug it off. I never wanted to "
+                                        + "cause any damage, certainly not to you... But it's done, and I'm not going"
+                                        + " to back off during the matches. Right now, though, you could drink some,"
+                                        + " I suppose. But you'd have to earn it. That might just make things worse,"
+                                        + " but if you think you can't handle it...\"</i> Honestly, you can't. So you go"
+                                        + " with Cassie to her room, eager to hear what she wants in return. <i>\"Don't"
+                                        + " worry,\"</i> she starts, <i>\"I'm not going to turn into some kind of dominatrix."
+                                        + " I just... Have some needs of my own. Quid pro quo, you see?\"</i> You ask what"
+                                        + " she specifically wants. <i>\"Well, I know you want milk, but I have some "
+                                        + "other fluids as well which, shall we say, are starting to overflow down "
+                                        + "there.\"</i> Having heard enough, you lift Cassie up in your arms and carry her"
+                                        + " to her bed. You fall down on it with her and kiss her neck. From there, you "
+                                        + "slowly travel down. When you reach the hem of her skirt you hook your "
+                                        + "fingers into it, grabbing her panties as well, and continue your downwards "
+                                        + "kisses along her leg until she's naked from the waist down. She starts "
+                                        + "squirming more and more as you travel back up to your destination. You take "
+                                        + "your time, kissing and then licking her inner thighs and lower belly, slowly "
+                                        + "zeroing in on her soft cleft. You use your tongue to trace the intricate runes"
+                                        + " around her lower lips, and she moans in approval. There is already a steady "
+                                        + "stream of her wetness dripping onto the mattress, and you start at the bottom,"
+                                        + " slowly lapping your way up to the source. You briefly tease her lips, moving "
+                                        + "up to her clit. Cassie suddenly grabs your head and forcefully pulls you into"
+                                        + " her pussy. <i>\"Enough with the teasing! I am so close to cumming already, so "
+                                        + "get to it!\"</i> You are briefly shocked that calm, subdued Cassie is speaking "
+                                        + "like this, but then you have been teasing her pretty hard. You delve in with "
+                                        + "full energy, running your tongue through her folds and dipping it into her "
+                                        + "hole. Cassie starts cumming almost instantly, and does not seem to stop for"
+                                        + " several minutes. Eventually she pushes you away, weakly scrambling back. "
+                                        + "<i>\"Please, I... I can't take it anymore. You've definitely earned your reward,"
+                                        + " but you'll have to get it yourself...\"</i> She collapses onto her back before "
+                                        + "she has even finished speaking. Quickly confirming she's alright, you gently "
+                                        + "remove her shirt and bra. You lay down and embrace her with your head on her "
+                                        + "breasts. After a few seconds, you take the nipple you've been laying on and "
+                                        + "suck it into your mouth. As you start sucking, Cassie places a hand on the "
+                                        + "back of your head, softly petting you as you drink. Your cock was already "
+                                        + "painfully hard from licking her, and it grows even more so at the taste of "
+                                        + "her sweet milk. You remove your pants with your free hand, but remain "
+                                        + "completely focused on the delicious taste. You crawl up to face level once "
+                                        + "you have had enough, and the two of you lay there for a few minutes of "
+                                        + "silence. Then Cassie looks down towards the hard dick poking her in her leg."
+                                        + " <i>\"Perhaps we should do something about that before you go...\"</i> You kiss her"
+                                        + " in response, and you spend a good long while making tender love before you"
+                                        + " leave. ";
+                        break;
+                    case MED:
+                        msg = "<i>\"No, wait, don't answer that. You're thirsty again, aren't you? Are you sure you want to"
+                                        + " do this? It only seems to get worse the more you drink...\"</i> She's right, but"
+                                        + " that doesn't mean you're suddenly not parched anymore. <i>\"Well, in that case"
+                                        + " maybe you can put that tongue of yours to work again. No! I've got the most"
+                                        + " perfect idea! Come with me!\"</i> Whatever concern for your well-being she may "
+                                        + "have had, it clearly went up in smoke. Now she's giddily almost-running to "
+                                        + "her dorm. You follow, hoping that it's as good for you as she seems convinced"
+                                        + " it will be for her.\n\n"
+                                        + "Cassie does not stand on ceremony and you start making out the moment"
+                                        + " the door closes. You're both in your underwear by the time you fall side "
+                                        + "by side on her bed, leaving a trail of clothes to guide you back to the door"
+                                        + " later. Cassie breaks the kiss and crawls down to the edge of the bed, taking "
+                                        + "off her bra and revealing those glorious orbs in the process. Umm. Wasn't "
+                                        + "this supposed to be about you paying her for milk? <i>\"Don't worry, you'll pay"
+                                        + " your share. This is just preparation.\"</i> She rubs your flaccid cock through "
+                                        + "your boxers, running her fingers along the covered shaft. Then she bends down"
+                                        + " and licks you through the fabric. She pays special attention to the emerging "
+                                        + "head, and it's not long before you are fully hard. <i>\"There's something I want"
+                                        + " to try. Something I wasn't able to do, before. But now with these babies...\""
+                                        + "</i> She gestures towards her recently-expanded busom and then removes your wet "
+                                        + "boxers. Your cock makes an audible smack against your stomach, causing Cassie"
+                                        + " to giggle slightly. She then grabs hold of it and places it firmly in her "
+                                        + "deep valley, wrapping her breasts around you. The head still pokes out, and "
+                                        + "she gives it an experimental lick, grinning. <i>\"Oh, I am going to like this, "
+                                        + "I think.\"</i> You are pretty sure you will, too. That premonition is confirmed "
+                                        + "as she starts moving her tits up and down in an alternating pattern. All the"
+                                        + " while she keeps the swollen nob in her mouth, drawing lazy circles on it "
+                                        + "with her tongue. You don't know if it's just the raw sensations, the proximity"
+                                        + " to the milk you so desperately need, or the feelings you have for this "
+                                        + "supremely cute girl between your legs, but as you lie there you cannot think "
+                                        + "of anywhere you'd rather be. Some milk leaks from her nipples, but you somehow"
+                                        + " resist lunging for it. After much too short a time, Cassie crawls back up "
+                                        + "your body. The copious precum and milk leave a slick trail up your stomach "
+                                        + "and chest, and the two of you share a wet embrace. <i>\"Now it's time for you "
+                                        + "to earn your keep!\"</i> Cassie sits down squarely on your cock, humping it "
+                                        + "through the soaked panties she's still wearing. She raises herself up and "
+                                        + "pulls the wet cotton aside. You waste no time, reach down to align yourself,"
+                                        + " and thrust upward. Cassie starts bouncing on you like a madwoman, and the "
+                                        + "sight of those magnificently swaying boobs finally gets the better of you. "
+                                        + "You sit up and pull Cassie against your body, placing her in your lap. Then "
+                                        + "you tilt her backwards, bringing her nipples up to mouth-level. You latch on"
+                                        + " and suck as hard as you can, and you are rewarded with a long, delicious "
+                                        + "spurt of milk. The taste lights yet more fires within you, and you speed up"
+                                        + " your movements. Thrusting is a bit difficult in this position, but you are"
+                                        + " hitting her g-spot on every movement. It doesn't take long for her first "
+                                        + "orgasm to hit, and the second. Breathing heavily, Cassie grinds against you"
+                                        + " harder and harder, but you keep your lips sealed around your prize. At one"
+                                        + " point she lifts up your chin to give you a kiss, but you quickly dive back"
+                                        + " down to where the milk is. After a respectable amount of time, during which"
+                                        + " Cassie came more times than you cared to count, you finally let go within "
+                                        + "her. Still holding her tight, you let yourself fall back on the bed with her"
+                                        + " in top of you. You stay like that for a while, catching your breath. Then "
+                                        + "the both of you leisurely get dressed. <i>\"I must say that I am a bit concerned"
+                                        + " with how strong this - let's call it for what it is - this addiction is "
+                                        + "getting. Are you sure you're alright?\"</i> You assure her that, now that you have"
+                                        + " had your fill, you are perfectly fine. Even though it isn't precisely true; "
+                                        + "you feels the beginnings of thirst welling up again. <i>\"Well, I suppose that as"
+                                        + " long as you can fuck like that, there's nothing to worry about. Just... Take"
+                                        + " care of yourself, okay?\"</i> You kiss Cassie goodbye,"
+                                        + " and return home to recuperate. ";
+                        break;
+                    case NONE:
+                    default:
+                        throw new IllegalStateException();                    
+                }
+                Global.gui().message(msg);
+            } else {
+                Global.gui().message("Cassie lets you drink some milk, as long as you do chores for her. This"
+                                      + " is a placeholder. It still increases your addiction, though. You"
+                                      + " won't suffer withdrawal effects tonight.");
             }
 
             Global.gui().choose(this, "Leave");
-            player.setFlag(MagicMilkAddiction.MAGICMILK_DRANK_DAYTIME_FLAG, 1);
-            player.setFlag(MagicMilkAddiction.MAGICMILK_ADDICTION_FLAG, addictionLevel + 1);
             npc.gainAffection(player, 1);
             player.gainAffection(npc, 1);
+            Global.getPlayer().addict(AddictionType.MAGIC_MILK, npc, Addiction.MED_INCREASE);
+            Global.getPlayer().getAddiction(AddictionType.MAGIC_MILK).flagDaytime();
         } else if (choice.equals("Sex")) {
             if (npc.getAffection(player) >= 12 && (!player.has(Trait.silvertongue) || Global.random(2) == 1)) {
                 Global.gui().message(
@@ -365,5 +535,10 @@ public class CassieTime extends BaseNPCTime {
             Global.modCounter(Flag.CassieLoneliness, -2);
             done(true);
         }
+    }
+    
+    @Override
+    public Optional<String> getAddictionOption() {
+        return Global.getPlayer().checkAddiction(AddictionType.MAGIC_MILK) ? Optional.of("Ask for milk") : Optional.empty();
     }
 }

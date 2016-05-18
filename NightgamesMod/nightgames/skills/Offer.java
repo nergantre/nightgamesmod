@@ -61,7 +61,7 @@ public class Offer extends Skill {
                 } else if (target.human()) {
                     c.write(getSelf(), receive(c, 0, Result.special, target));
                 }
-                c.setStance(new Missionary(target, getSelf()));
+                c.setStance(new Missionary(target, getSelf()), getSelf(), true);
                 getSelf().body.pleasure(target, target.body.getRandomCock(), getSelf().body.getRandomPussy(),
                                 Global.random(5) + getSelf().get(Attribute.Perception), c);
                 target.body.pleasure(getSelf(), getSelf().body.getRandomPussy(), target.body.getRandomCock(),
@@ -74,7 +74,7 @@ public class Offer extends Skill {
                 } else if (target.human()) {
                     c.write(getSelf(), receive(c, 0, Result.anal, target));
                 }
-                c.setStance(new Anal(target, getSelf()));
+                c.setStance(new Anal(target, getSelf()), getSelf(), true);
                 getSelf().body.pleasure(target, target.body.getRandomInsertable(), getSelf().body.getRandomAss(),
                                 Global.random(5) + getSelf().get(Attribute.Perception), c);
                 if (!target.has(Trait.strapped)) {
@@ -90,7 +90,7 @@ public class Offer extends Skill {
             } else if (target.human()) {
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             }
-            c.setStance(new Cowgirl(target, getSelf()));
+            c.setStance(new Cowgirl(target, getSelf()), getSelf(), true);
             getSelf().body.pleasure(target, target.body.getRandomPussy(), getSelf().body.getRandomCock(),
                             Global.random(5) + getSelf().get(Attribute.Perception), c);
             target.body.pleasure(getSelf(), getSelf().body.getRandomCock(), target.body.getRandomPussy(),
@@ -118,7 +118,7 @@ public class Offer extends Skill {
                                     "You get on all fours and offer your %s to %s, but %s merely "
                                                     + "chuckles at your meekness. Before you can get back up in shame,"
                                                     + " %s gives you a very satisfying slap on your ass for your troubles.",
-                                    getSelf().hasPussy() ? "pussy" : "ass", target.name(), target.pronoun());
+                                    getSelf().hasPussy() ? "pussy" : "ass", target.name(), target.pronoun(), getSelf().pronoun());
                 } else {
                     return String.format("You wave your %s at %s, but %s ignores you completely.",
                                     getSelf().body.getRandomCock().describe(getSelf()), target.name(),

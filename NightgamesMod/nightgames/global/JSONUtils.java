@@ -11,7 +11,7 @@ import org.json.simple.JSONObject;
 
 public class JSONUtils {
     public static int readInteger(JSONObject struct, String key) {
-        return ((Number) struct.get(key)).intValue();
+        return struct.get(key) == null ? 0 : ((Number) struct.get(key)).intValue();
     }
 
     public static float readFloat(JSONObject struct, String key) {

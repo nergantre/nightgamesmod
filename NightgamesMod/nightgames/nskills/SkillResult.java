@@ -13,9 +13,9 @@ import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.nskills.effects.SkillEffect;
-import nightgames.nskills.struct.SkillResultStruct;
 import nightgames.nskills.struct.CharacterResultStruct;
 import nightgames.nskills.struct.NormalSkillResultStruct;
+import nightgames.nskills.struct.SkillResultStruct;
 import nightgames.nskills.tags.SkillRequirement;
 import nightgames.nskills.tags.SkillTag;
 
