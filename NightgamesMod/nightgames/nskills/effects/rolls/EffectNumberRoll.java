@@ -1,4 +1,4 @@
-package nightgames.nskills.effects;
+package nightgames.nskills.effects.rolls;
 import nightgames.nskills.struct.SkillResultStruct;
 
 public interface EffectNumberRoll {

@@ -1,15 +1,14 @@
 package nightgames.nskills;
 
-import nightgames.combat.Combat;
+import java.util.Optional;
 
-import java.util.List;
-
-import nightgames.characters.Character;;
+import nightgames.characters.Character;
+import nightgames.combat.Combat;;
 
 public interface SkillInterface {
-    List<SkillResult> getPossibleResults(Combat c, Character user, Character target, int roll);
-
-    boolean isSelectable(Combat c, Character user, Character target);
+    Optional<SkillResult> getHighestPriorityUsableResult(Combat c, Character user, Character target);
 
     String getName();
+    
+    boolean resolve(Combat c, Character user, Character target);
 }

@@ -20,10 +20,6 @@ public class Fuck extends Skill {
 
     public Fuck(Character self) {
         super("Fuck", self);
-        if (self.human()) {
-            image = "Fuck.jpg";
-            artist = "Art by Fujin Hitokiri";
-        }
     }
 
     public BodyPart getSelfOrgan() {

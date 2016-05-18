@@ -107,11 +107,6 @@ public class CombatStats {
 	public static void main(String[] args) {
 		new Global(true);
 		Global.newGame(new Player("Dummy"));
-		Setup s1 = new Setup(1);
-		// new CombatStats(s1).test();
-
-		Setup s2 = new Setup(5);
-		// new CombatStats(s2).test();
 
 		Setup s3 = new Setup(20, new Reyka(), new Kat(), new Eve());
 		new CombatStats(s3).test();

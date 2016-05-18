@@ -200,14 +200,14 @@ public class CassieTime extends BaseNPCTime {
     @Override
     public void subVisit(String choice) {
         if (choice.equals("Ask for milk")) {
-            if (npc.getAffection(player) > 0) {
-                Global.gui().message("Cassie lets you drink from her breasts while you fuck her on her bed -placeholder-");
-            } else {
-                Global.gui().message("Cassie lets you drink from her breasts while she gives you a handjob in the library bathroom -placeholder-");
+            int addictionLevel = player.getFlag(MagicMilkAddiction.MAGICMILK_ADDICTION_FLAG);
+            if (addictionLevel == 0) {
+                Global.gui().message("");
             }
+
             Global.gui().choose(this, "Leave");
             player.setFlag(MagicMilkAddiction.MAGICMILK_DRANK_DAYTIME_FLAG, 1);
-            player.setFlag(MagicMilkAddiction.MAGICMILK_ADDICTION_FLAG, player.getFlag(MagicMilkAddiction.MAGICMILK_ADDICTION_FLAG) + 1);
+            player.setFlag(MagicMilkAddiction.MAGICMILK_ADDICTION_FLAG, addictionLevel + 1);
             npc.gainAffection(player, 1);
             player.gainAffection(npc, 1);
         } else if (choice.equals("Sex")) {

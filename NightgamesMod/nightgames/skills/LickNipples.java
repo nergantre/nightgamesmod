@@ -11,10 +11,6 @@ public class LickNipples extends Skill {
 
     public LickNipples(Character self) {
         super("Lick Nipples", self);
-        if (self.human()) {
-            image = "LickNipples.jpg";
-            artist = "Art by Fujin Hitokiri";
-        }
     }
 
     @Override

@@ -5,6 +5,7 @@ import java.util.Optional;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
+import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -79,10 +80,21 @@ public class Mara extends BasePersonality {
 
     @Override
     public void rest(int time) {
-        if (character.rank == 1) {
-            if (!character.has(Trait.madscientist) && character.money >= 1000) {
-                advance();
-            }
+        if (character.rank == 1 && !character.has(Trait.madscientist)) {
+            character.add(Trait.madscientist);
+            character.body.addReplace(PussyPart.cybernetic, 1);
+            character.unequipAllClothing();
+            character.outfitPlan.add(Clothing.getByID("bra"));
+            character.outfitPlan.add(Clothing.getByID("shirt"));
+            character.outfitPlan.add(Clothing.getByID("labcoat"));
+            character.outfitPlan.add(Clothing.getByID("underwear"));
+            character.outfitPlan.add(Clothing.getByID("pants"));
+            character.outfitPlan.add(Clothing.getByID("pantyhose"));
+            character.outfitPlan.add(Clothing.getByID("boots"));
+            character.mod(Attribute.Science, 1);
+        }
+        if (character.rank == 2 && !character.has(Trait.madscientist)) {
+            character.body.add(new GenericBodyPart("mechanical tentacles", "Four large mechanically feelers are attached to {self:possessive} back.", 1, 1.0, 0.0, true, "mechtentacles", ""));
         }
         super.rest(time);
         if (!(character.has(Item.Onahole) || character.has(Item.Onahole2)) && character.money >= 300) {
@@ -458,20 +470,6 @@ public class Mara extends BasePersonality {
                         + "you. You spot her back by the door, holding your clothes. She winks mischeviously and dashes into the building. You give chase, still naked. You manage to catch her just "
                         + "as she reaches your room. You consider it a minor miracle no one saw the two of you streaking through the dorm building. You're going to have to find a way to pay her back "
                         + "before morning.";
-    }
-
-    public void advance() {
-        character.add(Trait.madscientist);
-        character.body.addReplace(PussyPart.cybernetic, 1);
-        character.unequipAllClothing();
-        character.outfitPlan.add(Clothing.getByID("bra"));
-        character.outfitPlan.add(Clothing.getByID("shirt"));
-        character.outfitPlan.add(Clothing.getByID("labcoat"));
-        character.outfitPlan.add(Clothing.getByID("underwear"));
-        character.outfitPlan.add(Clothing.getByID("pants"));
-        character.outfitPlan.add(Clothing.getByID("pantyhose"));
-        character.outfitPlan.add(Clothing.getByID("boots"));
-        character.mod(Attribute.Science, 1);
     }
 
     @Override

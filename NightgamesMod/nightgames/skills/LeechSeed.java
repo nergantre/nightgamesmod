@@ -2,7 +2,6 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -90,13 +89,11 @@ public class LeechSeed extends Skill {
         }
         return Global.format(
                         "You sneak one of your thinner tentacles behind {other:name-do} and prepare one of your seeds. While {other:subject} is distracted, you slip the tentacle into {other:possessive} %s and plant a hard lemon-sized orb into {other:direct-object}. {other:SUBJECT} yelps in surprise, but by then it was too late. Your seed is planted firmly inside her %s.",
-                        getSelf(), target);
+                        getSelf(), target, hole, hole);
     }
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        BodyPart selfPart = getSelf().body.getRandom("tentacles");
-
         if (modifier == Result.miss) {
             return getSelf().subject() + " tries to plant a seed in you with " + getSelf().possessivePronoun()
                             + " tentacle, but you dodges out of the way";
