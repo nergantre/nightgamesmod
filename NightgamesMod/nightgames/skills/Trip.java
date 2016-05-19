@@ -17,11 +17,15 @@ public class Trip extends Skill {
         return !target.wary() && c.getStance().mobile(getSelf()) && !c.getStance().prone(target)
                         && c.getStance().front(getSelf()) && getSelf().canAct();
     }
+    
+    private boolean isSlime() {
+        return getSelf().get(Attribute.Slime) > 11;
+    }
 
     @Override
     public boolean resolve(Combat c, Character target) {
         if (target.roll(this, c, accuracy(c)) && getSelf().check(Attribute.Cunning, target.knockdownDC())) {
-            if (getSelf().has(Trait.slime)) {
+            if (isSlime()) {
                 if (getSelf().human()) {
                     c.write(getSelf(), deal(c, 0, Result.special, target));
                 } else if (target.human()) {
@@ -36,7 +40,7 @@ public class Trip extends Skill {
             }
             target.add(c, new Falling(target));
         } else {
-            if (getSelf().has(Trait.slime)) {
+            if (isSlime()) {
                 if (getSelf().human()) {
                     c.write(getSelf(), deal(c, 0, Result.weak, target));
                 } else if (target.human()) {
@@ -80,8 +84,8 @@ public class Trip extends Skill {
                         Math.min(150, 2.5f
                                         * (getSelf().get(Attribute.Cunning)
                                                         - c.getOther(getSelf()).get(Attribute.Cunning))
-                                        + (getSelf().has(Trait.slime) ? 100 : 75)),
-                        getSelf().has(Trait.slime) ? 70 : 40));
+                                        + (isSlime() ? 100 : 75)),
+                        isSlime() ? 70 : 40));
     }
 
     @Override

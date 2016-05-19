@@ -17,7 +17,7 @@ public class EngulfedFuck extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.has(Trait.slime);
+        return true;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class EngulfedFuck extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         Pairing pair = Pairing.findPairing(getSelf(), target);
-        double base = 20.0 + Global.random(getSelf().get(Attribute.Seduction) / 2);
+        double base = 20.0 + Global.random(getSelf().get(Attribute.Slime) + getSelf().get(Attribute.Seduction) / 2);
         int selfDmg = (int) ((base * pair.modPleasure(true)) / (getSelf().has(Trait.experienced) ? 2.0 : 3.0));
         int targetDmg = (int) (base * pair.modPleasure(false));
         switch (pair) {

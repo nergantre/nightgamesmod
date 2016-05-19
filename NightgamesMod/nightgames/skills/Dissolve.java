@@ -1,5 +1,6 @@
 package nightgames.skills;
 
+import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
@@ -23,7 +24,7 @@ public class Dissolve extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return c.getStance().mobile(getSelf()) && getSelf().canAct()
-                        && (getSelf().has(Item.DisSol) || getSelf().has(Trait.slime))
+                        && (getSelf().has(Item.DisSol) || getSelf().get(Attribute.Slime) > 0)
                         && target.outfit.getRandomShreddableSlot() != null && !c.getStance().prone(getSelf());
     }
 
@@ -35,7 +36,7 @@ public class Dissolve extends Skill {
         } else if (!target.outfit.slotOpen(ClothingSlot.top) && !target.outfit.slotUnshreddable(ClothingSlot.top)) {
             toShred = ClothingSlot.top;
         }
-        if (getSelf().has(Trait.slime)) {
+        if (getSelf().get(Attribute.Slime) > 0) {
             Clothing destroyed = shred(target, toShred);
             String msg = "{self:SUBJECT-ACTION:reach|reaches} out with a slimy hand and"
                             + " {self:action:caress|caresses} {other:possessive} " + destroyed.getName()
@@ -114,7 +115,7 @@ public class Dissolve extends Skill {
 
     @Override
     public String describe(Combat c) {
-        if (getSelf().has(Trait.slime))
+        if (getSelf().get(Attribute.Slime) > 0)
             return "Use your slime to dissolve your opponent's clothes";
         return "Throws dissolving solution to destroy opponent's clothes";
     }

@@ -1,5 +1,7 @@
 package nightgames.characters;
 
+import java.util.Optional;
+
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.GenericBodyPart;
@@ -23,7 +25,7 @@ public class Airi extends BasePersonality {
         preferredCockMod = CockMod.slimy;
 
         character.set(Attribute.Power, 6);
-        character.set(Attribute.Bio, 20);
+        character.set(Attribute.Slime, 1);
         character.set(Attribute.Cunning, 15);
         character.set(Attribute.Speed, 4);
         character.set(Attribute.Seduction, 17);
@@ -71,6 +73,8 @@ public class Airi extends BasePersonality {
         growth.addTrait(39, Trait.energydrain);
         growth.addTrait(42, Trait.desensitized);
         growth.addTrait(45, Trait.vaginaltongue);
+        preferredAttributes.add(c -> Optional.of(Attribute.Slime));
+        preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
     }
 
     @Override

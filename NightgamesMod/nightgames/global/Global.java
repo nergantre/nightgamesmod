@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -1197,6 +1198,14 @@ public class Global {
     public static <T> T pickRandom(T[] arr) {
         if (arr.length == 0) return null;
         return arr[Global.random(arr.length)];
+    }
+    
+    public static <T> Optional<T> pickRandom(List<T> list) {
+        if (list.size() == 0) {
+            return Optional.empty();
+        } else {
+            return Optional.of(list.get(random(list.size())));
+        }
     }
 
     public static int getDate() {

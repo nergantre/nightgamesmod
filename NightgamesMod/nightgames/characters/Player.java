@@ -860,7 +860,7 @@ public class Player extends Character {
         addictions.addAll(this.addictions.stream().map(Status::saveToJSON).collect(Collectors.toList()));
         obj.put("addictions", addictions);
     }
-    
+
     @Override
     protected void loadInternal(JSONObject obj) {
         JSONArray addictions = (JSONArray) obj.get("addictions");

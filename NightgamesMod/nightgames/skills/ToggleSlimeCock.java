@@ -1,5 +1,6 @@
 package nightgames.skills;
 
+import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BasicCockPart;
@@ -18,7 +19,7 @@ public class ToggleSlimeCock extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.has(Trait.slime);
+        return getSelf().get(Attribute.Slime) > 14;
     }
 
     @Override

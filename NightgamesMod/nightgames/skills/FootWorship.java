@@ -7,6 +7,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.stance.Kneeling;
 import nightgames.stance.Stance;
 import nightgames.stance.StandingOver;
 import nightgames.status.BodyFetish;
@@ -58,7 +59,7 @@ public class FootWorship extends Skill {
             target.buildMojo(c, n);
         }
         if (c.getStance().en == Stance.neutral) {
-            c.setStance(new StandingOver(target, getSelf()));
+            c.setStance(new Kneeling(target, getSelf()));
         }
         c.getCombatantData(getSelf()).toggleFlagOn("footworshipped", true);
         return result != Result.miss;

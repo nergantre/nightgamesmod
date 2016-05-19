@@ -56,12 +56,12 @@ public class CounterFlower extends CounterBase {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.has(Trait.dryad) && user.get(Attribute.Bio) >= 15;
+        return user.get(Attribute.Bio) >= 15;
     }
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return !c.getStance().dom(getSelf()) && !c.getStance().dom(target) && getSelf().canAct() && getSelf().hasPussy()
+        return getSelf().has(Trait.dryad) && !c.getStance().dom(getSelf()) && !c.getStance().dom(target) && getSelf().canAct() && getSelf().hasPussy()
                         && target.hasDick();
     }
 

@@ -58,4 +58,5 @@ public enum Stsflag {
     detected,
     magicmilkcraving,
     partiallyCorrupted,
+    parasited,
 }

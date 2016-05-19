@@ -339,22 +339,27 @@ public class Combat extends Observable implements Cloneable {
 
     public boolean combatMessageChanged;
 
+    public Optional<Skill> getRandomWorshipSkill(Character self, Character other) { 
+        List<Skill> avail = new ArrayList<Skill>(Arrays.asList(worshipSkills));
+        Collections.shuffle(avail);
+        while (!avail.isEmpty()) {
+            Skill skill = avail.remove(avail.size() - 1)
+                               .copy(self);
+            if (Skill.skillIsUsable(this, skill, other)) {
+                write(other, Global.format(
+                                "<b>{other:NAME-POSSESSIVE} divine aura forces {self:subject} to forget what {self:pronoun} {self:action:were|was} doing and crawl to {other:direct-object} on {self:possessive} knees.</b>",
+                                self, other));
+                return Optional.of(skill);
+            }
+        }
+        return Optional.ofNullable(null);
+    }
+
     private Skill checkWorship(Character self, Character other, Skill def) {
         if (other.has(Trait.objectOfWorship) && (other.breastsAvailable() || other.crotchAvailable())) {
             int chance = Math.min(20, Math.max(5, other.get(Attribute.Divinity) + 10 - self.getLevel()));
             if (Global.random(100) < chance) {
-                List<Skill> avail = new ArrayList<Skill>(Arrays.asList(worshipSkills));
-                Collections.shuffle(avail);
-                while (!avail.isEmpty()) {
-                    Skill skill = avail.remove(avail.size() - 1)
-                                       .copy(self);
-                    if (Skill.skillIsUsable(this, skill, other)) {
-                        write(other, Global.format(
-                                        "<b>{other:NAME-POSSESSIVE} divine aura forces {self:subject} to forget what {self:pronoun} {self:action:were|was} doing and crawl to {other:direct-object} on {self:possessive} knees.</b>",
-                                        self, other));
-                        return skill;
-                    }
-                }
+                return getRandomWorshipSkill(self, other).orElse(def);
             }
         }
         return def;

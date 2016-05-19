@@ -1,5 +1,6 @@
 package nightgames.skills;
 
+import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.Trait;
@@ -29,7 +30,7 @@ public class Engulf extends CounterBase {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.has(Trait.slime);
+        return getSelf().get(Attribute.Slime) > 19;
     }
 
     @Override
