@@ -2633,6 +2633,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public float getFitness(Combat c) {
+        
         float fit = 0;
         // Urgency marks
         float arousalMod = 1.0f;
