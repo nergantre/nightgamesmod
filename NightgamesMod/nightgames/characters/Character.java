@@ -2629,6 +2629,8 @@ public abstract class Character extends Observable implements Cloneable {
         for (Status status : other.getStatuses()) {
             fit += status.fitnessModifier();
         }
+        // hack to make the AI favor making the opponent cum
+        fit -= 100 * other.orgasms;
         return fit;
     }
 
