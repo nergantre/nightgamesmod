@@ -22,7 +22,8 @@ public enum Attribute {
     Technique,
     Submissive,
     Hypnosis,
-    Nymphomania;
+    Nymphomania,
+    Slime;
 
     private final SkillTag skillTag;
     private Attribute() {

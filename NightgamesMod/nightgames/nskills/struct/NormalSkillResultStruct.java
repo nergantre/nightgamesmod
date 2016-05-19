@@ -8,7 +8,7 @@ public class NormalSkillResultStruct implements SkillResultStruct {
     protected final CharacterResultStruct selfResults;
     protected final CharacterResultStruct otherResults;
     protected final SkillResult result;
-    protected final int roll;
+    protected final double roll;
 
     public Combat getCombat() {
         return c;
@@ -31,7 +31,7 @@ public class NormalSkillResultStruct implements SkillResultStruct {
     }
 
     public NormalSkillResultStruct(Combat c, CharacterResultStruct self, CharacterResultStruct other,
-                    SkillResult result, int roll) {
+                    SkillResult result, double roll) {
         this.c = c;
         this.selfResults = self;
         this.otherResults = other;

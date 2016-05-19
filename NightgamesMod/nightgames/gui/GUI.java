@@ -663,6 +663,33 @@ public class GUI extends JFrame implements Observer {
         }
         imgLabel.setIcon(null);
     }
+    public void loadPortrait(String imagepath) {
+        if (imagepath != null) {
+            BufferedImage face = null;
+            try {
+                face = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" + imagepath));
+            } catch (IOException localIOException9) {
+            } catch (IllegalArgumentException badArg) {
+
+            }
+            if (face != null) {
+                if (Global.isDebugOn(DebugFlags.DEBUG_IMAGES)) {
+                    System.out.println("Loading Portrait " + imagepath + " \n");
+                }
+                portrait.setIcon(null);
+
+                if (width > 720) {
+                    portrait.setIcon(new ImageIcon(face));
+                    portrait.setVerticalAlignment(SwingConstants.TOP);
+                } else {
+                    Image scaledFace = face.getScaledInstance(width / 6, height / 4, Image.SCALE_SMOOTH);
+                    portrait.setIcon(new ImageIcon(scaledFace));
+                    portrait.setVerticalAlignment(SwingConstants.TOP);
+                    System.out.println("Portrait resizing active.");
+                }
+            }
+        }
+    }
 
     // portrait loader
     public void loadPortrait(Combat c, Character player, Character enemy) {
@@ -676,31 +703,7 @@ public class GUI extends JFrame implements Observer {
             } else if (!enemy.human()) {
                 imagepath = enemy.getPortrait(c);
             }
-            if (imagepath != null) {
-                BufferedImage face = null;
-                try {
-                    face = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" + imagepath));
-                } catch (IOException localIOException9) {
-                } catch (IllegalArgumentException badArg) {
-
-                }
-                if (face != null) {
-                    if (Global.isDebugOn(DebugFlags.DEBUG_IMAGES)) {
-                        System.out.println("Loading Portrait " + imagepath + " \n");
-                    }
-                    portrait.setIcon(null);
-
-                    if (width > 720) {
-                        portrait.setIcon(new ImageIcon(face));
-                        portrait.setVerticalAlignment(SwingConstants.TOP);
-                    } else {
-                        Image scaledFace = face.getScaledInstance(width / 6, height / 4, Image.SCALE_SMOOTH);
-                        portrait.setIcon(new ImageIcon(scaledFace));
-                        portrait.setVerticalAlignment(SwingConstants.TOP);
-                        System.out.println("Portrait resizing active.");
-                    }
-                }
-            }
+            loadPortrait(imagepath);
         } else {
             if (Global.isDebugOn(DebugFlags.DEBUG_GUI)) {
                 System.out.println("No images/portraits");

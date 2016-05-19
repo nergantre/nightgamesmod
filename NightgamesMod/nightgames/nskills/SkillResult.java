@@ -24,9 +24,11 @@ public class SkillResult {
     private final Map<SkillRequirement, Double> requirements;
     private final List<SkillResult> children;
     private final List<SkillEffect> effects;
+    private String description;
     private String label;
     private int priority;
     private boolean success;
+    private int speed;
 
     protected SkillResult(Optional<SkillResult> parent) {
         if (parent.isPresent()) {
@@ -34,8 +36,10 @@ public class SkillResult {
             userTags = new HashMap<>(parentResult.userTags);
             targetTags = new HashMap<>(parentResult.targetTags);
             requirements = new HashMap<>(parentResult.requirements);
-            children = new ArrayList<>(parentResult.children);
-            effects = new ArrayList<>(parentResult.effects);
+            // do not copy children or effects, these should be up to the child class to add
+            children = new ArrayList<>();
+            effects = new ArrayList<>();
+            //
             this.label = parentResult.label;
             this.priority = parentResult.priority;
             this.success = parentResult.success;
@@ -63,14 +67,14 @@ public class SkillResult {
         return tags.entrySet().stream().allMatch(entry -> entry.getKey().getUsableRequirements().meets(results, entry.getValue()));
     }
 
-    public boolean meetsRequirements(Combat c, Character user, Character target, int roll) {
+    public boolean meetsRequirements(Combat c, Character user, Character target, double roll) {
         SkillResultStruct results = createResultStruct(c, user, target, roll);
         return requirements.entrySet().stream().allMatch(entry -> entry.getKey().meets(results, entry.getValue()))
                         && meetsRequirements(userTags, results)
                         && meetsRequirements(targetTags, results.reversed());
     }
 
-    public boolean meetsUsableRequirements(Combat c, Character user, Character target, int roll) {
+    public boolean meetsUsableRequirements(Combat c, Character user, Character target, double roll) {
         SkillResultStruct results = createResultStruct(c, user, target, roll);
         return requirements.entrySet().stream().allMatch(entry -> entry.getKey().meets(results, entry.getValue()))
                         && meetsUsableRequirements(userTags, results)
@@ -80,6 +84,10 @@ public class SkillResult {
     public SkillResult addRequirement(SkillRequirement req, double value) {
         requirements.put(req, value);
         return this;
+    }
+
+    public SkillResult addRequirement(SkillRequirement req) {
+        return addRequirement(req, 0);
     }
 
     public SkillResult createChildResult() {
@@ -102,17 +110,22 @@ public class SkillResult {
         this.label = label;
         return this;
     }
+
+    public SkillResult setDescription(String desc) {
+        this.description = desc;
+        return this;
+    }
     
     public boolean getSuccess() {
         return success;
     }
 
-    public SkillResult addUserEffect(SkillEffect effect) {
+    public SkillResult addEffect(SkillEffect effect) {
         effects.add(effect);
         return this;
     }
 
-    public SkillResult addTargetEffect(SkillEffect effect) {
+    public SkillResult addEffectForOther(SkillEffect effect) {
         effects.add(effect.reversed());
         return this;
     }
@@ -167,7 +180,7 @@ public class SkillResult {
                         .collect(Collectors.toSet());
     }
 
-    public SkillResultStruct createResultStruct(Combat c, Character user, Character target, int roll) {
+    public SkillResultStruct createResultStruct(Combat c, Character user, Character target, double roll) {
         Set<BodyPart> userParts = getUserParts(user);
         Set<BodyPart> targetParts = getTargetParts(target);
         CharacterResultStruct userStruct = new CharacterResultStruct(userParts, user);
@@ -175,7 +188,7 @@ public class SkillResult {
         return new NormalSkillResultStruct(c, userStruct, targetStruct, this, roll);
     }
 
-    public boolean resolve(Combat c, Character user, Character target, int roll) {
+    public boolean resolve(Combat c, Character user, Character target, double roll) {
         boolean failed = false;
         SkillResultStruct results = createResultStruct(c, user, target, roll);
         for (SkillEffect effect : effects) {
@@ -198,5 +211,23 @@ public class SkillResult {
 
     public Set<Attribute> getAllAttributes() {
         return userTags.keySet().stream().filter(tag -> tag.getAttribute().isPresent()).map(tag -> tag.getAttribute().get()).collect(Collectors.toSet());
+    }
+
+    public SkillResult setSpeed(int i) {
+        this.speed = i;
+        return this;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public List<SkillResult> getChildren() {
+        // TODO Auto-generated method stub
+        return children;
     }
 }

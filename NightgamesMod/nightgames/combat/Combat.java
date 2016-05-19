@@ -246,7 +246,8 @@ public class Combat extends Observable implements Cloneable {
     }
 
     public void turn() {
-        if (p1.checkLoss() && p2.checkLoss()) {
+        timer++;
+        if (p1.checkLoss(this) && p2.checkLoss(this)) {
             state = eval();
             p1.evalChallenges(this, null);
             p2.evalChallenges(this, null);
@@ -259,7 +260,7 @@ public class Combat extends Observable implements Cloneable {
             }
             return;
         }
-        if (p1.checkLoss()) {
+        if (p1.checkLoss(this)) {
             state = eval();
             p1.evalChallenges(this, p2);
             p2.evalChallenges(this, p2);
@@ -273,7 +274,7 @@ public class Combat extends Observable implements Cloneable {
             }
             return;
         }
-        if (p2.checkLoss()) {
+        if (p2.checkLoss(this)) {
             state = eval();
             p1.evalChallenges(this, p1);
             p2.evalChallenges(this, p1);
@@ -286,51 +287,6 @@ public class Combat extends Observable implements Cloneable {
                 end();
             }
             return;
-        }
-        if (!p1.human() && !p2.human() && timer > 15) {
-            if (p1.getArousal()
-                  .get() > p2.getArousal()
-                             .get()) {
-                state = eval();
-                if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-                    System.out.println(p2.name() + " victory over " + p1.name());
-                }
-                p2.victory(this, state);
-                doVictory(p2, p1);
-                phase = 2;
-                updateMessage();
-                if (!(p1.human() || p2.human())) {
-                    end();
-                }
-                return;
-            } else if (p1.getArousal()
-                         .get() < p2.getArousal()
-                                    .get()) {
-                state = eval();
-                if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-                    System.out.println(p1.name() + " victory over " + p2.name());
-                }
-                p1.victory(this, state);
-                doVictory(p1, p2);
-                phase = 2;
-                updateMessage();
-                if (!(p2.human() || p1.human())) {
-                    end();
-                }
-                return;
-            } else {
-                state = eval();
-                if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-                    System.out.println(p2.name() + " draw with " + p1.name());
-                }
-                p2.draw(this, state);
-                phase = 2;
-                updateMessage();
-                if (!(p1.human() || p2.human())) {
-                    end();
-                }
-                return;
-            }
         }
         Character player;
         Character other;
@@ -383,22 +339,27 @@ public class Combat extends Observable implements Cloneable {
 
     public boolean combatMessageChanged;
 
+    public Optional<Skill> getRandomWorshipSkill(Character self, Character other) { 
+        List<Skill> avail = new ArrayList<Skill>(Arrays.asList(worshipSkills));
+        Collections.shuffle(avail);
+        while (!avail.isEmpty()) {
+            Skill skill = avail.remove(avail.size() - 1)
+                               .copy(self);
+            if (Skill.skillIsUsable(this, skill, other)) {
+                write(other, Global.format(
+                                "<b>{other:NAME-POSSESSIVE} divine aura forces {self:subject} to forget what {self:pronoun} {self:action:were|was} doing and crawl to {other:direct-object} on {self:possessive} knees.</b>",
+                                self, other));
+                return Optional.of(skill);
+            }
+        }
+        return Optional.ofNullable(null);
+    }
+
     private Skill checkWorship(Character self, Character other, Skill def) {
         if (other.has(Trait.objectOfWorship) && (other.breastsAvailable() || other.crotchAvailable())) {
             int chance = Math.min(20, Math.max(5, other.get(Attribute.Divinity) + 10 - self.getLevel()));
             if (Global.random(100) < chance) {
-                List<Skill> avail = new ArrayList<Skill>(Arrays.asList(worshipSkills));
-                Collections.shuffle(avail);
-                while (!avail.isEmpty()) {
-                    Skill skill = avail.remove(avail.size() - 1)
-                                       .copy(self);
-                    if (Skill.skillIsUsable(this, skill, other)) {
-                        write(other, Global.format(
-                                        "<b>{other:NAME-POSSESSIVE} divine aura forces {self:subject} to forget what {self:pronoun} {self:action:were|was} doing and crawl to {other:direct-object} on {self:possessive} knees.</b>",
-                                        self, other));
-                        return skill;
-                    }
-                }
+                return getRandomWorshipSkill(self, other).orElse(def);
             }
         }
         return def;
@@ -445,7 +406,6 @@ public class Combat extends Observable implements Cloneable {
             getStance().checkOngoing(this);
             phase = 0;
             if (!(p1.human() || p2.human())) {
-                timer++;
                 turn();
             }
             updateMessage();
@@ -454,7 +414,7 @@ public class Combat extends Observable implements Cloneable {
 
     public void automate() {
         int turn = 0;
-        while (!(p1.checkLoss() || p2.checkLoss())) {
+        while (!(p1.checkLoss(this) || p2.checkLoss(this))) {
             // guarantee the fight finishes in a timely manner
             if (turn > 50) {
                 p1.pleasure(5 * (turn - 50), this, p2);
@@ -487,7 +447,7 @@ public class Combat extends Observable implements Cloneable {
             getStance().checkOngoing(this);
             phase = 0;
         }
-        if (p1.checkLoss() && p2.checkLoss()) {
+        if (p1.checkLoss(this) && p2.checkLoss(this)) {
             state = eval();
             p1.evalChallenges(this, null);
             p2.evalChallenges(this, null);
@@ -496,7 +456,7 @@ public class Combat extends Observable implements Cloneable {
             end();
             return;
         }
-        if (p1.checkLoss()) {
+        if (p1.checkLoss(this)) {
             state = eval();
             p1.evalChallenges(this, p2);
             p2.evalChallenges(this, p2);
@@ -506,7 +466,7 @@ public class Combat extends Observable implements Cloneable {
             end();
             return;
         }
-        if (p2.checkLoss()) {
+        if (p2.checkLoss(this)) {
             state = eval();
             p1.evalChallenges(this, p1);
             p2.evalChallenges(this, p1);
@@ -515,6 +475,47 @@ public class Combat extends Observable implements Cloneable {
             winner = Optional.of(p1);
             end();
             return;
+        }
+        if (timer > 25) {
+            if (p1.getWillpower().percent() < p2.getWillpower().percent()) {
+                state = eval();
+                if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+                    System.out.println(p2.name() + " victory over " + p1.name());
+                }
+                p2.victory(this, state);
+                doVictory(p2, p1);
+                phase = 2;
+                updateMessage();
+                if (!(p1.human() || p2.human())) {
+                    end();
+                }
+                return;
+            } else if (p1.getWillpower().percent() > p2.getWillpower().percent()) {
+                state = eval();
+                if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+                    System.out.println(p1.name() + " victory over " + p2.name());
+                }
+                p1.victory(this, state);
+                doVictory(p1, p2);
+                phase = 2;
+                updateMessage();
+                if (!(p2.human() || p1.human())) {
+                    end();
+                }
+                return;
+            } else {
+                state = eval();
+                if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+                    System.out.println(p2.name() + " draw with " + p1.name());
+                }
+                p2.draw(this, state);
+                phase = 2;
+                updateMessage();
+                if (!(p1.human() || p2.human())) {
+                    end();
+                }
+                return;
+            }
         }
     }
 
@@ -866,5 +867,9 @@ public class Combat extends Observable implements Cloneable {
         if (Global.checkFlag(Flag.systemMessages)) {
             write(character, string);
         }
+    }
+
+    public int getTimer() {
+        return timer;
     }
 }

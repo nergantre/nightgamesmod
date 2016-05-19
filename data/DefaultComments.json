@@ -289,5 +289,40 @@
 				"comment":"You really just can't resist me, can you?"
 			}
 		]
+	},{
+		"characters":"Airi"
+		"comments": [
+		{
+				"situation": "VAG_DOM_CATCH_WIN",
+				"comment":"More... MORE..!"
+			},{
+				"situation": "VAG_DOM_CATCH_LOSE",
+				"comment":"Aahh... I can still..."
+			},{
+				"situation": "VAG_SUB_CATCH_WIN",
+				"comment":"Keep... going..."
+			},{
+				"situation": "VAG_SUB_CATCH_LOSE",
+				"comment":"{other:name} please..."
+			},{
+				"situation": "ENGULFED_DOM",
+				"comment":"How... does it feel... inside me..."
+			},{
+				"situation": "SELF_BOUND",
+				"comment":"Useless..."
+			},{
+				"situation": "MOUNT_DOM_WIN",
+				"comment":"Prepare... yourself..."
+			},{
+				"situation": "MOUNT_SUB_WIN",
+				"comment":"Don't... stop... Cum inside..."
+			},{
+				"situation": "MOUNT_SUB_LOSE",
+				"comment":"Aahh... I won't... lose..."
+			},{
+				"situation": "OTHER_PARASITED",
+				"comment":"I'm... taking control..."
+			}
+		]
 	}
 ]

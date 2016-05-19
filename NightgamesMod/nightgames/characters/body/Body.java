@@ -917,4 +917,22 @@ public class Body implements Cloneable {
         }
         advancedTemporaryParts(c);
     }
+
+    public BodyPart getRandomGenital() {
+        List<BodyPart> parts = new ArrayList<>();
+        BodyPart pussy = getRandomPussy();
+        BodyPart cock = getRandomCock();
+        if (pussy != null) {
+            parts.add(pussy);
+        }
+        if (cock != null) {
+            parts.add(cock);
+        }
+        Collections.shuffle(parts);
+        if (parts.size() > 1) {
+            return parts.get(0);
+        } else {
+            return getRandomBreasts();
+        }
+    }
 }

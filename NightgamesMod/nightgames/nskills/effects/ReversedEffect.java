@@ -4,7 +4,7 @@ import nightgames.nskills.struct.SkillResultStruct;
 
 public class ReversedEffect implements SkillEffect {
     private final SkillEffect innerEffect;
-    public ReversedEffect(SkillEffect innerEffect) {
+    protected ReversedEffect(SkillEffect innerEffect) {
         this.innerEffect = innerEffect;
     }
 

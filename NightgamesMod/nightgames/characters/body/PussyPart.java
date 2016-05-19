@@ -599,7 +599,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                 opponent.loseWillpower(c, 10 + Global.random(Math.min(20, self.get(Attribute.Bio))));
             } else if (this == divine && self.has(Trait.zealinspiring) && opponent.human()) {
                 c.write(self, Global.format(
-                                "As {other:NAME-POSSESSIVE} cum floods {self:name-possessive} "
+                                "As {other-POSSESSIVE} cum floods {self:name-possessive} "
                                                 + "{self:body-part:pussy}, a holy aura surrounds {self:direct-object}. The soothing"
                                                 + " light washes over {other:pronoun}, filling {other:direct-object} with zeal.",
                                 self, opponent));

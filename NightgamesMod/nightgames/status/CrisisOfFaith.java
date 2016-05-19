@@ -73,7 +73,7 @@ public class CrisisOfFaith extends Status {
 
     @Override
     public int gainmojo(int x) {
-        return x - (int) ((double) x * Global.getPlayer().getAddiction(AddictionType.ZEAL).getMagnitude());
+        return (int) (x * (1.0f - Global.getPlayer().getAddiction(AddictionType.ZEAL).getMagnitude()));
     }
 
     @Override

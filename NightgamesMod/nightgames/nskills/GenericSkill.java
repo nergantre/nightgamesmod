@@ -2,14 +2,18 @@ package nightgames.nskills;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Deque;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 import nightgames.characters.Character;
 import nightgames.characters.custom.requirement.CustomRequirement;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
+import nightgames.nskills.struct.CharacterResultStruct;
+import nightgames.nskills.struct.NormalSkillResultStruct;
+import nightgames.nskills.struct.SkillResultStruct;
 
 public class GenericSkill implements SkillInterface {
     List<SkillResult> results;
@@ -24,28 +28,30 @@ public class GenericSkill implements SkillInterface {
         this.label = label;
     }
 
-    @Override
-    public List<SkillResult> getPossibleResults(Combat c, Character user, Character target, int roll) {
-        List<SkillResult> possibleResults = new ArrayList<>();
-        Deque<SkillResult> edges = new ArrayDeque<>(results.stream()
-                        .filter(res -> res.meetsRequirements(c, user, target, roll)).collect(Collectors.toList()));
-        while (!edges.isEmpty()) {
-            SkillResult res = edges.pop();
-            Collection<SkillResult> subResults = res.getSubResults(c, user, target, roll);
-            // only add to the possible result list if the result is a leaf result.
-            if (subResults.isEmpty()) {
-                possibleResults.add(res);
-            }
-        }
-        return possibleResults;
+    private List<SkillResult> getPossibleResults(Combat c, Character user, Character target, double roll) {
+        return filterResults(result -> result.meetsUsableRequirements(c, user, target, roll));
     }
 
-    /**
-     * affects whether this skill is even selectable
-     */
     @Override
-    public boolean isSelectable(Combat c, Character user, Character target) {
-        return usable.stream().allMatch(req -> req.meets(c, user, target));
+    public Optional<SkillResult> getHighestPriorityUsableResult(Combat c, Character user, Character target) {
+        return filterResults(result -> result.meetsUsableRequirements(c, user, target, 0)).stream()
+                                                                                          .max((a, b) -> Integer.compare(
+                                                                                                          a.getPriority(),
+                                                                                                          b.getPriority()));
+    }
+
+    private List<SkillResult> filterResults(Predicate<SkillResult> predicate) {
+        List<SkillResult> possibleResults = new ArrayList<>();
+        Deque<SkillResult> edges = new ArrayDeque<>(results);
+        while (!edges.isEmpty()) {
+            SkillResult res = edges.pop();
+            if (predicate.test(res) && res.getPriority() >= 0) {
+                possibleResults.add(res);
+            }
+            res.getChildren()
+               .forEach(child -> edges.push(child));
+        }
+        return possibleResults;
     }
 
     public void addRequirement(CustomRequirement requirement) {
@@ -62,5 +68,16 @@ public class GenericSkill implements SkillInterface {
 
     public String getName() {
         return label;
+    }
+
+    @Override
+    public boolean resolve(Combat c, Character user, Character target) {
+        double roll = Global.randomdouble();
+        Optional<SkillResult> maybeResults = getPossibleResults(c, user, target, roll).stream().max((a, b) -> Integer.compare(a.getPriority(), b.getPriority()));
+        if (!maybeResults.isPresent() || maybeResults.get().getPriority() < 0) {
+            c.write(user, Global.format("{self:NAME-POSSESSIVE} %s failed.", user, target, getName()));
+            return false;
+        }
+        return maybeResults.get().resolve(c, user, target, roll);
     }
 }

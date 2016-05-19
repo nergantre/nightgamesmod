@@ -374,7 +374,10 @@ public class CassieTime extends BaseNPCTime {
                                       + " is a placeholder. It still increases your addiction, though. You"
                                       + " won't suffer withdrawal effects tonight.");
             }
+
             Global.gui().choose(this, "Leave");
+            npc.gainAffection(player, 1);
+            player.gainAffection(npc, 1);
             Global.getPlayer().addict(AddictionType.MAGIC_MILK, npc, Addiction.MED_INCREASE);
             Global.getPlayer().getAddiction(AddictionType.MAGIC_MILK).flagDaytime();
         } else if (choice.equals("Sex")) {

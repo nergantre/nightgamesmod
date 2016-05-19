@@ -20,8 +20,6 @@ public abstract class Skill {
      */
     private String name;
     private Character self;
-    protected String image;
-    protected String artist;
     private int cooldown;
     public String choice;
 
@@ -32,8 +30,6 @@ public abstract class Skill {
     public Skill(String name, Character self, int cooldown) {
         this.name = name;
         setSelf(self);
-        image = null;
-        artist = null;
         this.cooldown = cooldown;
         choice = "";
     }
@@ -158,14 +154,6 @@ public abstract class Skill {
         return ("Skill:" + toString()).hashCode();
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public String getArtist(String image) {
-        return artist;
-    }
-
     public String getName(Combat c) {
         return toString();
     }
@@ -204,10 +192,6 @@ public abstract class Skill {
 
     public int getCooldown() {
         return cooldown;
-    }
-
-    public void setCooldown(int cooldown) {
-        this.cooldown = cooldown;
     }
 
     public Collection<String> subChoices() {

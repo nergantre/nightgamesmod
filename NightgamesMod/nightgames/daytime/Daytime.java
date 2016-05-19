@@ -161,6 +161,7 @@ public class Daytime {
         activities.add(new Bookstore(player));
         activities.add(new Meditation(player));
         activities.add(new AngelTime(player));
+        activities.add(new AiriTime(player));
         activities.add(new CassieTime(player));
         activities.add(new JewelTime(player));
         activities.add(new MaraTime(player));

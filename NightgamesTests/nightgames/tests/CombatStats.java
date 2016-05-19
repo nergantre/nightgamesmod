@@ -27,7 +27,6 @@ import nightgames.global.DebugFlags;
 import nightgames.global.Global;
 
 public class CombatStats {
-
     private static final Area NULL_AREA = new Area("", "", null);
     private static final int MATCH_COUNT = 1000;
 
@@ -222,8 +221,5 @@ public class CombatStats {
         public String toString() {
             return "Setup [level=" + level + ", extraChars=" + extraChars + "]";
         }
-
     }
-
-
 }

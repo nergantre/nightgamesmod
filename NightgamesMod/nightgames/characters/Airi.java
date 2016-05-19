@@ -1,5 +1,7 @@
 package nightgames.characters;
 
+import java.util.Optional;
+
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.GenericBodyPart;
@@ -23,7 +25,7 @@ public class Airi extends BasePersonality {
         preferredCockMod = CockMod.slimy;
 
         character.set(Attribute.Power, 6);
-        character.set(Attribute.Bio, 20);
+        character.set(Attribute.Slime, 1);
         character.set(Attribute.Cunning, 15);
         character.set(Attribute.Speed, 4);
         character.set(Attribute.Seduction, 17);
@@ -71,6 +73,8 @@ public class Airi extends BasePersonality {
         growth.addTrait(39, Trait.energydrain);
         growth.addTrait(42, Trait.desensitized);
         growth.addTrait(45, Trait.vaginaltongue);
+        preferredAttributes.add(c -> Optional.of(Attribute.Slime));
+        preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
     }
 
     @Override
@@ -243,7 +247,6 @@ public class Airi extends BasePersonality {
     public String night() {
         return "You walk back to your dorm after the match, and decide to take a shower after all that exertion. Who knew sex fighting a bunch of girls would be so exhausting? You strip off your shirt and boxers and head straight into the bathroom. As you flip on the lights, you notice that the tub seems already filled with water. Just as you wonder if you forgot to drain the tub from last night, the liquid in the tub quivers and… stands up. "
                         + "<br><br>It’s Airi. What’s she doing here? You ask her how did get in, since you were sure the door was locked. <i>Followed you… flowed under door… No problem…</i> Well, that explains it. Noticing the time, you let her know that you really need to take your shower now and head to bed or you won’t make it tomorrow for your morning classes. Airi looks at you for a second and nods. <i>Un… will help you clean…</i> Wait what? Oh n-! Airi pulls you into the tub with her gooey appendages and submerges you inside her body. <i>Relax… I’ll clean you up… Inside and out…</i>";
-
     }
 
     public void advance() {

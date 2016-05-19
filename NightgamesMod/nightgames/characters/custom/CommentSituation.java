@@ -87,6 +87,7 @@ public enum CommentSituation {
     PIN_DOM_LOSE(1, new StanceRequirement("pin"), new DomRequirement(), rev(new WinningRequirement())),
     PIN_SUB_WIN(1, new StanceRequirement("pin"), new SubRequirement(), new WinningRequirement()),
     PIN_SUB_LOSE(1, new StanceRequirement("pin"), new SubRequirement(), rev(new WinningRequirement())),
+    ENGULFED_DOM(1, new StanceRequirement("engulfed"), new DomRequirement()),
 
     // Statuses
     SELF_BOUND(0, new StatusRequirement("bound")),
@@ -101,6 +102,7 @@ public enum CommentSituation {
     OTHER_OILED(0, rev(new StatusRequirement("oiled"))),
     SELF_COCKBOUND(0, new StatusRequirement("cockbound")),
     OTHER_COCKBOUND(0, rev(new StatusRequirement("cockbound"))),
+    OTHER_PARASITED(0, rev(new StatusRequirement("parasited"))),
 
     NO_COMMENT(-1);
 

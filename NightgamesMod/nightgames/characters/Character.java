@@ -2629,6 +2629,8 @@ public abstract class Character extends Observable implements Cloneable {
         for (Status status : other.getStatuses()) {
             fit += status.fitnessModifier();
         }
+        // hack to make the AI favor making the opponent cum
+        fit -= 100 * other.orgasms;
         return fit;
     }
 
@@ -2863,8 +2865,8 @@ public abstract class Character extends Observable implements Cloneable {
         }
     }
 
-    public boolean checkLoss() {
-        return orgasmed && willpower.isEmpty();
+    public boolean checkLoss(Combat c) {
+        return (orgasmed || c.getTimer() > 20) && willpower.isEmpty();
     }
 
     public boolean isCustomNPC() {

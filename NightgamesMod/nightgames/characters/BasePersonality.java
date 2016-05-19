@@ -176,6 +176,7 @@ public abstract class BasePersonality implements Personality {
             avail.add(Attribute.Power);
             avail.add(Attribute.Seduction);
         }
+        int noPrefAdded = 2;
         for (; character.availableAttributePoints > 0; character.availableAttributePoints--) {
             Attribute selected = null;
             // remove all the attributes that isn't in avail
@@ -186,10 +187,15 @@ public abstract class BasePersonality implements Personality {
                                                   })
                                                   .collect(Collectors.toList()));
             if (preferred.size() > 0) {
-                Optional<Attribute> pref = preferred.removeFirst()
-                                                    .getPreferred(character);
-                if (pref.isPresent()) {
-                    selected = pref.get();
+                if (noPrefAdded > 1) {
+                    noPrefAdded = 0;
+                    Optional<Attribute> pref = preferred.removeFirst()
+                                                        .getPreferred(character);
+                    if (pref.isPresent()) {
+                        selected = pref.get();
+                    }
+                } else {
+                    noPrefAdded += 1;
                 }
             }
 
