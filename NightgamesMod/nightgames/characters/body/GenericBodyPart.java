@@ -249,12 +249,12 @@ public class GenericBodyPart implements BodyPart {
     }
 
     @Override
-    public int counterValue(BodyPart other) {
+    public int counterValue(BodyPart otherPart, Character self, Character other) {
         return 0;
     }
 
     @Override
-    public BodyPartMod getMod() {
+    public BodyPartMod getMod(Character self) {
         return BodyPartMod.noMod;
     }
 }

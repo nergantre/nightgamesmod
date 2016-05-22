@@ -67,5 +67,6 @@ public enum Flag {
     Maya,
     FTC,
     didFTC, 
-    AddictionAdvice,;
+    AddictionAdvice,
+    AiriDisabled,;
 }

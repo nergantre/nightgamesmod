@@ -869,36 +869,36 @@ public class Body implements Cloneable {
         }
     }
 
-    public float penetrationFitnessModifier(boolean pitcher, boolean anal, Body other) {
+    public float penetrationFitnessModifier(Character self, Character other, boolean pitcher, boolean anal) {
         int totalCounterValue = 0;
 
         if (anal) {
             if (!pitcher) {
                 totalCounterValue += get("ass").stream()
-                                               .flatMapToInt(ass -> other.get("cock")
+                                               .flatMapToInt(ass -> other.body.get("cock")
                                                                          .stream()
-                                                                         .mapToInt(cock -> ass.counterValue(cock)))
+                                                                         .mapToInt(cock -> ass.counterValue(cock, self, other)))
                                                .sum();
             } else {
                 totalCounterValue += get("cock").stream()
-                                                .flatMapToInt(cock -> other.get("ass")
+                                                .flatMapToInt(cock -> other.body.get("ass")
                                                                            .stream()
-                                                                           .mapToInt(ass -> cock.counterValue(ass)))
+                                                                           .mapToInt(ass -> cock.counterValue(ass, self, other)))
                                                 .sum();
             }
         } else {
             if (!pitcher) {
                 totalCounterValue += get("pussy").stream()
-                                                 .flatMapToInt(pussy -> other.get("cock")
+                                                 .flatMapToInt(pussy -> other.body.get("cock")
                                                                              .stream()
                                                                              .mapToInt(cock -> pussy.counterValue(
-                                                                                             cock)))
+                                                                                             cock, self, other)))
                                                  .sum();
             } else {
                 totalCounterValue += get("cock").stream()
-                                                .flatMapToInt(cock -> other.get("pussy")
+                                                .flatMapToInt(cock -> other.body.get("pussy")
                                                                            .stream()
-                                                                           .mapToInt(pussy -> cock.counterValue(pussy)))
+                                                                           .mapToInt(pussy -> cock.counterValue(pussy, self, other)))
                                                 .sum();
             }
         }

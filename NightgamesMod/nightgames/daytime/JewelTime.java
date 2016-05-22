@@ -52,14 +52,14 @@ public class JewelTime extends BaseNPCTime {
         enlightenedCock.ingredients.put(Item.JuggernautJuice, 10);
         enlightenedCock.requirements.add(new BodyPartRequirement("cock"));
         enlightenedCock.requirements.add((c, self, other) -> {
-            return self.body.get("cock").stream().anyMatch(cock -> ((CockPart) cock).isGeneric());
+            return self.body.get("cock").stream().anyMatch(cock -> ((CockPart) cock).isGeneric(self));
         });
         enlightenedCock.additionalRequirements = "A normal cock";
         enlightenedCock.option = "Enlightened Cock";
         enlightenedCock.scene = "[Placeholder]<br>Jewel trains your cock to be enlightened.";
         enlightenedCock.effect = (c, self, other) -> {
             Optional<BodyPart> optPart =
-                            self.body.get("cock").stream().filter(cock -> ((CockPart) cock).isGeneric()).findAny();
+                            self.body.get("cock").stream().filter(cock -> ((CockPart) cock).isGeneric(self)).findAny();
             BasicCockPart target = (BasicCockPart) optPart.get();
             self.body.remove(target);
             self.body.add(new ModdedCockPart(target, CockMod.enlightened));

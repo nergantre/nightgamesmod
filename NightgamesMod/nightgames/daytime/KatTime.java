@@ -42,14 +42,14 @@ public class KatTime extends BaseNPCTime {
         primalCock.ingredients.put(Item.Aphrodisiac, 50);
         primalCock.requirements.add(new BodyPartRequirement("cock"));
         primalCock.requirements.add((c, self, other) -> {
-            return self.body.get("cock").stream().anyMatch(cock -> ((CockPart) cock).isGeneric());
+            return self.body.get("cock").stream().anyMatch(cock -> ((CockPart) cock).isGeneric(self));
         });
         primalCock.additionalRequirements = "A normal cock";
         primalCock.option = "Primal Cock";
         primalCock.scene = "[Placeholder]<br>Kat uses her totemic magic to convert your penis into a primal cock.";
         primalCock.effect = (c, self, other) -> {
             Optional<BodyPart> optPart =
-                            self.body.get("cock").stream().filter(cock -> ((CockPart) cock).isGeneric()).findAny();
+                            self.body.get("cock").stream().filter(cock -> ((CockPart) cock).isGeneric(self)).findAny();
             BasicCockPart target = (BasicCockPart) optPart.get();
             self.body.remove(target);
             self.body.add(new ModdedCockPart(target, CockMod.primal));

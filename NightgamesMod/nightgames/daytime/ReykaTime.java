@@ -53,7 +53,7 @@ public class ReykaTime extends BaseNPCTime {
         incubusCock.requirements.add((c, self, other) -> {
             return self.body.get("cock")
                             .stream()
-                            .anyMatch(cock -> ((CockPart) cock).isGeneric());
+                            .anyMatch(cock -> ((CockPart) cock).isGeneric(self));
         });
         incubusCock.additionalRequirements = "A normal cock";
         incubusCock.option = "Incubus Cock";
@@ -89,7 +89,7 @@ public class ReykaTime extends BaseNPCTime {
         incubusCock.effect = (c, self, other) -> {
             Optional<BodyPart> optPart = self.body.get("cock")
                                                   .stream()
-                                                  .filter(cock -> ((CockPart) cock).isGeneric())
+                                                  .filter(cock -> ((CockPart) cock).isGeneric(self))
                                                   .findAny();
             BasicCockPart target = (BasicCockPart) optPart.get();
             self.body.remove(target);

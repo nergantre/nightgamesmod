@@ -274,8 +274,8 @@ public enum Trait {
     bramaster("Bra Master", "Better at undoing bras."),
     pantymaster("Panty Master", "Better at removing panties"),
 
-    // unimplemented
-    Clingy("Clingy", "can do the 'glomp' attack - weak standing grapple hug, probably something Cassie would take right away"),
+    Clingy("Clingy", "Harder to escape"),
+    fakeout("Fakeout", "Easier to counter"),
 
     // Feats
     sprinter("Sprinter", "Better at escaping combat"),
@@ -307,6 +307,7 @@ public enum Trait {
             }
         }
     }),
+    revered("Revered", "Higher chance of worship"),
     cautious("Cautious", "Better chance of avoiding traps"),
     responsive("Responsive", "Return more pleasure when being fucked"),
     assmaster("Ass Master", "Who needs lube? Also boosts pleasure to both parties when assfucking"),
@@ -321,7 +322,7 @@ public enum Trait {
 
     event("event", "special character"),
 
-    none("", ""),;
+    none("", "");
     private String desc;
     private TraitDescription longDesc;
     private String name;

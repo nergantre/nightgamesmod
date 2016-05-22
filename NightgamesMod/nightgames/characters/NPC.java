@@ -836,7 +836,13 @@ public class NPC extends Character {
         }
         return moveList.get(moveList.size() - 1).skill;
     }
-
+    
+    @Override
+    protected void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
+                    int totalTimes) {
+        super.resolveOrgasm(c, opponent, selfPart, opponentPart, times, totalTimes);
+        ai.resolveOrgasm(c, opponent, selfPart, opponentPart, times, totalTimes);
+    }
     @Override
     public String getPortrait(Combat c) {
         return ai.image(c);

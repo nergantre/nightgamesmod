@@ -44,7 +44,7 @@ public class AnalPussyPart extends AssPart {
     }
 
     @Override
-    public BodyPartMod getMod() {
+    public BodyPartMod getMod(Character self) {
         return AnalPussyMod;
     }
 }

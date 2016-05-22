@@ -7,7 +7,7 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 
-public enum EarPart implements BodyPart,BodyPartMod {
+public enum EarPart implements BodyPart, BodyPartMod {
     pointed("pointed ", .2, 1.2, 1),
     cat("cat ", .4, 1.5, 1.5),
     normal("normal ", 0, 1, 1);
@@ -178,12 +178,12 @@ public enum EarPart implements BodyPart,BodyPartMod {
     }
 
     @Override
-    public int counterValue(BodyPart other) {
+    public int counterValue(BodyPart otherPart, Character self, Character other) {
         return 0;
     }
 
     @Override
-    public BodyPartMod getMod() {
+    public BodyPartMod getMod(Character self) {
         if (this == normal) {
             return BodyPartMod.noMod;
         }

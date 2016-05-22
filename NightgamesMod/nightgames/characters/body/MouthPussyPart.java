@@ -62,7 +62,7 @@ public class MouthPussyPart extends MouthPart {
     }
 
     @Override
-    public BodyPartMod getMod() {
+    public BodyPartMod getMod(Character self) {
         return MouthPussyMod;
     }
 }

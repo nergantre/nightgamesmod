@@ -7,6 +7,8 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 
 public enum WingsPart implements BodyPart,BodyPartMod {
+    demonicslime("demonic slime ", .2, 1.3, 1.2),
+    angelicslime("angelic slime ", .2, 1.3, 1.2),
     demonic("demonic ", .2, 1.3, 1.2),
     angelic("angelic ", .3, 1.4, 1.3);
     public String desc;
@@ -162,12 +164,12 @@ public enum WingsPart implements BodyPart,BodyPartMod {
     }
 
     @Override
-    public int counterValue(BodyPart other) {
+    public int counterValue(BodyPart otherPart, Character self, Character other) {
         return 0;
     }
 
     @Override
-    public BodyPartMod getMod() {
+    public BodyPartMod getMod(Character self) {
         return this;
     }
 

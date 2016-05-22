@@ -56,7 +56,7 @@ public class AngelTime extends BaseNPCTime {
             blessedCock.requirements.add((c, self, other) -> {
                 return self.body.get("cock")
                                 .stream()
-                                .anyMatch(cock -> ((CockPart) cock).isGeneric());
+                                .anyMatch(cock -> ((CockPart) cock).isGeneric(self));
             });
             blessedCock.requirements.add((c, self, other) -> {
                 return self.get(Attribute.Divinity) >= 10;
@@ -68,7 +68,7 @@ public class AngelTime extends BaseNPCTime {
             blessedCock.effect = (c, self, other) -> {
                 Optional<BodyPart> optPart = self.body.get("cock")
                                                       .stream()
-                                                      .filter(cock -> ((CockPart) cock).isGeneric())
+                                                      .filter(cock -> ((CockPart) cock).isGeneric(self))
                                                       .findAny();
                 BasicCockPart target = (BasicCockPart) optPart.get();
                 self.body.remove(target);

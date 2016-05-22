@@ -20,7 +20,9 @@ public enum BreastsPart implements BodyPart {
     d("D Cup", "round", 4),
     dd("DD Cup", "large", 5),
     e("E Cup", "huge", 6),
-    f("F Cup", "glorious", 7);
+    f("F Cup", "glorious", 7),
+    g("F Cup", "massive", 8),
+    h("F Cup", "colossal", 9);
 
     public String desc;
     public String name;
@@ -336,12 +338,12 @@ public enum BreastsPart implements BodyPart {
     }
 
     @Override
-    public int counterValue(BodyPart other) {
+    public int counterValue(BodyPart otherPart, Character self, Character other) {
         return 0;
     }
 
     @Override
-    public BodyPartMod getMod() {
+    public BodyPartMod getMod(Character self) {
         return BodyPartMod.noMod;
     }
 }

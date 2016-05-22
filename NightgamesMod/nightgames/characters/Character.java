@@ -208,6 +208,10 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public int get(Attribute a) {
+        if (a == Attribute.Slime && !has(Trait.slime)) {
+            // always return 0 if there's no trait for it.
+            return 0;
+        }
         int total = getPure(a);
         for (Status s : getStatuses()) {
             total += s.mod(a);
@@ -1184,6 +1188,9 @@ public abstract class Character extends Observable implements Cloneable {
         if (has(Trait.freeSpirit)) {
             total += 5;
         }
+        if (c.getOther(this).has(Trait.Clingy)) {
+            total -= 5;
+        }
         int stanceMod = c.getStance().escape(c, this);
         if (stanceMod < 0) {
             total += stanceMod;
@@ -1357,12 +1364,13 @@ public abstract class Character extends Observable implements Cloneable {
         saveObj.put("human", human());
         JSONObject flagsObj = new JSONObject();
         saveObj.put("flags", flagsObj);
+        saveInternal(saveObj);
         flags.entrySet().stream().forEach(entry -> flagsObj.put(entry.getKey(), entry.getValue()));
         return saveObj;
     }
     
     protected void saveInternal(JSONObject obj) {
-        //NOP
+        
     }
 
     public abstract String getType();
@@ -1400,6 +1408,7 @@ public abstract class Character extends Observable implements Cloneable {
 
         loadClothingFromArr(obj, closet, "closet");
         traits = new CopyOnWriteArrayList<>(JSONUtils.loadEnumsFromArr(obj, "traits", Trait.class));
+        traits.remove(Trait.slime);
         body = Body.load((JSONObject) obj.get("body"), this);
         {
             JSONObject attObj = (JSONObject) obj.get("attributes");
@@ -1464,7 +1473,7 @@ public abstract class Character extends Observable implements Cloneable {
         }
     }
 
-    private void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
+    protected void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
                     int totalTimes) {
         orgasmed = true;
         if (times == 1) {
@@ -2262,6 +2271,9 @@ public abstract class Character extends Observable implements Cloneable {
         if (has(Trait.aikidoNovice)) {
             counter += 3;
         }
+        if (has(Trait.fakeout)) {
+            counter += 3;
+        }
         if (opponent.is(Stsflag.countered)) {
             counter -= 10;
         }
@@ -2671,8 +2683,7 @@ public abstract class Character extends Observable implements Cloneable {
         fit += body.getHotness(this, other);
         if (c.getStance().inserted()) { // If we are fucking...
             // ...we need to see if that's beneficial to us.
-            fit += body.penetrationFitnessModifier(c.getStance().inserted(this), c.getStance().anallyPenetrated(),
-                            other.body);
+            fit += body.penetrationFitnessModifier(this, other, c.getStance().inserted(this), c.getStance().anallyPenetrated());
         }
         if (hasDick()) {
             fit += (dickPreference() - 3) * 4;
@@ -2957,8 +2968,8 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public boolean isDemonic() {
-        return has(Trait.succubus) || body.get("pussy").stream().anyMatch(part -> part.getMod() == PussyPart.succubus)
-                        || body.get("cock").stream().anyMatch(part -> part.getMod() == CockMod.incubus);
+        return has(Trait.succubus) || body.get("pussy").stream().anyMatch(part -> part.moddedPartCountsAs(this, PussyPart.succubus))
+                        || body.get("cock").stream().anyMatch(part -> part.moddedPartCountsAs(this, CockMod.incubus));
     }
 
     public int baseDisarm() {

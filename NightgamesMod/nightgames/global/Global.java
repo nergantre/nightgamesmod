@@ -651,7 +651,7 @@ public class Global {
                     resting.add(player);
                 }
             }
-            lineup = pickCharacters(lineup, players, 4);
+            lineup = pickCharacters(players, lineup, 4);
             if (!checkFlag(Flag.Maya)) {
                 newChallenger(new Maya(human.getLevel()));
                 flag(Flag.Maya);

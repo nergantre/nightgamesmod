@@ -663,6 +663,9 @@ public class GUI extends JFrame implements Observer {
         }
         imgLabel.setIcon(null);
     }
+    public void clearPortrait() {
+        portrait.setIcon(null);
+    }
     public void loadPortrait(String imagepath) {
         if (imagepath != null) {
             BufferedImage face = null;

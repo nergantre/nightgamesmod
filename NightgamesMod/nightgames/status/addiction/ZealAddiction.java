@@ -43,7 +43,7 @@ public class ZealAddiction extends Addiction {
     @Override
     public Optional<Status> startNight() {
         Optional<Status> s = super.startNight();
-        if (!inWithdrawal) {
+        if (!inWithdrawal && isActive()) {
             shouldApplyDivineCharge = true;
         }
         return s;
