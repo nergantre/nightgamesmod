@@ -91,6 +91,6 @@ public class ToggleSlimeCock extends Skill {
     }
 
     private boolean hasSlimeCock() {
-        return getSelf().hasDick() && getSelf().body.getRandomCock().getMod().equals(CockMod.slimy);
+        return getSelf().hasDick() && getSelf().body.getRandomCock().moddedPartCountsAs(getSelf(), CockMod.slimy);
     }
 }

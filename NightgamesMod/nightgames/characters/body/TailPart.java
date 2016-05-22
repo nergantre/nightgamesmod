@@ -8,7 +8,9 @@ import nightgames.combat.Combat;
 
 public enum TailPart implements BodyPart,BodyPartMod {
     demonic("demonic ", .2, 1.2, 1),
-    cat("cat's ", .3, 1.5, 1.5);
+    demonicslime("demonic slime ", .2, 1.2, 1),
+    cat("cat's ", .3, 1.5, 1.5),
+    slimeycat("slimey cat's ", .3, 1.5, 1.5);
 
     public String desc;
     public double hotness;
@@ -158,12 +160,12 @@ public enum TailPart implements BodyPart,BodyPartMod {
     }
 
     @Override
-    public int counterValue(BodyPart other) {
+    public int counterValue(BodyPart otherPart, Character self, Character other) {
         return 0;
     }
 
     @Override
-    public BodyPartMod getMod() {
+    public BodyPartMod getMod(Character self) {
         return this;
     }
 

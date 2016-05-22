@@ -131,7 +131,7 @@ public class TentaclePart extends GenericBodyPart {
     }
 
     @Override
-    public BodyPartMod getMod() {
+    public BodyPartMod getMod(Character self) {
         return TentacleMod;
     }
 }

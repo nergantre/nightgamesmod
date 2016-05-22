@@ -90,8 +90,10 @@ public interface BodyPart {
       X.counterValue(Y) == -1 <=> Y.counterValue(X) == 1<br>
       X.counterValue(Y) == 0  <=> Y.counterValue(X) == 0<br>
       </code>
+     * @param self TODO
+     * @param other TODO
      */
-    public int counterValue(BodyPart other);
+    public int counterValue(BodyPart otherPart, Character self, Character other);
 
     public default double getFemininity(Character self) {
         return 0;
@@ -127,11 +129,11 @@ public interface BodyPart {
     }
 
     // whether the part is modded
-    public default boolean isGeneric() {
-        return getMod().getModType().equals("none");
+    public default boolean isGeneric(Character self) {
+        return getMod(self).getModType().equals("none");
     }
 
-    public BodyPartMod getMod();
+    public BodyPartMod getMod(Character self);
 
     public static boolean hasType(Collection<BodyPart> parts, String type) {
         return parts.stream().anyMatch(part -> part.isType(type));
@@ -139,5 +141,9 @@ public interface BodyPart {
 
     public static boolean hasOnlyType(Collection<BodyPart> parts, String type) {
         return parts.stream().allMatch(part -> part.isType(type));
+    }
+
+    public default boolean moddedPartCountsAs(Character self, BodyPartMod mod) {
+        return getMod(self).countsAs(self, mod);
     }
 }

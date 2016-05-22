@@ -111,7 +111,7 @@ public class Knotted extends Status {
     public float fitnessModifier() {
         // This is counted twice, but that's intentional.
         // (The other place is Character#getFitness())
-        return affected.body.penetrationFitnessModifier(false, anal, opponent.body);
+        return affected.body.penetrationFitnessModifier(affected, opponent, false, anal);
     }
 
     @Override

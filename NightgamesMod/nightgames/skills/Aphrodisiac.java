@@ -22,14 +22,14 @@ public class Aphrodisiac extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return c.getStance().mobile(getSelf()) && getSelf().canAct() && getSelf().has(Item.Aphrodisiac)
-                        || getSelf().hasPussy() && getSelf().body.getRandomPussy() == PussyPart.succubus
+                        || getSelf().hasPussy() && getSelf().body.getRandomPussy().moddedPartCountsAs(getSelf(), PussyPart.succubus)
                                         && getSelf().getArousal().get() >= 10 && !c.getStance().prone(getSelf());
     }
 
     @Override
     public boolean resolve(Combat c, Character target) {
         int magnitude = Global.random(5) + 15;
-        if (getSelf().hasPussy() && getSelf().body.getRandomPussy() == PussyPart.succubus) {
+        if (getSelf().hasPussy() && getSelf().body.getRandomPussy().moddedPartCountsAs(getSelf(), PussyPart.succubus)) {
             c.write(getSelf(), receive(c, magnitude, Result.strong, target));
             target.arouse(magnitude, c);
             target.emote(Emotion.horny, 20);

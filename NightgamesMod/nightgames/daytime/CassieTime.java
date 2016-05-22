@@ -51,14 +51,14 @@ public class CassieTime extends BaseNPCTime {
         runicCock.ingredients.put(Item.FaeScroll, 1);
         runicCock.requirements.add(new BodyPartRequirement("cock"));
         runicCock.requirements.add((c, self, other) -> {
-            return self.body.get("cock").stream().anyMatch(cock -> ((CockPart) cock).isGeneric());
+            return self.body.get("cock").stream().anyMatch(cock -> ((CockPart) cock).isGeneric(self));
         });
         runicCock.additionalRequirements = "A normal cock";
         runicCock.option = "Runic Cock";
         runicCock.scene = "[Placeholder]<br>Cassie enchants your cock with the power of the fairies.";
         runicCock.effect = (c, self, other) -> {
             Optional<BodyPart> optPart =
-                            self.body.get("cock").stream().filter(cock -> ((CockPart) cock).isGeneric()).findAny();
+                            self.body.get("cock").stream().filter(cock -> ((CockPart) cock).isGeneric(self)).findAny();
             BasicCockPart target = (BasicCockPart) optPart.get();
             self.body.remove(target);
             self.body.add(target.applyMod(CockMod.runic));
@@ -88,7 +88,7 @@ public class CassieTime extends BaseNPCTime {
         mouthPussy.ingredients.put(Item.FaeScroll, 1);
         mouthPussy.requirements.add(new BodyPartRequirement("mouth"));
         mouthPussy.requirements.add((c, self, other) -> {
-            return self.body.get("mouth").stream().anyMatch(mouth -> mouth.isGeneric());
+            return self.body.get("mouth").stream().anyMatch(mouth -> mouth.isGeneric(self));
         });
         mouthPussy.requirements.add((c, self, other) -> {
             return other.body.get("mouth").stream().anyMatch(mouth -> mouth instanceof MouthPussyPart);

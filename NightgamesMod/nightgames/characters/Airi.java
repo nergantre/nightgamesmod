@@ -2,6 +2,7 @@ package nightgames.characters;
 
 import java.util.Optional;
 
+import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.GenericBodyPart;
@@ -11,6 +12,8 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.status.SlimeMimicry;
+import nightgames.status.Stsflag;
 
 public class Airi extends BasePersonality {
     /**
@@ -30,11 +33,10 @@ public class Airi extends BasePersonality {
         character.set(Attribute.Speed, 4);
         character.set(Attribute.Seduction, 17);
         character.getStamina().setMax(80);
-        character.getArousal().setMax(200);
+        character.getArousal().setMax(100);
         character.getMojo().setMax(60);
-        character.getWillpower().setMax(150);
+        character.getWillpower().setMax(80);
         character.add(Trait.dexterous);
-        character.add(Trait.slime);
         character.add(Trait.imagination);
         character.add(Trait.softheart);
         character.add(Trait.alwaysready);
@@ -42,12 +44,7 @@ public class Airi extends BasePersonality {
         character.plan = Plan.retreating;
         character.mood = Emotion.confident;
         character.body.add(BreastsPart.b);
-        character.body.add(PussyPart.gooey);
-        character.body.add(new GenericBodyPart("gooey skin", .5, 1.5, .8, "skin", ""));
-        character.body.add(new TentaclePart("slime pseudopod", "back", "slime", 0.0, 1.0, 1.0));
-        character.body.add(new TentaclePart("gooey feelers", "hands", "slime", 0.0, 1.0, 1.0));
-        character.body.add(new TentaclePart("gooey feelers", "feet", "slime", 0.0, 1.0, 1.0));
-        character.body.add(new TentaclePart("slime filaments", "pussy", "slime", 0.0, 1.0, 1.0));
+        character.body.add(PussyPart.normal);
         character.body.finishBody(CharacterSex.female);
     }
 
@@ -78,6 +75,21 @@ public class Airi extends BasePersonality {
     }
 
     @Override
+    public void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times, int totalTimes) {
+        if (times == totalTimes && character.getWillpower().percent() < 60) {
+            c.write(character, Global.format("After {self:NAME-POSSESSIVE} orgasm, her whole body shimmers and melts into a puddle of goo. A human body rises from the slime and molds itself to a facsimile of {self:reflective}. You're now fighting {self:name} in slime form!", character, opponent));
+            character.addTemporaryTrait(Trait.slime, 999);
+            character.body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
+            character.body.temporaryAddOrReplacePartWithType(new GenericBodyPart("gooey skin", .5, 1.5, .8, "skin", ""), 99);
+            character.body.temporaryAddOrReplacePartWithType(new TentaclePart("slime pseudopod", "back", "slime", 0.0, 1.0, 1.0), 999);
+            character.body.temporaryAddOrReplacePartWithType(new TentaclePart("gooey feelers", "hands", "slime", 0.0, 1.0, 1.0), 999);
+            character.body.temporaryAddOrReplacePartWithType(new TentaclePart("gooey feelers", "feet", "slime", 0.0, 1.0, 1.0), 999);
+            character.body.temporaryAddOrReplacePartWithType(new TentaclePart("slime filaments", "pussy", "slime", 0.0, 1.0, 1.0), 999);
+            character.moodSwing(c);
+        }
+    }
+    
+    @Override
     public void rest(int time) {
         super.rest(time);
         Decider.visit(character);
@@ -105,28 +117,28 @@ public class Airi extends BasePersonality {
 
     @Override
     public String bbLiner(Combat c) {
-        return "Airi grimaces as you fall. <i>\"Apologies... but necessary.... Please understand...\"</i>";
+        return character.has(Trait.slime) ? "Airi grimaces as you fall. <i>\"Apologies... but necessary.... Please understand...\"</i>" : "Sorry... I hope it didn't hurt too badly...";
     }
 
     @Override
     public String nakedLiner(Combat c) {
-        // always naked
-        return "";
+        // always naked in slime form
+        return character.has(Trait.slime) ? "" : "Nooo! don't look at me!";
     }
 
     @Override
     public String stunLiner(Combat c) {
-        return "Airi glares at you from the puddle she formed on the floor. <i>\"Unforgivable...\"</i>";
+        return character.has(Trait.slime) ? "Airi glares at you from the puddle she formed on the floor. <i>\"Unforgivable...\"</i>" : "Unforgivable...";
     }
 
     @Override
     public String taunt(Combat c) {
-        return "Airi coos at you <i>\"About to cum..? ...even trying..?\"</i>";
+        return character.has(Trait.slime) ? "Airi coos at you <i>\"About to cum..? ...even trying..?\"</i>" : "<i>Giggle</i> Try a bit harder okay?";
     }
 
     @Override
     public String temptLiner(Combat c) {
-        return "<i>\"Fill me with yourself... You will forget about everything...\"</i>";
+        return character.has(Trait.slime) ? "<i>\"Fill me with yourself... forget everything...\"</i>" : "Uhm, it's okay, you can come inside...";
     }
 
     @Override
@@ -139,6 +151,7 @@ public class Airi extends BasePersonality {
         }
         character.arousal.empty();
         opponent.arousal.empty();
+        character.purge(c);
         return "Airi crawls over to you at an agonizing pace. Her slime rapidly flows on top of your penis and covers it in a sticky bulb. <i>\"Time… for you to cum…\"</i><br><br>"
                         + "Her previously still slime suddenly starts to frantically squeeze and knead your cock, pulsating in waves of sticky goo on top of you. Startled by the sudden stimulation, you barely manage to hold on. Unfortunately--or perhaps fortunately--for you, Airi is not finished. She also covers your chest with her own sticky breasts and engulfs your nipples inside hers. Although it’s just slime, you feel as if her lips are on your nipples, sucking them and rolling the tips around inside her mouth.<br><br>"
                         + "As you’re being overloaded with sensations, Airi brings her face close to yours and whispers in your ear.<i>\"Cum… cum… cum…\"<i> With a groan of agonising pleasure, you come hard, firing ropes of your seed inside her translucent depths.<br><br>"
@@ -152,6 +165,7 @@ public class Airi extends BasePersonality {
 
     @Override
     public String defeat(Combat c, Result flag) {
+        character.purge(c);
         return "Fighting Airi is not easy. Her stickiness makes it"
                         + " quite difficult for you to accomplish much of anything. Still, "
                         + "considering her incoherent babbling she's probably not got much fight left in her. "
@@ -183,9 +197,12 @@ public class Airi extends BasePersonality {
 
     @Override
     public String describe(Combat c) {
-        return "A crystal blue figure stands in front of you. Well, \"stands\" might be an exaggeration. "
+        return character.has(Trait.slime) ? "A crystal blue figure stands in front of you. Well, \"stands\" might be an exaggeration. "
                         + "Airi sports a cute face and a tight body, but her thighs end in a giant ball of slime. "
-                        + "Indeed, while her body might look human at a distance, she seems to be composed of a soft, translucent gel.";
+                        + "Indeed, while her body might look human at a distance, she seems to be composed of a soft, translucent gel."
+                        : "Airi looks at you cautiously. Airi sports a cute face and a tight body with shoulder length black hair "
+                                        + "almost covering her bright intelligent black eyes. You're not too sure what she's thinking "
+                                        + "so you approach her cautiously.";
     }
 
     @Override
@@ -234,7 +251,8 @@ public class Airi extends BasePersonality {
 
     @Override
     public String startBattle(Character other) {
-        return "Airi's main body rises up from her slime blob and forms the demure beauty you're used to seeing. <i>\"Delicious... Quickly... Give me your seed...\"</i>";
+        return character.has(Trait.slime) ? "Airi's main body rises up from her slime blob and forms the demure beauty you're used to seeing. <i>\"Delicious... Quickly... Give me your seed...\"</i>"
+                        : "You're fighting Airi, a reticent asian girl. She looks pretty normal for now, but you know she's holding a secret.";
     }
 
     @Override
@@ -267,11 +285,25 @@ public class Airi extends BasePersonality {
 
     @Override
     public String orgasmLiner(Combat c) {
-        return "<i>\"Ahhnn... forgot how good... feels... Will return favor...\"</i>.";
+        return character.has(Trait.slime) ? "<i>\"Ahhnn... forgot how good... feels... Will return favor...\"</i>." : "Aaahhh... my head's feeling fuzzy...";
     }
 
     @Override
     public String makeOrgasmLiner(Combat c) {
-        return "<i>\"...Feels good..? I'll suck more out... I'll drain you dry...\"</i>";
+        return character.has(Trait.slime) ? "<i>\"...Feels good..? I'll suck more out... I'll drain you dry...\"</i>" : "Feels good? let me have some more...";
+    }
+
+    @Override
+    public String image(Combat c) {
+        if (character.has(Trait.slime)) {
+            SlimeMimicry mimicry = (SlimeMimicry) character.getStatus(Stsflag.mimicry);
+            if (mimicry != null) {
+                return "airi_" + mimicry.getMimickedName() + "_slime.jpg";
+            } else {
+                return super.image(c);
+            }
+        } else {
+            return "airi_human.jpg";
+        }
     }
 }

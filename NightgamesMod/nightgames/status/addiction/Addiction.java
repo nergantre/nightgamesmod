@@ -125,12 +125,14 @@ public abstract class Addiction extends Status {
 
     public Optional<Status> startNight() {
         if (!didDaytime || overloading) {
-            inWithdrawal = true;
             if (!overloading)
                 alleviate(Global.randomfloat() / 4.f);
-            Global.gui()
-                  .message(describeWithdrawal());
-            return withdrawalEffects();
+            if (isActive()) {
+                inWithdrawal = true;
+                Global.gui()
+                      .message(describeWithdrawal());
+                return withdrawalEffects();
+            }
         }
         return Optional.empty();
     }

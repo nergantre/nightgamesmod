@@ -150,7 +150,7 @@ public class Combat extends Observable implements Cloneable {
     private boolean checkBottleCollection(Character victor, Character loser, PussyPart mod) {
         return victor.has(Item.EmptyBottle, 1) && loser.body.get("pussy")
                                                             .stream()
-                                                            .anyMatch(part -> part.getMod() == mod);
+                                                            .anyMatch(part -> part.getMod(loser) == mod);
     }
 
     public void doVictory(Character victor, Character loser) {
@@ -306,8 +306,9 @@ public class Combat extends Observable implements Cloneable {
         if ((p1.human() || p2.human()) && !Global.checkFlag(Flag.noimage)) {
             Global.gui()
                   .clearImage();
-            Global.gui()
-                  .displayImage(imagePath, images.get(imagePath));
+            if (!imagePath.isEmpty()) {
+            Global.gui().displayImage(imagePath, images.get(imagePath));
+            }
         }
         p1act = null;
         p2act = null;
@@ -358,6 +359,9 @@ public class Combat extends Observable implements Cloneable {
     private Skill checkWorship(Character self, Character other, Skill def) {
         if (other.has(Trait.objectOfWorship) && (other.breastsAvailable() || other.crotchAvailable())) {
             int chance = Math.min(20, Math.max(5, other.get(Attribute.Divinity) + 10 - self.getLevel()));
+            if (other.has(Trait.revered)) {
+                chance += 10;
+            }
             if (Global.random(100) < chance) {
                 return getRandomWorshipSkill(self, other).orElse(def);
             }

@@ -52,14 +52,14 @@ public class MaraTime extends BaseNPCTime {
         bionicCock.ingredients.put(Item.Dildo, 1);
         bionicCock.requirements.add(new BodyPartRequirement("cock"));
         bionicCock.requirements.add((c, self, other) -> {
-            return self.body.get("cock").stream().anyMatch(cock -> ((CockPart) cock).isGeneric());
+            return self.body.get("cock").stream().anyMatch(cock -> ((CockPart) cock).isGeneric(self));
         });
         bionicCock.additionalRequirements = "A normal cock";
         bionicCock.option = "Bionic Cock";
         bionicCock.scene = "[Placeholder]<br>Mara installs a bionic cock on you";
         bionicCock.effect = (c, self, other) -> {
             Optional<BodyPart> optPart =
-                            self.body.get("cock").stream().filter(cock -> ((CockPart) cock).isGeneric()).findAny();
+                            self.body.get("cock").stream().filter(cock -> ((CockPart) cock).isGeneric(self)).findAny();
             BasicCockPart target = (BasicCockPart) optPart.get();
             self.body.remove(target);
             self.body.add(new ModdedCockPart(target, CockMod.bionic));

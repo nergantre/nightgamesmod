@@ -140,7 +140,7 @@ public class Global {
     public static boolean debug[] = new boolean[DebugFlags.values().length];
     public static int debugSimulation = 0;
     public static double moneyRate = 1.0;
-    public static double xpRate = .75;
+    public static double xpRate = 1.0;
     public static ContextFactory factory;
     public static Context cx;
 
@@ -180,7 +180,7 @@ public class Global {
         // debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
         // debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
         // debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
-        //Global.debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
+        // debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
         // debug[DebugFlags.DEBUG_ADDICTION.ordinal()] = true;
         traitRequirements = new TraitTree(ResourceLoader.getFileResourceAsStream("data/TraitRequirements.xml"));
         current = null;
@@ -651,7 +651,7 @@ public class Global {
                     resting.add(player);
                 }
             }
-            lineup = pickCharacters(lineup, players, 4);
+            lineup = pickCharacters(players, lineup, 4);
             if (!checkFlag(Flag.Maya)) {
                 newChallenger(new Maya(human.getLevel()));
                 flag(Flag.Maya);

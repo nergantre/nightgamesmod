@@ -243,9 +243,9 @@ public enum BasicCockPart implements CockPart {
     public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {}
 
     @Override
-    public int counterValue(BodyPart other) {
+    public int counterValue(BodyPart otherPart, Character self, Character other) {
         // Don't fuck modded parts, they're dangerous
-        return other.isGeneric() ? 0 : -1;
+        return otherPart.isGeneric(self) ? 0 : -1;
     }
 
     @Override
@@ -254,7 +254,7 @@ public enum BasicCockPart implements CockPart {
     }
 
     @Override
-    public BodyPartMod getMod() {
+    public BodyPartMod getMod(Character self) {
         return BodyPartMod.noMod;
     }
 

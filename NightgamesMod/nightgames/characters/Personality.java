@@ -6,6 +6,7 @@ import java.util.Map;
 
 import nightgames.actions.Action;
 import nightgames.actions.Movement;
+import nightgames.characters.body.BodyPart;
 import nightgames.characters.custom.AiModifiers;
 import nightgames.characters.custom.CommentSituation;
 import nightgames.characters.custom.RecruitmentData;
@@ -81,4 +82,9 @@ public interface Personality extends Serializable {
     public String resist3p(Combat combat, Character target, Character assist);
 
     public Map<CommentSituation, String> getComments(Combat c);
+
+    public default void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
+                    int totalTimes) {
+        // no op
+    }
 }
