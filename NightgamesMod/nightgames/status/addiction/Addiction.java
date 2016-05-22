@@ -210,6 +210,10 @@ public abstract class Addiction extends Status {
             return 1.f;
         return amt;
     }
+    
+    public final boolean isAddiction() {
+        return true;
+    }
 
     public enum Severity {
         NONE,

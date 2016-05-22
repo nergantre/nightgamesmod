@@ -339,7 +339,7 @@ public class Combat extends Observable implements Cloneable {
 
     public boolean combatMessageChanged;
 
-    public Optional<Skill> getRandomWorshipSkill(Character self, Character other) { 
+    public Optional<Skill> getRandomWorshipSkill(Character self, Character other) {
         List<Skill> avail = new ArrayList<Skill>(Arrays.asList(worshipSkills));
         Collections.shuffle(avail);
         while (!avail.isEmpty()) {
@@ -477,7 +477,9 @@ public class Combat extends Observable implements Cloneable {
             return;
         }
         if (timer > 25) {
-            if (p1.getWillpower().percent() < p2.getWillpower().percent()) {
+            if (p1.getWillpower()
+                  .percent() < p2.getWillpower()
+                                 .percent()) {
                 state = eval();
                 if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
                     System.out.println(p2.name() + " victory over " + p1.name());
@@ -490,7 +492,9 @@ public class Combat extends Observable implements Cloneable {
                     end();
                 }
                 return;
-            } else if (p1.getWillpower().percent() > p2.getWillpower().percent()) {
+            } else if (p1.getWillpower()
+                         .percent() > p2.getWillpower()
+                                        .percent()) {
                 state = eval();
                 if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
                     System.out.println(p1.name() + " victory over " + p2.name());
@@ -830,21 +834,32 @@ public class Combat extends Observable implements Cloneable {
             getCombatantData(p1).setIntegerFlag("ChoseToFuck", 0);
             getCombatantData(p2).setIntegerFlag("ChoseToFuck", 0);
         } else if (!stance.inserted() && newStance.inserted()) {
+            Player player = Global.getPlayer();
+            Character opp = getOther(player);
             List<BodyPart> parts1 = newStance.partsFor(p1);
             List<BodyPart> parts2 = newStance.partsFor(p2);
             parts1.forEach(part -> parts2.forEach(other -> part.onStartPenetration(this, p1, p2, other)));
             parts2.forEach(part -> parts1.forEach(other -> part.onStartPenetration(this, p2, p1, other)));
-            if (voluntary && (p1.human() || p2.human()) && Global.getPlayer()
-                                                    .hasAddiction(AddictionType.CORRUPTION)
-                            && Global.getPlayer()
-                                     .getAddiction(AddictionType.CORRUPTION)
-                                     .wasCausedBy(getOther(Global.getPlayer()))) {
+            if (voluntary && (p1.human() || p2.human()) && player.checkAddiction(AddictionType.CORRUPTION, opp)) {
                 if (initiator != null) {
                     getCombatantData(initiator).setIntegerFlag("ChoseToFuck", 1);
                     getCombatantData(getOther(initiator)).setIntegerFlag("ChoseToFuck", -1);
                 }
                 if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
                     System.out.println(initiator + " initiated penetration, voluntary=" + voluntary);
+                }
+            }
+            if (player.checkAddiction(AddictionType.BREEDER, opp)) {
+                if (voluntary) {
+                    write(player, "As you enter Kat, instinct immediately kick in. It just"
+                                    + " feels so right, like this is what you're supposed"
+                                    + " to be doing all the time.");
+                    player.addict(AddictionType.BREEDER, opp, Addiction.MED_INCREASE);
+                } else {
+                    write(initiator, "Something shifts inside of you as Kat fills herself with"
+                                    + " you. A haze descends over your mind, clouding all but a desire"
+                                    + " to fuck her as hard as you can.");
+                    player.addict(AddictionType.BREEDER, opp, Addiction.LOW_INCREASE);
                 }
             }
         }

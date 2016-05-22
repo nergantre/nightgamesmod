@@ -159,6 +159,7 @@ public enum Trait {
     magicmilk("Magicked Milk", "Magically augmented milk. It's a a strong addictive aphrodisiac, as well as a subtle hypnotic."), // .
     zealinspiring("Zeal Inspiring", "Instills true belief in people, inspiring them to follow her"),
     corrupting("Corrupting Influence", "Corrupts to the very core."),
+    breeder("Breeder", "Particularly inviting"),
     darkpromises("Dark Promises", "Can enthrall with the right words"), // whisper upgrade, can enthrall
 
     energydrain("Energy Drain", "Drains energy during intercourse"),

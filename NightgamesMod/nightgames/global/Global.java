@@ -626,7 +626,7 @@ public class Global {
         for (Character c : players) {
             Flag disabledFlag = null;
             try {
-                disabledFlag = Flag.valueOf(c.getName() + "Disabled");
+                disabledFlag = Flag.valueOf(c.getType() + "Disabled");
             } catch (IllegalArgumentException e) {
             }
             if (disabledFlag == null || !Global.checkFlag(disabledFlag)) {
@@ -1123,7 +1123,7 @@ public class Global {
 
     public static NPC getNPC(String name) {
         for (Character c : allNPCs()) {
-            if (c.getName().equalsIgnoreCase(name)) {
+            if (c.getType().equalsIgnoreCase(name)) {
                 return (NPC) c;
             }
         }

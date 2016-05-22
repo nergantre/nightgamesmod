@@ -371,7 +371,7 @@ public class Player extends Character {
 
     @Override
     public void bathe() {
-        status.clear();
+        status.removeIf(s -> !s.isAddiction());
         stamina.fill();
         if (location.name.equals("Showers")) {
             gui.message("You let the hot water wash away your exhaustion and soon you're back to peak condition");
@@ -851,6 +851,13 @@ public class Player extends Character {
     
     public boolean checkAddiction(AddictionType type) {
         return hasAddiction(type) && getAddiction(type).isActive();
+    }
+    
+    public boolean checkAddiction(AddictionType type, Character cause) {
+        if (!hasAddiction(type))
+            return false;
+        Addiction add = getAddiction(type);
+        return add.isActive() && add.wasCausedBy(cause);
     }
     
     @SuppressWarnings("unchecked")

@@ -23,7 +23,7 @@ public class MagicMilkAddiction extends Addiction {
         flag(Stsflag.tolerance); // immune to regular addiction
     }
 
-    public MagicMilkAddiction(String name, Character cause) {
+    public MagicMilkAddiction(Character cause) {
         this(cause, .01f);
     }
 

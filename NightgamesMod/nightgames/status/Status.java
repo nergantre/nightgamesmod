@@ -130,4 +130,6 @@ public abstract class Status implements Cloneable {
     public abstract Status loadFromJSON(JSONObject obj);
 
     public void tick(Combat c) {}
+    
+    public boolean isAddiction() { return false; }
 }
