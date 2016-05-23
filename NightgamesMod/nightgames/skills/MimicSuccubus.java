@@ -56,8 +56,8 @@ public class MimicSuccubus extends Skill {
         if (part != null) {
             getSelf().body.temporaryAddOrReplacePartWithType(part.upgrade().upgrade(), 10);
         }
-        getSelf().add(new Abuff(getSelf(), Attribute.Dark, Math.max(10, getSelf().get(Attribute.Slime)), 10));
-        getSelf().add(new SlimeMimicry("succubus", PussyPart.succubus, CockMod.incubus, getSelf(), 10));
+        getSelf().add(c, new Abuff(getSelf(), Attribute.Dark, Math.max(10, getSelf().get(Attribute.Slime)), 10));
+        getSelf().add(c, new SlimeMimicry("succubus", PussyPart.succubus, CockMod.incubus, getSelf(), 10));
         return true;
     }
 

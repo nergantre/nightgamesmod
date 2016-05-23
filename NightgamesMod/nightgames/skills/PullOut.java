@@ -2,14 +2,19 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.global.Global;
 import nightgames.stance.Stance;
 import nightgames.stance.StandingOver;
 import nightgames.status.CockBound;
 import nightgames.status.Stsflag;
+import nightgames.status.addiction.Addiction.Severity;
+import nightgames.status.addiction.Addiction;
+import nightgames.status.addiction.AddictionType;
 
 public class PullOut extends Skill {
 
@@ -25,7 +30,19 @@ public class PullOut extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return !target.hasStatus(Stsflag.knotted) && getSelf().canAct() && (c.getStance().en == Stance.facesitting
-                        || c.getStance().inserted() && c.getStance().dom(getSelf()));
+                        || c.getStance().inserted() && c.getStance().dom(getSelf())) && !blockedByAddiction(getSelf());
+    }
+
+    static boolean blockedByAddiction(Character user) {
+        if (!user.human()) {
+            return false;
+        }
+        Player p = Global.getPlayer();
+        if (!p.hasAddiction(AddictionType.BREEDER)) {
+            return false;
+        }
+        Addiction add = p.getAddiction(AddictionType.BREEDER);
+        return add.atLeast(Severity.HIGH) || add.combatAtLeast(Severity.HIGH);
     }
 
     @Override

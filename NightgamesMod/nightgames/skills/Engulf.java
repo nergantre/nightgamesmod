@@ -73,28 +73,17 @@ public class Engulf extends CounterBase {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        if (modifier == Result.miss) {
-            return Global.format(
-                            "You will your slime to rush at {other:name} and pull her down, but she dodges away at the last second.\n",
-                            getSelf(), target);
-        } else {
-            return Global.format(
-                            "You will your slime to rush at {other:name} and manage to entrap her inside of yourself.\n",
-                            getSelf(), target);
-        }
+        return Global.format(
+                        "You spread out your slime, getting ready to trap {other:name} in it.",
+                        getSelf(), target);
     }
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        if (modifier == Result.miss) {
-            return Global.format(
-                            "{self:NAME}'s fluid body squirms violently and suddenly rushes at you. You manage to dodge out of the way and avoid being trapped.\n",
-                            getSelf(), target);
-        } else {
-            return Global.format(
-                            "{self:NAME}'s fluid body squirms violently and suddenly rushes at you. You don't react in time, and before you know it, {self:name-possessive} slime firmly locks you in inside {self:direct-object}",
-                            getSelf(), target);
-        }
+        return Global.format(
+                        "{self:NAME}'s body spreads out across the floor. From {self:possessive} lowered position, "
+                        + "{self:pronoun} smiles deviously up at you, goading you into an attack.",
+                        getSelf(), target);
     }
 
     @Override
@@ -116,7 +105,8 @@ public class Engulf extends CounterBase {
         if (target.hasPussy())
             msg += "pussy, ";
         msg += "ass and every other inch of {other:possessive} skin. ";
-        if (getSelf().getType().equals("Airi"))
+        if (getSelf().getType()
+                     .equals("Airi"))
             msg += "\n<i>\"It's done... over... stop struggling... cum.\"</i>";
         c.write(getSelf(), Global.format(msg, getSelf(), target));
         c.setStance(new Engulfed(getSelf(), target), getSelf(), true);

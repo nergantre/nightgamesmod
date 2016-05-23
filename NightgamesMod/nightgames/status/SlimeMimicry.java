@@ -22,6 +22,7 @@ public class SlimeMimicry extends DurationStatus {
         this.pussyMimicked = pussyMimicked;
         this.cockMimicked = cockMimicked;
         this.flag(Stsflag.mimicry);
+        this.flag(Stsflag.form);
     }
 
     public PussyPart getPussyMimicked() {

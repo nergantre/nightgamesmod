@@ -40,7 +40,8 @@ public class AssFuck extends Fuck {
                         && getSelf().canAct()
                         && (getTargetOrgan(target).isReady(target) || getSelf().has(Item.Lubricant)
                                         || getSelf().getArousal().percent() > 50 || getSelf().has(Trait.alwaysready)
-                                        || getSelf().has(Trait.assmaster));
+                                        || getSelf().has(Trait.assmaster))
+                        && (!target.hasPussy() || !PullOut.blockedByAddiction(getSelf()));
     }
 
     @Override

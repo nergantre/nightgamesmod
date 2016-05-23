@@ -88,6 +88,10 @@ public abstract class Status implements Cloneable {
     public void flag(Stsflag status) {
         flags.add(status);
     }
+    
+    public void unflag(Stsflag status) {
+        flags.remove(status);
+    }
 
     public HashSet<Stsflag> flags() {
         return flags;

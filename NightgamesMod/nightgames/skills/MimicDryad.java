@@ -50,8 +50,8 @@ public class MimicDryad extends Skill {
         if (part != null) {
             getSelf().body.temporaryAddOrReplacePartWithType(part.upgrade(), 10);
         }
-        getSelf().add(new Abuff(getSelf(), Attribute.Bio, Math.max(10, getSelf().get(Attribute.Slime)), 10));
-        getSelf().add(new SlimeMimicry("dryad", PussyPart.plant, CockMod.error, getSelf(), 10));
+        getSelf().add(c, new Abuff(getSelf(), Attribute.Bio, Math.max(10, getSelf().get(Attribute.Slime)), 10));
+        getSelf().add(c, new SlimeMimicry("dryad", PussyPart.plant, CockMod.error, getSelf(), 10));
         return true;
     }
 

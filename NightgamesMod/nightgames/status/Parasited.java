@@ -56,10 +56,10 @@ public class Parasited extends Status {
                                 Global.format("Suddenly, you hear a disembodied but familiar voice. \"Testing... testing... Ah good, looks like it has worked.\"",
                                 affected, other));
                 Global.gui().message(c, affected,
-                                Global.format("You... seem to be hearing {self:name-possessive} voice inside your head. That's not good.",
+                                Global.format("You... seem to be hearing {other:name-possessive} voice inside your head. That's not good.",
                                 affected, other));
                 Global.gui().message(c, other,
-                                Global.format("{self:NAME} gives you a satisfied smile and her disembodied voice echoes again inside your head, \"{other:NAME}, don't worry... I have connected myself with your brain... We will have so much fun together...\"",
+                                Global.format("{other:NAME} gives you a satisfied smile and her disembodied voice echoes again inside your head, \"{self:NAME}, don't worry... I have connected myself with your brain... We will have so much fun together...\"",
                                 affected, other));
                 
             }
@@ -114,7 +114,7 @@ public class Parasited extends Status {
                                     affected, other));
                     (new Masturbate(affected)).resolve(c, other);
             }
-            affected.add(c, new Frenzied(other, 1000));
+            affected.add(c, new Frenzied(affected, 1000));
         } else if (time >= 2) {
             if (stage < 2) {
                 stage = 2;
@@ -198,7 +198,7 @@ public class Parasited extends Status {
     }
 
     public String toString() {
-        return "Seeded";
+        return "Parasited";
     }
 
     @Override

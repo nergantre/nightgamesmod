@@ -76,7 +76,7 @@ public class Airi extends BasePersonality {
 
     @Override
     public void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times, int totalTimes) {
-        if (times == totalTimes && character.getWillpower().percent() < 60) {
+        if (times == totalTimes && character.getWillpower().percent() < 60 && !character.has(Trait.slime)) {
             c.write(character, Global.format("After {self:NAME-POSSESSIVE} orgasm, her whole body shimmers and melts into a puddle of goo. A human body rises from the slime and molds itself to a facsimile of {self:reflective}. You're now fighting {self:name} in slime form!", character, opponent));
             character.addTemporaryTrait(Trait.slime, 999);
             character.body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);

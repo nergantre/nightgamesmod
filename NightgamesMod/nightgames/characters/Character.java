@@ -1516,8 +1516,7 @@ public abstract class Character extends Observable implements Cloneable {
         if (human()) {
             Player p = (Player) this;
             
-            if (p.checkAddiction(AddictionType.CORRUPTION) 
-                           && p.getAddiction(AddictionType.CORRUPTION).wasCausedBy(opponent)
+            if (p.checkAddiction(AddictionType.CORRUPTION, opponent) 
                            && opponentPart.isType("pussy")
                            && selfPart.isType("cock")
                            && c.getCombatantData(this).getIntegerFlag("ChoseToFuck") == 1) {
@@ -1525,13 +1524,16 @@ public abstract class Character extends Observable implements Cloneable {
                                 + " the corruption inside of you.");
                 p.addict(AddictionType.CORRUPTION, opponent, Addiction.HIGH_INCREASE);
             }
-            if (p.checkAddiction(AddictionType.ZEAL) 
-                            && p.getAddiction(AddictionType.ZEAL).wasCausedBy(opponent)
+            if (p.checkAddiction(AddictionType.ZEAL, opponent) 
                                             && opponentPart.isType("pussy")
                                             && selfPart.isType("cock")) {
                 c.write(this, "Experiencing so much pleasure inside of " + opponent + " reinforces"
                                 + " your faith.");
                 p.addict(AddictionType.ZEAL, opponent, Addiction.MED_INCREASE);
+            }
+            if (p.checkAddiction(AddictionType.BREEDER)) {
+                //Clear combat addiction
+                p.unaddictCombat(AddictionType.BREEDER, opponent, 1.f, c);
             }
         }
         orgasms += 1;

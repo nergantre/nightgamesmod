@@ -103,11 +103,6 @@ public class CounterStatus extends DurationStatus {
     }
 
     @Override
-    public int regen(Combat c) {
-        return 0;
-    }
-
-    @Override
     public Status instance(Character newAffected, Character newOther) {
         return new CounterStatus(newAffected, skill, desc, getDuration());
     }

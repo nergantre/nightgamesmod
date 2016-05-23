@@ -359,7 +359,7 @@ public enum CockMod implements BodyPartMod {
         }
         SlimeMimicry mimicry = ((SlimeMimicry)self.getStatus(Stsflag.mimicry));
         if (this == CockMod.slimy && mimicry != null) {
-            return mimicry.getPussyMimicked() == part;
+            return mimicry.getCockMimicked() == part;
         } else {
             return part == this;
         }

@@ -2,6 +2,7 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
@@ -9,6 +10,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
+import nightgames.status.addiction.AddictionType;
 
 public class Thrust extends Skill {
     public Thrust(String name, Character self) {
@@ -57,7 +59,7 @@ public class Thrust extends Skill {
         if (c.getStance().anallyPenetrated(target) && getSelf().has(Trait.assmaster)) {
             m *= 1.5;
         }
-
+        
         float mt = Math.max(1, m / 3.f);
 
         if (getSelf().has(Trait.experienced)) {
@@ -65,6 +67,19 @@ public class Thrust extends Skill {
         }
         mt = target.modRecoilPleasure(mt);
 
+        if (getSelf().human() || target.human()) {
+            Player p = Global.getPlayer();
+            Character npc = c.getOther(p);
+            if (p.checkAddiction(AddictionType.BREEDER, npc)) {
+                float bonus = .3f * p.getAddiction(AddictionType.BREEDER).getCombatSeverity().ordinal();
+                if (p == getSelf()) {
+                    mt += mt * bonus;
+                } else {
+                    m += m * bonus;                    
+                }
+            }
+        }
+        
         results[0] = m;
         results[1] = (int) mt;
 

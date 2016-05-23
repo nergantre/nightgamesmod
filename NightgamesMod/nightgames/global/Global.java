@@ -458,6 +458,13 @@ public class Global {
         getSkillPool().add(new Pray(p));
         getSkillPool().add(new Prostrate(p));
         getSkillPool().add(new DarkKiss(p));
+        getSkillPool().add(new MimicAngel(p));
+        getSkillPool().add(new MimicCat(p));
+        getSkillPool().add(new MimicDryad(p));
+        getSkillPool().add(new MimicSuccubus(p));
+        getSkillPool().add(new MimicWitch(p));
+        getSkillPool().add(new Parasite(p));
+        getSkillPool().add(new Bite(p));
 
         if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
             getSkillPool().add(new SelfStun(p));

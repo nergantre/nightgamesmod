@@ -55,8 +55,8 @@ public class MimicCat extends Skill {
         if (part != null) {
             getSelf().body.temporaryAddOrReplacePartWithType(part.downgrade(), 10);
         }
-        getSelf().add(new Abuff(getSelf(), Attribute.Animism, Math.max(10, getSelf().get(Attribute.Slime)), 10));
-        getSelf().add(new SlimeMimicry("werecat", PussyPart.feral, CockMod.primal, getSelf(), 10));
+        getSelf().add(c, new Abuff(getSelf(), Attribute.Animism, Math.max(10, getSelf().get(Attribute.Slime)), 10));
+        getSelf().add(c, new SlimeMimicry("werecat", PussyPart.feral, CockMod.primal, getSelf(), 10));
         return true;
     }
 

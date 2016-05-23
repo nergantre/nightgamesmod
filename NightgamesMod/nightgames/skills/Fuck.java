@@ -70,7 +70,7 @@ public class Fuck extends Skill {
             return true;
         if (!getSelfOrgan().moddedPartCountsAs(getSelf(), CockMod.slimy))
             return false;
-        return target.outfit.getBottomOfSlot(ClothingSlot.bottom).getLayer() == 0;
+        return target.outfit.getTopOfSlot(ClothingSlot.bottom).getLayer() == 0;
     }
 
     @Override

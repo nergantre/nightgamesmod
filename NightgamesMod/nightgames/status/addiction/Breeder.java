@@ -13,15 +13,11 @@ import nightgames.global.Global;
 import nightgames.global.JSONUtils;
 import nightgames.status.Horny;
 import nightgames.status.Status;
+import nightgames.status.Stsflag;
 
 /*
  * TODO:
- * Increased damage
- * WildThrust: availability, addiction?, damage effects
- * PullOut: Unavailable at high levels?
- * Anal: ^?
- * Orgasm effects: clear combatSeverity
- * Invitation: no mojo cost for Kat
+ * Morning descs for all but Magic Milk!
  */
 
 public class Breeder extends Addiction {
@@ -41,6 +37,10 @@ public class Breeder extends Addiction {
 
     @Override
     protected Optional<Status> addictionEffects() {
+        if (atLeast(Severity.MED))
+            flag(Stsflag.feral);
+        else
+            unflag(Stsflag.feral);
         return Optional.of(this);
     }
 
@@ -110,14 +110,21 @@ public class Breeder extends Addiction {
 
     @Override
     public String informantsOverview() {
-        // TODO Auto-generated method stub
-        return null;
+        return "<i>\"Well... I don't know Kat that well, but don't you </i>always<i> want to fuck her?"
+                        + " What's so special?\"</i> You explain how the desire is so much stronger than usual,"
+                        + " that you just can't get it out of your mind. <i>\"Mmmm... You must be overly sensitive"
+                        + " to her pheromones. It happens every once in a while, just some genetic bad luck. Or"
+                        + " some </i>particularly<i> naughty parents, but let's not go there. Either way, it causes"
+                        + " this feedback effect, basically driving you into a rut. The good news is that you'll"
+                        + " be able to cum more often, the bad news is that you WILL cum more often when fucking Kat."
+                        + " As in all the time. Other contenstants won't be as prepared for your ferocity, though,"
+                        + " so you may have an advantage there. If you </i>don't<i> go and fuck someone, well, you"
+                        + " might just go crazy. Best not take the risk.\"</i>";
     }
 
     @Override
     public String describeMorning() {
-        // TODO Auto-generated method stub
-        return null;
+        return "";
     }
 
     @Override

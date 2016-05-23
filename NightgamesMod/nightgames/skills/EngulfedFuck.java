@@ -122,7 +122,7 @@ public class EngulfedFuck extends Skill {
                                 Global.format("{self:SUBJECT-ACTION:lower|lowers} {self:possessive}"
                                                 + " {self:body-part:pussy} down on {other:name-possessive} {other:body-part:cock}."
                                                 + " While slowly fucking {other:direct-object}, {self:pronoun} {self:action:move|moves}"
-                                                + " {self:possessive} {self:body-part:cock} to the entrance of (other:possessive} ass."
+                                                + " {self:possessive} {self:body-part:cock} to the entrance of {other:possessive} ass."
                                                 + " Before {other:pronoun} {other:action:have|has} a chance to react, {self:pronoun}"
                                                 + " {self:action:shove|shoves} it up there in one thrust, fucking {other:direct-object}"
                                                 + " from both sides.", getSelf(), target));

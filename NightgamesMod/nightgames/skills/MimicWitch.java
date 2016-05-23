@@ -49,8 +49,8 @@ public class MimicWitch extends Skill {
         if (part != null) {
             getSelf().body.temporaryAddOrReplacePartWithType(part.upgrade(), 10);
         }
-        getSelf().add(new Abuff(getSelf(), Attribute.Arcane, Math.max(10, getSelf().get(Attribute.Slime) * 2), 10));
-        getSelf().add(new SlimeMimicry("witch", PussyPart.arcane, CockMod.runic, getSelf(), 10));
+        getSelf().add(c, new Abuff(getSelf(), Attribute.Arcane, Math.max(10, getSelf().get(Attribute.Slime) * 2), 10));
+        getSelf().add(c, new SlimeMimicry("witch", PussyPart.arcane, CockMod.runic, getSelf(), 10));
         return true;
     }
 
