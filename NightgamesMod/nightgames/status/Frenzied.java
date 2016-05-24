@@ -48,7 +48,6 @@ public class Frenzied extends DurationStatus {
         FUCK_SKILLS.add(new Straddle(p));
         FUCK_SKILLS.add(new Tear(p));
         FUCK_SKILLS.add(new Undress(p));
-        FUCK_SKILLS.add(new Engulf(p)); // Probably?
         FUCK_SKILLS.add(new Fly(p));
         FUCK_SKILLS.add(new Fuck(p));
         FUCK_SKILLS.add(new Invitation(p));
