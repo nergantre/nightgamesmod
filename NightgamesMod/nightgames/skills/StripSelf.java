@@ -53,11 +53,11 @@ public class StripSelf extends Skill {
             }
         } else {
             NPC self = (NPC) getSelf();
-            HashMap<Clothing, Float> checks = new HashMap<>();
-            float selfFit = self.getFitness(c);
-            float otherFit = self.getOtherFitness(c, target);
+            HashMap<Clothing, Double> checks = new HashMap<>();
+            double selfFit = self.getFitness(c);
+            double otherFit = self.getOtherFitness(c, target);
             getSelf().getOutfit().getAllStrippable().stream().forEach(article -> {
-                float rating = self.rateAction(c, selfFit, otherFit, (newCombat, newSelf, newOther) -> {
+                double rating = self.rateAction(c, selfFit, otherFit, (newCombat, newSelf, newOther) -> {
                     newSelf.strip(article, newCombat);
                     return true;
                 });
@@ -69,7 +69,7 @@ public class StripSelf extends Skill {
                 });
             }
             Clothing best = checks.entrySet().stream().max((first, second) -> {
-                float test = second.getValue() - first.getValue();
+                double test = second.getValue() - first.getValue();
                 if (test < 0) {
                     return -1;
                 }

@@ -12,6 +12,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.skills.Skill;
 import nightgames.status.SlimeMimicry;
 import nightgames.status.Stsflag;
 
@@ -72,6 +73,25 @@ public class Airi extends BasePersonality {
         preferredAttributes.add(c -> Optional.of(Attribute.Slime));
         preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
     }
+    
+    @Override
+    public void eot(Combat c, Character opponent, Skill last) {
+        // always replace with gooey/slime versions of genitals.
+        if (character.has(Trait.slime)) {
+            if (character.hasPussy() && !character.body.getRandomPussy().moddedPartCountsAs(character, PussyPart.gooey)) {
+                character.body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
+                c.write(character, 
+                                Global.format("{self:NAME-POSSESSIVE} %s turned back into a gooey pussy.",
+                                                character, opponent, character.body.getRandomPussy()));
+            }
+            if (character.hasDick() && !character.body.getRandomCock().moddedPartCountsAs(character, CockMod.slimy)) {
+                character.body.temporaryAddOrReplacePartWithType(character.body.getRandomCock().applyMod(CockMod.slimy), 999);
+                c.write(character, 
+                                Global.format("{self:NAME-POSSESSIVE} %s turned back into a gooey pussy.",
+                                                character, opponent, character.body.getRandomPussy()));
+            }
+        }
+    }
 
     @Override
     public void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times, int totalTimes) {
@@ -83,7 +103,12 @@ public class Airi extends BasePersonality {
             character.purge(c);
             character.addTemporaryTrait(Trait.slime, 999);
             character.removeTemporaryTrait(Trait.repressed, 999);
-            character.body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
+            if (character.hasPussy() && !character.body.getRandomPussy().moddedPartCountsAs(character, PussyPart.gooey)) {
+                character.body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
+            }
+            if (character.hasDick() && !character.body.getRandomCock().moddedPartCountsAs(character, CockMod.slimy)) {
+                character.body.temporaryAddOrReplacePartWithType(character.body.getRandomCock().applyMod(CockMod.slimy), 999);
+            }
             BreastsPart part = character.body.getBreastsBelow(BreastsPart.h.size);
             if (part != null) {
                 character.body.temporaryAddOrReplacePartWithType(part.upgrade(), 10);

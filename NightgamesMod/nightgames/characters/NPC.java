@@ -598,7 +598,7 @@ public class NPC extends Character {
         if (plist.isEmpty()) {
             return null;
         }
-        float sum = 0;
+        double sum = 0;
         ArrayList<WeightedSkill> wlist = new ArrayList<WeightedSkill>();
         for (WeightedSkill wskill : plist) {
             sum += wskill.weight;
@@ -611,7 +611,7 @@ public class NPC extends Character {
         if (wlist.isEmpty()) {
             return null;
         }
-        float s = Global.randomfloat() * sum;
+        double s = Global.randomdouble() * sum;
         for (WeightedSkill wskill : wlist) {
             if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
                 System.out.printf("%.1f/%.1f %s\n", wskill.weight, s, wskill.skill);
@@ -661,6 +661,7 @@ public class NPC extends Character {
     @Override
     public void eot(Combat c, Character opponent, Skill last) {
         super.eot(c, opponent, last);
+        ai.eot(c, opponent, last);
         if (opponent.pet != null && canAct() && c.getStance().mobile(this) && !c.getStance().prone(this)) {
             if (get(Attribute.Speed) > opponent.pet.ac() * Global.random(20)) {
                 opponent.pet.caught(c, this);
@@ -730,7 +731,7 @@ public class NPC extends Character {
         return (NPC) super.clone();
     }
 
-    public float rateAction(Combat c, float selfFit, float otherFit, CustomEffect effect) {
+    public double rateAction(Combat c, double selfFit, double otherFit, CustomEffect effect) {
         // Clone ourselves a new combat... This should clone our characters, too
         Combat c2;
         try {
@@ -753,15 +754,15 @@ public class NPC extends Character {
         }
         effect.execute(c2, newSelf, newOther);
         Global.debugSimulation -= 1;
-        float selfFitnessDelta = newSelf.getFitness(c) - selfFit;
-        float otherFitnessDelta = newSelf.getOtherFitness(c, newOther) - otherFit;
+        double selfFitnessDelta = newSelf.getFitness(c) - selfFit;
+        double otherFitnessDelta = newSelf.getOtherFitness(c, newOther) - otherFit;
         if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS_RATING) && (c2.p1.human() || c2.p2.human())) {
             System.out.println("After:\n" + c2.debugMessage());
         }
         return selfFitnessDelta - otherFitnessDelta;
     }
 
-    private float rateMove(Skill skill, Combat c, float selfFit, float otherFit) {
+    private double rateMove(Skill skill, Combat c, double selfFit, double otherFit) {
         // Clone ourselves a new combat... This should clone our characters, too
         if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS_RATING) && (c.p1.human() || c.p2.human())) {
             System.out.println("===> Rating " + skill);
@@ -782,19 +783,19 @@ public class NPC extends Character {
         // The higher, the better the AI will plan for "rare" events better
         final int RUN_COUNT = 5;
         // Decrease to get an "easier" AI. Make negative to get a suicidal AI.
-        final float RATING_FACTOR = 0.02f;
+        final double RATING_FACTOR = 0.02f;
 
         // Starting fitness
         Character other = c.getOther(this);
-        float selfFit = getFitness(c);
-        float otherFit = getOtherFitness(c, other);
+        double selfFit = getFitness(c);
+        double otherFit = getOtherFitness(c, other);
 
         // Now simulate the result of all actions
         ArrayList<WeightedSkill> moveList = new ArrayList<WeightedSkill>();
-        float sum = 0;
+        double sum = 0;
         for (WeightedSkill wskill : plist) {
             // Run it a couple of times
-            float rating, raw_rating = 0;
+            double rating, raw_rating = 0;
             if (wskill.skill.type(c) == Tactics.fucking && has(Trait.experienced)) {
                 wskill.weight += 1.0;
             }
@@ -807,7 +808,7 @@ public class NPC extends Character {
 
             wskill.weight += ai.getAiModifiers().modAttack(wskill.skill.getClass());
             // Sum up rating, add to map
-            rating = (float) Math.pow(2, RATING_FACTOR * raw_rating + wskill.weight + wskill.skill.priorityMod(c)
+            rating = (double) Math.pow(2, RATING_FACTOR * raw_rating + wskill.weight + wskill.skill.priorityMod(c)
                             + Global.getMatch().condition.getSkillModifier().encouragement(wskill.skill, c, this));
             sum += rating;
             moveList.add(new WeightedSkill(sum, raw_rating, rating, wskill.skill));
@@ -825,7 +826,7 @@ public class NPC extends Character {
             System.out.println(s);
         }
         // Select
-        float s = Global.randomfloat() * sum;
+        double s = Global.randomdouble() * sum;
         for (WeightedSkill entry : moveList) {
             if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
                 System.out.printf("%.1f/%.1f %s\n", entry.weight, s, entry.skill.toString());

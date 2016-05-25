@@ -3,20 +3,20 @@ package nightgames.characters;
 import nightgames.skills.Skill;
 
 public class WeightedSkill implements Comparable<WeightedSkill> {
-    public float weight;
-    public float rating;
-    public float raw_rating;
+    public double weight;
+    public double rating;
+    public double raw_rating;
     public Skill skill;
 
-    public WeightedSkill(float weight, float raw_rating, float rating, Skill skill) {
-        this.weight = weight;
+    public WeightedSkill(double sum, double raw_rating2, double rating2, Skill skill) {
+        this.weight = sum;
         this.skill = skill;
-        this.rating = rating;
-        this.raw_rating = raw_rating;
+        this.rating = rating2;
+        this.raw_rating = raw_rating2;
     }
 
-    public WeightedSkill(float weight, Skill skill) {
-        this(weight, 0.f, 0.f, skill);
+    public WeightedSkill(double weight, Skill skill) {
+        this(weight, 0., 0., skill);
     }
 
     @Override
