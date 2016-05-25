@@ -12,6 +12,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
 import nightgames.skills.Skill;
 import nightgames.status.SlimeMimicry;
 import nightgames.status.Stsflag;
@@ -28,6 +29,13 @@ public class Airi extends BasePersonality {
         character.setTrophy(Item.AiriTrophy);
         preferredCockMod = CockMod.slimy;
 
+        character.outfitPlan.add(Clothing.getByID("shirt"));
+        character.outfitPlan.add(Clothing.getByID("bra"));
+        character.outfitPlan.add(Clothing.getByID("panties"));
+        character.outfitPlan.add(Clothing.getByID("skirt"));
+        character.outfitPlan.add(Clothing.getByID("pantyhose"));
+        character.outfitPlan.add(Clothing.getByID("shoes"));
+        character.change();
         character.rank = 1;
         character.set(Attribute.Power, 6);
         character.set(Attribute.Slime, 1);
