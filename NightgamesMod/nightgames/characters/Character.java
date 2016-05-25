@@ -1481,6 +1481,8 @@ public abstract class Character extends Observable implements Cloneable {
 
     protected void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
                     int totalTimes) {
+        String orgasmLiner = "<b>" + orgasmLiner(c) + "</b>";
+        String opponentOrgasmLiner = "<b>" + opponent.makeOrgasmLiner(c) + "</b>";
         orgasmed = true;
         if (times == 1) {
             c.write(this, "<br>");
@@ -1516,8 +1518,8 @@ public abstract class Character extends Observable implements Cloneable {
             restoreWillpower(c, 5 + Math.min((get(Attribute.Animism) + get(Attribute.Nymphomania)) / 5, 15));
         }
         if (this != opponent && times == totalTimes) {
-            c.write(this, "<b>" + orgasmLiner(c) + "</b>");
-            c.write(opponent, opponent.makeOrgasmLiner(c));
+            c.write(this, orgasmLiner);
+            c.write(opponent, opponentOrgasmLiner);
         }
         if (human()) {
             Player p = (Player) this;

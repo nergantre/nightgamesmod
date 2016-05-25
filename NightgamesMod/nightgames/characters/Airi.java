@@ -34,7 +34,7 @@ public class Airi extends BasePersonality {
         character.set(Attribute.Speed, 4);
         character.set(Attribute.Seduction, 17);
         character.getStamina().setMax(80);
-        character.getArousal().setMax(100);
+        character.getArousal().setMax(80);
         character.getMojo().setMax(60);
         character.getWillpower().setMax(80);
         character.add(Trait.dexterous);
@@ -52,7 +52,7 @@ public class Airi extends BasePersonality {
     @Override
     public void setGrowth() {
         growth.stamina = 1;
-        growth.arousal = 2;
+        growth.arousal = 1;
         growth.mojo = 2;
         growth.willpower = 3;
         growth.bonusStamina = 1;
