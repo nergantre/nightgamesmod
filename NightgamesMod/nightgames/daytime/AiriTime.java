@@ -55,6 +55,8 @@ public class AiriTime extends BaseNPCTime {
             npc.gainAttraction(player, 2);
             player.gainAttraction(npc, 2);
         } else if (npc.getAttraction(player) < 25) {
+            Global.gui().loadPortrait("airi_human.jpg");
+            Global.gui().showPortrait();
             Global.gui()
                   .message("You decide to go looking for the mysterious Airi. You know she's a student at the university, but everything else is a blank to you."
                                   + "You've seen her a few times when you were in the lab, so you decide to try your luck there again."

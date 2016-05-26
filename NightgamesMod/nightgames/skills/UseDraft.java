@@ -42,11 +42,11 @@ public class UseDraft extends Skill {
     }
 
     public Item pickBest(Combat c, NPC self, Character target, List<Item> usables) {
-        HashMap<Item, Float> checks = new HashMap<>();
-        float selfFitness = self.getFitness(c);
-        float targetFitness = self.getOtherFitness(c, target);
+        HashMap<Item, Double> checks = new HashMap<>();
+        double selfFitness = self.getFitness(c);
+        double targetFitness = self.getOtherFitness(c, target);
         usables.stream().forEach(item -> {
-            float rating = self.rateAction(c, selfFitness, targetFitness, (newCombat, newSelf, newOther) -> {
+            double rating = self.rateAction(c, selfFitness, targetFitness, (newCombat, newSelf, newOther) -> {
                 for (ItemEffect e : item.getEffects()) {
                     e.use(newCombat, newSelf, newOther, item);
                 }
@@ -60,7 +60,7 @@ public class UseDraft extends Skill {
             });
         }
         Item best = checks.entrySet().stream().max((first, second) -> {
-            float test = second.getValue() - first.getValue();
+            double test = second.getValue() - first.getValue();
             if (test < 0) {
                 return -1;
             }

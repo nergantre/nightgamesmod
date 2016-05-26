@@ -12,6 +12,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.skills.Skill;
 import nightgames.status.SlimeMimicry;
 import nightgames.status.Stsflag;
 
@@ -27,19 +28,20 @@ public class Airi extends BasePersonality {
         character.setTrophy(Item.AiriTrophy);
         preferredCockMod = CockMod.slimy;
 
+        character.rank = 1;
         character.set(Attribute.Power, 6);
         character.set(Attribute.Slime, 1);
         character.set(Attribute.Cunning, 15);
         character.set(Attribute.Speed, 4);
         character.set(Attribute.Seduction, 17);
         character.getStamina().setMax(80);
-        character.getArousal().setMax(100);
+        character.getArousal().setMax(80);
         character.getMojo().setMax(60);
         character.getWillpower().setMax(80);
         character.add(Trait.dexterous);
         character.add(Trait.imagination);
         character.add(Trait.softheart);
-        character.add(Trait.alwaysready);
+        character.add(Trait.repressed);
 
         character.plan = Plan.retreating;
         character.mood = Emotion.confident;
@@ -51,40 +53,101 @@ public class Airi extends BasePersonality {
     @Override
     public void setGrowth() {
         growth.stamina = 1;
-        growth.arousal = 2;
+        growth.arousal = 1;
         growth.mojo = 2;
-        growth.willpower = 5;
+        growth.willpower = 3;
         growth.bonusStamina = 1;
         growth.bonusArousal = 1;
         growth.bonusMojo = 2;
-        growth.addTrait(9, Trait.steady);
+        growth.addTrait(9, Trait.limbTraining1);
         growth.addTrait(12, Trait.lacedjuices);
         growth.addTrait(15, Trait.QuickRecovery);
         growth.addTrait(18, Trait.BoundlessEnergy);
-        growth.addTrait(21, Trait.shameless);
-        growth.addTrait(24, Trait.Sneaky);
-        growth.addTrait(27, Trait.lactating);
-        growth.addTrait(30, Trait.addictivefluids);
-        growth.addTrait(33, Trait.autonomousPussy);
-        growth.addTrait(36, Trait.entrallingjuices);
-        growth.addTrait(39, Trait.energydrain);
-        growth.addTrait(42, Trait.desensitized);
-        growth.addTrait(45, Trait.vaginaltongue);
+        growth.addTrait(23, Trait.pussyTraining1);
+        growth.addTrait(31, Trait.limbTraining2);
+        growth.addTrait(37, Trait.tongueTraining1);
+        growth.addTrait(44, Trait.limbTraining3);
+        growth.addTrait(51, Trait.pussyTraining2);
+        growth.addTrait(58, Trait.tongueTraining2);
+
         preferredAttributes.add(c -> Optional.of(Attribute.Slime));
         preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
+    }
+    
+    @Override
+    public void eot(Combat c, Character opponent, Skill last) {
+        // always replace with gooey/slime versions of genitals.
+        if (character.has(Trait.slime)) {
+            if (character.hasPussy() && !character.body.getRandomPussy().moddedPartCountsAs(character, PussyPart.gooey)) {
+                character.body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
+                c.write(character, 
+                                Global.format("{self:NAME-POSSESSIVE} %s turned back into a gooey pussy.",
+                                                character, opponent, character.body.getRandomPussy()));
+            }
+            if (character.hasDick() && !character.body.getRandomCock().moddedPartCountsAs(character, CockMod.slimy)) {
+                character.body.temporaryAddOrReplacePartWithType(character.body.getRandomCock().applyMod(CockMod.slimy), 999);
+                c.write(character, 
+                                Global.format("{self:NAME-POSSESSIVE} %s turned back into a gooey pussy.",
+                                                character, opponent, character.body.getRandomPussy()));
+            }
+        }
     }
 
     @Override
     public void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times, int totalTimes) {
         if (times == totalTimes && character.getWillpower().percent() < 60 && !character.has(Trait.slime)) {
-            c.write(character, Global.format("After {self:NAME-POSSESSIVE} orgasm, her whole body shimmers and melts into a puddle of goo. A human body rises from the slime and molds itself to a facsimile of {self:reflective}. You're now fighting {self:name} in slime form!", character, opponent));
+            c.write(character, Global.format("After {self:NAME-POSSESSIVE} orgasm, her whole body shimmers and melts into a puddle of goo. A human body rises from the slime and molds itself to a facsimile of {self:reflective}. "
+                            + "Gone is the slim repressed girl you knew. The new Airi that appears before you is a sexually idealized version of herself, with bigger breasts, a dynamic body line and long legs that end in a ball of blue goo. "
+                            + "You're now fighting {self:name} in slime form!", character, opponent));
+            character.nudify();
+            character.purge(c);
             character.addTemporaryTrait(Trait.slime, 999);
-            character.body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
-            character.body.temporaryAddOrReplacePartWithType(new GenericBodyPart("gooey skin", .5, 1.5, .8, "skin", ""), 99);
+            character.removeTemporaryTrait(Trait.repressed, 999);
+            if (character.hasPussy() && !character.body.getRandomPussy().moddedPartCountsAs(character, PussyPart.gooey)) {
+                character.body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
+            }
+            if (character.hasDick() && !character.body.getRandomCock().moddedPartCountsAs(character, CockMod.slimy)) {
+                character.body.temporaryAddOrReplacePartWithType(character.body.getRandomCock().applyMod(CockMod.slimy), 999);
+            }
+            BreastsPart part = character.body.getBreastsBelow(BreastsPart.h.size);
+            if (part != null) {
+                character.body.temporaryAddOrReplacePartWithType(part.upgrade(), 10);
+            }
+            character.body.temporaryAddOrReplacePartWithType(new GenericBodyPart("gooey skin", 2.0, 1.5, .8, "skin", ""), 999);
             character.body.temporaryAddOrReplacePartWithType(new TentaclePart("slime pseudopod", "back", "slime", 0.0, 1.0, 1.0), 999);
             character.body.temporaryAddOrReplacePartWithType(new TentaclePart("gooey feelers", "hands", "slime", 0.0, 1.0, 1.0), 999);
             character.body.temporaryAddOrReplacePartWithType(new TentaclePart("gooey feelers", "feet", "slime", 0.0, 1.0, 1.0), 999);
             character.body.temporaryAddOrReplacePartWithType(new TentaclePart("slime filaments", "pussy", "slime", 0.0, 1.0, 1.0), 999);
+            if (character.level >= 21) {
+                character.addTemporaryTrait(Trait.Sneaky, 999);
+            }
+            if (character.level >= 24) {
+                character.addTemporaryTrait(Trait.shameless, 999);
+            }
+            if (character.level >= 27) {
+                character.addTemporaryTrait(Trait.lactating, 999);
+            }
+            if (character.level >= 30) {
+                character.addTemporaryTrait(Trait.addictivefluids, 999);
+            }
+            if (character.level >= 33) {
+                character.addTemporaryTrait(Trait.autonomousPussy, 999);
+            }
+            if (character.level >= 36) {
+                character.addTemporaryTrait(Trait.entrallingjuices, 999);
+            }
+            if (character.level >= 39) {
+                character.addTemporaryTrait(Trait.energydrain, 999);
+            }
+            if (character.level >= 42) {
+                character.addTemporaryTrait(Trait.desensitized, 999);
+            }
+            if (character.level >= 45) {
+                character.addTemporaryTrait(Trait.steady, 999);
+            }
+            if (character.level >= 50) {
+                character.addTemporaryTrait(Trait.strongwilled, 999);
+            }
             character.moodSwing(c);
         }
     }
@@ -117,28 +180,28 @@ public class Airi extends BasePersonality {
 
     @Override
     public String bbLiner(Combat c) {
-        return character.has(Trait.slime) ? "Airi grimaces as you fall. <i>\"Apologies... but necessary.... Please understand...\"</i>" : "Sorry... I hope it didn't hurt too badly...";
+        return character.has(Trait.slime) ? "Airi grimaces as you fall. <i>\"Apologies... but necessary.... Please understand...\"</i>" : "<i>\"Sorry... I hope it didn't hurt too badly...\"</i>";
     }
 
     @Override
     public String nakedLiner(Combat c) {
         // always naked in slime form
-        return character.has(Trait.slime) ? "" : "Nooo! don't look at me!";
+        return character.has(Trait.slime) ? "" : "<i>Nooo! don't look at me!</i>";
     }
 
     @Override
     public String stunLiner(Combat c) {
-        return character.has(Trait.slime) ? "Airi glares at you from the puddle she formed on the floor. <i>\"Unforgivable...\"</i>" : "Unforgivable...";
+        return character.has(Trait.slime) ? "Airi glares at you from the puddle she formed on the floor. <i>\"Unforgivable...\"</i>" : "<i>\"Unforgivable...\"</i>";
     }
 
     @Override
     public String taunt(Combat c) {
-        return character.has(Trait.slime) ? "Airi coos at you <i>\"About to cum..? ...even trying..?\"</i>" : "<i>Giggle</i> Try a bit harder okay?";
+        return character.has(Trait.slime) ? "Airi coos at you <i>\"About to cum..? ...even trying..?\"</i>" : "<i><b>Giggle</b> \"Try a bit harder okay?\"</i>";
     }
 
     @Override
     public String temptLiner(Combat c) {
-        return character.has(Trait.slime) ? "<i>\"Fill me with yourself... forget everything...\"</i>" : "Uhm, it's okay, you can come inside...";
+        return character.has(Trait.slime) ? "<i>\"Fill me with yourself... forget everything...\"</i>" : "<i>\"Uhm, it's okay, you can come inside...\"</i>";
     }
 
     @Override
@@ -285,12 +348,21 @@ public class Airi extends BasePersonality {
 
     @Override
     public String orgasmLiner(Combat c) {
-        return character.has(Trait.slime) ? "<i>\"Ahhnn... forgot how good... feels... Will return favor...\"</i>." : "Aaahhh... my head's feeling fuzzy...";
+        if (character.has(Trait.slime)) {
+            return "<i>\"Ahhnn... forgot how good... feels... Will return favor...\"</i>.";
+        } else if (character.getWillpower().percent() > 90) {
+            return "<i>\"Aah that was a bit too much! Slow down a bit...\"</i>";
+        } else if (character.getWillpower().percent() > 75) {
+            return "<i>\"Aaahhh... my head's feeling fuzzy...\"</i>";
+        } else {
+            return "<i>\"I need more... Give me more...\"</i>";
+        }
+        
     }
 
     @Override
     public String makeOrgasmLiner(Combat c) {
-        return character.has(Trait.slime) ? "<i>\"...Feels good..? I'll suck more out... I'll drain you dry...\"</i>" : "Feels good? let me have some more...";
+        return character.has(Trait.slime) ? "<i>\"...Feels good..? I'll suck more out... I'll drain you dry...\"</i>" : "<i>\"Feels good? let me have some more...\"</i>";
     }
 
     @Override
@@ -302,8 +374,12 @@ public class Airi extends BasePersonality {
             } else {
                 return super.image(c);
             }
-        } else {
+        } else if (character.getWillpower().percent() > 90) {
             return "airi_human.jpg";
+        } else if (character.getWillpower().percent() > 75) {
+            return "airi_mostly_human.jpg";
+        } else {
+            return "airi_mostly_slime.jpg";
         }
     }
 }

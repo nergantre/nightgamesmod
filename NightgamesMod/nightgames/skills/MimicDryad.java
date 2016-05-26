@@ -27,7 +27,7 @@ public class MimicDryad extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().canAct() && !c.getStance().sub(getSelf()) && !getSelf().is(Stsflag.form);
+        return getSelf().canRespond() && !getSelf().is(Stsflag.mimicry);
     }
 
     @Override

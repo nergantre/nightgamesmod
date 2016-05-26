@@ -87,4 +87,8 @@ public interface Personality extends Serializable {
                     int totalTimes) {
         // no op
     }
+
+    public default void eot(Combat c, Character opponent, Skill last) {
+        // noop
+    }
 }

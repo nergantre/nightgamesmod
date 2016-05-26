@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -143,6 +144,7 @@ public class GUI extends JFrame implements Observer {
     private final static String USE_NONE = "NONE";
     private static final String USE_MAIN_TEXT_UI = "MAIN_TEXT";
     private static final String USE_CLOSET_UI = "CLOSET";
+    private static final Set<String> defaultChoices = new HashSet<>(Arrays.asList("Next", "Leave", "Back"));
 
     public GUI() {
 
@@ -589,8 +591,6 @@ public class GUI extends JFrame implements Observer {
         JPanel panel = (JPanel) getContentPane();
         panel.setFocusable(true);
         panel.addKeyListener(new KeyListener() {
-            private final Set<String> defaultActions = new HashSet<String>(Arrays.asList("Next", "Leave"));
-
             /**
              * Space bar will select the first option, unless they are in the default actions list.
              */
@@ -603,16 +603,26 @@ public class GUI extends JFrame implements Observer {
                         return;
                     }
                     JButton button = child instanceof JButton ? (JButton) child : ((SkillButton) child).getButton();
-                    if (defaultActions.contains(button.getText())) {
-                        button.doClick();
-                        return;
-                    } else if (button.isEnabled()) {
+                    if (button.isEnabled()) {
                         choices.add(button);
                     }
                 }
-                if (choices.size() > 0) {
-                    JButton choice = choices.get(0);
-                    choice.doClick();
+                char val = e.getKeyChar();
+                int index = Integer.valueOf(val) - Integer.valueOf('0');
+                if (index >= 0 && index <= 9) {
+                    if (index == 0) {
+                        index = 10;
+                    }
+                    if (choices.size() > 0) {
+                        index = Global.clamp(index - 1, 0, choices.size() - 1);
+                        JButton choice = choices.get(index);
+                        choice.doClick();
+                    }
+                } else if (val == 'b' || val == ' ') {
+                    Optional<JButton> defaultButton = choices.stream().filter(choice -> defaultChoices.contains(choice.getText())).findFirst();
+                    if (defaultButton.isPresent()) {
+                        defaultButton.get().doClick();
+                    }
                 }
             }
 

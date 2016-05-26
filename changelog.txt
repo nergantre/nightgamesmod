@@ -1,3 +1,27 @@
+2.0.0 changelog
+Note the bump in major version numbers. Old saves will NOT be supported (mostly because old Airi will be messed up)
+
+Bug fixes:
+- Fixed addictions not being saved
+- Fixed various typos and such
+- Fixed Maya crashing the game upon entrance
+- Fixed contestants not making you cum when at full arousal.
+- Fixed games vs AI lasting forever
+
+New content:
+- Added an Airi content update
+	- Airi has basic daytime scenes now, with two new Traits
+	- Airi will only shift into slime form after orgasming at < 60% willpower
+	- New Attribute for Airi split off from Rosea's Bio (now has Slime)
+	- Airi is now stronger but has less endurance in slime form
+		- Addded new slime mimicry skills:
+			- Mimic: Succubus
+			- Mimic: Dryad
+			- Mimic: Werecat
+			- Mimic: Witch
+			- Mimic: Angel
+	- Added a lot of new portraits for Airi
+
 1.9.4 changelog
 Balance:
 - Changed Oral skills to be no longer usable in the neutral stance.

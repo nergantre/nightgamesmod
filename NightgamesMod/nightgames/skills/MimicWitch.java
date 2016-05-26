@@ -14,7 +14,6 @@ import nightgames.status.SlimeMimicry;
 import nightgames.status.Stsflag;
 
 public class MimicWitch extends Skill {
-
     public MimicWitch(Character self) {
         super("Mimicry: Witch", self);
     }
@@ -26,7 +25,7 @@ public class MimicWitch extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().canAct() && !c.getStance().sub(getSelf()) && !getSelf().is(Stsflag.form) && Global.getNPC("Cassie").has(Trait.witch);
+        return getSelf().canRespond() && !getSelf().is(Stsflag.mimicry) && Global.getNPC("Cassie").has(Trait.witch);
     }
 
     @Override
@@ -49,7 +48,7 @@ public class MimicWitch extends Skill {
         if (part != null) {
             getSelf().body.temporaryAddOrReplacePartWithType(part.upgrade(), 10);
         }
-        getSelf().add(c, new Abuff(getSelf(), Attribute.Arcane, Math.max(10, getSelf().get(Attribute.Slime) * 2), 10));
+        getSelf().add(c, new Abuff(getSelf(), Attribute.Arcane, Math.max(10, getSelf().get(Attribute.Slime)), 10));
         getSelf().add(c, new SlimeMimicry("witch", PussyPart.arcane, CockMod.runic, getSelf(), 10));
         return true;
     }

@@ -361,7 +361,7 @@ public class Body implements Cloneable {
         // represents tempt damage
         double retval = hotness;
         for (BodyPart part : getCurrentParts()) {
-            retval += part.getHotness(self, opponent) * (getFetish(part.getType()).isPresent() ? 2 : 0);
+            retval += part.getHotness(self, opponent) * (getFetish(part.getType()).isPresent() ? 2 : 1);
         }
         retval += self.getOutfit()
                       .getHotness();

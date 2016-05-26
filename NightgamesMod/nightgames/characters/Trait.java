@@ -277,7 +277,7 @@ public enum Trait {
 
     Clingy("Clingy", "Harder to escape"),
     fakeout("Fakeout", "Easier to counter"),
-
+    repressed("Repressed", "Sexually represssed, lower seduction"),
     // Feats
     sprinter("Sprinter", "Better at escaping combat"),
     QuickRecovery("Quick Recovery", "Regain stamina rapidly out of combat"),

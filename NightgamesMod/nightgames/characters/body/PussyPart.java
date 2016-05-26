@@ -616,7 +616,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
             return part == this;
         }
         SlimeMimicry mimicry = ((SlimeMimicry)self.getStatus(Stsflag.mimicry));
-        if (this == gooey && mimicry != null) {
+        if (this == gooey && part != gooey && mimicry != null) {
             return mimicry.getPussyMimicked() == part;
         } else {
             return part == this;

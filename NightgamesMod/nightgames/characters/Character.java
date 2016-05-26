@@ -264,6 +264,12 @@ public abstract class Character extends Observable implements Cloneable {
                 if (has(ClothingTrait.higherheels) && !has(Trait.proheels)) {
                     total -= 1;
                 }
+                break;
+            case Seduction:
+                if (has(Trait.repressed)) {
+                    total /= 2;
+                }
+                break;
             default:
                 break;
         }
@@ -1475,6 +1481,8 @@ public abstract class Character extends Observable implements Cloneable {
 
     protected void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
                     int totalTimes) {
+        String orgasmLiner = "<b>" + orgasmLiner(c) + "</b>";
+        String opponentOrgasmLiner = "<b>" + opponent.makeOrgasmLiner(c) + "</b>";
         orgasmed = true;
         if (times == 1) {
             c.write(this, "<br>");
@@ -1510,8 +1518,8 @@ public abstract class Character extends Observable implements Cloneable {
             restoreWillpower(c, 5 + Math.min((get(Attribute.Animism) + get(Attribute.Nymphomania)) / 5, 15));
         }
         if (this != opponent && times == totalTimes) {
-            c.write(this, "<b>" + orgasmLiner(c) + "</b>");
-            c.write(opponent, opponent.makeOrgasmLiner(c));
+            c.write(this, orgasmLiner);
+            c.write(opponent, opponentOrgasmLiner);
         }
         if (human()) {
             Player p = (Player) this;
@@ -2645,6 +2653,10 @@ public abstract class Character extends Observable implements Cloneable {
         }
         // hack to make the AI favor making the opponent cum
         fit -= 100 * other.orgasms;
+        // special case where if you lost, you are super super unfit.
+        if (other.orgasmed && other.getWillpower().isEmpty()) {
+            fit -= 1000;
+        }
         return fit;
     }
 
@@ -2732,6 +2744,12 @@ public abstract class Character extends Observable implements Cloneable {
             fit += status.stream().flatMap(s -> s.flags().stream()).mapToDouble(f -> mods.modSelfStatus(f)).sum();
             fit += c.getOther(this).status.stream().flatMap(s -> s.flags().stream())
                             .mapToDouble(f -> mods.modOpponentStatus(f)).sum();
+        }
+        // hack to make the AI favor making the opponent cum
+        fit -= 100 * orgasms;
+        // special case where if you lost, you are super super unfit.
+        if (orgasmed && getWillpower().isEmpty()) {
+            fit -= 1000;
         }
         return fit;
     }
