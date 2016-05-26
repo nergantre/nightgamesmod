@@ -133,10 +133,6 @@ public class Daytime {
                     ((NPC) npc).daytime(daylength);
                 }
             }
-           Global.getPlayer().getAddictions().forEach(a -> {
-               Optional<Status> withEffect = a.startNight();
-               withEffect.ifPresent(s -> Global.getPlayer().add(s));
-           });
             if (!headless) {
                 // Global.gui().nextMatch();
                 if (Global.checkFlag(Flag.autosave)) {

@@ -137,6 +137,14 @@ public abstract class Addiction extends Status {
         return Optional.empty();
     }
 
+    public void refreshWithdrawal() {
+        if (inWithdrawal) {
+            Optional<Status> opt = withdrawalEffects();
+            if (opt.isPresent() && !affected.has(opt.get()))
+                affected.add(opt.get().instance(affected, cause));
+        }
+    }
+    
     public void endNight() {
         inWithdrawal = false;
         clearDaytime();

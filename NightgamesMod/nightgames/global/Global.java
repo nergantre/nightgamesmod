@@ -103,6 +103,7 @@ import nightgames.modifier.standard.VibrationModifier;
 import nightgames.modifier.standard.VulnerableModifier;
 import nightgames.pet.Ptype;
 import nightgames.skills.*;
+import nightgames.status.Status;
 import nightgames.trap.Alarm;
 import nightgames.trap.AphrodisiacTrap;
 import nightgames.trap.Decoy;
@@ -707,6 +708,10 @@ public class Global {
     }
 
     public static void startMatch() {
+        Global.getPlayer().getAddictions().forEach(a -> {
+            Optional<Status> withEffect = a.startNight();
+            withEffect.ifPresent(s -> Global.getPlayer().add(s));
+        });
         Global.gui().startMatch();
         match.round();
     }

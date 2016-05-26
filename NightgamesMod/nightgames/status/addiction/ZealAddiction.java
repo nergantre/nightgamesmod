@@ -128,16 +128,16 @@ public class ZealAddiction extends Addiction {
     protected String describeWithdrawal() {
         switch (getSeverity()) {
             case HIGH:
-                return "Your mind is completely preoccupied by " + cause.name() + ". You didn't worship today!"
+                return "<b>Your mind is completely preoccupied by " + cause.name() + ". You didn't worship today!"
                                 + " Will she be angry? What will you do if she is? You aren't going to be able"
-                                + " to focus on much else tonight.";
+                                + " to focus on much else tonight.</b>";
             case LOW:
-                return "You didn't pay your respects to " + cause.name() + " today... Is that bad? Or isn't it?"
-                                + " You are confused, and will have less mojo tonight.";
+                return "<b>You didn't pay your respects to " + cause.name() + " today... Is that bad? Or isn't it?"
+                                + " You are confused, and will have less mojo tonight.</b>";
             case MED:
-                return "You are terribly nervous at the thought of having to face " + cause.name()
+                return "<b>You are terribly nervous at the thought of having to face " + cause.name()
                                 + " tonight after failing to pray to her today. The rampaging thoughts are throwing you"
-                                + " off your game.";
+                                + " off your game.</b>";
             case NONE:
                 throw new IllegalStateException("Tried to describe withdrawal for an inactive zeal addiction.");
             default:

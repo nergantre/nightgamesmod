@@ -860,6 +860,12 @@ public class Player extends Character {
         return add.isActive() && add.wasCausedBy(cause);
     }
     
+    @Override
+    public void regen(Combat c, boolean combat) {
+        super.regen(c, combat);
+        addictions.forEach(Addiction::refreshWithdrawal);
+    }
+    
     @SuppressWarnings("unchecked")
     @Override
     protected void saveInternal(JSONObject obj) {
