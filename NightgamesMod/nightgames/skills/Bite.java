@@ -49,7 +49,7 @@ public class Bite extends Skill {
         
         Global.getPlayer().addict(AddictionType.BREEDER, getSelf(), Addiction.MED_INCREASE);
         
-        return false;
+        return true;
     }
 
     @Override
