@@ -48,6 +48,10 @@ public abstract class BasePersonality implements Personality {
         preferredAttributes = new ArrayList<PreferredAttribute>();
         setGrowth();
     }
+    
+    public void setCharacter(NPC c) {
+        this.character = c;
+    }
 
     public void setGrowth() {}
 

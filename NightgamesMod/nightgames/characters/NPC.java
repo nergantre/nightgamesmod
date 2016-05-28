@@ -58,6 +58,7 @@ public class NPC extends Character {
         for (Emotion e : Emotion.values()) {
             emotes.put(e, 0);
         }
+        mood = Emotion.confident;
     }
 
     @Override

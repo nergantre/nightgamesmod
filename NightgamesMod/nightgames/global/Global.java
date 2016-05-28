@@ -238,7 +238,9 @@ public class Global {
         Clothing.buildClothingTable();
         learnSkills(human);
         rebuildCharacterPool();
-        players.addAll(cfg.buildNpcs());
+        List<NPC> npcs = cfg.buildNpcs();
+        npcs.forEach(n -> characterPool.put(n.getType(), n));
+        players.addAll(npcs);
         List<Flag> cfgFlags = cfg.getFlags();
         if (!cfgFlags.isEmpty()) {
             flags.clear();

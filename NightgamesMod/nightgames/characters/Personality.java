@@ -117,4 +117,6 @@ public interface Personality extends Serializable {
                 throw new IllegalArgumentException("Unknown Personality: " + type);
         }
     }
+
+    public void setCharacter(NPC npc);
 }

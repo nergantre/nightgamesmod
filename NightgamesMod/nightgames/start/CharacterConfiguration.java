@@ -2,6 +2,7 @@ package nightgames.start;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -56,10 +57,13 @@ abstract class CharacterConfiguration {
             base.traits = new CopyOnWriteArrayList<>(traits.get());
         }
         if (clothing.isPresent()) {
-            base.outfitPlan = clothing.get()
-                                      .stream()
-                                      .map(Clothing::getByID)
-                                      .collect(Collectors.toList());
+            List<Clothing> clothes = clothing.get()
+                            .stream()
+                            .map(Clothing::getByID)
+                            .collect(Collectors.toList());
+            base.outfitPlan = new ArrayList<>(clothes);
+            base.closet = new HashSet<>(clothes);
+            base.change();
         }
         Body body;
         if (this.body.isPresent()) {

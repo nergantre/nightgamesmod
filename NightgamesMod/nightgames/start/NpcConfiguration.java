@@ -23,7 +23,8 @@ class NpcConfiguration extends CharacterConfiguration {
             throw new UnsupportedOperationException("Tried to build NPC from all_npcs configuration");
         }
         Personality pers = Personality.getByType(type.get());
-        NPC npc = new NPC(name.orElse(type.get()), level, pers);
+        NPC npc;
+        pers.setCharacter(npc = new NPC(name.orElse(type.get()), level, pers));
         if (common.isPresent()) {
            common.get().processCommon(npc);
         }
