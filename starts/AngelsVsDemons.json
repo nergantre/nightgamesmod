@@ -1,6 +1,6 @@
 {
-	"name":"New Game+",
-	"summary":"Start with all characters unlocked, and with the standard characters with their advanced classes. To compensate, the player gets higher starting attributes and a selection of beneficial traits.",
+	"name":"Angels and Demons",
+	"summary":"Start with the base characters + Eve and Reyka. All characters except the player are either angels or demons. Characters who are usually neither retain their original classes as well. Stats are similar to New Game+. It's a little wonky.",
 	"enabled":true,
 	"player": {
 		"attributes": {
@@ -20,34 +20,12 @@
 	},
 	"npcs": [
 		{
-			"type":"Airi"
-			"attributes": {
-				"Power": 6,
-				"Seduction": 17,
-				"Cunning": 15,
-				"Slime": 1,
-				"Speed": 4
-			},
-			"traits": [
-				"dexterous",
-				"imagination",
-				"softheart",
-				"repressed"
-			],
-			"clothing": [
-				"Tshirt",
-				"jeans",
-				"bra",
-				"panties"
-			]
-		},
-		{
 			"type":"Angel"
 			"attributes": {
-				"Power": 13,
-				"Seduction": 20,
-				"Cunning": 13,
-				"Divinity": 1
+				"Power": 10,
+				"Seduction": 15,
+				"Cunning": 10,
+				"Divinity": 15
 			},
 			"body": {
 				"archetype":"ANGEL"
@@ -69,15 +47,17 @@
 		{
 			"type":"Cassie"
 			"attributes": {
-				"Power": 13,
-				"Seduction": 13,
-				"Cunning": 13,
-				"Arcane": 1
+				"Power": 10,
+				"Seduction": 10,
+				"Cunning": 10,
+				"Divinity": 5,
+				"Arcane": 5
 			},
 			"body": {
-				"archetype":"WITCH"
+				"archetype":"ANGEL"
 			},
 			"traits": [
+				"divinity",
 				"witch",
 				"softheart",
 				"romantic",
@@ -95,14 +75,16 @@
 		{
 			"type":"Eve"
 			"attributes": {
-				"Power": 12,
+				"Power": 10,
 				"Seduction": 13,
-				"Cunning": 12,
+				"Cunning": 10,
 				"Speed": 6,
-				"Fetish": 5
+				"Fetish": 5,
+				"Dark": 5
 			},
 			"body": {
 				"gender":"herm",
+				"archetype":"DEMON"
 				"genitals": {
 					"cock": {
 						"length":"big"
@@ -112,6 +94,7 @@
 				"breasts":"d"
 			}
 			"traits": [
+				"succubus",
 				"exhibitionist",
 				"insatiable",
 				"proheels",
@@ -129,18 +112,20 @@
 		{
 			"type":"Jewel"
 			"attributes": {
-				"Power": 20,
+				"Power": 15,
 				"Seduction": 10,
 				"Cunning": 10,
-				"Ki": 1
+				"Ki": 5,
+				"Dark": 5
 			},
 			"body": {
-				"archetype":"REGULAR",
+				"archetype":"DEMON",
 				"genitals": {
 					"pussy":"fiery"
 				}
 			},
 			"traits": [
+				"succubus",
 				"fighter",
 				"direct",
 				"wrassler",
@@ -152,45 +137,20 @@
 			]
 		},
 		{
-			"type":"Kat"
-			"attributes": {
-				"Power": 10,
-				"Seduction": 7,
-				"Cunning": 8,
-				"Speed": 8,
-				"Animism": 2
-			},
-			"body": {
-				"archetype":"CAT"
-			},
-			"traits": [
-				"dexterous",
-				"pheromones",
-				"shy",
-				"petite"
-			],
-			"clothing": [
-				"bra",
-				"Tshirt",
-				"panties",
-				"skirt",
-				"sneakers",
-				"socks"
-			]
-		},
-		{
 			"type":"Mara"
 			"attributes": {
 				"Power": 10,
 				"Seduction": 10,
-				"Cunning": 20,
+				"Cunning": 15,
 				"Perception": 7,
-				"Science": 1
+				"Divinity": 5,
+				"Science": 5
 			},
 			"body": {
-				"archetype":"CYBORG"
+				"archetype":"ANGEL"
 			},
 			"traits": [
+				"divinity",
 				"madscientist",
 				"petite",
 				"dexterous",
@@ -212,7 +172,7 @@
 				"Power": 5,
 				"Seduction": 14,
 				"Cunning": 7,
-				"Dark": 5,
+				"Dark": 15,
 			},
 			"body": {
 				"archetype":"DEMON"

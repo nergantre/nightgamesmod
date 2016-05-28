@@ -70,6 +70,7 @@ abstract class CharacterConfiguration {
             body.finishBody(gender.orElse(CharacterSex.female));
         }
         base.body = body;
+        base.body.character = base;
     }
 
     protected void parseCommon(JSONObject obj) {
