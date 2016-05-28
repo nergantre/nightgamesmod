@@ -1,0 +1,74 @@
+{
+	"name":"Inverted Genders",
+	"summary":"Much like the default starts, but all opponents are men instead. This includes some changes to their names and wardrobes. NOTE: This does not affect any scenes, so lots of things won't make sense. It's also possible that characters will get traits like Permanent Lactation or Pussy Training even without the requisite parts. Characters unlocked later in the game are unaffected.",
+	"enabled":true,
+	"player": {
+		"gender":"female"
+	},
+	"npcs": [
+		{
+			"type":"Angel",
+			"name":"Angelo",
+			"gender":"male",
+			"body": {
+				"breasts":"flat"
+			},
+			"clothing": [
+				"Tshirt",
+				"boxers",
+				"jeans",
+				"socks",
+				"sneakers"
+			]
+		},
+		{
+			"type":"Cassie",
+			"name":"Casey",
+			"gender":"male",
+			"body": {
+				"breasts":"flat"
+			},
+			"clothing": [
+				"Tshirt",
+				"boxers",
+				"jeans",
+				"socks",
+				"sneakers"
+			]
+		},
+		{
+			"type":"Jewel",
+			"name":"Jason",
+			"gender":"male",
+			"body": {
+				"breasts":"flat"
+			},
+			"clothing": [
+				"Tshirt",
+				"boxers",
+				"jeans",
+				"socks",
+				"sneakers"
+			]
+		},
+		{
+			"type":"Mara",
+			"name":"Mark",
+			"gender":"male",
+			"body": {
+				"breasts":"flat"
+			},
+			"clothing": [
+				"Tshirt",
+				"boxers",
+				"jeans",
+				"socks",
+				"sneakers"
+			]
+		}
+	],
+	"all_npcs" : {
+		
+	},
+	"flags": []
+}
