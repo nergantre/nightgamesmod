@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
@@ -442,6 +443,20 @@ public class CreationGUI extends JPanel {
                   sb.append("\n\n");
                   configs.addItem(cfg);
               });
+        StartConfiguration firstCfg;
+        Optional<StartConfiguration> def = starts.stream()
+                                                 .filter(s -> s.getName()
+                                                               .equals("Default"))
+                                                 .findAny();
+        if (def.isPresent()) {
+            firstCfg = def.get();
+            configs.setSelectedItem(firstCfg);
+        } else {
+            firstCfg = (StartConfiguration) configs.getSelectedItem();
+        }
+        if (firstCfg != null) {
+            setupConfig(firstCfg);
+        }
         topPanel.remove(btnAdvStart);
         topPanel.add(configs);
         topPanel.revalidate();
