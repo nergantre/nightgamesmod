@@ -48,6 +48,10 @@ public abstract class BasePersonality implements Personality {
         preferredAttributes = new ArrayList<PreferredAttribute>();
         setGrowth();
     }
+    
+    public void setCharacter(NPC c) {
+        this.character = c;
+    }
 
     public void setGrowth() {}
 
@@ -119,7 +123,7 @@ public abstract class BasePersonality implements Personality {
 
     @Override
     public String image(Combat c) {
-        String fname = character.name()
+        String fname = getType()
                                 .toLowerCase()
                         + "_" + character.mood.name() + ".jpg";
         return fname;

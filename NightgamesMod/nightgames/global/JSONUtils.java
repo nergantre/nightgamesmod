@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.json.simple.JSONArray;
@@ -25,7 +26,12 @@ public class JSONUtils {
     public static boolean readBoolean(JSONObject struct, String key) {
         return ((Boolean) struct.get(key)).booleanValue();
     }
-
+    
+    @SuppressWarnings("unchecked")
+    public static <T> Optional<T> readOptional(JSONObject struct, String key) {
+        return Optional.ofNullable((T) struct.get(key));
+    }
+    
     public static List<String> loadStringsFromArr(JSONObject obj, String name) {
         List<String> arr = new ArrayList<>();
         JSONArray savedArr = (JSONArray) obj.get(name);

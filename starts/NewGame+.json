@@ -1,0 +1,238 @@
+{
+	"name":"New Game+",
+	"summary":"Start with all characters unlocked, and with the standard characters with their advanced classes. To compensate, the player gets higher starting attributes and a selection of beneficial traits.",
+	"enabled":true,
+	"player": {
+		"attributes": {
+			"Power":5,
+			"Seduction":5,
+			"Cunning":5
+		},
+		"attribute_points": 20
+		"money": 15000,
+		"traits": [
+			"pussyhandler",
+			"dickhandler",
+			"limbTraining1",
+			"tongueTraining1",
+			"powerfulhips"
+		]
+	},
+	"npcs": [
+		{
+			"type":"Airi"
+			"attributes": {
+				"Power": 6,
+				"Seduction": 17,
+				"Cunning": 15,
+				"Slime": 1,
+				"Speed": 4
+			},
+			"traits": [
+				"dexterous",
+				"imagination",
+				"softheart",
+				"repressed"
+			],
+			"clothing": [
+				"Tshirt",
+				"jeans",
+				"bra",
+				"panties"
+			]
+		},
+		{
+			"type":"Angel"
+			"attributes": {
+				"Power": 13,
+				"Seduction": 20,
+				"Cunning": 13,
+				"Divinity": 1
+			},
+			"body": {
+				"archetype":"ANGEL"
+			},
+			"traits": [
+				"demigoddess",
+				"divinity",
+				"proheels",
+				"undisciplined",
+				"lickable"
+			],
+			"clothing": [
+				"translucentshawl",
+				"bikinitop",
+				"bikinibottoms",
+				"highheels"
+			]
+		},
+		{
+			"type":"Cassie"
+			"attributes": {
+				"Power": 13,
+				"Seduction": 13,
+				"Cunning": 13,
+				"Arcane": 1
+			},
+			"body": {
+				"archetype":"WITCH"
+			},
+			"traits": [
+				"witch",
+				"softheart",
+				"romantic",
+				"imagination"
+			],
+			"clothing": [
+				"bra",
+				"blouse",
+				"cloak",
+				"panties",
+				"skirt",
+				"shoes"
+			]
+		},
+		{
+			"type":"Eve"
+			"attributes": {
+				"Power": 12,
+				"Seduction": 13,
+				"Cunning": 12,
+				"Speed": 6,
+				"Fetish": 5
+			},
+			"body": {
+				"gender":"herm",
+				"genitals": {
+					"cock": {
+						"length":"big"
+					},
+					"pussy":"normal"
+				},
+				"breasts":"d"
+			}
+			"traits": [
+				"exhibitionist",
+				"insatiable",
+				"proheels",
+				"assmaster",
+				"analFanatic"
+			],
+			"clothing": [
+				"tanktop",
+				"crotchlesspanties",
+				"jeans",
+				"stilettopumps",
+				"garters"
+			]
+		},
+		{
+			"type":"Jewel"
+			"attributes": {
+				"Power": 20,
+				"Seduction": 10,
+				"Cunning": 10,
+				"Ki": 1
+			},
+			"body": {
+				"archetype":"REGULAR",
+				"genitals": {
+					"pussy":"fiery"
+				}
+			},
+			"traits": [
+				"fighter",
+				"direct",
+				"wrassler",
+				"insatiable"
+			],
+			"clothing": [
+				"gi",
+				"panties"
+			]
+		},
+		{
+			"type":"Kat"
+			"attributes": {
+				"Power": 10,
+				"Seduction": 7,
+				"Cunning": 8,
+				"Speed": 8,
+				"Animism": 2
+			},
+			"body": {
+				"archetype":"CAT"
+			},
+			"traits": [
+				"dexterous",
+				"pheromones",
+				"shy",
+				"petite"
+			],
+			"clothing": [
+				"bra",
+				"Tshirt",
+				"panties",
+				"skirt",
+				"sneakers",
+				"socks"
+			]
+		},
+		{
+			"type":"Mara"
+			"attributes": {
+				"Power": 10,
+				"Seduction": 10,
+				"Cunning": 20,
+				"Perception": 7,
+				"Science": 1
+			},
+			"body": {
+				"archetype":"CYBORG"
+			},
+			"traits": [
+				"madscientist",
+				"petite",
+				"dexterous",
+				"ticklish"
+			],
+			"clothing": [
+				"bra",
+				"shirt",
+				"labcoat",
+				"underwear",
+				"pants",
+				"pantyhose",
+				"boots"
+			]
+		},
+		{
+			"type":"Reyka"
+			"attributes": {
+				"Power": 5,
+				"Seduction": 14,
+				"Cunning": 7,
+				"Dark": 5,
+			},
+			"body": {
+				"archetype":"DEMON"
+			},
+			"traits": [
+				"succubus",
+				"proheels",
+				"masterheels",
+				"darkpromises",
+				"Confident",
+				"shameless"
+			],
+			"clothing": [
+				"tanktop",
+				"miniskirt",
+				"garters",
+				"stilettopumps"
+			]
+		}
+	],
+	"all_npcs":{},
+	"flags":[]
+}

@@ -1,0 +1,26 @@
+{
+	"name":"Default",
+	"summary":"The default starting configuration.",
+	"enabled":true,
+	"player": {
+	
+	},
+	"npcs": [
+		{
+			"type":"Angel"
+		},
+		{
+			"type":"Cassie"
+		},
+		{
+			"type":"Jewel"
+		},
+		{
+			"type":"Mara"
+		},
+	],
+	"all_npcs": {
+	
+	},
+	"flags": []
+}
