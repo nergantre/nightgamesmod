@@ -168,14 +168,14 @@ public class Corruption extends Addiction {
     protected String describeWithdrawal() {
         switch (getSeverity()) {
             case HIGH:
-                return "Reyka's corruption is working hard to punish you "
-                                + "for not feeding it today, and it will cause all kinds of trouble tonight. ";
+                return "<b>Reyka's corruption is working hard to punish you "
+                                + "for not feeding it today, and it will cause all kinds of trouble tonight.</b>";
             case LOW:
-                return "Something is not quite right. The blackness Reyka "
-                                + "put in you is stirring, causing all kinds of strange sensations. Perhaps it's hungry? ";
+                return "<b>Something is not quite right. The blackness Reyka "
+                                + "put in you is stirring, causing all kinds of strange sensations. Perhaps it's hungry?</b>";
             case MED:
-                return "The powerful corruption within you is rebelling"
-                                + " against not being fed today. Expect the unexpected tonight.";
+                return "<b>The powerful corruption within you is rebelling"
+                                + " against not being fed today. Expect the unexpected tonight.</b>";
             case NONE:
             default:
                 return "";

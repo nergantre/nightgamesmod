@@ -87,14 +87,14 @@ public class MagicMilkAddiction extends Addiction {
     protected String describeWithdrawal() {
         switch (getSeverity()) {
             case HIGH:
-                return "You haven't had any of Cassie's milk today, and the thirst threatens"
-                                + " to overwhelm you. You won't last long in fights tonight...";
+                return "<b>You haven't had any of Cassie's milk today, and the thirst threatens"
+                                + " to overwhelm you. You won't last long in fights tonight...</b>";
             case LOW:
-                return "You feel a little uneasy going without Cassie's milk for a whole day,"
-                                + " and it's distracting you to the point where it lowers your willpower!";
+                return "<b>You feel a little uneasy going without Cassie's milk for a whole day,"
+                                + " and it's distracting you to the point where it lowers your willpower!</b>";
             case MED:
-                return "The thirst for Cassie's milk burns within you, "
-                                + "scorching away such useless things as a strong will.";
+                return "<b>The thirst for Cassie's milk burns within you, "
+                                + "scorching away such useless things as a strong will.</b>";
             case NONE:
                 throw new IllegalStateException("Tried to describe withdrawal for an inactive milk addiction.");
             default:

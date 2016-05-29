@@ -32,12 +32,12 @@ public class Breeder extends Addiction {
 
     @Override
     protected Optional<Status> withdrawalEffects() {
-        return Optional.empty();
+        return Optional.of(new Horny(affected, 5.f * getSeverity().ordinal(), 999, "your animal instincts"));
     }
 
     @Override
     protected Optional<Status> addictionEffects() {
-        if (atLeast(Severity.MED))
+        if (atLeast(Severity.HIGH))
             flag(Stsflag.feral);
         else
             unflag(Stsflag.feral);
@@ -82,15 +82,15 @@ public class Breeder extends Addiction {
     protected String describeWithdrawal() {
         switch (getSeverity()) {
             case HIGH:
-                return "Finding and seeding a willing pussy is foremost in your mind after not"
+                return "<b>Finding and seeding a willing pussy is foremost in your mind after not"
                                 + " fucking Kat all day, and you are already hard at the prospect of"
-                                + " mending that unfortunate situation.";
+                                + " mending that unfortunate situation.</b>";
             case LOW:
-                return "Having not fucked Kat all day, you feel a tingle in your balls telling you it's"
-                                + " time to do something about that.";
+                return "<b>Having not fucked Kat all day, you feel a tingle in your balls telling you it's"
+                                + " time to do something about that.</b>";
             case MED:
-                return "Your instincts are telling you that you haven't fucked enough today, and"
-                                + " they are driving up your arousal.";
+                return "<b>Your instincts are telling you that you haven't fucked enough today, and"
+                                + " they are driving up your arousal.</b>";
             case NONE:
                 throw new IllegalStateException("Tried to describe withdrawal for an inactive breeder addiction.");
             default:

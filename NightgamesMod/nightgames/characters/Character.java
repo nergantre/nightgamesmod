@@ -66,10 +66,10 @@ public abstract class Character extends Observable implements Cloneable {
     /**
      *
      */
-    protected String name;
-    protected int level;
-    protected int xp;
-    protected int rank;
+    public String name;
+    public int level;
+    public int xp;
+    public int rank;
     public int money;
     public HashMap<Attribute, Integer> att;
     protected Meter stamina;
@@ -330,8 +330,6 @@ public abstract class Character extends Observable implements Cloneable {
         if (has(Trait.fastLearner)) {
             rate += .2;
         }
-        if (!human())
-            rate += .5;
         rate *= Global.xpRate;
         xp += Math.round(i * rate);
         update();

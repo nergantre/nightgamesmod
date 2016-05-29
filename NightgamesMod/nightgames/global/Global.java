@@ -68,6 +68,7 @@ import nightgames.characters.Angel;
 import nightgames.characters.Attribute;
 import nightgames.characters.Cassie;
 import nightgames.characters.Character;
+import nightgames.characters.CharacterSex;
 import nightgames.characters.Eve;
 import nightgames.characters.Jewel;
 import nightgames.characters.Kat;
@@ -103,6 +104,8 @@ import nightgames.modifier.standard.VibrationModifier;
 import nightgames.modifier.standard.VulnerableModifier;
 import nightgames.pet.Ptype;
 import nightgames.skills.*;
+import nightgames.start.StartConfiguration;
+import nightgames.status.Status;
 import nightgames.trap.Alarm;
 import nightgames.trap.AphrodisiacTrap;
 import nightgames.trap.Decoy;
@@ -173,8 +176,8 @@ public class Global {
         System.out.println("Night games");
         System.out.println(new Timestamp(jdate.getTime()));
 
-        debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
-        debug[DebugFlags.DEBUG_LOADING.ordinal()] = true;
+        // debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
+        // debug[DebugFlags.DEBUG_LOADING.ordinal()] = true;
         // debug[DebugFlags.DEBUG_FTC.ordinal()] = true;
         // debug[DebugFlags.DEBUG_DAMAGE.ordinal()] = true;
         // debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
@@ -223,6 +226,29 @@ public class Global {
         players.add(getNPC("Angel"));
         players.add(getNPC("Mara"));
         match = new Match(players, new NoModifier());
+    }
+    
+    public static void configuredNewGame(StartConfiguration cfg, String playerName,
+                    List<Trait> pickedTraits, CharacterSex pickedGender) {
+        human = cfg.buildPlayer(playerName, pickedTraits, pickedGender);
+        players.add(human);
+        if (gui != null)
+            gui.populatePlayer(human);
+        buildSkillPool(human);
+        Clothing.buildClothingTable();
+        learnSkills(human);
+        rebuildCharacterPool();
+        List<NPC> npcs = cfg.buildNpcs();
+        npcs.forEach(n -> characterPool.put(n.getType(), n));
+        players.addAll(npcs);
+        List<Flag> cfgFlags = cfg.getFlags();
+        if (!cfgFlags.isEmpty()) {
+            flags.clear();
+            cfgFlags.stream().map(Flag::name).forEach(flags::add);
+        }
+        Set<Character> lineup = pickCharacters(players, Collections.singleton(human), 4);
+        match = new Match(lineup, new NoModifier());
+        save(false);
     }
 
     public static int random(int start, int end) {
@@ -707,6 +733,10 @@ public class Global {
     }
 
     public static void startMatch() {
+        Global.getPlayer().getAddictions().forEach(a -> {
+            Optional<Status> withEffect = a.startNight();
+            withEffect.ifPresent(s -> Global.getPlayer().add(s));
+        });
         Global.gui().startMatch();
         match.round();
     }

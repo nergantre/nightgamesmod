@@ -91,4 +91,32 @@ public interface Personality extends Serializable {
     public default void eot(Combat c, Character opponent, Skill last) {
         // noop
     }
+    
+    public static Personality getByType(String type) {
+        type = type.toLowerCase();
+        switch (type) {
+            case "angel":
+                return new Angel();
+            case "cassie":
+                return new Cassie();
+            case "eve":
+                return new Eve();
+            case "jewel":
+                return new Jewel();
+            case "kat":
+                return new Kat();
+            case "mara":
+                return new Mara();
+            case "maya":
+                return new Maya(1);
+            case "reyka":
+                return new Reyka();
+            case "airi":
+                return new Airi();
+            default:
+                throw new IllegalArgumentException("Unknown Personality: " + type);
+        }
+    }
+
+    public void setCharacter(NPC npc);
 }

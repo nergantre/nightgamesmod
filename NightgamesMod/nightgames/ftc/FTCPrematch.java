@@ -1,6 +1,7 @@
 package nightgames.ftc;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import javax.swing.JButton;
 
@@ -17,7 +18,7 @@ public class FTCPrematch implements Scene {
 
     private Character prey;
 
-    public FTCPrematch(Player player) {
+    public FTCPrematch(Player player) {        
         Global.current = this;
         Global.unflag(Flag.victory);
         ArrayList<JButton> choice = new ArrayList<JButton>();

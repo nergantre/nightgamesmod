@@ -266,6 +266,9 @@ public class Match {
         condition.handleItems(player);
         condition.handleStatus(player);
         condition.handleTurn(player, this);
+        if (player.human()) {
+            Global.getPlayer().getAddictions().forEach(Addiction::refreshWithdrawal);
+        }
     }
 
     public int meanLvl() {
