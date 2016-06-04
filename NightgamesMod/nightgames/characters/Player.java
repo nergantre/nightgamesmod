@@ -890,4 +890,11 @@ public class Player extends Character {
         }
     }
 
+    public Severity getAddictionSeverity(AddictionType type) {
+        if (hasAddiction(type)) {
+            return getAddiction(type).getSeverity();
+        }
+        return Severity.NONE;
+    }
+
 }

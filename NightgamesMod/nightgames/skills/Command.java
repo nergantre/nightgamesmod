@@ -346,7 +346,7 @@ public class Command extends Skill {
                                                 + " almost religious zeal. At the same time, you cannot contain your lust"
                                                 + " and simply must play with yourself.", getSelf().name(),
                                 getSelf().possessivePronoun(), getSelf().pronoun(), getSelf().possessivePronoun(),
-                                target.body.getRandomCock().describe(target)));
+                                getSelf().body.getRandomCock().describe(target)));
                 getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandomCock(),
                                 10 + Global.random(8), c);
                 if (target.hasDick())

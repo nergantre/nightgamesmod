@@ -71,6 +71,9 @@ public class Outfit {
 
     public Clothing getTopOfSlot(ClothingSlot slot, int highestLayer) {
         List<Clothing> list = outfit.get(slot);
+        if (list == null) {
+            return null;
+        }
         for (int i = highestLayer; i >= 0; i--) {
             if (list.get(i) != null) {
                 return list.get(i);
@@ -86,6 +89,9 @@ public class Outfit {
 
     public Clothing getBottomOfSlot(ClothingSlot slot) {
         List<Clothing> list = outfit.get(slot);
+        if (list == null) {
+            return null;
+        }
         for (int i = 0; i < Clothing.N_LAYERS; i++) {
             if (list.get(i) != null) {
                 return list.get(i);

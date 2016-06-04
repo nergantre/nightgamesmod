@@ -345,7 +345,8 @@ public class GUI extends JFrame implements Observer {
         malePrefSlider.addChangeListener(e -> Global.setCounter(Flag.malePref, malePrefSlider.getValue()));
 
         // malePrefPanel - options submenu - visible
-        optionsPanel.add(malePrefSlider);
+        // temporarily remove the maleprefslider, as NPCs no longer really use it for anything useful.
+        // optionsPanel.add(malePrefSlider);
         mntmOptions.addActionListener(arg0 -> {
             if (Global.checkFlag(Flag.systemMessages)) {
                 rdMsgOn.setSelected(true);
