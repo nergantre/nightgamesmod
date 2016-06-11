@@ -1525,7 +1525,8 @@ public abstract class Character extends Observable implements Cloneable {
             c.write(this, orgasmLiner);
             c.write(opponent, opponentOrgasmLiner);
         }
-        if (human()) {
+        // TODO: If NPCs are able to acquire long term addictions, replace this check with a call to human().
+        if (this instanceof Player) {
             Player p = (Player) this;
             
             if (p.checkAddiction(AddictionType.CORRUPTION, opponent) 

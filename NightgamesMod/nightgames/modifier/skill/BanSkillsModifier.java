@@ -40,8 +40,10 @@ public class BanSkillsModifier extends SkillModifier implements ModifierComponen
         } else if (obj.containsKey("skills")) {
             List<String> names = JSONUtils.loadStringsFromArr(obj, "skills");
             Skill[] skills = names.stream()
-                            .map(name -> Global.getSkillPool().stream().filter(s -> s.getName().equals(name)).findAny()
-                                            .orElseThrow(() -> new IllegalArgumentException("No such skill: " + name)))
+                            .map(name -> Global.getSkillPool().stream().filter(s -> s.getName().equals(name))
+                                            .findAny().<IllegalArgumentException>orElseThrow(
+                                                            () -> new IllegalArgumentException(
+                                                                            "No such skill: " + name)))
                             .toArray(Skill[]::new);
             return new BanSkillsModifier(skills);
         }
