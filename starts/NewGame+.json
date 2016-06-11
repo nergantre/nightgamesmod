@@ -8,7 +8,7 @@
 			"Seduction":5,
 			"Cunning":5
 		},
-		"attribute_points": 20
+		"attribute_points": 20,
 		"money": 15000,
 		"traits": [
 			"pussyhandler",
@@ -20,7 +20,7 @@
 	},
 	"npcs": [
 		{
-			"type":"Airi"
+			"type":"Airi",
 			"attributes": {
 				"Power": 6,
 				"Seduction": 17,
@@ -42,7 +42,7 @@
 			]
 		},
 		{
-			"type":"Angel"
+			"type":"Angel",
 			"attributes": {
 				"Power": 13,
 				"Seduction": 20,
@@ -67,7 +67,7 @@
 			]
 		},
 		{
-			"type":"Cassie"
+			"type":"Cassie",
 			"attributes": {
 				"Power": 13,
 				"Seduction": 13,
@@ -93,7 +93,7 @@
 			]
 		},
 		{
-			"type":"Eve"
+			"type":"Eve",
 			"attributes": {
 				"Power": 12,
 				"Seduction": 13,
@@ -110,7 +110,7 @@
 					"pussy":"normal"
 				},
 				"breasts":"d"
-			}
+			},
 			"traits": [
 				"exhibitionist",
 				"insatiable",
@@ -127,7 +127,7 @@
 			]
 		},
 		{
-			"type":"Jewel"
+			"type":"Jewel",
 			"attributes": {
 				"Power": 20,
 				"Seduction": 10,
@@ -152,7 +152,7 @@
 			]
 		},
 		{
-			"type":"Kat"
+			"type":"Kat",
 			"attributes": {
 				"Power": 10,
 				"Seduction": 7,
@@ -179,7 +179,7 @@
 			]
 		},
 		{
-			"type":"Mara"
+			"type":"Mara",
 			"attributes": {
 				"Power": 10,
 				"Seduction": 10,
@@ -207,12 +207,12 @@
 			]
 		},
 		{
-			"type":"Reyka"
+			"type":"Reyka",
 			"attributes": {
 				"Power": 5,
 				"Seduction": 14,
 				"Cunning": 7,
-				"Dark": 5,
+				"Dark": 5
 			},
 			"body": {
 				"archetype":"DEMON"

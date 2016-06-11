@@ -8,7 +8,7 @@
 			"Seduction":5,
 			"Cunning":5
 		},
-		"attribute_points": 20
+		"attribute_points": 20,
 		"money": 15000,
 		"traits": [
 			"pussyhandler",
@@ -20,7 +20,7 @@
 	},
 	"npcs": [
 		{
-			"type":"Angel"
+			"type":"Angel",
 			"attributes": {
 				"Power": 10,
 				"Seduction": 15,
@@ -45,7 +45,7 @@
 			]
 		},
 		{
-			"type":"Cassie"
+			"type":"Cassie",
 			"attributes": {
 				"Power": 10,
 				"Seduction": 10,
@@ -73,7 +73,7 @@
 			]
 		},
 		{
-			"type":"Eve"
+			"type":"Eve",
 			"attributes": {
 				"Power": 10,
 				"Seduction": 13,
@@ -84,7 +84,7 @@
 			},
 			"body": {
 				"gender":"herm",
-				"archetype":"DEMON"
+				"archetype":"DEMON",
 				"genitals": {
 					"cock": {
 						"length":"big"
@@ -92,7 +92,7 @@
 					"pussy":"normal"
 				},
 				"breasts":"d"
-			}
+			},
 			"traits": [
 				"succubus",
 				"exhibitionist",
@@ -110,7 +110,7 @@
 			]
 		},
 		{
-			"type":"Jewel"
+			"type":"Jewel",
 			"attributes": {
 				"Power": 15,
 				"Seduction": 10,
@@ -137,7 +137,7 @@
 			]
 		},
 		{
-			"type":"Mara"
+			"type":"Mara",
 			"attributes": {
 				"Power": 10,
 				"Seduction": 10,
@@ -167,12 +167,12 @@
 			]
 		},
 		{
-			"type":"Reyka"
+			"type":"Reyka",
 			"attributes": {
 				"Power": 5,
 				"Seduction": 14,
 				"Cunning": 7,
-				"Dark": 15,
+				"Dark": 15
 			},
 			"body": {
 				"archetype":"DEMON"
