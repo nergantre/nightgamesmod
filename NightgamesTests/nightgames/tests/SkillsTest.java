@@ -59,7 +59,7 @@ public class SkillsTest {
 	@Before
 	public void prepare() throws ParseException, IOException {
 		new Global(true);
-		Global.newGame(new Player("Dummy"));
+		Global.newGame("Dummy");
 		npcs1 = new ArrayList<Personality>();
 		npcs2 = new ArrayList<Personality>();
 		try {
