@@ -21,6 +21,7 @@
 	"npcs": [
 		{
 			"type":"Angel",
+			"start":true,
 			"attributes": {
 				"Power": 10,
 				"Seduction": 15,
@@ -46,6 +47,7 @@
 		},
 		{
 			"type":"Cassie",
+			"start":true,
 			"attributes": {
 				"Power": 10,
 				"Seduction": 10,
@@ -74,6 +76,7 @@
 		},
 		{
 			"type":"Eve",
+			"start":true,
 			"attributes": {
 				"Power": 10,
 				"Seduction": 13,
@@ -111,6 +114,7 @@
 		},
 		{
 			"type":"Jewel",
+			"start":true,
 			"attributes": {
 				"Power": 15,
 				"Seduction": 10,
@@ -138,6 +142,7 @@
 		},
 		{
 			"type":"Mara",
+			"start":true,
 			"attributes": {
 				"Power": 10,
 				"Seduction": 10,
@@ -168,6 +173,7 @@
 		},
 		{
 			"type":"Reyka",
+			"start":true,
 			"attributes": {
 				"Power": 5,
 				"Seduction": 14,

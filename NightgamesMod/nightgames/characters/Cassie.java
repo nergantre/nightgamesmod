@@ -35,6 +35,7 @@ public class Cassie extends BasePersonality {
     }
 
     protected void applyBasicStats() {
+        character.isStartCharacter = true;
         preferredCockMod = CockMod.runic;
         character.outfitPlan.add(Clothing.getByID("bra"));
         character.outfitPlan.add(Clothing.getByID("blouse"));

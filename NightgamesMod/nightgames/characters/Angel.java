@@ -29,6 +29,7 @@ public class Angel extends BasePersonality {
     }
 
     protected void applyBasicStats() {
+        character.isStartCharacter = true;
         preferredCockMod = CockMod.blessed;
         character.outfitPlan.add(Clothing.getByID("Tshirt"));
         character.outfitPlan.add(Clothing.getByID("bra"));

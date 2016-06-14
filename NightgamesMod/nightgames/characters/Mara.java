@@ -31,6 +31,7 @@ public class Mara extends BasePersonality {
     }
 
     protected void applyBasicStats() {
+        character.isStartCharacter = true;
         preferredCockMod = CockMod.bionic;
         character.outfitPlan.add(Clothing.getByID("bra"));
         character.outfitPlan.add(Clothing.getByID("Tshirt"));

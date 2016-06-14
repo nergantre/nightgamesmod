@@ -219,6 +219,8 @@ public class Global {
         Clothing.buildClothingTable();
         learnSkills(human);
         rebuildCharacterPool(config);
+        // Add starting characters to players
+        players.addAll(characterPool.values().stream().filter(npc -> npc.isStartCharacter).collect(Collectors.toList()));
         if (!cfgFlags.isEmpty()) {
             flags.clear();
             cfgFlags.stream().map(Flag::name).forEach(flags::add);

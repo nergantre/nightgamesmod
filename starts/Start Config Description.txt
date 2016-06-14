@@ -22,6 +22,7 @@ player: (All elements are optional)
 npcs: List of objects (at least 1) of the following format:
 	type (mandatory)The NPC's type. No more than 1 NPC of each type may be specified.
 	name			The NPC's name. Defaults to the type's standard name.
+	start           Whether the NPC is available at the start of the game. Defaults to false.
 	<all elements from player, except trait_choice. Gender instead defaults to female>
 	
 all_npcs:

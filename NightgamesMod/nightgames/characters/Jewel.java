@@ -31,6 +31,7 @@ public class Jewel extends BasePersonality {
     }
 
     protected void applyBasicStats() {
+        character.isStartCharacter = true;
         preferredCockMod = CockMod.enlightened;
         character.outfitPlan.add(Clothing.getByID("bra"));
         character.outfitPlan.add(Clothing.getByID("tanktop"));

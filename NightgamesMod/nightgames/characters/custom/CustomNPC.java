@@ -32,6 +32,7 @@ public class CustomNPC extends BasePersonality {
     public CustomNPC(NPCData data, Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
         // Make the built-in character
         character = new NPC(data.getName(), data.getStats().level, this);
+        this.data = data;
         applyBasicStats();
         growth = new Growth();
         preferredCockMod = CockMod.error;
@@ -48,6 +49,7 @@ public class CustomNPC extends BasePersonality {
     protected void applyBasicStats() {
         preferredAttributes = new ArrayList<PreferredAttribute>(data.getPreferredAttributes());
 
+        character.isStartCharacter = data.isStartCharacter();
         character.outfitPlan.addAll(data.getTopOutfit());
         character.outfitPlan.addAll(data.getBottomOutfit());
         character.closet.addAll(character.outfitPlan);
