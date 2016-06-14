@@ -1,14 +1,21 @@
 package nightgames.global;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.json.simple.parser.ParseException;
 
 public class JSONUtils {
     public static int readInteger(JSONObject struct, String key) {
@@ -65,5 +72,22 @@ public class JSONUtils {
             }
         }
         return res;
+    }
+
+    public static JSONObject rootFromFile(Path path) {
+        JSONObject root;
+        try (Reader read = Files.newBufferedReader(path)) {
+            root = (JSONObject) JSONValue.parseWithException(read);
+        } catch (IOException|ParseException e) {
+            throw new RuntimeException("Error reading JSON file.");
+        }
+
+        return root;
+    }
+
+    public static <T> Optional<T> getIfExists(JSONObject obj, String key, Function<Object, T> f) {
+        if (!obj.containsKey(key))
+            return Optional.empty();
+        return Optional.ofNullable(f.apply(obj.get(key)));
     }
 }

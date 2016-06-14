@@ -3,24 +3,13 @@ package nightgames.tests;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import nightgames.areas.Area;
-import nightgames.characters.Attribute;
-import nightgames.characters.BasePersonality;
+import nightgames.characters.*;
 import nightgames.characters.Character;
-import nightgames.characters.Eve;
-import nightgames.characters.Kat;
-import nightgames.characters.NPC;
-import nightgames.characters.Personality;
-import nightgames.characters.Player;
-import nightgames.characters.Reyka;
 import nightgames.combat.Combat;
 import nightgames.daytime.Daytime;
 import nightgames.global.DebugFlags;
@@ -120,7 +109,7 @@ public class CombatStats {
 
     public static void main(String[] args) {
         new Global(true);
-        Global.newGame(new Player("Dummy"));
+        Global.newGame("Dummy");
         Setup s1 = new Setup(1);
         // new CombatStats(s1).test();
 

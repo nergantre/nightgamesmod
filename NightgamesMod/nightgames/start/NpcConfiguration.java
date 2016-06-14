@@ -1,45 +1,30 @@
 package nightgames.start;
 
-import java.util.Map;
-import java.util.Optional;
-
+import nightgames.global.JSONUtils;
 import org.json.simple.JSONObject;
 
 import nightgames.characters.NPC;
-import nightgames.characters.Personality;
 
-class NpcConfiguration extends CharacterConfiguration {
+import java.util.Optional;
 
-    private Optional<String> type;
+public class NpcConfiguration extends CharacterConfiguration {
 
-    private NpcConfiguration() {
-        type = Optional.empty();
-    }
+    // Optional because NpcConfiguration is used for both NPCs and adjustments common to all NPCs
+    protected String type;
 
-    NPC build(Optional<NpcConfiguration> common) {
-        if (!type.isPresent() && common.isPresent()) {
-            throw new IllegalStateException("No type for npc");
-        } else if (!common.isPresent()) {
-            throw new UnsupportedOperationException("Tried to build NPC from all_npcs configuration");
+    public final void apply(NPC base) {
+        super.apply(base);
+        if (gender.isPresent()) {
+            base.initialGender = gender.get();
         }
-        Personality pers = Personality.getByType(type.get());
-        NPC npc;
-        pers.setCharacter(npc = new NPC(name.orElse(type.get()), level, pers));
-        if (common.isPresent()) {
-           common.get().processCommon(npc);
-        }
-        processCommon(npc);
-        return npc;
     }
 
     public static NpcConfiguration parse(JSONObject obj) {
         NpcConfiguration cfg = new NpcConfiguration();
         cfg.parseCommon(obj);
-        cfg.type = getIfExists(obj, "type", Object::toString);
-        /*if (!cfg.type.isPresent()) {
-            throw new RuntimeException("Error: Tried to specify an NPC without a type! (" + cfg.name.orElse("no name") + ")");
-        }*/
+        cfg.type = JSONUtils.getIfExists(obj, "type", Object::toString)
+                        .orElseThrow(() -> new RuntimeException("Tried parsing NPC without a type."));
+
         return cfg;
     }
-
 }

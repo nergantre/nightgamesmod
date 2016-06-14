@@ -23,6 +23,7 @@ import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.skills.Skill;
+import nightgames.start.NpcConfiguration;
 
 public abstract class BasePersonality implements Personality {
     /**
@@ -40,20 +41,46 @@ public abstract class BasePersonality implements Personality {
         Optional<Attribute> getPreferred(Character c);
     }
 
-    public BasePersonality(String name, int level) {
+    protected BasePersonality() {
+    }
+
+    public BasePersonality(String name, int level, Optional<NpcConfiguration> charConfig,
+                    Optional<NpcConfiguration> commonConfig) {
+        // Make the built-in character
         type = getClass().getSimpleName();
-        this.character = new NPC(name, level, this);
+        character = new NPC(name, level, this);
+        applyBasicStats();
         growth = new Growth();
         preferredCockMod = CockMod.error;
         preferredAttributes = new ArrayList<PreferredAttribute>();
         setGrowth();
+
+        // Apply config changes
+        applyConfigStats(commonConfig);
+        applyConfigStats(charConfig);
+
+        character.body.finishBody(character.initialGender);
+    }
+
+    /**
+     * Apply built-in character stats. Can be later overridden by StartConfiguration.
+     */
+    // TODO: Make this data-driven, like with custom NPCs.
+    protected abstract void applyBasicStats();
+
+    /**
+     * Apply character stats overrides from StartConfiguration.
+     * @param cfg NpcConfiguration extracted from a StartConfiguration.
+     */
+    protected void applyConfigStats(Optional<NpcConfiguration> cfg) {
+        cfg.ifPresent(c -> c.apply(character));
     }
     
     public void setCharacter(NPC c) {
         this.character = c;
     }
 
-    public void setGrowth() {}
+    abstract public void setGrowth();
 
     @Override
     public void rest(int time) {

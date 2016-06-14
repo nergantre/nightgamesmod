@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -189,7 +190,7 @@ public final class CustomModifierLoader {
         Global.buildParser();
         Global.buildModifierPool();
         Global.buildActionPool();
-        Global.buildSkillPool(new Player("player", CharacterSex.male));
+        Global.buildSkillPool(new Player("player"));
         Modifier mod = readModifier(obj);
         System.out.println(mod);
     }

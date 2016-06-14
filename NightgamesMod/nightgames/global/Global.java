@@ -34,6 +34,11 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import nightgames.characters.*;
+import nightgames.characters.Character;
+import nightgames.characters.custom.NPCData;
+import nightgames.start.NpcConfiguration;
+import nightgames.start.PlayerConfiguration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -63,23 +68,6 @@ import nightgames.actions.Use;
 import nightgames.actions.Wait;
 import nightgames.areas.Area;
 import nightgames.areas.MapDrawHint;
-import nightgames.characters.Airi;
-import nightgames.characters.Angel;
-import nightgames.characters.Attribute;
-import nightgames.characters.Cassie;
-import nightgames.characters.Character;
-import nightgames.characters.CharacterSex;
-import nightgames.characters.Eve;
-import nightgames.characters.Jewel;
-import nightgames.characters.Kat;
-import nightgames.characters.Mara;
-import nightgames.characters.Maya;
-import nightgames.characters.NPC;
-import nightgames.characters.Personality;
-import nightgames.characters.Player;
-import nightgames.characters.Reyka;
-import nightgames.characters.Trait;
-import nightgames.characters.TraitTree;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.StraponPart;
 import nightgames.characters.custom.CustomNPC;
@@ -209,39 +197,28 @@ public class Global {
         return debug[flag.ordinal()] && debugSimulation == 0;
     }
 
-    public static void newGame(Player one) {
-        human = one;
-        players.add(human);
-        if (gui != null) {
-            gui.populatePlayer(human);
-        }
-        buildSkillPool(human);
-        Clothing.buildClothingTable();
-        Global.learnSkills(human);
-        rebuildCharacterPool();
-        date = 0;
-        flag(Flag.systemMessages);
-        players.add(getNPC("Jewel"));
-        players.add(getNPC("Cassie"));
-        players.add(getNPC("Angel"));
-        players.add(getNPC("Mara"));
-        match = new Match(players, new NoModifier());
+    // Convenience method for easy game starts.
+    public static void newGame(String playerName) {
+        Map<Attribute, Integer> att = new HashMap<>();
+        att.put(Attribute.Power, 5);
+        att.put(Attribute.Seduction, 5);
+        att.put(Attribute.Cunning, 5);
+        newGame(playerName, Optional.empty(), new ArrayList<Trait>(), CharacterSex.male, att);
     }
-    
-    public static void configuredNewGame(StartConfiguration cfg, String playerName,
-                    List<Trait> pickedTraits, CharacterSex pickedGender) {
-        human = cfg.buildPlayer(playerName, pickedTraits, pickedGender);
+
+    public static void newGame(String playerName, Optional<StartConfiguration> config, List<Trait> pickedTraits,
+                    CharacterSex pickedGender, Map<Attribute, Integer> selectedAttributes) {
+        Optional<PlayerConfiguration> playerConfig;
+        playerConfig = config.isPresent() ? Optional.of(config.get().player) : Optional.empty();
+        List<Flag> cfgFlags = config.isPresent() ? config.get().getFlags() : new ArrayList<>();
+        human = new Player(playerName, pickedGender, playerConfig, selectedAttributes);
         players.add(human);
         if (gui != null)
             gui.populatePlayer(human);
         buildSkillPool(human);
         Clothing.buildClothingTable();
         learnSkills(human);
-        rebuildCharacterPool();
-        List<NPC> npcs = cfg.buildNpcs();
-        npcs.forEach(n -> characterPool.put(n.getType(), n));
-        players.addAll(npcs);
-        List<Flag> cfgFlags = cfg.getFlags();
+        rebuildCharacterPool(config);
         if (!cfgFlags.isEmpty()) {
             flags.clear();
             cfgFlags.stream().map(Flag::name).forEach(flags::add);
@@ -1022,8 +999,14 @@ public class Global {
         }
     }
 
-    public static void rebuildCharacterPool() {
+    private static Optional<NpcConfiguration> findNpcConfig(String type, Optional<StartConfiguration> startConfig) {
+        return startConfig.isPresent() ? startConfig.get().findNpcConfig(type) : Optional.empty();
+    }
+
+    public static void rebuildCharacterPool(Optional<StartConfiguration> startConfig) {
         characterPool = new HashMap<>();
+        Optional<NpcConfiguration> commonConfig =
+                        startConfig.isPresent() ? Optional.of(startConfig.get().npcCommon) : Optional.empty();
 
         try {
             JSONArray characterSet = (JSONArray) JSONValue.parseWithException(
@@ -1031,8 +1014,10 @@ public class Global {
             for (Object obj : characterSet) {
                 String name = (String) obj;
                 try {
-                    Personality npc = new CustomNPC(JSONSourceNPCDataLoader
-                                    .load(ResourceLoader.getFileResourceAsStream("characters/" + name)));
+                    NPCData data = JSONSourceNPCDataLoader
+                                    .load(ResourceLoader.getFileResourceAsStream("characters/" + name));
+                    Optional<NpcConfiguration> npcConfig = findNpcConfig(CustomNPC.TYPE_PREFIX, startConfig);
+                    Personality npc = new CustomNPC(data, npcConfig, commonConfig);
                     characterPool.put(npc.getCharacter().getType(), npc.getCharacter());
                     System.out.println("Loaded " + name);
                 } catch (ParseException | IOException e1) {
@@ -1045,15 +1030,16 @@ public class Global {
             e1.printStackTrace();
         }
 
-        Personality cassie = new Cassie();
-        Personality angel = new Angel();
-        Personality reyka = new Reyka();
-        Personality kat = new Kat();
-        Personality mara = new Mara();
-        Personality jewel = new Jewel();
-        Personality airi = new Airi();
-        Personality eve = new Eve();
-        Personality maya = new Maya(1);
+        // TODO: Refactor into function and unify with CustomNPC handling.
+        Personality cassie = new Cassie(findNpcConfig("Cassie", startConfig), commonConfig);
+        Personality angel = new Angel(findNpcConfig("Angel", startConfig), commonConfig);
+        Personality reyka = new Reyka(findNpcConfig("Reyka", startConfig), commonConfig);
+        Personality kat = new Kat(findNpcConfig("Kat", startConfig), commonConfig);
+        Personality mara = new Mara(findNpcConfig("Mara", startConfig), commonConfig);
+        Personality jewel = new Jewel(findNpcConfig("Jewel", startConfig), commonConfig);
+        Personality airi = new Airi(findNpcConfig("Airi", startConfig), commonConfig);
+        Personality eve = new Eve(findNpcConfig("Eve", startConfig), commonConfig);
+        Personality maya = new Maya(1, findNpcConfig("Maya", startConfig), commonConfig);
         characterPool.put(cassie.getCharacter().getType(), cassie.getCharacter());
         characterPool.put(angel.getCharacter().getType(), angel.getCharacter());
         characterPool.put(reyka.getCharacter().getType(), reyka.getCharacter());
@@ -1083,7 +1069,7 @@ public class Global {
         gui.purgePlayer();
         buildSkillPool(human);
         Clothing.buildClothingTable();
-        rebuildCharacterPool();
+        rebuildCharacterPool(Optional.empty());
 
         boolean dawn = false;
         try {

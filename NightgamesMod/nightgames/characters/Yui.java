@@ -1,6 +1,7 @@
 package nightgames.characters;
 
 import java.util.HashSet;
+import java.util.Optional;
 
 import nightgames.actions.Action;
 import nightgames.actions.Movement;
@@ -10,10 +11,18 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.start.NpcConfiguration;
 
 public class Yui extends BasePersonality {
     public Yui() {
-        super("Yui", 1);
+        this(Optional.empty(), Optional.empty());
+    }
+
+    public Yui(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
+        super("Yui", 1, charConfig, commonConfig);
+    }
+
+    protected void applyBasicStats() {
         character.outfitPlan.add(Clothing.getByID("bra"));
         character.outfitPlan.add(Clothing.getByID("Tshirt"));
         character.outfitPlan.add(Clothing.getByID("panties"));
@@ -24,7 +33,11 @@ public class Yui extends BasePersonality {
         character.mood = Emotion.confident;
         character.body.add(BreastsPart.c);
         character.body.add(PussyPart.normal);
-        character.body.finishBody(CharacterSex.female);
+        character.initialGender = CharacterSex.female;
+    }
+
+    public void setGrowth() {
+        // TODO method stub
     }
 
     /**

@@ -14,6 +14,7 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.skills.Skill;
+import nightgames.start.NpcConfiguration;
 import nightgames.status.SlimeMimicry;
 import nightgames.status.Stsflag;
 
@@ -24,7 +25,15 @@ public class Airi extends BasePersonality {
     private static final long serialVersionUID = -8169646189131720872L;
 
     public Airi() {
-        super("Airi", 10);
+        this(Optional.empty(), Optional.empty());
+    }
+
+    public Airi(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
+        super("Airi", 10, charConfig, commonConfig);
+
+    }
+
+    @Override protected void applyBasicStats() {
         character.change();
         character.setTrophy(Item.AiriTrophy);
         preferredCockMod = CockMod.slimy;
@@ -55,7 +64,7 @@ public class Airi extends BasePersonality {
         character.mood = Emotion.confident;
         character.body.add(BreastsPart.b);
         character.body.add(PussyPart.normal);
-        character.body.finishBody(CharacterSex.female);
+        character.initialGender = CharacterSex.female;
     }
 
     @Override

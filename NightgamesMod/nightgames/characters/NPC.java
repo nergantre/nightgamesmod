@@ -59,6 +59,7 @@ public class NPC extends Character {
             emotes.put(e, 0);
         }
         mood = Emotion.confident;
+        initialGender = CharacterSex.female;
     }
 
     @Override

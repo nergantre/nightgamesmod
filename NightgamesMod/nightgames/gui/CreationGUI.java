@@ -8,12 +8,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
@@ -31,7 +26,6 @@ import javax.swing.ScrollPaneConstants;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.CharacterSex;
-import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.global.Flag;
 import nightgames.global.Global;
@@ -120,27 +114,7 @@ public class CreationGUI extends JPanel {
         btnStart = new JButton("Start");
         btnStart.setFont(new Font("Verdana", Font.BOLD, 12));
         topPanel.add(btnStart);
-        btnStart.addActionListener(arg0 -> {
-            if (!namefield.getText()
-                          .isEmpty()) {
-                String name = namefield.getText();
-                CharacterSex sex = (CharacterSex) sexBox.getSelectedItem();
-                Player one = new Player(name, sex);
-                one.set(Attribute.Power, power);
-                one.set(Attribute.Seduction, seduction);
-                one.set(Attribute.Cunning, cunning);
-                one.add((Trait) StrengthBox.getSelectedItem());
-                one.add((Trait) WeaknessBox.getSelectedItem());
-                if (rdbtnDumb.isSelected()) {
-                    Global.flag(Flag.dumbmode);
-                }
-                if (rdbtnHard.isSelected()) {
-                    Global.flag(Flag.hardmode);
-                }
-                Global.newGame(one);
-                Global.startMatch();
-            }
-        });
+        btnStart.addActionListener(e -> makeGame());
 
         btnAdvStart = new JButton("Advanced Start");
         btnAdvStart.setFont(new Font("Verdana", Font.BOLD, 12));
@@ -464,21 +438,44 @@ public class CreationGUI extends JPanel {
         configs.addItemListener(e -> setupConfig((StartConfiguration) e.getItem()));
         Arrays.stream(btnStart.getActionListeners())
               .forEach(btnStart::removeActionListener);
-        btnStart.addActionListener(e -> {
-            if (!namefield.getText()
-                          .isEmpty()) {
-                String name = namefield.getText();
-                CharacterSex sex = (CharacterSex) sexBox.getSelectedItem();
-                StartConfiguration cfg = (StartConfiguration) configs.getSelectedItem();
-                List<Trait> traits =
-                                cfg.playerCanChooseTraits()
-                                                ? Arrays.asList((Trait) StrengthBox.getSelectedItem(),
-                                                                (Trait) WeaknessBox.getSelectedItem())
-                                                : Collections.emptyList();
-                Global.configuredNewGame(cfg, name, traits, sex);
-                Global.startMatch();
+        btnStart.addActionListener(e -> makeGame(Optional.of((StartConfiguration) configs.getSelectedItem())));
+    }
+
+    private void makeGame() {
+        makeGame(Optional.empty());
+    }
+
+    private boolean playerCanChooseTraits(Optional<StartConfiguration> startConfig) {
+        boolean allowed = true;
+        if (startConfig.isPresent()) {
+            allowed = startConfig.get().playerCanChooseTraits();
+        }
+        return allowed;
+    }
+
+
+    private void makeGame(Optional<StartConfiguration> startConfig) {
+        if (!namefield.getText()
+                        .isEmpty()) {
+            String name = namefield.getText();
+            CharacterSex sex = (CharacterSex) sexBox.getSelectedItem();
+            List<Trait> traits = Collections.emptyList();
+            if (playerCanChooseTraits(startConfig)) {
+                traits = Arrays.asList((Trait) StrengthBox.getSelectedItem(), (Trait) WeaknessBox.getSelectedItem());
             }
-        });
+            if (rdbtnDumb.isSelected()) {
+                Global.flag(Flag.dumbmode);
+            }
+            if (rdbtnHard.isSelected()) {
+                Global.flag(Flag.hardmode);
+            }
+            Map<Attribute, Integer> selectedAttributes = new HashMap<Attribute, Integer>();
+            selectedAttributes.put(Attribute.Power, power);
+            selectedAttributes.put(Attribute.Seduction, seduction);
+            selectedAttributes.put(Attribute.Cunning, cunning);
+            Global.newGame(name, startConfig, traits, sex, selectedAttributes);
+            Global.startMatch();
+        }
     }
 
     private void setupConfig(StartConfiguration cfg) {

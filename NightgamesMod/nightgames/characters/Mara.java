@@ -12,6 +12,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.start.NpcConfiguration;
 import nightgames.status.Hypersensitive;
 import nightgames.status.Oiled;
 
@@ -22,7 +23,14 @@ public class Mara extends BasePersonality {
     private static final long serialVersionUID = -3812726803607189573L;
 
     public Mara() {
-        super("Mara", 1);
+        this(Optional.empty(), Optional.empty());
+    }
+
+    public Mara(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
+        super("Mara", 1, charConfig, commonConfig);
+    }
+
+    protected void applyBasicStats() {
         preferredCockMod = CockMod.bionic;
         character.outfitPlan.add(Clothing.getByID("bra"));
         character.outfitPlan.add(Clothing.getByID("Tshirt"));
@@ -43,7 +51,7 @@ public class Mara extends BasePersonality {
         character.body.add(BreastsPart.b);
         character.body.add(PussyPart.normal);
         character.body.add(new FacePart(.1, 1.1));
-        character.body.finishBody(CharacterSex.female);
+        character.initialGender = CharacterSex.female;
     }
 
     @Override

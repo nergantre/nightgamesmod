@@ -12,6 +12,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.start.NpcConfiguration;
 
 public class Eve extends BasePersonality {
     /**
@@ -20,8 +21,14 @@ public class Eve extends BasePersonality {
     private static final long serialVersionUID = -8169646189131720872L;
 
     public Eve() {
-        super("Eve", 10);
+        this(Optional.empty(), Optional.empty());
+    }
 
+    public Eve(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
+        super("Eve", 10, charConfig, commonConfig);
+    }
+
+    protected void applyBasicStats() {
         character.outfitPlan.add(Clothing.getByID("tanktop"));
         character.outfitPlan.add(Clothing.getByID("crotchlesspanties"));
         character.outfitPlan.add(Clothing.getByID("jeans"));
@@ -48,7 +55,7 @@ public class Eve extends BasePersonality {
         character.body.add(PussyPart.normal);
         // somewhat androgynous face
         character.body.add(new FacePart(.1, .9));
-        character.body.finishBody(CharacterSex.herm);
+        character.initialGender = CharacterSex.herm;
         preferredCockMod = CockMod.primal;
     }
 

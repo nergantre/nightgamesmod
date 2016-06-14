@@ -1,33 +1,18 @@
 package nightgames.start;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
+import nightgames.characters.CharacterSex;
+import nightgames.characters.body.*;
+import nightgames.global.JSONUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-import nightgames.characters.CharacterSex;
-import nightgames.characters.body.AnalPussyPart;
-import nightgames.characters.body.AssPart;
-import nightgames.characters.body.BasicCockPart;
-import nightgames.characters.body.Body;
-import nightgames.characters.body.BodyPart;
-import nightgames.characters.body.BreastsPart;
-import nightgames.characters.body.CockMod;
-import nightgames.characters.body.CockPart;
-import nightgames.characters.body.EarPart;
-import nightgames.characters.body.ModdedCockPart;
-import nightgames.characters.body.PussyPart;
-import nightgames.characters.body.TailPart;
-import nightgames.characters.body.TentaclePart;
-import nightgames.characters.body.WingsPart;
-import nightgames.global.JSONUtils;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 class BodyConfiguration {
 
-    private Optional<CharacterSex> gender;
     private Archetype type;
     private Optional<GenitalConfiguration> genitals;
     private Optional<BreastsPart> breasts;
@@ -38,8 +23,7 @@ class BodyConfiguration {
     private List<TentaclePart> tentacles;
     private double hotness;
 
-    BodyConfiguration(Optional<CharacterSex> optGender) {
-        gender = optGender;
+    BodyConfiguration() {
         type = Archetype.REGULAR;
         genitals = Optional.empty();
         breasts = Optional.empty();
@@ -48,17 +32,15 @@ class BodyConfiguration {
         tail = Optional.empty();
         wings = Optional.empty();
         tentacles = new ArrayList<>();
+        // TODO: This overwrites base character hotness if not specified in the StartConfiguration.
         hotness = 1.0;
     }
 
-    static BodyConfiguration parse(JSONObject obj, Optional<CharacterSex> gender) {
-        BodyConfiguration cfg = new BodyConfiguration(gender);
+    static BodyConfiguration parse(JSONObject obj) {
+        BodyConfiguration cfg = new BodyConfiguration();
         if (obj.containsKey("archetype"))
             cfg.type = Archetype.valueOf(JSONUtils.readString(obj, "archetype")
                                                   .toUpperCase());
-        if (obj.containsKey("gender"))
-            cfg.gender = Optional.of(CharacterSex.valueOf(JSONUtils.readString(obj, "gender")
-                                                                   .toLowerCase()));
         if (obj.containsKey("breasts"))
             cfg.breasts = Optional.of(BreastsPart.valueOf(JSONUtils.readString(obj, "breasts")
                                                                    .toLowerCase()));
@@ -101,10 +83,8 @@ class BodyConfiguration {
         return new TentaclePart(desc, attachpoint, fluids, hotness, pleasure, sensitivity);
     }
 
-    Body build() {
-        CharacterSex gender = this.gender.orElse(CharacterSex.female);
-        Body body = type.buildBase(gender);
-        genitals.ifPresent(gc -> gc.process(body));
+    void apply(Body body) {
+/**/        genitals.ifPresent(gc -> gc.process(body));
         replaceIfPresent(body, breasts);
         replaceIfPresent(body, ass);
         replaceIfPresent(body, ears);
@@ -112,7 +92,6 @@ class BodyConfiguration {
         replaceIfPresent(body, wings);
         tentacles.forEach(body::add);
         body.hotness = hotness;
-        return body;
     }
 
     private void replaceIfPresent(Body body, Optional<? extends BodyPart> part) {
@@ -128,7 +107,6 @@ class BodyConfiguration {
         result = prime * result + ((ass == null) ? 0 : ass.hashCode());
         result = prime * result + ((breasts == null) ? 0 : breasts.hashCode());
         result = prime * result + ((ears == null) ? 0 : ears.hashCode());
-        result = prime * result + ((gender == null) ? 0 : gender.hashCode());
         result = prime * result + ((genitals == null) ? 0 : genitals.hashCode());
         long temp;
         temp = Double.doubleToLongBits(hotness);
@@ -164,11 +142,6 @@ class BodyConfiguration {
             if (other.ears != null)
                 return false;
         } else if (!ears.equals(other.ears))
-            return false;
-        if (gender == null) {
-            if (other.gender != null)
-                return false;
-        } else if (!gender.equals(other.gender))
             return false;
         if (genitals == null) {
             if (other.genitals != null)
@@ -269,9 +242,7 @@ class BodyConfiguration {
             this.pussy = pussy;
         }
 
-        private Body buildBase(CharacterSex gender) {
-            Body body = new Body();
-            body.finishBody(gender);
+        private void apply(Body body) {
             if (body.has("cock") && this != REGULAR)
                 body.addReplace(new ModdedCockPart(BasicCockPart.average, cockMod), 1);
             if (body.has("pussy") && this != REGULAR)
@@ -292,7 +263,6 @@ class BodyConfiguration {
                 default:
                     break;
             }
-            return body;
         }
     }
 
@@ -300,8 +270,11 @@ class BodyConfiguration {
         String test = "{\"archetype\":\"regular\",\"genitals\":{\"cock\":{\"type\":\"bionic\",\"length\":\"huge"
                         + "\"}},\"breasts\":\"c\",\"ass\":\"AnalPussy\",\"ears\":\"pointed\",\"tail\":\"cat\",\"wings"
                         + "\":\"demonic\",\"tentacles\":[],\"hotness\":1.0}";
-        BodyConfiguration cfg = parse((JSONObject) JSONValue.parse(test), Optional.of(CharacterSex.male));
-        Body body = cfg.build();
+        BodyConfiguration cfg = parse((JSONObject) JSONValue.parse(test));
+        Body body = new Body();
+        cfg.apply(body);
+        body.finishBody(CharacterSex.male);
+
         System.out.println(body);
     }
 }
