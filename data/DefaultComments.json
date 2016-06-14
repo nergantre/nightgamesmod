@@ -246,10 +246,10 @@
 			},{
 				"situation": "SIXTYNINE_DOM_WIN",
 				"comment":"Come on {other:name}! Try a little harder down there!"
-			},
+			}
 		]
 	},{
-		"characters":"Reyka"
+		"characters":"Reyka",
 		"comments": [
 		{
 				"situation": "VAG_DOM_CATCH_WIN",
@@ -290,7 +290,7 @@
 			}
 		]
 	},{
-		"characters":"Airi"
+		"characters":"Airi",
 		"comments": [
 		{
 				"situation": "VAG_DOM_CATCH_WIN",
