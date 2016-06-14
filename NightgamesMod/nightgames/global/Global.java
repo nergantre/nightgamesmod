@@ -1113,11 +1113,7 @@ public class Global {
             date = JSONUtils.readInteger(object, "date");
             String time = JSONUtils.readString(object, "time");
             dawn = time.equals("dawn");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (org.json.simple.parser.ParseException e) {
+        } catch (IOException|org.json.simple.parser.ParseException e) {
             e.printStackTrace();
         }
         gui.populatePlayer(human);
