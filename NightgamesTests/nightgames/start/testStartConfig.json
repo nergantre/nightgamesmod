@@ -24,8 +24,8 @@
 			"attributes": {
 				"Power": 13,
 				"Seduction": 20,
-				"Cunning": 13,
-				"Divinity": 1
+				"Cunning": 15,
+				"Divinity": 10
 			},
 			"body": {
 				"archetype":"ANGEL"
@@ -46,6 +46,15 @@
 		}
 
 	],
-	"all_npcs":{},
+	"all_npcs":{
+		"attributes": {
+			"Cunning": 14,
+			"Arcane": 2
+		},
+		"body": {
+			"archetype": "WITCH"
+		},
+		"xp": 50
+	},
 	"flags":[]
 }

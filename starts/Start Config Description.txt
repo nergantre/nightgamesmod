@@ -17,28 +17,29 @@ player: (All elements are optional)
 	traits			Starting traits. Defaults to an empty list
 	trait_choice    Boolean value. When true, allows the player to pick two starting traits, like normal. If "traits" is specified, these are added to the list. Defaults to true.
 	body			The player's body. If unspecified, defaults to the default body for the player's gender. See below.
-	clothing		The initial clothing. Defaults to standard clothing for the gender.
+	clothing		The initial clothing. Defaults to standard clothing for the character or gender. If set, make sure to specify the complete outfit.
 	
-npcs: List of objects (at least 1) of the following format:
+npcs: List of objects of the following format:
 	type (mandatory)The NPC's type. No more than 1 NPC of each type may be specified.
 	name			The NPC's name. Defaults to the type's standard name.
 	start           Whether the NPC is available at the start of the game. Defaults to false.
 	<all elements from player, except trait_choice. Gender instead defaults to female>
 	
 all_npcs:
+	start           Whether the NPC is available at the start of the game. Defaults to false.
 	<all elements from player, except trait_choice. Gender instead defaults to female>
 	<parameters in all_npcs can be overridden in individual npcs>
 	
 body:
 	<uses the gender's standard body as a base>
-	archetype		One of the advanced classes. This applies things like genital mods, wings, tails and such. Can be overridden by further parameters. Defaults to plain old, pre-lvl10 human. Possible values are regular, succubus, cat, angel, cyborg, witch and slime.
+	archetype		One of the advanced classes. This applies things like genital mods, wings, tails and such. Can be overridden by other body parameters. Possible values are regular, succubus, cat, angel, cyborg, witch and slime. A value of "regular" will reset a character's parts to human.
 	genitals		The body's genitals. If unspecified, use the gender's genitals. If specified, the body will have precisely these genitals, not the default ones.
 	breasts			The breasts. Should be a BreastPart enum constant (a, b, c, d, dd, e, f, g, h, flat). Defaults to flat for male/asex, b for female/herm.
 	ass				The ass. Defaults to the regular ass, the only alternative (currently) is AnalPussy.
 	ears			Defaults to normal, can also be pointed or cat
 	tail			Defaults to none, can also be demonic or cat. (Slimy variations not supported)
 	wings			Defaults to none, can alse be angelic or demonic.
-	tentacles		List of parts to which tentacles should be attached. Defaults to empty. Valid entries are ass, mouth, pussy, hands, feet tail and cock. If you try to hook a tentacle to a part the body doesn't have, that's an error.
+	tentacles		List of parts to which tentacles should be attached. Defaults to empty. Valid entries are ass, mouth, pussy, hands, feet tail and cock. If you try to hook a tentacle to a part the body doesn't have, that's an error. If set, will remove any original tentacles the character had.
 	hotness			Decimal value. Scales temptation damage. Defaults to 1.0	
 
 genitals: (again, both are optional)

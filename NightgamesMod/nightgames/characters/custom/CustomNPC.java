@@ -38,10 +38,11 @@ public class CustomNPC extends BasePersonality {
         preferredCockMod = CockMod.error;
         preferredAttributes = new ArrayList<PreferredAttribute>();
         setGrowth();
+        character.body.makeGenitalOrgans(character.initialGender);
 
         // Apply config changes
-        applyConfigStats(commonConfig);
-        applyConfigStats(charConfig);
+        Optional<NpcConfiguration> mergedConfig = NpcConfiguration.mergeOptionalNpcConfigs(charConfig, commonConfig);
+        mergedConfig.ifPresent(cfg -> cfg.apply(character));
 
         character.body.finishBody(character.initialGender);
     }

@@ -69,19 +69,6 @@ public class StartConfiguration {
         return player.getAttributePoints();
     }
 
-    /**
-     * Sets the configured basic attributes to the specified values. Useful for applying spent attribute points after creation.
-     *
-     * @param power Value to apply to the player's Power attribute.
-     * @param seduction Value to apply to the player's Seduction attribute.
-     * @param cunning Value to apply to the player's Cunning attribute.
-     */
-    public void setPlayerAttributePoints(int power, int seduction, int cunning) {
-        player.attributes.put(Attribute.Power, power);
-        player.attributes.put(Attribute.Seduction, seduction);
-        player.attributes.put(Attribute.Cunning, cunning);
-    }
-    
     public Map<Attribute, Integer> playerAttributes() {
         return new HashMap<>(player.attributes);
     }
@@ -103,8 +90,7 @@ public class StartConfiguration {
         cfg.summary = JSONUtils.readString(root, "summary");
         cfg.enabled = JSONUtils.readBoolean(root, "enabled");
         cfg.player = PlayerConfiguration.parse((JSONObject) root.get("player"));
-        cfg.npcCommon = new NpcConfiguration();
-        cfg.npcCommon.parseCommon((JSONObject) root.get("all_npcs"));
+        cfg.npcCommon = NpcConfiguration.parseAllNpcs((JSONObject) root.get("all_npcs"));
 
         JSONArray npcs = (JSONArray) root.get("npcs");
         cfg.npcs = ((Stream<Object>) npcs.stream()).map(o -> (JSONObject) o)
