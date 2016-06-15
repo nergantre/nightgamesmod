@@ -49,8 +49,6 @@ public class Mara extends BasePersonality {
         character.setTrophy(Item.MaraTrophy);
         character.plan = Plan.hunting;
         character.mood = Emotion.confident;
-        character.body.add(BreastsPart.b);
-        character.body.add(PussyPart.normal);
         character.body.add(new FacePart(.1, 1.1));
         character.initialGender = CharacterSex.female;
     }

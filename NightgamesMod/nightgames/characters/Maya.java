@@ -80,7 +80,6 @@ public class Maya extends BasePersonality {
         character.plan = Plan.hunting;
         character.mood = Emotion.confident;
         character.body.add(BreastsPart.d);
-        character.body.add(PussyPart.normal);
         character.initialGender = CharacterSex.female;
         preferredCockMod = CockMod.error;
     }

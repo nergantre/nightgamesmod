@@ -49,7 +49,6 @@ public class Angel extends BasePersonality {
         character.body.add(BreastsPart.dd);
         // very feminine face
         character.body.add(new FacePart(.1, 4.2));
-        character.body.add(PussyPart.normal);
         character.initialGender = CharacterSex.female;
     }
 

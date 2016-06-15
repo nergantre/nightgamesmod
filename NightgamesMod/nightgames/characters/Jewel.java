@@ -51,7 +51,6 @@ public class Jewel extends BasePersonality {
         character.plan = Plan.hunting;
         character.mood = Emotion.confident;
         character.body.add(BreastsPart.c);
-        character.body.add(PussyPart.normal);
         // fairly feminine face
         character.body.add(new FacePart(.1, 1.9));
         character.initialGender = CharacterSex.female;

@@ -32,7 +32,6 @@ public class Yui extends BasePersonality {
         character.plan = Plan.hunting;
         character.mood = Emotion.confident;
         character.body.add(BreastsPart.c);
-        character.body.add(PussyPart.normal);
         character.initialGender = CharacterSex.female;
     }
 

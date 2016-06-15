@@ -62,8 +62,6 @@ public class Airi extends BasePersonality {
 
         character.plan = Plan.retreating;
         character.mood = Emotion.confident;
-        character.body.add(BreastsPart.b);
-        character.body.add(PussyPart.normal);
         character.initialGender = CharacterSex.female;
     }
 
