@@ -14,6 +14,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.start.NpcConfiguration;
 
 public class Jewel extends BasePersonality {
     /**
@@ -22,7 +23,15 @@ public class Jewel extends BasePersonality {
     private static final long serialVersionUID = 6677748046858370216L;
 
     public Jewel() {
-        super("Jewel", 1);
+        this(Optional.empty(), Optional.empty());
+    }
+
+    public Jewel(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
+        super("Jewel", 1, charConfig, commonConfig);
+    }
+
+    protected void applyBasicStats() {
+        character.isStartCharacter = true;
         preferredCockMod = CockMod.enlightened;
         character.outfitPlan.add(Clothing.getByID("bra"));
         character.outfitPlan.add(Clothing.getByID("tanktop"));
@@ -42,10 +51,9 @@ public class Jewel extends BasePersonality {
         character.plan = Plan.hunting;
         character.mood = Emotion.confident;
         character.body.add(BreastsPart.c);
-        character.body.add(PussyPart.normal);
         // fairly feminine face
         character.body.add(new FacePart(.1, 1.9));
-        character.body.finishBody(CharacterSex.female);
+        character.initialGender = CharacterSex.female;
     }
 
     @Override

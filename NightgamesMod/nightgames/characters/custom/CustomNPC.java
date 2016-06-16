@@ -3,18 +3,17 @@ package nightgames.characters.custom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import nightgames.characters.Attribute;
-import nightgames.characters.BasePersonality;
+import nightgames.characters.*;
 import nightgames.characters.Character;
-import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
-import nightgames.characters.body.Body;
+import nightgames.characters.body.CockMod;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.ItemAmount;
+import nightgames.start.NpcConfiguration;
 
 public class CustomNPC extends BasePersonality {
     /**
@@ -23,12 +22,35 @@ public class CustomNPC extends BasePersonality {
     private NPCData data;
     private static final long serialVersionUID = -8169646189131720872L;
 
-    public CustomNPC(NPCData data) {
-        super(data.getName(), data.getStats().level);
+    public static final String TYPE_PREFIX = "CUSTOM_";
+
+    public CustomNPC(NPCData data){
+        this(data, Optional.empty(), Optional.empty());
+    }
+
+    // TODO: Once built-in NPCs are data-driven, this should be able to be replaced with a call to super().
+    public CustomNPC(NPCData data, Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
+        // Make the built-in character
+        character = new NPC(data.getName(), data.getStats().level, this);
         this.data = data;
-        growth = data.getGrowth();
+        applyBasicStats();
+        growth = new Growth();
+        preferredCockMod = CockMod.error;
+        preferredAttributes = new ArrayList<PreferredAttribute>();
+        setGrowth();
+        character.body.makeGenitalOrgans(character.initialGender);
+
+        // Apply config changes
+        Optional<NpcConfiguration> mergedConfig = NpcConfiguration.mergeOptionalNpcConfigs(charConfig, commonConfig);
+        mergedConfig.ifPresent(cfg -> cfg.apply(character));
+
+        character.body.finishBody(character.initialGender);
+    }
+
+    protected void applyBasicStats() {
         preferredAttributes = new ArrayList<PreferredAttribute>(data.getPreferredAttributes());
 
+        character.isStartCharacter = data.isStartCharacter();
         character.outfitPlan.addAll(data.getTopOutfit());
         character.outfitPlan.addAll(data.getBottomOutfit());
         character.closet.addAll(character.outfitPlan);
@@ -43,17 +65,24 @@ public class CustomNPC extends BasePersonality {
         character.plan = data.getPlan();
         character.mood = Emotion.confident;
         character.custom = true;
+
         try {
             character.body = data.getBody().clone(character);
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
-            character.body = new Body(character);
         }
-        character.body.finishBody(data.getSex());
+
+        character.initialGender = data.getSex();
+
         for (ItemAmount i : data.getStartingItems()) {
             character.gain(i.item, i.amount);
         }
+
         Global.gainSkills(character);
+    }
+
+    public void setGrowth() {
+        growth = data.getGrowth();
     }
 
     @Override
@@ -169,7 +198,7 @@ public class CustomNPC extends BasePersonality {
 
     @Override
     public String getType() {
-        return "CUSTOM_" + data.getType();
+        return TYPE_PREFIX + data.getType();
     }
 
     @Override

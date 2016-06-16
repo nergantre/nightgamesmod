@@ -56,4 +56,6 @@ public interface NPCData {
     AiModifiers getAiModifiers();
 
     Map<CommentSituation, String> getComments();
+
+    boolean isStartCharacter();
 }

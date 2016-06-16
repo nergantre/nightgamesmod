@@ -58,7 +58,7 @@ public class TemptressStripTease extends StripTease {
     @Override
     public boolean resolve(Combat c, Character target) {
         int technique = getSelf().get(Attribute.Technique);
-        assert technique > 0;
+        //assert technique > 0;
 
         if (isDance(c)) {
             if (getSelf().human()) {

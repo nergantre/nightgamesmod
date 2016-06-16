@@ -1,35 +1,94 @@
 package nightgames.characters;
 
-import java.util.Optional;
-
-import nightgames.characters.body.BreastsPart;
-import nightgames.characters.body.CockMod;
-import nightgames.characters.body.FacePart;
-import nightgames.characters.body.PussyPart;
-import nightgames.characters.body.WingsPart;
+import nightgames.Resources.ResourceLoader;
+import nightgames.characters.*;
+import nightgames.characters.Character;
+import nightgames.characters.body.*;
+import nightgames.characters.custom.CustomNPC;
+import nightgames.characters.custom.JSONSourceNPCDataLoader;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.global.JSONUtils;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.start.NpcConfiguration;
 
-public class Angel extends BasePersonality {
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Optional;
+
+public class TestAngel extends BasePersonality {
     /**
      *
      */
     private static final long serialVersionUID = -8169646189131720872L;
 
-    public Angel() {
+    public static final NPC baseTestAngelChar = makeBaseAngel();
+
+    /**
+     * A version of the TestAngel Character with all fields explicitly specified as their intended initial values.
+     * @return basic TestAngel.
+     */
+    private static NPC makeBaseAngel() {
+        NPC baseChar = new NPC("TestAngel", 1, null);
+        baseChar.name = "TestAngel";
+        baseChar.level = 1;
+
+        baseChar.att.put(Attribute.Power, 5);
+        baseChar.att.put(Attribute.Seduction, 7);
+        baseChar.att.put(Attribute.Cunning, 5);
+        baseChar.att.put(Attribute.Perception, 6);
+        baseChar.att.put(Attribute.Speed, 5);
+
+        baseChar.money = 0;
+        baseChar.xp = 0;
+
+        baseChar.traits.clear();
+        baseChar.traits.add(Trait.undisciplined);
+        baseChar.traits.add(Trait.lickable);
+
+        baseChar.plan = Plan.hunting;
+        baseChar.mood = Emotion.confident;
+        baseChar.trophy = Item.AngelTrophy;
+
+        baseChar.body = new Body(baseChar, 1);
+        baseChar.body.add(BreastsPart.dd);
+        baseChar.body.add(new FacePart(.1, 4.2));
+        baseChar.body.add(PussyPart.normal);
+        baseChar.body.add(MouthPart.generic);
+        baseChar.body.add(new GenericBodyPart("hands", 0, 1, 1, "hands", ""));
+        baseChar.body.add(new GenericBodyPart("feet", 0, 1, 1, "feet", ""));
+        baseChar.body.add(new GenericBodyPart("skin", 0, 1, 1, "skin", ""));
+        baseChar.body.add(AssPart.generic);
+        baseChar.body.add(EarPart.normal);
+        baseChar.body.baseFemininity = 2;
+
+        baseChar.outfitPlan.add(Clothing.getByID("Tshirt"));
+        baseChar.outfitPlan.add(Clothing.getByID("bra"));
+        baseChar.outfitPlan.add(Clothing.getByID("thong"));
+        baseChar.outfitPlan.add(Clothing.getByID("miniskirt"));
+        baseChar.outfitPlan.add(Clothing.getByID("sandals"));
+        baseChar.change();
+
+        Global.gainSkills(baseChar);
+
+        return baseChar;
+    }
+
+    public TestAngel() {
         this(Optional.empty(), Optional.empty());
     }
 
-    public Angel(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Angel", 1, charConfig, commonConfig);
+    public TestAngel(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
+        super("TestAngel", 1, charConfig, commonConfig);
     }
 
     protected void applyBasicStats() {
-        character.isStartCharacter = true;
         preferredCockMod = CockMod.blessed;
         character.outfitPlan.add(Clothing.getByID("Tshirt"));
         character.outfitPlan.add(Clothing.getByID("bra"));
@@ -37,8 +96,8 @@ public class Angel extends BasePersonality {
         character.outfitPlan.add(Clothing.getByID("miniskirt"));
         character.outfitPlan.add(Clothing.getByID("sandals"));
         character.change();
-        character.mod(Attribute.Seduction, 2);
-        character.mod(Attribute.Perception, 1);
+        character.att.put(Attribute.Seduction, 7);
+        character.att.put(Attribute.Perception, 6);
         Global.gainSkills(character);
 
         character.add(Trait.undisciplined);
@@ -49,11 +108,11 @@ public class Angel extends BasePersonality {
         character.body.add(BreastsPart.dd);
         // very feminine face
         character.body.add(new FacePart(.1, 4.2));
+        character.body.add(PussyPart.normal);
         character.initialGender = CharacterSex.female;
     }
 
-    @Override
-    public void setGrowth() {
+    @Override public void setGrowth() {
         growth.stamina = 1;
         growth.arousal = 5;
         growth.mojo = 1;
@@ -85,8 +144,7 @@ public class Angel extends BasePersonality {
         preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
     }
 
-    @Override
-    public void rest(int time) {
+    @Override public void rest(int time) {
         if (character.rank >= 1) {
             if (!character.has(Trait.demigoddess) && character.money >= 1000) {
                 advance();
@@ -169,97 +227,95 @@ public class Angel extends BasePersonality {
         }
     }
 
-    @Override
-    public String bbLiner(Combat c) {
+    @Override public String bbLiner(Combat c) {
         return "Angel seems to enjoy your anguish in a way that makes you more than a little nervous. <i>\"That's a great look for you, I'd like to see it more often.\"</i>";
     }
 
-    @Override
-    public String nakedLiner(Combat c) {
+    @Override public String nakedLiner(Combat c) {
         return "Angel gives you a haughty look, practically showing off her body. <i>\"I can't blame you for wanting to see me naked, everyone does.\"</i>";
     }
 
-    @Override
-    public String stunLiner(Combat c) {
+    @Override public String stunLiner(Combat c) {
         return "Angel groans on the floor. <i>\"You really are a beast. It takes a gentle touch to please a lady.\"</i>";
     }
 
-    @Override
-    public String taunt(Combat c) {
+    @Override public String taunt(Combat c) {
         return "Angel pushes the head of your dick with her finger and watches it spring back into place. <i>\"You obviously can't help yourself. If only you were a little bigger, we could have a lot of fun.\"</i>";
     }
 
-    @Override
-    public String temptLiner(Combat c) {
+    @Override public String temptLiner(Combat c) {
         return "Angel looks at you with a grin, <i>\"You're almost drooling. Is staring at my body that much fun? If you want me that much, why don't you just sit there and let me make you feel good.\"</i>";
     }
 
-    @Override
-    public String victory(Combat c, Result flag) {
+    @Override public String victory(Combat c, Result flag) {
         character.arousal.empty();
         Character opponent = character.equals(c.p1) ? c.p2 : c.p1;
         String message = "";
         if (c.getStance().anallyPenetrated(opponent)) {
-            message = "Angel leans over you as she grinds her hips against yours. <i>\"You're going to come for me, aren't you?\"</i> she purrs into your ear. You shake your head; "
-                            + "no way could you live it down if you came while you had something in your ass. Angel frowns and gives your ass a firm slap. <i>\"No reach around for you "
-                            + "then,\"</i> she snaps. <i>\"We'll just do this the old fashion way.\"</i> She renews her assault on your poor ass and you feel your will slipping. Another solid slap "
-                            + "to ass sends you into a shuddering orgasm. Angel's triumphant laughter rings in your head as the shame makes you flush bright read.<p>Pulling her "
-                            + (character.hasDick() ? character.body.getRandomCock().describe(character) : "strapon")
-                            + " from your ass with a wet slurp Angel flips you over"
-                            + (!character.hasDick() ? " and removes the strapon." : ". ")
-                            + "She then squats down and lines your cock up with her now soaked pussy, <i>\"Do "
-                            + "a good enough good job and I might not tell my friends how you came like a whore while I fucked your ass.\"</i> She gloats with a smug grin on her face. "
-                            + "Appalled at the idea that she might share that information with anyone, you strengthen your resolve to fuck the woman above you.<p>Several minutes later, "
-                            + "you are breathing hard. Angel sits not far from you, face flush with pleasure. You smile internally as you sit, trying to catch your breath. No way "
-                            + "she could have been disappointed with that performance.  You can only gape as you look up to see Angel is gone along with your clothes. You sigh as you "
-                            + "stand and ready yourself to move on. You wouldn't put past Angel to tell her girlfriends regardless of how well you performed, you just hope that's as "
-                            + "far as that information goes.";
+            message =
+                            "Angel leans over you as she grinds her hips against yours. <i>\"You're going to come for me, aren't you?\"</i> she purrs into your ear. You shake your head; "
+                                            + "no way could you live it down if you came while you had something in your ass. Angel frowns and gives your ass a firm slap. <i>\"No reach around for you "
+                                            + "then,\"</i> she snaps. <i>\"We'll just do this the old fashion way.\"</i> She renews her assault on your poor ass and you feel your will slipping. Another solid slap "
+                                            + "to ass sends you into a shuddering orgasm. Angel's triumphant laughter rings in your head as the shame makes you flush bright read.<p>Pulling her "
+                                            + (character.hasDick() ?
+                                            character.body.getRandomCock().describe(character) :
+                                            "strapon") + " from your ass with a wet slurp Angel flips you over"
+                                            + (!character.hasDick() ? " and removes the strapon." : ". ")
+                                            + "She then squats down and lines your cock up with her now soaked pussy, <i>\"Do "
+                                            + "a good enough good job and I might not tell my friends how you came like a whore while I fucked your ass.\"</i> She gloats with a smug grin on her face. "
+                                            + "Appalled at the idea that she might share that information with anyone, you strengthen your resolve to fuck the woman above you.<p>Several minutes later, "
+                                            + "you are breathing hard. Angel sits not far from you, face flush with pleasure. You smile internally as you sit, trying to catch your breath. No way "
+                                            + "she could have been disappointed with that performance.  You can only gape as you look up to see Angel is gone along with your clothes. You sigh as you "
+                                            + "stand and ready yourself to move on. You wouldn't put past Angel to tell her girlfriends regardless of how well you performed, you just hope that's as "
+                                            + "far as that information goes.";
         } else if (c.getStance().inserted(character)) {
-            message = "Angel stares at you in the eye, while expertly thrusting in and out of your slobbering pussy. Your needy cunt quivers as she leans close and gives you a long steamy kiss, "
-                            + "tongue and all. You try to get away from her, but she holds you down and merciless pounds away at your overused pussy. You can tell she is turned on as well, but "
-                            + "it'll do you no good, as you're already feeling yourself slip over the edge. "
-                            + "<br><br>Finally it becomes too much, and you cum hard. You wrap your arms and legs unconsciously cling to Angel's body and you seek out "
-                            + "a needy kiss from her. Angel takes note of your convulsing body, and smirks, <i>\"I think you need some more training. I could make "
-                            + "anyone cum instantly while they're in me.\"</i> After a small pausing, Angel grins devilishly and resumes pumping in and out of pussy "
-                            + "in long leisurely strokes. <i>\"Hmm\" in fact, why don't I practice with you a bit? You know what they say, practice makes perfect!\" "
-                            + "You groan in frustration as your oversensitive cunt receives her cocks again. "
-                            + "<br><br>This could be a long night.";
+            message =
+                            "Angel stares at you in the eye, while expertly thrusting in and out of your slobbering pussy. Your needy cunt quivers as she leans close and gives you a long steamy kiss, "
+                                            + "tongue and all. You try to get away from her, but she holds you down and merciless pounds away at your overused pussy. You can tell she is turned on as well, but "
+                                            + "it'll do you no good, as you're already feeling yourself slip over the edge. "
+                                            + "<br><br>Finally it becomes too much, and you cum hard. You wrap your arms and legs unconsciously cling to Angel's body and you seek out "
+                                            + "a needy kiss from her. Angel takes note of your convulsing body, and smirks, <i>\"I think you need some more training. I could make "
+                                            + "anyone cum instantly while they're in me.\"</i> After a small pausing, Angel grins devilishly and resumes pumping in and out of pussy "
+                                            + "in long leisurely strokes. <i>\"Hmm\" in fact, why don't I practice with you a bit? You know what they say, practice makes perfect!\" "
+                                            + "You groan in frustration as your oversensitive cunt receives her cocks again. "
+                                            + "<br><br>This could be a long night.";
         } else if (c.getStance().inserted(opponent)) {
-            message = "Angel rides your cock passionately, pushing you inevitably closer to ejaculation. Her hot pussy is wrapped around your shaft like... well, exactly "
-                            + "what it is. More importantly, she's a master with her hip movements and you've held out against her as long as you can. You can only hope her own orgasm is equally "
-                            + "imminent. <i>\"Not even close,\"</i> She practically growls. <i>\"Don't give up now.\"</i> That's an impossible command. How can she expect you not to cum when "
-                            + "her slick love canal is milking your dick so expertly. As the last of your restraint crumbles, you let out a groan and shoot a thick load of semen "
-                            + "into her depths. <p>You lie on the floor panting as Angel looks down at you, somehow annoyed despite her victory. <i>\"Is that the best you can do? "
-                            + "You know it's rude to finish before your lover.\"</i> She starts to lick and suck on her finger, sensually. <i>\"Don't think you can get off on your own and the "
-                            + "sex is done just like that. I never let a man go until I'm satisfied.\"</i> You're quite willing to try to satisfy her in a variety of ways, but more "
-                            + "fucking is a physical impossibility at this point. Your spent penis has completely wilted by now, and it'll be a little while before there's any possibility "
-                            + "of it recovering. Angel gives you a pitiless smile and reaches behind her. <i>\"Don't worry. I know a good trick.\"</i><p>Whoa! You jerk in surprise as you feel "
-                            + "her spit-coated finger probing at your anus. <i>\"Don't complain,\"</i> She says, sliding the digit into your ass. <i>\"It's your own fault for being such a quick "
-                            + "shot.\"</i> As she moves her finger around, it creates an indescrible sensation. You dick starts to react immediately and returns to full mast faster than you "
-                            + "ever would have imagined. Angel wastes no time impaling herself on the you newly recovered member and rides you with renewed vigor. Fortunately she removes "
-                            + "the invading finger from your anus so you can focus on the pleasure of being back in her wonderful pussy. <p>She grinds against you, clearly turned on and "
-                            + "enjoying being filled again. She moans passionately and her vaginal walls rub and squeeze your cock. You move your hips to match Angel's movements and "
-                            + "her voice jumps in pitch. She's obviously enjoying your efforts much more this time, but she's so good too. You've just recently cum, but she's riding "
-                            + "through your endurance at an alarming rate. If you end up cumming again before she finishes, you're going to get the finger treatment again or worse. "
-                            + "Fortunately, you don't have to worry about that. Angel throws back her head and practically screams out her orgasm. Her love canal squeezes tightly, milking "
-                            + "out your second ejaculation. <p>Angel quickly recovers, standing up as a double load of cum leaks out between her thighs. <i>\"That'll do... for now.\"</i>";
+            message =
+                            "Angel rides your cock passionately, pushing you inevitably closer to ejaculation. Her hot pussy is wrapped around your shaft like... well, exactly "
+                                            + "what it is. More importantly, she's a master with her hip movements and you've held out against her as long as you can. You can only hope her own orgasm is equally "
+                                            + "imminent. <i>\"Not even close,\"</i> She practically growls. <i>\"Don't give up now.\"</i> That's an impossible command. How can she expect you not to cum when "
+                                            + "her slick love canal is milking your dick so expertly. As the last of your restraint crumbles, you let out a groan and shoot a thick load of semen "
+                                            + "into her depths. <p>You lie on the floor panting as Angel looks down at you, somehow annoyed despite her victory. <i>\"Is that the best you can do? "
+                                            + "You know it's rude to finish before your lover.\"</i> She starts to lick and suck on her finger, sensually. <i>\"Don't think you can get off on your own and the "
+                                            + "sex is done just like that. I never let a man go until I'm satisfied.\"</i> You're quite willing to try to satisfy her in a variety of ways, but more "
+                                            + "fucking is a physical impossibility at this point. Your spent penis has completely wilted by now, and it'll be a little while before there's any possibility "
+                                            + "of it recovering. Angel gives you a pitiless smile and reaches behind her. <i>\"Don't worry. I know a good trick.\"</i><p>Whoa! You jerk in surprise as you feel "
+                                            + "her spit-coated finger probing at your anus. <i>\"Don't complain,\"</i> She says, sliding the digit into your ass. <i>\"It's your own fault for being such a quick "
+                                            + "shot.\"</i> As she moves her finger around, it creates an indescrible sensation. You dick starts to react immediately and returns to full mast faster than you "
+                                            + "ever would have imagined. Angel wastes no time impaling herself on the you newly recovered member and rides you with renewed vigor. Fortunately she removes "
+                                            + "the invading finger from your anus so you can focus on the pleasure of being back in her wonderful pussy. <p>She grinds against you, clearly turned on and "
+                                            + "enjoying being filled again. She moans passionately and her vaginal walls rub and squeeze your cock. You move your hips to match Angel's movements and "
+                                            + "her voice jumps in pitch. She's obviously enjoying your efforts much more this time, but she's so good too. You've just recently cum, but she's riding "
+                                            + "through your endurance at an alarming rate. If you end up cumming again before she finishes, you're going to get the finger treatment again or worse. "
+                                            + "Fortunately, you don't have to worry about that. Angel throws back her head and practically screams out her orgasm. Her love canal squeezes tightly, milking "
+                                            + "out your second ejaculation. <p>Angel quickly recovers, standing up as a double load of cum leaks out between her thighs. <i>\"That'll do... for now.\"</i>";
         } else {
-            message = "It's too much. You can't focus on the fight with the wonderful sensations Angel is giving you. She smiles triumphantly and mercilessly teases your "
-                            + "twitching dick. Your orgasm is imminent, but you concentrate on holding it back as long as you can, determined not to give up until the end. Angel's "
-                            + "expression gradually changes to one of impatience. <i>\"Just cum already!\"</i> She slaps your dick and the shock breaks your concentration. Your pent-up "
-                            + "ejaculation bursts forth and covers her hands. <p>Without giving you a chance to recover, Angel pushes you on your back and positions her soaking "
-                            + "pussy over your face. <i>\"Show me you're good for more than cumming on command.\"</i> She grinds against your mouth as you eat her out. She reaches behind her "
-                            + "and roughly grabs your balls, encouraging you to focus more on pleasing her. Soon her writhing grows more passionate and her moans express her building "
-                            + "pleasure. She rewards your efforts by moving her hand to your dick, which is already starting to harden again. She jerks you off, using your previous climax "
-                            + "for lubricant. The growing volume of Angel's cries reveal that she's close to the end, so you focus on licking and sucking her clit, quickly bringing her to "
-                            + "a loud climax. Your own peak isn't far behind and soon you shoot another jet of cum into the air.\n\nAngel licks her semen covered hands clean and walks away "
-                            + "with your clothes, having seemingly forgotten about you.";
+            message =
+                            "It's too much. You can't focus on the fight with the wonderful sensations Angel is giving you. She smiles triumphantly and mercilessly teases your "
+                                            + "twitching dick. Your orgasm is imminent, but you concentrate on holding it back as long as you can, determined not to give up until the end. Angel's "
+                                            + "expression gradually changes to one of impatience. <i>\"Just cum already!\"</i> She slaps your dick and the shock breaks your concentration. Your pent-up "
+                                            + "ejaculation bursts forth and covers her hands. <p>Without giving you a chance to recover, Angel pushes you on your back and positions her soaking "
+                                            + "pussy over your face. <i>\"Show me you're good for more than cumming on command.\"</i> She grinds against your mouth as you eat her out. She reaches behind her "
+                                            + "and roughly grabs your balls, encouraging you to focus more on pleasing her. Soon her writhing grows more passionate and her moans express her building "
+                                            + "pleasure. She rewards your efforts by moving her hand to your dick, which is already starting to harden again. She jerks you off, using your previous climax "
+                                            + "for lubricant. The growing volume of Angel's cries reveal that she's close to the end, so you focus on licking and sucking her clit, quickly bringing her to "
+                                            + "a loud climax. Your own peak isn't far behind and soon you shoot another jet of cum into the air.\n\nAngel licks her semen covered hands clean and walks away "
+                                            + "with your clothes, having seemingly forgotten about you.";
         }
         return message;
     }
 
-    @Override
-    public String defeat(Combat c, Result flag) {
+    @Override public String defeat(Combat c, Result flag) {
         Character opponent = c.getOther(character);
         if (c.getStance().vaginallyPenetrated(character)) {
             return "You thrust your cock continously into Angel's dripping pussy. Her hot insides feel amazing, but you're sure you have enough of an advantage to risk "
@@ -276,7 +332,8 @@ public class Angel extends BasePersonality {
                             + "I had a continuous orgasm for at least two minutes and that's way more exhausting. It's been a long time since anyone's made me do that.\"</i> Wait, what? You'd "
                             + "never have guessed that she came if she hadn't said anything. <i>\"Just because you managed to beat me this time doesn't mean you can suddenly start acting "
                             + "lazy. If you let your guard down, I'm going to turn you into my own personal toy.\"</i> At that, she walks away naked.";
-        } if (opponent.hasDick()) {
+        }
+        if (opponent.hasDick()) {
             return "Angel trembles and moans as you guide her closer and closer to orgasm. You pump two fingers in and out of her pussy and lick her sensitive nether lips. "
                             + "Her swollen clit peeks out from under its hood and you pinch it gently between your teeth. Angel instantly screams in pleasure and arches her back. A "
                             + "flood of feminine juice sprays you as she loses control of her body.<p>It takes her a little while to catch her breath. She quickly pushes you on your "
@@ -295,8 +352,7 @@ public class Angel extends BasePersonality {
         }
     }
 
-    @Override
-    public String describe(Combat c) {
+    @Override public String describe(Combat c) {
         if (character.has(Trait.demigoddess)) {
             return "Angel's transformation seems to have taken inspiration from her own name. She has large angelic wings behind her, which combined with her long blonde hair and perfect unblemished "
                             + "skin gives her a positively divine appearance. Her appearance should be emanating holy purity, but instead her eyes and expression seems lewder than ever. "
@@ -309,8 +365,7 @@ public class Angel extends BasePersonality {
         }
     }
 
-    @Override
-    public String draw(Combat c, Result flag) {
+    @Override public String draw(Combat c, Result flag) {
         if (flag == Result.intercourse) {
             return "Angel pins you on your back, riding you with passion. You're close to the edge, but she's too far gone to take advantage of it. She's fucking you "
                             + "for her own pleasure rather than trying to win. Just as you feel your climax hit, Angel cries out in ecstasy and her pussy tightens to milk your "
@@ -338,18 +393,15 @@ public class Angel extends BasePersonality {
                         + "worry if you can't keep up. As long as you keep making me cum, I'll let you be my pet.\"</i>";
     }
 
-    @Override
-    public boolean fightFlight(Character opponent) {
+    @Override public boolean fightFlight(Character opponent) {
         return !character.mostlyNude() || opponent.mostlyNude();
     }
 
-    @Override
-    public boolean attack(Character opponent) {
+    @Override public boolean attack(Character opponent) {
         return true;
     }
 
-    @Override
-    public String victory3p(Combat c, Character target, Character assist) {
+    @Override public String victory3p(Combat c, Character target, Character assist) {
         if (target.human()) {
             return "Angel looks over your helpless body like a predator ready to feast. She kneels between your legs and teasingly licks your erection. She circles her "
                             + "tongue around the head, coating your penis thoroughly with saliva. When she's satisfied that it is sufficiently lubricated and twitching with need, "
@@ -359,8 +411,7 @@ public class Angel extends BasePersonality {
                             + "while she tries to catch as much of your seed in her mouth as she can.";
         }
         if (target.hasDick()) {
-            return String.format(
-                            "You present %s's naked, helpless form to Angel's tender "
+            return String.format("You present %s's naked, helpless form to Angel's tender "
                                             + "minstrations. Angel licks her lips and begins licking and stroking %s's"
                                             + " body. She's hitting all the right spots, because soon %s is squirming "
                                             + "and moaning in pleasure, and Angel hasn't even touched %s cock yet."
@@ -370,15 +421,14 @@ public class Angel extends BasePersonality {
                                             + "%s immediately jumps as if %s's been shocked. Soon it takes all of your"
                                             + " energy to control %s who is violently shaking in the throes of orgasm."
                                             + " You ease %s to the floor as %s goes completely limp, while Angel licks"
-                                            + " the cum from her fingers.",
-                            target.name(), target.name(), target.name(), target.possessivePronoun(), target.name(),
-                            target.name(), target.pronoun(), target.name(), target.directObject(), target.pronoun());
+                                            + " the cum from her fingers.", target.name(), target.name(), target.name(),
+                            target.possessivePronoun(), target.name(), target.name(), target.pronoun(), target.name(),
+                            target.directObject(), target.pronoun());
         }
         return "You present " + target.name()
                         + "'s naked, helpless form to Angel's tender minstrations. Angel licks her lips and begins licking and stroking "
-                        + target.name() + "'s body. She's " + "hitting all the right spots, because soon "
-                        + target.name()
-                        + " is squirming and moaning in pleasure, and Angel hasn't even touched her pussy yet. "
+                        + target.name() + "'s body. She's " + "hitting all the right spots, because soon " + target
+                        .name() + " is squirming and moaning in pleasure, and Angel hasn't even touched her pussy yet. "
                         + "Angel meets your eyes to focus your attention and slowly moves her fingers down the front of "
                         + target.name() + "'s body. You can't see her hands from "
                         + "this position, but you know when she reaches her target, because " + target.name()
@@ -389,8 +439,7 @@ public class Angel extends BasePersonality {
 
     }
 
-    @Override
-    public String intervene3p(Combat c, Character target, Character assist) {
+    @Override public String intervene3p(Combat c, Character target, Character assist) {
         if (target.human()) {
             return "You manage to overwhelm " + assist.name()
                             + " and bring her to the floor. You're able to grab both her arms and pin her helplessly beneath you. "
@@ -410,18 +459,15 @@ public class Angel extends BasePersonality {
         }
     }
 
-    @Override
-    public String startBattle(Character other) {
+    @Override public String startBattle(Character other) {
         return "Angel licks her lips and stalks you like a predator.";
     }
 
-    @Override
-    public boolean fit() {
+    @Override public boolean fit() {
         return !character.mostlyNude() && character.getStamina().percent() >= 50;
     }
 
-    @Override
-    public String night() {
+    @Override public String night() {
         return "As you start to head back after the match, Angel grabs your hand and drags you in the other direction. <i>\"You're officially kidnapped, because I haven't had "
                         + "enough sex yet tonight.\"</i> That makes sense... kinda? You did just finish three hours of intense sex-fighting. If she wants too much more than that, you're "
                         + "both going to end up pretty sleep deprived. Angel looks like she's struggling to put her thoughts into words. <i>\"I had enough sex in general, but I want some "
@@ -445,8 +491,7 @@ public class Angel extends BasePersonality {
         character.mod(Attribute.Divinity, 1);
     }
 
-    @Override
-    public boolean checkMood(Combat c, Emotion mood, int value) {
+    @Override public boolean checkMood(Combat c, Emotion mood, int value) {
         switch (mood) {
             case horny:
                 return value >= 50;
@@ -457,13 +502,11 @@ public class Angel extends BasePersonality {
         }
     }
 
-    @Override
-    public String orgasmLiner(Combat c) {
+    @Override public String orgasmLiner(Combat c) {
         return "<i>\"Mmm maybe you do have promise. Care to try that again?\"</i>";
     }
 
-    @Override
-    public String makeOrgasmLiner(Combat c) {
+    @Override public String makeOrgasmLiner(Combat c) {
         return "Angel stares you in the eye as your consciousness return from the precipice <i>\"Once isn't enough. I need more. You can do that for me right?\"</i>";
     }
 }

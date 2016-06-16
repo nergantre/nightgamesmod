@@ -116,6 +116,10 @@ public class JSONSourceNPCDataLoader {
                 loadAiModifiers((JSONArray) object.get("ai-modifiers"), data.aiModifiers);
             }
 
+            if (object.containsKey("start")) {
+                data.isStartCharacter = JSONUtils.readBoolean(object, "start");
+            }
+
             if (object.containsKey("male-pref")) {
                 data.aiModifiers.setMalePref(Optional.of((double) JSONUtils.readFloat(object, "male-pref")));
             } else {

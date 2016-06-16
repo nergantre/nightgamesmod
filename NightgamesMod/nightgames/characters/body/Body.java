@@ -273,13 +273,26 @@ public class Body implements Cloneable {
         return breasts;
     }
 
+    public CockPart getLargestCock() {
+        List<BodyPart> parts = get("cock");
+        if (parts.size() == 0) {
+            return null;
+        }
+        CockPart largest = BasicCockPart.tiny;
+        for (BodyPart part : parts) {
+            CockPart cock = (CockPart) part;
+            largest = cock.getSize() >= largest.getSize() ? cock : largest;
+        }
+        return largest;
+    }
+
     public CockPart getCockBelow(double size) {
         List<BodyPart> parts = get("cock");
         List<CockPart> upgradable = new ArrayList<CockPart>();
         for (BodyPart part : parts) {
-            CockPart b = (CockPart) part;
-            if (b.getSize() < size) {
-                upgradable.add(b);
+            CockPart cock = (CockPart) part;
+            if (cock.getSize() < size) {
+                upgradable.add(cock);
             }
         }
         if (upgradable.size() == 0) {
@@ -632,17 +645,26 @@ public class Body implements Cloneable {
                 if (!has("face")) {
                     add(new FacePart(0, 2));
                 }
+                if (get("breasts").size() == 0) {
+                    add(BreastsPart.b);
+                }
                 break;
             case male:
                 baseFemininity -= 2;
                 if (!has("face")) {
                     add(new FacePart(0, -2));
                 }
+                if (!has("balls")) {
+                    add(new GenericBodyPart("balls", 0, 1.0, 1.5, "balls", ""));
+                }
                 break;
             case herm:
                 baseFemininity += 1;
                 if (!has("face")) {
                     add(new FacePart(0, 0));
+                }
+                if (get("breasts").size() == 0) {
+                    add(BreastsPart.b);
                 }
                 break;
             case asexual:
@@ -652,29 +674,43 @@ public class Body implements Cloneable {
                 }
                 break;
         }
-        if (sex == CharacterSex.female || sex == CharacterSex.herm) {
-            if (get("pussy").size() == 0) {
-                add(PussyPart.normal);
-            }
-            if (get("breasts").size() == 0) {
-                add(BreastsPart.b);
+        for (BodyPart part : requiredParts) {
+            if (!has(part.getType())) {
+                add(part);
             }
         }
-        if (sex == CharacterSex.male || sex == CharacterSex.herm) {
-            if (get("cock").size() == 0) {
+    }
+
+    CharacterSex getEffectiveSex() {
+        boolean hasCock = has("cock");
+        boolean hasPussy = has("pussy");
+        if (hasCock && hasPussy) {
+            return CharacterSex.herm;
+        } else if (hasCock) {
+            return CharacterSex.male;
+        } else if (hasPussy) {
+            return CharacterSex.female;
+        } else {
+            return CharacterSex.asexual;
+        }
+    }
+
+    public void makeGenitalOrgans(CharacterSex sex) {
+        if (sex.hasPussy()) {
+            if (!has("pussy")) {
+                add(PussyPart.normal);
+            }
+
+        }
+        if (sex.hasCock()) {
+            if (!has("cock")) {
                 add(BasicCockPart.average);
             }
         }
         if (sex == CharacterSex.male) {
-            if (get("balls").size() == 0) {
-                add(new GenericBodyPart("balls", 0, 1.0, 1.5, "balls", ""));
-            }
+
         }
-        for (BodyPart part : requiredParts) {
-            if (get(part.getType()).size() == 0) {
-                add(part);
-            }
-        }
+
     }
 
     @Override

@@ -6,18 +6,6 @@
 	
 	},
 	"npcs": [
-		{
-			"type":"Angel"
-		},
-		{
-			"type":"Cassie"
-		},
-		{
-			"type":"Jewel"
-		},
-		{
-			"type":"Mara"
-		},
 	],
 	"all_npcs": {
 	

@@ -192,6 +192,10 @@ public class ModdedCockPart implements CockPart {
         return getBase().getSize();
     }
 
+    public String getName() {
+        return getBase().getName();
+    }
+
     @Override
     public boolean isGeneric(Character self) {
         return false;

@@ -1,45 +1,89 @@
 package nightgames.start;
 
-import java.util.Map;
-import java.util.Optional;
-
+import com.sun.javafx.scene.control.behavior.OptionalBoolean;
+import nightgames.characters.CharacterSex;
+import nightgames.characters.body.Body;
+import nightgames.global.JSONUtils;
 import org.json.simple.JSONObject;
 
 import nightgames.characters.NPC;
-import nightgames.characters.Personality;
 
-class NpcConfiguration extends CharacterConfiguration {
+import java.util.Optional;
 
-    private Optional<String> type;
+import static nightgames.start.ConfigurationUtils.mergeOptionals;
 
-    private NpcConfiguration() {
-        type = Optional.empty();
+public class NpcConfiguration extends CharacterConfiguration {
+
+    // Optional because NpcConfiguration is used for both NPCs and adjustments common to all NPCs
+    protected String type;
+    public Optional<Boolean> isStartCharacter;
+
+    public NpcConfiguration() {
+        isStartCharacter = Optional.empty();
     }
 
-    NPC build(Optional<NpcConfiguration> common) {
-        if (!type.isPresent() && common.isPresent()) {
-            throw new IllegalStateException("No type for npc");
-        } else if (!common.isPresent()) {
-            throw new UnsupportedOperationException("Tried to build NPC from all_npcs configuration");
-        }
-        Personality pers = Personality.getByType(type.get());
-        NPC npc;
-        pers.setCharacter(npc = new NPC(name.orElse(type.get()), level, pers));
-        if (common.isPresent()) {
-           common.get().processCommon(npc);
-        }
-        processCommon(npc);
-        return npc;
+    /** Makes a new NpcConfiguration from merging two others.
+     * @param primaryConfig Will override field values from secondaryConfig.
+     * @param secondaryConfig Field values will be overridden by primaryConfig.
+     */
+    public NpcConfiguration(NpcConfiguration primaryConfig, NpcConfiguration secondaryConfig) {
+        super(primaryConfig, secondaryConfig);
+        isStartCharacter = mergeOptionals(primaryConfig.isStartCharacter, secondaryConfig.isStartCharacter);
+        type = primaryConfig.type;
     }
 
+    public static Optional<NpcConfiguration> mergeOptionalNpcConfigs(Optional<NpcConfiguration> primaryConfig,
+                    Optional<NpcConfiguration> secondaryConfig) {
+        if (primaryConfig.isPresent()) {
+            if (secondaryConfig.isPresent()) {
+                return Optional.of(new NpcConfiguration(primaryConfig.get(), secondaryConfig.get()));
+            } else {
+                return primaryConfig;
+            }
+        } else {
+            return secondaryConfig;
+        }
+    }
+
+    public final void apply(NPC base) {
+        if (gender.isPresent()) {
+            CharacterSex sex = gender.get();
+            base.initialGender = sex;
+            // If gender is present in config, make genitals conform to it. This will be overridden if config also supplies genitals.
+            if (!sex.hasCock()) {
+                base.body.removeAll("cock");
+            }
+            if (!sex.hasPussy()) {
+                base.body.removeAll("pussy");
+            }
+            base.body.makeGenitalOrgans(sex);
+        }
+        super.apply(base);
+        if (isStartCharacter.isPresent()) {
+            base.isStartCharacter = isStartCharacter.get();
+        }
+    }
+
+    /** Parse fields from the all_npcs section.
+     * @param obj The configuration from the JSON config file.
+     * @return A new NpcConfiguration as specified in the config file.
+     */
+    public static NpcConfiguration parseAllNpcs(JSONObject obj) {
+        NpcConfiguration config = new NpcConfiguration();
+        config.isStartCharacter = JSONUtils.getIfExists(obj, "start", b -> (boolean) b);
+        config.parseCommon(obj);
+        return config;
+    }
+
+    /** Parse a character-specific NPC config.
+     * @param obj The configuration from the JSON config file.
+     * @return A new NpcConfiguration as specified in the config file.
+     */
     public static NpcConfiguration parse(JSONObject obj) {
-        NpcConfiguration cfg = new NpcConfiguration();
-        cfg.parseCommon(obj);
-        cfg.type = getIfExists(obj, "type", Object::toString);
-        /*if (!cfg.type.isPresent()) {
-            throw new RuntimeException("Error: Tried to specify an NPC without a type! (" + cfg.name.orElse("no name") + ")");
-        }*/
-        return cfg;
-    }
+        NpcConfiguration config = NpcConfiguration.parseAllNpcs(obj);
+        config.type = JSONUtils.getIfExists(obj, "type", Object::toString)
+                        .orElseThrow(() -> new RuntimeException("Tried parsing NPC without a type."));
 
+        return config;
+    }
 }
