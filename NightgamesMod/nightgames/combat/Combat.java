@@ -60,6 +60,9 @@ public class Combat extends Observable implements Cloneable {
     protected int timer;
     public Result state;
     private HashMap<String, String> images;
+    boolean lastFailed = false;
+    private CombatLog log;
+    
     String imagePath = "";
 
     public Combat(Character p1, Character p2, Area loc) {
@@ -77,6 +80,9 @@ public class Combat extends Observable implements Cloneable {
         p1.state = State.combat;
         p2.state = State.combat;
         winner = Optional.empty();
+        if (doExtendedLog()) {
+            log = new CombatLog(this);
+        }
     }
 
     public Combat(Character p1, Character p2, Area loc, Position starting) {
@@ -135,6 +141,9 @@ public class Combat extends Observable implements Cloneable {
             automate();
         }
         updateMessage();
+        if (doExtendedLog()) {
+            log.logHeader();
+        }
     }
 
     public CombatantData getCombatantData(Character character) {
@@ -400,7 +409,11 @@ public class Combat extends Observable implements Cloneable {
             } else if (p2.pet != null) {
                 p2.pet.act(this, p1);
             }
-            useSkills();
+            if (doExtendedLog()) {
+                log.logTurn(p1act, p2act);
+            } else {
+                useSkills();
+            }
             this.write("<br>");
             p1.eot(this, p2, p2act);
             p2.eot(this, p1, p1act);
@@ -532,7 +545,7 @@ public class Combat extends Observable implements Cloneable {
                         && target.counterChance(this, attacker, skill) > Global.random(100);
     }
 
-    private boolean resolveSkill(Skill skill, Character target) {
+    boolean resolveSkill(Skill skill, Character target) {
         boolean orgasmed = false;
         if (Skill.skillIsUsable(this, skill, target)) {
             write(skill.user()
@@ -557,9 +570,11 @@ public class Combat extends Observable implements Cloneable {
             checkStamina(target);
             checkStamina(skill.user());
             orgasmed = checkOrgasm(skill.user(), target, skill);
+            lastFailed = false;
         } else {
             write(skill.user()
                        .possessivePronoun() + " " + skill.getLabel(this) + " failed.");
+            lastFailed = true;
         }
         return orgasmed;
     }
@@ -738,6 +753,9 @@ public class Combat extends Observable implements Cloneable {
                 ding = true;
             }
         }
+        if (doExtendedLog()) {
+            log.logEnd(winner);
+        }
         return ding;
     }
 
@@ -890,5 +908,9 @@ public class Combat extends Observable implements Cloneable {
 
     public int getTimer() {
         return timer;
+    }
+    
+    private boolean doExtendedLog() {
+        return (p1.human() || p2.human()) && Global.checkFlag(Flag.extendedLogs);
     }
 }

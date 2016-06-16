@@ -13,6 +13,7 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -651,6 +652,9 @@ public class GUI extends JFrame implements Observer {
         if (Global.isDebugOn(DebugFlags.DEBUG_GUI)) {
             System.out.println("Display image: " + path);
         }
+        if (!(new File("assets/"+path).canRead())) {
+            return;
+        }
         BufferedImage pic = null;
         try {
             pic = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" + path));
@@ -677,7 +681,7 @@ public class GUI extends JFrame implements Observer {
         portrait.setIcon(null);
     }
     public void loadPortrait(String imagepath) {
-        if (imagepath != null) {
+        if (imagepath != null && new File("assets/"+imagepath).canRead()) {
             BufferedImage face = null;
             try {
                 face = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" + imagepath));

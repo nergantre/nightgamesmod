@@ -3071,31 +3071,4 @@ public abstract class Character extends Observable implements Cloneable {
         return !is(Stsflag.charmed) && !is(Stsflag.lovestruck)
                         && !is(Stsflag.frenzied);
     }
-/*
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + cloned;
-        result ^= getClass().hashCode();
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Character other = (Character) obj;
-        if (cloned != other.cloned)
-            return false;
-        return true;
-    }
-*/
-    
-    
-    
 }

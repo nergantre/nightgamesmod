@@ -188,8 +188,12 @@ public class Body implements Cloneable {
     }
 
     public void describe(StringBuilder b, Character c, String delimiter) {
+        describe(b, c, delimiter, true);
+    }
+    
+    public void describe(StringBuilder b, Character c, String delimiter, boolean hideInvisible) {
         for (BodyPart part : getCurrentParts()) {
-            if (part.isVisible(c) && part.isNotable()) {
+            if ((!hideInvisible || part.isVisible(c)) && part.isNotable()) {
                 int prevLength = b.length();
                 part.describeLong(b, c);
                 if (prevLength != b.length()) {

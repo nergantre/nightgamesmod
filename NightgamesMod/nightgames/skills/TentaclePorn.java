@@ -48,17 +48,17 @@ public class TentaclePorn extends Skill {
                     } else if (target.human()) {
                         c.write(getSelf(), receive(c, 0, Result.special, target));
                     }
-                    target.body.pleasure(null, null, target.body.getRandom("cock"), m, c);
-                    target.body.pleasure(null, null, target.body.getRandom("pussy"), m, c);
-                    target.body.pleasure(null, null, target.body.getRandom("breasts"), m, c);
-                    target.body.pleasure(null, null, target.body.getRandom("ass"), m, c);
+                    target.body.pleasure(getSelf(), null, target.body.getRandom("cock"), m, c);
+                    target.body.pleasure(getSelf(), null, target.body.getRandom("pussy"), m, c);
+                    target.body.pleasure(getSelf(), null, target.body.getRandom("breasts"), m, c);
+                    target.body.pleasure(getSelf(), null, target.body.getRandom("ass"), m, c);
                     target.emote(Emotion.horny, 10);
                 } else if (getSelf().human()) {
                     c.write(getSelf(), deal(c, 0, Result.normal, target));
-                    target.body.pleasure(null, null, target.body.getRandom("skin"), m, c);
+                    target.body.pleasure(getSelf(), null, target.body.getRandom("skin"), m, c);
                 } else if (target.human()) {
                     c.write(getSelf(), receive(c, 0, Result.normal, target));
-                    target.body.pleasure(null, null, target.body.getRandom("skin"), m, c);
+                    target.body.pleasure(getSelf(), null, target.body.getRandom("skin"), m, c);
                 }
                 if (!target.is(Stsflag.oiled)) {
                     target.add(c, new Oiled(target));

@@ -15,30 +15,29 @@ class PlayerConfiguration extends CharacterConfiguration {
 
     private boolean allowsMoreTraits;
     private int attributePoints;
-    
+
     private PlayerConfiguration() {}
 
     boolean allowsMoreTraits() {
         return allowsMoreTraits;
     }
-    
+
     int getAttributePoints() {
         return attributePoints;
     }
 
     Player build(String name, Optional<CharacterSex> gender, Optional<List<Trait>> traits) {
         Player p = new Player(name, gender.orElse(CharacterSex.male));
-        if (!gender.isPresent()) {
-            if (gender.isPresent()) {
-                super.gender = gender;
-            } else {
-                super.gender = Optional.of(CharacterSex.male);
-            }
+        if (gender.isPresent()) {
+            super.gender = gender;
+        } else {
+            super.gender = Optional.of(CharacterSex.male);
         }
         if (allowsMoreTraits && traits.isPresent()) {
             List<Trait> extraTraits = traits.get();
             if (super.traits.isPresent())
-                super.traits.get().addAll(extraTraits);
+                super.traits.get()
+                            .addAll(extraTraits);
             else
                 super.traits = Optional.of(extraTraits);
         }

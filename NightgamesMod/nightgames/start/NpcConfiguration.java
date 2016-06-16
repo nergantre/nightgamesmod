@@ -7,6 +7,7 @@ import org.json.simple.JSONObject;
 
 import nightgames.characters.NPC;
 import nightgames.characters.Personality;
+import nightgames.items.Item;
 
 class NpcConfiguration extends CharacterConfiguration {
 
@@ -23,8 +24,10 @@ class NpcConfiguration extends CharacterConfiguration {
             throw new UnsupportedOperationException("Tried to build NPC from all_npcs configuration");
         }
         Personality pers = Personality.getByType(type.get());
+        Item trophy = pers.getCharacter().getTrophy();
         NPC npc;
         pers.setCharacter(npc = new NPC(name.orElse(type.get()), level, pers));
+        npc.setTrophy(trophy);
         if (common.isPresent()) {
            common.get().processCommon(npc);
         }

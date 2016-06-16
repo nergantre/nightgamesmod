@@ -1,3 +1,11 @@
+16/06/16 - 2.0.4
+-Fixed bug where unlocking new competitors allowed the player to end up with a negative amount of money.
+-Merged in fixes to the start configuration mechanism by Ryplinn.
+-Some small fixes.
+
+28/05/16 - 2.0.3.1
+-Fixed trophies not being set correctly for custom starts.
+
 28/05/16 - 2.0.3
 -Added start configurations:
 	-These alter the starting conditions of your game. Pretty much anything can be altered, different characters with different traits, different bodyparts, different attributes, even different names.

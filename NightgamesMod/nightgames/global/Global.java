@@ -12,6 +12,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.Reader;
+import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -146,6 +147,8 @@ public class Global {
     public static double xpRate = 1.0;
     public static ContextFactory factory;
     public static Context cx;
+    
+    public static final Path COMBAT_LOG_DIR = new File("combatlogs").toPath();
 
     public Global() {
         this(false);
@@ -248,7 +251,7 @@ public class Global {
         }
         Set<Character> lineup = pickCharacters(players, Collections.singleton(human), 4);
         match = new Match(lineup, new NoModifier());
-        save(false);
+        //save(false);
     }
 
     public static int random(int start, int end) {
