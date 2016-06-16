@@ -203,7 +203,7 @@ public class CassieTime extends BaseNPCTime {
         if (choice.equals("Ask for milk")) {
             if (npc.getAffection(player) > 0) {
                 String msg;
-                switch (Global.getPlayer().getAddiction(AddictionType.MAGIC_MILK).getSeverity()) {
+                switch (Global.getPlayer().getAddictionSeverity(AddictionType.MAGIC_MILK)) {
                     case HIGH:
                         msg = "You haven't been able to think of anything but Cassie all day, whether simply because of"
                                         + " her milk or because of some deeper feelings. She seems to understand the"

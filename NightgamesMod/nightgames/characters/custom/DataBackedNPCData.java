@@ -39,6 +39,7 @@ public class DataBackedNPCData implements NPCData {
     Body body;
     AiModifiers aiModifiers;
     Map<CommentSituation, String> comments;
+    boolean isStartCharacter;
 
     public DataBackedNPCData() {
         preferredAttributes = new ArrayList<>();
@@ -59,6 +60,7 @@ public class DataBackedNPCData implements NPCData {
         recruitment = new RecruitmentData();
         aiModifiers = new AiModifiers();
         comments = new HashMap<>();
+        isStartCharacter = false;
     }
 
     @Override
@@ -181,5 +183,9 @@ public class DataBackedNPCData implements NPCData {
     @Override
     public Map<CommentSituation, String> getComments() {
         return comments;
+    }
+
+    public boolean isStartCharacter() {
+        return isStartCharacter;
     }
 }

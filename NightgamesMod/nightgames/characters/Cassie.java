@@ -17,6 +17,7 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.stance.Stance;
+import nightgames.start.NpcConfiguration;
 import nightgames.status.Energized;
 
 public class Cassie extends BasePersonality {
@@ -26,7 +27,15 @@ public class Cassie extends BasePersonality {
     private static final long serialVersionUID = 8601852023164119671L;
 
     public Cassie() {
-        super("Cassie", 1);
+        this(Optional.empty(), Optional.empty());
+    }
+
+    public Cassie(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
+        super("Cassie", 1, charConfig, commonConfig);
+    }
+
+    protected void applyBasicStats() {
+        character.isStartCharacter = true;
         preferredCockMod = CockMod.runic;
         character.outfitPlan.add(Clothing.getByID("bra"));
         character.outfitPlan.add(Clothing.getByID("blouse"));
@@ -49,8 +58,7 @@ public class Cassie extends BasePersonality {
         character.plan = Plan.hunting;
         character.mood = Emotion.confident;
         character.body.add(BreastsPart.c);
-        character.body.add(PussyPart.normal);
-        character.body.finishBody(CharacterSex.female);
+        character.initialGender = CharacterSex.female;
     }
 
     @Override

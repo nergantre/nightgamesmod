@@ -49,6 +49,7 @@ public class NPC extends Character {
     public Emotion mood;
     public Plan plan;
     private boolean fakeHuman;
+    public boolean isStartCharacter = false;
 
     public NPC(String name, int level, Personality ai) {
         super(name, level);
@@ -59,6 +60,7 @@ public class NPC extends Character {
             emotes.put(e, 0);
         }
         mood = Emotion.confident;
+        initialGender = CharacterSex.female;
     }
 
     @Override

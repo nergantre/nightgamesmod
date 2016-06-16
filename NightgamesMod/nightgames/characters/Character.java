@@ -24,6 +24,7 @@ import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.TentaclePart;
 import nightgames.characters.custom.AiModifiers;
 import nightgames.combat.Combat;
 import nightgames.combat.IEncounter;
@@ -67,6 +68,7 @@ public abstract class Character extends Observable implements Cloneable {
      *
      */
     public String name;
+    public CharacterSex initialGender;
     public int level;
     public int xp;
     public int rank;
@@ -875,7 +877,7 @@ public abstract class Character extends Observable implements Cloneable {
 
     public void tick(Combat c) {
         body.tick(c);
-        status.forEach(s -> s.tick(c));
+        status.stream().filter(s -> c != null || s.lingering()).forEach(s -> s.tick(c));
         countdown(temporaryAddedTraits);
         countdown(temporaryRemovedTraits);
     }
@@ -1106,6 +1108,11 @@ public abstract class Character extends Observable implements Cloneable {
         }
         removelist.clear();
         addlist.clear();
+    }
+    
+    public void removeStatusNoSideEffects() {
+        status.removeAll(removelist);
+        removelist.clear();
     }
 
     public boolean is(Stsflag sts) {
@@ -1519,7 +1526,8 @@ public abstract class Character extends Observable implements Cloneable {
             c.write(this, orgasmLiner);
             c.write(opponent, opponentOrgasmLiner);
         }
-        if (human()) {
+        // TODO: If NPCs are able to acquire long term addictions, replace this check with a call to human().
+        if (this instanceof Player) {
             Player p = (Player) this;
             
             if (p.checkAddiction(AddictionType.CORRUPTION, opponent) 
@@ -1729,9 +1737,9 @@ public abstract class Character extends Observable implements Cloneable {
             c.write(this, Global.format("The tentacle suit squirms against {self:name-possessive} body.", this,
                             opponent));
             if (hasBreasts()) {
-                body.pleasure(null, null, body.getRandom("breasts"), 5, c);
+                TentaclePart.pleasureWithTentacles(c, this, 5, body.getRandomBreasts());
             }
-            body.pleasure(null, null, body.getRandom("skin"), 5, c);
+            TentaclePart.pleasureWithTentacles(c, this, 5, body.getRandom("skin"));
         }
         if (outfit.has(ClothingTrait.tentacleUnderwear)) {
             String undieName = "underwear";
@@ -1741,15 +1749,16 @@ public abstract class Character extends Observable implements Cloneable {
             c.write(this, Global.format("The tentacle " + undieName + " squirms against {self:name-possessive} crotch.",
                             this, opponent));
             if (hasDick()) {
+                TentaclePart.pleasureWithTentacles(c, this, 5, body.getRandomCock());
                 body.pleasure(null, null, body.getRandom("cock"), 5, c);
             }
             if (hasBalls()) {
-                body.pleasure(null, null, body.getRandom("balls"), 5, c);
+                TentaclePart.pleasureWithTentacles(c, this, 5, body.getRandom("balls"));
             }
             if (hasPussy()) {
-                body.pleasure(null, null, body.getRandom("pussy"), 5, c);
+                TentaclePart.pleasureWithTentacles(c, this, 5, body.getRandomPussy());
             }
-            body.pleasure(null, null, body.getRandom("ass"), 5, c);
+            TentaclePart.pleasureWithTentacles(c, this, 5, body.getRandomAss());
         }
         if (checkOrgasm()) {
             doOrgasm(c, opponent, null, null);
@@ -1866,6 +1875,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void upkeep() {
+        status.removeAll(status.stream().filter(s -> !s.lingering()).collect(Collectors.toSet()));
         getTraits().forEach(trait -> {
             if (trait.status != null) {
                 Status newStatus = trait.status.instance(this, null);

@@ -12,7 +12,9 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
 import nightgames.skills.Skill;
+import nightgames.start.NpcConfiguration;
 import nightgames.status.SlimeMimicry;
 import nightgames.status.Stsflag;
 
@@ -23,11 +25,26 @@ public class Airi extends BasePersonality {
     private static final long serialVersionUID = -8169646189131720872L;
 
     public Airi() {
-        super("Airi", 10);
+        this(Optional.empty(), Optional.empty());
+    }
+
+    public Airi(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
+        super("Airi", 10, charConfig, commonConfig);
+
+    }
+
+    @Override protected void applyBasicStats() {
         character.change();
         character.setTrophy(Item.AiriTrophy);
         preferredCockMod = CockMod.slimy;
 
+        character.outfitPlan.add(Clothing.getByID("shirt"));
+        character.outfitPlan.add(Clothing.getByID("bra"));
+        character.outfitPlan.add(Clothing.getByID("panties"));
+        character.outfitPlan.add(Clothing.getByID("skirt"));
+        character.outfitPlan.add(Clothing.getByID("pantyhose"));
+        character.outfitPlan.add(Clothing.getByID("shoes"));
+        character.change();
         character.rank = 1;
         character.set(Attribute.Power, 6);
         character.set(Attribute.Slime, 1);
@@ -45,9 +62,7 @@ public class Airi extends BasePersonality {
 
         character.plan = Plan.retreating;
         character.mood = Emotion.confident;
-        character.body.add(BreastsPart.b);
-        character.body.add(PussyPart.normal);
-        character.body.finishBody(CharacterSex.female);
+        character.initialGender = CharacterSex.female;
     }
 
     @Override

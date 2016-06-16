@@ -68,6 +68,10 @@ public enum BasicCockPart implements CockPart {
         return desc;
     }
 
+    public String getName() {
+        return name();
+    }
+
     @Override
     public double getHotness(Character self, Character opponent) {
         double hotness = Math.log(size / 4 + 1) / Math.log(2) - 1;

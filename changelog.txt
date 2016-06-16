@@ -1,3 +1,24 @@
+2.0.1 changelog
+Bug fixes:
+- Fixed a ton of Airi specific bugs (thanks dndw)
+- Fixed a bug where being at 0 willpower will make the AI always want to keep you there (hey, since they're at 0 willpower, I don't want to make them cum because that would lower their arousal right? RIGHT?)
+- Fixed/nerfed "Mimic: Witch" so that the AI doesn't pick it every chance it has
+
+Balance:
+- Rebalanced Airi (she was completely ridiculous before these changes)
+	- Gave the the "repressed" trait, which lowers her seduction by 50%
+		- Turning into slime form will remove this trait for that specific battle
+	- Gave her a body sexiness boost in slime form to compensate
+	- Reduced her Arousal to be lower than normal for opponents
+	- Reduced her willpower and willpower growth to be more in line with other opponents
+	- Gave her clothing. Woops. Apparently I forgot to do that, so she was just running around naked all the time without even being in slime form.
+	- Redid her level up trait growth.
+		- Now in human form, she only gets the training perks.
+		- In slime form, she will get more interesting traits dependent on her level.
+
+New features(?):
+	- Made it so you can now press 0-9 to pick choices. Hooray one handed mode.
+
 2.0.0 changelog
 Note the bump in major version numbers. Old saves will NOT be supported (mostly because old Airi will be messed up)
 

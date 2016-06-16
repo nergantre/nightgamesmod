@@ -59,7 +59,7 @@ public class SkillsTest {
 	@Before
 	public void prepare() throws ParseException, IOException {
 		new Global(true);
-		Global.newGame(new Player("Dummy"));
+		Global.newGame("Dummy");
 		npcs1 = new ArrayList<Personality>();
 		npcs2 = new ArrayList<Personality>();
 		try {
@@ -126,6 +126,7 @@ public class SkillsTest {
 		}
 	}
 
+	// TODO: May need to clone npc1 and npc2 here too, depending on how skills affect characters.
 	public void testCombo(Character npc1, Character npc2, Position pos) throws CloneNotSupportedException {
 		pos.top = npc1;
 		pos.bottom = npc2;
@@ -142,9 +143,9 @@ public class SkillsTest {
 					NPC npc1 = npcs1.get(i).getCharacter();
 					NPC npc2 = npcs2.get(j).getCharacter();
 					System.out.println("Testing [" + i + "]: " + npc1.getName() + " with [" + j + "]: " + npc2.getName() + " in Stance " + pos.getClass().getSimpleName());
-					testCombo(npc1, npc2, pos);
+					testCombo(npc1.clone(), npc2.clone(), pos);
 					System.out.println("Testing [" + j + "]: " + npc2.getName() + " with [" + i + "]: " + npc1.getName() + " in Stance " + pos.getClass().getSimpleName());
-					testCombo(npc1, npc2, pos);
+					testCombo(npc2.clone(), npc1.clone(), pos);
 				}
 			}
 		}

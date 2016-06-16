@@ -167,7 +167,10 @@ public class Frenzied extends DurationStatus {
 
     @Override
     public void tick(Combat c) {
-        if (!c.getStance().inserted(affected)) {
+        if (c == null) {
+            affected.removelist.add(this);
+            affected.removeStatusNoSideEffects();
+        } else if (c == null || !c.getStance().inserted(affected)) {
             affected.removelist.add(this);
         } else {
             setDuration(getDuration() + 2);

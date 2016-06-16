@@ -1,11 +1,9 @@
 package nightgames.characters;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
+import nightgames.start.PlayerConfiguration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -46,14 +44,41 @@ public class Player extends Character {
      *
      */
     public GUI gui;
-    public String sex;
     private Growth growth;
     public int traitPoints;
     private List<Addiction> addictions;
 
-    public Player(String name, CharacterSex sex) {
+    public Player(String name) {
+        this(name, CharacterSex.male, Optional.empty(), new HashMap<>());
+    }
+
+    // TODO(Ryplinn): This initialization pattern is very close to that of BasePersonality. I think it makes sense to make NPC the primary parent of characters instead of BasePersonality.
+    public Player(String name, CharacterSex sex, Optional<PlayerConfiguration> config,
+                    Map<Attribute, Integer> selectedAttributes) {
         super(name, 1);
-        if (sex == CharacterSex.female || sex == CharacterSex.herm) {
+        initialGender = sex;
+        applyBasicStats();
+        applyConfigStats(config);
+        finishCharacter(selectedAttributes);
+
+    }
+
+    private void applyBasicStats() {
+        willpower.setMax(willpower.max());
+        availableAttributePoints = 0;
+        setTrophy(Item.PlayerTrophy);
+        growth = new Growth();
+        setGrowth();
+        addictions = new ArrayList<>();
+    }
+
+    private void applyConfigStats(Optional<PlayerConfiguration> config) {
+        config.ifPresent(c -> c.apply(this));
+    }
+
+    private void finishCharacter(Map<Attribute, Integer> selectedAttributes) {
+        att.putAll(selectedAttributes);
+        if (initialGender == CharacterSex.female || initialGender == CharacterSex.herm) {
             outfitPlan.add(Clothing.getByID("bra"));
             outfitPlan.add(Clothing.getByID("panties"));
         } else {
@@ -63,19 +88,8 @@ public class Player extends Character {
         outfitPlan.add(Clothing.getByID("jeans"));
         outfitPlan.add(Clothing.getByID("socks"));
         outfitPlan.add(Clothing.getByID("sneakers"));
-
-        willpower.setMax(willpower.max());
         change();
-        availableAttributePoints = 0;
-        setTrophy(Item.PlayerTrophy);
-        body.finishBody(sex);
-        growth = new Growth();
-        setGrowth();
-        addictions = new ArrayList<>();
-    }
-
-    public Player(String name) {
-        this(name, CharacterSex.male);
+        body.finishBody(initialGender);
     }
 
     public void setGrowth() {
@@ -888,6 +902,13 @@ public class Player extends Character {
             Addiction addiction = Addiction.load(type, cause, mag, combat);
             this.addictions.add(addiction);
         }
+    }
+
+    public Severity getAddictionSeverity(AddictionType type) {
+        if (hasAddiction(type)) {
+            return getAddiction(type).getSeverity();
+        }
+        return Severity.NONE;
     }
 
 }

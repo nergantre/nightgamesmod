@@ -2,7 +2,6 @@ package nightgames.start;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -33,27 +32,13 @@ public class StartConfiguration {
 
     private String name, summary;
     private boolean enabled;
-    private PlayerConfiguration player;
+    public PlayerConfiguration player;
     private List<NpcConfiguration> npcs;
-    private NpcConfiguration npcCommon;
+    public NpcConfiguration npcCommon;
     private List<Flag> flags;
 
     private StartConfiguration() {
 
-    }
-
-    public Player buildPlayer(String name) {
-        return buildPlayer(name, null, null);
-    }
-
-    public Player buildPlayer(String name, List<Trait> traits, CharacterSex gender) {
-        return player.build(name, Optional.ofNullable(gender), Optional.ofNullable(traits));
-    }
-
-    public List<NPC> buildNpcs() {
-        return npcs.stream()
-                   .map(n -> n.build(Optional.ofNullable(npcCommon)))
-                   .collect(Collectors.toList());
     }
 
     public String getName() {
@@ -83,7 +68,7 @@ public class StartConfiguration {
     public int availableAttributePoints() {
         return player.getAttributePoints();
     }
-    
+
     public Map<Attribute, Integer> playerAttributes() {
         return new HashMap<>(player.attributes);
     }
@@ -98,20 +83,14 @@ public class StartConfiguration {
     }
 
     @SuppressWarnings("unchecked")
-    public static StartConfiguration parse(Reader read) throws ParseException {
+    public static StartConfiguration parse(JSONObject root) throws ParseException {
         StartConfiguration cfg = new StartConfiguration();
-        JSONObject root;
-        try {
-            root = (JSONObject) JSONValue.parseWithException(read);
-        } catch (IOException e) {
-            throw new RuntimeException("Error reading file.");
-        }
 
         cfg.name = JSONUtils.readString(root, "name");
         cfg.summary = JSONUtils.readString(root, "summary");
         cfg.enabled = JSONUtils.readBoolean(root, "enabled");
         cfg.player = PlayerConfiguration.parse((JSONObject) root.get("player"));
-        cfg.npcCommon = NpcConfiguration.parse((JSONObject) root.get("all_npcs"));
+        cfg.npcCommon = NpcConfiguration.parseAllNpcs((JSONObject) root.get("all_npcs"));
 
         JSONArray npcs = (JSONArray) root.get("npcs");
         cfg.npcs = ((Stream<Object>) npcs.stream()).map(o -> (JSONObject) o)
@@ -124,6 +103,10 @@ public class StartConfiguration {
         return cfg;
     }
 
+    public Optional<NpcConfiguration> findNpcConfig(String type) {
+        return npcs.stream().filter(npc -> type.equals(npc.type)).findAny();
+    }
+
     public static Collection<StartConfiguration> loadConfigurations() {
         Path dir = new File("starts/").toPath();
         Collection<StartConfiguration> res = new ArrayList<>();
@@ -132,7 +115,7 @@ public class StartConfiguration {
                 if (file.toString()
                         .endsWith(".json")) {
                     try {
-                        res.add(parse(Files.newBufferedReader(file)));
+                        res.add(parse(JSONUtils.rootFromFile(file)));
                     } catch (Exception e) {
                         System.out.println("Failed to load configuration from " + file.toString() + ": ");
                         System.out.flush();
@@ -149,9 +132,8 @@ public class StartConfiguration {
 
     public static void main(String[] args) throws IOException, ParseException {
         Clothing.buildClothingTable();
-        Reader reader = Files.newBufferedReader(new File("starts/Male Start.json").toPath());
-        StartConfiguration cfg = parse(reader);
-        reader.close();
+        Path path = new File("starts/Male Start.json").toPath();
+        StartConfiguration cfg = parse(JSONUtils.rootFromFile(path));
         System.out.println(cfg);
     }
 }
