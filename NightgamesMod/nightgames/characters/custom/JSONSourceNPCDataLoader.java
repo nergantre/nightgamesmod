@@ -21,23 +21,23 @@ import nightgames.characters.Trait;
 import nightgames.characters.body.Body;
 import nightgames.characters.custom.effect.CustomEffect;
 import nightgames.characters.custom.effect.MoneyModEffect;
-import nightgames.characters.custom.requirement.AndRequirement;
-import nightgames.characters.custom.requirement.BodyPartRequirement;
-import nightgames.characters.custom.requirement.CustomRequirement;
-import nightgames.characters.custom.requirement.DomRequirement;
-import nightgames.characters.custom.requirement.InsertedRequirement;
-import nightgames.characters.custom.requirement.ItemRequirement;
-import nightgames.characters.custom.requirement.LevelRequirement;
-import nightgames.characters.custom.requirement.MoodRequirement;
-import nightgames.characters.custom.requirement.NotRequirement;
-import nightgames.characters.custom.requirement.OrRequirement;
-import nightgames.characters.custom.requirement.OrgasmRequirement;
-import nightgames.characters.custom.requirement.RandomRequirement;
-import nightgames.characters.custom.requirement.ResultRequirement;
-import nightgames.characters.custom.requirement.ReverseRequirement;
-import nightgames.characters.custom.requirement.StanceRequirement;
-import nightgames.characters.custom.requirement.SubRequirement;
-import nightgames.characters.custom.requirement.TraitRequirement;
+import nightgames.requirement.AndRequirement;
+import nightgames.requirement.BodyPartRequirement;
+import nightgames.requirement.Requirement;
+import nightgames.requirement.DomRequirement;
+import nightgames.requirement.InsertedRequirement;
+import nightgames.requirement.ItemRequirement;
+import nightgames.requirement.LevelRequirement;
+import nightgames.requirement.MoodRequirement;
+import nightgames.requirement.NotRequirement;
+import nightgames.requirement.OrRequirement;
+import nightgames.requirement.OrgasmRequirement;
+import nightgames.requirement.RandomRequirement;
+import nightgames.requirement.ResultRequirement;
+import nightgames.requirement.ReverseRequirement;
+import nightgames.requirement.StanceRequirement;
+import nightgames.requirement.SubRequirement;
+import nightgames.requirement.TraitRequirement;
 import nightgames.combat.Result;
 import nightgames.global.JSONUtils;
 import nightgames.items.Item;
@@ -163,21 +163,21 @@ public class JSONSourceNPCDataLoader {
         }
     }
 
-    private static void loadRequirement(JSONObject obj, List<CustomRequirement> reqs) {
+    private static void loadRequirement(JSONObject obj, List<Requirement> reqs) {
         // reverse reverses the self/other, so you can apply the requirement to
         // the opponent
         if (obj.containsKey("reverse")) {
-            List<CustomRequirement> subReqs = new ArrayList<>();
+            List<Requirement> subReqs = new ArrayList<>();
             loadRequirement((JSONObject) obj.get("reverse"), subReqs);
             reqs.add(new ReverseRequirement(subReqs));
         }
         // and requires that both of the sub requirements are true
         if (obj.containsKey("and")) {
             JSONArray reqsArr = (JSONArray) obj.get("and");
-            List<List<CustomRequirement>> allReqs = new ArrayList<>();
+            List<List<Requirement>> allReqs = new ArrayList<>();
             for (Object reqMem : reqsArr) {
                 JSONObject reqsObj = (JSONObject) reqMem;
-                List<CustomRequirement> subReqs = new ArrayList<>();
+                List<Requirement> subReqs = new ArrayList<>();
                 loadRequirement(reqsObj, subReqs);
                 allReqs.add(subReqs);
             }
@@ -186,10 +186,10 @@ public class JSONSourceNPCDataLoader {
         // or requires that one of the sub requirements are true
         if (obj.containsKey("or")) {
             JSONArray reqsArr = (JSONArray) obj.get("or");
-            List<List<CustomRequirement>> allReqs = new ArrayList<>();
+            List<List<Requirement>> allReqs = new ArrayList<>();
             for (Object reqMem : reqsArr) {
                 JSONObject reqsObj = (JSONObject) reqMem;
-                List<CustomRequirement> subReqs = new ArrayList<>();
+                List<Requirement> subReqs = new ArrayList<>();
                 loadRequirement(reqsObj, subReqs);
                 allReqs.add(subReqs);
             }
@@ -197,7 +197,7 @@ public class JSONSourceNPCDataLoader {
         }
         // not requires that the sub requirement be not true
         if (obj.containsKey("not")) {
-            List<CustomRequirement> subReqs = new ArrayList<>();
+            List<Requirement> subReqs = new ArrayList<>();
             loadRequirement((JSONObject) obj.get("not"), subReqs);
             reqs.add(new NotRequirement(subReqs));
         }
@@ -217,7 +217,7 @@ public class JSONSourceNPCDataLoader {
         }
         // inserted requires the character to be inserted. Invalid out of combat
         if (obj.containsKey("inserted")) {
-            reqs.add(new InsertedRequirement(JSONUtils.readBoolean(obj, "inserted")));
+            reqs.add(new InsertedRequirement());
         }
         // body part requires the character to have at least one of the type of
         // body part specified

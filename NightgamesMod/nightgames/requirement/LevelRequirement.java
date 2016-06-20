@@ -1,13 +1,20 @@
-package nightgames.characters.custom.requirement;
+package nightgames.requirement;
 
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 
-public class LevelRequirement implements CustomRequirement {
-    int level;
+/**
+ * Returns true if character self's level is at least the specified amount.
+ */
+public class LevelRequirement implements Requirement {
+    private final int level;
 
     public LevelRequirement(int level) {
         this.level = level;
+    }
+
+    @Override public String getKey() {
+        return "level";
     }
 
     @Override

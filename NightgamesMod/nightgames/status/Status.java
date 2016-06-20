@@ -11,7 +11,7 @@ import org.json.simple.JSONObject;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
-import nightgames.characters.custom.requirement.CustomRequirement;
+import nightgames.requirement.Requirement;
 import nightgames.combat.Combat;
 import nightgames.skills.Skill;
 
@@ -19,7 +19,7 @@ public abstract class Status implements Cloneable {
     public String name;
     public Character affected;
     protected HashSet<Stsflag> flags;
-    protected List<CustomRequirement> requirements;
+    protected List<Requirement> requirements;
 
     public Status(String name, Character affected) {
         this.name = name;

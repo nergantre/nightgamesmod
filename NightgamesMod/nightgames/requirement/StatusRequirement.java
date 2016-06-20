@@ -1,10 +1,10 @@
-package nightgames.characters.custom.requirement;
+package nightgames.requirement;
 
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.status.Stsflag;
 
-public class StatusRequirement implements CustomRequirement {
+public class StatusRequirement implements Requirement {
     private final Stsflag flag;
 
     public StatusRequirement(String flag) {
@@ -15,12 +15,14 @@ public class StatusRequirement implements CustomRequirement {
         this.flag = flag;
     }
 
+    @Override public String getKey() {
+        return "status";
+    }
+
     @Override
     public boolean meets(Combat c, Character self, Character other) {
-        if (c == null || flag == null)
-            return false;
+        return !(c == null || flag == null) && self.getStatus(flag) != null;
 
-        return self.getStatus(flag) != null;
     }
 
 }

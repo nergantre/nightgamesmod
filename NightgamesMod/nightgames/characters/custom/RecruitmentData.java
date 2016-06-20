@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nightgames.characters.custom.effect.CustomEffect;
-import nightgames.characters.custom.requirement.CustomRequirement;
+import nightgames.requirement.Requirement;
 
 public class RecruitmentData {
     public String introduction;
     public String confirm;
     public String action;
-    public List<CustomRequirement> requirement;
+    public List<Requirement> requirement;
     public List<CustomEffect> effects;
 
     public RecruitmentData() {

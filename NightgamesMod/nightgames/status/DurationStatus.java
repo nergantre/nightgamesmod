@@ -2,7 +2,7 @@ package nightgames.status;
 
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.characters.custom.requirement.DurationRequirement;
+import nightgames.requirement.DurationRequirement;
 import nightgames.combat.Combat;
 
 public abstract class DurationStatus extends Status {

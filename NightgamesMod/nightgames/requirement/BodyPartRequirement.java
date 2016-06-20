@@ -1,13 +1,20 @@
-package nightgames.characters.custom.requirement;
+package nightgames.requirement;
 
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 
-public class BodyPartRequirement implements CustomRequirement {
-    private String type;
+/**
+ * Returns true if character self has at least one of the bodypart.
+ */
+public class BodyPartRequirement implements Requirement {
+    private final String type;
 
     public BodyPartRequirement(String type) {
         this.type = type;
+    }
+
+    @Override public String getKey() {
+        return "bodypart";
     }
 
     @Override

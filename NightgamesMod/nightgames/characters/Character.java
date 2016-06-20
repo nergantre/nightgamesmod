@@ -67,6 +67,7 @@ public abstract class Character extends Observable implements Cloneable {
     /**
      *
      */
+    // TODO(Ryplinn): Move combat stats to a different, combat-focused class to make it impossible to forget to set or reset things like orgasms.
     public String name;
     public CharacterSex initialGender;
     public int level;

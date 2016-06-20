@@ -1,11 +1,18 @@
-package nightgames.characters.custom.requirement;
+package nightgames.requirement;
 
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 
-public class WinningRequirement implements CustomRequirement {
+/**
+ * Returns true based on an estimation of whether character self is winning.
+ */
+public class WinningRequirement implements Requirement {
 
     private static final int INITIAL_WINNING_SCORE = 10;
+
+    @Override public String getKey() {
+        return "winning";
+    }
 
     @Override
     public boolean meets(Combat c, Character self, Character other) {

@@ -1,13 +1,20 @@
-package nightgames.characters.custom.requirement;
+package nightgames.requirement;
 
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 
-public class DurationRequirement implements CustomRequirement {
+/**
+ * Returns true while duration > 0. Primarily used when keeping track of time-limited statuses.
+ */
+public class DurationRequirement implements Requirement {
     public int duration;
 
     public DurationRequirement(int duration) {
         this.duration = duration;
+    }
+
+    @Override public String getKey() {
+        return "duration";
     }
 
     public void tick(int i) {

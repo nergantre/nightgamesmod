@@ -172,9 +172,9 @@
 				"requirements" :
 				{
 					"and" : [
-							{"bodypart" : "pussy"},
-							{"bodypart" : "tail"}
-						]
+							"bodypart" : "pussy",
+							"bodypart" : "tail"
+					]
 				}
 				,
 				"text" : "She wins by... having a pussy and a tail?"
@@ -182,12 +182,12 @@
 				"requirements" :
 				{
 					"or": [
-						{"dom" : ""},
-						{"item" : {
+						"dom" : "",
+						"item" : {
 								"item" : "Dildo",
 								"amount" : 1
-							}
 						}
+
 					]
 				},
 				"text" : "She wins by... either being in a dominant position OR having a dildo?"

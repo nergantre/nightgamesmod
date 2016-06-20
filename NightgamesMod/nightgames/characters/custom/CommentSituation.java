@@ -18,15 +18,15 @@ import org.json.simple.JSONValue;
 
 import nightgames.Resources.ResourceLoader;
 import nightgames.characters.Character;
-import nightgames.characters.custom.requirement.AnalRequirement;
-import nightgames.characters.custom.requirement.CustomRequirement;
-import nightgames.characters.custom.requirement.DomRequirement;
-import nightgames.characters.custom.requirement.InsertedRequirement;
-import nightgames.characters.custom.requirement.ReverseRequirement;
-import nightgames.characters.custom.requirement.StanceRequirement;
-import nightgames.characters.custom.requirement.StatusRequirement;
-import nightgames.characters.custom.requirement.SubRequirement;
-import nightgames.characters.custom.requirement.WinningRequirement;
+import nightgames.requirement.AnalRequirement;
+import nightgames.requirement.Requirement;
+import nightgames.requirement.DomRequirement;
+import nightgames.requirement.InsertedRequirement;
+import nightgames.requirement.ReverseRequirement;
+import nightgames.requirement.StanceRequirement;
+import nightgames.requirement.StatusRequirement;
+import nightgames.requirement.SubRequirement;
+import nightgames.requirement.WinningRequirement;
 import nightgames.combat.Combat;
 import nightgames.global.JSONUtils;
 
@@ -121,9 +121,9 @@ public enum CommentSituation {
     }
 
     private final int priority;
-    private final Set<CustomRequirement> reqs;
+    private final Set<Requirement> reqs;
 
-    private CommentSituation(int priority, CustomRequirement... reqs) {
+    private CommentSituation(int priority, Requirement... reqs) {
         this.priority = priority;
         this.reqs = Collections.unmodifiableSet(new HashSet<>((Arrays.asList(reqs))));
     }
@@ -149,7 +149,7 @@ public enum CommentSituation {
                         .max(Comparator.comparingInt(CommentSituation::getPriority)).get();
     }
 
-    private static CustomRequirement rev(CustomRequirement req) {
+    private static Requirement rev(Requirement req) {
         return new ReverseRequirement(Arrays.asList(req));
     }
 

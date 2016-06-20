@@ -19,7 +19,6 @@ public class DivineCharge extends Status {
         flag(Stsflag.divinecharge);
         flag(Stsflag.purgable);
         this.magnitude = magnitude;
-        // requirements.add(new ReverseRequirement(Arrays.asList(new EitherInsertedRequirement(true))));
     }
 
     private String getPart(Combat c) {

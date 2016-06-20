@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nightgames.characters.Character;
-import nightgames.characters.custom.requirement.CustomRequirement;
+import nightgames.requirement.Requirement;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 
@@ -14,7 +14,7 @@ public class CustomStringEntry {
      */
 
     String line;
-    List<CustomRequirement> requirements;
+    List<Requirement> requirements;
 
     public CustomStringEntry(String line) {
         this.line = line;
@@ -22,7 +22,7 @@ public class CustomStringEntry {
     }
 
     public boolean meetsRequirements(Combat c, Character self, Character other) {
-        for (CustomRequirement req : requirements) {
+        for (Requirement req : requirements) {
             if (!req.meets(c, self, other)) {
                 return false;
             }
