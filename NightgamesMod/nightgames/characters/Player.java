@@ -58,6 +58,7 @@ public class Player extends Character {
         super(name, 1);
         initialGender = sex;
         applyBasicStats();
+        body.makeGenitalOrgans(initialGender);
         applyConfigStats(config);
         finishCharacter(selectedAttributes);
 
