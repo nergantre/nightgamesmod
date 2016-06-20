@@ -42,7 +42,7 @@ public class NpcConfigurationTest {
                         .orElseThrow(() -> new NoSuchElementException("TestAngel not found in test config."));
     }
 
-    @Test public  void testConfigMerge() throws Exception {
+    @Test public void testConfigMerge() throws Exception {
         NpcConfiguration mergedConfig = new NpcConfiguration(angelConfig, startConfig.npcCommon);
         assertEquals("TestAngel", mergedConfig.type);
         assertEquals(Optional.empty(), mergedConfig.gender);
@@ -55,6 +55,25 @@ public class NpcConfigurationTest {
         assertEquals(expectedAttributes, mergedConfig.attributes);
         assertEquals(BodyConfiguration.Archetype.ANGEL, mergedConfig.body.get().type.get());
         assertEquals(50, mergedConfig.xp.get().intValue());
+        assertEquals(5, mergedConfig.level.get().intValue());
+        assertEquals(5000, mergedConfig.money.get().intValue());
+    }
+
+    @Test public void testNpcCreation() throws Exception {
+        TestAngel angel = new TestAngel(Optional.of(angelConfig), Optional.of(startConfig.npcCommon));
+        assertEquals("TestAngel", angel.character.getType());
+        Map<Attribute, Integer> expectedAttributes = new HashMap<>();
+        expectedAttributes.put(Attribute.Power, 13);
+        expectedAttributes.put(Attribute.Seduction, 20);
+        expectedAttributes.put(Attribute.Cunning, 15);
+        expectedAttributes.put(Attribute.Divinity, 10);
+        expectedAttributes.put(Attribute.Arcane, 2);
+        expectedAttributes.put(Attribute.Perception, 6);
+        expectedAttributes.put(Attribute.Speed, 5);
+        assertEquals(expectedAttributes, angel.character.att);
+        assertEquals(50, angel.character.xp);
+        assertEquals(5, angel.character.level);
+        assertEquals(5000, angel.character.money);
     }
 
     @Test public void testBodyMerge() throws Exception {
