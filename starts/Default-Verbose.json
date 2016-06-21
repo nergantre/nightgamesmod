@@ -165,6 +165,7 @@
 		{
 			"type":"Mara",
 			"name":"Mara",
+			"start": true,
 			"attributes": {
 				"Power":5,
 				"Seduction":5,
