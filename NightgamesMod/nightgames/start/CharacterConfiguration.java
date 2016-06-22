@@ -71,7 +71,7 @@ public abstract class CharacterConfiguration {
         name.ifPresent(n -> base.name = n);
         base.att.putAll(attributes);
         money.ifPresent(m -> base.money = m);
-        level.ifPresent(l -> base.money = l);
+        level.ifPresent(l -> base.level = l);
         xp.ifPresent(x -> base.xp = x);
         traits.ifPresent(t -> base.traits = new CopyOnWriteArrayList<Trait>(t));
         if (clothing.isPresent()) {
