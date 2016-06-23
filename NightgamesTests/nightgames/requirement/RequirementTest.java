@@ -8,7 +8,7 @@ import java.util.Arrays;
 import static org.junit.Assert.*;
 
 /**
- * Created by Ryplinn on 6/17/2016.
+ *
  */
 public class RequirementTest {
 

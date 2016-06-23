@@ -18,10 +18,6 @@ public class ResultRequirement implements Requirement {
         this(Result.valueOf(result));
     }
 
-    @Override public String getKey() {
-        return "result";
-    }
-
     @Override
     public boolean meets(Combat c, Character self, Character other) {
         return c != null && c.state == result;

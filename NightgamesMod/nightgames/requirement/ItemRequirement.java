@@ -15,12 +15,8 @@ public class ItemRequirement implements Requirement {
         this.item = item;
     }
 
-    public ItemRequirement(String itemType, int amount) {
-        item = new ItemAmount(Item.valueOf(itemType), amount);
-    }
-
-    @Override public String getKey() {
-        return "item";
+    public ItemRequirement(String item, int amount) {
+        this.item = new ItemAmount(Item.valueOf(item), amount);
     }
 
     @Override

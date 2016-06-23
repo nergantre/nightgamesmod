@@ -11,10 +11,6 @@ public class AttributeRequirement implements Requirement {
     private final Attribute att;
     private final int amount;
 
-    @Override public String getKey() {
-        return "attribute";
-    }
-
     public AttributeRequirement(Attribute att, int amount) {
         this.att = att;
         this.amount = amount;

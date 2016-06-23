@@ -11,10 +11,6 @@ public class InsertedRequirement implements Requirement {
     public InsertedRequirement() {
     }
 
-    @Override public String getKey() {
-        return "inserted";
-    }
-
     @Override
     public boolean meets(Combat c, Character self, Character other) {
         return c != null && c.getStance().inserted(self);

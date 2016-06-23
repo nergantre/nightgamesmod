@@ -13,10 +13,6 @@ public class LevelRequirement implements Requirement {
         this.level = level;
     }
 
-    @Override public String getKey() {
-        return "level";
-    }
-
     @Override
     public boolean meets(Combat c, Character self, Character other) {
         return self.getLevel() >= level;

@@ -13,10 +13,6 @@ public class DurationRequirement implements Requirement {
         this.duration = duration;
     }
 
-    @Override public String getKey() {
-        return "duration";
-    }
-
     public void tick(int i) {
         duration -= i;
     }

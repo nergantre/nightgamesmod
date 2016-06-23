@@ -13,10 +13,6 @@ public class BodyPartRequirement implements Requirement {
         this.type = type;
     }
 
-    @Override public String getKey() {
-        return "bodypart";
-    }
-
     @Override
     public boolean meets(Combat c, Character self, Character other) {
         return self.body.has(type);

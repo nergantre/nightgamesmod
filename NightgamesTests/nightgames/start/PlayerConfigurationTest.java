@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 
 /**
  * Tests involving starting player configuration.
- * Created by Ryplinn on 6/20/2016.
+ *
  */
 public class PlayerConfigurationTest {
     StartConfiguration startConfig;

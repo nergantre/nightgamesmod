@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 /**
  * Tests relating to the Player character class.
  * <p>
- * Created by Ryplinn on 6/20/2016.
+ *
  */
 public class PlayerTest {
     @BeforeClass public static void setUpPlayerTest() {

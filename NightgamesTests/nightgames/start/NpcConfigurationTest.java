@@ -24,7 +24,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /**
- * Created by Ryplinn on 6/11/2016.
+ *
  */
 public class NpcConfigurationTest {
     StartConfiguration startConfig;

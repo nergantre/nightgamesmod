@@ -15,10 +15,6 @@ public class AndRequirement implements Requirement {
         this.reqs = reqs;
     }
 
-    @Override public String getKey() {
-        return "and";
-    }
-
     @Override
     public boolean meets(Combat c, Character self, Character other) {
         return reqs.stream().allMatch(r -> r.meets(c, self, other));
