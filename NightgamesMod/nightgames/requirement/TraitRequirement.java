@@ -15,12 +15,24 @@ public class TraitRequirement implements Requirement {
         this.trait = Trait.valueOf(trait);
     }
 
-    @Override public String getKey() {
-        return "trait";
-    }
-
     @Override
     public boolean meets(Combat c, Character self, Character other) {
         return self.has(trait);
+    }
+
+    @Override public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        TraitRequirement that = (TraitRequirement) o;
+
+        return trait == that.trait;
+
+    }
+
+    @Override public int hashCode() {
+        return trait.hashCode();
     }
 }

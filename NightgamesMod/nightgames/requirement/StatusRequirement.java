@@ -15,14 +15,25 @@ public class StatusRequirement implements Requirement {
         this.flag = flag;
     }
 
-    @Override public String getKey() {
-        return "status";
-    }
-
     @Override
     public boolean meets(Combat c, Character self, Character other) {
         return !(c == null || flag == null) && self.getStatus(flag) != null;
 
     }
 
+    @Override public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        StatusRequirement that = (StatusRequirement) o;
+
+        return flag == that.flag;
+
+    }
+
+    @Override public int hashCode() {
+        return flag.hashCode();
+    }
 }
