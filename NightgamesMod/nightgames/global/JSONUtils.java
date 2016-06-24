@@ -79,7 +79,7 @@ public class JSONUtils {
         try (Reader read = Files.newBufferedReader(path)) {
             root = (JSONObject) JSONValue.parseWithException(read);
         } catch (IOException|ParseException e) {
-            throw new RuntimeException("Error reading JSON file.");
+            throw new RuntimeException("Error reading JSON file: " + e.getMessage());
         }
 
         return root;

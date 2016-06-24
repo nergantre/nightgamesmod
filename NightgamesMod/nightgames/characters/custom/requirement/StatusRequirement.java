@@ -23,4 +23,19 @@ public class StatusRequirement implements CustomRequirement {
         return self.getStatus(flag) != null;
     }
 
+    @Override public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        StatusRequirement that = (StatusRequirement) o;
+
+        return flag == that.flag;
+
+    }
+
+    @Override public int hashCode() {
+        return flag.hashCode();
+    }
 }

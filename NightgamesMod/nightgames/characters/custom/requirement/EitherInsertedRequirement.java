@@ -17,4 +17,20 @@ public class EitherInsertedRequirement implements CustomRequirement {
         }
         return c.getStance().inserted() == inserted;
     }
+
+    @Override public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        EitherInsertedRequirement that = (EitherInsertedRequirement) o;
+
+        return inserted == that.inserted;
+
+    }
+
+    @Override public int hashCode() {
+        return (inserted ? 1 : 0);
+    }
 }

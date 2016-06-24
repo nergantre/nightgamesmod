@@ -17,4 +17,20 @@ public class StanceRequirement implements CustomRequirement {
         }
         return c.getStance().getClass().getSimpleName().equals(stance);
     }
+
+    @Override public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        StanceRequirement that = (StanceRequirement) o;
+
+        return stance.equals(that.stance);
+
+    }
+
+    @Override public int hashCode() {
+        return stance.hashCode();
+    }
 }

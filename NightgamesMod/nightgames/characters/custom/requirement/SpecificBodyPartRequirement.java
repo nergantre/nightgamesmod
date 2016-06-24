@@ -15,4 +15,20 @@ public class SpecificBodyPartRequirement implements CustomRequirement {
     public boolean meets(Combat c, Character self, Character other) {
         return self.body.contains(part);
     }
+
+    @Override public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        SpecificBodyPartRequirement that = (SpecificBodyPartRequirement) o;
+
+        return part.equals(that.part);
+
+    }
+
+    @Override public int hashCode() {
+        return part.hashCode();
+    }
 }

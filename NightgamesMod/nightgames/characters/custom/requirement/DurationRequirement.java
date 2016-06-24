@@ -18,4 +18,20 @@ public class DurationRequirement implements CustomRequirement {
     public boolean meets(Combat c, Character self, Character other) {
         return duration > 0;
     }
+
+    @Override public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        DurationRequirement that = (DurationRequirement) o;
+
+        return duration == that.duration;
+
+    }
+
+    @Override public int hashCode() {
+        return duration;
+    }
 }

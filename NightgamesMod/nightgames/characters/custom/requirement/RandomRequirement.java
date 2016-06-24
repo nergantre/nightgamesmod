@@ -15,4 +15,20 @@ public class RandomRequirement implements CustomRequirement {
     public boolean meets(Combat c, Character self, Character other) {
         return Global.randomfloat() < thresh;
     }
+
+    @Override public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        RandomRequirement that = (RandomRequirement) o;
+
+        return Float.compare(that.thresh, thresh) == 0;
+
+    }
+
+    @Override public int hashCode() {
+        return (thresh != +0.0f ? Float.floatToIntBits(thresh) : 0);
+    }
 }

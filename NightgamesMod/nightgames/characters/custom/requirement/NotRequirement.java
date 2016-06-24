@@ -21,4 +21,20 @@ public class NotRequirement implements CustomRequirement {
     public boolean meets(Combat c, Character self, Character other) {
         return req.stream().allMatch(r -> !r.meets(c, self, other));
     }
+
+    @Override public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        NotRequirement that = (NotRequirement) o;
+
+        return req.equals(that.req);
+
+    }
+
+    @Override public int hashCode() {
+        return req.hashCode();
+    }
 }

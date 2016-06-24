@@ -18,4 +18,20 @@ public class ResultRequirement implements CustomRequirement {
         }
         return c.state == result;
     }
+
+    @Override public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        ResultRequirement that = (ResultRequirement) o;
+
+        return result == that.result;
+
+    }
+
+    @Override public int hashCode() {
+        return result.hashCode();
+    }
 }

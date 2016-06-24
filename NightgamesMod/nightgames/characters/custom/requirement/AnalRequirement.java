@@ -18,4 +18,19 @@ public class AnalRequirement implements CustomRequirement {
         return c.getStance().anallyPenetrated() == anal;
     }
 
+    @Override public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        AnalRequirement that = (AnalRequirement) o;
+
+        return anal == that.anal;
+
+    }
+
+    @Override public int hashCode() {
+        return (anal ? 1 : 0);
+    }
 }

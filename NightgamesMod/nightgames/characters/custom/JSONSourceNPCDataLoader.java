@@ -69,11 +69,20 @@ public class JSONSourceNPCDataLoader {
         stats.willpower = JSONUtils.readFloat(resources, "willpower");
     }
 
+    // TODO(Ryplinn): Convert this to using JSONUtils.rootFromFile()
     public static NPCData load(InputStream in) throws ParseException, IOException {
         Object value = JSONValue.parseWithException(new InputStreamReader(in));
-        DataBackedNPCData data = new DataBackedNPCData();
         try {
             JSONObject object = (JSONObject) value;
+            return load(object);
+        } catch (ClassCastException e) {
+            throw new IOException("Could not parse NPC JSON file: " + e.getMessage());
+        }
+    }
+
+    public static NPCData load(JSONObject object) throws IOException {
+        DataBackedNPCData data = new DataBackedNPCData();
+        try {
             data.name = (String) object.get("name");
             data.type = (String) object.get("type");
             data.trophy = Item.valueOf((String) object.get("trophy"));
@@ -163,7 +172,7 @@ public class JSONSourceNPCDataLoader {
         }
     }
 
-    private static void loadRequirement(JSONObject obj, List<CustomRequirement> reqs) {
+    protected static void loadRequirement(JSONObject obj, List<CustomRequirement> reqs) {
         // reverse reverses the self/other, so you can apply the requirement to
         // the opponent
         if (obj.containsKey("reverse")) {
