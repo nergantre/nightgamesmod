@@ -62,7 +62,7 @@ public class Combat extends Observable implements Cloneable {
     private HashMap<String, String> images;
     boolean lastFailed = false;
     private CombatLog log;
-    
+
     String imagePath = "";
 
     public Combat(Character p1, Character p2, Area loc) {
@@ -309,14 +309,13 @@ public class Combat extends Observable implements Cloneable {
         phase = 1;
         p1.regen(this);
         p2.regen(this);
-        message = other.describe(player.get(Attribute.Perception), this) + "<p>"
-                        + Global.capitalizeFirstLetter(getStance().describe()) + "<p>"
-                        + player.describe(other.get(Attribute.Perception), this) + "<p>";
+        message = describe(player, other);
         if ((p1.human() || p2.human()) && !Global.checkFlag(Flag.noimage)) {
             Global.gui()
                   .clearImage();
             if (!imagePath.isEmpty()) {
-            Global.gui().displayImage(imagePath, images.get(imagePath));
+                Global.gui()
+                      .displayImage(imagePath, images.get(imagePath));
             }
         }
         p1act = null;
@@ -332,6 +331,18 @@ public class Combat extends Observable implements Cloneable {
         }
 
         updateAndClearMessage();
+    }
+
+    private String describe(Character player, Character other) {
+        if (!player.is(Stsflag.blinded)) {
+            return other.describe(player.get(Attribute.Perception), this) + "<p>"
+                            + Global.capitalizeFirstLetter(getStance().describe()) + "<p>"
+                            + player.describe(other.get(Attribute.Perception), this) + "<p>";
+        } else {
+            return "<b>You are blinded, and cannot see what " + other.name() + " is doing!</b><p>"
+                            + Global.capitalizeFirstLetter(getStance().describe()) + "<p>"
+                            + player.describe(other.get(Attribute.Perception), this) + "<p>";
+        }
     }
 
     protected Result eval() {
@@ -548,6 +559,7 @@ public class Combat extends Observable implements Cloneable {
     boolean resolveSkill(Skill skill, Character target) {
         boolean orgasmed = false;
         if (Skill.skillIsUsable(this, skill, target)) {
+            if (!target.human() || !target.is(Stsflag.blinded))
             write(skill.user()
                        .subjectAction("use ", "uses ") + skill.getLabel(this) + ".");
             if (skill.makesContact() && !getStance().dom(target) && target.canAct()
@@ -909,7 +921,7 @@ public class Combat extends Observable implements Cloneable {
     public int getTimer() {
         return timer;
     }
-    
+
     private boolean doExtendedLog() {
         return (p1.human() || p2.human()) && Global.checkFlag(Flag.extendedLogs);
     }

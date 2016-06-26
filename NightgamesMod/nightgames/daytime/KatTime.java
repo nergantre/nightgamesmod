@@ -129,7 +129,7 @@ public class KatTime extends BaseNPCTime {
             }
         } else if (Global.getPlayer().checkAddiction(AddictionType.BREEDER)) {
             Global.gui()
-            .message("Reyka low-affection corruption intro");
+            .message("Kat low-affection addiction intro");
             if (npc.getAttraction(player) < 15) {
                 npc.gainAttraction(player, 2); 
                 player.gainAttraction(npc, 2);

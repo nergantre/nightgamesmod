@@ -119,6 +119,7 @@ public class Global {
     private static HashSet<Trait> featPool;
     private static HashSet<Modifier> modifierPool;
     private static HashSet<Character> players;
+    private static HashSet<Character> debugChars;
     private static Set<Character> resting;
     private static HashSet<String> flags;
     private static HashMap<String, Float> counters;
@@ -146,6 +147,7 @@ public class Global {
         rng = new Random();
         flags = new HashSet<String>();
         players = new HashSet<Character>();
+        debugChars = new HashSet<>();
         resting = new HashSet<Character>();
         counters = new HashMap<String, Float>();
         jdate = new Date();
@@ -215,6 +217,7 @@ public class Global {
         playerConfig = config.isPresent() ? Optional.of(config.get().player) : Optional.empty();
         List<Flag> cfgFlags = config.isPresent() ? config.get().getFlags() : new ArrayList<>();
         human = new Player(playerName, pickedGender, playerConfig, selectedAttributes);
+        human.traits.addAll(pickedTraits);
         players.add(human);
         if (gui != null)
             gui.populatePlayer(human);
@@ -230,7 +233,7 @@ public class Global {
         }
         Set<Character> lineup = pickCharacters(players, Collections.singleton(human), 4);
         match = new Match(lineup, new NoModifier());
-        //save(false);
+        save(false);
     }
 
     public static int random(int start, int end) {
@@ -473,6 +476,9 @@ public class Global {
         getSkillPool().add(new MimicWitch(p));
         getSkillPool().add(new Parasite(p));
         getSkillPool().add(new Bite(p));
+        getSkillPool().add(new PlaceBlindfold(p));
+        getSkillPool().add(new RipBlindfold(p));
+        getSkillPool().add(new ToggleBlindfold(p));
 
         if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
             getSkillPool().add(new SelfStun(p));
@@ -619,7 +625,7 @@ public class Global {
     }
 
     public static void dusk(Modifier matchmod) {
-        Set<Character> lineup = new HashSet<Character>();
+        Set<Character> lineup = new HashSet<Character>(debugChars);
         Character lover = null;
         int maxaffection = 0;
         day = null;
@@ -1010,6 +1016,8 @@ public class Global {
 
     public static void rebuildCharacterPool(Optional<StartConfiguration> startConfig) {
         characterPool = new HashMap<>();
+        debugChars.clear();
+        
         Optional<NpcConfiguration> commonConfig =
                         startConfig.isPresent() ? Optional.of(startConfig.get().npcCommon) : Optional.empty();
 
@@ -1054,6 +1062,8 @@ public class Global {
         characterPool.put(airi.getCharacter().getType(), airi.getCharacter());
         characterPool.put(eve.getCharacter().getType(), eve.getCharacter());
         characterPool.put(maya.getCharacter().getType(), maya.getCharacter());
+        
+        debugChars.add(mara.getCharacter());
     }
 
     public static void load() {

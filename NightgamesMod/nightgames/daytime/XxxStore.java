@@ -20,6 +20,7 @@ public class XxxStore extends Store {
         add(Item.Crop);
         add(Item.Tickler);
         add(Item.Strapon);
+        add(Item.Blindfold);
     }
 
     @Override

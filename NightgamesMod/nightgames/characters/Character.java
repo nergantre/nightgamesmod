@@ -61,6 +61,7 @@ import nightgames.status.Stsflag;
 import nightgames.status.Trance;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
+import nightgames.status.addiction.MindControl;
 import nightgames.trap.Trap;
 
 public abstract class Character extends Observable implements Cloneable {
@@ -1060,7 +1061,8 @@ public abstract class Character extends Observable implements Cloneable {
             if (!message.isEmpty()) {
                 message = Global.capitalizeFirstLetter(message);
                 if (c != null) {
-                    c.write(this, "<b>" + message + "</b>");
+                    if (!c.getOther(this).human() || !c.getOther(this).is(Stsflag.blinded))
+                        c.write(this, "<b>" + message + "</b>");
                     effectiveStatus.onApply(c, c.getOther(this));
                 } else if (human() || location() != null && location().humanPresent()) {
                     Global.gui().message("<b>" + message + "</b>");
@@ -1616,6 +1618,20 @@ public abstract class Character extends Observable implements Cloneable {
                                 "<b>{other:SUBJECT-ACTION:expertly coax|expertly coaxes} yet another orgasm from {self:name-do}, leaving {self:direct-object} completely spent.</b>",
                                 this, opponent));
             }
+        }
+        if (human() && opponent.has(Trait.mindcontroller) && cloned == 0) {
+            MindControl.Result res = new MindControl.Result(opponent, c.getStance());
+            String message = res.getDescription();
+            if (res.hasSucceeded()) {
+                message += "While your senses are overwhelmed by your violent orgasm, the deep pools of Mara's eyes"
+                                + " swirl and dance. You helplessly stare at the intricate movements and feel a strong"
+                                + " pressure on your mind as you do. When your orgasm dies down, so do the dancing patterns."
+                                + " With a satisfied smirk, Mara tells you to lift an arm. Before you have even processed"
+                                + " her words, you discover that your right arm is sticking straight up into the air. This"
+                                + " is probably really bad.";
+                Global.getPlayer().addict(AddictionType.MIND_CONTROL, opponent, Addiction.MED_INCREASE);
+            }
+            c.write(this, message);
         }
     }
 

@@ -201,4 +201,8 @@ public abstract class Skill {
     public Character getSelf() {
         return self;
     }
+    
+    protected void printBlinded(Combat c) {
+        c.write("<i>You're sure something is happening, but you can't figure out what it is.</i>");
+    }
 }
