@@ -10,6 +10,7 @@
 		},
 		"attribute_points": 20,
 		"money": 15000,
+		"level": 5,
 		"traits": [
 			"pussyhandler",
 			"dickhandler",
@@ -54,7 +55,9 @@
 		"body": {
 			"archetype": "WITCH"
 		},
-		"xp": 50
+		"xp": 50,
+		"level": 5,
+		"money": 5000
 	},
 	"flags":[]
 }
