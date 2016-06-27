@@ -52,6 +52,7 @@ public class PlaceBlindfold extends Skill {
                             String.format("%s out a blindfold and %s to place it around %s "
                                             + "head, but %s it away and throws it clear.",
                                             getSelf().subjectAction("take", "takes"), getSelf().action("try", "tries"),
+                                            target.possessivePronoun(),
                                             target.subjectAction("rip", "rips")));
         }
         return true;

@@ -1,3 +1,24 @@
+26/06/16 - 2.0.5
+-Added Mara's addiction: Mind Control
+	-After Mara reaches level 20, you'd best make sure she can't look you in the eyes when you cum.
+	-When fighting Mara while controlled, you'll randomly fall into enthrallment. You can lower the odds by acting submissively or masturbating.
+	-When in withdrawal, you'll have a constant drain on your stamina.
+	-While fighting anyone but Mara, you'll have a chance to resist mental effects.
+-Added Blindfolds
+	-When worn, these severly hamper your ability to see what's going on. You won't see the names of moves your opponent uses, can't see their clothing or status, and some moves are completely invisible (like counters, drinking drafts). They also lower your evasion, obviously.
+	-On the flip side, they protect you from things like Charm and EyesOfTempation, and also from Mara's new trick.
+	-You can put these on yourself, put them on opponents, or get them put on you. You can also remove them from yourself and your opponent.
+	-Mara is liable to remove your blindfold if possible, for obvious reasons. The others not so much.
+	-Blindfolds are cheap and can be bought from the XXX Store.
+-Fixed Drowsy having a shorter duration with Personal Inertia rather than longer.
+-Fixed Sweaters being classified as bottoms.
+-All addiction-inspired combat effects now reliably grow worse every turn you're fighting the source of the addiction.
+-Added missing morning descriptions for Angel's, Reyka's and Kat's addictions.
+-Incorporated fixes by Ryplinn:
+	-Setting a level in a start configuration no longer affects money instead.
+	-Genitals are now properly assigned again.
+-Starting traits, if allowed, are actually added in advanced starts.
+
 16/06/16 - 2.0.4
 -Fixed bug where unlocking new competitors allowed the player to end up with a negative amount of money.
 -Merged in fixes to the start configuration mechanism by Ryplinn.

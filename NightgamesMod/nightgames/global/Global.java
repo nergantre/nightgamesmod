@@ -233,7 +233,7 @@ public class Global {
         }
         Set<Character> lineup = pickCharacters(players, Collections.singleton(human), 4);
         match = new Match(lineup, new NoModifier());
-        save(false);
+        //save(false);
     }
 
     public static int random(int start, int end) {
@@ -1063,7 +1063,7 @@ public class Global {
         characterPool.put(eve.getCharacter().getType(), eve.getCharacter());
         characterPool.put(maya.getCharacter().getType(), maya.getCharacter());
         
-        debugChars.add(mara.getCharacter());
+        //debugChars.add(mara.getCharacter());
     }
 
     public static void load() {
