@@ -3097,4 +3097,15 @@ public abstract class Character extends Observable implements Cloneable {
         return !is(Stsflag.charmed) && !is(Stsflag.lovestruck)
                         && !is(Stsflag.frenzied);
     }
+    
+    public boolean levelUpIfPossible() {
+        int req;
+        boolean dinged = false;
+        while (xp > (req=getXPReqToNextLevel())) {
+            xp -= req;
+            ding();
+            dinged = true;
+        }
+        return dinged;
+    }
 }

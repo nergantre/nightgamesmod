@@ -750,21 +750,8 @@ public class Combat extends Observable implements Cloneable {
         p1.endofbattle();
         p2.endofbattle();
         location.endEncounter();
-        boolean ding = false;
-        while (p1.getXP() >= p1.getXPReqToNextLevel()) {
-            p1.loseXP(p1.getXPReqToNextLevel());
-            p1.ding();
-            if (p1.human()) {
-                ding = true;
-            }
-        }
-        while (p2.getXP() >= p2.getXPReqToNextLevel()) {
-            p2.loseXP(p2.getXPReqToNextLevel());
-            p2.ding();
-            if (p2.human()) {
-                ding = true;
-            }
-        }
+        boolean ding = p1.human() && p1.levelUpIfPossible();
+        ding |= p2.human() && p2.levelUpIfPossible();
         if (doExtendedLog()) {
             log.logEnd(winner);
         }

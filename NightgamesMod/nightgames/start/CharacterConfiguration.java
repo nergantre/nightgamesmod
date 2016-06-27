@@ -72,7 +72,7 @@ public abstract class CharacterConfiguration {
         base.att.putAll(attributes);
         money.ifPresent(m -> base.money = m);
         level.ifPresent(l -> base.level = l);
-        xp.ifPresent(x -> base.xp = x);
+        xp.ifPresent(x -> base.gainXP(x));
         traits.ifPresent(t -> base.traits = new CopyOnWriteArrayList<Trait>(t));
         if (clothing.isPresent()) {
             List<Clothing> clothes = clothing.get()
@@ -84,6 +84,7 @@ public abstract class CharacterConfiguration {
             base.change();
         }
         body.ifPresent(b -> b.apply(base.body));
+        base.levelUpIfPossible();
     }
 
     public Optional<CharacterSex> getGender() {
