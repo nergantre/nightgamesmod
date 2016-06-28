@@ -442,4 +442,10 @@ public class MaraTime extends BaseNPCTime {
             done(true);
         }
     }
+    
+    @Override
+    public Optional<String> getAddictionOption() {
+        return Global.getPlayer().checkAddiction(AddictionType.MIND_CONTROL) ? 
+                        Optional.of("Confront about control") : Optional.empty();
+    }
 }

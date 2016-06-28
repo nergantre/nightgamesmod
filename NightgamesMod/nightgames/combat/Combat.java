@@ -750,8 +750,9 @@ public class Combat extends Observable implements Cloneable {
         p1.endofbattle();
         p2.endofbattle();
         location.endEncounter();
-        boolean ding = p1.human() && p1.levelUpIfPossible();
-        ding |= p2.human() && p2.levelUpIfPossible();
+        // it's a little ugly, but we must be mindful of lazy evaluation
+        boolean ding = p1.levelUpIfPossible() && p1.human();
+        ding = (p2.levelUpIfPossible() && p2.human()) || ding;
         if (doExtendedLog()) {
             log.logEnd(winner);
         }
