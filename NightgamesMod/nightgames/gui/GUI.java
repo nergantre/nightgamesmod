@@ -1013,7 +1013,12 @@ public class GUI extends JFrame implements Observer {
             if (skills.get(index).size() >= 25) {
                 index++;
             } else {
-                skills.get(index).add(new SkillButton(action, com));
+                SkillButton btn = new SkillButton(action, com);
+                int others = skills.get(index).size();
+                if (index == 0 && others < 10) {
+                    btn.addIndex(others+1);
+                }
+                skills.get(index).add(btn);
                 placed = true;
             }
         }
