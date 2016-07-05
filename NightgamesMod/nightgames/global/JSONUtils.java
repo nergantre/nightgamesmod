@@ -78,16 +78,10 @@ public class JSONUtils {
         JSONObject root;
         try (Reader read = Files.newBufferedReader(path)) {
             root = (JSONObject) JSONValue.parseWithException(read);
-        } catch (IOException|ParseException e) {
-            throw new RuntimeException("Error reading JSON file.");
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException("Error reading JSON file: " + e.getMessage());
         }
 
         return root;
-    }
-
-    public static <T> Optional<T> getIfExists(JSONObject obj, String key, Function<Object, T> f) {
-        if (!obj.containsKey(key))
-            return Optional.empty();
-        return Optional.ofNullable(f.apply(obj.get(key)));
     }
 }

@@ -26,8 +26,8 @@ public class PlayerConfiguration extends CharacterConfiguration {
     public static PlayerConfiguration parse(JSONObject obj) {
         PlayerConfiguration cfg = new PlayerConfiguration();
         cfg.parseCommon(obj);
-        cfg.allowsMoreTraits = JSONUtils.getIfExists(obj, "trait_choice", o -> (boolean) o).orElse(true);
-        cfg.attributePoints = JSONUtils.getIfExists(obj, "attribute_points", o -> ((Long) o).intValue()).orElse(11);
+        cfg.allowsMoreTraits = JSONUtils.<Boolean>readOptional(obj, "trait_choice").orElse(true);
+        cfg.attributePoints = JSONUtils.readOptional(obj, "attribute_points").map(o -> ((Long) o).intValue()).orElse(11);
         return cfg;
     }
 

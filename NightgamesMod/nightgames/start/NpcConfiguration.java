@@ -70,7 +70,7 @@ public class NpcConfiguration extends CharacterConfiguration {
      */
     public static NpcConfiguration parseAllNpcs(JSONObject obj) {
         NpcConfiguration config = new NpcConfiguration();
-        config.isStartCharacter = JSONUtils.getIfExists(obj, "start", b -> (boolean) b);
+        config.isStartCharacter = JSONUtils.<Boolean>readOptional(obj, "start");
         config.parseCommon(obj);
         return config;
     }
@@ -81,7 +81,7 @@ public class NpcConfiguration extends CharacterConfiguration {
      */
     public static NpcConfiguration parse(JSONObject obj) {
         NpcConfiguration config = NpcConfiguration.parseAllNpcs(obj);
-        config.type = JSONUtils.getIfExists(obj, "type", Object::toString)
+        config.type = JSONUtils.readOptional(obj, "type").map(Object::toString)
                         .orElseThrow(() -> new RuntimeException("Tried parsing NPC without a type."));
 
         return config;

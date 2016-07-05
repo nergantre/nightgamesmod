@@ -94,18 +94,14 @@ public abstract class CharacterConfiguration {
      * @param obj The configuration read from the JSON config file.
      */
     protected void parseCommon(JSONObject obj) {
-        name = JSONUtils.getIfExists(obj, "name", Object::toString);
-        gender = JSONUtils.getIfExists(obj, "gender", o -> CharacterSex.valueOf(o.toString()
-                                                                       .toLowerCase()));
-        traits = JSONUtils.getIfExists(obj, "traits", o -> parseTraits((JSONArray) o));
-        body = JSONUtils.getIfExists(obj, "body", o -> BodyConfiguration.parse((JSONObject) o));
-        clothing = JSONUtils.getIfExists(obj, "clothing", o -> parseClothing((JSONArray) o));
-        if (obj.containsKey("money"))
-            money = Optional.of(JSONUtils.readInteger(obj, "money"));
-        if (obj.containsKey("level"))
-            level = Optional.of(JSONUtils.readInteger(obj, "level"));
-        if (obj.containsKey("xp"))
-            xp = Optional.of(JSONUtils.readInteger(obj, "xp"));
+        name = JSONUtils.readOptional(obj, "name").map(Object::toString);
+        gender = JSONUtils.readOptional(obj, "gender").map(o -> CharacterSex.valueOf(o.toString().toLowerCase()));
+        traits = JSONUtils.readOptional(obj, "traits").map(o -> parseTraits((JSONArray) o));
+        body = JSONUtils.readOptional(obj, "body").map(o -> BodyConfiguration.parse((JSONObject) o));
+        clothing = JSONUtils.readOptional(obj, "clothing").map(o -> parseClothing((JSONArray) o));
+        money = JSONUtils.readOptional(obj, "money").map(o -> ((Long) o).intValue());
+        level = JSONUtils.readOptional(obj, "level").map(o -> ((Long) o).intValue());
+        xp = JSONUtils.readOptional(obj, "xp").map(o -> ((Long) o).intValue());
         if (obj.containsKey("attributes")) {
             JSONObject attrs = (JSONObject) obj.get("attributes");
             for (Object a : attrs.keySet()) {
