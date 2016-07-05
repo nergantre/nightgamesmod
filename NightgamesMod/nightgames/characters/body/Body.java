@@ -654,9 +654,6 @@ public class Body implements Cloneable {
                 if (!has("face")) {
                     add(new FacePart(0, -2));
                 }
-                if (!has("balls")) {
-                    add(new GenericBodyPart("balls", 0, 1.0, 1.5, "balls", ""));
-                }
                 break;
             case herm:
                 baseFemininity += 1;
@@ -708,7 +705,9 @@ public class Body implements Cloneable {
             }
         }
         if (sex == CharacterSex.male) {
-
+            if (!has("balls")) {
+                add(new GenericBodyPart("balls", 0, 1.0, 1.5, "balls", ""));
+            }
         }
 
     }
