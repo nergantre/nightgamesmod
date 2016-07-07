@@ -4,6 +4,7 @@ import nightgames.items.clothing.Clothing;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -25,10 +26,14 @@ public class PlayerTest {
         selectedAttributes.put(Attribute.Power, 5);
         selectedAttributes.put(Attribute.Seduction, 6);
         selectedAttributes.put(Attribute.Cunning, 7);
-        Player playerMale = new Player("dude", CharacterSex.male, Optional.empty(), selectedAttributes);
-        Player playerFemale = new Player("chick", CharacterSex.female, Optional.empty(), selectedAttributes);
-        Player playerHerm = new Player("futa", CharacterSex.herm, Optional.empty(), selectedAttributes);
-        Player playerAsexual = new Player("ace", CharacterSex.asexual, Optional.empty(), selectedAttributes);
+        Player playerMale =
+                        new Player("dude", CharacterSex.male, Optional.empty(), new ArrayList<>(), selectedAttributes);
+        Player playerFemale = new Player("chick", CharacterSex.female, Optional.empty(), new ArrayList<>(),
+                        selectedAttributes);
+        Player playerHerm =
+                        new Player("futa", CharacterSex.herm, Optional.empty(), new ArrayList<>(), selectedAttributes);
+        Player playerAsexual = new Player("ace", CharacterSex.asexual, Optional.empty(), new ArrayList<>(),
+                        selectedAttributes);
 
         assertTrue("Male player has no cock!", playerMale.body.has("cock"));
         assertTrue("Male player has no balls!", playerMale.body.has("balls"));

@@ -1,77 +1,19 @@
 package nightgames.global;
 
-import java.awt.Rectangle;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.Reader;
-import java.sql.Timestamp;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-import nightgames.characters.*;
-import nightgames.characters.Character;
-import nightgames.characters.custom.NPCData;
-import nightgames.start.NpcConfiguration;
-import nightgames.start.PlayerConfiguration;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
-import org.json.simple.parser.ParseException;
-import org.mozilla.javascript.Context;
-import org.mozilla.javascript.ContextFactory;
-
 import com.cedarsoftware.util.io.JsonWriter;
-
 import nightgames.Resources.ResourceLoader;
 import nightgames.actions.Action;
-import nightgames.actions.Bathe;
-import nightgames.actions.BushAmbush;
-import nightgames.actions.Craft;
-import nightgames.actions.Energize;
-import nightgames.actions.Hide;
-import nightgames.actions.Locate;
-import nightgames.actions.MasturbateAction;
-import nightgames.actions.Movement;
-import nightgames.actions.PassAmbush;
-import nightgames.actions.Recharge;
-import nightgames.actions.Resupply;
-import nightgames.actions.Scavenge;
-import nightgames.actions.SetTrap;
-import nightgames.actions.TreeAmbush;
-import nightgames.actions.Use;
+import nightgames.actions.*;
 import nightgames.actions.Wait;
 import nightgames.areas.Area;
 import nightgames.areas.MapDrawHint;
+import nightgames.characters.*;
+import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.StraponPart;
 import nightgames.characters.custom.CustomNPC;
 import nightgames.characters.custom.JSONSourceNPCDataLoader;
+import nightgames.characters.custom.NPCData;
 import nightgames.combat.Combat;
 import nightgames.daytime.Daytime;
 import nightgames.ftc.FTCMatch;
@@ -80,39 +22,39 @@ import nightgames.gui.NullGUI;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.modifier.Modifier;
-import nightgames.modifier.standard.FTCModifier;
-import nightgames.modifier.standard.NoItemsModifier;
-import nightgames.modifier.standard.NoModifier;
-import nightgames.modifier.standard.NoRecoveryModifier;
-import nightgames.modifier.standard.NoToysModifier;
-import nightgames.modifier.standard.NudistModifier;
-import nightgames.modifier.standard.PacifistModifier;
-import nightgames.modifier.standard.UnderwearOnlyModifier;
-import nightgames.modifier.standard.VibrationModifier;
-import nightgames.modifier.standard.VulnerableModifier;
+import nightgames.modifier.standard.*;
 import nightgames.pet.Ptype;
 import nightgames.skills.*;
+import nightgames.start.NpcConfiguration;
+import nightgames.start.PlayerConfiguration;
 import nightgames.start.StartConfiguration;
 import nightgames.status.Status;
-import nightgames.trap.Alarm;
-import nightgames.trap.AphrodisiacTrap;
-import nightgames.trap.Decoy;
-import nightgames.trap.DissolvingTrap;
-import nightgames.trap.EnthrallingTrap;
-import nightgames.trap.IllusionTrap;
-import nightgames.trap.Snare;
-import nightgames.trap.Spiderweb;
-import nightgames.trap.SpringTrap;
-import nightgames.trap.StripMine;
-import nightgames.trap.TentacleTrap;
-import nightgames.trap.Trap;
-import nightgames.trap.Tripline;
+import nightgames.trap.*;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.json.simple.parser.ParseException;
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.ContextFactory;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.io.*;
+import java.sql.Timestamp;
+import java.text.DecimalFormat;
+import java.util.*;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Global {
     private static Random rng;
     private static GUI gui;
     private static HashSet<Skill> skillPool = new HashSet<Skill>();
-
+    private static Map<String, NPC> characterPool;
     private static HashSet<Action> actionPool;
     private static HashSet<Trap> trapPool;
     private static HashSet<Trait> featPool;
@@ -211,7 +153,7 @@ public class Global {
         Optional<PlayerConfiguration> playerConfig;
         playerConfig = config.isPresent() ? Optional.of(config.get().player) : Optional.empty();
         List<Flag> cfgFlags = config.isPresent() ? config.get().getFlags() : new ArrayList<>();
-        human = new Player(playerName, pickedGender, playerConfig, selectedAttributes);
+        human = new Player(playerName, pickedGender, playerConfig, pickedTraits, selectedAttributes);
         players.add(human);
         if (gui != null)
             gui.populatePlayer(human);
@@ -752,7 +694,6 @@ public class Global {
         return original.substring(0, 1).toUpperCase() + original.substring(1);
     }
 
-    private static Map<String, NPC> characterPool;
 
     public static NPC getNPCByType(String type) {
         NPC results = characterPool.get(type);

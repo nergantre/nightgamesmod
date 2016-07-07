@@ -6,6 +6,7 @@ import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.global.JSONUtils;
 import nightgames.items.clothing.Clothing;
+import org.hamcrest.core.IsCollectionContaining;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -25,7 +26,7 @@ public class PlayerConfigurationTest {
     StartConfiguration startConfig;
     PlayerConfiguration playerConfig;
 
-    @BeforeClass public static void setUpNpcConfigurationTest() {
+    @BeforeClass public static void setUpClass() {
         Clothing.buildClothingTable();
     }
 
@@ -38,16 +39,16 @@ public class PlayerConfigurationTest {
 
     @Test public void testPlayerCreation() throws Exception {
         Map<Attribute, Integer> chosenAttributes = new HashMap<>();
+        List<Trait> pickedTraits = Arrays.asList(Trait.romantic, Trait.insatiable);
         chosenAttributes.put(Attribute.Power, 5);
         chosenAttributes.put(Attribute.Seduction, 6);
         chosenAttributes.put(Attribute.Cunning, 7);
-        Player malePlayer = new Player("dude", CharacterSex.male, Optional.of(playerConfig), chosenAttributes);
+        Player malePlayer = new Player("dude", CharacterSex.male, Optional.of(playerConfig), pickedTraits,
+                        chosenAttributes);
         assertEquals(5, malePlayer.level);
         assertEquals(15000, malePlayer.money);
-        List<Trait> configTraits = playerConfig.traits.get();
-        Collections.sort(configTraits);
-        Collections.sort(malePlayer.traits);
-        assertArrayEquals(configTraits.toArray(), malePlayer.traits.toArray());
-
+        assertThat(malePlayer.traits, IsCollectionContaining
+                        .hasItems(Trait.pussyhandler, Trait.dickhandler, Trait.limbTraining1, Trait.tongueTraining1,
+                                        Trait.powerfulhips, Trait.romantic, Trait.insatiable));
     }
 }
