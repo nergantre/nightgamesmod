@@ -1015,7 +1015,7 @@ public class GUI extends JFrame implements Observer {
             } else {
                 SkillButton btn = new SkillButton(action, com);
                 int others = skills.get(index).size();
-                if (index == 0 && others < 10) {
+                if (index == 0 && others < 9) {
                     btn.addIndex(others+1);
                 }
                 skills.get(index).add(btn);

@@ -79,16 +79,18 @@ public class Player extends Character {
 
     private void finishCharacter(Map<Attribute, Integer> selectedAttributes) {
         att.putAll(selectedAttributes);
-        if (initialGender == CharacterSex.female || initialGender == CharacterSex.herm) {
-            outfitPlan.add(Clothing.getByID("bra"));
-            outfitPlan.add(Clothing.getByID("panties"));
-        } else {
-            outfitPlan.add(Clothing.getByID("boxers"));
+        if (outfitPlan.isEmpty()) {
+            if (initialGender == CharacterSex.female || initialGender == CharacterSex.herm) {
+                outfitPlan.add(Clothing.getByID("bra"));
+                outfitPlan.add(Clothing.getByID("panties"));
+            } else {
+                outfitPlan.add(Clothing.getByID("boxers"));
+            }
+            outfitPlan.add(Clothing.getByID("Tshirt"));
+            outfitPlan.add(Clothing.getByID("jeans"));
+            outfitPlan.add(Clothing.getByID("socks"));
+            outfitPlan.add(Clothing.getByID("sneakers"));
         }
-        outfitPlan.add(Clothing.getByID("Tshirt"));
-        outfitPlan.add(Clothing.getByID("jeans"));
-        outfitPlan.add(Clothing.getByID("socks"));
-        outfitPlan.add(Clothing.getByID("sneakers"));
         change();
         body.finishBody(initialGender);
     }

@@ -169,13 +169,13 @@ public class Global {
         System.out.println("Night games");
         System.out.println(new Timestamp(jdate.getTime()));
 
-        // debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
+         debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
         // debug[DebugFlags.DEBUG_LOADING.ordinal()] = true;
         // debug[DebugFlags.DEBUG_FTC.ordinal()] = true;
         // debug[DebugFlags.DEBUG_DAMAGE.ordinal()] = true;
         // debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
         // debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
-        // debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
+         debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
         // debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
         // debug[DebugFlags.DEBUG_ADDICTION.ordinal()] = true;
         traitRequirements = new TraitTree(ResourceLoader.getFileResourceAsStream("data/TraitRequirements.xml"));
@@ -233,7 +233,7 @@ public class Global {
         }
         Set<Character> lineup = pickCharacters(players, Collections.singleton(human), 4);
         match = new Match(lineup, new NoModifier());
-//      save(false);
+        //save(false);
     }
 
     public static int random(int start, int end) {
@@ -1029,7 +1029,7 @@ public class Global {
                 try {
                     NPCData data = JSONSourceNPCDataLoader
                                     .load(ResourceLoader.getFileResourceAsStream("characters/" + name));
-                    Optional<NpcConfiguration> npcConfig = findNpcConfig(CustomNPC.TYPE_PREFIX, startConfig);
+                    Optional<NpcConfiguration> npcConfig = findNpcConfig(CustomNPC.TYPE_PREFIX + data.getName(), startConfig);
                     Personality npc = new CustomNPC(data, npcConfig, commonConfig);
                     characterPool.put(npc.getCharacter().getType(), npc.getCharacter());
                     System.out.println("Loaded " + name);

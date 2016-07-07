@@ -56,6 +56,7 @@ public abstract class CharacterConfiguration {
         level = mergeOptionals(primaryConfig.level, secondaryConfig.level);
         xp = mergeOptionals(primaryConfig.xp, secondaryConfig.xp);
         clothing = mergeOptionals(primaryConfig.clothing, secondaryConfig.clothing);
+        traits = mergeOptionals(primaryConfig.traits, secondaryConfig.traits);
         if (primaryConfig.body.isPresent()) {
             if (secondaryConfig.body.isPresent()) {
                 body = Optional.of(new BodyConfiguration(primaryConfig.body.get(), secondaryConfig.body.get()));
