@@ -401,6 +401,8 @@ public abstract class Character extends Observable implements Cloneable {
                 available.add(feat);
             }
         }
+        if (available.isEmpty())
+            return "";
         Trait removed = available.get(Global.random(available.size()));
         if (human()) {
             string += "You've lost " + removed.toString() + ".<br>";
@@ -2835,7 +2837,7 @@ public abstract class Character extends Observable implements Cloneable {
         fit += Math.sqrt(totalAtts) * 5;
         // Always important: Position
         fit += c.getStance()
-                .priorityMod(this) * 15;
+                .priorityMod(this) * 20;
         int escape = getEscape(c);
         if (escape > 1) {
             fit += 8 * Math.log(escape);

@@ -376,6 +376,10 @@ public class Player extends Character {
         }
         gui.ding();
     }
+    
+    public Growth getGrowth() {
+        return growth;
+    }
 
     @Override
     public void flee(Area location2) {

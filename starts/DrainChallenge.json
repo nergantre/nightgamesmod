@@ -18,7 +18,6 @@
 			"archetype":"DEMON"
 		},
 		"traits": ["succubus", "leveldrainer", "energydrain", "spiritphage", "powerfulhips"],
-		"clothing":["shoes"],
 		"trait_choice":false
 	},
 	"npcs": [
@@ -37,40 +36,40 @@
 				"sneakers"
 			],
 			"attributes": {
-				"Power":15,
-				"Seduction":15,
-				"Cunning":15,
+				"Power":12,
+				"Seduction":12,
+				"Cunning":12,
 				"Perception":5,
 				"Speed":5
 			},
 			"traits":["tongueTraining1","cockTraining1","obsequiousAppeal","submissive","romantic"],
-			"level":7
+			"level":6
 		},
 		{
 			"type":"Jewel",
 			"start":true,
 			"attributes": {
-				"Power":20,
-				"Seduction":12,
-				"Cunning":12,
+				"Power":16,
+				"Seduction":10,
+				"Cunning":10,
 				"Perception":5,
 				"Speed":6
 			},
 			"traits":["smqueen", "pimphand", "powerfulhips", "limbTraining1", "SexualGroove"],
-			"level":7
+			"level":6
 		},
 		{
 			"type":"Angel",
 			"start":true,
 			"attributes": {
-				"Power":12,
-				"Seduction":20,
-				"Cunning":12,
+				"Power":10,
+				"Seduction":16,
+				"Cunning":10,
 				"Perception":5,
 				"Speed":5
 			},
 			"traits":["limbTraining1","tongueTraining1","dickhandler","frenzyingjuices","nymphomania"],
-			"level":7
+			"level":6
 		},
 		{
 			"type":"Mara",
@@ -87,14 +86,14 @@
 				"sneakers"
 			],
 			"attributes": {
-				"Power":12,
-				"Seduction":12,
-				"Cunning":20,
+				"Power":10,
+				"Seduction":10,
+				"Cunning":16,
 				"Perception":6,
 				"Speed":5
 			},
 			"traits":["limbTraining1","pantymaster","insertion","polecontrol","silvertongue"],
-			"level":7
+			"level":6
 		}
 	],
 	"all_npcs" : {
