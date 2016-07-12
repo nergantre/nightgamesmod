@@ -1,3 +1,16 @@
+12/07/16 - 2.0.6
+-Enthrallers now prioritze tops and bottoms when ordering their thralls to remove clothing, and won't remove strapons.
+-It's no longer possible to use oral skills when riding in Reverse Cowgirl. (Characters with a vaginal tongue can still use Blow)
+-Cassie is more likely to use Nurse, which triggers her addiction
+-Reyka's addiction requires more contact with her mouth to trigger
+-Angel's addiction has a 25% of not triggering when it normally would
+-The rate at which the in-combat effects of addictions grow worse is a bit lower now
+-Running out of stamina gets worse at higher levels, 1 extra turn of Winded for every 10 levels, starting at 20
+-The ai will prefer not to use Spiral Thrust unless the user has very high mojo
+-Fixed a crash in FaceSit because it wrongly assumed NPCs would always have a pussy
+-Relabeled the difficulty options in hopes of making them more clear for new players.
+-The custom modifier framework which I built months ago now actually uses its JSON interface. Check data/customModifiers.json for examples and explanations on how to build your own modifiers. (Modifiers are things like underwear-only or no-violence matches.)
+
 26/06/16 - 2.0.5
 -Added Mara's addiction: Mind Control
 	-After Mara reaches level 20, you'd best make sure she can't look you in the eyes when you cum.
