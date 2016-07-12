@@ -1,0 +1,88 @@
+[
+	{
+		"name":"DEMO",
+		"bonus":0,
+		"intro":"This is an example of a custom modifier. It will cause complete mayhem if loaded, so please don't change the name. 'name' is mostly used for administrative purposes, 'bonus' is the cash-per-win bonus the player gets (may be negative), 'intro' is Lily's introduction speech, 'acceptance' is the text displayed if the player chooses to accept the modifier. The no-fucking modifier is a working example.",
+		"acceptance":"There are four modifier categories, Skill, Action, Clothing and Item. You can leave any of them out if you want, but this example will use them all. Having NONE wouldn't be much fun, but it's legal. There are four types of Skill Modifier: ban-skills, ban-tactics, encourage-skills and encourage-tactics. The ban- modifiers prevent the player from using the listed skill(s) or tactics. Tactics are things like 'fucking', 'damage' or 'stripping'. The encourage- ones make NPCs more likely to use the skills/tactics provided.   There is only one Action modifier: ban-action. This bans a non-combat action from being used, like Masturbate, Clean Up or Hide (or Resupply, but that would break things). There are four clothing modifiers: force-clothing, no-panties, underwear-only and nude. underwear-only is the familiar 'boxers match', nude is self-explanatory, and no-panties is the opposite of underwear-only: clothing is fine, just no undies. force-clothing is more interesting: any listed clothing will be added to the player's outfit for the night, even if they don't own it. You can find the clothing in the data/clothing folder. Finally, we have the three item modifiers: ban-toys, ban-consumables and flag-only. That last one is a hack for FTC matches, you'd best ignore it. The other two are self-explanatory, I figure. A final note: the skills  modifiers can have either a 'skill' field with a string, or a 'skills' field with an array of strings.",
+		"skill": [
+			{
+				"type":"ban-tactic",
+				"value": {
+					"tactics":["damage", "debuff"]
+				}
+			},
+			{
+				"type":"ban-skills",
+				"value": {
+					"skill":"Wild Thrust"
+				}
+			},
+			{
+				"type":"encourage-skills",
+				"value": {
+					"list": [
+						{
+							"skill":"Slap",
+							"weight":-1.5
+						},
+						{
+							"skill":"Kiss",
+							"weight":1.5
+						}
+					]
+				}
+			},
+			{
+				"type":"encourage-tactic",
+				"value": {
+					"tactic":"fucking",
+					"weight":1.5
+				}
+			}
+		],
+		"action": [
+			{
+				"type":"ban-action",
+				"value": {
+					"action":"MasturbateAction"
+				}
+			}
+		],
+		"clothing": [
+			{
+				"type":"force-clothing",
+				"value": {
+					"clothing":"miniskirt"
+				}
+			},
+			{
+				"type":"no-panties",
+				"value": {}
+			}
+		],
+		"item": [
+			{
+				"type":"ban-toys",
+				"value":{}
+			},
+			{
+				"type":"ban-consumables",
+				"value":{}
+			}
+		]
+	},
+	{
+		"name":"No Fucking",
+		"bonus":75,
+		"intro":"<i>'Men... Always trying to stick their dick in people... You aren't like that, are you? Think you can go a full night without fucking one of our mutual friends? Of course, if THEY do it, that's another story.'</i>",
+		"acceptance":"<i>Great! I'll let the girls know their pussies are safe tonight. Well, as safe as they want them to be, anyway.</i>",
+		"skill": [
+			{
+				"type":"ban-tactic",
+				"value": {
+					"tactic": "fucking"
+				}
+			}
+		]
+	}
+]
