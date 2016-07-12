@@ -13,7 +13,7 @@ import nightgames.status.addiction.AddictionType;
 
 public class PartiallyCorrupted extends DurationStatus {
 
-    private static final int THRESHOLD = 3;
+    private static final int THRESHOLD = 5;
 
     private int counter;
     private final Character cause;

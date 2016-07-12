@@ -45,7 +45,7 @@ public abstract class Addiction extends Status {
 
     @Override
     public void tick(Combat c) {
-        combatMagnitude += magnitude / 10.0;
+        combatMagnitude += magnitude / 14.0;
         System.out.println(combatMagnitude);
     }
     
