@@ -6,7 +6,7 @@ import nightgames.combat.Combat;
 /**
  * Returns true if character self has at least one of the bodypart.
  */
-public class BodyPartRequirement implements Requirement {
+public class BodyPartRequirement extends BaseRequirement {
     private final String type;
 
     public BodyPartRequirement(String type) {
@@ -31,6 +31,6 @@ public class BodyPartRequirement implements Requirement {
     }
 
     @Override public int hashCode() {
-        return type.hashCode();
+        return super.hashCode() * 31 + type.hashCode();
     }
 }

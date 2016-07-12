@@ -8,15 +8,11 @@ import nightgames.combat.Combat;
 /**
  * Returns true if the sub-requirement is NOT met.
  */
-public class NotRequirement implements Requirement {
+public class NotRequirement extends BaseRequirement {
     private final Requirement req;
 
     public NotRequirement(Requirement req) {
         this.req = req;
-    }
-
-    @Override public String getKey() {
-        return "not";
     }
 
     @Override

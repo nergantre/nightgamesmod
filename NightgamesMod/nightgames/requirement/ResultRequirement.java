@@ -7,7 +7,7 @@ import nightgames.combat.Result;
 /**
  * Returns true if the combat is in a certain state.
  */
-public class ResultRequirement implements Requirement {
+public class ResultRequirement extends BaseRequirement {
     private final Result result;
 
     public ResultRequirement(Result result) {

@@ -26,7 +26,7 @@ public interface RequirementLoader<T> {
 
     MoodRequirement loadMood(T reqData);
 
-    NoRequirement loadNo(T reqData);
+    NoneRequirement loadNone(T reqData);
 
     NotRequirement loadNot(T reqData);
 

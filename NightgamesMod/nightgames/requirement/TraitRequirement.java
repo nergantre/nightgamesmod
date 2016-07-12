@@ -4,7 +4,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 
-public class TraitRequirement implements Requirement {
+public class TraitRequirement extends BaseRequirement {
     private final Trait trait;
 
     public TraitRequirement(Trait trait) {
@@ -33,6 +33,6 @@ public class TraitRequirement implements Requirement {
     }
 
     @Override public int hashCode() {
-        return trait.hashCode();
+        return super.hashCode() * 31 + trait.hashCode();
     }
 }

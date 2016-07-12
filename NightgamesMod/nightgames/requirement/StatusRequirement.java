@@ -4,7 +4,7 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.status.Stsflag;
 
-public class StatusRequirement implements Requirement {
+public class StatusRequirement extends BaseRequirement {
     private final Stsflag flag;
 
     public StatusRequirement(String flag) {

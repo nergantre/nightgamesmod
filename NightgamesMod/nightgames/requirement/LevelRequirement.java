@@ -6,7 +6,7 @@ import nightgames.combat.Combat;
 /**
  * Returns true if character self's level is at least the specified amount.
  */
-public class LevelRequirement implements Requirement {
+public class LevelRequirement extends BaseRequirement {
     private final int level;
 
     public LevelRequirement(int level) {
@@ -31,6 +31,6 @@ public class LevelRequirement implements Requirement {
     }
 
     @Override public int hashCode() {
-        return level;
+        return super.hashCode() * 31 + level;
     }
 }

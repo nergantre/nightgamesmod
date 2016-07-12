@@ -6,15 +6,11 @@ import nightgames.combat.Combat;
 /**
  * Returns true if character self has had at least a certain number of orgasms in the current combat.
  */
-public class OrgasmRequirement implements Requirement {
+public class OrgasmRequirement extends BaseRequirement {
     private final int number;
 
     public OrgasmRequirement(int number) {
         this.number = number;
-    }
-
-    @Override public String getKey() {
-        return "orgasm";
     }
 
     @Override

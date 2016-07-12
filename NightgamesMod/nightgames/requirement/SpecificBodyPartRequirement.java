@@ -9,15 +9,11 @@ import nightgames.combat.Combat;
  *
  * This is a more specific requirement than BodyPartRequirement.
  */
-public class SpecificBodyPartRequirement implements Requirement {
+public class SpecificBodyPartRequirement extends BaseRequirement {
     private final BodyPart part;
 
     public SpecificBodyPartRequirement(BodyPart part) {
         this.part = part;
-    }
-
-    @Override public String getKey() {
-        return "specificpart";
     }
 
     @Override

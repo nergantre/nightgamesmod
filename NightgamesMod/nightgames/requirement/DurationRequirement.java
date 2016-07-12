@@ -6,7 +6,7 @@ import nightgames.combat.Combat;
 /**
  * Returns true while duration > 0. Primarily used when keeping track of time-limited statuses.
  */
-public class DurationRequirement implements Requirement {
+public class DurationRequirement extends BaseRequirement {
     public int duration;
 
     public DurationRequirement(int duration) {

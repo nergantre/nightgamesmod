@@ -7,7 +7,7 @@ import nightgames.combat.Combat;
 /**
  * Returns true if character self has a certain active mood.
  */
-public class MoodRequirement implements Requirement {
+public class MoodRequirement extends BaseRequirement {
     private final Emotion mood;
 
     public MoodRequirement(Emotion mood) {
@@ -16,10 +16,6 @@ public class MoodRequirement implements Requirement {
 
     public MoodRequirement(String mood) {
         this.mood = Emotion.valueOf(mood);
-    }
-
-    @Override public String getKey() {
-        return "mood";
     }
 
     @Override

@@ -6,7 +6,7 @@ import nightgames.combat.Combat;
 /**
  * Returns true if character self is inserted into character other.
  */
-public class InsertedRequirement implements Requirement {
+public class InsertedRequirement extends BaseRequirement {
 
     public InsertedRequirement() {
     }

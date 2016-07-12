@@ -8,7 +8,7 @@ import nightgames.items.ItemAmount;
 /**
  * Returns true if character self has an item
  */
-public class ItemRequirement implements Requirement {
+public class ItemRequirement extends BaseRequirement {
     private final ItemAmount item;
 
     public ItemRequirement(ItemAmount item) {

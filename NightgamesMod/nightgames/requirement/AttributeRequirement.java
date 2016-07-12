@@ -7,7 +7,7 @@ import nightgames.combat.Combat;
 /**
  * Returns true if character self has at least the given amount of the Attribute.
  */
-public class AttributeRequirement implements Requirement {
+public class AttributeRequirement extends BaseRequirement {
     private final Attribute att;
     private final int amount;
 

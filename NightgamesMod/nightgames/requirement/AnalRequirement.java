@@ -6,7 +6,7 @@ import nightgames.combat.Combat;
 /**
  * Returns true if self is anally penetrated.
  */
-public class AnalRequirement implements Requirement {
+public class AnalRequirement extends BaseRequirement {
 
     public AnalRequirement() {
     }

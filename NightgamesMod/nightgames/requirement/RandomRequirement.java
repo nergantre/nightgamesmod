@@ -7,15 +7,11 @@ import nightgames.global.Global;
 /**
  * Returns true based on a random variable between 0.0 and 1.0, with probability equal to the threshold.
  */
-public class RandomRequirement implements Requirement {
+public class RandomRequirement extends BaseRequirement {
     private final float threshold;
 
     public RandomRequirement(float threshold) {
         this.threshold = threshold;
-    }
-
-    @Override public String getKey() {
-        return "random";
     }
 
     @Override

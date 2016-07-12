@@ -3,15 +3,11 @@ package nightgames.requirement;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 
-public class StanceRequirement implements Requirement {
+public class StanceRequirement extends BaseRequirement {
     private final String stance;
 
     public StanceRequirement(String stance) {
         this.stance = stance;
-    }
-
-    @Override public String getKey() {
-        return "stance";
     }
 
     @Override

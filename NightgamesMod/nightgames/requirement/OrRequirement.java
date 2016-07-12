@@ -8,15 +8,11 @@ import nightgames.combat.Combat;
 /**
  * Returns true if at least one sub-requirement is met.
  */
-public class OrRequirement implements Requirement {
+public class OrRequirement extends BaseRequirement {
     private final List<Requirement> reqs;
 
     public OrRequirement(List<Requirement> reqs) {
         this.reqs = reqs;
-    }
-
-    @Override public String getKey() {
-        return "or";
     }
 
     @Override

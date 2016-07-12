@@ -8,15 +8,11 @@ import nightgames.combat.Combat;
 /**
  * Returns true if the sub-requirement returns true with self and other swapped.
  */
-public class ReverseRequirement implements Requirement {
+public class ReverseRequirement extends BaseRequirement {
     private final Requirement req;
 
     public ReverseRequirement(Requirement req) {
         this.req = req;
-    }
-
-    @Override public String getKey() {
-        return "reverse";
     }
 
     @Override

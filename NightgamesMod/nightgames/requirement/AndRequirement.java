@@ -8,7 +8,7 @@ import nightgames.combat.Combat;
 /**
  * Returns true if all sub-requirements are met.
  */
-public class AndRequirement implements Requirement {
+public class AndRequirement extends BaseRequirement {
     private final List<Requirement> reqs;
 
     public AndRequirement(List<Requirement> reqs) {
