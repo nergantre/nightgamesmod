@@ -2,6 +2,7 @@ package nightgames.global;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
 import javax.swing.JButton;
 
 import nightgames.characters.Airi;
@@ -105,7 +106,7 @@ public class Prematch implements Scene {
         if (Global.random(10) > 4) {
             return new NoModifier();
         }
-        HashSet<Modifier> modifiers = Global.getModifierPool();
+        Set<Modifier> modifiers = Global.getModifierPool();
         modifiers.removeIf(mod -> !mod.isApplicable() || mod.name().equals("normal"));
         return Global.pickRandom(modifiers.toArray(new Modifier[] {}));
     }

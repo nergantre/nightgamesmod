@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Character;
 import nightgames.characters.DummyCharacter;
@@ -14,7 +14,7 @@ import nightgames.global.Global;
 
 public class TentaclePart extends GenericBodyPart {
     private static final BodyPartMod TentacleMod = () -> "TentacleMod";
-    public static final BodyPart DUMMY_PART = new GenericBodyPart("tentacles", 1.0, 1.0, 0.0, "tentacles", "");
+    public static final GenericBodyPart DUMMY_PART = new GenericBodyPart("tentacles", 1.0, 1.0, 0.0, "tentacles", "");
     public static final Character DUMMY_CHARACTER = new DummyCharacter("summoned tentacles", "tentaclesdummy", 1, DUMMY_PART);
     public String attachpoint;
     String fluids;
@@ -59,6 +59,10 @@ public class TentaclePart extends GenericBodyPart {
         this.attachpoint = attachpoint;
         this.fluids = fluids;
         this.printSynonym = printSynonym;
+    }
+
+    public TentaclePart() {
+        super(DUMMY_PART);
     }
 
     public static String synonyms[] = {"mass", "clump", "nest", "group",};
@@ -107,34 +111,6 @@ public class TentaclePart extends GenericBodyPart {
     @Override
     public String getFluids(Character c) {
         return fluids;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public JSONObject saveToDict() {
-        JSONObject res = new JSONObject();
-        res.put("desc", desc);
-        res.put("attachpoint", attachpoint);
-        res.put("hotness", hotness);
-        res.put("pleasure", pleasure);
-        res.put("sensitivity", sensitivity);
-        res.put("fluids", fluids);
-
-        return res;
-    }
-
-    @Override
-    public BodyPart loadFromDict(JSONObject dict) {
-        try {
-            GenericBodyPart part = new TentaclePart((String) dict.get("desc"), (String) dict.get("attachpoint"),
-                            (String) dict.get("fluids"), ((Number) dict.get("hotness")).doubleValue(),
-                            ((Number) dict.get("pleasure")).doubleValue(),
-                            ((Number) dict.get("sensitivity")).doubleValue());
-            return part;
-        } catch (ClassCastException e) {
-            System.err.println(e.getMessage());
-        }
-        return null;
     }
 
     @Override

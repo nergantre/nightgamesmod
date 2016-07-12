@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -12,7 +12,6 @@ import nightgames.characters.Emotion;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
-import nightgames.global.JSONUtils;
 import nightgames.skills.Blowjob;
 import nightgames.skills.Cunnilingus;
 import nightgames.skills.Kiss;
@@ -205,16 +204,16 @@ public class FluidAddiction extends DurationStatus {
 
     @Override
     @SuppressWarnings("unchecked")
-    public JSONObject saveToJSON() {
-        JSONObject obj = new JSONObject();
-        obj.put("type", getClass().getSimpleName());
-        obj.put("magnitude", magnitude);
-        obj.put("duration", getDuration());
+    public JsonObject saveToJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("type", getClass().getSimpleName());
+        obj.addProperty("magnitude", magnitude);
+        obj.addProperty("duration", getDuration());
         return obj;
     }
 
     @Override
-    public Status loadFromJSON(JSONObject obj) {
-        return new FluidAddiction(null, null, JSONUtils.readInteger(obj, "magnitude"), JSONUtils.readInteger(obj, "duration"));
+    public Status loadFromJson(JsonObject obj) {
+        return new FluidAddiction(null, null, obj.get("magnitude").getAsInt(), obj.get("duration").getAsInt());
     }
 }

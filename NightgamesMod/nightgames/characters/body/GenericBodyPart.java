@@ -1,12 +1,13 @@
 package nightgames.characters.body;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.json.JsonUtils;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.items.clothing.ClothingTrait;
 
@@ -45,6 +46,15 @@ public class GenericBodyPart implements BodyPart {
         this(desc, "", hotness, pleasure, sensitivity, notable, type, prefix);
     }
 
+    public GenericBodyPart(GenericBodyPart original) {
+        this(original.desc, original.descLong, original.hotness, original.pleasure, original.sensitivity,
+                        original.notable, original.type, original.prefix);
+    }
+
+    public GenericBodyPart() {
+        this("generic", "a generic body part", 0, 0, 0, false, "generic", "");
+    }
+
     @Override
     public void describeLong(StringBuilder b, Character c) {
         String parsedDesc = Global.format(descLong, c, c);
@@ -53,7 +63,7 @@ public class GenericBodyPart implements BodyPart {
 
     @Override
     public boolean isType(String type) {
-        return this.type.equalsIgnoreCase(type);
+        return this.getType().equalsIgnoreCase(type);
     }
 
     @Override
@@ -128,47 +138,22 @@ public class GenericBodyPart implements BodyPart {
         return (type + ":" + toString()).hashCode();
     }
 
-    @SuppressWarnings("unchecked")
-    public JSONObject saveToDict() {
-        JSONObject res = new JSONObject();
-        res.put("desc", desc);
-        res.put("descLong", descLong);
-        res.put("hotness", hotness);
-        res.put("pleasure", pleasure);
-        res.put("sensitivity", sensitivity);
-        res.put("notable", notable);
-        res.put("type", type);
-        res.put("prefix", prefix);
-
-        return res;
+    public JsonObject toJson() {
+        return JsonUtils.gson.toJsonTree(this, this.getClass()).getAsJsonObject();
     }
 
-    @SuppressWarnings("unchecked")
-    public BodyPart loadFromDict(JSONObject dict) {
-        try {
-            // newly added field
-            if (!dict.containsKey("generic")) {
-                dict.put("generic", true);
-            }
-            GenericBodyPart part = new GenericBodyPart((String) dict.get("desc"), (String) dict.get("descLong"),
-                            ((Number) dict.get("hotness")).doubleValue(), ((Number) dict.get("pleasure")).doubleValue(),
-                            ((Number) dict.get("sensitivity")).doubleValue(), (Boolean) dict.get("notable"),
-                            (String) dict.get("type"), (String) dict.get("prefix"));
-            return part;
-        } catch (ClassCastException e) {
-            System.err.println(e.getMessage());
-        }
-        return null;
+    public BodyPart fromJson(JsonObject object) {
+        return JsonUtils.gson.fromJson(object, this.getClass());
     }
 
     @Override
-    public JSONObject save() {
-        return saveToDict();
+    public JsonObject save() {
+        return toJson();
     }
 
     @Override
-    public BodyPart load(JSONObject obj) {
-        return loadFromDict(obj);
+    public BodyPart load(JsonObject obj) {
+        return fromJson(obj);
     }
 
     @Override

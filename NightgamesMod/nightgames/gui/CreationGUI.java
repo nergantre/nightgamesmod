@@ -40,10 +40,10 @@ public class CreationGUI extends JPanel {
     private JTextField seductionfield;
     private JTextField cunningfield;
     private JTextField attPoints;
-    private JTextField namefield;
-    private int power;
-    private int seduction;
-    private int cunning;
+    protected JTextField namefield;
+    protected int power;
+    protected int seduction;
+    protected int cunning;
     private int remaining;
     private JButton btnPowMin;
     private JButton btnPowPlus;
@@ -63,11 +63,11 @@ public class CreationGUI extends JPanel {
     private Box verticalBox;
     private Box horizontalBox;
     private JLabel lblStrength;
-    private JComboBox<Trait> StrengthBox;
+    protected JComboBox<Trait> StrengthBox;
     private JTextPane StrengthDescription;
     private JSeparator separator_2;
     private JLabel lblWeakness;
-    private JComboBox<Trait> WeaknessBox;
+    protected JComboBox<Trait> WeaknessBox;
     private JTextPane WeaknessDescription;
     private JPanel panel_1;
     private JPanel panel_4;
@@ -454,7 +454,7 @@ public class CreationGUI extends JPanel {
     }
 
 
-    private void makeGame(Optional<StartConfiguration> startConfig) {
+    protected void makeGame(Optional<StartConfiguration> startConfig) {
         if (!namefield.getText()
                         .isEmpty()) {
             String name = namefield.getText();
@@ -469,7 +469,7 @@ public class CreationGUI extends JPanel {
             if (rdbtnHard.isSelected()) {
                 Global.flag(Flag.hardmode);
             }
-            Map<Attribute, Integer> selectedAttributes = new HashMap<Attribute, Integer>();
+            Map<Attribute, Integer> selectedAttributes = new HashMap<>();
             selectedAttributes.put(Attribute.Power, power);
             selectedAttributes.put(Attribute.Seduction, seduction);
             selectedAttributes.put(Attribute.Cunning, cunning);

@@ -1,13 +1,12 @@
 package nightgames.status;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
-import nightgames.global.JSONUtils;
 
 public class Lethargic extends DurationStatus {
     double magnitude;
@@ -116,16 +115,16 @@ public class Lethargic extends DurationStatus {
 
     @Override
     @SuppressWarnings("unchecked")
-    public JSONObject saveToJSON() {
-        JSONObject obj = new JSONObject();
-        obj.put("type", getClass().getSimpleName());
-        obj.put("duration", getDuration());
-        obj.put("magnitude", magnitude);
+    public JsonObject saveToJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("type", getClass().getSimpleName());
+        obj.addProperty("duration", getDuration());
+        obj.addProperty("magnitude", magnitude);
         return obj;
     }
 
     @Override
-    public Status loadFromJSON(JSONObject obj) {
-        return new Lethargic(null, JSONUtils.readInteger(obj, "duration"), JSONUtils.readFloat(obj, "magnitude"));
+    public Status loadFromJson(JsonObject obj) {
+        return new Lethargic(null, obj.get("duration").getAsInt(), obj.get("magnitude").getAsFloat());
     }
 }

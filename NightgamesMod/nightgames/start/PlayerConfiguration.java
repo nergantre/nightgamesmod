@@ -1,8 +1,9 @@
 package nightgames.start;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import nightgames.characters.Player;
-import nightgames.global.JSONUtils;
-import org.json.simple.JSONObject;
+import nightgames.json.JsonUtils;
 
 public class PlayerConfiguration extends CharacterConfiguration {
 
@@ -23,11 +24,11 @@ public class PlayerConfiguration extends CharacterConfiguration {
         super.apply(player);
     }
 
-    public static PlayerConfiguration parse(JSONObject obj) {
+    public static PlayerConfiguration parse(JsonObject obj) {
         PlayerConfiguration cfg = new PlayerConfiguration();
         cfg.parseCommon(obj);
-        cfg.allowsMoreTraits = JSONUtils.<Boolean>readOptional(obj, "trait_choice").orElse(true);
-        cfg.attributePoints = JSONUtils.readOptional(obj, "attribute_points").map(o -> ((Long) o).intValue()).orElse(11);
+        cfg.allowsMoreTraits = JsonUtils.getOptional(obj, "trait_choice").map(JsonElement::getAsBoolean).orElse(true);
+        cfg.attributePoints = JsonUtils.getOptional(obj, "attribute_points").map(JsonElement::getAsInt).orElse(11);
         return cfg;
     }
 

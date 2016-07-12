@@ -4,14 +4,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.global.JSONUtils;
 import nightgames.skills.Anilingus;
 import nightgames.skills.Blowjob;
 import nightgames.skills.BreastWorship;
@@ -186,17 +185,17 @@ public class BodyFetish extends DurationStatus {
 
     @Override
     @SuppressWarnings("unchecked")
-    public JSONObject saveToJSON() {
-        JSONObject obj = new JSONObject();
-        obj.put("type", getClass().getSimpleName());
-        obj.put("part", part);
-        obj.put("magnitude", magnitude);
+    public JsonObject saveToJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("type", getClass().getSimpleName());
+        obj.addProperty("part", part);
+        obj.addProperty("magnitude", magnitude);
         return obj;
     }
 
     @Override
-    public Status loadFromJSON(JSONObject obj) {
-        return new BodyFetish(null, null, JSONUtils.readString(obj, "part"), JSONUtils.readFloat(obj, "magnitude"));
+    public Status loadFromJson(JsonObject obj) {
+        return new BodyFetish(null, null, obj.get("part").getAsString(), obj.get("magnitude").getAsFloat());
     }
 
     @Override

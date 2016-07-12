@@ -22,6 +22,9 @@ import nightgames.items.Item;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
+import static nightgames.requirement.RequirementShortcuts.bodypart;
+import static nightgames.requirement.RequirementShortcuts.not;
+
 public class KatTime extends BaseNPCTime {
     public KatTime(Character player) {
         super(player, Global.getNPC("Kat"));
@@ -78,7 +81,7 @@ public class KatTime extends BaseNPCTime {
         TransformationOption catTail = new TransformationOption();
         catTail.ingredients.put(Item.Rope, 10);
         catTail.ingredients.put(Item.Aphrodisiac, 50);
-        catTail.requirements.add(new NotRequirement(Arrays.asList(new BodyPartRequirement("tail"))));
+        catTail.requirements.add(not(bodypart("tail")));
         catTail.requirements.add((c, self, other) -> {
             return self.body.get("tail").stream().anyMatch(part -> part != TailPart.cat) || !self.body.has("tail");
         });

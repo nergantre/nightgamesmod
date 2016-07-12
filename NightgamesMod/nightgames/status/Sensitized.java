@@ -1,6 +1,6 @@
 package nightgames.status;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -8,7 +8,6 @@ import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.global.JSONUtils;
 
 public class Sensitized extends DurationStatus {
     BodyPart part;
@@ -123,20 +122,20 @@ public class Sensitized extends DurationStatus {
 
     @Override
     @SuppressWarnings("unchecked")
-    public JSONObject saveToJSON() {
-        JSONObject obj = new JSONObject();
-        obj.put("type", getClass().getSimpleName());
-        obj.put("magnitude", magnitude);
-        obj.put("maximum", maximum);
-        obj.put("duration", getDuration());
-        obj.put("part", part.save());
+    public JsonObject saveToJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("type", getClass().getSimpleName());
+        obj.addProperty("magnitude", magnitude);
+        obj.addProperty("maximum", maximum);
+        obj.addProperty("duration", getDuration());
+        obj.add("part", part.save());
         return obj;
     }
 
     @Override
-    public Status loadFromJSON(JSONObject obj) {
-        return new Sensitized(Global.noneCharacter(), Body.loadPart(obj), JSONUtils.readFloat(obj, "magnitude"),
-                        JSONUtils.readFloat(obj, "maximum"), JSONUtils.readInteger(obj, "duration"));
+    public Status loadFromJson(JsonObject obj) {
+        return new Sensitized(Global.noneCharacter(), Body.loadPart(obj), obj.get("magnitude").getAsFloat(),
+                        obj.get("maximum").getAsFloat(), obj.get("duration").getAsInt());
     }
 
 }

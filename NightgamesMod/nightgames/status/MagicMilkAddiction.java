@@ -1,13 +1,12 @@
 package nightgames.status;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.global.JSONUtils;
 
 @Deprecated
 public class MagicMilkAddiction extends Status {
@@ -182,16 +181,16 @@ public class MagicMilkAddiction extends Status {
     
     @Override
     @SuppressWarnings("unchecked")
-    public JSONObject saveToJSON() {
-        JSONObject obj = new JSONObject();
-        obj.put("type", getClass().getSimpleName());
-        obj.put("magnitude", magnitude);
+    public JsonObject saveToJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("type", getClass().getSimpleName());
+        obj.addProperty("magnitude", magnitude);
         return obj;
     }
 
     @Override
-    public Status loadFromJSON(JSONObject obj) {
-        return new MagicMilkAddiction(null, null, JSONUtils.readInteger(obj, "magnitude"));
+    public Status loadFromJson(JsonObject obj) {
+        return new MagicMilkAddiction(null, null, obj.get("magnitude").getAsInt());
     }
 
     @Override

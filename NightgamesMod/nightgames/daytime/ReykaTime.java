@@ -25,6 +25,9 @@ import nightgames.items.Loot;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
+import static nightgames.requirement.RequirementShortcuts.bodypart;
+import static nightgames.requirement.RequirementShortcuts.not;
+
 public class ReykaTime extends BaseNPCTime {
     public ReykaTime(Character player) {
         super(player, Global.getNPC("Reyka"));
@@ -100,7 +103,7 @@ public class ReykaTime extends BaseNPCTime {
         TransformationOption demonWings = new TransformationOption();
         demonWings.ingredients.put(Item.SuccubusDraft, 20);
         demonWings.ingredients.put(Item.semen, 10);
-        demonWings.requirements.add(new NotRequirement(Arrays.asList(new BodyPartRequirement("wings"))));
+        demonWings.requirements.add(not(bodypart("wings")));
         demonWings.option = "Demonic Wings";
         demonWings.scene =
                         "Reyka smiles and crushes the ingredients together and draws a magic formation on your back and shoulders. "
@@ -116,7 +119,7 @@ public class ReykaTime extends BaseNPCTime {
         TransformationOption demonTail = new TransformationOption();
         demonTail.ingredients.put(Item.SuccubusDraft, 20);
         demonTail.ingredients.put(Item.semen, 10);
-        demonTail.requirements.add(new NotRequirement(Arrays.asList(new BodyPartRequirement("tail"))));
+        demonTail.requirements.add(not(bodypart("tail")));
         demonTail.requirements.add((c, self, other) -> {
             return self.body.get("tail")
                             .stream()

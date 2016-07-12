@@ -4,14 +4,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.global.JSONUtils;
 import nightgames.skills.Skill;
 
 public class Aggressive extends DurationStatus {
@@ -116,16 +115,16 @@ public class Aggressive extends DurationStatus {
 
     @SuppressWarnings("unchecked")
     @Override
-    public JSONObject saveToJSON() {
-        JSONObject obj = new JSONObject();
-        obj.put("type", getClass().getSimpleName());
-        obj.put("duration", getDuration());
-        obj.put("cause", cause);
+    public JsonObject saveToJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("type", getClass().getSimpleName());
+        obj.addProperty("duration", getDuration());
+        obj.addProperty("cause", cause);
         return obj;
     }
 
     @Override
-    public Status loadFromJSON(JSONObject obj) {
-        return new Aggressive(null, JSONUtils.readString(obj, "cause"), JSONUtils.readInteger(obj, "duration"));
+    public Status loadFromJson(JsonObject obj) {
+        return new Aggressive(null, obj.get("cause").getAsString(), obj.get("duration").getAsInt());
     }
 }

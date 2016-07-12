@@ -1,7 +1,5 @@
 package nightgames.characters.body;
 
-import org.json.simple.JSONObject;
-
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
@@ -26,6 +24,10 @@ public class MouthPart extends GenericBodyPart {
 
     public MouthPart(String desc, double hotness, double pleasure, double sensitivity) {
         super(desc, hotness, pleasure, sensitivity, "mouth", "a ");
+    }
+
+    public MouthPart() {
+        super(generic);
     }
 
     @Override
@@ -130,18 +132,6 @@ public class MouthPart extends GenericBodyPart {
     @Override
     public String getFluids(Character c) {
         return "saliva";
-    }
-
-    @Override
-    public BodyPart loadFromDict(JSONObject dict) {
-        try {
-            GenericBodyPart part = new MouthPart((String) dict.get("desc"), (Double) dict.get("hotness"),
-                            (Double) dict.get("pleasure"), (Double) dict.get("sensitivity"));
-            return part;
-        } catch (ClassCastException e) {
-            System.err.println(e.getMessage());
-        }
-        return null;
     }
 
     @Override

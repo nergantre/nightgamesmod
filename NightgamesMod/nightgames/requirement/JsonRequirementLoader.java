@@ -1,18 +1,18 @@
 package nightgames.requirement;
 
-import nightgames.global.JSONUtils;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import nightgames.json.JsonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
- * Created by Ryplinn on 6/21/2016.
+ * Class for loading Requirements from JSON.
  */
-public class JSONRequirementLoader implements RequirementLoader<JSONValue> {
-    @Override public Requirement loadRequirement(String key, JSONValue reqData) {
+public class JsonRequirementLoader implements RequirementLoader<JsonElement> {
+    @Override public Requirement loadRequirement(String key, JsonElement reqData) {
         Requirement req;
         switch (key) {
             case "anal":
@@ -46,7 +46,7 @@ public class JSONRequirementLoader implements RequirementLoader<JSONValue> {
                 req = loadMood(reqData);
                 break;
             case "none":
-                req = loadMood(reqData);
+                req = loadNone(reqData);
                 break;
             case "not":
                 req = loadNot(reqData);
@@ -94,121 +94,117 @@ public class JSONRequirementLoader implements RequirementLoader<JSONValue> {
         return req;
     }
 
-    @Override public AnalRequirement loadAnal(JSONValue reqData) {
+    @Override public AnalRequirement loadAnal(JsonElement reqData) {
         return new AnalRequirement();
     }
 
-    @Override public AndRequirement loadAnd(JSONValue reqData) {
+    @Override public AndRequirement loadAnd(JsonElement reqData) {
         //return new AndRequirement(loadSubReqs((JSONObject) reqData));
         return null;
     }
 
-    @Override public AttributeRequirement loadAttribute(JSONValue reqData) {
-        //String att = JSONUtils.readString(reqData, "att");
-        //int amount = JSONUtils.readInteger(reqData, "amount");
+    @Override public AttributeRequirement loadAttribute(JsonElement reqData) {
+        //String att = reqData.get("att").getAsString();
+        //int amount = reqData.get("amount").getAsInt();
         //return new AttributeRequirement(att, amount);
         return null;
     }
 
-    @Override public BodyPartRequirement loadBodyPart(JSONValue reqData) {
-        //String type = JSONUtils.readString(reqData, "type");
+    @Override public BodyPartRequirement loadBodyPart(JsonElement reqData) {
+        //String type = reqData.get("type").getAsString();
         //return new BodyPartRequirement(type);
         return null;
     }
 
-    @Override public DomRequirement loadDom(JSONValue reqData) {
+    @Override public DomRequirement loadDom(JsonElement reqData) {
         return new DomRequirement();
     }
 
-    @Override public DurationRequirement loadDuration(JSONValue reqData) {
-        //int duration = JSONUtils.readInteger(reqData, "duration");
+    @Override public DurationRequirement loadDuration(JsonElement reqData) {
+        //int duration = reqData.get("duration").getAsInt();
         //return new DurationRequirement(duration);
         return null;
     }
 
-    @Override public InsertedRequirement loadInserted(JSONValue reqData) {
+    @Override public InsertedRequirement loadInserted(JsonElement reqData) {
         return new InsertedRequirement();
     }
 
-    @Override public ItemRequirement loadItem(JSONValue reqData) {
-        //String item = JSONUtils.readString(reqData, "item");
-        //int amount = JSONUtils.readInteger(reqData, "amount");
+    @Override public ItemRequirement loadItem(JsonElement reqData) {
+        //String item = reqData.get("item").getAsString();
+        //int amount = reqData.get("amount").getAsInt();
         //return new ItemRequirement(item, amount);
         return null;
     }
 
-    @Override public LevelRequirement loadLevel(JSONValue reqData) {
-        //int level = JSONUtils.readInteger(reqData, "level");
+    @Override public LevelRequirement loadLevel(JsonElement reqData) {
+        //int level = reqData.get("level").getAsInt();
         return null;
     }
 
-    @Override public MoodRequirement loadMood(JSONValue reqData) {
+    @Override public MoodRequirement loadMood(JsonElement reqData) {
         return null;
     }
 
-    @Override public NoRequirement loadNo(JSONValue reqData) {
+    @Override public NoneRequirement loadNone(JsonElement reqData) {
         return null;
     }
 
-    @Override public NotRequirement loadNot(JSONValue reqData) {
+    @Override public NotRequirement loadNot(JsonElement reqData) {
         return null;
     }
 
-    @Override public OrgasmRequirement loadOrgasm(JSONValue reqData) {
+    @Override public OrgasmRequirement loadOrgasm(JsonElement reqData) {
         return null;
     }
 
-    @Override public OrRequirement loadOr(JSONValue reqData) {
+    @Override public OrRequirement loadOr(JsonElement reqData) {
         return null;
     }
 
-    @Override public ProneRequirement loadProne(JSONValue reqData) {
+    @Override public ProneRequirement loadProne(JsonElement reqData) {
         return null;
     }
 
-    @Override public RandomRequirement loadRandom(JSONValue reqData) {
+    @Override public RandomRequirement loadRandom(JsonElement reqData) {
         return null;
     }
 
-    @Override public ResultRequirement loadResult(JSONValue reqData) {
+    @Override public ResultRequirement loadResult(JsonElement reqData) {
         return null;
     }
 
-    @Override public ReverseRequirement loadReverse(JSONValue reqData) {
+    @Override public ReverseRequirement loadReverse(JsonElement reqData) {
         return null;
     }
 
-    @Override public SpecificBodyPartRequirement loadSpecificBodyPart(JSONValue reqData) {
+    @Override public SpecificBodyPartRequirement loadSpecificBodyPart(JsonElement reqData) {
         return null;
     }
 
-    @Override public StanceRequirement loadStance(JSONValue reqData) {
+    @Override public StanceRequirement loadStance(JsonElement reqData) {
         return null;
     }
 
-    @Override public StatusRequirement loadStatus(JSONValue reqData) {
+    @Override public StatusRequirement loadStatus(JsonElement reqData) {
         return null;
     }
 
-    @Override public SubRequirement loadSub(JSONValue reqData) {
+    @Override public SubRequirement loadSub(JsonElement reqData) {
         return null;
     }
 
-    @Override public TraitRequirement loadTrait(JSONValue reqData) {
+    @Override public TraitRequirement loadTrait(JsonElement reqData) {
         return null;
     }
 
-    @Override public WinningRequirement loadWinning(JSONValue reqData) {
+    @Override public WinningRequirement loadWinning(JsonElement reqData) {
         return null;
     }
 
-    private List<Requirement> loadSubReqs(JSONObject reqData) {
-        List<Requirement> reqs = new ArrayList<Requirement>();
-        for (Object keyObj : reqData.keySet()) {
-            String key = (String) keyObj;
-            //reqs.add(loadRequirement(key, (JSONObject) reqData.get(key)));
-        }
-
-        return null;
+    private List<Requirement> loadSubReqs(JsonObject reqData) {
+        return reqData.entrySet().stream().map(e -> loadRequirement(e.getKey(), e.getValue()))
+                        .collect(Collectors.toList());
     }
+
 }

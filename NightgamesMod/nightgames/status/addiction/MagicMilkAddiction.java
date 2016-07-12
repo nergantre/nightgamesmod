@@ -2,14 +2,13 @@ package nightgames.status.addiction;
 
 import java.util.Optional;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.global.JSONUtils;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
 
@@ -207,9 +206,9 @@ public class MagicMilkAddiction extends Addiction {
     }
 
     @Override
-    public Status loadFromJSON(JSONObject obj) {
-        return new MagicMilkAddiction(Global.getCharacterByType(JSONUtils.readString(obj, "cause")),
-                        (float) JSONUtils.readInteger(obj, "magnitude"));
+    public Status loadFromJson(JsonObject obj) {
+        return new MagicMilkAddiction(Global.getCharacterByType(obj.get("cause").getAsString()),
+                        (float) obj.get("magnitude").getAsInt());
     }
 
     @Override

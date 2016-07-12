@@ -1,12 +1,11 @@
 package nightgames.status;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
-import nightgames.global.JSONUtils;
 
 public class Tolerance extends DurationStatus {
     public Tolerance(Character affected, int duration) {
@@ -96,15 +95,15 @@ public class Tolerance extends DurationStatus {
 
     @Override
     @SuppressWarnings("unchecked")
-    public JSONObject saveToJSON() {
-        JSONObject obj = new JSONObject();
-        obj.put("type", getClass().getSimpleName());
-        obj.put("duration", getDuration());
+    public JsonObject saveToJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("type", getClass().getSimpleName());
+        obj.addProperty("duration", getDuration());
         return obj;
     }
 
     @Override
-    public Status loadFromJSON(JSONObject obj) {
-        return new Tolerance(null, JSONUtils.readInteger(obj, "duration"));
+    public Status loadFromJson(JsonObject obj) {
+        return new Tolerance(null, obj.get("duration").getAsInt());
     }
 }

@@ -1,12 +1,11 @@
 package nightgames.status;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
-import nightgames.global.JSONUtils;
 
 public class Abuff extends DurationStatus {
     private Attribute modded;
@@ -162,18 +161,18 @@ public class Abuff extends DurationStatus {
 
     @Override
     @SuppressWarnings("unchecked")
-    public JSONObject saveToJSON() {
-        JSONObject obj = new JSONObject();
-        obj.put("type", getClass().getSimpleName());
-        obj.put("modded", modded.name());
-        obj.put("value", value);
-        obj.put("duration", getDuration());
+    public JsonObject saveToJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("type", getClass().getSimpleName());
+        obj.addProperty("modded", modded.name());
+        obj.addProperty("value", value);
+        obj.addProperty("duration", getDuration());
         return obj;
     }
 
     @Override
-    public Status loadFromJSON(JSONObject obj) {
-        return new Abuff(null, Attribute.valueOf(JSONUtils.readString(obj, "modded")),
-                        JSONUtils.readInteger(obj, "value"), JSONUtils.readInteger(obj, "duration"));
+    public Status loadFromJson(JsonObject obj) {
+        return new Abuff(null, Attribute.valueOf(obj.get("modded").getAsString()),
+                        obj.get("value").getAsInt(), obj.get("duration").getAsInt());
     }
 }

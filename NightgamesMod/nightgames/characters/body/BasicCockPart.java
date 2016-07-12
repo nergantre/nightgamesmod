@@ -3,7 +3,7 @@ package nightgames.characters.body;
 import java.util.Arrays;
 import java.util.Optional;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -135,15 +135,15 @@ public enum BasicCockPart implements CockPart {
 
     @SuppressWarnings("unchecked")
     @Override
-    public JSONObject save() {
-        JSONObject obj = new JSONObject();
-        obj.put("enum", name());
+    public JsonObject save() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("enum", name());
         return obj;
     }
 
     @Override
-    public BodyPart load(JSONObject obj) {
-        String enumName = (String) obj.get("enum");
+    public BodyPart load(JsonObject object) {
+        String enumName = object.get("enum").getAsString();
         // some compatibility for old versions
         Optional<CockMod> mod =
                         Arrays.stream(CockMod.values()).filter(modVal -> modVal.name().equals(enumName)).findAny();

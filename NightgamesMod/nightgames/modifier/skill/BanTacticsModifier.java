@@ -1,17 +1,16 @@
 package nightgames.modifier.skill;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
-import nightgames.global.JSONUtils;
-import nightgames.modifier.ModifierComponent;
+import nightgames.json.JsonUtils;
+import nightgames.modifier.ModifierComponentLoader;
 import nightgames.skills.Tactics;
 
-public class BanTacticsModifier extends SkillModifier implements ModifierComponent<BanTacticsModifier> {
+public class BanTacticsModifier extends SkillModifier implements ModifierComponentLoader<SkillModifier> {
+    private static final String name = "ban-tactic";
 
     private final Set<Tactics> tactics;
 
@@ -26,20 +25,22 @@ public class BanTacticsModifier extends SkillModifier implements ModifierCompone
 
     @Override
     public String name() {
-        return "ban-tactic";
+        return name;
     }
 
     @Override
-    public BanTacticsModifier instance(JSONObject obj) {
-        if (obj.containsKey("tactic")) {
-            String name = JSONUtils.readString(obj, "tactic");
-            Tactics tact = Tactics.valueOf(name);
-            return new BanTacticsModifier(tact);
-        } else if (obj.containsKey("tactics")) {
-            return new BanTacticsModifier(JSONUtils.loadStringsFromArr(obj, "tactics").stream().map(Tactics::valueOf)
-                            .toArray(Tactics[]::new));
+    public BanTacticsModifier instance(JsonObject object) {
+        Optional<BanTacticsModifier> maybeBan =
+                        JsonUtils.getOptional(object, "tactic").map(JsonElement::getAsString).map(Tactics::valueOf)
+                                        .map(BanTacticsModifier::new);
+        if (maybeBan.isPresent()) {
+            return maybeBan.get();
         }
-        throw new IllegalArgumentException("'ban-tactics' must have 'tactic' or 'tactics'");
+        Optional<Tactics[]> maybeTactics = JsonUtils.getOptionalArray(object, "tactics")
+                        .map(array -> JsonUtils.collectionFromJson(array, Tactics.class))
+                        .map(c -> c.toArray(new Tactics[] {}));
+        return new BanTacticsModifier(maybeTactics.orElseThrow(
+                        () -> new IllegalArgumentException("'ban-tactics' must have 'tactic' or 'tactics'")));
     }
 
     @Override

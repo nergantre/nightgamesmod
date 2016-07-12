@@ -1,15 +1,14 @@
 package nightgames.status;
 
-import org.json.simple.JSONObject;
-
+import com.google.gson.JsonObject;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.body.BodyPart;
-import nightgames.characters.custom.requirement.EitherInsertedRequirement;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.global.JSONUtils;
+
+import static nightgames.requirement.RequirementShortcuts.eitherinserted;
 
 public class TailFucked extends Status {
     private String target;
@@ -19,7 +18,7 @@ public class TailFucked extends Status {
         super(hole.equals("ass") ? "Tail Pegged" : "Tail Fucked", affected);
         target = hole;
         this.other = other;
-        requirements.add(new EitherInsertedRequirement(true));
+        requirements.add(eitherinserted());
         flag(Stsflag.bound);
         flag(hole.equals("ass") ? Stsflag.pegged : Stsflag.fucked);
     }
@@ -143,16 +142,16 @@ public class TailFucked extends Status {
 
     @Override
     @SuppressWarnings("unchecked")
-    public JSONObject saveToJSON() {
-        JSONObject obj = new JSONObject();
-        obj.put("type", getClass().getSimpleName());
-        obj.put("target", target);
+    public JsonObject saveToJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("type", getClass().getSimpleName());
+        obj.addProperty("target", target);
         return obj;
     }
 
     @Override
-    public Status loadFromJSON(JSONObject obj) {
-        return new TailFucked(null, null, JSONUtils.readString(obj, "target"));
+    public Status loadFromJson(JsonObject obj) {
+        return new TailFucked(null, null, obj.get("target").getAsString());
     }
 
     @Override

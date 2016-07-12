@@ -1,13 +1,12 @@
 package nightgames.status;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
-import nightgames.global.JSONUtils;
 
 public class CockBound extends Status {
     private float toughness;
@@ -124,16 +123,16 @@ public class CockBound extends Status {
 
     @Override
     @SuppressWarnings("unchecked")
-    public JSONObject saveToJSON() {
-        JSONObject obj = new JSONObject();
-        obj.put("type", getClass().getSimpleName());
-        obj.put("toughness", toughness);
-        obj.put("binding", binding);
+    public JsonObject saveToJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("type", getClass().getSimpleName());
+        obj.addProperty("toughness", toughness);
+        obj.addProperty("binding", binding);
         return obj;
     }
 
     @Override
-    public Status loadFromJSON(JSONObject obj) {
-        return new CockBound(null, JSONUtils.readFloat(obj, "toughness"), JSONUtils.readString(obj, "binding"));
+    public Status loadFromJson(JsonObject obj) {
+        return new CockBound(null, obj.get("toughness").getAsFloat(), obj.get("binding").getAsString());
     }
 }

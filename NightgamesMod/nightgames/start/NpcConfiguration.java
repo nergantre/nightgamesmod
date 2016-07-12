@@ -1,10 +1,9 @@
 package nightgames.start;
 
-import com.sun.javafx.scene.control.behavior.OptionalBoolean;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import nightgames.characters.CharacterSex;
-import nightgames.characters.body.Body;
-import nightgames.global.JSONUtils;
-import org.json.simple.JSONObject;
+import nightgames.json.JsonUtils;
 
 import nightgames.characters.NPC;
 
@@ -65,23 +64,23 @@ public class NpcConfiguration extends CharacterConfiguration {
     }
 
     /** Parse fields from the all_npcs section.
-     * @param obj The configuration from the JSON config file.
+     * @param object The configuration from the JSON config file.
      * @return A new NpcConfiguration as specified in the config file.
      */
-    public static NpcConfiguration parseAllNpcs(JSONObject obj) {
+    public static NpcConfiguration parseAllNpcs(JsonObject object) {
         NpcConfiguration config = new NpcConfiguration();
-        config.isStartCharacter = JSONUtils.<Boolean>readOptional(obj, "start");
-        config.parseCommon(obj);
+        config.isStartCharacter = JsonUtils.getOptional(object, "start").map(JsonElement::getAsBoolean);
+        config.parseCommon(object);
         return config;
     }
 
     /** Parse a character-specific NPC config.
-     * @param obj The configuration from the JSON config file.
+     * @param object The configuration from the JSON config file.
      * @return A new NpcConfiguration as specified in the config file.
      */
-    public static NpcConfiguration parse(JSONObject obj) {
-        NpcConfiguration config = NpcConfiguration.parseAllNpcs(obj);
-        config.type = JSONUtils.readOptional(obj, "type").map(Object::toString)
+    public static NpcConfiguration parse(JsonObject object) {
+        NpcConfiguration config = NpcConfiguration.parseAllNpcs(object);
+        config.type = JsonUtils.getOptional(object, "type").map(JsonElement::getAsString)
                         .orElseThrow(() -> new RuntimeException("Tried parsing NPC without a type."));
 
         return config;

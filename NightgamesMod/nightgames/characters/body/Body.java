@@ -14,8 +14,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -23,6 +24,7 @@ import nightgames.characters.CharacterSex;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.json.JsonUtils;
 import nightgames.status.Abuff;
 import nightgames.status.BodyFetish;
 import nightgames.status.Status;
@@ -73,8 +75,7 @@ public class Body implements Cloneable {
 
     // yeah i know :(
     public static BodyPart nonePart = new GenericBodyPart("none", 0, 1, 1, "none", "");
-    public static Set<String> pluralParts =
-                    new HashSet<String>(Arrays.asList("hands", "feet", "wings", "breasts", "balls"));
+    public static Set<String> pluralParts = new HashSet<>(Arrays.asList("hands", "feet", "wings", "breasts", "balls"));
     final static BodyPart requiredParts[] = {new GenericBodyPart("hands", 0, 1, 1, "hands", ""),
                     new GenericBodyPart("feet", 0, 1, 1, "feet", ""), new GenericBodyPart("skin", 0, 1, 1, "skin", ""),
                     AssPart.generic, MouthPart.generic, BreastsPart.flat, EarPart.normal};
@@ -115,7 +116,7 @@ public class Body implements Cloneable {
     }
 
     private void updateCurrentParts() {
-        LinkedHashSet<BodyPart> parts = new LinkedHashSet<BodyPart>(bodyParts);
+        LinkedHashSet<BodyPart> parts = new LinkedHashSet<>(bodyParts);
         for (PartReplacement r : replacements) {
             parts.removeAll(r.removed);
             parts.addAll(r.added);
@@ -723,39 +724,38 @@ public class Body implements Cloneable {
     }
 
     @SuppressWarnings("unchecked")
-    public JSONObject save() {
-        JSONObject bodyObj = new JSONObject();
-        bodyObj.put("hotness", hotness);
-        bodyObj.put("femininity", baseFemininity);
-        JSONArray partsArr = new JSONArray();
+    public JsonObject save() {
+        JsonObject bodyObj = new JsonObject();
+        bodyObj.addProperty("hotness", hotness);
+        bodyObj.addProperty("femininity", baseFemininity);
+        JsonArray partsArr = new JsonArray();
         for (BodyPart part : bodyParts) {
-            JSONObject obj = part.save();
-            obj.put("class", part.getClass()
+            JsonObject obj = part.save();
+            obj.addProperty("class", part.getClass()
                                  .getCanonicalName());
             partsArr.add(obj);
         }
-        bodyObj.put("parts", partsArr);
+        bodyObj.add("parts", partsArr);
         return bodyObj;
     }
 
-    public static BodyPart loadPart(JSONObject obj) {
-        String classType = (String) obj.get("class");
+    public static BodyPart loadPart(JsonObject obj) {
+        String classType = obj.get("class").getAsString();
         return prototypes.get(classType)
                          .load(obj);
     }
 
-    public void loadParts(JSONArray partsArr) {
-        for (Object part : partsArr) {
-            JSONObject obj = (JSONObject) part;
-            this.add(loadPart(obj));
+    public void loadParts(JsonArray partsArr) {
+        for (JsonElement element : partsArr) {
+            JsonObject partJson = element.getAsJsonObject();
+            this.add(loadPart(partJson));
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public static Body load(JSONObject bodyObj, Character character) {
-        double hotness = ((Number) bodyObj.get("hotness")).doubleValue();
+    public static Body load(JsonObject bodyObj, Character character) {
+        double hotness = bodyObj.get("hotness").getAsDouble();
         Body body = new Body(character, hotness);
-        body.loadParts((JSONArray) bodyObj.get("parts"));
+        body.loadParts(bodyObj.getAsJsonArray("parts"));
         double defaultFemininity = 0;
         if (body.has("pussy")) {
             defaultFemininity += 2;
@@ -763,8 +763,7 @@ public class Body implements Cloneable {
         if (body.has("cock")) {
             defaultFemininity -= 2;
         }
-        double femininity = ((Number) bodyObj.getOrDefault("femininity", defaultFemininity)).doubleValue();
-        body.baseFemininity = femininity;
+        body.baseFemininity = JsonUtils.getOptional(bodyObj, "femininity").map(JsonElement::getAsDouble).orElse(defaultFemininity);
         body.updateCurrentParts();
         return body;
     }
@@ -969,5 +968,32 @@ public class Body implements Cloneable {
         } else {
             return getRandomBreasts();
         }
+    }
+
+    @Override public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        Body body = (Body) o;
+
+        if (!(Math.abs(body.hotness - hotness) < 1e-6))
+            return false;
+        if (!(Math.abs(body.baseFemininity - baseFemininity) < 1e-6))
+            return false;
+        return bodyParts.equals(body.bodyParts);
+
+    }
+
+    @Override public int hashCode() {
+        int result;
+        long temp;
+        result = bodyParts.hashCode();
+        temp = Double.doubleToLongBits(hotness);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(baseFemininity);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
     }
 }

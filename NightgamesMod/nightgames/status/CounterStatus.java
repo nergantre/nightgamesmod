@@ -1,6 +1,6 @@
 package nightgames.status;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -109,15 +109,15 @@ public class CounterStatus extends DurationStatus {
 
     @Override
     @SuppressWarnings("unchecked")
-    public JSONObject saveToJSON() {
-        JSONObject obj = new JSONObject();
+    public JsonObject saveToJson() {
+        JsonObject obj = new JsonObject();
         // TODO Support this once skill loading is in the game
-        obj.put("type", getClass().getSimpleName());
+        obj.addProperty("type", getClass().getSimpleName());
         return obj;
     }
 
     @Override
-    public Status loadFromJSON(JSONObject obj) {
+    public Status loadFromJson(JsonObject obj) {
         // TODO Support this once skill loading is in the game
         throw new UnsupportedOperationException();
     }

@@ -1,6 +1,8 @@
 package nightgames.gui;
 
+import java.io.File;
 import java.util.Observable;
+import java.util.Optional;
 
 import nightgames.characters.Character;
 import nightgames.characters.Player;
@@ -8,14 +10,21 @@ import nightgames.combat.Combat;
 import nightgames.combat.IEncounter;
 import nightgames.skills.Skill;
 
-public class NullGUI extends GUI {
+public class TestGUI extends GUI {
     /**
      * 
      */
     private static final long serialVersionUID = 1739250786661411957L;
 
-    public NullGUI() {
-        setVisible(false);
+    public TestGUI() { }
+
+    @Override public void setVisible(boolean visible) {
+        // pass
+    }
+
+    // Don't use save dialog in tests
+    @Override public Optional<File> askForSaveFile() {
+        return Optional.empty();
     }
 
     @Override
@@ -23,11 +32,6 @@ public class NullGUI extends GUI {
         combat = new Combat(p1, p2, p1.location());
         combat.addObserver(this);
         return combat;
-    }
-
-    @Override
-    public void populatePlayer(Player player) {
-
     }
 
     @Override
@@ -41,9 +45,6 @@ public class NullGUI extends GUI {
 
     @Override
     public void addSkill(Skill action, Combat com) {}
-
-    @Override
-    public void setPlayer(Player player) {}
 
     @Override
     public void next(Combat combat) {}

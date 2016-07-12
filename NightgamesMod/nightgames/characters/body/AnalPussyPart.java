@@ -1,9 +1,11 @@
 package nightgames.characters.body;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.json.JsonUtils;
 
 public class AnalPussyPart extends AssPart {
     /**
@@ -37,10 +39,9 @@ public class AnalPussyPart extends AssPart {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public BodyPart loadFromDict(JSONObject dict) {
-        return new AnalPussyPart(
-                        ((Number) dict.getOrDefault("size", Double.valueOf(AssPart.SIZE_NORMAL))).doubleValue());
+    public BodyPart fromJson(JsonObject object) {
+        return new AnalPussyPart(JsonUtils.getOptional(object, "size").map(JsonElement::getAsDouble)
+                        .orElse(AssPart.SIZE_NORMAL));
     }
 
     @Override

@@ -5,20 +5,25 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiFunction;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.global.JSONUtils;
-import nightgames.modifier.ModifierComponent;
+import nightgames.modifier.ModifierComponentLoader;
 import nightgames.skills.Skill;
 
-public class EncourageSkillsModifier extends SkillModifier implements ModifierComponent<EncourageSkillsModifier> {
+public class EncourageSkillsModifier extends SkillModifier implements ModifierComponentLoader<SkillModifier> {
+    private static final String name = "encourage-skills";
 
     private final Map<Skill, Double> absolutes;
     private final Map<Skill, BiFunction<Character, Combat, Double>> variables;
+
+    EncourageSkillsModifier() {
+        absolutes = null;
+        variables = null;
+    }
 
     public EncourageSkillsModifier(Skill s, double encouragement) {
         absolutes = Collections.unmodifiableMap(Collections.singletonMap(s, encouragement));
@@ -59,31 +64,31 @@ public class EncourageSkillsModifier extends SkillModifier implements ModifierCo
 
     @Override
     public String name() {
-        return "encourage-skills";
+        return name;
     }
 
     @Override
-    public EncourageSkillsModifier instance(JSONObject obj) {
-        if (obj.containsKey("list")) {
-            JSONArray arr = (JSONArray) obj.get("list");
+    public EncourageSkillsModifier instance(JsonObject object) {
+        if (object.has("list")) {
+            JsonArray arr = (JsonArray) object.get("list");
             Map<Skill, Double> encs = new HashMap<>();
             for (Object raw : arr) {
-                JSONObject jobj = (JSONObject) raw;
-                if (!(jobj.containsKey("skill") && jobj.containsKey("weight"))) {
+                JsonObject jobj = (JsonObject) raw;
+                if (!(jobj.has("skill") && jobj.has("weight"))) {
                     throw new IllegalArgumentException("All encouraged skills need a 'skill' and a 'weight'");
                 }
-                String name = JSONUtils.readString(jobj, "skill");
+                String name = jobj.get("skill").getAsString();
                 Skill skill = Global.getSkillPool().stream().filter(s -> s.getName().equals(name)).findAny()
                                 .orElseThrow(() -> new IllegalArgumentException("No such skill: " + name));
-                double weight = JSONUtils.readFloat(jobj, "weight");
+                double weight = jobj.get("weight").getAsFloat();
                 encs.put(skill, weight);
             }
             return new EncourageSkillsModifier(encs);
-        } else if (obj.containsKey("skill") && obj.containsKey("weight")) {
-            String name = JSONUtils.readString(obj, "skill");
+        } else if (object.has("skill") && object.has("weight")) {
+            String name = object.get("skill").getAsString();
             Skill skill = Global.getSkillPool().stream().filter(s -> s.getName().equals(name)).findAny()
                             .orElseThrow(() -> new IllegalArgumentException("No such skill: " + name));
-            double weight = JSONUtils.readFloat(obj, "weight");
+            double weight = object.get("weight").getAsFloat();
             return new EncourageSkillsModifier(skill, weight);
         }
         throw new IllegalArgumentException("'encourage-skills' must have either 'list' or 'skill' and 'weight'");

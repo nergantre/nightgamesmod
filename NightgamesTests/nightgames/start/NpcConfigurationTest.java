@@ -2,9 +2,7 @@ package nightgames.start;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.CharacterSex;
-import nightgames.characters.NPC;
-import nightgames.characters.body.BreastsPart;
-import nightgames.global.JSONUtils;
+import nightgames.json.JsonUtils;
 import nightgames.items.clothing.Clothing;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -15,8 +13,6 @@ import static org.junit.Assert.*;
 import nightgames.characters.TestAngel;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +33,7 @@ public class NpcConfigurationTest {
 
     @Before public void setUp() throws Exception {
         Path file = new File("NightgamesTests/nightgames/start/TestStartConfig.json").toPath();
-        startConfig = StartConfiguration.parse(JSONUtils.rootFromFile(file));
+        startConfig = StartConfiguration.parse(JsonUtils.rootJson(file).getAsJsonObject());
         angelConfig = startConfig.findNpcConfig("TestAngel")
                         .orElseThrow(() -> new NoSuchElementException("TestAngel not found in test config."));
     }

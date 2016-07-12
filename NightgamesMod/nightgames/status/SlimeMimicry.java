@@ -1,6 +1,6 @@
 package nightgames.status;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -9,7 +9,6 @@ import nightgames.characters.body.CockMod;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.global.JSONUtils;
 
 public class SlimeMimicry extends DurationStatus {
     private final String mimickedName;
@@ -105,23 +104,23 @@ public class SlimeMimicry extends DurationStatus {
 
     @SuppressWarnings("unchecked")
     @Override
-    public JSONObject saveToJSON() {
-        JSONObject obj = new JSONObject();
-        obj.put("type", getClass().getSimpleName());
-        obj.put("mimickedName", getMimickedName());
-        obj.put("pussyMimicked", pussyMimicked.name());
-        obj.put("cockMimicked", cockMimicked.name());
-        obj.put("duration", getDuration());
+    public JsonObject saveToJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("type", getClass().getSimpleName());
+        obj.addProperty("mimickedName", getMimickedName());
+        obj.addProperty("pussyMimicked", pussyMimicked.name());
+        obj.addProperty("cockMimicked", cockMimicked.name());
+        obj.addProperty("duration", getDuration());
         return obj;
     }
 
     @Override
-    public Status loadFromJSON(JSONObject obj) {
-        return new SlimeMimicry(JSONUtils.readString(obj, "mimickedName"),
-                        PussyPart.valueOf(JSONUtils.readString(obj, "pussyMimicked")),
-                        CockMod.valueOf(JSONUtils.readString(obj, "cockMimicked")),
+    public Status loadFromJson(JsonObject obj) {
+        return new SlimeMimicry(obj.get("mimickedName").getAsString(),
+                        PussyPart.valueOf(obj.get("pussyMimicked").getAsString()),
+                        CockMod.valueOf(obj.get("cockMimicked").getAsString()),
                         null,
-                        JSONUtils.readInteger(obj, "duration"));
+                        obj.get("duration").getAsInt());
     }
 
     public String getMimickedName() {

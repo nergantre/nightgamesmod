@@ -4,12 +4,13 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Set;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.items.Item;
-import nightgames.modifier.ModifierComponent;
+import nightgames.modifier.ModifierComponentLoader;
 
-public class BanConsumablesModifier extends ItemModifier implements ModifierComponent<BanConsumablesModifier> {
+public class BanConsumablesModifier extends ItemModifier implements ModifierComponentLoader<ItemModifier> {
+    private static final String name = "ban-consumables";
 
     static final Set<Item> CONSUMABLES;
 
@@ -27,16 +28,16 @@ public class BanConsumablesModifier extends ItemModifier implements ModifierComp
 
     @Override
     public String name() {
-        return "ban-consumables";
+        return name;
     }
 
     @Override
-    public BanConsumablesModifier instance(JSONObject obj) {
+    public BanConsumablesModifier instance(JsonObject object) {
         return new BanConsumablesModifier();
     }
 
     @Override
     public String toString() {
-        return name();
+        return name;
     }
 }

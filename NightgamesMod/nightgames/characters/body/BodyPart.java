@@ -2,7 +2,7 @@ package nightgames.characters.body;
 
 import java.util.Collection;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -31,7 +31,7 @@ public interface BodyPart {
 
     public boolean isReady(Character self);
 
-    public JSONObject save();
+    public JsonObject save();
 
     public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c);
 
@@ -70,7 +70,7 @@ public interface BodyPart {
 
     public int mod(Attribute a, int total);
 
-    public BodyPart load(JSONObject obj);
+    public BodyPart load(JsonObject obj);
 
     public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan);
 

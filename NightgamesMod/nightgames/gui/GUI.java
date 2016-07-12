@@ -13,6 +13,7 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -85,7 +86,6 @@ public class GUI extends JFrame implements Observer {
      */
     private static final long serialVersionUID = 451431916952047183L;
     protected Combat combat;
-    private Player player;
     private ArrayList<ArrayList<SkillButton>> skills;
     JPanel commandPanel;
     private JTextPane textPane;
@@ -104,7 +104,7 @@ public class GUI extends JFrame implements Observer {
     private JLabel timeLabel;
     private JLabel cashLabel;
     private Panel panel0;
-    private CreationGUI creation;
+    protected CreationGUI creation;
     private JScrollPane textScroll;
     private JPanel gamePanel;
     private JToggleButton stsbtn;
@@ -138,6 +138,7 @@ public class GUI extends JFrame implements Observer {
     public int fontsize;
     private JMenuItem mntmQuitMatch;
     private boolean skippedFeat;
+    public NgsChooser saveFileChooser;
 
     private final static String USE_PORTRAIT = "PORTRAIT";
     private final static String USE_MAP = "MAP";
@@ -211,7 +212,7 @@ public class GUI extends JFrame implements Observer {
         mntmLoad.setBackground(GUIColors.bgGrey);
         mntmLoad.setHorizontalAlignment(SwingConstants.CENTER);
 
-        mntmLoad.addActionListener(arg0 -> Global.load());
+        mntmLoad.addActionListener(arg0 -> Global.loadWithDialog());
 
         menuBar.add(mntmLoad);
 
@@ -633,6 +634,13 @@ public class GUI extends JFrame implements Observer {
             @Override
             public void keyPressed(KeyEvent e) {}
         });
+
+        // Use this for making save dialogs
+        saveFileChooser = new NgsChooser(this);
+    }
+
+    public Optional<File> askForSaveFile() {
+        return saveFileChooser.askForSaveFile();
     }
 
     // combat GUI
@@ -790,7 +798,6 @@ public class GUI extends JFrame implements Observer {
         getContentPane().remove(creation);
         getContentPane().add(gamePanel);
         getContentPane().validate();
-        this.player = player;
         player.gui = this;
         player.addObserver(this);
         JPanel meter = new JPanel();
@@ -1041,10 +1048,6 @@ public class GUI extends JFrame implements Observer {
         commandPanel.revalidate();
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
     public void next(Combat combat) {
         refresh();
         clearCommand();
@@ -1115,7 +1118,7 @@ public class GUI extends JFrame implements Observer {
         if (!target.mostlyNude()) {
             commandPanel.add(new EncounterButton("Steal Clothes", encounter, target, Encs.stealclothes));
         }
-        if (player.has(Item.Aphrodisiac)) {
+        if (Global.human.has(Item.Aphrodisiac)) {
             commandPanel.add(new EncounterButton("Use Aphrodisiac", encounter, target, Encs.aphrodisiactrick));
         }
         commandPanel.add(new EncounterButton("Do Nothing", encounter, target, Encs.wait));
@@ -1142,6 +1145,7 @@ public class GUI extends JFrame implements Observer {
     }
 
     public void ding() {
+        Player player = Global.human;
         if (player.availableAttributePoints > 0) {
             message(player.availableAttributePoints + " Attribute Points remain.\n");
             clearCommand();
@@ -1213,6 +1217,7 @@ public class GUI extends JFrame implements Observer {
     }
 
     public void refresh() {
+        Player player = Global.human;
         stamina.setText("Stamina: " + getLabelString(player.getStamina()));
         arousal.setText("Arousal: " + getLabelString(player.getArousal()));
         mojo.setText("Mojo: " + getLabelString(player.getMojo()));
@@ -1264,6 +1269,7 @@ public class GUI extends JFrame implements Observer {
         JPanel inventoryPane = new JPanel();
         inventoryPane.setSize(400, 1000);
 
+        Player player = Global.human;
         List<Item> availItems = player.getInventory().entrySet().stream().filter(entry -> (entry.getValue() > 0))
                         .map(entry -> entry.getKey()).collect(Collectors.toList());
 
@@ -1444,6 +1450,7 @@ public class GUI extends JFrame implements Observer {
 
         public AttributeButton(Attribute att) {
             super();
+            Player player = Global.human;
             setFont(new Font("Baskerville Old Face", 0, 18));
             this.att = att;
             setText(att.name());
@@ -1471,6 +1478,7 @@ public class GUI extends JFrame implements Observer {
             setText(feat.toString());
             setToolTipText(feat.getDesc());
             addActionListener(arg0 -> {
+                Player player = Global.human;
                 player.add(FeatButton.this.feat);
                 clearTextIfNeeded();
                 Global.gui().message("Gained feat: " + FeatButton.this.feat);
@@ -1515,7 +1523,7 @@ public class GUI extends JFrame implements Observer {
             this.enc = enc2;
             this.assist = assist;
             setText("Help " + assist.name());
-            addActionListener(arg0 -> GUI.InterveneButton.this.enc.intrude(player, GUI.InterveneButton.this.assist));
+            addActionListener(arg0 -> GUI.InterveneButton.this.enc.intrude(Global.human, GUI.InterveneButton.this.assist));
         }
     }
 

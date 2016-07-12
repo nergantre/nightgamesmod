@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -129,9 +129,9 @@ public abstract class Status implements Cloneable {
 
     public void onApply(Combat c, Character other) {}
 
-    public abstract JSONObject saveToJSON();
+    public abstract JsonObject saveToJson();
 
-    public abstract Status loadFromJSON(JSONObject obj);
+    public abstract Status loadFromJson(JsonObject obj);
 
     public void tick(Combat c) {}
     

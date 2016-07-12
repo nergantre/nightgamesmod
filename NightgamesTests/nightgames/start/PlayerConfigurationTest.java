@@ -4,7 +4,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.CharacterSex;
 import nightgames.characters.Player;
 import nightgames.characters.Trait;
-import nightgames.global.JSONUtils;
+import nightgames.json.JsonUtils;
 import nightgames.items.clothing.Clothing;
 import org.hamcrest.core.IsCollectionContaining;
 import org.junit.Before;
@@ -12,7 +12,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.File;
-import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.*;
 
@@ -32,7 +31,7 @@ public class PlayerConfigurationTest {
 
     @Before public void setUp() throws Exception {
         Path file = new File("NightgamesTests/nightgames/start/TestStartConfig.json").toPath();
-        startConfig = StartConfiguration.parse(JSONUtils.rootFromFile(file));
+        startConfig = StartConfiguration.parse(JsonUtils.rootJson(file).getAsJsonObject());
         playerConfig = startConfig.player;
 
     }
@@ -50,5 +49,7 @@ public class PlayerConfigurationTest {
         assertThat(malePlayer.traits, IsCollectionContaining
                         .hasItems(Trait.pussyhandler, Trait.dickhandler, Trait.limbTraining1, Trait.tongueTraining1,
                                         Trait.powerfulhips, Trait.romantic, Trait.insatiable));
+        assertThat(malePlayer.outfit.getEquipped(),
+                        IsCollectionContaining.hasItems(Clothing.getByID("gothshirt"), Clothing.getByID("gothpants")));
     }
 }

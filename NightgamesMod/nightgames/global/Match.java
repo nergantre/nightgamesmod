@@ -225,7 +225,7 @@ public class Match {
             }
         }
         if (Global.checkFlag(Flag.autosave)) {
-            Global.save(true);
+            Global.autoSave();
         }
         Global.getPlayer().getAddictions().forEach(Addiction::endNight);
         new Postmatch(Global.getPlayer(), combatants);

@@ -1,6 +1,7 @@
 package nightgames.global;
 
-import com.cedarsoftware.util.io.JsonWriter;
+import com.google.gson.*;
+import com.google.gson.stream.JsonWriter;
 import nightgames.Resources.ResourceLoader;
 import nightgames.actions.Action;
 import nightgames.actions.*;
@@ -12,13 +13,13 @@ import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.StraponPart;
 import nightgames.characters.custom.CustomNPC;
-import nightgames.characters.custom.JSONSourceNPCDataLoader;
+import nightgames.characters.custom.JsonSourceNPCDataLoader;
 import nightgames.characters.custom.NPCData;
 import nightgames.combat.Combat;
 import nightgames.daytime.Daytime;
 import nightgames.ftc.FTCMatch;
+import nightgames.json.JsonUtils;
 import nightgames.gui.GUI;
-import nightgames.gui.NullGUI;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.modifier.Modifier;
@@ -30,10 +31,6 @@ import nightgames.start.PlayerConfiguration;
 import nightgames.start.StartConfiguration;
 import nightgames.status.Status;
 import nightgames.trap.*;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
-import org.json.simple.parser.ParseException;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.ContextFactory;
 
@@ -53,16 +50,16 @@ import java.util.stream.Collectors;
 public class Global {
     private static Random rng;
     private static GUI gui;
-    private static HashSet<Skill> skillPool = new HashSet<Skill>();
+    private static Set<Skill> skillPool = new HashSet<>();
     private static Map<String, NPC> characterPool;
-    private static HashSet<Action> actionPool;
-    private static HashSet<Trap> trapPool;
-    private static HashSet<Trait> featPool;
-    private static HashSet<Modifier> modifierPool;
-    private static HashSet<Character> players;
+    private static Set<Action> actionPool;
+    private static Set<Trap> trapPool;
+    private static Set<Trait> featPool;
+    private static Set<Modifier> modifierPool;
+    private static Set<Character> players;
     private static Set<Character> resting;
-    private static HashSet<String> flags;
-    private static HashMap<String, Float> counters;
+    private static Set<String> flags;
+    private static Map<String, Float> counters;
     public static Player human;
     private static Match match;
     public static Daytime day;
@@ -78,15 +75,11 @@ public class Global {
     public static Context cx;
 
     public Global() {
-        this(false);
-    }
-
-    public Global(boolean headless) {
         rng = new Random();
-        flags = new HashSet<String>();
-        players = new HashSet<Character>();
-        resting = new HashSet<Character>();
-        counters = new HashMap<String, Float>();
+        flags = new HashSet<>();
+        players = new HashSet<>();
+        resting = new HashSet<>();
+        counters = new HashMap<>();
         jdate = new Date();
         counters.put(Flag.malePref.name(), 0.f);
         Clothing.buildClothingTable();
@@ -124,11 +117,11 @@ public class Global {
         buildFeatPool();
         buildModifierPool();
         flag(Flag.AiriEnabled);
-        if (headless) {
-            gui = new NullGUI();
-        } else {
-            gui = new GUI();
-        }
+            gui = makeGUI();
+    }
+
+    protected GUI makeGUI() {
+        return new GUI();
     }
 
     public static boolean meetsRequirements(Character c, Trait t) {
@@ -139,24 +132,15 @@ public class Global {
         return debug[flag.ordinal()] && debugSimulation == 0;
     }
 
-    // Convenience method for easy game starts.
-    public static void newGame(String playerName) {
-        Map<Attribute, Integer> att = new HashMap<>();
-        att.put(Attribute.Power, 5);
-        att.put(Attribute.Seduction, 5);
-        att.put(Attribute.Cunning, 5);
-        newGame(playerName, Optional.empty(), new ArrayList<Trait>(), CharacterSex.male, att);
-    }
-
     public static void newGame(String playerName, Optional<StartConfiguration> config, List<Trait> pickedTraits,
                     CharacterSex pickedGender, Map<Attribute, Integer> selectedAttributes) {
-        Optional<PlayerConfiguration> playerConfig;
-        playerConfig = config.isPresent() ? Optional.of(config.get().player) : Optional.empty();
-        List<Flag> cfgFlags = config.isPresent() ? config.get().getFlags() : new ArrayList<>();
+        Optional<PlayerConfiguration> playerConfig = config.map(c -> c.player);
+        Collection<Flag> cfgFlags = config.map(StartConfiguration::getFlags).orElse(new ArrayList<>());
         human = new Player(playerName, pickedGender, playerConfig, pickedTraits, selectedAttributes);
         players.add(human);
-        if (gui != null)
+        if (gui != null) {
             gui.populatePlayer(human);
+        }
         buildSkillPool(human);
         Clothing.buildClothingTable();
         learnSkills(human);
@@ -164,12 +148,11 @@ public class Global {
         // Add starting characters to players
         players.addAll(characterPool.values().stream().filter(npc -> npc.isStartCharacter).collect(Collectors.toList()));
         if (!cfgFlags.isEmpty()) {
-            flags.clear();
-            cfgFlags.stream().map(Flag::name).forEach(flags::add);
+            flags = cfgFlags.stream().map(Flag::name).collect(Collectors.toSet());
         }
         Set<Character> lineup = pickCharacters(players, Collections.singleton(human), 4);
         match = new Match(lineup, new NoModifier());
-        save(false);
+        saveWithDialog();
     }
 
     public static int random(int start, int end) {
@@ -480,7 +463,7 @@ public class Global {
         modifierPool.add(new VulnerableModifier());
     }
 
-    public static HashSet<Action> getActions() {
+    public static Set<Action> getActions() {
         return actionPool;
     }
 
@@ -891,53 +874,35 @@ public class Global {
         counters.put(f.name(), val);
     }
 
-    @SuppressWarnings("unchecked")
-    public static void save(boolean auto) {
-        JSONObject obj = new JSONObject();
-        JSONArray characterArr = new JSONArray();
-        for (Character c : players) {
-            characterArr.add(c.save());
-        }
-        obj.put("characters", characterArr);
-        JSONArray flagsArr = new JSONArray();
-        for (String flag : flags) {
-            flagsArr.add(flag);
-        }
-        obj.put("flags", flagsArr);
-        JSONObject countersObj = new JSONObject();
-        for (String counter : counters.keySet()) {
-            countersObj.put(counter, counters.get(counter));
-        }
-        obj.put("counters", countersObj);
-        obj.put("time", match == null ? "dusk" : "dawn");
-        obj.put("date", date);
+    public static void autoSave() {
+        save(new File("./auto.ngs"));
+    }
 
-        try {
-            FileWriter file;
-            if (auto) {
-                file = new FileWriter("./auto.ngs");
-            } else {
-                JFileChooser dialog = new JFileChooser("./");
-                FileFilter savesFilter = new FileNameExtensionFilter("Nightgame Saves", "ngs");
-                dialog.addChoosableFileFilter(savesFilter);
-                dialog.setFileFilter(savesFilter);
-                dialog.setMultiSelectionEnabled(false);
-                int rv = dialog.showSaveDialog(gui);
+    public static void saveWithDialog() {
+        Optional<File> file = gui().askForSaveFile();
+        if (file.isPresent()) {
+            save(file.get());
+        }
+    }
 
-                if (rv != JFileChooser.APPROVE_OPTION) {
-                    return;
-                }
-                File saveFile = dialog.getSelectedFile();
-                String fname = saveFile.getAbsolutePath();
-                if (!fname.endsWith(".ngs")) {
-                    fname += ".ngs";
-                }
-                file = new FileWriter(new File(fname));
-            }
-            PrintWriter saver = new PrintWriter(file);
-            saver.write(JsonWriter.formatJson(obj.toJSONString()));
-            saver.close();
-        } catch (IOException e) {
+    protected static SaveData saveData() {
+        SaveData data = new SaveData();
+        data.players.addAll(players);
+        data.flags.addAll(flags);
+        data.counters.putAll(counters);
+        data.time = match == null ? SaveData.Time.DUSK : SaveData.Time.DAWN;
+        data.date = date;
+        return data;
+    }
+
+    public static void save(File file) {
+        SaveData data = saveData();
+        JsonObject saveJson = data.toJson();
+
+        try (JsonWriter saver = new JsonWriter(new FileWriter(file))) {
+            JsonUtils.gson.toJson(saveJson, saver);
+        } catch (IOException|JsonIOException e) {
+            System.err.println("Could not save file " + file + ": " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -951,24 +916,23 @@ public class Global {
         Optional<NpcConfiguration> commonConfig =
                         startConfig.isPresent() ? Optional.of(startConfig.get().npcCommon) : Optional.empty();
 
-        try {
-            JSONArray characterSet = (JSONArray) JSONValue.parseWithException(
-                            new InputStreamReader(ResourceLoader.getFileResourceAsStream("characters/included.json")));
-            for (Object obj : characterSet) {
-                String name = (String) obj;
+        try (InputStreamReader reader = new InputStreamReader(ResourceLoader.getFileResourceAsStream("characters/included.json"))) {
+            JsonArray characterSet = JsonUtils.rootJson(reader).getAsJsonArray();
+            for (JsonElement element : characterSet) {
+                String name = element.getAsString();
                 try {
-                    NPCData data = JSONSourceNPCDataLoader
+                    NPCData data = JsonSourceNPCDataLoader
                                     .load(ResourceLoader.getFileResourceAsStream("characters/" + name));
                     Optional<NpcConfiguration> npcConfig = findNpcConfig(CustomNPC.TYPE_PREFIX, startConfig);
                     Personality npc = new CustomNPC(data, npcConfig, commonConfig);
                     characterPool.put(npc.getCharacter().getType(), npc.getCharacter());
                     System.out.println("Loaded " + name);
-                } catch (ParseException | IOException e1) {
+                } catch (JsonParseException e1) {
                     System.err.println("Failed to load NPC " + name);
                     e1.printStackTrace();
                 }
             }
-        } catch (ParseException | IOException e1) {
+        } catch (JsonParseException | IOException e1) {
             System.err.println("Failed to load character set");
             e1.printStackTrace();
         }
@@ -994,7 +958,7 @@ public class Global {
         characterPool.put(maya.getCharacter().getType(), maya.getCharacter());
     }
 
-    public static void load() {
+    public static void loadWithDialog() {
         JFileChooser dialog = new JFileChooser("./");
         FileFilter savesFilter = new FileNameExtensionFilter("Nightgame Saves", "ngs");
         dialog.addChoosableFileFilter(savesFilter);
@@ -1004,6 +968,20 @@ public class Global {
         if (rv != JFileChooser.APPROVE_OPTION) {
             return;
         }
+        File file = dialog.getSelectedFile();
+        if (!file.isFile()) {
+            file = new File(dialog.getSelectedFile().getAbsolutePath() + ".ngs");
+            if (!file.isFile()) {
+                // not a valid save, abort
+                JOptionPane.showMessageDialog(gui, "Nightgames save file not found", "File not found",
+                                JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+        load(file);
+    }
+
+    public static void load(File file) {
         FileInputStream fileIS;
         players.clear();
         flags.clear();
@@ -1016,47 +994,19 @@ public class Global {
 
         boolean dawn = false;
         try {
-            File file = dialog.getSelectedFile();
-            if (!file.isFile()) {
-                file = new File(dialog.getSelectedFile().getAbsolutePath() + ".ngs");
-                if (!file.isFile()) {
-                    // not a valid save, abort
-                    JOptionPane.showMessageDialog(gui, "Nightgames save file not found", "File not found",
-                                    JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-            }
             fileIS = new FileInputStream(file);
             Reader loader = new InputStreamReader(fileIS);
-            JSONObject object = (JSONObject) JSONValue.parseWithException(loader);
+            JsonObject object = new JsonParser().parse(loader).getAsJsonObject();
             loader.close();
 
-            JSONArray characters = (JSONArray) object.get("characters");
-            for (Object obj : characters) {
-                JSONObject character = (JSONObject) obj;
-                String type = JSONUtils.readString(character, "type");
-                if (Boolean.TRUE.equals(character.get("human"))) {
-                    human.load(character);
-                    players.add(human);
-                } else if (characterPool.containsKey(type)) {
-                    characterPool.get(type).load(character);
-                    players.add(characterPool.get(type));
-                }
-            }
+            SaveData data = new SaveData(object);
 
-            JSONArray flagsArr = (JSONArray) object.get("flags");
-            for (Object flag : flagsArr) {
-                flags.add((String) flag);
-            }
-
-            JSONObject countersObj = (JSONObject) object.get("counters");
-            for (Object counter : countersObj.keySet()) {
-                counters.put((String) counter, JSONUtils.readFloat(countersObj, (String) counter));
-            }
-            date = JSONUtils.readInteger(object, "date");
-            String time = JSONUtils.readString(object, "time");
-            dawn = time.equals("dawn");
-        } catch (IOException|org.json.simple.parser.ParseException e) {
+            players.addAll(data.players);
+            flags.addAll(data.flags);
+            counters.putAll(data.counters);
+            date = data.date;
+            dawn = data.time == SaveData.Time.DAWN;
+        } catch (IOException e) {
             e.printStackTrace();
         }
         gui.populatePlayer(human);
@@ -1067,7 +1017,7 @@ public class Global {
         }
     }
 
-    public static HashSet<Character> everyone() {
+    public static Set<Character> everyone() {
         return players;
     }
 
@@ -1348,11 +1298,11 @@ public class Global {
         return formatter.format(val);
     }
 
-    public static HashSet<Skill> getSkillPool() {
+    public static Set<Skill> getSkillPool() {
         return skillPool;
     }
 
-    public static HashSet<Modifier> getModifierPool() {
+    public static Set<Modifier> getModifierPool() {
         return modifierPool;
     }
 

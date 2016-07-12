@@ -2,7 +2,7 @@ package nightgames.status.addiction;
 
 import java.util.Optional;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
@@ -89,12 +89,12 @@ public abstract class Addiction extends Status {
 
     @Override
     @SuppressWarnings("unchecked")
-    public JSONObject saveToJSON() {
-        JSONObject obj = new JSONObject();
-        obj.put("type", getType().name());
-        obj.put("cause", cause.getType());
-        obj.put("magnitude", magnitude);
-        obj.put("combat", combatMagnitude);
+    public JsonObject saveToJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("type", getType().name());
+        obj.addProperty("cause", cause.getType());
+        obj.addProperty("magnitude", magnitude);
+        obj.addProperty("combat", combatMagnitude);
         return obj;
     }
 

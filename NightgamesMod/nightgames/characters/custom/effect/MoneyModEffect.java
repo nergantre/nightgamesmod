@@ -18,4 +18,26 @@ public class MoneyModEffect implements CustomEffect {
         self.modMoney(amount);
         return true;
     }
+
+    @Override public String toString() {
+        return "MoneyModEffect{" +
+                        "amount=" + amount +
+                        '}';
+    }
+
+    @Override public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        MoneyModEffect that = (MoneyModEffect) o;
+
+        return amount == that.amount;
+
+    }
+
+    @Override public int hashCode() {
+        return amount;
+    }
 }

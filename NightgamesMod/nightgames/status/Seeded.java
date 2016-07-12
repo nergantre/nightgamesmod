@@ -1,6 +1,6 @@
 package nightgames.status;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -9,7 +9,6 @@ import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.GenericBodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.global.JSONUtils;
 
 public class Seeded extends Status {
     private String target;
@@ -208,15 +207,15 @@ public class Seeded extends Status {
     }
 
     @SuppressWarnings("unchecked")
-    public JSONObject saveToJSON() {
-        JSONObject obj = new JSONObject();
-        obj.put("type", getClass().getSimpleName());
-        obj.put("target", target);
+    public JsonObject saveToJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("type", getClass().getSimpleName());
+        obj.addProperty("target", target);
         return obj;
     }
 
-    public Status loadFromJSON(JSONObject obj) {
-        return new Seeded(null, null, JSONUtils.readString(obj, "target"));
+    public Status loadFromJson(JsonObject obj) {
+        return new Seeded(null, null, obj.get("target").getAsString());
     }
 
     @Override

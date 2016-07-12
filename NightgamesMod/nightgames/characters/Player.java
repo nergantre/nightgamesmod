@@ -3,9 +3,9 @@ package nightgames.characters;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.google.gson.JsonObject;
 import nightgames.start.PlayerConfiguration;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.google.gson.JsonArray;
 
 import nightgames.actions.Action;
 import nightgames.actions.Move;
@@ -20,7 +20,6 @@ import nightgames.ftc.FTCMatch;
 import nightgames.global.DebugFlags;
 import nightgames.global.Flag;
 import nightgames.global.Global;
-import nightgames.global.JSONUtils;
 import nightgames.gui.GUI;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
@@ -885,23 +884,23 @@ public class Player extends Character {
     
     @SuppressWarnings("unchecked")
     @Override
-    protected void saveInternal(JSONObject obj) {
-        JSONArray addictions = new JSONArray();
-        addictions.addAll(this.addictions.stream().map(Status::saveToJSON).collect(Collectors.toList()));
-        obj.put("addictions", addictions);
+    protected void saveInternal(JsonObject object) {
+        JsonArray addictions = new JsonArray();
+        this.addictions.stream().map(Status::saveToJson).forEach(addictions::add);
+        object.add("addictions", addictions);
     }
 
     @Override
-    protected void loadInternal(JSONObject obj) {
-        JSONArray addictions = (JSONArray) obj.get("addictions");
+    protected void loadInternal(JsonObject object) {
+        JsonArray addictions = object.getAsJsonArray("addictions");
         if (addictions == null)
             return;
         for (Object a : addictions) {
-            JSONObject json = (JSONObject) a;
+            JsonObject json = (JsonObject) a;
             AddictionType type = AddictionType.valueOf(json.get("type").toString());
             Character cause = Global.getCharacterByType(json.get("cause").toString());
-            float mag = JSONUtils.readFloat(json, "magnitude");
-            float combat = JSONUtils.readFloat(json, "combat");
+            float mag = json.get("magnitude").getAsFloat();
+            float combat = json.get("combat").getAsFloat();
             Addiction addiction = Addiction.load(type, cause, mag, combat);
             this.addictions.add(addiction);
         }

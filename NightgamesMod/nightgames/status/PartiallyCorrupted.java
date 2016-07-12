@@ -1,13 +1,12 @@
 package nightgames.status;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.global.JSONUtils;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
@@ -124,18 +123,18 @@ public class PartiallyCorrupted extends DurationStatus {
 
     @Override
     @SuppressWarnings("unchecked")
-    public JSONObject saveToJSON() {
-        JSONObject obj = new JSONObject();
-        obj.put("type", getClass().getSimpleName());
-        obj.put("counter", counter);
-        obj.put("cause", cause.getName());
+    public JsonObject saveToJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("type", getClass().getSimpleName());
+        obj.addProperty("counter", counter);
+        obj.addProperty("cause", cause.getName());
         return obj;
     }
 
     @Override
-    public Status loadFromJSON(JSONObject obj) {
-        PartiallyCorrupted pc = new PartiallyCorrupted(Global.getCharacterByType(JSONUtils.readString(obj, "cause")));
-        pc.counter = JSONUtils.readInteger(obj, "counter");
+    public Status loadFromJson(JsonObject obj) {
+        PartiallyCorrupted pc = new PartiallyCorrupted(Global.getCharacterByType(obj.get("cause").getAsString()));
+        pc.counter = obj.get("counter").getAsInt();
         return pc;
     }
 

@@ -1,6 +1,6 @@
 package nightgames.characters.body;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -154,15 +154,15 @@ public enum BreastsPart implements BodyPart {
 
     @SuppressWarnings("unchecked")
     @Override
-    public JSONObject save() {
-        JSONObject obj = new JSONObject();
-        obj.put("enum", name());
+    public JsonObject save() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("enum", name());
         return obj;
     }
 
     @Override
-    public BodyPart load(JSONObject obj) {
-        return BreastsPart.valueOf((String) obj.get("enum"));
+    public BodyPart load(JsonObject obj) {
+        return BreastsPart.valueOf(obj.get("enum").getAsString());
     }
 
     @Override

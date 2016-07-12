@@ -5,12 +5,13 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.items.Item;
-import nightgames.modifier.ModifierComponent;
+import nightgames.modifier.ModifierComponentLoader;
 
-public class BanToysModifier extends ItemModifier implements ModifierComponent<BanToysModifier> {
+public class BanToysModifier extends ItemModifier implements ModifierComponentLoader<ItemModifier> {
+    private static final String name = "ban-toys";
 
     static final Set<Item> TOYS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(Item.Dildo, Item.Dildo2,
                     Item.Onahole, Item.Onahole2, Item.Tickler, Item.Tickler2, Item.Crop, Item.Crop2)));
@@ -22,17 +23,17 @@ public class BanToysModifier extends ItemModifier implements ModifierComponent<B
 
     @Override
     public String name() {
-        return "ban-toys";
+        return name;
     }
 
     @Override
-    public BanToysModifier instance(JSONObject obj) {
+    public BanToysModifier instance(JsonObject object) {
         return new BanToysModifier();
     }
 
     @Override
     public String toString() {
-        return name();
+        return name;
     }
 
 }

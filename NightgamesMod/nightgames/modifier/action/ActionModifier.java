@@ -11,16 +11,13 @@ import java.util.function.BiPredicate;
 import nightgames.actions.Action;
 import nightgames.characters.Character;
 import nightgames.global.Match;
+import nightgames.modifier.ModifierCategory;
+import nightgames.modifier.ModifierComponent;
+import nightgames.modifier.ModifierComponentLoader;
 
-public abstract class ActionModifier {
-
-    public static final List<ActionModifier> TYPES = Collections.singletonList(new BanActionModifier());
-    public static final ActionModifier NULL_MODIFIER = new ActionModifier() {
-        @Override
-        public String toString() {
-            return "null-action-modifier";
-        }
-    };
+public abstract class ActionModifier implements ModifierCategory<ActionModifier>, ModifierComponent {
+    public static final ActionModifierLoader loader = new ActionModifierLoader();
+    public static final ActionModifierCombiner combiner = new ActionModifierCombiner();
 
     public Set<Action> bannedActions() {
         return Collections.emptySet();
@@ -35,39 +32,32 @@ public abstract class ActionModifier {
                         || conditionalBans().containsKey(act) && conditionalBans().get(act).test(user, match);
     }
 
-    public ActionModifier andThen(ActionModifier other) {
-        ActionModifier me = this;
+    @Override public ActionModifier combine(ActionModifier next) {
+        ActionModifier first = this;
         return new ActionModifier() {
             @Override
             public Set<Action> bannedActions() {
-                Set<Action> actions = new HashSet<>(me.bannedActions());
-                actions.addAll(other.bannedActions());
+                Set<Action> actions = new HashSet<>(first.bannedActions());
+                actions.addAll(next.bannedActions());
                 return Collections.unmodifiableSet(actions);
             }
 
             @Override
             public Map<Action, BiPredicate<Character, Match>> conditionalBans() {
-                Map<Action, BiPredicate<Character, Match>> actions = new HashMap<>(me.conditionalBans());
-                actions.putAll(other.conditionalBans());
+                Map<Action, BiPredicate<Character, Match>> actions = new HashMap<>(first.conditionalBans());
+                actions.putAll(next.conditionalBans());
                 return Collections.unmodifiableMap(actions);
             }
 
             @Override
             public String toString() {
-                return me.toString() + other.toString();
+                return first.toString() + next.toString();
+            }
+
+            public String name() {
+                return first.name() + " then " + next.name();
             }
         };
-    }
-
-    public static ActionModifier allOf(ActionModifier... modifiers) {
-        if (modifiers.length == 0) {
-            return NULL_MODIFIER;
-        }
-        ActionModifier mod = modifiers[0];
-        for (int i = 1; i < modifiers.length; i++) {
-            mod = mod.andThen(modifiers[i]);
-        }
-        return mod;
     }
 
     @Override

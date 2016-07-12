@@ -1,6 +1,6 @@
 package nightgames.characters.body;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -59,10 +59,10 @@ public enum CockMod implements BodyPartMod {
     }
 
     @SuppressWarnings("unchecked")
-    public JSONObject save() {
-        JSONObject res = new JSONObject();
-        res.put("enum", name());
-        return res;
+    public JsonObject save() {
+        JsonObject object = new JsonObject();
+        object.addProperty("enum", name());
+        return object;
     }
 
     public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c,
@@ -314,8 +314,8 @@ public enum CockMod implements BodyPartMod {
         }
     }
 
-    public CockMod load(JSONObject obj) {
-        return CockMod.valueOf((String) obj.get("enum"));
+    public CockMod load(JsonObject obj) {
+        return CockMod.valueOf(obj.get("enum").getAsString());
     }
 
     public int mod(Attribute a, int total, BasicCockPart base) {

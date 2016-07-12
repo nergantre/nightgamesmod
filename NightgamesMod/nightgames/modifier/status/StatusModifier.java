@@ -1,16 +1,12 @@
-package nightgames.modifier;
+package nightgames.modifier.status;
 
 import nightgames.characters.Character;
+import nightgames.modifier.ModifierCategory;
+import nightgames.modifier.ModifierComponent;
 import nightgames.status.Status;
 
-public class StatusModifier {
-
-    public static final StatusModifier NULL_MODIFIER = new StatusModifier() {
-        @Override
-        public String toString() {
-            return "null-status-modifier";
-        }
-    };
+public class StatusModifier implements ModifierCategory<StatusModifier>, ModifierComponent {
+    public static final StatusModifierCombiner combiner = new StatusModifierCombiner();
 
     private final Status status;
     private final boolean playerOnly;
@@ -24,7 +20,7 @@ public class StatusModifier {
         this(status, false);
     }
 
-    private StatusModifier() {
+    protected StatusModifier() {
         status = null;
         playerOnly = true;
     }
@@ -35,30 +31,23 @@ public class StatusModifier {
         }
     }
 
-    public StatusModifier andThen(StatusModifier other) {
-        StatusModifier me = this;
+    public StatusModifier combine(StatusModifier next) {
+        StatusModifier first = this;
         return new StatusModifier() {
             @Override
             public void apply(Character c) {
-                me.apply(c);
-                other.apply(c);
+                first.apply(c);
+                next.apply(c);
             }
         };
-    }
-
-    public static StatusModifier allOf(StatusModifier... mods) {
-        if (mods.length == 0) {
-            return NULL_MODIFIER;
-        }
-        StatusModifier result = mods[0];
-        for (int i = 1; i < mods.length; i++) {
-            result = result.andThen(mods[i]);
-        }
-        return result;
     }
 
     @Override
     public String toString() {
         return status.name;
+    }
+
+    @Override public String name() {
+        return "status-modifier-" + status.name;
     }
 }

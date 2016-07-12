@@ -2,7 +2,7 @@ package nightgames.status.addiction;
 
 import java.util.Optional;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -262,7 +262,7 @@ public class ZealAddiction extends Addiction {
     }
 
     @Override
-    public Status loadFromJSON(JSONObject obj) {
+    public Status loadFromJson(JsonObject obj) {
         return null;
     }
 

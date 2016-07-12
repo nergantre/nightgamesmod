@@ -3,16 +3,15 @@ package nightgames.start;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.CharacterSex;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.global.JSONUtils;
+import nightgames.json.JsonUtils;
 import nightgames.items.clothing.Clothing;
 
 import static nightgames.start.ConfigurationUtils.mergeOptionals;
@@ -25,9 +24,9 @@ public abstract class CharacterConfiguration {
     protected Optional<Integer> money;
     protected Optional<Integer> level;
     protected Optional<Integer> xp;
-    protected Optional<List<Trait>> traits;
+    protected Optional<Collection<Trait>> traits;
     protected Optional<BodyConfiguration> body;
-    protected Optional<List<String>> clothing;
+    protected Optional<Collection<String>> clothing;
 
     public CharacterConfiguration() {
         name = Optional.empty();
@@ -73,7 +72,7 @@ public abstract class CharacterConfiguration {
         money.ifPresent(m -> base.money = m);
         level.ifPresent(l -> base.level = l);
         xp.ifPresent(x -> base.xp = x);
-        traits.ifPresent(t -> base.traits = new CopyOnWriteArrayList<Trait>(t));
+        traits.ifPresent(t -> base.traits = new CopyOnWriteArrayList<>(t));
         if (clothing.isPresent()) {
             List<Clothing> clothes = clothing.get()
                             .stream()
@@ -91,43 +90,20 @@ public abstract class CharacterConfiguration {
     }
 
     /** Parses fields common to PlayerConfiguration and NpcConfigurations.
-     * @param obj The configuration read from the JSON config file.
+     * @param object The configuration read from the JSON config file.
      */
-    protected void parseCommon(JSONObject obj) {
-        name = JSONUtils.readOptional(obj, "name").map(Object::toString);
-        gender = JSONUtils.readOptional(obj, "gender").map(o -> CharacterSex.valueOf(o.toString().toLowerCase()));
-        traits = JSONUtils.readOptional(obj, "traits").map(o -> parseTraits((JSONArray) o));
-        body = JSONUtils.readOptional(obj, "body").map(o -> BodyConfiguration.parse((JSONObject) o));
-        clothing = JSONUtils.readOptional(obj, "clothing").map(o -> parseClothing((JSONArray) o));
-        money = JSONUtils.readOptional(obj, "money").map(o -> ((Long) o).intValue());
-        level = JSONUtils.readOptional(obj, "level").map(o -> ((Long) o).intValue());
-        xp = JSONUtils.readOptional(obj, "xp").map(o -> ((Long) o).intValue());
-        if (obj.containsKey("attributes")) {
-            JSONObject attrs = (JSONObject) obj.get("attributes");
-            for (Object a : attrs.keySet()) {
-                Attribute att = Attribute.valueOf(a.toString());
-                attributes.put(att, JSONUtils.readInteger(attrs, att.name()));
-            }
-        }
-
+    protected void parseCommon(JsonObject object) {
+        name = JsonUtils.getOptional(object, "name").map(JsonElement::getAsString);
+        gender = JsonUtils.getOptional(object, "gender").map(JsonElement::getAsString).map(String::toLowerCase)
+                        .map(CharacterSex::valueOf);
+        traits = JsonUtils.getOptionalArray(object, "traits").map(array -> JsonUtils
+                                        .collectionFromJson(array, Trait.class));
+        body = JsonUtils.getOptionalObject(object, "body").map(BodyConfiguration::parse);
+        clothing = JsonUtils.getOptionalArray(object, "clothing").map(JsonUtils::stringsFromJson);
+        money = JsonUtils.getOptional(object, "money").map(JsonElement::getAsInt);
+        level = JsonUtils.getOptional(object, "level").map(JsonElement::getAsInt);
+        xp = JsonUtils.getOptional(object, "xp").map(JsonElement::getAsInt);
+        attributes = JsonUtils.getOptionalObject(object, "attributes")
+                        .map(obj -> JsonUtils.mapFromJson(obj, Attribute.class, Integer.class)).orElse(new HashMap<>());
     }
-
-
-
-
-    private static List<Trait> parseTraits(JSONArray arr) {
-        List<Trait> traits = new ArrayList<>();
-        for (Object o : arr) {
-            String name = o.toString();
-            traits.add(Trait.valueOf(name));
-        }
-        return traits;
-    }
-
-    @SuppressWarnings("unchecked")
-    private static List<String> parseClothing(JSONArray arr) {
-        return ((Stream<Object>) arr.stream()).map(Object::toString)
-                                              .collect(Collectors.toList());
-    }
-
 }

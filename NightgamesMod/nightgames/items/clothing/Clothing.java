@@ -1,18 +1,14 @@
 package nightgames.items.clothing;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONValue;
-import org.json.simple.parser.ParseException;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonParseException;
 
 import nightgames.Resources.ResourceLoader;
 import nightgames.characters.Character;
@@ -20,6 +16,7 @@ import nightgames.characters.CharacterSex;
 import nightgames.characters.Trait;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
+import nightgames.json.JsonUtils;
 import nightgames.items.Loot;
 
 public class Clothing implements Loot {
@@ -27,43 +24,31 @@ public class Clothing implements Loot {
     public static Map<String, Clothing> clothingTable;
 
     public static void buildClothingTable() {
-        clothingTable = new HashMap<String, Clothing>();
-        try {
-            InputStream is = ResourceLoader.getFileResourceAsStream("data/clothing/defaults.json");
-            if (is != null) {
-                JSONArray value = (JSONArray) JSONValue.parseWithException(new InputStreamReader(is));
-                JSONClothingLoader.loadClothingListFromJSON(value)
-                                  .forEach(article -> {
-                                      clothingTable.put(article.id, article);
-                                      if (Global.isDebugOn(DebugFlags.DEBUG_LOADING)) {
-                                          System.out.println("Loaded " + article.id);
-                                      }
-                                  });
-            }
-        } catch (ClassCastException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        clothingTable = new HashMap<>();
+        try (InputStreamReader inputstreamreader = new InputStreamReader(
+                        ResourceLoader.getFileResourceAsStream("data/clothing/defaults.json"))) {
+            JsonArray defaultClothesJson = JsonUtils.rootJson(inputstreamreader).getAsJsonArray();
+            JsonClothingLoader.loadClothingListFromJson(defaultClothesJson)
+                            .forEach(article -> {
+                clothingTable.put(article.id, article);
+                if (Global.isDebugOn(DebugFlags.DEBUG_LOADING)) {
+                    System.out.println("Loaded " + article.id);
+                }
+            });
+        } catch (ClassCastException | JsonParseException | IOException e) {
             e.printStackTrace();
         }
         ResourceLoader.getFileResourcesFromDirectory("data/clothing")
                       .forEach(inputstream -> {
-                          try {
-                              JSONArray value = (JSONArray) JSONValue.parseWithException(
-                                              new InputStreamReader(inputstream));
-                              JSONClothingLoader.loadClothingListFromJSON(value)
-                                                .forEach(article -> {
+                          try (InputStreamReader inputstreamreader = new InputStreamReader(inputstream)) {
+                              JsonArray clothesJson = new JsonParser().parse(inputstreamreader).getAsJsonArray();
+                              JsonClothingLoader.loadClothingListFromJson(clothesJson).forEach(article -> {
                                   clothingTable.put(article.id, article);
                                   if (Global.isDebugOn(DebugFlags.DEBUG_LOADING)) {
                                       System.out.println("Loaded " + article.id);
                                   }
                               });
-                          } catch (ClassCastException e) {
-                              e.printStackTrace();
-                          } catch (ParseException e) {
-                              e.printStackTrace();
-                          } catch (IOException e) {
+                          } catch (ClassCastException | JsonParseException | IOException e) {
                               e.printStackTrace();
                           }
                       });
@@ -72,16 +57,16 @@ public class Clothing implements Loot {
     String name;
     int dc;
     String prefix;
-    List<ClothingTrait> attributes;
-    List<String> stores;
-    List<Trait> buffs;
-    private List<ClothingSlot> slots;
-    List<CharacterSex> sex;
+    Set<ClothingTrait> attributes;
+    Set<String> stores;
+    Set<Trait> buffs;
+    Set<ClothingSlot> slots;
+    Set<CharacterSex> sex;
     int price;
     double exposure;
     String id;
     double hotness;
-    private int layer;
+    int layer;
 
     Clothing() {}
 
@@ -113,11 +98,11 @@ public class Clothing implements Loot {
         return buffs.contains(test);
     }
 
-    public List<Trait> buffs() {
+    public Set<Trait> buffs() {
         return buffs;
     }
 
-    public List<ClothingTrait> attributes() {
+    public Set<ClothingTrait> attributes() {
         return attributes;
     }
 
@@ -159,12 +144,8 @@ public class Clothing implements Loot {
         this.layer = layer;
     }
 
-    public List<ClothingSlot> getSlots() {
+    public Set<ClothingSlot> getSlots() {
         return slots;
-    }
-
-    public void setSlots(List<ClothingSlot> slots) {
-        this.slots = slots;
     }
 
     public double getHotness() {
@@ -241,5 +222,63 @@ public class Clothing implements Loot {
         sb.append(getPrice());
         sb.append("</html>");
         return sb.toString();
+    }
+
+    // TODO: Replace small floating point values with integer representations
+    @Override public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        Clothing clothing = (Clothing) o;
+
+        if (dc != clothing.dc)
+            return false;
+        if (price != clothing.price)
+            return false;
+        if (!(Math.abs(clothing.exposure - exposure) < 1e-6))
+            return false;
+        if (!(Math.abs(clothing.hotness - hotness) < 1e-6))
+            return false;
+        if (layer != clothing.layer)
+            return false;
+        if (!name.equals(clothing.name))
+            return false;
+        if (!prefix.equals(clothing.prefix))
+            return false;
+        if (!attributes.equals(clothing.attributes))
+            return false;
+        if (!stores.equals(clothing.stores))
+            return false;
+        if (!buffs.equals(clothing.buffs))
+            return false;
+        if (!slots.equals(clothing.slots))
+            return false;
+        if (!sex.equals(clothing.sex))
+            return false;
+        return id.equals(clothing.id);
+
+    }
+
+    @Override public int hashCode() {
+        int result;
+        long temp;
+        result = name.hashCode();
+        result = 31 * result + dc;
+        result = 31 * result + prefix.hashCode();
+        result = 31 * result + attributes.hashCode();
+        result = 31 * result + stores.hashCode();
+        result = 31 * result + buffs.hashCode();
+        result = 31 * result + slots.hashCode();
+        result = 31 * result + sex.hashCode();
+        result = 31 * result + price;
+        temp = Double.doubleToLongBits(Double.valueOf(String.format("%.6f", exposure)));
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + id.hashCode();
+        temp = Double.doubleToLongBits(Double.valueOf(String.format("%.6f", hotness)));
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + layer;
+        return result;
     }
 }
