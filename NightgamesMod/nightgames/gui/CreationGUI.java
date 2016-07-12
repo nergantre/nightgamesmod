@@ -300,7 +300,7 @@ public class CreationGUI extends JPanel {
         panel_2.add(panel_12);
         panel_12.setBackground(new Color(0, 10, 30));
 
-        rdbtnDumb = new JRadioButton("Old AI");
+        rdbtnDumb = new JRadioButton("Easy Mode");
         rdbtnDumb.setForeground(new Color(240, 240, 240));
         rdbtnDumb.setBackground(new Color(0, 10, 30));
         panel_2.add(rdbtnDumb);
@@ -308,7 +308,7 @@ public class CreationGUI extends JPanel {
             panel_2.add(new JPanel());
         }
 
-        rdbtnHard = new JCheckBox("Hard Mode");
+        rdbtnHard = new JCheckBox("NPC Bonuses");
         rdbtnHard.setForeground(new Color(240, 240, 255));
         rdbtnHard.setBackground(new Color(0, 10, 30));
         panel_2.add(rdbtnHard);

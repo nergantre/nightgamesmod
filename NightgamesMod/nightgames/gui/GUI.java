@@ -234,7 +234,7 @@ public class GUI extends JFrame implements Observer {
         JLabel AILabel = new JLabel("AI Mode");
         ButtonGroup ai = new ButtonGroup();
         rdnormal = new JRadioButton("Normal");
-        rddumb = new JRadioButton("Old");
+        rddumb = new JRadioButton("Easier");
         ai.add(rdnormal);
         ai.add(rddumb);
         optionsPanel.add(AILabel);
@@ -243,10 +243,10 @@ public class GUI extends JFrame implements Observer {
 
         // difficultyLabel - options submenu - visible
 
-        JLabel difficultyLabel = new JLabel("Difficulty");
+        JLabel difficultyLabel = new JLabel("NPC Bonuses (Mainly XP)");
         ButtonGroup diff = new ButtonGroup();
-        rdeasy = new JRadioButton("Normal");
-        rdhard = new JRadioButton("Hard");
+        rdeasy = new JRadioButton("Off");
+        rdhard = new JRadioButton("On");
         diff.add(rdeasy);
         diff.add(rdhard);
         optionsPanel.add(difficultyLabel);
