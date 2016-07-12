@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.items.clothing.ClothingTrait;
@@ -43,7 +44,7 @@ public abstract class ClothingModifier implements ModifierCategory<ClothingModif
         return Collections.emptySet();
     }
 
-    public Set<ClothingTrait> forbiddenAttributes() {
+    public Set<ClothingTrait> forbiddenClothingTraits() {
         return Collections.emptySet();
     }
 
@@ -69,7 +70,7 @@ public abstract class ClothingModifier implements ModifierCategory<ClothingModif
                         .allMatch(e -> !c.getSlots().contains(e.getKey()) || e.getValue().contains(c.getLayer())));
 
         // remove disallowed attributes
-        equipped.removeIf(c -> forbiddenAttributes().stream().anyMatch(t -> c.attributes().contains(t)));
+        equipped.removeIf(c -> forbiddenClothingTraits().stream().anyMatch(t -> c.attributes().contains(t)));
 
         // add forced items, first remove same slots
         equipped.removeIf(c -> forcedItems().stream().map(Clothing::getByID)
@@ -80,31 +81,61 @@ public abstract class ClothingModifier implements ModifierCategory<ClothingModif
         equipped.forEach(outfit::equip);
     }
 
-    public ClothingModifier combine(ClothingModifier next) {
+    @Override public ClothingModifier combine(ClothingModifier next) {
         ClothingModifier first = this;
         return new ClothingModifier() {
             @Override public Set<Integer> allowedLayers() {
-                // returns only layers allowed by both modifiers
+                // allows only layers allowed by both modifiers
                 Set<Integer> layers = new HashSet<>(first.allowedLayers());
                 layers.retainAll(next.allowedLayers());
                 return layers;
             }
 
             @Override public Set<ClothingSlot> allowedSlots() {
-                // returns only slots allowed by both modifiers
+                // allows only slots allowed by both modifiers
                 Set<ClothingSlot> slots = new HashSet<>(first.allowedSlots());
                 slots.retainAll(next.allowedSlots());
                 return slots;
             }
 
             @Override public Map<ClothingSlot, Set<Integer>> allowedSlotLayerCombos() {
-                // merges allowed combos on a slot-by-slot basis
-                // {ClothingSlot.bottom: [0, 1], ClothingSlot.top[0,1,2]}
+                // merges allowed combos on a layer-by-layer basis
+                // {ClothingSlot.bottom: [0, 1], ClothingSlot.top: [0,1,2]}
                 // combined with
-                // {ClothingSlot.bottom:
-                for (ClothingSlot slot : first.allowedSlotLayerCombos().keySet()) {
-
+                // {ClothingSlot.top: [0, 2], ClothingSlot.feet: [0,1]}
+                // becomes
+                // {ClothingSlot.top: [0, 2]
+                Map<ClothingSlot, Set<Integer>> allowedCombos = new HashMap<>();
+                Set<ClothingSlot> slots = first.allowedSlotLayerCombos().keySet();
+                slots.retainAll(next.allowedSlotLayerCombos().keySet());
+                for (ClothingSlot slot : slots) {
+                    Set<Integer> layers = first.allowedSlotLayerCombos().get(slot);
+                    layers.retainAll(next.allowedSlotLayerCombos().get(slot));
+                    allowedCombos.put(slot, layers);
                 }
+                return allowedCombos;
+            }
+
+            @Override public Set<ClothingTrait> forbiddenClothingTraits() {
+                // forbids clothing traits forbidden by either modifier
+                Set<ClothingTrait> forbiddenTraits = new HashSet<>(first.forbiddenClothingTraits());
+                forbiddenTraits.addAll(next.forbiddenClothingTraits());
+                return forbiddenTraits;
+            }
+
+            @Override public Set<String> forbiddenItems() {
+                // forbids items forbidden by either modifier
+                Set<String> forbiddenItems = new HashSet<>(first.forbiddenItems());
+                forbiddenItems.addAll(next.forbiddenItems());
+                return forbiddenItems;
+            }
+
+            @Override public Set<String> forcedItems() {
+                // forces items forced by either modifier
+                // For items worn in the same clothing slot, which item will apply is arbitrary.
+                Set<String> forcedItems = new HashSet<>(first.forcedItems());
+                forcedItems.addAll(next.forcedItems());
+                return forcedItems;
             }
 
             @Override public void apply(Outfit outfit) {
@@ -152,8 +183,8 @@ public abstract class ClothingModifier implements ModifierCategory<ClothingModif
         new NoPantiesModifier().combine(new ForceClothingModifier("blouse", "thong")).apply(test4);
         System.out.println(test4);
 
-        Stream.of(new UnderwearOnlyModifier(), new ForceClothingModifier("blouse", "thong"), new NoPantiesModifier())
-                        .reduce(combiner.template(), (f, s) -> combiner.combine(f, s)).apply(test5);
+        //Stream.of(new UnderwearOnlyModifier(), new ForceClothingModifier("blouse", "thong"), new NoPantiesModifier())
+        //                .reduce(combiner.template(), (f, s) -> combiner.combine(f, s)).apply(test5);
         System.out.println(test5);
     }
 }

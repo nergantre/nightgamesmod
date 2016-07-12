@@ -39,6 +39,10 @@ public class StatusModifier implements ModifierCategory<StatusModifier>, Modifie
                 first.apply(c);
                 next.apply(c);
             }
+
+            @Override public String toString() {
+                return first.toString() + " and " + next.toString();
+            }
         };
     }
 
