@@ -158,7 +158,7 @@
 			},{
 				"type" : "skill",
 				"value" : "nightgames.skills.Nurse",
-				"weight" : 1.5
+				"weight" : 2.5
 			},{
 				"type" : "skill",
 				"value" : "nightgames.skills.PerfectTouch",
