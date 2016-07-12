@@ -67,7 +67,7 @@ public class ReverseCowgirl extends FemdomSexStance {
 
     @Override
     public boolean oral(Character c) {
-        return c == top;
+        return false;
     }
 
     @Override
