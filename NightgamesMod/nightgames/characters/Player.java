@@ -59,6 +59,16 @@ public class Player extends Character {
         initialGender = sex;
         applyBasicStats();
         body.makeGenitalOrgans(initialGender);
+        if (initialGender == CharacterSex.female || initialGender == CharacterSex.herm) {
+            outfitPlan.add(Clothing.getByID("bra"));
+            outfitPlan.add(Clothing.getByID("panties"));
+        } else {
+            outfitPlan.add(Clothing.getByID("boxers"));
+        }
+        outfitPlan.add(Clothing.getByID("Tshirt"));
+        outfitPlan.add(Clothing.getByID("jeans"));
+        outfitPlan.add(Clothing.getByID("socks"));
+        outfitPlan.add(Clothing.getByID("sneakers"));
         applyConfigStats(config);
         finishCharacter(pickedTraits, selectedAttributes);
 
@@ -80,16 +90,6 @@ public class Player extends Character {
     private void finishCharacter(List<Trait> pickedTraits, Map<Attribute, Integer> selectedAttributes) {
         traits.addAll(pickedTraits);
         att.putAll(selectedAttributes);
-        if (initialGender == CharacterSex.female || initialGender == CharacterSex.herm) {
-            outfitPlan.add(Clothing.getByID("bra"));
-            outfitPlan.add(Clothing.getByID("panties"));
-        } else {
-            outfitPlan.add(Clothing.getByID("boxers"));
-        }
-        outfitPlan.add(Clothing.getByID("Tshirt"));
-        outfitPlan.add(Clothing.getByID("jeans"));
-        outfitPlan.add(Clothing.getByID("socks"));
-        outfitPlan.add(Clothing.getByID("sneakers"));
         change();
         body.finishBody(initialGender);
     }

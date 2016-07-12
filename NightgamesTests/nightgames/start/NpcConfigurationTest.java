@@ -8,16 +8,16 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.junit.Assert.*;
 
 import nightgames.characters.TestAngel;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -76,9 +76,11 @@ public class NpcConfigurationTest {
         TestAngel angel = new TestAngel(Optional.of(angelConfig), Optional.of(startConfig.npcCommon));
 
         // Starting stats should match config but breasts should be the same as base Angel if not overwritten in config.
-        assertEquals(angelConfig.attributes.get(Attribute.Seduction).intValue(),
-                        angel.getCharacter().get(Attribute.Seduction));
-        assertEquals(TestAngel.baseTestAngelChar.body.getLargestBreasts(), angel.getCharacter().body.getLargestBreasts());
+        assertThat(angel.character.get(Attribute.Seduction), equalTo(angelConfig.attributes.get(Attribute.Seduction)));
+        assertThat(angel.character.body.getLargestBreasts(),
+                        equalTo(TestAngel.baseTestAngelChar.body.getLargestBreasts()));
+        assertEquals(TestAngel.baseTestAngelChar.body.getLargestBreasts(),
+                        angel.getCharacter().body.getLargestBreasts());
     }
     
     @Test public void testGenderChange() throws Exception {
@@ -88,7 +90,15 @@ public class NpcConfigurationTest {
         assertFalse(angel.character.body.has("pussy"));
         assertTrue(angel.character.body.has("cock"));
         // Changing gender should not change (e.g.) breast size.
-        assertEquals(TestAngel.baseTestAngelChar.body.getLargestBreasts(), angel.character.body.getLargestBreasts());
+        assertThat(angel.character.body.getLargestBreasts(),
+                        equalTo(TestAngel.baseTestAngelChar.body.getLargestBreasts()));
     }
 
+    @Test public void testClothing() throws Exception {
+        NpcConfiguration mergedConfig = new NpcConfiguration(angelConfig, startConfig.npcCommon);
+        TestAngel angel = new TestAngel(Optional.of(angelConfig), Optional.of(startConfig.npcCommon));
+        Clothing[] expectedClothing =
+                        mergedConfig.clothing.get().stream().map(Clothing::getByID).toArray(Clothing[]::new);
+        assertThat(angel.character.outfit.getEquipped(), hasItems(expectedClothing));
+    }
 }
