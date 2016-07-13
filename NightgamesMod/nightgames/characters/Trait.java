@@ -10,6 +10,8 @@ import nightgames.status.Lethargic;
 import nightgames.status.Resistance;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
+import nightgames.status.addiction.Addiction;
+import nightgames.status.addiction.AddictionType;
 
 public enum Trait {
     // Physical
@@ -162,6 +164,7 @@ public enum Trait {
     zealinspiring("Zeal Inspiring", "Instills true belief in people, inspiring them to follow her"),
     corrupting("Corrupting Influence", "Corrupts to the very core."),
     breeder("Breeder", "Particularly inviting"),
+    mindcontroller("Mind Controller", "Can take control of others' minds. Inventive, yes?"),
     darkpromises("Dark Promises", "Can enthrall with the right words"), // whisper upgrade, can enthrall
 
     energydrain("Energy Drain", "Drains energy during intercourse"),
@@ -254,6 +257,7 @@ public enum Trait {
 
     // Class subtrait
     divinity("Divinity", "Has aspects of divinity."),
+    leveldrainer("Level Drainer", "Natrually adept at draining levels."),
 
     // Strength
     dexterous("Dexterous", "Limbs and fingers. Underwear is not an obstacle."), // digital
@@ -324,7 +328,7 @@ public enum Trait {
     }), // currently wearing a strapon
 
     event("event", "special character"),
-
+    mindcontrolresistance("", "temporary resistance to mind games - hidden"),
     none("", "");
     private String desc;
     private TraitDescription longDesc;
@@ -438,6 +442,16 @@ public enum Trait {
                 return "Naive";
             }
             return "";
+        });
+        resistances.put(Trait.mindcontrolresistance, (c, s) -> {
+           if (s.mindgames() && !Global.gui().combat.getOther(c).has(Trait.mindcontroller)) {
+               Addiction add = Global.getPlayer().getAddiction(AddictionType.MIND_CONTROL);
+               float threshold = 40 * add.getMagnitude();
+               if (Global.random(100) < threshold) {
+                   return "Mara's Control";
+               }
+           }
+           return "";
         });
     }
 

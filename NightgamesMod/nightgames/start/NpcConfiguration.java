@@ -1,6 +1,5 @@
 package nightgames.start;
 
-import com.sun.javafx.scene.control.behavior.OptionalBoolean;
 import nightgames.characters.CharacterSex;
 import nightgames.characters.body.Body;
 import nightgames.global.JSONUtils;

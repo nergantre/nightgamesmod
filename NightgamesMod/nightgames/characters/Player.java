@@ -49,18 +49,19 @@ public class Player extends Character {
     private List<Addiction> addictions;
 
     public Player(String name) {
-        this(name, CharacterSex.male, Optional.empty(), new HashMap<>());
+        this(name, CharacterSex.male, Optional.empty(), new ArrayList<>(), new HashMap<>());
     }
 
     // TODO(Ryplinn): This initialization pattern is very close to that of BasePersonality. I think it makes sense to make NPC the primary parent of characters instead of BasePersonality.
-    public Player(String name, CharacterSex sex, Optional<PlayerConfiguration> config,
+    public Player(String name, CharacterSex sex, Optional<PlayerConfiguration> config, List<Trait> pickedTraits,
                     Map<Attribute, Integer> selectedAttributes) {
+
         super(name, 1);
         initialGender = sex;
         applyBasicStats();
         body.makeGenitalOrgans(initialGender);
         applyConfigStats(config);
-        finishCharacter(selectedAttributes);
+        finishCharacter(pickedTraits, selectedAttributes);
 
     }
 
@@ -77,18 +78,21 @@ public class Player extends Character {
         config.ifPresent(c -> c.apply(this));
     }
 
-    private void finishCharacter(Map<Attribute, Integer> selectedAttributes) {
+    private void finishCharacter(List<Trait> pickedTraits, Map<Attribute, Integer> selectedAttributes) {
+        traits.addAll(pickedTraits);
         att.putAll(selectedAttributes);
-        if (initialGender == CharacterSex.female || initialGender == CharacterSex.herm) {
-            outfitPlan.add(Clothing.getByID("bra"));
-            outfitPlan.add(Clothing.getByID("panties"));
-        } else {
-            outfitPlan.add(Clothing.getByID("boxers"));
+        if (outfitPlan.isEmpty()) {
+            if (initialGender == CharacterSex.female || initialGender == CharacterSex.herm) {
+                outfitPlan.add(Clothing.getByID("bra"));
+                outfitPlan.add(Clothing.getByID("panties"));
+            } else {
+                outfitPlan.add(Clothing.getByID("boxers"));
+            }
+            outfitPlan.add(Clothing.getByID("Tshirt"));
+            outfitPlan.add(Clothing.getByID("jeans"));
+            outfitPlan.add(Clothing.getByID("socks"));
+            outfitPlan.add(Clothing.getByID("sneakers"));
         }
-        outfitPlan.add(Clothing.getByID("Tshirt"));
-        outfitPlan.add(Clothing.getByID("jeans"));
-        outfitPlan.add(Clothing.getByID("socks"));
-        outfitPlan.add(Clothing.getByID("sneakers"));
         change();
         body.finishBody(initialGender);
     }
@@ -373,6 +377,10 @@ public class Player extends Character {
             traitPoints += 1;
         }
         gui.ding();
+    }
+    
+    public Growth getGrowth() {
+        return growth;
     }
 
     @Override

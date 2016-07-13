@@ -30,7 +30,7 @@ public class DarkKiss extends Skill {
                      .checkAddiction(AddictionType.CORRUPTION)
                         && c.getStance()
                             .kiss(getSelf())
-                        && getSelf().canAct() && !target.has(Trait.corrupting);
+                        && getSelf().canAct();
     }
 
     @Override

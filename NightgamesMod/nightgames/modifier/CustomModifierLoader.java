@@ -183,15 +183,4 @@ public final class CustomModifierLoader {
         return ItemModifier.allOf(mods.toArray(new ItemModifier[] {}));
     }
 
-    public static void main(String[] args) throws IOException, ParseException {
-        InputStream in = ResourceLoader.getFileResourceAsStream("test_modifier.json");
-        JSONObject obj = (JSONObject) JSONValue.parseWithException(new InputStreamReader(in));
-        Clothing.buildClothingTable();
-        Global.buildParser();
-        Global.buildModifierPool();
-        Global.buildActionPool();
-        Global.buildSkillPool(new Player("player"));
-        Modifier mod = readModifier(obj);
-        System.out.println(mod);
-    }
 }

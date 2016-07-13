@@ -10,6 +10,8 @@ import nightgames.stance.Anal;
 import nightgames.stance.Cowgirl;
 import nightgames.stance.Missionary;
 import nightgames.status.Shamed;
+import nightgames.status.addiction.Addiction;
+import nightgames.status.addiction.AddictionType;
 
 public class Offer extends Skill {
 
@@ -95,6 +97,11 @@ public class Offer extends Skill {
                             Global.random(5) + getSelf().get(Attribute.Perception), c);
             target.body.pleasure(getSelf(), getSelf().body.getRandomCock(), target.body.getRandomPussy(),
                             Global.random(5) + getSelf().get(Attribute.Perception), c);
+        }
+        if (Global.getPlayer().checkAddiction(AddictionType.MIND_CONTROL, target)) {
+            Global.getPlayer().unaddictCombat(AddictionType.MIND_CONTROL, 
+                            target, Addiction.MED_INCREASE, c);
+            c.write(getSelf(), "Acting submissively voluntarily reduces Mara's control over you.");
         }
         return true;
     }

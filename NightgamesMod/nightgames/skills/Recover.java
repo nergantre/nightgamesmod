@@ -5,6 +5,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.Neutral;
+import nightgames.status.Stsflag;
 
 public class Recover extends Skill {
 
@@ -14,7 +15,11 @@ public class Recover extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return c.getStance().prone(getSelf()) && c.getStance().mobile(getSelf()) && getSelf().canAct();
+        return c.getStance()
+                .prone(getSelf())
+                        && c.getStance()
+                            .mobile(getSelf())
+                        && getSelf().canAct();
     }
 
     @Override
@@ -22,7 +27,10 @@ public class Recover extends Skill {
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
         } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
+            if (target.is(Stsflag.blinded))
+                printBlinded(c);
+            else
+                c.write(getSelf(), receive(c, 0, Result.normal, target));
         }
         c.setStance(new Neutral(getSelf(), target));
         getSelf().heal(c, Global.random(3));

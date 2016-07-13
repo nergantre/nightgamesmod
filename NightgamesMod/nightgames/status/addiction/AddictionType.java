@@ -8,7 +8,8 @@ public enum AddictionType {
     MAGIC_MILK(MagicMilkAddiction::new),
     ZEAL(ZealAddiction::new),
     CORRUPTION(Corruption::new),
-    BREEDER(Breeder::new)
+    BREEDER(Breeder::new),
+    MIND_CONTROL(MindControl::new),
     ;
     
     private final BiFunction<Character, Float, ? extends Addiction> constructor;

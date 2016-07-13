@@ -6,6 +6,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.Stance;
+import nightgames.status.Stsflag;
 
 public class Undress extends Skill {
 
@@ -20,9 +21,11 @@ public class Undress extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().canAct() && !c.getStance().sub(getSelf())
+        return getSelf().canAct() && !c.getStance()
+                                       .sub(getSelf())
                         && (!getSelf().mostlyNude() || !getSelf().reallyNude() && getSelf().stripDifficulty(target) > 0)
-                        && !c.getStance().prone(getSelf());
+                        && !c.getStance()
+                             .prone(getSelf());
     }
 
     @Override
@@ -46,7 +49,10 @@ public class Undress extends Skill {
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, res, target));
         } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, res, target));
+            if (target.is(Stsflag.blinded))
+                printBlinded(c);
+            else
+                c.write(getSelf(), receive(c, 0, res, target));
         }
         if (res == Result.normal) {
             getSelf().undress(c);
