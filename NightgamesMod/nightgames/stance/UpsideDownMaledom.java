@@ -116,4 +116,9 @@ public class UpsideDownMaledom extends MaledomSexStance {
         }
         return 2;
     }
+
+    @Override
+    public int dominance() {
+        return 4;
+    }
 }

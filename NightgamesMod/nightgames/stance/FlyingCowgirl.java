@@ -125,4 +125,9 @@ public class FlyingCowgirl extends FemdomSexStance {
             return new Missionary(bottom, top);
         }
     }
+    
+    @Override
+    public int dominance() {
+        return 6;
+    }
 }

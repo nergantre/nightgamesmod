@@ -225,7 +225,7 @@ public class Combat extends Observable implements Cloneable {
             victor.consume(Item.EmptyBottle, 1, false);
             victor.gain(Item.BioGel, 1);
         }
-        if (loser.human()) {
+        if (loser.human() && loser.getWillpower().max() < loser.getMaxWillpowerPossible()) {
             write("<br>Ashamed at your loss, you resolve to win next time.");
             write("<br><b>Gained 1 Willpower</b>.");
             loser.getWillpower()
@@ -406,6 +406,8 @@ public class Combat extends Observable implements Cloneable {
             p2.eot(this, p1, p1act);
             checkStamina(p1);
             checkStamina(p2);
+            doStanceTick(p1);
+            doStanceTick(p2);
             getStance().decay(this);
             getStance().checkOngoing(this);
             phase = 0;
@@ -413,6 +415,35 @@ public class Combat extends Observable implements Cloneable {
                 turn();
             }
             updateMessage();
+        }
+    }
+
+    public int getDominanceOfStance(Character self) {
+        int domDelta = getStance().dominance() - 3;
+        if (getStance().dom(self) && domDelta > 0) {
+            if (self.has(Trait.smqueen)) {
+                domDelta += 3;
+            }
+        } else {
+            domDelta = -domDelta;
+        }
+        if (self.has(Trait.submissive)) {
+            domDelta -= 2;
+        }
+        return domDelta;
+    }
+
+    private void doStanceTick(Character self) {
+        int domDelta = getDominanceOfStance(self);
+        
+        if (domDelta > 0) {
+            Character sub = getStance().getOther(self);
+            if (!self.has(Trait.smqueen)) {
+                sub.loseWillpower(this, domDelta, 0, false, " (Dominance)");
+            } else {
+                write(self, Global.format("{self:NAME-POSSESSIVE} cold gaze in {self:possessive} dominant position makes {other:direct-object} shiver.", self, sub));
+                sub.loseWillpower(this, domDelta, 0, false, " (SM Queen)");
+            }
         }
     }
 

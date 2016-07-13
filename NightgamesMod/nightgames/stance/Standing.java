@@ -114,4 +114,9 @@ public class Standing extends MaledomSexStance {
                         bottom, top));
         return new CoiledSex(bottom, top);
     }
+    
+    @Override
+    public int dominance() {
+        return 3;
+    }
 }

@@ -112,4 +112,9 @@ public class HeldOral extends AbstractFacingStance {
         }
         return 2;
     }
+    
+    @Override
+    public int dominance() {
+        return 3;
+    }
 }

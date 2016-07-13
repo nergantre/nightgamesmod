@@ -98,4 +98,9 @@ public class CoiledSex extends FemdomSexStance {
     public double pheromoneMod(Character self) {
         return 10;
     }
+    
+    @Override
+    public int dominance() {
+        return 4;
+    }
 }

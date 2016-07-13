@@ -110,4 +110,9 @@ public class Jumped extends FemdomSexStance {
                         bottom, top));
         return new Standing(bottom, top);
     }
+    
+    @Override
+    public int dominance() {
+        return 3;
+    }
 }

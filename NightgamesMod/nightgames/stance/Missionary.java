@@ -111,4 +111,9 @@ public class Missionary extends MaledomSexStance {
         }
         return new Missionary(top, bottom);
     }
+    
+    @Override
+    public int dominance() {
+        return 3;
+    }
 }

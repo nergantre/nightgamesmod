@@ -376,6 +376,11 @@ public class Player extends Character {
     }
 
     @Override
+    public int getMaxWillpowerPossible() {
+        return 50 + getLevel() * 5 - get(Attribute.Submissive) * 2;
+    }
+    
+    @Override
     public void flee(Area location2) {
         Area[] adjacent = location2.adjacent.toArray(new Area[location2.adjacent.size()]);
         Area destination = adjacent[Global.random(adjacent.length)];
@@ -583,8 +588,6 @@ public class Player extends Character {
 
     @Override
     public void afterParty() {
-        // TODO Auto-generated method stub
-
     }
 
     @Override

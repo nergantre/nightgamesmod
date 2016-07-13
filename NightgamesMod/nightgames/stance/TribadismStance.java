@@ -103,4 +103,9 @@ public class TribadismStance extends Position {
         }
         return 2;
     }
+    
+    @Override
+    public int dominance() {
+        return 2;
+    }
 }

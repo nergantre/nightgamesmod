@@ -91,4 +91,9 @@ public class StandingOver extends AbstractFacingStance {
     public double pheromoneMod(Character self) {
         return 1.5;
     }
+    
+    @Override
+    public int dominance() {
+        return 1;
+    }
 }

@@ -19,9 +19,11 @@ public enum Trait {
         }
     }),
 
-    smqueen("SM Queen", "Skilled at providing pleasure alongside pain",
+    sadist("Sadist", "Skilled at providing pleasure alongside pain",
                     (b, c, t) -> b.append(Global.capitalizeFirstLetter(
-                                    String.format("%s sneers in a way like an SM queen.", c.subject())))),
+                                    String.format("%s sneers in an unsettling way.", c.subject())))),
+    bitingwords("Biting Words", "Knows how to rub salt in the wound."),
+    smqueen("SM Queen", "A natural dom."),
 
     // Perks
     ticklemonster("Tickle Monster", "Skilled at tickling in unconventional areas"), // Mara Sex perk,
@@ -296,7 +298,7 @@ public enum Trait {
     expertGoogler("Expert Googler", "More efficient at finding porn"),
     mojoMaster("Mojo Master", "Max Mojo increases faster"),
     powerfulhips("Powerful Hips", "Can grind from submissive positions"),
-    strongwilled("Strong Willed", "Halves willpower loss"),
+    strongwilled("Strong Willed", "Lowers willpower loss from orgasms"),
     nymphomania("Nymphomania", "Restores willpower upon orgasm"),
     alwaysready("Always Ready", "Always ready for penetration", (b, c, t) -> {
         if (!c.hasDick() && c.crotchAvailable()) {

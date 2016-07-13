@@ -102,4 +102,9 @@ public class BehindFootjob extends AbstractBehindStance {
     public double pheromoneMod(Character self) {
         return 1.5;
     }
+    
+    @Override
+    public int dominance() {
+        return 4;
+    }
 }

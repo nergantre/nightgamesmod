@@ -292,7 +292,7 @@ public abstract class Character extends Observable implements Cloneable {
 
     public void mod(Attribute a, int i) {
         if (a.equals(Attribute.Willpower)) {
-            getWillpower().gain(i * 3);
+            getWillpower().gain(i * 2);
             return;
         }
         if (att.containsKey(a)) {
@@ -2684,7 +2684,7 @@ public abstract class Character extends Observable implements Cloneable {
         }
         fit += Math.sqrt(totalAtts) * 5;
         // Always important: Position
-        fit += c.getStance().priorityMod(this) * 6;
+        fit += (c.getStance().priorityMod(this) + c.getDominanceOfStance(this)) * 4;
         int escape = getEscape(c);
         if (escape > 1) {
             fit += 8 * Math.log(escape);
@@ -3009,8 +3009,11 @@ public abstract class Character extends Observable implements Cloneable {
         return disarm;
     }
 
-    public float modRecoilPleasure(float mt) {
-        float total = mt + get(Attribute.Submissive) / 2;
+    public float modRecoilPleasure(Combat c, float mt) {
+        float total = mt;
+        if (c.getStance().sub(this)) {
+            total += get(Attribute.Submissive) / 2;
+        }
         if (has(Trait.responsive)) {
             total += total / 2;
         }
@@ -3081,31 +3084,8 @@ public abstract class Character extends Observable implements Cloneable {
         return !is(Stsflag.charmed) && !is(Stsflag.lovestruck)
                         && !is(Stsflag.frenzied);
     }
-/*
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + cloned;
-        result ^= getClass().hashCode();
-        return result;
-    }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Character other = (Character) obj;
-        if (cloned != other.cloned)
-            return false;
-        return true;
+    public int getMaxWillpowerPossible() {
+        return Integer.MAX_VALUE;
     }
-*/
-    
-    
-    
 }

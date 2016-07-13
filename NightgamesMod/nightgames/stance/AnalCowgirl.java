@@ -130,4 +130,9 @@ public class AnalCowgirl extends AnalSexStance {
         return Arrays.asList(bottom.body.getRandomInsertable()).stream().filter(part -> part != null && part.present())
                         .collect(Collectors.toList());
     }
+    
+    @Override
+    public int dominance() {
+        return 4;
+    }
 }

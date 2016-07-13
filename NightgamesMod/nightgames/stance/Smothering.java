@@ -10,25 +10,21 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.skills.Anilingus;
-import nightgames.skills.Blowjob;
-import nightgames.skills.Cunnilingus;
 import nightgames.skills.Escape;
 import nightgames.skills.Nothing;
 import nightgames.skills.Skill;
 import nightgames.skills.Struggle;
 import nightgames.skills.Wait;
 
-public class FaceSitting extends AbstractBehindStance {
+public class Smothering extends AbstractBehindStance {
 
-    public FaceSitting(Character top, Character bottom) {
-        super(top, bottom, Stance.facesitting);
+    public Smothering(Character top, Character bottom) {
+        super(top, bottom, Stance.smothering);
     }
 
     @Override
     public String describe() {
-        return Global.capitalizeFirstLetter(top.subjectAction("are", "is")) + " sitting on "
-                        + bottom.nameOrPossessivePronoun() + " face while holding " + bottom.possessivePronoun()
-                        + " arms so " + bottom.subject() + " cannot escape";
+        return Global.format("{self:SUBJECT-ACTION:sit|sits} on {other:name-posssesive} face, with {self:possessive} round ass fully encompassing {other:possessive} view. {other:subject} cannot even breathe except for the short pauses when {self:subject-action:allow|allows} {other:direct-object} to by lifting {self:possessive} ass.", top, bottom);
     }
 
     @Override
@@ -157,9 +153,7 @@ public class FaceSitting extends AbstractBehindStance {
             return Collections.emptySet();
         } else {
             Collection<Skill> avail = new HashSet<Skill>();
-            avail.add(new Cunnilingus(bottom));
             avail.add(new Anilingus(bottom));
-            avail.add(new Blowjob(bottom));
             avail.add(new Escape(bottom));
             avail.add(new Struggle(bottom));
             avail.add(new Nothing(bottom));
@@ -170,7 +164,7 @@ public class FaceSitting extends AbstractBehindStance {
 
     @Override
     public float priorityMod(Character self) {
-        return getSubDomBonus(self, top.has(Trait.energydrain) ? 5.0f : 3.0f);
+        return getSubDomBonus(self, top.has(Trait.energydrain) ? 7.0f : 5.0f);
     }
 
     @Override

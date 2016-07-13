@@ -87,4 +87,9 @@ public class ReverseCowgirl extends FemdomSexStance {
                                         + "to fuck {other:direct-object} from behind.", bottom, top));
         return new Doggy(bottom, top);
     }
+    
+    @Override
+    public int dominance() {
+        return 3;
+    }
 }
