@@ -321,7 +321,7 @@ public class Mara extends BasePersonality {
     public String describe(Combat c) {
         if (character.has(Trait.madscientist)) {
             return "Mara has gone high tech. She has a rig of equipment on harnesses that seem carefully placed so as not to interfere with clothing removal. The glasses she's wearing appear to be "
-                            + "computerized rather than perscription. She also has a device of unknown purpose strapped to her arm. Underneath all of that, she has the same cute, mischevious expression she "
+                            + "computerized rather than prescription. She also has a device of unknown purpose strapped to her arm. Underneath all of that, she has the same cute, mischievous expression she "
                             + "you're used to.";
         } else {
             return "Mara is short and slender, with a small heart shaped face. She has dark skin, and short, curly black hair. Her size and cute features make her look a few years "

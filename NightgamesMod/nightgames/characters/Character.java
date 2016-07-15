@@ -1721,17 +1721,17 @@ public abstract class Character extends Observable implements Cloneable {
                                             + opponent.possessivePronoun() + " ego.</b>"));
             opponent.restoreWillpower(c, 10 + Global.random(10));
         }
-        if (opponent.has(Trait.leveldrainer) && (c.getStance()
+        if (opponent.has(Trait.leveldrainer) && ((c.getStance()
                                                   .penetratedBy(opponent, this)
-                        && !has(Trait.strapped)) || c.getStance().en == Stance.trib) {
+                        && !has(Trait.strapped)) || c.getStance().en == Stance.trib)) {
             if (Global.random(10) < 4) {
                 if (c.getStance().en != Stance.trib)
                     c.write(opponent, Global.capitalizeFirstLetter(String.format("%s %s contracts around %s %s, reinforcing"
                             + " %s orgasm and drawing upon %s very strength and experience. Once it's over, %s"
                             + " left considerably more powerful, at %s expense.", opponent.nameOrPossessivePronoun(), 
-                            c.getStance().insertedPartFor(opponent).describe(opponent), nameOrPossessivePronoun(), 
-                            c.getStance().insertablePartFor(this).describe(this), possessivePronoun(), possessivePronoun(),
-                            opponent.subjectAction("is", "are"), nameOrPossessivePronoun())));
+                            c.getStance().insertablePartFor(opponent).describe(opponent), nameOrPossessivePronoun(), 
+                            c.getStance().insertedPartFor(this).describe(this), possessivePronoun(), possessivePronoun(),
+                            opponent.subjectAction("are", "is"), nameOrPossessivePronoun())));
                 else
                     c.write(opponent, Global.capitalizeFirstLetter(String.format("%s greedy %s sucks itself tightly to"
                                 + " %s %s, drawing in %s strength and experience along with the pleasure of %s orgasm.",

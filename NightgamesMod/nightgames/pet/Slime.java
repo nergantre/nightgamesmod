@@ -1,6 +1,7 @@
 package nightgames.pet;
 
 import nightgames.characters.Character;
+import nightgames.characters.body.PetPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
@@ -9,6 +10,8 @@ import nightgames.status.Oiled;
 
 public class Slime extends Pet {
 
+    private final PetPart part = new PetPart("slime creature");
+    
     public Slime(Character owner) {
         super("Slime", owner, Ptype.slime, 3, 3);
     }
@@ -31,7 +34,7 @@ public class Slime extends Pet {
                     if (target.crotchAvailable() && !c.getStance().inserted(target)) {
                         c.write(owner(), own()
                                         + "slime forms into a humanoid shape and grabs your dick. The slime hand molds to your penis and rubs you with a slippery pleasure.");
-                        target.body.pleasure(null, null, target.body.getRandom("cock"), 2 + 3 * Global.random(power),
+                        target.body.pleasure(owner(), part, target.body.getRandom("cock"), 2 + 3 * Global.random(power),
                                         c);
                     } else {
                         c.write(owner(), "You see eyes form in " + own() + " slime as it watches the fight curiously.");
@@ -85,7 +88,7 @@ public class Slime extends Pet {
                         c.write(owner(), "Two long appendages extend from your slime and wrap around " + target.name()
                                         + "'s legs. A third, phallic shaped appendage forms and penetrates her "
                                         + "pussy. She stifles a moan as the slimy tentacles thrusts in and out of her.");
-                        target.body.pleasure(null, null, target.body.getRandom("pussy"), 2 + 3 * Global.random(power),
+                        target.body.pleasure(owner(), part, target.body.getRandom("pussy"), 2 + 3 * Global.random(power),
                                         c);
                     } else {
                         c.write(owner(), "You see eyes form in " + own() + "slime as it watches the fight curiously.");
