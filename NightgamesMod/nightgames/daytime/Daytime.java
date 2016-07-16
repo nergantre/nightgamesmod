@@ -1,7 +1,6 @@
 package nightgames.daytime;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -9,7 +8,6 @@ import nightgames.characters.NPC;
 import nightgames.characters.Player;
 import nightgames.global.Flag;
 import nightgames.global.Global;
-import nightgames.status.Status;
 import nightgames.status.addiction.Addiction;
 
 public class Daytime {

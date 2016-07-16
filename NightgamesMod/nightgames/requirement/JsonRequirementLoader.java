@@ -2,9 +2,7 @@ package nightgames.requirement;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import nightgames.json.JsonUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

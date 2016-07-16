@@ -28,27 +28,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JSlider;
-import javax.swing.JTextPane;
-import javax.swing.JToggleButton;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.text.BadLocationException;
@@ -153,7 +133,7 @@ public class GUI extends JFrame implements Observer {
         setTitle("NightGames Mod");
 
         // closing operation
-        setDefaultCloseOperation(3);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         // resolution resolver
 
@@ -170,10 +150,7 @@ public class GUI extends JFrame implements Observer {
         int x1 = x / 2 - width / 2;
         int y1 = y / 2 - height / 2;
 
-        int centerX = x1;
-        int centerY = y1;
-
-        this.setLocation(centerX, centerY);
+        this.setLocation(x1, y1);
 
         // menu bar
 
@@ -586,7 +563,7 @@ public class GUI extends JFrame implements Observer {
         commandPanel.setBorder(new CompoundBorder());
         gamePanel.add(commandPanel);
 
-        skills = new ArrayList<ArrayList<SkillButton>>();
+        skills = new ArrayList<>();
         createCharacter();
         setVisible(true);
         pack();
@@ -610,7 +587,7 @@ public class GUI extends JFrame implements Observer {
                     }
                 }
                 char val = e.getKeyChar();
-                int index = Integer.valueOf(val) - Integer.valueOf('0');
+                int index = (int) val - (int) '0';
                 if (index >= 0 && index <= 9) {
                     if (index == 0) {
                         index = 10;
@@ -663,8 +640,8 @@ public class GUI extends JFrame implements Observer {
         BufferedImage pic = null;
         try {
             pic = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" + path));
-        } catch (IOException localIOException9) {
-        } catch (IllegalArgumentException e) {
+        } catch (IOException | IllegalArgumentException e) {
+            e.printStackTrace();
         }
         clearImage();
         if (pic != null) {
@@ -690,9 +667,8 @@ public class GUI extends JFrame implements Observer {
             BufferedImage face = null;
             try {
                 face = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" + imagepath));
-            } catch (IOException localIOException9) {
-            } catch (IllegalArgumentException badArg) {
-
+            } catch (IOException | IllegalArgumentException e) {
+                e.printStackTrace();
             }
             if (face != null) {
                 if (Global.isDebugOn(DebugFlags.DEBUG_IMAGES)) {
@@ -807,7 +783,7 @@ public class GUI extends JFrame implements Observer {
 
         stamina = new JLabel("Stamina: " + getLabelString(player.getStamina()));
         stamina.setFont(new Font("Sylfaen", 1, 15));
-        stamina.setHorizontalAlignment(0);
+        stamina.setHorizontalAlignment(SwingConstants.CENTER);
         stamina.setForeground(new Color(164, 8, 2));
         stamina.setToolTipText(
                         "Stamina represents your endurance and ability to keep fighting. If it drops to zero, you'll be temporarily stunned.");
@@ -815,7 +791,7 @@ public class GUI extends JFrame implements Observer {
 
         arousal = new JLabel("Arousal: " + getLabelString(player.getArousal()));
         arousal.setFont(new Font("Sylfaen", 1, 15));
-        arousal.setHorizontalAlignment(0);
+        arousal.setHorizontalAlignment(SwingConstants.CENTER);
         arousal.setForeground(new Color(254, 1, 107));
         arousal.setToolTipText(
                         "Arousal is raised when your opponent pleasures or seduces you. If it hits your max, you'll orgasm and lose the fight.");
@@ -823,7 +799,7 @@ public class GUI extends JFrame implements Observer {
 
         mojo = new JLabel("Mojo: " + getLabelString(player.getMojo()));
         mojo.setFont(new Font("Sylfaen", 1, 15));
-        mojo.setHorizontalAlignment(0);
+        mojo.setHorizontalAlignment(SwingConstants.CENTER);
         mojo.setForeground(new Color(51, 153, 255));
         mojo.setToolTipText(
                         "Mojo is the abstract representation of your momentum and style. It increases with normal techniques and is used to power special moves");
@@ -831,7 +807,7 @@ public class GUI extends JFrame implements Observer {
 
         willpower = new JLabel("Willpower: " + getLabelString(player.getWillpower()));
         willpower.setFont(new Font("Sylfaen", 1, 15));
-        willpower.setHorizontalAlignment(0);
+        willpower.setHorizontalAlignment(SwingConstants.CENTER);
         willpower.setForeground(new Color(68, 170, 85));
         willpower.setToolTipText("Willpower is a representation of your will to fight. When this reaches 0, you lose.");
         meter.add(willpower);
@@ -874,7 +850,7 @@ public class GUI extends JFrame implements Observer {
         bio.setBackground(GUIColors.bgDark);
 
         JLabel name = new JLabel(player.name());
-        name.setHorizontalAlignment(2);
+        name.setHorizontalAlignment(SwingConstants.LEFT);
         name.setFont(new Font("Sylfaen", 1, 15));
         name.setForeground(GUIColors.textColorLight);
         bio.add(name);
@@ -956,11 +932,12 @@ public class GUI extends JFrame implements Observer {
     }
 
     public void message(Combat c, Character character, String text) {
-        if (c == null) {
-        } else if (character == null) {
-            c.write(text);
-        } else {
-            c.write(character, text);
+        if (c != null) {
+            if (character != null) {
+                c.write(character, text);
+            } else {
+                c.write(text);
+            }
         }
         if (text.trim().length() == 0) {
             return;
@@ -972,10 +949,7 @@ public class GUI extends JFrame implements Observer {
             editorKit.insertHTML(doc, doc.getLength(),
                             "<font face='Georgia'><font color='white'><font size='" + fontsize + "'>" + text + "<br>",
                             0, 0, null);
-        } catch (BadLocationException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (BadLocationException | IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -990,10 +964,7 @@ public class GUI extends JFrame implements Observer {
             editorKit.insertHTML(doc, doc.getLength(),
                             "<font face='Georgia'><font color='white'><font size='" + fontsize + "'>" + text + "<br>",
                             0, 0, null);
-        } catch (BadLocationException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (BadLocationException | IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -1011,7 +982,7 @@ public class GUI extends JFrame implements Observer {
         boolean placed = false;
         while (!placed) {
             if (skills.size() <= index) {
-                skills.add(new ArrayList<SkillButton>());
+                skills.add(new ArrayList<>());
             }
             if (skills.get(index).size() >= 25) {
                 index++;
@@ -1168,7 +1139,7 @@ public class GUI extends JFrame implements Observer {
                 }
                 commandPanel.revalidate();
             }
-            commandPanel.add(new SkipFeatButton(null));
+            commandPanel.add(new SkipFeatButton());
             commandPanel.revalidate();
         } else {
             skippedFeat = false;
@@ -1271,7 +1242,7 @@ public class GUI extends JFrame implements Observer {
 
         Player player = Global.human;
         List<Item> availItems = player.getInventory().entrySet().stream().filter(entry -> (entry.getValue() > 0))
-                        .map(entry -> entry.getKey()).collect(Collectors.toList());
+                        .map(Map.Entry::getKey).collect(Collectors.toList());
 
         JScrollPane scrollInventory = new JScrollPane(inventoryPane);
         inventoryPane.setLayout(new GridLayout(availItems.size() / 3, 3));
@@ -1297,7 +1268,7 @@ public class GUI extends JFrame implements Observer {
         Map<Item, Integer> items = player.getInventory();
         int count = 0;
 
-        ArrayList<JLabel> itmlbls = new ArrayList<JLabel>();
+        ArrayList<JLabel> itmlbls = new ArrayList<>();
         for (Item i : availItems) {
             JLabel dirtyTrick = new JLabel(i.getName() + ": " + items.get(i) + "\n");
 
@@ -1311,7 +1282,7 @@ public class GUI extends JFrame implements Observer {
         }
 
         count = 0;
-        ArrayList<JLabel> attlbls = new ArrayList<JLabel>();
+        ArrayList<JLabel> attlbls = new ArrayList<>();
         for (Attribute a : Attribute.values()) {
             int amt = player.get(a);
             if (amt > 0) {
@@ -1350,10 +1321,7 @@ public class GUI extends JFrame implements Observer {
                                             + player.getOutfit().describe(player) + "<br>" + player.describeStatus()
                                             + "<br>",
                             0, 0, null);
-        } catch (BadLocationException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (BadLocationException | IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -1496,7 +1464,7 @@ public class GUI extends JFrame implements Observer {
          */
         private static final long serialVersionUID = -4949332486895844480L;
 
-        public SkipFeatButton(Trait feat) {
+        public SkipFeatButton() {
             super();
             setFont(new Font("Baskerville Old Face", 0, 18));
             setText("Skip");

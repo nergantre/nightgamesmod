@@ -31,9 +31,7 @@ public class SetTrap extends Action {
             if (user.human()) {
                 Global.gui().message(message);
             }
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
         return Movement.trap;

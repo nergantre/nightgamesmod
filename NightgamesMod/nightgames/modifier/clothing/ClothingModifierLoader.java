@@ -1,6 +1,5 @@
 package nightgames.modifier.clothing;
 
-import com.google.gson.JsonObject;
 import nightgames.modifier.ModifierCategoryLoader;
 import nightgames.modifier.ModifierComponentLoader;
 

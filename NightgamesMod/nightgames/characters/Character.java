@@ -333,7 +333,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public String loseRandomAttributes(int number) {
-        ArrayList<Attribute> avail = new ArrayList<Attribute>();
+        ArrayList<Attribute> avail = new ArrayList<>();
         String message = "";
         while (number > 0) {
             avail.clear();
@@ -357,7 +357,7 @@ public abstract class Character extends Observable implements Cloneable {
 
     public String loseFeat() {
         String string = "";
-        ArrayList<Trait> available = new ArrayList<Trait>();
+        ArrayList<Trait> available = new ArrayList<>();
         for (Trait feat : Global.getFeats(this)) {
             if (has(feat)) {
                 available.add(feat);
@@ -936,7 +936,7 @@ public abstract class Character extends Observable implements Cloneable {
         int regen = 1;
         // TODO can't find the concurrent modification error, just use a copy
         // for now I guess...
-        for (Status s : new HashSet<Status>(getStatuses())) {
+        for (Status s : new HashSet<>(getStatuses())) {
             regen += s.regen(c);
         }
         if (has(Trait.BoundlessEnergy)) {
@@ -1567,7 +1567,7 @@ public abstract class Character extends Observable implements Cloneable {
     public void eot(Combat c, Character opponent, Skill last) {
         dropStatus(c, opponent);
         tick(c);
-        List<String> removed = new ArrayList<String>();
+        List<String> removed = new ArrayList<>();
         for (String s : cooldowns.keySet()) {
             if (cooldowns.get(s) <= 1) {
                 removed.add(s);
@@ -1817,10 +1817,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public boolean has(Item item, int quantity) {
-        if (inventory.containsKey(item)) {
-            return inventory.get(item) >= quantity;
-        }
-        return false;
+        return inventory.containsKey(item) && inventory.get(item) >= quantity;
     }
 
     public void unequipAllClothing() {
@@ -2244,9 +2241,9 @@ public abstract class Character extends Observable implements Cloneable {
         if (location.name.equals(target.name)) {
             return null;
         }
-        ArrayDeque<Area> queue = new ArrayDeque<Area>();
-        Vector<Area> vector = new Vector<Area>();
-        HashMap<Area, Area> parents = new HashMap<Area, Area>();
+        ArrayDeque<Area> queue = new ArrayDeque<>();
+        Vector<Area> vector = new Vector<>();
+        HashMap<Area, Area> parents = new HashMap<>();
         queue.push(location);
         vector.add(location);
         Area last = null;
@@ -2327,7 +2324,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public ArrayList<String> listStatus() {
-        ArrayList<String> result = new ArrayList<String>();
+        ArrayList<String> result = new ArrayList<>();
         for (Status s : getStatuses()) {
             result.add(s.toString());
         }
@@ -2383,8 +2380,8 @@ public abstract class Character extends Observable implements Cloneable {
             c.write(this, nameOrPossessivePronoun() + " turn...");
             c.updateAndClearMessage();
         }
-        HashSet<Skill> available = new HashSet<Skill>();
-        HashSet<Skill> cds = new HashSet<Skill>();
+        HashSet<Skill> available = new HashSet<>();
+        HashSet<Skill> cds = new HashSet<>();
         for (Skill a : skills) {
             if (Skill.skillIsUsable(c, a, target)) {
                 if (cooldownAvailable(a)) {
@@ -2394,15 +2391,15 @@ public abstract class Character extends Observable implements Cloneable {
                 }
             }
         }
-        HashSet<Skill> damage = new HashSet<Skill>();
-        HashSet<Skill> pleasure = new HashSet<Skill>();
-        HashSet<Skill> fucking = new HashSet<Skill>();
-        HashSet<Skill> position = new HashSet<Skill>();
-        HashSet<Skill> debuff = new HashSet<Skill>();
-        HashSet<Skill> recovery = new HashSet<Skill>();
-        HashSet<Skill> summoning = new HashSet<Skill>();
-        HashSet<Skill> stripping = new HashSet<Skill>();
-        HashSet<Skill> misc = new HashSet<Skill>();
+        HashSet<Skill> damage = new HashSet<>();
+        HashSet<Skill> pleasure = new HashSet<>();
+        HashSet<Skill> fucking = new HashSet<>();
+        HashSet<Skill> position = new HashSet<>();
+        HashSet<Skill> debuff = new HashSet<>();
+        HashSet<Skill> recovery = new HashSet<>();
+        HashSet<Skill> summoning = new HashSet<>();
+        HashSet<Skill> stripping = new HashSet<>();
+        HashSet<Skill> misc = new HashSet<>();
         Skill.filterAllowedSkills(c, available, this, target);
         if (available.size() == 0) {
             available.add(new Nothing(this));
@@ -2622,9 +2619,9 @@ public abstract class Character extends Observable implements Cloneable {
             NPC me = (NPC) this;
             AiModifiers mods = me.ai.getAiModifiers();
             fit += mods.modPosition(c.getStance().enumerate()) * 6;
-            fit += status.stream().flatMap(s -> s.flags().stream()).mapToDouble(f -> mods.modSelfStatus(f)).sum();
+            fit += status.stream().flatMap(s -> s.flags().stream()).mapToDouble(mods::modSelfStatus).sum();
             fit += c.getOther(this).status.stream().flatMap(s -> s.flags().stream())
-                            .mapToDouble(f -> mods.modOpponentStatus(f)).sum();
+                            .mapToDouble(mods::modOpponentStatus).sum();
         }
         // hack to make the AI favor making the opponent cum
         fit -= 100 * orgasms;
@@ -2769,7 +2766,7 @@ public abstract class Character extends Observable implements Cloneable {
         return cooledDown;
     }
 
-    public Object getCooldown(Skill s) {
+    public Integer getCooldown(Skill s) {
         if (cooldowns.containsKey(s.toString()) && cooldowns.get(s.toString()) > 0) {
             return cooldowns.get(s.toString());
         } else {
@@ -2898,14 +2895,11 @@ public abstract class Character extends Observable implements Cloneable {
         temporaryAddedTraits.clear();
         temporaryRemovedTraits.clear();
         body.purge(c);
-        status = new HashSet<Status>(
-                        status.stream().filter(s -> !s.flags().contains(Stsflag.purgable)).collect(Collectors.toSet()));
+        status = new HashSet<>(status.stream().filter(s -> !s.flags().contains(Stsflag.purgable)).collect(Collectors.toSet()));
     }
 
     /**
      * applies bonuses and penalties for using an attribute.
-     * 
-     * @param c
      */
     public void usedAttribute(Attribute att, Combat c, double baseChance) {
         // divine recoil applies at 20% per magnitude
@@ -2916,8 +2910,6 @@ public abstract class Character extends Observable implements Cloneable {
 
     /**
      * Attempts to knock down this character
-     * @param c
-     * @param other
      */
     public void knockdown(Combat c, Character other, Set<Attribute> attributes, int strength, int roll) {
         if (canKnockDown(c, other, attributes, strength, roll)) {
@@ -2930,7 +2922,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public boolean canKnockDown(Combat c, Character other, Set<Attribute> attributes, int strength, double roll) {
-        return knockdownDC() < strength + (roll * 100) + attributes.stream().mapToInt(a -> other.get(a)).sum() + other.knockdownBonus();
+        return knockdownDC() < strength + (roll * 100) + attributes.stream().mapToInt(other::get).sum() + other.knockdownBonus();
     }
 
     public boolean checkResists(ResistType type, Character other, double value, double roll) {

@@ -71,7 +71,7 @@ public class JsonUtilsTest {
 
     @Test public void readOptional() throws Exception {
         assertThat(JsonUtils.getOptional(sampleJSON, "nope"), equalTo(Optional.empty()));
-        assertThat(JsonUtils.getOptional(sampleJSON, "int").get().getAsInt(), equalTo(10));
+        assertThat(JsonUtils.getOptional(sampleJSON, "int").map(JsonElement::getAsInt).orElse(0), equalTo(10));
     }
 
     @Test public void loadStringsFromArr() throws Exception {

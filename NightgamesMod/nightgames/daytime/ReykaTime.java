@@ -1,7 +1,6 @@
 package nightgames.daytime;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +17,6 @@ import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
 import nightgames.requirement.BodyPartRequirement;
-import nightgames.requirement.NotRequirement;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.Loot;
@@ -367,9 +365,7 @@ public class ReykaTime extends BaseNPCTime {
                   .choose(this, "Leave");
             Global.getPlayer()
                   .addict(AddictionType.CORRUPTION, npc, Addiction.MED_INCREASE);
-            Global.getPlayer()
-                  .getAddiction(AddictionType.CORRUPTION)
-                  .flagDaytime();
+            Global.getPlayer().getAddiction(AddictionType.CORRUPTION).ifPresent(Addiction::flagDaytime);
         } else if (choice.equals("Sex")) {
             if (npc.getAffection(player) >= 8 && (!player.has(Trait.desensitized) || Global.random(2) == 1)) {
                 Global.gui()

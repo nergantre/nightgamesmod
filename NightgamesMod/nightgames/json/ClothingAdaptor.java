@@ -6,7 +6,7 @@ import nightgames.items.clothing.Clothing;
 import java.lang.reflect.Type;
 
 /**
- * TODO: Write class-level documentation.
+ * Gson TypeAdapter for Clothing that serializes and deserializes based on the Clothing's ID.
  */
 public class ClothingAdaptor implements JsonSerializer<Clothing>, JsonDeserializer<Clothing> {
 

@@ -61,10 +61,10 @@ class BodyConfiguration {
         if (obj.has("ears"))
             config.ears = Optional.of(EarPart.valueOf(obj.get("ears").getAsString()
                                                             .toLowerCase()));
-        if (obj.has("tail") && !obj.get("tail").equals("none"))
+        if (obj.has("tail") && !obj.get("tail").getAsString().equals("none"))
             config.tail = Optional.of(TailPart.valueOf(obj.get("tail").getAsString()
                                                              .toLowerCase()));
-        if (obj.has("wings") && !obj.get("wings").equals("none"))
+        if (obj.has("wings") && !obj.get("wings").getAsString().equals("none"))
             config.wings = Optional.of(WingsPart.valueOf(obj.get("wings").getAsString()
                                                                .toLowerCase()));
 
@@ -259,8 +259,8 @@ class BodyConfiguration {
         ANGEL(CockMod.blessed, PussyPart.divine),
         WITCH(CockMod.runic, PussyPart.arcane),
         SLIME(CockMod.slimy, PussyPart.gooey);
-        private CockMod cockMod;
-        private PussyPart pussy;
+        private final CockMod cockMod;
+        private final PussyPart pussy;
 
         Archetype(CockMod cockMod, PussyPart pussy) {
             this.cockMod = cockMod;

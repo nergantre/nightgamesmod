@@ -17,9 +17,7 @@ public class ItemAmount {
 
         ItemAmount that = (ItemAmount) o;
 
-        if (amount != that.amount)
-            return false;
-        return item == that.item;
+        return amount == that.amount && item == that.item;
 
     }
 

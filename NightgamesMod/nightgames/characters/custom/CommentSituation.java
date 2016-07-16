@@ -135,7 +135,7 @@ public enum CommentSituation {
 
     public static CommentSituation getBestComment(Combat c, Character self, Character other) {
         return getApplicableComments(c, self, other).stream()
-                        .max(Comparator.comparingInt(CommentSituation::getPriority)).get();
+                        .max(Comparator.comparingInt(CommentSituation::getPriority)).orElse(NO_COMMENT);
     }
 
     public static Map<CommentSituation, String> getDefaultComments(String npcType) {

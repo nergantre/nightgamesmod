@@ -61,8 +61,7 @@ public class Outfit {
     public boolean slotEmptyOrMeetsCondition(ClothingSlot slot, Predicate<? super Clothing> condition) {
         Stream<Clothing> clothes = outfit.get(slot).stream().filter(article -> article != null);
         List<Clothing> clothesList = clothes.collect(Collectors.toList());
-        boolean isEmpty = clothesList.stream().allMatch(condition);
-        return isEmpty;
+        return clothesList.stream().allMatch(condition);
     }
 
     public Clothing getTopOfSlot(ClothingSlot slot) {
@@ -83,7 +82,7 @@ public class Outfit {
     }
 
     public List<Clothing> getAllStrippable() {
-        return Arrays.stream(ClothingSlot.values()).map(slot -> getTopOfSlot(slot)).filter(article -> article != null)
+        return Arrays.stream(ClothingSlot.values()).map(this::getTopOfSlot).filter(article -> article != null)
                         .distinct().collect(Collectors.toList());
     }
 
@@ -143,7 +142,7 @@ public class Outfit {
     }
 
     // mutator apis below
-    public void change(Modifier rule, List<Clothing> plan) {
+    public void change(List<Clothing> plan) {
         undress();
         plan.forEach(this::equip);
     }
@@ -235,7 +234,7 @@ public class Outfit {
         Clothing legs = getTopOfSlot(ClothingSlot.legs, 3);
         Clothing feet = getTopOfSlot(ClothingSlot.feet, 3);
 
-        Set<Clothing> others = new LinkedHashSet<Clothing>();
+        Set<Clothing> others = new LinkedHashSet<>();
         if (arms != null) {
             others.add(arms);
         }
@@ -350,7 +349,7 @@ public class Outfit {
     }
 
     public double getHotness() {
-        Map<Clothing, Double> maximumExposure = new HashMap<Clothing, Double>();
+        Map<Clothing, Double> maximumExposure = new HashMap<>();
         Arrays.stream(ClothingSlot.values()).forEach(slot -> getHotness(slot, maximumExposure));
         return maximumExposure.keySet().stream()
                         .mapToDouble(article -> maximumExposure.get(article) * article.getHotness()).sum();
@@ -361,14 +360,8 @@ public class Outfit {
         if (equipped == null) {
             return super.toString();
         }
-        StringBuilder sb = new StringBuilder("[");
-        sb.append(equipped.stream().reduce((a, b) -> {
-            sb.append(a);
-            sb.append(", ");
-            return b;
-        }).get());
-        sb.append(']');
-        return String.format("%s@%s", sb.toString(), Integer.toHexString(hashCode()));
+        String sb = "[" + equipped.stream().map(Clothing::getName).collect(Collectors.joining(", ")) + ']';
+        return String.format("%s@%s", sb, Integer.toHexString(hashCode()));
     }
 
     public boolean hasNoShoes() {

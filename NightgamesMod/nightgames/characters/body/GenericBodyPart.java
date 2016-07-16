@@ -130,6 +130,8 @@ public class GenericBodyPart implements BodyPart {
     {
         if (other == null)
             return false;
+        if (!(other instanceof GenericBodyPart))
+            return false;
         return toString().equals(other.toString());
     }
 

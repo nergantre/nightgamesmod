@@ -130,8 +130,7 @@ public class DataBackedNPCData implements NPCData {
     @Override
     public CharacterSex getSex() {
         try {
-            CharacterSex eSex = CharacterSex.valueOf(sex);
-            return eSex;
+            return CharacterSex.valueOf(sex);
         } catch (IllegalArgumentException | NullPointerException e) {
             return CharacterSex.asexual;
         }

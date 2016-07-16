@@ -1,7 +1,6 @@
 package nightgames.daytime;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Optional;
 
 import nightgames.characters.Attribute;
@@ -15,7 +14,6 @@ import nightgames.characters.body.ModdedCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.requirement.BodyPartRequirement;
-import nightgames.requirement.NotRequirement;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
@@ -279,7 +277,7 @@ public class KatTime extends BaseNPCTime {
             }
             Global.gui().choose(this, "Leave");
             Global.getPlayer().addict(AddictionType.BREEDER, npc, Addiction.MED_INCREASE);
-            Global.getPlayer().getAddiction(AddictionType.BREEDER).flagDaytime();
+            Global.getPlayer().getAddiction(AddictionType.BREEDER).ifPresent(Addiction::flagDaytime);
         }
         if (choice.equals("Sex")) {
             Global.gui().message(

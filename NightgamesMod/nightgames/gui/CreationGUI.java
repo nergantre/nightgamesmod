@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
 import java.util.*;
 
 import javax.swing.Box;
@@ -119,7 +118,7 @@ public class CreationGUI extends JPanel {
         btnAdvStart = new JButton("Advanced Start");
         btnAdvStart.setFont(new Font("Verdana", Font.BOLD, 12));
         topPanel.add(btnAdvStart);
-        btnAdvStart.addActionListener(this::advancedStart);
+        btnAdvStart.addActionListener((evt) -> advancedStart());
 
         scrollPane = new JScrollPane();
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -337,7 +336,7 @@ public class CreationGUI extends JPanel {
         lblStrength.setForeground(new Color(240, 240, 255));
         verticalBox.add(lblStrength);
 
-        StrengthBox = new JComboBox<Trait>();
+        StrengthBox = new JComboBox<>();
         StrengthBox.setBackground(new Color(0, 10, 30));
         StrengthBox.setForeground(new Color(240, 240, 255));
         StrengthBox.addItem(Trait.exhibitionist);
@@ -371,7 +370,7 @@ public class CreationGUI extends JPanel {
         lblWeakness.setForeground(new Color(240, 240, 255));
         verticalBox.add(lblWeakness);
 
-        WeaknessBox = new JComboBox<Trait>();
+        WeaknessBox = new JComboBox<>();
         WeaknessBox.setBackground(new Color(0, 10, 30));
         WeaknessBox.setForeground(new Color(240, 240, 255));
         WeaknessBox.addItem(Trait.insatiable);
@@ -404,7 +403,7 @@ public class CreationGUI extends JPanel {
 
     }
 
-    private void advancedStart(ActionEvent evt) {
+    private void advancedStart() {
         Collection<StartConfiguration> starts = StartConfiguration.loadConfigurations();
         configs = new JComboBox<>();
         StringBuilder sb = new StringBuilder();

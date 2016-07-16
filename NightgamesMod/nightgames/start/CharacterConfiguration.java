@@ -85,10 +85,6 @@ public abstract class CharacterConfiguration {
         body.ifPresent(b -> b.apply(base.body));
     }
 
-    public Optional<CharacterSex> getGender() {
-        return this.gender;
-    }
-
     /** Parses fields common to PlayerConfiguration and NpcConfigurations.
      * @param object The configuration read from the JSON config file.
      */

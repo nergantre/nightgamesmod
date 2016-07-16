@@ -5,7 +5,6 @@ import java.util.Observable;
 import java.util.Optional;
 
 import nightgames.characters.Character;
-import nightgames.characters.Player;
 import nightgames.combat.Combat;
 import nightgames.combat.IEncounter;
 import nightgames.skills.Skill;
@@ -48,8 +47,6 @@ public class TestGUI extends GUI {
 
     @Override
     public void next(Combat combat) {}
-
-    public void promptFF(IEncounter enc) {}
 
     @Override
     public void promptAmbush(IEncounter enc, Character target) {}

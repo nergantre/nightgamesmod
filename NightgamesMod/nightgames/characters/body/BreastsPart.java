@@ -202,7 +202,7 @@ public enum BreastsPart implements BodyPart {
             if (opponent.human()) {
                 Global.getPlayer().addict(AddictionType.MAGIC_MILK, opponent, Addiction.LOW_INCREASE);
                 addiction = Global.getPlayer()
-                                  .getAddiction(AddictionType.MAGIC_MILK);
+                                  .getAddiction(AddictionType.MAGIC_MILK).get();
                 addictionLevel = addiction.getMagnitude();
             } else {
                 addictionLevel = 0;

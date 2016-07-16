@@ -15,7 +15,7 @@ import static org.hamcrest.core.AllOf.allOf;
 import static org.junit.Assert.*;
 
 /**
- * TODO: Write class-level documentation.
+ * Tests involving the CreationGUI.
  */
 public class CreationGUITest {
     @Before public void setUp() throws Exception {

@@ -1,7 +1,5 @@
 package nightgames.requirement;
 
-import java.util.List;
-
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 

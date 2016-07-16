@@ -1,7 +1,5 @@
 package nightgames.gui;
 
-import nightgames.global.Global;
-
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -10,7 +8,7 @@ import java.io.File;
 import java.util.Optional;
 
 /**
- * TODO: Write class-level documentation.
+ * Save file dialog specialized for .ngs files.
  */
 public class NgsChooser extends JFileChooser {
     private static final long serialVersionUID = 1726133121559035386L;

@@ -111,11 +111,8 @@ public class Combat extends Observable implements Cloneable {
                     }
                 }
             }
-        } else if (other.human() && self.has(Trait.zealinspiring) && Global.getPlayer()
-                                                                           .checkAddiction(AddictionType.ZEAL)
-                        && !Global.getPlayer()
-                                  .getAddiction(AddictionType.ZEAL)
-                                  .isInWithdrawal()) {
+        } else if (other.human() && self.has(Trait.zealinspiring) && Global.getPlayer().getAddiction(AddictionType.ZEAL)
+                        .map(Addiction::isInWithdrawal).orElse(false)) {
             self.add(this, new DivineCharge(self, .3));
         }
     }

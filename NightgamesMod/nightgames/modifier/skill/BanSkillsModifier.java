@@ -53,11 +53,6 @@ public class BanSkillsModifier extends SkillModifier implements ModifierComponen
         return new BanSkillsModifier(skills);
     }
 
-    private Function<String, Skill> findSkill(Collection<Skill> skills) {
-        return name -> skills.stream().filter(matchName(name)).findAny()
-                        .orElseThrow(() -> new IllegalArgumentException("No such skill: " + name));
-    }
-
     private Predicate<Skill> matchName(String name) {
         return skill -> name.equals(skill.getName());
     }

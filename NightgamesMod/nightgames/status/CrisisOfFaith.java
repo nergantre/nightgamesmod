@@ -7,6 +7,7 @@ import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
 public class CrisisOfFaith extends Status {
@@ -73,7 +74,8 @@ public class CrisisOfFaith extends Status {
 
     @Override
     public int gainmojo(int x) {
-        return (int) (x * (1.0f - Global.getPlayer().getAddiction(AddictionType.ZEAL).getMagnitude()));
+        return (int) (x * (1.0f - Global.getPlayer().getAddiction(AddictionType.ZEAL).map(Addiction::getMagnitude)
+                        .orElse(0f)));
     }
 
     @Override

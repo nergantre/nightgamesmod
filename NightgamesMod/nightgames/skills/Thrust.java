@@ -10,6 +10,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
+import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
 public class Thrust extends Skill {
@@ -71,7 +72,8 @@ public class Thrust extends Skill {
             Player p = Global.getPlayer();
             Character npc = c.getOther(p);
             if (p.checkAddiction(AddictionType.BREEDER, npc)) {
-                float bonus = .3f * p.getAddiction(AddictionType.BREEDER).getCombatSeverity().ordinal();
+                float bonus = .3f * p.getAddiction(AddictionType.BREEDER).map(Addiction::getCombatSeverity)
+                                .map(Enum::ordinal).orElse(0);
                 if (p == getSelf()) {
                     mt += mt * bonus;
                 } else {

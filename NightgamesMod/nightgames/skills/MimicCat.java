@@ -8,7 +8,6 @@ import nightgames.characters.body.CockMod;
 import nightgames.characters.body.EarPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
-import nightgames.characters.body.WingsPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Flag;

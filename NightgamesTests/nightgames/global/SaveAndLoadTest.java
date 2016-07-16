@@ -11,7 +11,6 @@ import java.nio.file.Path;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for saving and loading game data.
@@ -32,7 +31,8 @@ public class SaveAndLoadTest {
         SaveData reloadedData = Global.saveData();
         assertThat(reloadedData.players, equalTo(firstLoadData.players));
         for (Character player : firstLoadData.players) {
-            Character reloaded = reloadedData.players.stream().filter(p -> p.equals(player)).findFirst().get();
+            Character reloaded = reloadedData.players.stream().filter(p -> p.equals(player)).findFirst()
+                            .orElseThrow(AssertionError::new);
             assertThat(reloaded, CharacterStatMatcher.statsMatch(player));
         }
         assertThat(reloadedData, equalTo(firstLoadData));

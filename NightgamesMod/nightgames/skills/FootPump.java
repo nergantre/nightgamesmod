@@ -15,19 +15,15 @@ public class FootPump extends Skill {
         super("Foot Pump", self);
     }
 
-    @Override
-    public boolean requirements(Combat c, Character user, Character target) {
+    @Override public boolean requirements(Combat c, Character user, Character target) {
         return user.get(Attribute.Seduction) >= 22;
     }
 
-    @Override
-    public boolean usable(Combat c, Character target) {
-        return c.getStance().behind(getSelf()) && target.crotchAvailable() && getSelf().canAct()
-                        && !c.getStance().inserted() && target.hasDick() && getSelf().outfit.hasNoShoes();
+    @Override public boolean usable(Combat c, Character target) {
+        return c.getStance().behind(getSelf()) && target.crotchAvailable() && getSelf().canAct() && !c.getStance().inserted() && target.hasDick() && getSelf().outfit.hasNoShoes();
     }
 
-    @Override
-    public float priorityMod(Combat c) {
+    @Override public float priorityMod(Combat c) {
         BodyPart feet = getSelf().body.getRandom("feet");
         Character other = c.p1 == getSelf() ? c.p2 : c.p1;
         BodyPart otherpart = other.hasDick() ? other.body.getRandomCock() : other.body.getRandomPussy();
@@ -37,13 +33,11 @@ public class FootPump extends Skill {
         return 0;
     }
 
-    @Override
-    public int getMojoBuilt(Combat c) {
+    @Override public int getMojoBuilt(Combat c) {
         return 20;
     }
 
-    @Override
-    public boolean resolve(Combat c, Character target) {
+    @Override public boolean resolve(Combat c, Character target) {
         int m = 12 + Global.random(6);
         int m2 = m / 2;
         if (getSelf().human()) {
@@ -62,42 +56,36 @@ public class FootPump extends Skill {
         return true;
     }
 
-    @Override
-    public Skill copy(Character user) {
+    @Override public Skill copy(Character user) {
         return new FootPump(user);
     }
 
-    @Override
-    public int speed() {
+    @Override public int speed() {
         return 4;
     }
 
-    @Override
-    public Tactics type(Combat c) {
+    @Override public Tactics type(Combat c) {
         return Tactics.pleasure;
     }
 
-    @Override
-    public String deal(Combat c, int damage, Result modifier, Character target) {
+    @Override public String deal(Combat c, int damage, Result modifier, Character target) {
         return Global.format(
                         "You wrap your legs around {other:name-possessive} waist and grip {other:possessive} {other:body-part:cock} between your toes. Massaging {other:name-possessive} {other:body-part:cock} between your toes, you start to stroke {other:possessive} {other:body-part:cock} up and down between your toes. Reaching around from behind {other:possessive} back, you start to tease and caress {other:possessive} breasts with your hands. Alternating between pumping and massaging the head of {other:possessive} {other:body-part:cock} with your toes, {other:pronoun} begins to let out a low moan with each additional touch.",
                         getSelf(), target);
     }
 
-    @Override
-    public String receive(Combat c, int damage, Result modifier, Character target) {
+    @Override public String receive(Combat c, int damage, Result modifier, Character target) {
         return Global.format(
-                        "{self:SUBJECT} wraps {self:possessive} legs around your waist and settles {self:possessive} feet on both sides of your {other:body-part:cock}. Cupping your dick with {self:possessive} arches, she starts making long and steady strokes up and down your {other:body-part:cock} as it remains trapped in between {self:possessive} arches. Reaching around you, {self:subject} begins to rub and gently flick your nipples with {self:possessive} fingers. Alternating between pumping and massaging the head of your {other:body-part:cock} with {self:possessive} toes you can’t help but groan in pleasure.",
+                        "{self:SUBJECT} wraps {self:possessive} legs around your waist and settles {self:possessive} feet on both sides of your {other:body-part:cock}. Cupping your dick with {self:possessive} arches, she starts making long and steady strokes up and down your {other:body-part:cock} as it remains trapped in between {self:possessive} arches. Reaching around you, {self:subject} begins to rub and gently flick your nipples with {self:possessive} fingers. Alternating between pumping and massaging the head of your {other:body-part:cock} with {self:possessive} toes you canï¿½t help but groan in pleasure.",
                         getSelf(), target);
     }
 
-    @Override
-    public String describe(Combat c) {
+    @Override public String describe(Combat c) {
         return "Pleasure your opponent with your feet";
     }
 
-    @Override
-    public boolean makesContact() {
+    @Override public boolean makesContact() {
         return true;
     }
+
 }

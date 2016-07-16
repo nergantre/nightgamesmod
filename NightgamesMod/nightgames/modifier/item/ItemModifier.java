@@ -6,7 +6,6 @@ import nightgames.characters.Character;
 import nightgames.items.Item;
 import nightgames.modifier.ModifierCategory;
 import nightgames.modifier.ModifierComponent;
-import nightgames.modifier.ModifierComponentLoader;
 
 public abstract class ItemModifier implements ModifierCategory<ItemModifier>, ModifierComponent {
     public static final ItemModifierLoader loader = new ItemModifierLoader();

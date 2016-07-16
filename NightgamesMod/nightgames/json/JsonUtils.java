@@ -8,7 +8,6 @@ import java.nio.file.Path;
 import java.util.*;
 
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
 import nightgames.items.clothing.Clothing;
 
 public class JsonUtils {

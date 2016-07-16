@@ -15,7 +15,6 @@ import nightgames.skills.Skill;
 import nightgames.stance.Stance;
 import nightgames.status.Stsflag;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;

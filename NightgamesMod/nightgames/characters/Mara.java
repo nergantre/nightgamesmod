@@ -2,7 +2,6 @@ package nightgames.characters;
 
 import java.util.Optional;
 
-import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
 import nightgames.characters.body.GenericBodyPart;

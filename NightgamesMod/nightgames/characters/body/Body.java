@@ -37,14 +37,14 @@ public class Body implements Cloneable {
         public int duration;
 
         public PartReplacement(int duration) {
-            added = new LinkedHashSet<BodyPart>(2);
-            removed = new LinkedHashSet<BodyPart>(2);
+            added = new LinkedHashSet<>(2);
+            removed = new LinkedHashSet<>(2);
             this.duration = duration;
         }
 
         public PartReplacement(PartReplacement original) {
-            added = new LinkedHashSet<BodyPart>(original.added);
-            removed = new LinkedHashSet<BodyPart>(original.removed);
+            added = new LinkedHashSet<>(original.added);
+            removed = new LinkedHashSet<>(original.removed);
             duration = original.duration;
         }
     }
@@ -52,7 +52,7 @@ public class Body implements Cloneable {
     static private Map<String, BodyPart> prototypes;
 
     static {
-        prototypes = new HashMap<String, BodyPart>();
+        prototypes = new HashMap<>();
         prototypes.put(PussyPart.class.getCanonicalName(), PussyPart.normal);
         prototypes.put(BreastsPart.class.getCanonicalName(), BreastsPart.c);
         prototypes.put(BasicCockPart.class.getCanonicalName(), BasicCockPart.average);
@@ -92,9 +92,9 @@ public class Body implements Cloneable {
 
 
     public Body() {
-        bodyParts = new LinkedHashSet<BodyPart>();
+        bodyParts = new LinkedHashSet<>();
         currentParts = Collections.emptySet();
-        replacements = new ArrayList<PartReplacement>();
+        replacements = new ArrayList<>();
         lastPleasuredBy = nonePart;
         lastPleasured = nonePart;
         hotness = 1.0;
@@ -289,7 +289,7 @@ public class Body implements Cloneable {
 
     public CockPart getCockBelow(double size) {
         List<BodyPart> parts = get("cock");
-        List<CockPart> upgradable = new ArrayList<CockPart>();
+        List<CockPart> upgradable = new ArrayList<>();
         for (BodyPart part : parts) {
             CockPart cock = (CockPart) part;
             if (cock.getSize() < size) {
@@ -305,7 +305,7 @@ public class Body implements Cloneable {
 
     public CockPart getCockAbove(double size) {
         List<BodyPart> parts = get("cock");
-        List<CockPart> upgradable = new ArrayList<CockPart>();
+        List<CockPart> upgradable = new ArrayList<>();
         for (BodyPart part : parts) {
             CockPart b = (CockPart) part;
             if (b.getSize() > size) {
@@ -321,7 +321,7 @@ public class Body implements Cloneable {
 
     public BreastsPart getBreastsBelow(double size) {
         List<BodyPart> parts = get("breasts");
-        List<BreastsPart> upgradable = new ArrayList<BreastsPart>();
+        List<BreastsPart> upgradable = new ArrayList<>();
         for (BodyPart part : parts) {
             BreastsPart b = (BreastsPart) part;
             if (b.size < size) {
@@ -337,7 +337,7 @@ public class Body implements Cloneable {
 
     public BreastsPart getBreastsAbove(double size) {
         List<BodyPart> parts = get("breasts");
-        List<BreastsPart> upgradable = new ArrayList<BreastsPart>();
+        List<BreastsPart> upgradable = new ArrayList<>();
         for (BodyPart part : parts) {
             BreastsPart b = (BreastsPart) part;
             if (b.size > size) {
@@ -416,7 +416,7 @@ public class Body implements Cloneable {
 
     // returns how many are removed
     public int removeAll(String type) {
-        List<BodyPart> removed = new ArrayList<BodyPart>();
+        List<BodyPart> removed = new ArrayList<>();
         for (BodyPart part : bodyParts) {
             assert part != null;
             if (part.isType(type)) {
@@ -716,7 +716,7 @@ public class Body implements Cloneable {
     @Override
     public Body clone() throws CloneNotSupportedException {
         Body newBody = (Body) super.clone();
-        newBody.replacements = new ArrayList<PartReplacement>();
+        newBody.replacements = new ArrayList<>();
         replacements.forEach(rep -> newBody.replacements.add(new PartReplacement(rep)));
         newBody.bodyParts = new LinkedHashSet<>(bodyParts);
         newBody.currentParts = currentParts;
@@ -769,7 +769,7 @@ public class Body implements Cloneable {
     }
 
     private void advancedTemporaryParts(Combat c) {
-        ArrayList<PartReplacement> expired = new ArrayList<Body.PartReplacement>();
+        ArrayList<PartReplacement> expired = new ArrayList<>();
         for (PartReplacement r : replacements) {
             r.duration -= 1;
             if (r.duration <= 0) {

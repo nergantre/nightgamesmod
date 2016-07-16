@@ -1,14 +1,11 @@
 package nightgames.json;
 
-import com.google.gson.reflect.TypeToken;
-
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * TODO: Write class-level documentation.
+ * Provides a Type for collections that lets Gson.fromJson() get around type erasure.
  */
 class ParameterizedCollectionType<T> implements ParameterizedType {
     private Class<T> wrapped;

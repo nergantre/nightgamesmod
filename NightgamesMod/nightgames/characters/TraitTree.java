@@ -90,9 +90,7 @@ public class TraitTree {
             parser.setContentHandler(handler);
             parser.parse(new InputSource(xml));
             requirements = handler.getRequirements();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (SAXException | IOException e) {
             e.printStackTrace();
         }
     }

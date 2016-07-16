@@ -12,9 +12,9 @@ import java.util.*;
  * SaveData specifies a schema for data that will be saved and loaded.
  */
 public class SaveData {
-    public Set<Character> players;
-    public Set<String> flags;
-    public Map<String, Float> counters;
+    public final Set<Character> players;
+    public final Set<String> flags;
+    public final Map<String, Float> counters;
     public Time time;
     public int date;
 
@@ -26,7 +26,7 @@ public class SaveData {
         TIME("time"),
         DATE("date");
 
-        String key;
+        final String key;
 
         JSONKey(String key) {
             this.key = key;
@@ -38,7 +38,7 @@ public class SaveData {
         DAWN("dawn"),
         DUSK("dusk");
 
-        String desc;
+        final String desc;
 
         Time(String desc) {
             this.desc = desc;

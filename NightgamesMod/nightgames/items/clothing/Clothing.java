@@ -11,6 +11,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonParseException;
 
 import nightgames.Resources.ResourceLoader;
+import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.CharacterSex;
 import nightgames.characters.Trait;
@@ -118,8 +119,6 @@ public class Clothing implements Loot {
         }
     }
 
-    public static Set<Clothing> femaleOnlyClothing;
-
     public static Clothing getByID(String key) {
         Clothing results = clothingTable.get(key);
         if (results == null) {
@@ -178,14 +177,7 @@ public class Clothing implements Loot {
         sb.append(getName());
         if (!getSlots().isEmpty()) {
             sb.append("<br>Slots: [");
-            sb.append(getSlots().stream()
-                                .reduce((a, b) -> {
-                                    sb.append(a.name());
-                                    sb.append(", ");
-                                    return b;
-                                })
-                                .get()
-                                .name());
+            sb.append(slots.stream().map(ClothingSlot::name).collect(Collectors.joining(", ")));
             sb.append(']');
         }
         sb.append("<br>Layer: ");
@@ -196,26 +188,12 @@ public class Clothing implements Loot {
         sb.append(format.format(getExposure()));
         if (!attributes().isEmpty()) {
             sb.append("<br>Attributes: [");
-            sb.append(attributes().stream()
-                                  .reduce((a, b) -> {
-                                      sb.append(a.getName());
-                                      sb.append(", ");
-                                      return b;
-                                  })
-                                  .get()
-                                  .name());
+            sb.append(attributes.stream().map(ClothingTrait::name).collect(Collectors.joining(", ")));
             sb.append(']');
         }
         if (!buffs().isEmpty()) {
             sb.append("<br>Buffs: [");
-            sb.append(buffs().stream()
-                             .reduce((a, b) -> {
-                                 sb.append(a.toString());
-                                 sb.append(", ");
-                                 return b;
-                             })
-                             .get()
-                             .name());
+            sb.append(buffs.stream().map(Trait::name).collect(Collectors.joining(", ")));
             sb.append(']');
         }
         sb.append("<br>Price: ");

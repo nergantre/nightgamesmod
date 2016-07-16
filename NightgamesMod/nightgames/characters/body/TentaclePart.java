@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.google.gson.JsonObject;
-
 import nightgames.characters.Character;
 import nightgames.characters.DummyCharacter;
 import nightgames.combat.Combat;

@@ -1,7 +1,6 @@
 package nightgames.ftc;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 import javax.swing.JButton;
 

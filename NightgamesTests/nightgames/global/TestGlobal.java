@@ -4,7 +4,7 @@ import nightgames.gui.GUI;
 import nightgames.gui.TestGUI;
 
 /**
- * TODO: Write class-level documentation.
+ * Creates a version of Global that has no visible GUI.
  */
 public class TestGlobal extends Global {
     @Override protected GUI makeGUI() {

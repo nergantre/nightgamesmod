@@ -3,15 +3,15 @@ package nightgames.requirement;
 import java.lang.reflect.Field;
 
 /**
- * Created by Ryplinn on 6/24/2016.
+ * Base class for requirements. Provides consistent requirement name handling.
  */
 public abstract class BaseRequirement implements Requirement {
-    public String getKey() {
+    public String getName() {
         return getClass().getName().replace("nightgames.requirement.", "").replace("Requirement", "").toLowerCase();
     }
 
     @Override public String toString() {
-        String s = getKey() + ": ";
+        String s = getName() + ": ";
         Field[] fields = getClass().getDeclaredFields();
         if (fields.length == 0) {
             s += "\"\"";
@@ -46,9 +46,7 @@ public abstract class BaseRequirement implements Requirement {
     }
 
     @Override public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        return !(o == null || getClass() != o.getClass());
+        return this == o || !(o == null || getClass() != o.getClass());
 
     }
 

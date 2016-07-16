@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.items.clothing.ClothingTrait;
@@ -183,8 +182,8 @@ public abstract class ClothingModifier implements ModifierCategory<ClothingModif
         new NoPantiesModifier().combine(new ForceClothingModifier("blouse", "thong")).apply(test4);
         System.out.println(test4);
 
-        //Stream.of(new UnderwearOnlyModifier(), new ForceClothingModifier("blouse", "thong"), new NoPantiesModifier())
-        //                .reduce(combiner.template(), (f, s) -> combiner.combine(f, s)).apply(test5);
+        Stream.of((ClothingModifier) new UnderwearOnlyModifier(), new ForceClothingModifier("blouse", "thong"), new NoPantiesModifier())
+                        .reduce(combiner.template(), combiner::combine).apply(test5);
         System.out.println(test5);
     }
 }

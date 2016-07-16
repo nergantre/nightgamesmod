@@ -5,7 +5,7 @@ import java.lang.reflect.Type;
 import java.util.Map;
 
 /**
- * TODO: Write class-level documentation.
+ * Provides a Type for maps that lets Gson.fromJson() get around type erasure.
  */
 class ParameterizedMapType<K, V> implements ParameterizedType {
     private Class<K> keyType;

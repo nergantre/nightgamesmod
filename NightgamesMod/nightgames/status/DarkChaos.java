@@ -11,6 +11,7 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.stance.Stance;
 import nightgames.stance.StandingOver;
+import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
 public class DarkChaos extends Status {
@@ -34,8 +35,7 @@ public class DarkChaos extends Status {
         if (c == null)
             return;
         float odds = Global.getPlayer()
-                           .getAddiction(AddictionType.CORRUPTION)
-                           .getMagnitude()
+                           .getAddiction(AddictionType.CORRUPTION).map(Addiction::getMagnitude).orElse(0f)
                         / 4;
         if (odds > Math.random()) {
             Effect e = Effect.pick(c);

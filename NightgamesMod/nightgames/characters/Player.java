@@ -69,7 +69,7 @@ public class Player extends Character {
         outfitPlan.add(Clothing.getByID("jeans"));
         outfitPlan.add(Clothing.getByID("socks"));
         outfitPlan.add(Clothing.getByID("sneakers"));
-        applyConfigStats(config);
+        config.ifPresent(this::applyConfigStats);
         finishCharacter(pickedTraits, selectedAttributes);
 
     }
@@ -83,8 +83,8 @@ public class Player extends Character {
         addictions = new ArrayList<>();
     }
 
-    private void applyConfigStats(Optional<PlayerConfiguration> config) {
-        config.ifPresent(c -> c.apply(this));
+    private void applyConfigStats(PlayerConfiguration config) {
+        config.apply(this);
     }
 
     private void finishCharacter(List<Trait> pickedTraits, Map<Attribute, Integer> selectedAttributes) {
@@ -548,9 +548,9 @@ public class Player extends Character {
                                             + "moan, <i>\"I'm gonna cum!\"</i> You hastily remove %s dick out of "
                                             + "your mouth and pump it rapidly. %s shoots %s load into the air, barely "
                                             + "missing you.",
-                            new Object[] {target.name(), Global.capitalizeFirstLetter(target.possessivePronoun()),
-                                            target.name(), Global.capitalizeFirstLetter(target.pronoun()),
-                                            target.possessivePronoun(), target.name(), target.possessivePronoun()}));
+                            target.name(), Global.capitalizeFirstLetter(target.possessivePronoun()),
+                            target.name(), Global.capitalizeFirstLetter(target.pronoun()), target.possessivePronoun(),
+                            target.name(), target.possessivePronoun()));
         } else {
             c.write(target.name()
                             + "'s arms are firmly pinned, so she tries to kick you ineffectually. You catch her ankles and slowly begin kissing and licking your way "
@@ -770,11 +770,8 @@ public class Player extends Character {
                          .anyMatch(a -> a.getType() == type);
     }
 
-    public Addiction getAddiction(AddictionType type) {
-        return addictions.stream()
-                         .filter(a -> a.getType() == type)
-                         .findAny()
-                         .get();
+    public Optional<Addiction> getAddiction(AddictionType type) {
+        return addictions.stream().filter(a -> a.getType() == type).findAny();
     }
     
     public Optional<Addiction> getStrongestAddiction() {
@@ -783,11 +780,12 @@ public class Player extends Character {
 
     public void addict(AddictionType type, Character cause, float mag) {
         boolean dbg = Global.isDebugOn(DebugFlags.DEBUG_ADDICTION);
-        if (hasAddiction(type)) {
+        Optional<Addiction> addiction = getAddiction(type);
+        if (addiction.isPresent()) {
             if (dbg) {
                 System.out.printf("Aggravating %s on player by %.3f\n", type.name(), mag);
             }
-            Addiction a = getAddiction(type);
+            Addiction a = addiction.get();
             a.aggravate(mag);
             if (dbg) {
                 System.out.printf("%s magnitude is now %.3f\n", a.getType()
@@ -806,12 +804,14 @@ public class Player extends Character {
 
     public void unaddict(AddictionType type, float mag) {
         boolean dbg = Global.isDebugOn(DebugFlags.DEBUG_ADDICTION);
-        if (!hasAddiction(type))
-            return;
         if (dbg) {
             System.out.printf("Alleviating %s on player by %.3f\n", type.name(), mag);
         }
-        Addiction addict = getAddiction(type);
+        Optional<Addiction> addiction = getAddiction(type);
+        if (!addiction.isPresent()) {
+            return;
+        }
+        Addiction addict = addiction.get();
         addict.alleviate(mag);
         if (addict.shouldRemove()) {
             if (dbg) {
@@ -823,12 +823,13 @@ public class Player extends Character {
 
     public void addictCombat(AddictionType type, Character cause, float mag, Combat c) {
         boolean dbg = Global.isDebugOn(DebugFlags.DEBUG_ADDICTION);
-        if (hasAddiction(type)) {
+        Optional<Addiction> addiction = getAddiction(type);
+        if (addiction.isPresent()) {
             if (dbg) {
                 System.out.printf("Aggravating %s on player by %.3f (Combat vs %s)\n", type.name(), mag,
                                 cause.getName());
             }
-            Addiction a = getAddiction(type);
+            Addiction a = addiction.get();
             a.aggravateCombat(mag);
             if (dbg) {
                 System.out.printf("%s magnitude is now %.3f\n", a.getType()
@@ -848,13 +849,13 @@ public class Player extends Character {
 
     public void unaddictCombat(AddictionType type, Character cause, float mag, Combat c) {
         boolean dbg = Global.isDebugOn(DebugFlags.DEBUG_ADDICTION);
-        if (!hasAddiction(type))
-            return;
-        if (dbg) {
-            System.out.printf("Alleviating %s on player by %.3f (Combat vs %s)\n", type.name(), mag, cause.getName());
+        Optional<Addiction> addict = getAddiction(type);
+        if (addict.isPresent()) {
+            if (dbg) {
+                System.out.printf("Alleviating %s on player by %.3f (Combat vs %s)\n", type.name(), mag, cause.getName());
+            }
+            addict.get().alleviateCombat(mag);
         }
-        Addiction addict = getAddiction(type);
-        addict.alleviateCombat(mag);
     }
 
     public List<Addiction> getAddictions() {
@@ -866,14 +867,11 @@ public class Player extends Character {
     }
     
     public boolean checkAddiction(AddictionType type) {
-        return hasAddiction(type) && getAddiction(type).isActive();
+        return getAddiction(type).map(Addiction::isActive).orElse(false);
     }
     
     public boolean checkAddiction(AddictionType type, Character cause) {
-        if (!hasAddiction(type))
-            return false;
-        Addiction add = getAddiction(type);
-        return add.isActive() && add.wasCausedBy(cause);
+        return getAddiction(type).map(addiction -> addiction.isActive() && addiction.wasCausedBy(cause)).orElse(false);
     }
     
     @Override
@@ -907,10 +905,7 @@ public class Player extends Character {
     }
 
     public Severity getAddictionSeverity(AddictionType type) {
-        if (hasAddiction(type)) {
-            return getAddiction(type).getSeverity();
-        }
-        return Severity.NONE;
+        return getAddiction(type).map(Addiction::getSeverity).orElse(Severity.NONE);
     }
 
 }

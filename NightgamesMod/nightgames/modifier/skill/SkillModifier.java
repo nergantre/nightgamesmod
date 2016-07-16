@@ -80,6 +80,7 @@ public abstract class SkillModifier implements ModifierCategory<SkillModifier>, 
             }
 
             @Override public double encouragement(Skill s, Combat c, Character u) {
+                // encourages a skill by the sum of each weight
                 return first.encouragement(s, c, u) + next.encouragement(s, c, u);
             }
         };

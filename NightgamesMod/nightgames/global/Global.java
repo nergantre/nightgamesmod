@@ -402,7 +402,7 @@ public class Global {
     }
 
     public static void buildActionPool() {
-        actionPool = new HashSet<Action>();
+        actionPool = new HashSet<>();
         actionPool.add(new Resupply());
         actionPool.add(new Wait());
         actionPool.add(new Hide());
@@ -426,7 +426,7 @@ public class Global {
     }
 
     public static void buildTrapPool() {
-        trapPool = new HashSet<Trap>();
+        trapPool = new HashSet<>();
         trapPool.add(new Alarm());
         trapPool.add(new Tripline());
         trapPool.add(new Snare());
@@ -442,7 +442,7 @@ public class Global {
     }
 
     public static void buildFeatPool() {
-        featPool = new HashSet<Trait>();
+        featPool = new HashSet<>();
         for (Trait trait : Trait.values()) {
             if (trait.isFeat()) {
                 featPool.add(trait);
@@ -541,7 +541,7 @@ public class Global {
     }
 
     public static void dusk(Modifier matchmod) {
-        Set<Character> lineup = new HashSet<Character>();
+        Set<Character> lineup = new HashSet<>();
         Character lover = null;
         int maxaffection = 0;
         day = null;
@@ -559,12 +559,13 @@ public class Global {
                 lover = player;
             }
         }
-        List<Character> participants = new ArrayList<Character>();
+        List<Character> participants = new ArrayList<>();
         for (Character c : players) {
             Flag disabledFlag = null;
             try {
                 disabledFlag = Flag.valueOf(c.getType() + "Disabled");
             } catch (IllegalArgumentException e) {
+                e.printStackTrace();
             }
             if (disabledFlag == null || !Global.checkFlag(disabledFlag)) {
                 // TODO: DEBUG
@@ -593,9 +594,9 @@ public class Global {
                 newChallenger(new Maya(human.getLevel()));
                 flag(Flag.Maya);
             }
-            NPC maya = getNPC("Maya");
+            NPC maya = Optional.ofNullable(getNPC("Maya")).orElseThrow(() -> new IllegalStateException("Maya data unavailable when attempting to add her to lineup."));
             lineup.add(maya);
-            resting = new HashSet<Character>(players);
+            resting = new HashSet<>(players);
             resting.removeAll(lineup);
             maya.gain(Item.Aphrodisiac, 10);
             maya.gain(Item.DisSol, 10);
@@ -618,7 +619,7 @@ public class Global {
             if (!prey.human())
                 lineup.add(human);
             lineup = pickCharacters(players, lineup, 4);
-            resting = new HashSet<Character>(players);
+            resting = new HashSet<>(players);
             resting.removeAll(lineup);
             match = buildMatch(lineup, matchmod);
         } else if (participants.size() > 5) {
@@ -627,7 +628,7 @@ public class Global {
             }
             lineup.add(human);
             lineup = pickCharacters(players, lineup, 4);
-            resting = new HashSet<Character>(players);
+            resting = new HashSet<>(players);
             resting.removeAll(lineup);
             match = buildMatch(lineup, matchmod);
         } else {
@@ -813,7 +814,7 @@ public class Global {
         pool.shortcut(workshop);
         library.shortcut(tunnel);
         tunnel.shortcut(library);
-        HashMap<String, Area> map = new HashMap<String, Area>();
+        HashMap<String, Area> map = new HashMap<>();
         map.put("Quad", quad);
         map.put("Dorm", dorm);
         map.put("Shower", shower);
@@ -1131,7 +1132,7 @@ public class Global {
     private static HashMap<String, MatchAction> matchActions = null;
 
     public static void buildParser() {
-        matchActions = new HashMap<String, Global.MatchAction>();
+        matchActions = new HashMap<>();
         matchActions.put("possessive", (self, first, second, third) -> {
             if (self != null) {
                 return self.possessivePronoun();
@@ -1259,7 +1260,7 @@ public class Global {
             if (action == null) {
                 System.out.println(second);
             }
-            if (second != null && action != null) {
+            if (action != null) {
                 replacement = action.replace(character, first, second, third);
                 if (caps) {
                     replacement = Global.capitalizeFirstLetter(replacement);

@@ -3,7 +3,6 @@ package nightgames.modifier.action;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiPredicate;
@@ -13,7 +12,6 @@ import nightgames.characters.Character;
 import nightgames.global.Match;
 import nightgames.modifier.ModifierCategory;
 import nightgames.modifier.ModifierComponent;
-import nightgames.modifier.ModifierComponentLoader;
 
 public abstract class ActionModifier implements ModifierCategory<ActionModifier>, ModifierComponent {
     public static final ActionModifierLoader loader = new ActionModifierLoader();

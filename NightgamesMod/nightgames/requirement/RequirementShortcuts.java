@@ -6,12 +6,8 @@ import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Result;
 import nightgames.items.ItemAmount;
-import nightgames.status.Status;
-import nightgames.status.Stsflag;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
 
 /**
  * Shortcut functions for requirement creation

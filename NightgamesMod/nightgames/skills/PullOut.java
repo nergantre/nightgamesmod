@@ -16,6 +16,8 @@ import nightgames.status.addiction.Addiction.Severity;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
+import java.util.Optional;
+
 public class PullOut extends Skill {
 
     public PullOut(Character self) {
@@ -38,10 +40,11 @@ public class PullOut extends Skill {
             return false;
         }
         Player p = Global.getPlayer();
-        if (!p.hasAddiction(AddictionType.BREEDER)) {
+        Optional<Addiction> addiction = p.getAddiction(AddictionType.BREEDER);
+        if (!addiction.isPresent()) {
             return false;
         }
-        Addiction add = p.getAddiction(AddictionType.BREEDER);
+        Addiction add = addiction.get();
         return add.atLeast(Severity.HIGH) || add.combatAtLeast(Severity.HIGH);
     }
 

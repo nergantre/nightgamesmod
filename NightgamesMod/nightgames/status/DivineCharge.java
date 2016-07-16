@@ -8,6 +8,7 @@ import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
 public class DivineCharge extends Status {
@@ -40,13 +41,8 @@ public class DivineCharge extends Status {
 
     @Override
     public void tick(Combat c) {
-        if (!c.getStance()
-              .vaginallyPenetrated(affected)
-                        && !(affected.has(Trait.zealinspiring) && Global.getPlayer()
-                                                                        .checkAddiction(AddictionType.ZEAL)
-                                        && !Global.getPlayer()
-                                                  .getAddiction(AddictionType.ZEAL)
-                                                  .isInWithdrawal())) {
+        if (!c.getStance().vaginallyPenetrated(affected) && !(affected.has(Trait.zealinspiring) && !Global.getPlayer()
+                        .getAddiction(AddictionType.ZEAL).map(Addiction::isInWithdrawal).orElse(false))) {
             magnitude = magnitude / 2;
             c.write(affected, "The holy energy seeps out of " + affected.getName() + ".");
             if (magnitude < .05f)

@@ -19,7 +19,7 @@ public class EncourageTacticsModifier extends SkillModifier implements ModifierC
 
     EncourageTacticsModifier() {
         modified = null;
-        weight = null;
+        weight = ((character, combat) -> 0.0);
     }
 
     public EncourageTacticsModifier(Tactics modified, BiFunction<Character, Combat, Double> weight) {
@@ -29,7 +29,7 @@ public class EncourageTacticsModifier extends SkillModifier implements ModifierC
 
     public EncourageTacticsModifier(Tactics modified, double weight) {
         this.modified = modified;
-        this.weight = (ch, com) -> weight;
+        this.weight = (character, combat) -> weight;
     }
 
     @Override
@@ -60,6 +60,7 @@ public class EncourageTacticsModifier extends SkillModifier implements ModifierC
 
     @Override
     public String toString() {
+        assert modified != null;
         return "Encouraged:{" + modified.toString() + " " + weight.apply(Global.noneCharacter(), null) + "}";
     }
 }
