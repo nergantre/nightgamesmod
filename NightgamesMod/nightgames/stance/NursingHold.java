@@ -95,7 +95,6 @@ public class NursingHold extends AbstractFacingStance {
     public void decay(Combat c) {
         time++;
         bottom.weaken(null, 5);
-        bottom.loseWillpower(c, 1);
         top.emote(Emotion.dominant, 10);
     }
 
@@ -126,6 +125,11 @@ public class NursingHold extends AbstractFacingStance {
 
     @Override
     public double pheromoneMod(Character self) {
+        return 3;
+    }
+    
+    @Override
+    public int dominance() {
         return 3;
     }
 }

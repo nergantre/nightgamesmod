@@ -43,6 +43,12 @@ public abstract class Addiction extends Status {
         this(name, cause, .01f);
     }
 
+    @Override
+    public void tick(Combat c) {
+        combatMagnitude += magnitude / 14.0;
+        System.out.println(combatMagnitude);
+    }
+    
     public final void clearDaytime() {
         didDaytime = false;
     }

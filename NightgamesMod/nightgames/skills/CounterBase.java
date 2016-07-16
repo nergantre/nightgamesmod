@@ -5,6 +5,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.status.CounterStatus;
+import nightgames.status.Stsflag;
 
 public abstract class CounterBase extends Skill {
     private String description;
@@ -28,11 +29,13 @@ public abstract class CounterBase extends Skill {
     }
 
     @Override
-    public boolean resolve(Combat c, Character target) {
+    public final boolean resolve(Combat c, Character target) {
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.setup, target));
-        } else {
+        } else if (!target.is(Stsflag.blinded)) {
             c.write(getSelf(), receive(c, 0, Result.setup, target));
+        } else {
+            printBlinded(c);
         }
         getSelf().add(c, new CounterStatus(getSelf(), this, description, duration));
         return true;

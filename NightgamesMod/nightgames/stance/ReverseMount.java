@@ -90,4 +90,9 @@ public class ReverseMount extends AbstractBehindStance {
     public double pheromoneMod(Character self) {
         return 2;
     }
+    
+    @Override
+    public int dominance() {
+        return 2;
+    }
 }

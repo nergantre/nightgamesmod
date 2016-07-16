@@ -237,7 +237,8 @@ public enum Item implements Loot {
                     new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Seduction, -5, 10)),
                     new AddTraitEffect("drink", "throw", Trait.lacedjuices),
                     new AddTraitEffect("drink", "throw", Trait.aikidoNovice)), 10),
-    Flag("Flag", 0, "A small red ribbon. Worth points.", "The ");
+    Flag("Flag", 0, "A small red ribbon. Worth points.", "The "),
+    Blindfold("Blindfold", 50, "A blindfold one might use to sleep.", "a ");
 
     /**
      * The Item's display name.

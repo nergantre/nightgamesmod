@@ -13,6 +13,7 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -84,7 +85,7 @@ public class GUI extends JFrame implements Observer {
      * 
      */
     private static final long serialVersionUID = 451431916952047183L;
-    protected Combat combat;
+    public Combat combat;
     private Player player;
     private ArrayList<ArrayList<SkillButton>> skills;
     JPanel commandPanel;
@@ -233,7 +234,7 @@ public class GUI extends JFrame implements Observer {
         JLabel AILabel = new JLabel("AI Mode");
         ButtonGroup ai = new ButtonGroup();
         rdnormal = new JRadioButton("Normal");
-        rddumb = new JRadioButton("Old");
+        rddumb = new JRadioButton("Easier");
         ai.add(rdnormal);
         ai.add(rddumb);
         optionsPanel.add(AILabel);
@@ -242,10 +243,10 @@ public class GUI extends JFrame implements Observer {
 
         // difficultyLabel - options submenu - visible
 
-        JLabel difficultyLabel = new JLabel("Difficulty");
+        JLabel difficultyLabel = new JLabel("NPC Bonuses (Mainly XP)");
         ButtonGroup diff = new ButtonGroup();
-        rdeasy = new JRadioButton("Normal");
-        rdhard = new JRadioButton("Hard");
+        rdeasy = new JRadioButton("Off");
+        rdhard = new JRadioButton("On");
         diff.add(rdeasy);
         diff.add(rdhard);
         optionsPanel.add(difficultyLabel);
@@ -652,6 +653,9 @@ public class GUI extends JFrame implements Observer {
         if (Global.isDebugOn(DebugFlags.DEBUG_GUI)) {
             System.out.println("Display image: " + path);
         }
+        if (!(new File("assets/"+path).canRead())) {
+            return;
+        }
         BufferedImage pic = null;
         try {
             pic = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" + path));
@@ -678,7 +682,7 @@ public class GUI extends JFrame implements Observer {
         portrait.setIcon(null);
     }
     public void loadPortrait(String imagepath) {
-        if (imagepath != null) {
+        if (imagepath != null && new File("assets/"+imagepath).canRead()) {
             BufferedImage face = null;
             try {
                 face = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" + imagepath));
@@ -1009,7 +1013,12 @@ public class GUI extends JFrame implements Observer {
             if (skills.get(index).size() >= 25) {
                 index++;
             } else {
-                skills.get(index).add(new SkillButton(action, com));
+                SkillButton btn = new SkillButton(action, com);
+                int others = skills.get(index).size();
+                if (index == 0 && others < 9) {
+                    btn.addIndex(others+1);
+                }
+                skills.get(index).add(btn);
                 placed = true;
             }
         }

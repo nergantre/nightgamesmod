@@ -68,5 +68,6 @@ public enum Flag {
     FTC,
     didFTC, 
     AddictionAdvice,
-    AiriDisabled,;
+    AiriDisabled,
+    extendedLogs;
 }

@@ -81,16 +81,18 @@ public class Player extends Character {
     private void finishCharacter(List<Trait> pickedTraits, Map<Attribute, Integer> selectedAttributes) {
         traits.addAll(pickedTraits);
         att.putAll(selectedAttributes);
-        if (initialGender == CharacterSex.female || initialGender == CharacterSex.herm) {
-            outfitPlan.add(Clothing.getByID("bra"));
-            outfitPlan.add(Clothing.getByID("panties"));
-        } else {
-            outfitPlan.add(Clothing.getByID("boxers"));
+        if (outfitPlan.isEmpty()) {
+            if (initialGender == CharacterSex.female || initialGender == CharacterSex.herm) {
+                outfitPlan.add(Clothing.getByID("bra"));
+                outfitPlan.add(Clothing.getByID("panties"));
+            } else {
+                outfitPlan.add(Clothing.getByID("boxers"));
+            }
+            outfitPlan.add(Clothing.getByID("Tshirt"));
+            outfitPlan.add(Clothing.getByID("jeans"));
+            outfitPlan.add(Clothing.getByID("socks"));
+            outfitPlan.add(Clothing.getByID("sneakers"));
         }
-        outfitPlan.add(Clothing.getByID("Tshirt"));
-        outfitPlan.add(Clothing.getByID("jeans"));
-        outfitPlan.add(Clothing.getByID("socks"));
-        outfitPlan.add(Clothing.getByID("sneakers"));
         change();
         body.finishBody(initialGender);
     }
@@ -376,7 +378,16 @@ public class Player extends Character {
         }
         gui.ding();
     }
+    
+    public Growth getGrowth() {
+        return growth;
+    }
 
+    @Override
+    public int getMaxWillpowerPossible() {
+        return 50 + getLevel() * 5 - get(Attribute.Submissive) * 2;
+    }
+    
     @Override
     public void flee(Area location2) {
         Area[] adjacent = location2.adjacent.toArray(new Area[location2.adjacent.size()]);
@@ -585,8 +596,6 @@ public class Player extends Character {
 
     @Override
     public void afterParty() {
-        // TODO Auto-generated method stub
-
     }
 
     @Override

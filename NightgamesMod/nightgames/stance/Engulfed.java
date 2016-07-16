@@ -182,4 +182,9 @@ public class Engulfed extends Position {
             return true;
         return Global.random(2) == 0;
     }
+    
+    @Override
+    public int dominance() {
+        return 5;
+    }
 }

@@ -235,7 +235,7 @@ public class MagicMilkAddiction extends Addiction {
 
     @Override
     public void tick(Combat c) {
-        aggravateCombat(LOW_INCREASE);
+        super.tick(c);
         if (combatAtLeast(Severity.LOW)) {
             int loss;
             switch (getCombatSeverity()) {

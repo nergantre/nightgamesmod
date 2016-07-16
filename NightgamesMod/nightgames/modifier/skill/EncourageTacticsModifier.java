@@ -45,7 +45,7 @@ public class EncourageTacticsModifier extends SkillModifier implements ModifierC
 
     @Override
     public EncourageTacticsModifier instance(JSONObject obj) {
-        if (!obj.containsKey("tactic") || !obj.containsKey("weight")) {
+        if (obj.containsKey("tactic") && obj.containsKey("weight")) {
             Tactics tact = Tactics.valueOf(JSONUtils.readString(obj, "tactic"));
             double weight = JSONUtils.readFloat(obj, "weight");
             return new EncourageTacticsModifier(tact, weight);

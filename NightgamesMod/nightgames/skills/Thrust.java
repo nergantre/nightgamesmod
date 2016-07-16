@@ -65,7 +65,7 @@ public class Thrust extends Skill {
         if (getSelf().has(Trait.experienced)) {
             mt = Math.max(1, mt * .66f);
         }
-        mt = target.modRecoilPleasure(mt);
+        mt = target.modRecoilPleasure(c, mt);
 
         if (getSelf().human() || target.human()) {
             Player p = Global.getPlayer();

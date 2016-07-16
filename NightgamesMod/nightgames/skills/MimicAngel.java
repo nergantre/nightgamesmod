@@ -40,7 +40,10 @@ public class MimicAngel extends Skill {
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
         } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
+            if (!target.is(Stsflag.blinded))
+                c.write(getSelf(), receive(c, 0, Result.normal, target));
+            else 
+                printBlinded(c);
         }
         getSelf().addTemporaryTrait(Trait.divinity, 10);
         getSelf().addTemporaryTrait(Trait.objectOfWorship, 10);

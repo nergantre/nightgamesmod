@@ -27,7 +27,8 @@ public class FaceSit extends Skill {
     @Override
     public float priorityMod(Combat c) {
         return getSelf().has(Trait.lacedjuices) || getSelf().has(Trait.addictivefluids)
-                        || getSelf().body.getRandomPussy().moddedPartCountsAs(getSelf(), PussyPart.feral) ? 3.0f : 0;
+                        || (getSelf().body.has("pussy") && getSelf().body.
+                                        getRandomPussy().moddedPartCountsAs(getSelf(), PussyPart.feral)) ? 3.0f : 0;
     }
 
     @Override

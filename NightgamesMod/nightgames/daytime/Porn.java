@@ -21,16 +21,18 @@ public class Porn extends Activity {
     public void visit(String choice) {
         Global.gui().clearText();
         if (page == 0) {
-            boolean fail = Global.random(10) < 1;
-            showScene(pickScene(fail ? 1 : 2));
-
-            Global.gui().next(this);
-            int gain = Global.random(5) + 4;
-            if (player.has(Trait.expertGoogler)) {
-                gain *= 2;
+            if (player.getArousal().max() < 100 + player.getLevel() * 15) {
+                boolean fail = Global.random(10) < 1;
+                showScene(pickScene(fail ? 1 : 2));
+    
+                Global.gui().next(this);
+                int gain = Global.random(3) + 2;
+                if (player.has(Trait.expertGoogler)) {
+                    gain = gain * 3 / 2;
+                }
+                player.getArousal().gain(gain);
+                Global.gui().message("<b>Your maximum arousal has increased by " + gain + ".</b>");
             }
-            player.getArousal().gain(gain);
-            Global.gui().message("<b>Your maximum arousal has increased by " + gain + ".</b>");
         } else {
             done(true);
         }
@@ -55,6 +57,10 @@ public class Porn extends Activity {
                 Global.gui().message(
                                 "You spend about an hour browsing fetish porn websites. You feel a bit more desensitized to normal sex and a little bit dead inside.");
                 break;
+            case none:
+                Global.gui().message(
+                                "You try find something arousing on the internet, but nothing seems sexy anymore. You've probably done this too much recently. (Need to raise your level more).");
+                break;
             case fail1:
                 Global.gui().message(
                                 "It feels like the internet has run out of sexy. There's nothing new worth fapping to. Maybe there's something decent behind this paywall? No, don't do it. It's a trap.");
@@ -77,7 +83,9 @@ public class Porn extends Activity {
 
     private Scene pickScene(int gain) {
         ArrayList<Scene> available = new ArrayList<Scene>();
-        if (gain == 1) {
+        if (gain == 0) {
+            available.add(Scene.none);            
+        } else if (gain == 1) {
             available.add(Scene.fail1);
         } else {
             available.add(Scene.basic1);
@@ -100,6 +108,7 @@ public class Porn extends Activity {
         basic1,
         basic2,
         basic3,
+        none,
         fail1,
         mara1,
         angel1,

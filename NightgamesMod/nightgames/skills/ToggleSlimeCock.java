@@ -10,6 +10,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.status.Stsflag;
 
 public class ToggleSlimeCock extends Skill {
 
@@ -66,7 +67,10 @@ public class ToggleSlimeCock extends Skill {
             }
             getSelf().body.temporaryAddOrReplacePartWithType(new ModdedCockPart(BasicCockPart.big, CockMod.slimy), 100);
         }
-        c.write(getSelf(), Global.format(msg, getSelf(), target));
+        if (!target.human() || !target.is(Stsflag.blinded))
+            c.write(getSelf(), Global.format(msg, getSelf(), target));
+        else 
+            printBlinded(c);
         return true;
     }
 

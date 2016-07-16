@@ -42,9 +42,13 @@ public class Taunt extends Skill {
             }
         } else {
             target.tempt(c, getSelf(), (int) Math.round(m));
-            if (Global.random(4) >= 2) {
+            if (Global.random(4) >= 2 || getSelf().has(Trait.bitingwords)) {
                 target.add(c, new Shamed(target));
             }
+        }
+        if (c.getStance().dom(getSelf()) && getSelf().has(Trait.bitingwords)) {
+            int willpowerLoss = Math.max(target.getWillpower().max() / 50, 3) + Global.random(3);
+            target.loseWillpower(c, willpowerLoss, 0, false, " (Biting Words)");
         }
         target.emote(Emotion.angry, 30);
         target.emote(Emotion.nervous, 15);

@@ -21,7 +21,10 @@ public class DarkTalisman extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().canAct() && c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf())
+        return getSelf().canAct() && c.getStance()
+                                      .mobile(getSelf())
+                        && !c.getStance()
+                             .prone(getSelf())
                         && !target.is(Stsflag.enthralled) && getSelf().has(Item.Talisman);
     }
 
@@ -32,7 +35,8 @@ public class DarkTalisman extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        Result result = target.roll(this, c, accuracy(c)) ? Result.normal : Result.miss;
+        Result result = target.is(Stsflag.blinded) ? Result.special
+                        : target.roll(this, c, accuracy(c)) ? Result.normal : Result.miss;
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, result, target));
         } else if (target.human()) {
@@ -62,6 +66,9 @@ public class DarkTalisman extends Skill {
         if (modifier == Result.normal) {
             return "You brandish the dark talisman, which seems to glow with power. The trinket crumbles to dust, but you see the image remain in the reflection of "
                             + target.name() + "'s eyes.";
+        } else if (modifier == Result.special) {
+            return "You hold the talisman in front of " + target.nameOrPossessivePronoun() + " head, but as "
+                            + target.pronoun() + " is currently unable to see, it crumbles uselessly in your hands.";
         } else {
             return "You brandish the dark talisman, which seems to glow with power. The trinket crumbles to dust, with "
                             + target + " seemingly unimpressed.";
@@ -73,6 +80,9 @@ public class DarkTalisman extends Skill {
         if (modifier == Result.normal) {
             return getSelf().name()
                             + " holds up a strange talisman. You feel compelled to look at the thing, captivated by its unholy nature.";
+        } else if (modifier == Result.special) {
+            return "You hear something which sounds like sand spilling onto the floor and a cry of annoyed "
+                            + "frustration from " + getSelf().name + ". What could it have been?";
         } else {
             return getSelf().name()
                             + " holds up a strange talisman. You feel a tiny tug on your consciousness, but it doesn't really affect you much.";
