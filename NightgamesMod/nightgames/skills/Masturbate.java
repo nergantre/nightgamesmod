@@ -10,6 +10,8 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.status.addiction.Addiction;
+import nightgames.status.addiction.AddictionType;
 
 public class Masturbate extends Skill {
     public Masturbate(Character self) {
@@ -76,6 +78,11 @@ public class Masturbate extends Skill {
                 c.write(getSelf(), deal(c, 0, Result.weak, target));
             } else {
                 c.write(getSelf(), deal(c, 0, Result.normal, target));
+                if (Global.getPlayer().checkAddiction(AddictionType.MIND_CONTROL, target)) {
+                    Global.getPlayer().unaddictCombat(AddictionType.MIND_CONTROL, 
+                                    target, Addiction.MED_INCREASE, c);
+                    c.write(getSelf(), "Touching yourself amuses Mara, reducing her control over you.");
+                }
             }
         } else if (target.human()) {
             c.write(getSelf(), receive(c, 0, Result.normal, target));

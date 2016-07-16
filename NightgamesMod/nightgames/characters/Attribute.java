@@ -39,6 +39,9 @@ public enum Attribute {
     }
 
     public static boolean isTrainable(Attribute a, Character self) {
+        if (a == Willpower) {
+            return self.getWillpower().max() + 2 <= self.getMaxWillpowerPossible();
+        }
         return a != Speed && a != Perception && (self.has(Trait.divinity) || a != Divinity);
     }
 }

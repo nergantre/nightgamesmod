@@ -23,6 +23,7 @@ public enum Stance {
     behindfootjob,
     nursing,
     facesitting,
+    smothering,
     engulfed,
     oralpin,
     flowertrap,

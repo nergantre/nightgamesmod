@@ -1,5 +1,6 @@
 package nightgames.characters;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -170,6 +171,15 @@ public class Jewel extends BasePersonality {
 
     @Override
     public String taunt(Combat c) {
+        if (character.has(Trait.bitingwords) && c.getStance().dom(character)) {
+            ArrayList<String> possible = new ArrayList<>(); 
+            Character other = c.getOther(character);
+            possible.add("Jewel looks down at you with a sadistic smirk, <i>\"That's a nice look on you there " + c.getOther(character).getName() + ".\"</i>");
+            possible.add("Shifting her weight a bit to glare into your eyes, Jewel says happily, <i>\"Aha, it looks like you're quiet comfortable there. Maybe you're a natural bottom?\"</i>");
+            if (other.hasBalls()) {
+                possible.add("Jewel cups your vulnerable balls and gives them a light squeeze. <i>\"Worthless boys like you should just give up. Why even try when you end up as my seat every time?\"</i>");
+            }
+        }
         return "Jewel glares at you and squeezes your dick tightly. <i>\"No matter how horny you are, you better give me your best fight. I don't like fucking weaklings.\"</i>";
     }
 

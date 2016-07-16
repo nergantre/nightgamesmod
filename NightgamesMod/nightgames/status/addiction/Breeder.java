@@ -14,11 +14,6 @@ import nightgames.status.Horny;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
 
-/*
- * TODO:
- * Morning descs for all but Magic Milk!
- */
-
 public class Breeder extends Addiction {
 
     public Breeder(Character cause, float magnitude) {
@@ -123,7 +118,9 @@ public class Breeder extends Addiction {
 
     @Override
     public String describeMorning() {
-        return "";
+        return "Of course morning wood is pretty normal, but this morning it just won't go down! No"
+                        + " matter what you do, it just gets worse. There must be <i>something</i> you"
+                        + " can do. Kat is clearly the cause, so maybe she can help?";
     }
 
     @Override
@@ -165,6 +162,7 @@ public class Breeder extends Addiction {
 
     @Override
     public void tick(Combat c) {
+        super.tick(c);
         if (inWithdrawal) {
             affected.arouse(Math.round(magnitude * 5), c, " (Breeding Instincts)");
             affected.emote(Emotion.horny, 20);

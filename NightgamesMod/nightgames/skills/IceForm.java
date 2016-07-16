@@ -33,7 +33,10 @@ public class IceForm extends Skill {
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
         } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
+            if (!target.is(Stsflag.blinded))
+                c.write(getSelf(), receive(c, 0, Result.normal, target));
+            else 
+                printBlinded(c);
         }
         getSelf().add(c, new IceStance(getSelf()));
         return true;

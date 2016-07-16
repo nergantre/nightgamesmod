@@ -67,7 +67,7 @@ public class ZealAddiction extends Addiction {
 
     @Override
     public void tick(Combat c) {
-        combatMagnitude += magnitude / 10.0;
+        super.tick(c);
         if ((c.getStance().en == Stance.neutral || c.getStance().en == Stance.behind)
                         && Global.randomdouble() < Math.min(.5f, combatMagnitude / 2.0)) {
             c.write(Global.getPlayer(), "Overcome by your desire to serve Angel, you get on the ground "
@@ -159,8 +159,9 @@ public class ZealAddiction extends Addiction {
 
     @Override
     public String describeMorning() {
-        // TODO Auto-generated method stub
-        return "";
+        return "An image of Angel in her full angelic splendor is fixed in your mind as you get up. A growing"
+                        + " part of you wants to pray to this new deity; to worship her and support you in the"
+                        + " day to come.";
     }
 
     @Override

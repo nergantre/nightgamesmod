@@ -20,6 +20,7 @@ public class XxxStore extends Store {
         add(Item.Crop);
         add(Item.Tickler);
         add(Item.Strapon);
+        add(Item.Blindfold);
     }
 
     @Override
@@ -141,7 +142,7 @@ public class XxxStore extends Store {
             } else {
                 Global.gui().sale(this, Item.Strapon);
             }
-
+            Global.gui().sale(this, Item.Blindfold);
             displayClothes();
             if (Global.checkFlag(Flag.AliceAvailable)) {
                 Global.gui().message(

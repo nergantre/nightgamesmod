@@ -99,14 +99,14 @@ public class MouthPart extends GenericBodyPart {
             bonus += Global.random(3) + 4;
             opponent.pain(c, 8 + Global.random(10), false, true);
         }
+        if (self.has(Trait.corrupting)) {
+            opponent.add(c, new PartiallyCorrupted(self));
+        }
         if (self.has(Trait.soulsucker)) {
             if (!self.human()) {
                 c.write(opponent,
                                 "<br>You feel faint as her lips touch your body, as if your will to fight is being sucked out through your "
                                                 + target.describe(opponent) + " into her mouth.");
-                if (self.has(Trait.corrupting)) {
-                    opponent.add(c, new PartiallyCorrupted(self));
-                }
             } else {
                 c.write(opponent,
                                 "<br>As your lips touch " + opponent.getName()

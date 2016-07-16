@@ -80,15 +80,4 @@ public final class CustomModifierLoader {
         return objects.stream().map(obj -> CustomModifierLoader.readModifierComponent(obj, loader)).reduce(combiner::combine).orElse(combiner.nullModifier());
     }
 
-    public static void main(String[] args) throws IOException, JsonParseException {
-        InputStream in = ResourceLoader.getFileResourceAsStream("test_modifier.json");
-        JsonObject obj = JsonUtils.rootJson(new InputStreamReader(in)).getAsJsonObject();
-        Clothing.buildClothingTable();
-        Global.buildParser();
-        Global.buildModifierPool();
-        Global.buildActionPool();
-        Global.buildSkillPool(new Player("player"));
-        Modifier mod = readModifier(obj);
-        System.out.println(mod);
-    }
 }

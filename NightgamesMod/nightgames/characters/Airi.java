@@ -70,7 +70,7 @@ public class Airi extends BasePersonality {
         growth.stamina = 1;
         growth.arousal = 1;
         growth.mojo = 2;
-        growth.willpower = 3;
+        growth.willpower = 1.5f;
         growth.bonusStamina = 1;
         growth.bonusArousal = 1;
         growth.bonusMojo = 2;

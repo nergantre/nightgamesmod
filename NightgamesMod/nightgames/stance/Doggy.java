@@ -97,4 +97,9 @@ public class Doggy extends MaledomSexStance {
                         bottom, top));
         return new ReverseCowgirl(bottom, top);
     }
+    
+    @Override
+    public int dominance() {
+        return 4;
+    }
 }

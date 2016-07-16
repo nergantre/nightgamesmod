@@ -94,4 +94,9 @@ public class Behind extends AbstractBehindStance {
     public double pheromoneMod(Character self) {
         return 1.5;
     }
+
+    @Override
+    public int dominance() {
+        return 3;
+    }
 }

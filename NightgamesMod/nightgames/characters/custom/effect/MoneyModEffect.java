@@ -12,7 +12,7 @@ public class MoneyModEffect implements CustomEffect {
 
     @Override
     public boolean execute(Combat c, Character self, Character other) {
-        if (self.money < amount) {
+        if (amount < 0 && -amount > self.money) {
             return false;
         }
         self.modMoney(amount);

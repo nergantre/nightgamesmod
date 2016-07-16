@@ -107,7 +107,7 @@ public abstract class BaseModifier implements Modifier {
     public String toString() {
         return String.format(
                         "Modifier\n\tClothing: %s\n\tItems: %s\n\t"
-                                        + "Status: %s\n\tSkills: %s\n\tActions: %s\n\tCustom: %s\n",
+                                        + "Status: %s\n\tSkills: %s\n\tActions: %s\n\tCustom Effect: %s\n",
                         clothing.toString(), items.toString(), status.toString(), skills.toString(), actions.toString(),
                         custom == EMPTY_CONSUMER ? "no" : "yes");
     }

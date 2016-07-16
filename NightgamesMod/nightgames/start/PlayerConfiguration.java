@@ -9,13 +9,11 @@ public class PlayerConfiguration extends CharacterConfiguration {
 
     private boolean allowsMoreTraits;
     private int attributePoints;
-    
-    public PlayerConfiguration() {}
 
     boolean allowsMoreTraits() {
         return allowsMoreTraits;
     }
-    
+
     int getAttributePoints() {
         return attributePoints;
     }

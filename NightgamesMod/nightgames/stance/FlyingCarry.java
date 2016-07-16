@@ -131,4 +131,9 @@ public class FlyingCarry extends MaledomSexStance {
             return new Cowgirl(bottom, top);
         }
     }
+    
+    @Override
+    public int dominance() {
+        return 5;
+    }
 }

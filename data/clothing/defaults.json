@@ -376,7 +376,7 @@
 	    "lame"
       ],
 	  "layer":3,
- 	  "slots" : ["bottom"],
+ 	  "slots" : ["top"],
 	  "shops" : ["ClothingStore"],
    	  "sex" : ["all"],
 	  "hotness":0.1,

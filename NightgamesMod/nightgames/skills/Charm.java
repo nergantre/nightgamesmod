@@ -8,6 +8,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.status.Charmed;
+import nightgames.status.Stsflag;
 
 public class Charm extends Skill {
     public Charm(Character self) {
@@ -26,6 +27,10 @@ public class Charm extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
+        if (target.human() && target.is(Stsflag.blinded)) {
+            printBlinded(c);
+            return false;
+        }
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
         } else if (target.human()) {

@@ -7,6 +7,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.status.Stsflag;
 
 public class ToggleSlimePussy extends Skill {
 
@@ -71,7 +72,10 @@ public class ToggleSlimePussy extends Skill {
             }
             getSelf().body.add(PussyPart.gooey);
         }
-        c.write(getSelf(), Global.format(msg, getSelf(), target));
+        if (!target.human() || !target.is(Stsflag.blinded))
+            c.write(getSelf(), Global.format(msg, getSelf(), target));
+        else 
+            printBlinded(c);
         return true;
     }
 

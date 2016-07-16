@@ -5,6 +5,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.status.Stsflag;
 
 public class EnergyDrink extends Skill {
 
@@ -32,7 +33,10 @@ public class EnergyDrink extends Skill {
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
         } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, getSelf()));
+            if (!target.is(Stsflag.blinded))
+                c.write(getSelf(), receive(c, 0, Result.normal, target));
+            else 
+                printBlinded(c);
         }
         getSelf().heal(c, Math.max(20, getSelf().getStamina().max() / 2));
         getSelf().buildMojo(c, 20 + Global.random(10));

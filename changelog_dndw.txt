@@ -1,3 +1,45 @@
+12/07/16 - 2.0.6
+-Enthrallers now prioritze tops and bottoms when ordering their thralls to remove clothing, and won't remove strapons.
+-It's no longer possible to use oral skills when riding in Reverse Cowgirl. (Characters with a vaginal tongue can still use Blow)
+-Cassie is more likely to use Nurse, which triggers her addiction
+-Reyka's addiction requires more contact with her mouth to trigger
+-Angel's addiction has a 25% of not triggering when it normally would
+-The rate at which the in-combat effects of addictions grow worse is a bit lower now
+-Running out of stamina gets worse at higher levels, 1 extra turn of Winded for every 10 levels, starting at 20
+-The ai will prefer not to use Spiral Thrust unless the user has very high mojo
+-Fixed a crash in FaceSit because it wrongly assumed NPCs would always have a pussy
+-Relabeled the difficulty options in hopes of making them more clear for new players.
+-The custom modifier framework which I built months ago now actually uses its JSON interface. Check data/customModifiers.json for examples and explanations on how to build your own modifiers. (Modifiers are things like underwear-only or no-violence matches.)
+
+26/06/16 - 2.0.5
+-Added Mara's addiction: Mind Control
+	-After Mara reaches level 20, you'd best make sure she can't look you in the eyes when you cum.
+	-When fighting Mara while controlled, you'll randomly fall into enthrallment. You can lower the odds by acting submissively or masturbating.
+	-When in withdrawal, you'll have a constant drain on your stamina.
+	-While fighting anyone but Mara, you'll have a chance to resist mental effects.
+-Added Blindfolds
+	-When worn, these severly hamper your ability to see what's going on. You won't see the names of moves your opponent uses, can't see their clothing or status, and some moves are completely invisible (like counters, drinking drafts). They also lower your evasion, obviously.
+	-On the flip side, they protect you from things like Charm and EyesOfTempation, and also from Mara's new trick.
+	-You can put these on yourself, put them on opponents, or get them put on you. You can also remove them from yourself and your opponent.
+	-Mara is liable to remove your blindfold if possible, for obvious reasons. The others not so much.
+	-Blindfolds are cheap and can be bought from the XXX Store.
+-Fixed Drowsy having a shorter duration with Personal Inertia rather than longer.
+-Fixed Sweaters being classified as bottoms.
+-All addiction-inspired combat effects now reliably grow worse every turn you're fighting the source of the addiction.
+-Added missing morning descriptions for Angel's, Reyka's and Kat's addictions.
+-Incorporated fixes by Ryplinn:
+	-Setting a level in a start configuration no longer affects money instead.
+	-Genitals are now properly assigned again.
+-Starting traits, if allowed, are actually added in advanced starts.
+
+16/06/16 - 2.0.4
+-Fixed bug where unlocking new competitors allowed the player to end up with a negative amount of money.
+-Merged in fixes to the start configuration mechanism by Ryplinn.
+-Some small fixes.
+
+28/05/16 - 2.0.3.1
+-Fixed trophies not being set correctly for custom starts.
+
 28/05/16 - 2.0.3
 -Added start configurations:
 	-These alter the starting conditions of your game. Pretty much anything can be altered, different characters with different traits, different bodyparts, different attributes, even different names.

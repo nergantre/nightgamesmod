@@ -96,4 +96,9 @@ public class Cowgirl extends FemdomSexStance {
         }
         return new Cowgirl(top, bottom);
     }
+    
+    @Override
+    public int dominance() {
+        return 3;
+    }
 }

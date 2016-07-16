@@ -40,10 +40,11 @@ public abstract class CharacterConfiguration {
         clothing = Optional.empty();
     }
 
-    /** Merges the fields of two CharacterConfigurations into the a new CharacterConfiguration.
-     * @param primaryConfig The primary configuration.
-     * @param secondaryConfig The secondary configuration. Field values will be overridden by values in primaryConfig.
-     * return
+    /**
+     * Merges the fields of two CharacterConfigurations into the a new CharacterConfiguration.
+     *
+     * @param primaryConfig   The primary configuration.
+     * @param secondaryConfig The secondary configuration. Field values will be overridden by values in primaryConfig. return
      */
     protected CharacterConfiguration(CharacterConfiguration primaryConfig, CharacterConfiguration secondaryConfig) {
         this();
@@ -55,6 +56,7 @@ public abstract class CharacterConfiguration {
         level = mergeOptionals(primaryConfig.level, secondaryConfig.level);
         xp = mergeOptionals(primaryConfig.xp, secondaryConfig.xp);
         clothing = mergeOptionals(primaryConfig.clothing, secondaryConfig.clothing);
+        traits = mergeOptionals(primaryConfig.traits, secondaryConfig.traits);
         if (primaryConfig.body.isPresent()) {
             if (secondaryConfig.body.isPresent()) {
                 body = Optional.of(new BodyConfiguration(primaryConfig.body.get(), secondaryConfig.body.get()));
@@ -70,30 +72,32 @@ public abstract class CharacterConfiguration {
         name.ifPresent(n -> base.name = n);
         base.att.putAll(attributes);
         money.ifPresent(m -> base.money = m);
-        level.ifPresent(l -> base.level = l);
-        xp.ifPresent(x -> base.xp = x);
+        level.ifPresent(l -> {
+            base.level = l;
+            modMeters(base, l * 2); // multiplication to compensate for missed daytime gains
+        });
+        xp.ifPresent(x -> base.gainXP(x));
         traits.ifPresent(t -> base.traits = new CopyOnWriteArrayList<>(t));
         if (clothing.isPresent()) {
-            List<Clothing> clothes = clothing.get()
-                            .stream()
-                            .map(Clothing::getByID)
-                            .collect(Collectors.toList());
+            List<Clothing> clothes = clothing.get().stream().map(Clothing::getByID).collect(Collectors.toList());
             base.outfitPlan = new ArrayList<>(clothes);
             base.closet = new HashSet<>(clothes);
             base.change();
         }
         body.ifPresent(b -> b.apply(base.body));
+        base.levelUpIfPossible();
     }
 
-    /** Parses fields common to PlayerConfiguration and NpcConfigurations.
+    /**
+     * Parses fields common to PlayerConfiguration and NpcConfigurations.
+     *
      * @param object The configuration read from the JSON config file.
      */
     protected void parseCommon(JsonObject object) {
         name = JsonUtils.getOptional(object, "name").map(JsonElement::getAsString);
         gender = JsonUtils.getOptional(object, "gender").map(JsonElement::getAsString).map(String::toLowerCase)
                         .map(CharacterSex::valueOf);
-        traits = JsonUtils.getOptionalArray(object, "traits").map(array -> JsonUtils
-                                        .collectionFromJson(array, Trait.class));
+        traits = JsonUtils.getOptionalArray(object, "traits").map(array -> JsonUtils.collectionFromJson(array, Trait.class));
         body = JsonUtils.getOptionalObject(object, "body").map(BodyConfiguration::parse);
         clothing = JsonUtils.getOptionalArray(object, "clothing").map(JsonUtils::stringsFromJson);
         money = JsonUtils.getOptional(object, "money").map(JsonElement::getAsInt);
@@ -101,5 +105,22 @@ public abstract class CharacterConfiguration {
         xp = JsonUtils.getOptional(object, "xp").map(JsonElement::getAsInt);
         attributes = JsonUtils.getOptionalObject(object, "attributes")
                         .map(obj -> JsonUtils.mapFromJson(obj, Attribute.class, Integer.class)).orElse(new HashMap<>());
+    }
+
+    private static void modMeters(Character ch, int levels) {
+        Growth gr = ch.human() ? ((Player) ch).getGrowth() : ((BasePersonality) ((NPC) ch).ai).getGrowth();
+        boolean hard = Global.checkFlag(Flag.hardmode);
+        for (int i = 0; i < levels; i++) {
+            ch.getStamina().gain(gr.stamina);
+            ch.getArousal().gain(gr.arousal);
+            ch.getMojo().gain(gr.mojo);
+            ch.getWillpower().gain(gr.willpower);
+            if (hard) {
+                ch.getStamina().gain(gr.bonusStamina);
+                ch.getArousal().gain(gr.bonusArousal);
+                ch.getMojo().gain(gr.bonusMojo);
+                ch.getWillpower().gain(gr.bonusWillpower);
+            }
+        }
     }
 }

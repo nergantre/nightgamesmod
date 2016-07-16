@@ -35,7 +35,7 @@ public class PullOut extends Skill {
                         || c.getStance().inserted() && c.getStance().dom(getSelf())) && !blockedByAddiction(getSelf());
     }
 
-    static boolean blockedByAddiction(Character user) {
+    public static boolean blockedByAddiction(Character user) {
         if (!user.human()) {
             return false;
         }

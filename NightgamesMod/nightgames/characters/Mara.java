@@ -72,6 +72,7 @@ public class Mara extends BasePersonality {
         growth.addTrait(12, Trait.strongwilled);
         growth.addTrait(15, Trait.pussyTraining1);
         growth.addTrait(18, Trait.tight);
+        growth.addTrait(20, Trait.mindcontroller);
         growth.addTrait(21, Trait.tongueTraining1);
         growth.addTrait(24, Trait.limbTraining2);
         growth.addTrait(27, Trait.skeptical);

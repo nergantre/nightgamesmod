@@ -92,4 +92,9 @@ public class Mount extends AbstractFacingStance {
     public double pheromoneMod(Character self) {
         return 3;
     }
+    
+    @Override
+    public int dominance() {
+        return 2;
+    }
 }

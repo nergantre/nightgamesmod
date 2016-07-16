@@ -2,6 +2,7 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -15,7 +16,9 @@ public class LevelDrain extends Drain {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.get(Attribute.Dark) >= 20;
+        return user.get(Attribute.Dark) >= 20 && !user.has(Trait.leveldrainer);
+        //The second clause may seem incorrect, but it isn't. Characters with this
+        //trait drain levels passively and cannot also use this skill.
     }
 
     @Override

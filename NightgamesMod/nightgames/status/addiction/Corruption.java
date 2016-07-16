@@ -35,7 +35,7 @@ public class Corruption extends Addiction {
 
     @Override
     public void tick(Combat c) {
-        aggravateCombat(Addiction.LOW_INCREASE);
+        super.tick(c);
         Severity sev = getCombatSeverity();
         int amt = sev.ordinal() * 2;
         List<Abuff> buffs = new ArrayList<>();
@@ -193,8 +193,9 @@ public class Corruption extends Addiction {
 
     @Override
     public String describeMorning() {
-        // TODO Auto-generated method stub
-        return "";
+        return "Something is churning inside of you this morning. It feels both wonderful and disgusting"
+                        + " at the same time. You think you hear an echo of a whisper as you go about your"
+                        + " daily routine, pushing you to evil acts.";
     }
 
     @Override

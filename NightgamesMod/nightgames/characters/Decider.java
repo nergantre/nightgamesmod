@@ -113,8 +113,8 @@ public class Decider {
                 addAllSkillsWithPriority(priority, stripping, 2.0f);
                 addAllSkillsWithPriority(priority, pleasure, 2.0f);
                 addAllSkillsWithPriority(priority, debuff, 2.0f);
+                addAllSkillsWithPriority(priority, damage, 2.0f);
                 addAllSkillsWithPriority(priority, summoning, 1.0f);
-                addAllSkillsWithPriority(priority, damage, 1.0f);
                 addAllSkillsWithPriority(priority, misc, 1f);
                 break;
         }
