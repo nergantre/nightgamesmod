@@ -156,7 +156,7 @@ public class LeechEnergy extends Skill {
         if (modifier == Result.miss) {
             BodyPart selfPart = getSelf().body.getRandom("tentacles");
             return "You try to drain energy with your " + selfPart.describe(getSelf()) + ", but " + target.name()
-                            + " dodges out of the way";
+                            + " dodges out of the way.";
         }
         return "";
     }
@@ -167,7 +167,7 @@ public class LeechEnergy extends Skill {
 
         if (modifier == Result.miss) {
             return getSelf().name() + " tries to drain energy with her " + selfPart.describe(getSelf())
-                            + ", but you dodge out of the way";
+                            + ", but you dodge out of the way.";
         }
         return "";
     }
