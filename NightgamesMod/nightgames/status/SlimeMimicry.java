@@ -40,7 +40,7 @@ public class SlimeMimicry extends DurationStatus {
 
     @Override
     public String describe(Combat c) {
-        return Global.format("{self:SUBJECT} is mimicking a %s.", affected, c.getOther(affected), mimickedName);
+    	return Global.format("{self:SUBJECT-ACTION:are|is} mimicking a %s.", affected, c.getOther(affected), mimickedName);
     }
 
     @Override
