@@ -97,7 +97,7 @@ public class TailPeg extends Skill {
                 }
                 if (shamed) {
                     c.write(getSelf(), "The shame of having her ass violated by you has destroyed " + target.getName()
-                                    + " confidence.");
+                                    + "'s confidence.");
                 }
             }
             if (c.getStance().havingSex()) {
