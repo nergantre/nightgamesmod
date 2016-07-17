@@ -1,5 +1,7 @@
 package nightgames.global;
 
+import com.google.gson.JsonObject;
+import nightgames.characters.*;
 import nightgames.characters.Character;
 import org.hamcrest.*;
 import org.junit.Before;
@@ -36,6 +38,16 @@ public class SaveAndLoadTest {
             assertThat(reloaded, CharacterStatMatcher.statsMatch(player));
         }
         assertThat(reloadedData, equalTo(firstLoadData));
+    }
+
+    @Test public void testSaveAndLoadAffection() throws Exception {
+        BlankPersonality beforeNPC = new BlankPersonality("Affectionate", 1);
+        Player human = new Player("testPlayer");
+        beforeNPC.character.gainAffection(human, 10);
+        JsonObject npcJson = beforeNPC.character.save();
+        BlankPersonality afterNPC = new BlankPersonality("AffectionateLoad", 1);
+        afterNPC.character.load(npcJson);
+        assertThat(afterNPC.character.getAffections(), equalTo(beforeNPC.character.getAffections()));
     }
 
     private static class CharacterStatMatcher extends TypeSafeMatcher<Character> {

@@ -1245,7 +1245,6 @@ public abstract class Character extends Observable implements Cloneable {
         return human() || Global.isDebugOn(DebugFlags.DEBUG_SKILL_CHOICES) && c.getOther(this).human();
     }
 
-    @SuppressWarnings("unchecked")
     public JsonObject save() {
         JsonObject saveObj = new JsonObject();
         saveObj.addProperty("name", name);
@@ -2153,6 +2152,10 @@ public abstract class Character extends Observable implements Cloneable {
         }
     }
 
+    public Map<Character, Integer> getAffections() {
+        return Collections.unmodifiableMap(affections);
+    }
+
     public int getAffection(Character other) {
         if (other == null) {
             System.err.println("Other is null");
@@ -2423,7 +2426,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public String toString() {
-        return name;
+        return getType();
     }
 
     public boolean taintedFluids() {

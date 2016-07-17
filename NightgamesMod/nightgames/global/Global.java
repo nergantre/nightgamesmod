@@ -597,7 +597,12 @@ public class Global {
             }
         }
         List<Character> participants = new ArrayList<>();
+        // Disable characters flagged as disabled
         for (Character c : players) {
+            // Disabling the player wouldn't make much sense, and there's no PlayerDisabled flag.
+            if (c.getType().equals("Player")) {
+                continue;
+            }
             Flag disabledFlag = null;
             try {
                 disabledFlag = Flag.valueOf(c.getType() + "Disabled");
