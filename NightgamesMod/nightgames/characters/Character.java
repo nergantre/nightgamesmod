@@ -1725,7 +1725,9 @@ public abstract class Character extends Observable implements Cloneable {
         if (opponent.has(Trait.leveldrainer) && ((c.getStance()
                                                   .penetratedBy(opponent, this)
                         && !has(Trait.strapped)) || c.getStance().en == Stance.trib)) {
-            if (Global.random(10) < 4) {
+            if (Global.random(10) < 8 && getLevel() > 1 && getLevel() <= opponent.getLevel()
+                            && !c.getCombatantData(opponent).getBooleanFlag("has_drained")) {
+                c.getCombatantData(opponent).toggleFlagOn("has_drained", true);
                 if (c.getStance().en != Stance.trib)
                     c.write(opponent, Global.capitalizeFirstLetter(String.format("%s %s contracts around %s %s, reinforcing"
                             + " %s orgasm and drawing upon %s very strength and experience. Once it's over, %s"
@@ -1739,9 +1741,9 @@ public abstract class Character extends Observable implements Cloneable {
                                 opponent.nameOrPossessivePronoun(), opponent.body.getRandomPussy().describe(opponent),
                                 nameOrPossessivePronoun(), body.getRandomPussy().describe(this), possessivePronoun(),
                                 possessivePronoun())));
-                int xpStolen = 95 + 5 * Math.min(opponent.getLevel(), getLevel());
+                int xpStolen = getXP();
                 c.write(dong());
-                opponent.gainXP(xpStolen);
+                opponent.gainXP(Math.min(opponent.getXPReqToNextLevel(), xpStolen));
             } else {
                 c.write(opponent, Global.capitalizeFirstLetter(String.format("%s %s pulses, but fails to"
                                 + " draw in %s experience.", opponent.nameOrPossessivePronoun(), 

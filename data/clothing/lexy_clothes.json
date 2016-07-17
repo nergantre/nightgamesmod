@@ -9,7 +9,7 @@
 		"nursegloves"
       ],
       "layer":1,
-	  "slots" : ["bottom"],
+	  "slots" : ["arms"],
 	  "shops" : ["Boutique"],
 	  "sex" : ["all"],
 	  "hotness":0.4,
