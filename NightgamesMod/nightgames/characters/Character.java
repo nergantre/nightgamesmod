@@ -1478,7 +1478,8 @@ public abstract class Character extends Observable implements Cloneable {
 
         loadClothingFromArr(obj, closet, "closet");
         traits = new CopyOnWriteArrayList<>(JSONUtils.loadEnumsFromArr(obj, "traits", Trait.class));
-        traits.remove(Trait.slime);
+        if (getType().equals("Airi"))
+            traits.remove(Trait.slime);
         body = Body.load((JSONObject) obj.get("body"), this);
         {
             JSONObject attObj = (JSONObject) obj.get("attributes");

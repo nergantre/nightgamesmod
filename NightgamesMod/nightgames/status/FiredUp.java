@@ -19,6 +19,7 @@ public class FiredUp extends DurationStatus {
         super("Fired Up", affected, 2);
         this.part = part;
         stack = 1;
+        this.other = other;
         flag(Stsflag.firedup);
         flag(Stsflag.purgable);
     }

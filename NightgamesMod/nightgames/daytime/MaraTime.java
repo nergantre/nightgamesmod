@@ -207,7 +207,7 @@ public class MaraTime extends BaseNPCTime {
                                       + "<i>not</i> like the sound of that, but it's not as if you can actually do anything about it. You are "
                                       + "going to have some serious words with her once she lets you speak again. Mara walks away into another room"
                                       + " briefly and when she comes back, that strange device she uses at night is strapped to one arm, and she's"
-                                      + " holding something else in the other. It looks suspiciously like a fleshlight, but it has a weird attatchment"
+                                      + " holding something else in the other. It looks suspiciously like a fleshlight, but it has a weird attachment"
                                       + " at one end. <i>\"I just figured, since I'm kinda raping you anyway, I might as well get a little testing in."
                                       + " This thing is not </i>entirely<i> legal, but you'll keep quiet, right? Oh, right. So just let me know how it "
                                       + "feels.\"</i> The weird attatchment seems to be a connector, as she plugs it into her device. Mara brandishes her"

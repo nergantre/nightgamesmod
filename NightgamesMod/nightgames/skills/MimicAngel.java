@@ -71,7 +71,7 @@ public class MimicAngel extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return "You shift your slime and start mimicking Cassie's witch form.";
+        return "You shift your slime and start mimicking Angel's... angel form.";
     }
 
     @Override
@@ -81,7 +81,7 @@ public class MimicAngel extends Skill {
                         + "as if someone dumped a bucket of bleach on it. "
                         + "The sphere unwraps itself in layers, with each layer forming a pair of pristine translucent gelatinous feathered wings. "
                         + "{self:NAME} {self:reflective} stands up in the center, giving you a haughty look. "
-                        + "Looks like {self:NAME} is mimicking Angel's er... angel form!.", getSelf(), target);
+                        + "Looks like {self:NAME} is mimicking Angel's er... angel form!", getSelf(), target);
     }
 
 }
