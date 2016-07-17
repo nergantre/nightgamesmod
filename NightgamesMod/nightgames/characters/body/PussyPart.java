@@ -419,7 +419,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
         }
         if (isType("pussy") && self.has(Trait.vaginaltongue) && target.isType("cock")
                         && !opponent.hasStatus(Stsflag.cockbound)) {
-            opponent.add(c, new CockBound(opponent, 5, self.name() + "'s pussy-tongue"));
+            opponent.add(c, new CockBound(opponent, 5, self.nameOrPossessivePronoun() + " pussy-tongue"));
             c.write(self, self.nameOrPossessivePronoun() + " long sinuous vaginal tongue wraps around "
                             + opponent.nameOrPossessivePronoun() + " " + target.describe(opponent)
                             + ", preventing any escape.\n");
