@@ -256,7 +256,7 @@ public class Informant extends Activity {
                                       + "you to hand over an unreasonable amount of money for Aesop's information. <i>\"You once asked me about an address and a password for the black market. I "
                                       + "gave you the address. Now I think you're ready for the password. The black market stocks some rare and unusual items for their prefered customers. Tell "
                                       + "them Callisto sent you and they'll make them available for you. I do feel compelled to warn you that some of the shit they sell there is pretty dangerous. "
-                                      + "I don't mean your life is at risk, nothing that serious, but be careful not to lose your humanity. Sometimes power really can change a person.\"/<i>");
+                                      + "I don't mean your life is at risk, nothing that serious, but be careful not to lose your humanity. Sometimes power really can change a person.\"</i>");
                 Global.flag(Flag.blackMarketPlus);
                 player.money -= 2500;
                 Global.gui()
