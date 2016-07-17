@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import nightgames.characters.Character;
-import nightgames.requirement.Requirement;
+import nightgames.requirements.Requirement;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 

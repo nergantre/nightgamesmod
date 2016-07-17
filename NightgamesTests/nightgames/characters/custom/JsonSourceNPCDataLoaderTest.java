@@ -12,7 +12,7 @@ import nightgames.json.JsonUtils;
 import nightgames.items.Item;
 import nightgames.items.ItemAmount;
 import nightgames.items.clothing.Clothing;
-import nightgames.requirement.*;
+import nightgames.requirements.*;
 import nightgames.skills.Skill;
 import nightgames.skills.ThrowDraft;
 import nightgames.stance.Stance;
@@ -48,7 +48,6 @@ public class JsonSourceNPCDataLoaderTest {
     @Before public void setUp() throws Exception {
         Path file = new File("NightgamesTests/nightgames/characters/custom/test_custom_npc.json").toPath();
         npcJSON = JsonUtils.rootJson(file).getAsJsonObject();
-
     }
 
     @Test public void testLoadBasicNPCData() throws Exception {
@@ -74,11 +73,14 @@ public class JsonSourceNPCDataLoaderTest {
         assertThat(stats, SamePropertyValuesAs.samePropertyValuesAs(expectedStats));
     }
 
-    @Test public void testLoadRequirement() throws Exception {
-        List<Requirement> reqs = new ArrayList<>();
-        JsonObject recruitmentJSON = npcJSON.getAsJsonObject("recruitment");
-        JsonObject reqsJSON = recruitmentJSON.getAsJsonObject("requirements");
-        JsonSourceNPCDataLoader.loadRequirement(reqsJSON, reqs);
+    @Test public void testLoadRecruitment() throws Exception {
+        JsonObject recruitJSON = npcJSON.getAsJsonObject("recruitment");
+        RecruitmentData recruitment = new RecruitmentData();
+        JsonSourceNPCDataLoader.loadRecruitment(recruitJSON, recruitment);
+
+        assertThat(recruitment.action, equalTo("Samantha:$1500"));
+        assertThat(recruitment.introduction, equalTo("So, I know this girl..."));
+        assertThat(recruitment.confirm, equalTo("Awesome"));
 
         List<Requirement> expectedReqs = new ArrayList<>();
         expectedReqs.add(new LevelRequirement(10));
@@ -90,17 +92,8 @@ public class JsonSourceNPCDataLoaderTest {
         orList.add(new AndRequirement(andList));
         expectedReqs.add(new OrRequirement(orList));
 
-        assertThat(reqs, IsCollectionContaining.hasItems(expectedReqs.toArray(new Requirement[] {})));
-    }
-
-    @Test public void testLoadRecruitment() throws Exception {
-        JsonObject recruitJSON = npcJSON.getAsJsonObject("recruitment");
-        RecruitmentData recruitment = new RecruitmentData();
-        JsonSourceNPCDataLoader.loadRecruitment(recruitJSON, recruitment);
-
-        assertEquals("Samantha:$1500", recruitment.action);
-        assertEquals("So, I know this girl...", recruitment.introduction);
-        assertEquals("Awesome", recruitment.confirm);
+        assertThat(recruitment.requirement,
+                        IsCollectionContaining.hasItems(expectedReqs.toArray(new Requirement[] {})));
     }
 
     @Test public void testLoadEffects() throws Exception {
@@ -125,7 +118,7 @@ public class JsonSourceNPCDataLoaderTest {
         JsonArray initialJSON = itemsJSON.getAsJsonArray("initial");
         ItemAmount item = JsonSourceNPCDataLoader.readItem(initialJSON.get(0).getAsJsonObject());
 
-        assertThat(item, is(new ItemAmount(Item.Strapon, 1)));
+        assertThat(item, equalTo(new ItemAmount(Item.Strapon, 1)));
 
     }
 

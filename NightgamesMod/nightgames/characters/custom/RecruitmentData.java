@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nightgames.characters.custom.effect.CustomEffect;
-import nightgames.requirement.Requirement;
+import nightgames.requirements.Requirement;
 
 public class RecruitmentData {
     public String introduction;

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import nightgames.characters.custom.effect.CustomEffect;
-import nightgames.requirement.Requirement;
+import nightgames.requirements.Requirement;
 import nightgames.items.Item;
 
 public class TransformationOption {

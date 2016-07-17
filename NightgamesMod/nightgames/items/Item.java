@@ -294,8 +294,11 @@ public enum Item implements Loot {
         return effect;
     }
 
-    @Override
-    public String getID() {
+    @Override public String getID() {
         return name();
+    }
+
+    public ItemAmount amount(int amount) {
+        return new ItemAmount(this, amount);
     }
 }

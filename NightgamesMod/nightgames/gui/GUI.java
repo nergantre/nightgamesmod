@@ -65,7 +65,7 @@ public class GUI extends JFrame implements Observer {
      * 
      */
     private static final long serialVersionUID = 451431916952047183L;
-    protected Combat combat;
+    public Combat combat;
     private ArrayList<ArrayList<SkillButton>> skills;
     JPanel commandPanel;
     private JTextPane textPane;

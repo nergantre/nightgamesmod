@@ -16,15 +16,15 @@ import nightgames.characters.body.ModdedCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
-import nightgames.requirement.BodyPartRequirement;
+import nightgames.requirements.BodyPartRequirement;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.Loot;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
-import static nightgames.requirement.RequirementShortcuts.bodypart;
-import static nightgames.requirement.RequirementShortcuts.not;
+import static nightgames.requirements.RequirementShortcuts.bodypart;
+import static nightgames.requirements.RequirementShortcuts.not;
 
 public class ReykaTime extends BaseNPCTime {
     public ReykaTime(Character player) {

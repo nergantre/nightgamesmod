@@ -477,7 +477,7 @@ public class Global {
         if (customModFile.canRead()) {
             try {
                 JsonArray array = JsonUtils.rootJson(Files.newBufferedReader(customModFile.toPath())).getAsJsonArray();
-                for (JsonElement element: array) {
+                for (JsonElement element : array) {
                     JsonObject object;
                     try {
                         object = element.getAsJsonObject();
@@ -485,17 +485,16 @@ public class Global {
                         System.out.println("Error loading custom modifiers: Non-object element in root array");
                         continue;
                     }
-                    CustomModifierLoader.readModifier(object);
+                    Modifier mod = CustomModifierLoader.readModifier(object);
                     if (!mod.name().equals("DEMO"))
                         modifierPool.add(mod);
                     if (isDebugOn(DebugFlags.DEBUG_LOADING))
                         System.out.println("Loaded custom modifier: " + mod.name());
                 }
-            }// TODO: handle these better
-            /*catch (Exception e) {
+            } catch (IOException e) {
                 System.out.println("Error loading custom modifiers: " + e);
                 e.printStackTrace();
-            }*/
+            }
         }
         if (isDebugOn(DebugFlags.DEBUG_LOADING))
             System.out.println("Done loading modifiers");

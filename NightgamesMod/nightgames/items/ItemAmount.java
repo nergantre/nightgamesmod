@@ -9,6 +9,10 @@ public class ItemAmount {
         this.amount = amount;
     }
 
+    public ItemAmount(String name, int amount) {
+        this(Item.valueOf(name), amount);
+    }
+
     @Override public boolean equals(Object o) {
         if (this == o)
             return true;

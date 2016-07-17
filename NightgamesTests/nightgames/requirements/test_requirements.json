@@ -1,0 +1,53 @@
+{
+  "good": {
+    "anal": "",
+    "and": {
+      "bodypart": "hands",
+      "not": {
+        "or": {
+          "reverse": {
+            "prone": ""
+          },
+          "orgasms": 12
+        }
+      },
+      "attribute": {
+        "att": "Power",
+        "amount": 3
+      }
+    },
+    "attribute": {
+      "att": "Seduction",
+      "amount": 50
+    },
+    "bodypart": "tail",
+    "dom": "",
+    "duration": 15,
+    "inserted": "",
+    "item": {
+      "item": "Dildo2",
+      "amount": 1
+    },
+    "level": 20,
+    "mood": "nervous",
+    "none": "",
+    "not": {
+      "trait": "graceful"
+    },
+    "or": {
+      "mood": "horny",
+      "orgasms": 0
+    },
+    "position": "FlyingCarry",
+    "prone": "",
+    "random": 0.75,
+    "result": "upgrade",
+    "status": "wary",
+    "sub": "",
+    "trait": "slime",
+    "winning": ""
+  },
+  "bad": {
+    "foo": "bar"
+  }
+}

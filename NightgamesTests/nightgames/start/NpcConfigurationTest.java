@@ -94,7 +94,8 @@ public class NpcConfigurationTest {
         NpcConfiguration mergedConfig = new NpcConfiguration(angelConfig, startConfig.npcCommon);
         TestAngel angel = new TestAngel(Optional.of(angelConfig), Optional.of(startConfig.npcCommon));
         Clothing[] expectedClothing =
-                        mergedConfig.clothing.orElseThrow(() -> new AssertionError("Merged npc clothing config has no")).stream().map(Clothing::getByID).toArray(Clothing[]::new);
+                        mergedConfig.clothing.orElseThrow(() -> new AssertionError("Merged npc clothing config has no"))
+                                        .stream().map(Clothing::getByID).toArray(Clothing[]::new);
         assertThat(angel.character.outfit.getEquipped(), hasItems(expectedClothing));
     }
 }

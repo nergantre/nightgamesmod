@@ -16,10 +16,10 @@ import com.google.gson.*;
 import nightgames.Resources.ResourceLoader;
 import nightgames.characters.Character;
 import nightgames.json.JsonUtils;
-import nightgames.requirement.Requirement;
+import nightgames.requirements.Requirement;
 import nightgames.combat.Combat;
 
-import static nightgames.requirement.RequirementShortcuts.*;
+import static nightgames.requirements.RequirementShortcuts.*;
 
 @SuppressWarnings("unchecked")
 public enum CommentSituation {
@@ -42,27 +42,20 @@ public enum CommentSituation {
     ANAL_SUB_CATCH_LOSE(2, rev(inserted()), anal(), sub(), rev(winning())),
 
     // Stances
-    BEHIND_DOM_WIN(1, stance("behind"), dom(), winning()),
-    BEHIND_DOM_LOSE(1, stance("behind"), dom(), rev(winning())),
-    BEHIND_SUB_WIN(1, stance("behind"), sub(), winning()),
-    BEHIND_SUB_LOSE(1, stance("behind"), sub(), rev(winning())),
-    SIXTYNINE_DOM_WIN(1, stance("sixnine"), dom(), winning()),
-    SIXTYNINE_DOM_LOSE(1, stance("sixnine"), dom(), rev(winning())),
-    SIXTYNINE_SUB_WIN(1, stance("sixnine"), sub(), winning()),
-    SIXTYNINE_SUB_LOSE(1, stance("sixnine"), sub(), rev(winning())),
-    MOUNT_DOM_WIN(1, stance("mount"), dom(), winning()),
-    MOUNT_DOM_LOSE(1, stance("mount"), dom(), rev(winning())),
-    MOUNT_SUB_WIN(1, stance("mount"), sub(), winning()),
-    MOUNT_SUB_LOSE(1, stance("mount"), sub(), rev(winning())),
-    NURSING_DOM_WIN(1, stance("nursing"), dom(), winning()),
-    NURSING_DOM_LOSE(1, stance("nursing"), dom(), rev(winning())),
-    FACESIT_DOM_WIN(1, stance("facesitting"), dom(), winning()),
-    FACESIT_DOM_LOSE(1, stance("facesitting"), dom(), rev(winning())),
-    PIN_DOM_WIN(1, stance("pin"), dom(), winning()),
-    PIN_DOM_LOSE(1, stance("pin"), dom(), rev(winning())),
-    PIN_SUB_WIN(1, stance("pin"), sub(), winning()),
-    PIN_SUB_LOSE(1, stance("pin"), sub(), rev(winning())),
-    ENGULFED_DOM(1, stance("engulfed"), dom()),
+    BEHIND_DOM_WIN(1, position("behind"), dom(), winning()), BEHIND_DOM_LOSE(1, position("behind"), dom(),
+                    rev(winning())), BEHIND_SUB_WIN(1, position("behind"), sub(), winning()), BEHIND_SUB_LOSE(1,
+                    position("behind"), sub(), rev(winning())), SIXTYNINE_DOM_WIN(1, position("sixnine"), dom(),
+                    winning()), SIXTYNINE_DOM_LOSE(1, position("sixnine"), dom(), rev(winning())), SIXTYNINE_SUB_WIN(1,
+                    position("sixnine"), sub(), winning()), SIXTYNINE_SUB_LOSE(1, position("sixnine"), sub(),
+                    rev(winning())), MOUNT_DOM_WIN(1, position("mount"), dom(), winning()), MOUNT_DOM_LOSE(1,
+                    position("mount"), dom(), rev(winning())), MOUNT_SUB_WIN(1, position("mount"), sub(),
+                    winning()), MOUNT_SUB_LOSE(1, position("mount"), sub(), rev(winning())), NURSING_DOM_WIN(1,
+                    position("nursing"), dom(), winning()), NURSING_DOM_LOSE(1, position("nursing"), dom(),
+                    rev(winning())), FACESIT_DOM_WIN(1, position("facesitting"), dom(), winning()), FACESIT_DOM_LOSE(1,
+                    position("facesitting"), dom(), rev(winning())), PIN_DOM_WIN(1, position("pin"), dom(),
+                    winning()), PIN_DOM_LOSE(1, position("pin"), dom(), rev(winning())), PIN_SUB_WIN(1, position("pin"),
+                    sub(), winning()), PIN_SUB_LOSE(1, position("pin"), sub(), rev(winning())), ENGULFED_DOM(1,
+                    position("engulfed"), dom()),
 
     // Statuses
     SELF_BOUND(0, status("bound")),

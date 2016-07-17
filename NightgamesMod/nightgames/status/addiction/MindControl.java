@@ -2,7 +2,7 @@ package nightgames.status.addiction;
 
 import java.util.Optional;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -10,11 +10,10 @@ import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.global.JSONUtils;
+import nightgames.json.JsonUtils;
 import nightgames.stance.Anal;
 import nightgames.stance.AnalCowgirl;
 import nightgames.stance.Position;
-import nightgames.stance.Stance;
 import nightgames.status.Enthralled;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
@@ -232,10 +231,9 @@ public class MindControl extends Addiction {
         return new MindControl(newOther, magnitude);
     }
 
-    @Override
-    public Status loadFromJSON(JSONObject obj) {
-        return new MindControl(Global.getCharacterByType(JSONUtils.readString(obj, "cause")),
-                        (float) JSONUtils.readInteger(obj, "magnitude"));
+    @Override public Status loadFromJson(JsonObject obj) {
+        return new MindControl(Global.getCharacterByType(obj.get("cause").getAsString()),
+                        obj.get("magnitude").getAsInt());
     }
 
     public static class Result {
@@ -462,13 +460,11 @@ public class MindControl extends Addiction {
             return new MindControlWithdrawal();
         }
 
-        @Override
-        public JSONObject saveToJSON() {
+        @Override public JsonObject saveToJson() {
             return null;
         }
 
-        @Override
-        public Status loadFromJSON(JSONObject obj) {
+        @Override public Status loadFromJson(JsonObject obj) {
             return null;
         }
 

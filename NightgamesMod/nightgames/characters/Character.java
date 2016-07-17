@@ -3098,4 +3098,6 @@ public abstract class Character extends Observable implements Cloneable {
         int result = getType().hashCode();
         return result * 31 + name.hashCode();
     }
+
+    public abstract Growth getGrowth();
 }

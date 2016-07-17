@@ -5,7 +5,7 @@ import java.util.List;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Trait;
-import nightgames.requirement.TraitRequirement;
+import nightgames.requirements.TraitRequirement;
 import nightgames.nskills.effects.SkillEffectBuilder;
 import nightgames.nskills.effects.rolls.BasicNumberRoll;
 import nightgames.nskills.effects.rolls.ConstantRoll;

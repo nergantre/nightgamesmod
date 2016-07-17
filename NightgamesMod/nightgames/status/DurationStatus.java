@@ -2,7 +2,7 @@ package nightgames.status;
 
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.requirement.DurationRequirement;
+import nightgames.requirements.DurationRequirement;
 import nightgames.combat.Combat;
 
 public abstract class DurationStatus extends Status {
@@ -19,16 +19,16 @@ public abstract class DurationStatus extends Status {
     }
 
     public int getDuration() {
-        return req.duration;
+        return req.remaining();
     }
 
     public void setDuration(int duration) {
-        req.duration = duration;
+        req.reset(duration);
     }
 
     @Override
     public int regen(Combat c) {
-        req.tick(1);
+        req.tick();
         return 0;
     }
 

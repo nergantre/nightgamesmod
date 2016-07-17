@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nightgames.characters.Character;
-import nightgames.requirement.Requirement;
+import nightgames.requirements.Requirement;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 

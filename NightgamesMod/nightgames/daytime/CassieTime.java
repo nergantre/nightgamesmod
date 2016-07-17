@@ -12,7 +12,7 @@ import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.body.MouthPussyPart;
 import nightgames.characters.body.PussyPart;
-import nightgames.requirement.BodyPartRequirement;
+import nightgames.requirements.BodyPartRequirement;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;

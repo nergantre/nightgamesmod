@@ -8,7 +8,7 @@ import nightgames.characters.Emotion;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 
-import static nightgames.requirement.RequirementShortcuts.eitherinserted;
+import static nightgames.requirements.RequirementShortcuts.eitherinserted;
 
 public class LegLocked extends Status {
     private float toughness;

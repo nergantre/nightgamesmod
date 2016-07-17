@@ -11,7 +11,7 @@ import com.google.gson.JsonObject;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
-import nightgames.requirement.Requirement;
+import nightgames.requirements.Requirement;
 import nightgames.combat.Combat;
 import nightgames.skills.Skill;
 

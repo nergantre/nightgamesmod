@@ -7,10 +7,10 @@ import java.util.stream.Collectors;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import nightgames.characters.Attribute;
-import nightgames.characters.CharacterSex;
+import nightgames.characters.*;
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
+import nightgames.global.Flag;
+import nightgames.global.Global;
 import nightgames.json.JsonUtils;
 import nightgames.items.clothing.Clothing;
 
@@ -107,19 +107,19 @@ public abstract class CharacterConfiguration {
                         .map(obj -> JsonUtils.mapFromJson(obj, Attribute.class, Integer.class)).orElse(new HashMap<>());
     }
 
-    private static void modMeters(Character ch, int levels) {
-        Growth gr = ch.human() ? ((Player) ch).getGrowth() : ((BasePersonality) ((NPC) ch).ai).getGrowth();
+    private static void modMeters(Character character, int levels) {
+        Growth growth = character.getGrowth();
         boolean hard = Global.checkFlag(Flag.hardmode);
         for (int i = 0; i < levels; i++) {
-            ch.getStamina().gain(gr.stamina);
-            ch.getArousal().gain(gr.arousal);
-            ch.getMojo().gain(gr.mojo);
-            ch.getWillpower().gain(gr.willpower);
+            character.getStamina().gain(growth.stamina);
+            character.getArousal().gain(growth.arousal);
+            character.getMojo().gain(growth.mojo);
+            character.getWillpower().gain(growth.willpower);
             if (hard) {
-                ch.getStamina().gain(gr.bonusStamina);
-                ch.getArousal().gain(gr.bonusArousal);
-                ch.getMojo().gain(gr.bonusMojo);
-                ch.getWillpower().gain(gr.bonusWillpower);
+                character.getStamina().gain(growth.bonusStamina);
+                character.getArousal().gain(growth.bonusArousal);
+                character.getMojo().gain(growth.bonusMojo);
+                character.getWillpower().gain(growth.bonusWillpower);
             }
         }
     }

@@ -8,8 +8,8 @@ import nightgames.characters.Emotion;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 
-import static nightgames.requirement.RequirementShortcuts.inserted;
-import static nightgames.requirement.RequirementShortcuts.rev;
+import static nightgames.requirements.RequirementShortcuts.inserted;
+import static nightgames.requirements.RequirementShortcuts.rev;
 
 public class Knotted extends Status {
 

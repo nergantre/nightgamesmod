@@ -8,7 +8,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 
-import static nightgames.requirement.RequirementShortcuts.eitherinserted;
+import static nightgames.requirements.RequirementShortcuts.eitherinserted;
 
 public class TailFucked extends Status {
     private String target;

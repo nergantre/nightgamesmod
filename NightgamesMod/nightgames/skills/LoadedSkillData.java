@@ -3,7 +3,7 @@ package nightgames.skills;
 import java.util.List;
 
 import nightgames.characters.custom.CustomStringEntry;
-import nightgames.requirement.Requirement;
+import nightgames.requirements.Requirement;
 
 public class LoadedSkillData {
     String name;
