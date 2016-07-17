@@ -511,7 +511,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
         }
         if (countsAs(self, plant)) {
             c.write(self, Global.format(
-                            "The small rough fibery filaments inside {self:name-possessive} flower pussy wraps around {other:name-possessive} cock. "
+                            "The small rough fibery filaments inside {self:name-possessive} flower pussy wrap around {other:name-possessive} cock. "
                                             + "A profound exhaustion settles on {other:direct-object}, as {other:subject-action:feel|feels} {self:name-possessive} insidious flower leeching {other:possessive} strength.",
                             self, opponent));
             opponent.drainStaminaAsMojo(c, self, 20, 1.25f);
