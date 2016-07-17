@@ -115,13 +115,13 @@ public class CounterFlower extends CounterBase {
             return Global.format(
                             "Numerous vines shoot out of her flower, entangling your body and stopping you in your tracks. "
                                             + "With a salacious smile, {self:subject} uses her vines and drags {other:name-do} into {self:possessive} flower and deposits you in {self:possessive} arms. "
-                                            + "{other:PRONOUN} forces your hips forward before frowning when she discovers you don't have the right equipment.",
+                                            + "{self:PRONOUN} forces your hips forward before frowning when she discovers you don't have the right equipment.",
                             getSelf(), target);
         } else {
             return Global.format(
                             "Numerous vines shoot out of her flower, entangling your body and stopping you in your tracks. "
                                             + "With a salacious smile, {self:subject} uses her vines and drags {other:name-do} into {self:possessive} flower and deposits you in {self:possessive} arms. "
-                                            + "{other:PRONOUN} coils her limbs around yours, forcing your face inside her fragrant cleavage and your cock inside her warm sticky flower cunt.",
+                                            + "{self:PRONOUN} coils her limbs around yours, forcing your face inside her fragrant cleavage and your cock inside her warm sticky flower cunt.",
                             getSelf(), target);
         }
     }
