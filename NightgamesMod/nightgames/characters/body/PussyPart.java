@@ -267,7 +267,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
             } else {
                 c.write(self, String.format(
                                 "%s hot flesh kneads %s %s as %s %s"
-                                                + ", drawing gouts of life energy out of %s %s, which is greedily absorbed by %s %s",
+                                                + ", drawing gouts of life energy out of %s %s, which is greedily absorbed by %s %s.",
                                 self.possessivePronoun(), opponent.possessivePronoun(), target.describe(opponent),
                                 self.subjectAction("ride", "rides"), opponent.directObject(),
                                 opponent.possessivePronoun(), target.describe(opponent), self.possessivePronoun(),
