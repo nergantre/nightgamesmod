@@ -1158,7 +1158,7 @@ public class GUI extends JFrame implements Observer {
             } else if (Global.getMatch() != null) {
                 Global.getMatch().resume();
             } else if (Global.day != null) {
-                Global.getDay().plan(false);
+                Global.getDay().plan();
             } else {
                 new Prematch(Global.human);
             }
@@ -1530,15 +1530,15 @@ public class GUI extends JFrame implements Observer {
             super();
             setFont(new Font("Baskerville Old Face", 0, 18));
             setText("Go to sleep");
-            addActionListener(arg0 -> Global.dawn());
+            addActionListener(arg0 -> Global.endNight());
         }
     }
 
-    @SuppressWarnings("unused")
-    private class MatchButton extends JButton {
+
+    @SuppressWarnings("unused") private class MatchButton extends JButton {
 
         /**
-         * 
+         *
          */
         private static final long serialVersionUID = 3899760251122030064L;
 
@@ -1546,7 +1546,7 @@ public class GUI extends JFrame implements Observer {
             super();
             setFont(new Font("Baskerville Old Face", 0, 18));
             setText("Start the match");
-            addActionListener(arg0 -> Global.dusk(new NoModifier()));
+            addActionListener(arg0 -> Global.setUpMatch(new NoModifier()));
         }
     }
 

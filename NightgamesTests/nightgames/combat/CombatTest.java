@@ -27,7 +27,6 @@ import static org.junit.Assert.*;
  */
 public class CombatTest {
     @BeforeClass public static void setUpClass() throws Exception {
-        Clothing.buildClothingTable();
         new TestGlobal();
         Global.newGame("TestPlayer", Optional.empty(), new ArrayList<>(), CharacterSex.asexual, new HashMap<>());
     }

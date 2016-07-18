@@ -93,7 +93,7 @@ public class Daytime {
         return false;
     }
 
-    public void plan(boolean headless) {
+    public void plan() {
         String threescene;
         boolean special = false;
         if (time == 10) {
@@ -131,14 +131,15 @@ public class Daytime {
                     ((NPC) npc).daytime(daylength);
                 }
             }
-            if (!headless) {
-                // Global.gui().nextMatch();
-                if (Global.checkFlag(Flag.autosave)) {
-                    Global.autoSave();
-                }
-                Global.decideMatchType()
-                      .buildPrematch(player);
+            Global.endDay();
+
+            /*
+            if (Global.checkFlag(Flag.autosave)) {
+                Global.autoSave();
             }
+            Global.decideMatchType()
+                  .buildPrematch(player);
+            */
         }
     }
 

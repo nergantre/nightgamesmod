@@ -1,6 +1,7 @@
 package nightgames.global;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 import javax.swing.JButton;
 
@@ -105,7 +106,7 @@ public class Prematch implements Scene {
         if (Global.random(10) > 4) {
             return new NoModifier();
         }
-        Set<Modifier> modifiers = Global.getModifierPool();
+        Set<Modifier> modifiers = new HashSet<>(Global.getModifierPool());
         modifiers.removeIf(mod -> !mod.isApplicable() || mod.name().equals("normal"));
         return Global.pickRandom(modifiers.toArray(new Modifier[] {}));
     }
@@ -115,10 +116,10 @@ public class Prematch implements Scene {
         String message = "";
         ArrayList<JButton> choice = new ArrayList<JButton>();
         if (response.startsWith("Start")) {
-            Global.dusk(type);
+            Global.setUpMatch(type);
         } else if (response.startsWith("Not")) {
             type = new NoModifier();
-            Global.dusk(type);
+            Global.setUpMatch(type);
         } else if (response.startsWith("Do")) {
             message += type.acceptance();
             choice.add(new SceneButton("Start The Match"));

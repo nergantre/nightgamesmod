@@ -62,7 +62,7 @@ public class FTCPrematch implements Scene {
         if (response.equals("Start the Match")) {
             FTCModifier mod = new FTCModifier(prey);
             Global.flag(Flag.didFTC);
-            Global.dusk(mod);
+            Global.setUpMatch(mod);
         } else {
             String message = "";
             if (response.equals("Volunteer")) {

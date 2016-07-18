@@ -67,7 +67,8 @@ public class Global {
     public static Player human;
     private static Match match;
     public static Daytime day;
-    private static int date;
+    protected static int date;
+    private static Time time;
     private Date jdate;
     private static TraitTree traitRequirements;
     public static Scene current;
@@ -125,7 +126,7 @@ public class Global {
         buildSkillPool(noneCharacter);
         buildModifierPool();
         flag(Flag.AiriEnabled);
-            gui = makeGUI();
+        gui = makeGUI();
     }
 
     protected GUI makeGUI() {
@@ -160,6 +161,7 @@ public class Global {
         }
         Set<Character> lineup = pickCharacters(players, Collections.singleton(human), 4);
         match = new Match(lineup, new NoModifier());
+        time = Time.NIGHT;
         saveWithDialog();
     }
 
@@ -527,8 +529,13 @@ public class Global {
         return day;
     }
 
-    public static void dawn() {
+    public static void startDay() {
         match = null;
+        day = new Daytime(human);
+        day.plan();
+    }
+
+    public static void endNight() {
         double level = 0;
         int maxLevelTracker = 0;
 
@@ -561,8 +568,11 @@ public class Global {
             rested.gainXP(100 + Math.max(0, (int) Math.round(10 * (level - rested.getLevel()))));
         }
         date++;
-        day = new Daytime(human);
-        day.plan(false);
+        time = Time.DAY;
+        if (Global.checkFlag(Flag.autosave)) {
+            Global.autoSave();
+        }
+        startDay();
     }
     
     private static Set<Character> pickCharacters(Set<Character> avail, Set<Character> added, int size) {
@@ -577,11 +587,24 @@ public class Global {
         return results;
     }
 
-    public static void dusk(Modifier matchmod) {
+    public static void endDay() {
+        day = null;
+        time = Time.NIGHT;
+        if (checkFlag(Flag.autosave)) {
+            autoSave();
+        }
+        startNight();
+    }
+
+    public static void startNight() {
+        decideMatchType().buildPrematch(human);
+    }
+
+    public static void setUpMatch(Modifier matchmod) {
+        assert day == null;
         Set<Character> lineup = new HashSet<>(debugChars);
         Character lover = null;
         int maxaffection = 0;
-        day = null;
         unflag(Flag.FTC);
         for (Character player : players) {
             player.getStamina().fill();
@@ -600,14 +623,13 @@ public class Global {
         // Disable characters flagged as disabled
         for (Character c : players) {
             // Disabling the player wouldn't make much sense, and there's no PlayerDisabled flag.
-            if (c.getType().equals("Player")) {
-                continue;
-            }
             Flag disabledFlag = null;
-            try {
-                disabledFlag = Flag.valueOf(c.getType() + "Disabled");
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
+            if (!c.getType().equals("Player")) {
+                try {
+                    disabledFlag = Flag.valueOf(c.getType() + "Disabled");
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                }
             }
             if (disabledFlag == null || !Global.checkFlag(disabledFlag)) {
                 // TODO: DEBUG
@@ -933,7 +955,7 @@ public class Global {
         data.players.addAll(players);
         data.flags.addAll(flags);
         data.counters.putAll(counters);
-        data.time = match == null ? SaveData.Time.DUSK : SaveData.Time.DAWN;
+        data.time = time;
         data.date = date;
         return data;
     }
@@ -1028,8 +1050,7 @@ public class Global {
         load(file);
     }
 
-    public static void load(File file) {
-        FileInputStream fileIS;
+    protected static void resetForLoad() {
         players.clear();
         flags.clear();
         gui.clearText();
@@ -1038,30 +1059,40 @@ public class Global {
         buildSkillPool(human);
         Clothing.buildClothingTable();
         rebuildCharacterPool(Optional.empty());
+    }
 
-        boolean dawn = false;
-        try {
-            fileIS = new FileInputStream(file);
-            Reader loader = new InputStreamReader(fileIS);
-            JsonObject object = new JsonParser().parse(loader).getAsJsonObject();
-            loader.close();
+    public static void load(File file) {
+        resetForLoad();
 
-            SaveData data = new SaveData(object);
+        JsonObject object;
+        try (Reader loader = new InputStreamReader(new FileInputStream(file))){
+            object = new JsonParser().parse(loader).getAsJsonObject();
 
-            players.addAll(data.players);
-            flags.addAll(data.flags);
-            counters.putAll(data.counters);
-            date = data.date;
-            dawn = data.time == SaveData.Time.DAWN;
         } catch (IOException e) {
             e.printStackTrace();
+            // Couldn't load data; just get out
+            return;
         }
+        SaveData data = new SaveData(object);
+        loadData(data);
         gui.populatePlayer(human);
-        if (dawn) {
-            dawn();
+        if (time == Time.DAY) {
+            startDay();
         } else {
-            decideMatchType().buildPrematch(human);
+            startNight();
         }
+    }
+
+    /**
+     * Loads game state data into static fields from SaveData object.
+     * @param data A SaveData object, as loaded from save files.
+     */
+    protected static void loadData(SaveData data) {
+        players.addAll(data.players);
+        flags.addAll(data.flags);
+        counters.putAll(data.counters);
+        date = data.date;
+        time = data.time;
     }
 
     public static Set<Character> everyone() {

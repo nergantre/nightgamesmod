@@ -34,21 +34,6 @@ public class SaveData {
     }
 
 
-    enum Time {
-        DAWN("dawn"),
-        DUSK("dusk");
-
-        final String desc;
-
-        Time(String desc) {
-            this.desc = desc;
-        }
-
-        static Time fromDesc(String desc) {
-            return Time.valueOf(desc.toUpperCase());
-        }
-    }
-
     public SaveData() {
         players = new HashSet<>();
         flags = new HashSet<>();
