@@ -449,13 +449,16 @@ public class Combat extends Observable implements Cloneable {
      * 5: Absurd dominance. Exotic positions like Engulfed and FlyingCarry have this rating, as well as the more mundane FaceSitting and Smothering.
      *
      * @param self The character whose traits are checked to modify the current stance's dominance score.
-     * @return the dominance of the current combat stance, modified by one combatant's traits. Higher return values cause more willpower loss on each combat tick.
+     * @return The dominance of the current position, modified by one combatant's traits. Higher return values cause more willpower loss on each combat tick.
+     * If a character is not the dominant character of the position, their effective dominance is 0.
      */
     public int getDominanceOfStance(Character self) {
-        int stanceDominance = 0;
-        stanceDominance += getStance().dominance();
+        if (getStance().sub(self)) {
+            return 0;
+        }
+        int stanceDominance = getStance().dominance();
         // It is unexpected, but not catastrophic if a character is at once a natural dom and submissive.
-        if (getStance().dom(self) && self.has(Trait.smqueen)) {
+        if (self.has(Trait.smqueen)) {
             // Rescales stance dominance values from 0-1-2-3-4-5 to 0-2-3-5-6-8
             stanceDominance = Double.valueOf(Math.ceil(stanceDominance * 1.5)).intValue();
         }
@@ -463,14 +466,10 @@ public class Combat extends Observable implements Cloneable {
             // Rescales stance dominance values from 0-1-2-3-4-5 to 0-0-1-1-2-3
             stanceDominance = Double.valueOf(Math.floor(stanceDominance * 0.6)).intValue();
         }
-        assert stanceDominance >= 0;
-        return stanceDominance;
+        return Math.max(0, stanceDominance);
     }
 
     private void doStanceTick(Character self) {
-        if (!getStance().dom(self)) {
-            return;
-        }
 
         int stanceDominance = getDominanceOfStance(self);
 
