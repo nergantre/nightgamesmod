@@ -103,11 +103,11 @@ public class TailPeg extends Skill {
             if (c.getStance().havingSex()) {
                 if (vaginal) {
                     target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom("pussy"),
-                                    strength, c);
+                                    strength, c, this);
                     target.add(c, new TailFucked(target, getSelf(), "pussy"));
                 } else {
                     target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom("ass"),
-                                    strength, c);
+                                    strength, c, this);
                     target.add(c, new TailFucked(target, getSelf(), "ass"));
                 }
             }

@@ -48,8 +48,8 @@ public class PussyGrind extends Skill {
         c.setStance(new TribadismStance(getSelf(), target));
         int m = 10 + Global.random(10);
         int otherm = 5 + Global.random(6);
-        target.body.pleasure(getSelf(), selfO, targetO, m, c);
-        getSelf().body.pleasure(target, targetO, selfO, otherm, c);
+        target.body.pleasure(getSelf(), selfO, targetO, m, c, this);
+        getSelf().body.pleasure(target, targetO, selfO, otherm, c, this);
         return true;
     }
 

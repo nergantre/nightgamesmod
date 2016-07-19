@@ -38,7 +38,7 @@ public class FaerieSwarm extends Skill {
             } else if (target.human()) {
                 c.write(receive(c, 0, Result.normal, target));
             }
-            target.body.pleasure(getSelf(), null, null, 25 + Global.random(getSelf().get(Attribute.Arcane)), c);
+            target.body.pleasure(getSelf(), null, null, 25 + Global.random(getSelf().get(Attribute.Arcane)), c, this);
         } else {
             if (getSelf().human()) {
                 c.write(deal(c, 0, Result.weak, target));

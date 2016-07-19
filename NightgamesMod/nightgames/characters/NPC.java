@@ -31,6 +31,7 @@ import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.skills.Nothing;
 import nightgames.skills.Skill;
+import nightgames.skills.Stage;
 import nightgames.skills.Tactics;
 import nightgames.stance.Behind;
 import nightgames.stance.Neutral;
@@ -133,6 +134,10 @@ public class NPC extends Character {
             }
         }
 
+        if (per >= 5) {
+            visible += Stage.describe(this);
+        }
+        
         if (per >= 6 && status.size() > 0) {
             visible += "List of statuses:<br><i>";
             for (Status s : status) {
@@ -140,6 +145,7 @@ public class NPC extends Character {
             }
             visible += "</i><br>";
         }
+        
         return visible;
     }
 

@@ -35,7 +35,7 @@ public class FondleBreasts extends Skill {
                     c.write(getSelf(), receive(c, m, Result.normal, target));
                 }
                 target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("breasts"), m,
-                                c);
+                                c, this);
             } else {
                 if (getSelf().human()) {
                     c.write(getSelf(), deal(c, m, Result.normal, target));
@@ -43,7 +43,7 @@ public class FondleBreasts extends Skill {
                     c.write(getSelf(), receive(c, m, Result.normal, target));
                 }
                 target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("breasts"), m,
-                                c);
+                                c, this);
             }
         } else {
             if (getSelf().human()) {
@@ -122,5 +122,10 @@ public class FondleBreasts extends Skill {
     @Override
     public boolean makesContact() {
         return true;
+    }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FOREPLAY;
     }
 }

@@ -66,9 +66,9 @@ public class TemptressRide extends Thrust {
         }
 
         target.body.pleasure(getSelf(), getSelf().body.getRandomPussy(), target.body.getRandomCock(),
-                        targetDmg + targetDmg * stack / 2, c);
+                        targetDmg + targetDmg * stack / 2, c, this);
 
-        getSelf().body.pleasure(getSelf(), target.body.getRandomCock(), getSelf().body.getRandomPussy(), selfDmg, c);
+        getSelf().body.pleasure(getSelf(), target.body.getRandomCock(), getSelf().body.getRandomPussy(), selfDmg, c, this);
 
         getSelf().add(c, new FiredUp(getSelf(), target, "pussy"));
         return true;
@@ -118,6 +118,11 @@ public class TemptressRide extends Thrust {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return deal(c, damage, modifier, target);
+    }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FINISHER;
     }
 
 }

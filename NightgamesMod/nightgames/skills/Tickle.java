@@ -73,7 +73,7 @@ public class Tickle extends Skill {
                                     getSelf(), target));
                 }
                 target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("skin"),
-                                2 + Global.random(4), bonus, c);
+                                2 + Global.random(4), bonus, c, false, this);
                 target.weaken(c, weak / 2 + 2 + target.get(Attribute.Perception) + Global.random(6));
             } else if (hastickler() && Global.random(2) == 1) {
                 if (target.breastsAvailable() && c.getStance().reachTop(getSelf())) {
@@ -90,7 +90,7 @@ public class Tickle extends Skill {
                                         getSelf(), target));
                     }
                     target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("skin"),
-                                    4 + Global.random(4), bonus, c);
+                                    4 + Global.random(4), bonus, c, false, this);
                     target.weaken(c, bonus / 2 + 2 + target.get(Attribute.Perception));
                 } else {
                     if (getSelf().human()) {
@@ -106,7 +106,7 @@ public class Tickle extends Skill {
                                         getSelf(), target));
                     }
                     target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("skin"),
-                                    4 + Global.random(2), bonus, c);
+                                    4 + Global.random(2), bonus, c, false, this);
                     target.weaken(c, bonus / 2 + target.get(Attribute.Perception));
                 }
             } else {
@@ -126,7 +126,7 @@ public class Tickle extends Skill {
                 int weak = (int) Math.round((bonus / 2 + Global.random(3 + target.get(Attribute.Perception)))
                                 * (1.5 - target.getExposure()));
                 target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("skin"), m,
-                                bonus, c);
+                                bonus, c, false, this);
                 target.weaken(c, weak);
             }
         } else {
@@ -221,5 +221,10 @@ public class Tickle extends Skill {
     @Override
     public boolean makesContact() {
         return true;
+    }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FOREPLAY;
     }
 }

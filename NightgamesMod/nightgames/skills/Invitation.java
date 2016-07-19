@@ -172,4 +172,9 @@ public class Invitation extends Skill {
             return "Invitation";
         }
     }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FINISHER;
+    }
 }

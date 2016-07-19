@@ -120,7 +120,7 @@ public class PullOut extends Skill {
                     if (c.getStance().inserted(getSelf())) {
                         BodyPart part = c.getStance().anallyPenetrated(target) ? target.body.getRandom("ass")
                                         : target.body.getRandomPussy();
-                        getSelf().body.pleasure(target, part, getSelf().body.getRandomInsertable(), m, c);
+                        getSelf().body.pleasure(target, part, getSelf().body.getRandomInsertable(), m, c, this);
                     }
                     getSelf().struggle();
                     return false;
@@ -130,7 +130,7 @@ public class PullOut extends Skill {
                 c.write(getSelf(), "You try to pull out of " + target.name() + "'s " + target.body.getRandomPussy()
                                 + ", but " + s.binding + " instantly reacts and pulls your dick back in.");
                 int m = 8;
-                getSelf().body.pleasure(target, target.body.getRandom("pussy"), getSelf().body.getRandom("cock"), m, c);
+                getSelf().body.pleasure(target, target.body.getRandom("pussy"), getSelf().body.getRandom("cock"), m, c, this);
                 return false;
             } else if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, result, target));

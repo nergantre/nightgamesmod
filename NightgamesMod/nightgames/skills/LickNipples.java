@@ -37,7 +37,7 @@ public class LickNipples extends Skill {
             if (getSelf().has(Trait.silvertongue)) {
                 m += 4;
             }
-            target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("breasts"), m, c);
+            target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("breasts"), m, c, this);
 
         } else {
             if (getSelf().human()) {

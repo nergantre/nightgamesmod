@@ -143,8 +143,8 @@ public class Fuck extends Skill {
             if (getSelf().has(Trait.insertion)) {
                 otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
             }
-            target.body.pleasure(getSelf(), selfO, targetO, m, c);
-            getSelf().body.pleasure(target, targetO, selfO, otherm, c);
+            target.body.pleasure(getSelf(), selfO, targetO, m, c, this);
+            getSelf().body.pleasure(target, targetO, selfO, otherm, c, this);
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(), premessage + deal(c, premessage.length(), Result.miss, target));
@@ -238,5 +238,10 @@ public class Fuck extends Skill {
     @Override
     public boolean makesContact() {
         return true;
+    }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FINISHER;
     }
 }

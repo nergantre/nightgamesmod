@@ -114,4 +114,9 @@ public class Engulf extends CounterBase {
         getSelf().emote(Emotion.horny, 30);
         target.emote(Emotion.nervous, 50);
     }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FINISHER;
+    }
 }

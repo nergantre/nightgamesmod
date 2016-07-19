@@ -80,4 +80,9 @@ public class ReverseFuck extends Fuck {
     public boolean makesContact() {
         return true;
     }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FINISHER;
+    }
 }

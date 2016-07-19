@@ -36,14 +36,14 @@ public class UseOnahole extends Skill {
                 } else {
                     c.write(getSelf(), deal(c, 0, Result.upgrade, target));
                 }
-                target.body.pleasure(getSelf(), null, target.body.getRandomCock(), m, c);
+                target.body.pleasure(getSelf(), null, target.body.getRandomCock(), m, c, this);
             } else {
                 if (target.human()) {
                     c.write(getSelf(), receive(c, 0, Result.normal, target));
                 } else {
                     c.write(getSelf(), deal(c, 0, Result.upgrade, target));
                 }
-                target.body.pleasure(getSelf(), null, target.body.getRandomCock(), m, c);
+                target.body.pleasure(getSelf(), null, target.body.getRandomCock(), m, c, this);
             }
         } else {
             if (getSelf().human()) {

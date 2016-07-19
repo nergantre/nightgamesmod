@@ -140,7 +140,7 @@ public class Struggle extends Skill {
                                         getSelf(), target));
                         int m = 15;
                         getSelf().body.pleasure(target, target.body.getRandom("pussy"),
-                                        getSelf().body.getRandom("cock"), m, c);
+                                        getSelf().body.getRandom("cock"), m, c, this);
                         getSelf().removeStatus(Stsflag.cockbound);
                     }
                     if (knotted) {
@@ -176,7 +176,7 @@ public class Struggle extends Skill {
                                                         + " up and down {self:possessive} cock and leaves {self:direct-object} gasping with pleasure.",
                                         getSelf(), target));
                         getSelf().body.pleasure(target, target.body.getRandom("pussy"),
-                                        getSelf().body.getRandom("cock"), 8, c);
+                                        getSelf().body.getRandom("cock"), 8, c, this);
                     } else if (getSelf().human()) {
                         if (c.getStance().inserted(getSelf())) {
                             c.write(getSelf(), "You try to tip " + target.name()

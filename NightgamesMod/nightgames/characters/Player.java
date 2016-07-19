@@ -25,6 +25,7 @@ import nightgames.gui.GUI;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.skills.Skill;
+import nightgames.skills.Stage;
 import nightgames.skills.Tactics;
 import nightgames.stance.Behind;
 import nightgames.stance.Neutral;
@@ -145,6 +146,8 @@ public class Player extends Character {
             }
             description += "</i><br>";
         }
+        description += Stage.describe(this);
+        
         return description;
     }
 

@@ -89,7 +89,7 @@ public class Masturbate extends Skill {
         }
         int pleasure;
 
-        pleasure = getSelf().body.pleasure(getSelf(), withO, targetO, 25, c);
+        pleasure = getSelf().body.pleasure(getSelf(), withO, targetO, 25, c, this);
         getSelf().emote(Emotion.horny, pleasure);
         return true;
     }

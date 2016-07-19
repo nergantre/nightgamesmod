@@ -45,8 +45,8 @@ public class ReverseCarry extends Carry {
             if (getSelf().has(Trait.insertion)) {
                 otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
             }
-            target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c);
-            getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c);
+            target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c, this);
+            getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c, this);
             c.setStance(new Jumped(getSelf(), target), getSelf(), getSelf().canMakeOwnDecision());
         } else {
             if (getSelf().human()) {
@@ -99,5 +99,10 @@ public class ReverseCarry extends Carry {
     @Override
     public boolean makesContact() {
         return true;
+    }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FINISHER;
     }
 }

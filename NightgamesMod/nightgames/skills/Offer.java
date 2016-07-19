@@ -65,9 +65,9 @@ public class Offer extends Skill {
                 }
                 c.setStance(new Missionary(target, getSelf()), getSelf(), true);
                 getSelf().body.pleasure(target, target.body.getRandomCock(), getSelf().body.getRandomPussy(),
-                                Global.random(5) + getSelf().get(Attribute.Perception), c);
+                                Global.random(5) + getSelf().get(Attribute.Perception), c, this);
                 target.body.pleasure(getSelf(), getSelf().body.getRandomPussy(), target.body.getRandomCock(),
-                                Global.random(5) + getSelf().get(Attribute.Perception), c);
+                                Global.random(5) + getSelf().get(Attribute.Perception), c, this);
 
             } else {
                 // offer ass to dick/strapon
@@ -78,10 +78,10 @@ public class Offer extends Skill {
                 }
                 c.setStance(new Anal(target, getSelf()), getSelf(), true);
                 getSelf().body.pleasure(target, target.body.getRandomInsertable(), getSelf().body.getRandomAss(),
-                                Global.random(5) + getSelf().get(Attribute.Perception), c);
+                                Global.random(5) + getSelf().get(Attribute.Perception), c, this);
                 if (!target.has(Trait.strapped)) {
                     target.body.pleasure(getSelf(), getSelf().body.getRandomAss(), target.body.getRandomCock(),
-                                    Global.random(5) + getSelf().get(Attribute.Perception), c);
+                                    Global.random(5) + getSelf().get(Attribute.Perception), c, this);
                 }
             }
         } else {
@@ -94,9 +94,9 @@ public class Offer extends Skill {
             }
             c.setStance(new Cowgirl(target, getSelf()), getSelf(), true);
             getSelf().body.pleasure(target, target.body.getRandomPussy(), getSelf().body.getRandomCock(),
-                            Global.random(5) + getSelf().get(Attribute.Perception), c);
+                            Global.random(5) + getSelf().get(Attribute.Perception), c, this);
             target.body.pleasure(getSelf(), getSelf().body.getRandomCock(), target.body.getRandomPussy(),
-                            Global.random(5) + getSelf().get(Attribute.Perception), c);
+                            Global.random(5) + getSelf().get(Attribute.Perception), c, this);
         }
         if (Global.getPlayer().checkAddiction(AddictionType.MIND_CONTROL, target)) {
             Global.getPlayer().unaddictCombat(AddictionType.MIND_CONTROL, 

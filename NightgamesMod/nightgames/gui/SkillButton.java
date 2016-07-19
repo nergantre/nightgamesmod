@@ -12,6 +12,7 @@ import javax.swing.border.LineBorder;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.skills.Skill;
+import nightgames.skills.Stage;
 import nightgames.skills.Tactics;
 
 public class SkillButton extends JPanel {
@@ -26,7 +27,7 @@ public class SkillButton extends JPanel {
         setButton(new JButton(action.getLabel(c)));
         getButton().setBorderPainted(false);
         getButton().setOpaque(true);
-        getButton().setFont(new Font("Baskerville Old Face", Font.PLAIN, 18));
+        getButton().setFont(fontForStage(action.getStage()));
         this.action = action;
         String text = "<html>" + action.describe(c);
         if (action.type(c) == Tactics.damage) {
@@ -100,7 +101,7 @@ public class SkillButton extends JPanel {
         button.setText(button.getText() + " [" + idx + "]");
     }
 
-    private Color foregroundColor(Tactics tact) {
+    private static Color foregroundColor(Tactics tact) {
         switch (tact) {
             case damage:
             case positioning:
@@ -108,6 +109,18 @@ public class SkillButton extends JPanel {
                 return Color.WHITE;
             default:
                 return Color.BLACK;
+        }
+    }
+    
+    private static Font fontForStage(Stage stage) {
+        switch (stage) {
+            case FINISHER:
+                return new Font("Baskerville Old Face", Font.BOLD, 18);
+            case FOREPLAY:
+                return new Font("Baskerville Old Face", Font.ITALIC, 18);
+            default:
+                return new Font("Baskerville Old Face", Font.PLAIN, 18);
+            
         }
     }
 }

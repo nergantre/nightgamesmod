@@ -132,4 +132,9 @@ public class WildThrust extends Thrust {
     public boolean makesContact() {
         return true;
     }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FINISHER;
+    }
 }

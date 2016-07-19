@@ -148,5 +148,9 @@ public class SuccubusSurprise extends Skill {
     public float priorityMod(Combat c) {
         return 0f;
     }
-
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FINISHER;
+    }
 }
