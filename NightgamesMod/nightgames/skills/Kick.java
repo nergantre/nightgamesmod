@@ -42,7 +42,7 @@ public class Kick extends Skill {
                 c.write(getSelf(), receive(c, 0, Result.special, target));
             }
             target.shred(ClothingSlot.bottom);
-        }
+        } else
         if (target.roll(this, c, accuracy(c))) {
             int m = Global.random(12) + Math.min(getSelf().get(Attribute.Power), 100);
             if (target.has(Trait.brassballs)) {
