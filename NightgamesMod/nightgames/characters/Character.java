@@ -2315,7 +2315,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public int getVictoryXP(Character opponent) {
-        return 20 + lvlBonus(opponent);
+        return 15 + lvlBonus(opponent);
     }
 
     public int getAssistXP(Character opponent) {
@@ -2323,7 +2323,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public int getDefeatXP(Character opponent) {
-        return 20 + lvlBonus(opponent);
+        return 10 + lvlBonus(opponent);
     }
 
     public int getAttraction(Character other) {
