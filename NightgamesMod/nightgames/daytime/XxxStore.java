@@ -65,6 +65,7 @@ public class XxxStore extends Store {
                                                 + "joke. You didn't have to grope me so roughly. My name is Alice.\"<p>");
                 Global.flag(Flag.metAlice);
                 player.mod(Attribute.Submissive, 1);
+                acted = true;
             }
             if (choice.startsWith("Talk to Alice")) {
                 Global.gui().message(
@@ -88,6 +89,7 @@ public class XxxStore extends Store {
 
                 Global.unflag(Flag.AliceAvailable);
                 player.mod(Attribute.Submissive, 1);
+                acted = true;
             }
 
             Global.gui().message("The adult specialty store stocks several items that could be useful during a match.");
