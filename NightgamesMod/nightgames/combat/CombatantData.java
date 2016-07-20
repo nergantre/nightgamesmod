@@ -1,29 +1,39 @@
 package nightgames.combat;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 
 public class CombatantData implements Cloneable {
     private List<Clothing> clothespile;
     private Map<String, Number> flags;
     private String lastUsedSkillName;
-
+    private List<Item> removedItems;
+    
     public CombatantData() {
         clothespile = new ArrayList<>();
         flags = new HashMap<String, Number>();
         setLastUsedSkillName("None");
+        removedItems = new ArrayList<>();
     }
 
     @Override
     public Object clone() {
-        CombatantData newData = new CombatantData();
+        CombatantData newData;
+        try {
+            newData = (CombatantData) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError(e);
+        }
         newData.clothespile = new ArrayList<>(clothespile);
         newData.flags = new HashMap<>(flags);
         newData.setLastUsedSkillName(lastUsedSkillName);
+        newData.removedItems = new ArrayList<>(removedItems);
         return newData;
     }
 
@@ -67,5 +77,13 @@ public class CombatantData implements Cloneable {
 
     public void setLastUsedSkillName(String lastUsedSkillName) {
         this.lastUsedSkillName = lastUsedSkillName;
+    }
+    
+    public void loseItem(Item item) {
+        removedItems.add(item);
+    }
+    
+    public List<Item> getRemovedItems() {
+        return Collections.unmodifiableList(removedItems);
     }
 }

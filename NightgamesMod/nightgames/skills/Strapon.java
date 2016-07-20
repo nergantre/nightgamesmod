@@ -71,6 +71,9 @@ public class Strapon extends Skill {
         }
         getSelf().emote(Emotion.confident, 30);
         getSelf().emote(Emotion.dominant, 40);
+        Item lost = getSelf().has(Item.Strapon2) ? Item.Strapon2 : Item.Strapon;
+        c.getCombatantData(getSelf()).loseItem(lost);
+        getSelf().remove(lost);
         return true;
     }
 
