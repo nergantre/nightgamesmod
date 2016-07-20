@@ -6,10 +6,13 @@ import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
 
 public class StripTop extends Skill {
 
+    private Clothing stripped, extra;
+    
     public StripTop(Character self) {
         super("Strip Top", self);
     }
@@ -30,16 +33,26 @@ public class StripTop extends Skill {
                         + (target.getStamina().percent() / 5 - target.getArousal().percent()) / 4
                         - (!target.canAct() || c.getStance().sub(target) ? 20 : 0);
         if (getSelf().check(Attribute.Cunning, difficulty) || !target.canAct()) {
-            if (getSelf().human()) {
+            stripped = target.strip(ClothingSlot.top, c);
+            boolean doubled = false;
+            if (getSelf().get(Attribute.Cunning) >= 30 && !target.breastsAvailable() 
+                            && getSelf().check(Attribute.Cunning, difficulty) || !target.canAct()) {
+                extra = target.strip(ClothingSlot.top, c);
+                doubled = true;
+                if (getSelf().human()) {
+                    c.write(getSelf(), deal(c, 0, Result.critical, target));
+                } else if (target.human()) {
+                    c.write(getSelf(), receive(c, 0, Result.critical, target));
+                }
+            } else if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.normal, target));
             } else if (target.human()) {
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             }
-            target.strip(ClothingSlot.top, c);
             if (getSelf().human() && target.mostlyNude()) {
                 c.write(target, target.nakedLiner(c));
             }
-            target.emote(Emotion.nervous, 10);
+            target.emote(Emotion.nervous, doubled ? 20 : 10);
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.miss, target));
@@ -76,11 +89,16 @@ public class StripTop extends Skill {
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
             return "You attempt to strip off " + target.name() + "'s "
-                            + target.getOutfit().getTopOfSlot(ClothingSlot.top).getName()
+                            + stripped.getName()
                             + ", but she shoves you away.";
         } else {
-            return "After a brief struggle, you manage to pull off " + target.name() + "'s "
-                            + target.getOutfit().getTopOfSlot(ClothingSlot.top).getName() + ".";
+            String msg = "After a brief struggle, you manage to pull off " + target.name() + "'s "
+                            + stripped.getName() + ".";
+            if (modifier == Result.critical) {
+                msg += String.format(" Taking advantage of the situation, you also"
+                                + " manage to snag %s %s!", target.possessivePronoun(), extra.getName());
+            }
+            return msg;
         }
     }
 
@@ -88,12 +106,17 @@ public class StripTop extends Skill {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
             return getSelf().name() + " tries to yank off your "
-                            + target.getOutfit().getTopOfSlot(ClothingSlot.top).getName()
+                            + stripped.getName()
                             + ", but you manage to hang onto it.";
         } else {
-            return getSelf().name() + " grabs a hold of your "
-                            + target.getOutfit().getTopOfSlot(ClothingSlot.top).getName()
+            String msg = getSelf().name() + " grabs a hold of your "
+                            + stripped.getName()
                             + " and yanks it off before you can stop her.";
+            if (modifier == Result.critical) {
+                msg += String.format(" Before you can react, %s also strips off your %s!", 
+                                getSelf().name, extra.getName());
+            }
+            return msg;
         }
     }
 
