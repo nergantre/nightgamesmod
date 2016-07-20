@@ -341,7 +341,31 @@ public class Cassie extends BasePersonality {
 
     @Override
     public String draw(Combat c, Result flag) {
+        Character opponent=c.getOther(character);
         if (flag == Result.intercourse) {
+            if (character.has(Trait.witch) && opponent.getPure(Attribute.Arcane) >= 4 && character.getAffection(opponent) >= 12 && Global.random(2) == 0) {
+                return "You thrust your hips in time with Cassie's, pushing you both closer to orgasm. At this rate, it seems a draw is pretty much certain. If you pulled out, "
+                                + "there's a chance you could change tactics and take the advantage, but right at this moment, it feels like there are more important things than winning.<p> "
+                                + "Cassie interlocks her fingers with yours, her eyes filled with desire and pleasure."
+                                + "<i>\"Together! Please\"</i> She manages to gasp between moans. You're quite happy to oblige. You grind against her hips while kissing her deeply. She presses "
+                                + "against your body as her tongue eagerly engages yours.<p>"
+                                + "As you feel your climax near, you're aware of your mana stirring inside you. A soft glow emanates from Cassie as her own magical energy responds. You can "
+                                + "sense it gathering everywhere your skin touches hers, attracted like opposite charges. Your bodies shudder in simultaneous orgasm as the flood gates "
+                                + "burst. A cascade of mana surges through you both, threatening to drown you in pleasure. You hold Cassie close as you both weather the storm of sensation. "
+                                + "You finally remember to breath again as the reaction dies down."
+                                + "<i>\"That felt so good, I thought I was on my way to heaven.\"</i> Cassie rests limply against you, too exhausted to move. You're in no hurry to move. You "
+                                + "simply bask in her warmth, filled with exhaustion, satisfaction, and a deep sense of love. It takes you a moment to realize the emotions aren't your own. "
+                                + "It's hard to articulate, but you can sense that feelings are flowing into you from Cassie. She looks at you in surprise, clearly feeling the same thing. In "
+                                + "fact, you know for sure she's feeling the same.<p>"
+                                + "<i>\"You too, right? Ah!\"</i> Realization suddenly dawns on her. <i>\"I think I read about this. We must have been emotionally in synch when the mana loop "
+                                + "occurred. Our emotions will keep leaking out as long as we're... connected.\"</i> She casts a meaningful glance downward to where you're still penetrating "
+                                + "her. You've apparently stumbled onto the ultimate form of afterglow. Only possible with two magic users under very specific circumstances. You kiss her "
+                                + "softly, indulging in the warm feelings she's letting out.<p>"
+                                + "You feel a strange giddy nervousness seize your heart as Cassie turns bright red. She smiles sheepishly as she pulls her hips away, breaking the bond. "
+                                + "<i>\"Sorry.\"</i> She whispers. <i>\"I'm really happy. Really really happy, but I don't think I can handle you knowing everything I feel for very long.\"</i> "
+                                + "She snuggles up to you again, her clear blue eyes staring into yours. <i>\"A girl's heart is suppose to be mysterious. I can't reveal all its secrets "
+                                + "to a boy. You'll just need to figure out what I'm feeling the old fashion way.\"</i>";
+            }
             return "You and Cassie move your hips against each other, both rapidly approaching orgasm. As you thrust again and again into her tight folds, you feel yourself pass "
                             + "the point of no return. You need to make her cum, now! You kiss her passionately, forcing your tongue into her mouth. The deep kiss combined with your continous "
                             + "thrusting have the desired effect. She embraces you tightly as her climax washes over her. At the same time, you fill her womb with your seed. You didn't quite "
