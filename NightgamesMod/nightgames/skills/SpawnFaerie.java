@@ -40,8 +40,8 @@ public class SpawnFaerie extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        int power = 7;
-        int ac = 4;
+        int power = 7 + getSelf().get(Attribute.Arcane) / 10;
+        int ac = 4 + getSelf().get(Attribute.Arcane) / 10;
         if (getSelf().has(Trait.leadership)) {
             power += 5;
         }

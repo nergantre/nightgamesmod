@@ -41,8 +41,8 @@ public class SpawnImp extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         getSelf().arouse(5, c);
-        int power = 8;
-        int ac = 2;
+        int power = 8 + getSelf().get(Attribute.Dark) / 10;
+        int ac = 2 + getSelf().get(Attribute.Dark) / 10;
         if (getSelf().has(Trait.leadership)) {
             power += 5;
         }
