@@ -30,12 +30,12 @@ public class SpawnFaerie extends Skill {
 
     @Override
     public int getMojoCost(Combat c) {
-        return 25;
+        return getSelf().has(Trait.faefriend) ? 10 : 25;
     }
 
     @Override
     public String describe(Combat c) {
-        return "Summon a Faerie familiar to support you: 15 Mojo";
+        return "Summon a Faerie familiar to support you: "+getMojoCost(c)+" Mojo";
     }
 
     @Override
