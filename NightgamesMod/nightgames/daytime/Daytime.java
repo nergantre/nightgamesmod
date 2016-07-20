@@ -82,7 +82,9 @@ public class Daytime {
                                   + "you've built with your opponents to good use. Well then, I shall wait to hear from you this time.\"</i> There's a click and the call ends.");
             player.rankup();
             time = 15;
-
+        } else if (player.getLevel() / 10 > player.getRank()) {
+            Global.gui().message("You have advanced to rank " + ++player.rank + "!");
+            time = 15;
         } else if (Global.getDate() % 7 == 6 || Global.getDate() % 7 == 0) {
             Global.gui()
                   .message("You don't have any classes today, but you try to get up at a reasonable hour so you can make full use of your weekend.");
@@ -127,7 +129,7 @@ public class Daytime {
         } else {
             for (Character npc : Global.everyone()) {
                 if (!npc.human()) {
-                    if (npc.getLevel() >= 10 && npc.getRank() == 0 || npc.getLevel() >= 20 && npc.getRank() == 1) {
+                    if (npc.getLevel() / 10 > npc.getRank()) {
                         npc.rankup();
                     }
                     ((NPC) npc).daytime(daylength);
