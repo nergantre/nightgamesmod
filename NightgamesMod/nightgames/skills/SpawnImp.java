@@ -46,6 +46,9 @@ public class SpawnImp extends Skill {
         if (getSelf().has(Trait.leadership)) {
             power += 5;
         }
+        if (getSelf().has(Trait.tactician)) {
+            ac += 3;
+        }
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
             if (gender == Ptype.impfem) {

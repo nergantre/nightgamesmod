@@ -298,6 +298,7 @@ public enum Trait {
     sympathetic("Sympathetic", "Intervening opponents are more likely to side with you"),
     fastLearner("Fast Learner", "Improved experience gain"),
     leadership("Leadership", "Summoned pets are more powerful"),
+    tactician("Tactician", "Summoned pets have higher evasion"),
     fitnessNut("Fitness Nut", "More efficient at exercising"),
     expertGoogler("Expert Googler", "More efficient at finding porn"),
     mojoMaster("Mojo Master", "Max Mojo increases faster"),
