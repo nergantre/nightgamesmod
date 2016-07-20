@@ -1,5 +1,6 @@
 package nightgames.trap;
 
+import nightgames.combat.Combat;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
@@ -60,6 +61,7 @@ public class IllusionTrap implements Trap {
 
     @Override
     public void capitalize(Character attacker, Character victim, IEncounter enc) {
+        enc.engage(new Combat(attacker,victim,attacker.location()));
         victim.location().remove(this);
     }
 
