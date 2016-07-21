@@ -3,13 +3,13 @@ package nightgames.items;
 import nightgames.characters.Character;
 
 public interface Loot {
-    public String getName();
+    String getName();
 
-    public String pre();
+    String pre();
 
-    public int getPrice();
+    int getPrice();
 
-    public void pickup(Character owner);
+    void pickup(Character owner);
 
-    public String getID();
+    String getID();
 }

@@ -13,7 +13,7 @@ import nightgames.characters.body.CockPart;
 import nightgames.characters.body.ModdedCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.WingsPart;
-import nightgames.characters.custom.requirement.BodyPartRequirement;
+import nightgames.requirements.BodyPartRequirement;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.status.addiction.Addiction;
@@ -287,9 +287,7 @@ public class AngelTime extends BaseNPCTime {
                   .choose(this, "Leave");
             Global.getPlayer()
                   .addict(AddictionType.ZEAL, npc, Addiction.MED_INCREASE);
-            Global.getPlayer()
-                  .getAddiction(AddictionType.ZEAL)
-                  .flagDaytime();
+            Global.getPlayer().getAddiction(AddictionType.ZEAL).ifPresent(Addiction::flagDaytime);
         } else if (choice.equals("Sex")) {
             if (npc.getAffection(player) >= 12 && (!player.has(Trait.experttongue) || Global.random(2) == 1)) {
                 Global.gui()

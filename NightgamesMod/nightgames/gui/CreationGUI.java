@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
 import java.util.*;
 
 import javax.swing.Box;
@@ -40,10 +39,10 @@ public class CreationGUI extends JPanel {
     private JTextField seductionfield;
     private JTextField cunningfield;
     private JTextField attPoints;
-    private JTextField namefield;
-    private int power;
-    private int seduction;
-    private int cunning;
+    protected JTextField namefield;
+    protected int power;
+    protected int seduction;
+    protected int cunning;
     private int remaining;
     private JButton btnPowMin;
     private JButton btnPowPlus;
@@ -63,11 +62,11 @@ public class CreationGUI extends JPanel {
     private Box verticalBox;
     private Box horizontalBox;
     private JLabel lblStrength;
-    private JComboBox<Trait> StrengthBox;
+    protected JComboBox<Trait> StrengthBox;
     private JTextPane StrengthDescription;
     private JSeparator separator_2;
     private JLabel lblWeakness;
-    private JComboBox<Trait> WeaknessBox;
+    protected JComboBox<Trait> WeaknessBox;
     private JTextPane WeaknessDescription;
     private JPanel panel_1;
     private JPanel panel_4;
@@ -119,7 +118,7 @@ public class CreationGUI extends JPanel {
         btnAdvStart = new JButton("Advanced Start");
         btnAdvStart.setFont(new Font("Verdana", Font.BOLD, 12));
         topPanel.add(btnAdvStart);
-        btnAdvStart.addActionListener(this::advancedStart);
+        btnAdvStart.addActionListener((evt) -> advancedStart());
 
         scrollPane = new JScrollPane();
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -337,7 +336,7 @@ public class CreationGUI extends JPanel {
         lblStrength.setForeground(new Color(240, 240, 255));
         verticalBox.add(lblStrength);
 
-        StrengthBox = new JComboBox<Trait>();
+        StrengthBox = new JComboBox<>();
         StrengthBox.setBackground(new Color(0, 10, 30));
         StrengthBox.setForeground(new Color(240, 240, 255));
         StrengthBox.addItem(Trait.exhibitionist);
@@ -371,7 +370,7 @@ public class CreationGUI extends JPanel {
         lblWeakness.setForeground(new Color(240, 240, 255));
         verticalBox.add(lblWeakness);
 
-        WeaknessBox = new JComboBox<Trait>();
+        WeaknessBox = new JComboBox<>();
         WeaknessBox.setBackground(new Color(0, 10, 30));
         WeaknessBox.setForeground(new Color(240, 240, 255));
         WeaknessBox.addItem(Trait.insatiable);
@@ -404,7 +403,7 @@ public class CreationGUI extends JPanel {
 
     }
 
-    private void advancedStart(ActionEvent evt) {
+    private void advancedStart() {
         Collection<StartConfiguration> starts = StartConfiguration.loadConfigurations();
         configs = new JComboBox<>();
         StringBuilder sb = new StringBuilder();
@@ -454,7 +453,7 @@ public class CreationGUI extends JPanel {
     }
 
 
-    private void makeGame(Optional<StartConfiguration> startConfig) {
+    protected void makeGame(Optional<StartConfiguration> startConfig) {
         if (!namefield.getText()
                         .isEmpty()) {
             String name = namefield.getText();
@@ -469,7 +468,7 @@ public class CreationGUI extends JPanel {
             if (rdbtnHard.isSelected()) {
                 Global.flag(Flag.hardmode);
             }
-            Map<Attribute, Integer> selectedAttributes = new HashMap<Attribute, Integer>();
+            Map<Attribute, Integer> selectedAttributes = new HashMap<>();
             selectedAttributes.put(Attribute.Power, power);
             selectedAttributes.put(Attribute.Seduction, seduction);
             selectedAttributes.put(Attribute.Cunning, cunning);

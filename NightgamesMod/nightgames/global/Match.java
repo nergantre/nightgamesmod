@@ -225,9 +225,6 @@ public class Match {
                 character.add(Trait.masterheels);
             }
         }
-        if (Global.checkFlag(Flag.autosave)) {
-            Global.save(true);
-        }
         Global.getPlayer().getAddictions().forEach(Addiction::endNight);
         new Postmatch(Global.getPlayer(), combatants);
     }

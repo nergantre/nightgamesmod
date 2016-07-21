@@ -1,7 +1,6 @@
 package nightgames.daytime;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,13 +16,15 @@ import nightgames.characters.body.ModdedCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
-import nightgames.characters.custom.requirement.BodyPartRequirement;
-import nightgames.characters.custom.requirement.NotRequirement;
+import nightgames.requirements.BodyPartRequirement;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.Loot;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
+
+import static nightgames.requirements.RequirementShortcuts.bodypart;
+import static nightgames.requirements.RequirementShortcuts.not;
 
 public class ReykaTime extends BaseNPCTime {
     public ReykaTime(Character player) {
@@ -100,7 +101,7 @@ public class ReykaTime extends BaseNPCTime {
         TransformationOption demonWings = new TransformationOption();
         demonWings.ingredients.put(Item.SuccubusDraft, 20);
         demonWings.ingredients.put(Item.semen, 10);
-        demonWings.requirements.add(new NotRequirement(Arrays.asList(new BodyPartRequirement("wings"))));
+        demonWings.requirements.add(not(bodypart("wings")));
         demonWings.option = "Demonic Wings";
         demonWings.scene =
                         "Reyka smiles and crushes the ingredients together and draws a magic formation on your back and shoulders. "
@@ -116,7 +117,7 @@ public class ReykaTime extends BaseNPCTime {
         TransformationOption demonTail = new TransformationOption();
         demonTail.ingredients.put(Item.SuccubusDraft, 20);
         demonTail.ingredients.put(Item.semen, 10);
-        demonTail.requirements.add(new NotRequirement(Arrays.asList(new BodyPartRequirement("tail"))));
+        demonTail.requirements.add(not(bodypart("tail")));
         demonTail.requirements.add((c, self, other) -> {
             return self.body.get("tail")
                             .stream()
@@ -364,9 +365,7 @@ public class ReykaTime extends BaseNPCTime {
                   .choose(this, "Leave");
             Global.getPlayer()
                   .addict(AddictionType.CORRUPTION, npc, Addiction.MED_INCREASE);
-            Global.getPlayer()
-                  .getAddiction(AddictionType.CORRUPTION)
-                  .flagDaytime();
+            Global.getPlayer().getAddiction(AddictionType.CORRUPTION).ifPresent(Addiction::flagDaytime);
         } else if (choice.equals("Sex")) {
             if (npc.getAffection(player) >= 8 && (!player.has(Trait.desensitized) || Global.random(2) == 1)) {
                 Global.gui()

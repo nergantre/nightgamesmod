@@ -1,6 +1,5 @@
 package nightgames.characters;
 
-import nightgames.characters.body.Body;
 import nightgames.global.Global;
 
 public enum CharacterSex {

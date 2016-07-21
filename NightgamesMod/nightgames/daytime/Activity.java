@@ -35,7 +35,7 @@ public abstract class Activity {
         page = 0;
         Global.gui().clearImage();
         Global.gui().clearPortrait();
-        Global.getDay().plan(false);
+        Global.getDay().plan();
     }
 
     @Override

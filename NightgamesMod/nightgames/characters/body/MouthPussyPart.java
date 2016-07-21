@@ -1,6 +1,6 @@
 package nightgames.characters.body;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
@@ -40,8 +40,7 @@ public class MouthPussyPart extends MouthPart {
         return pleasureMod;
     }
 
-    @Override
-    public BodyPart loadFromDict(JSONObject dict) {
+    @Override public BodyPart fromJson(JsonObject object) {
         try {
             GenericBodyPart part = new MouthPussyPart();
             return part;

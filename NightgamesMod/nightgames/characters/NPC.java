@@ -57,7 +57,7 @@ public class NPC extends Character {
         super(name, level);
         this.ai = ai;
         fakeHuman = false;
-        emotes = new HashMap<Emotion, Integer>();
+        emotes = new HashMap<>();
         for (Emotion e : Emotion.values()) {
             emotes.put(e, 0);
         }
@@ -244,7 +244,7 @@ public class NPC extends Character {
 
     @Override
     public void act(Combat c) {
-        HashSet<Skill> available = new HashSet<Skill>();
+        HashSet<Skill> available = new HashSet<>();
         Character target;
         if (c.p1 == this) {
             target = c.p2;
@@ -268,7 +268,7 @@ public class NPC extends Character {
     }
 
     public Skill actFast(Combat c) {
-        HashSet<Skill> available = new HashSet<Skill>();
+        HashSet<Skill> available = new HashSet<>();
         Character target;
         if (c.p1 == this) {
             target = c.p2;
@@ -368,6 +368,10 @@ public class NPC extends Character {
         return ai.temptLiner(c);
     }
 
+    @Override public Growth getGrowth() {
+        return ai.getGrowth();
+    }
+
     @Override
     public void detect() {
         // TODO Auto-generated method stub
@@ -402,8 +406,8 @@ public class NPC extends Character {
             masturbate();
         } else {
             if (!location.encounter(this)) {
-                HashSet<Action> available = new HashSet<Action>();
-                HashSet<Movement> radar = new HashSet<Movement>();
+                HashSet<Action> available = new HashSet<>();
+                HashSet<Movement> radar = new HashSet<>();
                 FTCMatch match;
                 if (Global.checkFlag(Flag.FTC)) {
                     match = (FTCMatch) Global.getMatch();
@@ -622,7 +626,7 @@ public class NPC extends Character {
             return null;
         }
         double sum = 0;
-        ArrayList<WeightedSkill> wlist = new ArrayList<WeightedSkill>();
+        ArrayList<WeightedSkill> wlist = new ArrayList<>();
         for (WeightedSkill wskill : plist) {
             sum += wskill.weight;
             wlist.add(new WeightedSkill(sum, wskill.skill));
@@ -814,7 +818,7 @@ public class NPC extends Character {
         double otherFit = getOtherFitness(c, other);
 
         // Now simulate the result of all actions
-        ArrayList<WeightedSkill> moveList = new ArrayList<WeightedSkill>();
+        ArrayList<WeightedSkill> moveList = new ArrayList<>();
         double sum = 0;
         for (WeightedSkill wskill : plist) {
             // Run it a couple of times

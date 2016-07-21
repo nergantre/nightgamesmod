@@ -1,15 +1,5 @@
 package nightgames.characters;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import nightgames.actions.Action;
 import nightgames.actions.Movement;
 import nightgames.characters.body.BodyPart;
@@ -25,6 +15,9 @@ import nightgames.items.Item;
 import nightgames.skills.Skill;
 import nightgames.start.NpcConfiguration;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 public abstract class BasePersonality implements Personality {
     /**
      *
@@ -36,10 +29,6 @@ public abstract class BasePersonality implements Personality {
     protected List<PreferredAttribute> preferredAttributes;
     protected CockMod preferredCockMod;
     protected AiModifiers mods;
-
-    public interface PreferredAttribute {
-        Optional<Attribute> getPreferred(Character c);
-    }
 
     protected BasePersonality() {
     }

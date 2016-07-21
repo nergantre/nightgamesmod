@@ -5,13 +5,14 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
-import nightgames.global.JSONUtils;
-import nightgames.modifier.ModifierComponent;
+import nightgames.json.JsonUtils;
+import nightgames.modifier.ModifierComponentLoader;
 
-public class ForceClothingModifier extends ClothingModifier implements ModifierComponent<ForceClothingModifier> {
+public class ForceClothingModifier extends ClothingModifier implements ModifierComponentLoader<ClothingModifier> {
+    private final String name = "force-clothing";
 
     private final Set<String> ids;
 
@@ -19,36 +20,24 @@ public class ForceClothingModifier extends ClothingModifier implements ModifierC
         this.ids = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(ids)));
     }
 
-    @Override
-    public Set<String> forcedItems() {
+    @Override public Set<String> forcedItems() {
         return ids;
     }
 
-    @Override
-    public String name() {
-        return "force-clothing";
+    @Override public String name() {
+        return name;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "Forced:" + ids.toString();
     }
 
-    @Override
-    public ForceClothingModifier instance(JSONObject obj) {
-        if (obj.containsKey("clothing")) {
-            Object raw = obj.get("clothing");
-            if (raw instanceof JSONArray) {
-                return new ForceClothingModifier(
-                                JSONUtils.loadStringsFromArr(obj, "clothing").toArray(new String[] {}));
-            } else if (raw instanceof String) {
-                return new ForceClothingModifier((String) raw);
-            } else {
-                throw new IllegalArgumentException(
-                                "'clothing' item of 'force-clothing' must be String or String Array.");
-            }
-        } else {
-            throw new IllegalArgumentException("'force-clothing' element must have 'clothing' item");
+    public ForceClothingModifier instance(JsonObject object) {
+        JsonElement element = JsonUtils.getOptional(object, "clothing").orElseThrow(() -> new IllegalArgumentException(
+                        "'force-clothing' element must have 'clothing' item"));
+        if (element.isJsonPrimitive()) {
+            return new ForceClothingModifier(element.getAsString());
         }
+        return new ForceClothingModifier(JsonUtils.stringsFromJson(element.getAsJsonArray()).toArray(new String[] {}));
     }
 }

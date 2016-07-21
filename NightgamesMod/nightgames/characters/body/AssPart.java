@@ -1,7 +1,5 @@
 package nightgames.characters.body;
 
-import org.json.simple.JSONObject;
-
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
@@ -29,6 +27,10 @@ public class AssPart extends GenericBodyPart {
     public AssPart(String desc, double hotness, double pleasure, double sensitivity) {
         super(desc, "", hotness, pleasure, sensitivity, false, "ass", "a ");
         this.size = SIZE_NORMAL;
+    }
+
+    public AssPart() {
+        super(generic);
     }
 
     @Override
@@ -121,28 +123,6 @@ public class AssPart extends GenericBodyPart {
     @Override
     public boolean isErogenous() {
         return true;
-    }
-
-    @SuppressWarnings("unchecked")
-    public JSONObject saveToDict() {
-        JSONObject res = super.saveToDict();
-        res.put("size", size);
-        return res;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public BodyPart loadFromDict(JSONObject dict) {
-        try {
-            GenericBodyPart part = new AssPart((String) dict.get("desc"), (String) dict.get("descLong"),
-                            ((Number) dict.get("hotness")).doubleValue(), ((Number) dict.get("pleasure")).doubleValue(),
-                            ((Number) dict.get("sensitivity")).doubleValue(),
-                            ((Number) dict.getOrDefault("size", Double.valueOf(SIZE_NORMAL))).doubleValue(), false);
-            return part;
-        } catch (ClassCastException e) {
-            System.err.println(e.getMessage());
-        }
-        return null;
     }
 
     @Override

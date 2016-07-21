@@ -1,0 +1,55 @@
+{
+  "bonus": 50,
+  "name": "no-fucking",
+  "intro": "TODO: no-fucking intro",
+  "acceptance": "TODO: no-fucking acceptance",
+  "skill": [
+    {
+      "type": "ban-tactic",
+      "value": {
+        "tactic": "fucking"
+      }
+    },
+    {
+      "type": "encourage-skills",
+      "value": {
+        "list": [
+          {
+            "skill": "Blow",
+            "weight": 1.0
+          },
+          {
+            "skill": "Kick",
+            "weight": -2.0
+          }
+        ]
+      }
+    }
+  ],
+  "action": [
+    {
+      "type": "ban-action",
+      "value": {
+        "action": "Locate"
+      }
+    }
+  ],
+  "clothing": [
+    {
+      "type": "underwear-only",
+      "value": {}
+    },
+    {
+      "type": "force-clothing",
+      "value": {
+        "clothing": "jacket"
+      }
+    }
+  ],
+  "item": [
+    {
+      "type": "ban-toys",
+      "value": {}
+    }
+  ]
+}

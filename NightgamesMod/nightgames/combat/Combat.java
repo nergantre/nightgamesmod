@@ -117,11 +117,8 @@ public class Combat extends Observable implements Cloneable {
                     }
                 }
             }
-        } else if (other.human() && self.has(Trait.zealinspiring) && Global.getPlayer()
-                                                                           .checkAddiction(AddictionType.ZEAL)
-                        && !Global.getPlayer()
-                                  .getAddiction(AddictionType.ZEAL)
-                                  .isInWithdrawal()) {
+        } else if (other.human() && self.has(Trait.zealinspiring) && Global.getPlayer().getAddiction(AddictionType.ZEAL)
+                        .map(Addiction::isInWithdrawal).orElse(false)) {
             self.add(this, new DivineCharge(self, .3));
         }
     }
@@ -442,32 +439,52 @@ public class Combat extends Observable implements Cloneable {
         }
     }
 
+    /**
+     * Stances have a dominance rating that benefits the dominant character, queried from Position.dominance().
+     * 0: Not dominant at all. Seen in the Neutral position.
+     * 1: Very give-and-take. Seen in the 69 position.
+     * 2: Slightly dominant. Found in the TribadismStance and Mount positions.
+     * 3: Average dominance. Missionary, Kneeling, Standing, and other "vanilla" positions all have this rating.
+     * 4: High dominance. Anal positions and Pin are examples of positions with this rating.
+     * 5: Absurd dominance. Exotic positions like Engulfed and FlyingCarry have this rating, as well as the more mundane FaceSitting and Smothering.
+     *
+     * @param self The character whose traits are checked to modify the current stance's dominance score.
+     * @return The dominance of the current position, modified by one combatant's traits. Higher return values cause more willpower loss on each combat tick.
+     * If a character is not the dominant character of the position, their effective dominance is 0.
+     */
     public int getDominanceOfStance(Character self) {
-        int domDelta = getStance().dominance() - 3;
-        if (getStance().dom(self) && domDelta > 0) {
-            if (self.has(Trait.smqueen)) {
-                domDelta += 3;
-            }
-        } else {
-            domDelta = -domDelta;
+        if (getStance().sub(self)) {
+            return 0;
+        }
+        int stanceDominance = getStance().dominance();
+        // It is unexpected, but not catastrophic if a character is at once a natural dom and submissive.
+        if (self.has(Trait.smqueen)) {
+            // Rescales stance dominance values from 0-1-2-3-4-5 to 0-2-3-5-6-8
+            stanceDominance = Double.valueOf(Math.ceil(stanceDominance * 1.5)).intValue();
         }
         if (self.has(Trait.submissive)) {
-            domDelta -= 2;
+            // Rescales stance dominance values from 0-1-2-3-4-5 to 0-0-1-1-2-3
+            stanceDominance = Double.valueOf(Math.floor(stanceDominance * 0.6)).intValue();
         }
-        return domDelta;
+        return Math.max(0, stanceDominance);
     }
 
     private void doStanceTick(Character self) {
-        int domDelta = getDominanceOfStance(self);
-        
-        if (domDelta > 0) {
-            Character sub = getStance().getOther(self);
-            if (!self.has(Trait.smqueen)) {
-                sub.loseWillpower(this, domDelta, 0, false, " (Dominance)");
-            } else {
-                write(self, Global.format("{self:NAME-POSSESSIVE} cold gaze in {self:possessive} dominant position makes {other:direct-object} shiver.", self, sub));
-                sub.loseWillpower(this, domDelta, 0, false, " (SM Queen)");
-            }
+
+        int stanceDominance = getDominanceOfStance(self);
+
+        if (!(stanceDominance > 0)) {
+            return;
+        }
+
+        Character sub = getStance().getOther(self);
+        if (self.has(Trait.smqueen)) {
+            write(self,
+                            Global.format("{self:NAME-POSSESSIVE} cold gaze in {self:possessive} dominant position makes {other:direct-object} shiver.",
+                                            self, sub));
+            sub.loseWillpower(this, stanceDominance, 0, false, " (SM Queen)");
+        } else {
+            sub.loseWillpower(this, stanceDominance, 0, false, " (Dominance)");
         }
     }
 

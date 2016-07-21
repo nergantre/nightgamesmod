@@ -12,6 +12,10 @@ public class FacePart extends GenericBodyPart {
         this.femininity = femininity;
     }
 
+    public FacePart() {
+        this(0, 0);
+    }
+
     @Override
     public void describeLong(StringBuilder b, Character c) {
         String desc;

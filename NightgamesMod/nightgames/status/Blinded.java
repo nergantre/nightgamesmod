@@ -1,12 +1,11 @@
 package nightgames.status;
 
-import org.json.simple.JSONObject;
 
+import com.google.gson.JsonObject;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
-import nightgames.global.JSONUtils;
 
 public class Blinded extends Status {
 
@@ -100,18 +99,15 @@ public class Blinded extends Status {
         return new Blinded(newAffected, cause, voluntary);
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public JSONObject saveToJSON() {
-        JSONObject obj = new JSONObject();
-        obj.put("cause", cause);
-        obj.put("voluntary", voluntary);
+    @Override public JsonObject saveToJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("cause", cause);
+        obj.addProperty("voluntary", voluntary);
         return obj;
     }
 
-    @Override
-    public Status loadFromJSON(JSONObject obj) {
-        return new Blinded(null, obj.get("cause").toString(), JSONUtils.readBoolean(obj, "voluntary"));
+    @Override public Status loadFromJson(JsonObject obj) {
+        return new Blinded(null, obj.get("cause").toString(), obj.get("voluntary").getAsBoolean());
     }
 
     public String getCause() {

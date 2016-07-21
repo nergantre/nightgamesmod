@@ -6,7 +6,6 @@ import java.util.Optional;
 import nightgames.actions.Action;
 import nightgames.actions.Movement;
 import nightgames.characters.body.BreastsPart;
-import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.items.Item;

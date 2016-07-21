@@ -19,7 +19,7 @@ public class CustomNPC extends BasePersonality {
     /**
      *
      */
-    private NPCData data;
+    private final NPCData data;
     private static final long serialVersionUID = -8169646189131720872L;
 
     public static final String TYPE_PREFIX = "CUSTOM_";
@@ -36,7 +36,7 @@ public class CustomNPC extends BasePersonality {
         applyBasicStats();
         growth = new Growth();
         preferredCockMod = CockMod.error;
-        preferredAttributes = new ArrayList<PreferredAttribute>();
+        preferredAttributes = new ArrayList<>();
         setGrowth();
         character.body.makeGenitalOrgans(character.initialGender);
 
@@ -48,15 +48,15 @@ public class CustomNPC extends BasePersonality {
     }
 
     protected void applyBasicStats() {
-        preferredAttributes = new ArrayList<PreferredAttribute>(data.getPreferredAttributes());
+        preferredAttributes = new ArrayList<>(data.getPreferredAttributes());
 
         character.isStartCharacter = data.isStartCharacter();
         character.outfitPlan.addAll(data.getTopOutfit());
         character.outfitPlan.addAll(data.getBottomOutfit());
         character.closet.addAll(character.outfitPlan);
         character.change();
-        character.att = new HashMap<Attribute, Integer>(data.getStats().attributes);
-        character.traits = new CopyOnWriteArrayList<Trait>(data.getStats().traits);
+        character.att = new HashMap<>(data.getStats().attributes);
+        character.traits = new CopyOnWriteArrayList<>(data.getStats().traits);
         character.getArousal().setMax(data.getStats().arousal);
         character.getStamina().setMax(data.getStats().stamina);
         character.getMojo().setMax(data.getStats().mojo);

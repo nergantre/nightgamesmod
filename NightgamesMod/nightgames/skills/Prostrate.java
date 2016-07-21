@@ -27,9 +27,8 @@ public class Prostrate extends Skill {
         if (!Global.getPlayer()
                    .checkAddiction(AddictionType.ZEAL))
             return false;
-        Addiction a = Global.getPlayer()
-                            .getAddiction(AddictionType.ZEAL);
-        return c.getStance().en == Stance.neutral && a.wasCausedBy(target);
+        return Global.getPlayer().getAddiction(AddictionType.ZEAL)
+                        .map(a -> c.getStance().en == Stance.neutral && a.wasCausedBy(target)).orElse(false);
     }
 
     @Override

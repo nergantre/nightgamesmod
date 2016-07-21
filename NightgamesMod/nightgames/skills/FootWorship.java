@@ -9,7 +9,6 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.Kneeling;
 import nightgames.stance.Stance;
-import nightgames.stance.StandingOver;
 import nightgames.status.BodyFetish;
 
 public class FootWorship extends Skill {

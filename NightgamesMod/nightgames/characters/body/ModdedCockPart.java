@@ -1,6 +1,6 @@
 package nightgames.characters.body;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -50,13 +50,11 @@ public class ModdedCockPart implements CockPart {
         return mod.isReady(self, getBase());
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public JSONObject save() {
-        JSONObject save = new JSONObject();
-        save.put("base", getBase().save());
-        save.put("mod", mod.save());
-        return save;
+    @SuppressWarnings("unchecked") @Override public JsonObject save() {
+        JsonObject object = new JsonObject();
+        object.add("base", getBase().save());
+        object.add("mod", mod.save());
+        return object;
     }
 
     @Override
@@ -139,10 +137,9 @@ public class ModdedCockPart implements CockPart {
         return mod.mod(a, total, getBase());
     }
 
-    @Override
-    public BodyPart load(JSONObject obj) {
-        JSONObject baseObj = (JSONObject) obj.get("base");
-        JSONObject modObj = (JSONObject) obj.get("mod");
+    @Override public BodyPart load(JsonObject obj) {
+        JsonObject baseObj = obj.getAsJsonObject("base");
+        JsonObject modObj = obj.getAsJsonObject("mod");
         BasicCockPart base = (BasicCockPart) getBase().load(baseObj);
         CockMod mod = this.mod.load(modObj);
         return new ModdedCockPart(base, mod);

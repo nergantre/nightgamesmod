@@ -3,13 +3,13 @@ package nightgames.skills;
 import java.util.List;
 
 import nightgames.characters.custom.CustomStringEntry;
-import nightgames.characters.custom.requirement.CustomRequirement;
+import nightgames.requirements.Requirement;
 
 public class LoadedSkillData {
     String name;
     float priorityMod;
-    public List<CustomRequirement> usableRequirements;
-    public List<CustomRequirement> skillRequirements;
+    public List<Requirement> usableRequirements;
+    public List<Requirement> skillRequirements;
     public List<CustomStringEntry> labels;
     public String description;
     public Tactics tactics;

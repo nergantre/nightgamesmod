@@ -3,11 +3,11 @@ package nightgames.modifier.clothing;
 import java.util.Collections;
 import java.util.Set;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
+import nightgames.modifier.ModifierComponentLoader;
 
-import nightgames.modifier.ModifierComponent;
-
-public class NudeModifier extends ClothingModifier implements ModifierComponent<NudeModifier> {
+public class NudeModifier extends ClothingModifier implements ModifierComponentLoader<ClothingModifier> {
+    private static final String name = "nude";
 
     @Override
     public Set<Integer> allowedLayers() {
@@ -16,11 +16,10 @@ public class NudeModifier extends ClothingModifier implements ModifierComponent<
 
     @Override
     public String name() {
-        return "nude";
+        return name;
     }
 
-    @Override
-    public NudeModifier instance(JSONObject obj) {
+    @Override public NudeModifier instance(JsonObject object) {
         return new NudeModifier();
     }
 

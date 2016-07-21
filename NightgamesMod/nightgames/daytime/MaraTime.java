@@ -12,7 +12,7 @@ import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.body.ModdedCockPart;
 import nightgames.characters.body.PussyPart;
-import nightgames.characters.custom.requirement.BodyPartRequirement;
+import nightgames.requirements.BodyPartRequirement;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.status.addiction.Addiction;
@@ -243,7 +243,7 @@ public class MaraTime extends BaseNPCTime {
             }
             Global.gui().choose(this, "Leave");
             Global.getPlayer().addict(AddictionType.MIND_CONTROL, npc, Addiction.MED_INCREASE);
-            Global.getPlayer().getAddiction(AddictionType.MIND_CONTROL).flagDaytime();
+            Global.getPlayer().getAddiction(AddictionType.MIND_CONTROL).ifPresent(Addiction::flagDaytime);
         }
         if (choice.equals("Sex")) {
             if (npc.getAffection(player) >= 8 && (!player.has(Trait.ticklemonster) || Global.random(2) == 1)) {

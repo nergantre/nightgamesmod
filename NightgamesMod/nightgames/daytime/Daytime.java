@@ -1,7 +1,6 @@
 package nightgames.daytime;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -9,7 +8,6 @@ import nightgames.characters.NPC;
 import nightgames.characters.Player;
 import nightgames.global.Flag;
 import nightgames.global.Global;
-import nightgames.status.Status;
 import nightgames.status.addiction.Addiction;
 
 public class Daytime {
@@ -104,7 +102,7 @@ public class Daytime {
         return false;
     }
 
-    public void plan(boolean headless) {
+    public void plan() {
         String threescene;
         boolean special = false;
         if (time == 10) {
@@ -142,14 +140,15 @@ public class Daytime {
                     ((NPC) npc).daytime(daylength);
                 }
             }
-            if (!headless) {
-                // Global.gui().nextMatch();
-                if (Global.checkFlag(Flag.autosave)) {
-                    Global.save(true);
-                }
-                Global.decideMatchType()
-                      .buildPrematch(player);
+            Global.endDay();
+
+            /*
+            if (Global.checkFlag(Flag.autosave)) {
+                Global.autoSave();
             }
+            Global.decideMatchType()
+                  .buildPrematch(player);
+            */
         }
     }
 

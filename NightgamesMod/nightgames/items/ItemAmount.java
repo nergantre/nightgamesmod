@@ -8,4 +8,26 @@ public class ItemAmount {
         this.item = item;
         this.amount = amount;
     }
+
+    public ItemAmount(String name, int amount) {
+        this(Item.valueOf(name), amount);
+    }
+
+    @Override public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        ItemAmount that = (ItemAmount) o;
+
+        return amount == that.amount && item == that.item;
+
+    }
+
+    @Override public int hashCode() {
+        int result = item.hashCode();
+        result = 31 * result + amount;
+        return result;
+    }
 }

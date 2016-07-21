@@ -1,25 +1,13 @@
 package nightgames.characters;
 
-import nightgames.Resources.ResourceLoader;
-import nightgames.characters.*;
-import nightgames.characters.Character;
 import nightgames.characters.body.*;
-import nightgames.characters.custom.CustomNPC;
-import nightgames.characters.custom.JSONSourceNPCDataLoader;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.global.JSONUtils;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.start.NpcConfiguration;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Optional;
 
 public class TestAngel extends BasePersonality {

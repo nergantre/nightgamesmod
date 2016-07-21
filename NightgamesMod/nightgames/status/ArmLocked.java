@@ -1,14 +1,14 @@
 package nightgames.status;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.body.BodyPart;
-import nightgames.characters.custom.requirement.EitherInsertedRequirement;
 import nightgames.combat.Combat;
-import nightgames.global.JSONUtils;
+
+import static nightgames.requirements.RequirementShortcuts.eitherinserted;
 
 public class ArmLocked extends Status {
     private float toughness;
@@ -16,7 +16,7 @@ public class ArmLocked extends Status {
     public ArmLocked(Character affected, float dc) {
         super("Arm Locked", affected);
         toughness = dc;
-        requirements.add(new EitherInsertedRequirement(true));
+        requirements.add(eitherinserted());
         requirements.add((c, self, other) -> toughness > .01);
         flag(Stsflag.armlocked);
     }
@@ -116,17 +116,14 @@ public class ArmLocked extends Status {
         return new ArmLocked(newAffected, Math.round(toughness));
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public JSONObject saveToJSON() {
-        JSONObject obj = new JSONObject();
-        obj.put("type", getClass().getSimpleName());
-        obj.put("toughness", toughness);
+    @Override @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("type", getClass().getSimpleName());
+        obj.addProperty("toughness", toughness);
         return obj;
     }
 
-    @Override
-    public Status loadFromJSON(JSONObject obj) {
-        return new ArmLocked(null, JSONUtils.readFloat(obj, "toughness"));
+    @Override public Status loadFromJson(JsonObject obj) {
+        return new ArmLocked(null, obj.get("toughness").getAsFloat());
     }
 }

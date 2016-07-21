@@ -1,20 +1,16 @@
 package nightgames.characters.custom;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
-
-import nightgames.characters.BasePersonality.PreferredAttribute;
 import nightgames.characters.Character;
-import nightgames.characters.CharacterSex;
-import nightgames.characters.Emotion;
-import nightgames.characters.Growth;
-import nightgames.characters.Plan;
+import nightgames.characters.*;
 import nightgames.characters.body.Body;
 import nightgames.combat.Combat;
 import nightgames.items.Item;
 import nightgames.items.ItemAmount;
 import nightgames.items.clothing.Clothing;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Stack;
 
 public interface NPCData {
     String getName();

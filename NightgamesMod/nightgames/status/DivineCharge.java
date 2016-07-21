@@ -1,6 +1,6 @@
 package nightgames.status;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -8,7 +8,7 @@ import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.global.JSONUtils;
+import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
 public class DivineCharge extends Status {
@@ -19,7 +19,6 @@ public class DivineCharge extends Status {
         flag(Stsflag.divinecharge);
         flag(Stsflag.purgable);
         this.magnitude = magnitude;
-        // requirements.add(new ReverseRequirement(Arrays.asList(new EitherInsertedRequirement(true))));
     }
 
     private String getPart(Combat c) {
@@ -42,13 +41,8 @@ public class DivineCharge extends Status {
 
     @Override
     public void tick(Combat c) {
-        if (!c.getStance()
-              .vaginallyPenetrated(affected)
-                        && !(affected.has(Trait.zealinspiring) && Global.getPlayer()
-                                                                        .checkAddiction(AddictionType.ZEAL)
-                                        && !Global.getPlayer()
-                                                  .getAddiction(AddictionType.ZEAL)
-                                                  .isInWithdrawal())) {
+        if (!c.getStance().vaginallyPenetrated(affected) && !(affected.has(Trait.zealinspiring) && !Global.getPlayer()
+                        .getAddiction(AddictionType.ZEAL).map(Addiction::isInWithdrawal).orElse(false))) {
             magnitude = magnitude / 2;
             c.write(affected, "The holy energy seeps out of " + affected.getName() + ".");
             if (magnitude < .05f)
@@ -161,18 +155,15 @@ public class DivineCharge extends Status {
         return new DivineCharge(newAffected, magnitude);
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public JSONObject saveToJSON() {
-        JSONObject obj = new JSONObject();
-        obj.put("type", getClass().getSimpleName());
-        obj.put("magnitude", magnitude);
+    @Override @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("type", getClass().getSimpleName());
+        obj.addProperty("magnitude", magnitude);
         return obj;
     }
 
-    @Override
-    public Status loadFromJSON(JSONObject obj) {
-        return new DivineCharge(null, JSONUtils.readFloat(obj, "magnitude"));
+    @Override public Status loadFromJson(JsonObject obj) {
+        return new DivineCharge(null, obj.get("magnitude").getAsFloat());
     }
 
     @Override

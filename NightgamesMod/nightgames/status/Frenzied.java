@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -12,10 +12,8 @@ import nightgames.characters.Emotion;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.global.JSONUtils;
 import nightgames.skills.AssFuck;
 import nightgames.skills.Carry;
-import nightgames.skills.Engulf;
 import nightgames.skills.Fly;
 import nightgames.skills.Fuck;
 import nightgames.skills.Invitation;
@@ -190,17 +188,14 @@ public class Frenzied extends DurationStatus {
                         .map(s -> s.copy(affected)).collect(Collectors.toSet());
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public JSONObject saveToJSON() {
-        JSONObject obj = new JSONObject();
-        obj.put("type", getClass().getSimpleName());
-        obj.put("duration", getDuration());
+    @Override @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("type", getClass().getSimpleName());
+        obj.addProperty("duration", getDuration());
         return obj;
     }
 
-    @Override
-    public Status loadFromJSON(JSONObject obj) {
-        return new Frenzied(null, JSONUtils.readInteger(obj, "duration"));
+    @Override public Status loadFromJson(JsonObject obj) {
+        return new Frenzied(null, obj.get("duration").getAsInt());
     }
 }
