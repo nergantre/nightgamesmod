@@ -423,6 +423,13 @@ public class Global {
         getSkillPool().add(new PlaceBlindfold(ch));
         getSkillPool().add(new RipBlindfold(ch));
         getSkillPool().add(new ToggleBlindfold(ch));
+        getSkillPool().add(new BunshinAssault(ch));
+        getSkillPool().add(new BunshinService(ch));
+        getSkillPool().add(new GoodnightKiss(ch));
+        getSkillPool().add(new NeedleThrow(ch));
+        getSkillPool().add(new StealClothes(ch));
+        getSkillPool().add(new Substitute(ch));
+        
 
         if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
             getSkillPool().add(new SelfStun(ch));
@@ -845,6 +852,7 @@ public class Global {
         workshop.link(engineering);
         lab.link(engineering);
         lab.link(bridge);
+        lab.jump(dining);
         libarts.link(quad);
         libarts.link(library);
         libarts.link(pool);
@@ -864,6 +872,7 @@ public class Global {
         tunnel.link(laundry);
         bridge.link(lab);
         bridge.link(library);
+        bridge.jump(quad);
         sau.link(pool);
         sau.link(quad);
         workshop.shortcut(pool);
@@ -1025,6 +1034,7 @@ public class Global {
         Personality airi = new Airi(findNpcConfig("Airi", startConfig), commonConfig);
         Personality eve = new Eve(findNpcConfig("Eve", startConfig), commonConfig);
         Personality maya = new Maya(1, findNpcConfig("Maya", startConfig), commonConfig);
+        Personality yui = new Yui(findNpcConfig("Yui", startConfig), commonConfig);
         characterPool.put(cassie.getCharacter().getType(), cassie.getCharacter());
         characterPool.put(angel.getCharacter().getType(), angel.getCharacter());
         characterPool.put(reyka.getCharacter().getType(), reyka.getCharacter());
@@ -1034,6 +1044,7 @@ public class Global {
         characterPool.put(airi.getCharacter().getType(), airi.getCharacter());
         characterPool.put(eve.getCharacter().getType(), eve.getCharacter());
         characterPool.put(maya.getCharacter().getType(), maya.getCharacter());
+        characterPool.put(yui.getCharacter().getType(), yui.getCharacter());
         
         //debugChars.add(mara.getCharacter());
     }

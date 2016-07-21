@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import nightgames.actions.Action;
+import nightgames.actions.Leap;
 import nightgames.actions.Move;
 import nightgames.actions.Movement;
 import nightgames.actions.Resupply;
@@ -433,6 +434,11 @@ public class NPC extends Character {
                             available.add(new Shortcut(path));
                         }
                     }
+                    if(getPure(Attribute.Ninjutsu)>=5){
+                        for(Area path:location.jump){
+                            available.add(new Leap(path));
+                        }
+                    }
                 }
                 for (Action act : Global.getActions()) {
                     if (act.usable(this)) {
@@ -451,8 +457,16 @@ public class NPC extends Character {
 
     @Override
     public void faceOff(Character opponent, IEncounter enc) {
-        // enc.fightOrFlight(this, ai.fightFlight(opponent));
-        enc.parse(ai.fightFlight(opponent) ? Encs.fight : Encs.flee, this, opponent);
+        Encs encType;
+        if (ai.fightFlight(opponent)) {
+            encType = Encs.fight;
+        } else if (has(Item.SmokeBomb)) {
+            encType = Encs.smoke;
+            remove(Item.SmokeBomb);
+        } else {
+            encType = Encs.flee;
+        }
+        enc.parse(encType, this, opponent);
     }
 
     @Override

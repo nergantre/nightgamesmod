@@ -8,6 +8,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import nightgames.actions.Action;
+import nightgames.actions.Leap;
 import nightgames.actions.Move;
 import nightgames.actions.Shortcut;
 import nightgames.areas.Area;
@@ -356,6 +357,12 @@ public class Player extends Character {
                 if (getPure(Attribute.Cunning) >= 28) {
                     for (Area path : location.shortcut) {
                         gui.addAction(new Shortcut(path), this);
+                    }
+                }
+
+                if(getPure(Attribute.Ninjutsu)>=5){
+                    for(Area path:location.jump){
+                        gui.addAction(new Leap(path),this);
                     }
                 }
                 for (Action act : Global.getActions()) {

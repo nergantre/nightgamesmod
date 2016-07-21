@@ -74,6 +74,7 @@ public class StripBottom extends Skill {
             }
             target.emote(Emotion.nervous, doubled ? 20 : 10);
         } else {
+            stripped = target.outfit.getTopOfSlot(ClothingSlot.bottom);
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.miss, target));
             } else if (target.human()) {

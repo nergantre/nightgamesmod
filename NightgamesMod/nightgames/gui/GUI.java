@@ -1098,6 +1098,9 @@ public class GUI extends JFrame implements Observer {
         clearCommand();
         commandPanel.add(new EncounterButton("Fight", enc, target, Encs.fight));
         commandPanel.add(new EncounterButton("Flee", enc, target, Encs.flee));
+        if (player.has(Item.SmokeBomb)) {
+            commandPanel.add(new EncounterButton("Smoke Bomb", enc, target, Encs.smoke));
+        }
         Global.getMatch().pause();
         commandPanel.revalidate();
     }

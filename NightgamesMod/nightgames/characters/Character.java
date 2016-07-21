@@ -20,6 +20,7 @@ import org.json.simple.JSONObject;
 import nightgames.actions.Move;
 import nightgames.actions.Movement;
 import nightgames.areas.Area;
+import nightgames.areas.NinjaStash;
 import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
@@ -35,6 +36,7 @@ import nightgames.global.DebugFlags;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.global.JSONUtils;
+import nightgames.global.Match;
 import nightgames.items.Item;
 import nightgames.items.Loot;
 import nightgames.items.clothing.Clothing;
@@ -3276,5 +3278,41 @@ public abstract class Character extends Observable implements Cloneable {
             dinged = true;
         }
         return dinged;
+    }
+    
+    public void matchPrep(Match m) {
+        if(getPure(Attribute.Ninjutsu)>=9){
+            Global.gainSkills(this);
+            placeNinjaStash(m);
+        }
+        
+    }
+    
+    private void placeNinjaStash(Match m) {
+        String location;
+        switch(Global.random(6)){
+        case 0:
+            location = "Library";
+            break;
+        case 1:
+            location = "Dining";
+            break;
+        case 2:
+            location = "Lab";
+            break;
+        case 3:
+            location = "Workshop";
+            break;
+        case 4:
+            location = "Storage";
+            break;
+        default:
+            location = "Liberal Arts";
+            break;
+        }
+        m.gps(location).place(new NinjaStash(this));
+        if(human()){
+            Global.gui().message("<b>You've arranged for a hidden stash to be placed in the "+m.gps(location).toString()+".</b>");
+        }
     }
 }

@@ -37,14 +37,15 @@ public class Match {
         matchData = new MatchData(combatants);
         score = new HashMap<Character, Integer>();
         this.condition = condition;
+        map = Global.buildMap();
         for (Character combatant : combatants) {
             score.put(combatant, 0);
             Global.gui().message(Global.gainSkills(combatant));
             Global.learnSkills(combatant);
+            combatant.matchPrep(this);
         }
         time = 0;
         dropOffTime = 0;
-        map = Global.buildMap();
         pause = false;
         Deque<Area> areaList = new ArrayDeque<>();
         areaList.add(map.get("Dorm"));

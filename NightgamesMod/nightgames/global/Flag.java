@@ -69,5 +69,9 @@ public enum Flag {
     didFTC, 
     AddictionAdvice,
     AiriDisabled,
-    extendedLogs;
+    extendedLogs, 
+    YuiLoyalty, 
+    YuiAvailable, 
+    Yui, 
+    YuiUnlocking;
 }

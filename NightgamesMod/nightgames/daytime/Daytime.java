@@ -29,6 +29,13 @@ public class Daytime {
                 Global.flag(Flag.AliceAvailable);
             }
         }
+        if (Global.checkFlag(Flag.YuiLoyalty)) {
+            Global.flag(Flag.YuiAvailable);
+        }
+        if (Global.checkFlag(Flag.YuiUnlocking)) {
+            Global.unflag(Flag.YuiUnlocking);
+        }
+        
         Global.unflag(Flag.threesome);
         threesome = new Threesomes(player);
         time = 10;
@@ -171,6 +178,9 @@ public class Daytime {
         activities.add(new Boutique(player));
         if (Global.checkFlag(Flag.Reyka)) {
             activities.add(new ReykaTime(player));
+        }
+        if (Global.checkFlag(Flag.YuiLoyalty)) {
+            activities.add(new YuiTime(player));
         }
         activities.add(new MagicTraining(player));
         activities.add(new Workshop(player));
