@@ -823,7 +823,11 @@ public class Body implements Cloneable {
                 }
                 sb.append(added.get(added.size() - 1)
                                .fullDescribe(character));
-                sb.append(" turned back into ");
+                if (removed.size() == 1 && removed.get(0) == null) {
+                    sb.append(" disappeared");
+                } else {
+                    sb.append(" turned back into ");
+                }
                 for (BodyPart p : removed.subList(0, removed.size() - 1)) {
                     sb.append(Global.prependPrefix(p.prefix(), p.fullDescribe(character)))
                       .append(", ");

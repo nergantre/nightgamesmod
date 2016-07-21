@@ -267,7 +267,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
             } else {
                 c.write(self, String.format(
                                 "%s hot flesh kneads %s %s as %s %s"
-                                                + ", drawing gouts of life energy out of %s %s, which is greedily absorbed by %s %s",
+                                                + ", drawing gouts of life energy out of %s %s, which is greedily absorbed by %s %s.",
                                 self.possessivePronoun(), opponent.possessivePronoun(), target.describe(opponent),
                                 self.subjectAction("ride", "rides"), opponent.directObject(),
                                 opponent.possessivePronoun(), target.describe(opponent), self.possessivePronoun(),
@@ -419,7 +419,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
         }
         if (isType("pussy") && self.has(Trait.vaginaltongue) && target.isType("cock")
                         && !opponent.hasStatus(Stsflag.cockbound)) {
-            opponent.add(c, new CockBound(opponent, 5, self.name() + "'s pussy-tongue"));
+            opponent.add(c, new CockBound(opponent, 5, self.nameOrPossessivePronoun() + " pussy-tongue"));
             c.write(self, self.nameOrPossessivePronoun() + " long sinuous vaginal tongue wraps around "
                             + opponent.nameOrPossessivePronoun() + " " + target.describe(opponent)
                             + ", preventing any escape.\n");
@@ -511,7 +511,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
         }
         if (countsAs(self, plant)) {
             c.write(self, Global.format(
-                            "The small rough fibery filaments inside {self:name-possessive} flower pussy wraps around {other:name-possessive} cock. "
+                            "The small rough fibery filaments inside {self:name-possessive} flower pussy wrap around {other:name-possessive} cock. "
                                             + "A profound exhaustion settles on {other:direct-object}, as {other:subject-action:feel|feels} {self:name-possessive} insidious flower leeching {other:possessive} strength.",
                             self, opponent));
             opponent.drainStaminaAsMojo(c, self, 20, 1.25f);
@@ -596,7 +596,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                                 "{self:NAME-POSSESSIVE} {self:body-part:pussy} clenches down hard"
                                                 + " on {other:name-possessive} {other:body-part:cock}. The suction is so strong that the cum"
                                                 + " leaves the shaft in a constant flow rather than spurts. When {other:possessive} orgasm is"
-                                                + " over, {other:possessive} is much more drained of cum than usual.",
+                                                + " over, {other:pronoun} is much more drained of cum than usual.",
                                 self, opponent));
                 opponent.loseWillpower(c, 10 + Global.random(Math.min(20, self.get(Attribute.Bio))));
             } else if (countsAs(self, divine) && self.has(Trait.zealinspiring) && opponent.human()

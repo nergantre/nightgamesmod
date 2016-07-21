@@ -789,7 +789,7 @@ public class Global {
                                         + "the first floor is in bounds. The Library is located directly out back, and the side door is just a short walk from the pool.",
                         Movement.la, new MapDrawHint(new Rectangle(5, 5, 5, 7), "L&A", false));
         Area pool = new Area("Pool",
-                        "You are by the indoor <b>Pool</b>, which is connected to the Student Union for reasons that no one has ever really explained. There pool is quite "
+                        "You are by the indoor <b>Pool</b>, which is connected to the Student Union for reasons that no one has ever really explained. The pool here is quite "
                                         + "large and there is even a jacuzzi. A quick soak would feel good, but the lack of privacy is a concern. The side doors are locked at this time of night, but the "
                                         + "door to the Student Union is open and there's a back door that exits near the Liberal Arts building. Across the water in the other direction is the Courtyard.",
                         Movement.pool, new MapDrawHint(new Rectangle(6, 12, 4, 2), "Pool", false));

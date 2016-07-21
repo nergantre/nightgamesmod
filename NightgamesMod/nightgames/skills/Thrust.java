@@ -142,7 +142,7 @@ public class Thrust extends Skill {
         } else if (modifier == Result.reverse) {
             return Global.format(
                             "You rock your hips against {other:direct-object}, riding her smoothly. "
-                                            + "Despite the slow place, {other:subject} soon starts gasping and mewing with pleasure.",
+                                            + "Despite the slow pace, {other:subject} soon starts gasping and mewing with pleasure.",
                             getSelf(), target);
         } else {
             return "You thrust into " + target.name()

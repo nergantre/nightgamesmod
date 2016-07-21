@@ -159,7 +159,7 @@ public class Cunnilingus extends Skill {
                             + (damage == -2 ? " You feel a strange pull on you mind,"
                                             + " somehow she has managed to enthrall you with her juices." : "");
         }
-        return "You locate and capture " + target.name() + "'s clit between your lips and attack it with your tongue"
+        return "You locate and capture " + target.name() + "'s clit between your lips and attack it with your tongue."
                         + (damage == -1 ? " Her juices taste wonderful and you cannot help but desire more." : "")
                         + (damage == -2 ? " You feel a strange pull on you mind,"
                                         + " somehow she has managed to enthrall you with her juices." : "");
