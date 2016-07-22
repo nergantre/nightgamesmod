@@ -411,7 +411,7 @@ public class MaraTime extends BaseNPCTime {
                     player.add(Trait.heeldrop);
                     npc.add(Trait.heeldrop);
                 }
-            } else if(choice=="Faerie play"){
+            } else if(choice.equals("Faerie play")){
                     Global.gui().message("The two of you head to Mara's room, where apparently she has a request for you. A quick glance around her room doesn't reveal any obvious traps or preparation. Everything seems "
                             + "fairly normal: slightly messy and her laptop left unlocked with some 'adult entertainment' on the desktop. <i>\"Hey! Don't be nosy!\"</i> She closes her laptop, noticably blushing, and sits "
                             + "on her bed.<p>"

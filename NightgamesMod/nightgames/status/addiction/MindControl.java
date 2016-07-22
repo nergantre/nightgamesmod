@@ -263,6 +263,7 @@ public class MindControl extends Addiction {
                         } else if (pos instanceof Anal) {
                             succeeded = false;
                             description = "Since you're not facing Mara, her hypnotic eyes cannot affect you.";
+                            break;
                         }
                         // Fall-through intentional -- AnalProne
                     case mount:

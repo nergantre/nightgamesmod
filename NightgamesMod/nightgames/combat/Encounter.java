@@ -27,8 +27,8 @@ public class Encounter implements Serializable, IEncounter {
     protected Character p2;
     protected boolean p1ff;
     protected boolean p2ff;
-    protected Optional<String> p1Guaranteed;
-    protected Optional<String> p2Guaranteed;
+    protected transient Optional<String> p1Guaranteed;
+    protected transient Optional<String> p2Guaranteed;
     protected Area location;
     protected transient Combat fight;
     protected int checkin;

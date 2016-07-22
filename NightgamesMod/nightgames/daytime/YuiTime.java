@@ -77,7 +77,7 @@ public class YuiTime extends BaseNPCTime {
             }
             Global.gui()
                   .choose(this, "Leave");
-        } else if (choice == "Leave") {
+        } else if (choice.equals("Leave")) {
             done(acted);
         } else if (choice.startsWith("Train")) {
             Global.gui()

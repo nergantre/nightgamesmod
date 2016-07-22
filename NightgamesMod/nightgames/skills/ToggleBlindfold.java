@@ -56,7 +56,7 @@ public class ToggleBlindfold extends Skill {
                 c.write(getSelf(), String.format("%s a blindfold around %s eyes.",
                                 getSelf().subjectAction("tie", "ties"), getSelf().possessivePronoun()));
             } else {
-                c.write(getSelf(), String.format("%s out a blindfold, but %s it from %s hands and throws it away.",
+                c.write(getSelf(), String.format("%s out a blindfold, but %s it from %s hands and %s it away.",
                                 getSelf().subjectAction("take", "takes"), target.subjectAction("snatch", "snatches"),
                                 getSelf().possessivePronoun(), getSelf().action("throw", "throws")));
             }

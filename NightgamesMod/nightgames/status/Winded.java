@@ -117,13 +117,15 @@ public class Winded extends DurationStatus {
         return new Winded(newAffected);
     }
 
-    @Override @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+    @Override public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         return obj;
     }
 
     @Override public Status loadFromJson(JsonObject obj) {
-        return new Winded(null);
+        //Winded constructor can't handle nulls
+        throw new UnsupportedOperationException();
+        //return new Winded(null);
     }
 }
