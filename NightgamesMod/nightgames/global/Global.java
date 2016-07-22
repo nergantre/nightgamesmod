@@ -975,6 +975,7 @@ public class Global {
         JsonObject saveJson = data.toJson();
 
         try (JsonWriter saver = new JsonWriter(new FileWriter(file))) {
+            saver.setIndent("  ");
             JsonUtils.gson.toJson(saveJson, saver);
         } catch (IOException | JsonIOException e) {
             System.err.println("Could not save file " + file + ": " + e.getMessage());
