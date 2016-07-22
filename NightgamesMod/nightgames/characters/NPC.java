@@ -114,10 +114,10 @@ public class NPC extends Character {
             }
         }
         if (per >= 6 && per < 8) {
-            if (stamina.percent() <= 66) {
-                visible = visible + "She's starting to look tired<br>";
-            } else if (stamina.percent() <= 33) {
+            if (stamina.percent() <= 33) {
                 visible = visible + "She looks a bit unsteady on her feet<br>";
+            } else if (stamina.percent() <= 66) {
+                visible = visible + "She's starting to look tired<br>";
             }
         }
         if (per >= 3 && per < 7) {
