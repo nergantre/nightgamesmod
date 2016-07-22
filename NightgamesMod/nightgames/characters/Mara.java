@@ -236,15 +236,35 @@ public class Mara extends BasePersonality {
                             + "cover her hands with your seed. Mara breaks the kiss and leaves you completely exhausted.";
         }
         if (c.getStance().vaginallyPenetrated(character)) {
-            return "Mara's pussy is so tight and wet. She skillfully rides your dick, overwhelming you with pleasure. <i>\"Are you going to cum before me?\"</i> She's panting with pleasure, "
-                            + "but still sounds confident. <i>\"Go ahead and fill me up. I don't mind.\"</i> Her permission is irrelevant. She's making you cum and there's nothing you can do about it. "
-                            + "You throw your head back and moan as you shoot your load into her tight womb.<p>Mara slides off your cock as your seed slowly leaks out of her. <i>\"Was I too good "
-                            + "for you to hold back? You quite a mess down here.\"</i> She stirs her entrance with her finger, making a wet sound. She still looks pretty horny and you recall that "
-                            + "she hasn't climaxed yet. She smiles and gives you a quick kiss. <i>\"Don't worry, I'll give myself a hand.\"</i> She inserts a second finger, using your ejaculate as a "
-                            + "lubricant. <i>\"Playing with semen would probably be a little gross to you, right? It's actually turning me on.\"</i> She lets out a quiet moan and gives you a needy "
-                            + "look. <i>\"Just don't leave, ok? I'd feel lonely masturbating on my own.\"</i> You hug Mara's petite body, feeling her tremble while she continues to play with herself. "
-                            + "You kiss her neck and stroke her body, which seems to heighten her pleasure. You judge she is on the verge of orgasm and kiss her passionately, while playing with "
-                            + "her nipples. She moans against your mouth and shudders in your arms as she climaxes.";
+            if(character.has(Item.ShockGlove)&&Global.random(2)==0){
+                return "You've got Mara just where you want her. Your arms are wrapped around her, holding her in place as you thrust your cock into her tight pussy over and over. Her moans are getting louder and louder, and you can feel her breath "
+                        + "quickening. You're getting close to cumming, but she's definitely closer. She returns your embrace, squeezing her body against yours, stroking your back with her hands. Her hands creep down to grasp your buttocks. "
+                        + "All of a sudden, she grins deviously, and she whispers...<p>"
+                        + "<i>\"Time for an experiment. Surprise!\"</i><br>"
+                        + "Suddenly, you feel a poking sensation in your ass. You feel the pressure of her fingers touching your prostate. Wait... is that the hand that she's wearing her shock glove on...?<p>"
+                        + "<b>BZZT!</b> A sharp jolt of pain tears through you as Mara forces electricity through her shock glove and into your ass. You thrash around desperately, but somehow the lithe girl is "
+                        + "able to keep her finger pressed against your prostate. You feel an intense pressure welling in your abdomen.<p>"
+                        + "Your orgasm hits you like a brick wall. The pain in your rear gives way to pleasure as the pressure in your abdomen releases. Your cock twitches over and over, and you can feel your seed filling up Mara's insides.<p>"
+                        + "When your orgasm finally subsides, Mara stands. Thick globs of white cum drip out of her. <i>\"Wow, you came a LOT!\"</i> she remarks happily. <i>\"Just like my research indicated.\"</i> She reaches for her soaked flower. "
+                        + "<i>\"Now, I can't go into my next fight this horny. You just hold that sexy, defeated pose. I'll handle myself.\"</i> Exhausted, you can do little more than lie there as Mara masturbates over you.<p>"
+                        + "After a few moments of pleasuring herself, Mara suddenly has a revelation. She spreads her pussy lips open and brings her dangerous, gloved hand near her exposed clit. She takes a deep breathe to bolster "
+                        + "her courage and giggles nervously. <i>\"This is probably either the best or worst idea I've even had. It looked like it felt great on your prostate... What's good for the goose, right..?\"</i> Before you can respond, "
+                        + "she touches an electrified finger to her sensitive love bud. Her whole body goes rigid and she lets out a scream of... probably pleasure?... as she shudders in orgasm.<p>"
+                        + "Finally, it's over. The reckless minx collapses next to you, panting. She rolls over and rests her head on your shoulder, then says, <i>\"That felt scary good, but I bet I don't need to tell you that... "
+                        + "I'm just worried I might get addicted to that kind of stimulation.\"</i> "
+                        + "She pecks your lips with a light kiss, then stands. <i>\"Come visit me every once in a while, okay? I'm working on some new tools that need... testing.\"</i>";
+            }else{
+                return "Mara's pussy is so tight and wet. She skillfully rides your dick, overwhelming you with pleasure. <i>\"Are you going to cum before me?\"</i> She's panting with pleasure, "+
+                    "but still sounds confident. <i>\"Go ahead and fill me up. I don't mind.\"</i> Her permission is irrelevant. She's making you cum and there's nothing you can do about it. "+
+                    "You throw your head back and moan as you shoot your load into her tight womb.<p>"
+                    + "Mara slides off your cock as your seed slowly leaks out of her. <i>\"Was I too good "+
+                    "for you to hold back? You quite a mess down here.\"</i> She stirs her entrance with her finger, making a wet sound. She still looks pretty horny and you recall that "+
+                    "she hasn't climaxed yet. She smiles and gives you a quick kiss. <i>\"Don't worry, I'll give myself a hand.\"</i> She inserts a second finger, using your ejaculate as a "+
+                    "lubricant. <i>\"Playing with semen would probably be a little gross to you, right? It's actually turning me on.\"</i> She lets out a quiet moan and gives you a needy "+
+                    "look. <i>\"Just don't leave, ok? I'd feel lonely masturbating on my own.\"</i> You hug Mara's petite body, feeling her tremble while she continues to play with herself. "+
+                    "You kiss her neck and stroke her body, which seems to heighten her pleasure. You judge she is on the verge of orgasm and kiss her passionately, while playing with "+
+                    "her nipples. She moans against your mouth and shudders in your arms as she climaxes.";
+            }
         } else {
             target.arousal.set(target.arousal.max() * 2 / 3);
             return "You're completely at Mara's mercy, but she refuses to finish you off. She teases and caresses you, keeping you too on-edge to fight back, but avoids your "
