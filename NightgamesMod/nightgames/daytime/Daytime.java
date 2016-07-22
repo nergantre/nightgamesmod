@@ -192,6 +192,7 @@ public class Daytime {
 
     public void advance(int t) {
         time += t;
+        buildActivities();
     }
 
     public static void train(Character one, Character two, Attribute att) {
