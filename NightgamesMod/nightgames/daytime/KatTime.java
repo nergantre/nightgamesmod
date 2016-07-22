@@ -1,7 +1,6 @@
 package nightgames.daytime;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Optional;
 
 import nightgames.characters.Attribute;
@@ -14,11 +13,15 @@ import nightgames.characters.body.EarPart;
 import nightgames.characters.body.ModdedCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
-import nightgames.characters.custom.requirement.BodyPartRequirement;
-import nightgames.characters.custom.requirement.NotRequirement;
+import nightgames.requirements.BodyPartRequirement;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.status.addiction.Addiction;
+import nightgames.status.addiction.AddictionType;
+
+import static nightgames.requirements.RequirementShortcuts.bodypart;
+import static nightgames.requirements.RequirementShortcuts.not;
 
 public class KatTime extends BaseNPCTime {
     public KatTime(Character player) {
@@ -42,14 +45,14 @@ public class KatTime extends BaseNPCTime {
         primalCock.ingredients.put(Item.Aphrodisiac, 50);
         primalCock.requirements.add(new BodyPartRequirement("cock"));
         primalCock.requirements.add((c, self, other) -> {
-            return self.body.get("cock").stream().anyMatch(cock -> ((CockPart) cock).isGeneric());
+            return self.body.get("cock").stream().anyMatch(cock -> ((CockPart) cock).isGeneric(self));
         });
         primalCock.additionalRequirements = "A normal cock";
         primalCock.option = "Primal Cock";
         primalCock.scene = "[Placeholder]<br>Kat uses her totemic magic to convert your penis into a primal cock.";
         primalCock.effect = (c, self, other) -> {
             Optional<BodyPart> optPart =
-                            self.body.get("cock").stream().filter(cock -> ((CockPart) cock).isGeneric()).findAny();
+                            self.body.get("cock").stream().filter(cock -> ((CockPart) cock).isGeneric(self)).findAny();
             BasicCockPart target = (BasicCockPart) optPart.get();
             self.body.remove(target);
             self.body.add(new ModdedCockPart(target, CockMod.primal));
@@ -76,7 +79,7 @@ public class KatTime extends BaseNPCTime {
         TransformationOption catTail = new TransformationOption();
         catTail.ingredients.put(Item.Rope, 10);
         catTail.ingredients.put(Item.Aphrodisiac, 50);
-        catTail.requirements.add(new NotRequirement(Arrays.asList(new BodyPartRequirement("tail"))));
+        catTail.requirements.add(not(bodypart("tail")));
         catTail.requirements.add((c, self, other) -> {
             return self.body.get("tail").stream().anyMatch(part -> part != TailPart.cat) || !self.body.has("tail");
         });
@@ -122,6 +125,23 @@ public class KatTime extends BaseNPCTime {
                             && Global.getNPC("Kat").getAffection(player) >= 5) {
                 Global.gui().choose(this, "Ask about Animal Spirit");
             }
+            if (Global.getPlayer().checkAddiction(AddictionType.BREEDER)) {
+                Global.gui().choose(this, "Must... Fuck...");
+            }
+        } else if (Global.getPlayer().checkAddiction(AddictionType.BREEDER)) {
+            Global.gui()
+            .message("Kat low-affection addiction intro");
+            if (npc.getAttraction(player) < 15) {
+                npc.gainAttraction(player, 2); 
+                player.gainAttraction(npc, 2);
+            } else {
+                npc.gainAffection(player, 1);
+                player.gainAffection(npc, 1);
+                Global.gui() .choose(this, "Games");
+                Global.gui().choose(this, "Sparring");
+                Global.gui().choose(this, "Sex");
+            }
+            Global.gui().choose(this, "Must... Fuck...");
         } else if (npc.getAttraction(player) < 10) {
             Global.gui().message(
                             "You decide to look for Kat and see if she's interested in spending some time together. You don't have any way to contact her directly, "
@@ -194,6 +214,71 @@ public class KatTime extends BaseNPCTime {
 
     @Override
     public void subVisit(String choice) {
+        if (choice.equals("Must... Fuck...")) {
+            if (npc.getAffection(player) == 0) {
+                Global.gui().message("Kat teases you, but eventually you end up fucking like, well, animals. No"
+                                + " surprise there. She also bites you again, which in the end just makes matters worse."
+                                + " This is a placeholder.");
+            } else {
+                Global.gui().message("Your cock sits uncomfortably hard in your pants as you clear your throat. You NEED "
+                                + "to fuck her, but you can't just say that, can you? Kat seems to see right through you, "
+                                + "though. <i>\"Oh boy, I recognize that look. Pins and needles all over? Slight tunnel "
+                                + "vision? Tense muscles? Increased saliva productionya? Enhanced sense of touch and smell? "
+                                + "Overactive libido?\"</i> Correct on all counts. <i>\"Yes! It worked!\"</i> You know Kat"
+                                + " would never hurt you, but her enthusiasm is still a little unsettling. You ask her to "
+                                + "explain. <i>\"Oh, well. It's just... You know, secretly we all want to let the animal "
+                                + "within us out from time to time, nya? I seem to bring those feelings a little more to the"
+                                + " surface.\"</i> Giving her an askance glance, you ask whether it has anything to do with"
+                                + " her newfound hobby of biting you, and in response she flushes redder than a strawberry."
+                                + " A cute strawberry. <i>\"Well, the animal spirit which fused with me might carry over a "
+                                + "little into my saliva... I figured if I could get a little of it into your bloodstream, "
+                                + "it would make things easier for me. You know, get you going, nya? I didn't expect this, "
+                                + "but... You seem to have gone into a rut! That's... Okay, right? I mean, I didn't mean any "
+                                + "harm... \"</i> She looks absolutely terrified, looking down and to the side, voice dwindling "
+                                + "to barely a whisper. You quickly reassure her that you aren't mad. <i>\"Oh, thank you! I "
+                                + "was worried that you... That you'd feel... Anyway, I have some experience with this stuff,"
+                                + " so I know how you must be feeling. Trust me, try as you might, it won't go away. Not until"
+                                + " you, uhm... You know...\"</i> Before she even has a chance to flush over, you hook a"
+                                + " finger under her chin and lean down for a kiss. When you break it and lean back, all the"
+                                + " nerves have fled Kat's face. In their place you see a look which must be a mirror of your "
+                                + "own; one filled with desire and need. You catch yourself almost growling as you snatch her "
+                                + "hand and start to lead her to your room.\n\nKat jumps on your back the moment you unlock the"
+                                + " door, and you awkwardly stumble in, trying to keep your balance. She sheds her shoes, and "
+                                + "then uses her feet to pull your pants and underwear down in one go. <i>\"No reason to wait, "
+                                + "nya? Might as well get a little practice in.\"</i> Oh, she wants a match, does she? Well, that"
+                                + " can be arranged. You reach back to dislodge her, but that only allows her to hook her arms"
+                                + " around yours, pinning them in place. Her feet, meanwhile, wrap themselves around your dick"
+                                + " and start giving you a footjob. You could always crush her against a wall or something, "
+                                + "but you don't want to hurt her, however devious a cat she may be. Instead, you stagger over"
+                                + " to your bed and allow yourself to fall onto it sideways. The impact frees your arms, and "
+                                + "you quickly wrench her legs away. Kat quickly grabs you again, but not before you've rolled"
+                                + " over. Now pressed together face-to-face, you kiss her again and start rubbing her nipples."
+                                + " In turn, she grinds your rod between her thighs. Her pheromones are wafting up to your face"
+                                + " now, and that's certainly not going to help your staying power. You'll have to finish"
+                                + " matters quickly. Using brute force, more than you thought you had, you force her onto her "
+                                + "stomach and climb on top. After plying her legs open with your own and seizing her slender "
+                                + "wrists in one hand, you use the other to line up your cock. This time you can't hold back the "
+                                + "growl as you plunge into her. That only seems to arouse Kat more, and she starts bucking "
+                                + "underneath you. You pull her up to her knees and continue to pound her hard and maul her "
+                                + "nipples. It's not long before she unleashes a flood of pheromones in orgasm, which seem to go"
+                                + " straight to your cock. You try to hold out for a second one, but you're already getting "
+                                + "really close. Kat senses the irregularity of your thrusts. <i>\"Yes! Nya! Cum in me!\"</i> "
+                                + "It would be rude to refuse a lady. With a final, mighty thrust, you let loose inside of her"
+                                + " at the same time her second orgasm starts. You writhe against each other in ecstasy for almost"
+                                + " a full minute before settling down. Strangely, however, you do not feel the lethargy that would"
+                                + " normally wash over you after such a glorious climax. In fact, your dick is still ad hard as "
+                                + "ever. <i>\"Surprised? That was fantastic, but once just won't do!\"</i> Agreed. The second "
+                                + "round is slower-paced, more intimate. And the third, and fourth. Each time, you cum a lot "
+                                + "sooner than normal, but Kat tells you that that's normal. You're not about to complain. By "
+                                + "the time you do finish, it's because every other part of you is giving out. That said, you don't"
+                                + " feel nearly as hot as before. You and Kat share a drink before she warmly kisses you goodbye. "
+                                + "If you're not really careful, you're going to get addicted to this for sure. But with sex like"
+                                + " that, is that a bad thing?");
+            }
+            Global.gui().choose(this, "Leave");
+            Global.getPlayer().addict(AddictionType.BREEDER, npc, Addiction.MED_INCREASE);
+            Global.getPlayer().getAddiction(AddictionType.BREEDER).ifPresent(Addiction::flagDaytime);
+        }
         if (choice.equals("Sex")) {
             Global.gui().message(
                             "Kat sits on her bed and looks at you hesitantly, with red cheeks. <i>\"Are we going to... you know?\"</i> Despite her shy appearance, there's definitely "

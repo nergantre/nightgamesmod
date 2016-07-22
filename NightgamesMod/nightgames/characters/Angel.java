@@ -12,6 +12,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.start.NpcConfiguration;
 
 public class Angel extends BasePersonality {
     /**
@@ -20,7 +21,15 @@ public class Angel extends BasePersonality {
     private static final long serialVersionUID = -8169646189131720872L;
 
     public Angel() {
-        super("Angel", 1);
+        this(Optional.empty(), Optional.empty());
+    }
+
+    public Angel(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
+        super("Angel", 1, charConfig, commonConfig);
+    }
+
+    protected void applyBasicStats() {
+        character.isStartCharacter = true;
         preferredCockMod = CockMod.blessed;
         character.outfitPlan.add(Clothing.getByID("Tshirt"));
         character.outfitPlan.add(Clothing.getByID("bra"));
@@ -40,8 +49,7 @@ public class Angel extends BasePersonality {
         character.body.add(BreastsPart.dd);
         // very feminine face
         character.body.add(new FacePart(.1, 4.2));
-        character.body.add(PussyPart.normal);
-        character.body.finishBody(CharacterSex.female);
+        character.initialGender = CharacterSex.female;
     }
 
     @Override
@@ -58,6 +66,7 @@ public class Angel extends BasePersonality {
         growth.addTrait(15, Trait.experienced);
         growth.addTrait(18, Trait.erophage);
         growth.addTrait(20, Trait.skeptical);
+        growth.addTrait(20, Trait.zealinspiring);
         growth.addTrait(21, Trait.holecontrol);
         growth.addTrait(24, Trait.insertion);
         growth.addTrait(27, Trait.lacedjuices);

@@ -2,20 +2,25 @@ package nightgames.modifier.skill;
 
 import java.util.function.BiFunction;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.global.JSONUtils;
-import nightgames.modifier.ModifierComponent;
+import nightgames.modifier.ModifierComponentLoader;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 
-public class EncourageTacticsModifier extends SkillModifier implements ModifierComponent<EncourageTacticsModifier> {
+public class EncourageTacticsModifier extends SkillModifier implements ModifierComponentLoader<SkillModifier> {
+    private static final String name = "encourage-tactic";
 
     private final Tactics modified;
     private final BiFunction<Character, Combat, Double> weight;
+
+    EncourageTacticsModifier() {
+        modified = null;
+        weight = ((character, combat) -> 0.0);
+    }
 
     public EncourageTacticsModifier(Tactics modified, BiFunction<Character, Combat, Double> weight) {
         this.modified = modified;
@@ -24,7 +29,7 @@ public class EncourageTacticsModifier extends SkillModifier implements ModifierC
 
     public EncourageTacticsModifier(Tactics modified, double weight) {
         this.modified = modified;
-        this.weight = (ch, com) -> weight;
+        this.weight = (character, combat) -> weight;
     }
 
     @Override
@@ -40,14 +45,13 @@ public class EncourageTacticsModifier extends SkillModifier implements ModifierC
 
     @Override
     public String name() {
-        return "encourage-tactic";
+        return name;
     }
 
-    @Override
-    public EncourageTacticsModifier instance(JSONObject obj) {
-        if (!obj.containsKey("tactic") || !obj.containsKey("weight")) {
-            Tactics tact = Tactics.valueOf(JSONUtils.readString(obj, "tactic"));
-            double weight = JSONUtils.readFloat(obj, "weight");
+    @Override public EncourageTacticsModifier instance(JsonObject object) {
+        if (object.has("tactic") && object.has("weight")) {
+            Tactics tact = Tactics.valueOf(object.get("tactic").getAsString());
+            double weight = object.get("weight").getAsFloat();
             return new EncourageTacticsModifier(tact, weight);
         }
         throw new IllegalArgumentException("'encourage-tactic' must have a 'tactic' and a 'weight'");
@@ -55,6 +59,7 @@ public class EncourageTacticsModifier extends SkillModifier implements ModifierC
 
     @Override
     public String toString() {
+        assert modified != null;
         return "Encouraged:{" + modified.toString() + " " + weight.apply(Global.noneCharacter(), null) + "}";
     }
 }

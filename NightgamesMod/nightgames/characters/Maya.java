@@ -2,22 +2,35 @@ package nightgames.characters;
 
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
-import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.start.NpcConfiguration;
 import nightgames.status.Drowsy;
 import nightgames.status.Energized;
+
+import java.util.Optional;
 
 public class Maya extends BasePersonality {
 
     private static final long serialVersionUID = 447375506153223682L;
 
-    public Maya(int playerLvl) {
-        super("Maya", 50);
+    public Maya(int playerLevel) {
+        this(playerLevel, Optional.empty(), Optional.empty());
+    }
+
+    public Maya(int playerLevel, Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
+        super("Maya", 50, charConfig, commonConfig);
+
+        while (character.getLevel() < playerLevel + 20) {
+            character.ding();
+        }
+    }
+
+    protected void applyBasicStats() {
         character.outfitPlan.add(Clothing.getByID("camisole"));
         character.outfitPlan.add(Clothing.getByID("blouse"));
         character.outfitPlan.add(Clothing.getByID("lacepanties"));
@@ -62,14 +75,11 @@ public class Maya extends BasePersonality {
         character.add(Trait.cursed);
         Global.gainSkills(character);
         character.setTrophy(Item.MayaTrophy);
-        while (character.getLevel() < playerLvl + 20) {
-            character.ding();
-        }
+
         character.plan = Plan.hunting;
         character.mood = Emotion.confident;
         character.body.add(BreastsPart.d);
-        character.body.add(PussyPart.normal);
-        character.body.finishBody(CharacterSex.female);
+        character.initialGender = CharacterSex.female;
         preferredCockMod = CockMod.error;
     }
 

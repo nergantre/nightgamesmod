@@ -23,12 +23,13 @@ public enum Stance {
     behindfootjob,
     nursing,
     facesitting,
+    smothering,
     engulfed,
     oralpin,
     flowertrap,
     coiled,
     upsidedownmaledom,
-    upsidedownfemdom,;
+    upsidedownfemdom, kneeling,;
 
     public SkillTag getSkillTag() {
         return new BothRequirementSkillTag((result, value) -> result.getCombat().getStance().en == this, Global.capitalizeFirstLetter(name())+"Position");

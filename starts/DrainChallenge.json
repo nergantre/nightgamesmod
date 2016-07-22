@@ -1,0 +1,103 @@
+{
+	"name":"Drain Challenge",
+	"summary":"Some goth guy tried to summon you, a succubus, for his entertainment. Trouble is, the idiot fucked up and you lost most of your power in the process. Clearly he did not expect the ritual to work at all, because he turned tail and ran as soon as the smoke cleared. So you are left stranded, weakened and alone, and must try to regain your power so you can go home. Fortunately, you learned of the Night Games being here, and were quickly allowed in. Where better to get your power than by stealing it from some horny college kids? The only problem is that said horny college kids have been at this for a while now, and you will find yourself quite underpowered. Except for your innate Level Drain ability, which triggers automatically whenever someone cums inside of you. Oh, and creepy goth guy didn't have any clothes lying around, except for an old pair of shoes, so there's that.",
+	"enabled":true,
+	"player": {
+		"gender":"female",
+		"attributes": {
+			"Power":3,
+			"Seduction":3,
+			"Cunning":3,
+			"Dark":15,
+          "Submissive": 5,
+			"Perception":5,
+			"Speed":5
+		},
+		"attribute_points":6,
+		"body":{
+			"archetype":"DEMON"
+		},
+		"traits": ["succubus", "leveldrainer", "energydrain", "spiritphage", "powerfulhips"],
+		"trait_choice":false
+	},
+	"npcs": [
+		{
+			"type":"Cassie",
+			"name":"Casey",
+			"gender":"male",
+			"body": {
+				"breasts":"flat"
+			},
+			"clothing": [
+				"Tshirt",
+				"boxers",
+				"jeans",
+				"socks",
+				"sneakers"
+			],
+			"attributes": {
+				"Power":12,
+				"Seduction":12,
+				"Cunning":12,
+				"Perception":5,
+				"Speed":5
+			},
+			"traits":["tongueTraining1","cockTraining1","obsequiousAppeal","submissive","romantic"],
+			"level":6
+		},
+		{
+			"type":"Jewel",
+			"start":true,
+			"attributes": {
+				"Power":16,
+				"Seduction":10,
+				"Cunning":10,
+				"Perception":5,
+				"Speed":6
+			},
+			"traits":["smqueen", "pimphand", "powerfulhips", "limbTraining1", "SexualGroove"],
+			"level":6
+		},
+		{
+			"type":"Angel",
+			"start":true,
+			"attributes": {
+				"Power":10,
+				"Seduction":16,
+				"Cunning":10,
+				"Perception":5,
+				"Speed":5
+			},
+			"traits":["limbTraining1","tongueTraining1","dickhandler","frenzyingjuices","nymphomania"],
+			"level":6
+		},
+		{
+			"type":"Mara",
+			"name":"Mark",
+			"gender":"male",
+			"body": {
+				"breasts":"flat"
+			},
+			"clothing": [
+				"Tshirt",
+				"boxers",
+				"jeans",
+				"socks",
+				"sneakers"
+			],
+			"attributes": {
+				"Power":10,
+				"Seduction":10,
+				"Cunning":16,
+				"Perception":6,
+				"Speed":5
+			},
+			"traits":["limbTraining1","pantymaster","insertion","polecontrol","silvertongue"],
+			"level":6
+		}
+	],
+	"all_npcs" : {
+		
+	},
+	"flags": []
+}

@@ -11,10 +11,6 @@ public class LickNipples extends Skill {
 
     public LickNipples(Character self) {
         super("Lick Nipples", self);
-        if (self.human()) {
-            image = "LickNipples.jpg";
-            artist = "Art by Fujin Hitokiri";
-        }
     }
 
     @Override
@@ -41,7 +37,7 @@ public class LickNipples extends Skill {
             if (getSelf().has(Trait.silvertongue)) {
                 m += 4;
             }
-            target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("breasts"), m, c);
+            target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("breasts"), m, c, this);
 
         } else {
             if (getSelf().human()) {

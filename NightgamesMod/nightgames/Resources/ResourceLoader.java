@@ -37,13 +37,19 @@ public class ResourceLoader {
     public static InputStream getFileResourceAsStream(String path) {
         // first check in the working directory
         File f = new File(path);
+        return getFileResourceAsStream(f);
+    }
+
+    public static InputStream getFileResourceAsStream(File f) {
         try {
             InputStream res = new FileInputStream(f);
             return res;
         } catch (FileNotFoundException e) {
+            System.err.println("Could not find file " + f.getPath());
             e.printStackTrace();
+            System.err.println("Current active directory is " + System.getProperty("user.dir"));
         }
         // then check in the class directory
-        return ResourceLoader.class.getClassLoader().getResourceAsStream("resources/" + path);
+        return ResourceLoader.class.getClassLoader().getResourceAsStream("resources/" + f.getPath());
     }
 }

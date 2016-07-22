@@ -1,17 +1,15 @@
 package nightgames.status;
 
-import java.util.Arrays;
-
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
-import nightgames.characters.custom.requirement.EitherInsertedRequirement;
-import nightgames.characters.custom.requirement.ReverseRequirement;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.global.JSONUtils;
+import nightgames.status.addiction.Addiction;
+import nightgames.status.addiction.AddictionType;
 
 public class DivineCharge extends Status {
     public double magnitude;
@@ -21,12 +19,13 @@ public class DivineCharge extends Status {
         flag(Stsflag.divinecharge);
         flag(Stsflag.purgable);
         this.magnitude = magnitude;
-        requirements.add(new ReverseRequirement(Arrays.asList(new EitherInsertedRequirement(true))));
     }
 
     private String getPart(Combat c) {
-        boolean penetrated = c.getStance().vaginallyPenetrated(affected);
-        boolean inserted = c.getStance().inserted(affected);
+        boolean penetrated = c.getStance()
+                              .vaginallyPenetrated(affected);
+        boolean inserted = c.getStance()
+                            .inserted(affected);
         String part = "body";
         if (penetrated && !inserted) {
             part = "pussy";
@@ -34,7 +33,21 @@ public class DivineCharge extends Status {
         if (!penetrated && inserted) {
             part = "cock";
         }
+        if (!penetrated && !inserted && affected.has(Trait.zealinspiring)) {
+            part = "pussy";
+        }
         return part;
+    }
+
+    @Override
+    public void tick(Combat c) {
+        if (!c.getStance().vaginallyPenetrated(affected) && !(affected.has(Trait.zealinspiring) && !Global.getPlayer()
+                        .getAddiction(AddictionType.ZEAL).map(Addiction::isInWithdrawal).orElse(false))) {
+            magnitude = magnitude / 2;
+            c.write(affected, "The holy energy seeps out of " + affected.getName() + ".");
+            if (magnitude < .05f)
+                affected.removelist.add(this);
+        }
     }
 
     @Override
@@ -142,18 +155,15 @@ public class DivineCharge extends Status {
         return new DivineCharge(newAffected, magnitude);
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public JSONObject saveToJSON() {
-        JSONObject obj = new JSONObject();
-        obj.put("type", getClass().getSimpleName());
-        obj.put("magnitude", magnitude);
+    @Override @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("type", getClass().getSimpleName());
+        obj.addProperty("magnitude", magnitude);
         return obj;
     }
 
-    @Override
-    public Status loadFromJSON(JSONObject obj) {
-        return new DivineCharge(null, JSONUtils.readFloat(obj, "magnitude"));
+    @Override public Status loadFromJson(JsonObject obj) {
+        return new DivineCharge(null, obj.get("magnitude").getAsFloat());
     }
 
     @Override

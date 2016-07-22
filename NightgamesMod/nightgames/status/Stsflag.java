@@ -57,4 +57,9 @@ public enum Stsflag {
     divinerecoil,
     detected,
     magicmilkcraving,
+    partiallyCorrupted,
+    parasited,
+    mimicry, 
+    blinded,
+    victimComplex
 }

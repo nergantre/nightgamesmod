@@ -13,6 +13,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.start.NpcConfiguration;
 import nightgames.status.Feral;
 import nightgames.status.Horny;
 import nightgames.status.Stsflag;
@@ -24,7 +25,14 @@ public class Kat extends BasePersonality {
     private static final long serialVersionUID = -8169646189131720872L;
 
     public Kat() {
-        super("Kat", 10);
+        this(Optional.empty(), Optional.empty());
+    }
+
+    public Kat(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
+        super("Kat", 10, charConfig, commonConfig);
+    }
+
+    protected void applyBasicStats() {
         preferredCockMod = CockMod.primal;
         character.outfitPlan.add(Clothing.getByID("bra"));
         character.outfitPlan.add(Clothing.getByID("Tshirt"));
@@ -54,7 +62,7 @@ public class Kat extends BasePersonality {
         character.body.add(EarPart.cat);
         // mostly feminine face
         character.body.add(new FacePart(.1, 2.3));
-        character.body.finishBody(CharacterSex.female);
+        character.initialGender = CharacterSex.female;
     }
 
     @Override
@@ -71,6 +79,7 @@ public class Kat extends BasePersonality {
         growth.addTrait(13, Trait.analTraining1);
         growth.addTrait(16, Trait.powerfulhips);
         growth.addTrait(19, Trait.alwaysready);
+        growth.addTrait(20, Trait.breeder);
         growth.addTrait(22, Trait.cute);
         growth.addTrait(25, Trait.nymphomania);
         growth.addTrait(28, Trait.tongueTraining1);

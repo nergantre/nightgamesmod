@@ -20,10 +20,6 @@ public class Fuck extends Skill {
 
     public Fuck(Character self) {
         super("Fuck", self);
-        if (self.human()) {
-            image = "Fuck.jpg";
-            artist = "Art by Fujin Hitokiri";
-        }
     }
 
     public BodyPart getSelfOrgan() {
@@ -72,9 +68,9 @@ public class Fuck extends Skill {
     private boolean canGetToCrotch(Character target) {
         if (target.crotchAvailable())
             return true;
-        if (!CockMod.slimy.partHasThisMod(getSelfOrgan()))
+        if (!getSelfOrgan().moddedPartCountsAs(getSelf(), CockMod.slimy))
             return false;
-        return target.outfit.getBottomOfSlot(ClothingSlot.bottom).getLayer() == 0;
+        return target.outfit.getTopOfSlot(ClothingSlot.bottom).getLayer() == 0;
     }
 
     @Override
@@ -85,7 +81,7 @@ public class Fuck extends Skill {
                         && c.getStance().mobile(getSelf()) && !c.getStance().mobile(target) && getSelf().canAct();
     }
 
-    String premessage(Combat c, Character target) {
+    protected String premessage(Combat c, Character target) {
         String premessage = "";
         Clothing underwear = getSelf().getOutfit().getSlotAt(ClothingSlot.bottom, 0);
         Clothing bottom = getSelf().getOutfit().getSlotAt(ClothingSlot.bottom, 1);
@@ -109,7 +105,7 @@ public class Fuck extends Skill {
                             bottomMessage);
         }
 
-        if (!target.crotchAvailable() && getSelfOrgan().getMod().equals(CockMod.slimy)) {
+        if (!target.crotchAvailable() && getSelfOrgan().getMod(getSelf()).equals(CockMod.slimy)) {
             Clothing destroyed = target.strip(ClothingSlot.bottom, c);
             assert target.outfit.slotEmpty(ClothingSlot.bottom);
             String start;
@@ -139,16 +135,16 @@ public class Fuck extends Skill {
                 c.write(getSelf(), premessage + receive(c, premessage.length(), Result.normal, target));
             }
             if (selfO.isType("pussy")) {
-                c.setStance(c.getStance().insert(target, getSelf()));
+                c.setStance(c.getStance().insert(target, getSelf()), getSelf(), getSelf().canMakeOwnDecision());
             } else {
-                c.setStance(c.getStance().insert(getSelf(), getSelf()));
+                c.setStance(c.getStance().insert(getSelf(), getSelf()), getSelf(), getSelf().canMakeOwnDecision());
             }
             int otherm = m;
             if (getSelf().has(Trait.insertion)) {
                 otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
             }
-            target.body.pleasure(getSelf(), selfO, targetO, m, c);
-            getSelf().body.pleasure(target, targetO, selfO, otherm, c);
+            target.body.pleasure(getSelf(), selfO, targetO, m, c, this);
+            getSelf().body.pleasure(target, targetO, selfO, otherm, c, this);
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(), premessage + deal(c, premessage.length(), Result.miss, target));
@@ -242,5 +238,10 @@ public class Fuck extends Skill {
     @Override
     public boolean makesContact() {
         return true;
+    }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FINISHER;
     }
 }

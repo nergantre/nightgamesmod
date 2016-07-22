@@ -1,0 +1,209 @@
+{
+	"name":"Default Verbose",
+	"summary":"Almost the same as Default, but explicitly sets each possible option to the default values. For educational purposes. This creates a basic male player and default set of NPC's.",
+	"enabled":false,
+	"player": {
+		"gender":"male",
+		"attributes": {
+			"Power":6,
+			"Seduction":6,
+			"Cunning":6,
+			"Perception":5,
+			"Speed":5
+		},
+		"money":0,
+		"level":1,
+		"xp":0,
+		"traits": [],
+		"trait_choice": true,
+		"attribute_points": 11,
+		"body": {
+			"archetype":"regular",
+			"genitals": {
+				"cock": {
+					"type":"basic",
+					"length":"average"
+				}
+			},
+			"breasts":"flat",
+			"ass":"basic",
+			"ears":"normal",
+			"tail":"none",
+			"wings":"none",
+			"tentacles":[],
+			"hotness":1.0
+		},
+		"clothing": [
+			"TShirt",
+			"jeans",
+			"boxers",
+			"socks",
+			"sneakers"
+		]
+	},
+	"npcs": [
+		{
+			"type":"Angel",
+			"name":"Angel",
+			"start": true,
+			"attributes": {
+				"Power":5,
+				"Seduction":7,
+				"Cunning":5,
+				"Perception":6,
+				"Speed":5
+			},
+			"money":0,
+			"level":1,
+			"xp":0,
+			"traits": [
+				"undisciplined",
+				"lickable"
+			],
+			"body": {
+				"archetype":"regular",
+				"genitals": {
+					"pussy": "normal"
+				},
+				"breasts":"dd",
+				"ass":"basic",
+				"ears":"normal",
+				"tail":"none",
+				"wings":"none",
+				"tentacles":[],
+				"hotness":1.0
+			},
+			"clothing": [
+				"TShirt",
+				"bra",
+				"thong",
+				"miniskirt",
+				"sandals"
+			]
+		},
+		{
+			"type":"Cassie",
+			"name":"Cassie",
+			"start": true,
+			"attributes": {
+				"Power":6,
+				"Seduction":6,
+				"Cunning":6,
+				"Perception":6,
+				"Speed":5
+			},
+			"money":0,
+			"level":1,
+			"xp":0,
+			"traits": [
+				"softheart",
+				"romantic",
+				"imagination"
+			],
+			"body": {
+				"archetype":"regular",
+				"genitals": {
+					"pussy": "normal"
+				},
+				"breasts":"c",
+				"ass":"basic",
+				"ears":"normal",
+				"tail":"none",
+				"wings":"none",
+				"tentacles":[],
+				"hotness":1.0
+			},
+			"clothing": [
+				"blouse",
+				"bra",
+				"panties",
+				"skirt",
+				"shoes"
+			]
+		},
+		{
+			"type":"Jewel",
+			"name":"Jewel",
+			"start": true,
+			"attributes": {
+				"Power":7,
+				"Seduction":5,
+				"Cunning":5,
+				"Perception":5,
+				"Speed":6
+			},
+			"money":0,
+			"level":1,
+			"xp":0,
+			"traits": [
+				"direct",
+				"wrassler",
+				"insatiable"
+			],
+			"body": {
+				"archetype":"regular",
+				"genitals": {
+					"pussy": "normal"
+				},
+				"breasts":"c",
+				"ass":"basic",
+				"ears":"normal",
+				"tail":"none",
+				"wings":"none",
+				"tentacles":[],
+				"hotness":1.0
+			},
+			"clothing": [
+				"tanktop",
+				"bra",
+				"panties",
+				"jeans",
+				"sneakers",
+				"socks"
+			]
+		},
+		{
+			"type":"Mara",
+			"name":"Mara",
+			"start": true,
+			"attributes": {
+				"Power":5,
+				"Seduction":5,
+				"Cunning":7,
+				"Perception":7,
+				"Speed":5
+			},
+			"money":0,
+			"level":1,
+			"xp":0,
+			"traits": [
+				"petite",
+				"dexterous",
+				"ticklish"
+			],
+			"body": {
+				"archetype":"regular",
+				"genitals": {
+					"pussy": "normal"
+				},
+				"breasts":"c",
+				"ass":"basic",
+				"ears":"normal",
+				"tail":"none",
+				"wings":"none",
+				"tentacles":[],
+				"hotness":1.0
+			},
+			"clothing": [
+				"TShirt",
+				"bra",
+				"underwear",
+				"shorts",
+				"pantyhose",
+				"boots"
+			]
+		}
+	],
+	"all_npcs": {},
+	"flags": []
+}

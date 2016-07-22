@@ -2,15 +2,16 @@ package nightgames.characters;
 
 import java.util.Optional;
 
-import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
+import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.start.NpcConfiguration;
 import nightgames.status.Hypersensitive;
 import nightgames.status.Oiled;
 
@@ -21,7 +22,15 @@ public class Mara extends BasePersonality {
     private static final long serialVersionUID = -3812726803607189573L;
 
     public Mara() {
-        super("Mara", 1);
+        this(Optional.empty(), Optional.empty());
+    }
+
+    public Mara(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
+        super("Mara", 1, charConfig, commonConfig);
+    }
+
+    protected void applyBasicStats() {
+        character.isStartCharacter = true;
         preferredCockMod = CockMod.bionic;
         character.outfitPlan.add(Clothing.getByID("bra"));
         character.outfitPlan.add(Clothing.getByID("Tshirt"));
@@ -39,10 +48,8 @@ public class Mara extends BasePersonality {
         character.setTrophy(Item.MaraTrophy);
         character.plan = Plan.hunting;
         character.mood = Emotion.confident;
-        character.body.add(BreastsPart.b);
-        character.body.add(PussyPart.normal);
         character.body.add(new FacePart(.1, 1.1));
-        character.body.finishBody(CharacterSex.female);
+        character.initialGender = CharacterSex.female;
     }
 
     @Override
@@ -65,6 +72,7 @@ public class Mara extends BasePersonality {
         growth.addTrait(12, Trait.strongwilled);
         growth.addTrait(15, Trait.pussyTraining1);
         growth.addTrait(18, Trait.tight);
+        growth.addTrait(20, Trait.mindcontroller);
         growth.addTrait(21, Trait.tongueTraining1);
         growth.addTrait(24, Trait.limbTraining2);
         growth.addTrait(27, Trait.skeptical);
@@ -79,10 +87,21 @@ public class Mara extends BasePersonality {
 
     @Override
     public void rest(int time) {
-        if (character.rank == 1) {
-            if (!character.has(Trait.madscientist) && character.money >= 1000) {
-                advance();
-            }
+        if (character.rank == 1 && !character.has(Trait.madscientist)) {
+            character.add(Trait.madscientist);
+            character.body.addReplace(PussyPart.cybernetic, 1);
+            character.unequipAllClothing();
+            character.outfitPlan.add(Clothing.getByID("bra"));
+            character.outfitPlan.add(Clothing.getByID("shirt"));
+            character.outfitPlan.add(Clothing.getByID("labcoat"));
+            character.outfitPlan.add(Clothing.getByID("underwear"));
+            character.outfitPlan.add(Clothing.getByID("pants"));
+            character.outfitPlan.add(Clothing.getByID("pantyhose"));
+            character.outfitPlan.add(Clothing.getByID("boots"));
+            character.mod(Attribute.Science, 1);
+        }
+        if (character.rank == 2 && !character.has(Trait.madscientist)) {
+            character.body.add(new GenericBodyPart("mechanical tentacles", "Four large mechanically feelers are attached to {self:possessive} back.", 1, 1.0, 0.0, true, "mechtentacles", ""));
         }
         super.rest(time);
         if (!(character.has(Item.Onahole) || character.has(Item.Onahole2)) && character.money >= 300) {
@@ -301,7 +320,7 @@ public class Mara extends BasePersonality {
     public String describe(Combat c) {
         if (character.has(Trait.madscientist)) {
             return "Mara has gone high tech. She has a rig of equipment on harnesses that seem carefully placed so as not to interfere with clothing removal. The glasses she's wearing appear to be "
-                            + "computerized rather than perscription. She also has a device of unknown purpose strapped to her arm. Underneath all of that, she has the same cute, mischevious expression she "
+                            + "computerized rather than prescription. She also has a device of unknown purpose strapped to her arm. Underneath all of that, she has the same cute, mischievous expression she "
                             + "you're used to.";
         } else {
             return "Mara is short and slender, with a small heart shaped face. She has dark skin, and short, curly black hair. Her size and cute features make her look a few years "
@@ -458,20 +477,6 @@ public class Mara extends BasePersonality {
                         + "you. You spot her back by the door, holding your clothes. She winks mischeviously and dashes into the building. You give chase, still naked. You manage to catch her just "
                         + "as she reaches your room. You consider it a minor miracle no one saw the two of you streaking through the dorm building. You're going to have to find a way to pay her back "
                         + "before morning.";
-    }
-
-    public void advance() {
-        character.add(Trait.madscientist);
-        character.body.addReplace(PussyPart.cybernetic, 1);
-        character.unequipAllClothing();
-        character.outfitPlan.add(Clothing.getByID("bra"));
-        character.outfitPlan.add(Clothing.getByID("shirt"));
-        character.outfitPlan.add(Clothing.getByID("labcoat"));
-        character.outfitPlan.add(Clothing.getByID("underwear"));
-        character.outfitPlan.add(Clothing.getByID("pants"));
-        character.outfitPlan.add(Clothing.getByID("pantyhose"));
-        character.outfitPlan.add(Clothing.getByID("boots"));
-        character.mod(Attribute.Science, 1);
     }
 
     @Override

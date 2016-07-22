@@ -1,0 +1,51 @@
+{
+	"name":"Disadvantaged",
+	"summary":"All NPC's get an XP boost at the beginning of the game, making for a more challenging start.",
+	"enabled":true,
+	"player": {
+	},
+	"npcs": [
+		{
+			"type":"Airi",
+			"start":false,
+			"xp":106
+		},
+		{
+			"type":"Angel",
+			"start":true,
+			"xp":106
+		},
+		{
+			"type":"Cassie",
+			"start":true,
+			"xp":106
+		},
+		{
+			"type":"Eve",
+			"start":false,
+			"xp":106
+		},
+		{
+			"type":"Jewel",
+			"start":true,
+			"xp":106
+		},
+		{
+			"type":"Kat",
+			"start":false,
+			"xp":106
+		},
+		{
+			"type":"Mara",
+			"start":true,
+			"xp":106
+		},
+		{
+			"type":"Reyka",
+			"start":false,
+			"xp":106
+		}
+	],
+	"all_npcs":{},
+	"flags":[]
+}

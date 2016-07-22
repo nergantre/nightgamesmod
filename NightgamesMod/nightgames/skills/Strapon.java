@@ -11,6 +11,7 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.stance.Stance;
+import nightgames.status.Stsflag;
 
 public class Strapon extends Skill {
 
@@ -47,25 +48,32 @@ public class Strapon extends Skill {
         if (unequipped.isEmpty()) {
             if (getSelf().human()) {
                 c.write(getSelf(), Global.capitalizeFirstLetter(deal(c, 0, Result.normal, target)));
-            } else {
+            } else if (!target.is(Stsflag.blinded)) {
                 c.write(getSelf(), Global.capitalizeFirstLetter(receive(c, 0, Result.normal, target)));
+            } else {
+                printBlinded(c);
             }
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(), "You take off your " + unequipped.get(0)
                                 + " and fasten a strap on dildo onto yourself.");
-            } else {
+            } else if (!target.is(Stsflag.blinded)){
                 c.write(getSelf(),
                                 getSelf().subject() + " takes off " + getSelf().possessivePronoun() + " "
                                                 + unequipped.get(
                                                                 0)
                                 + " and straps on a thick rubber cock and grins at you in a way that makes you feel a bit nervous.");
-            }
+            } else printBlinded(c);
         }
-        target.loseMojo(c, 10);
-        target.emote(Emotion.nervous, 10);
+        if (!target.is(Stsflag.blinded)) {
+            target.loseMojo(c, 10);
+            target.emote(Emotion.nervous, 10);
+        }
         getSelf().emote(Emotion.confident, 30);
         getSelf().emote(Emotion.dominant, 40);
+        Item lost = getSelf().has(Item.Strapon2) ? Item.Strapon2 : Item.Strapon;
+        c.getCombatantData(getSelf()).loseItem(lost);
+        getSelf().remove(lost);
         return true;
     }
 

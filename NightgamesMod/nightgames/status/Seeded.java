@@ -1,6 +1,6 @@
 package nightgames.status;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -9,7 +9,6 @@ import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.GenericBodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.global.JSONUtils;
 
 public class Seeded extends Status {
     private String target;
@@ -42,21 +41,21 @@ public class Seeded extends Status {
     public String describe(Combat c) {
         BodyPart hole = affected.body.getRandom(target);
         if (affected.human()) {
-            if (stage < 4) {
+            if (stage > 4) {
                 return Global.capitalizeFirstLetter(
                                 String.format("A large white lilly grows from your %s\n", hole.describe(affected)));
-            } else if (stage < 3) {
+            } else if (stage > 3) {
                 return Global.capitalizeFirstLetter(
                                 String.format("A small green bud peeks out from your %s\n", hole.describe(affected)));
             }
             return Global.capitalizeFirstLetter(
                             String.format("A lemon-sized seed is lodged firmly in your %s\n", hole.describe(affected)));
         } else {
-            if (stage < 4) {
+            if (stage > 4) {
                 return Global.capitalizeFirstLetter(String.format(
                                 "A large white lilly grows from " + affected.possessivePronoun() + " %s\n",
                                 hole.describe(affected)));
-            } else if (stage < 3) {
+            } else if (stage > 3) {
                 return Global.capitalizeFirstLetter(String.format(
                                 "A small green bud peeks out from " + affected.possessivePronoun() + " %s\n",
                                 hole.describe(affected)));
@@ -207,16 +206,15 @@ public class Seeded extends Status {
         return new Seeded(newAffected, newOther, target);
     }
 
-    @SuppressWarnings("unchecked")
-    public JSONObject saveToJSON() {
-        JSONObject obj = new JSONObject();
-        obj.put("type", getClass().getSimpleName());
-        obj.put("target", target);
+    @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("type", getClass().getSimpleName());
+        obj.addProperty("target", target);
         return obj;
     }
 
-    public Status loadFromJSON(JSONObject obj) {
-        return new Seeded(null, null, JSONUtils.readString(obj, "target"));
+    public Status loadFromJson(JsonObject obj) {
+        return new Seeded(null, null, obj.get("target").getAsString());
     }
 
     @Override

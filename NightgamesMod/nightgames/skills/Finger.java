@@ -34,7 +34,7 @@ public class Finger extends Skill {
                     c.write(getSelf(), receive(c, 0, Result.normal, target));
                 }
                 target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("pussy"), m,
-                                c);
+                                c, this);
             } else {
                 if (getSelf().human()) {
                     c.write(getSelf(), deal(c, m, Result.weak, target));
@@ -42,7 +42,7 @@ public class Finger extends Skill {
                     c.write(getSelf(), receive(c, 0, Result.weak, target));
                 }
                 target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("pussy"), m,
-                                c);
+                                c, this);
             }
         } else {
             if (getSelf().human()) {
@@ -134,5 +134,10 @@ public class Finger extends Skill {
     @Override
     public boolean makesContact() {
         return true;
+    }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FOREPLAY;
     }
 }

@@ -1,6 +1,6 @@
 package nightgames.status;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -128,13 +128,11 @@ public class TailSucked extends Status {
         return new TailSucked(newAffected, newOther, power);
     }
 
-    @Override
-    public JSONObject saveToJSON() {
+    @Override public JsonObject saveToJson() {
         return null;
     }
 
-    @Override
-    public Status loadFromJSON(JSONObject obj) {
+    @Override public Status loadFromJson(JsonObject obj) {
         return null;
     }
 

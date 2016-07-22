@@ -43,6 +43,10 @@ public class Meter implements Serializable, Cloneable {
         return Math.min(max, temporaryMax);
     }
 
+    float trueMax() {
+        return max;
+    }
+    
     public void reduce(int i) {
         if (i > 0) {
             current -= i;
@@ -98,7 +102,7 @@ public class Meter implements Serializable, Cloneable {
     }
     
     public void setTemporaryMax(int i) {
-        if (i < 0) {
+        if (i <= 0) {
             i = Integer.MAX_VALUE;
         }
         temporaryMax = i;

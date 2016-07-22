@@ -3,7 +3,7 @@ package nightgames.characters.body;
 import java.util.Arrays;
 import java.util.Optional;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -68,6 +68,10 @@ public enum BasicCockPart implements CockPart {
         return desc;
     }
 
+    public String getName() {
+        return name();
+    }
+
     @Override
     public double getHotness(Character self, Character opponent) {
         double hotness = Math.log(size / 4 + 1) / Math.log(2) - 1;
@@ -129,17 +133,14 @@ public enum BasicCockPart implements CockPart {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public JSONObject save() {
-        JSONObject obj = new JSONObject();
-        obj.put("enum", name());
+    @SuppressWarnings("unchecked") @Override public JsonObject save() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("enum", name());
         return obj;
     }
 
-    @Override
-    public BodyPart load(JSONObject obj) {
-        String enumName = (String) obj.get("enum");
+    @Override public BodyPart load(JsonObject object) {
+        String enumName = object.get("enum").getAsString();
         // some compatibility for old versions
         Optional<CockMod> mod =
                         Arrays.stream(CockMod.values()).filter(modVal -> modVal.name().equals(enumName)).findAny();
@@ -243,9 +244,9 @@ public enum BasicCockPart implements CockPart {
     public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {}
 
     @Override
-    public int counterValue(BodyPart other) {
+    public int counterValue(BodyPart otherPart, Character self, Character other) {
         // Don't fuck modded parts, they're dangerous
-        return other.isGeneric() ? 0 : -1;
+        return otherPart.isGeneric(self) ? 0 : -1;
     }
 
     @Override
@@ -254,7 +255,7 @@ public enum BasicCockPart implements CockPart {
     }
 
     @Override
-    public BodyPartMod getMod() {
+    public BodyPartMod getMod(Character self) {
         return BodyPartMod.noMod;
     }
 

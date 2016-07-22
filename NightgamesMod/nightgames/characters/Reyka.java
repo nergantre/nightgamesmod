@@ -14,12 +14,20 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.start.NpcConfiguration;
 
 public class Reyka extends BasePersonality {
     private static final long serialVersionUID = 8553663088141308399L;
 
     public Reyka() {
-        super("Reyka", 10);
+        this(Optional.empty(), Optional.empty());
+    }
+
+    public Reyka(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
+        super("Reyka", 1, charConfig, commonConfig);
+    }
+
+    protected void applyBasicStats() {
         preferredCockMod = CockMod.incubus;
         character.outfitPlan.add(Clothing.getByID("tanktop"));
         character.outfitPlan.add(Clothing.getByID("miniskirt"));
@@ -51,7 +59,7 @@ public class Reyka extends BasePersonality {
         character.body.add(WingsPart.demonic);
         character.body.add(EarPart.pointed);
         character.body.add(new FacePart(4.5, 1.1));
-        character.body.finishBody(CharacterSex.female);
+        character.initialGender = CharacterSex.female;
     }
 
     @Override
@@ -74,6 +82,7 @@ public class Reyka extends BasePersonality {
         growth.addTrait(11, Trait.addictivefluids);
         growth.addTrait(14, Trait.graceful);
         growth.addTrait(17, Trait.insertion);
+        growth.addTrait(20, Trait.corrupting);
         growth.addTrait(20, Trait.spiritphage);
         growth.addTrait(23, Trait.tongueTraining2);
         growth.addTrait(26, Trait.magicEyeTrance);

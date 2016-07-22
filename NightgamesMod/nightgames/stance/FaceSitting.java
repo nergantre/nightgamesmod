@@ -139,7 +139,6 @@ public class FaceSitting extends AbstractBehindStance {
     public void decay(Combat c) {
         time++;
         bottom.weaken(null, 5);
-        bottom.loseWillpower(c, 5);
         top.emote(Emotion.dominant, 20);
         top.emote(Emotion.horny, 10);
         if (top.has(Trait.energydrain)) {
@@ -185,5 +184,10 @@ public class FaceSitting extends AbstractBehindStance {
             return 10;
         }
         return 2;
+    }
+    
+    @Override
+    public int dominance() {
+        return 5;
     }
 }

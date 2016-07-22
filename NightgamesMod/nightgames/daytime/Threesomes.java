@@ -218,7 +218,7 @@ public class Threesomes implements Scene {
     @Override
     public void respond(String response) {
         Global.getDay().advance(1);
-        Global.getDay().plan(false);
+        Global.getDay().plan();
     }
 
 }

@@ -108,4 +108,9 @@ public class SixNine extends AbstractBehindStance {
     public double pheromoneMod(Character self) {
         return 10;
     }
+    
+    @Override
+    public int dominance() {
+        return 1;
+    }
 }

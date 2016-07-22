@@ -67,7 +67,7 @@ public class ReverseCowgirl extends FemdomSexStance {
 
     @Override
     public boolean oral(Character c) {
-        return c == top;
+        return false;
     }
 
     @Override
@@ -86,5 +86,10 @@ public class ReverseCowgirl extends FemdomSexStance {
                         .format("{self:SUBJECT-ACTION:manage|manages} to unbalance {other:name-do} and push {other:direct-object} forward onto {other:possessive} hands and knees. {self:SUBJECT-ACTION:follow|follows} {other:direct-object}, still inside {other:possessive} tight wetness, and continue "
                                         + "to fuck {other:direct-object} from behind.", bottom, top));
         return new Doggy(bottom, top);
+    }
+    
+    @Override
+    public int dominance() {
+        return 3;
     }
 }

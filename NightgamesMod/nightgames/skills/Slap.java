@@ -30,13 +30,13 @@ public class Slap extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         if (target.roll(this, c, accuracy(c))) {
-            if (getSelf().has(Trait.slime)) {
+            if (isSlime()) {
                 if (getSelf().human()) {
                     c.write(getSelf(), deal(c, 0, Result.critical, target));
                 } else if (target.human()) {
                     c.write(getSelf(), receive(c, 0, Result.critical, target));
                 }
-                target.pain(c, Global.random(10) + getSelf().get(Attribute.Power) / 2);
+                target.pain(c, Global.random(10) + getSelf().get(Attribute.Slime) + getSelf().get(Attribute.Power) / 2);
                 if (c.getStance().en == Stance.neutral && Global.random(5) == 0) {
                     c.setStance(new StandingOver(getSelf(), target));
                     c.write(getSelf(),
@@ -110,10 +110,14 @@ public class Slap extends Skill {
     public Tactics type(Combat c) {
         return Tactics.damage;
     }
+    
+    private boolean isSlime() {
+        return getSelf().get(Attribute.Slime) > 4;
+    }
 
     @Override
     public String getLabel(Combat c) {
-        if (getSelf().has(Trait.slime)) {
+        if (isSlime()) {
             return "Clobber";
         } else if (getSelf().get(Attribute.Animism) >= 8) {
             return "Tiger Claw";

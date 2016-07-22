@@ -1,0 +1,14 @@
+{
+	"name":"Default",
+	"summary":"The default starting configuration.",
+	"enabled":true,
+	"player": {
+	
+	},
+	"npcs": [
+	],
+	"all_npcs": {
+	
+	},
+	"flags": []
+}

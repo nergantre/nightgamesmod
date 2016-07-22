@@ -50,6 +50,10 @@ public abstract class BaseNPCTime extends Activity {
 
     public abstract void subVisitIntro(String choice);
 
+    public Optional<String> getAddictionOption() {
+        return Optional.empty();
+    }
+    
     @Override
     public void visit(String choice) {
         Global.gui().clearText();
@@ -135,6 +139,10 @@ public abstract class BaseNPCTime extends Activity {
                 }
                 if (npc.getAffection(player) > 35) {
                     Global.gui().choose(this, "Change Outfit");
+                }
+                Optional<String> addictionOpt = getAddictionOption();
+                if (addictionOpt.isPresent()) {
+                    Global.gui().choose(this, addictionOpt.get());
                 }
                 Global.gui().choose(this, "Leave");
             } else {

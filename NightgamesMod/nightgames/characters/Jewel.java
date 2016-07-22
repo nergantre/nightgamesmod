@@ -1,5 +1,6 @@
 package nightgames.characters;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.start.NpcConfiguration;
 
 public class Jewel extends BasePersonality {
     /**
@@ -22,7 +24,15 @@ public class Jewel extends BasePersonality {
     private static final long serialVersionUID = 6677748046858370216L;
 
     public Jewel() {
-        super("Jewel", 1);
+        this(Optional.empty(), Optional.empty());
+    }
+
+    public Jewel(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
+        super("Jewel", 1, charConfig, commonConfig);
+    }
+
+    protected void applyBasicStats() {
+        character.isStartCharacter = true;
         preferredCockMod = CockMod.enlightened;
         character.outfitPlan.add(Clothing.getByID("bra"));
         character.outfitPlan.add(Clothing.getByID("tanktop"));
@@ -42,10 +52,9 @@ public class Jewel extends BasePersonality {
         character.plan = Plan.hunting;
         character.mood = Emotion.confident;
         character.body.add(BreastsPart.c);
-        character.body.add(PussyPart.normal);
         // fairly feminine face
         character.body.add(new FacePart(.1, 1.9));
-        character.body.finishBody(CharacterSex.female);
+        character.initialGender = CharacterSex.female;
     }
 
     @Override
@@ -162,6 +171,15 @@ public class Jewel extends BasePersonality {
 
     @Override
     public String taunt(Combat c) {
+        if (character.has(Trait.bitingwords) && c.getStance().dom(character)) {
+            ArrayList<String> possible = new ArrayList<>(); 
+            Character other = c.getOther(character);
+            possible.add("Jewel looks down at you with a sadistic smirk, <i>\"That's a nice look on you there " + c.getOther(character).getName() + ".\"</i>");
+            possible.add("Shifting her weight a bit to glare into your eyes, Jewel says happily, <i>\"Aha, it looks like you're quiet comfortable there. Maybe you're a natural bottom?\"</i>");
+            if (other.hasBalls()) {
+                possible.add("Jewel cups your vulnerable balls and gives them a light squeeze. <i>\"Worthless boys like you should just give up. Why even try when you end up as my seat every time?\"</i>");
+            }
+        }
         return "Jewel glares at you and squeezes your dick tightly. <i>\"No matter how horny you are, you better give me your best fight. I don't like fucking weaklings.\"</i>";
     }
 

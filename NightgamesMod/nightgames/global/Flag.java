@@ -66,5 +66,12 @@ public enum Flag {
     Clue1,
     Maya,
     FTC,
-    didFTC,;
+    didFTC, 
+    AddictionAdvice,
+    AiriDisabled,
+    extendedLogs, 
+    YuiLoyalty, 
+    YuiAvailable, 
+    Yui, 
+    YuiUnlocking;
 }

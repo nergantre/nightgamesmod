@@ -17,7 +17,7 @@ public class EngulfedFuck extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.has(Trait.slime);
+        return true;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class EngulfedFuck extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         Pairing pair = Pairing.findPairing(getSelf(), target);
-        double base = 20.0 + Global.random(getSelf().get(Attribute.Seduction) / 2);
+        double base = 20.0 + Global.random(getSelf().get(Attribute.Slime) + getSelf().get(Attribute.Seduction) / 2);
         int selfDmg = (int) ((base * pair.modPleasure(true)) / (getSelf().has(Trait.experienced) ? 2.0 : 3.0));
         int targetDmg = (int) (base * pair.modPleasure(false));
         switch (pair) {
@@ -49,8 +49,8 @@ public class EngulfedFuck extends Skill {
                                                 + " {other:body-part:cock} in a clump of slime molded after {self:possessive} ass"
                                                 + " and {self:action:pump|pumps} it furiously.", getSelf(), target));
                 target.body.pleasure(getSelf(), getSelf().body.getRandomAss(), target.body.getRandomCock(), targetDmg,
-                                c);
-                getSelf().body.pleasure(target, target.body.getRandomCock(), getSelf().body.getRandomAss(), selfDmg, c);
+                                c, this);
+                getSelf().body.pleasure(target, target.body.getRandomCock(), getSelf().body.getRandomAss(), selfDmg, c, this);
                 break;
             case FEMALE_HERM:
                 c.write(getSelf(),
@@ -60,11 +60,11 @@ public class EngulfedFuck extends Skill {
                                                 + "{self:action:twiddle|twiddles} {other:possessive} clit with {self:possessive} fingers.",
                                 getSelf(), target));
                 target.body.pleasure(getSelf(), getSelf().body.getRandomPussy(), target.body.getRandomCock(),
-                                targetDmg / 2, c);
+                                targetDmg / 2, c, this);
                 target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandomPussy(),
-                                targetDmg / 2, c);
+                                targetDmg / 2, c, this);
                 getSelf().body.pleasure(target, target.body.getRandomCock(), getSelf().body.getRandomPussy(), selfDmg,
-                                c);
+                                c, this);
                 break;
             case FEMALE_MALE:
                 c.write(getSelf(),
@@ -72,9 +72,9 @@ public class EngulfedFuck extends Skill {
                                                 + " {other:name-possessive} {other:body-part:cock} and {self:action:bounce|bounces} wildly,"
                                                 + " filling {other:direct-object} with pleasure.", getSelf(), target));
                 target.body.pleasure(getSelf(), getSelf().body.getRandomPussy(), target.body.getRandomCock(), targetDmg,
-                                c);
+                                c, this);
                 getSelf().body.pleasure(target, target.body.getRandomCock(), getSelf().body.getRandomPussy(), selfDmg,
-                                c);
+                                c, this);
                 break;
             case HERM_ASEX:
             case MALE_ASEX:
@@ -84,8 +84,8 @@ public class EngulfedFuck extends Skill {
                                                 + " {other:body-part:ass} with {self:possessive} {self:body-part:cock}.",
                                 getSelf(), target));
                 target.body.pleasure(getSelf(), getSelf().body.getRandomCock(), target.body.getRandomAss(), targetDmg,
-                                c);
-                getSelf().body.pleasure(target, target.body.getRandomAss(), getSelf().body.getRandomCock(), selfDmg, c);
+                                c, this);
+                getSelf().body.pleasure(target, target.body.getRandomAss(), getSelf().body.getRandomCock(), selfDmg, c, this);
                 break;
             case HERM_FEMALE:
                 c.write(getSelf(),
@@ -93,11 +93,11 @@ public class EngulfedFuck extends Skill {
                                                 + "{other:body-part:pussy} with vigor, at the same time fingering {other:possessive}"
                                                 + " ass.", getSelf(), target));
                 target.body.pleasure(getSelf(), getSelf().body.getRandomCock(), target.body.getRandomPussy(),
-                                targetDmg / 2, c);
+                                targetDmg / 2, c, this);
                 target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandomAss(),
-                                targetDmg / 2, c);
+                                targetDmg / 2, c, this);
                 getSelf().body.pleasure(target, target.body.getRandomPussy(), getSelf().body.getRandomCock(), selfDmg,
-                                c);
+                                c, this);
                 break;
             case HERM_HERM:
                 c.write(getSelf(),
@@ -109,31 +109,31 @@ public class EngulfedFuck extends Skill {
                                                 + " so when {self:pronoun} {self:action:start|starts} fucking in earnest the sensations are"
                                                 + " almost enough to cause you both to pass out.", getSelf(), target));
                 target.body.pleasure(getSelf(), getSelf().body.getRandomCock(), target.body.getRandomPussy(),
-                                targetDmg / 2, c);
+                                targetDmg / 2, c, this);
                 target.body.pleasure(getSelf(), getSelf().body.getRandomPussy(), target.body.getRandomCock(),
-                                targetDmg / 2, c);
+                                targetDmg / 2, c, this);
                 getSelf().body.pleasure(target, target.body.getRandomPussy(), getSelf().body.getRandomCock(),
-                                selfDmg / 2, c);
+                                selfDmg / 2, c, this);
                 getSelf().body.pleasure(target, target.body.getRandomCock(), getSelf().body.getRandomPussy(),
-                                selfDmg / 2, c);
+                                selfDmg / 2, c, this);
                 break;
             case HERM_MALE:
                 c.write(getSelf(),
                                 Global.format("{self:SUBJECT-ACTION:lower|lowers} {self:possessive}"
                                                 + " {self:body-part:pussy} down on {other:name-possessive} {other:body-part:cock}."
                                                 + " While slowly fucking {other:direct-object}, {self:pronoun} {self:action:move|moves}"
-                                                + " {self:possessive} {self:body-part:cock} to the entrance of (other:possessive} ass."
+                                                + " {self:possessive} {self:body-part:cock} to the entrance of {other:possessive} ass."
                                                 + " Before {other:pronoun} {other:action:have|has} a chance to react, {self:pronoun}"
                                                 + " {self:action:shove|shoves} it up there in one thrust, fucking {other:direct-object}"
                                                 + " from both sides.", getSelf(), target));
                 target.body.pleasure(getSelf(), getSelf().body.getRandomCock(), target.body.getRandomAss(),
-                                targetDmg / 2, c);
+                                targetDmg / 2, c, this);
                 target.body.pleasure(getSelf(), getSelf().body.getRandomPussy(), target.body.getRandomCock(),
-                                targetDmg / 2, c);
+                                targetDmg / 2, c, this);
                 getSelf().body.pleasure(target, target.body.getRandomPussy(), getSelf().body.getRandomCock(),
-                                selfDmg / 2, c);
+                                selfDmg / 2, c, this);
                 getSelf().body.pleasure(target, target.body.getRandomCock(), getSelf().body.getRandomAss(), selfDmg / 2,
-                                c);
+                                c, this);
                 break;
             case MALE_FEMALE:
             case MALE_MALE:
@@ -152,11 +152,11 @@ public class EngulfedFuck extends Skill {
                 c.write(getSelf(), Global.format(msg, getSelf(), target));
                 if (pair == Pairing.MALE_HERM) {
                     target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandomCock(),
-                                    targetDmg / 2, c);
+                                    targetDmg / 2, c, this);
                     realTargetDmg /= 2;
                 }
-                target.body.pleasure(getSelf(), getSelf().body.getRandomCock(), bpart, realTargetDmg, c);
-                getSelf().body.pleasure(target, bpart, getSelf().body.getRandomCock(), selfDmg, c);
+                target.body.pleasure(getSelf(), getSelf().body.getRandomCock(), bpart, realTargetDmg, c, this);
+                getSelf().body.pleasure(target, bpart, getSelf().body.getRandomCock(), selfDmg, c, this);
                 break;
             default:
                 throw new IllegalArgumentException("EngulfedFuck had pairing NONE or default");
@@ -245,5 +245,10 @@ public class EngulfedFuck extends Skill {
         private static boolean herm(Character ch) {
             return ch.hasDick() && ch.hasPussy();
         }
+    }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FINISHER;
     }
 }

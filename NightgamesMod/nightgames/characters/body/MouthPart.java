@@ -1,7 +1,5 @@
 package nightgames.characters.body;
 
-import org.json.simple.JSONObject;
-
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
@@ -9,6 +7,7 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.status.FluidAddiction;
 import nightgames.status.Frenzied;
+import nightgames.status.PartiallyCorrupted;
 import nightgames.status.Stsflag;
 import nightgames.status.Trance;
 
@@ -25,6 +24,10 @@ public class MouthPart extends GenericBodyPart {
 
     public MouthPart(String desc, double hotness, double pleasure, double sensitivity) {
         super(desc, hotness, pleasure, sensitivity, "mouth", "a ");
+    }
+
+    public MouthPart() {
+        super(generic);
     }
 
     @Override
@@ -96,6 +99,9 @@ public class MouthPart extends GenericBodyPart {
             bonus += Global.random(3) + 4;
             opponent.pain(c, 8 + Global.random(10), false, true);
         }
+        if (self.has(Trait.corrupting)) {
+            opponent.add(c, new PartiallyCorrupted(self));
+        }
         if (self.has(Trait.soulsucker)) {
             if (!self.human()) {
                 c.write(opponent,
@@ -126,18 +132,6 @@ public class MouthPart extends GenericBodyPart {
     @Override
     public String getFluids(Character c) {
         return "saliva";
-    }
-
-    @Override
-    public BodyPart loadFromDict(JSONObject dict) {
-        try {
-            GenericBodyPart part = new MouthPart((String) dict.get("desc"), (Double) dict.get("hotness"),
-                            (Double) dict.get("pleasure"), (Double) dict.get("sensitivity"));
-            return part;
-        } catch (ClassCastException e) {
-            System.err.println(e.getMessage());
-        }
-        return null;
     }
 
     @Override

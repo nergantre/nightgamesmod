@@ -3,6 +3,7 @@ package nightgames.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Label;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -11,6 +12,7 @@ import javax.swing.border.LineBorder;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.skills.Skill;
+import nightgames.skills.Stage;
 import nightgames.skills.Tactics;
 
 public class SkillButton extends JPanel {
@@ -25,22 +27,19 @@ public class SkillButton extends JPanel {
         setButton(new JButton(action.getLabel(c)));
         getButton().setBorderPainted(false);
         getButton().setOpaque(true);
-        getButton().setFont(new Font("Baskerville Old Face", Font.PLAIN, 18));
+        getButton().setFont(fontForStage(action.getStage()));
         this.action = action;
         String text = "<html>" + action.describe(c);
         if (action.type(c) == Tactics.damage) {
             getButton().setBackground(new Color(150, 0, 0));
-            getButton().setForeground(Color.WHITE);
         } else if (action.type(c) == Tactics.pleasure) {
             getButton().setBackground(Color.PINK);
         } else if (action.type(c) == Tactics.fucking) {
             getButton().setBackground(new Color(255, 100, 200));
         } else if (action.type(c) == Tactics.positioning) {
             getButton().setBackground(new Color(0, 100, 0));
-            getButton().setForeground(Color.WHITE);
         } else if (action.type(c) == Tactics.stripping) {
             getButton().setBackground(new Color(0, 100, 0));
-            getButton().setForeground(Color.WHITE);
         } else if (action.type(c) == Tactics.debuff) {
             getButton().setBackground(Color.CYAN);
         } else if (action.type(c) == Tactics.recovery || action.type(c) == Tactics.calming) {
@@ -50,7 +49,8 @@ public class SkillButton extends JPanel {
         } else {
             getButton().setBackground(new Color(200, 200, 200));
         }
-
+        button.setForeground(foregroundColor(action.type(c)));
+        
         if (action.getMojoCost(c) > 0) {
             setBorder(new LineBorder(Color.RED, 3));
             text += "<br>Mojo cost: " + action.getMojoCost(c);
@@ -60,9 +60,11 @@ public class SkillButton extends JPanel {
         } else {
             setBorder(new LineBorder(getButton().getBackground(), 3));
         }
-        if (!action.user().cooldownAvailable(action)) {
+        if (!action.user()
+                   .cooldownAvailable(action)) {
             getButton().setEnabled(false);
-            text += String.format("<br>Remaining Cooldown: %d turns", action.user().getCooldown(action));
+            text += String.format("<br>Remaining Cooldown: %d turns", action.user()
+                                                                            .getCooldown(action));
             getButton().setForeground(Color.WHITE);
             getButton().setBackground(getBackground().darker());
         }
@@ -71,7 +73,8 @@ public class SkillButton extends JPanel {
         getButton().setToolTipText(text);
         combat = c;
         getButton().addActionListener(arg0 -> {
-            if (action.subChoices().size() == 0) {
+            if (action.subChoices()
+                      .size() == 0) {
                 combat.act(SkillButton.this.action.user(), SkillButton.this.action, "");
             } else {
                 Global.gui().commandPanel.removeAll();
@@ -92,5 +95,32 @@ public class SkillButton extends JPanel {
 
     public void setButton(JButton button) {
         this.button = button;
+    }
+
+    public void addIndex(int idx) {
+        button.setText(button.getText() + " [" + idx + "]");
+    }
+
+    private static Color foregroundColor(Tactics tact) {
+        switch (tact) {
+            case damage:
+            case positioning:
+            case stripping:
+                return Color.WHITE;
+            default:
+                return Color.BLACK;
+        }
+    }
+    
+    private static Font fontForStage(Stage stage) {
+        switch (stage) {
+            case FINISHER:
+                return new Font("Baskerville Old Face", Font.BOLD, 18);
+            case FOREPLAY:
+                return new Font("Baskerville Old Face", Font.ITALIC, 18);
+            default:
+                return new Font("Baskerville Old Face", Font.PLAIN, 18);
+            
+        }
     }
 }

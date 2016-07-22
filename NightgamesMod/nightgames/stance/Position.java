@@ -301,4 +301,15 @@ public abstract class Position implements Cloneable {
     public double pheromoneMod(Character self) {
         return 1;
     }
+    
+    /**
+     * @return how dominant the dominant character is. positive for more dominant, negative for less.
+     */
+    public int dominance() {
+        return 0;
+    }
+
+    public String name() {
+        return getClass().getSimpleName();
+    }
 }

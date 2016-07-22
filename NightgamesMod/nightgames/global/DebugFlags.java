@@ -13,4 +13,5 @@ public enum DebugFlags {
     DEBUG_CLOTHING,
     DEBUG_FTC,
     DEBUG_GUI,
+    DEBUG_ADDICTION,
 }

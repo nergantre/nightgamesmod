@@ -10,6 +10,8 @@ import nightgames.status.Lethargic;
 import nightgames.status.Resistance;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
+import nightgames.status.addiction.Addiction;
+import nightgames.status.addiction.AddictionType;
 
 public enum Trait {
     // Physical
@@ -19,9 +21,11 @@ public enum Trait {
         }
     }),
 
-    smqueen("SM Queen", "Skilled at providing pleasure alongside pain",
+    sadist("Sadist", "Skilled at providing pleasure alongside pain",
                     (b, c, t) -> b.append(Global.capitalizeFirstLetter(
-                                    String.format("%s sneers in a way like an SM queen.", c.subject())))),
+                                    String.format("%s sneers in an unsettling way.", c.subject())))),
+    bitingwords("Biting Words", "Knows how to rub salt in the wound."),
+    smqueen("SM Queen", "A natural dom."),
 
     // Perks
     ticklemonster("Tickle Monster", "Skilled at tickling in unconventional areas"), // Mara Sex perk,
@@ -157,6 +161,10 @@ public enum Trait {
     anatomyknowledge("Anatomical Knowledge", "Advanced medical knowledge; find all the good spots"), // Increased damage when using finger / fuck skills
     druglacedprecum("Drug-laced Precum", "Drugs in your precum are perfect for increasing an enemies sensitivity"), // Anybody part that comes into contact with your precum becomes increasingly sensitive for x turns.
     magicmilk("Magicked Milk", "Magically augmented milk. It's a a strong addictive aphrodisiac, as well as a subtle hypnotic."), // .
+    zealinspiring("Zeal Inspiring", "Instills true belief in people, inspiring them to follow her"),
+    corrupting("Corrupting Influence", "Corrupts to the very core."),
+    breeder("Breeder", "Particularly inviting"),
+    mindcontroller("Mind Controller", "Can take control of others' minds. Inventive, yes?"),
     darkpromises("Dark Promises", "Can enthrall with the right words"), // whisper upgrade, can enthrall
 
     energydrain("Energy Drain", "Drains energy during intercourse"),
@@ -249,6 +257,7 @@ public enum Trait {
 
     // Class subtrait
     divinity("Divinity", "Has aspects of divinity."),
+    leveldrainer("Level Drainer", "Natrually adept at draining levels."),
 
     // Strength
     dexterous("Dexterous", "Limbs and fingers. Underwear is not an obstacle."), // digital
@@ -272,9 +281,9 @@ public enum Trait {
     bramaster("Bra Master", "Better at undoing bras."),
     pantymaster("Panty Master", "Better at removing panties"),
 
-    // unimplemented
-    Clingy("Clingy", "can do the 'glomp' attack - weak standing grapple hug, probably something Cassie would take right away"),
-
+    Clingy("Clingy", "Harder to escape"),
+    fakeout("Fakeout", "Easier to counter"),
+    repressed("Repressed", "Sexually represssed, lower seduction"),
     // Feats
     sprinter("Sprinter", "Better at escaping combat"),
     QuickRecovery("Quick Recovery", "Regain stamina rapidly out of combat"),
@@ -289,11 +298,13 @@ public enum Trait {
     sympathetic("Sympathetic", "Intervening opponents are more likely to side with you"),
     fastLearner("Fast Learner", "Improved experience gain"),
     leadership("Leadership", "Summoned pets are more powerful"),
+    tactician("Tactician", "Summoned pets have higher evasion"),
+    faefriend("Fae Friend", "Less effort to summon Faeries"),
     fitnessNut("Fitness Nut", "More efficient at exercising"),
     expertGoogler("Expert Googler", "More efficient at finding porn"),
     mojoMaster("Mojo Master", "Max Mojo increases faster"),
     powerfulhips("Powerful Hips", "Can grind from submissive positions"),
-    strongwilled("Strong Willed", "Halves willpower loss"),
+    strongwilled("Strong Willed", "Lowers willpower loss from orgasms"),
     nymphomania("Nymphomania", "Restores willpower upon orgasm"),
     alwaysready("Always Ready", "Always ready for penetration", (b, c, t) -> {
         if (!c.hasDick() && c.crotchAvailable()) {
@@ -305,6 +316,7 @@ public enum Trait {
             }
         }
     }),
+    revered("Revered", "Higher chance of worship"),
     cautious("Cautious", "Better chance of avoiding traps"),
     responsive("Responsive", "Return more pleasure when being fucked"),
     assmaster("Ass Master", "Who needs lube? Also boosts pleasure to both parties when assfucking"),
@@ -318,8 +330,8 @@ public enum Trait {
     }), // currently wearing a strapon
 
     event("event", "special character"),
-
-    none("", ""),;
+    mindcontrolresistance("", "temporary resistance to mind games - hidden"),
+    none("", "");
     private String desc;
     private TraitDescription longDesc;
     private String name;
@@ -432,6 +444,19 @@ public enum Trait {
                 return "Naive";
             }
             return "";
+        });
+        resistances.put(Trait.mindcontrolresistance, (c, s) -> {
+            // TODO: We should not be getting combat information from the gui; the gui should be focused on display and interaction.
+           if (s.mindgames() && !Global.gui().combat.getOther(c).has(Trait.mindcontroller)) {
+               float magnitude =
+                               Global.getPlayer().getAddiction(AddictionType.MIND_CONTROL).map(Addiction::getMagnitude)
+                                               .orElse(0f);
+               float threshold = 40 * magnitude;
+               if (Global.random(100) < threshold) {
+                   return "Mara's Control";
+               }
+           }
+           return "";
         });
     }
 

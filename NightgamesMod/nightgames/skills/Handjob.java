@@ -45,14 +45,14 @@ public class Handjob extends Skill {
                 } else if (target.human()) {
                     c.write(getSelf(), receive(c, m, Result.normal, target));
                 }
-                target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("cock"), m, c);
+                target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("cock"), m, c, this);
             } else {
                 if (getSelf().human()) {
                     c.write(getSelf(), deal(c, m, Result.normal, target));
                 } else if (target.human()) {
                     c.write(getSelf(), receive(c, m, Result.weak, target));
                 }
-                target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("cock"), m, c);
+                target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("cock"), m, c, this);
             }
         } else {
             if (getSelf().human()) {
@@ -127,5 +127,10 @@ public class Handjob extends Skill {
     @Override
     public boolean makesContact() {
         return true;
+    }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FOREPLAY;
     }
 }

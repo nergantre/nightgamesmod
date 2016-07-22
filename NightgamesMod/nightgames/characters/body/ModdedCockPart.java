@@ -1,6 +1,6 @@
 package nightgames.characters.body;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -16,7 +16,7 @@ public class ModdedCockPart implements CockPart {
     }
 
     @Override
-    public BodyPartMod getMod() {
+    public BodyPartMod getMod(Character self) {
         return mod;
     }
 
@@ -50,13 +50,11 @@ public class ModdedCockPart implements CockPart {
         return mod.isReady(self, getBase());
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public JSONObject save() {
-        JSONObject save = new JSONObject();
-        save.put("base", getBase().save());
-        save.put("mod", mod.save());
-        return save;
+    @SuppressWarnings("unchecked") @Override public JsonObject save() {
+        JsonObject object = new JsonObject();
+        object.add("base", getBase().save());
+        object.add("mod", mod.save());
+        return object;
     }
 
     @Override
@@ -139,10 +137,9 @@ public class ModdedCockPart implements CockPart {
         return mod.mod(a, total, getBase());
     }
 
-    @Override
-    public BodyPart load(JSONObject obj) {
-        JSONObject baseObj = (JSONObject) obj.get("base");
-        JSONObject modObj = (JSONObject) obj.get("mod");
+    @Override public BodyPart load(JsonObject obj) {
+        JsonObject baseObj = obj.getAsJsonObject("base");
+        JsonObject modObj = obj.getAsJsonObject("mod");
         BasicCockPart base = (BasicCockPart) getBase().load(baseObj);
         CockMod mod = this.mod.load(modObj);
         return new ModdedCockPart(base, mod);
@@ -164,23 +161,23 @@ public class ModdedCockPart implements CockPart {
     }
 
     @Override
-    public int counterValue(BodyPart other) {
-        if (mod == CockMod.primal) {
-            return other == PussyPart.fiery ? 1 : other == PussyPart.arcane ? -1 : 0;
+    public int counterValue(BodyPart otherPart, Character self, Character other) {
+        if (mod.countsAs(self, CockMod.primal)) {
+            return otherPart.moddedPartCountsAs(other, PussyPart.fiery) ? 1 : otherPart.moddedPartCountsAs(other, PussyPart.arcane) ? -1 : 0;
         }
-        if (mod == CockMod.runic) {
-            return other == PussyPart.succubus ? 1 : other == PussyPart.feral ? -1 : 0;
+        if (mod.countsAs(self, CockMod.runic)) {
+            return otherPart.moddedPartCountsAs(other, PussyPart.succubus) ? 1 : otherPart.moddedPartCountsAs(other, PussyPart.feral) ? -1 : 0;
         }
-        if (mod == CockMod.incubus) {
-            return other == PussyPart.feral ? 1 : other == PussyPart.cybernetic ? -1 : 0;
+        if (mod.countsAs(self, CockMod.incubus)) {
+            return otherPart.moddedPartCountsAs(other, PussyPart.feral) ? 1 : otherPart.moddedPartCountsAs(other, PussyPart.cybernetic) ? -1 : 0;
         }
-        if (mod == CockMod.bionic) {
-            return other == PussyPart.arcane ? 1 : other == PussyPart.fiery ? -1 : 0;
+        if (mod.countsAs(self, CockMod.bionic)) {
+            return otherPart.moddedPartCountsAs(other, PussyPart.arcane) ? 1 : otherPart.moddedPartCountsAs(other, PussyPart.fiery) ? -1 : 0;
         }
-        if (mod == CockMod.enlightened) {
-            return other == PussyPart.cybernetic ? 1 : other == PussyPart.succubus ? -1 : 0;
+        if (mod.countsAs(self, CockMod.enlightened)) {
+            return otherPart.moddedPartCountsAs(other, PussyPart.cybernetic) ? 1 : otherPart.moddedPartCountsAs(other, PussyPart.succubus) ? -1 : 0;
         }
-        if (other.isGeneric()) {
+        if (otherPart.isGeneric(other)) {
             return 1;
         } else {
             return 0;
@@ -192,8 +189,12 @@ public class ModdedCockPart implements CockPart {
         return getBase().getSize();
     }
 
+    public String getName() {
+        return getBase().getName();
+    }
+
     @Override
-    public boolean isGeneric() {
+    public boolean isGeneric(Character self) {
         return false;
     }
 

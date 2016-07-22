@@ -2,6 +2,7 @@ package nightgames.pet;
 
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.characters.body.PetPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.items.clothing.Clothing;
@@ -11,6 +12,8 @@ import nightgames.status.Horny;
 
 public class ImpFem extends Pet {
 
+    private final PetPart part = new PetPart("female imp");
+    
     public ImpFem(Character owner) {
         super("Imp", owner, Ptype.impfem, 3, 2);
     }
@@ -32,7 +35,7 @@ public class ImpFem extends Pet {
                     if (target.crotchAvailable() && !c.getStance().inserted(target)) {
                         c.write(owner(), own()
                                         + "imp grabs your dick and begins sucking it hungrily until you push her away.");
-                        target.body.pleasure(null, null, target.body.getRandom("cock"), 2 + 3 * Global.random(power),
+                        target.body.pleasure(owner(), part, target.body.getRandom("cock"), 2 + 3 * Global.random(power),
                                         c);
                     } else {
                         c.write(owner(), own() + "imp stands at the periphery of the fight, touching herself idly.");

@@ -67,7 +67,7 @@ public class Escape extends Skill {
                                     + "'s iron grip on your dick. However, her pussy tongue has other ideas. She runs her tongue up and down your cock and leaves you gasping with pleasure.");
                     int m = 8;
                     getSelf().body.pleasure(target, target.body.getRandom("pussy"), getSelf().body.getRandom("cock"), m,
-                                    c);
+                                    c, this);
                 } else if (getSelf().crotchAvailable()) {
                     c.write(getSelf(), "You try to take advantage of an opening in " + target.name()
                                     + "'s stance to slip away, but she catches you by your protruding penis and reasserts her position.");

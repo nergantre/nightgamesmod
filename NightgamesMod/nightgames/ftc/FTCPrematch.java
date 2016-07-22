@@ -17,7 +17,7 @@ public class FTCPrematch implements Scene {
 
     private Character prey;
 
-    public FTCPrematch(Player player) {
+    public FTCPrematch(Player player) {        
         Global.current = this;
         Global.unflag(Flag.victory);
         ArrayList<JButton> choice = new ArrayList<JButton>();
@@ -62,7 +62,7 @@ public class FTCPrematch implements Scene {
         if (response.equals("Start the Match")) {
             FTCModifier mod = new FTCModifier(prey);
             Global.flag(Flag.didFTC);
-            Global.dusk(mod);
+            Global.setUpMatch(mod);
         } else {
             String message = "";
             if (response.equals("Volunteer")) {

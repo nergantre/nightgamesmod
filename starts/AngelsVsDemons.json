@@ -1,0 +1,204 @@
+{
+	"name":"Angels and Demons",
+	"summary":"Start with the base characters + Eve and Reyka. All characters except the player are either angels or demons. Characters who are usually neither retain their original classes as well. Stats are similar to New Game+. It's a little wonky.",
+	"enabled":true,
+	"player": {
+		"attributes": {
+			"Power":5,
+			"Seduction":5,
+			"Cunning":5
+		},
+		"attribute_points": 20,
+		"money": 15000,
+		"traits": [
+			"pussyhandler",
+			"dickhandler",
+			"limbTraining1",
+			"tongueTraining1",
+			"powerfulhips"
+		]
+	},
+	"npcs": [
+		{
+			"type":"Angel",
+			"start":true,
+			"attributes": {
+				"Power": 10,
+				"Seduction": 15,
+				"Cunning": 10,
+				"Divinity": 15
+			},
+			"body": {
+				"archetype":"ANGEL"
+			},
+			"traits": [
+				"demigoddess",
+				"divinity",
+				"proheels",
+				"undisciplined",
+				"lickable"
+			],
+			"clothing": [
+				"translucentshawl",
+				"bikinitop",
+				"bikinibottoms",
+				"highheels"
+			]
+		},
+		{
+			"type":"Cassie",
+			"start":true,
+			"attributes": {
+				"Power": 10,
+				"Seduction": 10,
+				"Cunning": 10,
+				"Divinity": 5,
+				"Arcane": 5
+			},
+			"body": {
+				"archetype":"ANGEL"
+			},
+			"traits": [
+				"divinity",
+				"witch",
+				"softheart",
+				"romantic",
+				"imagination"
+			],
+			"clothing": [
+				"bra",
+				"blouse",
+				"cloak",
+				"panties",
+				"skirt",
+				"shoes"
+			]
+		},
+		{
+			"type":"Eve",
+			"start":true,
+			"attributes": {
+				"Power": 10,
+				"Seduction": 13,
+				"Cunning": 10,
+				"Speed": 6,
+				"Fetish": 5,
+				"Dark": 5
+			},
+			"body": {
+				"gender":"herm",
+				"archetype":"DEMON",
+				"genitals": {
+					"cock": {
+						"length":"big"
+					},
+					"pussy":"normal"
+				},
+				"breasts":"d"
+			},
+			"traits": [
+				"succubus",
+				"exhibitionist",
+				"insatiable",
+				"proheels",
+				"assmaster",
+				"analFanatic"
+			],
+			"clothing": [
+				"tanktop",
+				"crotchlesspanties",
+				"jeans",
+				"stilettopumps",
+				"garters"
+			]
+		},
+		{
+			"type":"Jewel",
+			"start":true,
+			"attributes": {
+				"Power": 15,
+				"Seduction": 10,
+				"Cunning": 10,
+				"Ki": 5,
+				"Dark": 5
+			},
+			"body": {
+				"archetype":"DEMON",
+				"genitals": {
+					"pussy":"fiery"
+				}
+			},
+			"traits": [
+				"succubus",
+				"fighter",
+				"direct",
+				"wrassler",
+				"insatiable"
+			],
+			"clothing": [
+				"gi",
+				"panties"
+			]
+		},
+		{
+			"type":"Mara",
+			"start":true,
+			"attributes": {
+				"Power": 10,
+				"Seduction": 10,
+				"Cunning": 15,
+				"Perception": 7,
+				"Divinity": 5,
+				"Science": 5
+			},
+			"body": {
+				"archetype":"ANGEL"
+			},
+			"traits": [
+				"divinity",
+				"madscientist",
+				"petite",
+				"dexterous",
+				"ticklish"
+			],
+			"clothing": [
+				"bra",
+				"shirt",
+				"labcoat",
+				"underwear",
+				"pants",
+				"pantyhose",
+				"boots"
+			]
+		},
+		{
+			"type":"Reyka",
+			"start":true,
+			"attributes": {
+				"Power": 5,
+				"Seduction": 14,
+				"Cunning": 7,
+				"Dark": 15
+			},
+			"body": {
+				"archetype":"DEMON"
+			},
+			"traits": [
+				"succubus",
+				"proheels",
+				"masterheels",
+				"darkpromises",
+				"Confident",
+				"shameless"
+			],
+			"clothing": [
+				"tanktop",
+				"miniskirt",
+				"garters",
+				"stilettopumps"
+			]
+		}
+	],
+	"all_npcs":{},
+	"flags":[]
+}

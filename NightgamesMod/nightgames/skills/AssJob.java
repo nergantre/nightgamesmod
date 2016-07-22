@@ -53,7 +53,7 @@ public class AssJob extends Skill {
                     fetishChance += 15;
                 }
             }
-            target.body.pleasure(getSelf(), getSelf().body.getRandomAss(), target.body.getRandomCock(), m, c);
+            target.body.pleasure(getSelf(), getSelf().body.getRandomAss(), target.body.getRandomCock(), m, c, this);
 
             if (Global.random(100) < fetishChance) {
                 target.add(c, new BodyFetish(target, getSelf(), "ass", .1 + getSelf().get(Attribute.Fetish) * .05));
@@ -77,7 +77,7 @@ public class AssJob extends Skill {
                     }
                 }
                 if (target.body.getRandomCock().isReady(target)) {
-                    target.body.pleasure(getSelf(), getSelf().body.getRandomAss(), target.body.getRandomCock(), m, c);
+                    target.body.pleasure(getSelf(), getSelf().body.getRandomAss(), target.body.getRandomCock(), m, c, this);
                 } else {
                     target.tempt(c, getSelf(), getSelf().body.getRandomAss(), m);
                 }
@@ -99,7 +99,7 @@ public class AssJob extends Skill {
                         m += 3;
                     }
                 }
-                target.body.pleasure(getSelf(), getSelf().body.getRandomAss(), target.body.getRandomCock(), m, c);
+                target.body.pleasure(getSelf(), getSelf().body.getRandomAss(), target.body.getRandomCock(), m, c, this);
             }
         } else {
             if (getSelf().human()) {

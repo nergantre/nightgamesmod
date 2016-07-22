@@ -43,7 +43,7 @@ public class CounterFlower extends CounterBase {
             } else {
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             }
-            c.setStance(new FlowerSex(getSelf(), target));
+            c.setStance(new FlowerSex(getSelf(), target), getSelf(), true);
             new Thrust(getSelf()).resolve(c, target);
         } else {
             if (getSelf().human()) {
@@ -56,12 +56,12 @@ public class CounterFlower extends CounterBase {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.has(Trait.dryad) && user.get(Attribute.Bio) >= 15;
+        return user.get(Attribute.Bio) >= 15;
     }
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return !c.getStance().dom(getSelf()) && !c.getStance().dom(target) && getSelf().canAct() && getSelf().hasPussy()
+        return getSelf().has(Trait.dryad) && !c.getStance().dom(getSelf()) && !c.getStance().dom(target) && getSelf().canAct() && getSelf().hasPussy()
                         && target.hasDick();
     }
 
@@ -124,5 +124,10 @@ public class CounterFlower extends CounterBase {
                                             + "{other:PRONOUN} coils her limbs around yours, forcing your face inside her fragrant cleavage and your cock inside her warm sticky flower cunt.",
                             getSelf(), target);
         }
+    }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FINISHER;
     }
 }

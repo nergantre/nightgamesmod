@@ -1,13 +1,12 @@
 package nightgames.status;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.global.JSONUtils;
 
 public class FiredUp extends DurationStatus {
 
@@ -19,6 +18,7 @@ public class FiredUp extends DurationStatus {
         super("Fired Up", affected, 2);
         this.part = part;
         stack = 1;
+        this.other = other;
         flag(Stsflag.firedup);
         flag(Stsflag.purgable);
     }
@@ -150,20 +150,17 @@ public class FiredUp extends DurationStatus {
         setDuration(2);
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public JSONObject saveToJSON() {
-        JSONObject obj = new JSONObject();
-        obj.put("type", getClass().getSimpleName());
-        obj.put("part", part);
-        obj.put("stack", stack);
+    @SuppressWarnings("unchecked") @Override public JsonObject saveToJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("type", getClass().getSimpleName());
+        obj.addProperty("part", part);
+        obj.addProperty("stack", stack);
         return obj;
     }
 
-    @Override
-    public Status loadFromJSON(JSONObject obj) {
-        FiredUp fu = new FiredUp(null, null, JSONUtils.readString(obj, "part"));
-        fu.stack = JSONUtils.readInteger(obj, "stack");
+    @Override public Status loadFromJson(JsonObject obj) {
+        FiredUp fu = new FiredUp(null, null, obj.get("part").getAsString());
+        fu.stack = obj.get("stack").getAsInt();
         return fu;
     }
 

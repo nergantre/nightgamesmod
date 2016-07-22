@@ -24,7 +24,7 @@ public class TailPeg extends Skill {
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
         Collection<BodyPart> tails = user.body.get("tail");
-        boolean hasFuckableTail = tails.stream().anyMatch(p -> p.isType("tail") && p != TailPart.cat);
+        boolean hasFuckableTail = tails.stream().anyMatch(p -> p.isType("tail") && p != TailPart.cat && p != TailPart.slimeycat);
         return hasFuckableTail && (user.get(Attribute.Dark) >= 1 || user.get(Attribute.Seduction) >= 20);
     }
 
@@ -103,11 +103,11 @@ public class TailPeg extends Skill {
             if (c.getStance().havingSex()) {
                 if (vaginal) {
                     target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom("pussy"),
-                                    strength, c);
+                                    strength, c, this);
                     target.add(c, new TailFucked(target, getSelf(), "pussy"));
                 } else {
                     target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom("ass"),
-                                    strength, c);
+                                    strength, c, this);
                     target.add(c, new TailFucked(target, getSelf(), "ass"));
                 }
             }

@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
@@ -111,6 +112,20 @@ public class Engulfed extends Position {
     }
 
     @Override
+    public Position reverse(Combat c) {
+        if (bottom.has(Trait.slime)) {
+            c.write(bottom, String.format("%s %s slimy body around %s, reversing %s hold.",
+                            bottom.subjectAction("swirls", "swirl"), bottom.possessivePronoun(),
+                            top.nameOrPossessivePronoun(), top.possessivePronoun()));
+            return super.reverse(c);
+        }
+        c.write(bottom, String.format("%s loose from %s slimy grip and %s away from %s.", 
+                        bottom.subjectAction("struggles", "struggle"), top.nameOrPossessivePronoun(),
+                        bottom.action("stagger", "staggers"), top.directObject()));
+        return new Neutral(top, bottom);
+    }
+
+    @Override
     public void decay(Combat c) {
         time++;
         bottom.weaken(c, 5);
@@ -131,7 +146,9 @@ public class Engulfed extends Position {
             parts.addAll(top.body.get("pussy"));
             parts.addAll(top.body.get("ass"));
         }
-        return parts.stream().filter(part -> part != null && part.present()).collect(Collectors.toList());
+        return parts.stream()
+                    .filter(part -> part != null && part.present())
+                    .collect(Collectors.toList());
     }
 
     @Override
@@ -143,7 +160,9 @@ public class Engulfed extends Position {
             parts.addAll(bottom.body.get("pussy"));
             parts.addAll(bottom.body.get("ass"));
         }
-        return parts.stream().filter(part -> part != null && part.present()).collect(Collectors.toList());
+        return parts.stream()
+                    .filter(part -> part != null && part.present())
+                    .collect(Collectors.toList());
     }
 
     @Override
@@ -162,5 +181,10 @@ public class Engulfed extends Position {
         if (!bottom.hasDick())
             return true;
         return Global.random(2) == 0;
+    }
+    
+    @Override
+    public int dominance() {
+        return 5;
     }
 }

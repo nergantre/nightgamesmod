@@ -46,17 +46,17 @@ public class CockWorship extends Skill {
         }
         BodyPart mouth = getSelf().body.getRandom("mouth");
         BodyPart cock = target.body.getRandom("cock");
-        target.body.pleasure(getSelf(), mouth, cock, m, c);
+        target.body.pleasure(getSelf(), mouth, cock, m, c, this);
         if (getSelf().hasDick() && (!getSelf().hasPussy() || Global.random(2) == 0)) {
-            getSelf().body.pleasure(getSelf(), getSelf().body.getRandom("hands"), getSelf().body.getRandomCock(), m, c);
+            getSelf().body.pleasure(getSelf(), getSelf().body.getRandom("hands"), getSelf().body.getRandomCock(), m, c, this);
         } else if (getSelf().hasPussy()) {
             getSelf().body.pleasure(getSelf(), getSelf().body.getRandom("hands"), getSelf().body.getRandomPussy(), m,
-                            c);
+                            c, this);
         } else {
-            getSelf().body.pleasure(getSelf(), getSelf().body.getRandom("hands"), getSelf().body.getRandomHole(), m, c);
+            getSelf().body.pleasure(getSelf(), getSelf().body.getRandom("hands"), getSelf().body.getRandomHole(), m, c, this);
         }
         if (mouth.isErogenous()) {
-            getSelf().body.pleasure(getSelf(), cock, mouth, m, c);
+            getSelf().body.pleasure(getSelf(), cock, mouth, m, c, this);
         }
 
         target.buildMojo(c, 20);

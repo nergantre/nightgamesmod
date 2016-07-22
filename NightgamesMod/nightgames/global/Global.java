@@ -1,158 +1,93 @@
 package nightgames.global;
 
-import java.awt.Rectangle;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.Reader;
+import com.google.gson.*;
+import com.google.gson.stream.JsonWriter;
+import nightgames.Resources.ResourceLoader;
+import nightgames.actions.Action;
+import nightgames.actions.*;
+import nightgames.actions.Wait;
+import nightgames.areas.Area;
+import nightgames.areas.MapDrawHint;
+import nightgames.characters.*;
+import nightgames.characters.Character;
+import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.StraponPart;
+import nightgames.characters.custom.CustomNPC;
+import nightgames.characters.custom.JsonSourceNPCDataLoader;
+import nightgames.characters.custom.NPCData;
+import nightgames.combat.Combat;
+import nightgames.daytime.Daytime;
+import nightgames.ftc.FTCMatch;
+import nightgames.json.JsonUtils;
+import nightgames.gui.GUI;
+import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
+import nightgames.modifier.CustomModifierLoader;
+import nightgames.modifier.Modifier;
+import nightgames.modifier.standard.*;
+import nightgames.pet.Ptype;
+import nightgames.skills.*;
+import nightgames.start.NpcConfiguration;
+import nightgames.start.PlayerConfiguration;
+import nightgames.start.StartConfiguration;
+import nightgames.status.Status;
+import nightgames.trap.*;
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.ContextFactory;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
-import org.json.simple.parser.ParseException;
-import org.mozilla.javascript.Context;
-import org.mozilla.javascript.ContextFactory;
-
-import com.cedarsoftware.util.io.JsonWriter;
-
-import nightgames.Resources.ResourceLoader;
-import nightgames.actions.Action;
-import nightgames.actions.Bathe;
-import nightgames.actions.BushAmbush;
-import nightgames.actions.Craft;
-import nightgames.actions.Energize;
-import nightgames.actions.Hide;
-import nightgames.actions.Locate;
-import nightgames.actions.MasturbateAction;
-import nightgames.actions.Movement;
-import nightgames.actions.PassAmbush;
-import nightgames.actions.Recharge;
-import nightgames.actions.Resupply;
-import nightgames.actions.Scavenge;
-import nightgames.actions.SetTrap;
-import nightgames.actions.TreeAmbush;
-import nightgames.actions.Use;
-import nightgames.actions.Wait;
-import nightgames.areas.Area;
-import nightgames.areas.MapDrawHint;
-import nightgames.characters.Airi;
-import nightgames.characters.Angel;
-import nightgames.characters.Attribute;
-import nightgames.characters.Cassie;
-import nightgames.characters.Character;
-import nightgames.characters.Eve;
-import nightgames.characters.Jewel;
-import nightgames.characters.Kat;
-import nightgames.characters.Mara;
-import nightgames.characters.Maya;
-import nightgames.characters.NPC;
-import nightgames.characters.Personality;
-import nightgames.characters.Player;
-import nightgames.characters.Reyka;
-import nightgames.characters.Trait;
-import nightgames.characters.TraitTree;
-import nightgames.characters.body.BodyPart;
-import nightgames.characters.body.StraponPart;
-import nightgames.characters.custom.CustomNPC;
-import nightgames.characters.custom.JSONSourceNPCDataLoader;
-import nightgames.combat.Combat;
-import nightgames.daytime.Daytime;
-import nightgames.ftc.FTCMatch;
-import nightgames.gui.GUI;
-import nightgames.gui.NullGUI;
-import nightgames.items.Item;
-import nightgames.items.clothing.Clothing;
-import nightgames.modifier.Modifier;
-import nightgames.modifier.standard.FTCModifier;
-import nightgames.modifier.standard.NoItemsModifier;
-import nightgames.modifier.standard.NoModifier;
-import nightgames.modifier.standard.NoRecoveryModifier;
-import nightgames.modifier.standard.NoToysModifier;
-import nightgames.modifier.standard.NudistModifier;
-import nightgames.modifier.standard.PacifistModifier;
-import nightgames.modifier.standard.UnderwearOnlyModifier;
-import nightgames.modifier.standard.VibrationModifier;
-import nightgames.modifier.standard.VulnerableModifier;
-import nightgames.pet.Ptype;
-import nightgames.skills.*;
-import nightgames.trap.Alarm;
-import nightgames.trap.AphrodisiacTrap;
-import nightgames.trap.Decoy;
-import nightgames.trap.DissolvingTrap;
-import nightgames.trap.EnthrallingTrap;
-import nightgames.trap.IllusionTrap;
-import nightgames.trap.Snare;
-import nightgames.trap.Spiderweb;
-import nightgames.trap.SpringTrap;
-import nightgames.trap.StripMine;
-import nightgames.trap.TentacleTrap;
-import nightgames.trap.Trap;
-import nightgames.trap.Tripline;
-
 public class Global {
     private static Random rng;
     private static GUI gui;
-    private static HashSet<Skill> skillPool = new HashSet<Skill>();
-
-    private static HashSet<Action> actionPool;
-    private static HashSet<Trap> trapPool;
-    private static HashSet<Trait> featPool;
-    private static HashSet<Modifier> modifierPool;
-    private static HashSet<Character> players;
+    private static Set<Skill> skillPool = new HashSet<>();
+    private static Map<String, NPC> characterPool;
+    private static Set<Action> actionPool;
+    private static Set<Trap> trapPool;
+    private static Set<Trait> featPool;
+    private static Set<Modifier> modifierPool;
+    private static Set<Character> players;
+    private static Set<Character> debugChars;
     private static Set<Character> resting;
-    private static HashSet<String> flags;
-    private static HashMap<String, Float> counters;
+    private static Set<String> flags;
+    private static Map<String, Float> counters;
     public static Player human;
     private static Match match;
     public static Daytime day;
-    private static int date;
+    protected static int date;
+    private static Time time;
     private Date jdate;
     private static TraitTree traitRequirements;
     public static Scene current;
     public static boolean debug[] = new boolean[DebugFlags.values().length];
     public static int debugSimulation = 0;
     public static double moneyRate = 1.0;
-    public static double xpRate = .75;
+    public static double xpRate = 1.0;
     public static ContextFactory factory;
     public static Context cx;
 
-    public Global() {
-        this(false);
-    }
+    public static final Path COMBAT_LOG_DIR = new File("combatlogs").toPath();
 
-    public Global(boolean headless) {
+    public Global() {
         rng = new Random();
-        flags = new HashSet<String>();
-        players = new HashSet<Character>();
-        resting = new HashSet<Character>();
-        counters = new HashMap<String, Float>();
+        flags = new HashSet<>();
+        players = new HashSet<>();
+        debugChars = new HashSet<>();
+        resting = new HashSet<>();
+        counters = new HashMap<>();
         jdate = new Date();
         counters.put(Flag.malePref.name(), 0.f);
         Clothing.buildClothingTable();
@@ -172,14 +107,15 @@ public class Global {
         System.out.println("Night games");
         System.out.println(new Timestamp(jdate.getTime()));
 
-        debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
-        debug[DebugFlags.DEBUG_LOADING.ordinal()] = true;
+        // debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
+        // debug[DebugFlags.DEBUG_LOADING.ordinal()] = true;
         // debug[DebugFlags.DEBUG_FTC.ordinal()] = true;
         // debug[DebugFlags.DEBUG_DAMAGE.ordinal()] = true;
         // debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
         // debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
         // debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
         // debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
+        // debug[DebugFlags.DEBUG_ADDICTION.ordinal()] = true;
         traitRequirements = new TraitTree(ResourceLoader.getFileResourceAsStream("data/TraitRequirements.xml"));
         current = null;
         factory = new ContextFactory();
@@ -187,13 +123,14 @@ public class Global {
         buildParser();
         buildActionPool();
         buildFeatPool();
+        buildSkillPool(noneCharacter);
         buildModifierPool();
         flag(Flag.AiriEnabled);
-        if (headless) {
-            gui = new NullGUI();
-        } else {
-            gui = new GUI();
-        }
+        gui = makeGUI();
+    }
+
+    protected GUI makeGUI() {
+        return new GUI();
     }
 
     public static boolean meetsRequirements(Character c, Trait t) {
@@ -204,23 +141,28 @@ public class Global {
         return debug[flag.ordinal()] && debugSimulation == 0;
     }
 
-    public static void newGame(Player one) {
-        human = one;
+    public static void newGame(String playerName, Optional<StartConfiguration> config, List<Trait> pickedTraits,
+                    CharacterSex pickedGender, Map<Attribute, Integer> selectedAttributes) {
+        Optional<PlayerConfiguration> playerConfig = config.map(c -> c.player);
+        Collection<Flag> cfgFlags = config.map(StartConfiguration::getFlags).orElse(new ArrayList<>());
+        human = new Player(playerName, pickedGender, playerConfig, pickedTraits, selectedAttributes);
         players.add(human);
         if (gui != null) {
             gui.populatePlayer(human);
         }
         buildSkillPool(human);
         Clothing.buildClothingTable();
-        Global.learnSkills(human);
-        rebuildCharacterPool();
-        date = 0;
-        flag(Flag.systemMessages);
-        players.add(getNPC("Jewel"));
-        players.add(getNPC("Cassie"));
-        players.add(getNPC("Angel"));
-        players.add(getNPC("Mara"));
-        match = new Match(players, new NoModifier());
+        learnSkills(human);
+        rebuildCharacterPool(config);
+        // Add starting characters to players
+        players.addAll(characterPool.values().stream().filter(npc -> npc.isStartCharacter).collect(Collectors.toList()));
+        if (!cfgFlags.isEmpty()) {
+            flags = cfgFlags.stream().map(Flag::name).collect(Collectors.toSet());
+        }
+        Set<Character> lineup = pickCharacters(players, Collections.singleton(human), 4);
+        match = new Match(lineup, new NoModifier());
+        time = Time.NIGHT;
+        saveWithDialog();
     }
 
     public static int random(int start, int end) {
@@ -256,211 +198,231 @@ public class Global {
         return human;
     }
 
-    public static void buildSkillPool(Player p) {
+    public static void buildSkillPool(Character ch) {
         getSkillPool().clear();
-        getSkillPool().add(new Slap(p));
-        getSkillPool().add(new Tribadism(p));
-        getSkillPool().add(new PussyGrind(p));
-        getSkillPool().add(new Slap(p));
-        getSkillPool().add(new ArmBar(p));
-        getSkillPool().add(new Blowjob(p));
-        getSkillPool().add(new Cunnilingus(p));
-        getSkillPool().add(new Escape(p));
-        getSkillPool().add(new Flick(p));
-        getSkillPool().add(new ToggleKnot(p));
-        getSkillPool().add(new LivingClothing(p));
-        getSkillPool().add(new LivingClothingOther(p));
-        getSkillPool().add(new Engulf(p));
-        getSkillPool().add(new CounterFlower(p));
-        getSkillPool().add(new Knee(p));
-        getSkillPool().add(new LegLock(p));
-        getSkillPool().add(new LickNipples(p));
-        getSkillPool().add(new Maneuver(p));
-        getSkillPool().add(new Paizuri(p));
-        getSkillPool().add(new PerfectTouch(p));
-        getSkillPool().add(new Restrain(p));
-        getSkillPool().add(new Reversal(p));
-        getSkillPool().add(new LeechEnergy(p));
-        getSkillPool().add(new SweetScent(p));
-        getSkillPool().add(new Spank(p));
-        getSkillPool().add(new Stomp(p));
-        getSkillPool().add(new StandUp(p));
-        getSkillPool().add(new WildThrust(p));
-        getSkillPool().add(new SuckNeck(p));
-        getSkillPool().add(new Tackle(p));
-        getSkillPool().add(new Taunt(p));
-        getSkillPool().add(new Trip(p));
-        getSkillPool().add(new Whisper(p));
-        getSkillPool().add(new Kick(p));
-        getSkillPool().add(new PinAndBlow(p));
-        getSkillPool().add(new Footjob(p));
-        getSkillPool().add(new FootPump(p));
-        getSkillPool().add(new HeelGrind(p));
-        getSkillPool().add(new Handjob(p));
-        getSkillPool().add(new Squeeze(p));
-        getSkillPool().add(new Nurple(p));
-        getSkillPool().add(new Finger(p));
-        getSkillPool().add(new Aphrodisiac(p));
-        getSkillPool().add(new Lubricate(p));
-        getSkillPool().add(new Dissolve(p));
-        getSkillPool().add(new Sedate(p));
-        getSkillPool().add(new Tie(p));
-        getSkillPool().add(new Masturbate(p));
-        getSkillPool().add(new Piston(p));
-        getSkillPool().add(new Grind(p));
-        getSkillPool().add(new Thrust(p));
-        getSkillPool().add(new UseDildo(p));
-        getSkillPool().add(new UseOnahole(p));
-        getSkillPool().add(new UseCrop(p));
-        getSkillPool().add(new Carry(p));
-        getSkillPool().add(new Tighten(p));
-        getSkillPool().add(new HipThrow(p));
-        getSkillPool().add(new SpiralThrust(p));
-        getSkillPool().add(new Bravado(p));
-        getSkillPool().add(new Diversion(p));
-        getSkillPool().add(new Undress(p));
-        getSkillPool().add(new StripSelf(p));
-        getSkillPool().add(new StripTease(p));
-        getSkillPool().add(new Sensitize(p));
-        getSkillPool().add(new EnergyDrink(p));
-        getSkillPool().add(new Strapon(p));
-        getSkillPool().add(new AssFuck(p));
-        getSkillPool().add(new Turnover(p));
-        getSkillPool().add(new Tear(p));
-        getSkillPool().add(new Binding(p));
-        getSkillPool().add(new Bondage(p));
-        getSkillPool().add(new WaterForm(p));
-        getSkillPool().add(new DarkTendrils(p));
-        getSkillPool().add(new Dominate(p));
-        getSkillPool().add(new FlashStep(p));
-        getSkillPool().add(new FlyCatcher(p));
-        getSkillPool().add(new Illusions(p));
-        getSkillPool().add(new LustAura(p));
-        getSkillPool().add(new MagicMissile(p));
-        getSkillPool().add(new Masochism(p));
-        getSkillPool().add(new NakedBloom(p));
-        getSkillPool().add(new ShrinkRay(p));
-        getSkillPool().add(new SpawnFaerie(p, Ptype.fairyfem));
-        getSkillPool().add(new SpawnImp(p, Ptype.impfem));
-        getSkillPool().add(new SpawnFaerie(p, Ptype.fairymale));
-        getSkillPool().add(new SpawnImp(p, Ptype.impmale));
-        getSkillPool().add(new SpawnSlime(p));
-        getSkillPool().add(new StunBlast(p));
-        getSkillPool().add(new Fly(p));
-        getSkillPool().add(new Command(p));
-        getSkillPool().add(new Obey(p));
-        getSkillPool().add(new OrgasmSeal(p));
-        getSkillPool().add(new DenyOrgasm(p));
-        getSkillPool().add(new Drain(p));
-        getSkillPool().add(new LevelDrain(p));
-        getSkillPool().add(new StoneForm(p));
-        getSkillPool().add(new FireForm(p));
-        getSkillPool().add(new Defabricator(p));
-        getSkillPool().add(new TentaclePorn(p));
-        getSkillPool().add(new Sacrifice(p));
-        getSkillPool().add(new Frottage(p));
-        getSkillPool().add(new FaceFuck(p));
-        getSkillPool().add(new VibroTease(p));
-        getSkillPool().add(new TailPeg(p));
-        getSkillPool().add(new CommandDismiss(p));
-        getSkillPool().add(new CommandDown(p));
-        getSkillPool().add(new CommandGive(p));
-        getSkillPool().add(new CommandHurt(p));
-        getSkillPool().add(new CommandInsult(p));
-        getSkillPool().add(new CommandMasturbate(p));
-        getSkillPool().add(new CommandOral(p));
-        getSkillPool().add(new CommandStrip(p));
-        getSkillPool().add(new CommandStripPlayer(p));
-        getSkillPool().add(new CommandUse(p));
-        getSkillPool().add(new ShortCircuit(p));
-        getSkillPool().add(new IceForm(p));
-        getSkillPool().add(new Barrier(p));
-        getSkillPool().add(new CatsGrace(p));
-        getSkillPool().add(new Charm(p));
-        getSkillPool().add(new Tempt(p));
-        getSkillPool().add(new EyesOfTemptation(p));
-        getSkillPool().add(new TailJob(p));
-        getSkillPool().add(new FaceSit(p));
-        getSkillPool().add(new Purr(p));
-        getSkillPool().add(new MutualUndress(p));
-        getSkillPool().add(new Surrender(p));
-        getSkillPool().add(new ReverseFuck(p));
-        getSkillPool().add(new ReverseCarry(p));
-        getSkillPool().add(new ReverseFly(p));
-        getSkillPool().add(new CounterDrain(p));
-        getSkillPool().add(new CounterRide(p));
-        getSkillPool().add(new CounterPin(p));
-        getSkillPool().add(new ReverseAssFuck(p));
-        getSkillPool().add(new Nurse(p));
-        getSkillPool().add(new Suckle(p));
-        getSkillPool().add(new UseDraft(p));
-        getSkillPool().add(new ThrowDraft(p));
-        getSkillPool().add(new ReverseAssFuck(p));
-        getSkillPool().add(new FondleBreasts(p));
-        getSkillPool().add(new Fuck(p));
-        getSkillPool().add(new Kiss(p));
-        getSkillPool().add(new Struggle(p));
-        getSkillPool().add(new Tickle(p));
-        getSkillPool().add(new nightgames.skills.Wait(p));
-        getSkillPool().add(new Bluff(p));
-        getSkillPool().add(new StripTop(p));
-        getSkillPool().add(new StripBottom(p));
-        getSkillPool().add(new Shove(p));
-        getSkillPool().add(new Recover(p));
-        getSkillPool().add(new Straddle(p));
-        getSkillPool().add(new ReverseStraddle(p));
-        getSkillPool().add(new Stunned(p));
-        getSkillPool().add(new Distracted(p));
-        getSkillPool().add(new PullOut(p));
-        getSkillPool().add(new ThrowDraft(p));
-        getSkillPool().add(new UseDraft(p));
-        getSkillPool().add(new TentacleRape(p));
-        getSkillPool().add(new Anilingus(p));
-        getSkillPool().add(new UseSemen(p));
-        getSkillPool().add(new Invitation(p));
-        getSkillPool().add(new SubmissiveHold(p));
-        getSkillPool().add(new BreastGrowth(p));
-        getSkillPool().add(new CockGrowth(p));
-        getSkillPool().add(new BreastRay(p));
-        getSkillPool().add(new FootSmother(p));
-        getSkillPool().add(new FootWorship(p));
-        getSkillPool().add(new BreastWorship(p));
-        getSkillPool().add(new CockWorship(p));
-        getSkillPool().add(new PussyWorship(p));
-        getSkillPool().add(new SuccubusSurprise(p));
-        getSkillPool().add(new TemptressHandjob(p));
-        getSkillPool().add(new TemptressBlowjob(p));
-        getSkillPool().add(new TemptressRide(p));
-        getSkillPool().add(new TemptressStripTease(p));
-        getSkillPool().add(new Blindside(p));
-        getSkillPool().add(new LeechSeed(p));
-        getSkillPool().add(new Beg(p));
-        getSkillPool().add(new Cowardice(p));
-        getSkillPool().add(new Dive(p));
-        getSkillPool().add(new Offer(p));
-        getSkillPool().add(new ShamefulDisplay(p));
-        getSkillPool().add(new Stumble(p));
-        getSkillPool().add(new TortoiseWrap(p));
-        getSkillPool().add(new FaerieSwarm(p));
-        getSkillPool().add(new DarkTalisman(p));
-        getSkillPool().add(new HeightenSenses(p));
-        getSkillPool().add(new LewdSuggestion(p));
-        getSkillPool().add(new Suggestion(p));
-        getSkillPool().add(new ImbueFetish(p));
-        getSkillPool().add(new AssJob(p));
-        getSkillPool().add(new TailSuck(p));
-        getSkillPool().add(new ToggleSlimeCock(p));
-        getSkillPool().add(new ToggleSlimePussy(p));
-        getSkillPool().add(new Spores(p));
-        getSkillPool().add(new EngulfedFuck(p));
+        getSkillPool().add(new Slap(ch));
+        getSkillPool().add(new Tribadism(ch));
+        getSkillPool().add(new PussyGrind(ch));
+        getSkillPool().add(new Slap(ch));
+        getSkillPool().add(new ArmBar(ch));
+        getSkillPool().add(new Blowjob(ch));
+        getSkillPool().add(new Cunnilingus(ch));
+        getSkillPool().add(new Escape(ch));
+        getSkillPool().add(new Flick(ch));
+        getSkillPool().add(new ToggleKnot(ch));
+        getSkillPool().add(new LivingClothing(ch));
+        getSkillPool().add(new LivingClothingOther(ch));
+        getSkillPool().add(new Engulf(ch));
+        getSkillPool().add(new CounterFlower(ch));
+        getSkillPool().add(new Knee(ch));
+        getSkillPool().add(new LegLock(ch));
+        getSkillPool().add(new LickNipples(ch));
+        getSkillPool().add(new Maneuver(ch));
+        getSkillPool().add(new Paizuri(ch));
+        getSkillPool().add(new PerfectTouch(ch));
+        getSkillPool().add(new Restrain(ch));
+        getSkillPool().add(new Reversal(ch));
+        getSkillPool().add(new LeechEnergy(ch));
+        getSkillPool().add(new SweetScent(ch));
+        getSkillPool().add(new Spank(ch));
+        getSkillPool().add(new Stomp(ch));
+        getSkillPool().add(new StandUp(ch));
+        getSkillPool().add(new WildThrust(ch));
+        getSkillPool().add(new SuckNeck(ch));
+        getSkillPool().add(new Tackle(ch));
+        getSkillPool().add(new Taunt(ch));
+        getSkillPool().add(new Trip(ch));
+        getSkillPool().add(new Whisper(ch));
+        getSkillPool().add(new Kick(ch));
+        getSkillPool().add(new PinAndBlow(ch));
+        getSkillPool().add(new Footjob(ch));
+        getSkillPool().add(new FootPump(ch));
+        getSkillPool().add(new HeelGrind(ch));
+        getSkillPool().add(new Handjob(ch));
+        getSkillPool().add(new Squeeze(ch));
+        getSkillPool().add(new Nurple(ch));
+        getSkillPool().add(new Finger(ch));
+        getSkillPool().add(new Aphrodisiac(ch));
+        getSkillPool().add(new Lubricate(ch));
+        getSkillPool().add(new Dissolve(ch));
+        getSkillPool().add(new Sedate(ch));
+        getSkillPool().add(new Tie(ch));
+        getSkillPool().add(new Masturbate(ch));
+        getSkillPool().add(new Piston(ch));
+        getSkillPool().add(new Grind(ch));
+        getSkillPool().add(new Thrust(ch));
+        getSkillPool().add(new UseDildo(ch));
+        getSkillPool().add(new UseOnahole(ch));
+        getSkillPool().add(new UseCrop(ch));
+        getSkillPool().add(new Carry(ch));
+        getSkillPool().add(new Tighten(ch));
+        getSkillPool().add(new HipThrow(ch));
+        getSkillPool().add(new SpiralThrust(ch));
+        getSkillPool().add(new Bravado(ch));
+        getSkillPool().add(new Diversion(ch));
+        getSkillPool().add(new Undress(ch));
+        getSkillPool().add(new StripSelf(ch));
+        getSkillPool().add(new StripTease(ch));
+        getSkillPool().add(new Sensitize(ch));
+        getSkillPool().add(new EnergyDrink(ch));
+        getSkillPool().add(new Strapon(ch));
+        getSkillPool().add(new AssFuck(ch));
+        getSkillPool().add(new Turnover(ch));
+        getSkillPool().add(new Tear(ch));
+        getSkillPool().add(new Binding(ch));
+        getSkillPool().add(new Bondage(ch));
+        getSkillPool().add(new WaterForm(ch));
+        getSkillPool().add(new DarkTendrils(ch));
+        getSkillPool().add(new Dominate(ch));
+        getSkillPool().add(new FlashStep(ch));
+        getSkillPool().add(new FlyCatcher(ch));
+        getSkillPool().add(new Illusions(ch));
+        getSkillPool().add(new LustAura(ch));
+        getSkillPool().add(new MagicMissile(ch));
+        getSkillPool().add(new Masochism(ch));
+        getSkillPool().add(new NakedBloom(ch));
+        getSkillPool().add(new ShrinkRay(ch));
+        getSkillPool().add(new SpawnFaerie(ch, Ptype.fairyfem));
+        getSkillPool().add(new SpawnImp(ch, Ptype.impfem));
+        getSkillPool().add(new SpawnFaerie(ch, Ptype.fairymale));
+        getSkillPool().add(new SpawnImp(ch, Ptype.impmale));
+        getSkillPool().add(new SpawnSlime(ch));
+        getSkillPool().add(new StunBlast(ch));
+        getSkillPool().add(new Fly(ch));
+        getSkillPool().add(new Command(ch));
+        getSkillPool().add(new Obey(ch));
+        getSkillPool().add(new OrgasmSeal(ch));
+        getSkillPool().add(new DenyOrgasm(ch));
+        getSkillPool().add(new Drain(ch));
+        getSkillPool().add(new LevelDrain(ch));
+        getSkillPool().add(new StoneForm(ch));
+        getSkillPool().add(new FireForm(ch));
+        getSkillPool().add(new Defabricator(ch));
+        getSkillPool().add(new TentaclePorn(ch));
+        getSkillPool().add(new Sacrifice(ch));
+        getSkillPool().add(new Frottage(ch));
+        getSkillPool().add(new FaceFuck(ch));
+        getSkillPool().add(new VibroTease(ch));
+        getSkillPool().add(new TailPeg(ch));
+        getSkillPool().add(new CommandDismiss(ch));
+        getSkillPool().add(new CommandDown(ch));
+        getSkillPool().add(new CommandGive(ch));
+        getSkillPool().add(new CommandHurt(ch));
+        getSkillPool().add(new CommandInsult(ch));
+        getSkillPool().add(new CommandMasturbate(ch));
+        getSkillPool().add(new CommandOral(ch));
+        getSkillPool().add(new CommandStrip(ch));
+        getSkillPool().add(new CommandStripPlayer(ch));
+        getSkillPool().add(new CommandUse(ch));
+        getSkillPool().add(new ShortCircuit(ch));
+        getSkillPool().add(new IceForm(ch));
+        getSkillPool().add(new Barrier(ch));
+        getSkillPool().add(new CatsGrace(ch));
+        getSkillPool().add(new Charm(ch));
+        getSkillPool().add(new Tempt(ch));
+        getSkillPool().add(new EyesOfTemptation(ch));
+        getSkillPool().add(new TailJob(ch));
+        getSkillPool().add(new FaceSit(ch));
+        getSkillPool().add(new Purr(ch));
+        getSkillPool().add(new MutualUndress(ch));
+        getSkillPool().add(new Surrender(ch));
+        getSkillPool().add(new ReverseFuck(ch));
+        getSkillPool().add(new ReverseCarry(ch));
+        getSkillPool().add(new ReverseFly(ch));
+        getSkillPool().add(new CounterDrain(ch));
+        getSkillPool().add(new CounterRide(ch));
+        getSkillPool().add(new CounterPin(ch));
+        getSkillPool().add(new ReverseAssFuck(ch));
+        getSkillPool().add(new Nurse(ch));
+        getSkillPool().add(new Suckle(ch));
+        getSkillPool().add(new UseDraft(ch));
+        getSkillPool().add(new ThrowDraft(ch));
+        getSkillPool().add(new ReverseAssFuck(ch));
+        getSkillPool().add(new FondleBreasts(ch));
+        getSkillPool().add(new Fuck(ch));
+        getSkillPool().add(new Kiss(ch));
+        getSkillPool().add(new Struggle(ch));
+        getSkillPool().add(new Tickle(ch));
+        getSkillPool().add(new nightgames.skills.Wait(ch));
+        getSkillPool().add(new Bluff(ch));
+        getSkillPool().add(new StripTop(ch));
+        getSkillPool().add(new StripBottom(ch));
+        getSkillPool().add(new Shove(ch));
+        getSkillPool().add(new Recover(ch));
+        getSkillPool().add(new Straddle(ch));
+        getSkillPool().add(new ReverseStraddle(ch));
+        getSkillPool().add(new Stunned(ch));
+        getSkillPool().add(new Distracted(ch));
+        getSkillPool().add(new PullOut(ch));
+        getSkillPool().add(new ThrowDraft(ch));
+        getSkillPool().add(new UseDraft(ch));
+        getSkillPool().add(new TentacleRape(ch));
+        getSkillPool().add(new Anilingus(ch));
+        getSkillPool().add(new UseSemen(ch));
+        getSkillPool().add(new Invitation(ch));
+        getSkillPool().add(new SubmissiveHold(ch));
+        getSkillPool().add(new BreastGrowth(ch));
+        getSkillPool().add(new CockGrowth(ch));
+        getSkillPool().add(new BreastRay(ch));
+        getSkillPool().add(new FootSmother(ch));
+        getSkillPool().add(new FootWorship(ch));
+        getSkillPool().add(new BreastWorship(ch));
+        getSkillPool().add(new CockWorship(ch));
+        getSkillPool().add(new PussyWorship(ch));
+        getSkillPool().add(new SuccubusSurprise(ch));
+        getSkillPool().add(new TemptressHandjob(ch));
+        getSkillPool().add(new TemptressBlowjob(ch));
+        getSkillPool().add(new TemptressRide(ch));
+        getSkillPool().add(new TemptressStripTease(ch));
+        getSkillPool().add(new Blindside(ch));
+        getSkillPool().add(new LeechSeed(ch));
+        getSkillPool().add(new Beg(ch));
+        getSkillPool().add(new Cowardice(ch));
+        getSkillPool().add(new Dive(ch));
+        getSkillPool().add(new Offer(ch));
+        getSkillPool().add(new ShamefulDisplay(ch));
+        getSkillPool().add(new Stumble(ch));
+        getSkillPool().add(new TortoiseWrap(ch));
+        getSkillPool().add(new FaerieSwarm(ch));
+        getSkillPool().add(new DarkTalisman(ch));
+        getSkillPool().add(new HeightenSenses(ch));
+        getSkillPool().add(new LewdSuggestion(ch));
+        getSkillPool().add(new Suggestion(ch));
+        getSkillPool().add(new ImbueFetish(ch));
+        getSkillPool().add(new AssJob(ch));
+        getSkillPool().add(new TailSuck(ch));
+        getSkillPool().add(new ToggleSlimeCock(ch));
+        getSkillPool().add(new ToggleSlimePussy(ch));
+        getSkillPool().add(new Spores(ch));
+        getSkillPool().add(new EngulfedFuck(ch));
+        getSkillPool().add(new Pray(ch));
+        getSkillPool().add(new Prostrate(ch));
+        getSkillPool().add(new DarkKiss(ch));
+        getSkillPool().add(new MimicAngel(ch));
+        getSkillPool().add(new MimicCat(ch));
+        getSkillPool().add(new MimicDryad(ch));
+        getSkillPool().add(new MimicSuccubus(ch));
+        getSkillPool().add(new MimicWitch(ch));
+        getSkillPool().add(new Parasite(ch));
+        getSkillPool().add(new Bite(ch));
+        getSkillPool().add(new PlaceBlindfold(ch));
+        getSkillPool().add(new RipBlindfold(ch));
+        getSkillPool().add(new ToggleBlindfold(ch));
+        getSkillPool().add(new BunshinAssault(ch));
+        getSkillPool().add(new BunshinService(ch));
+        getSkillPool().add(new GoodnightKiss(ch));
+        getSkillPool().add(new NeedleThrow(ch));
+        getSkillPool().add(new StealClothes(ch));
+        getSkillPool().add(new Substitute(ch));
+
 
         if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
-            getSkillPool().add(new SelfStun(p));
+            getSkillPool().add(new SelfStun(ch));
         }
     }
 
     public static void buildActionPool() {
-        actionPool = new HashSet<Action>();
+        actionPool = new HashSet<>();
         actionPool.add(new Resupply());
         actionPool.add(new Wait());
         actionPool.add(new Hide());
@@ -484,7 +446,7 @@ public class Global {
     }
 
     public static void buildTrapPool() {
-        trapPool = new HashSet<Trap>();
+        trapPool = new HashSet<>();
         trapPool.add(new Alarm());
         trapPool.add(new Tripline());
         trapPool.add(new Snare());
@@ -500,7 +462,7 @@ public class Global {
     }
 
     public static void buildFeatPool() {
-        featPool = new HashSet<Trait>();
+        featPool = new HashSet<>();
         for (Trait trait : Trait.values()) {
             if (trait.isFeat()) {
                 featPool.add(trait);
@@ -519,9 +481,35 @@ public class Global {
         modifierPool.add(new UnderwearOnlyModifier());
         modifierPool.add(new VibrationModifier());
         modifierPool.add(new VulnerableModifier());
+
+        File customModFile = new File("data/customModifiers.json");
+        if (customModFile.canRead()) {
+            try {
+                JsonArray array = JsonUtils.rootJson(Files.newBufferedReader(customModFile.toPath())).getAsJsonArray();
+                for (JsonElement element : array) {
+                    JsonObject object;
+                    try {
+                        object = element.getAsJsonObject();
+                    } catch (Exception e) {
+                        System.out.println("Error loading custom modifiers: Non-object element in root array");
+                        continue;
+                    }
+                    Modifier mod = CustomModifierLoader.readModifier(object);
+                    if (!mod.name().equals("DEMO"))
+                        modifierPool.add(mod);
+                    if (isDebugOn(DebugFlags.DEBUG_LOADING))
+                        System.out.println("Loaded custom modifier: " + mod.name());
+                }
+            } catch (IOException e) {
+                System.out.println("Error loading custom modifiers: " + e);
+                e.printStackTrace();
+            }
+        }
+        if (isDebugOn(DebugFlags.DEBUG_LOADING))
+            System.out.println("Done loading modifiers");
     }
 
-    public static HashSet<Action> getActions() {
+    public static Set<Action> getActions() {
         return actionPool;
     }
 
@@ -548,8 +536,13 @@ public class Global {
         return day;
     }
 
-    public static void dawn() {
+    public static void startDay() {
         match = null;
+        day = new Daytime(human);
+        day.plan();
+    }
+
+    public static void endNight() {
         double level = 0;
         int maxLevelTracker = 0;
 
@@ -582,8 +575,11 @@ public class Global {
             rested.gainXP(100 + Math.max(0, (int) Math.round(10 * (level - rested.getLevel()))));
         }
         date++;
-        day = new Daytime(human);
-        day.plan(false);
+        time = Time.DAY;
+        if (Global.checkFlag(Flag.autosave)) {
+            Global.autoSave();
+        }
+        startDay();
     }
     
     private static Set<Character> pickCharacters(Set<Character> avail, Set<Character> added, int size) {
@@ -594,15 +590,28 @@ public class Global {
                         .collect(Collectors.toList());
         Collections.shuffle(randomizer);
         Set<Character> results = new HashSet<>(added);
-        results.addAll(randomizer.subList(0, Math.min(Math.max(0, size - results.size()), randomizer.size())));
+        results.addAll(randomizer.subList(0, Math.min(Math.max(0, size - results.size())+1, randomizer.size())));
         return results;
     }
 
-    public static void dusk(Modifier matchmod) {
-        Set<Character> lineup = new HashSet<Character>();
+    public static void endDay() {
+        day = null;
+        time = Time.NIGHT;
+        if (checkFlag(Flag.autosave)) {
+            autoSave();
+        }
+        startNight();
+    }
+
+    public static void startNight() {
+        decideMatchType().buildPrematch(human);
+    }
+
+    public static void setUpMatch(Modifier matchmod) {
+        assert day == null;
+        Set<Character> lineup = new HashSet<>(debugChars);
         Character lover = null;
         int maxaffection = 0;
-        day = null;
         unflag(Flag.FTC);
         for (Character player : players) {
             player.getStamina().fill();
@@ -617,18 +626,23 @@ public class Global {
                 lover = player;
             }
         }
-        List<Character> participants = new ArrayList<Character>();
+        List<Character> participants = new ArrayList<>();
+        // Disable characters flagged as disabled
         for (Character c : players) {
+            // Disabling the player wouldn't make much sense, and there's no PlayerDisabled flag.
             Flag disabledFlag = null;
-            try {
-                disabledFlag = Flag.valueOf(c.getName() + "Disabled");
-            } catch (IllegalArgumentException e) {
+            if (!c.getType().equals("Player")) {
+                try {
+                    disabledFlag = Flag.valueOf(c.getType() + "Disabled");
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                }
             }
             if (disabledFlag == null || !Global.checkFlag(disabledFlag)) {
                 // TODO: DEBUG
-                if (c.getName().contains("Cassie") || c.human()) {
+               // if (c.getName().contains("Reyka") || c.human()) {
                     participants.add(c);
-                }
+              //}
             }
         }
         if (matchmod.name().equals("maya")) {
@@ -646,14 +660,15 @@ public class Global {
                     resting.add(player);
                 }
             }
-            lineup = pickCharacters(lineup, players, 4);
+            lineup = pickCharacters(players, lineup, 4);
             if (!checkFlag(Flag.Maya)) {
                 newChallenger(new Maya(human.getLevel()));
                 flag(Flag.Maya);
             }
-            NPC maya = getNPC("Maya");
+            NPC maya = Optional.ofNullable(getNPC("Maya")).orElseThrow(() -> new IllegalStateException(
+                            "Maya data unavailable when attempting to add her to lineup."));
             lineup.add(maya);
-            resting = new HashSet<Character>(players);
+            resting = new HashSet<>(players);
             resting.removeAll(lineup);
             maya.gain(Item.Aphrodisiac, 10);
             maya.gain(Item.DisSol, 10);
@@ -675,8 +690,8 @@ public class Global {
             lineup.add(prey);
             if (!prey.human())
                 lineup.add(human);
-            lineup = pickCharacters(lineup, players, 4);
-            resting = new HashSet<Character>(players);
+            lineup = pickCharacters(players, lineup, 4);
+            resting = new HashSet<>(players);
             resting.removeAll(lineup);
             match = buildMatch(lineup, matchmod);
         } else if (participants.size() > 5) {
@@ -684,8 +699,8 @@ public class Global {
                 lineup.add(lover);
             }
             lineup.add(human);
-            lineup = pickCharacters(lineup, players, 4);
-            resting = new HashSet<Character>(players);
+            lineup = pickCharacters(players, lineup, 4);
+            resting = new HashSet<>(players);
             resting.removeAll(lineup);
             match = buildMatch(lineup, matchmod);
         } else {
@@ -695,6 +710,10 @@ public class Global {
     }
 
     public static void startMatch() {
+        Global.getPlayer().getAddictions().forEach(a -> {
+            Optional<Status> withEffect = a.startNight();
+            withEffect.ifPresent(s -> Global.getPlayer().add(s));
+        });
         Global.gui().startMatch();
         match.round();
     }
@@ -731,7 +750,6 @@ public class Global {
         return original.substring(0, 1).toUpperCase() + original.substring(1);
     }
 
-    private static Map<String, NPC> characterPool;
 
     public static NPC getNPCByType(String type) {
         NPC results = characterPool.get(type);
@@ -843,6 +861,7 @@ public class Global {
         workshop.link(engineering);
         lab.link(engineering);
         lab.link(bridge);
+        lab.jump(dining);
         libarts.link(quad);
         libarts.link(library);
         libarts.link(pool);
@@ -862,13 +881,14 @@ public class Global {
         tunnel.link(laundry);
         bridge.link(lab);
         bridge.link(library);
+        bridge.jump(quad);
         sau.link(pool);
         sau.link(quad);
         workshop.shortcut(pool);
         pool.shortcut(workshop);
         library.shortcut(tunnel);
         tunnel.shortcut(library);
-        HashMap<String, Area> map = new HashMap<String, Area>();
+        HashMap<String, Area> map = new HashMap<>();
         map.put("Quad", quad);
         map.put("Dorm", dorm);
         map.put("Shower", shower);
@@ -929,89 +949,84 @@ public class Global {
         counters.put(f.name(), val);
     }
 
-    @SuppressWarnings("unchecked")
-    public static void save(boolean auto) {
-        JSONObject obj = new JSONObject();
-        JSONArray characterArr = new JSONArray();
-        for (Character c : players) {
-            characterArr.add(c.save());
-        }
-        obj.put("characters", characterArr);
-        JSONArray flagsArr = new JSONArray();
-        for (String flag : flags) {
-            flagsArr.add(flag);
-        }
-        obj.put("flags", flagsArr);
-        JSONObject countersObj = new JSONObject();
-        for (String counter : counters.keySet()) {
-            countersObj.put(counter, counters.get(counter));
-        }
-        obj.put("counters", countersObj);
-        obj.put("time", match == null ? "dusk" : "dawn");
-        obj.put("date", date);
+    public static void autoSave() {
+        save(new File("./auto.ngs"));
+    }
 
-        try {
-            FileWriter file;
-            if (auto) {
-                file = new FileWriter("./auto.ngs");
-            } else {
-                JFileChooser dialog = new JFileChooser("./");
-                FileFilter savesFilter = new FileNameExtensionFilter("Nightgame Saves", "ngs");
-                dialog.addChoosableFileFilter(savesFilter);
-                dialog.setFileFilter(savesFilter);
-                dialog.setMultiSelectionEnabled(false);
-                int rv = dialog.showSaveDialog(gui);
+    public static void saveWithDialog() {
+        Optional<File> file = gui().askForSaveFile();
+        if (file.isPresent()) {
+            save(file.get());
+        }
+    }
 
-                if (rv != JFileChooser.APPROVE_OPTION) {
-                    return;
-                }
-                File saveFile = dialog.getSelectedFile();
-                String fname = saveFile.getAbsolutePath();
-                if (!fname.endsWith(".ngs")) {
-                    fname += ".ngs";
-                }
-                file = new FileWriter(new File(fname));
-            }
-            PrintWriter saver = new PrintWriter(file);
-            saver.write(JsonWriter.formatJson(obj.toJSONString()));
-            saver.close();
-        } catch (IOException e) {
+    protected static SaveData saveData() {
+        SaveData data = new SaveData();
+        data.players.addAll(players);
+        data.flags.addAll(flags);
+        data.counters.putAll(counters);
+        data.time = time;
+        data.date = date;
+        return data;
+    }
+
+    public static void save(File file) {
+        SaveData data = saveData();
+        JsonObject saveJson = data.toJson();
+
+        try (JsonWriter saver = new JsonWriter(new FileWriter(file))) {
+            saver.setIndent("  ");
+            JsonUtils.gson.toJson(saveJson, saver);
+        } catch (IOException | JsonIOException e) {
+            System.err.println("Could not save file " + file + ": " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    public static void rebuildCharacterPool() {
-        characterPool = new HashMap<>();
+    private static Optional<NpcConfiguration> findNpcConfig(String type, Optional<StartConfiguration> startConfig) {
+        return startConfig.isPresent() ? startConfig.get().findNpcConfig(type) : Optional.empty();
+    }
 
-        try {
-            JSONArray characterSet = (JSONArray) JSONValue.parseWithException(
-                            new InputStreamReader(ResourceLoader.getFileResourceAsStream("characters/included.json")));
-            for (Object obj : characterSet) {
-                String name = (String) obj;
+    public static void rebuildCharacterPool(Optional<StartConfiguration> startConfig) {
+        characterPool = new HashMap<>();
+        debugChars.clear();
+
+        Optional<NpcConfiguration> commonConfig =
+                        startConfig.isPresent() ? Optional.of(startConfig.get().npcCommon) : Optional.empty();
+
+        try (InputStreamReader reader = new InputStreamReader(
+                        ResourceLoader.getFileResourceAsStream("characters/included.json"))) {
+            JsonArray characterSet = JsonUtils.rootJson(reader).getAsJsonArray();
+            for (JsonElement element : characterSet) {
+                String name = element.getAsString();
                 try {
-                    Personality npc = new CustomNPC(JSONSourceNPCDataLoader
-                                    .load(ResourceLoader.getFileResourceAsStream("characters/" + name)));
+                    NPCData data = JsonSourceNPCDataLoader
+                                    .load(ResourceLoader.getFileResourceAsStream("characters/" + name));
+                    Optional<NpcConfiguration> npcConfig = findNpcConfig(CustomNPC.TYPE_PREFIX + data.getName(), startConfig);
+                    Personality npc = new CustomNPC(data, npcConfig, commonConfig);
                     characterPool.put(npc.getCharacter().getType(), npc.getCharacter());
                     System.out.println("Loaded " + name);
-                } catch (ParseException | IOException e1) {
+                } catch (JsonParseException e1) {
                     System.err.println("Failed to load NPC " + name);
                     e1.printStackTrace();
                 }
             }
-        } catch (ParseException | IOException e1) {
+        } catch (JsonParseException | IOException e1) {
             System.err.println("Failed to load character set");
             e1.printStackTrace();
         }
 
-        Personality cassie = new Cassie();
-        Personality angel = new Angel();
-        Personality reyka = new Reyka();
-        Personality kat = new Kat();
-        Personality mara = new Mara();
-        Personality jewel = new Jewel();
-        Personality airi = new Airi();
-        Personality eve = new Eve();
-        Personality maya = new Maya(1);
+        // TODO: Refactor into function and unify with CustomNPC handling.
+        Personality cassie = new Cassie(findNpcConfig("Cassie", startConfig), commonConfig);
+        Personality angel = new Angel(findNpcConfig("Angel", startConfig), commonConfig);
+        Personality reyka = new Reyka(findNpcConfig("Reyka", startConfig), commonConfig);
+        Personality kat = new Kat(findNpcConfig("Kat", startConfig), commonConfig);
+        Personality mara = new Mara(findNpcConfig("Mara", startConfig), commonConfig);
+        Personality jewel = new Jewel(findNpcConfig("Jewel", startConfig), commonConfig);
+        Personality airi = new Airi(findNpcConfig("Airi", startConfig), commonConfig);
+        Personality eve = new Eve(findNpcConfig("Eve", startConfig), commonConfig);
+        Personality maya = new Maya(1, findNpcConfig("Maya", startConfig), commonConfig);
+        Personality yui = new Yui(findNpcConfig("Yui", startConfig), commonConfig);
         characterPool.put(cassie.getCharacter().getType(), cassie.getCharacter());
         characterPool.put(angel.getCharacter().getType(), angel.getCharacter());
         characterPool.put(reyka.getCharacter().getType(), reyka.getCharacter());
@@ -1021,9 +1036,13 @@ public class Global {
         characterPool.put(airi.getCharacter().getType(), airi.getCharacter());
         characterPool.put(eve.getCharacter().getType(), eve.getCharacter());
         characterPool.put(maya.getCharacter().getType(), maya.getCharacter());
+        characterPool.put(yui.getCharacter().getType(), yui.getCharacter());
+
+
+        //debugChars.add(mara.getCharacter());
     }
 
-    public static void load() {
+    public static void loadWithDialog() {
         JFileChooser dialog = new JFileChooser("./");
         FileFilter savesFilter = new FileNameExtensionFilter("Nightgame Saves", "ngs");
         dialog.addChoosableFileFilter(savesFilter);
@@ -1033,7 +1052,20 @@ public class Global {
         if (rv != JFileChooser.APPROVE_OPTION) {
             return;
         }
-        FileInputStream fileIS;
+        File file = dialog.getSelectedFile();
+        if (!file.isFile()) {
+            file = new File(dialog.getSelectedFile().getAbsolutePath() + ".ngs");
+            if (!file.isFile()) {
+                // not a valid save, abort
+                JOptionPane.showMessageDialog(gui, "Nightgames save file not found", "File not found",
+                                JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+        load(file);
+    }
+
+    protected static void resetForLoad() {
         players.clear();
         flags.clear();
         gui.clearText();
@@ -1041,66 +1073,45 @@ public class Global {
         gui.purgePlayer();
         buildSkillPool(human);
         Clothing.buildClothingTable();
-        rebuildCharacterPool();
+        rebuildCharacterPool(Optional.empty());
+    }
 
-        boolean dawn = false;
-        try {
-            File file = dialog.getSelectedFile();
-            if (!file.isFile()) {
-                file = new File(dialog.getSelectedFile().getAbsolutePath() + ".ngs");
-                if (!file.isFile()) {
-                    // not a valid save, abort
-                    JOptionPane.showMessageDialog(gui, "Nightgames save file not found", "File not found",
-                                    JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-            }
-            fileIS = new FileInputStream(file);
-            Reader loader = new InputStreamReader(fileIS);
-            JSONObject object = (JSONObject) JSONValue.parseWithException(loader);
-            loader.close();
+    public static void load(File file) {
+        resetForLoad();
 
-            JSONArray characters = (JSONArray) object.get("characters");
-            for (Object obj : characters) {
-                JSONObject character = (JSONObject) obj;
-                String type = JSONUtils.readString(character, "type");
-                if (Boolean.TRUE.equals(character.get("human"))) {
-                    human.load(character);
-                    players.add(human);
-                } else if (characterPool.containsKey(type)) {
-                    characterPool.get(type).load(character);
-                    players.add(characterPool.get(type));
-                }
-            }
+        JsonObject object;
+        try (Reader loader = new InputStreamReader(new FileInputStream(file))) {
+            object = new JsonParser().parse(loader).getAsJsonObject();
 
-            JSONArray flagsArr = (JSONArray) object.get("flags");
-            for (Object flag : flagsArr) {
-                flags.add((String) flag);
-            }
-
-            JSONObject countersObj = (JSONObject) object.get("counters");
-            for (Object counter : countersObj.keySet()) {
-                counters.put((String) counter, JSONUtils.readFloat(countersObj, (String) counter));
-            }
-            date = JSONUtils.readInteger(object, "date");
-            String time = JSONUtils.readString(object, "time");
-            dawn = time.equals("dawn");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (org.json.simple.parser.ParseException e) {
-            e.printStackTrace();
+            // Couldn't load data; just get out
+            return;
         }
+        SaveData data = new SaveData(object);
+        loadData(data);
         gui.populatePlayer(human);
-        if (dawn) {
-            dawn();
+        if (time == Time.DAY) {
+            startDay();
         } else {
-            decideMatchType().buildPrematch(human);
+            startNight();
         }
     }
 
-    public static HashSet<Character> everyone() {
+    /**
+     * Loads game state data into static fields from SaveData object.
+     *
+     * @param data A SaveData object, as loaded from save files.
+     */
+    protected static void loadData(SaveData data) {
+        players.addAll(data.players);
+        flags.addAll(data.flags);
+        counters.putAll(data.counters);
+        date = data.date;
+        time = data.time;
+    }
+
+    public static Set<Character> everyone() {
         return players;
     }
 
@@ -1118,7 +1129,7 @@ public class Global {
 
     public static NPC getNPC(String name) {
         for (Character c : allNPCs()) {
-            if (c.getName().equalsIgnoreCase(name)) {
+            if (c.getType().equalsIgnoreCase(name)) {
                 return (NPC) c;
             }
         }
@@ -1191,7 +1202,16 @@ public class Global {
     }
 
     public static <T> T pickRandom(T[] arr) {
+        if (arr.length == 0) return null;
         return arr[Global.random(arr.length)];
+    }
+    
+    public static <T> Optional<T> pickRandom(List<T> list) {
+        if (list.size() == 0) {
+            return Optional.empty();
+        } else {
+            return Optional.of(list.get(random(list.size())));
+        }
     }
 
     public static int getDate() {
@@ -1205,7 +1225,7 @@ public class Global {
     private static HashMap<String, MatchAction> matchActions = null;
 
     public static void buildParser() {
-        matchActions = new HashMap<String, Global.MatchAction>();
+        matchActions = new HashMap<>();
         matchActions.put("possessive", (self, first, second, third) -> {
             if (self != null) {
                 return self.possessivePronoun();
@@ -1333,7 +1353,7 @@ public class Global {
             if (action == null) {
                 System.out.println(second);
             }
-            if (matchActions != null && second != null && action != null) {
+            if (action != null) {
                 replacement = action.replace(character, first, second, third);
                 if (caps) {
                     replacement = Global.capitalizeFirstLetter(replacement);
@@ -1372,11 +1392,11 @@ public class Global {
         return formatter.format(val);
     }
 
-    public static HashSet<Skill> getSkillPool() {
+    public static Set<Skill> getSkillPool() {
         return skillPool;
     }
 
-    public static HashSet<Modifier> getModifierPool() {
+    public static Set<Modifier> getModifierPool() {
         return modifierPool;
     }
 

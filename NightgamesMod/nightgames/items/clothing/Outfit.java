@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -31,7 +32,7 @@ public class Outfit {
         outfit = new EnumMap<>(ClothingSlot.class);
         equipped = new HashSet<>();
         Arrays.stream(ClothingSlot.values()).forEach(slot -> {
-            List<Clothing> list = new ArrayList<Clothing>(Clothing.N_LAYERS);
+            List<Clothing> list = new ArrayList<>(Clothing.N_LAYERS);
             outfit.put(slot, list);
             IntStream.range(0, Clothing.N_LAYERS).forEach(i -> list.add(null));
         });
@@ -39,8 +40,7 @@ public class Outfit {
 
     public Outfit(Outfit other) {
         outfit = new EnumMap<>(ClothingSlot.class);
-        Arrays.stream(ClothingSlot.values())
-                        .forEach(slot -> outfit.put(slot, new ArrayList<Clothing>(other.outfit.get(slot))));
+        Arrays.stream(ClothingSlot.values()).forEach(slot -> outfit.put(slot, new ArrayList<>(other.outfit.get(slot))));
         equipped = new HashSet<>(other.equipped);
     }
 
@@ -61,8 +61,7 @@ public class Outfit {
     public boolean slotEmptyOrMeetsCondition(ClothingSlot slot, Predicate<? super Clothing> condition) {
         Stream<Clothing> clothes = outfit.get(slot).stream().filter(article -> article != null);
         List<Clothing> clothesList = clothes.collect(Collectors.toList());
-        boolean isEmpty = clothesList.stream().allMatch(condition);
-        return isEmpty;
+        return clothesList.stream().allMatch(condition);
     }
 
     public Clothing getTopOfSlot(ClothingSlot slot) {
@@ -71,6 +70,9 @@ public class Outfit {
 
     public Clothing getTopOfSlot(ClothingSlot slot, int highestLayer) {
         List<Clothing> list = outfit.get(slot);
+        if (list == null) {
+            return null;
+        }
         for (int i = highestLayer; i >= 0; i--) {
             if (list.get(i) != null) {
                 return list.get(i);
@@ -80,12 +82,15 @@ public class Outfit {
     }
 
     public List<Clothing> getAllStrippable() {
-        return Arrays.stream(ClothingSlot.values()).map(slot -> getTopOfSlot(slot)).filter(article -> article != null)
+        return Arrays.stream(ClothingSlot.values()).map(this::getTopOfSlot).filter(article -> article != null)
                         .distinct().collect(Collectors.toList());
     }
 
     public Clothing getBottomOfSlot(ClothingSlot slot) {
         List<Clothing> list = outfit.get(slot);
+        if (list == null) {
+            return null;
+        }
         for (int i = 0; i < Clothing.N_LAYERS; i++) {
             if (list.get(i) != null) {
                 return list.get(i);
@@ -137,19 +142,19 @@ public class Outfit {
     }
 
     // mutator apis below
-    public void change(Modifier rule, List<Clothing> plan) {
+    public void change(List<Clothing> plan) {
         undress();
-        plan.forEach(article -> equip(article));
+        plan.forEach(this::equip);
     }
 
     public List<Clothing> undress() {
         List<Clothing> copy = new ArrayList<>(equipped);
-        return copy.stream().map(article -> unequip(article)).collect(Collectors.toList());
+        return copy.stream().map(this::unequip).collect(Collectors.toList());
     }
 
     public List<Clothing> undressOnly(Predicate<? super Clothing> requirement) {
         List<Clothing> copy = new ArrayList<>(equipped);
-        return copy.stream().filter(requirement).map(article -> unequip(article)).collect(Collectors.toList());
+        return copy.stream().filter(requirement).map(this::unequip).collect(Collectors.toList());
     }
 
     public Clothing unequip(Clothing article) {
@@ -164,14 +169,14 @@ public class Outfit {
     public List<Clothing> equip(Clothing article) {
         // get a list of things that will be unequipped by this
         List<Clothing> unequipped = article.getSlots().stream().map(slot -> outfit.get(slot).get(article.getLayer()))
-                        .filter(c -> c != null).map(c -> unequip(c)).collect(Collectors.toList());
+                        .filter(c -> c != null).map(this::unequip).collect(Collectors.toList());
         article.getSlots().forEach(slot -> outfit.get(slot).set(article.getLayer(), article));
         equipped.add(article);
         return unequipped;
     }
 
     public void dress(List<Clothing> pile) {
-        pile.forEach(article -> equip(article));
+        pile.forEach(this::equip);
     }
 
     public Collection<Clothing> getEquipped() {
@@ -229,7 +234,7 @@ public class Outfit {
         Clothing legs = getTopOfSlot(ClothingSlot.legs, 3);
         Clothing feet = getTopOfSlot(ClothingSlot.feet, 3);
 
-        Set<Clothing> others = new LinkedHashSet<Clothing>();
+        Set<Clothing> others = new LinkedHashSet<>();
         if (arms != null) {
             others.add(arms);
         }
@@ -344,7 +349,7 @@ public class Outfit {
     }
 
     public double getHotness() {
-        Map<Clothing, Double> maximumExposure = new HashMap<Clothing, Double>();
+        Map<Clothing, Double> maximumExposure = new HashMap<>();
         Arrays.stream(ClothingSlot.values()).forEach(slot -> getHotness(slot, maximumExposure));
         return maximumExposure.keySet().stream()
                         .mapToDouble(article -> maximumExposure.get(article) * article.getHotness()).sum();
@@ -355,18 +360,37 @@ public class Outfit {
         if (equipped == null) {
             return super.toString();
         }
-        StringBuilder sb = new StringBuilder("[");
-        sb.append(equipped.stream().reduce((a, b) -> {
-            sb.append(a);
-            sb.append(", ");
-            return b;
-        }).get());
-        sb.append(']');
-        return String.format("%s@%s", sb.toString(), Integer.toHexString(hashCode()));
+        String sb = "[" + equipped.stream().map(Clothing::getName).collect(Collectors.joining(", ")) + ']';
+        return String.format("%s@%s", sb, Integer.toHexString(hashCode()));
     }
 
     public boolean hasNoShoes() {
         Clothing feetSlot = getTopOfSlot(ClothingSlot.feet);
         return feetSlot == null || feetSlot.getLayer() < 2;
+    }
+
+    public boolean canEquip(Clothing c) {
+        return c.getSlots()
+                    .stream()
+                    .map(this::getTopOfSlot)
+                    .filter(Objects::nonNull)
+                    .mapToInt(Clothing::getLayer)
+                    .allMatch(i -> c.getLayer() < i);
+    }
+
+    @Override public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        Outfit outfit = (Outfit) o;
+
+        return equipped.equals(outfit.equipped);
+
+    }
+
+    @Override public int hashCode() {
+        return equipped.hashCode();
     }
 }

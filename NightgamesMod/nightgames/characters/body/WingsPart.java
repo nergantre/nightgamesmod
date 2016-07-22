@@ -1,12 +1,14 @@
 package nightgames.characters.body;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 
 public enum WingsPart implements BodyPart,BodyPartMod {
+    demonicslime("demonic slime ", .2, 1.3, 1.2),
+    angelicslime("angelic slime ", .2, 1.3, 1.2),
     demonic("demonic ", .2, 1.3, 1.2),
     angelic("angelic ", .3, 1.4, 1.3);
     public String desc;
@@ -77,17 +79,14 @@ public enum WingsPart implements BodyPart,BodyPartMod {
         return true;
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public JSONObject save() {
-        JSONObject obj = new JSONObject();
-        obj.put("enum", name());
+    @SuppressWarnings("unchecked") @Override public JsonObject save() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("enum", name());
         return obj;
     }
 
-    @Override
-    public BodyPart load(JSONObject obj) {
-        return WingsPart.valueOf((String) obj.get("enum"));
+    @Override public BodyPart load(JsonObject obj) {
+        return WingsPart.valueOf(obj.get("enum").getAsString());
     }
 
     @Override
@@ -162,12 +161,12 @@ public enum WingsPart implements BodyPart,BodyPartMod {
     }
 
     @Override
-    public int counterValue(BodyPart other) {
+    public int counterValue(BodyPart otherPart, Character self, Character other) {
         return 0;
     }
 
     @Override
-    public BodyPartMod getMod() {
+    public BodyPartMod getMod(Character self) {
         return this;
     }
 

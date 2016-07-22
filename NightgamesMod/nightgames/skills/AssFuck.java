@@ -40,7 +40,8 @@ public class AssFuck extends Fuck {
                         && getSelf().canAct()
                         && (getTargetOrgan(target).isReady(target) || getSelf().has(Item.Lubricant)
                                         || getSelf().getArousal().percent() > 50 || getSelf().has(Trait.alwaysready)
-                                        || getSelf().has(Trait.assmaster));
+                                        || getSelf().has(Trait.assmaster))
+                        && (!target.hasPussy() || !PullOut.blockedByAddiction(getSelf()));
     }
 
     @Override
@@ -84,22 +85,23 @@ public class AssFuck extends Fuck {
                 c.write(getSelf(), receive(c, premessage.length(), Result.normal, target));
             }
         }
+        boolean voluntary = getSelf().canMakeOwnDecision();
         if (c.getStance().behind(getSelf())) {
             if (getSelf().name().equals("Eve")) {
-                c.setStance(new AnalProne(getSelf(), target));
+                c.setStance(new AnalProne(getSelf(), target), getSelf(), voluntary);
             } else {
-                c.setStance(new Anal(getSelf(), target));
+                c.setStance(new Anal(getSelf(), target), getSelf(), voluntary);
             }
         } else {
-            c.setStance(new AnalProne(getSelf(), target));
+            c.setStance(new AnalProne(getSelf(), target), getSelf(), voluntary);
         }
         int otherm = m;
         if (getSelf().has(Trait.insertion)) {
             otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
         }
-        target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), otherm, c);
+        target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), otherm, c, this);
         if (!getSelf().has(Trait.strapped)) {
-            getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), m / 2, c);
+            getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), m / 2, c, this);
         }
         getSelf().emote(Emotion.dominant, 100);
         target.emote(Emotion.desperate, 50);
@@ -202,5 +204,10 @@ public class AssFuck extends Fuck {
     @Override
     public boolean makesContact() {
         return true;
+    }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FINISHER;
     }
 }

@@ -24,7 +24,8 @@ public class Locate extends Action {
     public boolean usable(Character self) {
         boolean hasUnderwear = false;
         for (Item i : self.getInventory().keySet()) {
-            if (i.toString().contains("Trophy")) {
+            // i hate myself for having to add this null check... why is inventory even public...
+            if (i != null && i.toString().contains("Trophy")) {
                 hasUnderwear = true;
             }
         }
@@ -51,6 +52,10 @@ public class Locate extends Action {
                                 gui.choose(this, character.getName(), self);
                             });
             gui.choose(this, "Leave", self);
+        } else if (choice.equals("Leave")) {
+            gui.clearText();
+            gui.clearCommand();
+            Global.getMatch().resume();
         } else if ((target = Global.getNPC(choice)) != null) {
             Area area = target.location();
             gui.clearText();
@@ -73,10 +78,6 @@ public class Locate extends Action {
             self.consume(Item.Talisman, 1);
             gui.clearCommand();
             gui.choose(this, "Leave", self);
-        } else if (choice.equals("Leave")) {
-            gui.clearText();
-            gui.clearCommand();
-            Global.getMatch().resume();
         } else {
             StringWriter writer = new StringWriter();
             new UnsupportedOperationException().printStackTrace(new PrintWriter(writer));

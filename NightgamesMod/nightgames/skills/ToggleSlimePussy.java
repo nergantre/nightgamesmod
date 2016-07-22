@@ -1,12 +1,13 @@
 package nightgames.skills;
 
+import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.status.Stsflag;
 
 public class ToggleSlimePussy extends Skill {
 
@@ -16,7 +17,7 @@ public class ToggleSlimePussy extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.has(Trait.slime);
+        return getSelf().get(Attribute.Slime) > 14;
     }
 
     @Override
@@ -71,7 +72,10 @@ public class ToggleSlimePussy extends Skill {
             }
             getSelf().body.add(PussyPart.gooey);
         }
-        c.write(getSelf(), Global.format(msg, getSelf(), target));
+        if (!target.human() || !target.is(Stsflag.blinded))
+            c.write(getSelf(), Global.format(msg, getSelf(), target));
+        else 
+            printBlinded(c);
         return true;
     }
 
@@ -96,6 +100,6 @@ public class ToggleSlimePussy extends Skill {
     }
 
     private boolean hasSlimePussy() {
-        return getSelf().hasPussy() && getSelf().body.getRandomPussy().getMod().equals(PussyPart.gooey);
+        return getSelf().hasPussy() && getSelf().body.getRandomPussy().moddedPartCountsAs(getSelf(), PussyPart.gooey);
     }
 }

@@ -43,7 +43,7 @@ public class CommandOral extends PlayerCommand {
                 c.write(getSelf(), deal(c, 0, Result.normal, target));
             }
         }
-        getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("cock"), m, c);
+        getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("cock"), m, c, this);
         return true;
     }
 

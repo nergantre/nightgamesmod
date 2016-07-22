@@ -32,16 +32,19 @@ public class SpawnSlime extends Skill {
 
     @Override
     public String describe(Combat c) {
-        return "Creates a mindless, but living slime to attack your opponent: 5 Battery";
+        return "Creates a mindless, but living slime to attack your opponent: 5 mojo, 5 Battery";
     }
 
     @Override
     public boolean resolve(Combat c, Character target) {
         getSelf().consume(Item.Battery, 5);
-        int power = 8;
-        int ac = 3;
+        int power = 8 + getSelf().get(Attribute.Science) / 10;
+        int ac = 3 + getSelf().get(Attribute.Science) / 10;
         if (getSelf().has(Trait.leadership)) {
             power += 5;
+        }
+        if (getSelf().has(Trait.tactician)) {
+            ac += 3;
         }
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));

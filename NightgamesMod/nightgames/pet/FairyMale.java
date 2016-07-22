@@ -1,6 +1,7 @@
 package nightgames.pet;
 
 import nightgames.characters.Character;
+import nightgames.characters.body.PetPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
@@ -9,6 +10,8 @@ import nightgames.status.Shield;
 
 public class FairyMale extends Pet {
 
+    private final PetPart part = new PetPart("male fairy");
+    
     public FairyMale(Character owner) {
         super("faerie", owner, Ptype.fairymale, 2, 4);
     }
@@ -30,13 +33,13 @@ public class FairyMale extends Pet {
                     if (target.crotchAvailable()) {
                         c.write(owner(), "Your faerie flies between " + target.name()
                                         + "'s legs and rubs her sensitive clit with both his tiny hands.");
-                        target.body.pleasure(null, null, target.body.getRandom("pussy"), 2 + 3 * Global.random(power),
+                        target.body.pleasure(owner(), part, target.body.getRandom("pussy"), 2 + 3 * Global.random(power),
                                         c);
                     } else {
                         c.write(owner(), "Your faerie crawls into " + target.name() + "'s "
                                         + target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName()
                                         + " and fondles her until she fishes him out.");
-                        target.body.pleasure(null, null, target.body.getRandom("pussy"), 2 + 3 * Global.random(power),
+                        target.body.pleasure(owner(), part, target.body.getRandom("pussy"), 2 + 3 * Global.random(power),
                                         c);
                     }
                     break;

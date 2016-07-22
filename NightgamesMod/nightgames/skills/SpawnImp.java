@@ -35,16 +35,19 @@ public class SpawnImp extends Skill {
 
     @Override
     public String describe(Combat c) {
-        return "Summon a demonic Imp: 5 arousal";
+        return "Summon a demonic Imp: 10 mojo, 5 arousal";
     }
 
     @Override
     public boolean resolve(Combat c, Character target) {
         getSelf().arouse(5, c);
-        int power = 8;
-        int ac = 2;
+        int power = 8 + getSelf().get(Attribute.Dark) / 10;
+        int ac = 2 + getSelf().get(Attribute.Dark) / 10;
         if (getSelf().has(Trait.leadership)) {
             power += 5;
+        }
+        if (getSelf().has(Trait.tactician)) {
+            ac += 3;
         }
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));

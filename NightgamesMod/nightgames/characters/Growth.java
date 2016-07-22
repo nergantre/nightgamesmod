@@ -32,9 +32,9 @@ public class Growth {
         bonusAttributes = 1;
         willpower = .5f;
         bonusWillpower = .25f;
-        attributes = new int[] {2, 3, 3, 3,};
-        traits = new HashMap<Integer, List<Trait>>();
-        actions = new HashMap<Integer, Runnable>();
+        attributes = new int[] {3, 4, 4, 4,};
+        traits = new HashMap<>();
+        actions = new HashMap<>();
     }
 
     public void addTrait(int level, Trait trait) {
@@ -44,7 +44,7 @@ public class Growth {
         traits.get(level).add(trait);
     }
 
-    public List<Trait> getTraits(int level) {
+    public List<Trait> traitsAtLevel(int level) {
         return traits.get(level);
     }
 
@@ -68,7 +68,7 @@ public class Growth {
             character.availableAttributePoints += bonusAttributes;
         }
         traits.keySet().stream().filter(i -> i <= character.level).forEach(i -> {
-            traits.get(i).forEach(trait -> character.add(trait));
+            traits.get(i).forEach(character::add);
         });
         actions.keySet().stream().filter(i -> i <= character.level).forEach(i -> {
             actions.get(i).run();

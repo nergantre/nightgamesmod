@@ -9,6 +9,7 @@ public enum Encs {
     fight,
     flee,
     wait,
+    smoke,
 
     // FTC-specific
     treeAmbush,

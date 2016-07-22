@@ -3,6 +3,7 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.body.TentaclePart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -48,17 +49,16 @@ public class TentaclePorn extends Skill {
                     } else if (target.human()) {
                         c.write(getSelf(), receive(c, 0, Result.special, target));
                     }
-                    target.body.pleasure(null, null, target.body.getRandom("cock"), m, c);
-                    target.body.pleasure(null, null, target.body.getRandom("pussy"), m, c);
-                    target.body.pleasure(null, null, target.body.getRandom("breasts"), m, c);
-                    target.body.pleasure(null, null, target.body.getRandom("ass"), m, c);
-                    target.emote(Emotion.horny, 10);
+                    TentaclePart.pleasureWithTentacles(c, target, m, target.body.getRandomCock());
+                    TentaclePart.pleasureWithTentacles(c, target, m, target.body.getRandomPussy());
+                    TentaclePart.pleasureWithTentacles(c, target, m, target.body.getRandomBreasts());
+                    TentaclePart.pleasureWithTentacles(c, target, m, target.body.getRandomAss());
                 } else if (getSelf().human()) {
                     c.write(getSelf(), deal(c, 0, Result.normal, target));
-                    target.body.pleasure(null, null, target.body.getRandom("skin"), m, c);
+                    TentaclePart.pleasureWithTentacles(c, target, m, target.body.getRandom("skin"));
                 } else if (target.human()) {
                     c.write(getSelf(), receive(c, 0, Result.normal, target));
-                    target.body.pleasure(null, null, target.body.getRandom("skin"), m, c);
+                    TentaclePart.pleasureWithTentacles(c, target, m, target.body.getRandom("skin"));
                 }
                 if (!target.is(Stsflag.oiled)) {
                     target.add(c, new Oiled(target));

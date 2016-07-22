@@ -13,6 +13,7 @@ import nightgames.global.DebugFlags;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.ItemEffect;
+import nightgames.status.Stsflag;
 
 public class UseDraft extends Skill {
     public UseDraft(Character self) {
@@ -42,11 +43,11 @@ public class UseDraft extends Skill {
     }
 
     public Item pickBest(Combat c, NPC self, Character target, List<Item> usables) {
-        HashMap<Item, Float> checks = new HashMap<>();
-        float selfFitness = self.getFitness(c);
-        float targetFitness = self.getOtherFitness(c, target);
+        HashMap<Item, Double> checks = new HashMap<>();
+        double selfFitness = self.getFitness(c);
+        double targetFitness = self.getOtherFitness(c, target);
         usables.stream().forEach(item -> {
-            float rating = self.rateAction(c, selfFitness, targetFitness, (newCombat, newSelf, newOther) -> {
+            double rating = self.rateAction(c, selfFitness, targetFitness, (newCombat, newSelf, newOther) -> {
                 for (ItemEffect e : item.getEffects()) {
                     e.use(newCombat, newSelf, newOther, item);
                 }
@@ -60,7 +61,7 @@ public class UseDraft extends Skill {
             });
         }
         Item best = checks.entrySet().stream().max((first, second) -> {
-            float test = second.getValue() - first.getValue();
+            double test = second.getValue() - first.getValue();
             if (test < 0) {
                 return -1;
             }
@@ -97,14 +98,15 @@ public class UseDraft extends Skill {
             c.write(getSelf(), "Skill failed...");
         } else {
             boolean eventful = false;
-            c.write(getSelf(), Global.format(
+            if (shouldPrint(target))
+                c.write(getSelf(), Global.format(
                             String.format("{self:SUBJECT-ACTION:%s|%ss} %s%s", used.getEffects().get(0).getSelfVerb(),
                                             used.getEffects().get(0).getSelfVerb(), used.pre(), used.getName()),
                             getSelf(), target));
             for (ItemEffect e : used.getEffects()) {
                 eventful = e.use(c, getSelf(), target, used) || eventful;
             }
-            if (!eventful) {
+            if (!eventful && shouldPrint(target)) {
                 c.write("...But nothing happened.");
             }
             getSelf().consume(used, 1);
@@ -140,5 +142,9 @@ public class UseDraft extends Skill {
     @Override
     public boolean makesContact() {
         return false;
+    }
+    
+    private boolean shouldPrint(Character target) {
+        return !target.human() || !target.is(Stsflag.blinded);
     }
 }

@@ -14,6 +14,16 @@ public enum CharacterSex {
         this.desc = desc;
     }
 
+    public boolean hasPussy() {
+        return this == female || this == herm;
+    }
+
+    public boolean hasCock() {
+        return this == male || this == herm;
+    }
+
+
+
     @Override
     public String toString() {
         return Global.capitalizeFirstLetter(desc);

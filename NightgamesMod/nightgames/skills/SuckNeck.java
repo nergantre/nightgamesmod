@@ -41,7 +41,7 @@ public class SuckNeck extends Skill {
                 }
             }
             int m = 1 + Global.random(8);
-            target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("skin"), m, c);
+            target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("skin"), m, c, this);
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.miss, target));
@@ -121,5 +121,10 @@ public class SuckNeck extends Skill {
     @Override
     public boolean makesContact() {
         return true;
+    }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FOREPLAY;
     }
 }

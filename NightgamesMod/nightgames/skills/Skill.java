@@ -20,8 +20,6 @@ public abstract class Skill {
      */
     private String name;
     private Character self;
-    protected String image;
-    protected String artist;
     private int cooldown;
     public String choice;
 
@@ -32,8 +30,6 @@ public abstract class Skill {
     public Skill(String name, Character self, int cooldown) {
         this.name = name;
         setSelf(self);
-        image = null;
-        artist = null;
         this.cooldown = cooldown;
         choice = "";
     }
@@ -149,20 +145,13 @@ public abstract class Skill {
 
     @Override
     public boolean equals(Object other) {
+        if (other == null) return false;
         return toString().equals(other.toString());
     }
 
     @Override
     public int hashCode() {
         return ("Skill:" + toString()).hashCode();
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public String getArtist(String image) {
-        return artist;
     }
 
     public String getName(Combat c) {
@@ -205,10 +194,6 @@ public abstract class Skill {
         return cooldown;
     }
 
-    public void setCooldown(int cooldown) {
-        this.cooldown = cooldown;
-    }
-
     public Collection<String> subChoices() {
         return Collections.emptySet();
     }
@@ -216,4 +201,17 @@ public abstract class Skill {
     public Character getSelf() {
         return self;
     }
+    
+    protected void printBlinded(Combat c) {
+        c.write("<i>You're sure something is happening, but you can't figure out what it is.</i>");
+    }
+    
+    public Stage getStage() {
+        return Stage.REGULAR;
+    }
+    
+    public final double multiplierForStage(Character target) {
+        return getStage().multiplierFor(target);
+    }
+    
 }

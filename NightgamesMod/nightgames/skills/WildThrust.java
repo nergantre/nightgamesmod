@@ -2,9 +2,14 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Player;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.status.addiction.Addiction;
+import nightgames.status.addiction.AddictionType;
+
+import java.util.Optional;
 
 public class WildThrust extends Thrust {
     public WildThrust(Character self) {
@@ -13,12 +18,16 @@ public class WildThrust extends Thrust {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.get(Attribute.Animism) > 1;
+        return user.get(Attribute.Animism) > 1 || user.human() && Global.getPlayer()
+                                                                        .checkAddiction(AddictionType.BREEDER);
     }
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().canAct() && c.getStance().havingSex() && c.getStance().inserted();
+        return getSelf().canAct() && c.getStance()
+                                      .havingSex()
+                        && c.getStance()
+                            .inserted();
     }
 
     @Override
@@ -30,14 +39,44 @@ public class WildThrust extends Thrust {
     public int[] getDamage(Combat c, Character target) {
         int results[] = new int[2];
 
-        int m = 15 + Global.random(20)
-                        + Math.min(getSelf().get(Attribute.Animism), getSelf().getArousal().getReal() / 30);
+        int m = 15 + Global.random(20) + Math
+                        .min(getSelf().get(Attribute.Animism), getSelf().getArousal().getReal() / 30);
         int mt = 15 + Global.random(20);
         mt = Math.max(1, mt);
+
+        results[0] = m;
+        results[1] = mt;
+
+        if (!getSelf().human() && !target.human()) {
+            return results;
+        }
+
+        Player p = Global.getPlayer();
+        Character npc = c.getOther(p);
+        Optional<Addiction> addiction = p.getAddiction(AddictionType.BREEDER);
+        if (!addiction.isPresent()) {
+            return results;
+        }
+
+        Addiction add = addiction.get();
+        if (getSelf().human()) {
+            if (add.wasCausedBy(npc)) {
+                //Increased recoil vs Kat
+                mt *= 1 + ((float) add.getSeverity().ordinal() / 3.f);
+                p.addict(AddictionType.BREEDER, npc, Addiction.LOW_INCREASE);
+            } else {
+                //Increased damage vs everyone else
+                m *= 1 + ((float) add.getSeverity().ordinal() / 3.f);
+            }
+        } else if (target.human() && add.wasCausedBy(npc)) {
+            m *= 1 + ((float) add.getSeverity().ordinal() / 4.f);
+        }
+
         results[0] = m;
         results[1] = mt;
 
         return results;
+
     }
 
     @Override
@@ -86,7 +125,8 @@ public class WildThrust extends Thrust {
 
     @Override
     public String getName(Combat c) {
-        if (c.getStance().inserted(getSelf())) {
+        if (c.getStance()
+             .inserted(getSelf())) {
             return "Wild Thrust";
         } else {
             return "Wild Ride";
@@ -96,5 +136,10 @@ public class WildThrust extends Thrust {
     @Override
     public boolean makesContact() {
         return true;
+    }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FINISHER;
     }
 }

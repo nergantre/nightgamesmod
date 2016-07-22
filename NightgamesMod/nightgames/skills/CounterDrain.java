@@ -27,9 +27,9 @@ public class CounterDrain extends CounterBase {
             c.write(getSelf(), receive(c, 0, Result.normal, target));
         }
         if (target.hasDick() && getSelf().hasPussy()) {
-            c.setStance(Cowgirl.similarInstance(getSelf(), target));
+            c.setStance(Cowgirl.similarInstance(getSelf(), target), getSelf(), true);
         } else {
-            c.setStance(Missionary.similarInstance(getSelf(), target));
+            c.setStance(Missionary.similarInstance(getSelf(), target), getSelf(), true);
         }
         Drain drain = new Drain(getSelf());
         drain.resolve(c, target, true);
@@ -98,5 +98,10 @@ public class CounterDrain extends CounterBase {
                                             + "Seeing the opportunity, she smirks and leisurely mounts you.",
                             getSelf(), target);
         }
+    }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FINISHER;
     }
 }

@@ -18,7 +18,7 @@ public class FlyingCarry extends MaledomSexStance {
     public String describe() {
         return String.format(
                         "You are flying some twenty feet up in the air,"
-                                        + " joinned to your partner by your hips. %s is on top of %s and %s %s is pumping into %s %s",
+                                        + " joined to your partner by your hips. %s is on top of %s and %s %s is pumping into %s %s",
                         top.subject(), bottom.subject(), top.possessivePronoun(),
                         top.body.getRandomInsertable().describe(top), bottom.possessivePronoun(),
                         bottom.body.getRandomPussy().describe(bottom));
@@ -46,7 +46,7 @@ public class FlyingCarry extends MaledomSexStance {
 
     @Override
     public boolean sub(Character c) {
-        return !top.equals(c);
+        return bottom.equals(c);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class FlyingCarry extends MaledomSexStance {
 
     @Override
     public boolean inserted(Character c) {
-        return c == top;
+        return top.equals(c);
     }
 
     public boolean flying(Character c) {
@@ -130,5 +130,10 @@ public class FlyingCarry extends MaledomSexStance {
             top.pain(c, 50);
             return new Cowgirl(bottom, top);
         }
+    }
+    
+    @Override
+    public int dominance() {
+        return 5;
     }
 }

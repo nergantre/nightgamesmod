@@ -45,7 +45,7 @@ public class TailSuck extends Skill {
                 c.write(getSelf(), receive(c, 0, Result.special, target));
             }
             target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandomCock(),
-                            Global.random(10) + 10, c);
+                            Global.random(10) + 10, c, this);
             drain(c, target);
         } else if (getSelf().roll(this, c, accuracy(c))) {
             Result res = c.getStance().en == Stance.facesitting && c.getStance().dom(getSelf()) ? Result.critical
@@ -56,7 +56,7 @@ public class TailSuck extends Skill {
                 c.write(getSelf(), receive(c, 0, res, target));
             }
             target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandomCock(),
-                            Global.random(10) + 10, c);
+                            Global.random(10) + 10, c, this);
             drain(c, target);
             target.add(c, new TailSucked(target, getSelf(), power()));
         } else if (target.hasBalls()) {
@@ -66,7 +66,7 @@ public class TailSuck extends Skill {
                 c.write(getSelf(), receive(c, 0, Result.weak, target));
             }
             target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom("balls"),
-                            Global.random(5) + 5, c);
+                            Global.random(5) + 5, c, this);
             return true;
         } else {
             if (getSelf().human()) {

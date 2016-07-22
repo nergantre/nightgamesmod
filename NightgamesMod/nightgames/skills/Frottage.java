@@ -62,9 +62,9 @@ public class Frottage extends Skill {
         }
 
         if (dealer != null) {
-            getSelf().body.pleasure(target, receiver, dealer, m / 2, c);
+            getSelf().body.pleasure(target, receiver, dealer, m / 2, c, this);
         }
-        target.body.pleasure(getSelf(), dealer, receiver, m, c);
+        target.body.pleasure(getSelf(), dealer, receiver, m, c, this);
         if (Global.random(100) < 15 + 2 * getSelf().get(Attribute.Fetish)) {
             target.add(c, new BodyFetish(target, getSelf(), "cock", .25));
         }

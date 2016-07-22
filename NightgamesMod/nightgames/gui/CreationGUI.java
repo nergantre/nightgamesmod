@@ -7,7 +7,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.util.Arrays;
+import java.util.*;
 
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
@@ -25,10 +25,10 @@ import javax.swing.ScrollPaneConstants;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.CharacterSex;
-import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.global.Flag;
 import nightgames.global.Global;
+import nightgames.start.StartConfiguration;
 
 public class CreationGUI extends JPanel {
     /**
@@ -39,10 +39,10 @@ public class CreationGUI extends JPanel {
     private JTextField seductionfield;
     private JTextField cunningfield;
     private JTextField attPoints;
-    private JTextField namefield;
-    private int power;
-    private int seduction;
-    private int cunning;
+    protected JTextField namefield;
+    protected int power;
+    protected int seduction;
+    protected int cunning;
     private int remaining;
     private JButton btnPowMin;
     private JButton btnPowPlus;
@@ -62,11 +62,11 @@ public class CreationGUI extends JPanel {
     private Box verticalBox;
     private Box horizontalBox;
     private JLabel lblStrength;
-    private JComboBox<Trait> StrengthBox;
+    protected JComboBox<Trait> StrengthBox;
     private JTextPane StrengthDescription;
     private JSeparator separator_2;
     private JLabel lblWeakness;
-    private JComboBox<Trait> WeaknessBox;
+    protected JComboBox<Trait> WeaknessBox;
     private JTextPane WeaknessDescription;
     private JPanel panel_1;
     private JPanel panel_4;
@@ -78,56 +78,47 @@ public class CreationGUI extends JPanel {
     private JPanel panel_10;
     private JPanel panel_11;
     private JPanel panel_12;
-
+    private JPanel topPanel;
+    private JComboBox<CharacterSex> sexBox;
+    private JComboBox<StartConfiguration> configs;
+    private JButton btnStart;
+    private JButton btnAdvStart;
 
     public CreationGUI() {
         setLayout(new BorderLayout(0, 0));
 
-        JPanel panel = new JPanel();
-        add(panel, BorderLayout.NORTH);
-        panel.setBackground(new Color(0, 10, 30));
+        topPanel = new JPanel();
+        add(topPanel, BorderLayout.NORTH);
+        topPanel.setBackground(new Color(0, 10, 30));
 
         JLabel lblName = new JLabel("Name");
 
         lblName.setForeground(new Color(240, 240, 255));
         lblName.setFont(new Font("Sylfaen", Font.BOLD, 15));
-        panel.add(lblName);
+        topPanel.add(lblName);
 
         namefield = new JTextField();
         namefield.setFont(new Font("Sylfaen", Font.BOLD, 15));
-        panel.add(namefield);
+        topPanel.add(namefield);
         namefield.setColumns(10);
 
-        JComboBox<CharacterSex> sexBox = new JComboBox<>();
-        Arrays.stream(CharacterSex.values()).forEach(s -> sexBox.addItem(s));
-        panel.add(sexBox);
+        sexBox = new JComboBox<>();
+        Arrays.stream(CharacterSex.values())
+              .forEach(s -> sexBox.addItem(s));
+        topPanel.add(sexBox);
 
         separator = new JSeparator();
-        panel.add(separator);
+        topPanel.add(separator);
 
-        JButton btnStart = new JButton("Start");
+        btnStart = new JButton("Start");
         btnStart.setFont(new Font("Verdana", Font.BOLD, 12));
-        panel.add(btnStart);
-        btnStart.addActionListener(arg0 -> {
-            if (!namefield.getText().isEmpty()) {
-                String name = namefield.getText();
-                CharacterSex sex = (CharacterSex) sexBox.getSelectedItem();
-                Player one = new Player(name, sex);
-                one.set(Attribute.Power, power);
-                one.set(Attribute.Seduction, seduction);
-                one.set(Attribute.Cunning, cunning);
-                one.add((Trait) StrengthBox.getSelectedItem());
-                one.add((Trait) WeaknessBox.getSelectedItem());
-                if (rdbtnDumb.isSelected()) {
-                    Global.flag(Flag.dumbmode);
-                }
-                if (rdbtnHard.isSelected()) {
-                    Global.flag(Flag.hardmode);
-                }
-                Global.newGame(one);
-                Global.startMatch();
-            }
-        });
+        topPanel.add(btnStart);
+        btnStart.addActionListener(e -> makeGame());
+
+        btnAdvStart = new JButton("Advanced Start");
+        btnAdvStart.setFont(new Font("Verdana", Font.BOLD, 12));
+        topPanel.add(btnAdvStart);
+        btnAdvStart.addActionListener((evt) -> advancedStart());
 
         scrollPane = new JScrollPane();
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -308,7 +299,7 @@ public class CreationGUI extends JPanel {
         panel_2.add(panel_12);
         panel_12.setBackground(new Color(0, 10, 30));
 
-        rdbtnDumb = new JRadioButton("Old AI");
+        rdbtnDumb = new JRadioButton("Easy Mode");
         rdbtnDumb.setForeground(new Color(240, 240, 240));
         rdbtnDumb.setBackground(new Color(0, 10, 30));
         panel_2.add(rdbtnDumb);
@@ -316,7 +307,7 @@ public class CreationGUI extends JPanel {
             panel_2.add(new JPanel());
         }
 
-        rdbtnHard = new JCheckBox("Hard Mode");
+        rdbtnHard = new JCheckBox("NPC Bonuses");
         rdbtnHard.setForeground(new Color(240, 240, 255));
         rdbtnHard.setBackground(new Color(0, 10, 30));
         panel_2.add(rdbtnHard);
@@ -345,7 +336,7 @@ public class CreationGUI extends JPanel {
         lblStrength.setForeground(new Color(240, 240, 255));
         verticalBox.add(lblStrength);
 
-        StrengthBox = new JComboBox<Trait>();
+        StrengthBox = new JComboBox<>();
         StrengthBox.setBackground(new Color(0, 10, 30));
         StrengthBox.setForeground(new Color(240, 240, 255));
         StrengthBox.addItem(Trait.exhibitionist);
@@ -379,7 +370,7 @@ public class CreationGUI extends JPanel {
         lblWeakness.setForeground(new Color(240, 240, 255));
         verticalBox.add(lblWeakness);
 
-        WeaknessBox = new JComboBox<Trait>();
+        WeaknessBox = new JComboBox<>();
         WeaknessBox.setBackground(new Color(0, 10, 30));
         WeaknessBox.setForeground(new Color(240, 240, 255));
         WeaknessBox.addItem(Trait.insatiable);
@@ -410,6 +401,96 @@ public class CreationGUI extends JPanel {
         remaining = 20 - power - seduction - cunning;
         refresh();
 
+    }
+
+    private void advancedStart() {
+        Collection<StartConfiguration> starts = StartConfiguration.loadConfigurations();
+        configs = new JComboBox<>();
+        StringBuilder sb = new StringBuilder();
+        starts.stream()
+              .filter(StartConfiguration::isEnabled)
+              .forEach(cfg -> {
+                  sb.append(cfg.getName());
+                  sb.append("\n");
+                  sb.append(cfg.getSummary());
+                  sb.append("\n\n");
+                  configs.addItem(cfg);
+              });
+        StartConfiguration firstCfg;
+        Optional<StartConfiguration> def = starts.stream()
+                                                 .filter(s -> s.getName()
+                                                               .equals("Default"))
+                                                 .findAny();
+        if (def.isPresent()) {
+            firstCfg = def.get();
+            configs.setSelectedItem(firstCfg);
+        } else {
+            firstCfg = (StartConfiguration) configs.getSelectedItem();
+        }
+        if (firstCfg != null) {
+            setupConfig(firstCfg);
+        }
+        topPanel.remove(btnAdvStart);
+        topPanel.add(configs);
+        topPanel.revalidate();
+        textPane.setText(sb.toString());
+        configs.addItemListener(e -> setupConfig((StartConfiguration) e.getItem()));
+        Arrays.stream(btnStart.getActionListeners())
+              .forEach(btnStart::removeActionListener);
+        btnStart.addActionListener(e -> makeGame(Optional.of((StartConfiguration) configs.getSelectedItem())));
+    }
+
+    private void makeGame() {
+        makeGame(Optional.empty());
+    }
+
+    private boolean playerCanChooseTraits(Optional<StartConfiguration> startConfig) {
+        boolean allowed = true;
+        if (startConfig.isPresent()) {
+            allowed = startConfig.get().playerCanChooseTraits();
+        }
+        return allowed;
+    }
+
+
+    protected void makeGame(Optional<StartConfiguration> startConfig) {
+        if (!namefield.getText()
+                        .isEmpty()) {
+            String name = namefield.getText();
+            CharacterSex sex = (CharacterSex) sexBox.getSelectedItem();
+            List<Trait> traits = Collections.emptyList();
+            if (playerCanChooseTraits(startConfig)) {
+                traits = Arrays.asList((Trait) StrengthBox.getSelectedItem(), (Trait) WeaknessBox.getSelectedItem());
+            }
+            if (rdbtnDumb.isSelected()) {
+                Global.flag(Flag.dumbmode);
+            }
+            if (rdbtnHard.isSelected()) {
+                Global.flag(Flag.hardmode);
+            }
+            Map<Attribute, Integer> selectedAttributes = new HashMap<>();
+            selectedAttributes.put(Attribute.Power, power);
+            selectedAttributes.put(Attribute.Seduction, seduction);
+            selectedAttributes.put(Attribute.Cunning, cunning);
+            Global.newGame(name, startConfig, traits, sex, selectedAttributes);
+            Global.startMatch();
+        }
+    }
+
+    private void setupConfig(StartConfiguration cfg) {
+        sexBox.setEnabled(cfg.playerCanChooseGender());
+        StrengthBox.setEnabled(cfg.playerCanChooseTraits());
+        WeaknessBox.setEnabled(cfg.playerCanChooseTraits());
+        if (!cfg.playerCanChooseGender()) {
+            sexBox.setSelectedItem(cfg.chosenPlayerGender());
+        }
+        Map<Attribute, Integer> cfgAttributes = cfg.playerAttributes();
+        int points = cfg.availableAttributePoints();
+        power = cfgAttributes.getOrDefault(Attribute.Power, 3);
+        seduction = cfgAttributes.getOrDefault(Attribute.Seduction, 3);
+        cunning = cfgAttributes.getOrDefault(Attribute.Cunning, 3);
+        remaining = points;
+        refresh();
     }
 
     private void refresh() {

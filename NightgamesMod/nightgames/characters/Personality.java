@@ -6,6 +6,7 @@ import java.util.Map;
 
 import nightgames.actions.Action;
 import nightgames.actions.Movement;
+import nightgames.characters.body.BodyPart;
 import nightgames.characters.custom.AiModifiers;
 import nightgames.characters.custom.CommentSituation;
 import nightgames.characters.custom.RecruitmentData;
@@ -14,67 +15,84 @@ import nightgames.combat.Result;
 import nightgames.skills.Skill;
 
 public interface Personality extends Serializable {
-    public Skill act(HashSet<Skill> available, Combat c);
+    Skill act(HashSet<Skill> available, Combat c);
 
-    public Action move(HashSet<Action> available, HashSet<Movement> radar);
+    Action move(HashSet<Action> available, HashSet<Movement> radar);
 
-    public NPC getCharacter();
+    NPC getCharacter();
 
-    public void rest(int time);
+    void rest(int time);
 
-    public String bbLiner(Combat c);
+    String bbLiner(Combat c);
 
-    public String nakedLiner(Combat c);
+    String nakedLiner(Combat c);
 
-    public String stunLiner(Combat c);
+    String stunLiner(Combat c);
 
-    public String taunt(Combat c);
+    String taunt(Combat c);
 
-    public String victory(Combat c, Result flag);
+    String victory(Combat c, Result flag);
 
-    public String defeat(Combat c, Result flag);
+    String defeat(Combat c, Result flag);
 
-    public String victory3p(Combat c, Character target, Character assist);
+    String victory3p(Combat c, Character target, Character assist);
 
-    public String intervene3p(Combat c, Character target, Character assist);
+    String intervene3p(Combat c, Character target, Character assist);
 
-    public String describe(Combat c);
+    String describe(Combat c);
 
-    public String draw(Combat c, Result flag);
+    String draw(Combat c, Result flag);
 
-    public boolean fightFlight(Character opponent);
+    boolean fightFlight(Character opponent);
 
-    public boolean attack(Character opponent);
+    boolean attack(Character opponent);
 
-    public void ding();
+    void ding();
 
-    public String startBattle(Character other);
+    String startBattle(Character other);
 
-    public boolean fit();
+    boolean fit();
 
-    public String night();
+    String night();
 
-    public boolean checkMood(Combat c, Emotion mood, int value);
+    boolean checkMood(Combat c, Emotion mood, int value);
 
-    public String image(Combat c);
+    String image(Combat c);
 
-    public void pickFeat();
+    void pickFeat();
 
-    public String describeAll(Combat c);
+    String describeAll(Combat c);
 
-    public String temptLiner(Combat c);
+    String temptLiner(Combat c);
 
-    public String orgasmLiner(Combat c);
+    String orgasmLiner(Combat c);
 
-    public String makeOrgasmLiner(Combat c);
+    String makeOrgasmLiner(Combat c);
 
-    public String getType();
+    String getType();
 
-    public RecruitmentData getRecruitmentData();
+    RecruitmentData getRecruitmentData();
 
-    public AiModifiers getAiModifiers();
+    AiModifiers getAiModifiers();
 
-    public String resist3p(Combat combat, Character target, Character assist);
+    void setAiModifiers(AiModifiers mods);
 
-    public Map<CommentSituation, String> getComments(Combat c);
+    void resetAiModifiers();
+
+    String resist3p(Combat combat, Character target, Character assist);
+
+    Map<CommentSituation, String> getComments(Combat c);
+
+    default void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
+                    int totalTimes) {
+        // no op
+    }
+
+    default void eot(Combat c, Character opponent, Skill last) {
+        // noop
+    }
+
+    void setCharacter(NPC npc);
+
+    Growth getGrowth();
 }

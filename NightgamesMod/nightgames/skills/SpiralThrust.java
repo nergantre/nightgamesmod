@@ -26,6 +26,12 @@ public class SpiralThrust extends Thrust {
         return getSelf().canAct() && c.getStance().canthrust(getSelf()) && c.getStance().inserted()
                         && c.getStance().havingSexOtherNoStrapped(getSelf());
     }
+    
+    @Override
+    public float priorityMod(Combat c) {
+        // Prefer 80+% mojo, or it would be a waste
+        return (100 - getSelf().getMojo().percent() - 80) / 10;
+    }
 
     @Override
     public int getMojoCost(Combat c) {
@@ -124,5 +130,10 @@ public class SpiralThrust extends Thrust {
     @Override
     public boolean makesContact() {
         return true;
+    }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FINISHER;
     }
 }

@@ -7,6 +7,9 @@ public interface CockPart extends BodyPart {
 
     BodyPart applyMod(CockMod mod);
 
+    // Returns the result of Enum.name().
+    String getName();
+
     @Override
     public default double getFemininity(Character self) {
         return -3;

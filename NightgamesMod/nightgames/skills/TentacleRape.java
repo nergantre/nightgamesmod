@@ -53,27 +53,27 @@ public class TentacleRape extends Skill {
                         c.write(getSelf(), receive(c, 0, Result.special, target));
                     }
                     if (target.hasDick()) {
-                        target.body.pleasure(getSelf(), tentacles, target.body.getRandom("cock"), m, c);
+                        target.body.pleasure(getSelf(), tentacles, target.body.getRandom("cock"), m, c, this);
                         m = 2 + Global.random(4);
                     }
                     if (target.hasPussy()) {
-                        target.body.pleasure(getSelf(), tentacles, target.body.getRandom("pussy"), m, c);
+                        target.body.pleasure(getSelf(), tentacles, target.body.getRandom("pussy"), m, c, this);
                         m = 2 + Global.random(4);
                     }
                     if (target.hasBreasts()) {
-                        target.body.pleasure(getSelf(), tentacles, target.body.getRandom("breasts"), m, c);
+                        target.body.pleasure(getSelf(), tentacles, target.body.getRandom("breasts"), m, c, this);
                         m = 2 + Global.random(4);
                     }
                     if (target.body.has("ass")) {
-                        target.body.pleasure(getSelf(), tentacles, target.body.getRandom("ass"), m, c);
+                        target.body.pleasure(getSelf(), tentacles, target.body.getRandom("ass"), m, c, this);
                         target.emote(Emotion.horny, 10);
                     }
                 } else if (getSelf().human()) {
                     c.write(getSelf(), deal(c, 0, Result.normal, target));
-                    target.body.pleasure(getSelf(), tentacles, target.body.getRandom("skin"), m, c);
+                    target.body.pleasure(getSelf(), tentacles, target.body.getRandom("skin"), m, c, this);
                 } else if (target.human()) {
                     c.write(getSelf(), receive(c, 0, Result.normal, target));
-                    target.body.pleasure(getSelf(), tentacles, target.body.getRandom("skin"), m, c);
+                    target.body.pleasure(getSelf(), tentacles, target.body.getRandom("skin"), m, c, this);
                 }
                 if (!target.is(Stsflag.oiled)) {
                     target.add(c, new Oiled(target));

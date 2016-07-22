@@ -3,31 +3,19 @@ package nightgames.tests;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import nightgames.areas.Area;
-import nightgames.characters.Attribute;
-import nightgames.characters.BasePersonality;
+import nightgames.characters.*;
 import nightgames.characters.Character;
-import nightgames.characters.Eve;
-import nightgames.characters.Kat;
-import nightgames.characters.NPC;
-import nightgames.characters.Personality;
-import nightgames.characters.Player;
-import nightgames.characters.Reyka;
 import nightgames.combat.Combat;
 import nightgames.daytime.Daytime;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
 
 public class CombatStats {
-
     private static final Area NULL_AREA = new Area("", "", null);
     private static final int MATCH_COUNT = 1000;
 
@@ -121,7 +109,7 @@ public class CombatStats {
 
     public static void main(String[] args) {
         new Global(true);
-        Global.newGame(new Player("Dummy"));
+        Global.newGame("Dummy");
         Setup s1 = new Setup(1);
         // new CombatStats(s1).test();
 
@@ -180,23 +168,23 @@ public class CombatStats {
         }
     }
 
-    private static class Setup {
+    public static class Setup {
 
         private int level;
         private List<Personality> extraChars;
 
-        Setup(int level, Personality... extraChars) {
+        public Setup(int level, Personality... extraChars) {
             this.level = level;
             this.extraChars = Arrays.asList(extraChars);
         }
 
-        String outputName() {
+        public String outputName() {
             return String.format("CombatStats-%d-%s-%d.txt", level, extraChars.stream()
                             .map(p -> p.getClass().getSimpleName().substring(0, 1)).collect(Collectors.joining()),
                             MATCH_COUNT);
         }
 
-        List<Character> execute() {
+        public List<Character> execute() {
             extraChars.forEach(Global::newChallenger);
             List<Character> combatants = new ArrayList<>(Global.getCharacters());
             combatants.removeIf(Character::human);
@@ -222,8 +210,5 @@ public class CombatStats {
         public String toString() {
             return "Setup [level=" + level + ", extraChars=" + extraChars + "]";
         }
-
     }
-
-
 }

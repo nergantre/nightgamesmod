@@ -10,6 +10,8 @@ import nightgames.stance.Anal;
 import nightgames.stance.Cowgirl;
 import nightgames.stance.Missionary;
 import nightgames.status.Shamed;
+import nightgames.status.addiction.Addiction;
+import nightgames.status.addiction.AddictionType;
 
 public class Offer extends Skill {
 
@@ -61,11 +63,11 @@ public class Offer extends Skill {
                 } else if (target.human()) {
                     c.write(getSelf(), receive(c, 0, Result.special, target));
                 }
-                c.setStance(new Missionary(target, getSelf()));
+                c.setStance(new Missionary(target, getSelf()), getSelf(), true);
                 getSelf().body.pleasure(target, target.body.getRandomCock(), getSelf().body.getRandomPussy(),
-                                Global.random(5) + getSelf().get(Attribute.Perception), c);
+                                Global.random(5) + getSelf().get(Attribute.Perception), c, this);
                 target.body.pleasure(getSelf(), getSelf().body.getRandomPussy(), target.body.getRandomCock(),
-                                Global.random(5) + getSelf().get(Attribute.Perception), c);
+                                Global.random(5) + getSelf().get(Attribute.Perception), c, this);
 
             } else {
                 // offer ass to dick/strapon
@@ -74,12 +76,12 @@ public class Offer extends Skill {
                 } else if (target.human()) {
                     c.write(getSelf(), receive(c, 0, Result.anal, target));
                 }
-                c.setStance(new Anal(target, getSelf()));
+                c.setStance(new Anal(target, getSelf()), getSelf(), true);
                 getSelf().body.pleasure(target, target.body.getRandomInsertable(), getSelf().body.getRandomAss(),
-                                Global.random(5) + getSelf().get(Attribute.Perception), c);
+                                Global.random(5) + getSelf().get(Attribute.Perception), c, this);
                 if (!target.has(Trait.strapped)) {
                     target.body.pleasure(getSelf(), getSelf().body.getRandomAss(), target.body.getRandomCock(),
-                                    Global.random(5) + getSelf().get(Attribute.Perception), c);
+                                    Global.random(5) + getSelf().get(Attribute.Perception), c, this);
                 }
             }
         } else {
@@ -90,11 +92,16 @@ public class Offer extends Skill {
             } else if (target.human()) {
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             }
-            c.setStance(new Cowgirl(target, getSelf()));
+            c.setStance(new Cowgirl(target, getSelf()), getSelf(), true);
             getSelf().body.pleasure(target, target.body.getRandomPussy(), getSelf().body.getRandomCock(),
-                            Global.random(5) + getSelf().get(Attribute.Perception), c);
+                            Global.random(5) + getSelf().get(Attribute.Perception), c, this);
             target.body.pleasure(getSelf(), getSelf().body.getRandomCock(), target.body.getRandomPussy(),
-                            Global.random(5) + getSelf().get(Attribute.Perception), c);
+                            Global.random(5) + getSelf().get(Attribute.Perception), c, this);
+        }
+        if (Global.getPlayer().checkAddiction(AddictionType.MIND_CONTROL, target)) {
+            Global.getPlayer().unaddictCombat(AddictionType.MIND_CONTROL, 
+                            target, Addiction.MED_INCREASE, c);
+            c.write(getSelf(), "Acting submissively voluntarily reduces Mara's control over you.");
         }
         return true;
     }
@@ -118,7 +125,7 @@ public class Offer extends Skill {
                                     "You get on all fours and offer your %s to %s, but %s merely "
                                                     + "chuckles at your meekness. Before you can get back up in shame,"
                                                     + " %s gives you a very satisfying slap on your ass for your troubles.",
-                                    getSelf().hasPussy() ? "pussy" : "ass", target.name(), target.pronoun());
+                                    getSelf().hasPussy() ? "pussy" : "ass", target.name(), target.pronoun(), getSelf().pronoun());
                 } else {
                     return String.format("You wave your %s at %s, but %s ignores you completely.",
                                     getSelf().body.getRandomCock().describe(getSelf()), target.name(),

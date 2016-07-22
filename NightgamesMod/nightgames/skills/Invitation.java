@@ -9,6 +9,7 @@ import nightgames.global.Global;
 import nightgames.stance.Stance;
 import nightgames.status.ArmLocked;
 import nightgames.status.LegLocked;
+import nightgames.status.addiction.AddictionType;
 
 public class Invitation extends Skill {
     private static final String divineStringFemale = "Goddess's Invitation";
@@ -38,7 +39,10 @@ public class Invitation extends Skill {
 
     @Override
     public int getMojoCost(Combat c) {
-        return 30;
+        //Free if user is Kat and player has Breeder
+        if (!c.getOther(getSelf()).human() || !Global.getPlayer().checkAddiction(AddictionType.BREEDER, getSelf()))
+            return 30;
+        return 0;
     }
 
     @Override
@@ -135,7 +139,7 @@ public class Invitation extends Skill {
         }
 
         if (success) {
-            c.setStance(c.getStance().insertRandomDom(target));
+            c.setStance(c.getStance().insertRandomDom(target), getSelf(), getSelf().canMakeOwnDecision());
         }
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, result, target));
@@ -167,5 +171,10 @@ public class Invitation extends Skill {
         } else {
             return "Invitation";
         }
+    }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FINISHER;
     }
 }

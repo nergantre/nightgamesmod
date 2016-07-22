@@ -76,7 +76,7 @@ public class Cunnilingus extends Skill {
             if (ReverseMount.class.isInstance(c.getStance())) {
                 c.setStance(new SixNine(getSelf(), target));
             }
-            target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("pussy"), m, c);
+            target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("pussy"), m, c, this);
         }
         return results != Result.miss;
     }
@@ -119,50 +119,50 @@ public class Cunnilingus extends Skill {
                             + "'s pussy, finding and pleasuring her more sensitive areas. You frequently tease her clitoris until she "
                             + "can't suppress her pleasured moans."
                             + (damage == -1 ? " Under your skilled ministrations, her juices flow freely, and they unmistakably"
-                                            + " have their effect on you"
+                                            + " have their effect on you."
                                             : "")
                             + (damage == -2 ? " You feel a strange pull on you mind,"
-                                            + " somehow she has managed to enthrall you with her juices" : "");
+                                            + " somehow she has managed to enthrall you with her juices." : "");
         }
         if (modifier == Result.reverse) {
             return "Your resign yourself to lapping at " + target.nameOrPossessivePronoun()
                             + " pussy, as she dominates your face with her ass."
                             + (damage == -1 ? " Under your skilled ministrations, her juices flow freely, and they unmistakably"
-                                            + " have their effect on you"
+                                            + " have their effect on you."
                                             : "")
                             + (damage == -2 ? " You feel a strange pull on you mind,"
-                                            + " somehow she has managed to enthrall you with her juices" : "");
+                                            + " somehow she has managed to enthrall you with her juices." : "");
         }
         if (target.getArousal().percent() > 80) {
             return "You relentlessly lick and suck the lips of " + target.name()
                             + "'s pussy as she squirms in pleasure. You let up just for a second before kissing her"
                             + " swollen clit, eliciting a cute gasp."
                             + (damage == -1 ? " The highly aroused succubus' vulva is dripping with her "
-                                            + "aphrodisiac juices and you consume generous amounts of them"
+                                            + "aphrodisiac juices and you consume generous amounts of them."
                                             : "")
                             + (damage == -2 ? " You feel a strange pull on you mind,"
-                                            + " somehow she has managed to enthrall you with her juices" : "");
+                                            + " somehow she has managed to enthrall you with her juices." : "");
         }
         int r = Global.random(3);
         if (r == 0) {
             return "You gently lick " + target.name() + "'s pussy and sensitive clit."
                             + (damage == -1 ? " As you drink down her juices, they seem to flow "
-                                            + "straight down to your crotch, lighting fires when they arrive"
+                                            + "straight down to your crotch, lighting fires when they arrive."
                                             : "")
                             + (damage == -2 ? " You feel a strange pull on you mind,"
-                                            + " somehow she has managed to enthrall you with her juices" : "");
+                                            + " somehow she has managed to enthrall you with her juices." : "");
         }
         if (r == 1) {
             return "You thrust your tongue into " + target.name() + "'s hot vagina and lick the walls of her pussy."
-                            + (damage == -1 ? " Your tongue tingles with her juices," + " clouding your mind with lust"
+                            + (damage == -1 ? " Your tongue tingles with her juices, clouding your mind with lust."
                                             : "")
                             + (damage == -2 ? " You feel a strange pull on you mind,"
-                                            + " somehow she has managed to enthrall you with her juices" : "");
+                                            + " somehow she has managed to enthrall you with her juices." : "");
         }
         return "You locate and capture " + target.name() + "'s clit between your lips and attack it with your tongue"
-                        + (damage == -1 ? " Her juices taste wonderful and you cannot" + " help but desire more" : "")
+                        + (damage == -1 ? " Her juices taste wonderful and you cannot help but desire more." : "")
                         + (damage == -2 ? " You feel a strange pull on you mind,"
-                                        + " somehow she has managed to enthrall you with her juices" : "");
+                                        + " somehow she has managed to enthrall you with her juices." : "");
     }
 
     @Override
