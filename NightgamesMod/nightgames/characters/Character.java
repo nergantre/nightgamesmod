@@ -3066,7 +3066,7 @@ public abstract class Character extends Observable implements Cloneable {
         }
         m.gps(location).place(new NinjaStash(this));
         if(human()){
-            Global.gui().message("<b>You've arranged for a hidden stash to be placed in the "+m.gps(location).toString()+".</b>");
+            Global.gui().message("<b>You've arranged for a hidden stash to be placed in the "+m.gps(location).name+".</b>");
         }
     }
 

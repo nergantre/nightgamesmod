@@ -1,6 +1,7 @@
 package nightgames.skills;
 
 import nightgames.characters.Character;
+import nightgames.global.Global;
 
 public enum Stage {
     FOREPLAY(.006), // 30% bonus at 0 arousal, 30% malus at 100% arousal
@@ -61,10 +62,11 @@ public enum Stage {
             return "";
         } else {
             if (stage == FOREPLAY) {
-                return ch.pronoun() + " does not seem particularly passionate yet.<br>";
+                return Global.capitalizeFirstLetter(ch.pronoun()) + " does not seem particularly passionate yet.<br>";
             }
             if (stage == FINISHER) {
-                return ch.pronoun() + " is completely absorbed in the fight, giving it " + ch.possessivePronoun()
+                return Global.capitalizeFirstLetter(ch.pronoun()) + 
+                                " is completely absorbed in the fight, giving it " + ch.possessivePronoun()
                                 + " all.<br>";
             }
             return "";

@@ -14,6 +14,7 @@ public class Threesomes implements Scene {
         this.player = player;
     }
 
+    @SuppressWarnings("deprecation")
     public void visit(String choice) {
 
         if (choice.equals("CassieJewel")) {

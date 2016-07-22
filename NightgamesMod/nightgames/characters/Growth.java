@@ -1,6 +1,7 @@
 package nightgames.characters;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,9 @@ public class Growth {
         bonusAttributes = 1;
         willpower = .5f;
         bonusWillpower = .25f;
-        attributes = new int[] {3, 4, 4, 4,};
+        attributes = new int[50];
+        Arrays.fill(attributes, 4);
+        attributes[0] = 3;
         traits = new HashMap<>();
         actions = new HashMap<>();
     }

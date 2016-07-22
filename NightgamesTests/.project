@@ -3,6 +3,7 @@
 	<name>NightgamesTests</name>
 	<comment></comment>
 	<projects>
+		<project>NightgamesMod</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

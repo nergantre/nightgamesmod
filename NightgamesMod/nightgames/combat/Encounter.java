@@ -593,7 +593,8 @@ public class Encounter implements Serializable, IEncounter {
     
     private String smokeMessage(Character c) {
         return String.format("%s a smoke bomb and %s.", 
-                        c.subjectAction("drop", "drops"), c.action("disappear", "disappears"));
+                        Global.capitalizeFirstLetter(c.subjectAction("drop", "drops"))
+                        , c.action("disappear", "disappears"));
     }
 
     @Override

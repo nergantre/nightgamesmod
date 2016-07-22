@@ -399,7 +399,7 @@ public class Player extends Character {
     public void flee(Area location2) {
         Area[] adjacent = location2.adjacent.toArray(new Area[location2.adjacent.size()]);
         Area destination = adjacent[Global.random(adjacent.length)];
-        gui.message("You dash away and escape into the <b>" + destination.name + "</b>");
+        gui.message("You dash away and escape into the <b>" + destination.name + ".</b>");
         travel(destination);
         location2.endEncounter();
     }
@@ -910,8 +910,8 @@ public class Player extends Character {
             return;
         for (Object a : addictions) {
             JsonObject json = (JsonObject) a;
-            AddictionType type = AddictionType.valueOf(json.get("type").toString());
-            Character cause = Global.getCharacterByType(json.get("cause").toString());
+            AddictionType type = AddictionType.valueOf(json.get("type").getAsString());
+            Character cause = Global.getCharacterByType(json.get("cause").getAsString());
             float mag = json.get("magnitude").getAsFloat();
             float combat = json.get("combat").getAsFloat();
             Addiction addiction = Addiction.load(type, cause, mag, combat);

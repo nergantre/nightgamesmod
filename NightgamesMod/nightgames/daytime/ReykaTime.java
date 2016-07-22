@@ -208,7 +208,7 @@ public class ReykaTime extends BaseNPCTime {
             Global.gui()
                   .choose(this, "Sex");
             if (Global.getPlayer().checkAddiction(AddictionType.CORRUPTION)) {
-                Global.gui().choose("Strengthen Corruption");
+                Global.gui().choose(this, "Strengthen Corruption");
             }
         } else if (Global.getPlayer()
                          .checkAddiction(AddictionType.CORRUPTION)) {
