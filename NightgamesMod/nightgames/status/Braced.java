@@ -10,7 +10,7 @@ import nightgames.combat.Combat;
 public class Braced extends DurationStatus {
 
     public Braced(Character affected) {
-        super("Braced", affected, 3);
+        super("Braced", affected, 4);
         flag(Stsflag.braced);
     }
 
