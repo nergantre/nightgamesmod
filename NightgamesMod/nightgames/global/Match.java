@@ -158,10 +158,10 @@ public class Match {
                 }
             }
             for (Challenge c : combatant.challenges) {
-                if (c.done) {
-                    combatant.modMoney(c.reward());
-                    if (combatant.human()) {
-                        creward += c.reward();
+            	if(c.done){
+                    combatant.money+=c.reward()+(c.reward()*3*combatant.getRank());
+                    if(combatant.human()){
+                        creward += c.reward()+(c.reward()*3*combatant.getRank());
                     }
                 }
             }
