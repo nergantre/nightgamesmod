@@ -1824,6 +1824,9 @@ public abstract class Character extends Observable implements Cloneable {
             willpower.restore(5);
             mojo.reduce(10);
         }
+        if (has(Trait.exhibitionist) && mostlyNude()) {
+            mojo.gain(5);
+        }
         if (bound()) {
             free();
         }
@@ -1834,7 +1837,7 @@ public abstract class Character extends Observable implements Cloneable {
         update();
         notifyObservers();
     }
-
+    
     public String debugMessage(Combat c, Position p) {
         String mood;
         if (this instanceof NPC) { // useOfInstanceOfWithThis

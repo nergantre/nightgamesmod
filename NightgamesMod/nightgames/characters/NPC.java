@@ -900,4 +900,43 @@ public class NPC extends Character {
             return Optional.empty();
         return Optional.of((String) Global.pickRandom(comments.values().toArray()));
     }
+    
+    public Emotion moodSwing() {
+        Emotion current = mood;
+        int max=emotes.get(current);
+        for(Emotion e: emotes.keySet()){
+            if(emotes.get(e)>max){
+                mood=e;
+                max=emotes.get(e);
+            }
+        }
+        return mood;
+    }
+    
+    public void decayMood(){
+        for(Emotion e: emotes.keySet()){
+            if(mostlyNude()&&!has(Trait.exhibitionist)&&!has(Trait.shameless)&& e==Emotion.nervous){
+                emotes.put(e, emotes.get(e)-((emotes.get(e)-50)/2));
+            }else if(mostlyNude()&&!has(Trait.exhibitionist)&& e==Emotion.horny){
+                emotes.put(e, emotes.get(e)-((emotes.get(e)-50)/2));
+            }
+            else if(!mostlyNude()&&e==Emotion.confident){
+                emotes.put(e, emotes.get(e)-((emotes.get(e)-50)/2));
+            }
+            else{
+                if(emotes.get(e)>=5){
+                    emotes.put(e, emotes.get(e)-(emotes.get(e)/2));
+                }
+            }
+        }
+    }
+    
+    @Override
+    public void upkeep() {
+        super.upkeep();
+        moodSwing();
+        decayMood();
+        update();
+        notifyObservers();
+    }
 }
