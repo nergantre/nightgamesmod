@@ -415,6 +415,13 @@ public class Global {
         getSkillPool().add(new NeedleThrow(ch));
         getSkillPool().add(new StealClothes(ch));
         getSkillPool().add(new Substitute(ch));
+        getSkillPool().add(new AttireShift(ch));
+        getSkillPool().add(new CheapShot(ch));
+        getSkillPool().add(new EmergencyJump(ch));
+        getSkillPool().add(new Haste(ch));
+        getSkillPool().add(new Rewind(ch));
+        getSkillPool().add(new Unstrip(ch));
+        getSkillPool().add(new WindUp(ch));
 
 
         if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {

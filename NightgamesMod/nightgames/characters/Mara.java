@@ -60,6 +60,8 @@ public class Mara extends BasePersonality {
         growth.bonusStamina = 1;
         growth.bonusArousal = 2;
         growth.bonusMojo = 2;
+        preferredAttributes.add(c -> c.getRank() >= 4 && c.get(Attribute.Temporal) < 20 
+                        ? Optional.of(Attribute.Temporal) : Optional.empty());
         preferredAttributes.add(c -> c.get(Attribute.Science) < 15 ? Optional.of(Attribute.Science) : Optional.empty());
         preferredAttributes.add(c -> c.get(Attribute.Science) >= 15 && c.get(Attribute.Fetish) < 50
                         ? Optional.of(Attribute.Fetish) : Optional.empty());
@@ -85,6 +87,13 @@ public class Mara extends BasePersonality {
         growth.addTrait(48, Trait.desensitized2);
     }
 
+    @Override
+    protected void onLevelUp() {
+        if (character.rank >= 4) {
+            
+        }
+    }
+    
     @Override
     public void rest(int time) {
         if (character.rank == 1 && !character.has(Trait.madscientist)) {

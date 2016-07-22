@@ -150,9 +150,14 @@ public abstract class BasePersonality implements Personality {
     @Override
     public void ding() {
         growth.levelUp(character);
+        onLevelUp();
         distributePoints();
     }
 
+    protected void onLevelUp() {
+        // NOP
+    }
+    
     @Override
     public String describeAll(Combat c) {
         StringBuilder b = new StringBuilder();

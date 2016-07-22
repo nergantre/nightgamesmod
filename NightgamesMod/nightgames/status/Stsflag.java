@@ -61,5 +61,6 @@ public enum Stsflag {
     parasited,
     mimicry, 
     blinded,
-    victimComplex
+    victimComplex, 
+    primed
 }
