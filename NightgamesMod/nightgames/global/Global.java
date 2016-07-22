@@ -286,6 +286,7 @@ public class Global {
         getSkillPool().add(new SpawnImp(ch, Ptype.impfem));
         getSkillPool().add(new SpawnFaerie(ch, Ptype.fairymale));
         getSkillPool().add(new SpawnImp(ch, Ptype.impmale));
+        getSkillPool().add(new SpawnFGoblin(ch, Ptype.fgoblin));
         getSkillPool().add(new SpawnSlime(ch));
         getSkillPool().add(new StunBlast(ch));
         getSkillPool().add(new Fly(ch));
