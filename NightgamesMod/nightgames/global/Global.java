@@ -639,12 +639,9 @@ public class Global {
         for (Character c : players) {
             // Disabling the player wouldn't make much sense, and there's no PlayerDisabled flag.
             Flag disabledFlag = null;
-            if (!c.getType().equals("Player")) {
-                try {
-                    disabledFlag = Flag.valueOf(c.getType() + "Disabled");
-                } catch (IllegalArgumentException e) {
-                    e.printStackTrace();
-                }
+            String flagName = c.getType() + "Disabled";
+            if (!c.getType().equals("Player") && Flag.exists(flagName)) {
+                disabledFlag = Flag.valueOf(flagName);
             }
             if (disabledFlag == null || !Global.checkFlag(disabledFlag)) {
                 // TODO: DEBUG
