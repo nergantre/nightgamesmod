@@ -1044,7 +1044,6 @@ public class GUI extends JFrame implements Observer {
         commandPanel.revalidate();
     }
 
-    @Deprecated //Probably need the one with an activity
     public void choose(String choice) {
         commandPanel.add(new SceneButton(choice));
         commandPanel.revalidate();
