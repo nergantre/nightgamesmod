@@ -528,6 +528,10 @@ public class Global {
         return null;
     }
 
+    public static Time getTime() {
+        return time;
+    }
+
     public static Match getMatch() {
         return match;
     }
@@ -579,7 +583,7 @@ public class Global {
         if (Global.checkFlag(Flag.autosave)) {
             Global.autoSave();
         }
-        startDay();
+        Global.gui().endMatch();
     }
     
     private static Set<Character> pickCharacters(Set<Character> avail, Set<Character> added, int size) {
@@ -1180,6 +1184,8 @@ public class Global {
     public static void reset() {
         players.clear();
         flags.clear();
+        day = null;
+        match = null;
         human = new Player("Dummy");
         gui.purgePlayer();
         gui.createCharacter();
