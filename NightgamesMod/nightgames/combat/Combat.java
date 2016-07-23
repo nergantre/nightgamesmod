@@ -398,7 +398,7 @@ public class Combat extends Observable implements Cloneable {
             p1.act(this);
         } else if (p2act == null) {
             p2.act(this);
-        } else if (p1act != null && p2act != null) {
+        } else {
             clear();
             if (p1.human() || p2.human()) {
                 Global.gui()

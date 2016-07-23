@@ -65,11 +65,7 @@ public class BodyShop extends Activity {
         selection.add(new ShopSelection("Body Mod: " + name, growPrice) {
             @Override
             void buy(Character buyer) {
-                if (normal == null) {
-                    buyer.body.addReplace(part, 1);
-                } else {
-                    buyer.body.addReplace(part, 1);
-                }
+                buyer.body.addReplace(part, 1);
             }
 
             @Override

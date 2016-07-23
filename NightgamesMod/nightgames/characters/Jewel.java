@@ -179,6 +179,7 @@ public class Jewel extends BasePersonality {
             if (other.hasBalls()) {
                 possible.add("Jewel cups your vulnerable balls and gives them a light squeeze. <i>\"Worthless boys like you should just give up. Why even try when you end up as my seat every time?\"</i>");
             }
+            return (String) possible.toArray()[Global.random(possible.size())];
         }
         return "Jewel glares at you and squeezes your dick tightly. <i>\"No matter how horny you are, you better give me your best fight. I don't like fucking weaklings.\"</i>";
     }

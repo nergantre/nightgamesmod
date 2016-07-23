@@ -55,8 +55,7 @@ public abstract class BaseModifier implements Modifier {
     @Override
     public void handleItems(Character c) {
         moddedItems.putIfAbsent(c, new HashMap<>());
-        Map<Item, Integer> inventory = new HashMap<>(c.getInventory());
-        inventory.forEach((item, count) -> {
+        c.getInventory().forEach((item, count) -> {
             if (items.itemIsBanned(c, item)) {
                 c.getInventory().remove(item);
                 moddedItems.get(c).putIfAbsent(item, 0);

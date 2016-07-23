@@ -168,7 +168,7 @@ public class Frenzied extends DurationStatus {
         if (c == null) {
             affected.removelist.add(this);
             affected.removeStatusNoSideEffects();
-        } else if (c == null || !c.getStance().inserted(affected)) {
+        } else if (!c.getStance().inserted(affected)) {
             affected.removelist.add(this);
         } else {
             setDuration(getDuration() + 2);

@@ -48,15 +48,15 @@ public class CombatantData implements Cloneable {
     }
 
     public void toggleFlagOn(String key, boolean val) {
-        flags.put(key, new Integer(val ? 1 : 0));
+        flags.put(key, val ? 1 : 0);
     }
 
     public void setIntegerFlag(String key, int val) {
-        flags.put(key, new Integer(val));
+        flags.put(key, val);
     }
 
     public void setFloatFlag(String key, int val) {
-        flags.put(key, new Integer(val));
+        flags.put(key, val);
     }
 
     public int getIntegerFlag(String key) {
