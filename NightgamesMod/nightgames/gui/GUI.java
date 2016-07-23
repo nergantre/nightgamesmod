@@ -692,7 +692,7 @@ public class GUI extends JFrame implements Observer {
 
     // portrait loader
     public void loadPortrait(Combat c, Character player, Character enemy) {
-        if (!Global.checkFlag(Flag.noimage) && !Global.checkFlag(Flag.noportraits)) {
+        if (!Global.checkFlag(Flag.noportraits)) {
             if (Global.isDebugOn(DebugFlags.DEBUG_GUI)) {
                 System.out.println("Load portraits");
             }
@@ -704,8 +704,9 @@ public class GUI extends JFrame implements Observer {
             }
             loadPortrait(imagepath);
         } else {
+            clearPortrait();
             if (Global.isDebugOn(DebugFlags.DEBUG_GUI)) {
-                System.out.println("No images/portraits");
+                System.out.println("No portraits");
             }
         }
     }
