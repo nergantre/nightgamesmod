@@ -108,7 +108,7 @@ public class FGoblin extends Pet {
                 break;
             case ANALBEADS:
                 c.write(owner(),String.format("Your fetish goblin takes advantage of %s's defenselessness to push a string of anal beads into her butt. She lets out a "
-                        + "whimper of protest as each bead goes in and a moan of pleasure as they're all pulled out."));
+                        + "whimper of protest as each bead goes in and a moan of pleasure as they're all pulled out.", target.name()));
                 target.body.pleasure(owner(), part, target.body.getRandomAss(), 5*Global.random(power), c);
                 break;
             default:

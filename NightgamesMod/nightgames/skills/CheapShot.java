@@ -32,7 +32,7 @@ public class CheapShot extends Skill {
 
     @Override
     public String describe(Combat c) {
-        return "Stop time long enough to get in an usportsmanlike attack from behind: 3 charges";
+        return "Stop time long enough to get in an unsportsmanlike attack from behind: 3 charges";
     }
 
     @Override
