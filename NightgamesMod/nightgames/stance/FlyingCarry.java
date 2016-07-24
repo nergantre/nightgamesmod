@@ -18,7 +18,7 @@ public class FlyingCarry extends MaledomSexStance {
     public String describe() {
         return String.format(
                         "You are flying some twenty feet up in the air,"
-                                        + " joined to your partner by your hips. %s is on top of %s and %s %s is pumping into %s %s",
+                                        + " joined to your partner by your hips. %s is on top of %s and %s %s is pumping into %s %s.",
                         top.subject(), bottom.subject(), top.possessivePronoun(),
                         top.body.getRandomInsertable().describe(top), bottom.possessivePronoun(),
                         bottom.body.getRandomPussy().describe(bottom));
@@ -122,7 +122,7 @@ public class FlyingCarry extends MaledomSexStance {
     public Position reverse(Combat c) {
         if (bottom.body.getRandomWings() != null) {
             c.write(bottom, Global.format(
-                            "In a desperate gamble for dominance, {self:subject} rides {other:name-do} wildly, making {other:direct-object} gasp and breaking {other:possessive} concentration. Shaking off {other:possessive} strong arms, {self:subject} starts flying on {self:possessive} own and starts riding {other:direct-object} with more control in the air.",
+                            "In a desperate gamble for dominance, {self:subject} rides {other:name-do} wildly, making {other:direct-object} gasp and breaking {other:possessive} concentration. Shaking off {other:possessive} strong arms, {self:subject-action:start|starts} flying on {self:possessive} own and starts riding {other:direct-object} with more control in the air.",
                             bottom, top));
             return new FlyingCowgirl(bottom, top);
         } else {
