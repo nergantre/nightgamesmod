@@ -30,20 +30,23 @@ public class SpawnFaerie extends Skill {
 
     @Override
     public int getMojoCost(Combat c) {
-        return 25;
+        return getSelf().has(Trait.faefriend) ? 10 : 25;
     }
 
     @Override
     public String describe(Combat c) {
-        return "Summon a Faerie familiar to support you: 15 Mojo";
+        return "Summon a Faerie familiar to support you: "+getMojoCost(c)+" Mojo";
     }
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        int power = 7;
-        int ac = 4;
+        int power = 7 + getSelf().get(Attribute.Arcane) / 10;
+        int ac = 4 + getSelf().get(Attribute.Arcane) / 10;
         if (getSelf().has(Trait.leadership)) {
             power += 5;
+        }
+        if (getSelf().has(Trait.tactician)) {
+            ac += 3;
         }
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));

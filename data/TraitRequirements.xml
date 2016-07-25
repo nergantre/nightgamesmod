@@ -247,7 +247,14 @@
 	<Trait>
 		<Name>leadership</Name>
 		<Requirements>
-			<Level>10</Level>
+			<LevelReq>10</LevelReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>tactician</Name>
+		<Requirements>
+			<LevelReq>15</LevelReq>
+			<TraitReq>leadership</TraitReq>
 		</Requirements>
 	</Trait>
 	<Trait>

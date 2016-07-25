@@ -72,9 +72,9 @@ public class FaceSit extends Skill {
             m = m * 3 / 2;
         }
         if (getSelf().hasBalls()) {
-            getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("balls"), m, c);
+            getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("balls"), m, c, this);
         } else {
-            getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("pussy"), m, c);
+            getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("pussy"), m, c, this);
         }
         double n = 4 + Global.random(4);
         if (c.getStance().front(getSelf())) {

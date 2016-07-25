@@ -74,14 +74,14 @@ public class Blowjob extends Skill {
             } else if (getSelf().human()) {
                 c.write(getSelf(), deal(c, m, Result.intercourse, target));
             }
-            target.body.pleasure(getSelf(), getSelf().body.getRandom("pussy"), target.body.getRandom("cock"), m, c);
+            target.body.pleasure(getSelf(), getSelf().body.getRandom("pussy"), target.body.getRandom("cock"), m, c, this);
         } else if (facesitting) {
             if (target.human()) {
                 c.write(getSelf(), receive(c, m, Result.reverse, target));
             } else if (getSelf().human()) {
                 c.write(getSelf(), deal(c, m, Result.reverse, target));
             }
-            target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("cock"), m, c);
+            target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("cock"), m, c, this);
             target.buildMojo(c, 10);
         } else if (!c.getStance().mobile(target) || target.roll(this, c, accuracy(c))) {
             if (getSelf().has(Trait.silvertongue)) {
@@ -100,9 +100,9 @@ public class Blowjob extends Skill {
 
             BodyPart mouth = getSelf().body.getRandom("mouth");
             BodyPart cock = target.body.getRandom("cock");
-            target.body.pleasure(getSelf(), mouth, cock, m, c);
+            target.body.pleasure(getSelf(), mouth, cock, m, c, this);
             if (mouth.isErogenous()) {
-                getSelf().body.pleasure(getSelf(), cock, mouth, m, c);
+                getSelf().body.pleasure(getSelf(), cock, mouth, m, c, this);
             }
 
             if (ReverseMount.class.isInstance(c.getStance())) {

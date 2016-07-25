@@ -35,7 +35,7 @@ public class UseDildo extends Skill {
                     c.write(getSelf(), receive(c, 0, Result.upgrade, target));
                 }
                 int m = 5 + Global.random(15) + target.get(Attribute.Perception);
-                target.body.pleasure(getSelf(), null, target.body.getRandom("pussy"), m, c);
+                target.body.pleasure(getSelf(), null, target.body.getRandom("pussy"), m, c, this);
             } else {
                 if (getSelf().human()) {
                     c.write(getSelf(), deal(c, 0, Result.normal, target));
@@ -43,7 +43,7 @@ public class UseDildo extends Skill {
                     c.write(getSelf(), receive(c, 0, Result.normal, target));
                 }
                 int m = Global.random(10) + target.get(Attribute.Perception);
-                target.body.pleasure(getSelf(), null, target.body.getRandom("pussy"), m, c);
+                target.body.pleasure(getSelf(), null, target.body.getRandom("pussy"), m, c, this);
             }
         } else {
             if (getSelf().human()) {

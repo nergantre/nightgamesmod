@@ -1,7 +1,6 @@
 package nightgames.daytime;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Optional;
 
 import nightgames.characters.Attribute;
@@ -14,13 +13,15 @@ import nightgames.characters.body.EarPart;
 import nightgames.characters.body.ModdedCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
-import nightgames.characters.custom.requirement.BodyPartRequirement;
-import nightgames.characters.custom.requirement.NotRequirement;
+import nightgames.requirements.BodyPartRequirement;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
+
+import static nightgames.requirements.RequirementShortcuts.bodypart;
+import static nightgames.requirements.RequirementShortcuts.not;
 
 public class KatTime extends BaseNPCTime {
     public KatTime(Character player) {
@@ -78,7 +79,7 @@ public class KatTime extends BaseNPCTime {
         TransformationOption catTail = new TransformationOption();
         catTail.ingredients.put(Item.Rope, 10);
         catTail.ingredients.put(Item.Aphrodisiac, 50);
-        catTail.requirements.add(new NotRequirement(Arrays.asList(new BodyPartRequirement("tail"))));
+        catTail.requirements.add(not(bodypart("tail")));
         catTail.requirements.add((c, self, other) -> {
             return self.body.get("tail").stream().anyMatch(part -> part != TailPart.cat) || !self.body.has("tail");
         });
@@ -276,7 +277,7 @@ public class KatTime extends BaseNPCTime {
             }
             Global.gui().choose(this, "Leave");
             Global.getPlayer().addict(AddictionType.BREEDER, npc, Addiction.MED_INCREASE);
-            Global.getPlayer().getAddiction(AddictionType.BREEDER).flagDaytime();
+            Global.getPlayer().getAddiction(AddictionType.BREEDER).ifPresent(Addiction::flagDaytime);
         }
         if (choice.equals("Sex")) {
             Global.gui().message(

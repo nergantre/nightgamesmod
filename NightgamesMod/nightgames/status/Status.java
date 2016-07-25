@@ -6,12 +6,12 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
-import nightgames.characters.custom.requirement.CustomRequirement;
+import nightgames.requirements.Requirement;
 import nightgames.combat.Combat;
 import nightgames.skills.Skill;
 
@@ -19,7 +19,7 @@ public abstract class Status implements Cloneable {
     public String name;
     public Character affected;
     protected HashSet<Stsflag> flags;
-    protected List<CustomRequirement> requirements;
+    protected List<Requirement> requirements;
 
     public Status(String name, Character affected) {
         this.name = name;
@@ -129,9 +129,9 @@ public abstract class Status implements Cloneable {
 
     public void onApply(Combat c, Character other) {}
 
-    public abstract JSONObject saveToJSON();
+    public abstract JsonObject saveToJson();
 
-    public abstract Status loadFromJSON(JSONObject obj);
+    public abstract Status loadFromJson(JsonObject obj);
 
     public void tick(Combat c) {}
     

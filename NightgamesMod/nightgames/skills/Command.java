@@ -254,7 +254,7 @@ public class Command extends Skill {
                                                 getSelf().possessivePronoun()));
                 int m = target.has(Trait.silvertongue) ? 15 : 10;
                 getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandomAss(),
-                                7 + Global.random(m), c);
+                                7 + Global.random(m), c, this);
                 if (Global.random(50) < getSelf().get(Attribute.Fetish) + 10) {
                     target.add(c, new BodyFetish(target, getSelf(), "ass", .1));
                 }
@@ -269,7 +269,7 @@ public class Command extends Skill {
                                                               .describe(getSelf())));
                 m = target.has(Trait.silvertongue) ? 15 : 10;
                 getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandomCock(),
-                                7 + Global.random(m), c);
+                                7 + Global.random(m), c, this);
                 if (Global.random(50) < getSelf().get(Attribute.Fetish) + 10) {
                     target.add(c, new BodyFetish(target, getSelf(), "cock", .1));
                 }
@@ -284,7 +284,7 @@ public class Command extends Skill {
                                 getSelf().possessivePronoun()));
                 m = target.has(Trait.silvertongue) ? 15 : 10;
                 getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandomPussy(),
-                                7 + Global.random(m), c);
+                                7 + Global.random(m), c, this);
                 if (Global.random(50) < getSelf().get(Attribute.Fetish) + 10) {
                     target.add(c, new BodyFetish(target, getSelf(), "pussy", .1));
                 }
@@ -337,7 +337,7 @@ public class Command extends Skill {
                                 String.format("Feeling a bit uninspired, %s just tells you"
                                                 + " to play with your %s for %s.", getSelf().name(),
                                                 pleasured.describe(target), getSelf().directObject()));
-                target.body.pleasure(target, target.body.getRandom("hands"), pleasured, 10 + Global.random(20), c);
+                target.body.pleasure(target, target.body.getRandom("hands"), pleasured, 10 + Global.random(20), c, this);
                 break;
             case HURT_SELF:
                 c.write(getSelf(),
@@ -389,13 +389,13 @@ public class Command extends Skill {
                                                 getSelf().possessivePronoun(), getSelf().body.getRandomCock()
                                                                                              .describe(target)));
                 getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandomCock(),
-                                10 + Global.random(8), c);
+                                10 + Global.random(8), c, this);
                 if (target.hasDick())
                     target.body.pleasure(target, target.body.getRandom("hands"), target.body.getRandomCock(),
-                                    10 + Global.random(8), c);
+                                    10 + Global.random(8), c, this);
                 else if (target.hasPussy())
                     target.body.pleasure(target, target.body.getRandom("hands"), target.body.getRandomPussy(),
-                                    10 + Global.random(8), c);
+                                    10 + Global.random(8), c, this);
                 break;
             case WORSHIP_PUSSY:
                 c.write(getSelf(),
@@ -408,13 +408,13 @@ public class Command extends Skill {
                                                 getSelf().possessivePronoun(), getSelf().body.getRandomPussy()
                                                                                              .describe(getSelf())));
                 getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandomPussy(),
-                                10 + Global.random(8), c);
+                                10 + Global.random(8), c, this);
                 if (target.hasDick())
                     target.body.pleasure(target, target.body.getRandom("hands"), target.body.getRandomCock(),
-                                    10 + Global.random(8), c);
+                                    10 + Global.random(8), c, this);
                 else if (target.hasPussy())
                     target.body.pleasure(target, target.body.getRandom("hands"), target.body.getRandomPussy(),
-                                    10 + Global.random(8), c);
+                                    10 + Global.random(8), c, this);
                 break;
             case MASTER_INSERT:
                 c.write(getSelf(),

@@ -2,7 +2,7 @@ package nightgames.status;
 
 import java.util.function.Supplier;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -11,6 +11,7 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.stance.Stance;
 import nightgames.stance.StandingOver;
+import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
 public class DarkChaos extends Status {
@@ -33,9 +34,7 @@ public class DarkChaos extends Status {
     public void tick(Combat c) {
         if (c == null)
             return;
-        float odds = Global.getPlayer()
-                           .getAddiction(AddictionType.CORRUPTION)
-                           .getMagnitude()
+        float odds = Global.getPlayer().getAddiction(AddictionType.CORRUPTION).map(Addiction::getMagnitude).orElse(0f)
                         / 4;
         if (odds > Math.random()) {
             Effect e = Effect.pick(c);
@@ -108,16 +107,13 @@ public class DarkChaos extends Status {
         return new DarkChaos();
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public JSONObject saveToJSON() {
-        JSONObject obj = new JSONObject();
-        obj.put("type", getClass().getSimpleName());
+    @SuppressWarnings("unchecked") @Override public JsonObject saveToJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("type", getClass().getSimpleName());
         return obj;
     }
 
-    @Override
-    public Status loadFromJSON(JSONObject obj) {
+    @Override public Status loadFromJson(JsonObject obj) {
         return new DarkChaos();
     }
 

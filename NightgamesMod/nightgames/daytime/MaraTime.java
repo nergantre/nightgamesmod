@@ -12,7 +12,7 @@ import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.body.ModdedCockPart;
 import nightgames.characters.body.PussyPart;
-import nightgames.characters.custom.requirement.BodyPartRequirement;
+import nightgames.requirements.BodyPartRequirement;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.status.addiction.Addiction;
@@ -109,6 +109,9 @@ public class MaraTime extends BaseNPCTime {
                   .choose(this, "Sparring");
             Global.gui()
                   .choose(this, "Sex");
+            if(player.getPure(Attribute.Arcane)>=3){
+                Global.gui().choose(this,"Faerie play");
+            }
             if (Global.getPlayer().checkAddiction(AddictionType.MIND_CONTROL)) {
                 Global.gui().choose(this, "Confront about control");
             }
@@ -240,7 +243,7 @@ public class MaraTime extends BaseNPCTime {
             }
             Global.gui().choose(this, "Leave");
             Global.getPlayer().addict(AddictionType.MIND_CONTROL, npc, Addiction.MED_INCREASE);
-            Global.getPlayer().getAddiction(AddictionType.MIND_CONTROL).flagDaytime();
+            Global.getPlayer().getAddiction(AddictionType.MIND_CONTROL).ifPresent(Addiction::flagDaytime);
         }
         if (choice.equals("Sex")) {
             if (npc.getAffection(player) >= 8 && (!player.has(Trait.ticklemonster) || Global.random(2) == 1)) {
@@ -408,6 +411,46 @@ public class MaraTime extends BaseNPCTime {
                     player.add(Trait.heeldrop);
                     npc.add(Trait.heeldrop);
                 }
+            } else if(choice.equals("Faerie play")){
+                    Global.gui().message("The two of you head to Mara's room, where apparently she has a request for you. A quick glance around her room doesn't reveal any obvious traps or preparation. Everything seems "
+                            + "fairly normal: slightly messy and her laptop left unlocked with some 'adult entertainment' on the desktop. <i>\"Hey! Don't be nosy!\"</i> She closes her laptop, noticably blushing, and sits "
+                            + "on her bed.<p>"
+                            + "<i>\"So... you've been learning some actual magic, right?\"</i> She asks with thinly veiled excitement. <i>\"Can you summon those faeries anytime?\"</i> She's practically vibrating at "
+                            + "the idea of playing with one of your pixie familiars. You've never really tried summoning them outside of a fight or Aisha's training room. The Games seem to have a magic of their own that "
+                            + "make the supernatural seem perfectly normal. It's a little harder to focus on your mana here in the 'real world,' but you should be able to manage.<p>"
+                            + "You begin the spell, and after a bit longer than usual, you feel a fae spirit answer you. You extend your hand and a male faerie winks into existance.<br>"
+                            + "<i>\"Ooh, a boy!\"</i> She giggles in amusement as she pokes and prods the fae. <i>\"He's got a tiny dick. It's so cute!\"</i> She seems to be enjoying "
+                            + "herself. You feel bad for your familiar though, summoned just to be bullied.<p>"
+                            + "<i>\"Oh, don't worry. He's not complaining. Are all faeries this sensitive?\"</i> They are significantly more sensitive than humans. Mara's delicate fingerwork does seem to be having an "
+                            + "effect. If she's not careful, she's going to make her new toy cum. <i>\"I'm very careful. Too bad, little guy.\"</i> She releases the frustrated little faerie. <i>\"Just be patient "
+                            + "and I'll finish you off later.\"</i> She looks at you again expectantly. <i>\"How about a girl faerie next?\"</i><br>"
+                            + "Two at once? You've never tried to split your mana between two familiars. It takes a lot of concentration just to maintain the one, and it's going to be hard to generate enough mana "
+                            + "outside the heat of a sexfight.<p>"
+                            + "Mara pounces on you without warning and kisses you deeply. She slips her tongue into your mouth while pressing her lithe body against you. She breaks the kiss to give you a seductive "
+                            + "smile. <i>\"Does that help at all?\"</i> You can definitely feel a fire blazing inside you. Instead of answering, you easily summon a female faerie.<br>"
+                            + "<i>\"Another cutie. Very nice.\"</i> She licks her lips suggestively she starts undressing. <i>\"I could probably have some fun with her, but I think we should start the main event.\"</i> "
+                            + "She presses herself against your body again and helps you out of your own clothing. If she just wanted to have sex, you didn't need to summon the second faerie.<p> "
+                            + "Mara assumes a sexy pose on the bed and gives you a wink. <i>\"This way we have two little 'helpers.' One for each of us. Wouldn't a few extra hands, tongues, and sexy parts make things "
+                            + "a bit more fun?\"</i> Speaking of your two familiars, they appear to be conversing in their own language as they watch Mara's seductive display. <i>\"Obviously, the girl will attend to "
+                            + "you and the little gu-Ah!\"</i><p>"
+                            + "Before either of you can react, the two fae pounce on Mara, teasing and caressing her naked body. <i>\"Ahh! HAHA~ Tickles! Why are they just -AH!- attacking me-EEK!?\"</i> That's a good "
+                            + "question. Maybe they're just loyal to you, because you summoned them. Maybe they're getting revenge for her teasing the male. Either way, it's a pretty good show. You position yourself "
+                            + "between her legs and hold them in place to control her squirming. The female faerie catches you intention and spreads Mara's pussy lips to reveal her dripping wet entrance. You lightly "
+                            + "prod her nethers with your cock, gauging her response.<p>"
+                            + "<i>\"God, yes! Fill me up!\"</i> That's as positive as reactions get. You're quite happy to comply. You thrust your hips, penetrating her with a single stroke. She squeals in delight and "
+                            + "wraps her legs around your hips. You piston your hips, fucking her in earnest. At first, you're worried about accidently squashing your familiars, but they have enough battle experience "
+                            + "to stay out of the way, darting in occassionally to tease and tickle sensitive areas. You kiss Mara passionately as you both approach climax. Both faeries target Mara's clit simultaneously, "
+                            + "sending her into a fit of orgasmic shudders. Her pussy clenches, milking out your ejaculation.<p>"
+                            + "You collapse onto the bed, pulling Mara into your embrace. She leans her head contentedly against your chest. The two faeries, apparently realizing the humans in the room are too "
+                            + "tired to play with them and entertain themselves by starting an impromptu sex-fight. You and Mara watch the show and she giggles in delight as the female gains the upper hand, milking "
+                            + "the boy dry. Mara finally gets a chance to play with the female, giving the victor an orgasm as reward.");
+                    if(!player.has(Trait.faefriend)){
+                        Global.gui().message("<p><b>You're finding it easier to call faeries. They seem to be more eager to respond to your summons.</b>");
+                        player.add(Trait.faefriend);
+                    }
+                    Global.gui().choose(this,"Leave");
+                    npc.gainAffection(player,1);
+                    player.gainAffection(npc,1);
             } else {
                 Global.gui()
                       .message("You suggest heading to the gym to do a bit of sparring, but she suggests her room would give you more privacy. This turns out to be important, because when "

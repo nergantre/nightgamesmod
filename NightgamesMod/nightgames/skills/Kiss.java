@@ -87,12 +87,12 @@ public class Kiss extends Skill {
             getSelf().usedAttribute(Attribute.Divinity, c, .5);
         }
         BodyPart selfMouth = getSelf().body.getRandom("mouth");
-        target.body.pleasure(getSelf(), selfMouth, target.body.getRandom("mouth"), m, c);
+        target.body.pleasure(getSelf(), selfMouth, target.body.getRandom("mouth"), m, c, this);
         int selfDamage = Math.max(1, m / 4);
         if (selfMouth.isErogenous()) {
             selfDamage = m / 2;
         }
-        getSelf().body.pleasure(target, target.body.getRandom("mouth"), selfMouth, selfDamage, c);
+        getSelf().body.pleasure(target, target.body.getRandom("mouth"), selfMouth, selfDamage, c, this);
         return true;
     }
 
@@ -214,5 +214,10 @@ public class Kiss extends Skill {
         } else {
             return "Kiss";
         }
+    }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FOREPLAY;
     }
 }

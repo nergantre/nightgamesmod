@@ -8,17 +8,14 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import nightgames.characters.Character;
-import nightgames.characters.custom.requirement.CustomRequirement;
+import nightgames.requirements.Requirement;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.nskills.struct.CharacterResultStruct;
-import nightgames.nskills.struct.NormalSkillResultStruct;
-import nightgames.nskills.struct.SkillResultStruct;
 
 public class GenericSkill implements SkillInterface {
     List<SkillResult> results;
-    List<CustomRequirement> requirements;
-    List<CustomRequirement> usable;
+    List<Requirement> requirements;
+    List<Requirement> usable;
     String label;
 
     public GenericSkill(String label) {
@@ -54,11 +51,11 @@ public class GenericSkill implements SkillInterface {
         return possibleResults;
     }
 
-    public void addRequirement(CustomRequirement requirement) {
+    public void addRequirement(Requirement requirement) {
         requirements.add(requirement);
     }
 
-    public void addUsableRequirement(CustomRequirement requirement) {
+    public void addUsableRequirement(Requirement requirement) {
         usable.add(requirement);
     }
 

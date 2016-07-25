@@ -31,7 +31,7 @@ public class TemptressHandjob extends Handjob {
         if (target.roll(this, c, accuracy(c))) {
             if (!target.body.getRandomCock().isReady(target)) {
                 m -= 7;
-                target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandomCock(), m, c);
+                target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandomCock(), m, c, this);
                 if (target.body.getRandomCock().isReady(target)) {
                     // Was flaccid, got hard
                     c.write(getSelf(), deal(c, 0, Result.special, target));
@@ -46,7 +46,7 @@ public class TemptressHandjob extends Handjob {
                 int stack = status == null || !status.getPart().equals("hands") ? 0 : status.getStack();
                 c.write(getSelf(), deal(c, stack, Result.normal, target));
                 target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandomCock(),
-                                m + m * stack / 2, c);
+                                m + m * stack / 2, c, this);
                 getSelf().add(c, new FiredUp(getSelf(), target, "hands"));
             }
         } else {
@@ -105,5 +105,10 @@ public class TemptressHandjob extends Handjob {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         // use formatted strings in deal
         return deal(c, damage, modifier, target);
+    }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FOREPLAY;
     }
 }

@@ -61,15 +61,25 @@ public class MagicTraining extends Activity {
         } else if (choice.startsWith("Lesson")) {
             if (player.money >= 1000 * (player.getPure(Attribute.Arcane) + 1)) {
                 int scene;
-                if (player.getPure(Attribute.Arcane) >= 6) {
+                if(player.getPure(Attribute.Arcane)>18){
                     scene = Global.random(4);
-                } else if (player.getPure(Attribute.Arcane) >= 5) {
+                }
+                else if(player.getPure(Attribute.Arcane)==18){
                     scene = 3;
-                } else if (player.getPure(Attribute.Arcane) >= 3) {
+                }
+                else if(player.getPure(Attribute.Arcane)>15){
+                    scene = Global.random(3);
+                }
+                else if(player.getPure(Attribute.Arcane)==15){
                     scene = 2;
-                } else if (player.getPure(Attribute.Arcane) >= 1) {
+                }
+                else if(player.getPure(Attribute.Arcane)>3){
+                    scene = Global.random(2);
+                }
+                else if(player.getPure(Attribute.Arcane)==3){
                     scene = 1;
-                } else {
+                }
+                else{
                     scene = 0;
                 }
                 switch (scene) {

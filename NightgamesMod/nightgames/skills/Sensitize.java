@@ -5,6 +5,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.items.Item;
 import nightgames.status.Hypersensitive;
+import nightgames.status.Stsflag;
 
 public class Sensitize extends Skill {
 
@@ -20,7 +21,7 @@ public class Sensitize extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return c.getStance().mobile(getSelf()) && getSelf().canAct() && getSelf().has(Item.SPotion)
-                        && target.mostlyNude() && !c.getStance().prone(getSelf());
+                        && target.mostlyNude() && !c.getStance().prone(getSelf()) && !target.is(Stsflag.hypersensitive);
     }
 
     @Override

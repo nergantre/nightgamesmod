@@ -1,63 +1,66 @@
 {
-	"name":"Test Game Config",
-	"summary":"Start with all characters unlocked, and with the standard characters with their advanced classes. To compensate, the player gets higher starting attributes and a selection of beneficial traits.",
-	"enabled":true,
-	"player": {
-		"attributes": {
-			"Power":5,
-			"Seduction":5,
-			"Cunning":5
-		},
-		"attribute_points": 20,
-		"money": 15000,
-		"level": 5,
-		"traits": [
-			"pussyhandler",
-			"dickhandler",
-			"limbTraining1",
-			"tongueTraining1",
-			"powerfulhips"
-		]
-	},
-	"npcs": [
-		{
-			"type":"TestAngel",
-			"attributes": {
-				"Power": 13,
-				"Seduction": 20,
-				"Cunning": 15,
-				"Divinity": 10
-			},
-			"body": {
-				"archetype":"ANGEL"
-			},
-			"traits": [
-				"demigoddess",
-				"divinity",
-				"proheels",
-				"undisciplined",
-				"lickable"
-			],
-			"clothing": [
-				"translucentshawl",
-				"bikinitop",
-				"bikinibottoms",
-				"highheels"
-			]
-		}
-
-	],
-	"all_npcs":{
-		"attributes": {
-			"Cunning": 14,
-			"Arcane": 2
-		},
-		"body": {
-			"archetype": "WITCH"
-		},
-		"xp": 50,
-		"level": 5,
-		"money": 5000
-	},
-	"flags":[]
+  "name": "Test Game Config",
+  "summary": "Start with all characters unlocked, and with the standard characters with their advanced classes. To compensate, the player gets higher starting attributes and a selection of beneficial traits.",
+  "enabled": true,
+  "player": {
+    "attributes": {
+      "Power": 5,
+      "Seduction": 5,
+      "Cunning": 5
+    },
+    "attribute_points": 20,
+    "money": 15000,
+    "level": 5,
+    "traits": [
+      "pussyhandler",
+      "dickhandler",
+      "limbTraining1",
+      "tongueTraining1",
+      "powerfulhips"
+    ],
+    "clothing": [
+      "gothshirt",
+      "gothpants"
+    ]
+  },
+  "npcs": [
+    {
+      "type": "TestAngel",
+      "attributes": {
+        "Power": 13,
+        "Seduction": 20,
+        "Cunning": 15,
+        "Divinity": 10
+      },
+      "body": {
+        "archetype": "ANGEL"
+      },
+      "traits": [
+        "demigoddess",
+        "divinity",
+        "proheels",
+        "undisciplined",
+        "lickable"
+      ],
+      "clothing": [
+        "translucentshawl",
+        "bikinitop",
+        "bikinibottoms",
+        "highheels"
+      ]
+    }
+  ],
+  "all_npcs": {
+    "attributes": {
+      "Cunning": 14,
+      "Arcane": 2
+    },
+    "body": {
+      "archetype": "WITCH"
+    },
+    "xp": 50,
+    "level": 5,
+    "money": 5000
+  },
+  "flags": []
 }

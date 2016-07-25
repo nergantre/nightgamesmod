@@ -3,22 +3,15 @@ package nightgames.start;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
-import nightgames.characters.Attribute;
-import nightgames.characters.BasePersonality;
-import nightgames.characters.CharacterSex;
-import nightgames.characters.Growth;
-import nightgames.characters.NPC;
-import nightgames.characters.Player;
+import nightgames.characters.*;
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.global.Flag;
 import nightgames.global.Global;
-import nightgames.global.JSONUtils;
+import nightgames.json.JsonUtils;
 import nightgames.items.clothing.Clothing;
 
 import static nightgames.start.ConfigurationUtils.mergeOptionals;
@@ -31,9 +24,9 @@ public abstract class CharacterConfiguration {
     protected Optional<Integer> money;
     protected Optional<Integer> level;
     protected Optional<Integer> xp;
-    protected Optional<List<Trait>> traits;
+    protected Optional<Collection<Trait>> traits;
     protected Optional<BodyConfiguration> body;
-    protected Optional<List<String>> clothing;
+    protected Optional<Collection<String>> clothing;
 
     public CharacterConfiguration() {
         name = Optional.empty();
@@ -49,8 +42,8 @@ public abstract class CharacterConfiguration {
 
     /**
      * Merges the fields of two CharacterConfigurations into the a new CharacterConfiguration.
-     * 
-     * @param primaryConfig The primary configuration.
+     *
+     * @param primaryConfig   The primary configuration.
      * @param secondaryConfig The secondary configuration. Field values will be overridden by values in primaryConfig. return
      */
     protected CharacterConfiguration(CharacterConfiguration primaryConfig, CharacterConfiguration secondaryConfig) {
@@ -81,15 +74,12 @@ public abstract class CharacterConfiguration {
         money.ifPresent(m -> base.money = m);
         level.ifPresent(l -> {
             base.level = l;
-            modMeters(base, l*2); // multiplication to compensate for missed daytime gains
+            modMeters(base, l * 2); // multiplication to compensate for missed daytime gains
         });
         xp.ifPresent(x -> base.gainXP(x));
-        traits.ifPresent(t -> base.traits = new CopyOnWriteArrayList<Trait>(t));
+        traits.ifPresent(t -> base.traits = new CopyOnWriteArrayList<>(t));
         if (clothing.isPresent()) {
-            List<Clothing> clothes = clothing.get()
-                                             .stream()
-                                             .map(Clothing::getByID)
-                                             .collect(Collectors.toList());
+            List<Clothing> clothes = clothing.get().stream().map(Clothing::getByID).collect(Collectors.toList());
             base.outfitPlan = new ArrayList<>(clothes);
             base.closet = new HashSet<>(clothes);
             base.change();
@@ -98,76 +88,40 @@ public abstract class CharacterConfiguration {
         base.levelUpIfPossible();
     }
 
-    public Optional<CharacterSex> getGender() {
-        return this.gender;
-    }
-
     /**
      * Parses fields common to PlayerConfiguration and NpcConfigurations.
-     * 
-     * @param obj The configuration read from the JSON config file.
+     *
+     * @param object The configuration read from the JSON config file.
      */
-    protected void parseCommon(JSONObject obj) {
-        name = JSONUtils.getIfExists(obj, "name", Object::toString);
-        gender = JSONUtils.getIfExists(obj, "gender", o -> CharacterSex.valueOf(o.toString()
-                                                                                 .toLowerCase()));
-        traits = JSONUtils.getIfExists(obj, "traits", o -> parseTraits((JSONArray) o));
-        body = JSONUtils.getIfExists(obj, "body", o -> BodyConfiguration.parse((JSONObject) o));
-        clothing = JSONUtils.getIfExists(obj, "clothing", o -> parseClothing((JSONArray) o));
-        if (obj.containsKey("money"))
-            money = Optional.of(JSONUtils.readInteger(obj, "money"));
-        if (obj.containsKey("level"))
-            level = Optional.of(JSONUtils.readInteger(obj, "level"));
-        if (obj.containsKey("xp"))
-            xp = Optional.of(JSONUtils.readInteger(obj, "xp"));
-        if (obj.containsKey("attributes")) {
-            JSONObject attrs = (JSONObject) obj.get("attributes");
-            for (Object a : attrs.keySet()) {
-                Attribute att = Attribute.valueOf(a.toString());
-                attributes.put(att, JSONUtils.readInteger(attrs, att.name()));
-            }
-        }
-
+    protected void parseCommon(JsonObject object) {
+        name = JsonUtils.getOptional(object, "name").map(JsonElement::getAsString);
+        gender = JsonUtils.getOptional(object, "gender").map(JsonElement::getAsString).map(String::toLowerCase)
+                        .map(CharacterSex::valueOf);
+        traits = JsonUtils.getOptionalArray(object, "traits")
+                        .map(array -> JsonUtils.collectionFromJson(array, Trait.class));
+        body = JsonUtils.getOptionalObject(object, "body").map(BodyConfiguration::parse);
+        clothing = JsonUtils.getOptionalArray(object, "clothing").map(JsonUtils::stringsFromJson);
+        money = JsonUtils.getOptional(object, "money").map(JsonElement::getAsInt);
+        level = JsonUtils.getOptional(object, "level").map(JsonElement::getAsInt);
+        xp = JsonUtils.getOptional(object, "xp").map(JsonElement::getAsInt);
+        attributes = JsonUtils.getOptionalObject(object, "attributes")
+                        .map(obj -> JsonUtils.mapFromJson(obj, Attribute.class, Integer.class)).orElse(new HashMap<>());
     }
 
-    private static void modMeters(Character ch, int levels) {
-        Growth gr = ch.human() ? ((Player) ch).getGrowth() : ((BasePersonality) ((NPC) ch).ai).getGrowth();
+    private static void modMeters(Character character, int levels) {
+        Growth growth = character.getGrowth();
         boolean hard = Global.checkFlag(Flag.hardmode);
         for (int i = 0; i < levels; i++) {
-            ch.getStamina()
-              .gain(gr.stamina);
-            ch.getArousal()
-              .gain(gr.arousal);
-            ch.getMojo()
-              .gain(gr.mojo);
-            ch.getWillpower()
-              .gain(gr.willpower);
+            character.getStamina().gain(growth.stamina);
+            character.getArousal().gain(growth.arousal);
+            character.getMojo().gain(growth.mojo);
+            character.getWillpower().gain(growth.willpower);
             if (hard) {
-                ch.getStamina()
-                  .gain(gr.bonusStamina);
-                ch.getArousal()
-                  .gain(gr.bonusArousal);
-                ch.getMojo()
-                  .gain(gr.bonusMojo);
-                ch.getWillpower()
-                  .gain(gr.bonusWillpower);
+                character.getStamina().gain(growth.bonusStamina);
+                character.getArousal().gain(growth.bonusArousal);
+                character.getMojo().gain(growth.bonusMojo);
+                character.getWillpower().gain(growth.bonusWillpower);
             }
         }
     }
-
-    private static List<Trait> parseTraits(JSONArray arr) {
-        List<Trait> traits = new ArrayList<>();
-        for (Object o : arr) {
-            String name = o.toString();
-            traits.add(Trait.valueOf(name));
-        }
-        return traits;
-    }
-
-    @SuppressWarnings("unchecked")
-    private static List<String> parseClothing(JSONArray arr) {
-        return ((Stream<Object>) arr.stream()).map(Object::toString)
-                                              .collect(Collectors.toList());
-    }
-
 }

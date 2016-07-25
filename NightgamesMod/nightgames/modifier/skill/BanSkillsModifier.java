@@ -1,24 +1,28 @@
 package nightgames.modifier.skill;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import nightgames.global.Global;
-import nightgames.global.JSONUtils;
-import nightgames.modifier.ModifierComponent;
+import nightgames.json.JsonUtils;
+import nightgames.modifier.ModifierComponentLoader;
 import nightgames.skills.Skill;
 
-public class BanSkillsModifier extends SkillModifier implements ModifierComponent<BanSkillsModifier> {
+public class BanSkillsModifier extends SkillModifier implements ModifierComponentLoader<SkillModifier> {
+    private static final String name = "ban-skills";
 
     private final Set<Skill> skills;
 
     public BanSkillsModifier(Skill... skills) {
         this.skills = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(skills)));
+    }
+
+    public BanSkillsModifier(Collection<Skill> skills) {
+        this(skills.toArray(new Skill[] {}));
     }
 
     @Override
@@ -28,26 +32,28 @@ public class BanSkillsModifier extends SkillModifier implements ModifierComponen
 
     @Override
     public String name() {
-        return "ban-skills";
+        return name;
     }
 
-    @Override
-    public BanSkillsModifier instance(JSONObject obj) {
-        if (obj.containsKey("skill")) {
-            String name = JSONUtils.readString(obj, "skill");
-            return new BanSkillsModifier(Global.getSkillPool().stream().filter(s -> s.getName().equals(name)).findAny()
-                            .orElseThrow(() -> new IllegalArgumentException("No such skill: " + name)));
-        } else if (obj.containsKey("skills")) {
-            List<String> names = JSONUtils.loadStringsFromArr(obj, "skills");
-            Skill[] skills = names.stream()
-                            .map(name -> Global.getSkillPool().stream().filter(s -> s.getName().equals(name))
-                                            .findAny().<IllegalArgumentException>orElseThrow(
-                                                            () -> new IllegalArgumentException(
-                                                                            "No such skill: " + name)))
-                            .toArray(Skill[]::new);
-            return new BanSkillsModifier(skills);
+    @Override public BanSkillsModifier instance(JsonObject object) {
+        Collection<Skill> skillPool = Global.getSkillPool();
+        Optional<String> maybeName = JsonUtils.getOptional(object, "skill").map(JsonElement::getAsString);
+        if (maybeName.isPresent()) {
+            String name = maybeName.get();
+            Skill skill = skillPool.stream().filter(matchName(name)).findAny()
+                            .orElseThrow(() -> new IllegalArgumentException("No such skill: " + name));
+            return new BanSkillsModifier(skill);
         }
-        throw new IllegalArgumentException("'ban-skills' must have 'skill' or 'skills'");
+        Collection<Skill> skills = JsonUtils.getOptionalArray(object, "skills")
+                        .map(array -> JsonUtils.collectionFromJson(array, Skill.class))
+                        .orElseThrow(() -> new IllegalArgumentException(
+                                        "\"ban-skills\" must have \"skill\" or \"skills\""));
+
+        return new BanSkillsModifier(skills);
+    }
+
+    private Predicate<Skill> matchName(String name) {
+        return skill -> name.equals(skill.getName());
     }
 
     @Override

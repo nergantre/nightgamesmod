@@ -298,6 +298,8 @@ public enum Trait {
     sympathetic("Sympathetic", "Intervening opponents are more likely to side with you"),
     fastLearner("Fast Learner", "Improved experience gain"),
     leadership("Leadership", "Summoned pets are more powerful"),
+    tactician("Tactician", "Summoned pets have higher evasion"),
+    faefriend("Fae Friend", "Less effort to summon Faeries"),
     fitnessNut("Fitness Nut", "More efficient at exercising"),
     expertGoogler("Expert Googler", "More efficient at finding porn"),
     mojoMaster("Mojo Master", "Max Mojo increases faster"),
@@ -444,9 +446,12 @@ public enum Trait {
             return "";
         });
         resistances.put(Trait.mindcontrolresistance, (c, s) -> {
+            // TODO: We should not be getting combat information from the gui; the gui should be focused on display and interaction.
            if (s.mindgames() && !Global.gui().combat.getOther(c).has(Trait.mindcontroller)) {
-               Addiction add = Global.getPlayer().getAddiction(AddictionType.MIND_CONTROL);
-               float threshold = 40 * add.getMagnitude();
+               float magnitude =
+                               Global.getPlayer().getAddiction(AddictionType.MIND_CONTROL).map(Addiction::getMagnitude)
+                                               .orElse(0f);
+               float threshold = 40 * magnitude;
                if (Global.random(100) < threshold) {
                    return "Mara's Control";
                }

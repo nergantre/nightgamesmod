@@ -68,10 +68,10 @@ public class FaceFuck extends Skill {
         target.add(c, new Shamed(target));
 
         if (selfDamage > 0) {
-            getSelf().body.pleasure(target, targetMouth, getSelf().body.getRandom("cock"), selfDamage, c);
+            getSelf().body.pleasure(target, targetMouth, getSelf().body.getRandom("cock"), selfDamage, c, this);
         }
         if (targetDamage > 0) {
-            target.body.pleasure(target, getSelf().body.getRandomInsertable(), targetMouth, targetDamage, c);
+            target.body.pleasure(target, getSelf().body.getRandomInsertable(), targetMouth, targetDamage, c, this);
         }
         if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish) && !getSelf().has(Trait.strapped)) {
             target.add(c, new BodyFetish(target, getSelf(), "cock", .25));
@@ -158,5 +158,10 @@ public class FaceFuck extends Skill {
     @Override
     public boolean makesContact() {
         return true;
+    }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FINISHER;
     }
 }

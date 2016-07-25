@@ -1,20 +1,17 @@
 package nightgames.characters.custom;
 
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
+import com.google.gson.*;
 
 import nightgames.Resources.ResourceLoader;
 import nightgames.global.Flag;
 import nightgames.global.Global;
-import nightgames.global.JSONUtils;
+import nightgames.json.JsonUtils;
 import nightgames.skills.Skill;
 import nightgames.stance.Stance;
 import nightgames.status.Stsflag;
@@ -26,14 +23,13 @@ public class AiModifiers {
 
     static {
         Map<String, AiModifiers> temp = new HashMap<>();
-        InputStream is = ResourceLoader.getFileResourceAsStream("data/DefaultAiModifications.json");
-        JSONArray root = (JSONArray) JSONValue.parse(new InputStreamReader(is));
-        for (Object obj : root) {
-            JSONObject jobj = (JSONObject) obj;
-            String pers = JSONUtils.readString(jobj, "personality");
-            Optional<Double> malePref = jobj.containsKey("male-pref")
-                            ? Optional.of((double) JSONUtils.readFloat(jobj, "male-pref")) : Optional.empty();
-            AiModifiers mods = readMods((JSONArray) jobj.get("mods"));
+        JsonArray modifiersJson = JsonUtils.rootJson(new InputStreamReader(
+                        ResourceLoader.getFileResourceAsStream("data/DefaultAiModifications.json"))).getAsJsonArray();
+        for (JsonElement element : modifiersJson) {
+            JsonObject modJson = element.getAsJsonObject();
+            String pers = modJson.get("personality").getAsString();
+            Optional<Double> malePref = JsonUtils.getOptional(modJson, "male-pref").map(JsonElement::getAsDouble);
+            AiModifiers mods = readMods(modJson.getAsJsonArray("mods"));
             mods.setMalePref(malePref);
             temp.put(pers, mods);
         }
@@ -123,14 +119,13 @@ public class AiModifiers {
         return DEFAULTS.getOrDefault(personality, new AiModifiers());
     }
 
-    @SuppressWarnings("unchecked")
-    private static AiModifiers readMods(JSONArray array) {
+    @SuppressWarnings("unchecked") private static AiModifiers readMods(JsonArray array) {
         AiModifiers mods = new AiModifiers();
-        for (Object obj : array) {
-            JSONObject mod = (JSONObject) obj;
-            String type = JSONUtils.readString(mod, "type");
-            String value = JSONUtils.readString(mod, "value");
-            double weight = JSONUtils.readFloat(mod, "weight");
+        for (JsonElement element : array) {
+            JsonObject modJson = element.getAsJsonObject();
+            String type = modJson.get("type").getAsString();
+            String value = modJson.get("value").getAsString();
+            double weight = modJson.get("weight").getAsFloat();
             switch (type) {
                 case "skill":
                     try {

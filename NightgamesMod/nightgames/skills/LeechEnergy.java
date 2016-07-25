@@ -105,7 +105,7 @@ public class LeechEnergy extends Skill {
                 c.write(getSelf(), "Wtf happened");
             }
             target.drainStaminaAsMojo(c, getSelf(), 10 + Global.random(20), 1.5f);
-            target.body.pleasure(getSelf(), selfPart, part, 10 + Global.random(20), c);
+            target.body.pleasure(getSelf(), selfPart, part, 10 + Global.random(20), c, this);
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.miss, target));

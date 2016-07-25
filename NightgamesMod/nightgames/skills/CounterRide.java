@@ -114,4 +114,9 @@ public class CounterRide extends CounterBase {
                             getSelf(), target);
         }
     }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FINISHER;
+    }
 }

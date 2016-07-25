@@ -3,7 +3,6 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -113,5 +112,10 @@ public class Engulf extends CounterBase {
         getSelf().emote(Emotion.dominant, 50);
         getSelf().emote(Emotion.horny, 30);
         target.emote(Emotion.nervous, 50);
+    }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FINISHER;
     }
 }

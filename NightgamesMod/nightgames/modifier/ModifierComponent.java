@@ -1,11 +1,8 @@
 package nightgames.modifier;
 
-import org.json.simple.JSONObject;
-
-public interface ModifierComponent<T extends ModifierComponent<T>> {
-
+/**
+ * Base class for ModifierComponents (e.g. SkillModifier, ActionModifier)
+ */
+public interface ModifierComponent {
     String name();
-
-    T instance(JSONObject obj);
-
 }

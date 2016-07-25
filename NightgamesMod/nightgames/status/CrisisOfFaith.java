@@ -1,12 +1,13 @@
 package nightgames.status;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
 public class CrisisOfFaith extends Status {
@@ -73,7 +74,8 @@ public class CrisisOfFaith extends Status {
 
     @Override
     public int gainmojo(int x) {
-        return (int) (x * (1.0f - Global.getPlayer().getAddiction(AddictionType.ZEAL).getMagnitude()));
+        return (int) (x * (1.0f - Global.getPlayer().getAddiction(AddictionType.ZEAL).map(Addiction::getMagnitude)
+                        .orElse(0f)));
     }
 
     @Override
@@ -96,16 +98,13 @@ public class CrisisOfFaith extends Status {
         return new CrisisOfFaith(newAffected);
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public JSONObject saveToJSON() {
-        JSONObject obj = new JSONObject();
-        obj.put("type", getClass().getSimpleName());
+    @SuppressWarnings("unchecked") @Override public JsonObject saveToJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("type", getClass().getSimpleName());
         return obj;
     }
 
-    @Override
-    public Status loadFromJSON(JSONObject obj) {
+    @Override public Status loadFromJson(JsonObject obj) {
         return new CrisisOfFaith(Global.getPlayer());
     }
 

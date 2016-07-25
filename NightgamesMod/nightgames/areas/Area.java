@@ -19,6 +19,7 @@ public class Area implements Serializable {
     public String name;
     public HashSet<Area> adjacent;
     public HashSet<Area> shortcut;
+    public HashSet<Area> jump;
     public ArrayList<Character> present;
     public String description;
     public IEncounter fight;
@@ -39,6 +40,7 @@ public class Area implements Serializable {
         this.enumerator = enumerator;
         adjacent = new HashSet<Area>();
         shortcut = new HashSet<Area>();
+        jump = new HashSet<Area>();
         present = new ArrayList<Character>();
         env = new ArrayList<Deployable>();
         alarm = false;
@@ -53,6 +55,10 @@ public class Area implements Serializable {
 
     public void shortcut(Area sc) {
         shortcut.add(sc);
+    }
+    
+    public void jump(Area adj){
+        jump.add(adj);
     }
 
     public boolean open() {

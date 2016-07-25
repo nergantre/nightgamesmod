@@ -1,6 +1,6 @@
 package nightgames.characters.body;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -152,17 +152,14 @@ public enum BreastsPart implements BodyPart {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public JSONObject save() {
-        JSONObject obj = new JSONObject();
-        obj.put("enum", name());
+    @SuppressWarnings("unchecked") @Override public JsonObject save() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("enum", name());
         return obj;
     }
 
-    @Override
-    public BodyPart load(JSONObject obj) {
-        return BreastsPart.valueOf((String) obj.get("enum"));
+    @Override public BodyPart load(JsonObject obj) {
+        return BreastsPart.valueOf(obj.get("enum").getAsString());
     }
 
     @Override
@@ -201,8 +198,7 @@ public enum BreastsPart implements BodyPart {
             Addiction addiction;
             if (opponent.human()) {
                 Global.getPlayer().addict(AddictionType.MAGIC_MILK, opponent, Addiction.LOW_INCREASE);
-                addiction = Global.getPlayer()
-                                  .getAddiction(AddictionType.MAGIC_MILK);
+                addiction = Global.getPlayer().getAddiction(AddictionType.MAGIC_MILK).get();
                 addictionLevel = addiction.getMagnitude();
             } else {
                 addictionLevel = 0;

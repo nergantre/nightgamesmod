@@ -10,6 +10,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
+import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
 public class Thrust extends Skill {
@@ -71,7 +72,8 @@ public class Thrust extends Skill {
             Player p = Global.getPlayer();
             Character npc = c.getOther(p);
             if (p.checkAddiction(AddictionType.BREEDER, npc)) {
-                float bonus = .3f * p.getAddiction(AddictionType.BREEDER).getCombatSeverity().ordinal();
+                float bonus = .3f * p.getAddiction(AddictionType.BREEDER).map(Addiction::getCombatSeverity)
+                                .map(Enum::ordinal).orElse(0);
                 if (p == getSelf()) {
                     mt += mt * bonus;
                 } else {
@@ -109,10 +111,10 @@ public class Thrust extends Skill {
         assert m.length >= 2;
 
         if (m[0] != 0) {
-            target.body.pleasure(getSelf(), selfO, targetO, m[0], c);
+            target.body.pleasure(getSelf(), selfO, targetO, m[0], c, this);
         }
         if (m[1] != 0) {
-            getSelf().body.pleasure(target, targetO, selfO, m[1], c);
+            getSelf().body.pleasure(target, targetO, selfO, m[1], c, this);
         }
         if (selfO.isType("ass") && Global.random(100) < 2 + getSelf().get(Attribute.Fetish)) {
             target.add(c, new BodyFetish(target, getSelf(), "ass", .25));
@@ -194,5 +196,10 @@ public class Thrust extends Skill {
     @Override
     public boolean makesContact() {
         return true;
+    }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FINISHER;
     }
 }

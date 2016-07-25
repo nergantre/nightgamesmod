@@ -308,4 +308,8 @@ public abstract class Position implements Cloneable {
     public int dominance() {
         return 0;
     }
+
+    public String name() {
+        return getClass().getSimpleName();
+    }
 }

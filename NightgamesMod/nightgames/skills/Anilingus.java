@@ -71,7 +71,7 @@ public class Anilingus extends Skill {
             c.write(getSelf(), receive(c, m, result, target));
         }
         if (m > 0) {
-            target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), targetAss, m, c);
+            target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), targetAss, m, c, this);
         }
         if (n > 0) {
             target.buildMojo(c, n);

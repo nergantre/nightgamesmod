@@ -62,8 +62,8 @@ public class Tribadism extends Skill {
         c.setStance(new TribadismStance(getSelf(), target));
         int otherm = 10;
         int m = 10;
-        target.body.pleasure(getSelf(), selfO, targetO, m, c);
-        getSelf().body.pleasure(target, targetO, selfO, otherm, c);
+        target.body.pleasure(getSelf(), selfO, targetO, m, c, this);
+        getSelf().body.pleasure(target, targetO, selfO, otherm, c, this);
         return true;
     }
 

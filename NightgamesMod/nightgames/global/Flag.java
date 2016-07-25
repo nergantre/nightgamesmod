@@ -1,5 +1,7 @@
 package nightgames.global;
 
+import java.util.Arrays;
+
 public enum Flag {
     metBroker,
     basicStores,
@@ -69,5 +71,13 @@ public enum Flag {
     didFTC, 
     AddictionAdvice,
     AiriDisabled,
-    extendedLogs;
+    extendedLogs, 
+    YuiLoyalty, 
+    YuiAvailable, 
+    Yui, 
+    YuiUnlocking;
+    
+    public static boolean exists(String flag) {
+        return Arrays.stream(values()).anyMatch(f -> f.name().equals(flag));
+    }
 }

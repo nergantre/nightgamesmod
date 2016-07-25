@@ -79,8 +79,8 @@ public class ReverseAssFuck extends Fuck {
         if (getSelf().has(Trait.insertion)) {
             otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
         }
-        target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c);
-        getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c);
+        target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c, this);
+        getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c, this);
         c.setStance(new AnalCowgirl(getSelf(), target), getSelf(), getSelf().canMakeOwnDecision());
         getSelf().emote(Emotion.dominant, 30);
         if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
@@ -132,5 +132,10 @@ public class ReverseAssFuck extends Fuck {
     @Override
     public boolean makesContact() {
         return true;
+    }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FINISHER;
     }
 }

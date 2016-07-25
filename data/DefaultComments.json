@@ -1,328 +1,422 @@
 [
-	{
-		"character": "Angel",
-		"comments": [
-			{
-				"situation": "VAG_DOM_CATCH_WIN",
-				"comment":"Mmmm, are you going to fill me up now, {other:name}?"
-			},{
-				"situation": "VAG_DOM_CATCH_LOSE",
-				"comment":"No! I can't lose like this! Cum now! Oh!"
-			},{
-				"situation": "VAG_SUB_CATCH_WIN",
-				"comment":"Keep going! You're giving me so much already, but I want more!"
-			},{
-				"situation": "VAG_SUB_CATCH_LOSE",
-				"comment":"Oh fuck! Why aren't you cumming already?"
-			},{
-				"situation": "ANAL_SUB_CATCH_WIN",
-				"comment":"I knew you were a sucker for ass, {other:name}. Fill me!"
-			},{
-				"situation": "ANAL_DOM_CATCH_WIN",
-				"comment":"All I need to do is give you a little ride and I've got you shooting up my ass! Shouldn't you be trying a little harder?"
-			},{
-				"situation": "MOUNT_DOM_WIN",
-				"comment":"Shall I make you cum now, {other:name}? Are you going to cum all over yourself?"
-			},{
-				"situation": "OTHER_CHARMED",
-				"comment":"You want to please me, don't you? Your beautiful Angel?"
-			},{
-				"situation": "SELF_HORNY",
-				"comment":"I need you! Now! Get over here!"
-			},{
-				"situation": "OTHER_HORNY",
-				"comment":"You're a little hot for me aren't you? I can help with that."
-			},{
-				"situation": "SELF_OILED",
-				"comment":"I'm all wet... Slimy... Slippery... Shiny... Do you like me like this?"
-			}
-		]
-	},{
-		"character": "Cassie",
-		"comments": [
-			{
-				"situation": "VAG_DOM_CATCH_WIN",
-				"comment":"Oh, yes! Give it all to me! Please!"
-			},{
-				"situation": "VAG_DOM_CATCH_LOSE",
-				"comment":"Ah! I... Can't... Lose... Yet!"
-			},{
-				"situation": "VAG_SUB_CATCH_WIN",
-				"comment":"Haha! I knew a horny boy like just can't resist once he's inside of me! Now finish it!"
-			},{
-				"situation": "VAG_SUB_CATCH_LOSE",
-				"comment":"Ah, ah ah! Please..."
-			},{
-				"situation": "ANAL_DOM_CATCH_WIN",
-				"comment":"You are a dirty boy, aren't you? I might be a bit dirty as well for doing this..."
-			},{
-				"situation": "ANAL_SUB_CATCH_LOSE",
-				"comment":"Not this! Not from this!"
-			},{
-				"situation": "NURSING_DOM_WIN",
-				"comment":"Drink up! It's good for you!"
-			},{
-				"situation": "SIXTYNINE_DOM_WIN",
-				"comment":"Mmm, you taste good {other:name}! Will you give me something else to taste now?"
-			},{
-				"situation": "SIXTYNINE_SUB_WIN",
-				"comment":"Mmm, you taste good {other:name}! Will you give me something else to taste now?"
-			},{
-				"situation": "OTHER_ENTHRALLED",
-				"comment":"Oh, I do so enjoy to have a boy at my bidding like this!"
-			},{
-				"situation": "OTHER_BOUND",
-				"comment":"Will you be still now? Then I can pleasure you properly..."
-			},{
-				"situation": "SELF_BOUND",
-				"comment":"Wait! If you let me go, I'll thank you properly!"
-			}
-		]
-	},{
-		"character":"Eve",
-		"comments": [
-			{
-				"situation": "VAG_DOM_CATCH_WIN",
-				"comment":"What? You thought just because of my cock I couldn't take yours? Let me show you!"
-			},{
-				"situation": "VAG_SUB_CATCH_LOSE",
-				"comment":"Fuck! You're going to have to let me repay you in kind next time!"
-			},{
-				"situation": "VAG_DOM_PITCH_WIN",
-				"comment":"Did you grow this pussy just for me? I'll pound it properly for you!"
-			},{
-				"situation": "ANAL_DOM_CATCH_WIN",
-				"comment":"I can take as well as I can give! You see?"
-			},{
-				"situation": "ANAL_SUB_CATCH_WIN",
-				"comment":"I can take as well as I can give! You see?"
-			},{
-				"situation": "ANAL_DOM_PITCH_WIN",
-				"comment":"Ah fuck! I knew the moment I saw you I was going to make you my bitch!"
-			},{
-				"situation": "ANAL_SUB_PITCH_WIN",
-				"comment":"Hah! I knew you'd love it, but to actually see you impale yourself on me? Priceless!"
-			},{
-				"situation": "ANAL_DOM_PITCH_LOSE",
-				"comment":"Oh, shit! I'm gonna paint your insides white, {other:name}!"
-			},{
-				"situation": "BEHIND_DOM_WIN",
-				"comment":"Do you want to cum, now? I could always take this pretty ass of yours..."
-			},{
-				"situation": "OTHER_OILED",
-				"comment":"All lubed up and ready, I see. Just how I like you!"
-			},{
-				"situation": "OTHER_STUNNED",
-				"comment":"Are you going to let me do what I want now? Good!"
-			},{
-				"situation": "SELF_HORNY",
-				"comment":"{other:name}! Wrap your ass around my cock NOW!"
-			}
-		]
-	},{
-		"character":"Jewel",
-		"comments":[
-			{
-				"situation": "VAG_DOM_CATCH_WIN",
-				"comment":"Does it hurt, {other:name}? A little warm for you? You know how to end it..."
-			},{
-				"situation": "VAG_DOM_CATCH_LOSE",
-				"comment":"Not yet! Fuck, not yet! Cum for me now!"
-			},{
-				"situation": "VAG_SUB_CATCH_LOSE",
-				"comment":"Oh, {other:name}! You might just deserve this!"
-			},{
-				"situation": "VAG_SUB_CATCH_WIN",
-				"comment":"Even on top you can't handle me! Cum already!"
-			},{
-				"situation": "ANAL_DOM_PITCH_WIN",
-				"comment":"I love fucking a pretty ass! You love it too, right? I know you do. Are you actually going to cum like this now?"
-			},{
-				"situation": "ANAL_SUB_CATCH_WIN",
-				"comment":"I have a boy pegging himself for me! Best. Day. Ever!"
-			},{
-				"situation": "ANAL_DOM_CATCH_LOSE",
-				"comment":"Fuck! I'm actually going to cum!"
-			},{
-				"situation": "OTHER_BOUND",
-				"comment":"Not going anywhere now, are you {other:name}?"
-			},{
-				"situation": "OTHER_STUNNED",
-				"comment":"Aww, did I hurt you? Let me kiss you to make it better!"
-			},{
-				"situation": "PIN_DOM_WIN",
-				"comment":"I've got you, {other:name}! No escape now!"
-			},{
-				"situation": "BEHIND_DOM_WIN",
-				"comment":"Sshh, just cum for me now..."
-			},{
-				"situation": "ANAL_SUB_CATCH_LOSE",
-				"comment":"Fuck! I'm actually going to cum!"
-			}
-		]
-	},{
-		"character":"Kat",
-		"comments": [
-			{
-				"situation": "VAG_DOM_CATCH_WIN",
-				"comment":"Nya! Cum in me now, {other:name}!"
-			},{
-				"situation": "VAG_DOM_CATCH_LOSE",
-				"comment":"Ooohnya! But I'm on top! I should win!"
-			},{
-				"situation": "VAG_SUB_CATCH_WIN",
-				"comment":"Yes! Fill me! Breed me~!"
-			},{
-				"situation": "VAG_SUB_CATCH_LOSE",
-				"comment":"Nnnya! Oh! Fuck, breed, cum, NYAAA!"
-			},{
-				"situation": "ANAL_SUB_CATCH_LOSE",
-				"comment":"Nya! And they ca-AAH-ll me an animalnya!"
-			},{
-				"situation": "ANAL_DOM_CATCH_LOSE",
-				"comment":"Nya! And they ca-AAH-ll me an animalnya!"
-			},{
-				"situation": "ANAL_SUB_CATCH_WIN",
-				"comment":"Ooh! Are you going to fill up my ass?"
-			},{
-				"situation": "ANAL_DOM_CATCH_WIN",
-				"comment":"Ooh! Are you going to fill up my ass?"
-			},{
-				"situation": "ANAL_SUB_CATCH_WIN",
-				"comment":"Ooh! Are you going to fill up my ass?"
-			},{
-				"situation": "MOUNT_DOM_WIN",
-				"comment":"Nyanyanya! I'm going to win now!"
-			},{
-				"situation": "SELF_BOUND",
-				"comment":"Please let me go! I'll do anyathing!"
-			},{
-				"situation": "MOUNT_SUB_LOSE",
-				"comment":"Ah! Put it in! Put it in!"
-			},{
-				"situation": "PIN_SUB_LOSE",
-				"comment":"Ah! Put it in! Put it in!"
-			},{
-				"situation": "OTHER_HORNY",
-				"comment":"Is my smell getting to you? Why don't you take a better whiff straight from the source?"
-			}
-		]
-	},{
-		"characters":"Mara",
-		"comments":[
-			{
-				"situation": "VAG_DOM_CATCH_WIN",
-				"comment":"Do you like it inside of me, {other:name}? Is she being a good host?"
-			},{
-				"situation": "VAG_DOM_CATCH_LOSE",
-				"comment":"Oooh! Even now... Please, please..."
-			},{
-				"situation": "VAG_SUB_CATCH_WIN",
-				"comment":"Mmm, it doesn't matter if you're on top; you can't beat science!"
-			},{
-				"situation": "VAG_SUB_CATCH_LOSE",
-				"comment":"Oh {other:name}! Oh... Harder!"
-			},{
-				"situation": "ANAL_SUB_CATCH_WIN",
-				"comment":"That's what you get for being such a dirty boy! Cum in my ass already!"
-			},{
-				"situation": "ANAL_SUB_CATCH_LOSE",
-				"comment":"Please {other:name}, finish me in any other way!"
-			},{
-				"situation": "ANAL_DOM_CATCH_WIN",
-				"comment":"So it's true that men enjoy anal more!"
-			},{
-				"situation": "ANAL_DOM_PITCH_WIN",
-				"comment":"Hah! I thought men would be ashamed of this, but you seem to like it! Show me how much!"
-			},{
-				"situation": "BEHIND_DOM_WIN",
-				"comment":"Shall I use hy hands to finish you off now? You know how good I am with them..."
-			},{
-				"situation": "SELF_BOUND",
-				"comment":"Pff, I'll have my hands free in just a second, and then I'll use them on you!"
-			},{
-				"situation": "OTHER_BOUND",
-				"comment":"Do you like being tied up, {other:name}? I am happy to oblige."
-			},{
-				"situation": "SIXTYNINE_DOM_WIN",
-				"comment":"Come on {other:name}! Try a little harder down there!"
-			}
-		]
-	},{
-		"characters":"Reyka",
-		"comments": [
-		{
-				"situation": "VAG_DOM_CATCH_WIN",
-				"comment":"Ah, yes! Give me more!"
-			},{
-				"situation": "VAG_DOM_CATCH_LOSE",
-				"comment":"I can't lose! Not like this!"
-			},{
-				"situation": "VAG_SUB_CATCH_WIN",
-				"comment":"Are you regretting fucking me now? It's time for you to cum now."
-			},{
-				"situation": "VAG_SUB_CATCH_LOSE",
-				"comment":"{other:name}! How did you get this good?!"
-			},{
-				"situation": "ANAL_SUB_CATCH_WIN",
-				"comment":"Thought my ass would be harmless, did you?"
-			},{
-				"situation": "FACESIT_DOM_WIN",
-				"comment":"Ahhh, yes! Lick me more! Drink me!"
-			},{
-				"situation": "FACESIT_DOM_LOSE",
-				"comment":"Shit! That's some tongue you've got there!"
-			},{
-				"situation": "MOUNT_DOM_WIN",
-				"comment":"Mmmm. I wonder if you'll cum right away if I put it in. Shall we find out?"
-			},{
-				"situation": "MOUNT_SUB_WIN",
-				"comment":"Hah! Even on top it's hopeless! Now fuck me and finish it!"
-			},{
-				"situation": "MOUNT_SUB_LOSE",
-				"comment":"Please... At least feed me..."
-			},{
-				"situation": "OTHER_ENTHRALLED",
-				"comment":"You're a good little slave aren't you?"
-			},{
-				"situation": "OTHER_HORNY",
-				"comment":"You really just can't resist me, can you?"
-			}
-		]
-	},{
-		"characters":"Airi",
-		"comments": [
-		{
-				"situation": "VAG_DOM_CATCH_WIN",
-				"comment":"More... MORE..!"
-			},{
-				"situation": "VAG_DOM_CATCH_LOSE",
-				"comment":"Aahh... I can still..."
-			},{
-				"situation": "VAG_SUB_CATCH_WIN",
-				"comment":"Keep... going..."
-			},{
-				"situation": "VAG_SUB_CATCH_LOSE",
-				"comment":"{other:name} please..."
-			},{
-				"situation": "ENGULFED_DOM",
-				"comment":"How... does it feel... inside me..."
-			},{
-				"situation": "SELF_BOUND",
-				"comment":"Useless..."
-			},{
-				"situation": "MOUNT_DOM_WIN",
-				"comment":"Prepare... yourself..."
-			},{
-				"situation": "MOUNT_SUB_WIN",
-				"comment":"Don't... stop... Cum inside..."
-			},{
-				"situation": "MOUNT_SUB_LOSE",
-				"comment":"Aahh... I won't... lose..."
-			},{
-				"situation": "OTHER_PARASITED",
-				"comment":"I'm... taking control..."
-			}
-		]
-	}
+  {
+    "character": "Angel",
+    "comments": [
+      {
+        "situation": "VAG_DOM_CATCH_WIN",
+        "comment": "Mmmm, are you going to fill me up now, {other:name}?"
+      },
+      {
+        "situation": "VAG_DOM_CATCH_LOSE",
+        "comment": "No! I can't lose like this! Cum now! Oh!"
+      },
+      {
+        "situation": "VAG_SUB_CATCH_WIN",
+        "comment": "Keep going! You're giving me so much already, but I want more!"
+      },
+      {
+        "situation": "VAG_SUB_CATCH_LOSE",
+        "comment": "Oh fuck! Why aren't you cumming already?"
+      },
+      {
+        "situation": "ANAL_SUB_CATCH_WIN",
+        "comment": "I knew you were a sucker for ass, {other:name}. Fill me!"
+      },
+      {
+        "situation": "ANAL_DOM_CATCH_WIN",
+        "comment": "All I need to do is give you a little ride and I've got you shooting up my ass! Shouldn't you be trying a little harder?"
+      },
+      {
+        "situation": "MOUNT_DOM_WIN",
+        "comment": "Shall I make you cum now, {other:name}? Are you going to cum all over yourself?"
+      },
+      {
+        "situation": "OTHER_CHARMED",
+        "comment": "You want to please me, don't you? Your beautiful Angel?"
+      },
+      {
+        "situation": "SELF_HORNY",
+        "comment": "I need you! Now! Get over here!"
+      },
+      {
+        "situation": "OTHER_HORNY",
+        "comment": "You're a little hot for me aren't you? I can help with that."
+      },
+      {
+        "situation": "SELF_OILED",
+        "comment": "I'm all wet... Slimy... Slippery... Shiny... Do you like me like this?"
+      }
+    ]
+  },
+  {
+    "character": "Cassie",
+    "comments": [
+      {
+        "situation": "VAG_DOM_CATCH_WIN",
+        "comment": "Oh, yes! Give it all to me! Please!"
+      },
+      {
+        "situation": "VAG_DOM_CATCH_LOSE",
+        "comment": "Ah! I... Can't... Lose... Yet!"
+      },
+      {
+        "situation": "VAG_SUB_CATCH_WIN",
+        "comment": "Haha! I knew a horny boy like just can't resist once he's inside of me! Now finish it!"
+      },
+      {
+        "situation": "VAG_SUB_CATCH_LOSE",
+        "comment": "Ah, ah ah! Please..."
+      },
+      {
+        "situation": "ANAL_DOM_CATCH_WIN",
+        "comment": "You are a dirty boy, aren't you? I might be a bit dirty as well for doing this..."
+      },
+      {
+        "situation": "ANAL_SUB_CATCH_LOSE",
+        "comment": "Not this! Not from this!"
+      },
+      {
+        "situation": "NURSING_DOM_WIN",
+        "comment": "Drink up! It's good for you!"
+      },
+      {
+        "situation": "SIXTYNINE_DOM_WIN",
+        "comment": "Mmm, you taste good {other:name}! Will you give me something else to taste now?"
+      },
+      {
+        "situation": "SIXTYNINE_SUB_WIN",
+        "comment": "Mmm, you taste good {other:name}! Will you give me something else to taste now?"
+      },
+      {
+        "situation": "OTHER_ENTHRALLED",
+        "comment": "Oh, I do so enjoy to have a boy at my bidding like this!"
+      },
+      {
+        "situation": "OTHER_BOUND",
+        "comment": "Will you be still now? Then I can pleasure you properly..."
+      },
+      {
+        "situation": "SELF_BOUND",
+        "comment": "Wait! If you let me go, I'll thank you properly!"
+      }
+    ]
+  },
+  {
+    "character": "Eve",
+    "comments": [
+      {
+        "situation": "VAG_DOM_CATCH_WIN",
+        "comment": "What? You thought just because of my cock I couldn't take yours? Let me show you!"
+      },
+      {
+        "situation": "VAG_SUB_CATCH_LOSE",
+        "comment": "Fuck! You're going to have to let me repay you in kind next time!"
+      },
+      {
+        "situation": "VAG_DOM_PITCH_WIN",
+        "comment": "Did you grow this pussy just for me? I'll pound it properly for you!"
+      },
+      {
+        "situation": "ANAL_DOM_CATCH_WIN",
+        "comment": "I can take as well as I can give! You see?"
+      },
+      {
+        "situation": "ANAL_SUB_CATCH_WIN",
+        "comment": "I can take as well as I can give! You see?"
+      },
+      {
+        "situation": "ANAL_DOM_PITCH_WIN",
+        "comment": "Ah fuck! I knew the moment I saw you I was going to make you my bitch!"
+      },
+      {
+        "situation": "ANAL_SUB_PITCH_WIN",
+        "comment": "Hah! I knew you'd love it, but to actually see you impale yourself on me? Priceless!"
+      },
+      {
+        "situation": "ANAL_DOM_PITCH_LOSE",
+        "comment": "Oh, shit! I'm gonna paint your insides white, {other:name}!"
+      },
+      {
+        "situation": "BEHIND_DOM_WIN",
+        "comment": "Do you want to cum, now? I could always take this pretty ass of yours..."
+      },
+      {
+        "situation": "OTHER_OILED",
+        "comment": "All lubed up and ready, I see. Just how I like you!"
+      },
+      {
+        "situation": "OTHER_STUNNED",
+        "comment": "Are you going to let me do what I want now? Good!"
+      },
+      {
+        "situation": "SELF_HORNY",
+        "comment": "{other:name}! Wrap your ass around my cock NOW!"
+      }
+    ]
+  },
+  {
+    "character": "Jewel",
+    "comments": [
+      {
+        "situation": "VAG_DOM_CATCH_WIN",
+        "comment": "Does it hurt, {other:name}? A little warm for you? You know how to end it..."
+      },
+      {
+        "situation": "VAG_DOM_CATCH_LOSE",
+        "comment": "Not yet! Fuck, not yet! Cum for me now!"
+      },
+      {
+        "situation": "VAG_SUB_CATCH_LOSE",
+        "comment": "Oh, {other:name}! You might just deserve this!"
+      },
+      {
+        "situation": "VAG_SUB_CATCH_WIN",
+        "comment": "Even on top you can't handle me! Cum already!"
+      },
+      {
+        "situation": "ANAL_DOM_PITCH_WIN",
+        "comment": "I love fucking a pretty ass! You love it too, right? I know you do. Are you actually going to cum like this now?"
+      },
+      {
+        "situation": "ANAL_SUB_CATCH_WIN",
+        "comment": "I have a boy pegging himself for me! Best. Day. Ever!"
+      },
+      {
+        "situation": "ANAL_DOM_CATCH_LOSE",
+        "comment": "Fuck! I'm actually going to cum!"
+      },
+      {
+        "situation": "OTHER_BOUND",
+        "comment": "Not going anywhere now, are you {other:name}?"
+      },
+      {
+        "situation": "OTHER_STUNNED",
+        "comment": "Aww, did I hurt you? Let me kiss you to make it better!"
+      },
+      {
+        "situation": "PIN_DOM_WIN",
+        "comment": "I've got you, {other:name}! No escape now!"
+      },
+      {
+        "situation": "BEHIND_DOM_WIN",
+        "comment": "Sshh, just cum for me now..."
+      },
+      {
+        "situation": "ANAL_SUB_CATCH_LOSE",
+        "comment": "Fuck! I'm actually going to cum!"
+      }
+    ]
+  },
+  {
+    "character": "Kat",
+    "comments": [
+      {
+        "situation": "VAG_DOM_CATCH_WIN",
+        "comment": "Nya! Cum in me now, {other:name}!"
+      },
+      {
+        "situation": "VAG_DOM_CATCH_LOSE",
+        "comment": "Ooohnya! But I'm on top! I should win!"
+      },
+      {
+        "situation": "VAG_SUB_CATCH_WIN",
+        "comment": "Yes! Fill me! Breed me~!"
+      },
+      {
+        "situation": "VAG_SUB_CATCH_LOSE",
+        "comment": "Nnnya! Oh! Fuck, breed, cum, NYAAA!"
+      },
+      {
+        "situation": "ANAL_SUB_CATCH_LOSE",
+        "comment": "Nya! And they ca-AAH-ll me an animalnya!"
+      },
+      {
+        "situation": "ANAL_DOM_CATCH_LOSE",
+        "comment": "Nya! And they ca-AAH-ll me an animalnya!"
+      },
+      {
+        "situation": "ANAL_SUB_CATCH_WIN",
+        "comment": "Ooh! Are you going to fill up my ass?"
+      },
+      {
+        "situation": "ANAL_DOM_CATCH_WIN",
+        "comment": "Ooh! Are you going to fill up my ass?"
+      },
+      {
+        "situation": "ANAL_SUB_CATCH_WIN",
+        "comment": "Ooh! Are you going to fill up my ass?"
+      },
+      {
+        "situation": "MOUNT_DOM_WIN",
+        "comment": "Nyanyanya! I'm going to win now!"
+      },
+      {
+        "situation": "SELF_BOUND",
+        "comment": "Please let me go! I'll do anyathing!"
+      },
+      {
+        "situation": "MOUNT_SUB_LOSE",
+        "comment": "Ah! Put it in! Put it in!"
+      },
+      {
+        "situation": "PIN_SUB_LOSE",
+        "comment": "Ah! Put it in! Put it in!"
+      },
+      {
+        "situation": "OTHER_HORNY",
+        "comment": "Is my smell getting to you? Why don't you take a better whiff straight from the source?"
+      }
+    ]
+  },
+  {
+    "character": "Mara",
+    "comments": [
+      {
+        "situation": "VAG_DOM_CATCH_WIN",
+        "comment": "Do you like it inside of me, {other:name}? Is she being a good host?"
+      },
+      {
+        "situation": "VAG_DOM_CATCH_LOSE",
+        "comment": "Oooh! Even now... Please, please..."
+      },
+      {
+        "situation": "VAG_SUB_CATCH_WIN",
+        "comment": "Mmm, it doesn't matter if you're on top; you can't beat science!"
+      },
+      {
+        "situation": "VAG_SUB_CATCH_LOSE",
+        "comment": "Oh {other:name}! Oh... Harder!"
+      },
+      {
+        "situation": "ANAL_SUB_CATCH_WIN",
+        "comment": "That's what you get for being such a dirty boy! Cum in my ass already!"
+      },
+      {
+        "situation": "ANAL_SUB_CATCH_LOSE",
+        "comment": "Please {other:name}, finish me in any other way!"
+      },
+      {
+        "situation": "ANAL_DOM_CATCH_WIN",
+        "comment": "So it's true that men enjoy anal more!"
+      },
+      {
+        "situation": "ANAL_DOM_PITCH_WIN",
+        "comment": "Hah! I thought men would be ashamed of this, but you seem to like it! Show me how much!"
+      },
+      {
+        "situation": "BEHIND_DOM_WIN",
+        "comment": "Shall I use hy hands to finish you off now? You know how good I am with them..."
+      },
+      {
+        "situation": "SELF_BOUND",
+        "comment": "Pff, I'll have my hands free in just a second, and then I'll use them on you!"
+      },
+      {
+        "situation": "OTHER_BOUND",
+        "comment": "Do you like being tied up, {other:name}? I am happy to oblige."
+      },
+      {
+        "situation": "SIXTYNINE_DOM_WIN",
+        "comment": "Come on {other:name}! Try a little harder down there!"
+      }
+    ]
+  },
+  {
+    "character": "Reyka",
+    "comments": [
+      {
+        "situation": "VAG_DOM_CATCH_WIN",
+        "comment": "Ah, yes! Give me more!"
+      },
+      {
+        "situation": "VAG_DOM_CATCH_LOSE",
+        "comment": "I can't lose! Not like this!"
+      },
+      {
+        "situation": "VAG_SUB_CATCH_WIN",
+        "comment": "Are you regretting fucking me now? It's time for you to cum now."
+      },
+      {
+        "situation": "VAG_SUB_CATCH_LOSE",
+        "comment": "{other:name}! How did you get this good?!"
+      },
+      {
+        "situation": "ANAL_SUB_CATCH_WIN",
+        "comment": "Thought my ass would be harmless, did you?"
+      },
+      {
+        "situation": "FACESIT_DOM_WIN",
+        "comment": "Ahhh, yes! Lick me more! Drink me!"
+      },
+      {
+        "situation": "FACESIT_DOM_LOSE",
+        "comment": "Shit! That's some tongue you've got there!"
+      },
+      {
+        "situation": "MOUNT_DOM_WIN",
+        "comment": "Mmmm. I wonder if you'll cum right away if I put it in. Shall we find out?"
+      },
+      {
+        "situation": "MOUNT_SUB_WIN",
+        "comment": "Hah! Even on top it's hopeless! Now fuck me and finish it!"
+      },
+      {
+        "situation": "MOUNT_SUB_LOSE",
+        "comment": "Please... At least feed me..."
+      },
+      {
+        "situation": "OTHER_ENTHRALLED",
+        "comment": "You're a good little slave aren't you?"
+      },
+      {
+        "situation": "OTHER_HORNY",
+        "comment": "You really just can't resist me, can you?"
+      }
+    ]
+  },
+  {
+    "character": "Airi",
+    "comments": [
+      {
+        "situation": "VAG_DOM_CATCH_WIN",
+        "comment": "More... MORE..!"
+      },
+      {
+        "situation": "VAG_DOM_CATCH_LOSE",
+        "comment": "Aahh... I can still..."
+      },
+      {
+        "situation": "VAG_SUB_CATCH_WIN",
+        "comment": "Keep... going..."
+      },
+      {
+        "situation": "VAG_SUB_CATCH_LOSE",
+        "comment": "{other:name} please..."
+      },
+      {
+        "situation": "ENGULFED_DOM",
+        "comment": "How... does it feel... inside me..."
+      },
+      {
+        "situation": "SELF_BOUND",
+        "comment": "Useless..."
+      },
+      {
+        "situation": "MOUNT_DOM_WIN",
+        "comment": "Prepare... yourself..."
+      },
+      {
+        "situation": "MOUNT_SUB_WIN",
+        "comment": "Don't... stop... Cum inside..."
+      },
+      {
+        "situation": "MOUNT_SUB_LOSE",
+        "comment": "Aahh... I won't... lose..."
+      },
+      {
+        "situation": "OTHER_PARASITED",
+        "comment": "I'm... taking control..."
+      }
+    ]
+  }
 ]

@@ -1,11 +1,9 @@
 package nightgames.start;
 
+import com.google.gson.*;
 import nightgames.characters.CharacterSex;
 import nightgames.characters.body.*;
-import nightgames.global.JSONUtils;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
+import nightgames.json.JsonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,53 +47,53 @@ class BodyConfiguration {
         hotness = mergeOptionals(primaryConfig.hotness, secondaryConfig.hotness);
     }
 
-    static BodyConfiguration parse(JSONObject obj) {
+    static BodyConfiguration parse(JsonObject obj) {
         BodyConfiguration config = new BodyConfiguration();
-        if (obj.containsKey("archetype"))
-            config.type = Optional.of(Archetype.valueOf(JSONUtils.readString(obj, "archetype").toUpperCase()));
-        if (obj.containsKey("breasts"))
-            config.breasts = Optional.of(BreastsPart.valueOf(JSONUtils.readString(obj, "breasts")
+        if (obj.has("archetype"))
+            config.type = Optional.of(Archetype.valueOf(obj.get("archetype").getAsString().toUpperCase()));
+        if (obj.has("breasts"))
+            config.breasts = Optional.of(BreastsPart.valueOf(obj.get("breasts").getAsString()
                                                                    .toLowerCase()));
-        if (obj.containsKey("ass"))
-            config.ass = Optional.of(JSONUtils.readString(obj, "ass")
+        if (obj.has("ass"))
+            config.ass = Optional.of(obj.get("ass").getAsString()
                                            .equals("basic") ? AssPart.generic : new AnalPussyPart());
 
-        if (obj.containsKey("ears"))
-            config.ears = Optional.of(EarPart.valueOf(JSONUtils.readString(obj, "ears")
+        if (obj.has("ears"))
+            config.ears = Optional.of(EarPart.valueOf(obj.get("ears").getAsString()
                                                             .toLowerCase()));
-        if (obj.containsKey("tail") && !obj.get("tail").equals("none"))
-            config.tail = Optional.of(TailPart.valueOf(JSONUtils.readString(obj, "tail")
+        if (obj.has("tail") && !obj.get("tail").getAsString().equals("none"))
+            config.tail = Optional.of(TailPart.valueOf(obj.get("tail").getAsString()
                                                              .toLowerCase()));
-        if (obj.containsKey("wings") && !obj.get("wings").equals("none"))
-            config.wings = Optional.of(WingsPart.valueOf(JSONUtils.readString(obj, "wings")
+        if (obj.has("wings") && !obj.get("wings").getAsString().equals("none"))
+            config.wings = Optional.of(WingsPart.valueOf(obj.get("wings").getAsString()
                                                                .toLowerCase()));
 
-        if (obj.containsKey("genitals"))
-            config.genitals = Optional.of(GenitalConfiguration.parse((JSONObject) obj.get("genitals")));
+        if (obj.has("genitals"))
+            config.genitals = Optional.of(GenitalConfiguration.parse(obj.getAsJsonObject("genitals")));
         
         List<TentaclePart> list = new ArrayList<>();
-        if (obj.containsKey("tentacles")) {
-            JSONArray arr = (JSONArray) obj.get("tentacles");
+        if (obj.has("tentacles")) {
+            JsonArray arr = obj.getAsJsonArray("tentacles");
             for (Object o : arr) {
-                list.add(parseTentacle((JSONObject) o));
+                list.add(parseTentacle((JsonObject) o));
             }
         }
         config.tentacles = Optional.of(list);
 
-        if (obj.containsKey("hotness")) {
-            config.hotness = Optional.of((double) JSONUtils.readFloat(obj, "hotness"));
+        if (obj.has("hotness")) {
+            config.hotness = Optional.of((double) obj.get("hotness").getAsFloat());
         }
 
         return config;
     }
 
-    private static TentaclePart parseTentacle(JSONObject o) {
-        String desc = JSONUtils.readString(o, "desc");
-        String fluids = JSONUtils.readString(o, "fluids");
-        String attachpoint = JSONUtils.readString(o, "attachpoint");
-        double hotness = JSONUtils.readFloat(o, "hotness");
-        double pleasure = JSONUtils.readFloat(o, "pleasure");
-        double sensitivity = JSONUtils.readFloat(o, "sensitivity");
+    private static TentaclePart parseTentacle(JsonObject o) {
+        String desc = o.get("desc").getAsString();
+        String fluids = o.get("fluids").getAsString();
+        String attachpoint = o.get("attachpoint").getAsString();
+        double hotness = o.get("hotness").getAsFloat();
+        double pleasure = o.get("pleasure").getAsFloat();
+        double sensitivity = o.get("sensitivity").getAsFloat();
         return new TentaclePart(desc, attachpoint, fluids, hotness, pleasure, sensitivity);
     }
 
@@ -208,22 +206,21 @@ class BodyConfiguration {
             pussy = Optional.empty();
         }
 
-        public static GenitalConfiguration parse(JSONObject o) {
+        public static GenitalConfiguration parse(JsonObject object) {
             GenitalConfiguration config = new GenitalConfiguration();
-            if (o.containsKey("cock")) {
+
+            if (object.has("cock")) {
                 CockConfiguration cock = new CockConfiguration();
-                JSONObject co = (JSONObject) o.get("cock");
-                if (co.containsKey("length")) {
-                    cock.length = BasicCockPart.valueOf(JSONUtils.readString(co, "length").toLowerCase());
-                }
-                if (co.containsKey("type") && !co.get("type").equals("basic")) {
-                    cock.type = Optional.of(CockMod.valueOf(JSONUtils.readString(co, "type").toLowerCase()));
-                }
+                JsonObject cockJson = object.getAsJsonObject("cock");
+                JsonUtils.getOptional(cockJson, "length").map(JsonElement::getAsString)
+                                .ifPresent(length -> cock.length = BasicCockPart.valueOf(length.toLowerCase()));
+                cock.type = JsonUtils.getOptional(cockJson, "type").map(JsonElement::getAsString)
+                                .map(String::toLowerCase).filter(type -> !type.equals("basic")).map(CockMod::valueOf);
                 config.cock = Optional.of(cock);
             }
-            if (o.containsKey("pussy")) {
-                config.pussy = Optional.of(PussyPart.valueOf(JSONUtils.readString(o, "pussy").toLowerCase()));
-            }
+
+            config.pussy = JsonUtils.getOptional(object, "pussy").map(JsonElement::getAsString).map(PussyPart::valueOf);
+
             return config;
         }
 
@@ -262,8 +259,8 @@ class BodyConfiguration {
         ANGEL(CockMod.blessed, PussyPart.divine),
         WITCH(CockMod.runic, PussyPart.arcane),
         SLIME(CockMod.slimy, PussyPart.gooey);
-        private CockMod cockMod;
-        private PussyPart pussy;
+        private final CockMod cockMod;
+        private final PussyPart pussy;
 
         Archetype(CockMod cockMod, PussyPart pussy) {
             this.cockMod = cockMod;
@@ -302,7 +299,7 @@ class BodyConfiguration {
         String test = "{\"archetype\":\"regular\",\"genitals\":{\"cock\":{\"type\":\"bionic\",\"length\":\"huge"
                         + "\"}},\"breasts\":\"c\",\"ass\":\"AnalPussy\",\"ears\":\"pointed\",\"tail\":\"cat\",\"wings"
                         + "\":\"demonic\",\"tentacles\":[],\"hotness\":1.0}";
-        BodyConfiguration config = parse((JSONObject) JSONValue.parse(test));
+        BodyConfiguration config = parse(new JsonParser().parse(test).getAsJsonObject());
         Body body = new Body();
         config.apply(body);
         body.finishBody(CharacterSex.male);

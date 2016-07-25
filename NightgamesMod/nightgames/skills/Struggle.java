@@ -3,7 +3,7 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
-import nightgames.characters.body.CockMod;import nightgames.characters.body.CockPart;
+import nightgames.characters.body.CockMod;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -140,7 +140,7 @@ public class Struggle extends Skill {
                                         getSelf(), target));
                         int m = 15;
                         getSelf().body.pleasure(target, target.body.getRandom("pussy"),
-                                        getSelf().body.getRandom("cock"), m, c);
+                                        getSelf().body.getRandom("cock"), m, c, this);
                         getSelf().removeStatus(Stsflag.cockbound);
                     }
                     if (knotted) {
@@ -176,7 +176,7 @@ public class Struggle extends Skill {
                                                         + " up and down {self:possessive} cock and leaves {self:direct-object} gasping with pleasure.",
                                         getSelf(), target));
                         getSelf().body.pleasure(target, target.body.getRandom("pussy"),
-                                        getSelf().body.getRandom("cock"), 8, c);
+                                        getSelf().body.getRandom("cock"), 8, c, this);
                     } else if (getSelf().human()) {
                         if (c.getStance().inserted(getSelf())) {
                             c.write(getSelf(), "You try to tip " + target.name()

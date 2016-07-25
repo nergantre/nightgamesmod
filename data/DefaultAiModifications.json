@@ -114,7 +114,7 @@
 				"type" : "opponent-status",
 				"value" : "bodyfetish",
 				"weight" : 1.0
-			},
+          }
 		]
 	},{
 		"personality" : "Cassie",
@@ -227,7 +227,7 @@
 				"type" : "opponent-status",
 				"value" : "fluidaddiction",
 				"weight" : 2.0
-			},
+          }
 		]
 	},{
 		"personality" : "Jewel",
@@ -944,7 +944,7 @@
 				"type" : "opponent-status",
 				"value" : "frenzied",
 				"weight" : 2.0
-			},
+          }
 		]
 	}, {
 		"personality" : "Maya",

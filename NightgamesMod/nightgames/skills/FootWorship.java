@@ -9,7 +9,6 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.Kneeling;
 import nightgames.stance.Stance;
-import nightgames.stance.StandingOver;
 import nightgames.status.BodyFetish;
 
 public class FootWorship extends Skill {
@@ -50,9 +49,9 @@ public class FootWorship extends Skill {
             c.write(getSelf(), Global.format(receive(c, 0, Result.normal, target), getSelf(), target));
         }
         if (m > 0) {
-            target.body.pleasure(getSelf(), mouth, feet, m, c);
+            target.body.pleasure(getSelf(), mouth, feet, m, c, this);
             if (mouth.isErogenous()) {
-                getSelf().body.pleasure(getSelf(), feet, mouth, m, c);
+                getSelf().body.pleasure(getSelf(), feet, mouth, m, c, this);
             }
         }
         if (n > 0) {

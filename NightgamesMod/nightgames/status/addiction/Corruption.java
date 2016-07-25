@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -19,7 +19,6 @@ import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.global.JSONUtils;
 import nightgames.status.Abuff;
 import nightgames.status.DarkChaos;
 import nightgames.status.Status;
@@ -283,10 +282,9 @@ public class Corruption extends Addiction {
         return new Corruption(newOther, magnitude);
     }
 
-    @Override
-    public Status loadFromJSON(JSONObject obj) {
-        return new Corruption(Global.getCharacterByType(JSONUtils.readString(obj, "cause")),
-                        (float) JSONUtils.readInteger(obj, "magnitude"));
+    @Override public Status loadFromJson(JsonObject obj) {
+        return new Corruption(Global.getCharacterByType(obj.get("cause").getAsString()),
+                        (float) obj.get("magnitude").getAsInt());
     }
 
     @Override

@@ -2,6 +2,7 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Emotion;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -46,7 +47,8 @@ public class ShamefulDisplay extends Skill {
             c.write(receive(c, 0, Result.normal, target));
         }
         getSelf().add(c, new Shamed(getSelf()));
-        target.add(c, new Horny(target, getSelf().get(Attribute.Submissive) / 4, 2, " (Dominant Thrill)"));
+        int divisor = target.getMood() == Emotion.dominant ? 3 : 4;
+        target.add(c, new Horny(target, getSelf().get(Attribute.Submissive) / divisor, 2, " (Dominant Thrill)"));
         return true;
     }
 

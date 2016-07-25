@@ -1,7 +1,7 @@
 package nightgames.modifier.standard;
 
 import nightgames.modifier.BaseModifier;
-import nightgames.modifier.StatusModifier;
+import nightgames.modifier.status.StatusModifier;
 import nightgames.status.Hypersensitive;
 
 public class VulnerableModifier extends BaseModifier {

@@ -1,0 +1,26 @@
+{
+  "allcomments": [
+    {
+      "character": "Success",
+      "comments": [
+        {
+          "situation": "SELF_HORNY",
+          "comment": "I need you! Now! Get over here!"
+        },
+        {
+          "situation": "OTHER_HORNY",
+          "comment": "You're a little hot for me aren't you? I can help with that."
+        }
+      ]
+    },
+    {
+      "character": "Failure",
+      "comments": [
+        {
+          "situation": "FAKE_SITUATION",
+          "comment": "Ah, ah ah! Please..."
+        }
+      ]
+    }
+  ]
+}

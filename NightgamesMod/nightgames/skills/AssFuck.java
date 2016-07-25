@@ -99,9 +99,9 @@ public class AssFuck extends Fuck {
         if (getSelf().has(Trait.insertion)) {
             otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
         }
-        target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), otherm, c);
+        target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), otherm, c, this);
         if (!getSelf().has(Trait.strapped)) {
-            getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), m / 2, c);
+            getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), m / 2, c, this);
         }
         getSelf().emote(Emotion.dominant, 100);
         target.emote(Emotion.desperate, 50);
@@ -204,5 +204,10 @@ public class AssFuck extends Fuck {
     @Override
     public boolean makesContact() {
         return true;
+    }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FINISHER;
     }
 }

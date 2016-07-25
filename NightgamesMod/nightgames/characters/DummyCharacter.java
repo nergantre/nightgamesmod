@@ -120,4 +120,8 @@ public class DummyCharacter extends Character {
     public String getPortrait(Combat c) {
         return "";
     }
+
+    @Override public Growth getGrowth() {
+        return new Growth();
+    }
 }

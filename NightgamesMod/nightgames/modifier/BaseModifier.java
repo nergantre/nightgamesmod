@@ -12,6 +12,7 @@ import nightgames.modifier.action.ActionModifier;
 import nightgames.modifier.clothing.ClothingModifier;
 import nightgames.modifier.item.ItemModifier;
 import nightgames.modifier.skill.SkillModifier;
+import nightgames.modifier.status.StatusModifier;
 
 public abstract class BaseModifier implements Modifier {
 
@@ -39,8 +40,9 @@ public abstract class BaseModifier implements Modifier {
     }
 
     protected BaseModifier() {
-        this(ClothingModifier.NULL_MODIFIER, ItemModifier.NULL_MODIFIER, StatusModifier.NULL_MODIFIER,
-                        SkillModifier.NULL_MODIFIER, ActionModifier.NULL_MODIFIER, EMPTY_CONSUMER);
+        this(ClothingModifier.combiner.nullModifier(), ItemModifier.combiner.nullModifier(),
+                        StatusModifier.combiner.nullModifier(), SkillModifier.combiner.nullModifier(),
+                        ActionModifier.combiner.nullModifier(), EMPTY_CONSUMER);
     }
 
     @Override
@@ -53,8 +55,7 @@ public abstract class BaseModifier implements Modifier {
     @Override
     public void handleItems(Character c) {
         moddedItems.putIfAbsent(c, new HashMap<>());
-        Map<Item, Integer> inventory = new HashMap<>(c.getInventory());
-        inventory.forEach((item, count) -> {
+        c.getInventory().forEach((item, count) -> {
             if (items.itemIsBanned(c, item)) {
                 c.getInventory().remove(item);
                 moddedItems.get(c).putIfAbsent(item, 0);

@@ -205,4 +205,13 @@ public abstract class Skill {
     protected void printBlinded(Combat c) {
         c.write("<i>You're sure something is happening, but you can't figure out what it is.</i>");
     }
+    
+    public Stage getStage() {
+        return Stage.REGULAR;
+    }
+    
+    public final double multiplierForStage(Character target) {
+        return getStage().multiplierFor(target);
+    }
+    
 }

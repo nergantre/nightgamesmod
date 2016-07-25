@@ -18,11 +18,14 @@ public class ResourceLoader {
         if (dir.exists() && dir.isDirectory()) {
             List<InputStream> streams = new ArrayList<InputStream>();
             try {
-                for (File f : dir.listFiles()) {
-                    if (!f.isDirectory()) {
-                        streams.add(new FileInputStream(f));
-                        if (Global.isDebugOn(DebugFlags.DEBUG_LOADING)) {
-                            System.out.println("Using " + f.getAbsolutePath());
+                File[] files = dir.listFiles();
+                if (files != null) {
+                    for (File f : files) {
+                        if (!f.isDirectory()) {
+                            streams.add(new FileInputStream(f));
+                            if (Global.isDebugOn(DebugFlags.DEBUG_LOADING)) {
+                                System.out.println("Using " + f.getAbsolutePath());
+                            }
                         }
                     }
                 }

@@ -51,7 +51,7 @@ public class Smother extends Skill {
         if (target.has(Trait.silvertongue)) {
             m = m * 3 / 2;
         }
-        getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("ass"), m, c);
+        getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("ass"), m, c, this);
         double n = 14 + Global.random(4);
         if (c.getStance().front(getSelf())) {
             // opponent can see self

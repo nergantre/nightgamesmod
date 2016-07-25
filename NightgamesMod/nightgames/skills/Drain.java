@@ -275,4 +275,9 @@ public class Drain extends Skill {
     public boolean makesContact() {
         return true;
     }
+    
+    @Override
+    public Stage getStage() {
+        return Stage.FINISHER;
+    }
 }

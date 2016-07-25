@@ -1,7 +1,6 @@
 package nightgames.characters.custom;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Collections;
@@ -12,97 +11,58 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
+import com.google.gson.*;
 
 import nightgames.Resources.ResourceLoader;
 import nightgames.characters.Character;
-import nightgames.characters.custom.requirement.AnalRequirement;
-import nightgames.characters.custom.requirement.CustomRequirement;
-import nightgames.characters.custom.requirement.DomRequirement;
-import nightgames.characters.custom.requirement.InsertedRequirement;
-import nightgames.characters.custom.requirement.ReverseRequirement;
-import nightgames.characters.custom.requirement.StanceRequirement;
-import nightgames.characters.custom.requirement.StatusRequirement;
-import nightgames.characters.custom.requirement.SubRequirement;
-import nightgames.characters.custom.requirement.WinningRequirement;
+import nightgames.json.JsonUtils;
+import nightgames.requirements.Requirement;
 import nightgames.combat.Combat;
-import nightgames.global.JSONUtils;
+
+import static nightgames.requirements.RequirementShortcuts.*;
 
 @SuppressWarnings("unchecked")
 public enum CommentSituation {
     // Fucking
-    VAG_DOM_PITCH_WIN(2, new InsertedRequirement(true), rev(new AnalRequirement(false)), new DomRequirement(),
-                    new WinningRequirement()),
-    VAG_DOM_PITCH_LOSE(2, new InsertedRequirement(true), rev(new AnalRequirement(false)), new DomRequirement(),
-                    rev(new WinningRequirement())),
-    VAG_DOM_CATCH_WIN(2, rev(new InsertedRequirement(true)), new AnalRequirement(false), new DomRequirement(),
-                    new WinningRequirement()),
-    VAG_DOM_CATCH_LOSE(2, rev(new InsertedRequirement(true)), new AnalRequirement(false), new DomRequirement(),
-                    rev(new WinningRequirement())),
-    VAG_SUB_PITCH_WIN(2, new InsertedRequirement(true), rev(new AnalRequirement(false)), new SubRequirement(),
-                    new WinningRequirement()),
-    VAG_SUB_PITCH_LOSE(2, new InsertedRequirement(true), rev(new AnalRequirement(false)), new SubRequirement(),
-                    rev(new WinningRequirement())),
-    VAG_SUB_CATCH_WIN(2, rev(new InsertedRequirement(true)), new AnalRequirement(false), new SubRequirement(),
-                    new WinningRequirement()),
-    VAG_SUB_CATCH_LOSE(2, rev(new InsertedRequirement(true)), new AnalRequirement(false), new SubRequirement(),
-                    rev(new WinningRequirement())),
-    ANAL_DOM_PITCH_WIN(2, new InsertedRequirement(true), rev(new AnalRequirement(true)), new DomRequirement(),
-                    new WinningRequirement()),
-    ANAL_DOM_PITCH_LOSE(2, new InsertedRequirement(true), rev(new AnalRequirement(true)), new DomRequirement(),
-                    rev(new WinningRequirement())),
-    ANAL_DOM_CATCH_WIN(2, rev(new InsertedRequirement(true)), new AnalRequirement(true), new DomRequirement(),
-                    new WinningRequirement()),
-    ANAL_DOM_CATCH_LOSE(2, rev(new InsertedRequirement(true)), new AnalRequirement(true), new DomRequirement(),
-                    rev(new WinningRequirement())),
-    ANAL_SUB_PITCH_WIN(2, new InsertedRequirement(true), rev(new AnalRequirement(true)), new SubRequirement(),
-                    new WinningRequirement()),
-    ANAL_SUB_PITCH_LOSE(2, new InsertedRequirement(true), rev(new AnalRequirement(true)), new SubRequirement(),
-                    rev(new WinningRequirement())),
-    ANAL_SUB_CATCH_WIN(2, rev(new InsertedRequirement(true)), new AnalRequirement(true), new SubRequirement(),
-                    new WinningRequirement()),
-    ANAL_SUB_CATCH_LOSE(2, rev(new InsertedRequirement(true)), new AnalRequirement(true), new SubRequirement(),
-                    rev(new WinningRequirement())),
+    VAG_DOM_PITCH_WIN(2, inserted(), rev(anal()), dom(), winning()), VAG_DOM_PITCH_LOSE(2, inserted(), rev(not(anal())),
+                    dom(), rev(winning())), VAG_DOM_CATCH_WIN(2, rev(inserted()), not(anal()), dom(),
+                    winning()), VAG_DOM_CATCH_LOSE(2, rev(inserted()), not(anal()), dom(),
+                    rev(winning())), VAG_SUB_PITCH_WIN(2, inserted(), rev(not(anal())), sub(),
+                    winning()), VAG_SUB_PITCH_LOSE(2, inserted(), rev(not(anal())), sub(),
+                    rev(winning())), VAG_SUB_CATCH_WIN(2, rev(inserted()), not(anal()), sub(),
+                    winning()), VAG_SUB_CATCH_LOSE(2, rev(inserted()), not(anal()), sub(),
+                    rev(winning())), ANAL_DOM_PITCH_WIN(2, inserted(), rev(anal()), dom(),
+                    winning()), ANAL_DOM_PITCH_LOSE(2, inserted(), rev(anal()), dom(),
+                    rev(winning())), ANAL_DOM_CATCH_WIN(2, rev(inserted()), anal(), dom(),
+                    winning()), ANAL_DOM_CATCH_LOSE(2, rev(inserted()), anal(), dom(),
+                    rev(winning())), ANAL_SUB_PITCH_WIN(2, inserted(), rev(anal()), sub(),
+                    winning()), ANAL_SUB_PITCH_LOSE(2, inserted(), rev(anal()), sub(),
+                    rev(winning())), ANAL_SUB_CATCH_WIN(2, rev(inserted()), anal(), sub(),
+                    winning()), ANAL_SUB_CATCH_LOSE(2, rev(inserted()), anal(), sub(), rev(winning())),
 
     // Stances
-    BEHIND_DOM_WIN(1, new StanceRequirement("behind"), new DomRequirement(), new WinningRequirement()),
-    BEHIND_DOM_LOSE(1, new StanceRequirement("behind"), new DomRequirement(), rev(new WinningRequirement())),
-    BEHIND_SUB_WIN(1, new StanceRequirement("behind"), new SubRequirement(), new WinningRequirement()),
-    BEHIND_SUB_LOSE(1, new StanceRequirement("behind"), new SubRequirement(), rev(new WinningRequirement())),
-    SIXTYNINE_DOM_WIN(1, new StanceRequirement("sixnine"), new DomRequirement(), new WinningRequirement()),
-    SIXTYNINE_DOM_LOSE(1, new StanceRequirement("sixnine"), new DomRequirement(), rev(new WinningRequirement())),
-    SIXTYNINE_SUB_WIN(1, new StanceRequirement("sixnine"), new SubRequirement(), new WinningRequirement()),
-    SIXTYNINE_SUB_LOSE(1, new StanceRequirement("sixnine"), new SubRequirement(), rev(new WinningRequirement())),
-    MOUNT_DOM_WIN(1, new StanceRequirement("mount"), new DomRequirement(), new WinningRequirement()),
-    MOUNT_DOM_LOSE(1, new StanceRequirement("mount"), new DomRequirement(), rev(new WinningRequirement())),
-    MOUNT_SUB_WIN(1, new StanceRequirement("mount"), new SubRequirement(), new WinningRequirement()),
-    MOUNT_SUB_LOSE(1, new StanceRequirement("mount"), new SubRequirement(), rev(new WinningRequirement())),
-    NURSING_DOM_WIN(1, new StanceRequirement("nursing"), new DomRequirement(), new WinningRequirement()),
-    NURSING_DOM_LOSE(1, new StanceRequirement("nursing"), new DomRequirement(), rev(new WinningRequirement())),
-    FACESIT_DOM_WIN(1, new StanceRequirement("facesitting"), new DomRequirement(), new WinningRequirement()),
-    FACESIT_DOM_LOSE(1, new StanceRequirement("facesitting"), new DomRequirement(), rev(new WinningRequirement())),
-    PIN_DOM_WIN(1, new StanceRequirement("pin"), new DomRequirement(), new WinningRequirement()),
-    PIN_DOM_LOSE(1, new StanceRequirement("pin"), new DomRequirement(), rev(new WinningRequirement())),
-    PIN_SUB_WIN(1, new StanceRequirement("pin"), new SubRequirement(), new WinningRequirement()),
-    PIN_SUB_LOSE(1, new StanceRequirement("pin"), new SubRequirement(), rev(new WinningRequirement())),
-    ENGULFED_DOM(1, new StanceRequirement("engulfed"), new DomRequirement()),
+    BEHIND_DOM_WIN(1, position("behind"), dom(), winning()), BEHIND_DOM_LOSE(1, position("behind"), dom(),
+                    rev(winning())), BEHIND_SUB_WIN(1, position("behind"), sub(), winning()), BEHIND_SUB_LOSE(1,
+                    position("behind"), sub(), rev(winning())), SIXTYNINE_DOM_WIN(1, position("sixnine"), dom(),
+                    winning()), SIXTYNINE_DOM_LOSE(1, position("sixnine"), dom(), rev(winning())), SIXTYNINE_SUB_WIN(1,
+                    position("sixnine"), sub(), winning()), SIXTYNINE_SUB_LOSE(1, position("sixnine"), sub(),
+                    rev(winning())), MOUNT_DOM_WIN(1, position("mount"), dom(), winning()), MOUNT_DOM_LOSE(1,
+                    position("mount"), dom(), rev(winning())), MOUNT_SUB_WIN(1, position("mount"), sub(),
+                    winning()), MOUNT_SUB_LOSE(1, position("mount"), sub(), rev(winning())), NURSING_DOM_WIN(1,
+                    position("nursing"), dom(), winning()), NURSING_DOM_LOSE(1, position("nursing"), dom(),
+                    rev(winning())), FACESIT_DOM_WIN(1, position("facesitting"), dom(), winning()), FACESIT_DOM_LOSE(1,
+                    position("facesitting"), dom(), rev(winning())), PIN_DOM_WIN(1, position("pin"), dom(),
+                    winning()), PIN_DOM_LOSE(1, position("pin"), dom(), rev(winning())), PIN_SUB_WIN(1, position("pin"),
+                    sub(), winning()), PIN_SUB_LOSE(1, position("pin"), sub(), rev(winning())), ENGULFED_DOM(1,
+                    position("engulfed"), dom()),
 
     // Statuses
-    SELF_BOUND(0, new StatusRequirement("bound")),
-    OTHER_BOUND(0, rev(new StatusRequirement("bound"))),
-    OTHER_STUNNED(0, rev(new StatusRequirement("stunned"))),
-    OTHER_TRANCE(0, rev(new StatusRequirement("trance"))),
-    OTHER_CHARMED(0, rev(new StatusRequirement("charmed"))),
-    OTHER_ENTHRALLED(0, rev(new StatusRequirement("enthralled"))),
-    SELF_HORNY(0, new StatusRequirement("horny")),
-    OTHER_HORNY(0, rev(new StatusRequirement("horny"))),
-    SELF_OILED(0, new StatusRequirement("oiled")),
-    OTHER_OILED(0, rev(new StatusRequirement("oiled"))),
-    SELF_COCKBOUND(0, new StatusRequirement("cockbound")),
-    OTHER_COCKBOUND(0, rev(new StatusRequirement("cockbound"))),
-    OTHER_PARASITED(0, rev(new StatusRequirement("parasited"))),
+    SELF_BOUND(0, status("bound")), OTHER_BOUND(0, rev(status("bound"))), OTHER_STUNNED(0,
+                    rev(status("stunned"))), OTHER_TRANCE(0, rev(status("trance"))), OTHER_CHARMED(0,
+                    rev(status("charmed"))), OTHER_ENTHRALLED(0, rev(status("enthralled"))), SELF_HORNY(0,
+                    status("horny")), OTHER_HORNY(0, rev(status("horny"))), SELF_OILED(0, status("oiled")), OTHER_OILED(
+                    0, rev(status("oiled"))), SELF_COCKBOUND(0, status("cockbound")), OTHER_COCKBOUND(0,
+                    rev(status("cockbound"))), OTHER_PARASITED(0, rev(status("parasited"))),
 
     NO_COMMENT(-1);
 
@@ -110,20 +70,34 @@ public enum CommentSituation {
 
     static {
         DEFAULT_COMMENTS = new HashMap<>();
-        InputStream is = ResourceLoader.getFileResourceAsStream("data/DefaultComments.json");
-        JSONArray root = (JSONArray) JSONValue.parse(new InputStreamReader(is));
-        root.forEach(o -> loadDefaultComments((JSONObject) o));
-        try {
-            is.close();
-        } catch (IOException e) {
+        try (InputStreamReader reader = new InputStreamReader(
+                        ResourceLoader.getFileResourceAsStream("data/DefaultComments.json"))) {
+            JsonArray root = JsonUtils.rootJson(reader).getAsJsonArray();
+            root.forEach(element -> loadDefaultComment(element.getAsJsonObject()));
+        } catch (JsonParseException | IOException e) {
             e.printStackTrace();
         }
     }
 
-    private final int priority;
-    private final Set<CustomRequirement> reqs;
+    private static void loadDefaultComment(JsonObject object) {
+        String type = object.get("character").getAsString();
+        Map<CommentSituation, String> comments = new HashMap<>();
+        JsonArray arr = object.getAsJsonArray("comments");
+        arr.forEach(element -> parseComment(element.getAsJsonObject(), comments));
+        DEFAULT_COMMENTS.put(type, comments);
+    }
 
-    private CommentSituation(int priority, CustomRequirement... reqs) {
+    static void parseComment(JsonObject obj, Map<CommentSituation, String> target) {
+        String type = obj.get("situation").getAsString();
+        CommentSituation situation = valueOf(type);
+        String comm = obj.get("comment").getAsString();
+        target.put(situation, comm);
+    }
+
+    private final int priority;
+    private final Set<Requirement> reqs;
+
+    CommentSituation(int priority, Requirement... reqs) {
         this.priority = priority;
         this.reqs = Collections.unmodifiableSet(new HashSet<>((Arrays.asList(reqs))));
     }
@@ -146,29 +120,10 @@ public enum CommentSituation {
 
     public static CommentSituation getBestComment(Combat c, Character self, Character other) {
         return getApplicableComments(c, self, other).stream()
-                        .max(Comparator.comparingInt(CommentSituation::getPriority)).get();
-    }
-
-    private static CustomRequirement rev(CustomRequirement req) {
-        return new ReverseRequirement(Arrays.asList(req));
+                        .max(Comparator.comparingInt(CommentSituation::getPriority)).orElse(NO_COMMENT);
     }
 
     public static Map<CommentSituation, String> getDefaultComments(String npcType) {
         return DEFAULT_COMMENTS.getOrDefault(npcType, Collections.emptyMap());
-    }
-
-    private static void loadDefaultComments(JSONObject obj) {
-        String type = JSONUtils.readString(obj, "character");
-        Map<CommentSituation, String> comments = new HashMap<>();
-        JSONArray arr = (JSONArray) obj.get("comments");
-        arr.forEach(o -> parseComment((JSONObject) o, comments));
-        DEFAULT_COMMENTS.put(type, comments);
-    }
-
-    static void parseComment(JSONObject obj, Map<CommentSituation, String> target) {
-        String type = JSONUtils.readString(obj, "situation");
-        CommentSituation sit = valueOf(type);
-        String comm = JSONUtils.readString(obj, "comment");
-        target.put(sit, comm);
     }
 }

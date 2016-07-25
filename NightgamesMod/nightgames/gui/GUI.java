@@ -28,27 +28,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JSlider;
-import javax.swing.JTextPane;
-import javax.swing.JToggleButton;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.text.BadLocationException;
@@ -80,13 +60,14 @@ import nightgames.modifier.standard.NoModifier;
 import nightgames.skills.Skill;
 import nightgames.trap.Trap;
 
+import static nightgames.requirements.RequirementShortcuts.item;
+
 public class GUI extends JFrame implements Observer {
     /**
      * 
      */
     private static final long serialVersionUID = 451431916952047183L;
     public Combat combat;
-    private Player player;
     private ArrayList<ArrayList<SkillButton>> skills;
     JPanel commandPanel;
     private JTextPane textPane;
@@ -105,7 +86,7 @@ public class GUI extends JFrame implements Observer {
     private JLabel timeLabel;
     private JLabel cashLabel;
     private Panel panel0;
-    private CreationGUI creation;
+    protected CreationGUI creation;
     private JScrollPane textScroll;
     private JPanel gamePanel;
     private JToggleButton stsbtn;
@@ -139,6 +120,7 @@ public class GUI extends JFrame implements Observer {
     public int fontsize;
     private JMenuItem mntmQuitMatch;
     private boolean skippedFeat;
+    public NgsChooser saveFileChooser;
 
     private final static String USE_PORTRAIT = "PORTRAIT";
     private final static String USE_MAP = "MAP";
@@ -153,7 +135,7 @@ public class GUI extends JFrame implements Observer {
         setTitle("NightGames Mod");
 
         // closing operation
-        setDefaultCloseOperation(3);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         // resolution resolver
 
@@ -170,10 +152,7 @@ public class GUI extends JFrame implements Observer {
         int x1 = x / 2 - width / 2;
         int y1 = y / 2 - height / 2;
 
-        int centerX = x1;
-        int centerY = y1;
-
-        this.setLocation(centerX, centerY);
+        this.setLocation(x1, y1);
 
         // menu bar
 
@@ -212,7 +191,7 @@ public class GUI extends JFrame implements Observer {
         mntmLoad.setBackground(GUIColors.bgGrey);
         mntmLoad.setHorizontalAlignment(SwingConstants.CENTER);
 
-        mntmLoad.addActionListener(arg0 -> Global.load());
+        mntmLoad.addActionListener(arg0 -> Global.loadWithDialog());
 
         menuBar.add(mntmLoad);
 
@@ -586,7 +565,7 @@ public class GUI extends JFrame implements Observer {
         commandPanel.setBorder(new CompoundBorder());
         gamePanel.add(commandPanel);
 
-        skills = new ArrayList<ArrayList<SkillButton>>();
+        skills = new ArrayList<>();
         createCharacter();
         setVisible(true);
         pack();
@@ -610,7 +589,7 @@ public class GUI extends JFrame implements Observer {
                     }
                 }
                 char val = e.getKeyChar();
-                int index = Integer.valueOf(val) - Integer.valueOf('0');
+                int index = (int) val - (int) '0';
                 if (index >= 0 && index <= 9) {
                     if (index == 0) {
                         index = 10;
@@ -634,6 +613,13 @@ public class GUI extends JFrame implements Observer {
             @Override
             public void keyPressed(KeyEvent e) {}
         });
+
+        // Use this for making save dialogs
+        saveFileChooser = new NgsChooser(this);
+    }
+
+    public Optional<File> askForSaveFile() {
+        return saveFileChooser.askForSaveFile();
     }
 
     // combat GUI
@@ -659,8 +645,8 @@ public class GUI extends JFrame implements Observer {
         BufferedImage pic = null;
         try {
             pic = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" + path));
-        } catch (IOException localIOException9) {
-        } catch (IllegalArgumentException e) {
+        } catch (IOException | IllegalArgumentException e) {
+            e.printStackTrace();
         }
         clearImage();
         if (pic != null) {
@@ -686,9 +672,8 @@ public class GUI extends JFrame implements Observer {
             BufferedImage face = null;
             try {
                 face = ImageIO.read(ResourceLoader.getFileResourceAsStream("assets/" + imagepath));
-            } catch (IOException localIOException9) {
-            } catch (IllegalArgumentException badArg) {
-
+            } catch (IOException | IllegalArgumentException e) {
+                e.printStackTrace();
             }
             if (face != null) {
                 if (Global.isDebugOn(DebugFlags.DEBUG_IMAGES)) {
@@ -794,7 +779,6 @@ public class GUI extends JFrame implements Observer {
         getContentPane().remove(creation);
         getContentPane().add(gamePanel);
         getContentPane().validate();
-        this.player = player;
         player.gui = this;
         player.addObserver(this);
         JPanel meter = new JPanel();
@@ -804,7 +788,7 @@ public class GUI extends JFrame implements Observer {
 
         stamina = new JLabel("Stamina: " + getLabelString(player.getStamina()));
         stamina.setFont(new Font("Sylfaen", 1, 15));
-        stamina.setHorizontalAlignment(0);
+        stamina.setHorizontalAlignment(SwingConstants.CENTER);
         stamina.setForeground(new Color(164, 8, 2));
         stamina.setToolTipText(
                         "Stamina represents your endurance and ability to keep fighting. If it drops to zero, you'll be temporarily stunned.");
@@ -812,7 +796,7 @@ public class GUI extends JFrame implements Observer {
 
         arousal = new JLabel("Arousal: " + getLabelString(player.getArousal()));
         arousal.setFont(new Font("Sylfaen", 1, 15));
-        arousal.setHorizontalAlignment(0);
+        arousal.setHorizontalAlignment(SwingConstants.CENTER);
         arousal.setForeground(new Color(254, 1, 107));
         arousal.setToolTipText(
                         "Arousal is raised when your opponent pleasures or seduces you. If it hits your max, you'll orgasm and lose the fight.");
@@ -820,7 +804,7 @@ public class GUI extends JFrame implements Observer {
 
         mojo = new JLabel("Mojo: " + getLabelString(player.getMojo()));
         mojo.setFont(new Font("Sylfaen", 1, 15));
-        mojo.setHorizontalAlignment(0);
+        mojo.setHorizontalAlignment(SwingConstants.CENTER);
         mojo.setForeground(new Color(51, 153, 255));
         mojo.setToolTipText(
                         "Mojo is the abstract representation of your momentum and style. It increases with normal techniques and is used to power special moves");
@@ -828,7 +812,7 @@ public class GUI extends JFrame implements Observer {
 
         willpower = new JLabel("Willpower: " + getLabelString(player.getWillpower()));
         willpower.setFont(new Font("Sylfaen", 1, 15));
-        willpower.setHorizontalAlignment(0);
+        willpower.setHorizontalAlignment(SwingConstants.CENTER);
         willpower.setForeground(new Color(68, 170, 85));
         willpower.setToolTipText("Willpower is a representation of your will to fight. When this reaches 0, you lose.");
         meter.add(willpower);
@@ -871,7 +855,7 @@ public class GUI extends JFrame implements Observer {
         bio.setBackground(GUIColors.bgDark);
 
         JLabel name = new JLabel(player.name());
-        name.setHorizontalAlignment(2);
+        name.setHorizontalAlignment(SwingConstants.LEFT);
         name.setFont(new Font("Sylfaen", 1, 15));
         name.setForeground(GUIColors.textColorLight);
         bio.add(name);
@@ -953,11 +937,12 @@ public class GUI extends JFrame implements Observer {
     }
 
     public void message(Combat c, Character character, String text) {
-        if (c == null) {
-        } else if (character == null) {
-            c.write(text);
-        } else {
-            c.write(character, text);
+        if (c != null) {
+            if (character != null) {
+                c.write(character, text);
+            } else {
+                c.write(text);
+            }
         }
         if (text.trim().length() == 0) {
             return;
@@ -969,10 +954,7 @@ public class GUI extends JFrame implements Observer {
             editorKit.insertHTML(doc, doc.getLength(),
                             "<font face='Georgia'><font color='white'><font size='" + fontsize + "'>" + text + "<br>",
                             0, 0, null);
-        } catch (BadLocationException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (BadLocationException | IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -987,10 +969,7 @@ public class GUI extends JFrame implements Observer {
             editorKit.insertHTML(doc, doc.getLength(),
                             "<font face='Georgia'><font color='white'><font size='" + fontsize + "'>" + text + "<br>",
                             0, 0, null);
-        } catch (BadLocationException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (BadLocationException | IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -1008,7 +987,7 @@ public class GUI extends JFrame implements Observer {
         boolean placed = false;
         while (!placed) {
             if (skills.size() <= index) {
-                skills.add(new ArrayList<SkillButton>());
+                skills.add(new ArrayList<>());
             }
             if (skills.get(index).size() >= 25) {
                 index++;
@@ -1048,10 +1027,6 @@ public class GUI extends JFrame implements Observer {
     public void addActivity(Activity act) {
         commandPanel.add(new ActivityButton(act));
         commandPanel.revalidate();
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
     }
 
     public void next(Combat combat) {
@@ -1098,6 +1073,9 @@ public class GUI extends JFrame implements Observer {
         clearCommand();
         commandPanel.add(new EncounterButton("Fight", enc, target, Encs.fight));
         commandPanel.add(new EncounterButton("Flee", enc, target, Encs.flee));
+        if (item(Item.SmokeBomb, 1).meets(null, Global.human, null)) {
+            commandPanel.add(new EncounterButton("Smoke Bomb", enc, target, Encs.smoke));
+        }
         Global.getMatch().pause();
         commandPanel.revalidate();
     }
@@ -1124,7 +1102,7 @@ public class GUI extends JFrame implements Observer {
         if (!target.mostlyNude()) {
             commandPanel.add(new EncounterButton("Steal Clothes", encounter, target, Encs.stealclothes));
         }
-        if (player.has(Item.Aphrodisiac)) {
+        if (Global.human.has(Item.Aphrodisiac)) {
             commandPanel.add(new EncounterButton("Use Aphrodisiac", encounter, target, Encs.aphrodisiactrick));
         }
         commandPanel.add(new EncounterButton("Do Nothing", encounter, target, Encs.wait));
@@ -1151,6 +1129,7 @@ public class GUI extends JFrame implements Observer {
     }
 
     public void ding() {
+        Player player = Global.human;
         if (player.availableAttributePoints > 0) {
             message(player.availableAttributePoints + " Attribute Points remain.\n");
             clearCommand();
@@ -1173,7 +1152,7 @@ public class GUI extends JFrame implements Observer {
                 }
                 commandPanel.revalidate();
             }
-            commandPanel.add(new SkipFeatButton(null));
+            commandPanel.add(new SkipFeatButton());
             commandPanel.revalidate();
         } else {
             skippedFeat = false;
@@ -1184,7 +1163,7 @@ public class GUI extends JFrame implements Observer {
             } else if (Global.getMatch() != null) {
                 Global.getMatch().resume();
             } else if (Global.day != null) {
-                Global.getDay().plan(false);
+                Global.getDay().plan();
             } else {
                 new Prematch(Global.human);
             }
@@ -1222,6 +1201,7 @@ public class GUI extends JFrame implements Observer {
     }
 
     public void refresh() {
+        Player player = Global.human;
         stamina.setText("Stamina: " + getLabelString(player.getStamina()));
         arousal.setText("Arousal: " + getLabelString(player.getArousal()));
         mojo.setText("Mojo: " + getLabelString(player.getMojo()));
@@ -1273,8 +1253,9 @@ public class GUI extends JFrame implements Observer {
         JPanel inventoryPane = new JPanel();
         inventoryPane.setSize(400, 1000);
 
+        Player player = Global.human;
         List<Item> availItems = player.getInventory().entrySet().stream().filter(entry -> (entry.getValue() > 0))
-                        .map(entry -> entry.getKey()).collect(Collectors.toList());
+                        .map(Map.Entry::getKey).collect(Collectors.toList());
 
         JScrollPane scrollInventory = new JScrollPane(inventoryPane);
         inventoryPane.setLayout(new GridLayout(availItems.size() / 3, 3));
@@ -1300,7 +1281,7 @@ public class GUI extends JFrame implements Observer {
         Map<Item, Integer> items = player.getInventory();
         int count = 0;
 
-        ArrayList<JLabel> itmlbls = new ArrayList<JLabel>();
+        ArrayList<JLabel> itmlbls = new ArrayList<>();
         for (Item i : availItems) {
             JLabel dirtyTrick = new JLabel(i.getName() + ": " + items.get(i) + "\n");
 
@@ -1314,7 +1295,7 @@ public class GUI extends JFrame implements Observer {
         }
 
         count = 0;
-        ArrayList<JLabel> attlbls = new ArrayList<JLabel>();
+        ArrayList<JLabel> attlbls = new ArrayList<>();
         for (Attribute a : Attribute.values()) {
             int amt = player.get(a);
             if (amt > 0) {
@@ -1353,10 +1334,7 @@ public class GUI extends JFrame implements Observer {
                                             + player.getOutfit().describe(player) + "<br>" + player.describeStatus()
                                             + "<br>",
                             0, 0, null);
-        } catch (BadLocationException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (BadLocationException | IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -1453,6 +1431,7 @@ public class GUI extends JFrame implements Observer {
 
         public AttributeButton(Attribute att) {
             super();
+            Player player = Global.human;
             setFont(new Font("Baskerville Old Face", 0, 18));
             this.att = att;
             setText(att.name());
@@ -1480,6 +1459,7 @@ public class GUI extends JFrame implements Observer {
             setText(feat.toString());
             setToolTipText(feat.getDesc());
             addActionListener(arg0 -> {
+                Player player = Global.human;
                 player.add(FeatButton.this.feat);
                 clearTextIfNeeded();
                 Global.gui().message("Gained feat: " + FeatButton.this.feat);
@@ -1497,7 +1477,7 @@ public class GUI extends JFrame implements Observer {
          */
         private static final long serialVersionUID = -4949332486895844480L;
 
-        public SkipFeatButton(Trait feat) {
+        public SkipFeatButton() {
             super();
             setFont(new Font("Baskerville Old Face", 0, 18));
             setText("Skip");
@@ -1524,7 +1504,8 @@ public class GUI extends JFrame implements Observer {
             this.enc = enc2;
             this.assist = assist;
             setText("Help " + assist.name());
-            addActionListener(arg0 -> GUI.InterveneButton.this.enc.intrude(player, GUI.InterveneButton.this.assist));
+            addActionListener(arg0 -> GUI.InterveneButton.this.enc
+                            .intrude(Global.human, GUI.InterveneButton.this.assist));
         }
     }
 
@@ -1555,15 +1536,15 @@ public class GUI extends JFrame implements Observer {
             super();
             setFont(new Font("Baskerville Old Face", 0, 18));
             setText("Go to sleep");
-            addActionListener(arg0 -> Global.dawn());
+            addActionListener(arg0 -> Global.endNight());
         }
     }
 
-    @SuppressWarnings("unused")
-    private class MatchButton extends JButton {
+
+    @SuppressWarnings("unused") private class MatchButton extends JButton {
 
         /**
-         * 
+         *
          */
         private static final long serialVersionUID = 3899760251122030064L;
 
@@ -1571,7 +1552,7 @@ public class GUI extends JFrame implements Observer {
             super();
             setFont(new Font("Baskerville Old Face", 0, 18));
             setText("Start the match");
-            addActionListener(arg0 -> Global.dusk(new NoModifier()));
+            addActionListener(arg0 -> Global.setUpMatch(new NoModifier()));
         }
     }
 
