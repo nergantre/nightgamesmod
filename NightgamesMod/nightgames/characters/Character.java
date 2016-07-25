@@ -839,10 +839,14 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     private void countdown(Map<Trait, Integer> counters) {
-        for (Trait t : counters.keySet()) {
-            int remaining = counters.remove(t) - 1;
+        Iterator<Map.Entry<Trait, Integer>> it = counters.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Trait, Integer> ent = it.next();
+            int remaining = ent.getValue() - 1;
             if (remaining > 0) {
-                counters.put(t, remaining);
+                ent.setValue(remaining);
+            } else {
+                it.remove();
             }
         }
     }

@@ -1079,6 +1079,7 @@ public class Global {
         buildSkillPool(human);
         Clothing.buildClothingTable();
         rebuildCharacterPool(Optional.empty());
+        day = null;
     }
 
     public static void load(File file) {
