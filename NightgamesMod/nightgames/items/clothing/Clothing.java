@@ -250,10 +250,10 @@ public class Clothing implements Loot {
         result = 31 * result + slots.hashCode();
         result = 31 * result + sex.hashCode();
         result = 31 * result + price;
-        temp = Double.doubleToLongBits(Double.valueOf(String.format("%.6f", exposure)));
+        temp = Double.doubleToLongBits(Double.valueOf(String.format(Locale.ENGLISH, "%.6f", exposure)));
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + id.hashCode();
-        temp = Double.doubleToLongBits(Double.valueOf(String.format("%.6f", hotness)));
+        temp = Double.doubleToLongBits(Double.valueOf(String.format(Locale.ENGLISH, "%.6f", hotness)));
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + layer;
         return result;
