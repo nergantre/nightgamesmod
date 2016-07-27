@@ -112,7 +112,7 @@ public class Fly extends Fuck {
                             + " hard and before you know it"
                             + " you are twenty feet in the sky held up by her arms and legs."
                             + " Somehow, her dick ended up inside of you in the process and"
-                            + " the rhythmic movements of her flying arouse you to no end";
+                            + " the rhythmic movements of her flying arouse you to no end.";
         }
     }
 
