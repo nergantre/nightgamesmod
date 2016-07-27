@@ -2,7 +2,6 @@ package nightgames.requirements;
 
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
-import nightgames.items.Item;
 import nightgames.items.ItemAmount;
 
 /**

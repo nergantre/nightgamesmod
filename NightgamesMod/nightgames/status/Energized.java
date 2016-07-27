@@ -108,7 +108,7 @@ public class Energized extends DurationStatus {
         return new Energized(newAffected, getDuration());
     }
 
-    @Override @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+    @Override  public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         obj.addProperty("duration", getDuration());

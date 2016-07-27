@@ -6,7 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import nightgames.Resources.ResourceLoader;
 import nightgames.global.Flag;
@@ -119,7 +121,8 @@ public class AiModifiers {
         return DEFAULTS.getOrDefault(personality, new AiModifiers());
     }
 
-    @SuppressWarnings("unchecked") private static AiModifiers readMods(JsonArray array) {
+     @SuppressWarnings("unchecked")
+    private static AiModifiers readMods(JsonArray array) {
         AiModifiers mods = new AiModifiers();
         for (JsonElement element : array) {
             JsonObject modJson = element.getAsJsonObject();

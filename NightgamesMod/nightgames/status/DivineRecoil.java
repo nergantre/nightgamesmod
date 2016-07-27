@@ -117,7 +117,7 @@ public class DivineRecoil extends DurationStatus {
         return new DivineRecoil(newAffected, magnitude);
     }
 
-    @Override @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+    @Override  public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         obj.addProperty("magnitude", magnitude);

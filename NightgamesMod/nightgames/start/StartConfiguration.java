@@ -4,7 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -13,8 +18,8 @@ import com.google.gson.JsonParseException;
 import nightgames.characters.Attribute;
 import nightgames.characters.CharacterSex;
 import nightgames.global.Flag;
-import nightgames.json.JsonUtils;
 import nightgames.items.clothing.Clothing;
+import nightgames.json.JsonUtils;
 
 public class StartConfiguration {
 
@@ -69,7 +74,7 @@ public class StartConfiguration {
         return name;
     }
 
-    @SuppressWarnings("unchecked") public static StartConfiguration parse(JsonObject root) throws JsonParseException {
+     public static StartConfiguration parse(JsonObject root) throws JsonParseException {
         StartConfiguration cfg = new StartConfiguration();
 
         cfg.name = root.get("name").getAsString();

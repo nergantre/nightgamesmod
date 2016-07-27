@@ -1,24 +1,49 @@
 package nightgames.characters;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Observable;
+import java.util.Optional;
+import java.util.Set;
+import java.util.Vector;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import nightgames.json.JsonUtils;
+
 import nightgames.actions.Move;
 import nightgames.actions.Movement;
 import nightgames.areas.Area;
 import nightgames.areas.NinjaStash;
-import nightgames.characters.body.*;
+import nightgames.characters.body.Body;
+import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.CockMod;
+import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.TentaclePart;
 import nightgames.characters.custom.AiModifiers;
 import nightgames.combat.Combat;
 import nightgames.combat.IEncounter;
 import nightgames.combat.Result;
 import nightgames.ftc.FTCMatch;
-import nightgames.global.*;
+import nightgames.global.Challenge;
+import nightgames.global.DebugFlags;
+import nightgames.global.Flag;
+import nightgames.global.Global;
+import nightgames.global.Match;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.items.clothing.ClothingTrait;
 import nightgames.items.clothing.Outfit;
+import nightgames.json.JsonUtils;
 import nightgames.pet.Pet;
 import nightgames.skills.Command;
 import nightgames.skills.Nothing;
@@ -26,15 +51,21 @@ import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 import nightgames.stance.Position;
 import nightgames.stance.Stance;
-import nightgames.status.*;
+import nightgames.status.Alluring;
+import nightgames.status.DivineCharge;
+import nightgames.status.DivineRecoil;
+import nightgames.status.Enthralled;
+import nightgames.status.Falling;
+import nightgames.status.Feral;
+import nightgames.status.Frenzied;
+import nightgames.status.Resistance;
+import nightgames.status.Status;
+import nightgames.status.Stsflag;
+import nightgames.status.Trance;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 import nightgames.status.addiction.MindControl;
 import nightgames.trap.Trap;
-
-import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.stream.Collectors;
 
 public abstract class Character extends Observable implements Cloneable {
     /**

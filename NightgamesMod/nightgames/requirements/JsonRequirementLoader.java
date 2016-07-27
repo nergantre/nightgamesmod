@@ -1,10 +1,10 @@
 package nightgames.requirements;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 /**
  * Class for loading Requirements from JSON.

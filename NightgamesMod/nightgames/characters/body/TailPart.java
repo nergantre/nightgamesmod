@@ -79,7 +79,7 @@ public enum TailPart implements BodyPart,BodyPartMod {
         return true;
     }
 
-    @SuppressWarnings("unchecked") @Override public JsonObject save() {
+     @Override public JsonObject save() {
         JsonObject obj = new JsonObject();
         obj.addProperty("enum", name());
         return obj;

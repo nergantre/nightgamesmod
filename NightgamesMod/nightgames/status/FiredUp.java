@@ -150,7 +150,7 @@ public class FiredUp extends DurationStatus {
         setDuration(2);
     }
 
-    @SuppressWarnings("unchecked") @Override public JsonObject saveToJson() {
+     @Override public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         obj.addProperty("part", part);

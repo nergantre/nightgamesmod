@@ -94,7 +94,7 @@ public class Rewired extends DurationStatus {
         return new Rewired(newAffected, getDuration());
     }
 
-    @Override @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+    @Override  public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         obj.addProperty("duration", getDuration());

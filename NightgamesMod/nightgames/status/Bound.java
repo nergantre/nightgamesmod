@@ -119,7 +119,7 @@ public class Bound extends Status {
         return new Bound(newAffected, toughness, binding);
     }
 
-    @Override @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+    @Override  public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         obj.addProperty("toughness", toughness);

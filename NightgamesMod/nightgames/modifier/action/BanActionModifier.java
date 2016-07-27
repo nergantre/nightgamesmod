@@ -1,6 +1,12 @@
 package nightgames.modifier.action;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.function.BiPredicate;
 
 import com.google.gson.JsonObject;
@@ -8,8 +14,8 @@ import com.google.gson.JsonObject;
 import nightgames.actions.Action;
 import nightgames.characters.Character;
 import nightgames.global.Global;
-import nightgames.json.JsonUtils;
 import nightgames.global.Match;
+import nightgames.json.JsonUtils;
 import nightgames.modifier.ModifierComponentLoader;
 
 public class BanActionModifier extends ActionModifier implements ModifierComponentLoader<ActionModifier> {

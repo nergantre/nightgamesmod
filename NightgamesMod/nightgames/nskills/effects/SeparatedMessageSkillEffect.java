@@ -1,11 +1,10 @@
 package nightgames.nskills.effects;
 
-import nightgames.nskills.struct.SkillResultStruct;
-
 import java.util.Optional;
 
 import nightgames.characters.Character;
 import nightgames.global.Global;
+import nightgames.nskills.struct.SkillResultStruct;
 
 public class SeparatedMessageSkillEffect implements SkillEffect {
     private final String message;

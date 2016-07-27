@@ -1,11 +1,15 @@
 package nightgames.characters;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.google.gson.JsonObject;
-import nightgames.start.PlayerConfiguration;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import nightgames.actions.Action;
 import nightgames.actions.Leap;
@@ -30,6 +34,7 @@ import nightgames.skills.Tactics;
 import nightgames.stance.Behind;
 import nightgames.stance.Neutral;
 import nightgames.stance.Position;
+import nightgames.start.PlayerConfiguration;
 import nightgames.status.Enthralled;
 import nightgames.status.Horny;
 import nightgames.status.Masochistic;
@@ -898,7 +903,7 @@ public class Player extends Character {
         addictions.forEach(Addiction::refreshWithdrawal);
     }
     
-    @SuppressWarnings("unchecked") @Override protected void saveInternal(JsonObject object) {
+     @Override protected void saveInternal(JsonObject object) {
         JsonArray addictions = new JsonArray();
         this.addictions.stream().map(Status::saveToJson).forEach(addictions::add);
         object.add("addictions", addictions);

@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import nightgames.characters.custom.effect.CustomEffect;
-import nightgames.requirements.Requirement;
 import nightgames.items.Item;
+import nightgames.requirements.Requirement;
 
 public class TransformationOption {
     String option;

@@ -3,22 +3,25 @@ package nightgames.items.clothing;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
 
 import nightgames.Resources.ResourceLoader;
-import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.CharacterSex;
 import nightgames.characters.Trait;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
-import nightgames.json.JsonUtils;
 import nightgames.items.Loot;
+import nightgames.json.JsonUtils;
 
 public class Clothing implements Loot {
     public static final int N_LAYERS = 5;

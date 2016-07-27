@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Set;
 
 import com.google.gson.JsonObject;
+
 import nightgames.modifier.ModifierComponentLoader;
 
 public class NudeModifier extends ClothingModifier implements ModifierComponentLoader<ClothingModifier> {

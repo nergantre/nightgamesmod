@@ -99,7 +99,7 @@ public class Satiated extends DurationStatus {
         return new Satiated(newAffected, value);
     }
 
-    @Override @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+    @Override  public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         obj.addProperty("value", value);

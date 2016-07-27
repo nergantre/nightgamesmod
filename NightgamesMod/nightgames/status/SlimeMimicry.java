@@ -102,7 +102,7 @@ public class SlimeMimicry extends DurationStatus {
         return new SlimeMimicry(getMimickedName(), pussyMimicked, cockMimicked, newAffected, getDuration());
     }
 
-    @SuppressWarnings("unchecked") @Override public JsonObject saveToJson() {
+     @Override public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         obj.addProperty("mimickedName", getMimickedName());

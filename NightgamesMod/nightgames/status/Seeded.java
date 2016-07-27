@@ -206,7 +206,7 @@ public class Seeded extends Status {
         return new Seeded(newAffected, newOther, target);
     }
 
-    @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+     public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         obj.addProperty("target", target);

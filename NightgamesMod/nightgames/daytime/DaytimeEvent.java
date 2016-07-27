@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import nightgames.characters.Character;
 import nightgames.global.Global;
 import nightgames.global.Scene;
-import nightgames.characters.Character;
 
 abstract class DaytimeEvent implements Scene {
 

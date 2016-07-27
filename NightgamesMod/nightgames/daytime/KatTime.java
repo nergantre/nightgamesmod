@@ -1,5 +1,8 @@
 package nightgames.daytime;
 
+import static nightgames.requirements.RequirementShortcuts.bodypart;
+import static nightgames.requirements.RequirementShortcuts.not;
+
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -13,15 +16,12 @@ import nightgames.characters.body.EarPart;
 import nightgames.characters.body.ModdedCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
-import nightgames.requirements.BodyPartRequirement;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.requirements.BodyPartRequirement;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
-
-import static nightgames.requirements.RequirementShortcuts.bodypart;
-import static nightgames.requirements.RequirementShortcuts.not;
 
 public class KatTime extends BaseNPCTime {
     public KatTime(Character player) {

@@ -136,7 +136,7 @@ public class Trance extends DurationStatus {
         return new Trance(newAffected);
     }
 
-    @Override @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+    @Override  public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         return obj;

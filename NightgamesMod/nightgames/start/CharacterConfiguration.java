@@ -1,20 +1,29 @@
 package nightgames.start;
 
-import java.util.*;
+import static nightgames.start.ConfigurationUtils.mergeOptionals;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import nightgames.characters.*;
+import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.CharacterSex;
+import nightgames.characters.Growth;
+import nightgames.characters.Trait;
 import nightgames.global.Flag;
 import nightgames.global.Global;
-import nightgames.json.JsonUtils;
 import nightgames.items.clothing.Clothing;
-
-import static nightgames.start.ConfigurationUtils.mergeOptionals;
+import nightgames.json.JsonUtils;
 
 public abstract class CharacterConfiguration {
 

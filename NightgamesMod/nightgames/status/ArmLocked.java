@@ -1,5 +1,7 @@
 package nightgames.status;
 
+import static nightgames.requirements.RequirementShortcuts.eitherinserted;
+
 import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
@@ -7,8 +9,6 @@ import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
-
-import static nightgames.requirements.RequirementShortcuts.eitherinserted;
 
 public class ArmLocked extends Status {
     private float toughness;
@@ -116,7 +116,7 @@ public class ArmLocked extends Status {
         return new ArmLocked(newAffected, Math.round(toughness));
     }
 
-    @Override @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+    @Override  public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         obj.addProperty("toughness", toughness);

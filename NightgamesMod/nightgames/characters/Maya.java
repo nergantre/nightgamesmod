@@ -1,5 +1,7 @@
 package nightgames.characters;
 
+import java.util.Optional;
+
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.combat.Combat;
@@ -11,8 +13,6 @@ import nightgames.items.clothing.Clothing;
 import nightgames.start.NpcConfiguration;
 import nightgames.status.Drowsy;
 import nightgames.status.Energized;
-
-import java.util.Optional;
 
 public class Maya extends BasePersonality {
 

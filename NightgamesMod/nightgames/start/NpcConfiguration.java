@@ -1,15 +1,15 @@
 package nightgames.start;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import nightgames.characters.CharacterSex;
-import nightgames.json.JsonUtils;
-
-import nightgames.characters.NPC;
+import static nightgames.start.ConfigurationUtils.mergeOptionals;
 
 import java.util.Optional;
 
-import static nightgames.start.ConfigurationUtils.mergeOptionals;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import nightgames.characters.CharacterSex;
+import nightgames.characters.NPC;
+import nightgames.json.JsonUtils;
 
 public class NpcConfiguration extends CharacterConfiguration {
 

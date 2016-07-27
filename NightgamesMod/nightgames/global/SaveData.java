@@ -1,12 +1,16 @@
 package nightgames.global;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
 import nightgames.characters.Character;
 import nightgames.json.JsonUtils;
-
-import java.util.*;
 
 /**
  * SaveData specifies a schema for data that will be saved and loaded.

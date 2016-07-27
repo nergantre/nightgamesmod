@@ -58,7 +58,7 @@ public enum CockMod implements BodyPartMod {
         return base.isReady(self) || this.countsAs(self, bionic);
     }
 
-    @SuppressWarnings("unchecked") public JsonObject save() {
+     public JsonObject save() {
         JsonObject object = new JsonObject();
         object.addProperty("enum", name());
         return object;

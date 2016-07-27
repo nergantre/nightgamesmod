@@ -183,7 +183,7 @@ public class BodyFetish extends DurationStatus {
         return new BodyFetish(newAffected, newOther, part, magnitude);
     }
 
-    @Override @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+    @Override  public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         obj.addProperty("part", part);

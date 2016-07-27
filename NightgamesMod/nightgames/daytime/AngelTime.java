@@ -13,9 +13,9 @@ import nightgames.characters.body.CockPart;
 import nightgames.characters.body.ModdedCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.WingsPart;
-import nightgames.requirements.BodyPartRequirement;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.requirements.BodyPartRequirement;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 

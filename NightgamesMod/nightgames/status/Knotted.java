@@ -1,5 +1,8 @@
 package nightgames.status;
 
+import static nightgames.requirements.RequirementShortcuts.inserted;
+import static nightgames.requirements.RequirementShortcuts.rev;
+
 import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
@@ -7,9 +10,6 @@ import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
-
-import static nightgames.requirements.RequirementShortcuts.inserted;
-import static nightgames.requirements.RequirementShortcuts.rev;
 
 public class Knotted extends Status {
 
@@ -122,7 +122,7 @@ public class Knotted extends Status {
         return new Knotted(newAffected, newOther, anal);
     }
 
-    @Override @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+    @Override  public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         obj.addProperty("anal", anal);

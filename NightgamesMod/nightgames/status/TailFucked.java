@@ -1,14 +1,15 @@
 package nightgames.status;
 
+import static nightgames.requirements.RequirementShortcuts.eitherinserted;
+
 import com.google.gson.JsonObject;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-
-import static nightgames.requirements.RequirementShortcuts.eitherinserted;
 
 public class TailFucked extends Status {
     private String target;
@@ -140,7 +141,7 @@ public class TailFucked extends Status {
         return new TailFucked(newAffected, newOther, target);
     }
 
-    @Override @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+    @Override  public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         obj.addProperty("target", target);

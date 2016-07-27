@@ -1,5 +1,7 @@
 package nightgames.gui;
 
+import static nightgames.requirements.RequirementShortcuts.item;
+
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -28,7 +30,28 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JSlider;
+import javax.swing.JTextPane;
+import javax.swing.JToggleButton;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.WindowConstants;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.text.BadLocationException;
@@ -59,8 +82,6 @@ import nightgames.items.clothing.Clothing;
 import nightgames.modifier.standard.NoModifier;
 import nightgames.skills.Skill;
 import nightgames.trap.Trap;
-
-import static nightgames.requirements.RequirementShortcuts.item;
 
 public class GUI extends JFrame implements Observer {
     /**

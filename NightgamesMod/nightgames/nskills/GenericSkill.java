@@ -8,9 +8,9 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import nightgames.characters.Character;
-import nightgames.requirements.Requirement;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.requirements.Requirement;
 
 public class GenericSkill implements SkillInterface {
     List<SkillResult> results;

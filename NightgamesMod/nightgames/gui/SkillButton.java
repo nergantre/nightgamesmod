@@ -3,7 +3,6 @@ package nightgames.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Label;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;

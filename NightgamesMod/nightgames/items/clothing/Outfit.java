@@ -22,7 +22,6 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
-import nightgames.modifier.Modifier;
 
 public class Outfit {
     private Map<ClothingSlot, List<Clothing>> outfit;

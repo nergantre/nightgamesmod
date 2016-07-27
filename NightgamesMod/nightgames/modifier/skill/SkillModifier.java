@@ -1,12 +1,16 @@
 package nightgames.modifier.skill;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.modifier.ModifierComponent;
 import nightgames.modifier.ModifierCategory;
+import nightgames.modifier.ModifierComponent;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 
