@@ -26,7 +26,6 @@ public class Aphrodisiac extends Skill {
 
         @Override
         public boolean test(BodyPart bodyPart) {
-            // TODO Auto-generated method stub
             return bodyPart.isType("pussy") && bodyPart.moddedPartCountsAs(getSelf(), PussyPart.succubus);
         }
         
