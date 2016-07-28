@@ -30,6 +30,7 @@ import nightgames.status.Abuff;
 import nightgames.status.BodyFetish;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
+import nightgames.status.addiction.AddictionType;
 
 public class Body implements Cloneable {
     static class PartReplacement {
@@ -551,6 +552,12 @@ public class Body implements Cloneable {
 
         if (skill != null) {
             multiplier = Math.max(0, multiplier + skill.multiplierForStage(character));
+        }
+        
+        if (character.human() && Global.getPlayer().checkAddiction(AddictionType.DOMINANCE, opponent)) {
+            float mag = Global.getPlayer().getAddiction(AddictionType.DOMINANCE).get().getMagnitude();
+            float dom = c.getDominanceOfStance(opponent);
+            multiplier += mag * (dom / 5.0);
         }
 
         double damage = base * multiplier;

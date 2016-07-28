@@ -166,7 +166,7 @@ public class GenericBodyPart implements BodyPart {
             bonus += 5 + Global.random(5);
             if (Global.random(5) == 0) {
                 c.write(self, "Unfortunately, the gloves wear out with their usage.");
-                self.shred(ClothingSlot.hands);
+                self.shred(ClothingSlot.arms);
             }
         }
         return bonus;

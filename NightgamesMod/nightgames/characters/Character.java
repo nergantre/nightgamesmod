@@ -56,6 +56,7 @@ public abstract class Character extends Observable implements Cloneable {
     protected Area location;
     protected CopyOnWriteArrayList<Skill> skills;
     public Set<Status> status;
+    public Set<Stsflag> statusFlags;
     public CopyOnWriteArrayList<Trait> traits;
     protected Map<Trait, Integer> temporaryAddedTraits;
     protected Map<Trait, Integer> temporaryRemovedTraits;
@@ -110,6 +111,7 @@ public abstract class Character extends Observable implements Cloneable {
         closet = new HashSet<>();
         skills = new CopyOnWriteArrayList<>();
         status = new HashSet<>();
+        statusFlags = EnumSet.noneOf(Stsflag.class);
         traits = new CopyOnWriteArrayList<>();
         temporaryAddedTraits = new HashMap<>();
         temporaryRemovedTraits = new HashMap<>();
@@ -154,6 +156,7 @@ public abstract class Character extends Observable implements Cloneable {
         c.body = body.clone();
         c.body.character = c;
         c.orgasmed = orgasmed;
+        c.statusFlags = EnumSet.copyOf(statusFlags);
         return c;
     }
 
@@ -1092,6 +1095,8 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public boolean is(Stsflag sts) {
+        if (statusFlags.contains(sts))
+            return true;
         for (Status s : getStatuses()) {
             if (s.flags().contains(sts)) {
                 return true;
@@ -1379,7 +1384,8 @@ public abstract class Character extends Observable implements Cloneable {
     protected void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
                     int totalTimes) {
         String orgasmLiner = "<b>" + orgasmLiner(c) + "</b>";
-        String opponentOrgasmLiner = "<b>" + opponent.makeOrgasmLiner(c) + "</b>";
+        String opponentOrgasmLiner = opponent == null || opponent == this ? "" : 
+            "<b>" + opponent.makeOrgasmLiner(c) + "</b>";
         orgasmed = true;
         if (times == 1) {
             c.write(this, "<br>");
@@ -1422,13 +1428,15 @@ public abstract class Character extends Observable implements Cloneable {
         if (this instanceof Player) {
             Player p = (Player) this;
 
-            if (p.checkAddiction(AddictionType.CORRUPTION, opponent) && opponentPart.isType("pussy") && selfPart
+            if (p.checkAddiction(AddictionType.CORRUPTION, opponent) && selfPart != null && opponentPart != null 
+                            && opponentPart.isType("pussy") && selfPart
                             .isType("cock") && c.getCombatantData(this).getIntegerFlag("ChoseToFuck") == 1) {
                 c.write(this, "Your willing sacrifice to " + opponent.getName() + " greatly reinforces"
                                 + " the corruption inside of you.");
                 p.addict(AddictionType.CORRUPTION, opponent, Addiction.HIGH_INCREASE);
             }
-            if (p.checkAddiction(AddictionType.ZEAL, opponent) && opponentPart.isType("pussy") && selfPart
+            if (p.checkAddiction(AddictionType.ZEAL, opponent) && selfPart != null && opponentPart != null 
+                            && opponentPart.isType("pussy") && selfPart
                             .isType("cock")) {
                 c.write(this, "Experiencing so much pleasure inside of " + opponent + " reinforces" + " your faith.");
                 p.addict(AddictionType.ZEAL, opponent, Addiction.MED_INCREASE);
@@ -3136,6 +3144,14 @@ public abstract class Character extends Observable implements Cloneable {
 
     }
 
+    public void flagStatus(Stsflag flag) {
+        statusFlags.add(flag);
+    }
+    
+    public void unflagStatus(Stsflag flag) {
+        statusFlags.remove(flag);
+    }
+    
     @Override public boolean equals(Object o) {
         if (this == o)
             return true;
