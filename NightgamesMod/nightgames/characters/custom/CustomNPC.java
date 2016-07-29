@@ -6,8 +6,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import nightgames.characters.*;
+import nightgames.characters.BasePersonality;
 import nightgames.characters.Character;
+import nightgames.characters.Emotion;
+import nightgames.characters.Growth;
+import nightgames.characters.NPC;
 import nightgames.characters.body.CockMod;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;

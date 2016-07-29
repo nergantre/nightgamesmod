@@ -7,9 +7,9 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.json.JsonUtils;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.items.clothing.ClothingTrait;
+import nightgames.json.JsonUtils;
 
 public class GenericBodyPart implements BodyPart {
     /**

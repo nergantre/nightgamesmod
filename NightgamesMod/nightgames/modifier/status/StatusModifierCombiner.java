@@ -12,6 +12,7 @@ public class StatusModifierCombiner implements ModifierComponentCombiner<StatusM
         }
     };
 
+    @SuppressWarnings("unused")
     private static final StatusModifier TEMPLATE = new StatusModifier() {
         @Override public String toString() {
             return "";

@@ -1,18 +1,12 @@
 package nightgames.modifier;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
-import nightgames.Resources.ResourceLoader;
-import nightgames.characters.Player;
-import nightgames.global.Global;
 import nightgames.json.JsonUtils;
-import nightgames.items.clothing.Clothing;
 import nightgames.modifier.action.ActionModifier;
 import nightgames.modifier.clothing.ClothingModifier;
 import nightgames.modifier.item.ItemModifier;
@@ -68,13 +62,13 @@ public final class CustomModifierLoader {
         };
     }
 
-    private static <T extends ModifierCategory> T readModifierComponent(JsonObject object,
+    private static <T extends ModifierCategory<T>> T readModifierComponent(JsonObject object,
                     ModifierCategoryLoader<T> template) {
 
         return template.instance(object);
     }
 
-    private static <T extends ModifierCategory> T readModifiers(JsonArray array, ModifierComponentCombiner<T> combiner,
+    private static <T extends ModifierCategory<T>> T readModifiers(JsonArray array, ModifierComponentCombiner<T> combiner,
                     ModifierCategoryLoader<T> loader) {
         Collection<JsonObject> objects = new ArrayList<>();
         array.forEach(element -> objects.add(element.getAsJsonObject()));

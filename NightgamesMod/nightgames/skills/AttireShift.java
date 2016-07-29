@@ -6,7 +6,6 @@ import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.status.Primed;
-import nightgames.status.Stsflag;
 
 public class AttireShift extends Skill {
 

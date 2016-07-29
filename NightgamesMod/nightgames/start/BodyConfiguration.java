@@ -1,15 +1,32 @@
 package nightgames.start;
 
-import com.google.gson.*;
-import nightgames.characters.CharacterSex;
-import nightgames.characters.body.*;
-import nightgames.json.JsonUtils;
+import static nightgames.start.ConfigurationUtils.mergeOptionals;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static nightgames.start.ConfigurationUtils.mergeOptionals;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import nightgames.characters.CharacterSex;
+import nightgames.characters.body.AnalPussyPart;
+import nightgames.characters.body.AssPart;
+import nightgames.characters.body.BasicCockPart;
+import nightgames.characters.body.Body;
+import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.BreastsPart;
+import nightgames.characters.body.CockMod;
+import nightgames.characters.body.CockPart;
+import nightgames.characters.body.EarPart;
+import nightgames.characters.body.ModdedCockPart;
+import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.TailPart;
+import nightgames.characters.body.TentaclePart;
+import nightgames.characters.body.WingsPart;
+import nightgames.json.JsonUtils;
 
 class BodyConfiguration {
 

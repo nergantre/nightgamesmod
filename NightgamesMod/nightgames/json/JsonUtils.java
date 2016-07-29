@@ -5,9 +5,18 @@ import java.io.Reader;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Optional;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
+
 import nightgames.items.clothing.Clothing;
 
 public class JsonUtils {
@@ -21,7 +30,7 @@ public class JsonUtils {
         return gson.fromJson(array, type);
     }
 
-    public static JsonArray jsonFromCollection(Collection collection) {
+    public static JsonArray jsonFromCollection(Collection<?> collection) {
         return gson.toJsonTree(collection).getAsJsonArray();
     }
 
@@ -36,7 +45,7 @@ public class JsonUtils {
         return gson.fromJson(object, type);
     }
 
-    public static JsonObject JsonFromMap(Map map) {
+    public static JsonObject JsonFromMap(Map<?, ?> map) {
         return gson.toJsonTree(map).getAsJsonObject();
     }
 

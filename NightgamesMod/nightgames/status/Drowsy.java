@@ -108,7 +108,7 @@ public class Drowsy extends DurationStatus {
         return true;
     }
 
-    @SuppressWarnings("unchecked") @Override public JsonObject saveToJson() {
+     @Override public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         obj.addProperty("magnitude", magnitude);

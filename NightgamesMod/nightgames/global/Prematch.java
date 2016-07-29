@@ -3,6 +3,7 @@ package nightgames.global;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.swing.JButton;
 
 import nightgames.characters.Airi;

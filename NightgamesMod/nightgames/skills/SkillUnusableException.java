@@ -5,6 +5,8 @@ package nightgames.skills;
  * after first checking whether it was usable.
  */
 public class SkillUnusableException extends RuntimeException {
+
+    private static final long serialVersionUID = 2449705009333893124L;
     private final Skill skill;
 
     public SkillUnusableException(Skill skill) {

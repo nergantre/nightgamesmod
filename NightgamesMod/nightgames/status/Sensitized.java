@@ -120,7 +120,7 @@ public class Sensitized extends DurationStatus {
         return new Sensitized(newAffected, part, magnitude, maximum, getDuration());
     }
 
-    @Override @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+    @Override  public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         obj.addProperty("magnitude", magnitude);

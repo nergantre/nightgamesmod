@@ -1,5 +1,15 @@
 package nightgames.characters.custom;
 
+import static nightgames.requirements.RequirementShortcuts.anal;
+import static nightgames.requirements.RequirementShortcuts.dom;
+import static nightgames.requirements.RequirementShortcuts.inserted;
+import static nightgames.requirements.RequirementShortcuts.not;
+import static nightgames.requirements.RequirementShortcuts.position;
+import static nightgames.requirements.RequirementShortcuts.rev;
+import static nightgames.requirements.RequirementShortcuts.status;
+import static nightgames.requirements.RequirementShortcuts.sub;
+import static nightgames.requirements.RequirementShortcuts.winning;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
@@ -11,17 +21,17 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 
 import nightgames.Resources.ResourceLoader;
 import nightgames.characters.Character;
+import nightgames.combat.Combat;
 import nightgames.json.JsonUtils;
 import nightgames.requirements.Requirement;
-import nightgames.combat.Combat;
 
-import static nightgames.requirements.RequirementShortcuts.*;
 
-@SuppressWarnings("unchecked")
 public enum CommentSituation {
     // Fucking
     VAG_DOM_PITCH_WIN(2, inserted(), rev(anal()), dom(), winning()), VAG_DOM_PITCH_LOSE(2, inserted(), rev(not(anal())),

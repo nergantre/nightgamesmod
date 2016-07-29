@@ -97,7 +97,7 @@ public abstract class Addiction extends Status {
         return getCombatSeverity().ordinal() >= threshold.ordinal();
     }
 
-    @Override @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+    @Override  public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getType().name());
         obj.addProperty("cause", cause.getType());

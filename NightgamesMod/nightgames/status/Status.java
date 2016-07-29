@@ -11,8 +11,8 @@ import com.google.gson.JsonObject;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
-import nightgames.requirements.Requirement;
 import nightgames.combat.Combat;
+import nightgames.requirements.Requirement;
 import nightgames.skills.Skill;
 
 public abstract class Status implements Cloneable {

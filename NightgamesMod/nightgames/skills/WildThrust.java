@@ -1,5 +1,7 @@
 package nightgames.skills;
 
+import java.util.Optional;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Player;
@@ -8,8 +10,6 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
-
-import java.util.Optional;
 
 public class WildThrust extends Thrust {
     public WildThrust(Character self) {

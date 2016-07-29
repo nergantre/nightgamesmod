@@ -188,7 +188,7 @@ public class Frenzied extends DurationStatus {
                         .map(s -> s.copy(affected)).collect(Collectors.toSet());
     }
 
-    @Override @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+    @Override  public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         obj.addProperty("duration", getDuration());

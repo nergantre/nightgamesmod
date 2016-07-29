@@ -143,7 +143,7 @@ public class Horny extends DurationStatus {
         return new Horny(newAffected, magnitude, getDuration(), source);
     }
 
-    @Override @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+    @Override  public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         obj.addProperty("source", source);

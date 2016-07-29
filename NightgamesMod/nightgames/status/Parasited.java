@@ -211,7 +211,7 @@ public class Parasited extends Status {
         return new Parasited(newAffected, newOther);
     }
 
-    @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+     public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         return obj;

@@ -1,5 +1,7 @@
 package nightgames.requirements;
 
+import java.util.Arrays;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Emotion;
 import nightgames.characters.Trait;
@@ -8,8 +10,6 @@ import nightgames.combat.Result;
 import nightgames.items.Item;
 import nightgames.items.ItemAmount;
 import nightgames.status.Stsflag;
-
-import java.util.Arrays;
 
 /**
  * Shortcut functions for requirements creation

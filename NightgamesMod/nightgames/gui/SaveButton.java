@@ -1,10 +1,10 @@
 package nightgames.gui;
 
-import nightgames.global.Global;
-
-import java.awt.*;
+import java.awt.Font;
 
 import javax.swing.JButton;
+
+import nightgames.global.Global;
 
 public class SaveButton extends JButton {
 

@@ -740,7 +740,7 @@ public class Body implements Cloneable {
         return newBody;
     }
 
-    @SuppressWarnings("unchecked") public JsonObject save() {
+     public JsonObject save() {
         JsonObject bodyObj = new JsonObject();
         bodyObj.addProperty("hotness", hotness);
         bodyObj.addProperty("femininity", baseFemininity);

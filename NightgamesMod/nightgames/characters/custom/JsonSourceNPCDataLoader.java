@@ -1,24 +1,33 @@
 package nightgames.characters.custom;
 
-import com.google.gson.*;
-import nightgames.characters.*;
-import nightgames.characters.body.Body;
-import nightgames.characters.custom.effect.CustomEffect;
-import nightgames.characters.custom.effect.MoneyModEffect;
-import nightgames.json.JsonUtils;
-import nightgames.items.Item;
-import nightgames.items.ItemAmount;
-import nightgames.items.clothing.Clothing;
-import nightgames.requirements.*;
-import nightgames.skills.Skill;
-import nightgames.stance.Stance;
-import nightgames.status.Stsflag;
-
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+
+import nightgames.characters.Attribute;
+import nightgames.characters.Growth;
+import nightgames.characters.MaxAttribute;
+import nightgames.characters.Plan;
+import nightgames.characters.PreferredAttribute;
+import nightgames.characters.Trait;
+import nightgames.characters.body.Body;
+import nightgames.characters.custom.effect.CustomEffect;
+import nightgames.characters.custom.effect.MoneyModEffect;
+import nightgames.items.Item;
+import nightgames.items.ItemAmount;
+import nightgames.items.clothing.Clothing;
+import nightgames.json.JsonUtils;
+import nightgames.requirements.JsonRequirementLoader;
+import nightgames.skills.Skill;
+import nightgames.stance.Stance;
+import nightgames.status.Stsflag;
 
 public class JsonSourceNPCDataLoader {
     private static JsonRequirementLoader requirementLoader = new JsonRequirementLoader();
@@ -186,7 +195,8 @@ public class JsonSourceNPCDataLoader {
         traits.addAll(JsonUtils.collectionFromJson(array, Trait.class));
     }
 
-    @SuppressWarnings("unchecked") protected static void loadAiModifiers(JsonArray arr, AiModifiers mods) {
+     @SuppressWarnings("unchecked")
+    protected static void loadAiModifiers(JsonArray arr, AiModifiers mods) {
         for (Object aiMod : arr) {
             JsonObject obj = (JsonObject) aiMod;
             String value = obj.get("value").getAsString();
@@ -217,7 +227,7 @@ public class JsonSourceNPCDataLoader {
         }
     }
 
-    @SuppressWarnings("unchecked") private static void loadComments(JsonArray arr, DataBackedNPCData data) {
+     private static void loadComments(JsonArray arr, DataBackedNPCData data) {
         arr.forEach(e -> CommentSituation.parseComment(e.getAsJsonObject(), data.comments));
     }
 }

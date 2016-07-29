@@ -110,7 +110,7 @@ public class Flatfooted extends DurationStatus {
         return new Flatfooted(newAffected, getDuration());
     }
 
-    @Override @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+    @Override  public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         obj.addProperty("duration", getDuration());

@@ -105,7 +105,7 @@ public class InducedEuphoria extends DurationStatus {
         return new InducedEuphoria(newAffected);
     }
 
-    @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+     public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         return obj;

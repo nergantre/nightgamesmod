@@ -107,7 +107,7 @@ public class CounterStatus extends DurationStatus {
         return new CounterStatus(newAffected, skill, desc, getDuration());
     }
 
-    @Override @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+    @Override  public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         // TODO Support this once skill loading is in the game
         obj.addProperty("type", getClass().getSimpleName());

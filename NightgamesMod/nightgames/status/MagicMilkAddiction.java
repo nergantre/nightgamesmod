@@ -179,7 +179,7 @@ public class MagicMilkAddiction extends Status {
         return new MagicMilkAddiction(newAffected, newOther, magnitude);
     }
     
-    @Override @SuppressWarnings("unchecked") public JsonObject saveToJson() {
+    @Override  public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         obj.addProperty("magnitude", magnitude);

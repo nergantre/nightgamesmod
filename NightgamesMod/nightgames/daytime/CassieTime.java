@@ -12,10 +12,10 @@ import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.body.MouthPussyPart;
 import nightgames.characters.body.PussyPart;
-import nightgames.requirements.BodyPartRequirement;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.requirements.BodyPartRequirement;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 

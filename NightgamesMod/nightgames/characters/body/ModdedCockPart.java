@@ -50,7 +50,7 @@ public class ModdedCockPart implements CockPart {
         return mod.isReady(self, getBase());
     }
 
-    @SuppressWarnings("unchecked") @Override public JsonObject save() {
+     @Override public JsonObject save() {
         JsonObject object = new JsonObject();
         object.add("base", getBase().save());
         object.add("mod", mod.save());

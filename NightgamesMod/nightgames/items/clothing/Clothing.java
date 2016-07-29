@@ -3,22 +3,25 @@ package nightgames.items.clothing;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
 
 import nightgames.Resources.ResourceLoader;
-import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.CharacterSex;
 import nightgames.characters.Trait;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
-import nightgames.json.JsonUtils;
 import nightgames.items.Loot;
+import nightgames.json.JsonUtils;
 
 public class Clothing implements Loot {
     public static final int N_LAYERS = 5;
@@ -250,10 +253,10 @@ public class Clothing implements Loot {
         result = 31 * result + slots.hashCode();
         result = 31 * result + sex.hashCode();
         result = 31 * result + price;
-        temp = Double.doubleToLongBits(Double.valueOf(String.format("%.6f", exposure)));
+        temp = Double.doubleToLongBits(Double.valueOf(String.format(Locale.ENGLISH, "%.6f", exposure)));
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + id.hashCode();
-        temp = Double.doubleToLongBits(Double.valueOf(String.format("%.6f", hotness)));
+        temp = Double.doubleToLongBits(Double.valueOf(String.format(Locale.ENGLISH, "%.6f", hotness)));
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + layer;
         return result;

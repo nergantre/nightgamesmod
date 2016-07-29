@@ -1,11 +1,11 @@
 package nightgames.modifier.action;
 
-import nightgames.modifier.ModifierCategoryLoader;
-import nightgames.modifier.ModifierComponentLoader;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import nightgames.modifier.ModifierCategoryLoader;
+import nightgames.modifier.ModifierComponentLoader;
 
 /**
  * TODO: Write class-level documentation.

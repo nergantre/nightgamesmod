@@ -98,7 +98,7 @@ public class CrisisOfFaith extends Status {
         return new CrisisOfFaith(newAffected);
     }
 
-    @SuppressWarnings("unchecked") @Override public JsonObject saveToJson() {
+     @Override public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         return obj;
