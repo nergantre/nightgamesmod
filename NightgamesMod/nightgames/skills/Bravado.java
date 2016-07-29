@@ -65,7 +65,7 @@ public class Bravado extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character attacker) {
-        return getSelf().name() + " gives you a determined glare as she seems to gain a second wind.";
+        return getSelf().name() + " gives you a determined glare as " + getSelf().pronoun() + " seems to gain a second wind.";
     }
 
     @Override
