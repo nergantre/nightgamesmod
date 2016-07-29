@@ -3,7 +3,7 @@ package nightgames.global;
 /**
  * Indicates whether it is daytime (shopping and talking) or nighttime (sex-fighting).
  */
-enum Time {
+public enum Time {
     DAY("day"), NIGHT("night");
 
     final String desc;
