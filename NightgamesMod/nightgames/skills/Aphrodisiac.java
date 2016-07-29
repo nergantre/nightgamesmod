@@ -1,7 +1,10 @@
 package nightgames.skills;
 
+import java.util.function.Predicate;
+
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -18,18 +21,30 @@ public class Aphrodisiac extends Skill {
     public boolean requirements(Combat c, Character user, Character target) {
         return true;
     }
+    
+    private final Predicate<BodyPart> hasSuccubusPussy = new Predicate<BodyPart>(){
+
+        @Override
+        public boolean test(BodyPart bodyPart) {
+            return bodyPart.isType("pussy") && bodyPart.moddedPartCountsAs(getSelf(), PussyPart.succubus);
+        }
+        
+    };
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return c.getStance().mobile(getSelf()) && getSelf().canAct() && getSelf().has(Item.Aphrodisiac)
-                        || getSelf().hasPussy() && getSelf().body.getRandomPussy().moddedPartCountsAs(getSelf(), PussyPart.succubus)
-                                        && getSelf().getArousal().get() >= 10 && !c.getStance().prone(getSelf());
+        boolean canMove = c.getStance().mobile(getSelf()) && getSelf().canAct();
+        boolean hasItem = getSelf().has(Item.Aphrodisiac);
+        boolean canGetFromOwnBody = !(getSelf().body.getCurrentPartsThatMatch(hasSuccubusPussy).isEmpty())
+                        && getSelf().getArousal().get() >= 10 && !c.getStance().prone(getSelf());
+        
+        return canMove && (hasItem || canGetFromOwnBody);
     }
 
     @Override
     public boolean resolve(Combat c, Character target) {
         int magnitude = Global.random(5) + 15;
-        if (getSelf().hasPussy() && getSelf().body.getRandomPussy().moddedPartCountsAs(getSelf(), PussyPart.succubus)) {
+        if (!getSelf().body.getCurrentPartsThatMatch(hasSuccubusPussy).isEmpty()) {//TODO: Arousal check? Otherwise, you can bypass the arousal check by having aphrodisiac in inventory
             c.write(getSelf(), receive(c, magnitude, Result.strong, target));
             target.arouse(magnitude, c);
             target.emote(Emotion.horny, 20);

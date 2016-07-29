@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import com.google.gson.JsonArray;
@@ -114,6 +115,10 @@ public class Body implements Cloneable {
 
     public Collection<BodyPart> getCurrentParts() {
         return currentParts;
+    }
+    
+    public List<BodyPart> getCurrentPartsThatMatch(Predicate<BodyPart> filterPredicate){
+        return currentParts.stream().filter(filterPredicate).collect(Collectors.toList());
     }
 
     private void updateCurrentParts() {
