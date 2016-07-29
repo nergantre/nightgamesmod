@@ -628,6 +628,14 @@ public class Global {
         day.plan();
     }
 
+    /**
+     * Sets the time to DAY, since the order of operations changed and manual end-of-match
+     * saves got flagged as NIGHT instead.
+     */
+    public static void endNightForSave() {
+        time = Time.DAY;
+    }
+    
     public static void endNight() {
         double level = 0;
         int maxLevelTracker = 0;

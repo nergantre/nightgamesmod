@@ -1216,6 +1216,7 @@ public class GUI extends JFrame implements Observer {
         clearCommand();
         showNone();
         mntmQuitMatch.setEnabled(false);
+        Global.endNightForSave();
         commandPanel.add(new SleepButton());
         commandPanel.add(new SaveButton());
         commandPanel.revalidate();
