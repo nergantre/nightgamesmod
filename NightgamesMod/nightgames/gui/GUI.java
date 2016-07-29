@@ -72,11 +72,7 @@ import nightgames.combat.IEncounter;
 import nightgames.daytime.Activity;
 import nightgames.daytime.Store;
 import nightgames.debug.DebugGUIPanel;
-import nightgames.global.DebugFlags;
-import nightgames.global.Encs;
-import nightgames.global.Flag;
-import nightgames.global.Global;
-import nightgames.global.Prematch;
+import nightgames.global.*;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.modifier.standard.NoModifier;
@@ -717,7 +713,7 @@ public class GUI extends JFrame implements Observer {
 
     // portrait loader
     public void loadPortrait(Combat c, Character player, Character enemy) {
-        if (!Global.checkFlag(Flag.noimage) && !Global.checkFlag(Flag.noportraits)) {
+        if (!Global.checkFlag(Flag.noportraits)) {
             if (Global.isDebugOn(DebugFlags.DEBUG_GUI)) {
                 System.out.println("Load portraits");
             }
@@ -729,8 +725,9 @@ public class GUI extends JFrame implements Observer {
             }
             loadPortrait(imagepath);
         } else {
+            clearPortrait();
             if (Global.isDebugOn(DebugFlags.DEBUG_GUI)) {
-                System.out.println("No images/portraits");
+                System.out.println("No portraits");
             }
         }
     }
@@ -1242,7 +1239,7 @@ public class GUI extends JFrame implements Observer {
         if (map != null) {
             map.repaint();
         }
-        if (Global.getMatch() != null) {
+        if (Global.getTime() == Time.NIGHT) {
             // yup... silverbard pls :D
             if (Global.getMatch().getHour() == 12 || Global.getMatch().getHour() < 10) {
                 timeLabel.setText(Global.getMatch().getTime() + " am");
@@ -1251,10 +1248,11 @@ public class GUI extends JFrame implements Observer {
             }
 
             timeLabel.setForeground(new Color(51, 101, 202));
-        }
-        if (Global.getDay() != null) { // not updating correctly during daytime
+        } else if (Global.getTime() == Time.DAY) { // not updating correctly during daytime
             timeLabel.setText(Global.getDay().getTime() + " pm");
             timeLabel.setForeground(new Color(253, 184, 19));
+        } else {
+            throw new RuntimeException("Unknown time of day: " + Global.getTime());
         }
         displayStatus();
     }
@@ -1557,7 +1555,7 @@ public class GUI extends JFrame implements Observer {
             super();
             setFont(new Font("Baskerville Old Face", 0, 18));
             setText("Go to sleep");
-            addActionListener(arg0 -> Global.endNight());
+            addActionListener(arg0 -> Global.startDay());
         }
     }
 
