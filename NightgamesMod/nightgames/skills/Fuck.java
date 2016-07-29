@@ -182,23 +182,23 @@ public class Fuck extends Skill {
         BodyPart targetO = getTargetOrgan(target);
         if (modifier == Result.normal) {
             return "you rub the head of your " + selfO.describe(getSelf()) + " around " + target.name()
-                            + "'s entrance, causing her to shiver with anticipation. Once you're sufficiently lubricated "
-                            + "with her wetness, you thrust into her " + target.body.getRandomPussy().describe(target)
+                            + "'s entrance, causing "+target.directObject()+" to shiver with anticipation. Once you're sufficiently lubricated "
+                            + "with "+target.possessivePronoun()+" wetness, you thrust into "+target.possessivePronoun()+" " + targetO.describe(target)
                             + ". " + target.name()
-                            + " tries to stifle her pleasured moan as you fill her in an instant.";
+                            + " tries to stifle "+target.possessivePronoun()+" pleasured moan as you fill "+target.possessivePronoun()+" in an instant.";
         } else if (modifier == Result.miss) {
             if (!selfO.isReady(getSelf()) && !targetO.isReady(target)) {
                 return "you're in a good position to fuck " + target.name()
                                 + ", but neither of you are aroused enough to follow through.";
-            } else if (!getTargetOrgan(target).isReady(target)) {
+            } else if (!targetO.isReady(target)) {
                 return "you position your " + selfO.describe(getSelf()) + " at the entrance to " + target.name()
-                                + ", but find that she's not nearly wet enough to allow a comfortable insertion. You'll need "
-                                + "to arouse her more or you'll risk hurting her.";
+                                + ", but find that "+target.pronoun()+"'s not nearly wet enough to allow a comfortable insertion. You'll need "
+                                + "to arouse "+target.directObject()+" more or you'll risk hurting "+target.directObject()+".";
             } else if (!selfO.isReady(getSelf())) {
                 return "you're ready and willing to claim " + target.name() + "'s eager "
-                                + target.body.getRandomPussy().describe(target) + ", but your shriveled "
+                                + targetO.describe(target) + ", but your shriveled "
                                 + selfO.describe(getSelf())
-                                + " isn't cooperating. Maybe your self-control training has become " + "too effective.";
+                                + " isn't cooperating. Maybe your self-control training has become too effective.";
             }
             return "you managed to miss the mark.";
         }
@@ -210,10 +210,10 @@ public class Fuck extends Skill {
         BodyPart selfO = getSelfOrgan();
         BodyPart targetO = getTargetOrgan(target);
         if (modifier == Result.normal) {
-            String message = getSelf().name() + " rubs her " + selfO.describe(getSelf())
-                            + " against your wet snatch. She slowly but steadily pushes in, forcing "
-                            + "her length into your hot, wet pussy.";
-            return message;
+            return String.format("%s rubs %s %s against your wet snatch. " +
+                                 "%s slowly but steadily pushes in, forcing %s length into your hot, wet pussy.", 
+                            getSelf().name(), getSelf().possessivePronoun(), selfO.describe(getSelf()), 
+                            Global.capitalizeFirstLetter(getSelf().pronoun()), getSelf().possessivePronoun());
         } else if (modifier == Result.miss) {
             if (!selfO.isReady(getSelf()) || !targetO.isReady(target)) {
                 return (damage == 0 ? getSelf().name() + " " : "")
