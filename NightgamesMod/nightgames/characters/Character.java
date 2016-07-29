@@ -93,14 +93,14 @@ public abstract class Character extends Observable implements Cloneable {
     public Set<Status> removelist;
     public Set<Status> addlist;
     public Map<String, Integer> cooldowns;
-    private CopyOnWriteArrayList<Character> mercy;
+    private CopyOnWriteArrayList<String> mercy;
     protected Map<Item, Integer> inventory;
     private Map<String, Integer> flags;
     protected Item trophy;
     public State state;
     protected int busy;
-    protected Map<Character, Integer> attractions;
-    protected Map<Character, Integer> affections;
+    protected Map<String, Integer> attractions;
+    protected Map<String, Integer> affections;
     public HashSet<Clothing> closet;
     public Pet pet;
     public List<Challenge> challenges;
@@ -1331,12 +1331,8 @@ public abstract class Character extends Observable implements Cloneable {
             willpower.setMax(resources.get("willpower").getAsFloat());
         }
 
-        affections = JsonUtils.mapFromJson(object.getAsJsonObject("affections"), String.class, Integer.class).entrySet()
-                        .stream()
-                        .collect(Collectors.toMap(e -> Global.getCharacterByType(e.getKey()), Map.Entry::getValue));
-        attractions = JsonUtils.mapFromJson(object.getAsJsonObject("attractions"), String.class, Integer.class)
-                        .entrySet().stream()
-                        .collect(Collectors.toMap(e -> Global.getCharacterByType(e.getKey()), Map.Entry::getValue));
+        affections = JsonUtils.mapFromJson(object.getAsJsonObject("affections"), String.class, Integer.class);
+        attractions = JsonUtils.mapFromJson(object.getAsJsonObject("attractions"), String.class, Integer.class);
 
         {
             outfitPlan.clear();
@@ -1953,11 +1949,12 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void defeated(Character victor) {
-        mercy.addIfAbsent(victor);
+        mercy.addIfAbsent(victor.getType());
     }
 
     public void resupply() {
-        for (Character victor : mercy) {
+        for (String victorType : mercy) {
+            Character victor = Global.getCharacterByType(victorType);
             victor.bounty(has(Trait.event) ? 5 : 1, victor);
         }
         mercy.clear();
@@ -1999,7 +1996,8 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void finishMatch() {
-        for (Character victor : mercy) {
+        for (String victorType : mercy) {
+            Character victor = Global.getCharacterByType(victorType);
             victor.bounty(has(Trait.event) ? 5 : 1, victor);
         }
         Global.gui().clearImage();
@@ -2043,7 +2041,7 @@ public abstract class Character extends Observable implements Cloneable {
             FTCMatch match = (FTCMatch) Global.getMatch();
             ftc = !match.inGracePeriod() || (!match.isPrey(this) && !match.isPrey(p2));
         }
-        return ftc && !mercy.contains(p2) && state != State.resupplying;
+        return ftc && !mercy.contains(p2.getType()) && state != State.resupplying;
     }
 
     public void setTrophy(Item trophy) {
@@ -2171,8 +2169,8 @@ public abstract class Character extends Observable implements Cloneable {
             Thread.dumpStack();
             return 0;
         }
-        if (attractions.containsKey(other)) {
-            return attractions.get(other);
+        if (attractions.containsKey(other.getType())) {
+            return attractions.get(other.getType());
         } else {
             return 0;
         }
@@ -2186,14 +2184,14 @@ public abstract class Character extends Observable implements Cloneable {
         if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
             System.out.printf("%s gained attraction for %s\n", name(), other.name());
         }
-        if (attractions.containsKey(other)) {
-            attractions.put(other, attractions.get(other) + x);
+        if (attractions.containsKey(other.getType())) {
+            attractions.put(other.getType(), attractions.get(other.getType()) + x);
         } else {
-            attractions.put(other, x);
+            attractions.put(other.getType(), x);
         }
     }
 
-    public Map<Character, Integer> getAffections() {
+    public Map<String, Integer> getAffections() {
         return Collections.unmodifiableMap(affections);
     }
 
@@ -2207,8 +2205,8 @@ public abstract class Character extends Observable implements Cloneable {
         if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
             System.out.printf("%s gained affection for %s\n", name(), other.name());
         }
-        if (affections.containsKey(other)) {
-            return affections.get(other);
+        if (affections.containsKey(other.getType())) {
+            return affections.get(other.getType());
         } else {
             return 0;
         }
@@ -2222,10 +2220,10 @@ public abstract class Character extends Observable implements Cloneable {
         if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
             System.out.printf("%s gained affection for %s\n", name(), other.name());
         }
-        if (affections.containsKey(other)) {
-            affections.put(other, affections.get(other) + x);
+        if (affections.containsKey(other.getType())) {
+            affections.put(other.getType(), affections.get(other.getType()) + x);
         } else {
-            affections.put(other, x);
+            affections.put(other.getType(), x);
         }
     }
 

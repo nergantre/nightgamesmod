@@ -205,7 +205,8 @@ public class Decider {
         int max = 0;
         Character bff = null;
         if (!self.attractions.isEmpty()) {
-            for (Character friend : self.attractions.keySet()) {
+            for (String key : self.attractions.keySet()) {
+                Character friend = Global.getCharacterByType(key);
                 if (self.getAttraction(friend) > max && !friend.human()) {
                     max = self.getAttraction(friend);
                     bff = friend;
