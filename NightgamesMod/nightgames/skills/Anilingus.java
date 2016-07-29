@@ -125,15 +125,15 @@ public class Anilingus extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return getSelf().name() + " closes in on your behind, but you manage to push "+target.possessivePronoun()+" head away.";
+            return getSelf().name() + " closes in on your behind, but you manage to push "+getSelf().possessivePronoun()+" head away.";
         } else if (modifier == Result.special) {
-            return getSelf().name() + " gently rims your asshole with "+target.possessivePronoun()+" tongue, sending shivers through your body.";
+            return getSelf().name() + " gently rims your asshole with "+getSelf().possessivePronoun()+" tongue, sending shivers through your body.";
         } else if (modifier == Result.reverse) {
             return "With your ass pressing into " + getSelf().nameOrPossessivePronoun()
-                            + " face, "+target.pronoun()+" helplessly gives in and starts licking your ass.";
+                            + " face, "+getSelf().pronoun()+" helplessly gives in and starts licking your ass.";
         } else if (modifier == Result.sub) {
             return "As if entranced, " + getSelf().subject()
-                            + " buries "+target.possessivePronoun()+" face inside your ass cheeks, licking your crack, and worshipping your anus.";
+                            + " buries "+getSelf().possessivePronoun()+" face inside your ass cheeks, licking your crack, and worshipping your anus.";
         }
         return getSelf().name() + " licks your tight asshole, both surprising and arousing you.";
     }
