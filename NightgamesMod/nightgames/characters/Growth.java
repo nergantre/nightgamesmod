@@ -57,11 +57,7 @@ public class Growth {
         character.getMojo().gain(mojo);
         character.getWillpower().gain(willpower);
 
-        if (character.rank < attributes.length) {
-            character.availableAttributePoints += attributes[character.rank];
-        } else {
-            character.availableAttributePoints += attributes[attributes.length - 1];
-        }
+        character.availableAttributePoints += attributes[Math.min(character.rank, attributes.length-1)];
 
         if (Global.checkFlag(Flag.hardmode)) {
             character.getStamina().gain(bonusStamina);
