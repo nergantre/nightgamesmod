@@ -105,35 +105,35 @@ public class Anilingus extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You try to lick " + target.name() + "'s rosebud, but she pushes your head away.";
+            return "You try to lick " + target.name() + "'s rosebud, but "+target.pronoun()+" pushes your head away.";
         } else if (modifier == Result.special) {
-            return "You gently rim " + target.name() + "'s asshole with your tongue, sending shivers through her body.";
+            return "You gently rim " + target.name() + "'s asshole with your tongue, sending shivers through "+target.possessivePronoun()+" body.";
         } else if (modifier == Result.reverse) {
             return "With " + target.nameOrPossessivePronoun()
-                            + " ass pressing into your face, you helplessly give in and take an experimental lick at her pucker.";
+                            + " ass pressing into your face, you helplessly give in and take an experimental lick at "+target.possessivePronoun()+" pucker.";
         } else if (modifier == Result.sub) {
             return "With a terrible need coursing through you, you lower your face between "
                             + target.nameOrPossessivePronoun()
-                            + " rear cheeks and plunge your tongue repeatedly in and out of her "
+                            + " rear cheeks and plunge your tongue repeatedly in and out of "+target.possessivePronoun()+" "
                             + target.body.getRandom("ass").describe(target) + ". "
                             + "You dimly realize that this is probably arousing you as much as " + target.getName()
-                            + ", but worshipping her sublime derriere seems much higher on your priorities than winning.";
+                            + ", but worshipping "+target.possessivePronoun()+" sublime derriere seems much higher on your priorities than winning.";
         }
-        return "You thrust your tongue into " + target.name() + "'s ass and lick it, making her yelp in surprise.";
+        return "You thrust your tongue into " + target.name() + "'s ass and lick it, making "+target.directObject()+" yelp in surprise.";
     }
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return getSelf().name() + " closes in on your behind, but you manage to push her head away.";
+            return getSelf().name() + " closes in on your behind, but you manage to push "+target.possessivePronoun()+" head away.";
         } else if (modifier == Result.special) {
-            return getSelf().name() + " gently rims your asshole with her tongue, sending shivers through your body.";
+            return getSelf().name() + " gently rims your asshole with "+target.possessivePronoun()+" tongue, sending shivers through your body.";
         } else if (modifier == Result.reverse) {
             return "With your ass pressing into " + getSelf().nameOrPossessivePronoun()
-                            + " face, she helplessly gives in and starts licking your ass.";
+                            + " face, "+target.pronoun()+" helplessly gives in and starts licking your ass.";
         } else if (modifier == Result.sub) {
             return "As if entranced, " + getSelf().subject()
-                            + " buries her face inside your ass cheeks, licking your crack, and worshipping your anus.";
+                            + " buries "+target.possessivePronoun()+" face inside your ass cheeks, licking your crack, and worshipping your anus.";
         }
         return getSelf().name() + " licks your tight asshole, both surprising and arousing you.";
     }
