@@ -382,7 +382,7 @@ public class Player extends Character {
         getStamina().gain(growth.stamina);
         getArousal().gain(growth.arousal);
         getMojo().gain(growth.mojo);
-        availableAttributePoints += growth.attributes[rank];
+        availableAttributePoints += growth.attributes[Math.min(rank, growth.attributes.length-1)];
         getMojo().gain(1);
         gui.message("You've gained a Level!<br>Select which attributes to increase.");
         if (getLevel() % 3 == 0 && level < 10 || (getLevel() + 1) % 2 == 0 && level > 10) {
