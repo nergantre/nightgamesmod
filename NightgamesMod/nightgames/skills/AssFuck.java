@@ -146,11 +146,11 @@ public class AssFuck extends Fuck {
         if (modifier == Result.normal) {
             return String.format(
                             (damage == 0 ? "You" : "After you")
-                                            + " make sure %s ass is sufficiently lubricated, you push your %s into her %s.",
+                                            + " make sure %s ass is sufficiently lubricated, you push your %s into %s %s.",
                             target.nameOrPossessivePronoun(), getSelfOrgan().describe(getSelf()),
-                            getTargetOrgan(target).describe(target));
+                            target.possessivePronoun(), getTargetOrgan(target).describe(target));
         } else {
-            return target.name() + "'s ass is oiled up and ready to go, but you're still too soft to penetrate her.";
+            return target.name() + "'s ass is oiled up and ready to go, but you're still too soft to penetrate "+target.directObject()+".";
         }
     }
 
