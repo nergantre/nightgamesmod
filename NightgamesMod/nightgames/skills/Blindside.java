@@ -41,7 +41,7 @@ public class Blindside extends Skill {
             c.write(getSelf(),
                             String.format("You move up to %s and kiss %s strongly. "
                                             + "While %s is distracted, you throw %s down and plant "
-                                            + "yourself on top of %s.", target.name(), target.pronoun(),
+                                            + "yourself on top of %s.", target.name(), target.directObject(),
                             target.pronoun(), target.directObject(), target.directObject()));
         } else {
             c.write(getSelf(), "Seductively swaying her hips, " + getSelf().subject() + " shashays over to you. "

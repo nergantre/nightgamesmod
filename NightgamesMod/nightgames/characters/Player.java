@@ -382,7 +382,7 @@ public class Player extends Character {
         getStamina().gain(growth.stamina);
         getArousal().gain(growth.arousal);
         getMojo().gain(growth.mojo);
-        availableAttributePoints += growth.attributes[rank];
+        availableAttributePoints += growth.attributes[Math.min(rank, growth.attributes.length-1)];
         getMojo().gain(1);
         gui.message("You've gained a Level!<br>Select which attributes to increase.");
         if (getLevel() % 3 == 0 && level < 10 || (getLevel() + 1) % 2 == 0 && level > 10) {
@@ -414,7 +414,7 @@ public class Player extends Character {
         status.removeIf(s -> !s.isAddiction());
         stamina.fill();
         if (location.name.equals("Showers")) {
-            gui.message("You let the hot water wash away your exhaustion and soon you're back to peak condition");
+            gui.message("You let the hot water wash away your exhaustion and soon you're back to peak condition.");
         }
         if (location.name.equals("Pool")) {
             gui.message("The hot water soothes and relaxes your muscles. You feel a bit exposed, skinny-dipping in such an open area. You decide it's time to get moving.");
