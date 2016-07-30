@@ -65,6 +65,7 @@ import nightgames.status.Stsflag;
 import nightgames.status.Trance;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
+import nightgames.status.addiction.Dominance;
 import nightgames.status.addiction.MindControl;
 import nightgames.trap.Trap;
 
@@ -683,6 +684,13 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void buildMojo(Combat c, int percent, String source) {
+        if (human() && Dominance.mojoIsBlocked(c)) {
+            c.write(c.getOther(this), 
+                            String.format("Enraptured by %s display of dominance, you build no mojo.", 
+                                            c.getOther(this).nameOrPossessivePronoun()));
+            return;
+        }
+        
         int x = percent * Math.min(mojo.max(), 200) / 100;
         int bonus = 0;
         for (Status s : getStatuses()) {

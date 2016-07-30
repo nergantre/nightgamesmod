@@ -185,7 +185,7 @@ public class Global {
         System.out.println("Night games");
         System.out.println(new Timestamp(jdate.getTime()));
 
-        // debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
+        debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
         // debug[DebugFlags.DEBUG_LOADING.ordinal()] = true;
         // debug[DebugFlags.DEBUG_FTC.ordinal()] = true;
         // debug[DebugFlags.DEBUG_DAMAGE.ordinal()] = true;
@@ -1134,7 +1134,7 @@ public class Global {
         characterPool.put(yui.getCharacter().getType(), yui.getCharacter());
 
 
-        //debugChars.add(mara.getCharacter());
+        debugChars.add(jewel.getCharacter());
     }
 
     public static void loadWithDialog() {

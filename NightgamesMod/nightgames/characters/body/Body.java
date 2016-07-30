@@ -559,12 +559,14 @@ public class Body implements Cloneable {
             multiplier = Math.max(0, multiplier + skill.multiplierForStage(character));
         }
         
+        double dominance = 0.0;
         if (character.human() && Global.getPlayer().checkAddiction(AddictionType.DOMINANCE, opponent)) {
             float mag = Global.getPlayer().getAddiction(AddictionType.DOMINANCE).get().getMagnitude();
             float dom = c.getDominanceOfStance(opponent);
-            multiplier += mag * (dom / 5.0);
+            dominance = mag * (dom / 5.0);
         }
-
+        multiplier += dominance;
+        
         double damage = base * multiplier;
         double perceptionlessDamage = base * (multiplier - (perceptionBonus - 1));
 
@@ -586,12 +588,13 @@ public class Body implements Cloneable {
                             ? String.format(" + <font color='rgb(255,100,50)'>%.1f<font color='white'>", bonusDamage)
                             : "";
             String stageString = skill == null ? "" : String.format(" + stage:%.2f", skill.multiplierForStage(character));
+            String dominanceString = dominance < 0.01 ? "" : String.format(" + dominance:%.2f", dominance);
             String battleString = String.format(
                             "%s%s %s<font color='white'> was pleasured by %s%s<font color='white'> for <font color='rgb(255,50,200)'>%d<font color='white'> "
-                                            + "base:%.1f (%.1f%s) x multiplier: %.2f (1 + sen:%.1f + ple:%.1f + per:%.1f %s)\n",
+                                            + "base:%.1f (%.1f%s) x multiplier: %.2f (1 + sen:%.1f + ple:%.1f + per:%.1f %s %s)\n",
                             firstColor, Global.capitalizeFirstLetter(character.nameOrPossessivePronoun()),
                             target.describe(character), secondColor, pleasuredBy, result, base, magnitude, bonusString,
-                            multiplier, sensitivity - 1, pleasure - 1, perceptionBonus - 1, stageString);
+                            multiplier, sensitivity - 1, pleasure - 1, perceptionBonus - 1, stageString, dominanceString);
             if (c != null) {
                 c.writeSystemMessage(battleString);
             }

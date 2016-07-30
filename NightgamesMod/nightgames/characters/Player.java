@@ -927,5 +927,14 @@ public class Player extends Character {
     public Severity getAddictionSeverity(AddictionType type) {
         return getAddiction(type).map(Addiction::getSeverity).orElse(Severity.NONE);
     }
+    
+    @Override
+    public int getEscape(Combat c) {
+        int escape = super.getEscape(c);
+        if (checkAddiction(AddictionType.DOMINANCE, c.getOther(this))) {
+            escape -= getAddiction(AddictionType.DOMINANCE).get().getCombatSeverity().ordinal() * 2;
+        }
+        return escape;
+    }
 
 }
