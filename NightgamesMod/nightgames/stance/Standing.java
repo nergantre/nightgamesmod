@@ -12,7 +12,7 @@ public class Standing extends MaledomSexStance {
     @Override
     public String describe() {
         if (top.human()) {
-            return "You are holding " + bottom.name() + " in the air while buried deep in her pussy";
+            return "You are holding " + bottom.name() + " in the air while buried deep in her pussy.";
         } else {
             return top.name() + " is holding you in her arms while pumping into your girl parts.";
         }

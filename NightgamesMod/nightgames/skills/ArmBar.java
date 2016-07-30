@@ -67,7 +67,7 @@ public class ArmBar extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You grab at " + target.name() + "'s arm, but she pulls it free.";
+            return "You grab at " + target.name() + "'s arm, but "+target.pronoun()+" pulls it free.";
         } else {
             return "You grab " + target.name()
                             + "'s arm at the wrist and pull it to your chest in the traditional judo submission technique.";
@@ -77,11 +77,11 @@ public class ArmBar extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return getSelf().name() + " grabs your wrist, but you pry it out of her grasp.";
+            return getSelf().name() + " grabs your wrist, but you pry it out of "+getSelf().possessivePronoun()+" grasp.";
         } else {
             return getSelf().name()
-                            + " pulls your arm between her legs, forcibly overextending your elbow. The pain almost makes you tap out, but you manage to yank your arm "
-                            + "out of her grip.";
+                            + " pulls your arm between "+getSelf().possessivePronoun()+" legs, forcibly overextending your elbow. The pain almost makes you tap out, but you manage to yank your arm "
+                            + "out of "+getSelf().possessivePronoun()+" grip.";
         }
     }
 

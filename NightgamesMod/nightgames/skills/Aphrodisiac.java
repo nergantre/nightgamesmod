@@ -90,11 +90,12 @@ public class Aphrodisiac extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.special) {
-            return "You pop an Aphrodisiac into your Aerosolizer and spray " + target.name()
-                            + " with a cloud of mist. She flushes and her eyes fill with lust as it takes hold.";
+            return String.format("You pop an Aphrodisiac into your Aerosolizer and spray %s"
+                            + " with a cloud of mist. %s flushes and %s eyes fill with lust as it takes hold.", 
+                            target.name(), Global.capitalizeFirstLetter(target.pronoun()), target.possessivePronoun());
         } else if (modifier == Result.miss) {
             return "You throw an Aphrodisiac at " + target.name()
-                            + ", but she ducks out of the way and it splashes harmlessly on the ground. What a waste.";
+                            + ", but "+target.pronoun()+" ducks out of the way and it splashes harmlessly on the ground. What a waste.";
         } else if (modifier == Result.strong) {
             return getSelf().subjectAction("dip", "dips") + " a finger "
                             + (getSelf().crotchAvailable() ? ""
@@ -109,12 +110,12 @@ public class Aphrodisiac extends Skill {
                             + target.directObject() + "," + " skillfully depositing it in " + target.possessivePronoun()
                             + " open mouth. " + Global.capitalizeFirstLetter(target.subject()) + " immediately feel"
                             + " a flash of heat spread through " + target.directObject()
-                            + " and only a small part of it" + " results from the anger caused by "
+                            + " and only a small part of it results from the anger caused by "
                             + getSelf().possessivePronoun() + " dirty move.";
         } else {
             return "You uncap a small bottle of Aphrodisiac and splash it in " + target.name()
-                            + "'s face. For a second, she's just surprised, but gradually a growing desire "
-                            + "starts to make her weak in the knees.";
+                            + "'s face. For a second, "+target.possessivePronoun()+"'s just surprised, but gradually a growing desire "
+                            + "starts to make "+target.directObject()+" weak in the knees.";
         }
 
     }
@@ -126,8 +127,8 @@ public class Aphrodisiac extends Skill {
                             + target.nameOrPossessivePronoun() + " direction, but none of it hits you.";
         } else if (modifier == Result.special) {
             return getSelf().name()
-                            + " inserts a bottle into the attachment on her arm. You're suddenly surrounded by a sweet smelling cloud of mist. You feel your blood boil "
-                            + "with desire as the unnatural gas takes effect";
+                            + " inserts a bottle into the attachment on "+getSelf().possessivePronoun()+" arm. You're suddenly surrounded by a sweet smelling cloud of mist. You feel your blood boil "
+                            + "with desire as the unnatural gas takes effect.";
         } else if (modifier == Result.strong) {
             return getSelf().subjectAction("dip", "dips") + " a finger "
                             + (getSelf().crotchAvailable() ? ""
