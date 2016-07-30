@@ -1019,6 +1019,14 @@ public class Global {
     public static void unflag(Flag f) {
         flags.remove(f.name());
     }
+    
+    public static void setFlag(Flag f, boolean value) {
+        if (value) { 
+            flags.add(f.name()); 
+        } else { 
+            flags.remove(f.name()); 
+        }
+    }
 
     public static boolean checkFlag(Flag f) {
         return flags.contains(f.name());

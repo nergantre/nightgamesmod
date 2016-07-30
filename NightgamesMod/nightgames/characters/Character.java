@@ -2806,7 +2806,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     private boolean useFemalePronouns() {
-        return hasPussy() || !hasDick();
+        return hasPussy() || !hasDick() || Global.checkFlag(Flag.FemalePronounsOnly);
     }
 
     public String nameDirectObject() {

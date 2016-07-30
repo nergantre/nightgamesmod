@@ -313,6 +313,16 @@ public class GUI extends JFrame implements Observer {
         optionsPanel.add(fontSizeLabel);
         optionsPanel.add(rdfntnorm);
         optionsPanel.add(rdnfntlrg);
+        
+        JLabel pronounLabel = new JLabel("Pronoun Usage");
+        ButtonGroup pronoun = new ButtonGroup();
+        JRadioButton rdPronounBody = new JRadioButton("Based on Anatomy");
+        JRadioButton rdPronounFemale = new JRadioButton("Always Female");
+        pronoun.add(rdPronounBody);
+        pronoun.add(rdPronounFemale);
+        optionsPanel.add(pronounLabel);
+        optionsPanel.add(rdPronounBody);
+        optionsPanel.add(rdPronounFemale);
 
         // m/f preference (no (other) males in the games yet... good for
         // modders?)
@@ -342,8 +352,7 @@ public class GUI extends JFrame implements Observer {
         malePrefSlider.addChangeListener(e -> Global.setCounter(Flag.malePref, malePrefSlider.getValue()));
 
         // malePrefPanel - options submenu - visible
-        // temporarily remove the maleprefslider, as NPCs no longer really use it for anything useful.
-        // optionsPanel.add(malePrefSlider);
+        optionsPanel.add(malePrefSlider);
         mntmOptions.addActionListener(arg0 -> {
             if (Global.checkFlag(Flag.systemMessages)) {
                 rdMsgOn.setSelected(true);
@@ -382,35 +391,22 @@ public class GUI extends JFrame implements Observer {
             } else {
                 rdfntnorm.setSelected(true);
             }
+            if (Global.checkFlag(Flag.FemalePronounsOnly)) {
+                rdPronounFemale.setSelected(true);
+            } else {
+                rdPronounBody.setSelected(true);
+            }
             malePrefSlider.setValue(Math.round(Global.getValue(Flag.malePref)));
             int result = JOptionPane.showConfirmDialog(GUI.this, optionsPanel, "Options", JOptionPane.OK_CANCEL_OPTION,
                             JOptionPane.INFORMATION_MESSAGE);
             if (result == JOptionPane.OK_OPTION) {
-                if (rdMsgOn.isSelected()) {
-                    Global.flag(Flag.systemMessages);
-                } else {
-                    Global.unflag(Flag.systemMessages);
-                }
-                if (rdnormal.isSelected()) {
-                    Global.unflag(Flag.dumbmode);
-                } else {
-                    Global.flag(Flag.dumbmode);
-                }
-                if (rdhard.isSelected()) {
-                    Global.flag(Flag.hardmode);
-                } else {
-                    Global.unflag(Flag.hardmode);
-                }
-                if (rdautosaveoff.isSelected()) {
-                    Global.unflag(Flag.autosave);
-                } else {
-                    Global.flag(Flag.autosave);
-                }
-                if (rdporon.isSelected()) {
-                    Global.unflag(Flag.noportraits);
-                } else {
-                    Global.flag(Flag.noportraits);
-                    // TODO I know this removes the map, but I don't want to bother checking for it right now.
+                Global.setFlag(Flag.systemMessages, rdMsgOn.isSelected());
+                Global.setFlag(Flag.dumbmode, !rdnormal.isSelected());
+                Global.setFlag(Flag.hardmode, rdhard.isSelected());
+                Global.setFlag(Flag.autosave, rdautosaveon.isSelected());
+                Global.setFlag(Flag.noportraits, rdporoff.isSelected());
+                Global.setFlag(Flag.FemalePronounsOnly, rdPronounFemale.isSelected());
+                if (!rdporon.isSelected()) {
                     showNone();
                 }
                 if (rdimgon.isSelected()) {

@@ -37,26 +37,43 @@ public class Dominance extends Addiction {
     
     @Override
     protected Optional<Status> withdrawalEffects() {
-        // TODO Auto-generated method stub
         return Optional.empty();
     }
 
     @Override
     protected Optional<Status> addictionEffects() {
-        // TODO Auto-generated method stub
-        return Optional.empty();
+        return Optional.of(this);
     }
 
     @Override
     protected String describeIncrease() {
-        // TODO Auto-generated method stub
-        return "";
+        switch (getSeverity()) {
+            case HIGH:
+                return "Held down by Jewel, you feel completely powerless to resist.";
+            case LOW:
+                return "You feel strangely weak in Jewel's powerful hold.";
+            case MED:
+                return "Something about the way Jewel is holding on to you is causing your strength to seep away.";
+            case NONE:
+            default:
+                return "";
+        }
     }
 
     @Override
     protected String describeDecrease() {
-        // TODO Auto-generated method stub
-        return "";
+        switch (getSeverity()) {
+            case LOW:
+                return "More and more of your strength is returning since escaping from Jewel. ";
+            case MED:
+                return "You find some of the strange weakness caused by Jewel's powerful hold"
+                                + " fleeing your bones. ";
+            case NONE:
+                return "You have completely recovered from Jewel's hold. ";
+            case HIGH:
+            default:
+                return "";
+        }
     }
 
     @Override
