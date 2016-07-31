@@ -599,10 +599,10 @@ public class NPC extends Character {
                 if (clothes != null) {
                     c.write(this, name()
                                     + " manages to catch you groping her clothing, and in a swift motion strips off your "
-                                    + clothes.getName());
+                                    + clothes.getName() + ".");
                 } else {
                     c.write(this, name()
-                                    + " manages to dodge your groping hands and gives a retaliating slap in return");
+                                    + " manages to dodge your groping hands and gives a retaliating slap in return.");
                     target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
                 }
                 break;
@@ -616,7 +616,7 @@ public class NPC extends Character {
                 }
                 break;
             default:
-                c.write(this, name() + " manages to dodge your attack and gives a retaliating slap in return");
+                c.write(this, name() + " manages to dodge your attack and gives a retaliating slap in return.");
                 target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
         }
     }
