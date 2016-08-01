@@ -702,8 +702,8 @@ public class Player extends Character {
                             opponent.nameOrPossessivePronoun() + " pheromones"));
         }
         if (opponent.has(Trait.smqueen) && !is(Stsflag.masochism)) {
-            c.write(Global.capitalizeFirstLetter(
-                            String.format("<br>%s seem to shudder in arousal at the thought of pain.", subject())));
+            c.write("<br>"+Global.capitalizeFirstLetter(
+                            String.format("%s seem to shudder in arousal at the thought of pain.", subject())));
             add(c, new Masochistic(this));
         }
         if (has(Trait.RawSexuality)) {
