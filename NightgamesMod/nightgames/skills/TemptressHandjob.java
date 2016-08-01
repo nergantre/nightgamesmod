@@ -68,7 +68,7 @@ public class TemptressHandjob extends Handjob {
                                 getSelf().subjectAction("reach", "reaches"), target.nameOrPossessivePronoun(),
                                 target.pronoun(), target.possessivePronoun());
             case weak:
-                return String.format("%s %s limp %s and %s it expertly, but it remains flaccid despite %s best efforts",
+                return String.format("%s %s limp %s and %s it expertly, but it remains flaccid despite %s best efforts.",
                                 getSelf().subjectAction("grab", "grabs"), target.nameOrPossessivePronoun(),
                                 target.body.getRandomCock().describe(target), getSelf().action("fondle", "fondles"),
                                 getSelf().possessivePronoun());
