@@ -992,7 +992,7 @@ public class Body implements Cloneable {
             parts.add(cock);
         }
         Collections.shuffle(parts);
-        if (parts.size() > 1) {
+        if (parts.size() >= 1) {
             return parts.get(0);
         } else {
             return getRandomBreasts();
