@@ -31,7 +31,7 @@ public class SelfStun extends Skill {
         getSelf().add(c, new Winded(getSelf()));
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (getSelf().human()) {
+        } else if (target.human()) {
             c.write(getSelf(), receive(c, 0, Result.normal, target));
         }
         return true;
