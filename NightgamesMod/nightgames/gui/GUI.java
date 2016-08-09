@@ -1236,7 +1236,8 @@ public class GUI extends JFrame implements Observer {
         if (map != null) {
             map.repaint();
         }
-        if (Global.getTime() == Time.NIGHT) {
+        // We may be in between setting NIGHT and building the Match object
+        if (Global.getTime() == Time.NIGHT && Global.getMatch() != null) {
             // yup... silverbard pls :D
             if (Global.getMatch().getHour() == 12 || Global.getMatch().getHour() < 10) {
                 timeLabel.setText(Global.getMatch().getTime() + " am");

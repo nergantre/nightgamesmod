@@ -25,6 +25,8 @@ public class Dominance extends Addiction {
     }
 
     public static boolean mojoIsBlocked(Combat c) {
+        if (c == null)
+            return false;
         Player player = Global.getPlayer();
         Character opp = c.getOther(player);
         if (!Global.getPlayer().checkAddiction(AddictionType.DOMINANCE, opp))
