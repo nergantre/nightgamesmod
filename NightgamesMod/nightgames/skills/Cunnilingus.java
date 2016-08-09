@@ -125,7 +125,7 @@ public class Cunnilingus extends Skill {
                                             + " somehow she has managed to enthrall you with her juices." : "");
         }
         if (modifier == Result.reverse) {
-            return "Your resign yourself to lapping at " + target.nameOrPossessivePronoun()
+            return "You resign yourself to lapping at " + target.nameOrPossessivePronoun()
                             + " pussy, as she dominates your face with her ass."
                             + (damage == -1 ? " Under your skilled ministrations, her juices flow freely, and they unmistakably"
                                             + " have their effect on you."

@@ -65,6 +65,11 @@ public class DarkKiss extends Skill {
     public Tactics type(Combat c) {
         return Tactics.pleasure;
     }
+    
+    @Override
+    public boolean makesContact(){
+        return true;
+    }
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
