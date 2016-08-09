@@ -67,11 +67,13 @@ public class Clothing implements Loot {
     Set<CharacterSex> sex;
     int price;
     double exposure;
-    String id;
+    final String id;
     double hotness;
     int layer;
 
-    Clothing() {}
+    Clothing(String id) {
+        this.id = id;
+    }
 
     @Override
     public String getName() {
@@ -204,61 +206,11 @@ public class Clothing implements Loot {
         return sb.toString();
     }
 
-    // TODO: Replace small floating point values with integer representations
     @Override public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-
-        Clothing clothing = (Clothing) o;
-
-        if (dc != clothing.dc)
-            return false;
-        if (price != clothing.price)
-            return false;
-        if (!(Math.abs(clothing.exposure - exposure) < 1e-6))
-            return false;
-        if (!(Math.abs(clothing.hotness - hotness) < 1e-6))
-            return false;
-        if (layer != clothing.layer)
-            return false;
-        if (!name.equals(clothing.name))
-            return false;
-        if (!prefix.equals(clothing.prefix))
-            return false;
-        if (!attributes.equals(clothing.attributes))
-            return false;
-        if (!stores.equals(clothing.stores))
-            return false;
-        if (!buffs.equals(clothing.buffs))
-            return false;
-        if (!slots.equals(clothing.slots))
-            return false;
-        if (!sex.equals(clothing.sex))
-            return false;
-        return id.equals(clothing.id);
-
+        return o != null && ((Clothing) o).id.equals(id);
     }
 
     @Override public int hashCode() {
-        int result;
-        long temp;
-        result = name.hashCode();
-        result = 31 * result + dc;
-        result = 31 * result + prefix.hashCode();
-        result = 31 * result + attributes.hashCode();
-        result = 31 * result + stores.hashCode();
-        result = 31 * result + buffs.hashCode();
-        result = 31 * result + slots.hashCode();
-        result = 31 * result + sex.hashCode();
-        result = 31 * result + price;
-        temp = Double.doubleToLongBits(Double.valueOf(String.format(Locale.ENGLISH, "%.6f", exposure)));
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + id.hashCode();
-        temp = Double.doubleToLongBits(Double.valueOf(String.format(Locale.ENGLISH, "%.6f", hotness)));
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + layer;
-        return result;
+        return id.hashCode();
     }
 }

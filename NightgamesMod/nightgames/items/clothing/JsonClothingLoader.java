@@ -21,8 +21,7 @@ public class JsonClothingLoader {
      * Example: { "displayName":"shirt", "buffs":[ ], "price":275, "prefix":"a ", "attributes":[ ], "layer":1, "slots" : ["top"], "sex" : ["all"], "hotness":0.1, "name":"shirt", "toughness":5, "exposure":0.4 },
      */
     protected static Clothing loadClothingFromJson(JsonObject clothingObj) {
-        Clothing clothing = new Clothing();
-        clothing.id = clothingObj.get("name").getAsString();
+        Clothing clothing = new Clothing(clothingObj.get("name").getAsString());
         clothing.name = clothingObj.get("displayName").getAsString();
         clothing.price = clothingObj.get("price").getAsInt();
         clothing.setLayer(clothingObj.get("layer").getAsInt());
