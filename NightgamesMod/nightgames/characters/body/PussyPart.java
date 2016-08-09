@@ -359,7 +359,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                                 target.describe(opponent)));
                 opponent.pain(c, Math.max(30, 20 + self.get(Attribute.Ki)));
             } else {
-                c.write(self, String.format("Pluging %s %s into %s %s leaves %s gasping from the heat.",
+                c.write(self, String.format("Plugging %s %s into %s %s leaves %s gasping from the heat.",
                                 opponent.possessivePronoun(), target.describe(opponent), self.possessivePronoun(),
                                 describe(self), opponent.directObject()));
                 opponent.pain(c, 20 + self.get(Attribute.Ki) / 2);
