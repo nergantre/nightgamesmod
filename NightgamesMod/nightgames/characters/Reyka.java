@@ -281,7 +281,7 @@ public class Reyka extends BasePersonality {
                             + "She pulls a blindfold out of a small pocket in her miniskirt and secures it tightly over your eyes. <i>\"Wouldn't want to spoil the surprise, would we?\"</i> For "
                             + "just a moment, you feel a slight pull on you mind, but the sensation passes quickly, replaced by that of one of her slender fingers invading your mouth. "
                             + "It is covered with a fragrant liquid and given what you already know about her, there is little doubt in your mind of its origins. Your suspicions "
-                            + "are proven correct when the ahrodisiac reaches your loins, which respond as expected. Appearantly not one to stand on ceremony, Reyka immediatly "
+                            + "are proven correct when the aphrodisiac reaches your loins, which respond as expected. Appearantly not one to stand on ceremony, Reyka immediatly "
                             + "settles over you now rock hard dick and lowers herself down onto it. The sensation is beyond comparison, her pussy wiggles and twists around you almost "
                             + "as if it has a mind of its own, a mind connected to your own, knowing what will bring you the most pleasure. Your experiences in sex-fighting have "
                             + "left you with impressive sexual stamina, but in the face of a succubus' unimpeded attentions, no man can hope to last. All too quickly you succumb "
