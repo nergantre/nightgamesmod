@@ -168,7 +168,7 @@ public class Reyka extends BasePersonality {
 
     @Override
     public String taunt(Combat c) {
-        return "\"You look like you will taste nice. Maybe if let me have " + "a taste, I will be nice to you too.\"";
+        return "\"You look like you will taste nice. Maybe if you let me have " + "a taste, I will be nice to you too.\"";
     }
 
     @Override
