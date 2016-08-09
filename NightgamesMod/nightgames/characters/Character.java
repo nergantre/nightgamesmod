@@ -1755,14 +1755,14 @@ public abstract class Character extends Observable implements Cloneable {
         if (opponent.has(Trait.magicEyeTrance) && getArousal().percent() >= 50 && c.getStance().facing()
                         && Global.random(10) == 0) {
             c.write(opponent,
-                            Global.format("<br>{other:NAME-POSSESSIVE} eyes start glowing and sends {self:subject} straight into a trance.",
+                            Global.format("<br>{other:NAME-POSSESSIVE} eyes start glowing and send {self:subject} straight into a trance.",
                                             this, opponent));
             add(c, new Trance(this));
         }
         if (opponent.has(Trait.magicEyeFrenzy) && getArousal().percent() >= 50 && c.getStance().facing()
                         && Global.random(10) == 0) {
             c.write(opponent,
-                            Global.format("<br>{other:NAME-POSSESSIVE} eyes start glowing and sends {self:subject} into a frenzy.",
+                            Global.format("<br>{other:NAME-POSSESSIVE} eyes start glowing and send {self:subject} into a frenzy.",
                                             this, opponent));
             add(c, new Frenzied(this, 3));
         }
