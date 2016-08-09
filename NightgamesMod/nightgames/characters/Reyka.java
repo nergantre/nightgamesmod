@@ -279,7 +279,7 @@ public class Reyka extends BasePersonality {
             return "<i>\"How kind of you to hold him for me, dear.\"</i> Reyka bows her head ever so slightly towards "
                             + assist.name() + " and then turns her gaze upon you prone form. "
                             + "She pulls a blindfold out of a small pocket in her miniskirt and secures it tightly over your eyes. <i>\"Wouldn't want to spoil the surprise, would we?\"</i> For "
-                            + "just a moment, you feel a slight pull on you mind, but the sensation passes quickly, replaced by that of one of her slender fingers invading your mouth. "
+                            + "just a moment, you feel a slight pull on your mind, but the sensation passes quickly, replaced by that of one of her slender fingers invading your mouth. "
                             + "It is covered with a fragrant liquid and given what you already know about her, there is little doubt in your mind of its origins. Your suspicions "
                             + "are proven correct when the aphrodisiac reaches your loins, which respond as expected. Appearantly not one to stand on ceremony, Reyka immediatly "
                             + "settles over you now rock hard dick and lowers herself down onto it. The sensation is beyond comparison, her pussy wiggles and twists around you almost "
