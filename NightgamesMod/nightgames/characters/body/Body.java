@@ -904,7 +904,7 @@ public class Body implements Cloneable {
             part = character.body.getRandom("skin");
         }
         if (character.has(Trait.spiritphage)) {
-            c.write(Global.capitalizeFirstLetter("<br><b>" + character.subjectAction("glow", "glows")
+            c.write("<br><b>" + Global.capitalizeFirstLetter(character.subjectAction("glow", "glows")
                             + " with power as the cum is absorbed by " + character.possessivePronoun() + " "
                             + part.describe(character) + ".</b>"));
             character.add(c, new Abuff(character, Attribute.Power, 5, 10));
@@ -992,7 +992,7 @@ public class Body implements Cloneable {
             parts.add(cock);
         }
         Collections.shuffle(parts);
-        if (parts.size() > 1) {
+        if (parts.size() >= 1) {
             return parts.get(0);
         } else {
             return getRandomBreasts();

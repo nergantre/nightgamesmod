@@ -923,7 +923,7 @@ public class Combat extends Observable implements Cloneable {
             }
             if (player.checkAddiction(AddictionType.BREEDER, opp)) {
                 if (voluntary) {
-                    write(player, "As you enter Kat, instinct immediately kick in. It just"
+                    write(player, "As you enter Kat, instinct immediately kicks in. It just"
                                     + " feels so right, like this is what you're supposed"
                                     + " to be doing all the time.");
                     player.addict(AddictionType.BREEDER, opp, Addiction.MED_INCREASE);

@@ -18,6 +18,7 @@ import nightgames.items.Item;
 import nightgames.requirements.BodyPartRequirement;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
+import nightgames.status.addiction.Addiction.Severity;
 
 public class CassieTime extends BaseNPCTime {
     public CassieTime(Character player) {
@@ -191,7 +192,7 @@ public class CassieTime extends BaseNPCTime {
             Global.gui().choose(this, "Games");
             Global.gui().choose(this, "Sparring");
             Global.gui().choose(this, "Sex");
-            if (npc.has(Trait.magicmilk)) {
+            if (npc.has(Trait.magicmilk) && Global.getPlayer().getAddictionSeverity(AddictionType.MAGIC_MILK) != Severity.NONE) {
                 Global.gui().choose(this, "Ask for milk");
             }
         }

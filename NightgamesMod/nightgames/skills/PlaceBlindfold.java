@@ -21,7 +21,7 @@ public class PlaceBlindfold extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().has(Item.Blindfold) && !target.is(Stsflag.blinded) && !c.getStance()
+        return getSelf().canAct() && getSelf().has(Item.Blindfold) && !target.is(Stsflag.blinded) && !c.getStance()
                                                                                  .mobile(target);
     }
 

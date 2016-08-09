@@ -68,7 +68,7 @@ public class TemptressRide extends Thrust {
         target.body.pleasure(getSelf(), getSelf().body.getRandomPussy(), target.body.getRandomCock(),
                         targetDmg + targetDmg * stack / 2, c, this);
 
-        getSelf().body.pleasure(getSelf(), target.body.getRandomCock(), getSelf().body.getRandomPussy(), selfDmg, c, this);
+        getSelf().body.pleasure(target, target.body.getRandomCock(), getSelf().body.getRandomPussy(), selfDmg, c, this);
 
         getSelf().add(c, new FiredUp(getSelf(), target, "pussy"));
         return true;

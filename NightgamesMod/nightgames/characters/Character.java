@@ -623,7 +623,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void arouse(int i, Combat c, String source) {
-        String message = String.format("%s aroused for <font color='rgb(240,100,100)'>%d<font color='white'>%s\n",
+        String message = String.format("%s aroused for <font color='rgb(240,100,100)'>%d<font color='white'> %s\n",
                         Global.capitalizeFirstLetter(subjectWas()), i, source);
         if (c != null) {
             c.writeSystemMessage(message);
