@@ -201,7 +201,7 @@ public class Airi extends BasePersonality {
     @Override
     public String nakedLiner(Combat c) {
         // always naked in slime form
-        return character.has(Trait.slime) ? "" : "<i>Nooo! don't look at me!</i>";
+        return character.has(Trait.slime) ? "" : "<i>Nooo! Don't look at me!</i>";
     }
 
     @Override
@@ -232,13 +232,13 @@ public class Airi extends BasePersonality {
         character.purge(c);
         return "Airi crawls over to you at an agonizing pace. Her slime rapidly flows on top of your penis and covers it in a sticky bulb. <i>\"Time… for you to cum…\"</i><br><br>"
                         + "Her previously still slime suddenly starts to frantically squeeze and knead your cock, pulsating in waves of sticky goo on top of you. Startled by the sudden stimulation, you barely manage to hold on. Unfortunately--or perhaps fortunately--for you, Airi is not finished. She also covers your chest with her own sticky breasts and engulfs your nipples inside hers. Although it’s just slime, you feel as if her lips are on your nipples, sucking them and rolling the tips around inside her mouth.<br><br>"
-                        + "As you’re being overloaded with sensations, Airi brings her face close to yours and whispers in your ear.<i>\"Cum… cum… cum…\"<i> With a groan of agonising pleasure, you come hard, firing ropes of your seed inside her translucent depths.<br><br>"
+                        + "As you’re being overloaded with sensations, Airi brings her face close to yours and whispers in your ear.<i>\"Cum… cum… cum…\"</i> With a groan of agonising pleasure, you come hard, firing ropes of your seed inside her translucent depths.<br><br>"
                         + "Panting with exertion from the aftershocks of your orgasm, you see your cum floating around in her body quickly getting absorbed and disappearing into nothing. Sensing danger, you glance at Airi's face <i>\"...Not enough... I need more food...\"</i><br><br>"
                         + "This time Airi engulfs your whole body, leaving only your face outside, facing the sky. Try as you might, you can't even move your neck to see what's happening below. Feeling frightened at what she might do, you tense up your body to attempt to resist. <i>\"Are you... ready..? I'll begin...\"</i> Whatever you expected, it was not this. Her whole body begins to churn around your own, both massaging and licking every square inch of you. You feel a tendril of slime enter your ass and press against your prostate. At the same time two tendrils of slime enter your ears and attach themselves to something deep inside your head. In seconds, you feel Airi literally inside your head.<br><br>"
                         + "<i>\"Cum...\"</i> An orgasm like nothing you felt before tears through your body, searing your head until your vision turns white.<br><br>"
                         + "<i>\"Cum...\"</i> Another climax wracks you, suspending all your thoughts.<br><br>"
                         + "<i>\"Cum...\"</i> Your cum turns thin, flowing out like water.<br><br>"
-                        + "<i>\"Give yourself... to me...\"</i> One final orgasm leaves you out cold. When you come to, you see Airi has left, taking your boxers like that. Wow, you're not sure how many more of these you can endure<br><br>";
+                        + "<i>\"Give yourself... to me...\"</i> One final orgasm leaves you out cold. When you come to, you see Airi has left, taking your boxers like that. Wow, you're not sure how many more of these you can endure.<br><br>";
     }
 
     @Override
@@ -263,7 +263,7 @@ public class Airi extends BasePersonality {
                         + " on her face. <i>\"Wonderful... Reward...\"</i> she mutters, even breathier than usual. "
                         + "She gently pulls you back down onto her. Since you've already won, you do not resist as Airi "
                         + "lets you sink in to her body slightly. Nor when every bit of her body starts vibrating against "
-                        + "your skin. The full-body massage is wonderful, especially when it starts focussing more and more "
+                        + "your skin. The full-body massage is wonderful, especially when it starts focusing more and more "
                         + "on your dick. It's somehow ended up in her pussy, which is milking you greedily. Seeing no reason"
                         + " to stop her, you just relax in her embrace and let her slowly drive you closer. Right before you "
                         + "cum, she kisses you again, pushing you over the edge. There is no frantic milking this time, just "
@@ -303,7 +303,7 @@ public class Airi extends BasePersonality {
     public String victory3p(Combat c, Character target, Character assist) {
         if (target.human()) {
             return "Airi crawls over to you at an agonizing pace. Her slime rapidly flows on top of your penis and covers it in a sticky bulb. <i>\"Time… for you to cum…\"</i><br><br>"
-                            + "Her previously still slime suddenly starts to frantically squeeze and knead your cock, pulsating in waves of sticky goo on top of you. Startled by the sudden stimulation, you cum in seconds, spilling the proof of your defeat inside her tendril<br><br>";
+                            + "Her previously still slime suddenly starts to frantically squeeze and knead your cock, pulsating in waves of sticky goo on top of you. Startled by the sudden stimulation, you cum in seconds, spilling the proof of your defeat inside her tendril.<br><br>";
         } else {
             return "Airi flows over to " + target.name()
                             + ". Her slime pools into a long and flexible appendage and worms itself inside "
@@ -316,12 +316,12 @@ public class Airi extends BasePersonality {
     public String intervene3p(Combat c, Character target, Character assist) {
         if (target.human()) {
             return Global.format(
-                            "Your fight with {other:name} seemed to have ran into a stalemate. Neither of you is willing to get close enough to each other for anything substantial to happen. You just continue to trade taunt while waiting for an opportunity.<br><br>"
+                            "Your fight with {other:name} seemed to have ran into a stalemate. Neither of you is willing to get close enough to each other for anything substantial to happen. You just continue to trade taunts whilst waiting for an opportunity.<br><br>"
                                             + "Suddenly, you feel something grasp your ankles and pull you off balance. You brace yourself for the fall, but after a second, you only feel softness on your back. It’s Airi. She somehow snuck up on you and tripped you into falling on top of her. She quickly engulfs your hands and legs in her slime and presents your helpless body to {other:name}’s ministrations.",
                             character, assist);
         } else {
             return Global.format(
-                            "Your fight with {other:name} seemed to have ran into a stalemate. Neither of you is willing to get close enough to each other for anything substantial to happen. You just continue to trade taunt while waiting for an opportunity.<br><br>"
+                            "Your fight with {other:name} seemed to have ran into a stalemate. Neither of you is willing to get close enough to each other for anything substantial to happen. You just continue to trade taunts whilst waiting for an opportunity.<br><br>"
                                             + "Suddenly, a blue blob appears in your line of sight. It’s Airi! More swiftly than you would expect, Airi moves to {other:name}’s side and engulfs her body in her own. After dissolving her clothing with her slime, Airi surfaces only {other:name-possessive} torso and sex, presenting her to you. Well, presented with a gift on a silver platter, you’re not going to refuse!",
                             character, target);
         }
@@ -377,7 +377,7 @@ public class Airi extends BasePersonality {
 
     @Override
     public String makeOrgasmLiner(Combat c) {
-        return character.has(Trait.slime) ? "<i>\"...Feels good..? I'll suck more out... I'll drain you dry...\"</i>" : "<i>\"Feels good? let me have some more...\"</i>";
+        return character.has(Trait.slime) ? "<i>\"...Feels good..? I'll suck more out... I'll drain you dry...\"</i>" : "<i>\"Feels good? Let me have some more...\"</i>";
     }
 
     @Override
