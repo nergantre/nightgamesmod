@@ -219,8 +219,8 @@ public class Cassie extends BasePersonality {
                             + "you actually came while she was pegging you. <i>\"You came?\"</i> she gasps. <i>\"I mean the shopkeeper said it would work but....\"</i> she trails off.  She smiles, and stands. <i>\"I never knew "
                             + "I'd enjoy that so much.\"</i> Her grin widens in a way that makes you nervous. <i>\"I might need to try that again in the future.\"</i> Your decide to bid a hasty retreat leaving your "
                             + "clothes behind to the victor.";
-        } else if (character.has(Trait.lactating) && c.getStance().en == Stance.nursing && c.getStance().dom(character)) {
-            return "";
+        } else if (false && character.has(Trait.lactating) && c.getStance().en == Stance.nursing && c.getStance().dom(character)) {
+            return "";//Disabled for being empty; why show the player an empty scene on defeat?
         } else if (character.has(Trait.witch) && character.has(Trait.silvertongue) && Global.random(3) == 0) {
             character.arousal.empty();
             return "Cassie's efforts to pleasure you finally break your resistance and you find yourself completely unable to stop her. She slips between your legs and takes your straining "
