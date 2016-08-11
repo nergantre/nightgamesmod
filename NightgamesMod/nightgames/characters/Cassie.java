@@ -278,12 +278,7 @@ public class Cassie extends BasePersonality {
 
     @Override
     public String defeat(Combat c, Result flag) {
-        Character opponent;
-        if (c.p1 == character) {
-            opponent = c.p2;
-        } else {
-            opponent = c.p1;
-        }
+        Character opponent = c.getOther(character);
         if (character.has(Trait.witch) && Global.random(3) == 0) {
             opponent.add(c, new Energized(opponent, 10));
             return "You capture Cassie's lips and slip your hand between her legs to facilitate her imminent orgasm. You rub her soaked pussy lips and she moans against your lips. Her body "
