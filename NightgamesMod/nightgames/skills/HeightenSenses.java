@@ -101,7 +101,7 @@ public class HeightenSenses extends Skill {
                             new Object[] {getSelf().name()});
         }
         return String.format(
-                        "%s explains to you that your body, especially your erogenous zones, have become more sensitive. You feel goosebumps cover your skin as if you've been hit by a Sensitivity Flask. Maybe you were and just didn't notice",
+                        "%s explains to you that your body, especially your erogenous zones, have become more sensitive. You feel goosebumps cover your skin as if you've been hit by a Sensitivity Flask. Maybe you were and just didn't notice?",
                         new Object[] {getSelf().name()});
     }
 
