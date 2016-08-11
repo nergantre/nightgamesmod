@@ -497,7 +497,7 @@ public class Player extends Character {
                 gain(Item.Spring);
                 break;
             default:
-                gui.message("You don't find anything useful");
+                gui.message("You don't find anything useful.");
         }
         state = State.ready;
     }
@@ -589,7 +589,7 @@ public class Player extends Character {
     @Override
     public void gain(Item item) {
         Global.gui()
-              .message("<b>You've gained " + item.pre() + item.getName() + "</b>");
+              .message("<b>You've gained " + item.pre() + item.getName() + ".</b>");
         super.gain(item);
     }
 
@@ -648,7 +648,7 @@ public class Player extends Character {
                                     4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
                     c.write(this, Global.format(
                                     "{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} nipples with {self:possessive} hands as {other:subject-action:try|tries} to fuck {self:direct-object}. "
-                                                    + "While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:take|takes} the chance to pleasure {other:possessive} body",
+                                                    + "While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:take|takes} the chance to pleasure {other:possessive} body.",
                                     this, target));
                 }
                 break;
@@ -660,7 +660,7 @@ public class Player extends Character {
                                     + clothes.getName() + " instead.");
                 } else {
                     c.write(this, "You manage to dodge " + target.possessivePronoun()
-                                    + " groping hands and give a retaliating slap in return");
+                                    + " groping hands and give a retaliating slap in return.");
                     target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
                 }
                 break;
@@ -677,7 +677,7 @@ public class Player extends Character {
                 break;
             default:
                 c.write(this, "You manage to dodge " + target.possessivePronoun()
-                                + " attack and give a retaliating slap in return");
+                                + " attack and give a retaliating slap in return.");
                 target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
         }
     }
