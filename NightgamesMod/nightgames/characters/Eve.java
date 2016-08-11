@@ -246,7 +246,7 @@ public class Eve extends BasePersonality {
                         + "expression, idly playing with her own fluids and occasionally licking them off her fingers. <p>You wave your unsatisfied erection in front of her face to remind her "
                         + "that she still owes you an orgasm. Eve smiles up at you lewdly. <i>\"Don't worry, boy. I'll get you off properly, but I don't want you just sitting back and enjoying "
                         + "it. Sucking you dry is bound to get me all hot and bothered again, and I don't plan to walk away with a boner. Make sure you give as good as you get.\"</i> She's pretty "
-                        + "demanding for a loser. Fortunately for her, you're in a generous mood. Eve seems eager to hold up her side of the deal. She takes most of your cock into her her mouth "
+                        + "demanding for a loser. Fortunately for her, you're in a generous mood. Eve seems eager to hold up her side of the deal. She takes most of your cock into her mouth "
                         + "without much difficulty and begins to explore your length with her tongue. You watch her dick harden again, sooner than you would have expected.";
     }
 
@@ -344,7 +344,7 @@ public class Eve extends BasePersonality {
                         + "response to the enticing scene. Eve grins at you confidently. <i>\"Jealous? I'm sure you wish your cock was buried deep in this tight, wet cunt, but I got "
                         + "here first.\"</i> She thrusts her hips several times for emphasis. <i>\"You could always go for the back door.\"</i> "
                         + target.name() + " frantically shakes her "
-                        + "head in protest, though she's moaning too much to speak. <i>\"Aww... She doesn't want to be double penetrated. You'll just have to settle for this.</i>\" <br>"
+                        + "head in protest, though she's moaning too much to speak. <i>\"Aww... She doesn't want to be double penetrated. You'll just have to settle for this.\"</i> <br>"
                         + "Without slowing down her thrusts, she pushes the other girl into your lap. Suddenly "
                         + target.name() + "'s soft butt is rubbing firmly and pleasurably against your erection. "
                         + "Shit. She's going to make you cum too, even when you're helping her. <i>\"Don't let go of her, or you won't get credit for her orgasm.\"</i> Unable to struggle "
@@ -356,9 +356,7 @@ public class Eve extends BasePersonality {
     @Override
     public String intervene3p(Combat c, Character target, Character assist) {
         if (target.human()) {
-            return
-
-            "Your fight with " + assist.name()
+            return "Your fight with " + assist.name()
                             + " is interrupted when you're suddenly grabbed from behind. The big breasts pressed against your back don't narrow down the "
                             + "suspects too much, but the hard bulge hitting your ass does. The last thing you want to do is expose your ass to Eve, but fortunately she doesn't have a "
                             + "firm grip on you yet. You jerk forward to try to escape her grasp. <i>\"Stop squirming!\"</i> She slams her knee up between your legs, hitting you squarely "
@@ -366,9 +364,7 @@ public class Eve extends BasePersonality {
                             + "You meekly shake your head and let her secure her grip.<br>";
         }
 
-        return
-
-        "Your fight with " + target.name()
+        return "Your fight with " + target.name()
                         + " quickly renders you both naked and aroused. She manages to trip you, dropping you solidly to the floor. She wastes no time "
                         + "and bends down to suck on your defenseless dick. You groan in pleasure as her tongue plays with your glans. Suddenly, she yelps in surprise and loses her balance. "
                         + "You spot Eve standing behind her, fondling her exposed girl parts. " + target.name()
@@ -417,7 +413,7 @@ public class Eve extends BasePersonality {
     @Override
     public String orgasmLiner(Combat c) {
         if (c.getStance().anallyPenetrated(c.getOther(character))) {
-            return "<i>\"Oh fuck! You are one tight little cum bucket! Let's go again!\"<i>"
+            return "<i>\"Oh fuck! You are one tight little cum bucket! Let's go again!\"</i>"
                             + " Eve immediately resumes her thrusting.";
         }
         return "<i>\"Ahhh shit! Wouldn't it have been sooo much better to have " + "taken that load up your ass?\"</i>";
