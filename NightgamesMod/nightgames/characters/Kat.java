@@ -281,7 +281,7 @@ public class Kat extends BasePersonality {
 
     @Override
     public String draw(Combat c, Result flag) {
-        Character opponent = c.p1 == character ? c.p2 : c.p1;
+        Character opponent = c.getOther(character);
         if (flag == Result.intercourse) {
             opponent.add(c, new Horny(opponent, 5, 10, character.nameOrPossessivePronoun() + " pheromones"));
             return "Kat lets out a near-constant mewing of pleasure as you thrust repeatedly into her tight pussy. You feel yourself rapidly approaching orgasm and judging by "
