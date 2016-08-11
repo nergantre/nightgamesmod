@@ -231,7 +231,7 @@ public class Kat extends BasePersonality {
 
     @Override
     public String defeat(Combat c, Result flag) {
-        Character opponent = c.p1 == character ? c.p2 : c.p1;
+        Character opponent = c.getOther(character);
         if (c.getStance().vaginallyPenetrated(character)) {
             opponent.add(c, new Horny(opponent, 5, 10, character.nameOrPossessivePronoun() + " pheromones"));
             return "Kat squeaks as you pump your cock inside her over and over, penetrating her deeper with each thrust. She seems to be particularly vulnerable to being fucked"
