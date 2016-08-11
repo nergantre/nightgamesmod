@@ -192,10 +192,10 @@ public class Blowjob extends Skill {
             m += "Faced with your dick sitting squarely in front of her face, " + getSelf().name()
                             + " obediently tongues your cock in defeat.";
         } else if (target.getArousal().get() < 15) {
-            m += getSelf().name() + " takes your soft penis into her mouth and sucks on it until it hardens";
+            m += getSelf().name() + " takes your soft penis into her mouth and sucks on it until it hardens.";
         } else if (target.getArousal().percent() >= 90) {
             m += getSelf().name()
-                            + " laps up the precum leaking from your cock and takes the entire length into her mouth, sucking relentlessly";
+                            + " laps up the precum leaking from your cock and takes the entire length into her mouth, sucking relentlessly.";
         } else {
             int r = Global.random(4);
             if (r == 0) {
