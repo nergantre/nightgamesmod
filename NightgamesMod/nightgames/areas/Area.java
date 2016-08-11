@@ -191,9 +191,9 @@ public class Area implements Serializable {
         env.remove(triggered);
     }
 
-    public Deployable get(Deployable type) {
+    public Deployable get(Class<? extends Deployable> type) {
         for (Deployable thing : env) {
-            if (thing.getClass() == type.getClass()) {
+            if (thing.getClass() == type) {
                 return thing;
             }
         }
