@@ -252,7 +252,7 @@ public class Player extends Character {
         String arousal;
         String stamina;
         if (opponent.state == State.webbed) {
-            gui.message("She is naked and helpless<br>");
+            gui.message("She is naked and helpless.<br>");
             return;
         }
         if (get(Attribute.Perception) >= 6) {
