@@ -100,7 +100,7 @@ public class Frottage extends Skill {
                             + " thrusts her hips to prod your delicate jewels with her strapon dildo. As you flinch and pull your hips back, she presses the toy against your cock, teasing your sensitive parts.";
         } else if (getSelf().hasDick()) {
             return getSelf().name()
-                            + " pushes her girl-cock against your the sensitive head of you member, dominating your manhood.";
+                            + " pushes her girl-cock against the sensitive head of your member, dominating your manhood.";
         } else {
             return getSelf().name()
                             + " pushes your cock against her soft thighs, rubbing your shaft up against her nether lips.";
