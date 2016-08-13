@@ -81,7 +81,7 @@ public class Combat extends Observable implements Cloneable {
         p1.state = State.combat;
         p2.state = State.combat;
         winner = Optional.empty();
-        if (doExtendedLog() || beingObserved) {
+        if (doExtendedLog()) {
             log = new CombatLog(this);
         }
     }
@@ -339,8 +339,8 @@ public class Combat extends Observable implements Cloneable {
     private String describe(Character player, Character other) {
         if (beingObserved) {
             return Global.capitalizeFirstLetter(getStance().describe()) + "<p>"
-                            + player.describe(other.get(Attribute.Perception), this) + "<p>"
-                            + other.describe(player.get(Attribute.Perception), this) + "<p>";
+                            + player.describe(Global.getPlayer().get(Attribute.Perception), this) + "<p>"
+                            + other.describe(Global.getPlayer().get(Attribute.Perception), this) + "<p>";
         } else if (!player.is(Stsflag.blinded)) {
             return other.describe(player.get(Attribute.Perception), this) + "<p>"
                             + Global.capitalizeFirstLetter(getStance().describe()) + "<p>"
@@ -409,7 +409,7 @@ public class Combat extends Observable implements Cloneable {
         } else if (p2act == null) {
             p2.act(this);
         } else {
-            clear();
+            //clear();
             if (!shouldAutoresolve()) {
                 Global.gui()
                       .clearText();
@@ -429,7 +429,7 @@ public class Combat extends Observable implements Cloneable {
             }
             if (doExtendedLog()) {
                 log.logTurn(p1act, p2act);
-            } else if (beingObserved) {
+            } else if (Global.isDebugOn(DebugFlags.DEBUG_SPECTATE) && beingObserved) {
                 write("<br>");
                 write(log.logTurnToString(p1act, p2act, "<br>"));
             } else {
@@ -986,7 +986,7 @@ public class Combat extends Observable implements Cloneable {
 
     public void setBeingObserved(boolean beingObserved) {
         this.beingObserved = beingObserved;
-        if (beingObserved && log == null) {
+        if (beingObserved && log == null && Global.isDebugOn(DebugFlags.DEBUG_SPECTATE)) {
             log = new CombatLog(this);
         }
     }
