@@ -173,12 +173,7 @@ public class Kat extends BasePersonality {
 
     @Override
     public String victory(Combat c, Result flag) {
-        Character opponent;
-        if (c.p1 == character) {
-            opponent = c.p2;
-        } else {
-            opponent = c.p1;
-        }
+        Character opponent = c.getOther(character);
         character.arousal.empty();
         if (c.getStance().vaginallyPenetrated(character)) {
             opponent.add(c, new Horny(opponent, 5, 10, character.nameOrPossessivePronoun() + " pheromones"));
@@ -212,7 +207,7 @@ public class Kat extends BasePersonality {
         } else {
             opponent.add(c, new Horny(opponent, 5, 10, character.nameOrPossessivePronoun() + " pheromones"));
             opponent.add(c, new Horny(opponent, 20, 5, character.nameOrPossessivePronoun() + " feral musk"));
-            opponent.arousal.restore(opponent.arousal.max() * 1 / 3);
+            opponent.arousal.restore(opponent.arousal.max() / 3);
             return "As Kat pleasures you, you're quickly reaching the limit of your control. You try to put some distance between you and her to catch your breath. The familiar "
                             + "tightness in your groin warns you that any stimulation will probably set you off right now. Eager to finish you off, Kat pounces on you and grabs your "
                             + "dick with both hands. <i>\"Nyaha! I got you!\"</i> The last of your endurance is blown away as she jerks you off excitedly. You shoot your load into the air, "
@@ -236,7 +231,7 @@ public class Kat extends BasePersonality {
 
     @Override
     public String defeat(Combat c, Result flag) {
-        Character opponent = c.p1 == character ? c.p2 : c.p1;
+        Character opponent = c.getOther(character);
         if (c.getStance().vaginallyPenetrated(character)) {
             opponent.add(c, new Horny(opponent, 5, 10, character.nameOrPossessivePronoun() + " pheromones"));
             return "Kat squeaks as you pump your cock inside her over and over, penetrating her deeper with each thrust. She seems to be particularly vulnerable to being fucked"
@@ -286,7 +281,7 @@ public class Kat extends BasePersonality {
 
     @Override
     public String draw(Combat c, Result flag) {
-        Character opponent = c.p1 == character ? c.p2 : c.p1;
+        Character opponent = c.getOther(character);
         if (flag == Result.intercourse) {
             opponent.add(c, new Horny(opponent, 5, 10, character.nameOrPossessivePronoun() + " pheromones"));
             return "Kat lets out a near-constant mewing of pleasure as you thrust repeatedly into her tight pussy. You feel yourself rapidly approaching orgasm and judging by "

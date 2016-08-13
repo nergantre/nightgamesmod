@@ -470,7 +470,7 @@ public class Encounter implements Serializable, IEncounter {
         attacker.state = State.ready;
         target.state = State.ready;
         location.endEncounter();
-        location.remove(location.get(new Spiderweb()));
+        location.remove(location.get(Spiderweb.class));
     }
 
     public void intrude(Character intruder, Character assist) {
