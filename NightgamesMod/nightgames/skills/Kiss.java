@@ -213,7 +213,7 @@ public class Kiss extends Skill {
                     return String.format("%s kisses %s softly and romantically, slowly drawing %s into %s "
                                     + "embrace. As %s part, %s teasingly brushes %s lips against %s.",
                                     getSelf().subject(), target.nameDirectObject(), target.directObject(),
-                                    getSelf().possessivePronoun(), c.isBeingObserved() ? "they" : "you",
+                                    getSelf().possessivePronoun(), c.bothSubject(),
                                     getSelf().subject(), target.possessivePronoun(),
                                     target.human() ? "yours" : target.possessivePronoun());
             }
