@@ -110,7 +110,7 @@ public class HeightenSenses extends Skill {
         return String.format(
                         "%s explains to %s that %s body, especially %s erogenous zones, have become more "
                         + "sensitive. %s goosebumps cover %s skin as if %s %s been hit by a "
-                        + "Sensitivity Flask. Maybe %s %s and just didn't notice",
+                        + "Sensitivity Flask. Maybe %s %s and just didn't notice?",
                         getSelf().name(), target.subject(), target.possessivePronoun(), 
                         target.possessivePronoun(),
                         Global.capitalizeFirstLetter(target.subjectAction("feel")),

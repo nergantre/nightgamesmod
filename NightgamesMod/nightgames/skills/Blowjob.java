@@ -179,7 +179,7 @@ public class Blowjob extends Skill {
                             getSelf().subjectAction("take"), target.nameOrPossessivePronoun(),
                             getSelf().nameOrPossessivePronoun());
         } else if (target.getArousal().percent() >= 90) {
-            m += String.format("%s up the precum leaking from %s cock and %s the entire length into %s mouth, sucking relentlessly",
+            m += String.format("%s up the precum leaking from %s cock and %s the entire length into %s mouth, sucking relentlessly.",
                             getSelf().subjectAction("lap"), target.nameOrPossessivePronoun(), getSelf().action("take"),
                             getSelf().possessivePronoun());
         } else {
