@@ -7,6 +7,7 @@ import java.util.HashSet;
 import nightgames.actions.Movement;
 import nightgames.characters.Character;
 import nightgames.combat.IEncounter;
+import nightgames.global.DebugFlags;
 import nightgames.global.Global;
 import nightgames.status.Stsflag;
 import nightgames.trap.Trap;
@@ -119,9 +120,10 @@ public class Area implements Serializable {
     public boolean encounter(Character p) {
         if (fight != null && fight.checkIntrude(p)) {
             p.intervene(fight, fight.getPlayer(1), fight.getPlayer(2));
-        } else if (present.size() > 1) {
+        } else if (present.size() > 1 && canFight(p)) {
             for (Character opponent : Global.getMatch().combatants) {
-                if (present.contains(opponent) && opponent != p) {
+                if (present.contains(opponent) && opponent != p
+                                && canFight(opponent)) {
                     fight = Global.getMatch().getType().buildEncounter(p, opponent, this);
                     return fight.spotCheck();
                 }
@@ -130,6 +132,10 @@ public class Area implements Serializable {
         return false;
     }
 
+    private boolean canFight(Character c) {
+        return !c.human() || !Global.isDebugOn(DebugFlags.DEBUG_SPECTATE);
+    }
+    
     public boolean opportunity(Character target, Trap trap) {
         if (present.size() > 1) {
             for (Character opponent : present) {

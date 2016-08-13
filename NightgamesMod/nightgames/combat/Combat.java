@@ -81,7 +81,7 @@ public class Combat extends Observable implements Cloneable {
         p1.state = State.combat;
         p2.state = State.combat;
         winner = Optional.empty();
-        if (doExtendedLog()) {
+        if (doExtendedLog() || beingObserved) {
             log = new CombatLog(this);
         }
     }
@@ -135,12 +135,12 @@ public class Combat extends Observable implements Cloneable {
         applyCombatStatuses(p1, p2);
         applyCombatStatuses(p2, p1);
 
-        if (!(p1.human() || p2.human())) {
+        if (shouldAutoresolve()) {
             automate();
         }
         updateMessage();
         if (doExtendedLog()) {
-            log.logHeader();
+            log.logHeader("\n");
         }
     }
 
@@ -262,7 +262,7 @@ public class Combat extends Observable implements Cloneable {
             phase = 2;
             updateMessage();
             winner = Optional.of(Global.noneCharacter());
-            if (!(p1.human() || p2.human())) {
+            if (shouldAutoresolve()) {
                 end();
             }
             return;
@@ -276,7 +276,7 @@ public class Combat extends Observable implements Cloneable {
             winner = Optional.of(p2);
             phase = 2;
             updateMessage();
-            if (!(p1.human() || p2.human())) {
+            if (shouldAutoresolve()) {
                 end();
             }
             return;
@@ -290,7 +290,7 @@ public class Combat extends Observable implements Cloneable {
             winner = Optional.of(p1);
             phase = 2;
             updateMessage();
-            if (!(p1.human() || p2.human())) {
+            if (shouldAutoresolve()) {
                 end();
             }
             return;
@@ -308,7 +308,7 @@ public class Combat extends Observable implements Cloneable {
         p1.regen(this);
         p2.regen(this);
         message = describe(player, other);
-        if ((p1.human() || p2.human()) && !Global.checkFlag(Flag.noimage)) {
+        if (!shouldAutoresolve() && !Global.checkFlag(Flag.noimage)) {
             Global.gui()
                   .clearImage();
             if (!imagePath.isEmpty()) {
@@ -320,8 +320,13 @@ public class Combat extends Observable implements Cloneable {
         p2act = null;
         p1.act(this);
 
-        if (Global.random(3) == 0 && (p1.human() || p2.human())) {
-            NPC commenter = (NPC) getOther(Global.getPlayer());
+        if (Global.random(3) == 0 && !shouldAutoresolve()) {
+            NPC commenter;
+            if (p1.human() || p2.human()) {
+                commenter = (NPC) getOther(Global.getPlayer());
+            } else {
+                commenter = (NPC) (Global.random(2) == 0 ? p1 : p2);
+            }
             Optional<String> comment = commenter.getComment(this);
             if (comment.isPresent()) {
                 write(commenter, "<i>\"" + Global.format(comment.get(), commenter, Global.getPlayer()) + "\"</i>");
@@ -332,7 +337,11 @@ public class Combat extends Observable implements Cloneable {
     }
 
     private String describe(Character player, Character other) {
-        if (!player.is(Stsflag.blinded)) {
+        if (beingObserved) {
+            return Global.capitalizeFirstLetter(getStance().describe()) + "<p>"
+                            + player.describe(other.get(Attribute.Perception), this) + "<p>"
+                            + other.describe(player.get(Attribute.Perception), this) + "<p>";
+        } else if (!player.is(Stsflag.blinded)) {
             return other.describe(player.get(Attribute.Perception), this) + "<p>"
                             + Global.capitalizeFirstLetter(getStance().describe()) + "<p>"
                             + player.describe(other.get(Attribute.Perception), this) + "<p>";
@@ -401,7 +410,7 @@ public class Combat extends Observable implements Cloneable {
             p2.act(this);
         } else {
             clear();
-            if (p1.human() || p2.human()) {
+            if (!shouldAutoresolve()) {
                 Global.gui()
                       .clearText();
             }
@@ -420,6 +429,9 @@ public class Combat extends Observable implements Cloneable {
             }
             if (doExtendedLog()) {
                 log.logTurn(p1act, p2act);
+            } else if (beingObserved) {
+                write("<br>");
+                write(log.logTurnToString(p1act, p2act, "<br>"));
             } else {
                 useSkills();
             }
@@ -433,7 +445,7 @@ public class Combat extends Observable implements Cloneable {
             getStance().decay(this);
             getStance().checkOngoing(this);
             phase = 0;
-            if (!(p1.human() || p2.human())) {
+            if (shouldAutoresolve()) {
                 turn();
             }
             updateMessage();
@@ -565,7 +577,7 @@ public class Combat extends Observable implements Cloneable {
                 doVictory(p2, p1);
                 phase = 2;
                 updateMessage();
-                if (!(p1.human() || p2.human())) {
+                if (!shouldAutoresolve()) {
                     end();
                 }
                 return;
@@ -580,7 +592,7 @@ public class Combat extends Observable implements Cloneable {
                 doVictory(p1, p2);
                 phase = 2;
                 updateMessage();
-                if (!(p2.human() || p1.human())) {
+                if (shouldAutoresolve()) {
                     end();
                 }
                 return;
@@ -592,7 +604,7 @@ public class Combat extends Observable implements Cloneable {
                 p2.draw(this, state);
                 phase = 2;
                 updateMessage();
-                if (!(p1.human() || p2.human())) {
+                if (shouldAutoresolve()) {
                     end();
                 }
                 return;
@@ -732,7 +744,10 @@ public class Combat extends Observable implements Cloneable {
                     if (p.human()) {
                         write("Your legs give out, but " + other.name() + " holds you up.");
                     } else {
-                        write(p.name() + " slumps in your arms, but you support her to keep her from collapsing.");
+                        write(String.format("%s slumps in %s arms, but %s %s %s to keep %s from collapsing.",
+                                        p.subject(), other.nameOrPossessivePronoun(),
+                                        other.pronoun(), other.action("support"), p.directObject(),
+                                        p.directObject()));
                     }
                 } else {
                     setStance(new StandingOver(other, p));
@@ -971,10 +986,17 @@ public class Combat extends Observable implements Cloneable {
 
     public void setBeingObserved(boolean beingObserved) {
         this.beingObserved = beingObserved;
+        if (beingObserved && log == null) {
+            log = new CombatLog(this);
+        }
     }
     
     public boolean shouldPrintReceive(Character ch) {
         return ch.human() || beingObserved;
+    }
+    
+    private boolean shouldAutoresolve() {
+        return !(p1.human() || p2.human()) && !beingObserved;
     }
     
     public String bothDirectObject() {

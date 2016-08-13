@@ -601,4 +601,12 @@ public class Encounter implements Serializable, IEncounter {
     public boolean checkIntrude(Character c) {
         return fight != null && !c.equals(p1) && !c.equals(p2);
     }
+
+    @Override
+    public void watch() {
+        fight.setBeingObserved(true);
+        Global.gui().combat = fight;
+        fight.addObserver(Global.gui());
+        Global.getMatch().resume();
+    }
 }

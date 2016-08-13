@@ -529,6 +529,8 @@ public class Player extends Character {
     public void intervene(IEncounter enc, Character p1, Character p2) {
         gui.message("You find <b>" + p1.name() + "</b> and <b>" + p2.name()
                         + "</b> fighting too intensely to notice your arrival. If you intervene now, it'll essentially decide the winner.");
+        gui.message("Then again, you could just wait and see which one of them comes out on top. It'd be entertaining,"
+                        + " at the very least.");
         gui.promptIntervene(enc, p1, p2);
     }
 

@@ -25,4 +25,6 @@ public interface IEncounter {
     void parse(Encs choice, Character primary, Character opponent);
 
     void parse(Encs choice, Character primary, Character opponent, Trap trap);
+
+    void watch();
 }
