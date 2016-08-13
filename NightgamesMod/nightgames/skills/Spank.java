@@ -28,11 +28,7 @@ public class Spank extends Skill {
             if (shamed) {
                 getSelf().spendMojo(c, 5);
             }
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.special, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.special, target));
-            }
+            writeOutput(c, Result.special, target);
             if (shamed) {
                 target.add(c, new Shamed(target));
                 target.emote(Emotion.angry, 10);
@@ -43,11 +39,7 @@ public class Spank extends Skill {
             }
             target.pain(c, Global.random(6 + target.get(Attribute.Perception) / 2) + 3);
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.normal, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.normal, target));
-            }
+            writeOutput(c, Result.normal, target);
             target.pain(c, Global.random(6) + 3);
         }
         target.emote(Emotion.angry, 25);
@@ -98,14 +90,20 @@ public class Spank extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return getSelf().name() + " aims a slap at your ass, but you dodge it.";
+            return String.format("%s aims a slap at %s ass, but %s %s it.", getSelf().subject(),
+                            target.nameOrPossessivePronoun(), target.pronoun(),
+                            target.action("dodge"));
         }
         if (modifier == Result.special) {
-            return getSelf().name()
-                            + " bends you over like a misbehaving child and spanks your ass twice. The third spank aims lower and connects solidly with your ballsack, "
-                            + "injuring your manhood along with your pride.";
+            return String.format("%s bends %s over like a misbehaving child and spanks %s"
+                            + " ass twice. The third spank aims lower and connects solidly with %s ballsack, "
+                            + "injuring %s manhood along with %s pride.", getSelf().subject(),
+                            target.nameDirectObject(), target.possessivePronoun(),
+                            target.possessivePronoun(), target.possessivePronoun(),
+                            target.possessivePronoun());
         } else {
-            return getSelf().name() + " lands a stinging slap on your bare ass.";
+            return String.format("%s lands a stinging slap on %s bare ass.",
+                            getSelf().subject(), target.nameOrPossessivePronoun());
         }
 
     }

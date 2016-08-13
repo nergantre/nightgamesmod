@@ -33,18 +33,10 @@ public class FaerieSwarm extends Skill {
     public boolean resolve(Combat c, Character target) {
         getSelf().consume(Item.MinorScroll, 1);
         if (target.getOutfit().isNude()) {
-            if (getSelf().human()) {
-                c.write(deal(c, 0, Result.normal, target));
-            } else if (target.human()) {
-                c.write(receive(c, 0, Result.normal, target));
-            }
+            writeOutput(c, Result.normal, target);
             target.body.pleasure(getSelf(), null, null, 25 + Global.random(getSelf().get(Attribute.Arcane)), c, this);
         } else {
-            if (getSelf().human()) {
-                c.write(deal(c, 0, Result.weak, target));
-            } else if (target.human()) {
-                c.write(receive(c, 0, Result.weak, target));
-            }
+            writeOutput(c, Result.weak, target);
             target.undress(c);
         }
         return true;
@@ -83,17 +75,22 @@ public class FaerieSwarm extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.weak) {
-            return getSelf().name()
-                            + " pulls out a scroll and a swarm of butterfly-winged faeries burst forth to attack you. They mischeviously grab at your clothes, using magical assistance "
-                            + "to efficiently strip you naked.";
+            return String.format("%s pulls out a scroll and a swarm of butterfly-winged faeries burst "
+                            + "forth to attack %s. They mischeviously grab at %s clothes, using magical assistance "
+                            + "to efficiently strip %s naked.", getSelf().subject(), target.nameDirectObject(),
+                            target.possessivePronoun(), target.directObject());
         }
-        return
-
-        getSelf().name() + " pulls out a scroll and a swarm of butterfly-winged faeries burst forth to attack you. A couple of them fly into your face to distract you with naked girl "
-                        + "parts, while the rest play with your naked body. They focus especially on your "
-                        + (target.hasDick() ? "dick and balls" : target.hasPussy() ? "pussy and clit" : "ass and chest")
-                        + ", dozens of tiny hands playfully immobilizing you with ticklish pleasure. The spell "
-                        + "doesn't actaully last very long, but from your perspective, it feels like minutes of delightful torture.";
+        String parts = target.hasDick() ? "dick and balls" : target.hasPussy() ? "pussy and clit" : "ass and chest";
+        return String.format("%s pulls out a scroll and a swarm of butterfly-winged faeries burst forth to attack %s."
+                        + " A couple of them fly into %s face to distract %s with naked girl "
+                        + "parts, while the rest play with %s naked body. They focus especially on %s %s, "
+                        + "dozens of tiny hands playfully immobilizing %s with ticklish pleasure. The spell "
+                        + "doesn't actaully last very long, but from %s perspective, it feels"
+                        + " like minutes of delightful torture.", getSelf().subject(),
+                        target.nameDirectObject(), target.possessivePronoun(),
+                        target.directObject(), target.possessivePronoun(),
+                        target.possessivePronoun(),
+                        parts, target.directObject(), target.nameOrPossessivePronoun());
     }
 
 }

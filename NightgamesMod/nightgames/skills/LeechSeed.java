@@ -36,11 +36,7 @@ public class LeechSeed extends Skill {
             if (!target.is(Stsflag.fucked) && target.hasPussy()) {
                 results = Result.normal;
             }
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, results, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, results, target));
-            }
+            writeOutput(c, results, target);
             if (results == Result.normal) {
 
                 target.add(c, new Seeded(target, getSelf(), "pussy"));
@@ -48,11 +44,7 @@ public class LeechSeed extends Skill {
                 target.add(c, new Seeded(target, getSelf(), "ass"));
             }
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.miss, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.miss, target));
-            }
+            writeOutput(c, Result.miss, target);
             return false;
         }
         return true;
@@ -97,18 +89,19 @@ public class LeechSeed extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return getSelf().subject() + " tries to plant a seed in you with " + getSelf().possessivePronoun()
-                            + " tentacle, but you dodge out of the way.";
+            return String.format("%s tries to plant a seed in %s with %s tentacle, but %s %s out of the way.",
+                            getSelf().subject(), target.nameDirectObject(), getSelf().possessivePronoun(),
+                            target.pronoun(), target.action("dodge"));
         }
         String hole = "pussy";
         if (modifier == Result.anal) {
             hole = "ass";
         }
         return Global.format(
-                        "{self:SUBJECT} flashes a brilliant smile at you and beckons you forward. Against your better judgement, you move closer to {self:direct-object}, hoping for an opening to attack. "
-                                        + "Suddenly, you feel a pressure at your %s. It was a trap! {self:SUBJECT} laughs at you and wiggles {self:possessive} tentacle burried inside you. Your ordeal however is not over. You feel an "
-                                        + "egg shaped object pushed through {self:possessive} tentacle and deposited inside your %s. With a final giggle, {self:subject} retracts {self:possessive} tentacle and you get to see that "
-                                        + "{self:pronoun} planted a fist sized seed inside you!",
+                        "{self:SUBJECT} flashes a brilliant smile at {other:name-do} and beckons {other:direct-object} forward. Against {other:possessive} better judgement, {other:subject-action:move|moves} closer to {self:direct-object}, hoping for an opening to attack. "
+                                        + "Suddenly, {other:pronoun-action:feel|feels} a pressure at {ohter:possessive} %s. It was a trap! {self:SUBJECT} laughs at {other:name-do} and wiggles {self:possessive} tentacle burried inside {other:direct-object}. {other:NAME-POSSESSIVE} ordeal, however, is not over. {other:PRONOUN-ACTION:feel|feels} an "
+                                        + "egg shaped object pushed through {self:possessive} tentacle and deposited inside {other:possessive} %s. With a final giggle, {self:subject} retracts {self:possessive} tentacle and {other:subject-action:get|gets} to see that "
+                                        + "{self:subject} planted a fist sized seed inside {other:direct-object}!",
                         getSelf(), target, hole, hole);
     }
 

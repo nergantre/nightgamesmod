@@ -37,7 +37,7 @@ public class MimicWitch extends Skill {
     public boolean resolve(Combat c, Character target) {
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
+        } else if (c.shouldPrintReceive(target)) {
             if (!target.is(Stsflag.blinded))
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             else 
@@ -75,7 +75,7 @@ public class MimicWitch extends Skill {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return Global.format("{self:NAME-POSSESSIVE} amorphous body shakes violently and her human-features completely dissolve. "
                         + "After briefly becoming something that resembles a mannequin, her goo shifts colors into a glowing purple hue. "
-                        + "Facial features forms again out of her previously smooth slime into something very familiar to you. "
+                        + "Facial features forms again out of her previously smooth slime into something very familiar to {other:name-do}. "
                         + "Looks like {self:NAME} is mimicking Cassie's witch form!", getSelf(), target);
     }
 

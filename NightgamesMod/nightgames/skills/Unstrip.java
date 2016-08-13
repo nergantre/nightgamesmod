@@ -36,11 +36,7 @@ public class Unstrip extends Skill {
     public boolean resolve(Combat c, Character target) {
         getSelf().outfit.dress(getSelf().outfitPlan);
         getSelf().add(new Primed(getSelf(), -6));
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         getSelf().emote(Emotion.confident, 20);
         return true;
     }
@@ -65,9 +61,13 @@ public class Unstrip extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return String.format(
-                        "You lose sight of %s for just a moment and almost do a double-take when you see %s again, fully dressed. "
-                                        + "In the second you looked away, how did %s find the time to put %s clothes on?!",
-                        getSelf().name(), getSelf().directObject(), getSelf().pronoun(), getSelf().possessivePronoun());
+                        "%s sight of %s for just a moment and almost %s a double-take "
+                        + "when %s %s %s again, fully dressed. "
+                                        + "In the second %s looked away, how did %s "
+                                        + "find the time to put %s clothes on?!",
+                        target.subjectAction("lose"), getSelf().name(), target.action("do", "does"),
+                        target.pronoun(), target.action("see"), getSelf().directObject(),
+                        target.pronoun(), getSelf().pronoun(), getSelf().possessivePronoun());
     }
 
 }

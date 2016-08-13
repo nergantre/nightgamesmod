@@ -96,14 +96,23 @@ public class Frottage extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.special) {
-            return getSelf().name()
-                            + " thrusts her hips to prod your delicate jewels with her strapon dildo. As you flinch and pull your hips back, she presses the toy against your cock, teasing your sensitive parts.";
+            return String.format("%s thrusts %s hips to prod %s delicate jewels with %s strapon dildo. "
+                            + "As %s and %s %s hips back, %s presses the toy against %s cock, "
+                            + "teasing %s sensitive parts.",
+                            getSelf().subject(), getSelf().possessivePronoun(), target.nameOrPossessivePronoun(),
+                            getSelf().possessivePronoun(),
+                            target.subjectAction("flinch", "flinches"), target.action("pull"), target.possessivePronoun(),
+                            getSelf().subject(), target.possessivePronoun(), target.possessivePronoun());
         } else if (getSelf().hasDick()) {
-            return getSelf().name()
-                            + " pushes her girl-cock against your the sensitive head of you member, dominating your manhood.";
+            return String.format("%s pushes %s %s against the sensitive head of %s member, "
+                            + "dominating %s manhood.", getSelf().subject(), getSelf().possessivePronoun(),
+                            getSelf().body.getRandomCock().describe(getSelf()), target.nameOrPossessivePronoun(),
+                            target.possessivePronoun());
         } else {
-            return getSelf().name()
-                            + " pushes your cock against her soft thighs, rubbing your shaft up against her nether lips.";
+            return String.format("%s pushes %s cock against her soft thighs, rubbing %s shaft up"
+                            + " against %s nether lips.", getSelf().subject(),
+                            target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                            getSelf().possessivePronoun());
         }
     }
 

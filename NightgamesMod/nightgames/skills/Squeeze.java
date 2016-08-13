@@ -78,11 +78,7 @@ public class Squeeze extends Skill {
 
             target.emote(Emotion.angry, 15);
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.miss, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.miss, target));
-            }
+            writeOutput(c, Result.miss, target);
             return false;
         }
         return true;
@@ -129,24 +125,36 @@ public class Squeeze extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return getSelf().name() + " grabs at your balls, but misses.";
+            return String.format("%s grabs at %s balls, but misses.",
+                            getSelf().subject(), target.nameOrPossessivePronoun());
         } else if (modifier == Result.special) {
-            return getSelf().name()
-                            + " grabs your naked balls roughly in her gloved hand. A painful jolt of electricity shoots through your groin, sapping your will to fight.";
+            return String.format("%s grabs %s naked balls roughly in %s gloved hand. A painful jolt "
+                            + "of electricity shoots through %s groin, sapping %s will to fight.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(),
+                            getSelf().possessivePronoun(), target.possessivePronoun(),
+                            target.possessivePronoun());
         } else if (modifier == Result.weak) {
-            return getSelf().name() + " grabs your balls through your "
-                            + target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName() + " and squeezes hard.";
+            return String.format("%s grabs %s balls through %s %s and squeezes hard.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(),
+                            target.possessivePronoun(), 
+                            target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName());
         } else if (modifier == Result.weak2) {
-            return getSelf().name() + " grins menacingly and firmly grabs your nuts. "
-                            + Global.capitalizeFirstLetter(getSelf().pronoun()) + " squeezes as hard as "
-                            + getSelf().pronoun() + "can, but you hardly feel it.";
+            return String.format("%s grins menacingly and firmly grabs %s nuts. %s squeezes as hard as "
+                            + "%s can, but %s hardly %s it.", getSelf().subject(),
+                            target.nameOrPossessivePronoun(),
+                            Global.capitalizeFirstLetter(getSelf().subject()),
+                            getSelf().pronoun(), target.pronoun(), target.action("feel"));
         } else if (modifier == Result.item) {
-            return getSelf().name() + " grabs your crotch through your "
-                            + target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName()
-                            + ", but you can barely feel it.";
+            return String.format("%s grabs %s crotch through %s %s, but %s can barely feel it.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                            target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName(),
+                            target.pronoun());
         } else {
-            return getSelf().name()
-                            + " reaches between your legs and grabs your exposed balls. You writhe in pain as she pulls and squeezes them.";
+            return String.format("%s reaches between %s legs and grabs %s exposed balls. %s "
+                            + "in pain as %s pulls and squeezes them.", getSelf().subject(),
+                            target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                            Global.capitalizeFirstLetter(target.subjectAction("writhe")),
+                            getSelf().subject());
         }
     }
 

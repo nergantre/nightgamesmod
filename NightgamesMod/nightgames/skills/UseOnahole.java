@@ -46,11 +46,7 @@ public class UseOnahole extends Skill {
                 target.body.pleasure(getSelf(), null, target.body.getRandomCock(), m, c, this);
             }
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.miss, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.miss, target));
-            }
+            writeOutput(c, Result.miss, target);
             return false;
         }
         return true;
@@ -83,15 +79,20 @@ public class UseOnahole extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return getSelf().name() + " tries to stick a cocksleeve on your dick, but you manage to avoid it.";
+            return String.format("%s tries to stick a cocksleeve on %s dick, but %s %s to avoid it.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(),
+                            target.pronoun(), target.action("manage"));
         } else if (modifier == Result.upgrade) {
-            return getSelf().name()
-                            + " slides her cocksleeve over your dick and starts pumping it. The sensation is the same as if she was riding you, but you're the only "
-                            + "one who's feeling anything.";
+            return String.format("%s slides %s cocksleeve over %s dick and starts pumping it. "
+                            + "The sensation is the same as if %s was riding %s, but %s %s the only "
+                            + "one who's feeling anything.", getSelf().subject(), getSelf().possessivePronoun(),
+                            target.nameOrPossessivePronoun(), getSelf().subject(), target.directObject(),
+                            target.pronoun(), target.action("are", "is"));
         } else {
-            return getSelf().name()
-                            + " forces a cocksleeve over your erection and begins to pump it. At first the feeling is strange and a little bit uncomfortable, but the "
-                            + "discomfort gradually becomes pleasure.";
+            return String.format("%s forces a cocksleeve over %s erection and begins to pump it. "
+                            + "At first the feeling is strange and a little bit uncomfortable, but the "
+                            + "discomfort gradually becomes pleasure.", getSelf().subject(),
+                            target.nameOrPossessivePronoun());
         }
 
     }

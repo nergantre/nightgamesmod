@@ -96,8 +96,10 @@ public class SpawnFaerie extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name()
-                        + " casts a spell as she extends her hand. In a flash of magic, a small, naked girl with butterfly wings appears in her palm.";
+        return String.format("%s casts a spell as %s extends %s hand. In a flash of magic,"
+                        + " a small, naked girl with butterfly wings appears in %s palm.",
+                        getSelf().subject(), getSelf().pronoun(), getSelf().possessivePronoun(),
+                        getSelf().possessivePronoun());
     }
 
 }

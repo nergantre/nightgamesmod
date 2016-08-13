@@ -42,7 +42,7 @@ public class MimicSuccubus extends Skill {
     public boolean resolve(Combat c, Character target) {
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
+        } else if (c.shouldPrintReceive(target)) {
             if (!target.is(Stsflag.blinded))
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             else 
@@ -83,7 +83,7 @@ public class MimicSuccubus extends Skill {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return Global.format("{self:NAME-POSSESSIVE} mercurial form seems to suddenly expand, then collapse onto itself. "
                         + "Her crystal blue goo glimmers and shifts into a deep obsidian. After reforming her features out of "
-                        + "her eratically flowing slime, you see that she has taken on an appearance reminiscent of Reyka's succubus form, "
+                        + "her eratically flowing slime, {other:subject-action:see|sees} that she has taken on an appearance reminiscent of Reyka's succubus form, "
                         + "complete with large translucent gel wings, a thick tail and her characteristic laviscious grin.", getSelf(), target);
     }
 

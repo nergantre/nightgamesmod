@@ -44,11 +44,7 @@ public class TentaclePorn extends Skill {
             if (target.mostlyNude()) {
                 int m = Global.random(getSelf().get(Attribute.Fetish)) / 2 + 1;
                 if (target.bound()) {
-                    if (getSelf().human()) {
-                        c.write(getSelf(), deal(c, 0, Result.special, target));
-                    } else if (target.human()) {
-                        c.write(getSelf(), receive(c, 0, Result.special, target));
-                    }
+                    writeOutput(c, Result.special, target);
                     TentaclePart.pleasureWithTentacles(c, target, m, target.body.getRandomCock());
                     TentaclePart.pleasureWithTentacles(c, target, m, target.body.getRandomPussy());
                     TentaclePart.pleasureWithTentacles(c, target, m, target.body.getRandomBreasts());
@@ -56,7 +52,7 @@ public class TentaclePorn extends Skill {
                 } else if (getSelf().human()) {
                     c.write(getSelf(), deal(c, 0, Result.normal, target));
                     TentaclePart.pleasureWithTentacles(c, target, m, target.body.getRandom("skin"));
-                } else if (target.human()) {
+                } else if (c.shouldPrintReceive(target)) {
                     c.write(getSelf(), receive(c, 0, Result.normal, target));
                     TentaclePart.pleasureWithTentacles(c, target, m, target.body.getRandom("skin"));
                 }
@@ -65,19 +61,11 @@ public class TentaclePorn extends Skill {
                 }
                 target.emote(Emotion.horny, 20);
             } else {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, 0, Result.weak, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.weak, target));
-                }
+                writeOutput(c, Result.weak, target);
             }
             target.add(c, new Bound(target, Math.min(10 + 3 * getSelf().get(Attribute.Fetish), 50), "tentacles"));
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.miss, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.miss, target));
-            }
+            writeOutput(c, Result.miss, target);
             return false;
         }
         return true;
@@ -113,18 +101,24 @@ public class TentaclePorn extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return getSelf().name()
-                            + " stomps on the ground and a bundle of tentacles erupt from the ground. You're barely able to avoid them.";
+            return String.format("%s stomps on the ground and a bundle of tentacles erupt from the "
+                            + "ground. %s barely able to avoid them.", getSelf().subject(),
+                            Global.capitalizeFirstLetter(target.subjectAction("are", "is")));
         } else if (modifier == Result.weak) {
-            return getSelf().name()
-                            + " stomps on the ground and a bundle of tentacles erupt from the ground around you, entangling your arms and legs.";
+            return String.format("%s stomps on the ground and a bundle of tentacles erupt from the "
+                            + "ground around %s, entangling %s arms and legs.", getSelf().subject(),
+                            target.nameDirectObject(), target.possessivePronoun());
         } else if (modifier == Result.normal) {
-            return getSelf().name()
-                            + " stomps on the ground and a bundle of tentacles erupt from the ground around you, entangling your arms and legs. The slimy appendages "
-                            + "wriggle over your body and coat you in the slippery liquid.";
+            return String.format("%s stomps on the ground and a bundle of tentacles erupt from the "
+                            + "ground around %s, entangling %s arms and legs. The slimy appendages "
+                            + "wriggle over %s body and coat %s in the slippery liquid.",
+                            getSelf().subject(), target.nameDirectObject(), target.possessivePronoun(),
+                            target.possessivePronoun(), target.directObject());
         } else {
-            return getSelf().name()
-                            + " summons slimy tentacles that cover your helpless body, tease your dick, and probe your ass.";
+            return String.format("%s summons slimy tentacles that cover %s helpless body,"
+                            + " tease %s dick, and probe %s ass.", getSelf().subject(),
+                            target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                            target.possessivePronoun());
         }
     }
 }

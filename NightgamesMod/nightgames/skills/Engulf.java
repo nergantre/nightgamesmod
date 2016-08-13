@@ -81,7 +81,7 @@ public class Engulf extends CounterBase {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return Global.format(
                         "{self:NAME}'s body spreads out across the floor. From {self:possessive} lowered position, "
-                        + "{self:pronoun} smiles deviously up at you, goading you into an attack.",
+                        + "{self:pronoun} smiles deviously up at {other:name-do}, goading {other:direct-object} into an attack.",
                         getSelf(), target);
     }
 

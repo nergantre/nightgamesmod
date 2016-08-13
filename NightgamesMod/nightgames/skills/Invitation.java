@@ -96,29 +96,29 @@ public class Invitation extends Skill {
         if (modifier == Result.miss) {
             if (hasDivinity()) {
                 return Global.format(
-                                "{self:SUBJECT} commands {other:direct-object} to embrace {self:direct-object}. {other:SUBJECT} move to walk towards her for a brief second before snapping out of it.",
+                                "{self:SUBJECT} commands {other:direct-object} to embrace {self:direct-object}. {other:SUBJECT} move to walk towards {self:direct-object} for a brief second before snapping out of it.",
                                 getSelf(), target);
             }
             return Global.format(
-                            "{self:NAME} hugs you softly and tries to pull you into her, but you come to your senses in the nick of time and manage to twist out of her grasp, causing {self:NAME} to pout at you cutely.\n",
+                            "{self:NAME} hugs {other:name-do} softly and tries to pull {other:direct-object} into {self:direct-object}, but {other:pronoun-action:come|comes} to {other:possessive} senses in the nick of time and manage to twist out of {self:possessive} grasp, causing {self:NAME} to pout at {other:direct-object} cutely.\n",
                             getSelf(), target);
         } else if (!c.getStance().inserted(getSelf())) {
             if (hasDivinity()) {
                 return Global.format(
-                                "{self:SUBJECT} commands {other:direct-object} to embrace her. {other:SUBJECT} obey and hug her close to {other:reflective}. {self:NAME} follows up on {self:possessive} earlier command and tell you to fuck {self:direct-object}, to which you promptly lovingly comply.",
+                                "{self:SUBJECT} commands {other:name-do} to embrace {self:direct-object}. {other:SUBJECT-ACTION:obey|obeys} and {other:action:hug|hugs} {self:direct-object} close to {other:reflective}. {self:NAME} follows up on {self:possessive} earlier command and tells {other:name-do} to fuck {self:direct-object}, to which {other:pronoun} promptly, lovingly {other:action:comply|complies}.",
                                 getSelf(), target);
             }
             return Global.format(
-                            "{self:NAME} embraces you and smoothly slide your cock into her folds while you're distracted. She then pulls you to the ground on top of her and softly wraps her legs around your waist preventing your escape.",
+                            "{self:NAME} embraces {other:name-do} and smoothly slides {other:possessive} cock into {self:possessive} folds while {other:pronoun-action:are|is} distracted. {self:PRONOUN} then pulls {other:direct-object} to the ground on top of {self:direct-object} and softly wraps {self:possessive} legs around {other:possessive} waist preventing {other:possessive} escape.",
                             getSelf(), target);
         } else {
             if (hasDivinity()) {
                 return Global.format(
-                                "{self:SUBJECT} commands {other:direct-object} to embrace her. {other:SUBJECT} obey and hug her close to {other:reflective}. {self:NAME} follows up on {self:possessive} earlier command and tell you to fuck {self:direct-object}, to which you promptly lovingly comply.",
+                                "{self:SUBJECT} commands {other:direct-object} to embrace {self:direct-object}. {other:SUBJECT-ACTION:obey|obeys} and {other:action:hug|hugs} {self:direct-action} close to {other:reflective}. {self:NAME} follows up on {self:possessive} earlier command and tells {other:name-do} to fuck {self:direct-object}, to which {other:pronoun} promptly, lovingly {other:action:comply|complies}.",
                                 getSelf(), target);
             }
             return Global.format(
-                            "{self:NAME} embraces you and pulls you on top of her. Taking advantage of your distraction, she pushes you above her with her fucking you from underneath.",
+                            "{self:NAME} embraces {other:name-do} and pulls {other:direct-object} on top of {self:direct-object}. Taking advantage of {other:possessive} distraction, {self:subject} pushes {other:name-do} above {self:direct-object} with {self:direct-object} fucking {other:direct-object} from underneath.",
                             getSelf(), target);
         }
     }

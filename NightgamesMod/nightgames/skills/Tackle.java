@@ -25,27 +25,15 @@ public class Tackle extends Skill {
         if (target.roll(this, c, accuracy(c))
                         && getSelf().check(Attribute.Power, target.knockdownDC() - getSelf().get(Attribute.Animism))) {
             if (getSelf().get(Attribute.Animism) >= 1) {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, 0, Result.special, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.special, target));
-                }
+                writeOutput(c, Result.special, target);
                 target.pain(c, 4 + Global.random(6));
             } else {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, 0, Result.normal, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.normal, target));
-                }
+                writeOutput(c, Result.normal, target);
                 target.pain(c, 3 + Global.random(4));
             }
             c.setStance(new Mount(getSelf(), target));
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.miss, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.miss, target));
-            }
+            writeOutput(c, Result.miss, target);
             return false;
         }
         return true;
@@ -115,12 +103,16 @@ public class Tackle extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.special) {
-            return getSelf().name() + " wiggles her butt cutely before leaping at you and pinning you to the floor.";
+            return String.format("%s wiggles her butt cutely before leaping at %s and pinning %s to the floor.",
+                            getSelf().subject(), target.nameDirectObject(), target.directObject());
         }
         if (modifier == Result.miss) {
-            return getSelf().name() + " tries to tackle you, but you sidestep out of the way.";
+            return String.format("%s tries to tackle %s, but %s %s out of the way.",
+                            getSelf().subject(), target.nameDirectObject(),
+                            target.pronoun(), target.action("sidestep"));
         } else {
-            return getSelf().name() + " bowls you over and sits triumphantly on your chest.";
+            return String.format("%s bowls %s over and sits triumphantly on %s chest.",
+                            getSelf().subject(), target.nameDirectObject(), target.possessivePronoun());
         }
     }
 

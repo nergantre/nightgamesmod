@@ -37,11 +37,7 @@ public class EyesOfTemptation extends Skill {
     public boolean resolve(Combat c, Character target) {
         Result result = target.is(Stsflag.blinded) ? Result.special
                         : target.roll(this, c, accuracy(c)) ? Result.normal : Result.miss;
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, result, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, result, target));
-        }
+        writeOutput(c, result, target);
         if (result == Result.normal) {
             target.add(c, new Enthralled(target, getSelf(), 5));
             getSelf().emote(Emotion.dominant, 50);
@@ -82,7 +78,7 @@ public class EyesOfTemptation extends Skill {
                                 getSelf(), target);
             } else {
                 return Global.format(
-                                "There seems to be a bit of a lull in the fight. You're not sure what {other:name} is doing, but it isn't having any effect on you.",
+                                "There seems to be a bit of a lull in the fight. {self:SUBJECT-ACTION:are|is} not sure what {other:name} is doing, but it isn't having any effect on {self:direct-object}.",
                                 getSelf(), target);
             }
         } else {

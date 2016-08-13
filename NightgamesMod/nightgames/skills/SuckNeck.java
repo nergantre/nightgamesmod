@@ -26,28 +26,16 @@ public class SuckNeck extends Skill {
     public boolean resolve(Combat c, Character target) {
         if (target.roll(this, c, accuracy(c))) {
             if (getSelf().get(Attribute.Dark) >= 1) {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, 0, Result.special, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.special, target));
-                }
+                writeOutput(c, Result.special, target);
                 int m = 10 + Math.min(20, getSelf().get(Attribute.Dark) / 2);
                 target.drain(c, getSelf(), m);
             } else {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, 0, Result.normal, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.normal, target));
-                }
+                writeOutput(c, Result.normal, target);
             }
             int m = 1 + Global.random(8);
             target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("skin"), m, c, this);
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.miss, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.miss, target));
-            }
+            writeOutput(c, Result.miss, target);
             return false;
         }
         return true;
@@ -103,13 +91,22 @@ public class SuckNeck extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return getSelf().name() + " goes after your neck, but you push her back.";
+            return String.format("%s goes after %s neck, but %s %s %s back.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(),
+                            target.pronoun(), target.action("push", "pushes"),
+                            getSelf().possessivePronoun());
         } else if (modifier == Result.special) {
-            return getSelf().name()
-                            + " presses her lips against your neck. She gives you a hickey and your knees start to go weak. It's like your strength is being sucked out through "
-                            + "your skin.";
+            return String.format("%s presses %s lips against %s neck. %s gives %s a "
+                            + "hickey and %s knees start to go weak. It's like %s strength"
+                            + " is being sucked out through "
+                            + "%s skin.", getSelf().subject(), getSelf().possessivePronoun(),
+                            target.nameOrPossessivePronoun(), getSelf().subject(),
+                            target.directObject(), target.possessivePronoun(), target.possessivePronoun(),
+                            target.possessivePronoun());
         } else {
-            return getSelf().name() + " licks and sucks your neck, biting lightly when you aren't expecting it.";
+            return String.format("%s licks and sucks %s neck, biting lightly when %s %s expecting it.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(),
+                            target.pronoun(), target.action("aren't", "isn't"));
         }
     }
 

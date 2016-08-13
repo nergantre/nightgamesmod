@@ -4,6 +4,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.global.Global;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.stance.Behind;
@@ -63,38 +64,24 @@ public class Diversion extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        if (modifier == Result.normal) {
-            // TODO this is kind of terrible (deal does the effect...)
-            Clothing article = getSelf().strip(ClothingSlot.top, c);
-            return "You quickly strip off your " + article.getName()
-                            + " and throw it to the right, while you jump to the left. " + target.getName()
-                            + " catches your discarded clothing, " + "losing sight of you in the process.";
-        } else {
-            // TODO this is kind of terrible (deal does the effect...)
-            Clothing article = getSelf().strip(ClothingSlot.bottom, c);
-            return "You quickly strip off your " + article.getName()
-                            + " and throw it to the right, while you jump to the left. " + target.getName()
-                            + " catches your discarded clothing, " + "losing sight of you in the process.";
-        }
+        Clothing article = getSelf().strip(modifier == Result.normal ? ClothingSlot.top : ClothingSlot.bottom, c);
+        return "You quickly strip off your " + article.getName()
+            + " and throw it to the right, while you jump to the left. " + target.getName()
+            + " catches your discarded clothing, " + "losing sight of you in the process.";
     }
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character attacker) {
-        if (modifier == Result.normal) {
-            // TODO this is kind of terrible (deal does the effect...)
-            Clothing article = getSelf().strip(ClothingSlot.top, c);
-            return "You lose sight of " + getSelf().name()
-                            + " for just a moment, but then see her moving behind you in your peripheral vision. You quickly spin around and grab her, "
-                            + "but you find yourself holding just her " + article.getName()
-                            + ". Wait... what the fuck?";
-        } else {
-            // TODO this is kind of terrible (deal does the effect...)
-            Clothing article = getSelf().strip(ClothingSlot.bottom, c);
-            return "You lose sight of " + getSelf().name()
-                            + " for just a moment, but then see her moving behind you in your peripheral vision. You quickly spin around and grab her, "
-                            + "but you find yourself holding just her " + article.getName()
-                            + ". Wait... what the fuck?";
-        }
+        Clothing article = getSelf().strip(modifier == Result.normal ? ClothingSlot.top : ClothingSlot.bottom, c);
+        return String.format("%s sight of %s for just a moment, but then %s %s moving behind "
+                        + "%s in %s peripheral vision. %s quickly %s around and grab %s, "
+                        + "but you find yourself holding just %s %s. Wait... what the fuck?",
+                        attacker.subjectAction("lose"), getSelf().subject(), attacker.pronoun(),
+                        attacker.action("see"),
+                        getSelf().directObject(), attacker.directObject(),
+                        Global.capitalizeFirstLetter(attacker.subject()), attacker.action("spin"),
+                        getSelf().nameDirectObject(), getSelf().possessivePronoun(),
+                        article.getName());
     }
 
     @Override

@@ -29,28 +29,16 @@ public class UseDildo extends Skill {
     public boolean resolve(Combat c, Character target) {
         if (target.roll(this, c, accuracy(c))) {
             if (getSelf().has(Item.Dildo2)) {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, 0, Result.upgrade, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.upgrade, target));
-                }
+                writeOutput(c, Result.upgrade, target);
                 int m = 5 + Global.random(15) + target.get(Attribute.Perception);
                 target.body.pleasure(getSelf(), null, target.body.getRandom("pussy"), m, c, this);
             } else {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, 0, Result.normal, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.normal, target));
-                }
+                writeOutput(c, Result.normal, target);
                 int m = Global.random(10) + target.get(Attribute.Perception);
                 target.body.pleasure(getSelf(), null, target.body.getRandom("pussy"), m, c, this);
             }
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.miss, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.miss, target));
-            }
+            writeOutput(c, Result.miss, target);
             return false;
         }
         return true;

@@ -36,11 +36,7 @@ public class Shove extends Skill {
         boolean success = true;
         if (getSelf().get(Attribute.Ki) >= 1 && !target.getOutfit().slotUnshreddable(ClothingSlot.top)
                         && getSelf().canSpend(5)) {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.special, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.special, target));
-            }
+            writeOutput(c, Result.special, target);
             target.shred(ClothingSlot.top);
             target.pain(c, Global.random(10) + 15 + (getSelf().get(Attribute.Power) + getSelf().get(Attribute.Ki)) / 4);
             if (getSelf().check(Attribute.Power, target.knockdownDC() - getSelf().get(Attribute.Ki))) {
@@ -51,15 +47,17 @@ public class Shove extends Skill {
                 if (getSelf().human()) {
                     c.write(getSelf(), "You shove " + target.name()
                                     + " off of you and get to your feet before she can retaliate.");
-                } else if (target.human()) {
-                    c.write(getSelf(), getSelf().name() + " shoves you hard enough to free herself and jump up.");
+                } else if (c.shouldPrintReceive(target)) {
+                    c.write(getSelf(), String.format("%s shoves %s hard enough to free %s and jump up.",
+                                    getSelf().subject(), target.nameDirectObject(), getSelf().reflectivePronoun()));
                 }
                 c.setStance(new Neutral(getSelf(), target));
             } else {
                 if (getSelf().human()) {
                     c.write(getSelf(), "You push " + target.name() + ", but you're unable to dislodge her.");
-                } else if (target.human()) {
-                    c.write(getSelf(), getSelf().name() + " shoves you weakly.");
+                } else if (c.shouldPrintReceive(target)) {
+                    c.write(getSelf(), String.format("%s shoves %s weakly.", getSelf().subject(), 
+                                    target.nameDirectObject()));
                 }
                 success = false;
             }
@@ -68,16 +66,19 @@ public class Shove extends Skill {
             if (getSelf().check(Attribute.Power, target.knockdownDC())) {
                 if (getSelf().human()) {
                     c.write(getSelf(), "You shove " + target.name() + " hard enough to knock her flat on her back.");
-                } else if (target.human()) {
-                    c.write(getSelf(), getSelf().name() + " knocks you off balance and you fall at her feet.");
+                } else if (c.shouldPrintReceive(target)) {
+                    c.write(getSelf(), String.format("%s knocks %s off balance and %s %s at her feet.",
+                                    getSelf().subject(), target.nameDirectObject(),
+                                    target.pronoun(), target.action("fall")));
                 }
                 target.add(c, new Falling(target));
             } else {
                 if (getSelf().human()) {
                     c.write(getSelf(), "You shove " + target.name() + " back a step, but she keeps her footing.");
-                } else if (target.human()) {
-                    c.write(getSelf(),
-                                    getSelf().name() + " pushes you back, but you're able to maintain your balance.");
+                } else if (c.shouldPrintReceive(target)) {
+                    c.write(getSelf(), String.format("%s pushes %s back, but %s %s able to maintain %s balance.",
+                                    getSelf().subject(), target.nameDirectObject(), target.pronoun(),
+                                    target.action("are", "is"), target.possessivePronoun()));
                 }
                 success = false;
             }
@@ -123,9 +124,12 @@ public class Shove extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name() + " strikes you in the chest with her palm, staggering your footing. Suddenly your "
-                        + target.getOutfit().getTopOfSlot(ClothingSlot.top).getName()
-                        + " tears and falls off you in tatters.";
+        return String.format("%s strikes %s in the chest with %s palm, staggering %s footing. Suddenly %s "
+                        + "%s tears and falls off %s in tatters.", getSelf().subject(),
+                        target.nameDirectObject(), getSelf().possessivePronoun(),
+                        target.possessivePronoun(), getSelf().nameOrPossessivePronoun(),
+                        target.getOutfit().getTopOfSlot(ClothingSlot.top).getName(),
+                        target.directObject());
     }
 
     @Override

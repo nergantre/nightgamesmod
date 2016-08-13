@@ -33,11 +33,7 @@ public class ShortCircuit extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         getSelf().consume(Item.Battery, 3);
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         target.add(c, new Rewired(target, 4 + Global.random(3)));
         return true;
     }
@@ -60,8 +56,13 @@ public class ShortCircuit extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name()
-                        + " aims a devices at you and you feel a strange shiver run across your skin. You feel indescribably weird. She's done something to your sense of touch.";
+        return String.format("%s aims a device at %s and %s %s a strange shiver run "
+                        + "across %s skin. %s indescribably weird. %s has "
+                        + "done something to %s sense of touch.", getSelf().subject(),
+                        target.nameDirectObject(), target.pronoun(), target.action("feel"),
+                        target.possessivePronoun(),
+                        Global.capitalizeFirstLetter(target.subjectAction("feel")),
+                        getSelf().subject(), target.possessivePronoun());
     }
 
 }

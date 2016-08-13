@@ -34,27 +34,23 @@ public class Stomp extends Skill {
             if (getSelf().has(Trait.heeldrop) && target.crotchAvailable() && target.hasBalls()) {
                 if (getSelf().human()) {
                     c.write(getSelf(), deal(c, 0, Result.strong, target));
-                } else if (target.human()) {
+                } else if (c.shouldPrintReceive(target)) {
                     c.write(getSelf(), receive(c, 0, Result.strong, target));
-                    if (Global.random(5) >= 1) {
+                    if (target.hasBalls() && Global.random(5) >= 1) {
                         c.write(getSelf(), getSelf().bbLiner(c));
                     }
                 }
                 pain = 15 - (int) Math
                                 .round((5 + Global.random(5)) * target.getOutfit().getExposure(ClothingSlot.bottom));
             } else {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, 0, Result.weak2, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.weak2, target));
-                }
+                writeOutput(c, Result.weak2, target);
             }
         } else if (getSelf().has(Trait.heeldrop) && target.crotchAvailable()) {
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.special, target));
-            } else if (target.human()) {
+            } else if (c.shouldPrintReceive(target)) {
                 c.write(getSelf(), receive(c, 0, Result.special, target));
-                if (Global.random(5) >= 1) {
+                if (target.hasBalls() && Global.random(5) >= 1) {
                     c.write(getSelf(), getSelf().bbLiner(c));
                 }
             }
@@ -63,18 +59,14 @@ public class Stomp extends Skill {
             }
             pain += 30 - (int) Math.round((5 + Global.random(5)) * target.getOutfit().getExposure(ClothingSlot.bottom));
         } else if (target.has(ClothingTrait.armored)) {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.weak, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.weak, target));
-            }
+            writeOutput(c, Result.weak, target);
             pain += 5 - (int) Math.round((2 + Global.random(3)) * target.getOutfit().getExposure(ClothingSlot.bottom));
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.normal, target));
-            } else if (target.human()) {
+            } else if (c.shouldPrintReceive(target)) {
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
-                if (Global.random(5) >= 1) {
+                if (target.hasBalls() && Global.random(5) >= 1) {
                     c.write(getSelf(), getSelf().bbLiner(c));
                 }
             }
@@ -161,27 +153,47 @@ public class Stomp extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.special) {
-            return getSelf().name()
-                            + " forces your legs open and begins prodding your genitals with her foot. You're slightly aroused by her attention, but she's not giving "
-                            + "you a proper footjob, she's mostly just playing with your balls. Too late, you realize that she's actually lining up her targets. Two torrents of pain "
-                            + "erupt from your delicates as her feet crash down on them.";
+            return String.format("%s forces %s legs open and begins prodding %s genitals with %s foot. "
+                            + "%s slightly aroused by %s attention, but %s is not giving "
+                            + "%s a proper footjob, %s is mostly just playing with %s balls. Too late, "
+                            + "%s that %s is actually lining up %s targets. Two torrents of pain "
+                            + "erupt from %s delicates as %s feet crash down on them.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(),
+                            target.possessivePronoun(), getSelf().possessivePronoun(),
+                            Global.capitalizeFirstLetter(target.subjectAction("are", "is")),
+                            getSelf().nameOrPossessivePronoun(), getSelf().pronoun(),
+                            target.directObject(), getSelf().pronoun(), target.possessivePronoun(),
+                            target.subjectAction("realize"), getSelf().pronoun(),
+                            getSelf().possessivePronoun(), target.nameOrPossessivePronoun(),
+                            getSelf().nameOrPossessivePronoun());
         } else if (modifier == Result.strong) {
             return String.format(
-                            "%s forces your legs out of the way and then starts using %s "
-                                            + "foot to fondle your %s. You were just thinking that this could be much"
+                            "%s forces %s legs out of the way and then starts using %s "
+                                            + "foot to fondle %s %s. %s was just thinking that this could be much"
                                             + " worse, when %s suddenly lifts the foot up and slams it back down with"
-                                            + " great force. You don't often feel much pain from your balls, but the"
+                                            + " great force. %s often feel much pain from %s balls, but the"
                                             + " enormous impact still hurts a lot.",
-                            getSelf().name(), getSelf().possessivePronoun(),
-                            target.body.getRandomCock().describe(target), getSelf().pronoun());
+                            getSelf().name(), target.nameOrPossessivePronoun(),
+                            getSelf().possessivePronoun(), target.possessivePronoun(),
+                            target.body.getRandomCock().describe(target), 
+                            Global.capitalizeFirstLetter(target.subjectAction("were", "was")),
+                            getSelf().pronoun(), 
+                            Global.capitalizeFirstLetter(target.subjectAction("were", "was")),
+                            target.possessivePronoun());
         } else if (modifier == Result.weak2) {
-            return getSelf().name() + " forces your legs open and brutally stomps your "
-                            + "balls. Despite the great blow, you don't feel much pain.";
+            return String.format("%s forces %s legs open and brutally stomps %s "
+                            + "balls. Despite the great blow, %s feel much pain.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(),
+                            target.possessivePronoun(), target.subjectAction("don't", "doesn't"));
         } else if (modifier == Result.weak) {
-            return getSelf().name() + " grabs your ankles and stomps down on your armored groin, doing little damage.";
+            return String.format("%s grabs %s ankles and stomps down on %s armored groin, doing little damage.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(), target.possessivePronoun());
         } else {
-            return getSelf().name()
-                            + " grabs your ankles and stomps down on your unprotected jewels. You curl up in the fetal position, groaning in agony.";
+            return String.format("%s grabs %s ankles and stomps down on %s unprotected "
+                            + "jewels. %s up in the fetal position, groaning in agony.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(),
+                            target.possessivePronoun(),
+                            Global.capitalizeFirstLetter(target.subjectAction("curl")));
         }
     }
 

@@ -32,11 +32,7 @@ public class TailJob extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         int m = (5 + Global.random(10))
                         + Math.min(getSelf().getArousal().getReal() / 20, getSelf().get(Attribute.Animism));
         String receiver;
@@ -76,13 +72,19 @@ public class TailJob extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (target.hasDick()) {
-            return getSelf().name() + " teases your sensitive dick and balls with her "
-                            + getSelf().body.getRandom("tail").describe(getSelf())
-                            + ". It wraps completely around your shaft and strokes firmly.";
+            return String.format("%s teases %s sensitive dick and balls with %s %s. "
+                            + "It wraps completely around %s shaft and strokes firmly.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(),
+                            getSelf().possessivePronoun(),
+                            getSelf().body.getRandom("tail").describe(getSelf()),
+                            target.possessivePronoun());
         } else {
-            return getSelf().name() + " teases your sensitive pussy with her "
-                            + getSelf().body.getRandom("tail").describe(getSelf())
-                            + ". It runs along your nether lips and leaves you gasping.";
+            return String.format("%s teases %s sensitive pussy with %s %s. "
+                            + "It runs along %s nether lips and leaves %s gasping.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(),
+                            getSelf().possessivePronoun(),
+                            getSelf().body.getRandom("tail").describe(getSelf()),
+                            target.possessivePronoun(), target.directObject());
         }
     }
 

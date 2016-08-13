@@ -50,11 +50,7 @@ public class Tighten extends Thrust {
             result = Result.normal;
         }
 
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, result, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, result, target));
-        }
+        writeOutput(c, result, target);
 
         int[] m = getDamage(c, target);
         assert (m.length >= 2);

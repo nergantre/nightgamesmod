@@ -61,11 +61,7 @@ public class Drain extends Skill {
         int strength = Math.max(10, 1 + getSelf().get(Attribute.Dark) / 4);
         int type = Math.max(1, Global.centeredrandom(6, getSelf().get(Attribute.Dark) / 3.0, 3));
 
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, type, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, type, Result.normal, target));
-        }
+        writeOutput(c, type, Result.normal, target);
         switch (type) {
             case 0:
                 getSelf().arouse(getSelf().getArousal().max(), c);
@@ -182,88 +178,129 @@ public class Drain extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
+        String demon = getSelf().useFemalePronouns() ? "succubus" : "incubus";
+        
         if (c.getStance().inserted(target)) {
             String muscDesc = c.getStance().anallyPenetrated(getSelf()) ? "anal" : "vaginal";
             String partDesc = c.getStance().anallyPenetrated(getSelf())
                             ? getSelf().body.getRandom("ass").describe(getSelf())
                             : getSelf().body.getRandomPussy().describe(getSelf());
 
-            String base = "You feel " + getSelf().nameOrPossessivePronoun() + " powerful " + muscDesc
-                            + " muscles suddenly tighten around you. "
-                            + "She starts kneading your dick bringing you immense pleasure and soon"
-                            + " you feel yourself erupt into her, but you realize you are shooting"
-                            + " something far more precious than semen into her " + partDesc
-                            + "; as more of the ethereal" + " fluid leaves you, you feel ";
+            String base = String.format("%s %s  powerful %s muscles suddenly tighten around %s. "
+                            + "%s starts kneading %s dick, bringing %s immense pleasure and soon"
+                            + " %s %s erupt into %s, but %s %s %s %s shooting"
+                            + " something far more precious than semen into her %s; "
+                            + "as more of the ethereal fluid leaves %s, %s ", 
+                            target.subjectAction("feel"), getSelf().nameOrPossessivePronoun(),
+                            muscDesc, target.directObject(), getSelf().subject(),
+                            target.possessivePronoun(), target.directObject(),
+                            target.subjectAction("feel"), target.reflectivePronoun(), getSelf().nameDirectObject(),
+                            target.pronoun(), target.action("realize"), target.pronoun(), target.action("are", "is"),
+                            partDesc, target.directObject(), target.subjectAction("feel"));
             switch (damage) {
                 case 4:
-                    return base + "your strength leaving you with it, "
-                                    + "making you more tired than you have ever felt.";
+                    return base + String.format("%s strength leaving %s with it, "
+                                    + "making %s more tired than %s have ever felt.",
+                                    target.possessivePronoun(), target.directObject(),
+                                    target.directObject(), target.pronoun());
                 case 5:
-                    return base + "memories of previous sexual experiences escape your mind,"
-                                    + " numbing your skills, rendering you more sensitive and"
-                                    + " perilously close to the edge of climax.";
+                    return base + String.format("memories of previous sexual experiences escape %s mind,"
+                                    + " numbing %s skills, rendering %s more sensitive and"
+                                    + " perilously close to the edge of climax.",
+                                    target.possessivePronoun(), target.possessivePronoun(),
+                                    target.directObject());
                 case 3:
-                    return base + "your mind go numb, causing your confidence and" + "cunning to flow into her.";
+                    return base + String.format("%s mind go numb, causing %s confidence and cunning to flow into %s.",
+                                    target.possessivePronoun(), target.possessivePronoun(), getSelf().nameDirectObject());
                 case 1:
-                    return "Clearly the succubus is trying to do something really special to you, "
-                                    + "as you can feel the walls of her " + partDesc + " squirm against you in a way "
-                                    + "no human could manage, but all you feel is some drowsiness.";
+                    return String.format("Clearly the %s is trying to do something really special to %s, "
+                                    + "as %s can feel the walls of %s %s squirm against %s in a way "
+                                    + "no human could manage, but all %s is some drowsiness.",
+                                    demon, target.nameDirectObject(), target.pronoun(),
+                                    getSelf().nameOrPossessivePronoun(), partDesc, target.directObject(),
+                                    target.subjectAction("feel"));
                 case 2:
-                    return "Clearly the succubus is trying to do something really special to you, "
-                                    + "as you can feel the walls of her " + partDesc + " squirm against you in a way "
-                                    + "no human could manage, but all you feel is your focus waning some.";
+                    return String.format("Clearly the %s is trying to do something really special to %s, "
+                                    + "as %s can feel the walls of %s %s squirm against %s in a way "
+                                    + "no human could manage, but all %s is %s focus waning a bit.",
+                                    demon, target.nameDirectObject(), target.pronoun(),
+                                    getSelf().nameOrPossessivePronoun(), partDesc, target.directObject(),
+                                    target.subjectAction("feel"), target.possessivePronoun());
                 case 0:
-                    return getSelf().name() + " squeezes you with her " + partDesc
-                                    + " and starts to milk you, but you suddenly feel her shudder and moan loudly. Looks like her plan backfired.";
+                    return String.format("%s squeezes %s with %s %s and starts to milk %s,"
+                                    + " but %s suddenly %s %s shudder and moan loudly."
+                                    + " Looks like %s plan backfired.", getSelf().name(), target.subject(),
+                                    getSelf().possessivePronoun(), partDesc, target.directObject(),
+                                    target.pronoun(), target.action("feel"), getSelf().directObject(),
+                                    target.nameOrPossessivePronoun());
                 case 6:
-                    return base + "something snap loose inside of you and it seems to flow right "
-                                    + "through your dick and into her. When it is over you feel... empty "
-                                    + "somehow. At the same time, " + getSelf().name()
-                                    + " seems radiant, looking more powerful,"
+                    return base + String.format("something snap loose inside of %s and it seems to flow right "
+                                    + "through %s dick and into %s. When it is over %s... empty "
+                                    + "somehow. At the same time, %s seems radiant, looking more powerful,"
                                     + " smarter and even more seductive than before. Through all of this,"
-                                    + " she has kept on thrusting and you are right on the edge of climax."
-                                    + " Your defeat appears imminent, but you have already lost something"
-                                    + " far more valuable than a simple sex fight...";
+                                    + " %s has kept on thrusting and %s right on the edge of climax."
+                                    + " %s defeat appears imminent, but %s %s already lost something"
+                                    + " far more valuable than a simple sex fight...",
+                                    target.directObject(), target.possessivePronoun(), getSelf().nameDirectObject(),
+                                    target.subjectAction("feel"), getSelf().subject(), getSelf().pronoun(),
+                                    target.subjectAction("are", "is"), Global.capitalizeFirstLetter(target.possessivePronoun()),
+                                    target.pronoun(), target.action("have", "has"));
                 default:
                     // Should never happen
                     return " nothing. You should be feeling something, but you're not.";
             }
         } else {
-            String base = "You feel " + getSelf().nameOrPossessivePronoun()
-                            + " powerful will drawing some of your energy into " + getSelf().possessivePronoun()
-                            + " cock, ";
+            String base = String.format("%s feel %s powerful will drawing some of %s energy into %s cock, ",
+                            target.subjectAction("feel"), getSelf().nameOrPossessivePronoun(), 
+                            target.possessivePronoun(), getSelf().possessivePronoun());
             switch (damage) {
                 case 4:
-                    return base + "your strength leaving you with it, "
-                                    + "making you more tired than you have ever felt.";
+                    return base + String.format("%s strength leaving %s with it, "
+                                    + "making %s more tired than %s have ever felt.",
+                                    target.possessivePronoun(), target.directObject(),
+                                    target.directObject(), target.pronoun());
                 case 5:
-                    return base + "memories of previous sexual experiences escape your mind,"
-                                    + " numbing your skills, rendering you more sensitive and"
-                                    + " perilously close to the edge of climax.";
+                    return base + String.format("memories of previous sexual experiences escape %s mind,"
+                                    + " numbing %s skills, rendering %s more sensitive and"
+                                    + " perilously close to the edge of climax.",
+                                    target.possessivePronoun(), target.possessivePronoun(),
+                                    target.directObject());
                 case 3:
-                    return base + "your mind go numb, causing your confidence and" + "cunning to flow into her.";
+                    return base + String.format("%s mind go numb, causing %s confidence and cunning to flow into %s.",
+                                    target.possessivePronoun(), target.possessivePronoun(), getSelf().nameDirectObject());
                 case 1:
-                    return "Clearly the demon is trying to do something really special to you, " + "as you can feel "
-                                    + getSelf().nameOrPossessivePronoun() + " cock thrust against you in a way "
-                                    + "no human could manage, but all you feel is some drowsiness";
+                    return String.format("Clearly the %s is trying to do something really special to %s, "
+                                    + "as %s can feel %s cock thrust against %s in a way "
+                                    + "no human could manage, but all %s is some drowsiness.",
+                                    demon, target.nameDirectObject(), target.pronoun(),
+                                    getSelf().nameOrPossessivePronoun(), target.directObject(),
+                                    target.subjectAction("feel"));
                 case 2:
-                    return "Clearly the demon is trying to do something really special to you, " + "as you can feel "
-                                    + getSelf().nameOrPossessivePronoun() + " cock thrust against you in a way "
-                                    + "no human could manage, but all you feel is your focus waning some";
+                    return String.format("Clearly the %s is trying to do something really special to %s, "
+                                    + "as %s can feel %s cock thrust against %s in a way "
+                                    + "no human could manage, but all %s is %s focus waning a bit.",
+                                    demon, target.nameDirectObject(), target.pronoun(),
+                                    getSelf().nameOrPossessivePronoun(), target.directObject(),
+                                    target.subjectAction("feel"), target.possessivePronoun());
                 case 0:
-                    return getSelf().name() + " draws upon your will through your connection, but you suddenly feel "
-                                    + getSelf().pronoun() + " shudder and moan loudly. Looks like "
-                                    + getSelf().possessivePronoun() + " plan backfired.";
+                    return String.format("%s draws upon %s will through %s connection, but %s"
+                                    + " suddenly %s %s shudder and moan loudly. Looks like %s plan backfired.",
+                                    getSelf().nameOrPossessivePronoun(), target.nameOrPossessivePronoun(),
+                                    c.bothPossessive(), target.subject(),
+                                                    target.action("feel"), getSelf().subject(),
+                                                    getSelf().possessivePronoun());
                 case 6:
-                    return base + "something snap loose inside of you and it seems to flow right "
-                                    + "through your pussy and into " + getSelf().directObject()
-                                    + ". When it is over you feel... empty " + "somehow. At the same time, "
-                                    + getSelf().name() + " seems radiant, looking more powerful,"
-                                    + " smarter and even more seductive than before. Through all of this," + " "
-                                    + getSelf().pronoun()
-                                    + " has kept on thrusting and you are right on the edge of climax."
-                                    + " Your defeat appears imminent, but you have already lost something"
-                                    + " far more valuable than a simple sex fight...";
+                    return base + String.format("something snap loose inside of %s and it seems to flow right "
+                                    + "through %s pussy and into %s. When it is over %s... empty "
+                                    + "somehow. At the same time, %s seems radiant, looking more powerful,"
+                                    + " smarter and even more seductive than before. Through all of this,"
+                                    + " %s has kept on thrusting and %s right on the edge of climax."
+                                    + " %s defeat appears imminent, but %s %s already lost something"
+                                    + " far more valuable than a simple sex fight...",
+                                    target.directObject(), target.possessivePronoun(), getSelf().nameDirectObject(),
+                                    target.subjectAction("feel"), getSelf().subject(), getSelf().pronoun(),
+                                    target.subjectAction("are", "is"), Global.capitalizeFirstLetter(target.possessivePronoun()),
+                                    target.pronoun(), target.action("have", "has"));
                 default:
                     // Should never happen
                     return " nothing. You should be feeling something, but you're not.";

@@ -97,7 +97,7 @@ public class TemptressRide extends Thrust {
                                                 + " with %s %s. The muscles are wound so tight that it's nearly"
                                                 + " impossible to move at all, but %s %s down hard and eventually"
                                                 + " all of %s %s is lodged firmly inside of %s.",
-                                getSelf().subjectAction("slide", "slides"), target.subject(), target.directObject(),
+                                getSelf().subjectAction("slide"), target.subject(), target.directObject(),
                                 getSelf().possessivePronoun(), getSelf().body.getRandomPussy().describe(getSelf()),
                                 getSelf().pronoun(), getSelf().action("push", "pushes"), target.possessivePronoun(),
                                 target.body.getRandomCock().describe(target), getSelf().directObject());
@@ -107,10 +107,10 @@ public class TemptressRide extends Thrust {
                                                 + " of %s %s is undulating on %s shaft, sending ripples along it"
                                                 + " as if milking it. Overcome with pleasure, %s entire body tenses up and"
                                                 + " %s %s %s head back, trying hard not to cum instantly.",
-                                getSelf().subjectAction("move", "moves"), target.nameOrPossessivePronoun(),
+                                getSelf().subjectAction("move"), target.nameOrPossessivePronoun(),
                                 target.body.getRandomCock().describe(target), getSelf().possessivePronoun(),
                                 getSelf().body.getRandomPussy().describe(getSelf()), target.possessivePronoun(),
-                                target.possessivePronoun(), target.pronoun(), target.action("throw", "throws"),
+                                target.possessivePronoun(), target.pronoun(), target.action("throw"),
                                 target.possessivePronoun());
         }
     }

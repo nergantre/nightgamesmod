@@ -61,11 +61,7 @@ public class Cunnilingus extends Skill {
                 results = Result.reverse;
             }
         }
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, i, results, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, i, results, target));
-        }
+        writeOutput(c, i, results, target);
         if (i == -2) {
             getSelf().add(c, new Enthralled(getSelf(), target, 3));
         }
@@ -166,29 +162,43 @@ public class Cunnilingus extends Skill {
     }
 
     @Override
-    public String receive(Combat c, int damage, Result modifier, Character attacker) {
-        if (modifier == Result.miss) {
-            return getSelf().name()
-                            + " tries to tease your cunt with her mouth, but you push her face away from your box.";
-        } else if (modifier == Result.special) {
-            return getSelf().nameOrPossessivePronoun()
-                            + " skilled tongue explores your pussy, finding and pleasuring your more sensitive areas. "
-                            + "She repeatedly attacks your clitoris until you can't suppress your pleasured moans."
-                            + (damage == -1 ? " Your aphrodisiac juices manage to arouse her as much as she aroused you."
-                                            : "")
-                            + (damage == -2 ? " Your tainted juices quickly reduce her into a willing thrall." : "");
-        } else if (modifier == Result.reverse) {
-            return getSelf().name() + " obediently laps at your pussy as you sit on her face."
-                            + (damage == -1 ? " Your aphrodisiac juices manage to arouse her as much as she aroused you."
-                                            : "")
-                            + (damage == -2 ? " Your tainted juices quickly reduce her into a willing thrall." : "");
+    public String receive(Combat c, int damage, Result modifier, Character target) {
+        String special;
+        switch (damage) {
+            case -1:
+                special = String.format(" %s aphrodisiac juices manage to arouse %s as much as %s aroused %s.", 
+                                target.nameOrPossessivePronoun(), getSelf().nameDirectObject(),
+                                getSelf().pronoun(), target.nameDirectObject());
+                break;
+            case -2:
+                special = String.format(" %s tainted juices quickly reduce %s into a willing thrall.",
+                                target.nameOrPossessivePronoun(), getSelf().nameDirectObject());
+                break;
+            default:
+                special = "";
         }
-        return getSelf().name() + " locates and captures your clit between her lips and attacks it with her tongue."
-                        + (damage == -1 ? " Your aphrodisiac juices manage to arouse her as much as she aroused you."
-                                        : "")
-                        + (damage == -2 ? " Your tainted juices quickly reduce her into a willing thrall." : "");
+        if (modifier == Result.miss) {
+            return String.format("%s tries to tease %s cunt with %s mouth, but %s %s %s face away from %s box.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessivePronoun(),
+                            target.pronoun(), target.action("push", "pushes"), getSelf().nameOrPossessivePronoun(),
+                            target.possessivePronoun());
+        } else if (modifier == Result.special) {
+            return String.format("%s skilled tongue explores %s pussy, finding and pleasuring %s more sensitive areas. "
+                            + "%s repeatedly attacks %s clitoris until %s can't suppress %s pleasured moans.%s",
+                            getSelf().nameOrPossessivePronoun(), target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                            Global.capitalizeFirstLetter(getSelf().pronoun()), target.nameOrPossessivePronoun(),
+                            target.pronoun(), target.possessivePronoun(), special);
+        } else if (modifier == Result.reverse) {
+            return String.format("%s obediently laps at %s pussy as %s %s on %s face.%s",
+                            getSelf().subject(), target.nameOrPossessivePronoun(),
+                            target.pronoun(), target.action("sit"), getSelf().possessivePronoun(),
+                            special);
+        }
+        return String.format("%s locates and captures %s clit between %s lips and attacks it with %s tongue.%s", 
+                        getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessivePronoun(),
+                        getSelf().possessivePronoun(), special);
     }
-
+    
     @Override
     public String describe(Combat c) {
         return "Perfom cunnilingus on opponent";

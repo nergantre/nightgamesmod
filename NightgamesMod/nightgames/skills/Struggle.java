@@ -43,7 +43,7 @@ public class Struggle extends Skill {
                     } else {
                         c.write(getSelf(), "You manage to snap the restraints that are binding your hands.");
                     }
-                } else if (target.human()) {
+                } else if (c.shouldPrintReceive(target)) {
                     if (status != null) {
                         c.write(getSelf(), getSelf().name() + " slips free from the " + status + ".");
                     } else {
@@ -58,7 +58,7 @@ public class Struggle extends Skill {
                     } else {
                         c.write(getSelf(), "You struggle against your restraints, but can't get free.");
                     }
-                } else if (target.human()) {
+                } else if (c.shouldPrintReceive(target)) {
                     if (status != null) {
                         c.write(getSelf(), getSelf().name() + " struggles against the " + status
                                         + ", but can't free her hands.");
@@ -87,15 +87,19 @@ public class Struggle extends Skill {
                         } else {
                             c.write(getSelf(), "You manage to break away from " + target.name() + ".");
                         }
-                    } else if (target.human()) {
+                    } else if (c.shouldPrintReceive(target)) {
                         if (knotted) {
-                            c.write(getSelf(), getSelf().name()
-                                            + " roughly pulls away from you, groaning loudly as the knot in your dick pops free of her ass.");
+                            c.write(getSelf(), String.format("%s roughly pulls away from %s, groaning loudly"
+                                            + " as the knot in %s dick pops free of %s ass.", getSelf().subject(),
+                                            target.nameDirectObject(), target.possessivePronoun(),
+                                            getSelf().possessivePronoun()));
                             getSelf().removeStatus(Stsflag.knotted);
                             getSelf().pain(c, 10);
                         } else {
-                            c.write(getSelf(), getSelf().name()
-                                            + " pulls away from you and your dick slides out of her butt.");
+                            c.write(getSelf(), String.format("%s pulls away from %s and"
+                                            + " %s dick slides out of %s butt.",
+                                            getSelf().subject(), target.nameDirectObject(),
+                                            target.possessivePronoun(), getSelf().possessivePronoun()));
                         }
                     }
                     c.setStance(new Neutral(getSelf(), target));
@@ -108,13 +112,17 @@ public class Struggle extends Skill {
                             c.write(getSelf(), "You try to pull free, but " + target.name()
                                             + " has a good grip on your waist.");
                         }
-                    } else if (target.human()) {
+                    } else if (c.shouldPrintReceive(target)) {
                         if (knotted) {
                             c.write(getSelf(),
-                                            " frantically attempts to get your cock out of her ass, but your knot is keeping it inside her warm depths.");
+                                            String.format("%s frantically attempts to get %s cock out of %s ass, "
+                                                            + "but %s knot is keeping it inside %s warm depths.",
+                                                            getSelf().subject(), target.nameOrPossessivePronoun(),
+                                                            getSelf().possessivePronoun(), target.possessivePronoun(),
+                                                            getSelf().possessivePronoun()));
                         } else {
-                            c.write(getSelf(),
-                                            getSelf().name() + " tries to squirm away, but you have better leverage.");
+                            c.write(getSelf(), String.format("%s tries to squirm away, but %s better leverage.",
+                                            getSelf().subject(), target.subjectAction("have", "has")));
                         }
                     }
                     getSelf().struggle();
@@ -190,13 +198,18 @@ public class Struggle extends Skill {
                                                 + ", but she drives her cock into you to the hilt, pinning you down.");
                             }
                         }
-                    } else if (target.human()) {
+                    } else if (c.shouldPrintReceive(target)) {
                         if (c.getStance().behind(target)) {
-                            c.write(getSelf(), getSelf().name()
-                                            + " struggles to gain a more dominant position, but with you behind her, holding her waist firmly, there is nothing she can do.");
+                            c.write(getSelf(), String.format("%s struggles to gain a more dominant position, but with"
+                                            + " %s behind %s, holding %s waist firmly, there is nothing %s can do.",
+                                            getSelf().subject(), target.subject(), getSelf().directObject(),
+                                            getSelf().possessivePronoun(), getSelf().pronoun()));
                         } else {
-                            c.write(getSelf(), getSelf().name()
-                                            + " tries to roll on top of you, but you use you superior upper body strength to maintain your position.");
+                            c.write(getSelf(), String.format("%s tries to roll on top of %s, but %s %s %s superior "
+                                            + "upper body strength to maintain %s position.",
+                                            getSelf().subject(), target.nameDirectObject(),
+                                            target.pronoun(), target.action("use"), target.possessivePronoun(),
+                                            target.possessivePronoun()));
                         }
                     }
                     getSelf().struggle();
@@ -208,7 +221,7 @@ public class Struggle extends Skill {
                             + target.get(Attribute.Power) - getSelf().get(Attribute.Power) - getSelf().escape(c))) {
                 if (getSelf().human()) {
                     c.write(getSelf(), "You manage to scrabble out of " + target.name() + "'s grip.");
-                } else if (target.human()) {
+                } else if (c.shouldPrintReceive(target)) {
                     c.write(getSelf(), getSelf().name() + " squirms out from under you.");
                 }
                 c.setStance(new Neutral(getSelf(), target));
@@ -217,9 +230,12 @@ public class Struggle extends Skill {
                     if (getSelf().human()) {
                         c.write(getSelf(), "You try to free yourself from " + target.name()
                                         + ", but she drops her ass over your face again, forcing you to service her.");
-                    } else if (target.human()) {
-                        c.write(getSelf(), getSelf().name()
-                                        + " struggles against you, but you drop your ass over her face again, forcing her to service you.");
+                    } else if (c.shouldPrintReceive(target)) {
+                        c.write(getSelf(), String.format("%s struggles against %s, but %s %s %s ass "
+                                        + "over %s face again, forcing %s to service %s.", getSelf().subject(),
+                                        target.nameDirectObject(), target.pronoun(), target.action("drop"),
+                                        target.possessivePronoun(), getSelf().pronoun(),
+                                        getSelf().directObject(), target.directObject()));
                     }
                     if (target.hasPussy()) {
                         new Cunnilingus(getSelf()).resolve(c, target);
@@ -233,9 +249,10 @@ public class Struggle extends Skill {
                     if (getSelf().human()) {
                         c.write(getSelf(), "You try to free yourself from " + target.name()
                                         + "'s grasp, but she has you pinned too well.");
-                    } else if (target.human()) {
-                        c.write(getSelf(),
-                                        getSelf().name() + " struggles against you, but you maintain your position.");
+                    } else if (c.shouldPrintReceive(target)) {
+                        c.write(getSelf(), String.format("%s struggles against %s, but %s %s %s position.",
+                                        getSelf().subject(), target.nameDirectObject(), target.pronoun(),
+                                        target.action("maintain"), target.possessivePronoun()));
                     }
                     target.weaken(c, 5 + Global.random(5) + getSelf().get(Attribute.Power) / 2);
                     getSelf().struggle();

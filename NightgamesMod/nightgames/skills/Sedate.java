@@ -3,6 +3,7 @@ package nightgames.skills;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.global.Global;
 import nightgames.items.Item;
 
 public class Sedate extends Skill {
@@ -26,27 +27,15 @@ public class Sedate extends Skill {
     public boolean resolve(Combat c, Character target) {
         getSelf().consume(Item.Sedative, 1);
         if (getSelf().has(Item.Aersolizer)) {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.special, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.special, target));
-            }
+            writeOutput(c, Result.special, target);
             target.weaken(c, 30);
             target.loseMojo(c, 25);
         } else if (target.roll(this, c, accuracy(c))) {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.normal, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.normal, target));
-            }
+            writeOutput(c, Result.normal, target);
             target.weaken(c, 30);
             target.loseMojo(c, 25);
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.miss, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.miss, target));
-            }
+            writeOutput(c, Result.miss, target);
             return false;
         }
         return true;
@@ -79,13 +68,20 @@ public class Sedate extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.special) {
-            return getSelf().name()
-                            + " inserts a bottle into the attachment on her arm. You're suddenly surrounded by a cloud of dense fog. The fog seems to fill your head and your body feels heavy.";
+            return String.format("%s inserts a bottle into the attachment on %s arm. "
+                            + "%s suddenly surrounded by a cloud of dense fog. The "
+                            + "fog seems to fill %s head and %s body feels heavy.",
+                            getSelf().subject(), getSelf().possessivePronoun(),
+                            Global.capitalizeFirstLetter(target.action("are", "is")),
+                            target.possessivePronoun(), target.possessivePronoun());
         } else if (modifier == Result.miss) {
-            return getSelf().name() + " splashes a bottle of liquid in your direction, but none of it hits you.";
+            return String.format("%s splashes a bottle of liquid in %s direction, but none of it hits %s.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(), target.directObject());
         } else {
-            return getSelf().name()
-                            + " hits you with a flask of liquid. Even the fumes make you feel sluggish and your limbs become heavy.";
+            return String.format("%s hits %s with a flask of liquid. Even the fumes make %s feel"
+                            + " sluggish and %s limbs become heavy.",
+                            getSelf().subject(), target.nameDirectObject(),
+                            target.directObject(), target.possessivePronoun());
         }
     }
 

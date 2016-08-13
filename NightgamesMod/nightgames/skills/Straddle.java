@@ -21,11 +21,7 @@ public class Straddle extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         c.setStance(new Mount(getSelf(), target));
         return true;
     }
@@ -57,7 +53,9 @@ public class Straddle extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name() + " plops herself down on top of your stomach.";
+        return String.format("%s plops %s down on top of %s stomach.",
+                        getSelf().subject(), getSelf().reflectivePronoun(),
+                        target.nameOrPossessivePronoun());
     }
 
     @Override

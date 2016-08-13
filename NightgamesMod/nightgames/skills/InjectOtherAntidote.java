@@ -56,7 +56,7 @@ public class InjectOtherAntidote extends Skill {
 
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return Global.format(
-                        "{self:SUBJECT} quickly manages to stick you with a hypodermic needle. As the contents flood into your body, you feel any temporary buffs or debuffs leave you.",
+                        "{self:SUBJECT} quickly manages to stick {other:name-do} with a hypodermic needle. As the contents flood into {other:possessive} body, {other:pronoun-action:feel|feels} any temporary buffs or debuffs leave {other:direct-object}.",
                         getSelf(), target);
     }
 

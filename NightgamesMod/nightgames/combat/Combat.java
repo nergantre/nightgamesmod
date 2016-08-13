@@ -62,6 +62,7 @@ public class Combat extends Observable implements Cloneable {
     private HashMap<String, String> images;
     boolean lastFailed = false;
     private CombatLog log;
+    private boolean beingObserved;
 
     String imagePath = "";
 
@@ -962,5 +963,29 @@ public class Combat extends Observable implements Cloneable {
 
     private boolean doExtendedLog() {
         return (p1.human() || p2.human()) && Global.checkFlag(Flag.extendedLogs);
+    }
+
+    public boolean isBeingObserved() {
+        return beingObserved;
+    }
+
+    public void setBeingObserved(boolean beingObserved) {
+        this.beingObserved = beingObserved;
+    }
+    
+    public boolean shouldPrintReceive(Character ch) {
+        return ch.human() || beingObserved;
+    }
+    
+    public String bothDirectObject() {
+        return beingObserved ? "them" : "you";
+    }
+    
+    public String bothPossessive() {
+        return beingObserved ? "their" : "your";
+    }
+    
+    public String bothSubject() {
+        return beingObserved ? "they" : "you";
     }
 }

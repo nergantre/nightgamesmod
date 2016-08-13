@@ -38,31 +38,19 @@ public class MagicMissile extends Skill {
     public boolean resolve(Combat c, Character target) {
         if (target.roll(this, c, accuracy(c))) {
             if (target.mostlyNude() && Global.random(3) == 2) {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, 0, Result.critical, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.critical, target));
-                }
+                writeOutput(c, Result.critical, target);
                 if (target.has(Trait.achilles)) {
                     target.pain(c, Global.random(6));
                 }
                 target.pain(c, Math.min(9 + Global.random(2 * getSelf().get(Attribute.Arcane) + 1), 100));
                 target.emote(Emotion.angry, 10);
             } else {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, 0, Result.normal, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.normal, target));
-                }
+                writeOutput(c, Result.normal, target);
                 target.pain(c, Math.min(100, 6 + Global.random(getSelf().get(Attribute.Arcane) + 2)));
                 target.emote(Emotion.angry, 5);
             }
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.miss, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.miss, target));
-            }
+            writeOutput(c, Result.miss, target);
             return false;
         }
         return true;
@@ -109,15 +97,21 @@ public class MagicMissile extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You see " + getSelf().name()
-                            + " start to cast a spell and you dive to the left, just in time to avoid the missile.";
+            return String.format("%s %s start to cast a spell and %s %s to"
+                            + " the left, just in time to avoid the missile.",
+                            target.subjectAction("see"), getSelf().subject(),
+                            target.pronoun(), target.action("jump"));
         } else if (modifier == Result.critical) {
-            return getSelf().name()
-                            + " casts a quick spell and fires a bolt of magic into your vulnerable groin. You cradle your injured plums as pain saps the strength from your "
-                            + "legs.";
+            return String.format("%s casts a quick spell and fires a bolt of magic into %s vulnerable "
+                            + "groin. %s %s injured plums as pain saps the strength from %s "
+                            + "legs.", getSelf().subject(), target.nameOrPossessivePronoun(),
+                            target.subjectAction("cup"), target.possessivePronoun(),
+                            target.possessivePronoun());
         } else {
-            return getSelf().name()
-                            + "'s hand glows as she casts a spell. Before you can react, you're struck with an impact like a punch in the gut.";
+            return String.format("%s hand glows as %s casts a spell. Before %s can react, %s "
+                            + "struck with an impact like a punch in the gut.", getSelf().subject(),
+                            getSelf().pronoun(),
+                            target.pronoun(), target.subjectAction("are", "is"));
         }
     }
 

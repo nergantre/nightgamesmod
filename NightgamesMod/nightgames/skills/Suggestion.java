@@ -74,12 +74,18 @@ public class Suggestion extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return getSelf().name()
-                            + " attempts to put you under hypnotic suggestion, but you manage to regain control of your consciousness.";
+            return String.format("%s attempts to put %s under hypnotic suggestion, but"
+                            + " %s %s to regain control of %s consciousness.",
+                            getSelf().subject(), target.nameDirectObject(),
+                            target.pronoun(), target.action("manage"), target.possessivePronoun());
         }
-        return getSelf().name()
-                        + " speaks in a firm, but relaxing tone, attempting to put you into a trance. Obviously you wouldn't let yourself be "
-                        + "hynotized in the middle of a match, right? ...Right? ...Why were you fighting her again?";
+        return String.format("%s speaks in a firm, but relaxing tone, attempting to put %s"
+                        + " into a trance. Obviously %s wouldn't let %s be "
+                        + "hynotized in the middle of a match, right? ...Right? ..."
+                        + "Why %s %s fighting %s again?", getSelf().subject(),
+                        target.nameDirectObject(), target.subject(),
+                        target.reflectivePronoun(), target.action("was", "were"),
+                        target.pronoun(), getSelf().subject());
     }
 
 }

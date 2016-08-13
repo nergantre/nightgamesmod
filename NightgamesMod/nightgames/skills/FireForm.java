@@ -32,7 +32,7 @@ public class FireForm extends Skill {
     public boolean resolve(Combat c, Character target) {
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
+        } else if (c.shouldPrintReceive(target)) {
             if (!target.is(Stsflag.blinded))
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             else 
@@ -59,7 +59,8 @@ public class FireForm extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name() + " powers up and you can almost feel the energy radiating from her.";
+        return String.format("%s powers up and %s can almost feel the energy radiating from %s.",
+                        getSelf().subject(), target.subject(), getSelf().directObject());
     }
 
 }

@@ -40,11 +40,7 @@ public class Rewind extends Skill {
         getSelf().getStamina()
                  .fill();
         getSelf().clearStatus();
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         getSelf().emote(Emotion.confident, 25);
         getSelf().emote(Emotion.dominant, 20);
         target.emote(Emotion.nervous, 10);
@@ -73,8 +69,9 @@ public class Rewind extends Skill {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return String.format(
                         "%s hits a button on %s wristband and suddenly seems to completely recover. It's like nothing "
-                                        + "you've done even happened.",
-                        getSelf().name(), getSelf().possessivePronoun());
+                                        + "%s done even happened.",
+                        getSelf().name(), getSelf().possessivePronoun(),
+                        target.subjectAction("have", "has"));
     }
 
 }

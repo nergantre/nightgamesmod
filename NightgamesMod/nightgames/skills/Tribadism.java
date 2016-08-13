@@ -54,11 +54,7 @@ public class Tribadism extends Skill {
     public boolean resolve(Combat c, Character target) {
         BodyPart selfO = getSelfOrgan();
         BodyPart targetO = getTargetOrgan(target);
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         c.setStance(new TribadismStance(getSelf(), target));
         int otherm = 10;
         int m = 10;
@@ -102,9 +98,11 @@ public class Tribadism extends Skill {
         BodyPart selfO = getSelfOrgan();
         BodyPart targetO = getTargetOrgan(target);
         if (modifier == Result.normal) {
-            String message = getSelf().name()
-                            + " grabs your leg and slides her crotch against yours. She then grinds her "
-                            + selfO.describe(getSelf()) + " against your wet " + targetO.describe(target) + ".";
+            String message = String.format("%s grabs %s leg and slides her crotch against %s."
+                            + " She then grinds her %s against %s wet %s.", getSelf().subject(),
+                            target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                            selfO.describe(getSelf()), target.possessivePronoun(),
+                            targetO.describe(getSelf()));
             return message;
         }
         return "Bad stuff happened";

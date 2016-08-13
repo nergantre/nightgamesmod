@@ -70,11 +70,7 @@ public class Kiss extends Skill {
             res = Result.divine;
             m += 20;
         }
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, m, res, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, m, res, target));
-        }
+        writeOutput(c, res, target);
         if (res == Result.upgrade) {
             target.drain(c, getSelf(), 10);
             target.loseWillpower(c, Global.random(3) + 2);
@@ -160,35 +156,66 @@ public class Kiss extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.divine) {
-            return getSelf().name()
-                            + " seductively pulls you into a deep kiss. As first you try to match her enthusiastic tongue with your own, but she starts using her divine energy to directly attack your soul. "
-                            + "Golden waves of ecstacy flow through your body, completely shattering every single thought you hold and replacing them with "
-                            + getSelf().getName() + ".";
+            return String.format("%s seductively pulls %s into a deep kiss. As first %s %s to match %s enthusiastic"
+                            + " tongue with %s own, but %s starts using %s divine energy to directly attack %s soul. "
+                            + "Golden waves of ecstacy flow through %s body, completely shattering every single thought %s and replacing them with %s.",
+                            getSelf().subject(), target.nameDirectObject(), target.pronoun(),
+                            target.action("try", "tries"), getSelf().possessivePronoun(),
+                            target.possessivePronoun(), getSelf().subject(), getSelf().possessivePronoun(),
+                            target.nameOrPossessivePronoun(), target.possessivePronoun(), 
+                            target.subjectAction("hold"), getSelf().name());
         }
         if (modifier == Result.upgrade) {
-            return getSelf().name()
-                            + " seductively pulls you into a deep kiss. As first you try to match her enthusiastic tongue with your own, but you're quickly overwhelmed. "
-                            + "You start to feel weak as the kiss continues, and you realize she's draining you; her kiss is sapping your will to fight through your connection! "
-                            + "You try to resist, but her splendid tonguework prevents you from mounting much of a defense.";
+            return String.format("%s seductively pulls %s into a deep kiss. As first %s %s to match %s "
+                            + "enthusiastic tongue with %s own, but %s %s quickly overwhelmed. "
+                            + "%s to feel weak as the kiss continues, and %s %s %s is "
+                            + "draining %s; %s kiss is sapping %s will to fight through %s connection! "
+                            + "%s try to resist, but %s splendid tonguework prevents "
+                            + "%s from mounting much of a defense.",
+                            getSelf().subject(), target.nameDirectObject(), target.pronoun(),
+                            target.action("try", "tries"), getSelf().possessivePronoun(),
+                            target.possessivePronoun(), target.pronoun(), target.action("are", "is"),
+                            Global.capitalizeFirstLetter(target.subjectAction("start")),
+                            target.pronoun(), target.action("realize"), getSelf().subject(),
+                            target.directObject(), getSelf().possessivePronoun(), target.possessivePronoun(),
+                            c.bothPossessive(), 
+                            Global.capitalizeFirstLetter(target.subjectAction("try", "tries")),
+                            getSelf().nameOrPossessivePronoun(), target.directObject());
         }
         if (modifier == Result.special) {
-            return getSelf().name()
-                            + " seductively pulls you into a deep kiss. As first you try to match her enthusiastic tongue with your own, but you're quickly overwhelmed. She draws "
-                            + "your tongue into her mouth and sucks on it in a way that seems to fill your mind with a pleasant, but intoxicating fog.";
+            return String.format("%s seductively pulls %s into a deep kiss. As first %s %s to match %s "
+                            + "enthusiastic tongue with %s own, but %s %s quickly overwhelmed. %s draws "
+                            + "%s tongue into %s mouth and sucks on it in a way that seems to fill %s "
+                            + "mind with a pleasant, but intoxicating fog.",
+                            getSelf().subject(), target.nameDirectObject(), target.pronoun(),
+                            target.action("try", "tries"), getSelf().possessivePronoun(),
+                            target.possessivePronoun(), target.pronoun(), target.action("are", "is"),
+                            getSelf().subject(), target.nameOrPossessivePronoun(),
+                            getSelf().possessivePronoun(), target.possessivePronoun());
         } else if (modifier == Result.weak) {
-            return getSelf().name()
-                            + " presses her lips against yours in a passionate, if not particularly skillful, kiss.";
+            return String.format("%s presses %s lips against %s in a passionate, if not particularly skillful, kiss.",
+                            getSelf().subject(), getSelf().possessivePronoun(),
+                            target.human() ? "yours" : target.possessivePronoun());
         } else {
             switch (Global.random(3)) {
                 case 0:
-                    return getSelf().name()
-                                    + " grabs you and kisses you passionately on the mouth. As you break for air, she gently nibbles on your bottom lip.";
+                    return String.format("%s grabs %s and kisses %s passionately on the mouth. "
+                                    + "As %s for air, %s gently nibbles on %s bottom lip.",
+                                    getSelf().subject(), target.nameDirectObject(), target.directObject(),
+                                    target.subjectAction("break"), getSelf().subject(), target.possessivePronoun());
                 case 1:
-                    return getSelf().name()
-                                    + " peppers quick little kisses around your mouth before suddenly taking your lips forcefully and invading your mouth with her tongue.";
+                    return String.format("%s peppers quick little kisses around %s mouth before suddenly"
+                                    + " taking %s lips forcefully and invading %s mouth with %s tongue.",
+                                    getSelf().subject(), target.nameOrPossessivePronoun(),
+                                    target.possessivePronoun(), target.possessivePronoun(),
+                                    getSelf().possessivePronoun());
                 default:
-                    return getSelf().name()
-                                    + " kisses you softly and romantically, slowly drawing you into her embrace. As you part, she teasingly brushes her lips against yours.";
+                    return String.format("%s kisses %s softly and romantically, slowly drawing %s into %s "
+                                    + "embrace. As %s part, %s teasingly brushes %s lips against %s.",
+                                    getSelf().subject(), target.nameDirectObject(), target.directObject(),
+                                    getSelf().possessivePronoun(), c.isBeingObserved() ? "they" : "you",
+                                    getSelf().subject(), target.possessivePronoun(),
+                                    target.human() ? "yours" : target.possessivePronoun());
             }
         }
     }

@@ -50,7 +50,7 @@ public class ShrinkRay extends Skill {
             } else {
                 c.write(getSelf(), deal(c, permanent ? 1 : 0, Result.normal, target));
             }
-        } else if (target.human()) {
+        } else if (c.shouldPrintReceive(target)) {
             if (target.hasDick()) {
                 c.write(getSelf(), receive(c, permanent ? 1 : 0, Result.special, target));
             } else {
@@ -121,15 +121,22 @@ public class ShrinkRay extends Skill {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         String message;
         if (modifier == Result.special) {
-            message = getSelf().name()
-                            + " points a device at your groin and giggles as your genitals shrink. You flush in shame and cover yourself.";
+            message = String.format("%s points a device at %s groin and giggles as %s genitals "
+                            + "shrink. %s in shame and %s %s.", getSelf().subject(),
+                            target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                            Global.capitalizeFirstLetter(target.subjectAction("flush", "flushes")),
+                            target.action("cover"), target.reflectivePronoun());
         } else {
-            message = getSelf().name() + " points a device at your chest and giggles as your "
-                            + getSelf().body.getRandomBreasts().describe(getSelf())
-                            + " shrink. You flush in shame and cover yourself.";
+            message = String.format("%s points a device at %s chest and giggles as %s %s"
+                            + " shrink. %s in shame and %s %s.", getSelf().subject(),
+                            target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                            getSelf().body.getRandomBreasts().describe(getSelf()),
+                            Global.capitalizeFirstLetter(target.subjectAction("flush", "flushes")),
+                            target.action("cover"), target.reflectivePronoun());
         }
         if (damage == 0) {
-            message += " The effect wears off quickly, but the damage to your dignity lasts much longer.";
+            message += String.format(" The effect wears off quickly, but the"
+                            + " damage to %s dignity lasts much longer.", target.nameOrPossessivePronoun());
         } else {
             message += " You realize the effects are permanent!";
         }

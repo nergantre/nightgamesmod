@@ -186,33 +186,63 @@ public class TailPeg extends Skill {
     public String receive(Combat c, int magnitude, Result modifier, Character target) {
         switch (modifier) {
             case critical:
-                return "Smiling down on you, " + getSelf().name()
-                                + " spreads your legs and tickles your butt with her tail."
-                                + " You notice how the tail itself is slick and wet as it"
-                                + " slowly pushes through your anus, spreading your cheeks apart. " + getSelf().name()
-                                + " pumps it in and out a for a few times before taking " + "it out again.";
+                return String.format("Smiling down on %s, %s spreads %s legs and tickles %s butt with %s tail."
+                                + " %s how the tail itself is slick and wet as it"
+                                + " slowly pushes through %s anus, spreading %s cheeks apart. %s"
+                                + " pumps it in and out a for a few times before taking it out again.",
+                                target.nameDirectObject(), getSelf().subject(), target.possessivePronoun(),
+                                target.possessivePronoun(), getSelf().possessivePronoun(),
+                                Global.capitalizeFirstLetter(target.subjectAction("notice")),
+                                target.possessivePronoun(), target.possessivePronoun(),
+                                getSelf().subject());
             case miss:
-                return getSelf().name() + " tries to peg you with her tail but you manage to push"
-                                + " your butt cheeks together in time to keep it out.";
+                return String.format("%s tries to peg %s with her tail but %s %s to clench"
+                                + " %s butt cheeks together in time to keep it out.",
+                                getSelf().subject(), target.nameDirectObject(),
+                                target.pronoun(), target.action("manage"),
+                                target.possessivePronoun());
             case normal:
-                return getSelf().name() + " suddenly moves very close to you. You expect an attack from the front"
-                                + " and try to move back, but end up shoving her tail right up your ass.";
+                return String.format("%s suddenly moves very close to %s. %s an attack from the front"
+                                + " and %s to move back, but %s up shoving %s tail right up %s ass.",
+                                getSelf().subject(), target.nameDirectObject(),
+                                Global.capitalizeFirstLetter(target.subjectAction("expect")),
+                                target.action("try", "tries"), target.action("end"),
+                                getSelf().possessivePronoun(), target.possessivePronoun());
             case special:
-                return getSelf().name() + " smirks and wiggles her tail behind her back. You briefly look "
-                                + "at it and the see the appendage move behind you. You try to keep it"
-                                + " out by clenching your butt together, but a squeeze of " + getSelf().name()
-                                + "'s vagina breaks your concentration, so the tail slides up your ass"
-                                + " and you almost lose it as your cock and ass are stimulated so thoroughly"
-                                + " at the same time.";
+                return String.format("%s smirks and wiggles %s tail behind %s back. %s briefly %s "
+                                + "at it and %s the appendage move behind %s. %s to keep it"
+                                + " out by clenching %s butt together, but a squeeze of %s"
+                                + " vagina breaks %s concentration, so the tail slides up %s ass"
+                                + " and %s almost %s it as %s cock and ass are stimulated so thoroughly"
+                                + " at the same time.", getSelf().subject(), getSelf().possessivePronoun(),
+                                target.nameOrPossessivePronoun(),
+                                Global.capitalizeFirstLetter(target.pronoun()), target.action("look"),
+                                target.action("see"), target.directObject(), 
+                                Global.capitalizeFirstLetter(target.subjectAction("try", "tries")),
+                                target.possessivePronoun(), getSelf().nameOrPossessivePronoun(),
+                                target.possessivePronoun(), target.possessivePronoun(),
+                                target.pronoun(), target.action("lose"), target.possessivePronoun());
             case intercourse:
-                return getSelf().name() + " smirks and coils her tail around in front of you. You briefly look "
-                                + "at it and the see the appendage move under you and panic. You try to keep it"
-                                + " out by clamping your legs together, but a squeeze of " + getSelf().name()
-                                + "'s ass breaks your concentration, so the tail slides smoothly into your pussy.";
+                return String.format("%s smirks and coils %s tail around in front of %s. %s briefly %s "
+                                + "at it and %s the appendage move under %s and %s. %s to keep it"
+                                + " out by clamping %s legs together, but a squeeze of %s"
+                                + " ass breaks %s concentration, so the tail slides smoothly into %s pussy.",
+                                getSelf().subject(), getSelf().possessivePronoun(), 
+                                target.nameDirectObject(), Global.capitalizeFirstLetter(target.pronoun()),
+                                target.action("look"), target.action("see"), target.directObject(),
+                                target.action("panic"),
+                                Global.capitalizeFirstLetter(target.subjectAction("try", "tries")),
+                                target.possessivePronoun(), getSelf().nameOrPossessivePronoun(),
+                                target.possessivePronoun(), target.possessivePronoun());
             case strong:
-                return getSelf().name() + " hugs you from behind and rubs her chest against your back."
-                                + " Distracted by that, she managed to push her tail between your"
-                                + " ass cheeks and started tickling your prostate with the tip.";
+                return String.format("%s hugs %s from behind and rubs %s chest against %s back."
+                                + " Distracted by that, %s managed to push %s tail between %s"
+                                + " ass cheeks and started tickling %s %s with the tip.",
+                                getSelf().subject(), target.nameDirectObject(),
+                                getSelf().possessivePronoun(), target.possessivePronoun(),
+                                getSelf().pronoun(), getSelf().possessivePronoun(),
+                                target.possessivePronoun(), target.possessivePronoun(),
+                                target.hasBalls() ? "prostate" : "sensitive insides");
             default:
                 return "<<This should not be displayed, please inform The Silver Bard: TailPeg-receive>>";
         }

@@ -4,6 +4,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.global.Global;
 import nightgames.status.Alluring;
 import nightgames.status.Distorted;
 
@@ -35,11 +36,7 @@ public class Illusions extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         getSelf().add(c, new Distorted(getSelf(), 6));
         getSelf().add(c, new Alluring(getSelf(), 5));
         return true;
@@ -62,9 +59,12 @@ public class Illusions extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name()
-                        + " casts a brief spell and your vision is filled with naked copies of her. You can still tell which "
-                        + getSelf().name()
-                        + " is real, but it's still a distraction. At the same time, she suddenly looks irresistible.";
+        return String.format("%s casts a brief spell and %s vision is filled with "
+                        + "naked copies of %s. %s can still tell which %s is real,"
+                        + " but it's still a distraction. At the same "
+                        + "time, %s suddenly looks irresistible.", getSelf().subject(),
+                        target.nameOrPossessivePronoun(), getSelf().directObject(),
+                        Global.capitalizeFirstLetter(target.pronoun()), getSelf().name(),
+                        getSelf().nameDirectObject());
     }
 }

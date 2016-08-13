@@ -94,10 +94,18 @@ public class FootWorship extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (!c.getCombatantData(getSelf()).getBooleanFlag("footworshipped")) {
-            return getSelf().name() + " throws herself at your feet. She worshipfully grasps your feet "
-                            + "and start licking between your toes, all while her face displays a mask of ecstasy.";
+            return String.format("%s throws %s at %s feet. %s worshipfully grasps %s feet "
+                            + "and starts licking between %s toes, all while %s face displays a mask of ecstasy.",
+                            getSelf().subject(), getSelf().reflectivePronoun(), target.nameOrPossessivePronoun(),
+                            getSelf().subject(), target.possessivePronoun(), target.possessivePronoun(),
+                            getSelf().possessivePronoun());
         }
-        return "{self:SUBJECT} can't seem to get enough of your feet as {self:pronoun} continues to lick along the bottom of your soles, {self:possessive} face further lost in {self:possessive} servitude as {self:pronoun} is careful not to miss a spot.";
+        return String.format("%s can't seem to get enough of %s feet as %s continues to "
+                        + "lick along the bottom of %s soles, %s face further lost in "
+                        + "servitude as %s is careful not to miss a spot.", getSelf().subject(),
+                        target.nameOrPossessivePronoun(), getSelf().pronoun(),
+                        target.possessivePronoun(), getSelf().possessivePronoun(),
+                        getSelf().pronoun());
     }
 
     @Override

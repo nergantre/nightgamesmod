@@ -97,10 +97,10 @@ public class PussyWorship extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return Global.format(
-                        "{self:subject} ecstatically crawls to you on {self:possessive} knees and attaches {self:possessive} {self:body-part:mouth} to "
-                                        + "{other:possessive} {other:body-part:pussy} while holding onto your legs. {self:SUBJECT} carefully takes a few licks of {other:possessive} slit before "
-                                        + "diving right in with her tongue to eat you out. Minutes pass and {self:subject} continues {self:possessive} attack on your cunt while idly playing with "
-                                        + "{self:reflective}. Feeling a bit too good, you manage to push {self:name-do} away from your sensitive womanhood lest she makes you cum accidentally.",
+                        "{self:subject} ecstatically crawls to {other:name-do} on {self:possessive} knees and attaches {self:possessive} {self:body-part:mouth} to "
+                                        + "{other:possessive} {other:body-part:pussy} while holding onto {other:possessive} legs. {self:SUBJECT} carefully takes a few licks of {other:possessive} slit before "
+                                        + "diving right in with {self:possessive} tongue to eat {other:name-do} out. Minutes pass and {self:subject} continues {self:possessive} attack on {other:name-possessive} cunt while idly playing with "
+                                        + "{self:reflective}. Feeling a bit too good, {other:pronoun-action:manage|manages} to push {self:name-do} away from {other:possessive} sensitive womanhood lest {self:pronoun} makes {other:direct-object} cum accidentally.",
                         getSelf(), target);
     }
 

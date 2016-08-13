@@ -26,11 +26,7 @@ public class BreastWorship extends Skill {
     public boolean resolve(Combat c, Character target) {
         Result results = target.has(Trait.lactating) ? Result.special : Result.normal;
         int m = 8 + Global.random(6);
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, results, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, results, target));
-        }
+        writeOutput(c, results, target);
         if (getSelf().has(Trait.silvertongue)) {
             m += 4;
         }
@@ -89,11 +85,14 @@ public class BreastWorship extends Skill {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.normal) {
             return getSelf().name()
-                            + " worshipfully licks and sucks your nipples while uncontrollably playing with herself.";
+                            + " worshipfully licks and sucks "+target.nameOrPossessivePronoun()+
+                            " nipples while uncontrollably playing with "+getSelf().reflectivePronoun()+".";
         } else {
-            return getSelf().name()
-                            + " worshipfully licks and sucks your nipples while uncontrollably masturbating, drawing forth a gush of breast milk from your teats. "
-                            + "She drinks deeply of your milk, gurgling happily as more of the smooth liquid flows down her throat.";
+            return String.format("%s worshipfully licks and sucks %s nipples while uncontrollably masturbating, drawing forth "
+                            + "a gush of breast milk from %s teats. %s drinks deeply of %s milk, gurgling happily "
+                            + "as more of the smooth liquid flows down %s throat.",
+                            getSelf().name(), target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                            getSelf().name(), target.possessivePronoun(), getSelf().possessivePronoun());
         }
     }
 

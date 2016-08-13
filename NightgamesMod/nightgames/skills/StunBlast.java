@@ -35,20 +35,12 @@ public class StunBlast extends Skill {
     public boolean resolve(Combat c, Character target) {
         getSelf().consume(Item.Battery, 4);
         if (Global.random(10) >= 4) {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.normal, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.normal, target));
-            }
+            writeOutput(c, Result.normal, target);
             target.getStamina().empty();
             target.add(c, new Falling(target));
             target.add(c, new Winded(target));
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.miss, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.miss, target));
-            }
+            writeOutput(c, Result.miss, target);
             return false;
         }
         return true;
@@ -78,11 +70,15 @@ public class StunBlast extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return getSelf().name()
-                            + " covers her face and points a device in your direction. Sensing danger, you shield you eyes just as the flashbang goes off.";
+            return String.format("%s covers %s face and points a device in %s direction. Sensing "
+                            + "danger, %s %s %s eyes just as the flashbang goes off.", getSelf().subject(),
+                            getSelf().possessivePronoun(), target.nameOrPossessivePronoun(),
+                            target.pronoun(), target.action("cover"), target.possessivePronoun());
         } else {
-            return getSelf().name()
-                            + " points a device in your direction that glows slightly. A sudden flash of light disorients you and your ears ring from the blast.";
+            return String.format("%s points a device in %s direction that glows slightly. A sudden "
+                            + "flash of light disorients %s and %s ears ring from the blast.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(),
+                            target.directObject(), target.possessivePronoun());
         }
     }
 

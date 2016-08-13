@@ -34,11 +34,7 @@ public class OrgasmSeal extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         target.add(c, new nightgames.status.OrgasmSeal(target, 15));
         return true;
     }
@@ -61,10 +57,13 @@ public class OrgasmSeal extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name() + " makes a complicated gesture and envelopes her finger tips in a blood red glow. "
-                        + "With a nasty grin, she jams her finger into your "
-                        + (target.hasBalls() ? "balls" : "lower abdomen")
-                        + ". Strangely it doesn't hurt at all, but when " + getSelf().subject()
-                        + " withdraws her finger, she leaves a glowing pentagram on you.";
+        return String.format("%s makes a complicated gesture and envelopes %s finger tips in a blood red glow. "
+                        + "With a nasty grin, %s jams %s finger into %s %s. Strangely it doesn't hurt at all, but"
+                        + " when %s withdraws %s finger, %s leaves a glowing pentagram on %s.",
+                        getSelf().subject(), getSelf().possessivePronoun(), getSelf().pronoun(),
+                        getSelf().possessivePronoun(), target.nameOrPossessivePronoun(),
+                        (target.hasBalls() ? "balls" : "lower abdomen"),
+                        getSelf().pronoun(), target.possessivePronoun(), getSelf().subject(),
+                        target.nameDirectObject());
     }
 }

@@ -54,24 +54,24 @@ public class ToggleBlindfold extends Skill {
                   .sub(getSelf()) || target.roll(this, c, 80)) {
                 getSelf().add(new Blinded(getSelf(), "a blindfold", true));
                 c.write(getSelf(), String.format("%s a blindfold around %s eyes.",
-                                getSelf().subjectAction("tie", "ties"), getSelf().possessivePronoun()));
+                                getSelf().subjectAction("tie"), getSelf().possessivePronoun()));
             } else {
                 c.write(getSelf(), String.format("%s out a blindfold, but %s it from %s hands and %s it away.",
-                                getSelf().subjectAction("take", "takes"), target.subjectAction("snatch", "snatches"),
-                                getSelf().possessivePronoun(), getSelf().action("throw", "throws")));
+                                getSelf().subjectAction("take"), target.subjectAction("snatch", "snatches"),
+                                getSelf().possessivePronoun(), getSelf().action("throw")));
             }
         } else if (c.getStance()
                     .sub(getSelf()) && target.canAct() && Global.random(2) == 0) {
             c.write(getSelf(),
                             String.format("%s to take off %s blindfold, but %s %s hands away.",
                                             getSelf().subjectAction("try", "tries"), getSelf().possessivePronoun(),
-                                            target.subjectAction("keep", "keeps"), getSelf().possessivePronoun()));
+                                            target.subjectAction("keep"), getSelf().possessivePronoun()));
         } else {
             getSelf().gain(Item.Blindfold);
             c.write(getSelf(),
                             String.format("%s off %s blindfold and %s a few times to clear %s eyes.",
-                                            getSelf().subjectAction("take", "takes"), getSelf().possessivePronoun(),
-                                            getSelf().action("blink", "blinks"), getSelf().possessivePronoun()));
+                                            getSelf().subjectAction("take"), getSelf().possessivePronoun(),
+                                            getSelf().action("blink"), getSelf().possessivePronoun()));
             getSelf().removeStatus(Stsflag.blinded);
         }
         return true;

@@ -48,7 +48,7 @@ public class Footjob extends Skill {
             int m = 8 + Global.random(6);
             if (getSelf().human()) {
                 c.write(getSelf(), Global.format(deal(c, m, Result.normal, target), getSelf(), target));
-            } else if (target.human()) {
+            } else if (c.shouldPrintReceive(target)) {
                 c.write(getSelf(), Global.format(receive(c, m, Result.normal, target), getSelf(), target));
             }
             if (target.hasDick()) {
@@ -62,7 +62,7 @@ public class Footjob extends Skill {
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(), Global.format(deal(c, 0, Result.miss, target), getSelf(), target));
-            } else if (target.human()) {
+            } else if (c.shouldPrintReceive(target)) {
                 c.write(getSelf(), Global.format(receive(c, 0, Result.miss, target), getSelf(), target));
             }
             return false;
@@ -121,18 +121,28 @@ public class Footjob extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return getSelf().name() + " swings her foot at your groin, but misses.";
+            return String.format("%s swings %s foot at %s groin, but misses.",
+                            getSelf().subject(), getSelf().possessivePronoun(),
+                            target.nameOrPossessivePronoun());
         } else {
             if (target.hasDick()) {
-                return getSelf().name()
-                                + " rubs your dick with the sole of her soft foot. From time to time, she teases you by pinching the glans between her toes and jostling your balls.";
+                return String.format("%s rubs %s dick with the sole of %s soft foot. From time to time,"
+                                + " %s teases %s by pinching the glans between %s toes and jostling %s balls.",
+                                getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessivePronoun(),
+                                getSelf().subject(), target.directObject(), getSelf().possessivePronoun(),
+                                target.possessivePronoun());
             }
             if (target.hasPussy()) {
-                return getSelf().name()
-                                + " toes the lips of your slit with her foot. From time to time, she teases you by slipping her big toe inside and wiggling it around.";
+                return String.format("%s teases the lips of %s slit with %s foot. From time "
+                                + "to time, %s teases %s by slipping %s big toe inside and wiggling it around.",
+                                getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessivePronoun(),
+                                getSelf().subject(), target.directObject(), getSelf().possessivePronoun());
             }
-            return getSelf().name()
-                            + " toes your asshole with her foot. From time to time, she teases you by pressing her big toe at your sphincter and nudging it.";
+            return String.format("%s teases %s asshole with %s foot. From time to time, %s "
+                            + "teases %s by pressing %s big toe at %s sphincter and nudging it.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessivePronoun(),
+                            getSelf().subject(), target.directObject(), getSelf().possessivePronoun(),
+                            target.possessivePronoun());
         }
     }
 

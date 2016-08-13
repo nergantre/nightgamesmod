@@ -38,19 +38,11 @@ public class Purr extends Skill {
             if (damage < 10) {
                 damage = 0;
             }
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, damage, Result.normal, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, damage, Result.normal, target));
-            }
+            writeOutput(c, damage, Result.normal, target);
             target.tempt(c, getSelf(), damage);
             target.add(c, new Charmed(target));
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.miss, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.miss, target));
-            }
+            writeOutput(c, Result.miss, target);
             return false;
         }
         return true;
@@ -86,14 +78,24 @@ public class Purr extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return getSelf().name()
-                            + " slumps submissively and purrs. It's cute, but she's not going to get the better of you.";
+            return String.format("%s slumps submissively and purrs. It's cute, but %s's not going "
+                            + "to get the better of %s.", getSelf().subject(), getSelf().pronoun(),
+                            target.nameDirectObject());
         } else {
-            String message = getSelf().name()
-                            + " purrs cutely, and looks up at you with sad eyes. Oh God, she's so adorable! It'd be mean to beat her too quickly. Maybe you should let her get some "
-                            + "attacks in while you enjoy watching her earnest efforts.";
+            String message = String.format("%s purrs cutely, and looks up at %s with sad eyes. Oh God,"
+                            + " %s's so adorable! It'd be mean to beat %s too quickly. "
+                            + "Maybe %s should let her get some "
+                            + "attacks in while %s %s watching %s earnest efforts.",
+                            getSelf().subject(), target.nameDirectObject(),
+                            getSelf().pronoun(), getSelf().directObject(), target.subject(),
+                            target.pronoun(), target.action("enjoy"), getSelf().possessivePronoun());
             if (damage > 0) {
-                message += "\nYou're not sure if this was intentional, but her flushed face and ragged breathing makes the act a lot more erotic than you would expect. You try to contain your need to fuck the little kitty in heat.";
+                message += String.format("\nYou're not sure if this was intentional, but %s flushed "
+                                + "face and ragged breathing makes the act a lot more erotic than "
+                                + "you would expect. %s to contain %s need to fuck the little kitty in heat.",
+                                getSelf().nameOrPossessivePronoun(), 
+                                Global.capitalizeFirstLetter(target.subjectAction("try", "tries")),
+                                target.possessivePronoun());
             }
             return message;
         }

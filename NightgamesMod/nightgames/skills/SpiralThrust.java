@@ -98,18 +98,24 @@ public class SpiralThrust extends Thrust {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         BodyPart selfO = getSelfOrgan(c);
         if (modifier == Result.anal) {
-            return getSelf().name()
-                            + " drills into your ass with extraordinary power. Your head seems to go blank and you fall face down to the ground as your arms turn to jelly and give out.";
+            return String.format("%s drills into %s ass with extraordinary power. %s head seems to go"
+                            + " blank and %s %s face down to the ground as %s arms turn to jelly and give out.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(),
+                            Global.capitalizeFirstLetter(target.nameOrPossessivePronoun()),
+                            target.pronoun(), target.action("fall"), target.possessivePronoun());
         } else if (modifier != Result.reverse) {
             return Global.format(
-                            "The movements of {self:name-possessive} cock suddenly change. She suddenly begins drilling to your poor pussy with an unprecedented passion. "
-                                            + "The only thing you can do is bite your lips and try to not instantly cum.",
+                            "The movements of {self:name-possessive} cock suddenly change. {self:PRONOUN} suddenly begins "
+                            + "drilling {other:name-possessive} poor pussy with an unprecedented passion. "
+                                            + "The only thing {other:subject} can do is bite {other:possessive} lips and try to not instantly cum.",
                             getSelf(), target);
         } else {
-            return getSelf().name()
-                            + " begins to move her hips wildly in circles, rubbing every inch of your cock with her hot, "
-                            + (selfO.isType("pussy") ? "slippery pussy walls" : " steaming asshole")
-                            + ", bringing you more pleasure " + "than you thought possible.";
+            return String.format("%s begins to move %s hips wildly in circles, rubbing every inch"
+                            + " of %s cock with %s hot, %s, bringing %s more pleasure than %s thought possible.",
+                            getSelf().subject(), getSelf().possessivePronoun(),
+                            target.nameOrPossessivePronoun(), getSelf().possessivePronoun(),
+                            (selfO.isType("pussy") ? "slippery pussy walls" : " steaming asshole"),
+                            target.directObject(), target.pronoun());
         }
     }
 

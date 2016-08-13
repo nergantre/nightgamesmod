@@ -29,21 +29,13 @@ public class Maneuver extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         if (target.roll(this, c, accuracy(c))) {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.normal, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.normal, target));
-            }
+            writeOutput(c, Result.normal, target);
             c.setStance(new Behind(getSelf(), target));
             getSelf().emote(Emotion.confident, 15);
             getSelf().emote(Emotion.dominant, 15);
             target.emote(Emotion.nervous, 10);
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.miss, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.miss, target));
-            }
+            writeOutput(c, Result.miss, target);
             return false;
         }
         return true;
@@ -86,10 +78,16 @@ public class Maneuver extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return getSelf().name() + " tries to slip behind you, but you're able to keep her in sight.";
+            return String.format("%s tries to slip behind %s, but %s %s able to keep %s in sight.",
+                            getSelf().subject(), target.nameDirectObject(), target.pronoun(),
+                            target.action("are", "is"), getSelf().directObject());
         } else {
-            return getSelf().name()
-                            + " lunges at you, but when you try to grab her, she ducks out of sight. Suddenly her arms are wrapped around you. How did she get behind you?";
+            return String.format("%s lunges at %s, but when %s %s to grab %s, %s ducks out of sight. "
+                            + "Suddenly %s arms are wrapped around %s. How did %s get behind %s?",
+                            getSelf().subject(), target.nameDirectObject(), target.pronoun(),
+                            target.action("try", "tries"), target.directObject(), getSelf().pronoun(),
+                            getSelf().nameOrPossessivePronoun(), target.nameOrPossessivePronoun(),
+                            getSelf().pronoun(), target.directObject());
         }
     }
 

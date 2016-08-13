@@ -31,13 +31,13 @@ public class Knee extends Skill {
         if (target.roll(this, c, accuracy(c))) {
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.normal, target));
-            } else if (target.human()) {
+            } else if (c.shouldPrintReceive(target)) {
                 if (c.getStance().prone(target)) {
                     c.write(getSelf(), receive(c, 0, Result.special, target));
                 } else {
                     c.write(getSelf(), receive(c, 0, Result.normal, target));
                 }
-                if (Global.random(5) >= 3) {
+                if (target.hasBalls() && Global.random(5) >= 3) {
                     c.write(getSelf(), getSelf().bbLiner(c));
                 }
             }
@@ -52,11 +52,7 @@ public class Knee extends Skill {
 
             target.emote(Emotion.angry, 20);
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.miss, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.miss, target));
-            }
+            writeOutput(c, Result.miss, target);
             return false;
         }
         return true;
@@ -93,17 +89,30 @@ public class Knee extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
+        String victim = target.hasBalls() ? "balls" : "crotch";
         if (modifier == Result.miss) {
-            return getSelf().name() + " tries to knee you in the balls, but you block it.";
+            return String.format("%s tries to knee %s in the %s, but %s %s it.",
+                            getSelf().subject(), target.nameDirectObject(),
+                            victim, target.pronoun(),
+                                            target.action("block"));
         }
         if (modifier == Result.special) {
-            return getSelf().name()
-                            + " raises one leg into the air, then brings her knee down like a hammer onto your balls. You cry out in pain and instinctively try "
-                            + "to close your legs, but she holds them open.";
+            return String.format("%s raises one leg into the air, then brings %s knee "
+                            + "down like a hammer onto %s %s. %s"
+                            + " out in pain and instinctively try "
+                            + "to close %s legs, but %s holds them open.",
+                            getSelf().subject(), getSelf().possessivePronoun(),
+                            target.nameOrPossessivePronoun(), victim,
+                            Global.capitalizeFirstLetter(target.subjectAction("cry", "cries")),
+                            target.possessivePronoun(), getSelf().subject());
         } else {
-            return getSelf().name()
-                            + " steps in close and brings her knee up between your legs, crushing your fragile balls. You groan and nearly collapse from the "
-                            + "intense pain in your abdomen.";
+            return String.format("%s steps in close and brings %s knee up between %s legs, "
+                            + "crushing %s fragile balls. %s and nearly %s from the "
+                            + "intense pain in %s abdomen.", getSelf().subject(),
+                            getSelf().possessivePronoun(), target.nameOrPossessivePronoun(),
+                            target.possessivePronoun(),
+                            Global.capitalizeFirstLetter(target.subjectAction("groan")),
+                            target.action("collapse"), target.possessivePronoun());
         }
     }
 

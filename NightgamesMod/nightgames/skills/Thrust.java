@@ -101,11 +101,8 @@ public class Thrust extends Skill {
             result = Result.normal;
         }
 
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, result, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, result, target));
-        }
+
+        writeOutput(c, result, target);
 
         int[] m = getDamage(c, target);
         assert m.length >= 2;
@@ -156,25 +153,37 @@ public class Thrust extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.anal) {
+            String res;
             if (getSelf().has(Trait.strapped)) {
-                String res = getSelf().name()
-                                + " thrusts her hips, pumping her artificial cock in and out of your ass and pushing on your prostate.";
-                if (getSelf().has(Trait.assmaster)) {
-                    return res + getSelf().name()
-                                    + "'s penchant for fucking people in the ass makes her thrusting that much more powerful, and that much more intense for the both of you.";
-                }
-                return res;
+                res = String.format("%s thrusts her hips, pumping her artificial cock in and out"
+                                + " of %s ass and pushing on %s %s.", getSelf().subject(),
+                                target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                                target.hasBalls() ? "prostate" : "innermost parts");
+                
             } else {
-                return getSelf().name() + "'s cock slowly pumps the inside of your rectum.";
+                res = String.format("%s cock slowly pumps the inside of %s rectum.",
+                                getSelf().nameOrPossessivePronoun(), target.nameOrPossessivePronoun());
             }
+            if (getSelf().has(Trait.assmaster)) {
+                res += String.format(" %s penchant for fucking people in the ass makes "
+                                + "%s thrusting that much more powerful, and that much more "
+                                + "intense for the both of %s.", getSelf().nameOrPossessivePronoun(),
+                                getSelf().possessivePronoun(),
+                                c.bothDirectObject());
+            }
+            return res;
         } else if (modifier == Result.reverse) {
-            return getSelf().name()
-                            + " rocks her hips against you, riding you smoothly and deliberately. Despite the slow pace, the sensation of her hot "
-                            + getSelfOrgan(c).fullDescribe(getSelf()) + " surrounding "
-                            + "your dick is gradually driving you to your limit.";
+            return String.format("%s rocks %s hips against %s, riding %s smoothly and deliberately. "
+                            + "Despite the slow pace, the sensation of %s hot %s surrounding "
+                            + "%s dick is gradually driving %s to %s limit.", getSelf().subject(),
+                            getSelf().possessivePronoun(), target.nameDirectObject(),
+                            target.directObject(), getSelf().nameOrPossessivePronoun(),
+                            getSelfOrgan(c).fullDescribe(getSelf()),
+                            target.nameOrPossessivePronoun(), target.directObject(),
+                            target.possessivePronoun());
         } else {
             return Global.format(
-                            "{self:subject} thrusts into {other:name-possessive} {other:body-part:pussy} in a slow steady rhythm, leaving you gasping.",
+                            "{self:subject} thrusts into {other:name-possessive} {other:body-part:pussy} in a slow steady rhythm, leaving {other:direct-object} gasping.",
                             getSelf(), target);
         }
     }

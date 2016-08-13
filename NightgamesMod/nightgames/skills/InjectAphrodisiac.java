@@ -62,7 +62,7 @@ public class InjectAphrodisiac extends Skill {
 
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return Global.format(
-                        "{self:SUBJECT} grins as {self:pronoun} flashes a hypodermic needle filled with light purple liquid. You yelp as {self:pronoun} grab your arm before jabbing you with the needle skillfully, pushing the plunger down to unload its cargo. A warmth floods through your body as the drug begins to take effect. It was an aphrodisiac!",
+                        "{self:SUBJECT} grins as {self:pronoun} flashes a hypodermic needle filled with light purple liquid. {other:SUBJECT-ACTION:gasp|gasps} as {self:pronoun} grab {other:possessive} arm before jabbing {other:direct-object} with the needle skillfully, pushing the plunger down to unload its cargo. A warmth floods through {other:name-possessive} body as the drug begins to take effect. It was an aphrodisiac!",
                         getSelf(), target);
     }
 

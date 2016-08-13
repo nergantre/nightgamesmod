@@ -4,6 +4,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.global.Global;
 import nightgames.status.Falling;
 
 public class Trip extends Skill {
@@ -25,32 +26,16 @@ public class Trip extends Skill {
     public boolean resolve(Combat c, Character target) {
         if (target.roll(this, c, accuracy(c)) && getSelf().check(Attribute.Cunning, target.knockdownDC())) {
             if (isSlime()) {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, 0, Result.special, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.special, target));
-                }
+                writeOutput(c, Result.special, target);
             } else {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, 0, Result.normal, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.normal, target));
-                }
+                writeOutput(c, Result.normal, target);
             }
             target.add(c, new Falling(target));
         } else {
             if (isSlime()) {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, 0, Result.weak, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.weak, target));
-                }
+                writeOutput(c, Result.weak, target);
             } else {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, 0, Result.miss, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.miss, target));
-                }
+                writeOutput(c, Result.miss, target);
             }
             return false;
         }
@@ -114,19 +99,26 @@ public class Trip extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return getSelf().name() + " hooks your ankle, but you recover without falling.";
+            return String.format("%s hooks %s ankle, but %s %s without falling.", getSelf().subject(),
+                            target.nameOrPossessivePronoun(), target.pronoun(), target.action("recover"));
         } else if (modifier == Result.special) {
             return String.format(
-                            "%s shoves a mass of %s slime under your feet, destabilizing you. With a few"
-                                            + " pulls, %s throws you onto your back.",
-                            getSelf().name(), getSelf().pronoun(), getSelf().pronoun());
+                            "%s shoves a mass of %s slime under %s feet, destabilizing %s. With a few"
+                                            + " pulls, %s throws %s onto %s back.",
+                            getSelf().name(), getSelf().possessivePronoun(),
+                            target.nameOrPossessivePronoun(), target.directObject(),
+                            getSelf().pronoun(), target.directObject(), target.possessivePronoun());
         } else if (modifier == Result.weak) {
             return String.format(
-                            "%s forms some of %s slime into a sheet and slides it towards your feet."
-                                            + " You jump away from it, and %s harmlessly retracts the slime.",
-                            getSelf().name(), getSelf().possessivePronoun(), getSelf().pronoun());
+                            "%s forms some of %s slime into a sheet and slides it towards %s feet."
+                                            + " %s %s away from it, and %s harmlessly retracts the slime.",
+                            getSelf().name(), getSelf().possessivePronoun(), target.nameOrPossessivePronoun(), 
+                            Global.capitalizeFirstLetter(target.pronoun()), target.action("jump"),
+                            getSelf().pronoun());
         } else {
-            return getSelf().name() + " takes your feet out from under you and sends you sprawling to the floor.";
+            return String.format("%s takes %s feet out from under %s and sends %s sprawling to the floor.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(), target.directObject(),
+                            target.directObject());
         }
     }
 

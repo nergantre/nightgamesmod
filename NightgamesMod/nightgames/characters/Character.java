@@ -634,6 +634,10 @@ public abstract class Character extends Observable implements Cloneable {
     public String subjectAction(String verb, String pluralverb) {
         return subject() + " " + pluralverb;
     }
+    
+    public String subjectAction(String verb) {
+        return subjectAction(verb, verb + "s");
+    }
 
     public String subjectWas() {
         return subject() + " was";
@@ -2805,7 +2809,7 @@ public abstract class Character extends Observable implements Cloneable {
         }
     }
 
-    private boolean useFemalePronouns() {
+    public boolean useFemalePronouns() {
         return hasPussy() || !hasDick() || Global.checkFlag(Flag.FemalePronounsOnly);
     }
 
@@ -2861,6 +2865,10 @@ public abstract class Character extends Observable implements Cloneable {
 
     public String action(String firstPerson, String thirdPerson) {
         return thirdPerson;
+    }
+    
+    public String action(String verb) {
+        return action(verb, verb + "s");
     }
 
     public void addCooldown(Skill skill) {

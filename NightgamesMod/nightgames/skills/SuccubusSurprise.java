@@ -7,6 +7,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.stance.Position;
 import nightgames.stance.Stance;
@@ -112,22 +113,37 @@ public class SuccubusSurprise extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        String result = String.format("Despite your dominant position, %s seems unfazed."
-                        + " She twists her head to the side and you follow her gaze, fearing"
-                        + " another competitor may be about to crash your party. There's no one"
-                        + " there, though, and when you look back at %s, she has already downed"
-                        + " a draft of some kind. Her grin widens as black wings and a tail form on her back."
-                        + " You try to pull out, but ", getSelf().name(), getSelf().name());
+        String result = String.format("Despite %s dominant position, %s seems unfazed."
+                        + " %s twists %s head to the side and %s %s gaze, fearing"
+                        + " another competitor may be about to crash %s party. There's no one"
+                        + " there, though, and when %s back at %s, %s has already downed"
+                        + " a draft of some kind. %s grin widens as black wings and a tail form on %s back."
+                        + " %s to pull out, but ", target.nameOrPossessivePronoun(),
+                        getSelf().name(), getSelf().subject(), getSelf().possessivePronoun(),
+                        target.subjectAction("follow"), getSelf().possessivePronoun(), 
+                        target.subjectAction("look"), getSelf().name(), getSelf().directObject(),
+                        getSelf().pronoun(), Global.capitalizeFirstLetter(getSelf().possessivePronoun()),
+                        getSelf().possessivePronoun(), 
+                        Global.capitalizeFirstLetter(target.subjectAction("try", "tries")));
         if (isArmLock(c.getStance())) {
-            result += "she grabs your hands tightly to her body, holding you in place. ";
+            result += String.format("%s grabs %s hands tightly to %s body, holding %s in place. ",
+                            getSelf().subject(), target.possessivePronoun(), 
+                            getSelf().possessivePronoun(), target.directObject());
         } else {
-            result += "she wraps her lithe legs around your waist, keeping you inside.";
+            result += String.format("%s wraps %s lithe legs around %s waist, keeping %s inside.",
+                            getSelf().subject(), getSelf().possessivePronoun(),
+                            target.possessivePronoun(), target.directObject());
         }
         if (modifier == Result.weak) {
-            result += " Luckily, the blessings on your cock prevent any serious damage.";
+            result += String.format(" Luckily%s, the blessings on %s cock prevent any serious damage.",
+                            target.human() ? "" : " for " + target.directObject(), 
+                                            target.nameOrPossessivePronoun());
         } else {
-            result += " Your fears are confirmed as you feel a terrible suction starting "
-                            + "on your cock, drawing out your strength.";
+            result += String.format(" %s fears are confirmed as %s %s a terrible suction starting "
+                            + "on %s cock, drawing out %s strength.",
+                            Global.capitalizeFirstLetter(target.nameOrPossessivePronoun()),
+                            target.pronoun(), target.action("feel"),
+                            target.possessivePronoun(), target.possessivePronoun());
         }
         return result;
     }

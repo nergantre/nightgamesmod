@@ -45,11 +45,7 @@ public class Finger extends Skill {
                                 c, this);
             }
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.miss, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.miss, target));
-            }
+            writeOutput(c, Result.miss, target);
             return false;
         }
         return true;
@@ -108,20 +104,35 @@ public class Finger extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "She gropes at your pussy, but misses the mark.";
+            return String.format("%s gropes at %s pussy, but misses the mark.",
+                            getSelf().subject(), target.nameOrPossessivePronoun());
         }
         if (modifier == Result.weak) {
-            return "She gropes between your legs, not really knowing what she's doing. She doesn't know where you're the most sensitive, so she rubs and "
-                            + "strokes every bit of your moist flesh under her fingers.";
+            return String.format("%s gropes between %s legs, not really knowing what %s is doing. "
+                            + "%s doesn't know where %s the most sensitive, so %s rubs and "
+                            + "strokes every bit of %s moist flesh under %s fingers.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().pronoun(),
+                            getSelf().subject(), target.subject(), getSelf().pronoun(),
+                            target.possessivePronoun(), getSelf().possessivePronoun());
         } else {
             if (target.getArousal().get() <= 15) {
-                return "She softly rubs the petals of your closed flower.";
+                return String.format("%s softly rubs the petals of %s closed flower.",
+                                getSelf().subject(), target.nameOrPossessivePronoun());
             } else if (target.getArousal().percent() < 50) {
-                return "Your sensitive lower lips start to open up under her skilled touch and you can feel yourself becoming wet.";
+                return String.format("%s sensitive lower lips start to open up under"
+                                + " %s skilled touch and %s can feel %s becoming wet.",
+                                target.nameOrPossessivePronoun(), getSelf().nameOrPossessivePronoun(),
+                                target.pronoun(), target.reflectivePronoun());
             } else if (target.getArousal().percent() < 80) {
-                return "She locates your clitoris and caress it directly, causing you to tremble from the powerful stimulation.";
+                return String.format("%s locates %s clitoris and caress it directly, causing"
+                                + " %s to tremble from the powerful stimulation.",
+                                getSelf().subject(), target.nameOrPossessivePronoun(), target.directObject());
             } else {
-                return "She stirs your increasingly soaked pussy with her fingers and rub your clit directly with her thumb.";
+                return String.format("%s stirs %s increasingly soaked pussy with %s fingers and "
+                                + "rubs %s clit directly with %s thumb.",
+                                getSelf().subject(), target.nameOrPossessivePronoun(),
+                                getSelf().possessivePronoun(), target.possessivePronoun(),
+                                getSelf().possessivePronoun());
             }
         }
     }

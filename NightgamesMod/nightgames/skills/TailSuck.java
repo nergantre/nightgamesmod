@@ -39,41 +39,25 @@ public class TailSuck extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         if (target.is(Stsflag.tailsucked)) {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.special, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.special, target));
-            }
+            writeOutput(c, Result.special, target);
             target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandomCock(),
                             Global.random(10) + 10, c, this);
             drain(c, target);
         } else if (getSelf().roll(this, c, accuracy(c))) {
             Result res = c.getStance().en == Stance.facesitting && c.getStance().dom(getSelf()) ? Result.critical
                             : Result.normal;
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, res, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, res, target));
-            }
+            writeOutput(c, res, target);
             target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandomCock(),
                             Global.random(10) + 10, c, this);
             drain(c, target);
             target.add(c, new TailSucked(target, getSelf(), power()));
         } else if (target.hasBalls()) {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.weak, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.weak, target));
-            }
+            writeOutput(c, Result.weak, target);
             target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom("balls"),
                             Global.random(5) + 5, c, this);
             return true;
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.miss, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.miss, target));
-            }
+            writeOutput(c, Result.miss, target);
         }
         return true;
     }
@@ -137,47 +121,58 @@ public class TailSuck extends Skill {
         if (modifier == Result.special) {
             return String.format(
                             "%s twists and turns %s tail with renewed vigor,"
-                                            + " stealing more of your energy in the process.",
-                            getSelf().name(), getSelf().possessivePronoun());
+                                            + " stealing more of %s energy in the process.",
+                            getSelf().name(), getSelf().possessivePronoun(), target.nameOrPossessivePronoun());
         } else if (modifier == Result.normal) {
             return String.format(
                             "%s grabs %s tail with both hands and aims it at"
-                                            + " your groin. The tip opens up like a flower, revealing a hollow"
-                                            + " inside shaped suspiciously like a pussy. Leaving you no chance"
-                                            + " to ponder this curiosity, the tail suddenly flies at you. The opening"
-                                            + ", which does indeed <i>feel</i> like a pussy as well, engulfs your %s"
-                                            + " completely. You feel as if you are slowly getting weaker the more it"
-                                            + " sucks on you. That is not good.",
+                                            + " %s groin. The tip opens up like a flower, revealing a hollow"
+                                            + " inside shaped suspiciously like a pussy. Leaving %s no chance"
+                                            + " to ponder this curiosity, the tail suddenly flies at %s. The opening"
+                                            + ", which does indeed <i>feel</i> like a pussy as well, engulfs %s %s"
+                                            + " completely. %s as if %s %s slowly getting weaker the more it"
+                                            + " sucks on %s. That is not good.",
                             getSelf().name(), getSelf().possessivePronoun(),
-                            target.body.getRandomCock().describe(target));
+                            target.nameOrPossessivePronoun(), target.directObject(),target.directObject(),
+                            target.possessivePronoun(), target.body.getRandomCock().describe(target),
+                            Global.capitalizeFirstLetter(target.subjectAction("feel")),
+                            target.pronoun(), target.action("are", "is"), target.directObject());
         } else if (modifier == Result.critical) {
             return String.format(
-                            "With your nose between %s asscheeks as it is, you feel some muscles at the base "
-                                            + "of %s spine tense up. You aren't sure what's going on, but not long after you"
-                                            + " feel your %s being swallowed up in a warm sheath. If %s %s weren't in your face, you'd"
-                                            + " think %s were fucking you. Suddenly, the slick canal contracts around your dick, and"
-                                            + " you feel some of your strength flowing out of you and into it. That is not good.",
-                            getSelf().nameOrPossessivePronoun(), getSelf().possessivePronoun(),
-                            target.body.getRandomCock().describe(target), getSelf().possessivePronoun(),
-                            user().body.getRandomPussy().describe(getSelf()), getSelf().pronoun());
+                            "With %s nose between %s asscheeks as it is, %s some muscles at the base "
+                                            + "of %s spine tense up. %s %sn't sure what's going on, but not long after, %s"
+                                            + " %s %s %s being swallowed up in a warm sheath. If %s %s weren't in %s face, you would"
+                                            + " think %s were fucking %s. Suddenly, the slick canal contracts around %s dick, and"
+                                            + " %s %s some of %s strength flowing out of %s and into it. That is not good.",
+                            target.possessivePronoun(), getSelf().nameOrPossessivePronoun(), target.subjectAction("feel"),
+                            getSelf().possessivePronoun(), Global.capitalizeFirstLetter(target.pronoun()),
+                            target.action("are", "is"), target.pronoun(), target.action("feel"),
+                            target.possessivePronoun(), target.body.getRandomCock().describe(target), 
+                            getSelf().possessivePronoun(), user().body.getRandomPussy().describe(getSelf()),
+                            target.possessivePronoun(),
+                            getSelf().subject(), target.directObject(), target.nameOrPossessivePronoun(),
+                            target.pronoun(), target.action("feel"), target.possessivePronoun(), target.directObject());
         } else if (modifier == Result.weak) {
             return String.format(
                             "%s grabs %s tail with both hands and aims it at"
-                                            + " your groin. The tip opens up like a flower, revealing a hollow"
+                                            + " %s groin. The tip opens up like a flower, revealing a hollow"
                                             + " inside shaped suspiciously like a pussy. That cannot be good, so"
-                                            + " you twist your hips just in time to evade the tail as it suddenly"
+                                            + " %s %s hips just in time to evade the tail as it suddenly"
                                             + " launches forward. Evade may be too strong a term, though, as it"
-                                            + " misses your %s but finds your balls instead. %s does not seem"
-                                            + " to interested in them, though, and leaves them alone after"
+                                            + " misses %s %s but finds %s balls instead. %s does not seem"
+                                            + " too interested in them, though, and leaves them alone after"
                                             + " massaging them a bit.",
-                            getSelf().name(), getSelf().possessivePronoun(),
-                            target.body.getRandomCock().describe(target), getSelf().name());
+                            getSelf().name(), getSelf().possessivePronoun(), target.nameOrPossessivePronoun(),
+                            target.subjectAction("twist"), target.possessivePronoun(), target.possessivePronoun(),
+                            target.body.getRandomCock().describe(target), target.possessivePronoun(), getSelf().name());
         } else {
             return String.format("%s grabs %s tail with both hands and aims it at"
-                            + " your groin. The tip opens up like a flower, revealing a hollow"
+                            + " %s groin. The tip opens up like a flower, revealing a hollow"
                             + " inside shaped suspiciously like a pussy. That cannot be good, so"
-                            + " you twist your hips just in time to evade the tail as it suddenly"
-                            + " launches forward..", getSelf().name(), getSelf().possessivePronoun());
+                            + " %s %s hips just in time to evade the tail as it suddenly"
+                            + " launches forward..", getSelf().name(), getSelf().possessivePronoun(), 
+                            target.nameOrPossessivePronoun(),
+                            target.subjectAction("twist"), target.possessivePronoun());
         }
     }
 

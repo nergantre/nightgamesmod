@@ -68,15 +68,18 @@ public class FootSmother extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        String message = "{self:SUBJECT} presses {self:possessive} soles in to your face causing you to inhale {self:possessive} scent deeply. As you start to worship {self:possessive} {self:body-part:feet}, ";
+        String message = "{self:SUBJECT} presses {self:possessive} soles in to {other:name-possessive} "
+                        + "face causing {other:direct-object} to "
+                        + "inhale {self:possessive} scent deeply. As {other:subject-action:start|starts} to worship {self:possessive}"
+                        + " {self:body-part:feet}, ";
         String parts = "";
         if (target.hasDick()) {
             if (target.getArousal().percent() < 30) {
-                parts += "your {other:body-part:cock} starts to twitch";
+                parts += "{other:possessive} {other:body-part:cock} starts to twitch";
             } else if (target.getArousal().percent() < 60) {
-                parts += "your {other:body-part:cock} starts to throb";
+                parts += "{other:possessive} {other:body-part:cock} starts to throb";
             } else {
-                parts += "your {other:body-part:cock} start to leak " + target.body.getRandomCock().getFluids(target);
+                parts += "{other:possessive} {other:body-part:cock} start to leak " + target.body.getRandomCock().getFluids(target);
             }
         }
         if (target.hasPussy()) {
@@ -84,15 +87,16 @@ public class FootSmother extends Skill {
                 parts += " and ";
             }
             if (target.getArousal().percent() < 30) {
-                parts += "you feel yourself start to get wet";
+                parts += "{other:pronoun-action:feel|feels} {other:reflective} start to get wet";
             } else if (target.getArousal().percent() < 60) {
-                parts += "you feel your wetness start to run down your leg";
+                parts += "{other:pronoun-action:feel|feels} {other:possessive}"
+                                + " wetness start to run down {other:possessive} leg";
             } else {
-                parts += "your {other:body-part:pussy} starts to spasm as your "
-                                + target.body.getRandomPussy().getFluids(target) + " puddles underneath you";
+                parts += "{other:possessive} {other:body-part:pussy} starts to spasm as {other:possessive} "
+                                + target.body.getRandomPussy().getFluids(target) + " puddles underneath {other:direct-object}";
             }
         }
-        return message + parts + ".";
+        return Global.format(message + parts + ".", getSelf(), target);
     }
 
     @Override

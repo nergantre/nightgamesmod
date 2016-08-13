@@ -24,11 +24,7 @@ public class Suckle extends Skill {
     public boolean resolve(Combat c, Character target) {
         Result results = target.has(Trait.lactating) ? Result.special : Result.normal;
         int m = (getSelf().get(Attribute.Seduction) > 10 ? 8 : 4) + Global.random(6);
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, results, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, results, target));
-        }
+        writeOutput(c, Result.normal, target);
         if (getSelf().has(Trait.silvertongue)) {
             m += 4;
         }
@@ -72,12 +68,18 @@ public class Suckle extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.normal) {
-            return getSelf().name()
-                            + " licks and sucks your nipples, sending a surge of excitement straight to your groin.";
+            return String.format("%s licks and sucks %s nipples, sending a "
+                            + "surge of excitement straight to %s groin.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(),
+                            target.possessivePronoun());
         } else {
-            return getSelf().name()
-                            + " licks and sucks your nipples, drawing forth a gush of breast milk from your teats. "
-                            + "She drinks deeply of your milk, gurgling happily as more of the smooth liquid flows down her throat.";
+            return String.format("%s licks and sucks %s nipples, drawing forth "
+                            + "a gush of breast milk from %s teats. "
+                            + "%s drinks deeply of %s milk, gurgling happily as more of the"
+                            + " smooth liquid flows down %s throat.", getSelf().subject(),
+                            target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                            getSelf().subject(), target.nameOrPossessivePronoun(),
+                            getSelf().possessivePronoun());
         }
     }
 

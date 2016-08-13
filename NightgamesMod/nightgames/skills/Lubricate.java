@@ -26,11 +26,7 @@ public class Lubricate extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         target.add(c, new Oiled(target));
         getSelf().consume(Item.Lubricant, 1);
         return true;
@@ -53,8 +49,10 @@ public class Lubricate extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name()
-                        + " throws an oily liquid at you. The liquid clings to you and makes your whole body slippery.";
+        return String.format("%s throws an oily liquid at %s. The liquid "
+                        + "clings to %s and makes %s whole body slippery.",
+                        getSelf().subject(), target.nameDirectObject(),
+                        target.directObject(), target.possessivePronoun());
     }
 
     @Override

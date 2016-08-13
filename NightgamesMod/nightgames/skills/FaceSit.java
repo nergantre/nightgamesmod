@@ -47,26 +47,12 @@ public class FaceSit extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         if (getSelf().has(Trait.entrallingjuices) && Global.random(4) == 0 && !target.wary()) {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.special, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.special, target));
-            }
+            writeOutput(c, Result.special, target);
             target.add(c, new Enthralled(target, getSelf(), 5));
-        } else if (getSelf().has(Trait.lacedjuices)) {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.strong, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.strong, target));
-            }
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.normal, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.normal, target));
-            }
+            writeOutput(c, getSelf().has(Trait.lacedjuices) ? Result.strong : Result.normal, target);
         }
-
+        
         int m = 10;
         if (target.has(Trait.silvertongue)) {
             m = m * 3 / 2;
@@ -170,31 +156,68 @@ public class FaceSit extends Skill {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (getSelf().hasBalls()) {
             if (modifier == Result.special) {
-                return getSelf().name()
-                                + " straddles your head and dominates you by putting her balls in your mouth. For some reason, your mind seems to cloud over and you're "
-                                + "desperate to please her. She gives a superior smile as you obediently suck on her nuts.";
+                return String.format("%s straddles %s head and dominates %s by putting %s balls in %s mouth. "
+                                + "For some reason, %s mind seems to cloud over and %s %s "
+                                + "desperate to please %s. %s gives a superior smile as %s obediently %s on %s nuts.",
+                                getSelf().subject(), target.nameOrPossessivePronoun(), target.directObject(),
+                                getSelf().possessivePronoun(), target.possessivePronoun(),
+                                target.nameOrPossessivePronoun(), target.pronoun(),
+                                target.action("are", "is"), getSelf().directObject(),
+                                Global.capitalizeFirstLetter(getSelf().subject()),
+                                target.subject(), target.action("suck"), getSelf().possessivePronoun());
             } else if (modifier == Result.strong) {
-                return getSelf().name()
-                                + " straddles your head and dominates you by putting her balls in your mouth. Despite the humiliation, her scent is turning you on incredibly. "
-                                + "She gives a superior smile as you obediently suck on her nuts.";
+                return String.format("%s straddles %s head and dominates %s by putting %s balls in %s mouth. "
+                                + "Despite the humiliation, %s scent is turning %s on incredibly. "
+                                + "%s gives a superior smile as %s obediently %s on %s nuts.",
+                                getSelf().subject(), target.nameOrPossessivePronoun(), target.directObject(),
+                                getSelf().possessivePronoun(), target.possessivePronoun(),
+                                getSelf().nameOrPossessivePronoun(), target.subject(),
+                                getSelf().subject(), target.subject(), target.action("suck"),
+                                getSelf().possessivePronoun());
             } else {
-                return getSelf().name()
-                                + " straddles your head and dominates you by putting her balls in your mouth. She gives a superior smile as you obediently suck on her nuts.";
+                return String.format("%s straddles %s head and dominates %s by putting %s balls in %s mouth. "
+                                + "%s gives a superior smile as %s obediently %s on %s nuts.",
+                                getSelf().subject(), target.nameOrPossessivePronoun(), target.directObject(),
+                                getSelf().possessivePronoun(),
+                                target.possessivePronoun(),
+                                getSelf().subject(), target.subject(), target.action("suck"),
+                                getSelf().possessivePronoun());
             }
         } else {
             if (modifier == Result.special) {
-                return getSelf().name()
-                                + " straddles your face and presses her pussy against your mouth. You open your mouth and start to lick her freely offered muff, but she just smiles "
-                                + "while continuing to queen you. As you swallow her juices, you feel her eyes start to bore into your mind. You can't resist her. You don't even want to.";
+                return String.format("%s straddles %s face and presses %s pussy against %s mouth. %s "
+                                + "%s mouth and %s to lick %s freely offered muff, but %s just smiles "
+                                + "while continuing to queen %s. As %s %s %s juices, %s %s"
+                                + " eyes start to bore into %s mind. %s can't resist %s. %s %s even want to.",
+                                getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessivePronoun(),
+                                target.possessivePronoun(), target.subjectAction("open"), target.possessivePronoun(),
+                                target.action("start"), getSelf().possessivePronoun(), getSelf().pronoun(),
+                                target.directObject(), target.pronoun(),
+                                target.action("drink"), getSelf().possessivePronoun(),
+                                target.subjectAction("feel"), getSelf().nameOrPossessivePronoun(), 
+                                target.possessivePronoun(),
+                                Global.capitalizeFirstLetter(target.pronoun()), 
+                                Global.capitalizeFirstLetter(target.pronoun()), 
+                                getSelf().nameDirectObject(), target.action("don't", "doesn't"));
             } else if (modifier == Result.strong) {
-                return getSelf().name()
-                                + " straddles your face and presses her pussy against your mouth. You open your mouth and start to lick her freely offered muff, but she just smiles "
-                                + "while continuing to queen you. You feel your body start to heat up as her juices flow into your mouth. She's giving you a mouthful of aphrodisiac straight from "
-                                + "the source.";
+                return String.format("%s straddles %s face and presses %s pussy against %s mouth. %s "
+                                + "%s mouth and start to lick %s freely offered muff, but %s just smiles "
+                                + "while continuing to queen %s. %s %s body start to heat up as %s "
+                                + "juices flow into %s mouth. %s giving %s a mouthful of aphrodisiac straight from "
+                                + "the source.", getSelf().subject(), target.nameOrPossessivePronoun(),
+                                getSelf().possessivePronoun(), target.possessivePronoun(), target.subjectAction("open"),
+                                target.possessivePronoun(), getSelf().nameDirectObject(), getSelf().pronoun(),
+                                 target.directObject(), Global.capitalizeFirstLetter(target.subjectAction("feel")),
+                                 target.possessivePronoun(), getSelf().nameOrPossessivePronoun(), target.possessivePronoun(),
+                                 getSelf().subject(), target.directObject());
             } else {
-                return getSelf().name()
-                                + " straddles your face and presses her pussy against your mouth. You open your mouth and start to lick her freely offered muff, but she just smiles "
-                                + "while continuing to queen you. She clearly doesn't mind accepting some pleasure to demonstrate her superiority.";
+                return String.format("%s straddles %s face and presses %s pussy against %s mouth. %s "
+                                + "%s mouth and start to lick %s freely offered muff, but %s just smiles "
+                                + "while continuing to queen %s. %s clearly doesn't mind accepting some pleasure"
+                                + " to demonstrate %s superiority.",getSelf().subject(), target.nameOrPossessivePronoun(),
+                                getSelf().possessivePronoun(), target.possessivePronoun(), target.subjectAction("open"),
+                                target.possessivePronoun(), getSelf().nameDirectObject(), getSelf().pronoun(),
+                                 target.directObject(), getSelf().subject(), getSelf().possessivePronoun());
             }
         }
     }

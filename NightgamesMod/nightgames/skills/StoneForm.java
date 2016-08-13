@@ -30,11 +30,7 @@ public class StoneForm extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         getSelf().add(c, new StoneStance(getSelf()));
         return true;
     }
@@ -56,7 +52,9 @@ public class StoneForm extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name() + " braces herself to resist your attacks.";
+        return String.format("%s braces %s to resist %s attacks.",
+                        getSelf().subject(), getSelf().reflectivePronoun(),
+                        target.nameOrPossessivePronoun());
     }
 
 }

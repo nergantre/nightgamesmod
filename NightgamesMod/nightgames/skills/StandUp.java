@@ -19,11 +19,7 @@ public class StandUp extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         c.setStance(new StandingOver(getSelf(), target));
         return true;
     }
@@ -60,7 +56,9 @@ public class StandUp extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().getName() + " relinquishes her hold on you and stands back up.";
+        return String.format("%s relinquishes %s hold on %s and stands back up.",
+                        getSelf().subject(), getSelf().possessivePronoun(),
+                        target.nameDirectObject());
     }
 
     @Override

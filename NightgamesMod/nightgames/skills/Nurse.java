@@ -44,18 +44,15 @@ public class Nurse extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
-        }
+        boolean special = c.getStance().en != Stance.nursing && !c.getStance().havingSex();
+        writeOutput(c, special ? Result.special : Result.normal, target);
         if (getSelf().has(Trait.lactating) && !target.is(Stsflag.suckling) && !target.is(Stsflag.wary)) {
             c.write(target, Global.format(
                             "{other:SUBJECT-ACTION:are|is} a little confused at the sudden turn of events, but after milk starts flowing into {other:possessive} mouth, {other:pronoun} can't help but continue to suck on {self:possessive} teats.",
                             getSelf(), target));
             target.add(c, new Suckling(target, getSelf(), 4));
         }
-        if (c.getStance().en != Stance.nursing && !c.getStance().havingSex()) {
+        if (special) {
             c.setStance(new NursingHold(getSelf(), target));
             getSelf().emote(Emotion.dominant, 20);
         } else {
@@ -122,13 +119,19 @@ public class Nurse extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.special) {
-            return getSelf().name() + " plops her " + getSelf().body.getRandomBreasts().fullDescribe(getSelf())
-                            + " in front of your face. You vision suddenly consists of only swaying titflesh."
-                            + " Giggling a bit, " + getSelf().name()
-                            + " pokes your sides and slides her nipples in your mouth when you let out a yelp.";
+            return String.format("%s plops %s %s in front of %s face. %s vision suddenly consists of only"
+                            + " swaying titflesh. Giggling a bit, %s pokes %s sides and slides %s nipples in"
+                            + " %s mouth when %s %s out a yelp.", getSelf().subject(),
+                            getSelf().possessivePronoun(), getSelf().body.getRandomBreasts().fullDescribe(getSelf()),
+                            target.nameOrPossessivePronoun(), Global.capitalizeFirstLetter(target.possessivePronoun()),
+                            getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessivePronoun(),
+                            target.possessivePronoun(), target.pronoun(), target.action("let"));
         } else {
-            return getSelf().name() + " gently strokes your hair as she presents her nipples to your mouth. "
-                            + "Presented with the opportunity, you happily suck on her breasts.";
+            return String.format("%s gently strokes %s hair as %s presents her nipples to %s mouth. "
+                            + "Presented with the opportunity, %s happily %s on %s breasts.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(),
+                            getSelf().pronoun(), target.possessivePronoun(),
+                            target.subject(), target.action("suck"), getSelf().possessivePronoun());
         }
     }
 

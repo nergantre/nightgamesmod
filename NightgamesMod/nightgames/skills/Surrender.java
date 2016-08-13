@@ -28,11 +28,7 @@ public class Surrender extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         getSelf().tempt(c, getSelf().getArousal().max());
         getSelf().loseWillpower(c, getSelf().getWillpower().max());
         return true;
