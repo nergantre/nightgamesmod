@@ -995,7 +995,7 @@ public class Combat extends Observable implements Cloneable {
         return ch.human() || beingObserved;
     }
     
-    private boolean shouldAutoresolve() {
+    public boolean shouldAutoresolve() {
         return !(p1.human() || p2.human()) && !beingObserved;
     }
     

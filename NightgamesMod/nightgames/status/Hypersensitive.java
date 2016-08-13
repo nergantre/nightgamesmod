@@ -19,7 +19,8 @@ public class Hypersensitive extends DurationStatus {
         if (affected.human()) {
             return "Your skin tingles and feels extremely sensitive to touch.";
         } else {
-            return "She shivers from the breeze hitting her skin and has goosebumps";
+            return String.format("%s shivers from the breeze hitting %s skin and has goosebumps.",
+                            affected.pronoun(), affected.possessivePronoun());
         }
     }
 

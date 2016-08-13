@@ -21,11 +21,8 @@ public class CockBound extends Status {
 
     @Override
     public String describe(Combat c) {
-        if (affected.human()) {
-            return "Your dick is bound by " + binding + ".";
-        } else {
-            return "Her girl-cock is restrained by " + binding + ".";
-        }
+        return String.format("%s %s is bound by %s.", affected.nameOrPossessivePronoun(),
+                        affected.body.getRandomCock().describe(affected), binding);
     }
 
     @Override

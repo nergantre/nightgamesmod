@@ -43,15 +43,9 @@ public class TailFucked extends Status {
         if (hole == null || tail == null) {
             return "";
         }
-        if (affected.human()) {
-            return Global.capitalizeFirstLetter(String.format("%s fucking %s %s with %s %s\n",
+        return Global.capitalizeFirstLetter(String.format("%s fucking %s %s with %s %s\n",
                             other.subjectAction("are", "is"), affected.nameOrPossessivePronoun(),
                             hole.describe(affected), other.possessivePronoun(), tail.describe(other)));
-        } else {
-            return Global.capitalizeFirstLetter(String.format("%s fucking %s %s with %s %s\n",
-                            other.subjectAction("are", "is"), affected.nameOrPossessivePronoun(),
-                            hole.describe(affected), other.possessivePronoun(), tail.describe(other)));
-        }
     }
 
     @Override

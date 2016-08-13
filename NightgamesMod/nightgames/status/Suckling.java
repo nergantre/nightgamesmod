@@ -39,7 +39,8 @@ public class Suckling extends DurationStatus {
         if (affected.human()) {
             return "You feel an irresistable urge to suck on her nipples.";
         } else {
-            return affected.name() + " is looking intently at your breasts.";
+            return affected.name() + " is looking intently at "
+                            +c.getOther(affected).nameOrPossessivePronoun()+" breasts.";
         }
     }
 
