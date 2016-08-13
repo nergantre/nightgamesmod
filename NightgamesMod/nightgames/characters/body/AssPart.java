@@ -83,7 +83,7 @@ public class AssPart extends GenericBodyPart {
             c.write(self, Global.format(
                             "{self:NAME-POSSESSIVE} " + fullDescribe(self)
                                             + " churns against {other:name-possessive} cock, "
-                                            + "seemingly with a mind of its own. Her internal muscles feel like a hot fleshy hand inside her asshole, jerking {other:possessive} shaft.",
+                                            + "seemingly with a mind of its own. {self:POSSESSIVE} internal muscles feel like a hot fleshy hand inside her asshole, jerking {other:possessive} shaft.",
                             self, opponent));
             opponent.body.pleasure(self, this, otherOrgan, 10, c);
         }

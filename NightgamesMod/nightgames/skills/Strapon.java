@@ -95,9 +95,9 @@ public class Strapon extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return String.format("%s straps on a thick rubber cock and grins at %s in a way that "
+        return String.format("%s straps on a thick rubber cock and grins in a way that "
                         + "makes %s feel a bit nervous.", getSelf().subject(),
-                        target.nameDirectObject(), target.directObject());
+                        target.nameDirectObject());
     }
 
 }

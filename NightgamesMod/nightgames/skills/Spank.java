@@ -95,12 +95,14 @@ public class Spank extends Skill {
                             target.action("dodge"));
         }
         if (modifier == Result.special) {
+            String victim = target.hasBalls() ? "balls" : "clit";
+            String hood = target.hasBalls() ? "manhood" : "womanhood";
             return String.format("%s bends %s over like a misbehaving child and spanks %s"
-                            + " ass twice. The third spank aims lower and connects solidly with %s ballsack, "
-                            + "injuring %s manhood along with %s pride.", getSelf().subject(),
+                            + " ass twice. The third spank aims lower and connects solidly with %s %s, "
+                            + "injuring %s %s along with %s pride.", getSelf().subject(),
                             target.nameDirectObject(), target.possessivePronoun(),
-                            target.possessivePronoun(), target.possessivePronoun(),
-                            target.possessivePronoun());
+                            target.possessivePronoun(), victim, target.possessivePronoun(),
+                            hood, target.possessivePronoun());
         } else {
             return String.format("%s lands a stinging slap on %s bare ass.",
                             getSelf().subject(), target.nameOrPossessivePronoun());

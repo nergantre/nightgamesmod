@@ -116,7 +116,7 @@ public class ThrowDraft extends Skill {
                 verb = "throw";
             }
             c.write(getSelf(), Global.format(
-                            String.format("{self:SUBJECT-ACTION:%s|%ss} %s%s", verb, verb, used.pre(), used.getName()),
+                            String.format("{self:SUBJECT-ACTION:%s|%ss} %s%s.", verb, verb, used.pre(), used.getName()),
                             getSelf(), target));
             if (transformativeItems.contains(used) && target.has(Trait.stableform)) {
                 c.write(target, "...But nothing happened (Stable Form).");

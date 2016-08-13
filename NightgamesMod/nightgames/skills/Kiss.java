@@ -170,15 +170,15 @@ public class Kiss extends Skill {
                             + "enthusiastic tongue with %s own, but %s %s quickly overwhelmed. "
                             + "%s to feel weak as the kiss continues, and %s %s %s is "
                             + "draining %s; %s kiss is sapping %s will to fight through %s connection! "
-                            + "%s try to resist, but %s splendid tonguework prevents "
+                            + "%s to resist, but %s splendid tonguework prevents "
                             + "%s from mounting much of a defense.",
-                            getSelf().subject(), target.nameDirectObject(), target.pronoun(),
+                            getSelf().subject(), target.nameDirectObject(), target.subject(),
                             target.action("try", "tries"), getSelf().possessivePronoun(),
                             target.possessivePronoun(), target.pronoun(), target.action("are", "is"),
                             Global.capitalizeFirstLetter(target.subjectAction("start")),
                             target.pronoun(), target.action("realize"), getSelf().subject(),
-                            target.directObject(), getSelf().possessivePronoun(), target.possessivePronoun(),
-                            c.bothPossessive(), 
+                            target.directObject(), getSelf().possessivePronoun(), 
+                            target.nameOrPossessivePronoun(), c.bothPossessive(), 
                             Global.capitalizeFirstLetter(target.subjectAction("try", "tries")),
                             getSelf().nameOrPossessivePronoun(), target.directObject());
         }

@@ -526,7 +526,7 @@ public class NPC extends Character {
 
     @Override
     public void promptTrap(IEncounter enc, Character target, Trap trap) {
-        if (ai.attack(target)) {
+        if (ai.attack(target) && (!target.human() || !Global.isDebugOn(DebugFlags.DEBUG_SPECTATE))) {
             enc.trap(this, target, trap);
         } else {
             location.endEncounter();

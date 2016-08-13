@@ -3,6 +3,7 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.TentaclePart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -45,8 +46,10 @@ public class TentaclePorn extends Skill {
                 int m = Global.random(getSelf().get(Attribute.Fetish)) / 2 + 1;
                 if (target.bound()) {
                     writeOutput(c, Result.special, target);
-                    TentaclePart.pleasureWithTentacles(c, target, m, target.body.getRandomCock());
-                    TentaclePart.pleasureWithTentacles(c, target, m, target.body.getRandomPussy());
+                    if (target.hasDick())
+                        TentaclePart.pleasureWithTentacles(c, target, m, target.body.getRandomCock());
+                    if (target.hasPussy())
+                        TentaclePart.pleasureWithTentacles(c, target, m, target.body.getRandomPussy());
                     TentaclePart.pleasureWithTentacles(c, target, m, target.body.getRandomBreasts());
                     TentaclePart.pleasureWithTentacles(c, target, m, target.body.getRandomAss());
                 } else if (getSelf().human()) {
@@ -115,9 +118,25 @@ public class TentaclePorn extends Skill {
                             getSelf().subject(), target.nameDirectObject(), target.possessivePronoun(),
                             target.possessivePronoun(), target.directObject());
         } else {
+            String actions = "";
+            if (target.hasDick())
+                actions += String.format("tease %s %s", target.possessivePronoun(), 
+                                target.body.getRandomCock().describe(target));
+            
+            if (target.hasPussy())
+                actions += String.format("%scaress %s clit", actions.length() > 0 ? ", " : "", 
+                                target.possessivePronoun());
+            
+            if (target.body.getRandomBreasts() != BreastsPart.flat)
+                actions += String.format("%sknead %s %s" ,actions.length() > 0 ? ", " : "", 
+                                target.possessivePronoun(),
+                                target.body.getRandomBreasts().describe(target));
+            
+            if (actions.length() > 0)
+                actions += ", and";
             return String.format("%s summons slimy tentacles that cover %s helpless body,"
-                            + " tease %s dick, and probe %s ass.", getSelf().subject(),
-                            target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                            + " %s probe %s ass.", getSelf().subject(),
+                            target.nameOrPossessivePronoun(), actions,
                             target.possessivePronoun());
         }
     }

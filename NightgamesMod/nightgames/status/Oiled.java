@@ -19,7 +19,7 @@ public class Oiled extends Status {
             return "Your skin is slick with oil and kinda feels weird.";
         } else {
             return String.format("%s is shiny with lubricant, making %s more tempted to touch and rub %s skin.",
-                            affected.pronoun(), c.getOther(affected).subject(), affected.pronoun());
+                            affected.subject(), c.getOther(affected).subject(), affected.possessivePronoun());
         }
     }
 
