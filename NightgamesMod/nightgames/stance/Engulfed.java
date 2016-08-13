@@ -26,8 +26,10 @@ public class Engulfed extends Position {
             return "You have engulfed " + bottom.name() + " inside your slime body, with only "
                             + bottom.possessivePronoun() + " face outside of you.";
         } else {
-            return top.name() + " is holding your entire body inside " + top.possessivePronoun()
-                            + " slime body, with only your face outside.";
+            return String.format("%s is holding %s entire body inside "
+                            + "%s slime body, with only %s face outside.",
+                            top.nameOrPossessivePronoun(), bottom.nameOrPossessivePronoun(),
+                            top.possessivePronoun(), bottom.possessivePronoun());
         }
     }
 

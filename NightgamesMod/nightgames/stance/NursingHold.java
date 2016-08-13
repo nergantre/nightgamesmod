@@ -26,8 +26,10 @@ public class NursingHold extends AbstractFacingStance {
             return "You are cradling " + bottom.nameOrPossessivePronoun()
                             + " head in your lap with your breasts dangling in front of " + bottom.directObject();
         } else {
-            return top.name()
-                            + " is holding your head in her lap, with her enticing breasts right in front of your mouth.";
+            return String.format("%s is holding %s head in %s lap, with %s enticing "
+                            + "breasts right in front of %s mouth.", top.subject(),
+                            bottom.nameOrPossessivePronoun(), top.possessivePronoun(),
+                            top.possessivePronoun(), bottom.possessivePronoun());
         }
     }
 

@@ -17,11 +17,18 @@ public class FlyingCowgirl extends FemdomSexStance {
     @Override
     public String describe() {
         return String.format(
-                        "You are flying some twenty feet up in the air,"
-                                        + " joined to your partner by your hips. %s on top of %s and %s %s is strangling %s %s.",
+                        "%s are flying some twenty feet up in the air,"
+                                        + " joined to %s by %s hips. %s on top of %s and %s %s is strangling %s %s.",
+                                        spectated() ? String.format("%s and %s", top.subject(), bottom.subject()) : "You",
+                                                        spectated() ? "eachother" : "your partner",
+                                                        spectated() ? "their" : "your",
                         top.subjectAction("are", "is"), bottom.subject(), top.possessivePronoun(),
                         top.body.getRandomPussy().describe(top), bottom.possessivePronoun(),
                         bottom.body.getRandomInsertable().describe(bottom));
+    }
+    
+    private boolean spectated() {
+        return !(top.human() || bottom.human());
     }
 
     @Override

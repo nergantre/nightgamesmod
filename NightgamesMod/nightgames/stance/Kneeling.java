@@ -14,7 +14,8 @@ public class Kneeling extends AbstractFacingStance {
         if (top.human()) {
             return "You are standing over " + bottom.name() + ", who is kneeling before you.";
         } else {
-            return "You are kneeling on the ground, while " + top.name() + " stands over you.";
+            return String.format("%s kneeling on the ground, while %s stands over %s.",
+                            bottom.subjectAction("are", "is"), top.subject(), bottom.directObject());
         }
     }
 

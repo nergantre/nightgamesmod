@@ -24,7 +24,7 @@ public class Smothering extends AbstractBehindStance {
 
     @Override
     public String describe() {
-        return Global.format("{self:SUBJECT-ACTION:sit|sits} on {other:name-posssesive} face, with {self:possessive} round ass fully encompassing {other:possessive} view. {other:subject} cannot even breathe except for the short pauses when {self:subject-action:allow|allows} {other:direct-object} to by lifting {self:possessive} ass.", top, bottom);
+        return Global.format("{self:SUBJECT-ACTION:sit|sits} on {other:name-posssesive} face, with {self:possessive} round ass fully encompassing {other:possessive} view. {other:SUBJECT} cannot even breathe except for the short pauses when {self:subject-action:allow|allows} {other:direct-object} to by lifting {self:possessive} ass.", top, bottom);
     }
 
     @Override
