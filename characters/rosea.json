@@ -240,7 +240,7 @@
 			}
 		],
 		"night" : [{
-				"text" : "Tired after the night's games, you start trudging back to your place. As you're about to leave the grounds however, you smell a sweet scene in the air. The aroma seems to arouse you, but at the same time making your accumulated fatigue disappear like magic. You grin and thank {self:name-do} in your mind."
+				"text" : "Tired after the night's games, you start trudging back to your place. As you're about to leave the grounds however, you smell a sweet scent in the air. The aroma seems to arouse you, but at the same time making your accumulated fatigue disappear like magic. You grin and thank {self:name-do} in your mind."
 			}
 		],
 		"victory" : [{
@@ -309,7 +309,7 @@
 			{"modMoney" : -1000}
 		],
 		"introduction" : "Rosea's a tree. If you want, I can plant her in the middle of the front lawn.",
-		"confirm" : "Alright, you'll see her tomorrow at dusk"
+		"confirm" : "Alright, you'll see her tomorrow at dusk."
 	},
 	"portraits" : [{
 			"requirements" : {
