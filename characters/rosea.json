@@ -277,18 +277,18 @@
 			}
 		],
 		"victory3p" : [{
-				"text" : "Rosea brings you to an orgasm while {other:subject} holds you down."
+				"text" : "{self:name} brings you to an orgasm while {other:subject} holds you down."
 			}],
 		"victory3pAssist" :[{
-				"text" : "Rosea brings {other:name-do} to an orgasm while you hold {other:direct-object} down."
+				"text" : "{self:name} brings {other:name-do} to an orgasm while you hold {other:direct-object} down."
 			}
 		],
 		"intervene3p" : [{
-				"text" : "While the fight is happening between you and {other:subject}, Rosea sneaks up behind you and holds you down."
+				"text" : "While the fight is happening between you and {other:subject}, {self:name} sneaks up behind you and holds you down."
 			}
 		],
 		"intervene3pAssist": [{
-				"text" : "While the fight is happening, Rosea sneaks behind {other:name-do} and holds {other:direct-object} down."
+				"text" : "While the fight is happening, {self:name} sneaks behind {other:name-do} and holds {other:direct-object} down."
 			}
 		]
 	},
