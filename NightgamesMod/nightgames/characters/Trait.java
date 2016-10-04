@@ -166,7 +166,8 @@ public enum Trait {
     breeder("Breeder", "Particularly inviting"),
     mindcontroller("Mind Controller", "Can take control of others' minds. Inventive, yes?"),
     darkpromises("Dark Promises", "Can enthrall with the right words"), // whisper upgrade, can enthrall
-
+    dominatrix("Dominatrix", "Relishes in hurting and humiliating partners."),
+    
     energydrain("Energy Drain", "Drains energy during intercourse"),
     objectOfWorship("Object Of Worship", "Opponents is periodically forced to worship your body.",
                     (b, c, t) -> b.append("A divine aura surrounds " + c.nameDirectObject() + ".")),

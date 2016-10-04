@@ -93,6 +93,7 @@ import nightgames.combat.Combat;
 import nightgames.daytime.Daytime;
 import nightgames.ftc.FTCMatch;
 import nightgames.gui.GUI;
+import nightgames.gui.HeadlessGui;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.json.JsonUtils;
@@ -159,7 +160,7 @@ public class Global {
 
     public static final Path COMBAT_LOG_DIR = new File("combatlogs").toPath();
 
-    public Global() {
+    public Global(boolean headless) {
         rng = new Random();
         flags = new HashSet<>();
         players = new HashSet<>();
@@ -205,11 +206,11 @@ public class Global {
         buildSkillPool(noneCharacter);
         buildModifierPool();
         flag(Flag.AiriEnabled);
-        gui = makeGUI();
+        gui = makeGUI(headless);
     }
 
-    protected GUI makeGUI() {
-        return new GUI();
+    protected GUI makeGUI(boolean headless) {
+        return headless ? new HeadlessGui() : new GUI();
     }
 
     public static boolean meetsRequirements(Character c, Trait t) {
@@ -241,7 +242,7 @@ public class Global {
         Set<Character> lineup = pickCharacters(players, Collections.singleton(human), 4);
         match = new Match(lineup, new NoModifier());
         time = Time.NIGHT;
-        saveWithDialog();
+        //saveWithDialog();
     }
 
     public static int random(int start, int end) {
@@ -1252,7 +1253,7 @@ public class Global {
                 // pass
             }
         }
-        new Global();
+        new Global(false);
     }
 
     public static String getIntro() {

@@ -42,6 +42,7 @@ import nightgames.status.Wary;
 import nightgames.status.Winded;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
+import nightgames.status.addiction.Addiction.Severity;
 
 public class Combat extends Observable implements Cloneable {
 
@@ -409,7 +410,7 @@ public class Combat extends Observable implements Cloneable {
         } else if (p2act == null) {
             p2.act(this);
         } else {
-            //clear();
+            clear();
             if (!shouldAutoresolve()) {
                 Global.gui()
                       .clearText();
@@ -491,11 +492,20 @@ public class Combat extends Observable implements Cloneable {
         }
 
         Character sub = getStance().getOther(self);
+        if (sub.human()) {
+            Addiction add = Global.getPlayer().getAddiction(AddictionType.DOMINANCE).orElse(null);
+            if (add != null && add.atLeast(Severity.MED) && !add.wasCausedBy(self)) {
+                write(self, Global.format("{self:name} does {self:possessive} best to be dominant, but with the "
+                            + "way Jewel has been working you over you're completely desensitized." , self, sub));
+                return;
+            }
+        }
         if (self.has(Trait.smqueen)) {
             write(self,
-                            Global.format("{self:NAME-POSSESSIVE} cold gaze in {self:possessive} dominant position makes {other:direct-object} shiver.",
+                            Global.format("{self:NAME-POSSESSIVE} cold gaze in {self:possessive} dominant position"
+                                            + " makes {other:direct-object} shiver.",
                                             self, sub));
-            sub.loseWillpower(this, stanceDominance, 0, false, " (SM Queen)");
+            sub.loseWillpower(this, (int) (stanceDominance * 1.5), 0, false, " (SM Queen)");
         } else {
             sub.loseWillpower(this, stanceDominance, 0, false, " (Dominance)");
         }
@@ -733,13 +743,13 @@ public class Combat extends Observable implements Cloneable {
         if (p.getStamina()
              .isEmpty() && !p.is(Stsflag.stunned)) {
             p.add(this, new Winded(p));
+            Character other;
+            if (p == p1) {
+                other = p2;
+            } else {
+                other = p1;
+            }
             if (!getStance().prone(p)) {
-                Character other;
-                if (p == p1) {
-                    other = p2;
-                } else {
-                    other = p1;
-                }
                 if (getStance().inserted() && getStance().dom(other)) {
                     if (p.human()) {
                         write("Your legs give out, but " + other.name() + " holds you up.");
@@ -760,6 +770,19 @@ public class Combat extends Observable implements Cloneable {
                 p.loseWillpower(this, Math.min(p.getWillpower()
                                                 .max()
                                 / 8, 15), true);
+            }
+            if (p.human() && other.has(Trait.dominatrix)) {
+                if (Global.getPlayer().hasAddiction(AddictionType.DOMINANCE)) {
+                    write(String.format("Being dominated by %s again reinforces your"
+                                    + " submissiveness towards %s.", other.getName(),
+                                    other.directObject()));
+                } else {
+                    write(String.format("There's something about the way %s knows just"
+                                    + " how and where to hurt you which some part of your"
+                                    + " psyche finds strangely appealing. You find yourself"
+                                    + " wanting more.", other.getName()));
+                }
+                Global.getPlayer().addict(AddictionType.DOMINANCE, other, Addiction.HIGH_INCREASE);
             }
         }
     }

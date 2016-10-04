@@ -21,7 +21,6 @@ public abstract class Addiction extends Status {
     public static final float MED_THRESHOLD = .4f;
     public static final float HIGH_THRESHOLD = .7f;
 
-    protected final String name;
     protected final Character cause;
     protected float magnitude;
     protected float combatMagnitude;
@@ -50,7 +49,6 @@ public abstract class Addiction extends Status {
     @Override
     public void tick(Combat c) {
         combatMagnitude += magnitude / 14.0;
-        System.out.println(combatMagnitude);
     }
     
     public final void clearDaytime() {

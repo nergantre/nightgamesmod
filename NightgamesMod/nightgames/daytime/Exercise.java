@@ -70,6 +70,7 @@ public class Exercise extends Activity {
 
                 Global.getNPC("Jewel").gainAffection(player, 1);
                 player.gainAffection(Global.getNPC("Jewel"), 1);
+                break;
             case yuiintro1:
                 Global.gui().message("For a change of pace, you decide to try a different jogging route today that takes you outside the campus. There's less foot traffic to worry about here, "
                         + "which gives you more opportunity to just take in your surroundings. It's a fairly nice area. There are lots of small shops around, but at this time of day, "

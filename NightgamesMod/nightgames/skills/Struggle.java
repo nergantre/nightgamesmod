@@ -222,7 +222,7 @@ public class Struggle extends Skill {
                 if (getSelf().human()) {
                     c.write(getSelf(), "You manage to scrabble out of " + target.name() + "'s grip.");
                 } else if (c.shouldPrintReceive(target)) {
-                    c.write(getSelf(), getSelf().name() + " squirms out from under you.");
+                    c.write(getSelf(), getSelf().name() + " squirms out from under "+target.nameDirectObject()+".");
                 }
                 c.setStance(new Neutral(getSelf(), target));
             } else {
