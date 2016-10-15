@@ -77,6 +77,7 @@ public class Jewel extends BasePersonality {
         growth.addTrait(13, Trait.shameless);
         growth.addTrait(16, Trait.limbTraining1);
         growth.addTrait(19, Trait.oiledass);
+        growth.addTrait(20, Trait.dominatrix);
         growth.addTrait(22, Trait.alwaysready);
         growth.addTrait(25, Trait.tight);
         growth.addTrait(28, Trait.limbTraining2);

@@ -106,7 +106,7 @@ public class Meter implements Serializable, Cloneable {
             i = Integer.MAX_VALUE;
         }
         temporaryMax = i;
-        current = max();
+        current = Math.min(current, max());
     }
 
     public int percent() {
