@@ -5,6 +5,7 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Stance;
 import nightgames.status.Stsflag;
 
@@ -12,6 +13,7 @@ public class Undress extends Skill {
 
     public Undress(Character self) {
         super("Undress", self);
+        addTag(SkillTag.undressing);
     }
 
     @Override
@@ -69,7 +71,7 @@ public class Undress extends Skill {
 
     @Override
     public Tactics type(Combat c) {
-        return Tactics.stripping;
+        return Tactics.misc;
     }
 
     @Override

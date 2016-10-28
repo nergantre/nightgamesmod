@@ -443,6 +443,9 @@ public class Combat extends Observable implements Cloneable {
             checkStamina(p2);
             doStanceTick(p1);
             doStanceTick(p2);
+            p1Data.tick();
+            p2Data.tick();
+
             getStance().decay(this);
             getStance().checkOngoing(this);
             phase = 0;
@@ -472,7 +475,7 @@ public class Combat extends Observable implements Cloneable {
         }
         int stanceDominance = getStance().dominance();
         // It is unexpected, but not catastrophic if a character is at once a natural dom and submissive.
-        if (self.has(Trait.smqueen)) {
+        if (self.has(Trait.naturalTop)) {
             // Rescales stance dominance values from 0-1-2-3-4-5 to 0-2-3-5-6-8
             stanceDominance = Double.valueOf(Math.ceil(stanceDominance * 1.5)).intValue();
         }
@@ -500,6 +503,7 @@ public class Combat extends Observable implements Cloneable {
                 return;
             }
         }
+        if (getStance().time % 2 == 0 && getStance().time > 0)
         if (self.has(Trait.smqueen)) {
             write(self,
                             Global.format("{self:NAME-POSSESSIVE} cold gaze in {self:possessive} dominant position"
@@ -507,6 +511,9 @@ public class Combat extends Observable implements Cloneable {
                                             self, sub));
             sub.loseWillpower(this, (int) (stanceDominance * 1.5), 0, false, " (SM Queen)");
         } else {
+            write(self,
+                            Global.format("{other:NAME-POSSESSIVE} compromising position takes a toll on {other:possessive} willpower.",
+                                            self, sub));
             sub.loseWillpower(this, stanceDominance, 0, false, " (Dominance)");
         }
     }

@@ -7,6 +7,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Kneeling;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
@@ -14,6 +15,11 @@ import nightgames.status.BodyFetish;
 public class FootWorship extends Skill {
     public FootWorship(Character self) {
         super("Foot Worship", self);
+        addTag(SkillTag.usesFeet);
+        addTag(SkillTag.pleasure);
+        addTag(SkillTag.worship);
+        addTag(SkillTag.suicidal);
+        addTag(SkillTag.pleasureSelf);
     }
 
     @Override

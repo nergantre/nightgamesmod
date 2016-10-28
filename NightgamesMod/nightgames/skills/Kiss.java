@@ -7,6 +7,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.status.Lovestruck;
 
 public class Kiss extends Skill {
@@ -15,6 +16,7 @@ public class Kiss extends Skill {
 
     public Kiss(Character self) {
         super("Kiss", self);
+        addTag(SkillTag.pleasureSelf);
     }
 
     @Override

@@ -5,11 +5,15 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.status.BodyFetish;
 
 public class FootSmother extends Skill {
     public FootSmother(Character self) {
         super("Foot Smother", self);
+        addTag(SkillTag.usesFeet);
+        addTag(SkillTag.pleasure);
+        addTag(SkillTag.dominant);
     }
 
     @Override

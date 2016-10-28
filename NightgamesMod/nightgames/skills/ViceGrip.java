@@ -7,32 +7,30 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
 
-public class Tighten extends Thrust {
-    public Tighten(Character self) {
-        super("Tighten", self);
-        removeTag(SkillTag.pleasureSelf);
+public class ViceGrip extends Thrust {
+    public ViceGrip(Character self) {
+        super("Vice", self);
     }
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.get(Attribute.Seduction) >= 26 || user.has(Trait.tight);
+        return user.get(Attribute.Ninjutsu) >= 24;
     }
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().canRespond() && c.getStance().penetratedBy(getSelf(), target)
-                        && c.getStance().havingSexNoStrapped() && target.hasDick();
+        return getSelf().canRespond() && c.getStance().vaginallyPenetratedBy(getSelf(), target)
+                        && c.getStance().havingSexNoStrapped() && target.hasDick() && (target.stunned() || target.getStamina().percent() < 25);
     }
 
     @Override
     public int[] getDamage(Combat c, Character target) {
         int[] result = new int[2];
 
-        int m = 5 + Global.random(10) + Math.min(getSelf().get(Attribute.Power) / 3, 20);
+        int m = target.getArousal().max();
         result[0] = m;
         result[1] = 1;
 
@@ -43,14 +41,7 @@ public class Tighten extends Thrust {
     public boolean resolve(Combat c, Character target) {
         BodyPart selfO = getSelfOrgan(c);
         BodyPart targetO = getTargetOrgan(c, target);
-        Result result;
-        if (c.getStance().inserted(target)) {
-            result = Result.reverse;
-        } else if (c.getStance().en == Stance.anal) {
-            result = Result.anal;
-        } else {
-            result = Result.normal;
-        }
+        Result result = Result.normal;
 
         writeOutput(c, result, target);
 
@@ -61,9 +52,6 @@ public class Tighten extends Thrust {
             target.body.pleasure(getSelf(), selfO, targetO, m[0], c, this);
         if (m[1] != 0)
             getSelf().body.pleasure(target, targetO, selfO, m[1], -10000, c, false, this);
-        if (selfO.isType("ass") && Global.random(100) < 2 + getSelf().get(Attribute.Fetish)) {
-            target.add(c, new BodyFetish(target, getSelf(), "ass", .25));
-        }
         return true;
     }
 
@@ -73,8 +61,13 @@ public class Tighten extends Thrust {
     }
 
     @Override
+    public int getMojoCost(Combat c) {
+        return 25;
+    }
+
+    @Override
     public Skill copy(Character user) {
-        return new Tighten(user);
+        return new ViceGrip(user);
     }
 
     @Override
@@ -97,12 +90,12 @@ public class Tighten extends Thrust {
 
     @Override
     public String describe(Combat c) {
-        return "Squeeze opponent's dick, no pleasure to self";
+        return "Ninjitsu technique: squeezes your opponent's dick like a vice, 100% chance to make him cum, but can only be used when the opponent is stunned or weak.";
     }
 
     @Override
     public String getName(Combat c) {
-        return "Tighten";
+        return "Vice";
     }
 
     @Override

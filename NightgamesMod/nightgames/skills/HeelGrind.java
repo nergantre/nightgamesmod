@@ -6,6 +6,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.BehindFootjob;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
@@ -13,6 +14,9 @@ import nightgames.status.BodyFetish;
 public class HeelGrind extends Skill {
     public HeelGrind(Character self) {
         super("Heel Grind", self);
+        addTag(SkillTag.usesFeet);
+        addTag(SkillTag.pleasure);
+        addTag(SkillTag.dominant);
     }
 
     @Override

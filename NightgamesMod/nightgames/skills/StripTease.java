@@ -7,12 +7,14 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.status.Alluring;
 import nightgames.status.Stsflag;
 
 public class StripTease extends Skill {
     public StripTease(Character self) {
         super("Strip Tease", self);
+        addTag(SkillTag.undressing);
     }
 
     public StripTease(String string, Character self) {

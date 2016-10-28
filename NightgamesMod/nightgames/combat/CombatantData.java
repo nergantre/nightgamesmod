@@ -5,21 +5,30 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
+import nightgames.characters.Character;
+import nightgames.global.DebugFlags;
+import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.skills.strategy.CombatStrategy;
 
 public class CombatantData implements Cloneable {
     private List<Clothing> clothespile;
     private Map<String, Number> flags;
     private String lastUsedSkillName;
     private List<Item> removedItems;
+    private Optional<CombatStrategy> strategy;
+    private int strategyDuration;
     
     public CombatantData() {
         clothespile = new ArrayList<>();
         flags = new HashMap<String, Number>();
         setLastUsedSkillName("None");
         removedItems = new ArrayList<>();
+        strategy = Optional.empty();
+        strategyDuration = 0;
     }
 
     @Override
@@ -34,6 +43,9 @@ public class CombatantData implements Cloneable {
         newData.flags = new HashMap<>(flags);
         newData.setLastUsedSkillName(lastUsedSkillName);
         newData.removedItems = new ArrayList<>(removedItems);
+        if (strategy.isPresent()) {
+            newData.strategy = Optional.of(strategy.get().instance());
+        }
         return newData;
     }
 
@@ -85,5 +97,28 @@ public class CombatantData implements Cloneable {
     
     public List<Item> getRemovedItems() {
         return Collections.unmodifiableList(removedItems);
+    }
+    
+    public Optional<CombatStrategy> getStrategy() {
+        return strategy;
+    }
+
+    public void setStrategy(Combat c, Character self, CombatStrategy strategy) {
+        this.strategy = Optional.ofNullable(strategy);
+        this.strategyDuration = strategy.initialDuration(c, self);
+        if (Global.isDebugOn(DebugFlags.DEBUG_STRATEGIES)) {
+            System.out.printf("%s is now using %s\n", self.getName(), strategy.getClass().getSimpleName());
+        }
+    }
+
+    public void tick() {
+        strategyDuration -= 1;
+        if (strategyDuration <= 0) {
+            strategyDuration = 0;
+            strategy = Optional.empty();
+        }
+        if (Global.isDebugOn(DebugFlags.DEBUG_STRATEGIES)) {
+            System.out.printf("%s is now at %s\n", strategy.getClass().getSimpleName(), String.valueOf(strategyDuration));
+        }
     }
 }
