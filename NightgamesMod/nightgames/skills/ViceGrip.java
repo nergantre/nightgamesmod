@@ -2,13 +2,11 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.Stance;
-import nightgames.status.BodyFetish;
 
 public class ViceGrip extends Thrust {
     public ViceGrip(Character self) {

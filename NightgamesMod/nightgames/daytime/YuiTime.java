@@ -4,7 +4,6 @@ import java.util.Collections;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Reyka;
 import nightgames.characters.Yui;
 import nightgames.global.Flag;
 import nightgames.global.Global;

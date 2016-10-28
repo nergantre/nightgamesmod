@@ -13,7 +13,7 @@ import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 
-public class FuckStrategy implements CombatStrategy {
+public class FuckStrategy extends AbstractStrategy {
     @Override
     public double weight(Combat c, Character self) {
         double weight = 1;
@@ -24,11 +24,8 @@ public class FuckStrategy implements CombatStrategy {
     }
 
     @Override
-    public Set<Skill> nextSkills(Combat c, Character self) {
+    protected Set<Skill> filterSkills(Combat c, Character self, Set<Skill> allowedSkills) {
         Character other = c.getOther(self);
-        Set<Skill> availableSkills = new HashSet<>(self.getSkills());
-        Skill.filterAllowedSkills(c, availableSkills, self, other);
-        Set<Skill> allowedSkills = availableSkills.stream().filter(skill -> Skill.skillIsUsable(c, skill, other)).collect(Collectors.toSet());
         Set<Skill> fuckSkills = allowedSkills.stream().filter(skill -> Tactics.fucking.equals(skill.type(c))).collect(Collectors.toSet());
         if (!fuckSkills.isEmpty()) {
             return fuckSkills;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.global.Configuration;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 
@@ -23,25 +24,38 @@ public class Exercise extends Activity {
         Global.gui().clearText();
         if (page == 0) {
             Global.gui().next(this);
-            int gain = Global.random(3) + 3;
-            if (player.has(Trait.fitnessNut)) {
-                gain *= 2;
-            }
+            int gain = gainStamina(player);
             showScene(pickScene(gain));
-            player.getStamina().gain(gain);
-            Global.gui().message("<b>Your maximum stamina has increased by " + gain + ".</b>");
+            if (gain > 0) {
+                Global.gui().message("<b>Your maximum stamina has increased by " + gain + ".</b>");
+            }
         } else {
             done(true);
         }
     }
+    
+    private int gainStamina(Character self) {
+        int maximumStaminaForLevel = Configuration.getMaximumStaminaPossible(self);
+        int gain = 1;
+        if (player.has(Trait.fitnessNut)) {
+            gain = gain + Global.random(2);
+        }
+        gain = Math.max(0, (int) Math.min(maximumStaminaForLevel, self.getStamina().trueMax() + gain) - gain);
+        self.getStamina().gain(gain);
+        return gain;
+    }
 
     @Override
     public void shop(Character npc, int budget) {
-        npc.getStamina().gain(Global.random(3) + 1);
+        gainStamina(npc);
     }
 
     private void showScene(Scene chosen) {
         switch (chosen) {
+            case restricted:
+                Global.gui().message(
+                                "You try exercising for a while, but you don't have too much to show for it. Maybe you need to gain some more real world experience?");
+                break;
             case basic1:
                 Global.gui().message(
                                 "You're about halfway through your jog when a sudden downpour leaves you completely soaked. You squelch your way back to the dorm, looking like a drowned rat.");
@@ -177,7 +191,8 @@ public class Exercise extends Activity {
         if(Global.getValue(Flag.YuiAffection)>1&&!Global.checkFlag(Flag.YuiLoyalty)&&!Global.checkFlag(Flag.YuiUnlocking)){
             available.add(Scene.yuiintro3);
         }
-        if (gain == 1) {
+        if (gain == 0) {
+            available.add(Scene.restricted);
             available.add(Scene.fail1);
         } else {
             available.add(Scene.basic1);
@@ -202,6 +217,7 @@ public class Exercise extends Activity {
         fail1,
         yuiintro1,
         yuiintro2,
-        yuiintro3;
+        yuiintro3,
+        restricted;
     }
 }

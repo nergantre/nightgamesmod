@@ -43,9 +43,8 @@ public class CombatantData implements Cloneable {
         newData.flags = new HashMap<>(flags);
         newData.setLastUsedSkillName(lastUsedSkillName);
         newData.removedItems = new ArrayList<>(removedItems);
-        if (strategy.isPresent()) {
-            newData.strategy = Optional.of(strategy.get().instance());
-        }
+        // strategies should always be stateless.
+        newData.strategy = strategy;
         return newData;
     }
 

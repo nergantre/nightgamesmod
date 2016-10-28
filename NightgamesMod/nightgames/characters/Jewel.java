@@ -63,7 +63,7 @@ public class Jewel extends BasePersonality {
 
     @Override
     public void setGrowth() {
-        growth.stamina = 5;
+        growth.stamina = 3;
         growth.arousal = 3;
         growth.mojo = 1;
         growth.bonusStamina = 3;
@@ -138,23 +138,13 @@ public class Jewel extends BasePersonality {
             Global.getDay().visit("Black Market", character, Global.random(character.money));
         }
         int r;
+
         for (int i = 0; i < time; i++) {
-            r = Global.random(4);
+            r = Global.random(8);
             if (r == 1) {
-                if (character.has(Trait.fitnessNut)) {
-                    character.getStamina().gain(2);
-                }
-                character.getStamina().gain(2);
-            } else if (r == 3) {
-                if (character.has(Trait.expertGoogler)) {
-                    character.getArousal().gain(3);
-                }
-                character.getArousal().gain(4);
-            } else if (r == 2) {
-                if (character.has(Trait.mojoMaster)) {
-                    character.getMojo().gain(1);
-                }
-                character.getMojo().gain(1);
+                Global.getDay().visit("Exercise", this.character, 0);
+            } else if (r == 0) {
+                Global.getDay().visit("Browse Porn Sites", this.character, 0);
             }
         }
         Decider.visit(character);

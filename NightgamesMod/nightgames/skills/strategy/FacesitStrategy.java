@@ -14,7 +14,7 @@ import nightgames.skills.FaceSit;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 
-public class FacesitStrategy implements CombatStrategy {
+public class FacesitStrategy extends AbstractStrategy {
     @Override
     public double weight(Combat c, Character self) {
         double weight = 1;
@@ -28,11 +28,8 @@ public class FacesitStrategy implements CombatStrategy {
     }
 
     @Override
-    public Set<Skill> nextSkills(Combat c, Character self) {
+    protected Set<Skill> filterSkills(Combat c, Character self, Set<Skill> allowedSkills) {
         Character other = c.getOther(self);
-        Set<Skill> availableSkills = new HashSet<>(self.getSkills());
-        Skill.filterAllowedSkills(c, availableSkills, self, other);
-        Set<Skill> allowedSkills = availableSkills.stream().filter(skill -> Skill.skillIsUsable(c, skill, other)).collect(Collectors.toSet());
         Set<Skill> facesitSkills = allowedSkills.stream()
                         .filter(skill -> skill.getTags().contains(SkillTag.facesit)
                                         && !skill.getTags().contains(SkillTag.suicidal))

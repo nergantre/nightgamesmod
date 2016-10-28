@@ -11,12 +11,11 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.Footjob;
-import nightgames.skills.Kick;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 import nightgames.skills.TakeOffShoes;
 
-public class FootjobStrategy implements CombatStrategy {
+public class FootjobStrategy extends AbstractStrategy {
     @Override
     public double weight(Combat c, Character self) {
         double weight = 1;
@@ -30,11 +29,8 @@ public class FootjobStrategy implements CombatStrategy {
     }
 
     @Override
-    public Set<Skill> nextSkills(Combat c, Character self) {
+    protected Set<Skill> filterSkills(Combat c, Character self, Set<Skill> allowedSkills) {
         Character other = c.getOther(self);
-        Set<Skill> availableSkills = new HashSet<>(self.getSkills());
-        Skill.filterAllowedSkills(c, availableSkills, self, other);
-        Set<Skill> allowedSkills = availableSkills.stream().filter(skill -> Skill.skillIsUsable(c, skill, other)).collect(Collectors.toSet());
         Set<Skill> footjobSkills = allowedSkills.stream()
                         .filter(skill -> skill.getTags().contains(SkillTag.usesFeet)
                                         && !skill.getTags().contains(SkillTag.suicidal))

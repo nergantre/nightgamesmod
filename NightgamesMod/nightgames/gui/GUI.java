@@ -1532,12 +1532,9 @@ public class GUI extends JFrame implements Observer {
          * 
          */
         private static final long serialVersionUID = 7410615523557227147L;
-        private IEncounter enc;
-
         public WatchButton(IEncounter enc) {
             super();
             setFont(new Font("Baskerville Old Face", 0, 18));
-            this.enc = enc;
             setText("Watch them fight");
             addActionListener(arg0 -> enc.watch());
         }

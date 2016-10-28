@@ -8,17 +8,12 @@ import nightgames.actions.Movement;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
-import nightgames.characters.body.MouthPussyPart;
-import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
-import nightgames.stance.Stance;
 import nightgames.start.NpcConfiguration;
-import nightgames.status.Energized;
 
 public class Yui extends BasePersonality {
     /**
@@ -64,7 +59,7 @@ public class Yui extends BasePersonality {
     @Override
     public void setGrowth() {
         growth.stamina = 3;
-        growth.arousal = 3;
+        growth.arousal = 4;
         growth.mojo = 2;
         growth.willpower = .4f;
         growth.bonusStamina = 2;
@@ -144,23 +139,13 @@ public class Yui extends BasePersonality {
             Global.getDay().visit("Black Market", character, Global.random(character.money));
         }
         int r;
+
         for (int i = 0; i < time; i++) {
-            r = Global.random(4);
+            r = Global.random(8);
             if (r == 1) {
-                if (character.has(Trait.fitnessNut)) {
-                    character.getStamina().gain(Global.random(6) + 4);
-                }
-                character.getStamina().gain(Global.random(3) + 2);
-            } else if (r == 3) {
-                if (character.has(Trait.expertGoogler)) {
-                    character.getArousal().gain(5);
-                }
-                character.getArousal().gain(5);
-            } else if (r == 2) {
-                if (character.has(Trait.mojoMaster)) {
-                    character.getMojo().gain(Global.random(6) + 4);
-                }
-                character.getMojo().gain(Global.random(3) + 2);
+                Global.getDay().visit("Exercise", this.character, 0);
+            } else if (r == 0) {
+                Global.getDay().visit("Browse Porn Sites", this.character, 0);
             }
         }
         Decider.visit(character);
@@ -206,7 +191,6 @@ public class Yui extends BasePersonality {
 
     @Override
     public String defeat(Combat c, Result flag) {
-        Character opponent = c.getOther(character);
         return "Yui was defeated";
     }
 

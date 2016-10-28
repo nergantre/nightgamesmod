@@ -159,9 +159,9 @@ public class Player extends Character {
         if (c.getStance()
              .inserted() && c.getStance()
                              .dom(this)) {
-            getMojo().gain(2);
+            getMojo().gain(1);
             if (has(Trait.mojoMaster)) {
-                getMojo().gain(2);
+                getMojo().gain(1);
             }
         }
         if (c.p1.human()) {
@@ -197,9 +197,9 @@ public class Player extends Character {
         if (c.getStance()
              .inserted()) {
             c.p1.getMojo()
-                .gain(3);
+                .gain(1);
             c.p2.getMojo()
-                .gain(3);
+                .gain(1);
         }
         if (c.p1.human()) {
             c.p2.draw(c, flag);
