@@ -87,7 +87,7 @@ public abstract class Character extends Observable implements Cloneable {
     public Outfit outfit;
     public List<Clothing> outfitPlan;
     protected Area location;
-    protected CopyOnWriteArrayList<Skill> skills;
+    private CopyOnWriteArrayList<Skill> skills;
     public Set<Status> status;
     public Set<Stsflag> statusFlags;
     public CopyOnWriteArrayList<Trait> traits;
@@ -142,7 +142,7 @@ public abstract class Character extends Observable implements Cloneable {
         outfitPlan = new ArrayList<>();
 
         closet = new HashSet<>();
-        skills = new CopyOnWriteArrayList<>();
+        skills = (new CopyOnWriteArrayList<>());
         status = new HashSet<>();
         statusFlags = EnumSet.noneOf(Stsflag.class);
         traits = new CopyOnWriteArrayList<>();
@@ -185,7 +185,7 @@ public abstract class Character extends Observable implements Cloneable {
         c.inventory = new HashMap<>(inventory);
         c.attractions = new HashMap<>(attractions);
         c.affections = new HashMap<>(affections);
-        c.skills = new CopyOnWriteArrayList<>(skills);
+        c.skills = (new CopyOnWriteArrayList<>(getSkills()));
         c.body = body.clone();
         c.body.character = c;
         c.orgasmed = orgasmed;
@@ -1822,7 +1822,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void forget(Skill copy) {
-        skills.remove(copy);
+        getSkills().remove(copy);
     }
 
     public boolean stealthCheck(int perception) {
@@ -2388,7 +2388,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public boolean knows(Skill skill) {
-        for (Skill s : skills) {
+        for (Skill s : getSkills()) {
             if (s.equals(skill)) {
                 return true;
             }
@@ -2502,7 +2502,7 @@ public abstract class Character extends Observable implements Cloneable {
         }
         HashSet<Skill> available = new HashSet<>();
         HashSet<Skill> cds = new HashSet<>();
-        for (Skill a : skills) {
+        for (Skill a : getSkills()) {
             if (Skill.skillIsUsable(c, a, target)) {
                 if (cooldownAvailable(a)) {
                     available.add(a);
@@ -3218,4 +3218,8 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public abstract Growth getGrowth();
+
+    public Collection<Skill> getSkills() {
+        return skills;
+    }
 }

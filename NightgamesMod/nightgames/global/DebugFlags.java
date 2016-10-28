@@ -3,6 +3,7 @@ package nightgames.global;
 public enum DebugFlags {
     DEBUG_SCENE,
     DEBUG_SKILLS,
+    DEBUG_STRATEGIES,
     DEBUG_SKILLS_RATING,
     DEBUG_MOOD,
     DEBUG_IMAGES,

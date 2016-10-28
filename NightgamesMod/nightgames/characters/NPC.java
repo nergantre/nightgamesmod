@@ -1,9 +1,11 @@
 package nightgames.characters;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -34,6 +36,8 @@ import nightgames.skills.Nothing;
 import nightgames.skills.Skill;
 import nightgames.skills.Stage;
 import nightgames.skills.Tactics;
+import nightgames.skills.strategy.CombatStrategy;
+import nightgames.skills.strategy.DefaultStrategy;
 import nightgames.stance.Behind;
 import nightgames.stance.Neutral;
 import nightgames.stance.Position;
@@ -52,6 +56,7 @@ public class NPC extends Character {
     public Plan plan;
     private boolean fakeHuman;
     public boolean isStartCharacter = false;
+    private List<CombatStrategy> personalStrategies;
 
     public NPC(String name, int level, Personality ai) {
         super(name, level);
@@ -63,6 +68,11 @@ public class NPC extends Character {
         }
         mood = Emotion.confident;
         initialGender = CharacterSex.female;
+        personalStrategies = new ArrayList<>();
+    }
+    
+    protected void addPersonalStrategy(CombatStrategy strategy) {
+        personalStrategies.add(strategy);
     }
 
     @Override
@@ -244,7 +254,6 @@ public class NPC extends Character {
 
     @Override
     public void act(Combat c) {
-        HashSet<Skill> available = new HashSet<>();
         Character target;
         if (c.p1 == this) {
             target = c.p2;
@@ -254,7 +263,35 @@ public class NPC extends Character {
         if (target.human() && Global.isDebugOn(DebugFlags.DEBUG_SKILL_CHOICES)) {
             pickSkillsWithGUI(c, target);
         } else {
-            for (Skill act : skills) {
+            // if there's no strategy, try getting a new one.
+            if (!c.getCombatantData(this).getStrategy().isPresent()) {
+                c.getCombatantData(this).setStrategy(c, this, pickStrategy(c));
+            }
+            // if the strategy is out of moves, try getting a new one.
+            Collection<Skill> possibleSkills = c.getCombatantData(this).getStrategy().get().nextSkills(c, this);
+            if (possibleSkills.isEmpty()) {
+                if (Global.isDebugOn(DebugFlags.DEBUG_STRATEGIES)) {
+                    System.out.printf("%s has no moves available for strategy %s, picking a new one\n", this.getName(), c.getCombatantData(this).getStrategy().get().getClass().getSimpleName());
+                }
+                c.getCombatantData(this).setStrategy(c, this, pickStrategy(c));
+                possibleSkills = c.getCombatantData(this).getStrategy().get().nextSkills(c, this);
+            }
+            if (Global.isDebugOn(DebugFlags.DEBUG_STRATEGIES)) {
+                System.out.println("next skills: " +  possibleSkills);
+            }
+            // if there are still no moves, just use all available skills for this turn and try again next turn.
+            if (possibleSkills.isEmpty()) {
+                if (Global.isDebugOn(DebugFlags.DEBUG_STRATEGIES)) {
+                    System.out.printf("%s has no moves available for strategy %s\n", this.getName(), c.getCombatantData(this).getStrategy().get().getClass().getSimpleName());
+                }
+                possibleSkills = getSkills();
+            } else {
+                if (Global.isDebugOn(DebugFlags.DEBUG_STRATEGIES)) {
+                    System.out.printf("%s is using strategy %s\n", this.getName(), c.getCombatantData(this).getStrategy().get().getClass().getSimpleName());
+                }
+            }
+            HashSet<Skill> available = new HashSet<>();
+            for (Skill act : possibleSkills) {
                 if (Skill.skillIsUsable(c, act, target) && cooldownAvailable(act)) {
                     available.add(act);
                 }
@@ -267,6 +304,30 @@ public class NPC extends Character {
         }
     }
 
+    private CombatStrategy pickStrategy(Combat c) {
+        Map<Double, CombatStrategy> stratsWithCumulativeWeights = new HashMap<>();
+        DefaultStrategy defaultStrat = new DefaultStrategy();
+        double lastWeight = defaultStrat.weight(c, this);
+        stratsWithCumulativeWeights.put(lastWeight, defaultStrat);
+        List<CombatStrategy> allStrategies = new ArrayList<>(CombatStrategy.availableStrategies);
+        allStrategies.addAll(personalStrategies);
+        for (CombatStrategy strat: allStrategies) {
+            if (strat.weight(c, this) < .01 || strat.nextSkills(c, this).isEmpty()) {
+                continue;
+            }
+            lastWeight += strat.weight(c, this);
+            stratsWithCumulativeWeights.put(lastWeight, strat);
+        }
+        double random = Global.randomdouble() * lastWeight;
+        for (Map.Entry<Double, CombatStrategy> entry: stratsWithCumulativeWeights.entrySet()) {
+            if (random < entry.getKey()) {
+                return entry.getValue();
+            }
+        }
+        // we should have picked something, but w/e just return the default if we need to
+        return defaultStrat;
+    }
+
     public Skill actFast(Combat c) {
         HashSet<Skill> available = new HashSet<>();
         Character target;
@@ -275,7 +336,7 @@ public class NPC extends Character {
         } else {
             target = c.p1;
         }
-        for (Skill act : skills) {
+        for (Skill act : getSkills()) {
             if (Skill.skillIsUsable(c, act, target) && cooldownAvailable(act)) {
                 available.add(act);
             }

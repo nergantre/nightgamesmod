@@ -5,11 +5,13 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 
 public class MutualUndress extends Skill {
 
     public MutualUndress(Character self) {
         super("Tempt Undress", self);
+        addTag(SkillTag.undressing);
     }
 
     @Override

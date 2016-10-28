@@ -214,6 +214,7 @@ public enum Trait {
     autonomousPussy("Autonomous Pussy", "Her pussy instinctively forces anything inside of it to cum."),
     // AI traits
     submissive("Submissive", "Enjoys being the sub."),
+    naturalTop("Natural Top", "Being the dom comes easy."),
     obsequiousAppeal("Obsequious Appeal", "So tempting when on the bottom."),
     catstongue("Cat's Tongue", "Rough but sensual."),
     opportunist("Opportunist", "Always ready to stuff someone's backside."),
@@ -229,6 +230,7 @@ public enum Trait {
     immobile("Immobile", "Unable to move"), // Cannot move
     lethargic("Lethargic", "Very low mojo gain from normal methods.", new Lethargic(null, 999, .75)), // 25% mojo gain
     hairtrigger("Hair Trigger", "Very quick to shoot. Not for beginners."),
+    obedient("Obedient", "Easy to order around."),
     cursed("Cursed", "Restricts some skills. The name is probably a plot point. The suspense is killing me."),
 
     // Restrictions
@@ -255,6 +257,7 @@ public enum Trait {
     slime("Slime", "An accident in the biology labs made the body a bit more... malleable."),
     dryad("Dryad", "Part girl, part tree."),
     temptress("Temptress", "Well versed in the carnal arts."),
+    ninja("Ninja", "A shadowy servant."),
 
     // Class subtrait
     divinity("Divinity", "Has aspects of divinity."),

@@ -7,6 +7,7 @@ import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.FaceSitting;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
@@ -17,6 +18,10 @@ public class FaceSit extends Skill {
 
     public FaceSit(Character self) {
         super("Facesit", self);
+        addTag(SkillTag.pleasureSelf);
+        addTag(SkillTag.dominant);
+        addTag(SkillTag.facesit);
+        
     }
 
     @Override
@@ -203,13 +208,13 @@ public class FaceSit extends Skill {
                 return String.format("%s straddles %s face and presses %s pussy against %s mouth. %s "
                                 + "%s mouth and start to lick %s freely offered muff, but %s just smiles "
                                 + "while continuing to queen %s. %s %s body start to heat up as %s "
-                                + "juices flow into %s mouth. %s giving %s a mouthful of aphrodisiac straight from "
-                                + "the source.", getSelf().subject(), target.nameOrPossessivePronoun(),
+                                + "juices flow into %s mouth, %s %s giving %s a mouthful of aphrodisiac straight from "
+                                + "the source!", getSelf().subject(), target.nameOrPossessivePronoun(),
                                 getSelf().possessivePronoun(), target.possessivePronoun(), target.subjectAction("open"),
                                 target.possessivePronoun(), getSelf().nameDirectObject(), getSelf().pronoun(),
                                  target.directObject(), Global.capitalizeFirstLetter(target.subjectAction("feel")),
                                  target.possessivePronoun(), getSelf().nameOrPossessivePronoun(), target.possessivePronoun(),
-                                 getSelf().subject(), target.directObject());
+                                 getSelf().pronoun(), getSelf().action("are", "is"), target.directObject());
             } else {
                 return String.format("%s straddles %s face and presses %s pussy against %s mouth. %s "
                                 + "%s mouth and start to lick %s freely offered muff, but %s just smiles "
@@ -217,7 +222,7 @@ public class FaceSit extends Skill {
                                 + " to demonstrate %s superiority.",getSelf().subject(), target.nameOrPossessivePronoun(),
                                 getSelf().possessivePronoun(), target.possessivePronoun(), target.subjectAction("open"),
                                 target.possessivePronoun(), getSelf().nameDirectObject(), getSelf().pronoun(),
-                                 target.directObject(), getSelf().subject(), getSelf().possessivePronoun());
+                                 target.directObject(), Global.capitalizeFirstLetter(getSelf().pronoun()), getSelf().possessivePronoun());
             }
         }
     }

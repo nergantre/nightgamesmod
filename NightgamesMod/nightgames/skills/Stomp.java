@@ -9,11 +9,15 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.items.clothing.ClothingTrait;
+import nightgames.nskills.tags.SkillTag;
 
 public class Stomp extends Skill {
 
     public Stomp(Character self) {
         super("Stomp", self);
+        addTag(SkillTag.usesFeet);
+        addTag(SkillTag.physical);
+        addTag(SkillTag.hurt);
     }
 
     @Override

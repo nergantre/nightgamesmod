@@ -8,6 +8,7 @@ import nightgames.characters.body.BreastsPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.NursingHold;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
@@ -18,7 +19,7 @@ public class Nurse extends Skill {
 
     public Nurse(Character self) {
         super("Nurse", self);
-
+        addTag(SkillTag.pleasureSelf);
     }
 
     @Override

@@ -8,6 +8,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
 import nightgames.status.addiction.Addiction;
@@ -20,6 +21,7 @@ public class Thrust extends Skill {
 
     public Thrust(Character self) {
         super("Thrust", self);
+        addTag(SkillTag.pleasureSelf);
     }
 
     @Override
