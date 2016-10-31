@@ -7,6 +7,7 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.damage.DamageType;
 import nightgames.status.Falling;
 
@@ -14,6 +15,10 @@ public class HipThrow extends Skill {
 
     public HipThrow(Character self) {
         super("Hip Throw", self);
+        addTag(SkillTag.hurt);
+        addTag(SkillTag.staminaDamage);
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.knockdown);
     }
 
     @Override

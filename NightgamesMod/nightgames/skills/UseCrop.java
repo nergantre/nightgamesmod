@@ -8,12 +8,17 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.damage.DamageType;
 
 public class UseCrop extends Skill {
 
     public UseCrop(Character self) {
         super(Item.Crop.getName(), self);
+        addTag(SkillTag.usesToy);
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.hurt);
+        addTag(SkillTag.staminaDamage);
     }
 
     @Override
@@ -54,7 +59,7 @@ public class UseCrop extends Skill {
                 m -= Global.random(2, 6);
                 target.pain(c, 5 + Global.random(12));
             }
-            target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, m));
+            target.pain(c, (int) getSelf().modifyDamage(DamageType.gadgets, target, m));
             target.emote(Emotion.angry, 15);
         } else {
             writeOutput(c, Result.miss, target);

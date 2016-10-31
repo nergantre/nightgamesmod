@@ -7,11 +7,15 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.nskills.tags.SkillTag;
+import nightgames.stance.Stance;
 
 public class Finger extends Skill {
 
     public Finger(Character self) {
         super("Finger", self);
+        addTag(SkillTag.usesHands);
+        addTag(SkillTag.pleasure);
     }
 
     @Override
@@ -58,7 +62,7 @@ public class Finger extends Skill {
 
     @Override
     public int accuracy(Combat c) {
-        return c.getStance().mobile(c.getOther(getSelf())) ? 35 : 100;
+        return c.getStance().en == Stance.neutral ? 35 : 100;
     }
 
     @Override

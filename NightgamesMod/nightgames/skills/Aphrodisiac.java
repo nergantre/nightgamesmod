@@ -11,6 +11,8 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.skills.damage.DamageType;
+import nightgames.status.Horny;
 
 public class Aphrodisiac extends Skill {
     public Aphrodisiac(Character self) {
@@ -22,14 +24,7 @@ public class Aphrodisiac extends Skill {
         return true;
     }
 
-    private final Predicate<BodyPart> hasSuccubusPussy = new Predicate<BodyPart>() {
-
-        @Override
-        public boolean test(BodyPart bodyPart) {
-            return bodyPart.isType("pussy") && bodyPart.moddedPartCountsAs(getSelf(), PussyPart.succubus);
-        }
-
-    };
+    private final Predicate<BodyPart> hasSuccubusPussy = (bodyPart) -> bodyPart.isType("pussy") && bodyPart.moddedPartCountsAs(getSelf(), PussyPart.succubus);
 
     @Override
     public boolean usable(Combat c, Character target) {
@@ -49,24 +44,24 @@ public class Aphrodisiac extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        int magnitude = Global.random(5) + 15;
+        float magnitude = 10;
         if (!getSelf().body.getCurrentPartsThatMatch(hasSuccubusPussy)
                            .isEmpty()
                         && getSelf().getArousal()
                                     .percent() >= 15) {
-            c.write(getSelf(), receive(c, magnitude, Result.strong, target));
-            target.arouse(magnitude, c);
+            writeOutput(c, (int) magnitude, Result.strong, target);
+            target.add(c, Horny.getWithBiologicalType(getSelf(), target, magnitude, 5, getSelf().nameOrPossessivePronoun() + " aphrodisiac juices"));
             target.emote(Emotion.horny, 20);
         } else if (getSelf().has(Item.Aersolizer)) {
             writeOutput(c, Result.special, target);
             getSelf().consume(Item.Aphrodisiac, 1);
-            target.arouse(magnitude, c);
+            target.add(c, Horny.getWithBiologicalType(getSelf(), target, magnitude, 5, getSelf().nameOrPossessivePronoun() + " aphrodisiac spray"));
             target.emote(Emotion.horny, 20);
         } else if (target.roll(this, c, accuracy(c))) {
-            writeOutput(c, magnitude, Result.normal, target);
+            writeOutput(c, (int) magnitude, Result.normal, target);
             target.emote(Emotion.horny, 20);
             getSelf().consume(Item.Aphrodisiac, 1);
-            target.arouse(magnitude, c);
+            target.add(c, Horny.getWithBiologicalType(getSelf(), target, magnitude, 5, getSelf().nameOrPossessivePronoun() + " aphrodisiacs"));
         } else {
             writeOutput(c, Result.miss, target);
             return false;

@@ -7,12 +7,17 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.status.BodyFetish;
 
 public class PussyWorship extends Skill {
 
     public PussyWorship(Character self) {
         super("Pussy Worship", self);
+        addTag(SkillTag.usesMouth);
+        addTag(SkillTag.pleasure);
+        addTag(SkillTag.suicidal);
+        addTag(SkillTag.worship);
     }
 
     @Override

@@ -6,6 +6,7 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.ReverseMount;
 import nightgames.stance.SixNine;
 import nightgames.stance.Stance;
@@ -15,14 +16,19 @@ public class Cunnilingus extends Skill {
 
     public Cunnilingus(Character self) {
         super("Lick Pussy", self);
+        addTag(SkillTag.usesMouth);
+        addTag(SkillTag.pleasure);
+        addTag(SkillTag.oral);
     }
 
     @Override
     public boolean usable(Combat c, Character target) {
         boolean canUse = c.getStance().enumerate() == Stance.facesitting && getSelf().canRespond()
                         || getSelf().canAct();
-        return target.crotchAvailable() && target.hasPussy() && c.getStance().oral(getSelf()) && canUse
-                        && !c.getStance().vaginallyPenetrated(target);
+        boolean pussyAvailable = target.crotchAvailable() && target.hasPussy();
+        boolean stanceAvailable = c.getStance().oral(getSelf()) && !c.getStance().vaginallyPenetrated(target);
+        boolean usable = pussyAvailable && stanceAvailable && canUse;
+        return usable;
     }
 
     @Override

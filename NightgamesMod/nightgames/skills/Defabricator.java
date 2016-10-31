@@ -6,11 +6,13 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.nskills.tags.SkillTag;
 
 public class Defabricator extends Skill {
 
     public Defabricator(Character self) {
         super("Defabricator", self);
+        addTag(SkillTag.stripping);
     }
 
     @Override

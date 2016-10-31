@@ -6,6 +6,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.stance.Stance;
 
 public class FondleBreasts extends Skill {
 
@@ -25,7 +26,7 @@ public class FondleBreasts extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        int m = 1 + Global.random(4);
+        int m = 4 + Global.random(4);
         if (target.roll(this, c, accuracy(c))) {
             if (target.breastsAvailable()) {
                 m += 4;
@@ -69,7 +70,7 @@ public class FondleBreasts extends Skill {
 
     @Override
     public int accuracy(Combat c) {
-        return 95;
+        return c.getStance().en == Stance.neutral ? 70 : 100;
     }
 
     @Override

@@ -151,6 +151,8 @@ public enum Trait {
         }
     }),
 
+    defthands("Deft hands", "They know where to go"), // hands damage upgrade
+    nimbletoes("Nimble toes", "Good both in the street and in the bed."), // feet damage upgrade
     polecontrol("Pole Control", "Always hit the right spots"), // Dick damage upgrade
     hypnoticsemen("Hypnotic Semen", "Cum drains willpower"), // Semen willpower damage trait
     testosterone("Testosterone", "More powerful muscles"), // Having a cock gives + to power
@@ -219,6 +221,7 @@ public enum Trait {
     catstongue("Cat's Tongue", "Rough but sensual."),
     opportunist("Opportunist", "Always ready to stuff someone's backside."),
     carnalvirtuoso("Carnal Virtuoso", "Opponents cums twice"),
+    toymaster("Toymaster", "Expert at using toys."),
     // Weaknesses
     ticklish("Ticklish", "Can be easily tickled into submission"), // more weaken damage and arousal from tickle
     insatiable("Insatiable", "One orgasm is never enough"), // arousal doesn't completely clear at end of match

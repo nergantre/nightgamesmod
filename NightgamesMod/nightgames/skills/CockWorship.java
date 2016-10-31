@@ -16,6 +16,10 @@ public class CockWorship extends Skill {
     public CockWorship(Character self) {
         super("Cock Worship", self);
         addTag(SkillTag.pleasureSelf);
+        addTag(SkillTag.usesMouth);
+        addTag(SkillTag.pleasure);
+        addTag(SkillTag.suicidal);
+        addTag(SkillTag.worship);
     }
 
     @Override

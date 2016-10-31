@@ -5,6 +5,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.status.Enthralled;
 import nightgames.status.Stsflag;
 
@@ -12,6 +13,7 @@ public class DarkTalisman extends Skill {
 
     public DarkTalisman(Character self) {
         super("Dark Talisman", self);
+        addTag(SkillTag.dark);
     }
 
     @Override

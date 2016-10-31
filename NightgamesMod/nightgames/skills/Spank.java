@@ -7,6 +7,7 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.damage.DamageType;
 import nightgames.status.Shamed;
 import nightgames.status.Stsflag;
@@ -15,6 +16,9 @@ public class Spank extends Skill {
 
     public Spank(Character self) {
         super("Spank", self);
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.hurt);
+        addTag(SkillTag.staminaDamage);
     }
 
     @Override

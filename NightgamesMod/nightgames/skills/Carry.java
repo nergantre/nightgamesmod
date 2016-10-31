@@ -6,6 +6,7 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Standing;
 import nightgames.status.Falling;
 
@@ -13,6 +14,10 @@ public class Carry extends Fuck {
 
     public Carry(String name, Character self) {
         super(name, self, 5);
+        addTag(SkillTag.pleasure);
+        addTag(SkillTag.pleasureSelf);
+        addTag(SkillTag.fucking);
+        addTag(SkillTag.positioning);
     }
 
     public Carry(Character self) {

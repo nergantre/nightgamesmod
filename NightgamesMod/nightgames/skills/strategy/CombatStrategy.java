@@ -13,7 +13,12 @@ import nightgames.skills.Skill;
  * then it must be in CombatantData or this must be cloned when combatant data is cloned.
  */
 public interface CombatStrategy {
-    public static List<CombatStrategy> availableStrategies = Arrays.asList(new FuckStrategy(), new KnockdownStrategy());
+    public static List<CombatStrategy> availableStrategies = Arrays.asList(
+                    new FuckStrategy(),
+                    new KnockdownStrategy(),
+                    new UseHandsStrategy(),
+                    new OralStrategy(),
+                    new ForeplayStrategy());
     double weight(Combat c, Character self);
     int initialDuration(Combat c, Character self);
     Set<Skill> nextSkills(Combat c, Character self);

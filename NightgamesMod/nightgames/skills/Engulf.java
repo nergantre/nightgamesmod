@@ -6,12 +6,16 @@ import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Engulfed;
 import nightgames.stance.Stance;
 
 public class Engulf extends CounterBase {
     public Engulf(Character self) {
         super("Engulf", self, 5, counterDesc(self), 2);
+        addTag(SkillTag.counter);
+        addTag(SkillTag.fucking);
+        addTag(SkillTag.positioning);
     }
 
     private static String counterDesc(Character self) {

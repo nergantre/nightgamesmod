@@ -96,6 +96,7 @@ public abstract class SkillTag {
     public final static SkillTag usesMouth = new BodyPartSkillTag("mouth");
     public final static SkillTag usesHands = new BodyPartSkillTag("hands");
     public final static SkillTag usesFeet = new BodyPartSkillTag("feet");
+    public final static SkillTag usesToy = new BodyPartSkillTag("toy");
     public final static SkillTag pleasureSelf = new NameOnlySkillTag("PleasureSelf");
     public final static SkillTag pleasure = new NameOnlySkillTag("Pleasure");
     public final static SkillTag temptation = new NameOnlySkillTag("Temptation");
@@ -109,6 +110,12 @@ public abstract class SkillTag {
     public final static SkillTag undressing = new NameOnlySkillTag("Undressing");
     public final static SkillTag reclothing = new NameOnlySkillTag("Reclothing");
     public final static SkillTag perfectAccuracy = new NameOnlySkillTag("PerfectAccuracy");
+    public final static SkillTag breastfeed = new NameOnlySkillTag("Breastfeed");
+    public final static SkillTag staminaDamage = new NameOnlySkillTag("StaminaDamage");
+    public final static SkillTag positioning = new NameOnlySkillTag("Positioning");
+    public final static SkillTag dark = new NameOnlySkillTag("Dark");
+    public final static SkillTag escaping = new NameOnlySkillTag("Escaping");
+
     public final static SkillTag accuracy =
                     new BasicSkillTag((results, value) -> results.getRoll() * 100 >= (100 - value) || results.getResult().hasUserTag(perfectAccuracy),
                                     SkillRequirement.noRequirement(), "Accuracy");

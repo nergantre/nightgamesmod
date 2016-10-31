@@ -6,6 +6,7 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.skills.damage.DamageType;
 
 public class Wait extends Skill {
 
@@ -31,11 +32,11 @@ public class Wait extends Skill {
     public boolean resolve(Combat c, Character target) {
         if (focused() && !c.getStance().sub(getSelf())) {
             writeOutput(c, Result.strong, target);
-            getSelf().heal(c, Global.random(4));
-            getSelf().calm(c, Global.random(8));
+            getSelf().heal(c, (int) getSelf().modifyDamage(DamageType.physicial, Global.noneCharacter(), Global.random(8, 16)));
+            getSelf().calm(c, Global.random(8, 14));
         } else {
             writeOutput(c, Result.normal, target);
-            getSelf().heal(c, Global.random(4));
+            getSelf().heal(c, (int) getSelf().modifyDamage(DamageType.physicial, Global.noneCharacter(), Global.random(4, 8)));
         }
         return true;
     }

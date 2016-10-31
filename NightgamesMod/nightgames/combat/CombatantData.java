@@ -12,7 +12,10 @@ import nightgames.global.DebugFlags;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.skills.Skill;
+import nightgames.skills.damage.Staleness;
 import nightgames.skills.strategy.CombatStrategy;
+import nightgames.skills.strategy.DefaultStrategy;
 
 public class CombatantData implements Cloneable {
     private List<Clothing> clothespile;
@@ -21,7 +24,8 @@ public class CombatantData implements Cloneable {
     private List<Item> removedItems;
     private Optional<CombatStrategy> strategy;
     private int strategyDuration;
-    
+    private Map<Skill, Double> moveModifiers;
+
     public CombatantData() {
         clothespile = new ArrayList<>();
         flags = new HashMap<String, Number>();
@@ -29,6 +33,7 @@ public class CombatantData implements Cloneable {
         removedItems = new ArrayList<>();
         strategy = Optional.empty();
         strategyDuration = 0;
+        moveModifiers = new HashMap<>();
     }
 
     @Override
@@ -45,6 +50,7 @@ public class CombatantData implements Cloneable {
         newData.removedItems = new ArrayList<>(removedItems);
         // strategies should always be stateless.
         newData.strategy = strategy;
+        newData.moveModifiers = new HashMap<>(moveModifiers);
         return newData;
     }
 
@@ -110,14 +116,36 @@ public class CombatantData implements Cloneable {
         }
     }
 
-    public void tick() {
+    public void tick(Combat c) {
         strategyDuration -= 1;
         if (strategyDuration <= 0) {
             strategyDuration = 0;
             strategy = Optional.empty();
         }
         if (Global.isDebugOn(DebugFlags.DEBUG_STRATEGIES)) {
-            System.out.printf("%s is now at %s\n", strategy.getClass().getSimpleName(), String.valueOf(strategyDuration));
+            System.out.printf("%s is now at %s\n", strategy.orElse(new DefaultStrategy()).getClass().getSimpleName(), String.valueOf(strategyDuration));
         }
+        for (Skill skill : moveModifiers.keySet()) {
+            if (!lastUsedSkillName.equals(skill.getName())) {
+                double staleness = moveModifiers.get(skill);
+                if (staleness < .999) {
+                    moveModifiers.put(skill, Math.min(1.0, staleness + skill.getStaleness().recovery));
+                }
+                if (staleness > 1.01) {
+                    moveModifiers.put(skill, Math.max(1.0, staleness - Math.abs(skill.getStaleness().recovery)));
+                }
+            }
+        }
+    }
+
+    public double getMoveModifier(Skill skill) {
+        return moveModifiers.getOrDefault(skill, skill.getStaleness().defaultAmount);
+    }
+
+    public void decreaseMoveModifier(Combat c, Skill skill) {
+        double currentAmount = moveModifiers.getOrDefault(skill, 1.0);
+        Staleness staleness = skill.getStaleness();
+        double amount = Math.max(currentAmount - staleness.decay, Math.min(staleness.floor, currentAmount));
+        moveModifiers.put(skill, amount);
     }
 }

@@ -14,6 +14,9 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.skills.strategy.FacesitStrategy;
+import nightgames.skills.strategy.FootjobStrategy;
+import nightgames.skills.strategy.KnockdownStrategy;
 import nightgames.start.NpcConfiguration;
 
 public class Reyka extends BasePersonality {
@@ -49,6 +52,10 @@ public class Reyka extends BasePersonality {
         character.add(Trait.Confident);
         character.add(Trait.shameless);
 
+        getCharacter().addPersonalStrategy(new FootjobStrategy());
+        getCharacter().addPersonalStrategy(new FacesitStrategy());
+        getCharacter().addPersonalStrategy(new KnockdownStrategy());
+
         Global.gainSkills(character);
         character.getStamina().setMax(50 + character.getLevel() * getGrowth().stamina);
         character.getArousal().setMax(120 + character.getLevel() * getGrowth().arousal);
@@ -60,7 +67,7 @@ public class Reyka extends BasePersonality {
         character.body.add(TailPart.demonic);
         character.body.add(WingsPart.demonic);
         character.body.add(EarPart.pointed);
-        character.body.add(new FacePart(4.5, 1.1));
+        character.body.add(new FacePart(1.5, 1.1));
         character.initialGender = CharacterSex.female;
     }
 

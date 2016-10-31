@@ -443,8 +443,8 @@ public class Combat extends Observable implements Cloneable {
             checkStamina(p2);
             doStanceTick(p1);
             doStanceTick(p2);
-            p1Data.tick();
-            p2Data.tick();
+            p1Data.tick(this);
+            p2Data.tick(this);
 
             getStance().decay(this);
             getStance().checkOngoing(this);

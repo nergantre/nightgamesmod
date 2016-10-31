@@ -1,7 +1,6 @@
 package nightgames.skills.strategy;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -12,7 +11,7 @@ import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 
-public class ForeplayStrategy extends AbstractStrategy {
+public class ForeplayStrategy extends KnockdownThenActionStrategy {
     @Override
     public double weight(Combat c, Character self) {
         double weight = 1;
@@ -20,28 +19,12 @@ public class ForeplayStrategy extends AbstractStrategy {
     }
 
     @Override
-    protected Set<Skill> filterSkills(Combat c, Character self, Set<Skill> allowedSkills) {
-        Character other = c.getOther(self);
-
-        Set<Tactics> positioningTactics = new HashSet<>();
-        positioningTactics.add(Tactics.damage);
-        positioningTactics.add(Tactics.positioning);
-
-        Set<Skill> positioningSkills = allowedSkills.stream().filter(skill -> positioningTactics.contains(skill.type(c))).collect(Collectors.toSet());
-        if (!c.getStance().mobile(self) || c.getStance().mobile(other)) {
-            return positioningSkills;
+    protected Set<Skill> getPreferredAfterKnockdownSkills(Combat c, Character self, Set<Skill> allowedSkills) {
+        if (c.getStance().havingSex()) {
+            return Collections.emptySet();
         }
-        if (!other.crotchAvailable()) {
-            allowedSkills.stream().filter(skill -> Tactics.stripping.equals(skill.type(c)));
-        }
-        if (!self.crotchAvailable()) {
-            return allowedSkills.stream().filter(skill -> skill.getTags().contains(SkillTag.undressing)).collect(Collectors.toSet());
-        }
-        Set<Skill> foreplaySkills = allowedSkills.stream().filter(skill -> Tactics.pleasure.equals(skill.type(c))).collect(Collectors.toSet());
-        if (!foreplaySkills.isEmpty()) {
-            return foreplaySkills;
-        }
-        return Collections.emptySet();
+        Set<Skill> foreplaySkills = allowedSkills.stream().filter(skill -> Tactics.pleasure.equals(skill.type(c)) || skill.getTags().contains(SkillTag.stripping)).collect(Collectors.toSet());
+        return foreplaySkills;
     }
 
     @Override
@@ -51,6 +34,6 @@ public class ForeplayStrategy extends AbstractStrategy {
     
     @Override
     public int initialDuration(Combat c, Character self) {
-        return Global.random(4, 8);
+        return Global.random(2, 6);
     }
 }

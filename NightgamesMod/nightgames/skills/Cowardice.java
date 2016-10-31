@@ -5,6 +5,7 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Behind;
 import nightgames.stance.Stance;
 import nightgames.status.addiction.Addiction;
@@ -14,6 +15,8 @@ public class Cowardice extends Skill {
 
     public Cowardice(Character self) {
         super("Cowardice", self);
+        addTag(SkillTag.suicidal);
+        addTag(SkillTag.positioning);
     }
 
     @Override

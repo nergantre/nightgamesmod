@@ -11,4 +11,5 @@ public enum DamageType {
     arcane,
     gadgets,
     technique,
+    biological,
 }

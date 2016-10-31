@@ -5,12 +5,16 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.damage.DamageType;
 
 public class BunshinAssault extends Skill {
 
     public BunshinAssault(Character self) {
         super("Bunshin Assault", self);
+        addTag(SkillTag.hurt);
+        addTag(SkillTag.staminaDamage);
+        addTag(SkillTag.positioning);
     }
 
     @Override

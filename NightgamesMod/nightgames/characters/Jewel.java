@@ -16,6 +16,8 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.skills.strategy.KnockdownStrategy;
+import nightgames.skills.strategy.StraponStrategy;
+import nightgames.skills.strategy.FacesitStrategy;
 import nightgames.skills.strategy.FootjobStrategy;
 import nightgames.start.NpcConfiguration;
 
@@ -31,8 +33,6 @@ public class Jewel extends BasePersonality {
 
     public Jewel(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
         super("Jewel", 1, charConfig, commonConfig);
-        getCharacter().addPersonalStrategy(new FootjobStrategy());
-        getCharacter().addPersonalStrategy(new KnockdownStrategy());
     }
 
     protected void applyBasicStats() {
@@ -49,6 +49,11 @@ public class Jewel extends BasePersonality {
         character.mod(Attribute.Speed, 1);
         Global.gainSkills(character);
 
+        getCharacter().addPersonalStrategy(new FootjobStrategy());
+        getCharacter().addPersonalStrategy(new FacesitStrategy());
+        getCharacter().addPersonalStrategy(new KnockdownStrategy());
+        getCharacter().addPersonalStrategy(new StraponStrategy());
+        
         character.add(Trait.direct);
         character.add(Trait.wrassler);
         character.add(Trait.insatiable);

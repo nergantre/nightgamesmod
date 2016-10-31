@@ -6,6 +6,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.damage.DamageType;
 import nightgames.stance.Mount;
 import nightgames.stance.Neutral;
@@ -16,6 +17,10 @@ import nightgames.status.Stsflag;
 public class Shove extends Skill {
     public Shove(Character self) {
         super("Shove", self);
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.hurt);
+        addTag(SkillTag.staminaDamage);
+        addTag(SkillTag.knockdown);
     }
 
     @Override

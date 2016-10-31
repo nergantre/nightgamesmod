@@ -7,6 +7,7 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Mount;
 import nightgames.stance.Stance;
 
@@ -14,6 +15,7 @@ public class Blindside extends Skill {
 
     public Blindside(Character self) {
         super("Blindside", self, 2);
+        addTag(SkillTag.positioning);
     }
 
     @Override

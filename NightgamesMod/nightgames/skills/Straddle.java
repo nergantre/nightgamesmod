@@ -3,13 +3,14 @@ package nightgames.skills;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Mount;
 
 public class Straddle extends Skill {
 
     public Straddle(Character self) {
         super("Mount", self);
-
+        addTag(SkillTag.positioning);
     }
 
     @Override

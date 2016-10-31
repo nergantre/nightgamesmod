@@ -21,7 +21,7 @@ public class FaceSit extends Skill {
         addTag(SkillTag.pleasureSelf);
         addTag(SkillTag.dominant);
         addTag(SkillTag.facesit);
-        
+        addTag(SkillTag.positioning);
     }
 
     @Override

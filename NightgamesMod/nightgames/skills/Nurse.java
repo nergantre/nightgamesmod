@@ -20,6 +20,7 @@ public class Nurse extends Skill {
     public Nurse(Character self) {
         super("Nurse", self);
         addTag(SkillTag.pleasureSelf);
+        addTag(SkillTag.breastfeed);
     }
 
     @Override

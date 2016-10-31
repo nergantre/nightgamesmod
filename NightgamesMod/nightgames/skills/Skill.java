@@ -11,6 +11,8 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
+import nightgames.skills.damage.DamageType;
+import nightgames.skills.damage.Staleness;
 import nightgames.status.FiredUp;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
@@ -24,6 +26,7 @@ public abstract class Skill {
     private int cooldown;
     private Set<SkillTag> tags;
     public String choice;
+    private Staleness staleness;
 
     public Skill(String name, Character self) {
         this(name, self, 0);
@@ -35,6 +38,7 @@ public abstract class Skill {
         this.cooldown = cooldown;
         choice = "";
         tags = new HashSet<>();
+        staleness = Staleness.build().withDecay(.1).withFloor(.5).withRecovery(.05);
     }
 
     public final boolean requirements(Combat c, Character target) {
@@ -121,6 +125,10 @@ public abstract class Skill {
         return 90;
     }
 
+    public Staleness getStaleness() {
+        return this.staleness;
+    }
+
     public int speed() {
         return 5;
     }
@@ -190,6 +198,7 @@ public abstract class Skill {
         if (success) {
             skill.user().buildMojo(c, generated);
         }
+        c.getCombatantData(skill.getSelf()).decreaseMoveModifier(c, skill);
         c.getCombatantData(skill.user()).setLastUsedSkillName(skill.getName());
     }
 

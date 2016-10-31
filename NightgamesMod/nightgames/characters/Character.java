@@ -422,7 +422,8 @@ public abstract class Character extends Observable implements Cloneable {
         // this differential should be min capped to (.5 * (100 + attacker's level * 5))%
         double maxDamage = baseDamage * 3 * (1 + .05 * getLevel());
         double minDamage = baseDamage * .5 * (1 + .05 * getLevel());
-        double damage = baseDamage * (1 + .1 * getOffensivePower(type) - .05 * other.getDefensivePower(type));
+        double multiplier = (1 + .1 * getOffensivePower(type) - .05 * other.getDefensivePower(type));
+        double damage = baseDamage * multiplier;
         return Math.min(Math.max(minDamage, damage), maxDamage);
     }
 
@@ -430,24 +431,26 @@ public abstract class Character extends Observable implements Cloneable {
         switch (type) {
             case arcane:
                 return get(Attribute.Arcane) + get(Attribute.Dark) / 2 + get(Attribute.Divinity) / 2 + get(Attribute.Ki) / 2;
+            case biological:
+                return get(Attribute.Animism) + get(Attribute.Bio) + get(Attribute.Medicine) / 2 + get(Attribute.Science) / 2 + get(Attribute.Cunning) / 2;
             case pleasure:
                 return get(Attribute.Seduction);
             case temptation:
-                return (get(Attribute.Seduction) * 2 + get(Attribute.Cunning)) / 3.0;
+                return (get(Attribute.Seduction) * 2 + get(Attribute.Cunning)) / 2.0;
             case technique:
                 return get(Attribute.Cunning);
             case physicial:
-                return (get(Attribute.Power) * 2 + get(Attribute.Cunning)) / 3.0;
+                return (get(Attribute.Power) * 2 + get(Attribute.Cunning)) / 2.0;
             case gadgets:
-                return get(Attribute.Cunning) / 2;
+                return get(Attribute.Cunning);
             case drain:
-                return (get(Attribute.Dark) * 2 + get(Attribute.Arcane)) / 3.0;
+                return (get(Attribute.Dark) * 2 + get(Attribute.Arcane)) / 2.0;
             case stance:
-                return (get(Attribute.Cunning) * 2 + get(Attribute.Power)) / 3.0;
+                return (get(Attribute.Cunning) * 2 + get(Attribute.Power)) / 2.0;
             case weaken:
-                return (get(Attribute.Dark) * 2 + get(Attribute.Divinity)) / 3.0;
+                return (get(Attribute.Dark) * 2 + get(Attribute.Divinity)) / 2.0;
             case willpower:
-                return (get(Attribute.Dark) + get(Attribute.Fetish) + get(Attribute.Divinity) * 2 + getLevel()) / 3.0;
+                return (get(Attribute.Dark) + get(Attribute.Fetish) + get(Attribute.Divinity) * 2 + getLevel()) / 2.0;
             default:
                 return 0;
         }
@@ -455,8 +458,14 @@ public abstract class Character extends Observable implements Cloneable {
 
     private double getOffensivePower(DamageType type){
         switch (type) {
+            case biological:
+                return get(Attribute.Animism) + get(Attribute.Bio) + get(Attribute.Medicine) + get(Attribute.Science) + get(Attribute.Cunning) / 2;
             case gadgets:
-                return (get(Attribute.Science) * 2 + get(Attribute.Cunning)) / 3.0;
+                double power = (get(Attribute.Science) * 2 + get(Attribute.Cunning)) / 3.0;
+                if (has(Trait.toymaster)) {
+                    power += 20;
+                }
+                return power;
             case pleasure:
                 return get(Attribute.Seduction);
             case arcane:
@@ -533,7 +542,7 @@ public abstract class Character extends Observable implements Cloneable {
         emote(Emotion.angry, pain / 3);
 
         // threshold at which pain calms you down
-        int painAllowance = Math.max(10, getStamina().max() / 25);
+        int painAllowance = Math.max(10, getStamina().max() / 6);
         if (c != null && c.getOther(this)
                           .has(Trait.wrassler)) {
             painAllowance *= 1.5;
@@ -1943,14 +1952,14 @@ public abstract class Character extends Observable implements Cloneable {
             mojo.reduce(10);
         }
         if (has(Trait.exhibitionist) && mostlyNude()) {
-            mojo.gain(5);
+            mojo.restore(2);
         }
         if (bound()) {
             free();
         }
         dropStatus(null, null);
         if (has(Trait.QuickRecovery)) {
-            heal(null, 4);
+            heal(null, Global.random(1, 3));
         }
         update();
         notifyObservers();

@@ -6,6 +6,7 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.FlowerSex;
 
 public class CounterFlower extends CounterBase {
@@ -14,6 +15,9 @@ public class CounterFlower extends CounterBase {
                         Global.format("<b>The giant flower at the base of {self:name-possessive} legs are open, with the petals waving invitingly.",
                                         self, self),
                         2);
+        addTag(SkillTag.counter);
+        addTag(SkillTag.fucking);
+        addTag(SkillTag.positioning);
     }
 
     @Override

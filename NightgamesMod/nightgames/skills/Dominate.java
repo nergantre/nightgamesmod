@@ -7,12 +7,16 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.StandingOver;
 
 public class Dominate extends Skill {
 
     public Dominate(Character self) {
         super("Dominate", self, 3);
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.knockdown);
+        addTag(SkillTag.dark);
     }
 
     @Override

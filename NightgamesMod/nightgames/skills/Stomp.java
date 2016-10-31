@@ -19,6 +19,8 @@ public class Stomp extends Skill {
         addTag(SkillTag.usesFeet);
         addTag(SkillTag.physical);
         addTag(SkillTag.hurt);
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.staminaDamage);
     }
 
     @Override

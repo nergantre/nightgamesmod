@@ -5,16 +5,25 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.nskills.tags.SkillTag;
+import nightgames.skills.damage.DamageType;
+import nightgames.stance.Stance;
 
 public class UseOnahole extends Skill {
 
     public UseOnahole(Character self) {
         super(Item.Onahole.getName(), self);
+        addTag(SkillTag.usesToy);
     }
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
         return true;
+    }
+
+    @Override
+    public int accuracy(Combat c) {
+        return c.getStance().en == Stance.neutral ? 35 : 100;
     }
 
     @Override
@@ -26,7 +35,7 @@ public class UseOnahole extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        int m = 5 + Global.random(5);
+        int m = 5 + Global.random(10);
 
         if (target.roll(this, c, accuracy(c))) {
             if (getSelf().has(Item.Onahole2)) {
@@ -36,15 +45,15 @@ public class UseOnahole extends Skill {
                 } else {
                     c.write(getSelf(), deal(c, 0, Result.upgrade, target));
                 }
-                target.body.pleasure(getSelf(), null, target.body.getRandomCock(), m, c, this);
             } else {
                 if (target.human()) {
                     c.write(getSelf(), receive(c, 0, Result.normal, target));
                 } else {
                     c.write(getSelf(), deal(c, 0, Result.upgrade, target));
                 }
-                target.body.pleasure(getSelf(), null, target.body.getRandomCock(), m, c, this);
             }
+            m = (int)getSelf().modifyDamage(DamageType.gadgets, target, m);
+            target.body.pleasure(getSelf(), null, target.body.getRandomCock(), m, c, this);
         } else {
             writeOutput(c, Result.miss, target);
             return false;

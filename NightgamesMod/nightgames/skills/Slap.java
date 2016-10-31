@@ -25,7 +25,7 @@ public class Slap extends Skill {
 
     @Override
     public int getMojoBuilt(Combat c) {
-        return getSelf().has(Trait.pimphand) ? 10 : 0;
+        return getSelf().has(Trait.pimphand) ? 15 : 5;
     }
 
     @Override
@@ -76,7 +76,7 @@ public class Slap extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return !user.has(Trait.softheart) && user.get(Attribute.Power) >= 7;
+        return !user.has(Trait.softheart) && user.get(Attribute.Power) >= 5;
     }
 
     @Override

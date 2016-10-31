@@ -392,7 +392,10 @@ public class Body implements Cloneable {
                       .getHotness();
         int seductionDiff = Math.max(0, self.get(Attribute.Seduction) - opponent.get(Attribute.Seduction));
         retval += seductionDiff / 10.0;
-        retval *= self.getExposure();
+        retval *= (.5 + self.getExposure());
+        if (self.is(Stsflag.glamour)) {
+            retval += 4.0;
+        }
         if (self.is(Stsflag.alluring)) {
             retval *= 1.5;
         }
@@ -454,6 +457,11 @@ public class Body implements Cloneable {
 
     public CockPart getRandomCock() {
         return (CockPart) getRandom("cock");
+    }
+    
+    public List<BodyPart> getAllGenitals() {
+        List<String> partTypes = Arrays.asList("cock", "pussy", "strapon", "ass");
+        return getCurrentPartsThatMatch(part -> partTypes.contains(part.getType()));
     }
 
     public BodyPart getRandomInsertable() {
@@ -556,7 +564,7 @@ public class Body implements Cloneable {
         double multiplier = Math.max(0, 1 + ((sensitivity - 1) + (pleasure - 1) + (perceptionBonus - 1)));
 
         if (skill != null) {
-            multiplier = Math.max(0, multiplier + skill.multiplierForStage(character));
+            multiplier = Math.max(0, multiplier + skill.multiplierForStage(character)) * c.getCombatantData(opponent).getMoveModifier(skill);
         }
         
         double dominance = 0.0;
@@ -590,12 +598,15 @@ public class Body implements Cloneable {
                             : "";
             String stageString = skill == null ? "" : String.format(" + stage:%.2f", skill.multiplierForStage(character));
             String dominanceString = dominance < 0.01 ? "" : String.format(" + dominance:%.2f", dominance);
+            double staleness = c.getCombatantData(opponent).getMoveModifier(skill);
+            String staleString = staleness < .99 ? String.format(" x staleness: %.2f", staleness) : "";
             String battleString = String.format(
                             "%s%s %s<font color='white'> was pleasured by %s%s<font color='white'> for <font color='rgb(255,50,200)'>%d<font color='white'> "
-                                            + "base:%.1f (%.1f%s) x multiplier: %.2f (1 + sen:%.1f + ple:%.1f + per:%.1f %s %s)\n",
+                                            + "base:%.1f (%.1f%s) x multiplier: %.2f (1 + sen:%.1f + ple:%.1f + per:%.1f %s %s)%s\n",
                             firstColor, Global.capitalizeFirstLetter(character.nameOrPossessivePronoun()),
                             target.describe(character), secondColor, pleasuredBy, result, base, magnitude, bonusString,
-                            multiplier, sensitivity - 1, pleasure - 1, perceptionBonus - 1, stageString, dominanceString);
+                            multiplier, sensitivity - 1, pleasure - 1, perceptionBonus - 1, stageString, dominanceString, 
+                            staleString);
             if (c != null) {
                 c.writeSystemMessage(battleString);
             }

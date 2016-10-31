@@ -6,6 +6,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.status.Seeded;
 import nightgames.status.Stsflag;
 
@@ -15,6 +16,10 @@ public class LeechSeed extends Skill {
     public LeechSeed(Character self) {
         super("Leech Seed", self, 3);
         lastPart = "none";
+        addTag(SkillTag.drain);
+        addTag(SkillTag.staminaDamage);
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.debuff);
     }
 
     @Override

@@ -49,7 +49,11 @@ public class Winded extends DurationStatus {
 
     @Override
     public void onRemove(Combat c, Character other) {
-        affected.addlist.add(new Braced(affected));
+        if (affected.get(Attribute.Divinity) > 0) {
+            affected.addlist.add(new BastionOfFaith(affected));
+        } else {
+            affected.addlist.add(new Braced(affected));
+        }
         affected.addlist.add(new Wary(affected, 3));
         affected.heal(c, affected.getStamina().max());
     }

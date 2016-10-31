@@ -171,9 +171,9 @@ public class NPC extends Character {
         gainXP(getVictoryXP(target));
         target.gainXP(getDefeatXP(this));
         if (c.getStance().inserted() && c.getStance().dom(this)) {
-            getMojo().gain(2);
+            getMojo().gain(1);
             if (has(Trait.mojoMaster)) {
-                getMojo().gain(2);
+                getMojo().gain(1);
             }
         }
         target.arousal.empty();
@@ -758,7 +758,7 @@ public class NPC extends Character {
         if (opponent.has(Trait.pheromones) && opponent.getArousal().percent() >= 20 && opponent.rollPheromones(c)) {
             c.write(opponent, "<br>You see " + name()
                             + " swoon slightly as she gets close to you. Seems like she's starting to feel the effects of your musk.");
-            add(c, new Horny(this, opponent.getPheromonePower(), 10,
+            add(c, Horny.getWithBiologicalType(opponent, this, opponent.getPheromonePower(), 10,
                             opponent.nameOrPossessivePronoun() + " pheromones"));
         }
         if (opponent.has(Trait.smqueen) && !is(Stsflag.masochism)) {

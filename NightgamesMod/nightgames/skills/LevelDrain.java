@@ -6,12 +6,18 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.status.Satiated;
 
 public class LevelDrain extends Drain {
 
     public LevelDrain(Character self) {
         super("Level Drain", self);
+
+        addTag(SkillTag.drain);
+        addTag(SkillTag.staminaDamage);
+        addTag(SkillTag.fucking);
+        addTag(SkillTag.dark);
     }
 
     @Override

@@ -358,6 +358,7 @@ public class Global {
         getSkillPool().add(new FlashStep(ch));
         getSkillPool().add(new FlyCatcher(ch));
         getSkillPool().add(new Illusions(ch));
+        getSkillPool().add(new Glamour(ch));
         getSkillPool().add(new LustAura(ch));
         getSkillPool().add(new MagicMissile(ch));
         getSkillPool().add(new Masochism(ch));
@@ -405,6 +406,7 @@ public class Global {
         getSkillPool().add(new EyesOfTemptation(ch));
         getSkillPool().add(new TailJob(ch));
         getSkillPool().add(new FaceSit(ch));
+        getSkillPool().add(new Smother(ch));
         getSkillPool().add(new Purr(ch));
         getSkillPool().add(new MutualUndress(ch));
         getSkillPool().add(new Surrender(ch));

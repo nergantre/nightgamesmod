@@ -701,7 +701,7 @@ public class Player extends Character {
                         && opponent.rollPheromones(c)) {
             c.write(opponent, "<br>Whenever you're near " + opponent.name()
                             + ", you feel your body heat up. Something in her scent is making you extremely horny.");
-            add(c, new Horny(this, opponent.getPheromonePower(), 10,
+            add(c, Horny.getWithBiologicalType(opponent, this, opponent.getPheromonePower(), 10,
                             opponent.nameOrPossessivePronoun() + " pheromones"));
         }
         if (opponent.has(Trait.smqueen) && !is(Stsflag.masochism)) {

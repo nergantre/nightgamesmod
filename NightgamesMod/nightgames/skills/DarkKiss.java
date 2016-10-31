@@ -4,6 +4,7 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
@@ -11,6 +12,7 @@ public class DarkKiss extends Skill {
 
     public DarkKiss(Character self) {
         super("Dark Kiss", self, 3);
+        addTag(SkillTag.dark);
     }
 
     @Override

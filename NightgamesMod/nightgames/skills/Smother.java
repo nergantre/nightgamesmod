@@ -25,7 +25,7 @@ public class Smother extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.has(Trait.smqueen);
+        return user.get(Attribute.Fetish) >= 5;
     }
 
     @Override

@@ -7,6 +7,7 @@ import nightgames.characters.body.CockMod;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.damage.DamageType;
 import nightgames.stance.Neutral;
 import nightgames.stance.Position;
@@ -19,6 +20,8 @@ public class Struggle extends Skill {
 
     public Struggle(Character self) {
         super("Struggle", self);
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.escaping);
     }
 
     @Override

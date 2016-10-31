@@ -8,6 +8,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.damage.DamageType;
 
 public class StripTop extends Skill {
@@ -16,6 +17,11 @@ public class StripTop extends Skill {
     
     public StripTop(Character self) {
         super("Strip Top", self);
+
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.stripping);
+        addTag(SkillTag.weaken);
+        addTag(SkillTag.staminaDamage);
     }
 
     @Override
@@ -25,7 +31,7 @@ public class StripTop extends Skill {
 
     @Override
     public int getMojoCost(Combat c) {
-        return 10;
+        return c.getStance().dom(getSelf()) ? 2 : 10;
     }
 
     @Override

@@ -6,6 +6,7 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.damage.DamageType;
 import nightgames.status.Abuff;
 
@@ -13,6 +14,9 @@ public class Drain extends Skill {
 
     public Drain(Character self) {
         super("Drain", self, 5);
+        addTag(SkillTag.drain);
+        addTag(SkillTag.dark);
+        addTag(SkillTag.fucking);
     }
 
     public Drain(String name, Character self) {

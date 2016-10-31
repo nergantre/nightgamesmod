@@ -12,6 +12,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.skills.strategy.StraponStrategy;
 import nightgames.start.NpcConfiguration;
 
 public class Angel extends BasePersonality {
@@ -51,7 +52,7 @@ public class Angel extends BasePersonality {
         character.mood = Emotion.confident;
         character.body.add(BreastsPart.dd);
         // very feminine face
-        character.body.add(new FacePart(.1, 4.2));
+        character.body.add(new FacePart(0.6, 4.2));
         character.initialGender = CharacterSex.female;
     }
 
@@ -63,7 +64,7 @@ public class Angel extends BasePersonality {
         growth.bonusStamina = 1;
         growth.bonusArousal = 4;
         growth.bonusMojo = 1;
-        growth.addTrait(3, Trait.alwaysready);
+        growth.addTrait(3, Trait.responsive);
         growth.addTrait(9, Trait.pussyTraining1);
         growth.addTrait(12, Trait.expertGoogler);
         growth.addTrait(15, Trait.experienced);
@@ -72,13 +73,13 @@ public class Angel extends BasePersonality {
         growth.addTrait(20, Trait.zealinspiring);
         growth.addTrait(21, Trait.holecontrol);
         growth.addTrait(24, Trait.insertion);
-        growth.addTrait(27, Trait.lacedjuices);
+        growth.addTrait(27, Trait.alwaysready);
         growth.addTrait(30, Trait.pussyTraining2);
         growth.addTrait(33, Trait.RawSexuality);
         growth.addTrait(36, Trait.objectOfWorship);
         growth.addTrait(39, Trait.tight);
         growth.addTrait(42, Trait.desensitized);
-        growth.addTrait(45, Trait.entrallingjuices);
+        growth.addTrait(45, Trait.limbTraining1);
         growth.addTrait(48, Trait.magicEyeArousal);
         growth.addTrait(51, Trait.pussyTraining3);
         growth.addTrait(54, Trait.desensitized2);

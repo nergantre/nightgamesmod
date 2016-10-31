@@ -6,11 +6,13 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.nskills.tags.SkillTag;
 
 public class StealClothes extends Skill {
 
     public StealClothes(Character self) {
         super("Steal Clothes", self);
+        addTag(SkillTag.stripping);
     }
 
     @Override

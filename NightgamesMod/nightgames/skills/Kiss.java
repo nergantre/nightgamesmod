@@ -18,7 +18,8 @@ public class Kiss extends Skill {
 
     public Kiss(Character self) {
         super("Kiss", self);
-        addTag(SkillTag.pleasureSelf);
+        addTag(SkillTag.usesMouth);
+        addTag(SkillTag.pleasure);
     }
 
     @Override

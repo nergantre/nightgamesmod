@@ -33,7 +33,7 @@ public class Porn extends Activity {
 
     private int gainArousal(Character self) {
         int maximumArousalForLevel = Configuration.getMaximumArousalPossible(self);
-        int gain = 1;
+        int gain = 1 + Global.random(2);
         if (player.has(Trait.expertGoogler)) {
             gain = gain + Global.random(2);
         }

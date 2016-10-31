@@ -8,12 +8,15 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.FlyingCowgirl;
 import nightgames.status.Falling;
 
 public class ReverseFly extends Fly {
     public ReverseFly(Character self) {
         super("ReverseFly", self);
+        addTag(SkillTag.positioning);
+
     }
 
     @Override

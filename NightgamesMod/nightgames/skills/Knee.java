@@ -8,12 +8,16 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingTrait;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.damage.DamageType;
 
 public class Knee extends Skill {
 
     public Knee(Character self) {
         super("Knee", self);
+        addTag(SkillTag.hurt);
+        addTag(SkillTag.staminaDamage);
+        addTag(SkillTag.positioning);
     }
 
     @Override
@@ -24,7 +28,7 @@ public class Knee extends Skill {
 
     @Override
     public int getMojoCost(Combat c) {
-        return 15;
+        return 25;
     }
 
     @Override

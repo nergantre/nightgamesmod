@@ -5,6 +5,7 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.status.Bound;
 import nightgames.status.Falling;
 
@@ -12,6 +13,9 @@ public class DarkTendrils extends Skill {
 
     public DarkTendrils(Character self) {
         super("Dark Tendrils", self, 4);
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.knockdown);
+        addTag(SkillTag.dark);
     }
 
     @Override
