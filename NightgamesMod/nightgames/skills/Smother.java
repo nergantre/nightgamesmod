@@ -7,6 +7,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
+import nightgames.skills.damage.DamageType;
 import nightgames.stance.Smothering;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
@@ -63,7 +64,7 @@ public class Smother extends Skill {
         }
 
         target.tempt(c, getSelf(), getSelf().body.getRandom("ass"), (int) Math.round(n / 2));
-        target.weaken(c, 10 + Global.random(10) + getSelf().get(Attribute.Power) / 3);
+        target.weaken(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(10, 25)));
 
         target.loseWillpower(c, Math.max(10, target.getWillpower().max() * 10 / 100 ));
         target.add(c, new Shamed(target));

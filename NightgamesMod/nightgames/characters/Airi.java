@@ -51,8 +51,8 @@ public class Airi extends BasePersonality {
         character.set(Attribute.Cunning, 15);
         character.set(Attribute.Speed, 4);
         character.set(Attribute.Seduction, 17);
-        character.getStamina().setMax(80);
-        character.getArousal().setMax(80);
+        character.getStamina().setMax(50 + character.getLevel() * getGrowth().stamina);
+        character.getArousal().setMax(80 + character.getLevel() * getGrowth().arousal);
         character.getMojo().setMax(60);
         character.getWillpower().setMax(80);
         character.add(Trait.dexterous);

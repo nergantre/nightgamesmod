@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import nightgames.actions.Action;
 import nightgames.actions.Leap;
@@ -36,6 +37,7 @@ import nightgames.skills.Nothing;
 import nightgames.skills.Skill;
 import nightgames.skills.Stage;
 import nightgames.skills.Tactics;
+import nightgames.skills.damage.DamageType;
 import nightgames.skills.strategy.CombatStrategy;
 import nightgames.skills.strategy.DefaultStrategy;
 import nightgames.stance.Behind;
@@ -151,9 +153,7 @@ public class NPC extends Character {
         
         if (per >= 6 && status.size() > 0) {
             visible += "List of statuses:<br><i>";
-            for (Status s : status) {
-                visible += s + ", ";
-            }
+            visible += status.stream().map(Status::toString).collect(Collectors.joining(", "));
             visible += "</i><br>";
         }
         
@@ -670,7 +670,7 @@ public class NPC extends Character {
             case positioning:
                 if (c.getStance().dom(this)) {
                     c.write(this, name() + " outmanuevers you and you're exhausted from the struggle.");
-                    target.weaken(c, 10);
+                    target.weaken(c, (int) this.modifyDamage(DamageType.stance, target, 15));
                 } else {
                     c.write(this, name() + " outmanuevers you and catches you from behind when you stumble.");
                     c.setStance(new Behind(this, target));

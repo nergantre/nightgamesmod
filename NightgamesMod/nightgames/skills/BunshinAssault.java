@@ -5,6 +5,7 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.skills.damage.DamageType;
 
 public class BunshinAssault extends Skill {
 
@@ -58,19 +59,19 @@ public class BunshinAssault extends Skill {
                 switch(Global.random(4)){
                 case 0:
                     r=Result.weak;
-                    target.pain(c,Global.random(4)+3);
+                    target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(1, 4)));
                     break;
                 case 1:
                     r=Result.normal;
-                    target.pain(c,Global.random(4)+getSelf().get(Attribute.Power)/3);
+                    target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(2, 5)));
                     break;
                 case 2:
                     r=Result.strong;
-                    target.pain(c,Global.random(8)+getSelf().get(Attribute.Power)/2);
+                    target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(6, 9)));
                     break;
                 default:
                     r=Result.critical;
-                    target.pain(c,Global.random(12)+getSelf().get(Attribute.Power));
+                    target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(10, 14)));
                     break;
                 }
                 writeOutput(c, r, target);

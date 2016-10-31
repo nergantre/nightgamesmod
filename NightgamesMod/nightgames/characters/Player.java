@@ -31,6 +31,7 @@ import nightgames.items.clothing.Clothing;
 import nightgames.skills.Skill;
 import nightgames.skills.Stage;
 import nightgames.skills.Tactics;
+import nightgames.skills.damage.DamageType;
 import nightgames.stance.Behind;
 import nightgames.stance.Neutral;
 import nightgames.stance.Position;
@@ -76,6 +77,8 @@ public class Player extends Character {
         outfitPlan.add(Clothing.getByID("jeans"));
         outfitPlan.add(Clothing.getByID("socks"));
         outfitPlan.add(Clothing.getByID("sneakers"));
+        getStamina().setMax(80 + getLevel() * getGrowth().stamina);
+        getArousal().setMax(80 + getLevel() * getGrowth().arousal);
         config.ifPresent(this::applyConfigStats);
         finishCharacter(pickedTraits, selectedAttributes);
 
@@ -144,9 +147,7 @@ public class Player extends Character {
         description = description + outfit.describe(this);
         if (per >= 5 && status.size() > 0) {
             description += "<br>List of statuses:<br><i>";
-            for (Status s : status) {
-                description += s + ", ";
-            }
+            description += status.stream().map(Status::toString).collect(Collectors.joining(", "));
             description += "</i><br>";
         }
         description += Stage.describe(this);
@@ -670,7 +671,7 @@ public class Player extends Character {
                 if (c.getStance()
                      .dom(this)) {
                     c.write(this, "You outmanuever " + target.name() + " and you exhausted her from the struggle.");
-                    target.weaken(c, 10);
+                    target.weaken(c, (int) this.modifyDamage(DamageType.stance, target, 15));
                 } else {
                     c.write(this, target.name()
                                     + " loses her balance while grappling with you. Before she can fall to the floor, you catch her from behind and hold her up.");

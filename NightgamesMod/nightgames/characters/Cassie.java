@@ -48,6 +48,8 @@ public class Cassie extends BasePersonality {
         character.mod(Attribute.Cunning, 1);
         character.mod(Attribute.Perception, 1);
 
+        character.getStamina().setMax(70 + character.getLevel() * getGrowth().stamina);
+        character.getArousal().setMax(100 + character.getLevel() * getGrowth().arousal);
         Global.gainSkills(character);
         character.add(Trait.softheart);
         character.add(Trait.romantic);

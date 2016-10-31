@@ -9,6 +9,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.items.clothing.ClothingTrait;
+import nightgames.skills.damage.DamageType;
 
 public class Kick extends Skill {
 
@@ -40,22 +41,22 @@ public class Kick extends Skill {
             target.shred(ClothingSlot.bottom);
         } else
         if (target.roll(this, c, accuracy(c))) {
-            int m = Global.random(12) + Math.min(getSelf().get(Attribute.Power), 100);
+            double m = Global.random(16, 21);
             if (target.has(Trait.brassballs)) {
                 m *= .8;
             }
             if (getSelf().human()) {
                 if (c.getStance().prone(getSelf())) {
-                    c.write(getSelf(), deal(c, m, Result.strong, target));
+                    c.write(getSelf(), deal(c, 0, Result.strong, target));
                 } else {
-                    c.write(getSelf(), deal(c, m, Result.normal, target));
+                    c.write(getSelf(), deal(c, 0, Result.normal, target));
 
                 }
             } else if (c.shouldPrintReceive(target)) {
                 if (c.getStance().prone(getSelf())) {
-                    c.write(getSelf(), receive(c, m, Result.strong, target));
+                    c.write(getSelf(), receive(c, 0, Result.strong, target));
                 } else {
-                    c.write(getSelf(), receive(c, m, Result.normal, target));
+                    c.write(getSelf(), receive(c, 0, Result.normal, target));
                 }
             }
             if (target.has(Trait.achilles) && !target.has(ClothingTrait.armored)) {
@@ -64,7 +65,7 @@ public class Kick extends Skill {
             if (target.has(ClothingTrait.armored)) {
                 m = m / 2;
             }
-            target.pain(c, m);
+            target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, m));
             target.emote(Emotion.angry, 20);
         } else {
             writeOutput(c, Result.miss, target);

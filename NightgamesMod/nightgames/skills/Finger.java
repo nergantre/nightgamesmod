@@ -25,7 +25,7 @@ public class Finger extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         if (target.roll(this, c, accuracy(c))) {
-            int m = 6 + Global.random(4);
+            int m = Global.random(8, 13);
             if (getSelf().get(Attribute.Seduction) >= 8) {
                 m += 6;
                 if (getSelf().human()) {
@@ -58,7 +58,7 @@ public class Finger extends Skill {
 
     @Override
     public int accuracy(Combat c) {
-        return 95;
+        return c.getStance().mobile(c.getOther(getSelf())) ? 35 : 100;
     }
 
     @Override
@@ -139,7 +139,7 @@ public class Finger extends Skill {
 
     @Override
     public String describe(Combat c) {
-        return "Digitally stimulate opponent's pussy";
+        return "Digitally stimulate opponent's pussy, difficult to land without pinning her down.";
     }
 
     @Override

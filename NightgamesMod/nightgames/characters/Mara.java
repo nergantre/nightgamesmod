@@ -41,6 +41,8 @@ public class Mara extends BasePersonality {
         character.change();
         character.mod(Attribute.Cunning, 2);
         character.mod(Attribute.Perception, 2);
+        character.getStamina().setMax(80 + character.getLevel() * getGrowth().stamina);
+        character.getArousal().setMax(80 + character.getLevel() * getGrowth().arousal);
         Global.gainSkills(character);
         character.add(Trait.petite);
         character.add(Trait.dexterous);

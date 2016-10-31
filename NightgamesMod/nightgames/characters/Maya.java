@@ -44,8 +44,8 @@ public class Maya extends BasePersonality {
         character.set(Attribute.Speed, 17);
         character.set(Attribute.Power, 36);
         character.set(Attribute.Hypnosis, 8);
-        character.getStamina().setMax(250);
-        character.getArousal().setMax(600);
+        character.getStamina().setMax(90 + character.getLevel() * getGrowth().stamina);
+        character.getArousal().setMax(150 + character.getLevel() * getGrowth().arousal);
         character.getMojo().setMax(350);
         character.getWillpower().setMax(100);
         character.add(Trait.darkpromises);

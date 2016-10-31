@@ -7,6 +7,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.skills.damage.DamageType;
 import nightgames.status.Abuff;
 import nightgames.status.CockBound;
 import nightgames.status.DivineCharge;
@@ -279,7 +280,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                 } else {
                     strength = 10 + self.get(Attribute.Dark) / 2;
                 }
-                opponent.drain(c, self, strength);
+                opponent.drain(c, self, (int) self.modifyDamage(DamageType.drain, opponent, strength));
                 for (int i = 0; i < 10; i++) {
                     Attribute stolen = (Attribute) opponent.att.keySet()
                                                                .toArray()[Global.random(opponent.att.keySet()

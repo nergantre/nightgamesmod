@@ -7,6 +7,7 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.skills.damage.DamageType;
 import nightgames.status.Shamed;
 import nightgames.status.Stsflag;
 
@@ -18,11 +19,12 @@ public class Spank extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return !c.getStance().prone(target) && c.getStance().reachBottom(getSelf()) && getSelf().canAct();
+        return c.getStance().prone(target) && c.getStance().reachBottom(getSelf()) && getSelf().canAct();
     }
 
     @Override
     public boolean resolve(Combat c, Character target) {
+        double m = Global.random(6, 13);
         if (getSelf().has(Trait.disciplinarian)) {
             boolean shamed = Global.random(10) >= 5 || !target.is(Stsflag.shamed) && getSelf().canSpend(5);
             if (shamed) {
@@ -35,13 +37,15 @@ public class Spank extends Skill {
                 target.emote(Emotion.nervous, 15);
             }
             if (target.has(Trait.achilles)) {
-                target.pain(c, 5);
+                m += 10;
+            } else {
+                m += 5;
             }
-            target.pain(c, Global.random(6 + target.get(Attribute.Perception) / 2) + 3);
         } else {
             writeOutput(c, Result.normal, target);
-            target.pain(c, Global.random(6) + 3);
         }
+        target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, m));
+
         target.emote(Emotion.angry, 25);
         target.emote(Emotion.nervous, 15);
         target.loseMojo(c, 10);

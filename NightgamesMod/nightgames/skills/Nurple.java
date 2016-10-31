@@ -7,6 +7,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.skills.damage.DamageType;
 
 public class Nurple extends Skill {
 
@@ -31,15 +32,19 @@ public class Nurple extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
+        double m = Global.random(4, 7);
+        DamageType damageType = DamageType.physicial;
         if (target.roll(this, c, accuracy(c))) {
             if (getSelf().has(Item.ShockGlove) && getSelf().has(Item.Battery, 2)) {
                 writeOutput(c, Result.special, target);
-                target.pain(c, Global.random(9) + target.get(Attribute.Perception));
+                getSelf().consume(Item.Battery, 2);
+                damageType = DamageType.gadgets;
+                m += Global.random(16, 30);
             } else {
                 writeOutput(c, Result.normal, target);
-                target.pain(c, Global.random(9) + target.get(Attribute.Perception) / 2);
             }
-            target.loseMojo(c, 5);
+            target.pain(c, (int) getSelf().modifyDamage(damageType, target, m));
+            target.loseMojo(c, (int) getSelf().modifyDamage(DamageType.technique, target, 5));
             target.emote(Emotion.angry, 15);
         } else {
             writeOutput(c, Result.miss, target);

@@ -7,18 +7,21 @@ import java.util.stream.Collectors;
 
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 
-public class FuckStrategy extends AbstractStrategy {
+public class KnockdownStrategy extends AbstractStrategy {
     @Override
     public double weight(Combat c, Character self) {
         double weight = 1;
-        if (self.getMood().equals(Emotion.horny)) {
+        if (self.getMood().equals(Emotion.angry) || self.getMood().equals(Emotion.dominant)) {
             weight *= 2;
+        }
+        if (self.has(Trait.submissive)) {
+            weight *= .3;
         }
         return weight;
     }
@@ -26,11 +29,9 @@ public class FuckStrategy extends AbstractStrategy {
     @Override
     protected Set<Skill> filterSkills(Combat c, Character self, Set<Skill> allowedSkills) {
         Character other = c.getOther(self);
-        Set<Skill> fuckSkills = allowedSkills.stream().filter(skill -> Tactics.fucking.equals(skill.type(c))).collect(Collectors.toSet());
-        if (!fuckSkills.isEmpty()) {
-            return fuckSkills;
+        if (c.getStance().dom(self)) {
+            return Collections.emptySet();
         }
-
         Set<Tactics> positioningTactics = new HashSet<>();
         positioningTactics.add(Tactics.damage);
         positioningTactics.add(Tactics.positioning);
@@ -39,28 +40,16 @@ public class FuckStrategy extends AbstractStrategy {
         if (!c.getStance().mobile(self) || c.getStance().mobile(other)) {
             return positioningSkills;
         }
-        if (!other.crotchAvailable()) {
-            allowedSkills.stream().filter(skill -> Tactics.stripping.equals(skill.type(c)));
-        }
-        if (!self.crotchAvailable()) {
-            return allowedSkills.stream().filter(skill -> skill.getTags().contains(SkillTag.undressing)).collect(Collectors.toSet());
-        }
-        if (other.getArousal().percent() < 15) {
-            return allowedSkills.stream().filter(skill -> skill.type(c).equals(Tactics.pleasure)).collect(Collectors.toSet());
-        }
-        if (self.getArousal().percent() < 15) {
-            return allowedSkills.stream().filter(skill -> skill.getTags().contains(SkillTag.pleasureSelf)).collect(Collectors.toSet());
-        }
         return Collections.emptySet();
-    }
-
-    @Override
-    public CombatStrategy instance() {
-        return new FuckStrategy();
     }
     
     @Override
+    public CombatStrategy instance() {
+        return new KnockdownStrategy();
+    }
+
+    @Override
     public int initialDuration(Combat c, Character self) {
-        return Global.random(4, 8);
+        return Global.random(3, 5);
     }
 }

@@ -47,8 +47,8 @@ public class Kat extends BasePersonality {
         character.set(Attribute.Cunning, 8);
         character.set(Attribute.Speed, 8);
         character.set(Attribute.Seduction, 7);
-        character.getStamina().setMax(150);
-        character.getArousal().setMax(90);
+        character.getStamina().setMax(100 + character.getLevel() * getGrowth().stamina);
+        character.getArousal().setMax(50 + character.getLevel() * getGrowth().arousal);
         character.getMojo().setMax(60);
         character.add(Trait.dexterous);
         character.add(Trait.pheromones);

@@ -40,7 +40,7 @@ public class Exercise extends Activity {
         if (player.has(Trait.fitnessNut)) {
             gain = gain + Global.random(2);
         }
-        gain = Math.max(0, (int) Math.min(maximumStaminaForLevel, self.getStamina().trueMax() + gain) - gain);
+        gain = Math.max(0, (int) (Math.min(maximumStaminaForLevel, self.getStamina().trueMax() + gain) - self.getStamina().trueMax()));
         self.getStamina().gain(gain);
         return gain;
     }

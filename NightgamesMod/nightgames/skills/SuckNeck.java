@@ -5,6 +5,7 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.skills.damage.DamageType;
 
 public class SuckNeck extends Skill {
 
@@ -27,8 +28,8 @@ public class SuckNeck extends Skill {
         if (target.roll(this, c, accuracy(c))) {
             if (getSelf().get(Attribute.Dark) >= 1) {
                 writeOutput(c, Result.special, target);
-                int m = 10 + Math.min(20, getSelf().get(Attribute.Dark) / 2);
-                target.drain(c, getSelf(), m);
+                int m = 10;
+                target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, m));
             } else {
                 writeOutput(c, Result.normal, target);
             }

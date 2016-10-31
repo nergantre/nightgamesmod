@@ -50,6 +50,7 @@ import nightgames.skills.Command;
 import nightgames.skills.Nothing;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
+import nightgames.skills.damage.DamageType;
 import nightgames.stance.Position;
 import nightgames.stance.Stance;
 import nightgames.status.Alluring;
@@ -414,6 +415,71 @@ public abstract class Character extends Observable implements Cloneable {
         return xp;
     }
 
+    
+    public double modifyDamage(DamageType type, Character other, double baseDamage) {
+        // so for each damage type, one level from the attacker should result in about 10% increased damage, while a point in defense should reduce damage by around 5% per level.
+        // this differential should be max capped to (3 * (100 + attacker's level * 5))%
+        // this differential should be min capped to (.5 * (100 + attacker's level * 5))%
+        double maxDamage = baseDamage * 3 * (1 + .05 * getLevel());
+        double minDamage = baseDamage * .5 * (1 + .05 * getLevel());
+        double damage = baseDamage * (1 + .1 * getOffensivePower(type) - .05 * other.getDefensivePower(type));
+        return Math.min(Math.max(minDamage, damage), maxDamage);
+    }
+
+    private double getDefensivePower(DamageType type){
+        switch (type) {
+            case arcane:
+                return get(Attribute.Arcane) + get(Attribute.Dark) / 2 + get(Attribute.Divinity) / 2 + get(Attribute.Ki) / 2;
+            case pleasure:
+                return get(Attribute.Seduction);
+            case temptation:
+                return (get(Attribute.Seduction) * 2 + get(Attribute.Cunning)) / 3.0;
+            case technique:
+                return get(Attribute.Cunning);
+            case physicial:
+                return (get(Attribute.Power) * 2 + get(Attribute.Cunning)) / 3.0;
+            case gadgets:
+                return get(Attribute.Cunning) / 2;
+            case drain:
+                return (get(Attribute.Dark) * 2 + get(Attribute.Arcane)) / 3.0;
+            case stance:
+                return (get(Attribute.Cunning) * 2 + get(Attribute.Power)) / 3.0;
+            case weaken:
+                return (get(Attribute.Dark) * 2 + get(Attribute.Divinity)) / 3.0;
+            case willpower:
+                return (get(Attribute.Dark) + get(Attribute.Fetish) + get(Attribute.Divinity) * 2 + getLevel()) / 3.0;
+            default:
+                return 0;
+        }
+    }
+
+    private double getOffensivePower(DamageType type){
+        switch (type) {
+            case gadgets:
+                return (get(Attribute.Science) * 2 + get(Attribute.Cunning)) / 3.0;
+            case pleasure:
+                return get(Attribute.Seduction);
+            case arcane:
+                return get(Attribute.Arcane);
+            case temptation:
+                return (get(Attribute.Seduction) * 2 + get(Attribute.Cunning)) / 3.0;
+            case technique:
+                return get(Attribute.Cunning);
+            case physicial:
+                return (get(Attribute.Power) * 2 + get(Attribute.Cunning) + get(Attribute.Ki) * 2) / 3.0;
+            case drain:
+                return (get(Attribute.Dark) * 2 + get(Attribute.Arcane)) / 3.0;
+            case stance:
+                return (get(Attribute.Cunning) * 2 + get(Attribute.Power)) / 3.0;
+            case weaken:
+                return (get(Attribute.Dark) * 2 + get(Attribute.Divinity) + get(Attribute.Ki)) / 3.0;
+            case willpower:
+                return (get(Attribute.Dark) + get(Attribute.Fetish) + get(Attribute.Divinity) * 2 + getLevel()) / 3.0;
+            default:
+                return 0;
+        }
+    }
+
     public void pain(Combat c, int i) {
         pain(c, i, true, true);
     }
@@ -528,7 +594,7 @@ public abstract class Character extends Observable implements Cloneable {
         }
         i = Math.max(1, i);
         if (c != null) {
-            c.writeSystemMessage(String.format("%s weaked by <font color='rgb(200,200,200)'>%d<font color='white'>",
+            c.writeSystemMessage(String.format("%s weakened by <font color='rgb(200,200,200)'>%d<font color='white'>",
                             subjectWas(), i));
         }
         stamina.reduce(weak);
@@ -1006,20 +1072,20 @@ public abstract class Character extends Observable implements Cloneable {
         if (regen > 0) {
             heal(c, regen);
         } else {
-            weaken(c, regen);
+            weaken(c, -regen);
         }
         if (combat) {
             if (has(Trait.exhibitionist) && mostlyNude()) {
-                buildMojo(c, 5);
+                buildMojo(c, 2);
             }
             if (outfit.has(ClothingTrait.stylish)) {
-                buildMojo(c, 3);
+                buildMojo(c, 1);
             }
             if (has(Trait.SexualGroove)) {
                 buildMojo(c, 2);
             }
             if (outfit.has(ClothingTrait.lame)) {
-                buildMojo(c, -2);
+                buildMojo(c, -1);
             }
         }
         orgasmed = false;
@@ -1711,7 +1777,7 @@ public abstract class Character extends Observable implements Cloneable {
                                                 + selfOrgan.describe(this) + " through your connection.",
                                 this, opponent));
                 int m = Global.random(5) + 5;
-                opponent.drain(c, this, m);
+                opponent.drain(c, this, (int) this.modifyDamage(DamageType.drain, opponent, m));
             }
             // TODO this works weirdly when both have both organs.
             body.tickHolding(c, opponent, selfOrgan, otherOrgan);
@@ -2663,7 +2729,7 @@ public abstract class Character extends Observable implements Cloneable {
         float fit = 0;
         // Urgency marks
         float arousalMod = 1.0f;
-        float staminaMod = 1.0f;
+        float staminaMod = 2.0f;
         float mojoMod = 1.0f;
         float usum = arousalMod + staminaMod + mojoMod;
         Character other = c.getOther(this);

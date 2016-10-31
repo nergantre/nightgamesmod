@@ -6,30 +6,22 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import nightgames.characters.Character;
-import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 
-public class FuckStrategy extends AbstractStrategy {
+public class ForeplayStrategy extends AbstractStrategy {
     @Override
     public double weight(Combat c, Character self) {
         double weight = 1;
-        if (self.getMood().equals(Emotion.horny)) {
-            weight *= 2;
-        }
         return weight;
     }
 
     @Override
     protected Set<Skill> filterSkills(Combat c, Character self, Set<Skill> allowedSkills) {
         Character other = c.getOther(self);
-        Set<Skill> fuckSkills = allowedSkills.stream().filter(skill -> Tactics.fucking.equals(skill.type(c))).collect(Collectors.toSet());
-        if (!fuckSkills.isEmpty()) {
-            return fuckSkills;
-        }
 
         Set<Tactics> positioningTactics = new HashSet<>();
         positioningTactics.add(Tactics.damage);
@@ -45,18 +37,16 @@ public class FuckStrategy extends AbstractStrategy {
         if (!self.crotchAvailable()) {
             return allowedSkills.stream().filter(skill -> skill.getTags().contains(SkillTag.undressing)).collect(Collectors.toSet());
         }
-        if (other.getArousal().percent() < 15) {
-            return allowedSkills.stream().filter(skill -> skill.type(c).equals(Tactics.pleasure)).collect(Collectors.toSet());
-        }
-        if (self.getArousal().percent() < 15) {
-            return allowedSkills.stream().filter(skill -> skill.getTags().contains(SkillTag.pleasureSelf)).collect(Collectors.toSet());
+        Set<Skill> foreplaySkills = allowedSkills.stream().filter(skill -> Tactics.pleasure.equals(skill.type(c))).collect(Collectors.toSet());
+        if (!foreplaySkills.isEmpty()) {
+            return foreplaySkills;
         }
         return Collections.emptySet();
     }
 
     @Override
     public CombatStrategy instance() {
-        return new FuckStrategy();
+        return new ForeplayStrategy();
     }
     
     @Override

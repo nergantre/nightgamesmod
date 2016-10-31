@@ -8,6 +8,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.skills.TailSuck;
+import nightgames.skills.damage.DamageType;
 
 public class TailSucked extends Status {
 
@@ -59,7 +60,7 @@ public class TailSucked extends Status {
                         .map(e -> e.getKey()).toArray(Attribute[]::new));
         affected.addlist.add(new Abuff(affected, toDrain, -power, 20));
         sucker.addlist.add(new Abuff(sucker, toDrain, power, 20));
-        affected.drain(c, sucker, 1 + Global.random(power * 3));
+        affected.drain(c, sucker, (int) sucker.modifyDamage(DamageType.drain, affected, 10));
         affected.drainMojo(c, sucker, 1 + Global.random(power * 3));
     }
 

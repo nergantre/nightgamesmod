@@ -7,6 +7,7 @@ import nightgames.characters.body.CockMod;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.skills.damage.DamageType;
 import nightgames.stance.Neutral;
 import nightgames.stance.Position;
 import nightgames.stance.Stance;
@@ -83,7 +84,7 @@ public class Struggle extends Skill {
                                             + target.possessivePronoun()
                                             + " knot through your asshole, and the rest of her dick soon follows.");
                             getSelf().removeStatus(Stsflag.knotted);
-                            getSelf().pain(c, 10);
+                            target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, 10));
                         } else {
                             c.write(getSelf(), "You manage to break away from " + target.name() + ".");
                         }
@@ -94,7 +95,7 @@ public class Struggle extends Skill {
                                             target.nameDirectObject(), target.possessivePronoun(),
                                             getSelf().possessivePronoun()));
                             getSelf().removeStatus(Stsflag.knotted);
-                            getSelf().pain(c, 10);
+                            target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, 10));
                         } else {
                             c.write(getSelf(), String.format("%s pulls away from %s and"
                                             + " %s dick slides out of %s butt.",
@@ -242,7 +243,7 @@ public class Struggle extends Skill {
                     } else {
                         new Anilingus(getSelf()).resolve(c, target);
                     }
-                    target.weaken(c, 5 + Global.random(5) + getSelf().get(Attribute.Power) / 2);
+                    target.weaken(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(5, 10)));
                     getSelf().struggle();
                     return false;
                 } else {
@@ -254,7 +255,7 @@ public class Struggle extends Skill {
                                         getSelf().subject(), target.nameDirectObject(), target.pronoun(),
                                         target.action("maintain"), target.possessivePronoun()));
                     }
-                    target.weaken(c, 5 + Global.random(5) + getSelf().get(Attribute.Power) / 2);
+                    target.weaken(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(5, 10)));
                     getSelf().struggle();
                     return false;
                 }

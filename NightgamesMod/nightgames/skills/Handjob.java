@@ -34,8 +34,13 @@ public class Handjob extends Skill {
     }
 
     @Override
+    public int accuracy(Combat c) {
+        return c.getStance().mobile(c.getOther(getSelf())) ? 35 : 100;
+    }
+
+    @Override
     public boolean resolve(Combat c, Character target) {
-        int m = 6 + Global.random(5);
+        int m = Global.random(8, 15);
 
         if (target.roll(this, c, accuracy(c))) {
             if (getSelf().get(Attribute.Seduction) >= 8) {

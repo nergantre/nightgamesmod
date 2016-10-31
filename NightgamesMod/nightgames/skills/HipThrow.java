@@ -7,6 +7,7 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.skills.damage.DamageType;
 import nightgames.status.Falling;
 
 public class HipThrow extends Skill {
@@ -35,9 +36,8 @@ public class HipThrow extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         if (getSelf().check(Attribute.Power, target.knockdownDC())) {
-            int m = Global.random(6) + target.get(Attribute.Power) / 2;
             writeOutput(c, Result.normal, target);
-            target.pain(c, m);
+            target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(10, 16)));
             target.add(c, new Falling(target));
             target.emote(Emotion.angry, 5);
         } else {

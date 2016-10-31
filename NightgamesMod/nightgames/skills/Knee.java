@@ -8,6 +8,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingTrait;
+import nightgames.skills.damage.DamageType;
 
 public class Knee extends Skill {
 
@@ -29,6 +30,7 @@ public class Knee extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         if (target.roll(this, c, accuracy(c))) {
+            double m = Global.random(40, 60);
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.normal, target));
             } else if (c.shouldPrintReceive(target)) {
@@ -42,13 +44,12 @@ public class Knee extends Skill {
                 }
             }
             if (target.has(Trait.achilles) && !target.has(ClothingTrait.armored)) {
-                target.pain(c, 20 + Global.random(6) + Math.min(getSelf().get(Attribute.Power), 50));
+                m += Global.random(16,20);
             }
             if (target.has(ClothingTrait.armored) || target.has(Trait.brassballs)) {
-                target.pain(c, Global.random(6) + Math.min(getSelf().get(Attribute.Power) / 2, 50));
-            } else {
-                target.pain(c, 4 + Global.random(11) + Math.min(getSelf().get(Attribute.Power), 50));
+                m *= .75;
             }
+            target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, m));
 
             target.emote(Emotion.angry, 20);
         } else {

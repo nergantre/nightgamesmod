@@ -50,6 +50,8 @@ public class Reyka extends BasePersonality {
         character.add(Trait.shameless);
 
         Global.gainSkills(character);
+        character.getStamina().setMax(50 + character.getLevel() * getGrowth().stamina);
+        character.getArousal().setMax(120 + character.getLevel() * getGrowth().arousal);
 
         character.plan = Plan.hunting;
         character.mood = Emotion.confident;

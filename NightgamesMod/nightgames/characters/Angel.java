@@ -41,6 +41,9 @@ public class Angel extends BasePersonality {
         character.mod(Attribute.Perception, 1);
         Global.gainSkills(character);
 
+        character.getStamina().setMax(60 + character.getLevel() * getGrowth().stamina);
+        character.getArousal().setMax(110 + character.getLevel() * getGrowth().arousal);
+
         character.add(Trait.undisciplined);
         character.add(Trait.lickable);
         character.setTrophy(Item.AngelTrophy);

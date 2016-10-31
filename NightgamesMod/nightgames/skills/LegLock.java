@@ -6,6 +6,7 @@ import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.skills.damage.DamageType;
 import nightgames.status.Abuff;
 
 public class LegLock extends Skill {
@@ -25,7 +26,7 @@ public class LegLock extends Skill {
         if (target.roll(this, c, accuracy(c))) {
             writeOutput(c, Result.normal, target);
             target.add(c, new Abuff(target, Attribute.Speed, -2, 5));
-            target.pain(c, Global.random(10) + 7);
+            target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(10, 16)));
             target.emote(Emotion.angry, 15);
         } else {
             writeOutput(c, Result.miss, target);

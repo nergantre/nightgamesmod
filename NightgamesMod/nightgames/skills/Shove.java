@@ -6,6 +6,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.skills.damage.DamageType;
 import nightgames.stance.Mount;
 import nightgames.stance.Neutral;
 import nightgames.stance.ReverseMount;
@@ -38,7 +39,7 @@ public class Shove extends Skill {
                         && getSelf().canSpend(5)) {
             writeOutput(c, Result.special, target);
             target.shred(ClothingSlot.top);
-            target.pain(c, Global.random(10) + 15 + (getSelf().get(Attribute.Power) + getSelf().get(Attribute.Ki)) / 4);
+            target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(10, 25)));
             if (getSelf().check(Attribute.Power, target.knockdownDC() - getSelf().get(Attribute.Ki))) {
                 c.setStance(new Neutral(getSelf(), target));
             }
@@ -61,7 +62,7 @@ public class Shove extends Skill {
                 }
                 success = false;
             }
-            target.pain(c, Global.random(10) + 10 + (getSelf().get(Attribute.Power) + getSelf().get(Attribute.Ki)) / 4);
+            target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(8, 20)));
         } else {
             if (getSelf().check(Attribute.Power, target.knockdownDC())) {
                 if (getSelf().human()) {
@@ -82,7 +83,7 @@ public class Shove extends Skill {
                 }
                 success = false;
             }
-            target.pain(c, Global.random(10) + 10 + (getSelf().get(Attribute.Power) + getSelf().get(Attribute.Ki)) / 4);
+            target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(16, 25)));
         }
         return success;
     }

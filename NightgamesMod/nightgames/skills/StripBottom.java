@@ -8,6 +8,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.skills.damage.DamageType;
 
 public class StripBottom extends Skill {
 
@@ -57,7 +58,7 @@ public class StripBottom extends Skill {
         } else {
             stripped = target.outfit.getTopOfSlot(ClothingSlot.bottom);
             writeOutput(c, Result.miss, target);
-            target.weaken(c, Global.random(6) + getSelf().get(Attribute.Power) / 4);
+            target.weaken(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(8, 16)));
             return false;
         }
         return true;

@@ -15,7 +15,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
-import nightgames.skills.strategy.FacesitStrategy;
+import nightgames.skills.strategy.KnockdownStrategy;
 import nightgames.skills.strategy.FootjobStrategy;
 import nightgames.start.NpcConfiguration;
 
@@ -32,7 +32,7 @@ public class Jewel extends BasePersonality {
     public Jewel(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
         super("Jewel", 1, charConfig, commonConfig);
         getCharacter().addPersonalStrategy(new FootjobStrategy());
-        getCharacter().addPersonalStrategy(new FacesitStrategy());
+        getCharacter().addPersonalStrategy(new KnockdownStrategy());
     }
 
     protected void applyBasicStats() {
@@ -88,6 +88,9 @@ public class Jewel extends BasePersonality {
         growth.addTrait(31, Trait.analTraining2);
         growth.addTrait(34, Trait.exhibitionist);
         growth.addTrait(37, Trait.naturalTop);
+
+        character.getStamina().setMax(100 + character.getLevel() * getGrowth().stamina);
+        character.getArousal().setMax(70 + character.getLevel() * getGrowth().arousal);
         growth.actions.put(40, () -> {
             character.body.addReplace(new AnalPussyPart(), 1);
         });

@@ -53,6 +53,9 @@ public class Eve extends BasePersonality {
         character.body.add(BreastsPart.d);
         character.body.add(BasicCockPart.big);
         character.body.add(PussyPart.normal);
+
+        character.getStamina().setMax(90 + character.getLevel() * getGrowth().stamina);
+        character.getArousal().setMax(80 + character.getLevel() * getGrowth().arousal);
         // somewhat androgynous face
         character.body.add(new FacePart(.1, .9));
         character.initialGender = CharacterSex.herm;

@@ -37,7 +37,7 @@ public class Porn extends Activity {
         if (player.has(Trait.expertGoogler)) {
             gain = gain + Global.random(2);
         }
-        gain = Math.max(0, (int) Math.min(maximumArousalForLevel, self.getArousal().trueMax() + gain) - gain);
+        gain = (int) Math.max(0, (int) Math.min(maximumArousalForLevel, self.getArousal().trueMax() + gain) - self.getArousal().trueMax());
         self.getArousal().gain(gain);
         return gain;
     }
