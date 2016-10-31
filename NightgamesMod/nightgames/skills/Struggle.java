@@ -87,7 +87,7 @@ public class Struggle extends Skill {
                                             + target.possessivePronoun()
                                             + " knot through your asshole, and the rest of her dick soon follows.");
                             getSelf().removeStatus(Stsflag.knotted);
-                            target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, 10));
+                            target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, 10));
                         } else {
                             c.write(getSelf(), "You manage to break away from " + target.name() + ".");
                         }
@@ -98,7 +98,7 @@ public class Struggle extends Skill {
                                             target.nameDirectObject(), target.possessivePronoun(),
                                             getSelf().possessivePronoun()));
                             getSelf().removeStatus(Stsflag.knotted);
-                            target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, 10));
+                            target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, 10));
                         } else {
                             c.write(getSelf(), String.format("%s pulls away from %s and"
                                             + " %s dick slides out of %s butt.",
@@ -246,7 +246,7 @@ public class Struggle extends Skill {
                     } else {
                         new Anilingus(getSelf()).resolve(c, target);
                     }
-                    target.weaken(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(5, 10)));
+                    target.weaken(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(5, 10)));
                     getSelf().struggle();
                     return false;
                 } else {
@@ -258,7 +258,7 @@ public class Struggle extends Skill {
                                         getSelf().subject(), target.nameDirectObject(), target.pronoun(),
                                         target.action("maintain"), target.possessivePronoun()));
                     }
-                    target.weaken(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(5, 10)));
+                    target.weaken(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(5, 10)));
                     getSelf().struggle();
                     return false;
                 }

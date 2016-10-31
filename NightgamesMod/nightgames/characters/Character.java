@@ -415,7 +415,7 @@ public abstract class Character extends Observable implements Cloneable {
         return xp;
     }
 
-    
+
     public double modifyDamage(DamageType type, Character other, double baseDamage) {
         // so for each damage type, one level from the attacker should result in about 10% increased damage, while a point in defense should reduce damage by around 5% per level.
         // this differential should be max capped to (3 * (100 + attacker's level * 5))%
@@ -439,7 +439,7 @@ public abstract class Character extends Observable implements Cloneable {
                 return (get(Attribute.Seduction) * 2 + get(Attribute.Cunning)) / 2.0;
             case technique:
                 return get(Attribute.Cunning);
-            case physicial:
+            case physical:
                 return (get(Attribute.Power) * 2 + get(Attribute.Cunning)) / 2.0;
             case gadgets:
                 return get(Attribute.Cunning);
@@ -459,7 +459,7 @@ public abstract class Character extends Observable implements Cloneable {
     private double getOffensivePower(DamageType type){
         switch (type) {
             case biological:
-                return get(Attribute.Animism) + get(Attribute.Bio) + get(Attribute.Medicine) + get(Attribute.Science) + get(Attribute.Cunning) / 2;
+                return get(Attribute.Animism) + get(Attribute.Bio) + get(Attribute.Medicine) + get(Attribute.Science);
             case gadgets:
                 double power = (get(Attribute.Science) * 2 + get(Attribute.Cunning)) / 3.0;
                 if (has(Trait.toymaster)) {
@@ -474,7 +474,7 @@ public abstract class Character extends Observable implements Cloneable {
                 return (get(Attribute.Seduction) * 2 + get(Attribute.Cunning)) / 3.0;
             case technique:
                 return get(Attribute.Cunning);
-            case physicial:
+            case physical:
                 return (get(Attribute.Power) * 2 + get(Attribute.Cunning) + get(Attribute.Ki) * 2) / 3.0;
             case drain:
                 return (get(Attribute.Dark) * 2 + get(Attribute.Arcane)) / 3.0;

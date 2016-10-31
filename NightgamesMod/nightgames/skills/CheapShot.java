@@ -48,7 +48,7 @@ public class CheapShot extends Skill {
             c.write(getSelf(), getSelf().bbLiner(c));
         }
         c.setStance(new Behind(getSelf(), target));
-        target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(8, 20)));
+        target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(8, 20)));
         getSelf().buildMojo(c, 10);
 
         getSelf().emote(Emotion.confident, 15);

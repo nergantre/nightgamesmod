@@ -69,7 +69,7 @@ public class Kick extends Skill {
             if (target.has(ClothingTrait.armored)) {
                 m = m / 2;
             }
-            target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, m));
+            target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, m));
             target.emote(Emotion.angry, 20);
         } else {
             writeOutput(c, Result.miss, target);

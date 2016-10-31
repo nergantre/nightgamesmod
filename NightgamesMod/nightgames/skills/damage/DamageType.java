@@ -3,7 +3,7 @@ package nightgames.skills.damage;
 public enum DamageType {
     pleasure,
     temptation,
-    physicial,
+    physical,
     drain,
     weaken,
     willpower,

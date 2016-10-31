@@ -364,7 +364,7 @@ public class Command extends Skill {
                                                 + " makes everything alright.", target.subjectAction("slam"),
                                                 target.possessivePronoun(), target.possessivePronoun(),
                                                 target.pronoun(), getSelf().nameOrPossessivePronoun()));
-                target.pain(c, (int) target.modifyDamage(DamageType.physicial, target, Global.random(30, 50)));
+                target.pain(c, (int) target.modifyDamage(DamageType.physical, target, Global.random(30, 50)));
                 break;
             case STRIP_MASTER:
                 Clothing removed = getStripTarget(getSelf());

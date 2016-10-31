@@ -44,7 +44,7 @@ public class Shove extends Skill {
                         && getSelf().canSpend(5)) {
             writeOutput(c, Result.special, target);
             target.shred(ClothingSlot.top);
-            target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(10, 25)));
+            target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(10, 25)));
             if (getSelf().check(Attribute.Power, target.knockdownDC() - getSelf().get(Attribute.Ki))) {
                 c.setStance(new Neutral(getSelf(), target));
             }
@@ -67,7 +67,7 @@ public class Shove extends Skill {
                 }
                 success = false;
             }
-            target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(8, 20)));
+            target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(8, 20)));
         } else {
             if (getSelf().check(Attribute.Power, target.knockdownDC())) {
                 if (getSelf().human()) {
@@ -88,7 +88,7 @@ public class Shove extends Skill {
                 }
                 success = false;
             }
-            target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(16, 25)));
+            target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(16, 25)));
         }
         return success;
     }

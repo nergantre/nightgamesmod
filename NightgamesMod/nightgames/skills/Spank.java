@@ -48,7 +48,7 @@ public class Spank extends Skill {
         } else {
             writeOutput(c, Result.normal, target);
         }
-        target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, m));
+        target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, m));
 
         target.emote(Emotion.angry, 25);
         target.emote(Emotion.nervous, 15);

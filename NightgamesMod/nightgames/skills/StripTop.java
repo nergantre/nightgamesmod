@@ -57,7 +57,7 @@ public class StripTop extends Skill {
         } else {
             stripped = target.outfit.getTopOfSlot(ClothingSlot.top);
             writeOutput(c, Result.miss, target);
-            target.weaken(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(8, 16)));
+            target.weaken(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(8, 16)));
             return false;
         }
         return true;

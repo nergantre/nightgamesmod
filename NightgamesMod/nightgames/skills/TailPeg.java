@@ -112,7 +112,7 @@ public class TailPeg extends Skill {
                     target.add(c, new TailFucked(target, getSelf(), "ass"));
                 }
             }
-            target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, strength / 2));
+            target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, strength / 2));
             target.emote(Emotion.nervous, 10);
             target.emote(Emotion.desperate, 10);
             getSelf().emote(Emotion.confident, 15);

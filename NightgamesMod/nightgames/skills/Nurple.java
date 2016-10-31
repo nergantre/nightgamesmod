@@ -37,7 +37,7 @@ public class Nurple extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         double m = Global.random(4, 7);
-        DamageType damageType = DamageType.physicial;
+        DamageType damageType = DamageType.physical;
         if (target.roll(this, c, accuracy(c))) {
             if (getSelf().has(Item.ShockGlove) && getSelf().has(Item.Battery, 2)) {
                 writeOutput(c, Result.special, target);

@@ -76,7 +76,7 @@ public class Stunned extends DurationStatus {
 
     @Override
     public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x) {
-        return 0;
+        return -x / 2;
     }
 
     @Override

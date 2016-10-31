@@ -394,7 +394,7 @@ public class Body implements Cloneable {
         retval += seductionDiff / 10.0;
         retval *= (.5 + self.getExposure());
         if (self.is(Stsflag.glamour)) {
-            retval += 4.0;
+            retval += 2.0;
         }
         if (self.is(Stsflag.alluring)) {
             retval *= 1.5;

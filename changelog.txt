@@ -1,3 +1,35 @@
+2.3.0
+Bug fixes:
+- A lot of random miscellaneous stuff I've never noticed
+	- Fixed bug where you gain 5 mojo permanently every turn your naked as a exhibitionist... :(
+	- Fixed bug where you could not lick pussy from underneath a 69
+	- Many typo fixes
+
+New:
+- Added preset AI strategies that will hopefully spice up the game a bit more. Expect AIs to use some more of the lesser used skills
+- Added a new female Tighten variant: Vice. This will instantly make the target cum, but can only be used while the target is stunned or is under 25% stamina as well as having >50% arousal.
+	- Requires 24 Ninjutsu (so basically no one is going to use this yet)
+- Added a new arcane skill Glamour which increases the "hotness" multiplier for arousal damage by 2.0. Requires 6 arcane.
+
+Balance changes:
+- Changed how stamina works.
+	- Now all sources of healing is much less than before, so stamina damage will stick a bit more.
+	- Nerfed exercised and porn to give 1-2 points without fitness nut/expert googler, 2-4 with the perks.
+		- You can now only achieve a maximum of 100 + level * 8 arousal, and 100 + level * 5 stamina through training.
+			Hopefully this stops the stat ballooning at end game where you can just spam porn and have > 2000 maximum arousal.
+	- Taking points in power (and to a lesser extent cunning) will now both increase the amount of hurt you do, and the amount of stamina loss you get from taking damage.
+	- Getting knocked off your feet will stun you for 2 turns, and getting your stamina bar emptied will stun you for 4 turns.
+	- Being stunned/winded will reduce pleasure damage taken by 50%.
+	- Having a point in Divinity will upgrade the braced status after getting up, increasing the damage reduction and extending it to 6 turns.
+	- Shield now lasts for 7 turns (up from 4).
+	- Increased the pain threshold for reducing arousal from 4% up to 16.66%
+- Points in cunning will now decrease the amount of damage from toys taken as well as increasing damage dealt. Science will also increase toys damage, but will not add to defence.
+- Points in dark and arcane will increase the amount of drain damage dealt and decreased drain damage received.
+- Points in Bio/Animism/Science/Medicine will improve biological damage. So far this is limited to pheromones and aphrodisiacs. The same attributes will reduce damage from them with the addition of cunning to a lesser extent.
+- Mara now has a new perk "Deft hands" at 33 that increases her pleasure damage with hands by a flat 2-5.
+- Mara now has a new perk "Nimble toes" at 42 that increases her pleasure damage with feet by a flat 2-5.
+- Mara now has a new perk "Toymaster" at 36 that increases her skill effectiveness with toys.
+
 2.0.1 changelog
 Bug fixes:
 - Fixed a ton of Airi specific bugs (thanks dndw)

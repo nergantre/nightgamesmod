@@ -21,7 +21,7 @@ public class ViceGrip extends Thrust {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().canRespond() && c.getStance().vaginallyPenetratedBy(getSelf(), target)
-                        && c.getStance().havingSexNoStrapped() && target.hasDick() && (target.stunned() || target.getStamina().percent() < 25);
+                        && c.getStance().havingSexNoStrapped() && target.hasDick() && (target.stunned() || target.getStamina().percent() < 25) && target.getArousal().percent() >= 50;
     }
 
     @Override

@@ -33,7 +33,7 @@ public class Squeeze extends Skill {
     public boolean resolve(Combat c, Character target) {
         if (target.roll(this, c, accuracy(c))) {
             double m = Global.random(10, 20);
-            DamageType type = DamageType.physicial;
+            DamageType type = DamageType.physical;
             if (target.has(Trait.brassballs)) {
                 if (target.human()) {
                     c.write(getSelf(), receive(c, 0, Result.weak2, target));

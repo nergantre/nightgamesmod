@@ -41,28 +41,28 @@ public class Slap extends Skill {
                                                     + " enough to throw {other:pronoun} to the ground.", getSelf(),
                                     target));
                 }
-                target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(10, 20)));
+                target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(10, 20)));
                 target.emote(Emotion.nervous, 40);
                 target.emote(Emotion.angry, 30);
             } else if (getSelf().get(Attribute.Animism) >= 8) {
                 writeOutput(c, Result.special, target);
                 if (getSelf().has(Trait.pimphand)) {
-                    target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(35, 50) * (25 + getSelf().getArousal().percent()) / 100));
+                    target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(35, 50) * (25 + getSelf().getArousal().percent()) / 100));
                     target.emote(Emotion.nervous, 40);
                     target.emote(Emotion.angry, 30);
                 } else {
-                    target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(25, 45) * (25 + getSelf().getArousal().percent()) / 100));
+                    target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(25, 45) * (25 + getSelf().getArousal().percent()) / 100));
                     target.emote(Emotion.nervous, 25);
                     target.emote(Emotion.angry, 30);
                 }
             } else {
                 writeOutput(c, Result.normal, target);
                 if (getSelf().has(Trait.pimphand)) {
-                    target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(7, 15)));
+                    target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(7, 15)));
                     target.emote(Emotion.nervous, 20);
                     target.emote(Emotion.angry, 30);
                 } else {
-                    target.pain(c, (int) getSelf().modifyDamage(DamageType.physicial, target, Global.random(5, 10)));
+                    target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(5, 10)));
                     target.emote(Emotion.nervous, 10);
                     target.emote(Emotion.angry, 30);
                 }
