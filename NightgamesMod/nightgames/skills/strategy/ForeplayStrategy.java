@@ -1,6 +1,7 @@
 package nightgames.skills.strategy;
 
 import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -19,12 +20,12 @@ public class ForeplayStrategy extends KnockdownThenActionStrategy {
     }
 
     @Override
-    protected Set<Skill> getPreferredAfterKnockdownSkills(Combat c, Character self, Set<Skill> allowedSkills) {
+    protected Optional<Set<Skill>> getPreferredAfterKnockdownSkills(Combat c, Character self, Set<Skill> allowedSkills) {
         if (c.getStance().havingSex()) {
-            return Collections.emptySet();
+            // terminate this strategy if already fucking
+            return Optional.of(Collections.emptySet());
         }
-        Set<Skill> foreplaySkills = allowedSkills.stream().filter(skill -> Tactics.pleasure.equals(skill.type(c)) || skill.getTags().contains(SkillTag.stripping)).collect(Collectors.toSet());
-        return foreplaySkills;
+        return emptyIfSetEmpty(allowedSkills.stream().filter(skill -> Tactics.pleasure.equals(skill.type(c)) || skill.getTags().contains(SkillTag.stripping)).collect(Collectors.toSet()));
     }
 
     @Override

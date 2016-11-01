@@ -238,7 +238,7 @@ public class Struggle extends Skill {
                         c.write(getSelf(), String.format("%s struggles against %s, but %s %s %s ass "
                                         + "over %s face again, forcing %s to service %s.", getSelf().subject(),
                                         target.nameDirectObject(), target.pronoun(), target.action("drop"),
-                                        target.possessivePronoun(), getSelf().pronoun(),
+                                        target.possessivePronoun(), getSelf().possessivePronoun(),
                                         getSelf().directObject(), target.directObject()));
                     }
                     if (target.hasPussy()) {

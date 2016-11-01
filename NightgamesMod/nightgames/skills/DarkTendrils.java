@@ -31,16 +31,17 @@ public class DarkTendrils extends Skill {
 
     @Override
     public String describe(Combat c) {
-        return "Summon shadowy tentacles to grab or trip your opponent: 5 Arousal";
+        return "Summon shadowy tentacles to grab or trip your opponent: 15% Arousal";
     }
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        getSelf().arouse(5, c);
+        getSelf().arouse((int) (getSelf().getArousal().max() * .15), c);
         if (target.roll(this, c, accuracy(c))) {
             if (Global.random(2) == 1) {
                 writeOutput(c, Result.normal, target);
                 target.add(c, new Bound(target, Math.min(10 + 3 * getSelf().get(Attribute.Dark), 55), "shadows"));
+                target.add(c, new Falling(target));
             } else if (getSelf().check(Attribute.Dark, target.knockdownDC() - getSelf().getMojo().get())) {
                 writeOutput(c, Result.weak, target);
                 target.add(c, new Falling(target));

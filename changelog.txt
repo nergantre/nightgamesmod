@@ -1,3 +1,24 @@
+2.3.1
+Bug fixes:
+- Fixed a crash bug related to tentacles.
+	- Unfortunately this does change it a bit, in that it will use the character's stats in calculating pleasure damage whereas before it was using a dummy tentacles character. Oh well.
+- Fixed a crash bug related to the Glamour skill
+- Fixed a bug that caused AI opponents not to evaluate tickle and slap as stamina damage.
+- Stunned now 3 -> 2 turns and winded lasts 3-4 -> 4 turns.
+- Fixed a bug where characters will equip random clothing they own upon loading from a save. This removes compatibility with SUPER old saves. If you're using like < 1.9 saves, well, don't :P
+- Fixed a bunch of typos and grammar issues. I swear writing for nightgames is like doing madlibs...
+- Fixed a bug where Footjob strategy would cause the user to do squats. (repeatedly stand up and mount you)
+
+New:
+- Added WindUp strategy to Mara. Maybe she'll actually begin using some of those temporal skills...
+
+Balance:
+- Made windup a bit more attractive.
+	- Charging will now only cost charges * 5 mojo instead of charges * 10.
+- Dark Tendrils will now also knockdown upon successful bind.
+	- It now will arouse the user by 15% instead of by 5 flat.
+- Dominate will also now cost 10% arousal instead of a flat 10.
+
 2.3.0
 Bug fixes:
 - A lot of random miscellaneous stuff I've never noticed

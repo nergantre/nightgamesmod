@@ -7,6 +7,7 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.damage.DamageType;
 import nightgames.stance.Stance;
 import nightgames.stance.StandingOver;
@@ -15,6 +16,9 @@ public class Slap extends Skill {
 
     public Slap(Character self) {
         super("Slap", self);
+        addTag(SkillTag.staminaDamage);
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.hurt);
     }
 
     @Override

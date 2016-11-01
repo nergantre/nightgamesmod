@@ -563,7 +563,7 @@ public class Body implements Cloneable {
         double base = (magnitude + bonusDamage);
         double multiplier = Math.max(0, 1 + ((sensitivity - 1) + (pleasure - 1) + (perceptionBonus - 1)));
 
-        if (skill != null) {
+        if (skill != null && opponent != null && c.getCombatantData(opponent) != null) {
             multiplier = Math.max(0, multiplier + skill.multiplierForStage(character)) * c.getCombatantData(opponent).getMoveModifier(skill);
         }
         

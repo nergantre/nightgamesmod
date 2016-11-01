@@ -1,5 +1,6 @@
 package nightgames.skills.strategy;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -36,14 +37,13 @@ public class OralStrategy extends KnockdownThenActionStrategy {
     }
 
     @Override
-    protected Set<Skill> getPreferredSkills(Combat c, Character self, Set<Skill> allowedSkills) {
-        Set<Skill> handSkills = allowedSkills.stream()
+    protected Optional<Set<Skill>> getPreferredSkills(Combat c, Character self, Set<Skill> allowedSkills) {
+        return emptyIfSetEmpty(allowedSkills.stream()
                         .filter(skill -> ((skill.getTags().contains(SkillTag.oral)
                                         && skill.getTags().contains(SkillTag.pleasure)
                                         ) || skill.getTags().contains(SkillTag.stripping))
                                         && !skill.getTags().contains(SkillTag.suicidal))
-                        .collect(Collectors.toSet());
-        return handSkills;
+                        .collect(Collectors.toSet()));
     }
     
     @Override

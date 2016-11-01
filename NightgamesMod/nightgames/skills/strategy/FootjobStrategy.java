@@ -1,6 +1,7 @@
 package nightgames.skills.strategy;
 
 import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -35,25 +36,33 @@ public class FootjobStrategy extends KnockdownThenActionStrategy {
     }
 
     @Override
-    protected Set<Skill> getPreferredSkills(Combat c, Character self, Set<Skill> allowedSkills) {
+    protected Optional<Set<Skill>> getPreferredSkills(Combat c, Character self, Set<Skill> allowedSkills) {
         Set<Skill> footjobSkills = allowedSkills.stream()
-                        .filter(skill -> (skill.getTags().contains(SkillTag.usesFeet) || skill.getTags().contains(SkillTag.stripping))
+                        .filter(skill -> (skill.getTags().contains(SkillTag.usesFeet))
                                         && !skill.getTags().contains(SkillTag.suicidal))
                         .collect(Collectors.toSet());
 
         if (!footjobSkills.isEmpty()) {
-            return footjobSkills;
+            return Optional.of(footjobSkills);
         }
-        if (!self.outfit.hasNoShoes()) {
-            return Collections.singleton(new TakeOffShoes(self));
+        if (!c.getOther(self).crotchAvailable()) {
+            Set<Skill> strippingSkills = allowedSkills.stream()
+                            .filter(skill -> (skill.getTags().contains(SkillTag.stripping))
+                                            && !skill.getTags().contains(SkillTag.suicidal))
+                            .collect(Collectors.toSet());
+            return Optional.of(strippingSkills);
         }
         
-        StandUp standup = new StandUp(self);
-        if (allowedSkills.contains(standup)) {
-            return Collections.singleton(standup);
+        if (!self.outfit.hasNoShoes()) {
+            return Optional.of(Collections.singleton(new TakeOffShoes(self)));
         }
 
-        return Collections.emptySet();
+        StandUp standup = new StandUp(self);
+        if (allowedSkills.contains(standup)) {
+            return Optional.of(Collections.singleton(standup));
+        }
+
+        return Optional.empty();
     }
     
     @Override

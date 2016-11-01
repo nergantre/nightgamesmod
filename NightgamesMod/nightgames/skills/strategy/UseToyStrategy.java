@@ -1,5 +1,6 @@
 package nightgames.skills.strategy;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,14 +18,12 @@ public class UseToyStrategy extends KnockdownThenActionStrategy {
     }
 
     @Override
-    protected Set<Skill> getPreferredSkills(Combat c, Character self, Set<Skill> allowedSkills) {
-        Set<Skill> gadgetSkills = allowedSkills.stream()
+    protected Optional<Set<Skill>> getPreferredSkills(Combat c, Character self, Set<Skill> allowedSkills) {
+        return emptyIfSetEmpty(allowedSkills.stream()
                         .filter(skill -> (skill.getTags().contains(SkillTag.usesToy)
                                         || skill.getTags().contains(SkillTag.stripping))
                                         && !skill.getTags().contains(SkillTag.suicidal))
-                        .collect(Collectors.toSet());
-
-        return gadgetSkills;
+                        .collect(Collectors.toSet()));
     }
     
     @Override

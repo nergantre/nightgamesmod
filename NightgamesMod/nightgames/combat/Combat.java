@@ -151,7 +151,7 @@ public class Combat extends Observable implements Cloneable {
         } else if (character.equals(p2)) {
             return p2Data;
         } else {
-            throw new IllegalArgumentException(character + " is not in combat " + this);
+            return null;
         }
     }
 
@@ -749,7 +749,7 @@ public class Combat extends Observable implements Cloneable {
     public void checkStamina(Character p) {
         if (p.getStamina()
              .isEmpty() && !p.is(Stsflag.stunned)) {
-            p.add(this, new Winded(p));
+            p.add(this, new Winded(p, 3));
             Character other;
             if (p == p1) {
                 other = p2;

@@ -174,7 +174,7 @@ public class Kiss extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return target.name()
+            return getSelf().subject()
                             + " pulls you in for a kiss, but you manage to push her face away.";
         }
         if (modifier == Result.divine) {

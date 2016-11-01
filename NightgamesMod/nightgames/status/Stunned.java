@@ -13,7 +13,7 @@ import nightgames.combat.Combat;
  */
 public class Stunned extends DurationStatus {
     public Stunned(Character affected) {
-        this(affected, 2);
+        this(affected, 1);
     }
 
     public Stunned(Character affected, int duration) {

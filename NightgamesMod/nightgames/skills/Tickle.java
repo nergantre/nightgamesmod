@@ -17,6 +17,7 @@ public class Tickle extends Skill {
     public Tickle(Character self) {
         super("Tickle", self);
         addTag(SkillTag.weaken);
+        addTag(SkillTag.staminaDamage);
     }
 
     @Override

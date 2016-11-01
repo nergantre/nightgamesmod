@@ -116,7 +116,7 @@ public class Finger extends Skill {
                             + "%s doesn't know where %s the most sensitive, so %s rubs and "
                             + "strokes every bit of %s moist flesh under %s fingers.",
                             getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().pronoun(),
-                            getSelf().subject(), target.subject(), getSelf().pronoun(),
+                            getSelf().subject(), target.subjectAction("are", "is"), getSelf().pronoun(),
                             target.possessivePronoun(), getSelf().possessivePronoun());
         } else {
             if (target.getArousal().get() <= 15) {

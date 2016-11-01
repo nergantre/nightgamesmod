@@ -16,7 +16,7 @@ import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
-import nightgames.skills.strategy.BarrierStrategy;
+import nightgames.skills.strategy.WindUpStrategy;
 import nightgames.skills.strategy.NurseStrategy;
 import nightgames.start.NpcConfiguration;
 import nightgames.status.Energized;
@@ -50,7 +50,7 @@ public class Cassie extends BasePersonality {
         character.mod(Attribute.Cunning, 1);
         character.mod(Attribute.Perception, 1);
 
-        character.addPersonalStrategy(new BarrierStrategy());
+        character.addPersonalStrategy(new WindUpStrategy());
         character.addPersonalStrategy(new NurseStrategy());
 
         character.getStamina().setMax(70 + character.getLevel() * getGrowth().stamina);

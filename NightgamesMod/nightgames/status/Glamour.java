@@ -20,7 +20,7 @@ public class Glamour extends DurationStatus {
 
     @Override
     public String initialMessage(Combat c, boolean replaced) {
-        return String.format("%s surrounded %s with a arcane glamour.\n", affected.subjectAction("have", "has"));
+        return String.format("%s surrounded %s with a arcane glamour.\n", affected.subjectAction("have", "has"), affected.reflectivePronoun());
     }
 
     @Override

@@ -11,7 +11,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
-import nightgames.skills.strategy.BarrierStrategy;
+import nightgames.skills.strategy.WindUpStrategy;
 import nightgames.skills.strategy.FootjobStrategy;
 import nightgames.skills.strategy.NurseStrategy;
 import nightgames.skills.strategy.StraponStrategy;
@@ -52,7 +52,8 @@ public class Mara extends BasePersonality {
         character.addPersonalStrategy(new FootjobStrategy());
         character.addPersonalStrategy(new UseToyStrategy());
         character.addPersonalStrategy(new StraponStrategy());
-        
+        character.addPersonalStrategy(new WindUpStrategy());
+
         Global.gainSkills(character);
         character.add(Trait.petite);
         character.add(Trait.dexterous);

@@ -33,7 +33,7 @@ public class LustAura extends Skill {
 
     @Override
     public String describe(Combat c) {
-        return "Inflicts arousal over time: 5 Arousal, 5 Mojo";
+        return "Inflicts arousal over time: 10 Arousal, 10 Mojo";
     }
 
     @Override

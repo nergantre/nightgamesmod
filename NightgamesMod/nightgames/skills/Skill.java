@@ -11,7 +11,6 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
-import nightgames.skills.damage.DamageType;
 import nightgames.skills.damage.Staleness;
 import nightgames.status.FiredUp;
 import nightgames.status.Status;
@@ -198,8 +197,12 @@ public abstract class Skill {
         if (success) {
             skill.user().buildMojo(c, generated);
         }
-        c.getCombatantData(skill.getSelf()).decreaseMoveModifier(c, skill);
-        c.getCombatantData(skill.user()).setLastUsedSkillName(skill.getName());
+        if (c.getCombatantData(skill.getSelf()) != null) {
+            c.getCombatantData(skill.getSelf()).decreaseMoveModifier(c, skill);
+        }
+        if (c.getCombatantData(skill.user()) != null) { 
+            c.getCombatantData(skill.user()).setLastUsedSkillName(skill.getName());
+        }
     }
 
     public int getCooldown() {
