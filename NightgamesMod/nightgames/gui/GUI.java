@@ -1251,7 +1251,7 @@ public class GUI extends JFrame implements Observer {
             timeLabel.setText(Global.getDay().getTime() + " pm");
             timeLabel.setForeground(new Color(253, 184, 19));
         } else {
-            throw new RuntimeException("Unknown time of day: " + Global.getTime());
+            System.err.println("Unknown time of day: " + Global.getTime());
         }
         displayStatus();
     }

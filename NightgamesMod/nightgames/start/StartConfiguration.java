@@ -85,7 +85,13 @@ public class StartConfiguration {
 
         cfg.npcs = new HashSet<>();
         JsonArray npcs = root.getAsJsonArray("npcs");
-        npcs.forEach(element -> cfg.npcs.add(NpcConfiguration.parse(element.getAsJsonObject())));
+        npcs.forEach(element -> {
+            try {
+                cfg.npcs.add(NpcConfiguration.parse(element.getAsJsonObject()));
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            }
+        });
         JsonArray flags = root.getAsJsonArray("flags");
         cfg.flags = JsonUtils.collectionFromJson(flags, Flag.class);
         return cfg;

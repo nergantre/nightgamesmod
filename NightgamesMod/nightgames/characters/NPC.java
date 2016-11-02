@@ -442,7 +442,9 @@ public class NPC extends Character {
     @Override
     public void move() {
         if (state == State.combat) {
-            location.fight.battle();
+            if (location != null && location.fight != null) {
+                location.fight.battle();
+            }
         } else if (busy > 0) {
             busy--;
         } else if (this.is(Stsflag.enthralled) && !has(Trait.immobile)) {

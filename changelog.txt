@@ -1,3 +1,10 @@
+2.3.2
+Bug fixes:
+- Fixed a crash bug still related to tentacles. Woops.
+- Fixed a crash bug related to spectating
+- Fixed a bug where any starts loaded after futanari time would fail to appear (extra comma in the json, guessing dndw fixed it but forgot to push)
+- Fixed a bug where Yui would join the game even though she's only half implemented. Woops.
+
 2.3.1
 Bug fixes:
 - Fixed a crash bug related to tentacles.

@@ -562,9 +562,12 @@ public class Body implements Cloneable {
         bonusDamage = Math.max(0, bonusDamage);
         double base = (magnitude + bonusDamage);
         double multiplier = Math.max(0, 1 + ((sensitivity - 1) + (pleasure - 1) + (perceptionBonus - 1)));
+        multiplier = Math.max(0, multiplier + skill.multiplierForStage(character));
 
+        double staleness = 1.0;
         if (skill != null && opponent != null && c.getCombatantData(opponent) != null) {
-            multiplier = Math.max(0, multiplier + skill.multiplierForStage(character)) * c.getCombatantData(opponent).getMoveModifier(skill);
+            staleness = c.getCombatantData(opponent).getMoveModifier(skill);
+            multiplier *= staleness;
         }
         
         double dominance = 0.0;
@@ -598,7 +601,6 @@ public class Body implements Cloneable {
                             : "";
             String stageString = skill == null ? "" : String.format(" + stage:%.2f", skill.multiplierForStage(character));
             String dominanceString = dominance < 0.01 ? "" : String.format(" + dominance:%.2f", dominance);
-            double staleness = c.getCombatantData(opponent).getMoveModifier(skill);
             String staleString = staleness < .99 ? String.format(" x staleness: %.2f", staleness) : "";
             String battleString = String.format(
                             "%s%s %s<font color='white'> was pleasured by %s%s<font color='white'> for <font color='rgb(255,50,200)'>%d<font color='white'> "
