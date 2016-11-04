@@ -650,38 +650,40 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void tempt(Combat c, Character tempter, BodyPart with, int i) {
-        if (tempter != null && with != null) {
-            // triple multiplier for the body part
-            double temptMultiplier = body.getCharismaBonus(tempter) + with.getHotness(tempter, this) * 2;
-            int dmg = (int) Math.round(i * temptMultiplier);
-            tempt(dmg);
-            String message = String.format(
-                            "%s tempted by %s %s for <font color='rgb(240,100,100)'>%d<font color='white'> (base:%d, charisma:%.1f)\n",
-                            Global.capitalizeFirstLetter(subjectWas()), tempter.nameOrPossessivePronoun(),
-                            with.describe(tempter), dmg, i, temptMultiplier);
-            if (Global.isDebugOn(DebugFlags.DEBUG_DAMAGE)) {
-                System.out.printf(message);
-            }
-            if (c != null) {
-                c.writeSystemMessage(message);
-            }
-        } else if (tempter != null) {
-            double temptMultiplier = body.getCharismaBonus(tempter);
-            if (c != null && tempter.has(Trait.obsequiousAppeal) && c.getStance()
-                                                                     .sub(tempter)) {
-                temptMultiplier *= 2;
-            }
-            int dmg = (int) Math.round(i * temptMultiplier);
-            tempt(dmg);
-            String message = String.format(
-                            "%s tempted %s for <font color='rgb(240,100,100)'>%d<font color='white'> (base:%d, charisma:%.1f)\n",
-                            Global.capitalizeFirstLetter(tempter.subject()),
-                            tempter == this ? reflectivePronoun() : directObject(), dmg, i, temptMultiplier);
-            if (Global.isDebugOn(DebugFlags.DEBUG_DAMAGE)) {
-                System.out.printf(message);
-            }
-            if (c != null) {
-                c.writeSystemMessage(message);
+        if (tempter != null) {
+            if (with != null) {
+                // triple multiplier for the body part
+                double temptMultiplier = tempter.body.getCharismaBonus(this) + with.getHotness(tempter, this) * 2;
+                int dmg = (int) Math.round(i * temptMultiplier);
+                tempt(dmg);
+                String message = String.format(
+                                "%s tempted by %s %s for <font color='rgb(240,100,100)'>%d<font color='white'> (base:%d, charisma:%.1f)\n",
+                                Global.capitalizeFirstLetter(subjectWas()), tempter.nameOrPossessivePronoun(),
+                                with.describe(tempter), dmg, i, temptMultiplier);
+                if (Global.isDebugOn(DebugFlags.DEBUG_DAMAGE)) {
+                    System.out.printf(message);
+                }
+                if (c != null) {
+                    c.writeSystemMessage(message);
+                }
+            } else {
+                double temptMultiplier = tempter.body.getCharismaBonus(this);
+                if (c != null && tempter.has(Trait.obsequiousAppeal) && c.getStance()
+                                                                         .sub(tempter)) {
+                    temptMultiplier *= 2;
+                }
+                int dmg = (int) Math.round(i * temptMultiplier);
+                tempt(dmg);
+                String message = String.format(
+                                "%s tempted %s for <font color='rgb(240,100,100)'>%d<font color='white'> (base:%d, charisma:%.1f)\n",
+                                Global.capitalizeFirstLetter(tempter.subject()),
+                                tempter == this ? reflectivePronoun() : directObject(), dmg, i, temptMultiplier);
+                if (Global.isDebugOn(DebugFlags.DEBUG_DAMAGE)) {
+                    System.out.printf(message);
+                }
+                if (c != null) {
+                    c.writeSystemMessage(message);
+                }
             }
         } else {
             if (c != null) {
@@ -2970,7 +2972,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public boolean checkLoss(Combat c) {
-        return (orgasmed || c.getTimer() > 20) && willpower.isEmpty();
+        return (orgasmed || c.getTimer() > 150) && willpower.isEmpty();
     }
 
     public boolean isCustomNPC() {

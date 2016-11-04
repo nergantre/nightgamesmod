@@ -45,7 +45,11 @@ public class Kiss extends Skill {
 
     @Override
     public int accuracy(Combat c) {
-        return c.getStance().en == Stance.neutral ? 30 : 100;
+        int accuracy = c.getStance().en == Stance.neutral ? 30 : 100;
+        if (getSelf().has(Trait.romantic)) {
+            accuracy += 40;
+        }
+        return accuracy;
     }
 
     @Override
@@ -58,8 +62,9 @@ public class Kiss extends Skill {
         boolean deep = getLabel(c).equals("Deep Kiss");
         if (getSelf().has(Trait.romantic)) {
             m += 3;
-            if (deep) {
-                m += 7;
+            // if it's an advanced kiss.
+            if (!getLabel(c).equals("Kiss")) {
+                m += 3;
             }
         }
         Result res = Result.normal;

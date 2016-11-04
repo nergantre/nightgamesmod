@@ -1,3 +1,26 @@
+2.3.3
+Balance changes:
+- Pantymaster, and Bramaster have been removed
+- Dexterous has been buffed
+	- Now works with fondle breasts as well.
+	- Dexterous now will work with second layer clothing as well.
+		- This means you can now use finger, handjob, and fondle breasts with increased effectiveness when they are wearing shirt and pants (but not coats)
+- Romantic has been buffed
+	- Original effects: 
+		- Boost Kiss mojo gain by 5%
+		- Increase kiss pleasure damage by 3
+		- Increase deep kiss pleasure damage by 10
+	- New effects:
+		- Boost Kiss mojo gain by 5%
+		- Increase kiss accuracy from a base 30% when opponent is mobile to 70%.
+		- Increase kiss pleasure damage by 3
+		- Increase all advanced kisses (Kiss of Baptism, Drain Kiss, Deep Kiss) pleasure damage by 6
+		- Increases your charisma multiplier by your (opponent's arousal % - 70) when your opponent is below 30% arousal. (So at 0% arousal you have a 30% bonus and at 20%, you have a 10% bonus)
+			- This is pretty minor and is really only for flavour
+
+Bug fixes:
+- Fixed a bug that was causing charm, facesit, smother, and tempt to use the opponent's body's charisma bonus instead of the users. Woops.
+
 2.3.2
 Bug fixes:
 - Fixed a crash bug still related to tentacles. Woops.

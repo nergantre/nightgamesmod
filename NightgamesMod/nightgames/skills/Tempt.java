@@ -24,10 +24,12 @@ public class Tempt extends Skill {
     public boolean resolve(Combat c, Character target) {
         writeOutput(c, Result.normal, target);
         double m = 4 + Global.random(4);
+
         if (c.getStance().front(getSelf())) {
             // opponent can see self
             m += 3 * getSelf().body.getCharismaBonus(target);
         }
+
         if (target.has(Trait.imagination)) {
             m *= 1.5;
         }

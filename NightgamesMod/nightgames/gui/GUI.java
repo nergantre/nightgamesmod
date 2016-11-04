@@ -68,6 +68,7 @@ import nightgames.characters.Meter;
 import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
+import nightgames.combat.CombatSceneChoice;
 import nightgames.combat.IEncounter;
 import nightgames.daytime.Activity;
 import nightgames.daytime.Store;
@@ -1058,6 +1059,11 @@ public class GUI extends JFrame implements Observer {
         commandPanel.revalidate();
     }
 
+    public void choose(Combat c, Character npc, String message, CombatSceneChoice choice) {
+        commandPanel.add(new CombatSceneButton(message, c, npc, choice));
+        commandPanel.revalidate();
+    }
+
     public void choose(String choice) {
         commandPanel.add(new SceneButton(choice));
         commandPanel.revalidate();
@@ -1399,7 +1405,7 @@ public class GUI extends JFrame implements Observer {
                     GUI.NextButton.this.combat.turn();
                 } else if (GUI.NextButton.this.combat.phase == 2) {
                     clearCommand();
-                    if (!GUI.NextButton.this.combat.end()) {
+                    if (GUI.NextButton.this.combat.end()) {
                         endCombat();
                     }
                 }
@@ -1586,7 +1592,7 @@ public class GUI extends JFrame implements Observer {
             addActionListener(arg0 -> Global.setUpMatch(new NoModifier()));
         }
     }
-
+    
     private class LocatorButton extends JButton {
 
         /**
@@ -1642,4 +1648,5 @@ public class GUI extends JFrame implements Observer {
             message(string);
         }
     }
+
 }

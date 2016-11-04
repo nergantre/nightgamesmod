@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import nightgames.areas.Area;
 import nightgames.characters.Attribute;
@@ -64,6 +65,7 @@ public class Combat extends Observable implements Cloneable {
     boolean lastFailed = false;
     private CombatLog log;
     private boolean beingObserved;
+    private int postCombatScenesSeen;
 
     String imagePath = "";
 
@@ -81,6 +83,7 @@ public class Combat extends Observable implements Cloneable {
         images = new HashMap<String, String>();
         p1.state = State.combat;
         p2.state = State.combat;
+        postCombatScenesSeen = 0;
         winner = Optional.empty();
         if (doExtendedLog()) {
             log = new CombatLog(this);
@@ -837,8 +840,29 @@ public class Combat extends Observable implements Cloneable {
         updateMessage();
     }
 
+    /**
+     * @return true if it should end the fight, false if there are still more scenes
+     */
     public boolean end() {
         clear();
+        boolean hasScene = false;
+        if (p1.human() || p2.human()) {
+            if (postCombatScenesSeen < 3) {
+                if (!p2.human()) {
+                    hasScene = doPostCombatScenes((NPC)p2);
+                } else if (!p1.human()) {
+                    hasScene = doPostCombatScenes((NPC)p1);
+                }
+                if (hasScene) {
+                    postCombatScenesSeen += 1;
+                    return false; 
+                }
+            } else {
+                Global.gui().next(this);
+            }
+        }
+        phase = 2;
+
         p1.state = State.ready;
         p2.state = State.ready;
         p1.endofbattle();
@@ -852,7 +876,24 @@ public class Combat extends Observable implements Cloneable {
         if (doExtendedLog()) {
             log.logEnd(winner);
         }
-        return ding;
+        return !ding;
+    }
+
+    private boolean doPostCombatScenes(NPC npc) {
+        List<CombatScene> availableScenes = npc.getPostCombatScenes()
+                        .stream()
+                        .filter(scene -> scene.meetsRequirements(this, npc))
+                        .collect(Collectors.toList());
+        Optional<CombatScene> possibleScene = Global.pickRandom(availableScenes);
+        if (possibleScene.isPresent()) {
+            Global.gui().clearText();
+            Global.gui().clearCommand();
+            phase = 1;
+            possibleScene.get().visit(this, npc);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void petbattle(Pet one, Pet two) {
@@ -896,6 +937,7 @@ public class Combat extends Observable implements Cloneable {
         if (c.getStance().bottom == p2) {
             c.getStance().bottom = c.p2;
         }
+        c.postCombatScenesSeen = this.postCombatScenesSeen;
         return c;
     }
 

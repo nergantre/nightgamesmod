@@ -267,7 +267,8 @@ public enum Trait {
     leveldrainer("Level Drainer", "Natrually adept at draining levels."),
 
     // Strength
-    dexterous("Dexterous", "Limbs and fingers. Underwear is not an obstacle."), // digital
+    dexterous("Dexterous", "Dexterous limbs and fingers. Underwear is not an obstacle."),
+                                                                                // digital
                                                                                 // stimulation
                                                                                 // through
                                                                                 // underwear
@@ -285,8 +286,6 @@ public enum Trait {
                                                                                    // from the
                                                                                    // opponent
     brassballs("Brass Balls", "Can take a kick"),
-    bramaster("Bra Master", "Better at undoing bras."),
-    pantymaster("Panty Master", "Better at removing panties"),
 
     Clingy("Clingy", "Harder to escape"),
     fakeout("Fakeout", "Easier to counter"),

@@ -1,6 +1,7 @@
 package nightgames.skills;
 
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BreastsPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -27,29 +28,24 @@ public class FondleBreasts extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         int m = 4 + Global.random(4);
+        Result result = Result.normal;
         if (target.roll(this, c, accuracy(c))) {
             if (target.breastsAvailable()) {
                 m += 4;
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, m, Result.normal, target));
-                } else {
-                    c.write(getSelf(), receive(c, m, Result.normal, target));
-                }
-                target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("breasts"), m,
-                                c, this);
-            } else {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, m, Result.normal, target));
-                } else {
-                    c.write(getSelf(), receive(c, m, Result.normal, target));
-                }
-                target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("breasts"), m,
-                                c, this);
+                result = Result.strong;
+            } else if (target.outfit.getTopOfSlot(ClothingSlot.top).getLayer() <= 1 && getSelf().has(Trait.dexterous)) {
+                m += 4;
+                result = Result.special;
             }
         } else {
             writeOutput(c, Result.miss, target);
             return false;
         }
+
+        target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("breasts"), m,
+                        c, this);
+        writeOutput(c, result, target);
+
         return true;
     }
 
@@ -82,9 +78,12 @@ public class FondleBreasts extends Skill {
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
             return "You grope at " + target.name() + "'s breasts, but miss.";
-        } else if (target.breastsAvailable()) {
+        } else if (modifier == Result.strong) {
             return "You massage " + target.name()
-                            + "'s soft breasts and pinch her nipples, causing her to moan with desire.";
+            + "'s soft breasts and pinch her nipples, causing her to moan with desire.";
+        } else if (modifier == Result.special) {
+            return "You slip your hands into " + target.nameOrPossessivePronoun() + " " + target.outfit.getTopOfSlot(ClothingSlot.top).getName() + ", massaging " + target.name()
+            + "'s soft breasts and pinching her nipples.";
         } else {
             return "You massage " + target.name() + "'s breasts over her "
                             + target.getOutfit().getTopOfSlot(ClothingSlot.top).getName() + ".";
@@ -97,11 +96,14 @@ public class FondleBreasts extends Skill {
             return String.format("%s gropes at %s %s, but misses the mark.",
                             getSelf().subject(), target.nameOrPossessivePronoun(),
                             target.body.getRandomBreasts().describe(target));
-        } else if (target.breastsAvailable()) {
+        } else if (modifier == Result.strong) {
             return String.format("%s massages %s %s, and pinches %s nipples, causing %s to moan with desire.",
                             getSelf().subject(), target.nameOrPossessivePronoun(),
                             target.body.getRandomBreasts().describe(target),
                             target.possessivePronoun(), target.directObject());
+        } else if (modifier == Result.special) {
+            return Global.format("{self:SUBJECT-ACTION:slip|slips} {self:possessive} agile fingers into {other:name-possessive} bra, massaging and pinching at {other:possessive} nipples.",
+                            getSelf(), target);
         } else {
             return String.format("%s massages %s %s over %s %s.",
                             getSelf().subject(), target.nameOrPossessivePronoun(),

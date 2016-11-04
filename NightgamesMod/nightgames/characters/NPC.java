@@ -2,6 +2,7 @@ package nightgames.characters;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -23,6 +24,7 @@ import nightgames.characters.custom.CommentSituation;
 import nightgames.characters.custom.RecruitmentData;
 import nightgames.characters.custom.effect.CustomEffect;
 import nightgames.combat.Combat;
+import nightgames.combat.CombatScene;
 import nightgames.combat.IEncounter;
 import nightgames.combat.Result;
 import nightgames.ftc.FTCMatch;
@@ -59,6 +61,7 @@ public class NPC extends Character {
     private boolean fakeHuman;
     public boolean isStartCharacter = false;
     private List<CombatStrategy> personalStrategies;
+    private List<CombatScene> postCombatScenes;
 
     public NPC(String name, int level, Personality ai) {
         super(name, level);
@@ -71,10 +74,19 @@ public class NPC extends Character {
         mood = Emotion.confident;
         initialGender = CharacterSex.female;
         personalStrategies = new ArrayList<>();
+        postCombatScenes = new ArrayList<>();
     }
-    
+
     protected void addPersonalStrategy(CombatStrategy strategy) {
         personalStrategies.add(strategy);
+    }
+
+    protected void addCombatScene(CombatScene scene) {
+        postCombatScenes.add(scene);
+    }
+    
+    public List<CombatScene> getPostCombatScenes() {
+        return Collections.unmodifiableList(postCombatScenes);
     }
 
     @Override

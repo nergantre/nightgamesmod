@@ -528,7 +528,7 @@ public class Body implements Cloneable {
         }
         double perceptionBonus = 1.0;
         if (opponent != null) {
-            perceptionBonus *= getCharismaBonus(opponent);
+            perceptionBonus *= opponent.body.getCharismaBonus(character);
         }
         double bonusDamage = bonus;
         if (opponent != null) {
@@ -562,14 +562,16 @@ public class Body implements Cloneable {
         bonusDamage = Math.max(0, bonusDamage);
         double base = (magnitude + bonusDamage);
         double multiplier = Math.max(0, 1 + ((sensitivity - 1) + (pleasure - 1) + (perceptionBonus - 1)));
-        multiplier = Math.max(0, multiplier + skill.multiplierForStage(character));
-
         double staleness = 1.0;
-        if (skill != null && opponent != null && c.getCombatantData(opponent) != null) {
-            staleness = c.getCombatantData(opponent).getMoveModifier(skill);
-            multiplier *= staleness;
+        double stageMultiplier = 1.0;
+        if (skill != null) {
+            if (opponent != null && c.getCombatantData(opponent) != null) {
+                staleness = c.getCombatantData(opponent).getMoveModifier(skill);
+            }
+            stageMultiplier = skill.getStage().multiplierFor(character);
         }
-        
+        multiplier = Math.max(0, multiplier + stageMultiplier) * staleness;
+
         double dominance = 0.0;
         if (character.human() && Global.getPlayer().checkAddiction(AddictionType.DOMINANCE, opponent)
                        && c.getStance().dom(opponent)) {
@@ -648,15 +650,21 @@ public class Body implements Cloneable {
         return result;
     }
 
+    /**
+     * Gets how much your opponent views this body. 
+     */
     public double getCharismaBonus(Character opponent) {
         // you don't get turned on by yourself
         if (opponent == character) {
             return 1.0;
         } else {
-            double perceptionBonus = Math.sqrt(opponent.body.getHotness(opponent, character)
-                            * (1.0 + (Math.max(0, character.get(Attribute.Perception)) - 5) / 10.0));
-            if (character.is(Stsflag.lovestruck)) {
+            double perceptionBonus = Math.sqrt(getHotness(character, opponent)
+                            * (1.0 + (Math.max(0, opponent.get(Attribute.Perception)) - 5) / 10.0));
+            if (opponent.is(Stsflag.lovestruck)) {
                 perceptionBonus += 1;
+            }
+            if (character.has(Trait.romantic)) {
+                perceptionBonus += Math.max(0, opponent.getArousal().percent() - 70) / 100.0;
             }
             return perceptionBonus;
         }

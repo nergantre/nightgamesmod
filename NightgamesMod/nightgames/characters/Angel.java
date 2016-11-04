@@ -1,5 +1,8 @@
 package nightgames.characters;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import nightgames.characters.body.BreastsPart;
@@ -8,11 +11,12 @@ import nightgames.characters.body.FacePart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.WingsPart;
 import nightgames.combat.Combat;
+import nightgames.combat.CombatScene;
+import nightgames.combat.CombatSceneChoice;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
-import nightgames.skills.strategy.StraponStrategy;
 import nightgames.start.NpcConfiguration;
 
 public class Angel extends BasePersonality {
@@ -83,7 +87,6 @@ public class Angel extends BasePersonality {
         growth.addTrait(48, Trait.magicEyeArousal);
         growth.addTrait(51, Trait.pussyTraining3);
         growth.addTrait(54, Trait.desensitized2);
-
         preferredAttributes
                         .add(c -> c.get(Attribute.Divinity) < 50 ? Optional.of(Attribute.Divinity) : Optional.empty());
         preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
