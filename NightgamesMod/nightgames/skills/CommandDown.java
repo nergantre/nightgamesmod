@@ -3,18 +3,24 @@ package nightgames.skills;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Mount;
 import nightgames.stance.Stance;
+import nightgames.status.Enthralled;
+import nightgames.status.Stsflag;
 
 public class CommandDown extends PlayerCommand {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return super.usable(c, target) && c.getStance().en == Stance.neutral;
+        return target.is(Stsflag.enthralled)
+                        && ((Enthralled) target.getStatus(Stsflag.enthralled)).master.equals(getSelf())
+                        && !c.getStance().havingSex() && getSelf().canRespond() && c.getStance().en == Stance.neutral;
     }
 
     public CommandDown(Character self) {
         super("Force Down", self);
+        addTag(SkillTag.positioning);
     }
 
     @Override
@@ -47,7 +53,10 @@ public class CommandDown extends PlayerCommand {
 
     @Override
     public String receive(Combat c, int magnitude, Result modifier, Character target) {
-        return "<<This should not be displayed, please inform The" + " Silver Bard: CommandDown-receive>>";
+        return String.format("%s tells %s to remain still and"
+                                        + " gracefully lies down on %s, %s face right above %ss.",
+                                        getSelf().name(), target.subject(), 
+                                        target.directObject(), getSelf().possessivePronoun(),
+                                        target.possessivePronoun());
     }
-
 }

@@ -176,15 +176,6 @@ public class ReykaTime extends BaseNPCTime {
     }
 
     @Override
-    public List<Loot> getGiftables() {
-        List<Loot> giftables = new ArrayList<>();
-        player.closet.stream()
-                     .filter(article -> !npc.has(article))
-                     .forEach(article -> giftables.add(article));
-        return giftables;
-    }
-
-    @Override
     public void subVisitIntro(String choice) {
         if (npc.getAffection(player) > 0) {
             Global.gui()

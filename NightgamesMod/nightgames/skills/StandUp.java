@@ -3,12 +3,14 @@ package nightgames.skills;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.StandingOver;
 
 public class StandUp extends Skill {
 
     public StandUp(Character self) {
         super("Stand Up", self);
+        addTag(SkillTag.positioning);
     }
 
     @Override

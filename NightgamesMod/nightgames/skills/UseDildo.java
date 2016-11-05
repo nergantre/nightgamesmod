@@ -1,16 +1,19 @@
 package nightgames.skills;
 
-import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.nskills.tags.SkillTag;
+import nightgames.skills.damage.DamageType;
+import nightgames.stance.Stance;
 
 public class UseDildo extends Skill {
 
     public UseDildo(Character self) {
         super(Item.Dildo.getName(), self);
+        addTag(SkillTag.usesToy);
     }
 
     @Override
@@ -26,17 +29,25 @@ public class UseDildo extends Skill {
     }
 
     @Override
+    public int accuracy(Combat c) {
+        return c.getStance().en == Stance.neutral ? 35 : 100;
+    }
+
+    @Override
     public boolean resolve(Combat c, Character target) {
         if (target.roll(this, c, accuracy(c))) {
+            int m;
             if (getSelf().has(Item.Dildo2)) {
                 writeOutput(c, Result.upgrade, target);
-                int m = 5 + Global.random(15) + target.get(Attribute.Perception);
-                target.body.pleasure(getSelf(), null, target.body.getRandom("pussy"), m, c, this);
+                m = Global.random(10, 20);
             } else {
                 writeOutput(c, Result.normal, target);
-                int m = Global.random(10) + target.get(Attribute.Perception);
-                target.body.pleasure(getSelf(), null, target.body.getRandom("pussy"), m, c, this);
+                m = Global.random(5, 15);
+                
             }
+
+            m = (int)getSelf().modifyDamage(DamageType.gadgets, target, m);
+            target.body.pleasure(getSelf(), null, target.body.getRandom("pussy"), m, c, this);
         } else {
             writeOutput(c, Result.miss, target);
             return false;

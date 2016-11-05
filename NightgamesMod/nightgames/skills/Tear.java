@@ -10,11 +10,13 @@ import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.items.clothing.ClothingTrait;
+import nightgames.nskills.tags.SkillTag;
 
 public class Tear extends Skill {
 
     public Tear(Character self) {
         super("Tear Clothes", self);
+        addTag(SkillTag.stripping);
     }
 
     @Override

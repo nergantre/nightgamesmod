@@ -9,11 +9,18 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.items.clothing.ClothingTrait;
+import nightgames.nskills.tags.SkillTag;
+import nightgames.skills.damage.DamageType;
 
 public class Stomp extends Skill {
 
     public Stomp(Character self) {
         super("Stomp", self);
+        addTag(SkillTag.usesFeet);
+        addTag(SkillTag.physical);
+        addTag(SkillTag.hurt);
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.staminaDamage);
     }
 
     @Override
@@ -29,7 +36,7 @@ public class Stomp extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        int pain = 0;
+        int pain = Global.random(1, 10);
         if (target.has(Trait.brassballs)) {
             if (getSelf().has(Trait.heeldrop) && target.crotchAvailable() && target.hasBalls()) {
                 if (getSelf().human()) {
@@ -57,10 +64,10 @@ public class Stomp extends Skill {
             if (target.has(Trait.achilles)) {
                 pain += 20;
             }
-            pain += 30 - (int) Math.round((5 + Global.random(5)) * target.getOutfit().getExposure(ClothingSlot.bottom));
+            pain += 40 - (int) Math.round((5 + Global.random(5)) * target.getOutfit().getExposure(ClothingSlot.bottom));
         } else if (target.has(ClothingTrait.armored)) {
             writeOutput(c, Result.weak, target);
-            pain += 5 - (int) Math.round((2 + Global.random(3)) * target.getOutfit().getExposure(ClothingSlot.bottom));
+            pain += 15 - (int) Math.round((2 + Global.random(3)) * target.getOutfit().getExposure(ClothingSlot.bottom));
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.normal, target));
@@ -74,7 +81,7 @@ public class Stomp extends Skill {
             pain += 20 - (int) Math
                             .round((10 + Global.random(10)) * target.getOutfit().getExposure(ClothingSlot.bottom));
         }
-        target.pain(c, pain);
+        target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, pain));
         target.emote(Emotion.angry, 25);
         return true;
     }

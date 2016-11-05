@@ -6,6 +6,7 @@ import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Behind;
 import nightgames.stance.Stance;
 
@@ -13,6 +14,7 @@ public class Turnover extends Skill {
 
     public Turnover(Character self) {
         super("Turn Over", self);
+        addTag(SkillTag.positioning);
     }
 
     @Override

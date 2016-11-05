@@ -31,6 +31,7 @@ import nightgames.items.clothing.Clothing;
 import nightgames.skills.Skill;
 import nightgames.skills.Stage;
 import nightgames.skills.Tactics;
+import nightgames.skills.damage.DamageType;
 import nightgames.stance.Behind;
 import nightgames.stance.Neutral;
 import nightgames.stance.Position;
@@ -76,6 +77,8 @@ public class Player extends Character {
         outfitPlan.add(Clothing.getByID("jeans"));
         outfitPlan.add(Clothing.getByID("socks"));
         outfitPlan.add(Clothing.getByID("sneakers"));
+        getStamina().setMax(80 + getLevel() * getGrowth().stamina);
+        getArousal().setMax(80 + getLevel() * getGrowth().arousal);
         config.ifPresent(this::applyConfigStats);
         finishCharacter(pickedTraits, selectedAttributes);
 
@@ -144,9 +147,7 @@ public class Player extends Character {
         description = description + outfit.describe(this);
         if (per >= 5 && status.size() > 0) {
             description += "<br>List of statuses:<br><i>";
-            for (Status s : status) {
-                description += s + ", ";
-            }
+            description += status.stream().map(Status::toString).collect(Collectors.joining(", "));
             description += "</i><br>";
         }
         description += Stage.describe(this);
@@ -159,9 +160,9 @@ public class Player extends Character {
         if (c.getStance()
              .inserted() && c.getStance()
                              .dom(this)) {
-            getMojo().gain(2);
+            getMojo().gain(1);
             if (has(Trait.mojoMaster)) {
-                getMojo().gain(2);
+                getMojo().gain(1);
             }
         }
         if (c.p1.human()) {
@@ -197,9 +198,9 @@ public class Player extends Character {
         if (c.getStance()
              .inserted()) {
             c.p1.getMojo()
-                .gain(3);
+                .gain(1);
             c.p2.getMojo()
-                .gain(3);
+                .gain(1);
         }
         if (c.p1.human()) {
             c.p2.draw(c, flag);
@@ -670,7 +671,7 @@ public class Player extends Character {
                 if (c.getStance()
                      .dom(this)) {
                     c.write(this, "You outmanuever " + target.name() + " and you exhausted her from the struggle.");
-                    target.weaken(c, 10);
+                    target.weaken(c, (int) this.modifyDamage(DamageType.stance, target, 15));
                 } else {
                     c.write(this, target.name()
                                     + " loses her balance while grappling with you. Before she can fall to the floor, you catch her from behind and hold her up.");
@@ -700,7 +701,7 @@ public class Player extends Character {
                         && opponent.rollPheromones(c)) {
             c.write(opponent, "<br>Whenever you're near " + opponent.name()
                             + ", you feel your body heat up. Something in her scent is making you extremely horny.");
-            add(c, new Horny(this, opponent.getPheromonePower(), 10,
+            add(c, Horny.getWithBiologicalType(opponent, this, opponent.getPheromonePower(), 10,
                             opponent.nameOrPossessivePronoun() + " pheromones"));
         }
         if (opponent.has(Trait.smqueen) && !is(Stsflag.masochism)) {

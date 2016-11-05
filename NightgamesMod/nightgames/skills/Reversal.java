@@ -5,12 +5,15 @@ import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Pin;
 
 public class Reversal extends Skill {
 
     public Reversal(Character self) {
         super("Reversal", self);
+        addTag(SkillTag.escaping);
+        addTag(SkillTag.positioning);
     }
 
     @Override

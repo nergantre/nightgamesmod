@@ -10,7 +10,7 @@ import nightgames.combat.Combat;
 
 public class Winded extends DurationStatus {
     public Winded(Character affected) {
-        this(affected, Math.max(2, 1 + affected.level / 10));
+        this(affected, Math.max(2, 4));
     }
 
     public Winded(Character affected, int duration) {
@@ -49,7 +49,11 @@ public class Winded extends DurationStatus {
 
     @Override
     public void onRemove(Combat c, Character other) {
-        affected.addlist.add(new Braced(affected));
+        if (affected.get(Attribute.Divinity) > 0) {
+            affected.addlist.add(new BastionOfFaith(affected));
+        } else {
+            affected.addlist.add(new Braced(affected));
+        }
         affected.addlist.add(new Wary(affected, 3));
         affected.heal(c, affected.getStamina().max());
     }
@@ -69,7 +73,7 @@ public class Winded extends DurationStatus {
 
     @Override
     public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x) {
-        return 0;
+        return -x / 2;
     }
 
     @Override

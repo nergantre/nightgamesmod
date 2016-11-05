@@ -244,49 +244,51 @@ public enum BreastsPart implements BodyPart {
                 addiction.alleviateCombat(Addiction.LOW_INCREASE);
 
             }
-            int timesDrank = c.getCombatantData(opponent)
-                              .getIntegerFlag("drank_magicmilk")
-                            + 1;
-            c.getCombatantData(opponent)
-             .setIntegerFlag("drank_magicmilk", timesDrank);
-            if (timesDrank >= 3) {
-                /*c.getCombatantData(opponent)
-                 .setIntegerFlag("drank_magicmilk", 0);
-                addictionLevel += 1;
-                if (addictionLevel == 50) {
-                    c.write(opponent,
-                                    Global.format("<b>{other:subject:action:are|is} now completely and hopelessly enslaved by {self:name-possessive} mind-altering milk. "
-                                                    + "It's unlikely that {other:subject} will ever be able to shake this addiction on {other:possessive} own.</b>",
-                                    self, opponent));
-                } else if (addictionLevel == 35) {
-                    c.write(opponent,
-                                    Global.format("<b>{other:SUBJECT-ACTION:are|is} now completely hooked on {self:name-possessive} aphordisiac milk.</b>",
-                                                    self, opponent));
-                } else if (addictionLevel > 20) {
-                    c.write(opponent,
-                                    Global.format("<b>{other:NAME-POSSESSIVE} addiction to {self:name-possessive} devilish milk grows.</b>",
-                                                    self, opponent));
-                } else if (addictionLevel == 20) {
-                    c.write(opponent,
-                                    Global.format("<b>{other:SUBJECT-ACTION:now have|now has} an addiction to {self:name-possessive} devilish milk.</b>",
-                                                    self, opponent));
-                } else if (addictionLevel > 10) {
-                    c.write(opponent,
-                                    Global.format("<b>{other:SUBJECT-ACTION:crave|craves} more of {self:name-possessive} milk.</b>",
-                                                    self, opponent));
-                } else if (addictionLevel == 10) {
-                    c.write(opponent,
-                                    Global.format("<b>{other:SUBJECT-ACTION:now have|now has} a permanent craving for {self:name-possessive} milk.</b>",
-                                                    self, opponent));
-                } else if (addictionLevel > 1) {
-                    c.write(opponent,
-                                    Global.format("<b>{other:SUBJECT-ACTION:desire|desires} more of {self:name-possessive} milk.</b>",
-                                                    self, opponent));
-                } else {
-                    c.write(opponent,
-                                    Global.format("<b>{other:SUBJECT-ACTION:have|has} a permanent unconscious desire for {self:name-possessive} milk.</b>",
-                                                    self, opponent));
-                }*/
+            if (c.getCombatantData(opponent) != null) {
+                int timesDrank = c.getCombatantData(opponent)
+                                  .getIntegerFlag("drank_magicmilk")
+                                + 1;
+                c.getCombatantData(opponent)
+                 .setIntegerFlag("drank_magicmilk", timesDrank);
+                if (timesDrank >= 3) {
+                    /*c.getCombatantData(opponent)
+                     .setIntegerFlag("drank_magicmilk", 0);
+                    addictionLevel += 1;
+                    if (addictionLevel == 50) {
+                        c.write(opponent,
+                                        Global.format("<b>{other:subject:action:are|is} now completely and hopelessly enslaved by {self:name-possessive} mind-altering milk. "
+                                                        + "It's unlikely that {other:subject} will ever be able to shake this addiction on {other:possessive} own.</b>",
+                                        self, opponent));
+                    } else if (addictionLevel == 35) {
+                        c.write(opponent,
+                                        Global.format("<b>{other:SUBJECT-ACTION:are|is} now completely hooked on {self:name-possessive} aphordisiac milk.</b>",
+                                                        self, opponent));
+                    } else if (addictionLevel > 20) {
+                        c.write(opponent,
+                                        Global.format("<b>{other:NAME-POSSESSIVE} addiction to {self:name-possessive} devilish milk grows.</b>",
+                                                        self, opponent));
+                    } else if (addictionLevel == 20) {
+                        c.write(opponent,
+                                        Global.format("<b>{other:SUBJECT-ACTION:now have|now has} an addiction to {self:name-possessive} devilish milk.</b>",
+                                                        self, opponent));
+                    } else if (addictionLevel > 10) {
+                        c.write(opponent,
+                                        Global.format("<b>{other:SUBJECT-ACTION:crave|craves} more of {self:name-possessive} milk.</b>",
+                                                        self, opponent));
+                    } else if (addictionLevel == 10) {
+                        c.write(opponent,
+                                        Global.format("<b>{other:SUBJECT-ACTION:now have|now has} a permanent craving for {self:name-possessive} milk.</b>",
+                                                        self, opponent));
+                    } else if (addictionLevel > 1) {
+                        c.write(opponent,
+                                        Global.format("<b>{other:SUBJECT-ACTION:desire|desires} more of {self:name-possessive} milk.</b>",
+                                                        self, opponent));
+                    } else {
+                        c.write(opponent,
+                                        Global.format("<b>{other:SUBJECT-ACTION:have|has} a permanent unconscious desire for {self:name-possessive} milk.</b>",
+                                                        self, opponent));
+                    }*/
+                }
             }
         }
         return 0;

@@ -27,7 +27,7 @@ public class StandingOver extends AbstractFacingStance {
 
     @Override
     public boolean kiss(Character c) {
-        return c == top;
+        return false;
     }
 
     @Override

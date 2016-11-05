@@ -12,7 +12,7 @@ public class Shield extends DurationStatus {
     private double strength;
 
     public Shield(Character affected, double strength) {
-        this(affected, strength, 4);
+        this(affected, strength, 7);
     }
 
     public Shield(Character affected, double strength, int duration) {

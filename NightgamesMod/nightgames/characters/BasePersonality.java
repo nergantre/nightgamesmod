@@ -45,11 +45,11 @@ public abstract class BasePersonality implements Personality {
         // Make the built-in character
         type = getClass().getSimpleName();
         character = new NPC(name, level, this);
-        applyBasicStats();
         growth = new Growth();
         preferredCockMod = CockMod.error;
         preferredAttributes = new ArrayList<PreferredAttribute>();
         setGrowth();
+        applyBasicStats();
         character.body.makeGenitalOrgans(character.initialGender);
 
         // Apply config changes

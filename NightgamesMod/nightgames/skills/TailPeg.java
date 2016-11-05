@@ -10,6 +10,7 @@ import nightgames.characters.body.TailPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.skills.damage.DamageType;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
 import nightgames.status.Shamed;
@@ -111,7 +112,7 @@ public class TailPeg extends Skill {
                     target.add(c, new TailFucked(target, getSelf(), "ass"));
                 }
             }
-            target.pain(c, strength / 2);
+            target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, strength / 2));
             target.emote(Emotion.nervous, 10);
             target.emote(Emotion.desperate, 10);
             getSelf().emote(Emotion.confident, 15);

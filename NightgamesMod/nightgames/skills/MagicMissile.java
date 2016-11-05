@@ -3,15 +3,19 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
+import nightgames.skills.damage.DamageType;
 
 public class MagicMissile extends Skill {
 
     public MagicMissile(Character self) {
         super("Magic Missile", self);
+        addTag(SkillTag.hurt);
+        addTag(SkillTag.staminaDamage);
+        addTag(SkillTag.positioning);
     }
 
     @Override
@@ -37,18 +41,16 @@ public class MagicMissile extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         if (target.roll(this, c, accuracy(c))) {
+            double m = Global.random(7,13);
             if (target.mostlyNude() && Global.random(3) == 2) {
                 writeOutput(c, Result.critical, target);
-                if (target.has(Trait.achilles)) {
-                    target.pain(c, Global.random(6));
-                }
-                target.pain(c, Math.min(9 + Global.random(2 * getSelf().get(Attribute.Arcane) + 1), 100));
+                m += Global.random(7, 13);
                 target.emote(Emotion.angry, 10);
             } else {
                 writeOutput(c, Result.normal, target);
-                target.pain(c, Math.min(100, 6 + Global.random(getSelf().get(Attribute.Arcane) + 2)));
                 target.emote(Emotion.angry, 5);
             }
+            target.pain(c, (int) getSelf().modifyDamage(DamageType.arcane, target, m));
         } else {
             writeOutput(c, Result.miss, target);
             return false;

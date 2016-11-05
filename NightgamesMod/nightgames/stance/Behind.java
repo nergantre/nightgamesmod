@@ -35,7 +35,7 @@ public class Behind extends AbstractBehindStance {
 
     @Override
     public boolean kiss(Character c) {
-        return c == top;
+        return false;
     }
 
     @Override

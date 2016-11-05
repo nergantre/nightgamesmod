@@ -8,12 +8,18 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.status.BodyFetish;
 
 public class CockWorship extends Skill {
 
     public CockWorship(Character self) {
         super("Cock Worship", self);
+        addTag(SkillTag.pleasureSelf);
+        addTag(SkillTag.usesMouth);
+        addTag(SkillTag.pleasure);
+        addTag(SkillTag.suicidal);
+        addTag(SkillTag.worship);
     }
 
     @Override

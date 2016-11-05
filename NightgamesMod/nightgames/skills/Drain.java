@@ -6,12 +6,17 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
+import nightgames.skills.damage.DamageType;
 import nightgames.status.Abuff;
 
 public class Drain extends Skill {
 
     public Drain(Character self) {
         super("Drain", self, 5);
+        addTag(SkillTag.drain);
+        addTag(SkillTag.dark);
+        addTag(SkillTag.fucking);
     }
 
     public Drain(String name, Character self) {
@@ -66,7 +71,7 @@ public class Drain extends Skill {
             case 0:
                 getSelf().arouse(getSelf().getArousal().max(), c);
             case 1:
-                target.drain(c, getSelf(), 50);
+                target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, 50));
                 break;
             case 2:
                 target.loseMojo(c, 20);
@@ -78,7 +83,7 @@ public class Drain extends Skill {
                 break;
             case 4:
                 steal(c, target, Attribute.Power, strength);
-                target.drain(c, getSelf(), 50);
+                target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, 50));
                 break;
             case 5:
                 steal(c, target, Attribute.Seduction, strength);
@@ -89,7 +94,7 @@ public class Drain extends Skill {
                 steal(c, target, Attribute.Seduction, strength);
                 steal(c, target, Attribute.Cunning, strength);
                 target.mod(Attribute.Perception, 1);
-                target.drain(c, getSelf(), 50);
+                target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, 50));
                 target.loseMojo(c, 10);
                 target.tempt(c, getSelf(), 10);
                 break;

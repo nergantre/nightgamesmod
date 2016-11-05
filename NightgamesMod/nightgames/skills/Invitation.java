@@ -6,6 +6,7 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Stance;
 import nightgames.status.ArmLocked;
 import nightgames.status.LegLocked;
@@ -17,6 +18,8 @@ public class Invitation extends Skill {
 
     public Invitation(Character self) {
         super("Invitation", self, 6);
+        addTag(SkillTag.fucking);
+        addTag(SkillTag.positioning);
     }
 
     @Override

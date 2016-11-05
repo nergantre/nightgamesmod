@@ -5,12 +5,14 @@ import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Pin;
 
 public class Restrain extends Skill {
 
     public Restrain(Character self) {
         super("Pin", self);
+        addTag(SkillTag.positioning);
     }
 
     @Override

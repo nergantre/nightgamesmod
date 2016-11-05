@@ -6,12 +6,16 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.status.FiredUp;
 
 public class TemptressBlowjob extends Blowjob {
 
     public TemptressBlowjob(Character user) {
         super("Skillful Blowjob", user);
+        addTag(SkillTag.usesMouth);
+        addTag(SkillTag.pleasure);
+        addTag(SkillTag.oral);
     }
 
     @Override

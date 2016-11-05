@@ -7,6 +7,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.ReverseMount;
 import nightgames.stance.SixNine;
 import nightgames.stance.Stance;
@@ -18,6 +19,9 @@ public class Blowjob extends Skill {
 
     public Blowjob(Character self) {
         this("Blow", self);
+        addTag(SkillTag.usesMouth);
+        addTag(SkillTag.pleasure);
+        addTag(SkillTag.oral);
     }
 
     @Override
@@ -177,7 +181,7 @@ public class Blowjob extends Skill {
         } else if (target.getArousal().get() < 15) {
             m += String.format("%s %s soft penis into %s mouth and sucks on it until it hardens.",
                             getSelf().subjectAction("take"), target.nameOrPossessivePronoun(),
-                            getSelf().nameOrPossessivePronoun());
+                            getSelf().possessivePronoun());
         } else if (target.getArousal().percent() >= 90) {
             m += String.format("%s up the precum leaking from %s cock and %s the entire length into %s mouth, sucking relentlessly.",
                             getSelf().subjectAction("lap"), target.nameOrPossessivePronoun(), getSelf().action("take"),

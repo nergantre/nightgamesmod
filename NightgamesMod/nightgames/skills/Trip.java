@@ -5,11 +5,14 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.status.Falling;
 
 public class Trip extends Skill {
     public Trip(Character self) {
         super("Trip", self);
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.knockdown);
     }
 
     @Override

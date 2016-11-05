@@ -4,12 +4,14 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Behind;
 
 public class FlashStep extends Skill {
 
     public FlashStep(Character self) {
         super("Flash Step", self);
+        addTag(SkillTag.positioning);
     }
 
     @Override

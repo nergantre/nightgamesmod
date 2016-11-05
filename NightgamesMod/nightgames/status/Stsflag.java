@@ -62,5 +62,6 @@ public enum Stsflag {
     mimicry, 
     blinded,
     victimComplex, 
-    primed
+    primed, 
+    glamour
 }

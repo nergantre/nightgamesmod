@@ -246,7 +246,7 @@ public abstract class Position implements Cloneable {
 
     public boolean vaginallyPenetrated(Character c) {
         List<BodyPart> parts = partsFor(c);
-        return BodyPart.hasType(parts, "pussy") || c.is(Stsflag.fucked);
+        return (BodyPart.hasType(parts, "pussy") && inserted()) || c.is(Stsflag.fucked);
     }
 
     public boolean havingSexOtherNoStrapped(Character c) {
@@ -283,8 +283,8 @@ public abstract class Position implements Cloneable {
         }
         List<BodyPart> parts = partsFor(self);
         List<BodyPart> otherParts = partsFor(other);
-        return BodyPart.hasType(parts, "ass")
-                        && (BodyPart.hasType(otherParts, "cock") || BodyPart.hasType(otherParts, "strapon"));
+        return (BodyPart.hasType(parts, "ass")
+                        && (BodyPart.hasType(otherParts, "cock") || BodyPart.hasType(otherParts, "strapon"))) && inserted();
     }
 
     public boolean connected() {

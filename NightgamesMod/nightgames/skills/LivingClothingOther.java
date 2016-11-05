@@ -7,10 +7,13 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.nskills.tags.SkillTag;
 
 public class LivingClothingOther extends Skill {
     public LivingClothingOther(Character self) {
         super("Living Clothing: Other", self, 8);
+        addTag(SkillTag.pleasure);
+        addTag(SkillTag.debuff);
     }
 
     @Override

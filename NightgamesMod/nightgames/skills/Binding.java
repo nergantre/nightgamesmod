@@ -5,12 +5,14 @@ import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.status.Bound;
 
 public class Binding extends Skill {
 
     public Binding(Character self) {
         super("Binding", self, 4);
+        addTag(SkillTag.positioning);
     }
 
     @Override

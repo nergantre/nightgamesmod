@@ -10,12 +10,14 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
 public class Masturbate extends Skill {
     public Masturbate(Character self) {
         super("Masturbate", self);
+        addTag(SkillTag.pleasureSelf);
     }
 
     @Override

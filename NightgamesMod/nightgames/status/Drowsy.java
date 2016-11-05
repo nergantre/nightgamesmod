@@ -18,6 +18,10 @@ public class Drowsy extends DurationStatus {
         magnitude = 1;
     }
 
+    public float fitnessModifier() {
+        return -10;
+    }
+
     public Drowsy(Character affected, int magnitude, int duration) {
         super("Drowsy", affected, duration);
         this.magnitude = magnitude;
@@ -44,8 +48,7 @@ public class Drowsy extends DurationStatus {
 
     @Override
     public int regen(Combat c) {
-        super.regen(c);
-        return -3 * magnitude;
+        return -3 * magnitude + super.regen(c);
     }
 
     @Override
@@ -60,7 +63,7 @@ public class Drowsy extends DurationStatus {
 
     @Override
     public int weakened(int x) {
-        return x * magnitude / 4;
+        return x * (1 + magnitude);
     }
 
     @Override
@@ -80,7 +83,7 @@ public class Drowsy extends DurationStatus {
 
     @Override
     public int gainmojo(int x) {
-        return x * magnitude / 3;
+        return x * 1 / (1 + magnitude);
     }
 
     @Override

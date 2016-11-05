@@ -1,5 +1,8 @@
 package nightgames.characters;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import nightgames.characters.body.BreastsPart;
@@ -8,6 +11,8 @@ import nightgames.characters.body.FacePart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.WingsPart;
 import nightgames.combat.Combat;
+import nightgames.combat.CombatScene;
+import nightgames.combat.CombatSceneChoice;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
@@ -41,6 +46,9 @@ public class Angel extends BasePersonality {
         character.mod(Attribute.Perception, 1);
         Global.gainSkills(character);
 
+        character.getStamina().setMax(60 + character.getLevel() * getGrowth().stamina);
+        character.getArousal().setMax(110 + character.getLevel() * getGrowth().arousal);
+
         character.add(Trait.undisciplined);
         character.add(Trait.lickable);
         character.setTrophy(Item.AngelTrophy);
@@ -48,7 +56,7 @@ public class Angel extends BasePersonality {
         character.mood = Emotion.confident;
         character.body.add(BreastsPart.dd);
         // very feminine face
-        character.body.add(new FacePart(.1, 4.2));
+        character.body.add(new FacePart(0.6, 4.2));
         character.initialGender = CharacterSex.female;
     }
 
@@ -60,7 +68,7 @@ public class Angel extends BasePersonality {
         growth.bonusStamina = 1;
         growth.bonusArousal = 4;
         growth.bonusMojo = 1;
-        growth.addTrait(3, Trait.alwaysready);
+        growth.addTrait(3, Trait.responsive);
         growth.addTrait(9, Trait.pussyTraining1);
         growth.addTrait(12, Trait.expertGoogler);
         growth.addTrait(15, Trait.experienced);
@@ -69,17 +77,16 @@ public class Angel extends BasePersonality {
         growth.addTrait(20, Trait.zealinspiring);
         growth.addTrait(21, Trait.holecontrol);
         growth.addTrait(24, Trait.insertion);
-        growth.addTrait(27, Trait.lacedjuices);
+        growth.addTrait(27, Trait.alwaysready);
         growth.addTrait(30, Trait.pussyTraining2);
         growth.addTrait(33, Trait.RawSexuality);
         growth.addTrait(36, Trait.objectOfWorship);
         growth.addTrait(39, Trait.tight);
         growth.addTrait(42, Trait.desensitized);
-        growth.addTrait(45, Trait.entrallingjuices);
+        growth.addTrait(45, Trait.limbTraining1);
         growth.addTrait(48, Trait.magicEyeArousal);
         growth.addTrait(51, Trait.pussyTraining3);
         growth.addTrait(54, Trait.desensitized2);
-
         preferredAttributes
                         .add(c -> c.get(Attribute.Divinity) < 50 ? Optional.of(Attribute.Divinity) : Optional.empty());
         preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
@@ -149,22 +156,11 @@ public class Angel extends BasePersonality {
         Decider.visit(character);
         int r;
         for (int i = 0; i < time; i++) {
-            r = Global.random(4);
+            r = Global.random(8);
             if (r == 1) {
-                if (character.has(Trait.fitnessNut)) {
-                    character.getStamina().gain(1);
-                }
-                character.getStamina().gain(1);
-            } else if (r == 3) {
-                if (character.has(Trait.expertGoogler)) {
-                    character.getArousal().gain(4);
-                }
-                character.getArousal().gain(6);
-            } else if (r == 2) {
-                if (character.has(Trait.mojoMaster)) {
-                    character.getMojo().gain(1);
-                }
-                character.getMojo().gain(1);
+                Global.getDay().visit("Exercise", this.character, 0);
+            } else if (r == 0) {
+                Global.getDay().visit("Browse Porn Sites", this.character, 0);
             }
         }
     }

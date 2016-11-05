@@ -7,6 +7,7 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.skills.damage.DamageType;
 import nightgames.stance.Stance;
 import nightgames.status.Abuff;
 import nightgames.status.Stsflag;
@@ -181,7 +182,7 @@ public class TailSuck extends Skill {
                         .map(e -> e.getKey()).toArray(Attribute[]::new));
         target.add(c, new Abuff(target, toDrain, -power(), 20));
         getSelf().add(c, new Abuff(getSelf(), toDrain, power(), 20));
-        target.drain(c, getSelf(), 1 + Global.random(power() * 3));
+        target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, 10));
         target.drainMojo(c, getSelf(), 1 + Global.random(power() * 3));
         target.emote(Emotion.desperate, 5);
         getSelf().emote(Emotion.confident, 5);

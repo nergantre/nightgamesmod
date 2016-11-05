@@ -5,6 +5,7 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.items.Item;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.status.Hypersensitive;
 import nightgames.status.Stsflag;
 import nightgames.status.Tied;
@@ -13,6 +14,7 @@ public class TortoiseWrap extends Skill {
 
     public TortoiseWrap(Character self) {
         super("Tortoise Wrap", self);
+        addTag(SkillTag.positioning);
     }
 
     @Override

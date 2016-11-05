@@ -110,7 +110,7 @@ public class GenericBodyPart implements BodyPart {
             pleasureMod += self.has(Trait.dexterous) ? .4 : 0;
         }
         if (type.equals("hands")) {
-            pleasureMod += self.has(Trait.pimphand) ? .5 : 0;
+            pleasureMod += self.has(Trait.pimphand) ? .2 : 0;
         }
         return pleasureMod;
     }
@@ -168,6 +168,18 @@ public class GenericBodyPart implements BodyPart {
                 c.write(self, "Unfortunately, the gloves wear out with their usage.");
                 self.shred(ClothingSlot.arms);
             }
+        }
+        if (type.equals("hands") && self.has(Trait.defthands)) {
+            c.write(self, Global
+                            .format("{self:name-possessive} hands dance across {other:possessive} "
+                                            + target.describe(opponent) + ", hitting all the right spots.", self, opponent));
+            bonus += Global.random(2, 6);
+        }
+        if (type.equals("feet") && self.has(Trait.nimbletoes)) {
+            c.write(self, Global
+                            .format("{self:name-possessive} nimble toes adeptly massage {other:possessive} "
+                                            + target.describe(opponent) + " elicting a quiet gasp.", self, opponent));
+            bonus += Global.random(2, 6);
         }
         return bonus;
     }

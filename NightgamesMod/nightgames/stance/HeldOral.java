@@ -3,6 +3,7 @@ package nightgames.stance;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 
 public class HeldOral extends AbstractFacingStance {
     public HeldOral(Character top, Character bottom) {
