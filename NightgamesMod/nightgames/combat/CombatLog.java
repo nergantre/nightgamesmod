@@ -52,15 +52,15 @@ class CombatLog {
         }
     }
 
-    void logHeader() {
+    void logHeader(String linebreak) {
         StringBuilder sb = new StringBuilder("Combat Log - ");
         sb.append(p1.getName())
           .append(" versus ")
           .append(p2.getName())
-          .append('\n');
-        describeForHeader(p1, sb);
-        describeForHeader(p2, sb);
-        sb.append("____________________________\n\n");
+          .append(linebreak);
+        describeForHeader(p1, sb, linebreak);
+        describeForHeader(p2, sb, linebreak);
+        sb.append("____________________________").append(linebreak).append(linebreak);
         try {
             writer.write(sb.toString());
         } catch (IOException e) {
@@ -69,23 +69,28 @@ class CombatLog {
     }
 
     void logTurn(Skill p1act, Skill p2act) {
-        StringBuilder sb = new StringBuilder(String.format("Turn %d:\n", cbt.timer));
-        sb.append(String.format("%s: %s\n%s: %s\n", p1.getName(), p1act.getName(), p2.getName(), p2act.getName()));
-        useSkills(p1act, p2act, sb);
-        sb.append(p1.getName())
-          .append(": ");
-        describeChanges(p1, last1, sb);
-        sb.append('\n')
-          .append(p2.getName())
-          .append(": ");
-        describeChanges(p2, last2, sb);
-        describePositionChange(cbt.getStance(), lastP, sb);
-        sb.append("\n____________________________\n\n");
         try {
-            writer.write(sb.toString());
+            writer.write(logTurnToString(p1act, p2act, "\n"));
         } catch (IOException e1) {
             e1.printStackTrace();
         }
+    }
+
+    String logTurnToString(Skill p1act, Skill p2act, String linebreak) {
+        StringBuilder sb = new StringBuilder(String.format("Turn %d:%s", cbt.timer, linebreak));
+        sb.append(String.format("%s: %s%s%s: %s%s", p1.getName(), p1act.getName(),
+                        linebreak, p2.getName(), p2act.getName(), linebreak));
+        useSkills(p1act, p2act, sb, linebreak);
+        sb.append(p1.getName())
+          .append(": ");
+        describeChanges(p1, last1, sb);
+        sb.append(linebreak)
+          .append(p2.getName())
+          .append(": ");
+        describeChanges(p2, last2, sb);
+        describePositionChange(cbt.getStance(), lastP, sb, linebreak);
+        sb.append(linebreak).append("____________________________").append(linebreak).append(linebreak);
+        
         try {
             last1 = p1.clone();
             last2 = p2.clone();
@@ -95,8 +100,9 @@ class CombatLog {
             e.printStackTrace();
         }
         lastP = cbt.getStance();
+        return sb.toString();
     }
-
+    
     void logEnd(Optional<Character> winner) {
         StringBuilder sb = new StringBuilder("\nMATCH OVER: ");
         if (winner.isPresent()) {
@@ -114,7 +120,7 @@ class CombatLog {
         }
     }
 
-    private void useSkills(Skill p1act, Skill p2act, StringBuilder sb) {
+    private void useSkills(Skill p1act, Skill p2act, StringBuilder sb, String linebreak) {
         Skill firstSkill, secondSkill;
         Character firstCharacter, secondCharacter;
         if (p1.init() + p1act.speed() >= p2.init() + p2act.speed()) {
@@ -134,15 +140,15 @@ class CombatLog {
             cbt.write("<br>");
             second = cbt.resolveSkill(secondSkill, firstCharacter);
         }
-        sb.append(String.format("%s went first: %s\n", firstCharacter.getName(), first ? "orgasm" : "normal"));
-        sb.append(String.format("%s went second: %s\n", secondCharacter.getName(),
-                        cbt.lastFailed || first ? "failed" : second ? "orgasm" : "normal"))
-          .append('\n');
+        sb.append(String.format("%s went first: %s%s", firstCharacter.getName(), first ? "orgasm" : "normal", linebreak));
+        sb.append(String.format("%s went second: %s%s", secondCharacter.getName(),
+                        cbt.lastFailed || first ? "failed" : second ? "orgasm" : "normal", linebreak))
+          .append(linebreak);
     }
 
-    private void describePositionChange(Position current, Position last, StringBuilder sb) {
+    private void describePositionChange(Position current, Position last, StringBuilder sb, String linebreak) {
         if (!current.equals(last)) {
-            sb.append(String.format("\nPosition changed: %s -> %s ", last.getClass()
+            sb.append(String.format("%sPosition changed: %s -> %s ", linebreak, last.getClass()
                                                                          .getSimpleName(),
                             current.getClass()
                                    .getSimpleName()));
@@ -153,13 +159,13 @@ class CombatLog {
                 sb.append(p2.getName())
                   .append(" dominant");
             }
-            sb.append("\n");
+            sb.append(linebreak);
         }
     }
 
-    private static void describeForHeader(Character c, StringBuilder sb) {
+    private static void describeForHeader(Character c, StringBuilder sb, String linebreak) {
         sb.append(c.getName())
-          .append(" at start:\n");
+          .append(" at start:").append(linebreak);
         sb.append(c.att.toString());
         sb.append(c.traits.toString());
         sb.append(c.status.toString());
@@ -167,7 +173,7 @@ class CombatLog {
         c.body.describe(sb, c, " ", false);
         sb.append(" -- ");
         sb.append(c.outfit.describe(c));
-        sb.append('\n');
+        sb.append(linebreak);
     }
 
     private static void describeChanges(Character c, Character clone, StringBuilder sb) {

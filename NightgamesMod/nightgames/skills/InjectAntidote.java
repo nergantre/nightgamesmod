@@ -54,7 +54,7 @@ public class InjectAntidote extends Skill {
 
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return Global.format(
-                        "{self:SUBJECT} jabs {self:reflective} with a needle, sighing as {self:pronoun} pushes the needle down. Before your eyes, {self:possessive} entire bodily system is purged of all factors, both begin and malign.",
+                        "{self:SUBJECT} jabs {self:reflective} with a needle, sighing as {self:pronoun} pushes the needle down. Before {other:name-possessive} eyes, {self:possessive} entire bodily system is purged of all factors, both begin and malign.",
                         getSelf(), target);
     }
 

@@ -45,11 +45,7 @@ public class SpawnFGoblin extends Skill {
             power += 2;
         if (getSelf().has(Trait.tactician))
             ac += 2;
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         getSelf().pet = new FGoblin(getSelf(), power, ac);
         return true;
     }
@@ -75,10 +71,11 @@ public class SpawnFGoblin extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return String.format(
-                        "%s shivers and moans as she sinks into her darkest fantasies. Something dangerous is coming. Sure enough a short feminine figure in bondage gear appears "
-                                        + "before you. Her face is completely obscured by a latex mask, but her big tits and her crotch are completely exposed. She has a large cock, "
-                                        + "which looks ready to burst if it wasn't tightly bound at the base. Past her heavy sack, you can see sex toys sticking out of both her pussy and ass.",
-                        getSelf().name());
+                        "%s shivers and moans as %s sinks into %s darkest fantasies. Something dangerous is coming. Sure enough a short feminine figure in bondage gear appears "
+                                        + "before %s. Her face is completely obscured by a latex mask, but her big tits and her crotch are completely exposed. She has a large cock, "
+                                        + "which looks ready to burst if it wasn't tightly bound at the base. Past her heavy sack, %s can see sex toys sticking out of both her pussy and ass.",
+                        getSelf().name(), getSelf().pronoun(), getSelf().possessivePronoun(),
+                        target.nameDirectObject(), target.subject());
     }
 
 }

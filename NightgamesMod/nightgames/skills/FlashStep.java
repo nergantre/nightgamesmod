@@ -36,11 +36,7 @@ public class FlashStep extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         c.setStance(new Behind(getSelf(), target));
         getSelf().weaken(c, 10);
 
@@ -65,8 +61,10 @@ public class FlashStep extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name()
-                        + " starts to move and suddenly vanishes. You hesitate for a second and feel her grab you from behind.";
+        return String.format("%s starts to move and suddenly vanishes. %s for a"
+                        + " second and feel %s grab %s from behind.",
+                        getSelf().subject(), target.subjectAction("hesitate"),
+                        getSelf().subject(), target.directObject());
     }
 
     @Override

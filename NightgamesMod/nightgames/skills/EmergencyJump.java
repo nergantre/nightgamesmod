@@ -74,8 +74,9 @@ public class EmergencyJump extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return String.format(
-                        "You thought you had %s right where you want %s, but %s seems to vanish completely and escape.",
-                        getSelf().name(), getSelf().directObject(), getSelf().pronoun());
+                        "%s thought %s had %s right where %s wanted %s, but %s seems to vanish completely and escape.",
+                        target.subject(), target.pronoun(), getSelf().name(), 
+                        target.pronoun(), getSelf().directObject(), getSelf().pronoun());
     }
 
 }

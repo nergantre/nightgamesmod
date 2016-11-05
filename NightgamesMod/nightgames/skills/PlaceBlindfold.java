@@ -21,7 +21,7 @@ public class PlaceBlindfold extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().has(Item.Blindfold) && !target.is(Stsflag.blinded) && !c.getStance()
+        return getSelf().canAct() && getSelf().has(Item.Blindfold) && !target.is(Stsflag.blinded) && !c.getStance()
                                                                                  .mobile(target);
     }
 
@@ -43,7 +43,7 @@ public class PlaceBlindfold extends Skill {
         if (!target.canAct() || target.roll(this, c, 60)) {
             c.write(getSelf(),
                             String.format("%s a blindfold around %s head, covering %s eyes.",
-                                            getSelf().subjectAction("snap", "snaps"), target.nameOrPossessivePronoun(),
+                                            getSelf().subjectAction("snap"), target.nameOrPossessivePronoun(),
                                             target.possessivePronoun()));
             getSelf().remove(Item.Blindfold);
             target.add(new Blinded(target, "a blindfold", false));
@@ -51,9 +51,9 @@ public class PlaceBlindfold extends Skill {
             c.write(getSelf(),
                             String.format("%s out a blindfold and %s to place it around %s "
                                             + "head, but %s it away and throws it clear.",
-                                            getSelf().subjectAction("take", "takes"), getSelf().action("try", "tries"),
+                                            getSelf().subjectAction("take"), getSelf().action("try", "tries"),
                                             target.possessivePronoun(),
-                                            target.subjectAction("rip", "rips")));
+                                            target.subjectAction("rip")));
         }
         return true;
     }

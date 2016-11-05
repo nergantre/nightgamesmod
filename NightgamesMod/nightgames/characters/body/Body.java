@@ -31,6 +31,7 @@ import nightgames.status.Abuff;
 import nightgames.status.BodyFetish;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
+import nightgames.status.addiction.AddictionType;
 
 public class Body implements Cloneable {
     static class PartReplacement {
@@ -557,7 +558,16 @@ public class Body implements Cloneable {
         if (skill != null) {
             multiplier = Math.max(0, multiplier + skill.multiplierForStage(character));
         }
-
+        
+        double dominance = 0.0;
+        if (character.human() && Global.getPlayer().checkAddiction(AddictionType.DOMINANCE, opponent)
+                       && c.getStance().dom(opponent)) {
+            float mag = Global.getPlayer().getAddiction(AddictionType.DOMINANCE).get().getMagnitude();
+            float dom = c.getDominanceOfStance(opponent);
+            dominance = mag * (dom / 5.0);
+        }
+        multiplier += dominance;
+        
         double damage = base * multiplier;
         double perceptionlessDamage = base * (multiplier - (perceptionBonus - 1));
 
@@ -579,12 +589,13 @@ public class Body implements Cloneable {
                             ? String.format(" + <font color='rgb(255,100,50)'>%.1f<font color='white'>", bonusDamage)
                             : "";
             String stageString = skill == null ? "" : String.format(" + stage:%.2f", skill.multiplierForStage(character));
+            String dominanceString = dominance < 0.01 ? "" : String.format(" + dominance:%.2f", dominance);
             String battleString = String.format(
                             "%s%s %s<font color='white'> was pleasured by %s%s<font color='white'> for <font color='rgb(255,50,200)'>%d<font color='white'> "
-                                            + "base:%.1f (%.1f%s) x multiplier: %.2f (1 + sen:%.1f + ple:%.1f + per:%.1f %s)\n",
+                                            + "base:%.1f (%.1f%s) x multiplier: %.2f (1 + sen:%.1f + ple:%.1f + per:%.1f %s %s)\n",
                             firstColor, Global.capitalizeFirstLetter(character.nameOrPossessivePronoun()),
                             target.describe(character), secondColor, pleasuredBy, result, base, magnitude, bonusString,
-                            multiplier, sensitivity - 1, pleasure - 1, perceptionBonus - 1, stageString);
+                            multiplier, sensitivity - 1, pleasure - 1, perceptionBonus - 1, stageString, dominanceString);
             if (c != null) {
                 c.writeSystemMessage(battleString);
             }
@@ -832,7 +843,11 @@ public class Body implements Cloneable {
                 }
                 sb.append(added.get(added.size() - 1)
                                .fullDescribe(character));
-                sb.append(" turned back into ");
+                if (removed.size() == 1 && removed.get(0) == null) {
+                    sb.append(" disappeared");
+                } else {
+                    sb.append(" turned back into ");
+                }
                 for (BodyPart p : removed.subList(0, removed.size() - 1)) {
                     sb.append(Global.prependPrefix(p.prefix(), p.fullDescribe(character)))
                       .append(", ");
@@ -890,7 +905,7 @@ public class Body implements Cloneable {
             part = character.body.getRandom("skin");
         }
         if (character.has(Trait.spiritphage)) {
-            c.write(Global.capitalizeFirstLetter("<br><b>" + character.subjectAction("glow", "glows")
+            c.write("<br><b>" + Global.capitalizeFirstLetter(character.subjectAction("glow", "glows")
                             + " with power as the cum is absorbed by " + character.possessivePronoun() + " "
                             + part.describe(character) + ".</b>"));
             character.add(c, new Abuff(character, Attribute.Power, 5, 10));
@@ -978,7 +993,7 @@ public class Body implements Cloneable {
             parts.add(cock);
         }
         Collections.shuffle(parts);
-        if (parts.size() > 1) {
+        if (parts.size() >= 1) {
             return parts.get(0);
         } else {
             return getRandomBreasts();

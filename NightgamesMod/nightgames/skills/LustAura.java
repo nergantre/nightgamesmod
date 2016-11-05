@@ -39,11 +39,7 @@ public class LustAura extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         getSelf().arouse(10, c);
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         target.add(c, new Horny(target, (float) (3 + 2 * getSelf().getExposure()), 3 + Global.random(3),
                         getSelf().nameOrPossessivePronoun() + " aura of lust"));
         target.emote(Emotion.horny, 10);
@@ -68,7 +64,9 @@ public class LustAura extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name() + " releases an aura of pure sex. You feel your body becoming hot just being near her.";
+        return String.format("%s releases an aura of pure sex. %s %s body becoming hot just being near %s.",
+                        getSelf().subject(), Global.capitalizeFirstLetter(target.subjectAction("feel")),
+                        target.possessivePronoun(), getSelf().directObject());
     }
 
 }

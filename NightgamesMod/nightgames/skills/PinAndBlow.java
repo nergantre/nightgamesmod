@@ -20,8 +20,13 @@ public class PinAndBlow extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return c.getStance().mobile(getSelf()) && c.getStance().prone(target) && target.crotchAvailable()
-                        && getSelf().canAct() && !c.getStance().connected() && c.getStance().en != Stance.oralpin;
+        return c.getStance()
+                .mobile(getSelf())
+                        && c.getStance()
+                            .prone(target)
+                        && target.crotchAvailable() && getSelf().canAct() && !c.getStance()
+                                                                               .connected()
+                        && c.getStance().en != Stance.oralpin;
     }
 
     @Override
@@ -36,25 +41,16 @@ public class PinAndBlow extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        Result res = Result.normal;
-
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, res, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, res, target));
+        writeOutput(c, Result.normal, target);
+        c.setStance(new HeldOral(getSelf(), target));
+        if (target.hasDick()) {
+            new Blowjob(getSelf()).resolve(c, target);
+        } else if (target.hasPussy()) {
+            new Cunnilingus(getSelf()).resolve(c, target);
+        } else if (target.body.has("ass")) {
+            new Anilingus(getSelf()).resolve(c, target);
         }
-        if (res != Result.miss) {
-            c.setStance(new HeldOral(getSelf(), target));
-            if (target.hasDick()) {
-                new Blowjob(getSelf()).resolve(c, target);
-            } else if (target.hasPussy()) {
-                new Cunnilingus(getSelf()).resolve(c, target);
-            } else if (target.body.has("ass")) {
-                new Anilingus(getSelf()).resolve(c, target);
-            }
-            return true;
-        }
-        return false;
+        return true;
     }
 
     @Override

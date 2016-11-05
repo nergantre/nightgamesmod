@@ -62,8 +62,9 @@ public class NursesGloves extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         String message;
-        message = "With a lecherous grin on her face, " + getSelf().subject()
-                        + " snaps on a pair of rubber gloves similar to those you would see at the doctor's.";
+        message = String.format("With a lecherous grin on %s face, %s snaps on a pair of"
+                        + " rubber gloves similar to those you would see at the doctor's.",
+                        getSelf().possessivePronoun(), getSelf().subject());
         return message;
     }
 

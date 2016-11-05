@@ -173,12 +173,7 @@ public class Kat extends BasePersonality {
 
     @Override
     public String victory(Combat c, Result flag) {
-        Character opponent;
-        if (c.p1 == character) {
-            opponent = c.p2;
-        } else {
-            opponent = c.p1;
-        }
+        Character opponent = c.getOther(character);
         character.arousal.empty();
         if (c.getStance().vaginallyPenetrated(character)) {
             opponent.add(c, new Horny(opponent, 5, 10, character.nameOrPossessivePronoun() + " pheromones"));
@@ -212,7 +207,7 @@ public class Kat extends BasePersonality {
         } else {
             opponent.add(c, new Horny(opponent, 5, 10, character.nameOrPossessivePronoun() + " pheromones"));
             opponent.add(c, new Horny(opponent, 20, 5, character.nameOrPossessivePronoun() + " feral musk"));
-            opponent.arousal.restore(opponent.arousal.max() * 1 / 3);
+            opponent.arousal.restore(opponent.arousal.max() / 3);
             return "As Kat pleasures you, you're quickly reaching the limit of your control. You try to put some distance between you and her to catch your breath. The familiar "
                             + "tightness in your groin warns you that any stimulation will probably set you off right now. Eager to finish you off, Kat pounces on you and grabs your "
                             + "dick with both hands. <i>\"Nyaha! I got you!\"</i> The last of your endurance is blown away as she jerks you off excitedly. You shoot your load into the air, "
@@ -236,7 +231,7 @@ public class Kat extends BasePersonality {
 
     @Override
     public String defeat(Combat c, Result flag) {
-        Character opponent = c.p1 == character ? c.p2 : c.p1;
+        Character opponent = c.getOther(character);
         if (c.getStance().vaginallyPenetrated(character)) {
             opponent.add(c, new Horny(opponent, 5, 10, character.nameOrPossessivePronoun() + " pheromones"));
             return "Kat squeaks as you pump your cock inside her over and over, penetrating her deeper with each thrust. She seems to be particularly vulnerable to being fucked"
@@ -286,7 +281,7 @@ public class Kat extends BasePersonality {
 
     @Override
     public String draw(Combat c, Result flag) {
-        Character opponent = c.p1 == character ? c.p2 : c.p1;
+        Character opponent = c.getOther(character);
         if (flag == Result.intercourse) {
             opponent.add(c, new Horny(opponent, 5, 10, character.nameOrPossessivePronoun() + " pheromones"));
             return "Kat lets out a near-constant mewing of pleasure as you thrust repeatedly into her tight pussy. You feel yourself rapidly approaching orgasm and judging by "
@@ -306,10 +301,10 @@ public class Kat extends BasePersonality {
             opponent.add(c, new Horny(opponent, 20, 5, character.nameOrPossessivePronoun() + " feral musk"));
             return "Kat has you backed up against a wall, your lips locked in a passionate kiss. Her nimble fingers are wrapped around your stiff cock, pumping on your member as "
                             + "quickly as she can. The feeling of her tongue dancing in your mouth, is driving you to the brink of an orgasm. You're almost certain you're not going to make it.<p>"
-                            + "You reach down, fumbling desperately between her thighs, trying to find her clitoris and make a comeback. Its difficult to concentrate though, as she starts "
+                            + "You reach down, fumbling desperately between her thighs, trying to find her clitoris and make a comeback. It's difficult to concentrate though, as she starts "
                             + "gently rolling your balls in between her skilled fingers.<p>"
                             + "Suddenly you locate her clitoris with your thumb, rubbing it quickly as you plunge two fingers up into her dripping pussy.<p>"
-                            + "\"Nyyaaaa!\" she meows in ecstasy, breaking the kiss. Her fingers return to your shaft and resume pumping it furiously.You seize the opportunity to regain "
+                            + "<i>\"Nyyaaaa!\"</i> she meows in ecstasy, breaking the kiss. Her fingers return to your shaft and resume pumping it furiously. You seize the opportunity to regain "
                             + "lost ground and teasingly nibble on her ultra-sensitive ear, letting your tongue dance over the edge of it. Suddenly your gut clenches as you feel the first "
                             + "waves of an orgasm begin to build at the base of your cock. You're going to cum, you're going to-<p>"
                             + "<i>\"NYYAAAAAAAAAAAAAA!\"</i><br>"
@@ -371,7 +366,7 @@ public class Kat extends BasePersonality {
             return "Your fight with " + target.name()
                             + " goes back and forth for several minutes, leaving you both naked and aroused, but without a clear winner. You back off "
                             + "a couple steps to catch your breath, when you notice a blur of motion out of the corner of your eye. Distracted as you are, you aren't paying attention to "
-                            + "you footing and stumble backwards. " + target.name()
+                            + "your footing and stumble backwards. " + target.name()
                             + " advances to take advantage of your mistake, but she soon realizes you aren't looking at her, but "
                             + "behind her. She turns around just in time to get pounced on by an exuberant catgirl. Kat starts to playfully tickle her prey, incapacitating the poor, "
                             + "naked girl with uncontrollable fits of laughter. You stand up, brush off your butt, and leisurely walk towards your helpless opponent to finish her off.";
@@ -396,7 +391,7 @@ public class Kat extends BasePersonality {
                         + "pretty obvious. You pretend you didn't see anything and continue toward your dorm. So, a stray Kat is following you home tonight. It would make more sense for her "
                         + "to just come out so you can walk together, but you know how shy she can be about things like this. On the other hand, she is following you back to your room at night "
                         + "with obvious implications, so... does that count as being forward? <p>You reach the door to your dorm building and look back to see Kat clumsily attempting to hide behind a "
-                        + "tree. Oh good grief. How long is planning to stay hidden? The door to the building locks automatically, so if you go inside she'll be stuck out here. Besides, the closer "
+                        + "tree. Oh good grief. How long is she planning to stay hidden? The door to the building locks automatically, so if you go inside she'll be stuck out here. Besides, the closer "
                         + "you get to your room, the harder it's going to be for her to work up to courage to approach you. You walk over to where she's hiding and she freezes in panic. Before she "
                         + "can run off, you catch her and gently pat her on the head. It's starting to get chilly out here. She should just come inside with you. Kat blushes furiously, but looks "
                         + "delighted as you lead her to your room.";

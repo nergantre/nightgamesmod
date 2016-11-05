@@ -21,7 +21,10 @@ public class BreastGrowth extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().canAct() && c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf());
+        return getSelf().canAct() && c.getStance()
+                                      .mobile(getSelf())
+                        && !c.getStance()
+                             .prone(getSelf());
     }
 
     @Override
@@ -41,15 +44,19 @@ public class BreastGrowth extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        Result res = target.roll(this, c, 0) ? Result.normal : Result.miss;
-
-        boolean permanent = Global.random(20) == 0 && (getSelf().human() || target.human())
-                        && !target.has(Trait.stableform);
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, permanent ? 1 : 0, res, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, permanent ? 1 : 0, res, target));
+        Result res;
+        if (target.roll(this, c, accuracy(c))) {
+            if (target.body.getRandomBreasts() == BreastsPart.flat) {
+                res = Result.special;
+            } else {
+                res = Result.normal;
+            }
+        } else {
+            res = Result.miss;
         }
+        boolean permanent = Global.random(20) == 0 && (getSelf().human() || c.shouldPrintReceive(target))
+                        && !target.has(Trait.stableform);
+        writeOutput(c, permanent ? 1 : 0, res, target);
         if (res != Result.miss) {
             target.add(c, new Hypersensitive(target));
             BreastsPart part = target.body.getBreastsBelow(BreastsPart.f.size);
@@ -79,15 +86,31 @@ public class BreastGrowth extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         String message;
-        if (modifier != Result.miss) {
-            message = "You channel your arcane energies into " + target.name()
-                            + "'s breasts, causing them to grow rapidly. Her knees buckle with the new sensitivity you bestowed on her boobs.";
+        if (modifier == Result.normal) {
+            message = String.format(
+                            "You channel your arcane energies into %s breasts, "
+                                            + "causing them to grow rapidly. %s knees buckle with the new"
+                                            + " sensitivity you bestowed on %s boobs.",
+                            target.nameOrPossessivePronoun(),
+                            Global.capitalizeFirstLetter(target.possessivePronoun()), target.possessivePronoun());
+            if (damage > 0) {
+                message += " You realize the effects are permanent!";
+            }
+        } else if (modifier == Result.special) {
+            message = String.format(
+                            "You channel your arcane energies into %s flat chest, "
+                                            + "causing small mounds to rapidly grow on %s. %s knees buckle with the"
+                                            + " sensitivity you bestowed on %s new boobs.",
+                            target.nameOrPossessivePronoun(), target.directObject(),
+                            Global.capitalizeFirstLetter(target.possessivePronoun()), target.possessivePronoun());
             if (damage > 0) {
                 message += " You realize the effects are permanent!";
             }
         } else {
-            message = "You attempt to channel your arcane energies into " + target.name()
-                            + "'s breasts, but she dodges out of the way, causing your spell to fail.";
+            message = String.format(
+                            "You attempt to channel your arcane energies into %s breasts, but "
+                                            + "%s %s out of the way, causing your spell to fail.",
+                            target.nameOrPossessivePronoun(), target.pronoun(), target.action("dodge"));
         }
         return message;
     }
@@ -95,17 +118,33 @@ public class BreastGrowth extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         String message;
-        if (modifier != Result.miss) {
-            message = getSelf().name()
-                            + " stops moving and begins chanting. You feel your breasts grow hot, and start expanding! "
-                            + "You try to hold them back with your hands, but the growth continues until you're a full cup size bigger than before. "
-                            + "The new sensations from your substantially larger breasts make you tremble.";
+        if (modifier == Result.normal) {
+            message = String.format(
+                            "%s moving and begins chanting. %s %s breasts grow hot, and they start expanding!"
+                                            + " %s to hold them back with %s hands, but the growth continues untill they are a full cup size"
+                                            + " bigger than begore. The new sensations from %s substantially larger breasts make %s tremble.",
+                            getSelf().name(), Global.capitalizeFirstLetter(target.subjectAction("feel")),
+                            target.possessivePronoun(), Global.capitalizeFirstLetter(target.pronoun()),
+                            target.action("try", "tries"), target.possessivePronoun(), target.directObject());
             if (damage > 0) {
-                message += " You realize the effects are permanent!";
+                message += Global.capitalizeFirstLetter(target.subjectAction("realize"))
+                                + " the effects are permanent!";
             }
+        } else if (modifier == Result.special) {
+            message = String.format(
+                            "%s moving and begins chanting. %s %s chest grow hot, and small, perky breasts start to form!"
+                                            + " %s to hold them back with %s hands, but the growth continues untill they are a full A-cup."
+                                            + " The new sensations from %s new breasts make %s tremble.",
+                            getSelf().name(), Global.capitalizeFirstLetter(target.subjectAction("feel")),
+                            target.possessivePronoun(), Global.capitalizeFirstLetter(target.pronoun()),
+                            target.action("try", "tries"), target.possessivePronoun(), target.directObject());
         } else {
-            message = getSelf().name()
-                            + " stops moving and begins chanting. You start feeling some tingling in your breasts, but it quickly subsides as you dodge out of the way.";
+            message = String.format(
+                            "%s moving and begins chanting. %s feeling some tingling in %s breasts, "
+                                            + "but it quickly subsides as %s %s out of the way.",
+                            getSelf().subjectAction("stop"),
+                            Global.capitalizeFirstLetter(target.subjectAction("start")), target.possessivePronoun(),
+                            target.pronoun(), target.action("dodge"));
         }
         return message;
     }

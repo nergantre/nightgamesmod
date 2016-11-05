@@ -23,11 +23,10 @@ public class ArmLocked extends Status {
 
     @Override
     public String describe(Combat c) {
-        if (affected.human()) {
-            return "Her hands are entwined with your own, preventing your escape.";
-        } else {
-            return "Your hands are entwined with hers, preventing her escape.";
-        }
+        Character opp = c.getOther(affected);
+        return String.format("%s hands are intertwined with %s, preventing %s escape.",
+                        opp.nameOrPossessivePronoun(), !affected.human() && !affected.useFemalePronouns()
+                        ? "his" : affected.possessivePronoun() + "s", affected.possessivePronoun());
     }
 
     @Override

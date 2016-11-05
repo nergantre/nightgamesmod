@@ -131,7 +131,7 @@ public class Fuck extends Skill {
         if (selfO.isReady(getSelf()) && targetO.isReady(target)) {
             if (getSelf().human()) {
                 c.write(getSelf(), premessage + deal(c, premessage.length(), Result.normal, target));
-            } else if (target.human()) {
+            } else if (c.shouldPrintReceive(target)) {
                 c.write(getSelf(), premessage + receive(c, premessage.length(), Result.normal, target));
             }
             if (selfO.isType("pussy")) {
@@ -148,7 +148,7 @@ public class Fuck extends Skill {
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(), premessage + deal(c, premessage.length(), Result.miss, target));
-            } else if (target.human()) {
+            } else if (c.shouldPrintReceive(target)) {
                 c.write(getSelf(), premessage + receive(c, premessage.length(), Result.miss, target));
             }
             return false;
@@ -210,21 +210,31 @@ public class Fuck extends Skill {
         BodyPart selfO = getSelfOrgan();
         BodyPart targetO = getTargetOrgan(target);
         if (modifier == Result.normal) {
-            return String.format("%s rubs %s %s against your wet snatch. " +
-                                 "%s slowly but steadily pushes in, forcing %s length into your hot, wet pussy.", 
+            return String.format("%s rubs %s %s against %s wet snatch. " +
+                                 "%s slowly but steadily pushes in, forcing %s length into %s hot, wet pussy.", 
                             getSelf().name(), getSelf().possessivePronoun(), selfO.describe(getSelf()), 
-                            Global.capitalizeFirstLetter(getSelf().pronoun()), getSelf().possessivePronoun());
+                            target.nameOrPossessivePronoun(),
+                            Global.capitalizeFirstLetter(getSelf().pronoun()), getSelf().possessivePronoun(),
+                            target.possessivePronoun());
         } else if (modifier == Result.miss) {
+            String subject = (damage == 0 ? getSelf().name() + " " : "");
             if (!selfO.isReady(getSelf()) || !targetO.isReady(target)) {
-                return (damage == 0 ? getSelf().name() + " " : "")
-                                + "grinds her privates against yours, but since neither of you are very turned on yet, it doesn't accomplish much.";
+                String indicative = target.human() ? "yours" : target.nameOrPossessivePronoun();
+                return String.format("%sgrinds %s privates against %ss, but since neither of %s are"
+                                + " very turned on yet, it doesn't accomplish much.",
+                                subject, getSelf().possessivePronoun(), indicative,
+                                c.bothDirectObject());
             } else if (!targetO.isReady(target)) {
-                return (damage == 0 ? getSelf().name() + " " : "") + "tries to push her " + selfO.describe(getSelf())
-                                + " inside your pussy, but you're not wet enough. You're simply not horny enough for "
-                                + "effective penetration yet.";
+                return String.format("%stries to push %s %s inside %s pussy, but %s %s not wet enough. "
+                                + "%s simply not horny enough for effective penetration yet.",
+                                subject, getSelf().possessivePronoun(), selfO.describe(getSelf()),
+                                target.nameOrPossessivePronoun(), target.pronoun(),
+                                target.action("are", "is"),
+                                Global.capitalizeFirstLetter(target.subjectAction("are", "is")));
             } else {
-                return (damage == 0 ? getSelf().name() + " " : "") + "tries to push her " + selfO.describe(getSelf())
-                                + " into your ready pussy, but she is still limp.";
+                return String.format("%stries to push %s %s into %s ready pussy, but %s is still limp.",
+                                subject, getSelf().possessivePronoun(), selfO.describe(getSelf()),
+                                target.nameOrPossessivePronoun(), getSelf().pronoun());
             }
         }
         return "Bad stuff happened";

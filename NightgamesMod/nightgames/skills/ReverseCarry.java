@@ -37,7 +37,7 @@ public class ReverseCarry extends Carry {
         if (target.roll(this, c, accuracy(c))) {
             if (getSelf().human()) {
                 c.write(getSelf(), premessage + deal(c, premessage.length(), Result.normal, target));
-            } else if (target.human()) {
+            } else if (c.shouldPrintReceive(target)) {
                 c.write(getSelf(), premessage + receive(c, premessage.length(), Result.normal, getSelf()));
             }
             int m = 5 + Global.random(5);
@@ -51,7 +51,7 @@ public class ReverseCarry extends Carry {
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(), premessage + deal(c, premessage.length(), Result.miss, target));
-            } else if (target.human()) {
+            } else if (c.shouldPrintReceive(target)) {
                 c.write(getSelf(), premessage + receive(c, premessage.length(), Result.miss, target));
             }
             getSelf().add(c, new Falling(getSelf()));
@@ -81,13 +81,20 @@ public class ReverseCarry extends Carry {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
+        String subject = (damage > 0 ? "" : target.subject() + " ");
         if (modifier == Result.miss) {
-            return (damage > 0 ? "" : target.subject() + " ")
-                            + "jumps onto you, but you deposit her back onto the floor.";
+            return String.format("%sjumps onto %s, but %s %s %s back onto the floor.",
+                            subject, target.nameDirectObject(), target.pronoun(),
+                            target.action("deposit"), getSelf().directObject());
         } else {
-            return (damage > 0 ? "" : target.subject() + " ")
-                            + "leaps into your arms and impales herself on your cock. She wraps her legs around your torso and you quickly support her so she doesn't "
-                            + "fall and injure herself or you.";
+            return String.format("%sleaps into %s arms and impales %s on %s cock. "
+                            + "%s wraps %s legs around %s torso and %s quickly %s %s so %s doesn't "
+                            + "fall and injure %s or %s.", subject, target.nameOrPossessivePronoun(),
+                            getSelf().reflectivePronoun(), target.possessivePronoun(),
+                            getSelf().subject(), getSelf().possessivePronoun(), target.nameOrPossessivePronoun(),
+                            target.pronoun(), target.action("support"), getSelf().pronoun(),
+                            getSelf().pronoun(),
+                            getSelf().reflectivePronoun(), target.directObject());
         }
     }
 

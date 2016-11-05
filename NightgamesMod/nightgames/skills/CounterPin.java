@@ -64,7 +64,7 @@ public class CounterPin extends CounterBase {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.setup && getSelf().hasPussy()) {
-            return Global.format("Eyeing you carefully, {self:SUBJECT} shifts to a low stance.", getSelf(), target);
+            return Global.format("Eyeing {other:name-do} carefully, {self:SUBJECT} shifts to a low stance.", getSelf(), target);
         } else {
             return "";
         }

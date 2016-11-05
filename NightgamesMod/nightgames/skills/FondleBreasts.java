@@ -46,11 +46,7 @@ public class FondleBreasts extends Skill {
                                 c, this);
             }
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.miss, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.miss, target));
-            }
+            writeOutput(c, Result.miss, target);
             return false;
         }
         return true;
@@ -97,14 +93,19 @@ public class FondleBreasts extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return getSelf().name() + " gropes at your " + target.body.getRandomBreasts().describe(target)
-                            + ", but misses the mark.";
+            return String.format("%s gropes at %s %s, but misses the mark.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(),
+                            target.body.getRandomBreasts().describe(target));
         } else if (target.breastsAvailable()) {
-            return getSelf().name() + " massages your " + target.body.getRandomBreasts().describe(target)
-                            + ", and pinches your nipples, causing you to moan with desire.";
+            return String.format("%s massages %s %s, and pinches %s nipples, causing %s to moan with desire.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(),
+                            target.body.getRandomBreasts().describe(target),
+                            target.possessivePronoun(), target.directObject());
         } else {
-            return getSelf().name() + " massages your " + target.body.getRandomBreasts().describe(target)
-                            + " over your " + target.getOutfit().getTopOfSlot(ClothingSlot.top).getName() + ".";
+            return String.format("%s massages %s %s over %s %s.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(),
+                            target.body.getRandomBreasts().describe(target), target.possessivePronoun(),
+                            target.getOutfit().getTopOfSlot(ClothingSlot.top).getName());
         }
     }
 

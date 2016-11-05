@@ -39,11 +39,7 @@ public class CockWorship extends Skill {
         if (getSelf().has(Trait.silvertongue)) {
             m += 4;
         }
-        if (target.human()) {
-            c.write(getSelf(), receive(c, m, Result.normal, target));
-        } else if (getSelf().human()) {
-            c.write(getSelf(), deal(c, m, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         BodyPart mouth = getSelf().body.getRandom("mouth");
         BodyPart cock = target.body.getRandom("cock");
         target.body.pleasure(getSelf(), mouth, cock, m, c, this);
@@ -102,10 +98,10 @@ public class CockWorship extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return Global.format(
-                        "{self:subject} ecstatically crawls to you on {self:possessive} knees and reverently cups {other:possessive} {other:body-part:cock}"
-                                        + "with {self:possessive} hands. She carefully takes {other:possessive} member into {other:possessive} {self:body-part:mouth} and start sucking on it "
+                        "{self:subject} ecstatically crawls to {other:subject} on {self:possessive} knees and reverently cups {other:possessive} {other:body-part:cock}"
+                                        + "with {self:possessive} hands. {self:PRONOUN} carefully takes {other:possessive} member into {self:possessive} {self:body-part:mouth} and starts sucking on it "
                                         + "like it was the most delicious popsicle made. Minutes pass and {self:subject} continues blowing {other:possessive} shaft while idly playing with "
-                                        + "{self:reflective}. Feeling a bit too good, you manage to push {self:name-do} away from your cock lest she makes you cum accidentally.",
+                                        + "{self:reflective}. Feeling a bit too good, {other:subject-action:manage|manages} to push {self:name-do} away from {other:possessive} cock lest {self:pronoun} makes {other:direct-object} cum accidentally.",
                         getSelf(), target);
     }
 

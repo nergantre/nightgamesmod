@@ -32,7 +32,8 @@ public class Horny extends DurationStatus {
             return "Your heart pounds in your chest as you try to surpress your arousal from contacting " + source
                             + ".";
         } else {
-            return affected.name() + " is flushed and her nipples are noticeably hard from contacting " + source + ".";
+            return affected.name() + " is flushed and "+affected.possessivePronoun()
+            +" nipples are noticeably hard from contacting " + source + ".";
         }
     }
 

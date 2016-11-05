@@ -35,32 +35,16 @@ public class DarkTendrils extends Skill {
         getSelf().arouse(5, c);
         if (target.roll(this, c, accuracy(c))) {
             if (Global.random(2) == 1) {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, 0, Result.normal, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.normal, target));
-                }
+                writeOutput(c, Result.normal, target);
                 target.add(c, new Bound(target, Math.min(10 + 3 * getSelf().get(Attribute.Dark), 55), "shadows"));
             } else if (getSelf().check(Attribute.Dark, target.knockdownDC() - getSelf().getMojo().get())) {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, 0, Result.weak, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.weak, target));
-                }
+                writeOutput(c, Result.weak, target);
                 target.add(c, new Falling(target));
             } else {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, 0, Result.miss, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.miss, target));
-                }
+                writeOutput(c, Result.miss, target);
             }
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.miss, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.miss, target));
-            }
+            writeOutput(c, Result.miss, target);
             return false;
         }
         return true;
@@ -96,12 +80,15 @@ public class DarkTendrils extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return getSelf().name()
-                            + " makes a gesture and evil looking tentacles pop up around you. You dive out of the way as they try to grab you.";
+            return String.format("%s makes a gesture and evil looking tentacles pop up around %s. %s %s out of the way as they try to grab %s.",
+                            getSelf().subject(), target.subject(), Global.capitalizeFirstLetter(target.pronoun()),
+                            target.action("dive"), target.directObject());
         } else if (modifier == Result.weak) {
-            return "Your shadow seems to come to life as dark tendrils wrap around your legs and bring you to the floor.";
+            return String.format("%s shadow seems to come to life as dark tendrils wrap around %s legs and bring %s to the floor.",
+                            target.nameOrPossessivePronoun(), target.possessivePronoun(), target.directObject());
         } else {
-            return getSelf().name() + " summons shadowy tentacles that snare your arms and hold you in place.";
+            return String.format("%s summons shadowy tentacles which snare %s arms and hold %s in place.", 
+                            getSelf().subject(), target.nameOrPossessivePronoun(), target.directObject());
         }
     }
 

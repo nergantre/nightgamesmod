@@ -38,7 +38,8 @@ public class Knotted extends Status {
         if (affected.human()) {
             return opponent.nameOrPossessivePronoun() + " knotted dick is lodged inside of you, preventing escape.";
         } else {
-            return "The knot in you dick is keeping it fully entrenched within " + affected.name() + ".";
+            return "The knot in "+opponent.nameOrPossessivePronoun()+
+                            " dick is keeping it fully entrenched within " + affected.name() + ".";
         }
     }
 

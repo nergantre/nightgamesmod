@@ -44,10 +44,12 @@ public class Substitute extends Skill {
                             target.name(), target.pronoun(), target.directObject()));
         } else {
             c.write(getSelf(),
-                            String.format("You take a good hold of %s body, and %s is surprisingly pliable..."
-                                            + " You are wrestling a blow-up doll! The real %s is standing behind you! How- How"
-                                            + " did %s make the switch?!", getSelf().nameOrPossessivePronoun(),
-                                            getSelf().pronoun(), getSelf().name, getSelf().pronoun()));
+                            String.format("%s a good hold of %s body, and %s is surprisingly pliable..."
+                                            + " %s wrestling a blow-up doll! The real %s is standing behind %s! How- How"
+                                            + " did %s make the switch?!", target.subjectAction("take"),
+                                            getSelf().nameOrPossessivePronoun(), getSelf().pronoun(),
+                                            target.subjectAction("are", "is"), getSelf().name, target.directObject(),
+                                            getSelf().pronoun()));
         }
         getSelf().emote(Emotion.dominant, 10);
         target.emote(Emotion.nervous, 10);

@@ -28,23 +28,14 @@ public class LickNipples extends Skill {
     public boolean resolve(Combat c, Character target) {
         int m = 3 + Global.random(6);
         if (target.roll(this, c, accuracy(c))) {
-            if (getSelf().human()) {
-                // c.offerImage("LickNipples.jpg", "Art by Fujin Hitokiri");
-                c.write(getSelf(), deal(c, 0, Result.normal, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.normal, target));
-            }
+            writeOutput(c, Result.normal, target);
             if (getSelf().has(Trait.silvertongue)) {
                 m += 4;
             }
             target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("breasts"), m, c, this);
 
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.miss, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.miss, target));
-            }
+            writeOutput(c, Result.miss, target);
             return false;
         }
         return true;
@@ -78,10 +69,12 @@ public class LickNipples extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return getSelf().name() + " tries to suck on your chest, but you avoid her.";
+            return String.format("%s tries to suck on %s chest, but %s %s %s.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(),
+                            target.pronoun(), target.action("avoid"), getSelf().directObject());
         } else {
-            return getSelf().name()
-                            + " licks and sucks your nipples, sending a surge of excitement straight to your groin.";
+            return String.format("%s licks and sucks %s nipples, sending a surge of excitement straight to %s groin.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(), target.possessivePronoun());
         }
     }
 

@@ -59,10 +59,11 @@ public class Strapon extends Skill {
                                 + " and fasten a strap on dildo onto yourself.");
             } else if (!target.is(Stsflag.blinded)){
                 c.write(getSelf(),
-                                getSelf().subject() + " takes off " + getSelf().possessivePronoun() + " "
-                                                + unequipped.get(
-                                                                0)
-                                + " and straps on a thick rubber cock and grins at you in a way that makes you feel a bit nervous.");
+                                String.format("%s takes off %s %s and straps on a thick rubber "
+                                                + "cock and grins at %s in a way that makes %s feel a bit nervous.",
+                                                getSelf().subject(), getSelf().possessivePronoun(),
+                                                unequipped.get(0), target.nameDirectObject(),
+                                                target.directObject()));
             } else printBlinded(c);
         }
         if (!target.is(Stsflag.blinded)) {
@@ -94,8 +95,9 @@ public class Strapon extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name()
-                        + " straps on a thick rubber cock and grins at you in a way that makes you feel a bit nervous.";
+        return String.format("%s straps on a thick rubber cock and grins in a way that "
+                        + "makes %s feel a bit nervous.", getSelf().subject(),
+                        target.nameDirectObject());
     }
 
 }

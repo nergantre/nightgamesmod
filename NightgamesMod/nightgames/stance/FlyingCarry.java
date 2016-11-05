@@ -17,13 +17,20 @@ public class FlyingCarry extends MaledomSexStance {
     @Override
     public String describe() {
         return String.format(
-                        "You are flying some twenty feet up in the air,"
-                                        + " joined to your partner by your hips. %s is on top of %s and %s %s is pumping into %s %s.",
+                        "%s are flying some twenty feet up in the air,"
+                                        + " joined to %s by %s hips. %s is on top of %s and %s %s is pumping into %s %s.",
+                        spectated() ? String.format("%s and %s", top.subject(), bottom.subject()) : "You",
+                        spectated() ? "eachother" : "your partner",
+                        spectated() ? "their" : "your",
                         top.subject(), bottom.subject(), top.possessivePronoun(),
                         top.body.getRandomInsertable().describe(top), bottom.possessivePronoun(),
                         bottom.body.getRandomPussy().describe(bottom));
     }
 
+    private boolean spectated() {
+        return !(top.human() || bottom.human());
+    }
+    
     @Override
     public String image() {
         return "flying.jpg";

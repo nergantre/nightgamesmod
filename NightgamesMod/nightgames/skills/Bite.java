@@ -21,7 +21,7 @@ public class Bite extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return c.getStance().penetratedBy(getSelf(), target) && c.getStance().kiss(getSelf());
+        return target.human() && c.getStance().penetratedBy(getSelf(), target) && c.getStance().kiss(getSelf());
     }
 
     @Override

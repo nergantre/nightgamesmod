@@ -1,0 +1,33 @@
+{
+	"name":"Futanari Time",
+	"summary":"Girls with dicks! This is almost the default start, except that all the girls are packing. By MotoKuchoma.",
+	"enabled":true,
+	"player": {
+	
+	},
+	"npcs": [
+		{
+			"type":"Angel"
+		},
+		{
+			"type":"Cassie"
+		},
+		{
+			"type":"Jewel"
+		},
+		{
+			"type":"Mara"
+		},
+	],
+	"all_npcs": {
+	"gender":"female",
+	"body":{"genitals": {
+				"cock": {
+					"type":"basic",
+					"length":"average"
+				},
+				"pussy": "normal"
+			}}
+	},
+	"flags": []
+}

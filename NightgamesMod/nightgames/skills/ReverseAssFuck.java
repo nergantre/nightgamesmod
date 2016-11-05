@@ -69,11 +69,7 @@ public class ReverseAssFuck extends Fuck {
         c.write(getSelf(), Global.format(premessage, getSelf(), target));
 
         int m = 5 + Global.random(5);
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, m, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, m, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
 
         int otherm = m;
         if (getSelf().has(Trait.insertion)) {
@@ -119,9 +115,10 @@ public class ReverseAssFuck extends Fuck {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return String.format("%s makes sure her %s is sufficiently lubricated and pushes %s %s into her greedy hole.",
-                        getSelf().name(), getSelfOrgan().describe(getSelf()), target.nameOrPossessivePronoun(),
-                        getTargetOrgan(target).describe(target));
+        return String.format("%s makes sure %s %s is sufficiently lubricated and pushes %s %s into %s greedy hole.",
+                        getSelf().name(), getSelf().possessivePronoun(), getSelfOrgan().describe(getSelf()), 
+                        target.nameOrPossessivePronoun(),
+                        getTargetOrgan(target).describe(target), getSelf().possessivePronoun());
     }
 
     @Override

@@ -68,8 +68,11 @@ public class VibroTease extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name() + " cranks up the vibration to maximum level which stirs up your insides. "
-                        + "She teasingly pokes the tip against your prostate which causes your limbs to get shaky from the pleasure.";
+        return String.format("%s cranks up the vibration to maximum level which stirs up %s insides. "
+                        + "%s teasingly pokes the tip against %s %s which causes %s limbs to get shaky from the pleasure.",
+                        getSelf().subject(), target.nameOrPossessivePronoun(),
+                        Global.capitalizeFirstLetter(getSelf().pronoun()), target.possessivePronoun(),
+                        target.hasBalls() ? "prostate" : "sensitive insides", target.possessivePronoun());
     }
 
     @Override

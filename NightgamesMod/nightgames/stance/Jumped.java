@@ -16,8 +16,11 @@ public class Jumped extends FemdomSexStance {
             return "You are clinging to " + bottom.nameOrPossessivePronoun()
                             + " arms while her dick is buried deep in your pussy";
         } else {
-            return top.name()
-                            + " is clinging to your shoulders and gripping your waist with her thighs while she uses the leverage to ride you.";
+            return String.format("%s clinging to %s shoulders and gripping %s waist "
+                            + "with %s thighs while %s uses the leverage to ride %s.",
+                            top.subjectAction("are", "is"), bottom.nameOrPossessivePronoun(),
+                            bottom.possessivePronoun(), top.possessivePronoun(),
+                            top.pronoun(), bottom.directObject());
         }
     }
 

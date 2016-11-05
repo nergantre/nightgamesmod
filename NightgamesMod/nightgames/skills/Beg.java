@@ -24,7 +24,8 @@ public class Beg extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().canAct() && !c.getStance().dom(getSelf());
+        return getSelf().canAct() && !c.getStance()
+                                       .dom(getSelf());
     }
 
     @Override
@@ -35,25 +36,23 @@ public class Beg extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         if ((Global.random(30) <= getSelf().get(Attribute.Submissive) - target.get(Attribute.Cunning) / 2
-                        && !target.is(Stsflag.cynical) || target.getMood() == Emotion.dominant) &&
-                        target.getMood()!=Emotion.angry && target.getMood() != Emotion.desperate) {
+                        && !target.is(Stsflag.cynical) || target.getMood() == Emotion.dominant)
+                        && target.getMood() != Emotion.angry && target.getMood() != Emotion.desperate) {
             target.add(c, new Charmed(target));
             if (getSelf().human()) {
                 c.write(deal(c, 0, Result.normal, target));
-                if (Global.getPlayer().checkAddiction(AddictionType.MIND_CONTROL, target)) {
-                    Global.getPlayer().unaddictCombat(AddictionType.MIND_CONTROL, 
-                                    target, Addiction.LOW_INCREASE, c);
+                if (Global.getPlayer()
+                          .checkAddiction(AddictionType.MIND_CONTROL, target)) {
+                    Global.getPlayer()
+                          .unaddictCombat(AddictionType.MIND_CONTROL, target, Addiction.LOW_INCREASE, c);
                     c.write(getSelf(), "Acting submissively voluntarily reduces Mara's control over you.");
                 }
-            } else if (target.human()) {
+            } else if (c.shouldPrintReceive(target)) {
                 c.write(receive(c, 0, Result.normal, target));
             }
             return true;
-        } else if (getSelf().human()) {
-            c.write(deal(c, 0, Result.miss, target));
-        } else if (target.human()) {
-            c.write(receive(c, 0, Result.miss, target));
         }
+        writeOutput(c, Result.miss, target);
         return false;
     }
 
@@ -81,9 +80,10 @@ public class Beg extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return getSelf().name() + " gives you a pleading look and asks you to go light on "
-                            + getSelf().directObject() + ". " + Global.capitalizeFirstLetter(getSelf().pronoun())
-                            + "'s cute, but " + getSelf().pronoun() + "'s not getting away that easily.";
+            return String.format("%s gives %s a pleading look and asks %s to go light on %s."+
+                            "%s is cute, but %s is not getting away that easily.", getSelf().name(), target.subject(),
+                            target.directObject(), getSelf().directObject(), Global.capitalizeFirstLetter(getSelf().pronoun()),
+                            getSelf().pronoun());
         }
         return getSelf().name() + " begs you for mercy, looking ready to cry. Maybe you should give "
                         + getSelf().directObject() + " a break.";

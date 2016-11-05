@@ -1,5 +1,6 @@
 package nightgames.status.addiction;
 
+import java.util.EnumSet;
 import java.util.Optional;
 
 import com.google.gson.JsonObject;
@@ -8,6 +9,7 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.status.Status;
+import nightgames.status.Stsflag;
 
 public abstract class Addiction extends Status {
 
@@ -19,10 +21,10 @@ public abstract class Addiction extends Status {
     public static final float MED_THRESHOLD = .4f;
     public static final float HIGH_THRESHOLD = .7f;
 
-    protected final String name;
     protected final Character cause;
     protected float magnitude;
     protected float combatMagnitude;
+    protected final EnumSet<Stsflag> flags;
 
     private boolean didDaytime;
     protected boolean inWithdrawal;
@@ -37,6 +39,7 @@ public abstract class Addiction extends Status {
         didDaytime = false;
         inWithdrawal = false;
         overloading = false;
+        flags = EnumSet.noneOf(Stsflag.class);
     }
 
     protected Addiction(String name, Character cause) {
@@ -46,7 +49,6 @@ public abstract class Addiction extends Status {
     @Override
     public void tick(Combat c) {
         combatMagnitude += magnitude / 14.0;
-        System.out.println(combatMagnitude);
     }
     
     public final void clearDaytime() {
@@ -164,13 +166,14 @@ public abstract class Addiction extends Status {
     public Optional<Status> startCombat(Combat c, Character opp) {
         combatMagnitude = atLeast(Severity.MED) ? .2f : .0f;
         if (opp.equals(cause) && atLeast(Severity.LOW)) {
+            flags.forEach(affected::flagStatus);
             return addictionEffects();
         }
         return Optional.empty();
     }
 
     public void endCombat(Combat c, Character opp) {
-        // NOP
+        flags.forEach(affected::unflagStatus);
     }
 
     public boolean isActive() {

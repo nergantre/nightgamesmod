@@ -41,7 +41,7 @@ public class MimicCat extends Skill {
     public boolean resolve(Combat c, Character target) {
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
+        } else if (c.shouldPrintReceive(target)) {
             if (!target.is(Stsflag.blinded))
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             else 
@@ -79,10 +79,10 @@ public class MimicCat extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return Global.format("{self:NAME-POSSESSIVE} amorphous body abruptly shifts as you're facing {self:direct-object}. "
-                        + "Not sure what {self:pronoun} is doing, you cautiously approach. Suddenly, {self:possessive} slime solidifies again, "
-                        + "and a orange shadow pounces at you from where {self:pronoun} was before. You manage to dodge it, but looking back at "
-                        + "the formerly-crystal blue slime girl, you see that {self:NAME} has transformed into a caricature of Kat's feral form, "
+        return Global.format("{self:NAME-POSSESSIVE} amorphous body abruptly shifts as {other:subject-action:are|is} facing {self:direct-object}. "
+                        + "Not sure what {self:pronoun} is doing, {other:subject} cautiously {other:action:approach|approaches}. Suddenly, {self:possessive} slime solidifies again, "
+                        + "and a orange shadow pounces at {other:direct-object} from where {self:pronoun} was before. {other:SUBJECT-ACTION:manage|manages} to dodge it, but looking back at "
+                        + "the formerly-crystal blue slime girl, {other:pronoun-action:see|sees} that {self:NAME} has transformed into a caricature of Kat's feral form, "
                         + "complete with faux cat ears and a slimey tail!", getSelf(), target);
     }
 

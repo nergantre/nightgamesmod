@@ -65,11 +65,7 @@ public class Anilingus extends Skill {
             n = 0;
             result = Result.miss;
         }
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, m, result, target));
-        } else {
-            c.write(getSelf(), receive(c, m, result, target));
-        }
+        writeOutput(c, m, result, target);
         if (m > 0) {
             target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), targetAss, m, c, this);
         }
@@ -125,17 +121,23 @@ public class Anilingus extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return getSelf().name() + " closes in on your behind, but you manage to push "+getSelf().possessivePronoun()+" head away.";
+            return String.format("%s closes in on %s behind, but %s %s to push %s head away.", getSelf().name(), 
+                            target.nameOrPossessivePronoun(), getSelf().pronoun(), 
+                            target.action("manage"), target.possessivePronoun());
         } else if (modifier == Result.special) {
-            return getSelf().name() + " gently rims your asshole with "+getSelf().possessivePronoun()+" tongue, sending shivers through your body.";
+            return String.format("%s gently rims %s asshole with %s tongue, sending shivers through %s body.",
+                            getSelf().name(), target.nameOrPossessivePronoun(), getSelf().possessivePronoun(),
+                            target.possessivePronoun());
         } else if (modifier == Result.reverse) {
-            return "With your ass pressing into " + getSelf().nameOrPossessivePronoun()
-                            + " face, "+getSelf().pronoun()+" helplessly gives in and starts licking your ass.";
+            return String.format("With %s ass pressing into %s face, %s helplessly gives in and starts licking %s ass.",
+                            target.nameOrPossessivePronoun(), getSelf().nameOrPossessivePronoun(), getSelf().pronoun(),
+                            target.possessivePronoun());
         } else if (modifier == Result.sub) {
-            return "As if entranced, " + getSelf().subject()
-                            + " buries "+getSelf().possessivePronoun()+" face inside your ass cheeks, licking your crack, and worshipping your anus.";
+            return String.format("As if entranced, %s buries %s face inside %s asscheeks, licking %s crack and worshipping %s anus.",
+                            getSelf().subject(), getSelf().possessivePronoun(), target.nameOrPossessivePronoun(), target.possessivePronoun(), target.possessivePronoun());
         }
-        return getSelf().name() + " licks your tight asshole, both surprising and arousing you.";
+        return String.format("%s licks %s tight asshole, both surprising and arousing %s.",
+                        getSelf().name(), target.nameOrPossessivePronoun(), target.pronoun());
     }
 
     @Override

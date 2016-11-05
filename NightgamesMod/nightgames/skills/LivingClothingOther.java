@@ -66,11 +66,13 @@ public class LivingClothingOther extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         String message;
-        message = "While holding you down, " + getSelf().subject() + " powers up " + getSelf().possessivePronoun()
-                        + " fabricator and dials the knob to the emergency reclothing setting. "
-                        + Global.capitalizeFirstLetter(getSelf().pronoun())
-                        + " hits the button and dark tentacles squirm out of the device."
-                        + "The created tentacles coils around your body and wraps itself into a living suit.";
+        message = String.format("While holding %s down, %s powers up %s fabricator and dials the knob"
+                        + " to the emergency reclothing setting. %s hits the button and dark tentacles squirm"
+                        + " out of the device. The created tentacles coils around %s body and"
+                        + " wrap themselves into a living suit.", target.nameDirectObject(),
+                        getSelf().subject(), getSelf().possessivePronoun(),
+                        Global.capitalizeFirstLetter(getSelf().pronoun()),
+                        target.nameOrPossessivePronoun());
         return message;
     }
 

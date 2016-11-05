@@ -5,6 +5,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.global.Global;
 import nightgames.status.Frenzied;
 
 public class SweetScent extends Skill {
@@ -26,11 +27,7 @@ public class SweetScent extends Skill {
     public boolean resolve(Combat c, Character target) {
         Result res = target.roll(this, c, -2) ? Result.normal : Result.miss;
 
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, res, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, res, target));
-        }
+        writeOutput(c, res, target);
         if (res != Result.miss) {
             target.arouse(25, c);
             target.emote(Emotion.horny, 100);
@@ -73,11 +70,15 @@ public class SweetScent extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier != Result.miss) {
-            return getSelf().getName()
-                            + " breathes out a dizzying pink gas which spreads through the area. You quickly succumbs to the coying scent as your whole body flushes with arousal.";
+            return String.format("%s breathes out a dizzying pink gas which spreads through the area. "
+                            + "%s quickly %s to the coying scent as %s whole"
+                            + " body flushes with arousal.", getSelf().subject(),
+                            Global.capitalizeFirstLetter(target.subject()),
+                            target.action("succumb"), target.possessivePronoun());
         } else {
-            return getSelf().getName()
-                            + " breathes out a dizzying pink gas, but you manage to cover your face and dodge out of the cloud.";
+            return String.format("%s breathes out a dizzying pink gas, but %s to cover"
+                            + " %s face and dodge out of the cloud.", getSelf().subject(),
+                            target.subjectAction("manage"), target.possessivePronoun());
         }
     }
 

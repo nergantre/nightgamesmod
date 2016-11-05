@@ -4,6 +4,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.global.Global;
 
 public class MutualUndress extends Skill {
 
@@ -42,11 +43,7 @@ public class MutualUndress extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.strong, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.strong, target));
-        }
+        writeOutput(c, Result.strong, target);
         getSelf().undress(c);
         target.undress(c);
         return true;
@@ -72,9 +69,15 @@ public class MutualUndress extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name()
-                        + " asks for a quick time out and starts sexily slipping her her clothes off. Although there are no time outs in the rules, you can't help staring "
-                        + "at the seductive display until she finishes with a cute wiggle of her naked ass. She asks you if you want to join her in feeling good, and before you realize it "
-                        + "she's got you naked as well.";
+        return String.format("%s asks for a quick time out and starts sexily slipping %s clothes off. Although there"
+                        + " are no time outs in the rules, %s can't help staring "
+                        + "at the seductive display until %s finishes with a cute wiggle of %s naked ass. "
+                        + "%s asks %s if %s %s to join %s in feeling good, and before %s it "
+                        + "%s has got %s naked as well.", getSelf().subject(), getSelf().possessivePronoun(),
+                        target.subject(), getSelf().subject(), getSelf().possessivePronoun(),
+                        Global.capitalizeFirstLetter(getSelf().pronoun()), target.directObject(),
+                        target.pronoun(), target.action("want"), getSelf().directObject(),
+                        target.subjectAction("realize"), getSelf().subject(),
+                        target.directObject());
     }
 }

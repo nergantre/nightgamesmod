@@ -29,17 +29,13 @@ public class PerfectTouch extends Skill {
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.normal, target));
                 c.write(target, target.nakedLiner(c));
-            } else if (target.human()) {
+            } else if (c.shouldPrintReceive(target)) {
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             }
             target.undress(c);
             target.emote(Emotion.nervous, 10);
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.miss, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.miss, target));
-            }
+            writeOutput(c, Result.miss, target);
             return false;
         }
         return true;
@@ -87,12 +83,20 @@ public class PerfectTouch extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return getSelf().name()
-                            + " lunges toward you, but you catch her hands before she can get ahold of your clothes.";
+            return String.format("%s lunges toward %s, but %s %s %s hands"
+                            + " before %s can get ahold of %s clothes.",
+                            getSelf().subject(), target.nameDirectObject(),
+                            target.pronoun(), target.action("catch"),
+                            target.possessivePronoun(), getSelf().pronoun(),
+                            target.possessivePronoun());
         } else {
-            return getSelf().name()
-                            + " lunges towards you, but dodges away without hitting you. She tosses aside a handful of clothes, at which point you realize you're "
-                            + "naked. How the hell did she manage that?";
+            return String.format("%s lunges towards %s, but dodges away without hitting %s. "
+                            + "%s tosses aside a handful of clothes, "
+                            + "at which point %s %s %s "
+                            + "naked. How the hell did %s manage that?",
+                            getSelf().subject(), target.nameDirectObject(), target.directObject(),
+                            getSelf().subject(), target.subjectAction("realize"), target.pronoun(),
+                            target.action("are", "is"), getSelf().pronoun());
         }
 
     }

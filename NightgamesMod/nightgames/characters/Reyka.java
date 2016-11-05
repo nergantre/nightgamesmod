@@ -168,7 +168,7 @@ public class Reyka extends BasePersonality {
 
     @Override
     public String taunt(Combat c) {
-        return "\"You look like you will taste nice. Maybe if let me have " + "a taste, I will be nice to you too.\"";
+        return "\"You look like you will taste nice. Maybe if you let me have " + "a taste, I will be nice to you too.\"";
     }
 
     @Override
@@ -189,7 +189,7 @@ public class Reyka extends BasePersonality {
                             + "still owe me a meal.\"</i> She smirks in a way that makes your eyes flash quickly left to right, looking for an escape route. Reyka is too quick "
                             + "however and soon you find yourself pinned with your still hard cock buried deep in her pussy.<p>She rides you until you cum again and she "
                             + "has cum twice herself. She stands up and begins collecting her clothes and her spoils as the victor. She turns to you. <i>\"The offer still "
-                            + "stands; you'd make a great sub if you're ever interesting in broadening your sexual horizons. Open minded men are hard to find.\"</i> She admits "
+                            + "stands; you'd make a great sub if you're ever interested in broadening your sexual horizons. Open minded men are hard to find.\"</i> She admits "
                             + "smiling. You shake your head; you don't think that sort of thing would really suit you. Her smile deflates some but she nods her head and "
                             + "turns to go. <i>\"Let me know if that ever changes, I'd definitely enjoy opening your mind,\"</i> she calls over her shoulder as she leaves.";
         }
@@ -243,7 +243,7 @@ public class Reyka extends BasePersonality {
                             + "<i>\"Down lover\"</i> Reyka admonishes you as she covers her groin protectively. <i>\"I appreciate the dedication, but after a couple orgasms, I need a chance to "
                             + "catch my breath.\"</i> You feel your head clear a bit and realize you completely fell victim to her addictive love juice.<p>Reyka uses her grip on your "
                             + "head to force you onto your back. <i>\"I do love being eaten out, but right now I'm ready to be filled.\"</i> She releases the head scissor and positions herself "
-                            + "over your dick before dropping her hips to engulf you to the hilt. A jolt goes through you and you realize exactly how horny you are. I addition to "
+                            + "over your dick before dropping her hips to engulf you to the hilt. A jolt goes through you and you realize exactly how horny you are. In addition to "
                             + "not having any relief, Reyka's fluids have started to affect you. You're incredibly hard and sensitive, but even though Reyka is riding you intensely, "
                             + "your ejaculation feels painfully out of reach. You don't feel your climax start to build until Reyka is moaning and approaching yet another orgasm. Is "
                             + "that an innate succubus ability? Is she controlling the timing of your orgasm? You don't have time to dwell on the question, your hips thrust involuntarily "
@@ -279,13 +279,13 @@ public class Reyka extends BasePersonality {
             return "<i>\"How kind of you to hold him for me, dear.\"</i> Reyka bows her head ever so slightly towards "
                             + assist.name() + " and then turns her gaze upon you prone form. "
                             + "She pulls a blindfold out of a small pocket in her miniskirt and secures it tightly over your eyes. <i>\"Wouldn't want to spoil the surprise, would we?\"</i> For "
-                            + "just a moment, you feel a slight pull on you mind, but the sensation passes quickly, replaced by that of one of her slender fingers invading your mouth. "
+                            + "just a moment, you feel a slight pull on your mind, but the sensation passes quickly, replaced by that of one of her slender fingers invading your mouth. "
                             + "It is covered with a fragrant liquid and given what you already know about her, there is little doubt in your mind of its origins. Your suspicions "
-                            + "are proven correct when the ahrodisiac reaches your loins, which respond as expected. Appearantly not one to stand on ceremony, Reyka immediatly "
-                            + "settles over you now rock hard dick and lowers herself down onto it. The sensation is beyond comparison, her pussy wiggles and twists around you almost "
+                            + "are proven correct when the aphrodisiac reaches your loins, which respond as expected. Apparently not one to stand on ceremony, Reyka immediately "
+                            + "settles over your now rock hard dick and lowers herself down onto it. The sensation is beyond comparison, her pussy wiggles and twists around you almost "
                             + "as if it has a mind of its own, a mind connected to your own, knowing what will bring you the most pleasure. Your experiences in sex-fighting have "
                             + "left you with impressive sexual stamina, but in the face of a succubus' unimpeded attentions, no man can hope to last. All too quickly you succumb "
-                            + "to the feelings, pouring your seed into the succubus. Just your seed. You where expecting her take so much more, but you just feel a little tired, "
+                            + "to the feelings, pouring your seed into the succubus. Just your seed. You were expecting her take so much more, but you just feel a little tired, "
                             + "not more so than after a regular orgasm. The mystery is unveiled when Reyka removes the blindfold with her left hand. In her right hand, she is "
                             + "holding a bottle. That bottle is firmly planted against the head of your still twitching dick and filled with your cum. <i>\"You looked scrumptuous, "
                             + "sitting there all helpless, but I was really in need of some supplies. Still, I didn't want to deny you the pleasure, so I crafted a teeny tiny "
@@ -299,7 +299,7 @@ public class Reyka extends BasePersonality {
                         + target.name() + ". When she is finished she squats down in front of her, bringing "
                         + "her tail up between them. <i>\"Where would you prefer it dear?\"</i>, she asks "
                         + target.name() + ", whose eyes grow wide in shock. She manages to stammer out a "
-                        + "few syllables, but nothing quite coherent. \"No preference? Then I guess I will simply choose for you\" She brings her spade-tipped tail between "
+                        + "few syllables, but nothing quite coherent. <i>\"No preference? Then I guess I will simply choose for you.\"</i> She brings her spade-tipped tail between "
                         + target.name() + "s "
                         + "legs and starts running the very tip rapidly across her labia. When it is sufficiently wet, she moves it slightly upwards and moves it briskly back and forth over "
                         + target.name() + "'s clit.<p>" + target.name()

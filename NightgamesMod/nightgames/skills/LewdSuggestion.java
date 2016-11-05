@@ -89,17 +89,19 @@ public class LewdSuggestion extends Skill {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.strong) {
             return String.format(
-                            "%s whispers a lewd suggestion to you, intensifying the fantasies you were trying to ignore and enflaming your arousal.",
-                            new Object[] {getSelf().name()});
+                            "%s whispers a lewd suggestion to %s, intensifying the fantasies %s %s trying to ignore and enflaming %s arousal.",
+                            getSelf().name(), target.nameDirectObject(), target.pronoun(), target.action("were", "was"),
+                            target.possessivePronoun());
         }
         if (modifier == Result.miss) {
             return String.format(
-                            "%s whispers a lewd suggestion to you, but you just ignore it, and try to concentrate on the fight.",
-                            new Object[] {getSelf().name()});
+                            "%s whispers a lewd suggestion to %s, but %s just %s it, and %s to concentrate on the fight.",
+                            getSelf().name(), target.nameDirectObject(), target.pronoun(),
+                            target.action("ignore"), target.action("try", "tries"));
         }
         return String.format(
-                        "%s gives you a hypnotic suggestion and your head is immediately filled with erotic possibilities.",
-                        new Object[] {getSelf().name()});
+                        "%s gives %s a hypnotic suggestion and %s head is immediately filled with erotic possibilities.",
+                        getSelf().name(), target.nameDirectObject(), target.possessivePronoun());
     }
 
 }

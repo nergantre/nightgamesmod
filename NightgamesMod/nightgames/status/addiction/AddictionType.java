@@ -10,6 +10,7 @@ public enum AddictionType {
     CORRUPTION(Corruption::new),
     BREEDER(Breeder::new),
     MIND_CONTROL(MindControl::new),
+    DOMINANCE(Dominance::new)
     ;
     
     private final BiFunction<Character, Float, ? extends Addiction> constructor;

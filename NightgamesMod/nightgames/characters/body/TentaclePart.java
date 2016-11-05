@@ -94,8 +94,8 @@ public class TentaclePart extends GenericBodyPart {
                     Combat c) {
         if (with.isType(attachpoint) && Global.random(3) > -1) {
             c.write(self, Global.format("Additionally, {self:name-possessive} " + fullDescribe(self)
-                            + " takes the opportunity to squirm against {other:name-possessive} "
-                            + target.fullDescribe(opponent), self, opponent));
+                            + " take the opportunity to squirm against {other:name-possessive} "
+                            + target.fullDescribe(opponent) + ".", self, opponent));
             opponent.body.pleasure(self, this, target, 5, c);
         }
         return 0;

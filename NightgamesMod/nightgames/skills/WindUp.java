@@ -52,11 +52,7 @@ public class WindUp extends Skill {
                         / 10);
         getSelf().add(new Primed(getSelf(), charges + 1));
         getSelf().spendMojo(c, charges * 10);
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         return true;
     }
 

@@ -4,6 +4,7 @@ import nightgames.characters.Character;
 import nightgames.characters.body.CockMod;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.global.Global;
 import nightgames.status.Knotted;
 import nightgames.status.Stsflag;
 
@@ -46,10 +47,12 @@ public class ToggleKnot extends Skill {
             if (getSelf().human()) {
                 c.write(getSelf(),
                                 "Deciding she's had enough for now, you let your cock return to its regular shape, once again permitting movement.");
-            } else if (target.human()) {
+            } else if (c.shouldPrintReceive(target)) {
                 String part = c.getStance().insertedPartFor(target).describe(target);
-                c.write(getSelf(), "You feel the intense pressure in your " + part + " recede as " + target.name()
-                                + " allows her knot to deflate.");
+                c.write(getSelf(), String.format("%s the intense pressure in %s %s "
+                                + "recede as %s allows %s knot to deflate.", target.subjectAction("feel"),
+                                target.possessivePronoun(), part, getSelf().subject(),
+                                getSelf().possessivePronoun()));
             }
             target.removeStatus(Stsflag.knotted);
         } else {
@@ -59,17 +62,26 @@ public class ToggleKnot extends Skill {
                                                 + (c.getStance().canthrust(getSelf()) ? "thrust" : "buck up")
                                                 + " as deep inside of her as you can and send a mental command to the base of your cock, where your"
                                                 + " knot soon swells up, locking you inside,");
-            } else if (target.human()) {
+            } else if (c.shouldPrintReceive(target)) {
                 String firstPart;
                 if (c.getStance().dom(getSelf())) {
-                    firstPart = getSelf().name() + " bottoms out inside of you, and something quickly feels off.";
+                    firstPart = String.format("%s bottoms out inside of %s, and something quickly feels off%s.",
+                                    getSelf().subject(), target.nameDirectObject(),
+                                    c.isBeingObserved() ? " to " + target.directObject() : "");
                 } else {
-                    firstPart = getSelf().name()
-                                    + " pulls you all the way onto her cock. As soon as your pelvis touches hers, something starts happening.";
+                    firstPart = String.format("%s pulls %s all the way onto %s cock."
+                                    + "As soon as %s pelvis touches %s, something starts happening.",
+                                    getSelf().subject(), target.nameDirectObject(),
+                                    getSelf().possessivePronoun(), getSelf().possessivePronoun(),
+                                    (target.human() || target.useFemalePronouns()) 
+                                    ? target.possessivePronoun() + "s" : "s");
                 }
-                c.write(getSelf(),
-                                firstPart + " A ball swells up at the base of her dick, growing to the size of a small apple. You're not"
-                                                + " getting it out of you any time soon...");
+                c.write(getSelf() ,String.format("%s A ball swells up at the base of %s dick,"
+                                + " growing to the size of a small apple. %s not"
+                                                + " getting <i>that</i> out of %s any time soon...",
+                                                firstPart, getSelf().nameOrPossessivePronoun(),
+                                                Global.capitalizeFirstLetter(target.subjectAction("are", "is")),
+                                                target.reflectivePronoun()));
             }
             target.add(c, new Knotted(target, getSelf(), c.getStance().anallyPenetrated(target)));
         }

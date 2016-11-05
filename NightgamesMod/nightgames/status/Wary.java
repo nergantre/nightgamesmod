@@ -18,7 +18,7 @@ public class Wary extends DurationStatus {
         if (affected.human()) {
             return "You're wary of your opponent.";
         } else {
-            return affected.name() + " is wary of you.";
+            return affected.name() + " is wary of "+c.getOther(affected).nameDirectObject()+".";
         }
     }
 

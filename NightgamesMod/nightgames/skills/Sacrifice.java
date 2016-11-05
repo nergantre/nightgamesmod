@@ -33,11 +33,7 @@ public class Sacrifice extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         getSelf().weaken(c, 20 + getSelf().get(Attribute.Dark));
         getSelf().calm(c, getSelf().getArousal().max() / 3 + 20 + getSelf().get(Attribute.Dark));
         return true;
@@ -60,7 +56,10 @@ public class Sacrifice extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name()
-                        + " pinches her nipples hard while screaming in pain. You see her stagger in exhaustion, but she seems much less aroused.";
+        return String.format("%s pinches %s nipples hard while screaming in pain. %s %s "
+                        + "stagger in exhaustion, but %s seems much less aroused.",
+                        getSelf().subject(), target.nameOrPossessivePronoun(),
+                        target.subjectAction("see"), getSelf().directObject(),
+                        getSelf().pronoun());
     }
 }

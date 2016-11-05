@@ -48,8 +48,8 @@ public class ReverseFuck extends Fuck {
         } else if (modifier == Result.miss) {
             if (!selfO.isReady(getSelf()) && !targetO.isReady(target)) {
                 return Global.format(
-                                "{self:subject-action:are|is} in a good position to fuck {other:direct-object}, but neither of you are aroused enough to follow through.",
-                                getSelf(), target);
+                                "{self:subject-action:are|is} in a good position to fuck {other:direct-object}, but neither of %s are aroused enough to follow through.",
+                                getSelf(), target, c.bothDirectObject());
             } else if (!getTargetOrgan(target).isReady(target)) {
                 return Global.format(
                                 "{self:subject-action:position|positions} {self:possessive} {self:body-part:pussy} on top of {other:possessive} {other:body-part:cock}, "

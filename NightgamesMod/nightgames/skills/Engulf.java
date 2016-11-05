@@ -50,7 +50,7 @@ public class Engulf extends CounterBase {
     @Override
     public String getBlockedString(Combat c, Character target) {
         return Global.format(
-                        "{self:SUBJECT-ACTION:move:moves} to engulf {other:subject} "
+                        "{self:SUBJECT-ACTION:move|moves} to engulf {other:subject} "
                                         + "in {self:possessive} slime, but {other:pronoun} stays out of {self:possessive} reach.",
                         getSelf(), target);
     }
@@ -81,7 +81,7 @@ public class Engulf extends CounterBase {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return Global.format(
                         "{self:NAME}'s body spreads out across the floor. From {self:possessive} lowered position, "
-                        + "{self:pronoun} smiles deviously up at you, goading you into an attack.",
+                        + "{self:pronoun} smiles deviously up at {other:name-do}, goading {other:direct-object} into an attack.",
                         getSelf(), target);
     }
 
@@ -91,7 +91,7 @@ public class Engulf extends CounterBase {
                         + " forward, folding {self:possessive} slime around {other:direct-object}. ";
         if (!target.outfit.isNude()) {
             target.nudify();
-            msg += "{self:name-possessive} slime vibrates wildly around {other:pronoun}, causing"
+            msg += "{self:NAME-POSSESSIVE} slime vibrates wildly around {other:direct-object}, causing"
                             + " {other:possessive} clothes to dissolve without a trace. ";
         }
         msg += "As {self:pronoun} {self:action:reform|reforms} {self:possessive} body around {other:direct-object},"

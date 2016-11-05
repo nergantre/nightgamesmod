@@ -75,7 +75,9 @@ public enum Flag {
     YuiLoyalty, 
     YuiAvailable, 
     Yui, 
-    YuiUnlocking;
+    YuiUnlocking,
+    FemalePronounsOnly,
+    ;
     
     public static boolean exists(String flag) {
         return Arrays.stream(values()).anyMatch(f -> f.name().equals(flag));

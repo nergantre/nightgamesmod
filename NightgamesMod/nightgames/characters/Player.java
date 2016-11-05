@@ -252,7 +252,7 @@ public class Player extends Character {
         String arousal;
         String stamina;
         if (opponent.state == State.webbed) {
-            gui.message("She is naked and helpless<br>");
+            gui.message("She is naked and helpless.<br>");
             return;
         }
         if (get(Attribute.Perception) >= 6) {
@@ -497,7 +497,7 @@ public class Player extends Character {
                 gain(Item.Spring);
                 break;
             default:
-                gui.message("You don't find anything useful");
+                gui.message("You don't find anything useful.");
         }
         state = State.ready;
     }
@@ -529,6 +529,8 @@ public class Player extends Character {
     public void intervene(IEncounter enc, Character p1, Character p2) {
         gui.message("You find <b>" + p1.name() + "</b> and <b>" + p2.name()
                         + "</b> fighting too intensely to notice your arrival. If you intervene now, it'll essentially decide the winner.");
+        gui.message("Then again, you could just wait and see which one of them comes out on top. It'd be entertaining,"
+                        + " at the very least.");
         gui.promptIntervene(enc, p1, p2);
     }
 
@@ -589,7 +591,7 @@ public class Player extends Character {
     @Override
     public void gain(Item item) {
         Global.gui()
-              .message("<b>You've gained " + item.pre() + item.getName() + "</b>");
+              .message("<b>You've gained " + item.pre() + item.getName() + ".</b>");
         super.gain(item);
     }
 
@@ -648,7 +650,7 @@ public class Player extends Character {
                                     4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
                     c.write(this, Global.format(
                                     "{self:SUBJECT-ACTION:pinch|pinches} {other:possessive} nipples with {self:possessive} hands as {other:subject-action:try|tries} to fuck {self:direct-object}. "
-                                                    + "While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:take|takes} the chance to pleasure {other:possessive} body",
+                                                    + "While {other:subject-action:yelp|yelps} with surprise, {self:subject-action:take|takes} the chance to pleasure {other:possessive} body.",
                                     this, target));
                 }
                 break;
@@ -660,7 +662,7 @@ public class Player extends Character {
                                     + clothes.getName() + " instead.");
                 } else {
                     c.write(this, "You manage to dodge " + target.possessivePronoun()
-                                    + " groping hands and give a retaliating slap in return");
+                                    + " groping hands and give a retaliating slap in return.");
                     target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
                 }
                 break;
@@ -677,7 +679,7 @@ public class Player extends Character {
                 break;
             default:
                 c.write(this, "You manage to dodge " + target.possessivePronoun()
-                                + " attack and give a retaliating slap in return");
+                                + " attack and give a retaliating slap in return.");
                 target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
         }
     }
@@ -702,8 +704,8 @@ public class Player extends Character {
                             opponent.nameOrPossessivePronoun() + " pheromones"));
         }
         if (opponent.has(Trait.smqueen) && !is(Stsflag.masochism)) {
-            c.write(Global.capitalizeFirstLetter(
-                            String.format("<br>%s seem to shudder in arousal at the thought of pain.", subject())));
+            c.write("<br>"+Global.capitalizeFirstLetter(
+                            String.format("%s seem to shudder in arousal at the thought of pain.", subject())));
             add(c, new Masochistic(this));
         }
         if (has(Trait.RawSexuality)) {
@@ -926,6 +928,15 @@ public class Player extends Character {
 
     public Severity getAddictionSeverity(AddictionType type) {
         return getAddiction(type).map(Addiction::getSeverity).orElse(Severity.NONE);
+    }
+    
+    @Override
+    public int getEscape(Combat c) {
+        int escape = super.getEscape(c);
+        if (checkAddiction(AddictionType.DOMINANCE, c.getOther(this))) {
+            escape -= getAddiction(AddictionType.DOMINANCE).get().getCombatSeverity().ordinal() * 8;
+        }
+        return escape;
     }
 
 }

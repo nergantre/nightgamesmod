@@ -84,7 +84,7 @@ public class Masturbate extends Skill {
                     c.write(getSelf(), "Touching yourself amuses Mara, reducing her control over you.");
                 }
             }
-        } else if (target.human()) {
+        } else if (c.shouldPrintReceive(target)) {
             c.write(getSelf(), receive(c, 0, Result.normal, target));
         }
         int pleasure;
@@ -127,20 +127,28 @@ public class Masturbate extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (targetO == null) {
-            return "She starts playing with herself, building up her own arousal.";
+            return String.format("%s starts playing with %s, building up %s own arousal.",
+                            getSelf().subject(), getSelf().reflectivePronoun(),
+                            getSelf().possessivePronoun());
         }
         if (targetO.isType("cock")) {
             if (modifier == Result.weak) {
-                return "She takes hold of her flaccid dick, tugging and rubbing it into a full erection.";
+                return String.format("%s takes hold of %s flaccid dick, tugging and rubbing it into a full erection.",
+                                getSelf().subject(), getSelf().possessivePronoun());
             } else {
-                return "She jerks off, building up her own arousal.";
+                return String.format("%s jerks off, building up %s own arousal.",
+                                getSelf().subject(), getSelf().possessivePronoun());
             }
         } else if (targetO.isType("pussy")) {
-            return "She slowly teases her own labia and starts playing with herself.";
+            return String.format("%s slowly teases her own labia and starts playing with %s.",
+                            getSelf().subject(), getSelf().reflectivePronoun());
         } else if (targetO.isType("ass")) {
-            return "She teases her own asshole and sticks a finger in.";
+            return String.format("%s teases %s own asshole and sticks a finger in.",
+                            getSelf().subject(), getSelf().possessivePronoun());
         } else {
-            return "She starts playing with herself, building up her own arousal.";
+            return String.format("%s starts playing with %s, building up %s own arousal.",
+                            getSelf().subject(), getSelf().possessivePronoun(),
+                            getSelf().reflectivePronoun());
         }
     }
 

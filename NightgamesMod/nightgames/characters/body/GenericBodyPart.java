@@ -162,11 +162,11 @@ public class GenericBodyPart implements BodyPart {
         if (self.has(ClothingTrait.nursegloves) && type.equals("hands")) {
             c.write(self, Global
                             .format("{self:name-possessive} rubber gloves provide an unique sensation as {self:subject-action:run|runs} {self:possessive} hands over {other:possessive} "
-                                            + target.describe(opponent), self, opponent));
+                                            + target.describe(opponent) + ".", self, opponent));
             bonus += 5 + Global.random(5);
             if (Global.random(5) == 0) {
                 c.write(self, "Unfortunately, the gloves wear out with their usage.");
-                self.shred(ClothingSlot.hands);
+                self.shred(ClothingSlot.arms);
             }
         }
         return bonus;

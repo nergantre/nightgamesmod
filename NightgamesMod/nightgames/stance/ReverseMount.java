@@ -13,7 +13,8 @@ public class ReverseMount extends AbstractBehindStance {
         if (top.human()) {
             return "You are straddling " + bottom.name() + ", with your back to her.";
         } else {
-            return top.name() + " is sitting on your chest, facing your groin.";
+            return String.format("%s is sitting on %s chest, facing %s groin.",
+                            top.subject(), bottom.nameOrPossessivePronoun(), bottom.possessivePronoun());
         }
     }
 

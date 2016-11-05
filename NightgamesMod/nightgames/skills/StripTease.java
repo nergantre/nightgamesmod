@@ -53,8 +53,8 @@ public class StripTease extends Skill {
     public boolean resolve(Combat c, Character target) {
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            if (target.is(Stsflag.blinded))
+        } else if (c.shouldPrintReceive(target)) {
+            if (target.human() && target.is(Stsflag.blinded))
                 printBlinded(c);
             else
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
@@ -90,9 +90,11 @@ public class StripTease extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name()
-                        + " asks for a quick time out and starts sexily slipping her clothes off. Although there are no time outs in the rules, you can't help staring "
-                        + "at the seductive display until she finishes with a cute wiggle of her naked ass.";
+        return String.format("%s asks for a quick time out and starts sexily slipping %s clothes off."
+                        + " Although there are no time outs in the rules, %s can't help staring "
+                        + "at the seductive display until %s finishes with a cute wiggle of %s naked ass.",
+                        getSelf().subject(), target.nameOrPossessivePronoun(), target.subject(),
+                        getSelf().subject(), getSelf().possessivePronoun());
     }
 
     @Override

@@ -93,6 +93,7 @@ import nightgames.combat.Combat;
 import nightgames.daytime.Daytime;
 import nightgames.ftc.FTCMatch;
 import nightgames.gui.GUI;
+import nightgames.gui.HeadlessGui;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.json.JsonUtils;
@@ -159,7 +160,7 @@ public class Global {
 
     public static final Path COMBAT_LOG_DIR = new File("combatlogs").toPath();
 
-    public Global() {
+    public Global(boolean headless) {
         rng = new Random();
         flags = new HashSet<>();
         players = new HashSet<>();
@@ -194,6 +195,7 @@ public class Global {
         // debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
         // debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
         // debug[DebugFlags.DEBUG_ADDICTION.ordinal()] = true;
+        // debug[DebugFlags.DEBUG_SPECTATE.ordinal()] = true;
         traitRequirements = new TraitTree(ResourceLoader.getFileResourceAsStream("data/TraitRequirements.xml"));
         current = null;
         factory = new ContextFactory();
@@ -204,11 +206,11 @@ public class Global {
         buildSkillPool(noneCharacter);
         buildModifierPool();
         flag(Flag.AiriEnabled);
-        gui = makeGUI();
+        gui = makeGUI(headless);
     }
 
-    protected GUI makeGUI() {
-        return new GUI();
+    protected GUI makeGUI(boolean headless) {
+        return headless ? new HeadlessGui() : new GUI();
     }
 
     public static boolean meetsRequirements(Character c, Trait t) {
@@ -240,7 +242,7 @@ public class Global {
         Set<Character> lineup = pickCharacters(players, Collections.singleton(human), 4);
         match = new Match(lineup, new NoModifier());
         time = Time.NIGHT;
-        saveWithDialog();
+        //saveWithDialog();
     }
 
     public static int random(int start, int end) {
@@ -632,6 +634,14 @@ public class Global {
         day.plan();
     }
 
+    /**
+     * Sets the time to DAY, since the order of operations changed and manual end-of-match
+     * saves got flagged as NIGHT instead.
+     */
+    public static void endNightForSave() {
+        time = Time.DAY;
+    }
+    
     public static void endNight() {
         double level = 0;
         int maxLevelTracker = 0;
@@ -892,7 +902,7 @@ public class Global {
                                         + "the first floor is in bounds. The Library is located directly out back, and the side door is just a short walk from the pool.",
                         Movement.la, new MapDrawHint(new Rectangle(5, 5, 5, 7), "L&A", false));
         Area pool = new Area("Pool",
-                        "You are by the indoor <b>Pool</b>, which is connected to the Student Union for reasons that no one has ever really explained. There pool is quite "
+                        "You are by the indoor <b>Pool</b>, which is connected to the Student Union for reasons that no one has ever really explained. The pool here is quite "
                                         + "large and there is even a jacuzzi. A quick soak would feel good, but the lack of privacy is a concern. The side doors are locked at this time of night, but the "
                                         + "door to the Student Union is open and there's a back door that exits near the Liberal Arts building. Across the water in the other direction is the Courtyard.",
                         Movement.pool, new MapDrawHint(new Rectangle(6, 12, 4, 2), "Pool", false));
@@ -1011,6 +1021,14 @@ public class Global {
     public static void unflag(Flag f) {
         flags.remove(f.name());
     }
+    
+    public static void setFlag(Flag f, boolean value) {
+        if (value) { 
+            flags.add(f.name()); 
+        } else { 
+            flags.remove(f.name()); 
+        }
+    }
 
     public static boolean checkFlag(Flag f) {
         return flags.contains(f.name());
@@ -1126,7 +1144,7 @@ public class Global {
         characterPool.put(yui.getCharacter().getType(), yui.getCharacter());
 
 
-        //debugChars.add(mara.getCharacter());
+        debugChars.add(jewel.getCharacter());
     }
 
     public static void loadWithDialog() {
@@ -1235,7 +1253,7 @@ public class Global {
                 // pass
             }
         }
-        new Global();
+        new Global(false);
     }
 
     public static String getIntro() {

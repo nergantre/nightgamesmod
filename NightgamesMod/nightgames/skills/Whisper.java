@@ -43,18 +43,10 @@ public class Whisper extends Skill {
         }
         if (getSelf().has(Trait.darkpromises) && roll == 4 && getSelf().canSpend(15) && !target.wary()) {
             getSelf().spendMojo(c, 15);
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.special, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.special, target));
-            }
+            writeOutput(c, Result.special, target);
             target.add(c, new Enthralled(target, getSelf(), 4));
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.normal, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.normal, target));
-            }
+            writeOutput(c, Result.normal, target);
         }
         target.tempt(c, getSelf(), m);
         target.emote(Emotion.horny, 30);
@@ -95,11 +87,17 @@ public class Whisper extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.special) {
-            return getSelf().name() + " whispers in your ear in some eldritch language."
-                            + " Her words echo through your head and you feel a"
-                            + " strong compulsion to do what she tells you.";
+            return String.format("%s whispers in %s ear in some eldritch language."
+                            + " %s words echo through %s head and %s %s a"
+                            + " strong compulsion to do what %s tells %s.", getSelf().subject(),
+                            target.nameOrPossessivePronoun(), 
+                            Global.capitalizeFirstLetter(getSelf().possessivePronoun()),
+                                            target.possessivePronoun(), target.pronoun(),
+                                            target.action("feel"), getSelf().subject(),
+                                            target.directObject());
         } else {
-            return getSelf().name() + " whispers some deliciously seductive suggestions in your ear.";
+            return String.format("%s whispers some deliciously seductive suggestions in %s ear.",
+                            getSelf().subject(), target.nameOrPossessivePronoun());
         }
     }
 

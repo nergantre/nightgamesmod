@@ -526,7 +526,7 @@ public class NPC extends Character {
 
     @Override
     public void promptTrap(IEncounter enc, Character target, Trap trap) {
-        if (ai.attack(target)) {
+        if (ai.attack(target) && (!target.human() || !Global.isDebugOn(DebugFlags.DEBUG_SPECTATE))) {
             enc.trap(this, target, trap);
         } else {
             location.endEncounter();
@@ -599,10 +599,10 @@ public class NPC extends Character {
                 if (clothes != null) {
                     c.write(this, name()
                                     + " manages to catch you groping her clothing, and in a swift motion strips off your "
-                                    + clothes.getName());
+                                    + clothes.getName() + ".");
                 } else {
                     c.write(this, name()
-                                    + " manages to dodge your groping hands and gives a retaliating slap in return");
+                                    + " manages to dodge your groping hands and gives a retaliating slap in return.");
                     target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
                 }
                 break;
@@ -616,7 +616,7 @@ public class NPC extends Character {
                 }
                 break;
             default:
-                c.write(this, name() + " manages to dodge your attack and gives a retaliating slap in return");
+                c.write(this, name() + " manages to dodge your attack and gives a retaliating slap in return.");
                 target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
         }
     }
@@ -701,8 +701,8 @@ public class NPC extends Character {
                             opponent.nameOrPossessivePronoun() + " pheromones"));
         }
         if (opponent.has(Trait.smqueen) && !is(Stsflag.masochism)) {
-            c.write(Global.capitalizeFirstLetter(
-                            String.format("<br>%s seems to shudder in arousal at the thought of pain.", subject())));
+            c.write("<br>"+Global.capitalizeFirstLetter(
+                            String.format("%s seems to shudder in arousal at the thought of pain.", subject())));
             add(c, new Masochistic(this));
         }
         if (has(Trait.RawSexuality)) {

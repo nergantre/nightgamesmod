@@ -39,7 +39,7 @@ public class MimicAngel extends Skill {
     public boolean resolve(Combat c, Character target) {
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
+        } else if (c.shouldPrintReceive(target)) {
             if (!target.is(Stsflag.blinded))
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             else 
@@ -77,10 +77,10 @@ public class MimicAngel extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return Global.format("{self:NAME-POSSESSIVE} amorphous body jiggles violently and she shrinks her body into a sphere. "
-                        + "You cautiously approach the unknown object, but hesistate when you see it suddenly turns pure white "
+                        + "{other:SUBJECT} cautiously {other:action:approach|approaches} the unknown object, but hesistate when {other:pronoun-action:see|sees} it suddenly turns pure white "
                         + "as if someone dumped a bucket of bleach on it. "
                         + "The sphere unwraps itself in layers, with each layer forming a pair of pristine translucent gelatinous feathered wings. "
-                        + "{self:NAME} {self:reflective} stands up in the center, giving you a haughty look. "
+                        + "{self:NAME} {self:reflective} stands up in the center, giving {other:name-do} a haughty look. "
                         + "Looks like {self:NAME} is mimicking Angel's er... angel form!", getSelf(), target);
     }
 

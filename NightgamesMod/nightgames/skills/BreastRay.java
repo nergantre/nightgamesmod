@@ -39,14 +39,9 @@ public class BreastRay extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         getSelf().consume(Item.Battery, 2);
-
-        boolean permanent = Global.random(20) == 0 && (getSelf().human() || target.human())
+        boolean permanent = Global.random(20) == 0 && (getSelf().human() || c.shouldPrintReceive(target))
                         && !target.has(Trait.stableform);
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, permanent ? 1 : 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, permanent ? 1 : 0, Result.normal, target));
-        }
+        writeOutput(c, permanent ? 1 : 0, Result.normal, target);
         target.add(c, new Hypersensitive(target));
         BreastsPart part = target.body.getBreastsBelow(BreastsPart.f.size);
         if (permanent) {
@@ -85,9 +80,16 @@ public class BreastRay extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         String message;
-        message = getSelf().name() + " points a device at your chest and giggles as your "
-                        + getSelf().body.getRandomBreasts().describe(getSelf())
-                        + " starts ballooning up. You flush and cover yourself, but the increased sensitivity distracts you in a delicious way.";
+        boolean plural = target.body.getRandomBreasts().size > 0 || target.get(Attribute.Power) > 25;
+        message = String.format("%s a device at %s chest and giggles as %s %s"
+                        + " %s ballooning up. %s %s and %s to cover %s, but the increased sensitivity "
+                        + "distracts %s in a delicious way.",
+                        getSelf().subjectAction("point"), target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                        target.body.getRandomBreasts().describe(target), plural ? "start" : "starts",
+                                        Global.capitalizeFirstLetter(target.pronoun()), 
+                                        target.action("flush", "flushes"),
+                                        target.action("try", "tries"),
+                                        target.reflectivePronoun(), target.directObject());;
         if (damage > 0) {
             message += " You realize the effects are permanent!";
         }

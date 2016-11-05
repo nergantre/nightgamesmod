@@ -68,15 +68,15 @@ public class TemptressHandjob extends Handjob {
                                 getSelf().subjectAction("reach", "reaches"), target.nameOrPossessivePronoun(),
                                 target.pronoun(), target.possessivePronoun());
             case weak:
-                return String.format("%s %s limp %s and %s it expertly, but it remains flaccid despite %s best efforts",
-                                getSelf().subjectAction("grab", "grabs"), target.nameOrPossessivePronoun(),
-                                target.body.getRandomCock().describe(target), getSelf().action("fondle", "fondles"),
+                return String.format("%s %s limp %s and %s it expertly, but it remains flaccid despite %s best efforts.",
+                                getSelf().subjectAction("grab"), target.nameOrPossessivePronoun(),
+                                target.body.getRandomCock().describe(target), getSelf().action("fondle"),
                                 getSelf().possessivePronoun());
             case special:
                 return String.format(
                                 "%s %s limp %s and %s it expertly, and it grows fully hard under %s skilled touch.",
-                                getSelf().subjectAction("grab", "grabs"), target.nameOrPossessivePronoun(),
-                                target.body.getRandomCock().describe(target), getSelf().action("massage", "massages"),
+                                getSelf().subjectAction("grab"), target.nameOrPossessivePronoun(),
+                                target.body.getRandomCock().describe(target), getSelf().action("massage"),
                                 getSelf().possessivePronoun());
             default: // should be Result.normal
                 // already hard
@@ -84,8 +84,8 @@ public class TemptressHandjob extends Handjob {
                     case 0:
                         return String.format(
                                         "%s hold of %s %s and %s %s fingers over it briskly, hitting all the right spots.",
-                                        getSelf().subjectAction("take", "takes"), target.nameOrPossessivePronoun(),
-                                        target.body.getRandomCock().describe(target), getSelf().action("run", "runs"),
+                                        getSelf().subjectAction("take"), target.nameOrPossessivePronoun(),
+                                        target.body.getRandomCock().describe(target), getSelf().action("run"),
                                         getSelf().possessivePronoun());
                     case 1:
                         return String.format(

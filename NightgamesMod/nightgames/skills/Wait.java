@@ -30,19 +30,11 @@ public class Wait extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         if (focused() && !c.getStance().sub(getSelf())) {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.strong, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.strong, target));
-            }
+            writeOutput(c, Result.strong, target);
             getSelf().heal(c, Global.random(4));
             getSelf().calm(c, Global.random(8));
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.normal, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.normal, target));
-            }
+            writeOutput(c, Result.normal, target);
             getSelf().heal(c, Global.random(4));
         }
         return true;
@@ -86,13 +78,17 @@ public class Wait extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.special) {
-            return "Despite your best efforts, " + getSelf().name()
-                            + " is still looking as calm and composed as ever. Either you aren't getting to her at all, or she's good at hiding it.";
+            return String.format("Despite %s best efforts, %s is still looking as calm and composed as ever. Either "
+                            + "%s %s getting to %s at all, or %s's good at hiding it.", target.nameOrPossessivePronoun(),
+                            getSelf().subject(), target.pronoun(), target.action("are", "is"),
+                            getSelf().directObject(), getSelf().pronoun());
         } else if (modifier == Result.strong) {
-            return getSelf().name()
-                            + " closes her eyes and takes a deep breath. When she opens her eyes, she seems more composed.";
+            return String.format("%s closes %s eyes and takes a deep breath. When %s opens %s eyes, "
+                            + "%s seems more composed.", getSelf().subject(), getSelf().possessivePronoun(),
+                            getSelf().pronoun(), getSelf().possessivePronoun(), getSelf().pronoun());
         } else {
-            return getSelf().name() + " hesitates, watching you closely.";
+            return String.format("%s hesitates, watching %s closely.",
+                            getSelf().subject(), target.nameDirectObject());
         }
     }
 

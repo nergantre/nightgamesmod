@@ -73,23 +73,23 @@ public class TemptressBlowjob extends Blowjob {
     public String deal(Combat c, int damage, Result modifier, Character target) {
         switch (modifier) {
             case miss:
-                return String.format("%s towards %s %s, but %s %s hips back.", getSelf().subjectAction("move", "moves"),
+                return String.format("%s towards %s %s, but %s %s hips back.", getSelf().subjectAction("move"),
                                 target.nameOrPossessivePronoun(), target.body.getRandomCock().describe(target),
-                                target.pronoun(), target.action("pull", "pulls"));
+                                target.pronoun(), target.action("pull"));
             case weak:
                 return String.format(
                                 "%s up %s flaccid %s, doing everything %s"
                                                 + " can to get it hard, but %s %s back before %s can manage it.",
-                                getSelf().subjectAction("gobble", "gobbles"), target.nameOrPossessivePronoun(),
+                                getSelf().subjectAction("gobble"), target.nameOrPossessivePronoun(),
                                 target.body.getRandomCock().describe(target), getSelf().pronoun(), target.pronoun(),
-                                target.action("pull", "pulls"), getSelf().pronoun());
+                                target.action("pull"), getSelf().pronoun());
             case special:
                 return String.format(
                                 "%s %s %s into %s mouth and %s on it powerfully. It hardens"
                                                 + " swiftly, as if %s pulled the blood right into it.",
-                                getSelf().subjectAction("take", "takes"), target.nameOrPossessivePronoun(),
+                                getSelf().subjectAction("take"), target.nameOrPossessivePronoun(),
                                 target.body.getRandomCock().describe(target), getSelf().possessivePronoun(),
-                                getSelf().action("suck", "sucks"), getSelf().pronoun());
+                                getSelf().action("suck"), getSelf().pronoun());
             default: // should be Result.normal
                 switch (damage) {
                     case 0:
@@ -104,9 +104,9 @@ public class TemptressBlowjob extends Blowjob {
                                         + "and %s on it forcefully while swirling %s tongue rapidly"
                                         + " around. At the same time, %s hands are massaging and"
                                         + " caressing every bit of sensitive flesh not covered by" + " %s mouth.",
-                                        getSelf().subjectAction("lock", "locks"), getSelf().possessivePronoun(),
+                                        getSelf().subjectAction("lock"), getSelf().possessivePronoun(),
                                         target.nameOrPossessivePronoun(), target.body.getRandomCock().describe(target),
-                                        getSelf().action("suck", "sucks"), getSelf().possessivePronoun(),
+                                        getSelf().action("suck"), getSelf().possessivePronoun(),
                                         getSelf().possessivePronoun(), getSelf().possessivePronoun());
                     default:
                         return String.format("%s bobbing up and down now, hands still working"
@@ -114,10 +114,10 @@ public class TemptressBlowjob extends Blowjob {
                                         + " over-stimulated manhood. %s %s not even trying to hide %s"
                                         + " enjoyment, and %s %s loudly every time %s teeth graze" + " %s shaft.",
                                         getSelf().subjectAction("are", "is"), getSelf().pronoun(),
-                                        getSelf().action("lick", "licks"), getSelf().action("suck", "sucks"),
-                                        getSelf().action("nibble", "nibbles"), target.possessivePronoun(),
+                                        getSelf().action("lick"), getSelf().action("suck"),
+                                        getSelf().action("nibble"), target.possessivePronoun(),
                                         target.nameDirectObject(), target.action("are", "is"),
-                                        target.possessivePronoun(), target.pronoun(), target.action("grunt", "grunts"),
+                                        target.possessivePronoun(), target.pronoun(), target.action("grunt"),
                                         getSelf().possessivePronoun(), target.possessivePronoun());
                 }
         }

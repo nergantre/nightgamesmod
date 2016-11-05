@@ -20,7 +20,9 @@ public class AnalCowgirl extends AnalSexStance {
             return String.format("You're sitting on top of %s with your ass squeezing her cock.",
                             bottom.nameDirectObject());
         } else {
-            return "You're flat on your back with your cock buried inside " + top.nameOrPossessivePronoun() + " ass.";
+            return String.format("%s flat on %s back with %s cock buried inside %s ass.",
+                            bottom.subjectAction("are", "is"), bottom.possessivePronoun(),
+                            bottom.possessivePronoun(), top.nameOrPossessivePronoun());
         }
     }
 

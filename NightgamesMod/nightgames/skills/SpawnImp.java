@@ -98,9 +98,11 @@ public class SpawnImp extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name()
-                        + " spreads out her dark aura and a demonic imp appears next to her in a burst of flame. The imp stands about waist height, with bright red hair, "
-                        + "silver skin and a long flexible tail. It's naked, clearly female, and surprisingly attractive given its inhuman features.";
+        return String.format("%s spreads out %s dark aura and a demonic imp appears next to %s"
+                        + " in a burst of flame. The imp stands about waist height, with bright red hair, "
+                        + "silver skin and a long flexible tail. It's naked, clearly female, and "
+                        + "surprisingly attractive given its inhuman features.",
+                        getSelf().subject(), getSelf().possessivePronoun(), getSelf().directObject());
     }
 
 }

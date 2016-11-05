@@ -6,6 +6,7 @@ import nightgames.characters.Emotion;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.global.Global;
 import nightgames.stance.StandingOver;
 
 public class Dominate extends Skill {
@@ -38,11 +39,7 @@ public class Dominate extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         getSelf().arouse(10, c);
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         c.setStance(new StandingOver(getSelf(), target));
         getSelf().emote(Emotion.dominant, 20);
         target.emote(Emotion.nervous, 20);
@@ -69,9 +66,16 @@ public class Dominate extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name()
-                        + " forcefully orders you to \"Kneel!\" Your body complies without waiting for your brain and you drop to your knees in front of her. She smiles and "
-                        + "pushes you onto your back. By the time you break free of her suggestion, you're flat on the floor with her foot planted on your chest.";
+        return String.format("%s forcefully orders %s to \"Kneel!\" %s body complies without waiting for"
+                        + " %s brain and %s %s to %s knees in front of %s. %s smiles and "
+                        + "pushes %s onto %s back. By the time %s free of %s suggestion, %s %s"
+                        + " flat on the floor with %s foot planted on %s chest.", getSelf().subject(),
+                        target.subject(), Global.capitalizeFirstLetter(target.pronoun()),
+                        target.possessivePronoun(), target.pronoun(), target.action("drop"),
+                        target.possessivePronoun(), getSelf().directObject(),
+                        getSelf().name(), target.nameDirectObject(), target.possessivePronoun(),
+                        target.subjectAction("break"), getSelf().possessivePronoun(), target.pronoun(),
+                        target.action("are", "is"), getSelf().nameOrPossessivePronoun(), target.possessivePronoun());
     }
 
 }

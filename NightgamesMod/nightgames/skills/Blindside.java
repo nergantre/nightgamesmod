@@ -6,6 +6,7 @@ import nightgames.characters.Emotion;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.global.Global;
 import nightgames.stance.Mount;
 import nightgames.stance.Stance;
 
@@ -27,7 +28,8 @@ public class Blindside extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return !target.wary() && c.getStance().enumerate() == Stance.neutral;
+        return !target.wary() && c.getStance()
+                                  .enumerate() == Stance.neutral;
     }
 
     @Override
@@ -37,18 +39,7 @@ public class Blindside extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (getSelf().human()) {
-            c.write(getSelf(),
-                            String.format("You move up to %s and kiss %s strongly. "
-                                            + "While %s is distracted, you throw %s down and plant "
-                                            + "yourself on top of %s.", target.name(), target.directObject(),
-                            target.pronoun(), target.directObject(), target.directObject()));
-        } else {
-            c.write(getSelf(), "Seductively swaying her hips, " + getSelf().subject() + " shashays over to you. "
-                            + "Her eyes fix you in place as she leans in and firmly kisses you, shoving her tongue down"
-                            + " your mouth. You are so absorbed in kissing back, that you only notice her ulterior motive"
-                            + " once she has already swept your legs out from under you and she has landed on top of you.");
-        }
+        writeOutput(c, Result.normal, target);
         c.setStance(new Mount(getSelf(), target));
         getSelf().emote(Emotion.confident, 15);
         getSelf().emote(Emotion.dominant, 15);
@@ -68,12 +59,27 @@ public class Blindside extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return null;
+        return String.format(
+                        "You move up to %s and kiss %s strongly. "
+                                        + "While %s is distracted, you throw %s down and plant "
+                                        + "yourself on top of %s.",
+                        target.name(), target.directObject(), target.pronoun(), target.directObject(),
+                        target.directObject());
     }
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return null;
+        return String.format(
+                        "Seductively swaying %s hips, %s shashays over to %s. "
+                                        + "%s eyes fix %s in place as %s leans in and firmly kisses %s, shoving %s tongue down"
+                                        + " %s mouth. %s are so absorbed in kissing back, that %s only notice %s ulterior motive"
+                                        + " once %s has already swept %s legs out from under %s and %s has landed on top of %s.",
+                        getSelf().possessivePronoun(), getSelf().name(), target.subject(),
+                        Global.capitalizeFirstLetter(getSelf().possessivePronoun()), target.directObject(),
+                        getSelf().pronoun(), target.directObject(), getSelf().possessivePronoun(),
+                        target.possessivePronoun(), Global.capitalizeFirstLetter(target.pronoun()), target.pronoun(),
+                        getSelf().possessivePronoun(), getSelf().pronoun(), target.possessivePronoun(),
+                        target.directObject(), getSelf().pronoun(), target.directObject());
     }
 
 }

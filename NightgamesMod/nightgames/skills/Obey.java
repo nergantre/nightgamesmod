@@ -29,9 +29,10 @@ public class Obey extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         if (getSelf().human()) {
-            c.write(getSelf(), "You patiently await your mistress' command.");
-        } else if (target.human()) {
-            c.write(getSelf(), getSelf().name() + " stares ahead blankly, waiting for her orders.");
+            String controller = target.useFemalePronouns() ? "mistress'" : "master's";
+            c.write(getSelf(), "You patiently await your "+controller+" command.");
+        } else if (c.shouldPrintReceive(target)) {
+            c.write(getSelf(), getSelf().name() + " stares ahead blankly, waiting for "+getSelf().possessivePronoun()+" orders.");
         }
         return true;
     }

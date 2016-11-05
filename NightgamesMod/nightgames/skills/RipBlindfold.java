@@ -54,13 +54,13 @@ public class RipBlindfold extends Skill {
         if (hit) {
             c.write(getSelf(),
                             String.format("%s %s blindfold and %s it off with a strong yank.",
-                                            getSelf().subjectAction("grab", "grabs"), target.nameOrPossessivePronoun(),
-                                            getSelf().action("pull", "pulls")));
+                                            getSelf().subjectAction("grab"), target.nameOrPossessivePronoun(),
+                                            getSelf().action("pull")));
             target.removeStatus(Stsflag.blinded);
         } else {
             c.write(getSelf(), String.format("%s at %s blindfold, but %s %s away from %s fingers.",
-                            getSelf().subjectAction("grasp", "grasps"), target.nameOrPossessivePronoun(),
-                            target.pronoun(), target.action("twist", "twists"), getSelf().possessivePronoun()));
+                            getSelf().subjectAction("grasp"), target.nameOrPossessivePronoun(),
+                            target.pronoun(), target.action("twist"), getSelf().possessivePronoun()));
         }
 
         return hit;

@@ -44,25 +44,13 @@ public class Dissolve extends Skill {
         } else {
             getSelf().consume(Item.DisSol, 1);
             if (getSelf().has(Item.Aersolizer)) {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, 0, Result.special, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.special, getSelf()));
-                }
+                writeOutput(c, Result.special, target);
                 shred(target, toShred);
             } else if (target.roll(this, c, accuracy(c))) {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, 0, Result.normal, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.normal, getSelf()));
-                }
+                writeOutput(c, Result.normal, target);
                 shred(target, toShred);
             } else {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, 0, Result.miss, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.miss, target));
-                }
+                writeOutput(c, Result.miss, target);
                 return false;
             }
         }
@@ -102,13 +90,17 @@ public class Dissolve extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character attacker) {
         if (modifier == Result.special) {
-            return getSelf().name()
-                            + " inserts a bottle into the attachment on her arm. You're suddenly surrounded by a cloud of mist. Your clothes begin to disintegrate immediately.";
+            return String.format("%s inserts a bottle into the attachment on her arm. "
+                            + "%s suddenly surrounded by a cloud of mist."
+                            + " %s clothes begin to disintegrate immediately.",
+                            getSelf().subject(), Global.capitalizeFirstLetter(attacker.subjectAction("are", "is")),
+                            Global.capitalizeFirstLetter(attacker.nameOrPossessivePronoun()));
         } else if (modifier == Result.miss) {
-            return getSelf().name() + " splashes a bottle of liquid in your direction, but none of it hits you.";
+            return String.format("%s splashes a bottle of liquid in %s direction, but none of it hits %s.",
+                            getSelf().subject(), attacker.nameOrPossessivePronoun(), attacker.directObject());
         } else {
-            return getSelf().name()
-                            + " covers you with a clear liquid. Your clothes dissolve away, but it doesn't do anything to your skin.";
+            return String.format("%s covers you with a clear liquid. %s clothes dissolve away, but it doesn't do anything to %s skin.",
+                            getSelf().subject(), Global.capitalizeFirstLetter(attacker.subject()), attacker.possessivePronoun());
         }
     }
 

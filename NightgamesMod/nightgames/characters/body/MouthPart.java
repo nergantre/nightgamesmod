@@ -93,7 +93,7 @@ public class MouthPart extends GenericBodyPart {
                             * self.getArousal().percent() / 100.0;
         }
         if (self.has(Trait.catstongue)) {
-            c.write(opponent, Global.format("<br>{self:name-possessive} abbrasive tongue produces an unique sensation.",
+            c.write(opponent, Global.format("<br>{self:name-possessive} abrasive tongue produces an unique sensation.",
                             self, opponent));
 
             bonus += Global.random(3) + 4;

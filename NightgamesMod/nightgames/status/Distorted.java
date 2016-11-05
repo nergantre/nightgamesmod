@@ -21,7 +21,8 @@ public class Distorted extends DurationStatus {
             return "Your image is distorted, making you hard to hit.";
         } else {
             return "Multiple " + affected.name()
-                            + "s appear in front of you. When you focus, you can tell which one is real, but it's still screwing up your accuracy.";
+                            + "s appear in front of you. When you focus, you can tell "
+                            + "which one is real, but it's still screwing up "+affected.nameOrPossessivePronoun()+" accuracy.";
         }
     }
 

@@ -31,11 +31,7 @@ public class Charm extends Skill {
             printBlinded(c);
             return false;
         }
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         double mag = 2 + Global.random(4) + 5 * getSelf().body.getCharismaBonus(target);
         if (target.has(Trait.imagination)) {
             mag += 4;
@@ -81,7 +77,7 @@ public class Charm extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().getName() + " flashes a dazzling smile at you.";
+        return getSelf().getName() + " flashes a dazzling smile at "+target.subject()+".";
     }
 
     @Override

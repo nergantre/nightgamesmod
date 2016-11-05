@@ -40,26 +40,14 @@ public class Handjob extends Skill {
         if (target.roll(this, c, accuracy(c))) {
             if (getSelf().get(Attribute.Seduction) >= 8) {
                 m += 6;
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, m, Result.normal, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, m, Result.normal, target));
-                }
+                writeOutput(c, Result.normal, target);
                 target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("cock"), m, c, this);
             } else {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, m, Result.normal, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, m, Result.weak, target));
-                }
+                writeOutput(c, Result.weak, target);
                 target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("cock"), m, c, this);
             }
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.miss, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.miss, target));
-            }
+            writeOutput(c, Result.miss, target);
             return false;
         }
         return true;
@@ -93,28 +81,39 @@ public class Handjob extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return getSelf().name() + " grabs for your dick and misses.";
+            return String.format("%s grabs for %s dick and misses.",
+                            getSelf().subject(), target.nameOrPossessivePronoun());
         }
         int r;
         if (!target.crotchAvailable()) {
-            return getSelf().name() + " slips her hand into your "
-                            + target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName()
-                            + " and strokes your dick.";
+            return String.format("%s slips %s hand into %s %s and strokes %s dick.",
+                            getSelf().subject(), getSelf().possessivePronoun(),
+                            target.nameOrPossessivePronoun(),
+                            target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName(),
+                            target.possessivePronoun());
         } else if (modifier == Result.weak) {
-            return getSelf().name()
-                            + " clumsily fondles your crotch. It's not skillful by any means, but it's also not entirely ineffective.";
+            return String.format("%s clumsily fondles %s crotch. It's not skillful by"
+                            + " any means, but it's also not entirely ineffective.",
+                            getSelf().subject(), target.nameOrPossessivePronoun());
         } else {
             if (target.getArousal().get() < 15) {
-                return getSelf().name()
-                                + " grabs your soft penis and plays with the sensitive organ until it springs into readiness.";
+                return String.format("%s grabs %s soft penis and plays with the sensitive organ "
+                                + "until it springs into readiness.",
+                                getSelf().subject(), target.nameOrPossessivePronoun());
             }
 
             else if ((r = Global.random(3)) == 0) {
-                return getSelf().name() + " strokes and teases your dick, sending shivers of pleasure up your spine.";
+                return String.format("%s strokes and teases %s dick, sending shivers of pleasure up %s spine.",
+                                getSelf().subject(), target.nameOrPossessivePronoun(),
+                                target.possessivePronoun());
             } else if (r == 1) {
-                return getSelf().name() + " rubs the sensitive head of your penis and fondles your balls.";
+                return String.format("%s rubs the sensitive head of %s penis and fondles %s balls.",
+                                getSelf().subject(), target.nameOrPossessivePronoun(),
+                                target.possessivePronoun());
             } else {
-                return getSelf().name() + " jerks you off like she's trying to milk every drop of your cum.";
+                return String.format("%s jerks %s off like she's trying to milk every drop of %s cum.",
+                                getSelf().subject(), target.subject(),
+                                target.possessivePronoun());
             }
         }
     }

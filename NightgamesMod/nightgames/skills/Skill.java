@@ -214,4 +214,16 @@ public abstract class Skill {
         return getStage().multiplierFor(target);
     }
     
+    protected void writeOutput(Combat c, Result result, Character target) {
+        writeOutput(c, 0, result, target);
+    }
+    
+    protected void writeOutput(Combat c, int mag, Result result, Character target) {
+        if (getSelf().human()) {
+            c.write(getSelf(), deal(c, mag, result, target));
+        } else if (c.shouldPrintReceive(target)) {
+            c.write(getSelf(), receive(c, mag, result, target));
+        }
+    }
+    
 }

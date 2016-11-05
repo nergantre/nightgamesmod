@@ -131,26 +131,45 @@ public class FaceFuck extends Skill {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         String m;
         if (modifier == Result.strapon) {
-            m = getSelf().name()
-                            + " forces her strapon cock into your mouth and fucks your face with it. It's only rubber, but your position is still humiliating. You struggle not "
-                            + "to gag on the artificial member while " + getSelf().name() + " revels in her dominance.";
+            m = String.format("%s forces her strapon cock into %s mouth and fucks %s face with it. "
+                            + "It's only rubber, but the position is still humiliating. %s not "
+                            + "to gag on the artificial member while %s revels in her dominance.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                            target.subjectAction("try", "tries"), getSelf().subject());
         } else if (modifier == Result.upgrade) {
-            m = getSelf().name()
-                            + " slightly moves forward on you, pushing her strapon against your lips. You try to keep your mouth closed but "
-                            + getSelf().name() + " pinches your nose shut, "
-                            + "and pushes in the rubbery invader as you gasp for air. After a few sucks, you manage to break free, although you're still shivering "
-                            + "with a mix of arousal and humiliation.";
+            m = String.format("%s moves slightly towards %s, pushing her strapon against %s lips. %s to keep %s"
+                            + " mouth closed but %s pinches %s nose shut, "
+                            + "and pushes in the rubbery invader as %s for air. After a few sucks, %s"
+                            + " %s to break free, although %s %s still shivering "
+                            + "with a mix of arousal and humiliation.", getSelf().subject(), target.nameDirectObject(),
+                            target.possessivePronoun(), target.subjectAction("try", "tries"), target.possessivePronoun(),
+                            getSelf().subject(), target.possessivePronoun(), target.subjectAction("gasp"),
+                            target.pronoun(), target.action("manage"), target.pronoun(), target.action("are", "is"));
         } else if (target.body.getRandom("mouth").isErogenous()) {
-            m = getSelf().name()
-                            + " forces your mouth open and shoves her sizable girl-cock into it. You're momentarily overwhelmed by the strong, musky smell and the taste, but "
-                            + "she quickly starts moving her hips, fucking your mouth. However, your modified oral orifice was literally designed to squeeze cum; soon "
-                            + getSelf().name()
-                            + " finds herself ramming with little more than her own enjoyment in mind.";
+            m = String.format("%s forces %s mouth open and shoves %s %s into it. %s "
+                            + "momentarily overwhelmed by the strong, musky smell and the taste, but "
+                            + "%s quickly starts moving %s hips, fucking %s mouth. However, %s "
+                            + "modified oral orifice was literally designed to squeeze cum; soon %s finds "
+                            + "%s ramming with little more than %s own enjoyment in mind.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessivePronoun(),
+                            getSelf().body.getRandomCock().describe(getSelf()), target.subjectAction("are", "is"),
+                            getSelf().subject(), getSelf().possessivePronoun(), target.possessivePronoun(),
+                            target.nameOrPossessivePronoun(), getSelf().subject(), getSelf().reflectivePronoun(),
+                            getSelf().possessivePronoun());
         } else {
-            m = getSelf().name()
-                            + " forces your mouth open and shoves her sizable girl-cock into it. You're momentarily overwhelmed by the strong, musky smell and the taste, but "
-                            + "she quickly starts moving her hips, fucking your mouth like a pussy. You feel your cheeks redden in shame, but you still do what you can to pleasure her. "
-                            + "She may be using you like a sex toy, but you're going to try to scrounge whatever advantage you can get.";
+            m = String.format("%s forces %s mouth open and shoves %s %s into it. %s "
+                            + "momentarily overwhelmed by the strong, musky smell and the taste, but "
+                            + "%s quickly starts moving %s hips, fucking %s mouth like a pussy. %s "
+                            + "%s cheeks redden in shame, but %s still %s what you can to pleasure %s. "
+                            + "%s may be using you like a sex toy, but %s going to try to scrounge "
+                            + "whatever advantage %s can get.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessivePronoun(),
+                            getSelf().body.getRandomCock().describe(getSelf()), target.subjectAction("are", "is"),
+                            getSelf().subject(), getSelf().possessivePronoun(), target.possessivePronoun(),
+                            Global.capitalizeFirstLetter(target.subjectAction("feel")), target.possessivePronoun(),
+                            target.pronoun(), target.action("do", "does"), getSelf().nameDirectObject(),
+                            Global.capitalizeFirstLetter(getSelf().subject()), target.subjectAction("are", "is"),
+                            target.pronoun());
         }
         return m;
     }

@@ -38,7 +38,8 @@ public class Enthralled extends DurationStatus {
             return "You feel a constant pull on your mind, forcing you to obey " + master.possessivePronoun()
                             + " every command.";
         } else {
-            return affected.name() + " looks dazed and compliant, ready to follow your orders.";
+            return affected.name() + " looks dazed and compliant, ready to follow "
+                                +c.getOther(affected).nameOrPossessivePronoun()+" orders.";
         }
     }
 

@@ -31,11 +31,7 @@ public class Slap extends Skill {
     public boolean resolve(Combat c, Character target) {
         if (target.roll(this, c, accuracy(c))) {
             if (isSlime()) {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, 0, Result.critical, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.critical, target));
-                }
+                writeOutput(c, Result.critical, target);
                 target.pain(c, Global.random(10) + getSelf().get(Attribute.Slime) + getSelf().get(Attribute.Power) / 2);
                 if (c.getStance().en == Stance.neutral && Global.random(5) == 0) {
                     c.setStance(new StandingOver(getSelf(), target));
@@ -47,11 +43,7 @@ public class Slap extends Skill {
                 target.emote(Emotion.nervous, 40);
                 target.emote(Emotion.angry, 30);
             } else if (getSelf().get(Attribute.Animism) >= 8) {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, 0, Result.special, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.special, target));
-                }
+                writeOutput(c, Result.special, target);
                 if (getSelf().has(Trait.pimphand)) {
                     target.pain(c, Global.random(16 * getSelf().getArousal().percent() / 100)
                                     + getSelf().get(Attribute.Power) / 2);
@@ -64,11 +56,7 @@ public class Slap extends Skill {
                     target.emote(Emotion.angry, 30);
                 }
             } else {
-                if (getSelf().human()) {
-                    c.write(getSelf(), deal(c, 0, Result.normal, target));
-                } else if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.normal, target));
-                }
+                writeOutput(c, Result.normal, target);
                 if (getSelf().has(Trait.pimphand)) {
                     target.pain(c, Global.random(8) + 5 + target.get(Attribute.Perception));
                     target.emote(Emotion.nervous, 20);
@@ -81,11 +69,7 @@ public class Slap extends Skill {
             }
 
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.miss, target));
-            } else if (target.human()) {
-                c.write(getSelf(), receive(c, 0, Result.miss, target));
-            }
+            writeOutput(c, Result.miss, target);
             return false;
         }
         return true;
@@ -144,14 +128,21 @@ public class Slap extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return getSelf().name() + " tries to slap you but you catch her wrist.";
+            return String.format("%s tries to slap %s but %s %s %s wrist.",
+                            getSelf().subject(), target.nameDirectObject(),
+                            target.pronoun(), target.action("catch", "catches"),
+                            getSelf().possessivePronoun());
         } else if (modifier == Result.special) {
-            return getSelf().name() + "'s palm hits you in a savage strike that makes your head ring.";
+            return String.format("%s palm hits %s in a savage strike that makes %s head ring.",
+                            getSelf().nameOrPossessivePronoun(), target.nameDirectObject(),
+                            target.possessivePronoun());
         } else if (modifier == Result.critical) {
-            return getSelf().name() + "'s hand grows significantly, and then " + getSelf().pronoun()
-                            + " swings it powerfully into your face.";
+            return String.format("%s hand grows significantly, and then %s swings it powerfully into %s face.",
+                            getSelf().nameOrPossessivePronoun(), getSelf().pronoun(),
+                            target.nameOrPossessivePronoun());
         } else {
-            return getSelf().name() + " slaps you across the face, leaving a stinging heat on your cheek.";
+            return String.format("%s slaps %s across the face, leaving a stinging heat on %s cheek.",
+                            getSelf().subject(), target.nameDirectObject(), target.possessivePronoun());
         }
     }
 

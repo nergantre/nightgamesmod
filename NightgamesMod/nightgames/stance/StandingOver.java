@@ -14,7 +14,9 @@ public class StandingOver extends AbstractFacingStance {
         if (top.human()) {
             return "You are standing over " + bottom.name() + ", who is helpless on the ground.";
         } else {
-            return "You are flat on your back, while " + top.name() + " stands over you.";
+            return String.format("%s flat on %s back, while %s stands over %s.",
+                            bottom.subjectAction("are", "is"), bottom.possessivePronoun(),
+                            top.subject(), bottom.directObject());
         }
     }
 

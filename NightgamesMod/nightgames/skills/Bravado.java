@@ -33,11 +33,7 @@ public class Bravado extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         int x = cost;
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, x, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, x, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         getSelf().calm(c, 20 + x / 2);
         getSelf().heal(c, x);
         getSelf().restoreWillpower(c, 2 + x / 10);
@@ -65,7 +61,7 @@ public class Bravado extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character attacker) {
-        return getSelf().name() + " gives you a determined glare as " + getSelf().pronoun() + " seems to gain a second wind.";
+        return getSelf().name() + " gives "+attacker.nameDirectObject()+" a determined glare as " + getSelf().pronoun() + " seems to gain a second wind.";
     }
 
     @Override

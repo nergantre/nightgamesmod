@@ -20,7 +20,7 @@ public class Unreadable extends DurationStatus {
 
     @Override
     public String describe(Combat c) {
-        return null;
+        return "";
     }
 
     @Override

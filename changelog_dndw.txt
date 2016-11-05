@@ -1,3 +1,52 @@
+10/09/16 - 2.2.0
+-Added Spectator mode
+	-When encountering two opponents and you are offered the opportunity to intervene, you can now also choose to watch.
+-Added Jewel's addiction: Dominance
+	-Makes escape from submissive positions much more difficult. (Similar magnitude to being bound at high levels of addiction.)
+	-Increases pleasure received while in a submissive position.
+	-At high levels, blocks mojo gain while in a submissive position.
+	(-So as you've figured by now, this makes submissive positions pretty bad to be in.)
+	-In withdrawal, limits max stamina and causes permanent Masochistic (which makes pain cause pleasure).
+	-Will be inflicted and worsened when Jewel empties your stamina.
+	
+-Added the Scene Creator as an external application. This tool lets you more easily write scenes for custom characters.
+	-The Text tab lets you write a scene, with two characters, and displays the formatted text to the right.
+	-The Help item in the menu bar has a list of available formatting tags.
+	-The Requirements tab lets you set the requirements for your scene. Right-click an item to add a subrequirement, keeping the following in mind:
+		-"The following are all true:" and "At least one of the following is true:" must have at least one subrequirement, and may have more. (Having just one doesn't really make sense, but it's legal.)
+		-The top-level requirement is an exception to the above. It may be empty, in which case the scene will always trigger.
+		-"The following is NOT true:" must have exactly one subrequirement.
+		-All other requirements are not allowed to have subrequirements.
+		-Every requirement which has fields, like "has this item:" and ".. this position:", must have all options filled.
+		-No two subrequirements of the same requirement may be of the same type or refer to the "other character". (You can have two of the same type if one refers to the other character)	
+		-Click "Validate" at the bottom of the screen to check for mistakes.
+		-When writing multiple alternative scenes, these will be evaluated top-down and the first scenes of which the requirements match will trigger, so order is important.
+		-Always make sure that a scene always triggers, typically by including a requirement-less scene as the last entry.
+	-In the File menu item, click "Display JSON" to get the properly-formatted JSON text, which you can copy-paste into your character file.
+
+31/07/16 - 2.1.0.2
+Ryplinn:
+	-Fixed a bug where the clock would be stuck after loading a game.
+	-Disabling images no longer also disables portraits.
+	-Fixed affection and attraction not loading correctly.
+Pimvgd:
+	-Fixed Use Aphrodisiac for succubi and slimes.
+	-Fixed some text issues.
+	-Improved handling of rank.
+	-Modified some skill messages to use characters' gender instead of assuming female.
+DNDW:
+	-Fix manual saves after match being loaded at start of match.
+	-Added option to always use female pronouns for opponents, regardless of anatomy. (In the Options screen.)
+	-Added "Futanari Time" custom start, made by MotoKuchoma.
+	(-Some unfinished work on Jewel's addiction.)
+
+28/07/16 - 2.1.0.1
+-Fixed a bug causing the player's inventory to disappear when modified by special rules. (e.g. no toys)
+
+27/07/16 - 2.1.0
+-Merged everything (relevant) up to Not Quite Mara Time from the base game, including the Ninjutsu and Temporal skillsets.
+-Expanded on The Silver Bard's Foreplay/Finisher system. Foreplay skills are listed in italics, Finishers in bold. Foreplay is more effective at low arousal/willpower, Finishers at high values.
+
 12/07/16 - 2.0.6
 -Enthrallers now prioritze tops and bottoms when ordering their thralls to remove clothing, and won't remove strapons.
 -It's no longer possible to use oral skills when riding in Reverse Cowgirl. (Characters with a vaginal tongue can still use Blow)

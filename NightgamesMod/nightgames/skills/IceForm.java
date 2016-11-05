@@ -32,7 +32,7 @@ public class IceForm extends Skill {
     public boolean resolve(Combat c, Character target) {
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
+        } else if (c.shouldPrintReceive(target)) {
             if (!target.is(Stsflag.blinded))
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             else 
@@ -59,8 +59,10 @@ public class IceForm extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name()
-                        + " takes a deep breath and her expression turns so frosty that you're not sure you can ever thaw her out.";
+        return String.format("%s takes a deep breath and %s expression turns so "
+                        + "frosty that %s not sure %s can ever thaw her out.",
+                        getSelf().subject(), getSelf().possessivePronoun(),
+                        target.subjectAction("are", "is"), target.pronoun());
     }
 
 }

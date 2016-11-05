@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -64,6 +65,7 @@ import nightgames.status.Stsflag;
 import nightgames.status.Trance;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
+import nightgames.status.addiction.Dominance;
 import nightgames.status.addiction.MindControl;
 import nightgames.trap.Trap;
 
@@ -87,6 +89,7 @@ public abstract class Character extends Observable implements Cloneable {
     protected Area location;
     protected CopyOnWriteArrayList<Skill> skills;
     public Set<Status> status;
+    public Set<Stsflag> statusFlags;
     public CopyOnWriteArrayList<Trait> traits;
     protected Map<Trait, Integer> temporaryAddedTraits;
     protected Map<Trait, Integer> temporaryRemovedTraits;
@@ -141,6 +144,7 @@ public abstract class Character extends Observable implements Cloneable {
         closet = new HashSet<>();
         skills = new CopyOnWriteArrayList<>();
         status = new HashSet<>();
+        statusFlags = EnumSet.noneOf(Stsflag.class);
         traits = new CopyOnWriteArrayList<>();
         temporaryAddedTraits = new HashMap<>();
         temporaryRemovedTraits = new HashMap<>();
@@ -185,6 +189,7 @@ public abstract class Character extends Observable implements Cloneable {
         c.body = body.clone();
         c.body.character = c;
         c.orgasmed = orgasmed;
+        c.statusFlags = EnumSet.copyOf(statusFlags);
         return c;
     }
 
@@ -618,7 +623,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void arouse(int i, Combat c, String source) {
-        String message = String.format("%s aroused for <font color='rgb(240,100,100)'>%d<font color='white'>%s\n",
+        String message = String.format("%s aroused for <font color='rgb(240,100,100)'>%d<font color='white'> %s\n",
                         Global.capitalizeFirstLetter(subjectWas()), i, source);
         if (c != null) {
             c.writeSystemMessage(message);
@@ -628,6 +633,10 @@ public abstract class Character extends Observable implements Cloneable {
 
     public String subjectAction(String verb, String pluralverb) {
         return subject() + " " + pluralverb;
+    }
+    
+    public String subjectAction(String verb) {
+        return subjectAction(verb, verb + "s");
     }
 
     public String subjectWas() {
@@ -679,6 +688,13 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void buildMojo(Combat c, int percent, String source) {
+        if (human() && Dominance.mojoIsBlocked(c)) {
+            c.write(c.getOther(this), 
+                            String.format("Enraptured by %s display of dominance, you build no mojo.", 
+                                            c.getOther(this).nameOrPossessivePronoun()));
+            return;
+        }
+        
         int x = percent * Math.min(mojo.max(), 200) / 100;
         int bonus = 0;
         for (Status s : getStatuses()) {
@@ -1123,6 +1139,8 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public boolean is(Stsflag sts) {
+        if (statusFlags.contains(sts))
+            return true;
         for (Status s : getStatuses()) {
             if (s.flags().contains(sts)) {
                 return true;
@@ -1406,7 +1424,8 @@ public abstract class Character extends Observable implements Cloneable {
     protected void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
                     int totalTimes) {
         String orgasmLiner = "<b>" + orgasmLiner(c) + "</b>";
-        String opponentOrgasmLiner = "<b>" + opponent.makeOrgasmLiner(c) + "</b>";
+        String opponentOrgasmLiner = opponent == null || opponent == this ? "" : 
+            "<b>" + opponent.makeOrgasmLiner(c) + "</b>";
         orgasmed = true;
         if (times == 1) {
             c.write(this, "<br>");
@@ -1449,13 +1468,15 @@ public abstract class Character extends Observable implements Cloneable {
         if (this instanceof Player) {
             Player p = (Player) this;
 
-            if (p.checkAddiction(AddictionType.CORRUPTION, opponent) && opponentPart.isType("pussy") && selfPart
+            if (p.checkAddiction(AddictionType.CORRUPTION, opponent) && selfPart != null && opponentPart != null 
+                            && opponentPart.isType("pussy") && selfPart
                             .isType("cock") && c.getCombatantData(this).getIntegerFlag("ChoseToFuck") == 1) {
                 c.write(this, "Your willing sacrifice to " + opponent.getName() + " greatly reinforces"
                                 + " the corruption inside of you.");
                 p.addict(AddictionType.CORRUPTION, opponent, Addiction.HIGH_INCREASE);
             }
-            if (p.checkAddiction(AddictionType.ZEAL, opponent) && opponentPart.isType("pussy") && selfPart
+            if (p.checkAddiction(AddictionType.ZEAL, opponent) && selfPart != null && opponentPart != null 
+                            && opponentPart.isType("pussy") && selfPart
                             .isType("cock")) {
                 c.write(this, "Experiencing so much pleasure inside of " + opponent + " reinforces" + " your faith.");
                 p.addict(AddictionType.ZEAL, opponent, Addiction.MED_INCREASE);
@@ -1738,14 +1759,14 @@ public abstract class Character extends Observable implements Cloneable {
         if (opponent.has(Trait.magicEyeTrance) && getArousal().percent() >= 50 && c.getStance().facing()
                         && Global.random(10) == 0) {
             c.write(opponent,
-                            Global.format("<br>{other:NAME-POSSESSIVE} eyes start glowing and sends {self:subject} straight into a trance.",
+                            Global.format("<br>{other:NAME-POSSESSIVE} eyes start glowing and send {self:subject} straight into a trance.",
                                             this, opponent));
             add(c, new Trance(this));
         }
         if (opponent.has(Trait.magicEyeFrenzy) && getArousal().percent() >= 50 && c.getStance().facing()
                         && Global.random(10) == 0) {
             c.write(opponent,
-                            Global.format("<br>{other:NAME-POSSESSIVE} eyes start glowing and sends {self:subject} into a frenzy.",
+                            Global.format("<br>{other:NAME-POSSESSIVE} eyes start glowing and send {self:subject} into a frenzy.",
                                             this, opponent));
             add(c, new Frenzied(this, 3));
         }
@@ -2180,6 +2201,7 @@ public abstract class Character extends Observable implements Cloneable {
         if (other == null) {
             System.err.println("Other is null");
             Thread.dumpStack();
+            return;
         }
         if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
             System.out.printf("%s gained attraction for %s\n", name(), other.name());
@@ -2216,6 +2238,7 @@ public abstract class Character extends Observable implements Cloneable {
         if (other == null) {
             System.err.println("Other is null");
             Thread.dumpStack();
+            return;
         }
         if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
             System.out.printf("%s gained affection for %s\n", name(), other.name());
@@ -2788,8 +2811,8 @@ public abstract class Character extends Observable implements Cloneable {
         }
     }
 
-    private boolean useFemalePronouns() {
-        return hasPussy() || !hasDick();
+    public boolean useFemalePronouns() {
+        return hasPussy() || !hasDick() || Global.checkFlag(Flag.FemalePronounsOnly);
     }
 
     public String nameDirectObject() {
@@ -2844,6 +2867,10 @@ public abstract class Character extends Observable implements Cloneable {
 
     public String action(String firstPerson, String thirdPerson) {
         return thirdPerson;
+    }
+    
+    public String action(String verb) {
+        return action(verb, verb + "s");
     }
 
     public void addCooldown(Skill skill) {
@@ -3165,6 +3192,14 @@ public abstract class Character extends Observable implements Cloneable {
 
     }
 
+    public void flagStatus(Stsflag flag) {
+        statusFlags.add(flag);
+    }
+    
+    public void unflagStatus(Stsflag flag) {
+        statusFlags.remove(flag);
+    }
+    
     @Override public boolean equals(Object o) {
         if (this == o)
             return true;

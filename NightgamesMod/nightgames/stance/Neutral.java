@@ -14,7 +14,8 @@ public class Neutral extends Position {
         if (top.human()) {
             return "You and " + bottom.name() + " circle each other cautiously";
         } else {
-            return "You and " + top.name() + " circle each other cautiously";
+            return String.format("%s and %s circle each other cautiously",
+                            top.subject(), bottom.subject());
         }
     }
 

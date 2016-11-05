@@ -40,11 +40,7 @@ public class PussyGrind extends Skill {
     public boolean resolve(Combat c, Character target) {
         BodyPart selfO = getSelfOrgan();
         BodyPart targetO = getTargetOrgan(target);
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         c.setStance(new TribadismStance(getSelf(), target));
         int m = 10 + Global.random(10);
         int otherm = 5 + Global.random(6);
@@ -88,9 +84,11 @@ public class PussyGrind extends Skill {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.normal) {
             return Global.format(
-                            "{self:SUBJECT} rocks your tangled bodies back and forth, grinding her crotch into yours. You moan passionately as the stimulation overwhelms you. "
-                                            + "Soon the floor is drenched with the fruits of your combined labor.",
-                            getSelf(), target);
+                            "{self:SUBJECT} rocks {other:name-possessive} tangled bodies back and forth, grinding {self:possessive}"
+                            + " crotch into %s. {other:SUBJECT-ACTION:moan|moans} passionately as the stimulation overwhelms {other:direct-object}. "
+                                            + "Soon the floor is drenched with the fruits of %s combined labor.",
+                            getSelf(), target, target.human() ? "yours" : target.useFemalePronouns() ? "hers" : "his",
+                                            c.bothPossessive());
         }
         return "Bad stuff happened";
     }

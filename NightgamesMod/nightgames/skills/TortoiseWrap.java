@@ -35,11 +35,7 @@ public class TortoiseWrap extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         getSelf().consume(Item.Rope, 1);
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         target.add(c, new Tied(target));
         target.add(c, new Hypersensitive(target));
         return true;
@@ -67,12 +63,14 @@ public class TortoiseWrap extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return String.format("%s ties you up with a complex series of knots. "
-                        + "Surprisingly, instead of completely incapacitating you, "
-                        + "%s wraps you in a way that only "
-                        + "slightly hinders your movement. However, the discomfort of "
-                        + "the rope wrapping around you seems to make your sense of " + "touch more pronounced.",
-                        getSelf().name(), getSelf().pronoun());
+        return String.format("%s ties %s up with a complex series of knots. "
+                        + "Surprisingly, instead of completely incapacitating %s, "
+                        + "%s wraps %s in a way that only "
+                        + "slightly hinders %s movement. However, the discomfort of "
+                        + "the rope wrapping around %s seems to make %s sense of touch more pronounced.",
+                        getSelf().name(), target.nameDirectObject(), target.directObject(),
+                        getSelf().pronoun(), target.directObject(), target.possessivePronoun(),
+                        target.pronoun(), target.possessivePronoun());
     }
 
 }

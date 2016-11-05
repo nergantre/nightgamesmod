@@ -37,11 +37,7 @@ public class DarkTalisman extends Skill {
     public boolean resolve(Combat c, Character target) {
         Result result = target.is(Stsflag.blinded) ? Result.special
                         : target.roll(this, c, accuracy(c)) ? Result.normal : Result.miss;
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, result, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, result, target));
-        }
+        writeOutput(c, result, target);
         getSelf().consume(Item.Talisman, 1);
         if (result == Result.normal) {
             target.add(c, new Enthralled(target, getSelf(), Global.random(3) + 1));
@@ -78,14 +74,16 @@ public class DarkTalisman extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.normal) {
-            return getSelf().name()
-                            + " holds up a strange talisman. You feel compelled to look at the thing, captivated by its unholy nature.";
+            return String.format("%s holds up a strange talisman. %s compelled to look at the thing, captivated by its unholy nature.",
+                            getSelf().name(), Global.capitalizeFirstLetter(target.subjectAction("feel")));
         } else if (modifier == Result.special) {
-            return "You hear something which sounds like sand spilling onto the floor and a cry of annoyed "
-                            + "frustration from " + getSelf().name + ". What could it have been?";
+            return String.format("%s something which sounds like sand spilling onto the floor and a cry of annoyed "
+                            + "frustration from %s. What could it have been?", getSelf().subjectAction("hear"),
+                            target.nameDirectObject());
         } else {
-            return getSelf().name()
-                            + " holds up a strange talisman. You feel a tiny tug on your consciousness, but it doesn't really affect you much.";
+            return String.format("%s holds up a strange talisman. %s a tiny tug on %s consciousness, but it doesn't really affect %s much.",
+                            getSelf().name(), Global.capitalizeFirstLetter(target.subjectAction("feel")), target.possessivePronoun(),
+                            target.directObject());
         }
     }
 

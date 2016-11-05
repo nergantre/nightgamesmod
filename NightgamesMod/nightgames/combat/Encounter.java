@@ -470,7 +470,7 @@ public class Encounter implements Serializable, IEncounter {
         attacker.state = State.ready;
         target.state = State.ready;
         location.endEncounter();
-        location.remove(location.get(new Spiderweb()));
+        location.remove(location.get(Spiderweb.class));
     }
 
     public void intrude(Character intruder, Character assist) {
@@ -600,5 +600,13 @@ public class Encounter implements Serializable, IEncounter {
     @Override
     public boolean checkIntrude(Character c) {
         return fight != null && !c.equals(p1) && !c.equals(p2);
+    }
+
+    @Override
+    public void watch() {
+        fight.setBeingObserved(true);
+        Global.gui().combat = fight;
+        fight.addObserver(Global.gui());
+        Global.getMatch().resume();
     }
 }

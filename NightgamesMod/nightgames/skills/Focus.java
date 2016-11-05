@@ -24,11 +24,7 @@ public class Focus extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         getSelf().calm(c, Math.max(getSelf().getArousal().max() / 5, 20));
         return true;
     }
@@ -60,8 +56,11 @@ public class Focus extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name()
-                        + " closes her eyes and takes a deep breath. When she opens her eyes, she seems more composed.";
+        return String.format("%s closes %s eyes and takes a deep breath. When %s "
+                        + "opens %s eyes again, %s seems more composed.",
+                        getSelf().subject(), getSelf().possessivePronoun(),
+                        getSelf().pronoun(), getSelf().possessivePronoun(),
+                        getSelf().pronoun());
     }
 
     @Override

@@ -46,11 +46,7 @@ public class SpawnSlime extends Skill {
         if (getSelf().has(Trait.tactician)) {
             ac += 3;
         }
-        if (getSelf().human()) {
-            c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (target.human()) {
-            c.write(getSelf(), receive(c, 0, Result.normal, target));
-        }
+        writeOutput(c, Result.normal, target);
         getSelf().pet = new Slime(getSelf(), power, ac);
         return true;
     }
@@ -73,9 +69,9 @@ public class SpawnSlime extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name()
-                        + " points a device at the floor and releases a blob of blue slime. The blob starts to move like a living thing and briefly takes on a vaguely humanoid shape "
-                        + "and smiles at you.";
+        return String.format("%s points a device at the floor and releases a blob of blue slime. The blob "
+                        + "starts to move like a living thing and briefly takes on a vaguely humanoid shape "
+                        + "and smiles at %s.", getSelf().subject(), target.nameDirectObject());
     }
 
 }
