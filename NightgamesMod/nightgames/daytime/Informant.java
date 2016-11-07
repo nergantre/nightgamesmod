@@ -595,12 +595,12 @@ public class Informant extends Activity {
                 Global.gui()
                       .choose(this, "More Competitors");
             }
-            Global.gui()
-                  .choose(this, "Select Competitors");
         }
         if (Global.checkFlag(Flag.girlAdvice)) {
             Global.gui()
                   .choose(this, "Competition Info");
+            Global.gui()
+            .choose(this, "Select Competitors");
         }
         if (Global.getPlayer()
                   .checkAddiction()) {

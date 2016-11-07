@@ -27,7 +27,7 @@ public class Masturbate extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().canMasturbate() && c.getStance().mobile(getSelf())
+        return getSelf().canMasturbate() && !getSelf().bound()
                         && getTargetOrgan(c, getSelf()) != Body.nonePart;
     }
 

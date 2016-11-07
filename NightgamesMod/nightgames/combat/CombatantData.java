@@ -84,6 +84,10 @@ public class CombatantData implements Cloneable {
         return flags.containsKey(key) ? flags.get(key).intValue() != 0 : false;
     }
 
+    public void setBooleanFlag(String key, boolean val) {
+        flags.put(key, val ? Integer.valueOf(1) : Integer.valueOf(0));
+    }
+
     public float getFloatFlag(String key) {
         return flags.containsKey(key) ? flags.get(key).floatValue() : 0f;
     }

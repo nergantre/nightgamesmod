@@ -23,6 +23,7 @@ import nightgames.global.DebugFlags;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.items.clothing.ClothingSlot;
 import nightgames.pet.Pet;
 import nightgames.skills.Anilingus;
 import nightgames.skills.BreastWorship;
@@ -37,8 +38,10 @@ import nightgames.stance.StandingOver;
 import nightgames.status.Braced;
 import nightgames.status.CounterStatus;
 import nightgames.status.DivineCharge;
+import nightgames.status.Enthralled;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
+import nightgames.status.Trance;
 import nightgames.status.Wary;
 import nightgames.status.Winded;
 import nightgames.status.addiction.Addiction;
@@ -449,6 +452,9 @@ public class Combat extends Observable implements Cloneable {
             p1Data.tick(this);
             p2Data.tick(this);
 
+            doCombatUpkeep(p1, p2);
+            doCombatUpkeep(p2, p1);
+
             getStance().decay(this);
             getStance().checkOngoing(this);
             phase = 0;
@@ -456,6 +462,17 @@ public class Combat extends Observable implements Cloneable {
                 turn();
             }
             updateMessage();
+        }
+    }
+
+    private void doCombatUpkeep(Character self, Character other) {
+        String beguilingbreastCompletedFlag = Trait.beguilingbreasts.name()+"Completed";
+        if (other.has(Trait.beguilingbreasts) && !getCombatantData(self).getBooleanFlag(beguilingbreastCompletedFlag)) {
+            write(other, Global.format("The instant {self:subject-action:lay|lays} {self:possessive} eyes on {other:name-possessive} bare breasts, {self:possessive} consciousness flies out of {self:possessive} mind. " +
+                            (other.canAct() ? "{other:SUBJECT-ACTION:giggle|giggles} a bit and cups her stupendous tits and gives them a little squeeze to which {self:subject} can only moan." : ""), 
+                            self, other));
+            self.add(new Trance(self, 4));
+            getCombatantData(self).setBooleanFlag(beguilingbreastCompletedFlag, true);
         }
     }
 
@@ -506,18 +523,31 @@ public class Combat extends Observable implements Cloneable {
                 return;
             }
         }
-        if (getStance().time % 2 == 0 && getStance().time > 0)
         if (self.has(Trait.smqueen)) {
-            write(self,
+                write(self,
                             Global.format("{self:NAME-POSSESSIVE} cold gaze in {self:possessive} dominant position"
                                             + " makes {other:direct-object} shiver.",
                                             self, sub));
-            sub.loseWillpower(this, (int) (stanceDominance * 1.5), 0, false, " (SM Queen)");
-        } else {
+            sub.loseWillpower(this, stanceDominance, 0, false, " (SM Queen)");
+        } else if (getStance().time % 2 == 0 && getStance().time > 0) {
             write(self,
                             Global.format("{other:NAME-POSSESSIVE} compromising position takes a toll on {other:possessive} willpower.",
                                             self, sub));
             sub.loseWillpower(this, stanceDominance, 0, false, " (Dominance)");
+        }
+        
+        if (getStance().facing() && getOther(self).breastsAvailable() && getOther(self).has(Trait.temptingtits)) {
+            write(self, Global.format("{self:SUBJECT-ACTION:can't avert|can't avert} {self:possessive} eyes from {other:NAME-POSSESSIVE} perfectly shaped tits sitting in front of {self:possessive} eyes.",
+                                            self, sub));
+            self.tempt(this, sub, sub.body.getRandomBreasts(), 10 + Math.max(0, sub.get(Attribute.Seduction) / 3 - 7));
+        } else if (getOther(self).has(Trait.temptingtits) && getStance().behind(sub)) {
+            write(self, Global.format("{self:SUBJECT-ACTION:feel|feels} a heat in {self:possessive} groin as {other:name-possessive} enticing tits pressing against {self:possessive} back.",
+                            self, sub));
+            double selfTopExposure = self.outfit.getExposure(ClothingSlot.top);
+            double otherTopExposure = sub.outfit.getExposure(ClothingSlot.top);
+            double temptDamage = 20 + Math.max(0, sub.get(Attribute.Seduction) / 2 - 12);
+            temptDamage = temptDamage * Math.min(1, selfTopExposure + .5) * Math.min(1, otherTopExposure + .5);
+            self.tempt(this, sub, sub.body.getRandomBreasts(), (int) temptDamage);
         }
     }
 
@@ -888,7 +918,6 @@ public class Combat extends Observable implements Cloneable {
         if (possibleScene.isPresent()) {
             Global.gui().clearText();
             Global.gui().clearCommand();
-            phase = 1;
             possibleScene.get().visit(this, npc);
             return true;
         } else {
@@ -1000,7 +1029,7 @@ public class Combat extends Observable implements Cloneable {
             List<BodyPart> parts2 = newStance.partsFor(p2);
             parts1.forEach(part -> parts2.forEach(other -> part.onStartPenetration(this, p1, p2, other)));
             parts2.forEach(part -> parts1.forEach(other -> part.onStartPenetration(this, p2, p1, other)));
-            if (voluntary && (p1.human() || p2.human()) && player.checkAddiction(AddictionType.CORRUPTION, opp)) {
+            if (voluntary) {
                 if (initiator != null) {
                     getCombatantData(initiator).setIntegerFlag("ChoseToFuck", 1);
                     getCombatantData(getOther(initiator)).setIntegerFlag("ChoseToFuck", -1);

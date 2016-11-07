@@ -99,4 +99,9 @@ public class Behind extends AbstractBehindStance {
     public int dominance() {
         return 3;
     }
+
+    @Override
+    public int distance() {
+        return 1;
+    }
 }

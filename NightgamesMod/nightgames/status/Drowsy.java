@@ -13,7 +13,7 @@ public class Drowsy extends DurationStatus {
     private int magnitude;
 
     public Drowsy(Character affected) {
-        super("Drowsy", affected, affected.has(Trait.PersonalInertia) ? 6 : 4);
+        super("Drowsy", affected, 4);
         flag(Stsflag.drowsy);
         magnitude = 1;
     }

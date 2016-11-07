@@ -68,6 +68,7 @@ public class Angel extends BasePersonality {
         growth.bonusStamina = 1;
         growth.bonusArousal = 4;
         growth.bonusMojo = 1;
+
         growth.addTrait(3, Trait.responsive);
         growth.addTrait(9, Trait.pussyTraining1);
         growth.addTrait(12, Trait.expertGoogler);

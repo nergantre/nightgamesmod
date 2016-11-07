@@ -190,4 +190,9 @@ public class Engulfed extends Position {
     public int dominance() {
         return 5;
     }
+    
+    @Override
+    public int distance() {
+        return 1;
+    }
 }

@@ -85,7 +85,7 @@ public class Blowjob extends Skill {
             BodyPart cock = target.body.getRandom("cock");
             target.body.pleasure(getSelf(), mouth, cock, m, c, this);
             if (mouth.isErogenous()) {
-                getSelf().body.pleasure(getSelf(), cock, mouth, m, c, this);
+                getSelf().body.pleasure(target, cock, mouth, m, c, this);
             }
 
             if (ReverseMount.class.isInstance(c.getStance())) {

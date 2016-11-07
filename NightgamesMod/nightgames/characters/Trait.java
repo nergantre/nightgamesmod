@@ -90,9 +90,7 @@ public enum Trait {
                                              // action
     desensitized("Desensitized", "Sex is old hat now"), // Reyka Sex perk slight
                                                         // pleasure reduction
-    desensitized2("Desensitized 2", "Only the strongest stimulation gets you off"), // Reyka Sex perk
-                                                                                    // slight pleasure
-                                                                                    // reduction
+    desensitized2("Desensitized 2", "Only the strongest stimulation gets you off"),
     RawSexuality("Raw Sexuality", "Constant lust boost for you and your opponent in battle", (b, c, t) -> {
         if (c.human()) {
             b.append("You exude");
@@ -136,6 +134,8 @@ public enum Trait {
     frenzyingjuices("Frenzying juices", "Frenzying juices"),
     lacedjuices("Laced Juices", "Intoxicating bodily fluids"), // opponents take temptation when using oral skills
     addictivefluids("Addictive Fluids", "Addictive bodily fluids"), // opponents can only use oral skills if available
+    temptingtits("Tempting Tits", "Perfectly shaped and oh-so-tempting."),
+    beguilingbreasts("Beguiling Breasts", "Glamourous breasts can put you in trance"), // the first time in a fight that you see bare breasts you are entranced
     lactating("Lactating", "Breasts produces milk", new TraitDescription() {
         public void describe(StringBuilder b, Character c, Trait t) {
             if (!c.human()) {
@@ -150,11 +150,13 @@ public enum Trait {
             }
         }
     }),
+    sedativecream("Sedative Cream", "Lactate that weakens the drinker"), // the first time in a fight that you see bare breasts you are entranced
 
     defthands("Deft hands", "They know where to go"), // hands damage upgrade
     nimbletoes("Nimble toes", "Good both in the street and in the bed."), // feet damage upgrade
     polecontrol("Pole Control", "Always hit the right spots"), // Dick damage upgrade
     hypnoticsemen("Hypnotic Semen", "Cum drains willpower"), // Semen willpower damage trait
+    sweetlips("Sweet lips", "Enticing lips makes kissing dangerous"), // more kickback damage from kiss
     testosterone("Testosterone", "More powerful muscles"), // Having a cock gives + to power
     pussyhandler("Pussy Handler", "Expert at pleasing the pussy"), // Bonus damage to pussies
     dickhandler("Dick Handler", "Expert at pleasing cocks"), // Bonus damage to cocks
@@ -181,6 +183,7 @@ public enum Trait {
     autonomousAss("Autonomous Ass", "Asshole instinctively forces anything inside of it to cum."),
     fetishTrainer("Fetish Trainer", "Capable of developing others' fetishes."),
     insertion("Insertion Master", "More pleasure on insertion"), // more damage on insertion.
+    hawkeye("Hawk Eye", "More accurate"), // 5% additional accuracy
     proheels("Heels Pro", "Pro at walking around in heels"), // no speed penalty from heels
     masterheels("Heels Master", "Master at moving in heels, resists knockdowns"), // graceful when wearing heels
     naturalgrowth("Natural Growth", "Always keeps up on levels"), // levels up to highest level + 2 after each night

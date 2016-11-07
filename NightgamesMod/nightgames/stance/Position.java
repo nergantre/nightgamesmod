@@ -60,6 +60,8 @@ public abstract class Position implements Cloneable {
         return 0;
     }
 
+    public abstract int distance();
+
     public abstract String describe();
 
     public abstract boolean mobile(Character c);

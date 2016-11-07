@@ -10,7 +10,7 @@ import nightgames.combat.Combat;
 
 public class Winded extends DurationStatus {
     public Winded(Character affected) {
-        this(affected, Math.max(2, 4));
+        this(affected, 3);
     }
 
     public Winded(Character affected, int duration) {

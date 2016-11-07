@@ -99,4 +99,9 @@ public class Mount extends AbstractFacingStance {
     public int dominance() {
         return 2;
     }
+
+    @Override
+    public int distance() {
+        return 1;
+    }
 }

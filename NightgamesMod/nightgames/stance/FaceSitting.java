@@ -190,4 +190,8 @@ public class FaceSitting extends AbstractBehindStance {
     public int dominance() {
         return 5;
     }
+    @Override
+    public int distance() {
+        return 1;
+    }
 }

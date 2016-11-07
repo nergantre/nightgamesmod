@@ -420,9 +420,13 @@ public abstract class Character extends Observable implements Cloneable {
         // so for each damage type, one level from the attacker should result in about 10% increased damage, while a point in defense should reduce damage by around 5% per level.
         // this differential should be max capped to (3 * (100 + attacker's level * 5))%
         // this differential should be min capped to (.5 * (100 + attacker's level * 5))%
+        
         double maxDamage = baseDamage * 3 * (1 + .05 * getLevel());
         double minDamage = baseDamage * .5 * (1 + .05 * getLevel());
         double multiplier = (1 + .1 * getOffensivePower(type) - .05 * other.getDefensivePower(type));
+        if (Global.isDebugOn(DebugFlags.DEBUG_DAMAGE)) {
+            System.out.println(baseDamage + " from " + getName() + " has multiplier " + multiplier + " against " + other.getName() + "["+ getOffensivePower(type) +", " + other.getDefensivePower(type) + "].");
+        }
         double damage = baseDamage * multiplier;
         return Math.min(Math.max(minDamage, damage), maxDamage);
     }
@@ -436,7 +440,7 @@ public abstract class Character extends Observable implements Cloneable {
             case pleasure:
                 return get(Attribute.Seduction);
             case temptation:
-                return (get(Attribute.Seduction) * 2 + get(Attribute.Cunning)) / 2.0;
+                return (get(Attribute.Seduction) * 2 + get(Attribute.Submissive) * 2 + get(Attribute.Cunning)) / 2.0;
             case technique:
                 return get(Attribute.Cunning);
             case physical:
@@ -2337,11 +2341,14 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public int counterChance(Combat c, Character opponent, Skill skill) {
-        int counter = 0;
-        counter += Math.max(0, get(Attribute.Cunning) - opponent.get(Attribute.Cunning)) / 2;
-        counter += get(Attribute.Perception);
+        int counter = 3;
+        // subtract some counter chance if the opponent is more cunning than you.
+        // 1% decreased counter chance per 5 points of cunning over you.
+        counter += Math.min(0, get(Attribute.Cunning) - opponent.get(Attribute.Cunning)) / 5;
+        // increase counter chance by perception difference
+        counter += get(Attribute.Perception) - opponent.get(Attribute.Perception);
+        // 1% increased counter chance per 2 speed over your opponent.
         counter += getSpeedDifference(opponent) / 2;
-        counter += 5 - skill.accuracy(c);
         for (Status s : getStatuses()) {
             counter += s.counter();
         }
@@ -2357,6 +2364,9 @@ public abstract class Character extends Observable implements Cloneable {
         if (opponent.is(Stsflag.countered)) {
             counter -= 10;
         }
+        // Maximum counter chance is 3 + 5 + 2 + 3 + 3 + 3 = 19, which is super hard to achieve.
+        // I guess you also get some more counter with certain statuses effects like water form.
+        // Counters should be pretty rare.
         return Math.max(0, counter);
     }
 
@@ -2370,6 +2380,7 @@ public abstract class Character extends Observable implements Cloneable {
         int levelDiff = Math.min(attack.user().level - level, 5);
         levelDiff = Math.max(attack.user().level - level, -5);
         int attackroll = Global.random(100);
+        
 
         // with no level or hit differences and an default accuracy of 80, 80%
         // hit rate
@@ -2378,6 +2389,9 @@ public abstract class Character extends Observable implements Cloneable {
         // each point in accuracy of skill affects changes the hit chance by 1%
         // each point in speed and perception will increase hit by 5%
         int chanceToHit = 2 * levelDiff + accuracy + 5 * (hitDiff - evasionBonus());
+        if (has(Trait.hawkeye)) {
+            chanceToHit += 5;
+        }
         if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
             System.out.printf("Rolled %s against %s, base accuracy: %s, hit difference: %s, level difference: %s\n",
                             attackroll, chanceToHit, accuracy, hitDiff, levelDiff);

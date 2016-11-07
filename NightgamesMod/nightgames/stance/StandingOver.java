@@ -98,4 +98,9 @@ public class StandingOver extends AbstractFacingStance {
     public int dominance() {
         return 1;
     }
+    
+    @Override
+    public int distance() {
+        return 2;
+    }
 }

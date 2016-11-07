@@ -98,4 +98,9 @@ public class Pin extends AbstractFacingStance {
     public int dominance() {
         return 4;
     }
+    
+    @Override
+    public int distance() {
+        return 1;
+    }
 }

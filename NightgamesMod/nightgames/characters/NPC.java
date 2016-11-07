@@ -775,7 +775,7 @@ public class NPC extends Character {
             add(c, Horny.getWithBiologicalType(opponent, this, opponent.getPheromonePower(), 10,
                             opponent.nameOrPossessivePronoun() + " pheromones"));
         }
-        if (opponent.has(Trait.smqueen) && !is(Stsflag.masochism)) {
+        if (opponent.has(Trait.sadist) && !is(Stsflag.masochism)) {
             c.write("<br>"+Global.capitalizeFirstLetter(
                             String.format("%s seems to shudder in arousal at the thought of pain.", subject())));
             add(c, new Masochistic(this));
@@ -901,7 +901,7 @@ public class NPC extends Character {
             if (wskill.skill.type(c) == Tactics.fucking && has(Trait.experienced)) {
                 wskill.weight += 1.0;
             }
-            if (wskill.skill.type(c) == Tactics.damage && has(Trait.smqueen)) {
+            if (wskill.skill.type(c) == Tactics.damage && has(Trait.sadist)) {
                 wskill.weight += 1.0;
             }
             for (int j = 0; j < RUN_COUNT; j++) {

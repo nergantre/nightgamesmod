@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
+import nightgames.global.DebugFlags;
 import nightgames.global.Global;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
@@ -24,11 +25,14 @@ public abstract class Addiction extends Status {
     protected final Character cause;
     protected float magnitude;
     protected float combatMagnitude;
+
+    // should be saved
+    private boolean didDaytime;
+    private boolean overloading;
+    
     protected final EnumSet<Stsflag> flags;
 
-    private boolean didDaytime;
     protected boolean inWithdrawal;
-    private boolean overloading;
 
     protected Addiction(String name, Character cause, float magnitude) {
         super(name, Global.getPlayer());
@@ -101,6 +105,8 @@ public abstract class Addiction extends Status {
         obj.addProperty("cause", cause.getType());
         obj.addProperty("magnitude", magnitude);
         obj.addProperty("combat", combatMagnitude);
+        obj.addProperty("overloading", overloading);
+        obj.addProperty("reenforced", didDaytime);
         return obj;
     }
 
@@ -131,8 +137,13 @@ public abstract class Addiction extends Status {
 
     public Optional<Status> startNight() {
         if (!didDaytime || overloading) {
-            if (!overloading)
-                alleviate(Global.randomfloat() / 4.f);
+            if (!overloading) {
+                float amount = Global.randomfloat() / 4.f;
+                if (Global.isDebugOn(DebugFlags.DEBUG_ADDICTION)) {
+                    System.out.println("Alleviating addiction " + this.getType() + " by " + amount);
+                }
+                alleviate(amount);
+            }
             if (isActive()) {
                 inWithdrawal = true;
                 Global.gui()
@@ -150,7 +161,7 @@ public abstract class Addiction extends Status {
                 affected.add(opt.get().instance(affected, cause));
         }
     }
-    
+
     public void endNight() {
         inWithdrawal = false;
         clearDaytime();
@@ -244,10 +255,12 @@ public abstract class Addiction extends Status {
               .message(describeIncrease());
     }
 
-    public static Addiction load(AddictionType type, Character cause, float mag, float combat) {
+    public static Addiction load(AddictionType type, Character cause, float mag, float combat, boolean overloading, boolean reenforced) {
         Addiction a = type.build(cause, mag);
         a.magnitude = mag;
         a.combatMagnitude = combat;
+        a.overloading = overloading;
+        a.didDaytime = reenforced;
         return a;
     }
 

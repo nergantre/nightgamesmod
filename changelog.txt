@@ -17,9 +17,50 @@ Balance changes:
 		- Increase all advanced kisses (Kiss of Baptism, Drain Kiss, Deep Kiss) pleasure damage by 6
 		- Increases your charisma multiplier by your (opponent's arousal % - 70) when your opponent is below 30% arousal. (So at 0% arousal you have a 30% bonus and at 20%, you have a 10% bonus)
 			- This is pretty minor and is really only for flavour
+- Fixed a "bug?" not sure if this was intended, but counter pretty much never ever ever triggered. It can now trigger and has a base chance of 3% for skills.
+	- Counter chance increased by 3% for each of these traits: [clairvoyance, aikidonovice, fakeout]
+	- Counter is increased by certain statuses like WaterForm (+5), Nimble (+ Animism/2 * Arousal %)
+	- Counter chance is decreased by 1% for every 5 points of cunning your opponent has over you
+	- Counter chance is increased by 1% for every point of perception you have over the opponent and decreased the same way.
+	- Counter chance is increased by 1% for every 2 points of speed you have over the opponent and decreased the same way (maximum of +5 or -5 this way).
+- Locate will no longer consume a Talisman if you have one
+- Submissive (attribute) will now increase tempt damage for certain moves
+- Magic Missiles now has an increased base damage (it was to the point where upon becoming level 10, Cassie would just rather kick you rather than using her new skills because it sucked).
+	- Now does 10-19 base damage instead of 7-13.
+
+New:
+Cassie has been reworked:
+- At levels 10 and 20, after combat with the player, Cassie	will ask the player for your opinion on what she should focus on. The choice will influence what attributes and traits she will get upon leveling up.
+
+Introduced some new traits (some of them seem pretty OP, but really only comes into play in the extreme late game and are replacements for some equally OP traits):
+- Hawkeye
+	- +5% accuracy
+- Tempting Tits
+	- When your breasts are exposed, your tempt the opponent every turn if you are facing each other.
+	- When you are behind your opponent, you tempt the opponent every turn. More temptation damage if their top is off and your top is off/is more skimpy.
+- Beguiling breasts
+	- Once per fight, the first time your opponent sees your breasts, they are entranced for 4 turns
+- Sedative Cream
+	- Drinking milk will cause the opponent to be weakened by 10% and lose 1 Power for 20 turns.
+- Sweet Lips
+	- If you do oral pleasure from a submissive position, the opponent is also tempted for the base pleasure damage of the move.
+- Split SM Queen into different Traits
+	- SM Queen now applies dominance willpower loss every turn instead of every other turn in a dominant stance.
+	- (new) Sadist now automatically applies masochism to the opponent
 
 Bug fixes:
 - Fixed a bug that was causing charm, facesit, smother, and tempt to use the opponent's body's charisma bonus instead of the users. Woops.
+- Fixed a bug where doing Faerie play with Mara freezes the game
+- Fixed a bug where addiction overloading/day time visits were not being saved
+- Fixed a bug where the cause for Magic milk addiction was the player instead of Cassie
+- Fixed a bug where the Breeder addiction was not using voluntary insertion bonuses unless the player was also corrupted.
+- Fixed a bug where mouthpussy blowjobs was using a phantom cock from yourself instead of the opponents. Woops.
+- Fixed a bug where entranced wasn't let you masturbate.
+- Fixed a bug where drowsy was being affected by Personal Inertia twice.
+
+2.3.2.1
+
+- Actually fixed the bug with tentacles. Goddamn.
 
 2.3.2
 Bug fixes:

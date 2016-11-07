@@ -10,18 +10,21 @@ import nightgames.global.Global;
 import nightgames.requirements.Requirement;
 
 public class CombatScene {
-    private String message;
+    public static interface StringProvider {
+        String provide(Combat c, Character self, Character other);
+    }
+    private StringProvider message;
     private List<CombatSceneChoice> choices;
     private Requirement requirement;
 
-    public CombatScene(Requirement requirement, String message, Collection<CombatSceneChoice> choices) {
+    public CombatScene(Requirement requirement, StringProvider message, Collection<CombatSceneChoice> choices) {
         this.choices = new ArrayList<>(choices);
         this.message = message;
         this.requirement = requirement;
     }
 
     public void visit(Combat c, Character npc) {
-        Global.gui().message(message);
+        Global.gui().message(message.provide(c, npc, c.getOther(npc)));
         choices.forEach(choice -> Global.gui().choose(c, npc, choice.getChoice(), choice));
     }
 

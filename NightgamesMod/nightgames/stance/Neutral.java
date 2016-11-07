@@ -124,4 +124,9 @@ public class Neutral extends Position {
     public double pheromoneMod(Character self) {
         return .5;
     }
+    
+    @Override
+    public int distance() {
+        return 3;
+    }
 }

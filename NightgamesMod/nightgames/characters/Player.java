@@ -704,7 +704,7 @@ public class Player extends Character {
             add(c, Horny.getWithBiologicalType(opponent, this, opponent.getPheromonePower(), 10,
                             opponent.nameOrPossessivePronoun() + " pheromones"));
         }
-        if (opponent.has(Trait.smqueen) && !is(Stsflag.masochism)) {
+        if (opponent.has(Trait.sadist) && !is(Stsflag.masochism)) {
             c.write("<br>"+Global.capitalizeFirstLetter(
                             String.format("%s seem to shudder in arousal at the thought of pain.", subject())));
             add(c, new Masochistic(this));
@@ -922,7 +922,9 @@ public class Player extends Character {
             Character cause = Global.getCharacterByType(json.get("cause").getAsString());
             float mag = json.get("magnitude").getAsFloat();
             float combat = json.get("combat").getAsFloat();
-            Addiction addiction = Addiction.load(type, cause, mag, combat);
+            boolean overloading = json.has("overloading") ? json.get("overloading").getAsBoolean() : false;
+            boolean reenforced = json.has("reenforced") ? json.get("reenforced").getAsBoolean() : false;
+            Addiction addiction = Addiction.load(type, cause, mag, combat, overloading, reenforced);
             this.addictions.add(addiction);
         }
     }
