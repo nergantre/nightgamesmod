@@ -14,6 +14,7 @@ import nightgames.skills.Skill;
 import nightgames.skills.Struggle;
 import nightgames.skills.Suckle;
 import nightgames.skills.Wait;
+import nightgames.skills.damage.DamageType;
 
 public class NursingHold extends AbstractFacingStance {
     public NursingHold(Character top, Character bottom) {
@@ -96,7 +97,7 @@ public class NursingHold extends AbstractFacingStance {
     @Override
     public void decay(Combat c) {
         time++;
-        bottom.weaken(null, 5);
+        bottom.weaken(c, (int) top.modifyDamage(DamageType.temptation, bottom, 3));
         top.emote(Emotion.dominant, 10);
     }
 
@@ -133,5 +134,9 @@ public class NursingHold extends AbstractFacingStance {
     @Override
     public int dominance() {
         return 3;
+    }
+    @Override
+    public int distance() {
+        return 1;
     }
 }

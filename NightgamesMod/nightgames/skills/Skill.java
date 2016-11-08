@@ -10,6 +10,8 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
+import nightgames.skills.damage.Staleness;
 import nightgames.status.FiredUp;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
@@ -21,7 +23,9 @@ public abstract class Skill {
     private String name;
     private Character self;
     private int cooldown;
+    private Set<SkillTag> tags;
     public String choice;
+    private Staleness staleness;
 
     public Skill(String name, Character self) {
         this(name, self, 0);
@@ -32,6 +36,8 @@ public abstract class Skill {
         setSelf(self);
         this.cooldown = cooldown;
         choice = "";
+        tags = new HashSet<>();
+        staleness = Staleness.build().withDecay(.1).withFloor(.5).withRecovery(.05);
     }
 
     public final boolean requirements(Combat c, Character target) {
@@ -40,7 +46,7 @@ public abstract class Skill {
 
     public abstract boolean requirements(Combat c, Character user, Character target);
 
-    public static void filterAllowedSkills(Combat c, Set<Skill> skills, Character user, Character target) {
+    public static void filterAllowedSkills(Combat c, Collection<Skill> skills, Character user, Character target) {
         boolean filtered = false;
         Set<Skill> stanceSkills = new HashSet<Skill>(c.getStance().availSkills(user));
 
@@ -118,6 +124,10 @@ public abstract class Skill {
         return 90;
     }
 
+    public Staleness getStaleness() {
+        return this.staleness;
+    }
+
     public int speed() {
         return 5;
     }
@@ -187,7 +197,12 @@ public abstract class Skill {
         if (success) {
             skill.user().buildMojo(c, generated);
         }
-        c.getCombatantData(skill.user()).setLastUsedSkillName(skill.getName());
+        if (c.getCombatantData(skill.getSelf()) != null) {
+            c.getCombatantData(skill.getSelf()).decreaseMoveModifier(c, skill);
+        }
+        if (c.getCombatantData(skill.user()) != null) { 
+            c.getCombatantData(skill.user()).setLastUsedSkillName(skill.getName());
+        }
     }
 
     public int getCooldown() {
@@ -225,5 +240,15 @@ public abstract class Skill {
             c.write(getSelf(), receive(c, mag, result, target));
         }
     }
-    
+
+    protected void addTag(SkillTag tag) {
+        tags.add(tag);
+    }
+
+    protected void removeTag(SkillTag tag) {
+        tags.remove(tag);
+    }
+    public Set<SkillTag> getTags() {
+        return Collections.unmodifiableSet(tags);
+    }
 }

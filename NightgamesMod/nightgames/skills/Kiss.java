@@ -7,6 +7,9 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
+import nightgames.skills.damage.DamageType;
+import nightgames.stance.Stance;
 import nightgames.status.Lovestruck;
 
 public class Kiss extends Skill {
@@ -15,6 +18,8 @@ public class Kiss extends Skill {
 
     public Kiss(Character self) {
         super("Kiss", self);
+        addTag(SkillTag.usesMouth);
+        addTag(SkillTag.pleasure);
     }
 
     @Override
@@ -39,18 +44,32 @@ public class Kiss extends Skill {
     }
 
     @Override
+    public int accuracy(Combat c) {
+        int accuracy = c.getStance().en == Stance.neutral ? 30 : 100;
+        if (getSelf().has(Trait.romantic)) {
+            accuracy += 40;
+        }
+        return accuracy;
+    }
+
+    @Override
     public boolean resolve(Combat c, Character target) {
-        int m = 2 + Global.random(2);
+        int m = Global.random(6, 10);
+        if (!target.roll(this, c, accuracy(c))) {
+            writeOutput(c, Result.miss, target);
+            return false;
+        }
         boolean deep = getLabel(c).equals("Deep Kiss");
         if (getSelf().has(Trait.romantic)) {
             m += 3;
-            if (deep) {
-                m += 7;
+            // if it's an advanced kiss.
+            if (!getLabel(c).equals("Kiss")) {
+                m += 3;
             }
         }
         Result res = Result.normal;
         if (getSelf().get(Attribute.Seduction) >= 9) {
-            m += 2 + Global.random(2);
+            m += Global.random(4, 6);
             res = Result.normal;
         } else {
             res = Result.weak;
@@ -72,7 +91,7 @@ public class Kiss extends Skill {
         }
         writeOutput(c, res, target);
         if (res == Result.upgrade) {
-            target.drain(c, getSelf(), 10);
+            target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, 10));
             target.loseWillpower(c, Global.random(3) + 2);
         }
         if (res == Result.divine) {
@@ -114,6 +133,10 @@ public class Kiss extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
+        if (modifier == Result.miss) {
+            return "You pull " + target.name()
+                            + " in for a kiss, but " + target.pronoun() + " pushes your face away. Rude.";
+        }
         if (modifier == Result.divine) {
             return "You pull " + target.name()
                             + " to you and kiss her passionately, sending your divine aura into her body though her mouth. "
@@ -155,6 +178,10 @@ public class Kiss extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
+        if (modifier == Result.miss) {
+            return getSelf().subject()
+                            + " pulls you in for a kiss, but you manage to push her face away.";
+        }
         if (modifier == Result.divine) {
             return String.format("%s seductively pulls %s into a deep kiss. As first %s %s to match %s enthusiastic"
                             + " tongue with %s own, but %s starts using %s divine energy to directly attack %s soul. "

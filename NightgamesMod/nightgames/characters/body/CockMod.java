@@ -308,7 +308,7 @@ public enum CockMod implements BodyPartMod {
             c.write(self, String.format("Raw sexual energy flows from %s %s into %s %s, enflaming %s lust",
                             self.nameOrPossessivePronoun(), part.describe(self), opponent.nameOrPossessivePronoun(),
                             otherOrgan.describe(opponent), opponent.possessivePronoun()));
-            opponent.add(c, new Horny(opponent, Global.random(3) + 1, 3,
+            opponent.add(c, Horny.getWithBiologicalType(self, opponent, Global.random(3) + 1, 3,
                             self.nameOrPossessivePronoun() + " primal passion"));
         }
     }

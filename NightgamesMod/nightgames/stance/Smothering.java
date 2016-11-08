@@ -15,6 +15,7 @@ import nightgames.skills.Nothing;
 import nightgames.skills.Skill;
 import nightgames.skills.Struggle;
 import nightgames.skills.Wait;
+import nightgames.skills.damage.DamageType;
 
 public class Smothering extends AbstractBehindStance {
 
@@ -134,7 +135,7 @@ public class Smothering extends AbstractBehindStance {
     @Override
     public void decay(Combat c) {
         time++;
-        bottom.weaken(null, 5);
+        bottom.weaken(c, (int) top.modifyDamage(DamageType.stance, bottom, 6));
         top.emote(Emotion.dominant, 20);
         top.emote(Emotion.horny, 10);
         if (top.has(Trait.energydrain)) {
@@ -142,8 +143,7 @@ public class Smothering extends AbstractBehindStance {
                             "{self:NAME-POSSESSIVE} body glows purple as {other:subject-action:feel|feels} {other:possessive} very spirit drained through your connection.",
                             top, bottom));
             int m = Global.random(5) + 5;
-            bottom.weaken(c, m);
-            top.heal(c, m);
+            bottom.drain(c, top, (int) top.modifyDamage(DamageType.drain, bottom, m));
         }
     }
 
@@ -183,5 +183,10 @@ public class Smothering extends AbstractBehindStance {
     @Override
     public int dominance() {
         return 5;
+    }
+
+    @Override
+    public int distance() {
+        return 1;
     }
 }

@@ -7,6 +7,8 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
+import nightgames.skills.damage.DamageType;
 import nightgames.stance.Stance;
 import nightgames.stance.StandingOver;
 
@@ -14,6 +16,9 @@ public class Slap extends Skill {
 
     public Slap(Character self) {
         super("Slap", self);
+        addTag(SkillTag.staminaDamage);
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.hurt);
     }
 
     @Override
@@ -40,34 +45,32 @@ public class Slap extends Skill {
                                                     + " enough to throw {other:pronoun} to the ground.", getSelf(),
                                     target));
                 }
+                target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(10, 20)));
                 target.emote(Emotion.nervous, 40);
                 target.emote(Emotion.angry, 30);
             } else if (getSelf().get(Attribute.Animism) >= 8) {
                 writeOutput(c, Result.special, target);
                 if (getSelf().has(Trait.pimphand)) {
-                    target.pain(c, Global.random(16 * getSelf().getArousal().percent() / 100)
-                                    + getSelf().get(Attribute.Power) / 2);
+                    target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(35, 50) * (25 + getSelf().getArousal().percent()) / 100));
                     target.emote(Emotion.nervous, 40);
                     target.emote(Emotion.angry, 30);
                 } else {
-                    target.pain(c, Global.random(12 * getSelf().getArousal().percent() / 100 + 1)
-                                    + getSelf().get(Attribute.Power) / 2);
+                    target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(25, 45) * (25 + getSelf().getArousal().percent()) / 100));
                     target.emote(Emotion.nervous, 25);
                     target.emote(Emotion.angry, 30);
                 }
             } else {
                 writeOutput(c, Result.normal, target);
                 if (getSelf().has(Trait.pimphand)) {
-                    target.pain(c, Global.random(8) + 5 + target.get(Attribute.Perception));
+                    target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(7, 15)));
                     target.emote(Emotion.nervous, 20);
                     target.emote(Emotion.angry, 30);
                 } else {
-                    target.pain(c, Global.random(5) + 4);
+                    target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(5, 10)));
                     target.emote(Emotion.nervous, 10);
                     target.emote(Emotion.angry, 30);
                 }
             }
-
         } else {
             writeOutput(c, Result.miss, target);
             return false;
@@ -77,7 +80,7 @@ public class Slap extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return !user.has(Trait.softheart) && user.get(Attribute.Power) >= 7;
+        return !user.has(Trait.softheart) && user.get(Attribute.Power) >= 5;
     }
 
     @Override

@@ -8,6 +8,7 @@ import nightgames.characters.body.BreastsPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.NursingHold;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
@@ -18,7 +19,8 @@ public class Nurse extends Skill {
 
     public Nurse(Character self) {
         super("Nurse", self);
-
+        addTag(SkillTag.pleasureSelf);
+        addTag(SkillTag.breastfeed);
     }
 
     @Override
@@ -95,11 +97,7 @@ public class Nurse extends Skill {
 
     @Override
     public Tactics type(Combat c) {
-        if (c.getStance().enumerate() != Stance.nursing) {
-            return Tactics.positioning;
-        } else {
-            return Tactics.pleasure;
-        }
+        return Tactics.pleasure;
     }
 
     @Override

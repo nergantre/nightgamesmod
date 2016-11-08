@@ -18,6 +18,7 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.skills.damage.DamageType;
 import nightgames.stance.Behind;
 import nightgames.stance.FaceSitting;
 import nightgames.stance.Mount;
@@ -363,7 +364,7 @@ public class Command extends Skill {
                                                 + " makes everything alright.", target.subjectAction("slam"),
                                                 target.possessivePronoun(), target.possessivePronoun(),
                                                 target.pronoun(), getSelf().nameOrPossessivePronoun()));
-                target.pain(c, 10 + Global.random(20));
+                target.pain(c, (int) target.modifyDamage(DamageType.physical, target, Global.random(30, 50)));
                 break;
             case STRIP_MASTER:
                 Clothing removed = getStripTarget(getSelf());

@@ -7,6 +7,8 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
+import nightgames.skills.damage.DamageType;
 import nightgames.stance.Behind;
 import nightgames.stance.Position;
 import nightgames.status.Primed;
@@ -15,6 +17,9 @@ public class CheapShot extends Skill {
 
     public CheapShot(Character self) {
         super("Cheap Shot", self);
+        addTag(SkillTag.hurt);
+        addTag(SkillTag.staminaDamage);
+        addTag(SkillTag.positioning);
     }
 
     @Override
@@ -43,12 +48,7 @@ public class CheapShot extends Skill {
             c.write(getSelf(), getSelf().bbLiner(c));
         }
         c.setStance(new Behind(getSelf(), target));
-        target.pain(c, 8 + Global.random(16) + getSelf().get(Attribute.Power));
-        if (getSelf().has(Trait.wrassler)) {
-            target.calm(c, Global.random(6));
-        } else {
-            target.calm(c, Global.random(10));
-        }
+        target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(8, 20)));
         getSelf().buildMojo(c, 10);
 
         getSelf().emote(Emotion.confident, 15);

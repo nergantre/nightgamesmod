@@ -9,6 +9,7 @@ import nightgames.characters.body.AssPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
 import nightgames.status.Stsflag;
@@ -18,6 +19,9 @@ public class Anilingus extends Skill {
 
     public Anilingus(Character self) {
         super("Lick Ass", self);
+        addTag(SkillTag.usesMouth);
+        addTag(SkillTag.pleasure);
+        addTag(SkillTag.oral);
     }
 
     @Override

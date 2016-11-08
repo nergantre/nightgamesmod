@@ -15,6 +15,10 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.skills.strategy.KnockdownStrategy;
+import nightgames.skills.strategy.StraponStrategy;
+import nightgames.skills.strategy.FacesitStrategy;
+import nightgames.skills.strategy.FootjobStrategy;
 import nightgames.start.NpcConfiguration;
 
 public class Jewel extends BasePersonality {
@@ -45,6 +49,11 @@ public class Jewel extends BasePersonality {
         character.mod(Attribute.Speed, 1);
         Global.gainSkills(character);
 
+        getCharacter().addPersonalStrategy(new FootjobStrategy());
+        getCharacter().addPersonalStrategy(new FacesitStrategy());
+        getCharacter().addPersonalStrategy(new KnockdownStrategy());
+        getCharacter().addPersonalStrategy(new StraponStrategy());
+        
         character.add(Trait.direct);
         character.add(Trait.wrassler);
         character.add(Trait.insatiable);
@@ -59,7 +68,7 @@ public class Jewel extends BasePersonality {
 
     @Override
     public void setGrowth() {
-        growth.stamina = 5;
+        growth.stamina = 3;
         growth.arousal = 3;
         growth.mojo = 1;
         growth.bonusStamina = 3;
@@ -83,13 +92,18 @@ public class Jewel extends BasePersonality {
         growth.addTrait(28, Trait.limbTraining2);
         growth.addTrait(31, Trait.analTraining2);
         growth.addTrait(34, Trait.exhibitionist);
-        growth.addTrait(37, Trait.autonomousAss);
+        growth.addTrait(37, Trait.naturalTop);
+
+        character.getStamina().setMax(100 + character.getLevel() * getGrowth().stamina);
+        character.getArousal().setMax(70 + character.getLevel() * getGrowth().arousal);
         growth.actions.put(40, () -> {
             character.body.addReplace(new AnalPussyPart(), 1);
         });
         growth.addTrait(43, Trait.analTraining3);
         growth.addTrait(46, Trait.strongwilled);
         growth.addTrait(49, Trait.smqueen);
+        growth.addTrait(52, Trait.autonomousAss);
+
     }
 
     @Override
@@ -132,23 +146,13 @@ public class Jewel extends BasePersonality {
             Global.getDay().visit("Black Market", character, Global.random(character.money));
         }
         int r;
+
         for (int i = 0; i < time; i++) {
-            r = Global.random(4);
+            r = Global.random(8);
             if (r == 1) {
-                if (character.has(Trait.fitnessNut)) {
-                    character.getStamina().gain(2);
-                }
-                character.getStamina().gain(2);
-            } else if (r == 3) {
-                if (character.has(Trait.expertGoogler)) {
-                    character.getArousal().gain(3);
-                }
-                character.getArousal().gain(4);
-            } else if (r == 2) {
-                if (character.has(Trait.mojoMaster)) {
-                    character.getMojo().gain(1);
-                }
-                character.getMojo().gain(1);
+                Global.getDay().visit("Exercise", this.character, 0);
+            } else if (r == 0) {
+                Global.getDay().visit("Browse Porn Sites", this.character, 0);
             }
         }
         Decider.visit(character);

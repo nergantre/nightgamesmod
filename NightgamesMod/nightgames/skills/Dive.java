@@ -5,6 +5,7 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Stance;
 import nightgames.stance.StandingOver;
 import nightgames.status.addiction.Addiction;
@@ -14,6 +15,8 @@ public class Dive extends Skill {
 
     public Dive(Character self) {
         super("Dive", self);
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.suicidal);
     }
 
     @Override

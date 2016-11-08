@@ -5,6 +5,7 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Cowgirl;
 import nightgames.stance.Missionary;
 
@@ -12,6 +13,12 @@ public class CounterDrain extends CounterBase {
     public CounterDrain(Character self) {
         super("Counter Vortex", self, 6,
                         Global.format("{self:SUBJECT-ACTION:glow|glows} with a purple light.", self, self));
+        addTag(SkillTag.drain);
+        addTag(SkillTag.counter);
+        addTag(SkillTag.fucking);
+        addTag(SkillTag.staminaDamage);
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.dark);
     }
 
     @Override

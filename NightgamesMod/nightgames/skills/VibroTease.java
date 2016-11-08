@@ -6,12 +6,15 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.nskills.tags.SkillTag;
+import nightgames.skills.damage.DamageType;
 import nightgames.stance.Stance;
 
 public class VibroTease extends Skill {
 
     public VibroTease(Character self) {
         super("Vibro-Tease", self);
+        addTag(SkillTag.usesToy);
     }
 
     @Override
@@ -41,7 +44,7 @@ public class VibroTease extends Skill {
             }
         }
         int m = 10 + Global.random(5);
-        target.body.pleasure(getSelf(), null, target.body.getRandom("ass"), m, c, this);
+        target.body.pleasure(getSelf(), null, target.body.getRandom("ass"), getSelf().modifyDamage(DamageType.gadgets, target, m), c, this);
         getSelf().arouse(2, c);
         return true;
     }

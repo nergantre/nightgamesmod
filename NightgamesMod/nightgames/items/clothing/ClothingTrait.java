@@ -20,6 +20,8 @@ public enum ClothingTrait {
     tentacleSuit("Tentacle Suit", "Wearing a tentacle suit"),
     nursegloves("Nurse's Gloves", "Wearing a pair of rubber nitrile gloves."),
     stylish("Stylish", "Better mojo gain"),
+    ninja("Ninja Garb", "Bonus cunning and speed"),
+    dexterous("Dextrous", "Bonus cunning"),
     lame("Lame", "Small mojo penalty"),
     none("", "");
 

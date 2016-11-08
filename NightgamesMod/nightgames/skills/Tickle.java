@@ -7,6 +7,8 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.nskills.tags.SkillTag;
+import nightgames.skills.damage.DamageType;
 import nightgames.status.Hypersensitive;
 import nightgames.status.Winded;
 
@@ -14,6 +16,8 @@ public class Tickle extends Skill {
 
     public Tickle(Character self) {
         super("Tickle", self);
+        addTag(SkillTag.weaken);
+        addTag(SkillTag.staminaDamage);
     }
 
     @Override
@@ -29,6 +33,7 @@ public class Tickle extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
+        DamageType type = DamageType.technique;
         if (getSelf().has(Trait.ticklemonster) || target.roll(this, c, accuracy(c))) {
             if (target.crotchAvailable() && c.getStance().reachBottom(getSelf()) && !c.getStance().havingSex()) {
                 int bonus = 0;
@@ -45,6 +50,7 @@ public class Tickle extends Skill {
                     result = Result.strong;
                     bonus += 5 + Global.random(4);
                     weak += 3 + Global.random(4);
+                    type = DamageType.gadgets;
                 }
                 writeOutput(c, result, target);
                 if (getSelf().has(Trait.ticklemonster) && target.mostlyNude()) {
@@ -65,12 +71,13 @@ public class Tickle extends Skill {
                                     getSelf(), target));
                 }
                 target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("skin"),
-                                2 + Global.random(4), bonus, c, false, this);
-                target.weaken(c, weak / 2 + 2 + target.get(Attribute.Perception) + Global.random(6));
+                                (int) getSelf().modifyDamage(type, target, 2 + Global.random(4)), bonus, c, false, this);
+                target.weaken(c, (int) getSelf().modifyDamage(type, target, weak + Global.random(10, 15)));
             } else if (hastickler() && Global.random(2) == 1) {
+                type = DamageType.gadgets;
+                int bonus = 0;
                 if (target.breastsAvailable() && c.getStance().reachTop(getSelf())) {
                     writeOutput(c, Result.item, target);
-                    int bonus = 0;
                     if (target.has(Trait.ticklish)) {
                         bonus = 4 + Global.random(3);
                         c.write(target, Global.format(
@@ -79,10 +86,8 @@ public class Tickle extends Skill {
                     }
                     target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("skin"),
                                     4 + Global.random(4), bonus, c, false, this);
-                    target.weaken(c, bonus / 2 + 2 + target.get(Attribute.Perception));
                 } else {
                     writeOutput(c, Result.weak, target);
-                    int bonus = 0;
                     if (target.has(Trait.ticklish)) {
                         bonus = 4 + Global.random(3);
                         c.write(target, Global.format(
@@ -91,8 +96,8 @@ public class Tickle extends Skill {
                     }
                     target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("skin"),
                                     4 + Global.random(2), bonus, c, false, this);
-                    target.weaken(c, bonus / 2 + target.get(Attribute.Perception));
                 }
+                target.weaken(c, (int) getSelf().modifyDamage(type, target, bonus + Global.random(5, 10)));
             } else {
                 writeOutput(c, Result.normal, target);
                 int bonus = 0;
@@ -102,12 +107,11 @@ public class Tickle extends Skill {
                                     "{other:SUBJECT-ACTION:squirm|squirms} uncontrollably from {self:name-possessive} actions. Yup definitely ticklish.",
                                     getSelf(), target));
                 }
-                int m = (int) Math.round((4 + Global.random(3)) * (1.5 - target.getExposure()));
-                int weak = (int) Math.round((bonus / 2 + Global.random(3 + target.get(Attribute.Perception)))
-                                * (1.5 - target.getExposure()));
-                target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("skin"), m,
+                int m = (int) Math.round((2 + Global.random(3)) * (.25 + target.getExposure()));
+                int weak = (int) Math.round(bonus / 2 * (.25 + target.getExposure()));
+                target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("skin"), (int) getSelf().modifyDamage(type, target, m),
                                 bonus, c, false, this);
-                target.weaken(c, weak);
+                target.weaken(c, (int) getSelf().modifyDamage(type, target, weak + Global.random(4, 7)));
             }
         } else {
             writeOutput(c, Result.miss, target);

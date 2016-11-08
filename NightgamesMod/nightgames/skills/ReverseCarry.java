@@ -7,12 +7,14 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Jumped;
 import nightgames.status.Falling;
 
 public class ReverseCarry extends Carry {
     public ReverseCarry(Character self) {
         super("Jump", self);
+        addTag(SkillTag.positioning);
     }
 
     @Override

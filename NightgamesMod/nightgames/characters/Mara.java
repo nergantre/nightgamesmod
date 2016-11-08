@@ -11,6 +11,11 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.skills.strategy.WindUpStrategy;
+import nightgames.skills.strategy.FootjobStrategy;
+import nightgames.skills.strategy.NurseStrategy;
+import nightgames.skills.strategy.StraponStrategy;
+import nightgames.skills.strategy.UseToyStrategy;
 import nightgames.start.NpcConfiguration;
 import nightgames.status.Hypersensitive;
 import nightgames.status.Oiled;
@@ -41,6 +46,14 @@ public class Mara extends BasePersonality {
         character.change();
         character.mod(Attribute.Cunning, 2);
         character.mod(Attribute.Perception, 2);
+        character.getStamina().setMax(80 + character.getLevel() * getGrowth().stamina);
+        character.getArousal().setMax(80 + character.getLevel() * getGrowth().arousal);
+        
+        character.addPersonalStrategy(new FootjobStrategy());
+        character.addPersonalStrategy(new UseToyStrategy());
+        character.addPersonalStrategy(new StraponStrategy());
+        character.addPersonalStrategy(new WindUpStrategy());
+
         Global.gainSkills(character);
         character.add(Trait.petite);
         character.add(Trait.dexterous);
@@ -55,7 +68,7 @@ public class Mara extends BasePersonality {
     @Override
     public void setGrowth() {
         growth.stamina = 2;
-        growth.arousal = 2;
+        growth.arousal = 4;
         growth.mojo = 3;
         growth.bonusStamina = 1;
         growth.bonusArousal = 2;
@@ -71,20 +84,21 @@ public class Mara extends BasePersonality {
         growth.addTrait(3, Trait.cautious);
         growth.addTrait(6, Trait.freeSpirit);
         growth.addTrait(9, Trait.limbTraining1);
-        growth.addTrait(12, Trait.strongwilled);
+        growth.addTrait(12, Trait.dickhandler);
         growth.addTrait(15, Trait.pussyTraining1);
-        growth.addTrait(18, Trait.tight);
+        growth.addTrait(18, Trait.pussyhandler);
         growth.addTrait(20, Trait.mindcontroller);
         growth.addTrait(21, Trait.tongueTraining1);
         growth.addTrait(24, Trait.limbTraining2);
-        growth.addTrait(27, Trait.skeptical);
+        growth.addTrait(27, Trait.tight);
         growth.addTrait(30, Trait.limbTraining3);
-        growth.addTrait(33, Trait.pussyTraining2);
-        growth.addTrait(36, Trait.tongueTraining2);
+        growth.addTrait(33, Trait.defthands);
+        growth.addTrait(36, Trait.toymaster);
         growth.addTrait(39, Trait.calm);
-        growth.addTrait(42, Trait.pussyTraining3);
-        growth.addTrait(45, Trait.holecontrol);
-        growth.addTrait(48, Trait.desensitized2);
+        growth.addTrait(42, Trait.nimbletoes);
+        growth.addTrait(45, Trait.dickhandler);
+        growth.addTrait(48, Trait.skeptical);
+        growth.addTrait(51, Trait.desensitized2);
     }
 
     @Override
@@ -153,23 +167,13 @@ public class Mara extends BasePersonality {
         }
         Decider.visit(character);
         int r;
+
         for (int i = 0; i < time; i++) {
-            r = Global.random(4);
+            r = Global.random(8);
             if (r == 1) {
-                if (character.has(Trait.fitnessNut)) {
-                    character.getStamina().gain(1);
-                }
-                character.getStamina().gain(1);
-            } else if (r == 3) {
-                if (character.has(Trait.expertGoogler)) {
-                    character.getArousal().gain(3);
-                }
-                character.getArousal().gain(4);
-            } else if (r == 2) {
-                if (character.has(Trait.mojoMaster)) {
-                    character.getMojo().gain(1);
-                }
-                character.getMojo().gain(1);
+                Global.getDay().visit("Exercise", this.character, 0);
+            } else if (r == 0) {
+                Global.getDay().visit("Browse Porn Sites", this.character, 0);
             }
         }
     }

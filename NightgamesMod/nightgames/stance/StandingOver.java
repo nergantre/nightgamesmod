@@ -27,7 +27,7 @@ public class StandingOver extends AbstractFacingStance {
 
     @Override
     public boolean kiss(Character c) {
-        return c == top;
+        return false;
     }
 
     @Override
@@ -97,5 +97,10 @@ public class StandingOver extends AbstractFacingStance {
     @Override
     public int dominance() {
         return 1;
+    }
+    
+    @Override
+    public int distance() {
+        return 2;
     }
 }

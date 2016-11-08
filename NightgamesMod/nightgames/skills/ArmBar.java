@@ -7,12 +7,18 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
+import nightgames.skills.damage.DamageType;
+import nightgames.skills.strategy.SkillTags;
 import nightgames.status.Abuff;
 
 public class ArmBar extends Skill {
 
     public ArmBar(Character self) {
         super("Armbar", self);
+        addTag(SkillTag.hurt);
+        addTag(SkillTag.staminaDamage);
+        addTag(SkillTag.positioning);
     }
 
     @Override
@@ -24,7 +30,7 @@ public class ArmBar extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         if (target.roll(this, c, accuracy(c))) {
-            int m = Global.random(10) + getSelf().get(Attribute.Power) / 2;
+            int m = (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(6, 10));
             writeOutput(c, m, Result.normal, target);
             target.pain(c, m);
             target.add(c, new Abuff(target, Attribute.Power, -4, 5));

@@ -5,12 +5,14 @@ import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.status.Primed;
 
 public class AttireShift extends Skill {
 
     public AttireShift(Character self) {
         super("Attrie Shift", self);
+        addTag(SkillTag.stripping);
     }
 
     @Override

@@ -7,6 +7,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Behind;
 import nightgames.status.Flatfooted;
 
@@ -14,6 +15,7 @@ public class Diversion extends Skill {
 
     public Diversion(Character self) {
         super("Diversion", self);
+        addTag(SkillTag.undressing);
     }
 
     @Override

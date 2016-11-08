@@ -346,6 +346,42 @@ public class Informant extends Activity {
                       .message("You don't have enough money<p>");
             }
         }
+        final String REMOVE_PREFIX = "Remove: ";
+        final String RETURN_PREFIX = "Bring Back: ";
+        if (choice.equals("Select Competitors")) {
+            Global.gui()
+            .message("Haha, feeling the heat? That's okay, I can talk to the organizers about redirecting some of the competitors to other sessions. Just let me know who is becoming too much for you.");
+            Global.everyone().stream()
+                  .filter(c -> !c.human())
+                  .filter(c -> !Global.checkFlag(String.format("%sDisabled", c.getType())))
+                  .forEach(character -> Global.gui().choose(this, String.format(REMOVE_PREFIX + "%s", character.getName())));
+            Global.everyone().stream()
+                  .filter(c -> !c.human())
+                  .filter(c -> Global.checkFlag(String.format("%sDisabled", c.getType())))
+                  .forEach(character -> Global.gui().choose(this, String.format(RETURN_PREFIX + "%s", character.getName())));
+            Global.gui().choose(this, "Back");
+            return;
+        }
+        if (choice.startsWith(REMOVE_PREFIX)) {
+            String name = choice.substring(REMOVE_PREFIX.length());
+            String type = Global.getCharacterByName(name).getType();
+            Global.gui()
+                  .message("Got it, I'll see about sending " + name+ " to another session.");
+            Global.flag(String.format("%sDisabled", type));
+            Global.gui()
+                  .choose(this, "Back");
+            return;
+        }
+        if (choice.startsWith(RETURN_PREFIX)) {
+            String name = choice.substring(RETURN_PREFIX.length());
+            String type = Global.getCharacterByName(name).getType();
+            Global.gui()
+                  .message("Missing " + name+ " already? I'll see what I can do.");
+            Global.unflag(String.format("%sDisabled", type));
+            Global.gui()
+                  .choose(this, "Back");
+            return;
+        }
         if (choice.equals("More Competitors")) {
             if (!Global.checkFlag(Flag.Reyka) && Global.checkFlag(Flag.blackMarketPlus)) {
                 Global.gui()
@@ -563,6 +599,8 @@ public class Informant extends Activity {
         if (Global.checkFlag(Flag.girlAdvice)) {
             Global.gui()
                   .choose(this, "Competition Info");
+            Global.gui()
+            .choose(this, "Select Competitors");
         }
         if (Global.getPlayer()
                   .checkAddiction()) {

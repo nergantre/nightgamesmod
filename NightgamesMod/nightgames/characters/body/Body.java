@@ -392,7 +392,10 @@ public class Body implements Cloneable {
                       .getHotness();
         int seductionDiff = Math.max(0, self.get(Attribute.Seduction) - opponent.get(Attribute.Seduction));
         retval += seductionDiff / 10.0;
-        retval *= self.getExposure();
+        retval *= (.5 + self.getExposure());
+        if (self.is(Stsflag.glamour)) {
+            retval += 2.0;
+        }
         if (self.is(Stsflag.alluring)) {
             retval *= 1.5;
         }
@@ -454,6 +457,11 @@ public class Body implements Cloneable {
 
     public CockPart getRandomCock() {
         return (CockPart) getRandom("cock");
+    }
+    
+    public List<BodyPart> getAllGenitals() {
+        List<String> partTypes = Arrays.asList("cock", "pussy", "strapon", "ass");
+        return getCurrentPartsThatMatch(part -> partTypes.contains(part.getType()));
     }
 
     public BodyPart getRandomInsertable() {
@@ -520,7 +528,7 @@ public class Body implements Cloneable {
         }
         double perceptionBonus = 1.0;
         if (opponent != null) {
-            perceptionBonus *= getCharismaBonus(opponent);
+            perceptionBonus *= opponent.body.getCharismaBonus(character);
         }
         double bonusDamage = bonus;
         if (opponent != null) {
@@ -554,11 +562,16 @@ public class Body implements Cloneable {
         bonusDamage = Math.max(0, bonusDamage);
         double base = (magnitude + bonusDamage);
         double multiplier = Math.max(0, 1 + ((sensitivity - 1) + (pleasure - 1) + (perceptionBonus - 1)));
-
+        double staleness = 1.0;
+        double stageMultiplier = 1.0;
         if (skill != null) {
-            multiplier = Math.max(0, multiplier + skill.multiplierForStage(character));
+            if (opponent != null && c.getCombatantData(opponent) != null) {
+                staleness = c.getCombatantData(opponent).getMoveModifier(skill);
+            }
+            stageMultiplier = skill.getStage().multiplierFor(character);
         }
-        
+        multiplier = Math.max(0, multiplier + stageMultiplier) * staleness;
+
         double dominance = 0.0;
         if (character.human() && Global.getPlayer().checkAddiction(AddictionType.DOMINANCE, opponent)
                        && c.getStance().dom(opponent)) {
@@ -590,12 +603,14 @@ public class Body implements Cloneable {
                             : "";
             String stageString = skill == null ? "" : String.format(" + stage:%.2f", skill.multiplierForStage(character));
             String dominanceString = dominance < 0.01 ? "" : String.format(" + dominance:%.2f", dominance);
+            String staleString = staleness < .99 ? String.format(" x staleness: %.2f", staleness) : "";
             String battleString = String.format(
                             "%s%s %s<font color='white'> was pleasured by %s%s<font color='white'> for <font color='rgb(255,50,200)'>%d<font color='white'> "
-                                            + "base:%.1f (%.1f%s) x multiplier: %.2f (1 + sen:%.1f + ple:%.1f + per:%.1f %s %s)\n",
+                                            + "base:%.1f (%.1f%s) x multiplier: %.2f (1 + sen:%.1f + ple:%.1f + per:%.1f %s %s)%s\n",
                             firstColor, Global.capitalizeFirstLetter(character.nameOrPossessivePronoun()),
                             target.describe(character), secondColor, pleasuredBy, result, base, magnitude, bonusString,
-                            multiplier, sensitivity - 1, pleasure - 1, perceptionBonus - 1, stageString, dominanceString);
+                            multiplier, sensitivity - 1, pleasure - 1, perceptionBonus - 1, stageString, dominanceString, 
+                            staleString);
             if (c != null) {
                 c.writeSystemMessage(battleString);
             }
@@ -635,15 +650,21 @@ public class Body implements Cloneable {
         return result;
     }
 
+    /**
+     * Gets how much your opponent views this body. 
+     */
     public double getCharismaBonus(Character opponent) {
         // you don't get turned on by yourself
         if (opponent == character) {
             return 1.0;
         } else {
-            double perceptionBonus = Math.sqrt(opponent.body.getHotness(opponent, character)
-                            * (1.0 + (Math.max(0, character.get(Attribute.Perception)) - 5) / 10.0));
-            if (character.is(Stsflag.lovestruck)) {
+            double perceptionBonus = Math.sqrt(getHotness(character, opponent)
+                            * (1.0 + (Math.max(0, opponent.get(Attribute.Perception)) - 5) / 10.0));
+            if (opponent.is(Stsflag.lovestruck)) {
                 perceptionBonus += 1;
+            }
+            if (character.has(Trait.romantic)) {
+                perceptionBonus += Math.max(0, opponent.getArousal().percent() - 70) / 100.0;
             }
             return perceptionBonus;
         }

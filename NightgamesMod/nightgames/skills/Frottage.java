@@ -9,12 +9,14 @@ import nightgames.characters.body.StraponPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.status.BodyFetish;
 
 public class Frottage extends Skill {
 
     public Frottage(Character self) {
         super("Frottage", self);
+        addTag(SkillTag.pleasureSelf);
     }
 
     @Override

@@ -10,6 +10,7 @@ import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.skills.damage.DamageType;
 
 public class Engulfed extends Position {
 
@@ -130,7 +131,7 @@ public class Engulfed extends Position {
     @Override
     public void decay(Combat c) {
         time++;
-        bottom.weaken(c, 5);
+        bottom.weaken(c, (int) top.modifyDamage(DamageType.stance, bottom, 5));
         top.emote(Emotion.dominant, 10);
     }
 
@@ -188,5 +189,10 @@ public class Engulfed extends Position {
     @Override
     public int dominance() {
         return 5;
+    }
+    
+    @Override
+    public int distance() {
+        return 1;
     }
 }

@@ -73,4 +73,9 @@ public abstract class MaledomSexStance extends Position {
     public double pheromoneMod(Character self) {
         return 2;
     }
+    
+    @Override
+    public int distance() {
+        return 1;
+    }
 }

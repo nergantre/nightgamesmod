@@ -85,7 +85,7 @@ public class Strapon extends Skill {
 
     @Override
     public Tactics type(Combat c) {
-        return Tactics.positioning;
+        return Tactics.misc;
     }
 
     @Override

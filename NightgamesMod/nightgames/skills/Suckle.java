@@ -6,18 +6,21 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Stance;
 
 public class Suckle extends Skill {
     public Suckle(Character self) {
         super("Suckle", self);
+        addTag(SkillTag.usesMouth);
+        addTag(SkillTag.pleasure);
     }
 
     @Override
     public boolean usable(Combat c, Character target) {
         return target.breastsAvailable() && c.getStance().reachTop(getSelf()) && c.getStance().front(getSelf())
                         && (getSelf().canAct() || c.getStance().enumerate() == Stance.nursing && getSelf().canRespond())
-                        && c.getStance().facing();
+                        && c.getStance().facing() && c.getStance().en != Stance.neutral;
     }
 
     @Override

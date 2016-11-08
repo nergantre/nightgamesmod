@@ -7,12 +7,18 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
 
 public class BreastWorship extends Skill {
     public BreastWorship(Character self) {
         super("Breast Worship", self);
+        addTag(SkillTag.usesMouth);
+        addTag(SkillTag.pleasure);
+        addTag(SkillTag.suicidal);
+        addTag(SkillTag.worship);
+        addTag(SkillTag.pleasureSelf);
     }
 
     @Override

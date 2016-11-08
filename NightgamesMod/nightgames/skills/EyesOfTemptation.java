@@ -18,7 +18,7 @@ public class EyesOfTemptation extends Skill {
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
         return user.get(Attribute.Seduction) >= 45 || user.get(Attribute.Dark) >= 20
-                        || user.get(Attribute.Arcane) >= 10;
+                        || user.get(Attribute.Arcane) >= 15;
     }
 
     @Override

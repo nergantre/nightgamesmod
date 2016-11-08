@@ -90,9 +90,7 @@ public enum Trait {
                                              // action
     desensitized("Desensitized", "Sex is old hat now"), // Reyka Sex perk slight
                                                         // pleasure reduction
-    desensitized2("Desensitized 2", "Only the strongest stimulation gets you off"), // Reyka Sex perk
-                                                                                    // slight pleasure
-                                                                                    // reduction
+    desensitized2("Desensitized 2", "Only the strongest stimulation gets you off"),
     RawSexuality("Raw Sexuality", "Constant lust boost for you and your opponent in battle", (b, c, t) -> {
         if (c.human()) {
             b.append("You exude");
@@ -136,6 +134,8 @@ public enum Trait {
     frenzyingjuices("Frenzying juices", "Frenzying juices"),
     lacedjuices("Laced Juices", "Intoxicating bodily fluids"), // opponents take temptation when using oral skills
     addictivefluids("Addictive Fluids", "Addictive bodily fluids"), // opponents can only use oral skills if available
+    temptingtits("Tempting Tits", "Perfectly shaped and oh-so-tempting."),
+    beguilingbreasts("Beguiling Breasts", "Glamourous breasts can put you in trance"), // the first time in a fight that you see bare breasts you are entranced
     lactating("Lactating", "Breasts produces milk", new TraitDescription() {
         public void describe(StringBuilder b, Character c, Trait t) {
             if (!c.human()) {
@@ -150,9 +150,13 @@ public enum Trait {
             }
         }
     }),
+    sedativecream("Sedative Cream", "Lactate that weakens the drinker"), // the first time in a fight that you see bare breasts you are entranced
 
+    defthands("Deft hands", "They know where to go"), // hands damage upgrade
+    nimbletoes("Nimble toes", "Good both in the street and in the bed."), // feet damage upgrade
     polecontrol("Pole Control", "Always hit the right spots"), // Dick damage upgrade
     hypnoticsemen("Hypnotic Semen", "Cum drains willpower"), // Semen willpower damage trait
+    sweetlips("Sweet lips", "Enticing lips makes kissing dangerous"), // more kickback damage from kiss
     testosterone("Testosterone", "More powerful muscles"), // Having a cock gives + to power
     pussyhandler("Pussy Handler", "Expert at pleasing the pussy"), // Bonus damage to pussies
     dickhandler("Dick Handler", "Expert at pleasing cocks"), // Bonus damage to cocks
@@ -179,6 +183,7 @@ public enum Trait {
     autonomousAss("Autonomous Ass", "Asshole instinctively forces anything inside of it to cum."),
     fetishTrainer("Fetish Trainer", "Capable of developing others' fetishes."),
     insertion("Insertion Master", "More pleasure on insertion"), // more damage on insertion.
+    hawkeye("Hawk Eye", "More accurate"), // 5% additional accuracy
     proheels("Heels Pro", "Pro at walking around in heels"), // no speed penalty from heels
     masterheels("Heels Master", "Master at moving in heels, resists knockdowns"), // graceful when wearing heels
     naturalgrowth("Natural Growth", "Always keeps up on levels"), // levels up to highest level + 2 after each night
@@ -214,10 +219,12 @@ public enum Trait {
     autonomousPussy("Autonomous Pussy", "Her pussy instinctively forces anything inside of it to cum."),
     // AI traits
     submissive("Submissive", "Enjoys being the sub."),
+    naturalTop("Natural Top", "Being the dom comes easy."),
     obsequiousAppeal("Obsequious Appeal", "So tempting when on the bottom."),
     catstongue("Cat's Tongue", "Rough but sensual."),
     opportunist("Opportunist", "Always ready to stuff someone's backside."),
     carnalvirtuoso("Carnal Virtuoso", "Opponents cums twice"),
+    toymaster("Toymaster", "Expert at using toys."),
     // Weaknesses
     ticklish("Ticklish", "Can be easily tickled into submission"), // more weaken damage and arousal from tickle
     insatiable("Insatiable", "One orgasm is never enough"), // arousal doesn't completely clear at end of match
@@ -229,6 +236,7 @@ public enum Trait {
     immobile("Immobile", "Unable to move"), // Cannot move
     lethargic("Lethargic", "Very low mojo gain from normal methods.", new Lethargic(null, 999, .75)), // 25% mojo gain
     hairtrigger("Hair Trigger", "Very quick to shoot. Not for beginners."),
+    obedient("Obedient", "Easy to order around."),
     cursed("Cursed", "Restricts some skills. The name is probably a plot point. The suspense is killing me."),
 
     // Restrictions
@@ -255,13 +263,15 @@ public enum Trait {
     slime("Slime", "An accident in the biology labs made the body a bit more... malleable."),
     dryad("Dryad", "Part girl, part tree."),
     temptress("Temptress", "Well versed in the carnal arts."),
+    ninja("Ninja", "A shadowy servant."),
 
     // Class subtrait
     divinity("Divinity", "Has aspects of divinity."),
     leveldrainer("Level Drainer", "Natrually adept at draining levels."),
 
     // Strength
-    dexterous("Dexterous", "Limbs and fingers. Underwear is not an obstacle."), // digital
+    dexterous("Dexterous", "Dexterous limbs and fingers. Underwear is not an obstacle."),
+                                                                                // digital
                                                                                 // stimulation
                                                                                 // through
                                                                                 // underwear
@@ -279,8 +289,6 @@ public enum Trait {
                                                                                    // from the
                                                                                    // opponent
     brassballs("Brass Balls", "Can take a kick"),
-    bramaster("Bra Master", "Better at undoing bras."),
-    pantymaster("Panty Master", "Better at removing panties"),
 
     Clingy("Clingy", "Harder to escape"),
     fakeout("Fakeout", "Easier to counter"),

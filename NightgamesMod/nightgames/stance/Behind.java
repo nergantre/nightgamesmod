@@ -35,7 +35,7 @@ public class Behind extends AbstractBehindStance {
 
     @Override
     public boolean kiss(Character c) {
-        return c == top;
+        return false;
     }
 
     @Override
@@ -98,5 +98,10 @@ public class Behind extends AbstractBehindStance {
     @Override
     public int dominance() {
         return 3;
+    }
+
+    @Override
+    public int distance() {
+        return 1;
     }
 }

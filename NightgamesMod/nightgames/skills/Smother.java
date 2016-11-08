@@ -6,6 +6,8 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
+import nightgames.skills.damage.DamageType;
 import nightgames.stance.Smothering;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
@@ -15,11 +17,15 @@ public class Smother extends Skill {
 
     public Smother(Character self) {
         super("Smother", self);
+        addTag(SkillTag.pleasureSelf);
+        addTag(SkillTag.dominant);
+        addTag(SkillTag.facesit);
+        addTag(SkillTag.weaken);
     }
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.has(Trait.smqueen);
+        return user.get(Attribute.Fetish) >= 5;
     }
 
     @Override
@@ -58,6 +64,7 @@ public class Smother extends Skill {
         }
 
         target.tempt(c, getSelf(), getSelf().body.getRandom("ass"), (int) Math.round(n / 2));
+        target.weaken(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(10, 25)));
 
         target.loseWillpower(c, Math.max(10, target.getWillpower().max() * 10 / 100 ));
         target.add(c, new Shamed(target));

@@ -4,6 +4,7 @@ import java.util.Collections;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Yui;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
@@ -56,6 +57,7 @@ public class YuiTime extends BaseNPCTime {
                 if (Global.checkFlag(Flag.Yui)) {
                     Global.getNPC("Yui")
                           .gainAffection(player, 1);
+                    Global.newChallenger(Global.getNPCByType(new Yui().getType()).ai);
                     player.gainAffection(Global.getNPC("Yui"), 1);
                 } else {
                     Global.modCounter(Flag.YuiAffection, 1);

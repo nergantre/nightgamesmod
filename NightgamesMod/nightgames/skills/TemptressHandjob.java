@@ -6,12 +6,15 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.status.FiredUp;
 
 public class TemptressHandjob extends Handjob {
 
     public TemptressHandjob(Character self) {
         super("Skillful Handjob", self);
+        addTag(SkillTag.usesHands);
+        addTag(SkillTag.pleasure);
     }
 
     @Override

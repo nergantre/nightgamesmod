@@ -1,0 +1,91 @@
+[
+	{
+	  "displayName":"shinobi garb",
+      "buffs":[
+      ],
+      "price":7500,
+      "prefix":"a ",
+      "attributes":[
+		"ninja"
+      ],
+      "layer":2,
+	  "slots" : ["top", "bottom"],
+	  "shops" : ["XxxStore"],
+	  "sex" : ["all"],
+	  "hotness":0.3,
+      "name":"shinobigarb",
+      "toughness":10,
+      "exposure":0.2
+	},
+	{
+	  "displayName":"tabi",
+      "buffs":[
+      ],
+      "price":2500,
+      "prefix":"a pair of ",
+      "attributes":[
+		"ninja",
+		"shoes"
+      ],
+      "layer":2,
+	  "slots" : ["feet"],
+	  "shops" : ["XxxStore"],
+	  "sex" : ["all"],
+	  "hotness":0.3,
+      "name":"tabi",
+      "toughness":8,
+      "exposure":0.2
+	},
+   {
+      "displayName":"sarashi",
+      "buffs":[
+      ],
+      "price":1500,
+      "prefix":"a ",
+      "attributes":[
+      ],
+      "layer":0,
+	  "slots" : ["top"],
+	  "shops" : ["XxxStore"],
+  	  "sex" : ["female"],
+	  "hotness":0.2,
+      "name":"sarashi",
+      "toughness":5,
+      "exposure":0.6
+   },
+   {
+      "displayName":"loincloth",
+      "buffs":[
+      ],
+      "price":1500,
+      "prefix":"a ",
+      "attributes":[
+      ],
+      "layer":0,
+	  "slots" : ["bottom"],
+	  "shops" : ["XxxStore"],
+  	  "sex" : ["all"],
+	  "hotness":0.1,
+      "name":"loincloth",
+      "toughness":5,
+      "exposure":0.6
+   },
+   {
+      "displayName":"fingerless gloves",
+      "buffs":[
+      ],
+      "price":900,
+      "prefix":"a pair of ",
+      "attributes":[
+			"dexterous"
+      ],
+	  "layer":1,
+ 	  "slots" : ["hands"],
+	  "shops" : ["XxxStore"],
+   	  "sex" : ["all"],
+   	  "hotness":0.25,
+      "name":"fingerlessgloves",
+      "toughness":2,
+      "exposure":0.8
+   }
+]

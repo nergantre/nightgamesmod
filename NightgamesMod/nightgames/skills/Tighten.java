@@ -7,12 +7,14 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
 
 public class Tighten extends Thrust {
     public Tighten(Character self) {
         super("Tighten", self);
+        removeTag(SkillTag.pleasureSelf);
     }
 
     @Override

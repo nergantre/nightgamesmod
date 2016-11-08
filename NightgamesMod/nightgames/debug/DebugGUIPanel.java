@@ -4,6 +4,7 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import javax.swing.BoxLayout;
@@ -112,9 +113,10 @@ public class DebugGUIPanel extends JPanel {
         consoleCommands.add(new DebugCommand("(\\w+)\\.list", (output, list) -> {
             try {
                 Character target = Global.getCharacterByType(list.get(1));
-                output.setText(String.format("Stamina [%s]\nArousal [%s]\nMojo [%s]\nWillpower [%s]\n",
+                String attString = target.att.entrySet().stream().map(e -> String.format("%s: %d", e.getKey(), e.getValue())).collect(Collectors.joining("\n"));
+                output.setText(String.format("Stamina [%s]\nArousal [%s]\nMojo [%s]\nWillpower [%s]\n%s",
                                 target.getStamina().toString(), target.getArousal().toString(),
-                                target.getMojo().toString(), target.getWillpower().toString()));
+                                target.getMojo().toString(), target.getWillpower().toString(), attString));
             } catch (NullPointerException e) {
                 output.setText(list.get(1) + " is not a valid charater");
             }

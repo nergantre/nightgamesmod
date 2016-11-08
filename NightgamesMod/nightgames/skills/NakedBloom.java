@@ -5,11 +5,13 @@ import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.nskills.tags.SkillTag;
 
 public class NakedBloom extends Skill {
 
     public NakedBloom(Character self) {
         super("Naked Bloom", self);
+        addTag(SkillTag.stripping);
     }
 
     @Override

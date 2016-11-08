@@ -68,6 +68,7 @@ import nightgames.characters.Meter;
 import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
+import nightgames.combat.CombatSceneChoice;
 import nightgames.combat.IEncounter;
 import nightgames.daytime.Activity;
 import nightgames.daytime.Store;
@@ -1058,6 +1059,11 @@ public class GUI extends JFrame implements Observer {
         commandPanel.revalidate();
     }
 
+    public void choose(Combat c, Character npc, String message, CombatSceneChoice choice) {
+        commandPanel.add(new CombatSceneButton(message, c, npc, choice));
+        commandPanel.revalidate();
+    }
+
     public void choose(String choice) {
         commandPanel.add(new SceneButton(choice));
         commandPanel.revalidate();
@@ -1251,7 +1257,7 @@ public class GUI extends JFrame implements Observer {
             timeLabel.setText(Global.getDay().getTime() + " pm");
             timeLabel.setForeground(new Color(253, 184, 19));
         } else {
-            throw new RuntimeException("Unknown time of day: " + Global.getTime());
+            System.err.println("Unknown time of day: " + Global.getTime());
         }
         displayStatus();
     }
@@ -1399,7 +1405,7 @@ public class GUI extends JFrame implements Observer {
                     GUI.NextButton.this.combat.turn();
                 } else if (GUI.NextButton.this.combat.phase == 2) {
                     clearCommand();
-                    if (!GUI.NextButton.this.combat.end()) {
+                    if (GUI.NextButton.this.combat.end()) {
                         endCombat();
                     }
                 }
@@ -1532,12 +1538,9 @@ public class GUI extends JFrame implements Observer {
          * 
          */
         private static final long serialVersionUID = 7410615523557227147L;
-        private IEncounter enc;
-
         public WatchButton(IEncounter enc) {
             super();
             setFont(new Font("Baskerville Old Face", 0, 18));
-            this.enc = enc;
             setText("Watch them fight");
             addActionListener(arg0 -> enc.watch());
         }
@@ -1589,7 +1592,7 @@ public class GUI extends JFrame implements Observer {
             addActionListener(arg0 -> Global.setUpMatch(new NoModifier()));
         }
     }
-
+    
     private class LocatorButton extends JButton {
 
         /**
@@ -1645,4 +1648,5 @@ public class GUI extends JFrame implements Observer {
             message(string);
         }
     }
+
 }
