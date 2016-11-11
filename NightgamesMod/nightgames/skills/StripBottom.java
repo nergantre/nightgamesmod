@@ -54,9 +54,9 @@ public class StripBottom extends Skill {
             }
             if (target.human() && target.crotchAvailable() && target.hasDick()) {
                 if (target.body.getRandomCock().isReady(target)) {
-                    c.write("Your boner springs out, no longer restrained by your pants.");
+                    c.write(getSelf(), "Your boner springs out, no longer restrained by your pants.");
                 } else {
-                    c.write(getSelf().name() + " giggles as "+target.nameOrPossessivePronoun()
+                    c.write(getSelf(), getSelf().name() + " giggles as "+target.nameOrPossessivePronoun()
                     +" flaccid dick is exposed.");
                 }
             }

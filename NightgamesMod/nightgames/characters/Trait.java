@@ -456,7 +456,7 @@ public enum Trait {
         });
         resistances.put(Trait.mindcontrolresistance, (c, s) -> {
             // TODO: We should not be getting combat information from the gui; the gui should be focused on display and interaction.
-           if (s.mindgames() && !Global.gui().combat.getOther(c).has(Trait.mindcontroller)) {
+           if (s.mindgames() && !Global.gui().combat.getOpponent(c).has(Trait.mindcontroller)) {
                float magnitude =
                                Global.getPlayer().getAddiction(AddictionType.MIND_CONTROL).map(Addiction::getMagnitude)
                                                .orElse(0f);

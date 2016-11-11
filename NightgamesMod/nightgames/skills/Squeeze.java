@@ -79,7 +79,7 @@ public class Squeeze extends Skill {
                 }
                 m *= target.getExposure(ClothingSlot.bottom);
             }
-            target.pain(c, (int) getSelf().modifyDamage(type, target, m));
+            target.pain(c, getSelf(), (int) getSelf().modifyDamage(type, target, m));
 
             target.emote(Emotion.angry, 15);
         } else {

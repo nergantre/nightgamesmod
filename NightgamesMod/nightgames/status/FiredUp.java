@@ -54,13 +54,13 @@ public class FiredUp extends DurationStatus {
             if (stack == 1) {
                 return Global.capitalizeFirstLetter(String.format(
                                 "%s has a big grin on %s face at the prospect of further pleasuring %s with %s %s.",
-                                affected.pronoun(), affected.possessivePronoun(), c.getOther(affected).nameDirectObject(),
+                                affected.pronoun(), affected.possessivePronoun(), c.getOpponent(affected).nameDirectObject(),
                                 affected.possessivePronoun(), part));
             } else if (stack == 2) {
                 return Global.capitalizeFirstLetter(String.format(
                                 "%s looks as if %s is enjoying working %s %s almost as much as %s.",
                                 affected.pronoun(), affected.possessivePronoun(), affected.pronoun(), part,
-                                c.getOther(affected).subjectAction("are", "is")));
+                                c.getOpponent(affected).subjectAction("are", "is")));
             } else {
                 return Global.capitalizeFirstLetter(
                                 String.format("%s is focused almost exclusively on using %s %s to the greatest possible effect, and it's working.",

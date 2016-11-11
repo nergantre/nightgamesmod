@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Decider;
 import nightgames.characters.NPC;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -57,7 +58,7 @@ public class StripSelf extends Skill {
             double selfFit = self.getFitness(c);
             double otherFit = self.getOtherFitness(c, target);
             getSelf().getOutfit().getAllStrippable().stream().forEach(article -> {
-                double rating = self.rateAction(c, selfFit, otherFit, (newCombat, newSelf, newOther) -> {
+                double rating = Decider.rateAction(self, c, selfFit, otherFit, (newCombat, newSelf, newOther) -> {
                     newSelf.strip(article, newCombat);
                     return true;
                 });

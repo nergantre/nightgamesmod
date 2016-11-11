@@ -33,10 +33,10 @@ public class Tackle extends Skill {
                         && getSelf().check(Attribute.Power, target.knockdownDC() - getSelf().get(Attribute.Animism))) {
             if (getSelf().get(Attribute.Animism) >= 1) {
                 writeOutput(c, Result.special, target);
-                target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(15, 30)));
+                target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(15, 30)));
             } else {
                 writeOutput(c, Result.normal, target);
-                target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(10, 25)));
+                target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(10, 25)));
             }
             c.setStance(new Mount(getSelf(), target));
         } else {
@@ -77,7 +77,7 @@ public class Tackle extends Skill {
             base = 120 + (getSelf().getArousal().getReal() / 10);
         }
         return Math.round(Math.max(Math.min(150,
-                        2.5f * (getSelf().get(Attribute.Power) - c.getOther(getSelf()).get(Attribute.Power)) + base),
+                        2.5f * (getSelf().get(Attribute.Power) - c.getOpponent(getSelf()).get(Attribute.Power)) + base),
                         40));
     }
 

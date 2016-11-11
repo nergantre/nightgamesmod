@@ -26,7 +26,7 @@ public class NurseStrategy extends KnockdownThenActionStrategy {
         if (self.getMood().equals(Emotion.angry) || self.getMood().equals(Emotion.nervous)) {
             weight *= .2;
         }
-        if (!(new Nurse(self)).requirements(c, self, c.getOther(self))) {
+        if (!(new Nurse(self)).requirements(c, self, c.getOpponent(self))) {
             weight = 0;
         }
         return weight;

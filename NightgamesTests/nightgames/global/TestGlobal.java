@@ -1,6 +1,5 @@
 package nightgames.global;
 
-import nightgames.characters.Player;
 import nightgames.gui.GUI;
 import nightgames.gui.TestGUI;
 

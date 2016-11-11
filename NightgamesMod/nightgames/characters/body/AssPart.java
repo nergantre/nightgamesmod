@@ -71,7 +71,7 @@ public class AssPart extends GenericBodyPart {
                             self, opponent));
             bonus += self.has(Trait.tight) && self.has(Trait.holecontrol) ? 10 : 5;
             if (self.has(Trait.tight)) {
-                opponent.pain(c, Math.min(30, self.get(Attribute.Power)));
+                opponent.pain(c, opponent, Math.min(30, self.get(Attribute.Power)));
             }
         }
         return bonus;

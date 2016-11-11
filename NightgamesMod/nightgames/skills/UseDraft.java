@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import nightgames.characters.Character;
+import nightgames.characters.Decider;
 import nightgames.characters.NPC;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -47,7 +48,7 @@ public class UseDraft extends Skill {
         double selfFitness = self.getFitness(c);
         double targetFitness = self.getOtherFitness(c, target);
         usables.stream().forEach(item -> {
-            double rating = self.rateAction(c, selfFitness, targetFitness, (newCombat, newSelf, newOther) -> {
+            double rating = Decider.rateAction(self, c, selfFitness, targetFitness, (newCombat, newSelf, newOther) -> {
                 for (ItemEffect e : item.getEffects()) {
                     e.use(newCombat, newSelf, newOther, item);
                 }
@@ -107,7 +108,7 @@ public class UseDraft extends Skill {
                 eventful = e.use(c, getSelf(), target, used) || eventful;
             }
             if (!eventful && shouldPrint(target)) {
-                c.write("...But nothing happened.");
+                c.write(getSelf(), "...But nothing happened.");
             }
             getSelf().consume(used, 1);
         }

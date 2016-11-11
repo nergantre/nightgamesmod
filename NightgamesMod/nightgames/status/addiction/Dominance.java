@@ -32,7 +32,7 @@ public class Dominance extends Addiction {
         if (c == null)
             return false;
         Player player = Global.getPlayer();
-        Character opp = c.getOther(player);
+        Character opp = c.getOpponent(player);
         if (!Global.getPlayer()
                    .checkAddiction(AddictionType.DOMINANCE, opp))
             return false;

@@ -107,10 +107,8 @@ public class Player extends Character {
     public void setGrowth() {
         growth.stamina = 2;
         growth.arousal = 4;
-        growth.mojo = 2;
         growth.bonusStamina = 1;
         growth.bonusArousal = 2;
-        growth.bonusMojo = 1;
         growth.attributes = new int[]{2, 3, 3, 3};
     }
 
@@ -195,19 +193,11 @@ public class Player extends Character {
 
     @Override
     public void draw(Combat c, Result flag) {
-        if (c.getStance()
-             .inserted()) {
-            c.p1.getMojo()
-                .gain(1);
-            c.p2.getMojo()
-                .gain(1);
-        }
         if (c.p1.human()) {
             c.p2.draw(c, flag);
         } else {
             c.p1.draw(c, flag);
         }
-
     }
 
     @Override
@@ -382,9 +372,7 @@ public class Player extends Character {
         level++;
         getStamina().gain(growth.stamina);
         getArousal().gain(growth.arousal);
-        getMojo().gain(growth.mojo);
         availableAttributePoints += growth.attributes[Math.min(rank, growth.attributes.length-1)];
-        getMojo().gain(1);
         gui.message("You've gained a Level!<br>Select which attributes to increase.");
         if (getLevel() % 3 == 0 && level < 10 || (getLevel() + 1) % 2 == 0 && level > 10) {
             traitPoints += 1;
@@ -619,7 +607,7 @@ public class Player extends Character {
             case damage:
                 c.write(this, "You dodge " + target.name()
                                 + "'s slow attack and hit her sensitive tit to stagger her.");
-                target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
+                target.pain(c, target, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
                 break;
             case pleasure:
                 if (!target.crotchAvailable() || !target.hasPussy()) {
@@ -664,7 +652,7 @@ public class Player extends Character {
                 } else {
                     c.write(this, "You manage to dodge " + target.possessivePronoun()
                                     + " groping hands and give a retaliating slap in return.");
-                    target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
+                    target.pain(c, target, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
                 }
                 break;
             case positioning:
@@ -681,21 +669,13 @@ public class Player extends Character {
             default:
                 c.write(this, "You manage to dodge " + target.possessivePronoun()
                                 + " attack and give a retaliating slap in return.");
-                target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
+                target.pain(c, target, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
         }
     }
 
     @Override
     public void eot(Combat c, Character opponent, Skill last) {
         super.eot(c, opponent, last);
-        if (opponent.pet != null && canAct() && c.getStance()
-                                                 .mobile(this)
-                        && !c.getStance()
-                             .prone(this)) {
-            if (get(Attribute.Speed) > opponent.pet.ac() * Global.random(20)) {
-                opponent.pet.caught(c, this);
-            }
-        }
         if (opponent.has(Trait.pheromones) && opponent.getArousal()
                                                       .percent() >= 20
                         && opponent.rollPheromones(c)) {
@@ -932,11 +912,11 @@ public class Player extends Character {
     public Severity getAddictionSeverity(AddictionType type) {
         return getAddiction(type).map(Addiction::getSeverity).orElse(Severity.NONE);
     }
-    
+
     @Override
-    public int getEscape(Combat c) {
-        int escape = super.getEscape(c);
-        if (checkAddiction(AddictionType.DOMINANCE, c.getOther(this))) {
+    public int getEscape(Combat c, Character other) {
+        int escape = super.getEscape(c, other);
+        if (checkAddiction(AddictionType.DOMINANCE, c.getOpponent(this))) {
             escape -= getAddiction(AddictionType.DOMINANCE).get().getCombatSeverity().ordinal() * 8;
         }
         return escape;

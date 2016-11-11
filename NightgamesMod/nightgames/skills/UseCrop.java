@@ -52,14 +52,14 @@ public class UseCrop extends Skill {
                     m += 8;
                 } else {
                     writeOutput(c, Result.normal, target);
-                    target.pain(c, 5 + Global.random(12) + target.get(Attribute.Perception) / 2);
+                    target.pain(c, getSelf(), 5 + Global.random(12) + target.get(Attribute.Perception) / 2);
                 }
             } else {
                 writeOutput(c, Result.weak, target);
                 m -= Global.random(2, 6);
-                target.pain(c, 5 + Global.random(12));
+                target.pain(c, getSelf(), 5 + Global.random(12));
             }
-            target.pain(c, (int) getSelf().modifyDamage(DamageType.gadgets, target, m));
+            target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.gadgets, target, m));
             target.emote(Emotion.angry, 15);
         } else {
             writeOutput(c, Result.miss, target);

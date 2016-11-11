@@ -1,14 +1,11 @@
 package nightgames.characters;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import nightgames.actions.Action;
 import nightgames.actions.Movement;
@@ -104,7 +101,7 @@ public abstract class BasePersonality implements Personality {
         Skill chosen;
         ArrayList<WeightedSkill> priority = Decider.parseSkills(available, c, character);
         if (!Global.checkFlag(Flag.dumbmode)) {
-            chosen = character.prioritizeNew(priority, c);
+            chosen = Decider.prioritizeNew(character, priority, c);
         } else {
             chosen = character.prioritize(priority);
         }
@@ -158,7 +155,7 @@ public abstract class BasePersonality implements Personality {
     public void ding() {
         growth.levelUp(character);
         onLevelUp();
-        distributePoints();
+        character.distributePoints(preferredAttributes);
     }
 
     protected void onLevelUp() {
@@ -183,53 +180,6 @@ public abstract class BasePersonality implements Personality {
     @Override
     public NPC getCharacter() {
         return character;
-    }
-
-    public void distributePoints() {
-        if (character.availableAttributePoints <= 0) {
-            return;
-        }
-        ArrayList<Attribute> avail = new ArrayList<Attribute>();
-        Deque<PreferredAttribute> preferred = new ArrayDeque<PreferredAttribute>(preferredAttributes);
-        for (Attribute a : character.att.keySet()) {
-            if (Attribute.isTrainable(a, character) && (character.getPure(a) > 0 || Attribute.isBasic(a))) {
-                avail.add(a);
-            }
-        }
-        if (avail.size() == 0) {
-            avail.add(Attribute.Cunning);
-            avail.add(Attribute.Power);
-            avail.add(Attribute.Seduction);
-        }
-        int noPrefAdded = 2;
-        for (; character.availableAttributePoints > 0; character.availableAttributePoints--) {
-            Attribute selected = null;
-            // remove all the attributes that isn't in avail
-            preferred = new ArrayDeque<>(preferred.stream()
-                                                  .filter(p -> {
-                                                      Optional<Attribute> att = p.getPreferred(character);
-                                                      return att.isPresent() && avail.contains(att.get());
-                                                  })
-                                                  .collect(Collectors.toList()));
-            if (preferred.size() > 0) {
-                if (noPrefAdded > 1) {
-                    noPrefAdded = 0;
-                    Optional<Attribute> pref = preferred.removeFirst()
-                                                        .getPreferred(character);
-                    if (pref.isPresent()) {
-                        selected = pref.get();
-                    }
-                } else {
-                    noPrefAdded += 1;
-                }
-            }
-
-            if (selected == null) {
-                selected = avail.get(Global.random(avail.size()));
-            }
-            character.mod(selected, 1);
-            selected = null;
-        }
     }
 
     @Override
@@ -266,7 +216,7 @@ public abstract class BasePersonality implements Personality {
         all.entrySet()
            .stream()
            .filter(e -> e.getKey()
-                         .isApplicable(c, character, c.getOther(character)))
+                         .isApplicable(c, character, c.getOpponent(character)))
            .forEach(e -> applicable.put(e.getKey(), e.getValue()));
         return applicable;
     }

@@ -49,6 +49,7 @@ public class Yui extends BasePersonality {
         character.add(Trait.obedient);
         character.add(Trait.cute);
         character.add(Trait.lickable);
+        character.getMojo().setMax(130);
 
         character.setTrophy(Item.YuiTrophy);
         character.plan = Plan.hunting;
@@ -61,11 +62,9 @@ public class Yui extends BasePersonality {
     public void setGrowth() {
         growth.stamina = 3;
         growth.arousal = 4;
-        growth.mojo = 2;
         growth.willpower = .4f;
         growth.bonusStamina = 2;
         growth.bonusArousal = 2;
-        growth.bonusMojo = 1;
         preferredAttributes.add(c -> c.get(Attribute.Ninjutsu) < 60 ? Optional.of(Attribute.Ninjutsu) : Optional.empty());
         preferredAttributes.add(c -> c.get(Attribute.Cunning) < 50 ? Optional.of(Attribute.Cunning) : Optional.empty());
         growth.addTrait(2, Trait.Sneaky);
@@ -161,7 +160,7 @@ public class Yui extends BasePersonality {
 
     @Override
     public String victory(Combat c, Result flag) {
-        if (c.getStance().anallyPenetrated(c.getOther(character))) {
+        if (c.getStance().anallyPenetrated(c.getOpponent(character))) {
             character.arousal.empty();
             return "Yui fucks you from behind.";
         } else if (c.getStance().vaginallyPenetrated(character)) {

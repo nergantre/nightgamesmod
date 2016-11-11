@@ -20,7 +20,7 @@ public class Tolerance extends DurationStatus {
             return "You've built up a tolerance to addictive fluids.";
         } else {
             return affected.name() + " has built up a tolerance to "
-                           +c.getOther(affected).nameOrPossessivePronoun()+" addictive fluids.";
+                           +c.getOpponent(affected).nameOrPossessivePronoun()+" addictive fluids.";
         }
     }
 

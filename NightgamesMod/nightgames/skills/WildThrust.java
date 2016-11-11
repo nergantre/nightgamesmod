@@ -52,7 +52,7 @@ public class WildThrust extends Thrust {
         }
 
         Player p = Global.getPlayer();
-        Character npc = c.getOther(p);
+        Character npc = c.getOpponent(p);
         Optional<Addiction> addiction = p.getAddiction(AddictionType.BREEDER);
         if (!addiction.isPresent()) {
             return results;

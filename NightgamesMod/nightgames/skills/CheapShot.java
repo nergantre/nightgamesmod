@@ -3,7 +3,6 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -48,7 +47,7 @@ public class CheapShot extends Skill {
             c.write(getSelf(), getSelf().bbLiner(c));
         }
         c.setStance(new Behind(getSelf(), target));
-        target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(8, 20)));
+        target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(8, 20)));
         getSelf().buildMojo(c, 10);
 
         getSelf().emote(Emotion.confident, 15);

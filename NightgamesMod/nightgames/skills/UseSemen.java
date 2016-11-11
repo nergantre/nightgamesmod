@@ -35,7 +35,7 @@ public class UseSemen extends Skill {
             eventful = e.use(c, getSelf(), target, used) || eventful;
         }
         if (!eventful) {
-            c.write("...But nothing happened.");
+            c.write(getSelf(), "...But nothing happened.");
         }
         getSelf().consume(used, 1);
         return true;

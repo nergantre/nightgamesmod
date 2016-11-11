@@ -10,7 +10,7 @@ public class Bravado extends Skill {
     int cost;
 
     public Bravado(Character self) {
-        super("Determination", self);
+        super("Determination", self, 5);
         cost = 0;
     }
 

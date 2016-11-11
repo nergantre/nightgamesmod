@@ -28,7 +28,7 @@ public class KnockdownStrategy extends AbstractStrategy {
 
     @Override
     protected Set<Skill> filterSkills(Combat c, Character self, Set<Skill> allowedSkills) {
-        Character other = c.getOther(self);
+        Character other = c.getOpponent(self);
         if (c.getStance().dom(self)) {
             return Collections.emptySet();
         }

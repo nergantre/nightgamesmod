@@ -31,7 +31,7 @@ public abstract class KnockdownThenActionStrategy extends AbstractStrategy {
     
     @Override
     protected Set<Skill> filterSkills(Combat c, Character self, Set<Skill> allowedSkills) {
-        Character other = c.getOther(self);
+        Character other = c.getOpponent(self);
         
         Optional<Set<Skill>> preferredSkills = getPreferredSkills(c, self, allowedSkills);
 

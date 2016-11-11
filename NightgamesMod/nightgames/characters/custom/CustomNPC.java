@@ -97,48 +97,48 @@ public class CustomNPC extends BasePersonality {
 
     @Override
     public String bbLiner(Combat c) {
-        return data.getLine("hurt", c, character, c.getOther(character));
+        return data.getLine("hurt", c, character, c.getOpponent(character));
     }
 
     @Override
     public String nakedLiner(Combat c) {
-        return data.getLine("naked", c, character, c.getOther(character));
+        return data.getLine("naked", c, character, c.getOpponent(character));
     }
 
     @Override
     public String stunLiner(Combat c) {
-        return data.getLine("stunned", c, character, c.getOther(character));
+        return data.getLine("stunned", c, character, c.getOpponent(character));
     }
 
     @Override
     public String taunt(Combat c) {
-        return data.getLine("taunt", c, character, c.getOther(character));
+        return data.getLine("taunt", c, character, c.getOpponent(character));
     }
 
     @Override
     public String temptLiner(Combat c) {
-        return data.getLine("tempt", c, character, c.getOther(character));
+        return data.getLine("tempt", c, character, c.getOpponent(character));
     }
 
     @Override
     public String victory(Combat c, Result flag) {
         character.getArousal().empty();
-        return data.getLine("victory", c, character, c.getOther(character));
+        return data.getLine("victory", c, character, c.getOpponent(character));
     }
 
     @Override
     public String defeat(Combat c, Result flag) {
-        return data.getLine("defeat", c, character, c.getOther(character));
+        return data.getLine("defeat", c, character, c.getOpponent(character));
     }
 
     @Override
     public String describe(Combat c) {
-        return data.getLine("describe", c, character, c.getOther(character));
+        return data.getLine("describe", c, character, c.getOpponent(character));
     }
 
     @Override
     public String draw(Combat c, Result flag) {
-        return data.getLine("draw", c, character, c.getOther(character));
+        return data.getLine("draw", c, character, c.getOpponent(character));
     }
 
     @Override
@@ -191,12 +191,12 @@ public class CustomNPC extends BasePersonality {
 
     @Override
     public String orgasmLiner(Combat c) {
-        return data.getLine("orgasm", c, character, c.getOther(character));
+        return data.getLine("orgasm", c, character, c.getOpponent(character));
     }
 
     @Override
     public String makeOrgasmLiner(Combat c) {
-        return data.getLine("makeOrgasm", c, character, c.getOther(character));
+        return data.getLine("makeOrgasm", c, character, c.getOpponent(character));
     }
 
     @Override
@@ -206,7 +206,7 @@ public class CustomNPC extends BasePersonality {
 
     @Override
     public String image(Combat c) {
-        Character other = c.getOther(character);
+        Character other = c.getOpponent(character);
         return data.getPortraitName(c, character, other);
     }
 
@@ -228,7 +228,7 @@ public class CustomNPC extends BasePersonality {
     public Map<CommentSituation, String> getComments(Combat c) {
         Map<CommentSituation, String> all = data.getComments();
         Map<CommentSituation, String> applicable = new HashMap<>();
-        all.entrySet().stream().filter(e -> e.getKey().isApplicable(c, character, c.getOther(character)))
+        all.entrySet().stream().filter(e -> e.getKey().isApplicable(c, character, c.getOpponent(character)))
                         .forEach(e -> applicable.put(e.getKey(), e.getValue()));
         return applicable;
     }

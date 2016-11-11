@@ -4,7 +4,6 @@ import nightgames.characters.Attribute;
 import nightgames.characters.CharacterSex;
 import nightgames.json.JsonUtils;
 import nightgames.items.clothing.Clothing;
-import org.hamcrest.Matcher;
 import org.hamcrest.collection.IsMapContaining;
 import org.junit.Before;
 import org.junit.BeforeClass;
