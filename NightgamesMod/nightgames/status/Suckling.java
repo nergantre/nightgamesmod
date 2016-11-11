@@ -37,7 +37,7 @@ public class Suckling extends DurationStatus {
     @Override
     public String describe(Combat c) {
         if (affected.human()) {
-            return "You feel an irresistable urge to suck on her nipples.";
+            return "You feel an irresistable urge to suck on " + c.getOther(affected).nameOrPossessivePronoun() + " nipples.";
         } else {
             return affected.name() + " is looking intently at "
                             +c.getOther(affected).nameOrPossessivePronoun()+" breasts.";
