@@ -30,7 +30,7 @@ public class Escape extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         if (getSelf().bound()) {
-            if (getSelf().check(Attribute.Cunning, 5 - getSelf().escape(c))) {
+            if (getSelf().check(Attribute.Cunning, 5 - getSelf().escape(c, target))) {
                 if (getSelf().human()) {
                     c.write(getSelf(), "You slip your hands out of your restraints.");
                 } else if (c.shouldPrintReceive(target)) {
@@ -49,7 +49,7 @@ public class Escape extends Skill {
                 getSelf().struggle();
                 return false;
             }
-        } else if (getSelf().check(Attribute.Cunning, 10 + target.get(Attribute.Cunning) - getSelf().escape(c))) {
+        } else if (getSelf().check(Attribute.Cunning, 10 + target.get(Attribute.Cunning) - getSelf().escape(c, target))) {
             if (getSelf().human()) {
                 if (getSelf().hasStatus(Stsflag.cockbound)) {
                     c.write(getSelf(), "You somehow managed to wiggle out of " + target.name()

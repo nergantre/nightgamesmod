@@ -70,7 +70,7 @@ public class FaceSit extends Skill {
         double n = 4 + Global.random(4);
         if (c.getStance().front(getSelf())) {
             // opponent can see self
-            n += 3 * getSelf().body.getCharismaBonus(target);
+            n += 3 * getSelf().body.getHotness(target);
         }
         if (target.has(Trait.imagination)) {
             n *= 1.5;

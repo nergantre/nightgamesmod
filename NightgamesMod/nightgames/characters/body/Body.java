@@ -92,7 +92,7 @@ public class Body implements Cloneable {
     transient public BodyPart lastPleasuredBy;
     transient public BodyPart lastPleasured;
     public double baseFemininity;
-
+    private double height;
 
     public Body() {
         bodyParts = new LinkedHashSet<>();
@@ -101,6 +101,7 @@ public class Body implements Cloneable {
         lastPleasuredBy = nonePart;
         lastPleasured = nonePart;
         hotness = 1.0;
+        height = 170;
     }
 
     public Body(Character character) {
@@ -382,24 +383,22 @@ public class Body implements Cloneable {
         }
     }
 
-    public double getHotness(Character self, Character opponent) {
+    public double getHotness(Character opponent) {
         // represents tempt damage
-        double retval = hotness;
+        double bodyHotness = hotness;
         for (BodyPart part : getCurrentParts()) {
-            retval += part.getHotness(self, opponent) * (getFetish(part.getType()).isPresent() ? 2 : 1);
+            bodyHotness += part.getHotness(character, opponent) * (getFetish(part.getType()).isPresent() ? 2 : 1);
         }
-        retval += self.getOutfit()
-                      .getHotness();
-        int seductionDiff = Math.max(0, self.get(Attribute.Seduction) - opponent.get(Attribute.Seduction));
-        retval += seductionDiff / 10.0;
-        retval *= (.5 + self.getExposure());
-        if (self.is(Stsflag.glamour)) {
-            retval += 2.0;
+        double clothingHotness = character.getOutfit()
+                        .getHotness();
+        double totalHotness = bodyHotness * (.5 + character.getExposure()) + clothingHotness;
+        if (character.is(Stsflag.glamour)) {
+            totalHotness += 2.0;
         }
-        if (self.is(Stsflag.alluring)) {
-            retval *= 1.5;
+        if (character.is(Stsflag.alluring)) {
+            totalHotness *= 1.5;
         }
-        return retval;
+        return totalHotness;
     }
 
     public void remove(BodyPart part) {
@@ -586,7 +585,7 @@ public class Body implements Cloneable {
 
         int result = (int) Math.round(damage);
         if (character.is(Stsflag.rewired)) {
-            character.pain(c, result, false, false);
+            character.pain(c, opponent, result, false, false);
             return 0;
         }
         if (opponent != null) {
@@ -658,8 +657,10 @@ public class Body implements Cloneable {
         if (opponent == character) {
             return 1.0;
         } else {
-            double perceptionBonus = Math.sqrt(getHotness(character, opponent)
-                            * (1.0 + (Math.max(0, opponent.get(Attribute.Perception)) - 5) / 10.0));
+            double seductionBonus = Math.max(0, character.get(Attribute.Seduction) - opponent.get(Attribute.Seduction)) / 10.0;
+            double perceptionBonus = Math.sqrt(getHotness(opponent) + seductionBonus
+                            * (1.0 + (opponent.get(Attribute.Perception) - 5) / 10.0));
+            
             if (opponent.is(Stsflag.lovestruck)) {
                 perceptionBonus += 1;
             }
@@ -926,7 +927,7 @@ public class Body implements Cloneable {
             part = character.body.getRandom("skin");
         }
         if (character.has(Trait.spiritphage)) {
-            c.write("<br><b>" + Global.capitalizeFirstLetter(character.subjectAction("glow", "glows")
+            c.write(character, "<br><b>" + Global.capitalizeFirstLetter(character.subjectAction("glow", "glows")
                             + " with power as the cum is absorbed by " + character.possessivePronoun() + " "
                             + part.describe(character) + ".</b>"));
             character.add(c, new Abuff(character, Attribute.Power, 5, 10));
@@ -935,7 +936,7 @@ public class Body implements Cloneable {
             character.buildMojo(c, 100);
         }
         if (opponent.has(Trait.hypnoticsemen)) {
-            c.write(Global.format(
+            c.write(character, Global.format(
                             "<br><b>{other:NAME-POSSESSIVE} hypnotic semen takes its toll on {self:name-possessive} willpower, rendering {self:direct-object} doe-eyed and compliant.</b>",
                             character, opponent));
             character.loseWillpower(c, 10 + Global.random(10));
@@ -1046,5 +1047,13 @@ public class Body implements Cloneable {
         temp = Double.doubleToLongBits(baseFemininity);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
     }
 }

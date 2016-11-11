@@ -11,11 +11,10 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
-import nightgames.skills.strategy.WindUpStrategy;
 import nightgames.skills.strategy.FootjobStrategy;
-import nightgames.skills.strategy.NurseStrategy;
 import nightgames.skills.strategy.StraponStrategy;
 import nightgames.skills.strategy.UseToyStrategy;
+import nightgames.skills.strategy.WindUpStrategy;
 import nightgames.start.NpcConfiguration;
 import nightgames.status.Hypersensitive;
 import nightgames.status.Oiled;
@@ -48,7 +47,8 @@ public class Mara extends BasePersonality {
         character.mod(Attribute.Perception, 2);
         character.getStamina().setMax(80 + character.getLevel() * getGrowth().stamina);
         character.getArousal().setMax(80 + character.getLevel() * getGrowth().arousal);
-        
+        character.getMojo().setMax(120);
+
         character.addPersonalStrategy(new FootjobStrategy());
         character.addPersonalStrategy(new UseToyStrategy());
         character.addPersonalStrategy(new StraponStrategy());
@@ -69,10 +69,8 @@ public class Mara extends BasePersonality {
     public void setGrowth() {
         growth.stamina = 2;
         growth.arousal = 4;
-        growth.mojo = 3;
         growth.bonusStamina = 1;
         growth.bonusArousal = 2;
-        growth.bonusMojo = 2;
         preferredAttributes.add(c -> c.getRank() >= 4 && c.get(Attribute.Temporal) < 20 
                         ? Optional.of(Attribute.Temporal) : Optional.empty());
         preferredAttributes.add(c -> c.get(Attribute.Science) < 15 ? Optional.of(Attribute.Science) : Optional.empty());
@@ -206,7 +204,7 @@ public class Mara extends BasePersonality {
 
     @Override
     public String victory(Combat c, Result flag) {
-        Character target = c.getOther(character);
+        Character target = c.getOpponent(character);
         character.arousal.empty();
         if (c.getStance().anallyPenetrated(target)) {
             return "The sensations coming from your prostate are too much as your arms give out below you. Mara doesn't let up either, grinding the head of the strap on over your "
@@ -283,7 +281,7 @@ public class Mara extends BasePersonality {
 
     @Override
     public String defeat(Combat c, Result flag) {
-        Character other = c.getOther(character);
+        Character other = c.getOpponent(character);
         if (character.has(Trait.madscientist) && character.has(Item.SPotion)) {
             character.add(c, new Hypersensitive(character));
             return "Mara begins to panic as she realizes she's on the verge of defeat. She grabs a small bottle of liquid from pouch on her belt, but it slips from her fingers "

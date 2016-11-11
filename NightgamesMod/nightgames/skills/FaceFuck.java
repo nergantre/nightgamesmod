@@ -76,7 +76,7 @@ public class FaceFuck extends Skill {
         if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish) && !getSelf().has(Trait.strapped)) {
             target.add(c, new BodyFetish(target, getSelf(), "cock", .25));
         }
-        target.loseMojo(c, 2 * getSelf().get(Attribute.Seduction));
+        target.loseMojo(c, Global.random(10, 20));
         target.loseWillpower(c, 5);
         return true;
     }

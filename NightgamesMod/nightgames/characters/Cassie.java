@@ -78,11 +78,9 @@ public class Cassie extends BasePersonality {
     public void setGrowth() {
         growth.stamina = 2;
         growth.arousal = 4;
-        growth.mojo = 3;
         growth.willpower = .4f;
         growth.bonusStamina = 1;
         growth.bonusArousal = 3;
-        growth.bonusMojo = 1;
 
         character.addCombatScene(new CombatScene((c, self, other) -> {
             return self.getLevel() >= 10 && !Global.checkFlag(CASSIE_BREAST_FOCUS) && !Global.checkFlag(CASSIE_MOUTH_FOCUS);
@@ -274,7 +272,7 @@ public class Cassie extends BasePersonality {
 
     @Override
     public String victory(Combat c, Result flag) {
-        if (c.getStance().anallyPenetrated(c.getOther(character))) {
+        if (c.getStance().anallyPenetrated(c.getOpponent(character))) {
             character.arousal.empty();
             return "Cassie bucks her hips against your ass wildly causing the strapon to rub hard against your prostate. Your arms and legs feel like jelly as she thrusts in again and again. "
                             + "You're almost shocked as you feel yourself on the edge of orgasm and you're certain you wouldn't be able to stop yourself if Cassie keeps this pace up. Above you Cassie moans "
@@ -341,7 +339,7 @@ public class Cassie extends BasePersonality {
 
     @Override
     public String defeat(Combat c, Result flag) {
-        Character opponent = c.getOther(character);
+        Character opponent = c.getOpponent(character);
         if (character.has(Trait.witch) && Global.random(3) == 0) {
             opponent.add(c, new Energized(opponent, 10));
             return "You capture Cassie's lips and slip your hand between her legs to facilitate her imminent orgasm. You rub her soaked pussy lips and she moans against your lips. Her body "
@@ -399,7 +397,7 @@ public class Cassie extends BasePersonality {
 
     @Override
     public String draw(Combat c, Result flag) {
-        Character opponent=c.getOther(character);
+        Character opponent=c.getOpponent(character);
         if (flag == Result.intercourse) {
             if (character.has(Trait.witch) && opponent.getPure(Attribute.Arcane) >= 4 && character.getAffection(opponent) >= 12 && Global.random(2) == 0) {
                 return "You thrust your hips in time with Cassie's, pushing you both closer to orgasm. At this rate, it seems a draw is pretty much certain. If you pulled out, "

@@ -23,6 +23,7 @@ public class TailSucked extends Status {
                         && new TailSuck(other).usable(c, self));
         flag(Stsflag.bound);
         flag(Stsflag.tailsucked);
+        flag(Stsflag.inserted);
     }
 
     @Override

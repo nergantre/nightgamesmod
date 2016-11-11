@@ -62,7 +62,7 @@ public class Tear extends Skill {
                 }
                 target.shred(ClothingSlot.top);
                 if (getSelf().human() && target.mostlyNude()) {
-                    c.write(target.nakedLiner(c));
+                    c.write(getSelf(), target.nakedLiner(c));
                 }
                 getSelf().consume(Item.MedicalSupplies, 1);
             } else if (!article.is(ClothingTrait.indestructible) && getSelf().get(Attribute.Animism) >= 12
@@ -85,7 +85,7 @@ public class Tear extends Skill {
                 }
                 target.shred(ClothingSlot.top);
                 if (getSelf().human() && target.mostlyNude()) {
-                    c.write(target.nakedLiner(c));
+                    c.write(getSelf(), target.nakedLiner(c));
                 }
             } else if (!article.is(ClothingTrait.indestructible)
                             && getSelf().check(Attribute.Power, article.dc()
@@ -140,7 +140,7 @@ public class Tear extends Skill {
                 }
                 target.shred(ClothingSlot.bottom);
                 if (getSelf().human() && target.mostlyNude()) {
-                    c.write(target.nakedLiner(c));
+                    c.write(getSelf(), target.nakedLiner(c));
                 }
                 getSelf().consume(Item.MedicalSupplies, 1);
             } else if (!article.is(ClothingTrait.indestructible) && getSelf().get(Attribute.Animism) >= 12
@@ -167,10 +167,10 @@ public class Tear extends Skill {
                 }
                 if (target.human() && target.crotchAvailable() && target.hasDick()) {
                     if (target.getArousal().get() >= 15) {
-                        c.write(String.format("%s boner springs out, no longer restrained by %s pants.",
+                        c.write(getSelf(), String.format("%s boner springs out, no longer restrained by %s pants.",
                                         target.nameOrPossessivePronoun(), target.possessivePronoun()));
                     } else {
-                        c.write(String.format("%s giggles as %s flaccid dick is exposed.",
+                        c.write(getSelf(), String.format("%s giggles as %s flaccid dick is exposed.",
                                         getSelf().subject(), target.nameOrPossessivePronoun()));
                     }
                 }
@@ -192,10 +192,10 @@ public class Tear extends Skill {
                 }
                 if (target.human() && target.crotchAvailable()) {
                     if (target.getArousal().get() >= 15) {
-                        c.write(String.format("%s boner springs out, no longer restrained by %s pants.",
+                        c.write(getSelf(), String.format("%s boner springs out, no longer restrained by %s pants.",
                                         target.nameOrPossessivePronoun(), target.possessivePronoun()));
                     } else {
-                        c.write(String.format("%s giggles as %s flaccid dick is exposed.",
+                        c.write(getSelf(), String.format("%s giggles as %s flaccid dick is exposed.",
                                         getSelf().subject(), target.nameOrPossessivePronoun()));
                     }
                 }

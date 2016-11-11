@@ -49,7 +49,7 @@ public class LeechEnergy extends Skill {
                 }
             }
             if (part == null) {
-                c.write("<b>ERROR: Could not pick part in LeechEnergy!</b>");
+                c.write(getSelf(), "<b>ERROR: Could not pick part in LeechEnergy!</b>");
                 return false;
             }
             String partString = selfPart.describe(getSelf());

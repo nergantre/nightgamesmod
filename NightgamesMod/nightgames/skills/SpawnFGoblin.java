@@ -28,7 +28,7 @@ public class SpawnFGoblin extends Skill {
                                       .mobile(getSelf())
                         && !c.getStance()
                              .prone(getSelf())
-                        && getSelf().pet == null && getSelf().getArousal()
+                        && c.getPetsFor(getSelf()).isEmpty() && getSelf().getArousal()
                                                              .get() >= 25;
     }
 
@@ -46,7 +46,7 @@ public class SpawnFGoblin extends Skill {
         if (getSelf().has(Trait.tactician))
             ac += 2;
         writeOutput(c, Result.normal, target);
-        getSelf().pet = new FGoblin(getSelf(), power, ac);
+        c.addPet(new FGoblin(getSelf(), power, ac).getSelf());
         return true;
     }
 

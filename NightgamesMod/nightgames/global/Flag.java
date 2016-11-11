@@ -74,9 +74,11 @@ public enum Flag {
     extendedLogs, 
     YuiLoyalty, 
     YuiAvailable, 
-    Yui, 
+    Yui,
     YuiUnlocking,
     FemalePronounsOnly,
+    skipMM,
+    skipFF,
     ;
     
     public static boolean exists(String flag) {

@@ -78,9 +78,9 @@ public class CustomSkill extends Skill {
     @Override
     public String getLabel(Combat c) {
         Optional<CustomStringEntry> picked = data.labels.stream()
-                        .filter(entry -> entry.meetsRequirements(c, getSelf(), c.getOther(getSelf()))).findFirst();
+                        .filter(entry -> entry.meetsRequirements(c, getSelf(), c.getOpponent(getSelf()))).findFirst();
         if (picked.isPresent()) {
-            return picked.get().getLine(c, getSelf(), c.getOther(getSelf()));
+            return picked.get().getLine(c, getSelf(), c.getOpponent(getSelf()));
         }
         return getName(c);
     }

@@ -16,7 +16,7 @@ public class BarrierStrategy extends AbstractStrategy {
     @Override
     public double weight(Combat c, Character self) {
         double weight = 3;
-        if (self.is(Stsflag.shielded) || BARRIER.requirements(c, self, c.getOther(self))) {
+        if (self.is(Stsflag.shielded) || BARRIER.requirements(c, self, c.getOpponent(self))) {
             return 0;
         }
         return weight;

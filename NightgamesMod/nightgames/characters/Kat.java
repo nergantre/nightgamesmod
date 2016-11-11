@@ -13,7 +13,6 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
-import nightgames.skills.damage.DamageType;
 import nightgames.skills.strategy.FacesitStrategy;
 import nightgames.start.NpcConfiguration;
 import nightgames.status.Feral;
@@ -51,7 +50,7 @@ public class Kat extends BasePersonality {
         character.set(Attribute.Seduction, 7);
         character.getStamina().setMax(100 + character.getLevel() * getGrowth().stamina);
         character.getArousal().setMax(50 + character.getLevel() * getGrowth().arousal);
-        character.getMojo().setMax(60);
+        character.getMojo().setMax(80);
         getCharacter().addPersonalStrategy(new FacesitStrategy());
 
         character.add(Trait.dexterous);
@@ -73,10 +72,8 @@ public class Kat extends BasePersonality {
     public void setGrowth() {
         growth.stamina = 2;
         growth.arousal = 2;
-        growth.mojo = 1;
         growth.bonusStamina = 1;
         growth.bonusArousal = 2;
-        growth.bonusMojo = 2;
         preferredAttributes.add(c -> Optional.of(Attribute.Animism));
 
         growth.addTrait(10, Trait.sympathetic);
@@ -167,7 +164,7 @@ public class Kat extends BasePersonality {
 
     @Override
     public String victory(Combat c, Result flag) {
-        Character opponent = c.getOther(character);
+        Character opponent = c.getOpponent(character);
         character.arousal.empty();
         if (c.getStance().vaginallyPenetrated(character)) {
             opponent.add(c, Horny.getWithBiologicalType(character, opponent, 5, 10, character.nameOrPossessivePronoun() + " pheromones"));
@@ -225,7 +222,7 @@ public class Kat extends BasePersonality {
 
     @Override
     public String defeat(Combat c, Result flag) {
-        Character opponent = c.getOther(character);
+        Character opponent = c.getOpponent(character);
         if (c.getStance().vaginallyPenetrated(character)) {
             opponent.add(c, Horny.getWithBiologicalType(character, opponent, 5, 10, character.nameOrPossessivePronoun() + " pheromones"));
             return "Kat squeaks as you pump your cock inside her over and over, penetrating her deeper with each thrust. She seems to be particularly vulnerable to being fucked"
@@ -275,7 +272,7 @@ public class Kat extends BasePersonality {
 
     @Override
     public String draw(Combat c, Result flag) {
-        Character opponent = c.getOther(character);
+        Character opponent = c.getOpponent(character);
         if (flag == Result.intercourse) {
             opponent.add(c, Horny.getWithBiologicalType(character, opponent, 5, 10, character.nameOrPossessivePronoun() + " pheromones"));
             return "Kat lets out a near-constant mewing of pleasure as you thrust repeatedly into her tight pussy. You feel yourself rapidly approaching orgasm and judging by "

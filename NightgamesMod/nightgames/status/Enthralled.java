@@ -39,7 +39,7 @@ public class Enthralled extends DurationStatus {
                             + " every command.";
         } else {
             return affected.name() + " looks dazed and compliant, ready to follow "
-                                +c.getOther(affected).nameOrPossessivePronoun()+" orders.";
+                                +c.getOpponent(affected).nameOrPossessivePronoun()+" orders.";
         }
     }
 

@@ -3,6 +3,8 @@ package nightgames.pet;
 import java.util.ArrayList;
 
 import nightgames.characters.Character;
+import nightgames.characters.CharacterSex;
+import nightgames.characters.Growth;
 import nightgames.characters.body.PetPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
@@ -11,9 +13,8 @@ import nightgames.status.Masochistic;
 import nightgames.status.Shamed;
 
 public class FGoblin extends Pet {
-
     private final PetPart part = new PetPart("fetish goblin");
-    
+
     public FGoblin(Character owner, int pow, int ac) {
         super("Fetish Goblin", owner, Ptype.fgoblin, pow, ac);
     }
@@ -29,11 +30,11 @@ public class FGoblin extends Pet {
         if(target.human()){
             switch(pickSkill(c,target)){
             case VIBRATOR:
-                c.write(owner(),String.format("%s's goblin pulls the vibrator out of her wet hole and thrusts it between your legs.",owner().name()));
-                target.body.pleasure(owner(), part, target.body.getRandomPussy(), 2+3*Global.random(power), c);
+                c.write(getSelf(),String.format("%s's goblin pulls the vibrator out of her wet hole and thrusts it between your legs.",owner().name()));
+                target.body.pleasure(getSelf(), part, target.body.getRandomPussy(), 2+3*Global.random(power), c);
                 break;
             case MASOCHISM:
-                c.write(owner(),String.format("%s's fetish goblin draws a riding crop and hits her own balls with it. She shivers with delight at the pain and you can "
+                c.write(getSelf(),String.format("%s's fetish goblin draws a riding crop and hits her own balls with it. She shivers with delight at the pain and you can "
                         + "feel an aura of masochism radiate off her.",owner().name()));
                 owner().add(new Masochistic(owner()));
                 target.add(new Masochistic(target));
@@ -47,7 +48,7 @@ public class FGoblin extends Pet {
             case DENIAL:
                 c.write(owner(),String.format("%s's fetish goblin suddenly appears to turn against %s and slaps %s sensitive testicles. You're momentarily confused, but you "
                         + "realize the shock probably undid your efforts to make %s cum.",owner().name(),owner().directObject(),owner().possessivePronoun(),owner().directObject()));
-                owner().pain(c, 3*Global.random(power));
+                owner().pain(c, getSelf(), 3*Global.random(power));
                 owner().calm(c,(3+Global.random(5))*power);
                 break;
             case FACEFUCK:
@@ -93,7 +94,7 @@ public class FGoblin extends Pet {
             case DENIAL:
                 c.write(owner(),String.format("As you feel your arousal build, your fetish goblin suddenly turns and slaps you sharply on the balls. You wince in pain and "
                         + "let out a yelp of protest. You can't see the goblin's expression through her mask, but her eyes seem to be scolding you for your lack of self control."));
-                owner().pain(c, 3*Global.random(power));
+                owner().pain(c, getSelf(), 3*Global.random(power));
                 owner().calm(c,(3+Global.random(5))*power);
                 break;
             case FACEFUCK:
@@ -169,19 +170,9 @@ public class FGoblin extends Pet {
                     + "a strong enough stimulus to push her over the theshold. You grab the end of the anal beads sticking out of her ass and yank them out all at once. "
                     + "The goblin shudders and the flow of liquid leaking out of her holes signals her orgasm before she vanishes.",owner().name()));
         }
-        remove();
+        c.removePet(getSelf());
     }
 
-    @Override
-    public boolean hasDick() {
-        return true;
-    }
-
-    @Override
-    public boolean hasPussy() {
-        return true;
-    }
-    
     public PetSkill pickSkill(Combat c, Character target){
         ArrayList<PetSkill> available = new ArrayList<PetSkill>();
         available.add(PetSkill.IDLE);
@@ -214,5 +205,14 @@ public class FGoblin extends Pet {
         ANALDILDO,
         ANALBEADS,
         IDLE,
+    }
+    
+    @Override
+    protected void buildSelf() {
+        PetCharacter self = new PetCharacter(this, own() + getName(), getName(), new Growth(), power);
+        // goblins are about 120 centimeters tall (around 4' for US people)
+        self.body.setHeight(120);
+        self.body.finishBody(CharacterSex.herm);
+        setSelf(self);
     }
 }

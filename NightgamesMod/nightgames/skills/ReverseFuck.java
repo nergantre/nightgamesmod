@@ -75,7 +75,7 @@ public class ReverseFuck extends Fuck {
 
     @Override
     public String describe(Combat c) {
-        return "Straddle your opponent and ride " + c.getOther(getSelf()).possessivePronoun() + " cock";
+        return "Straddle your opponent and ride " + c.getOpponent(getSelf()).possessivePronoun() + " cock";
     }
 
     @Override

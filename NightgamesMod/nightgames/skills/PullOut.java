@@ -70,7 +70,7 @@ public class PullOut extends Skill {
             if (getSelf().hasStatus(Stsflag.leglocked) || getSelf().hasStatus(Stsflag.armlocked)
                             || target.has(Trait.tight) && c.getStance().inserted(getSelf())) {
                 boolean escaped = getSelf().check(Attribute.Power,
-                                10 - getSelf().escape(c) + target.get(Attribute.Power));
+                                10 - getSelf().escape(c, target) + target.get(Attribute.Power));
                 if (escaped) {
                     writeOutput(c, result, target);
                 } else {

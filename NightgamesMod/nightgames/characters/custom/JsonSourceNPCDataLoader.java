@@ -153,8 +153,6 @@ public class JsonSourceNPCDataLoader {
         growth.bonusStamina = object.get("bonusStamina").getAsFloat();
         growth.arousal = object.get("arousal").getAsFloat();
         growth.bonusArousal = object.get("bonusArousal").getAsFloat();
-        growth.mojo = object.get("mojo").getAsFloat();
-        growth.bonusMojo = object.get("bonusMojo").getAsFloat();
         growth.willpower = object.get("willpower").getAsFloat();
         growth.bonusWillpower = object.get("bonusWillpower").getAsFloat();
         growth.bonusAttributes = object.get("bonusPoints").getAsInt();

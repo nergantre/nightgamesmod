@@ -148,7 +148,7 @@ public class DarkChaos extends Status {
 
         void execute(Combat c) {
             if (this == FALLING)
-                c.setStance(new StandingOver(c.getOther(Global.getPlayer()), Global.getPlayer()));
+                c.setStance(new StandingOver(c.getOpponent(Global.getPlayer()), Global.getPlayer()));
             else
                 Global.getPlayer()
                       .addlist.add(supplier.get());

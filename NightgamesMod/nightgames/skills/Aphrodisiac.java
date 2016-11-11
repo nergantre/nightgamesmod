@@ -11,7 +11,6 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.ClothingSlot;
-import nightgames.skills.damage.DamageType;
 import nightgames.status.Horny;
 
 public class Aphrodisiac extends Skill {

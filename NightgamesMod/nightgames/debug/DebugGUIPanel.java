@@ -15,6 +15,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import nightgames.characters.Character;
+import nightgames.characters.Attribute;
 import nightgames.characters.Trait;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
@@ -73,6 +74,21 @@ public class DebugGUIPanel extends JPanel {
                     amt = Integer.valueOf(list.get(3));
                 }
                 target.gain(Item.valueOf(list.get(2)), amt);
+            } catch (NullPointerException e) {
+                output.setText(list.get(1) + " is not a valid charater");
+            } catch (IllegalArgumentException e) {
+                output.setText(list.get(2) + " is not a valid item");
+            }
+        }));
+
+        consoleCommands.add(new DebugCommand("(\\w+)\\.addAtt (\\w+) ?(\\d+)?", (output, list) -> {
+            try {
+                Character target = Global.getCharacterByType(list.get(1));
+                int amt = 1;
+                if (list.size() > 3 && list.get(3) != null) {
+                    amt = Integer.valueOf(list.get(3));
+                }
+                target.mod(Attribute.valueOf(list.get(2)), amt);
             } catch (NullPointerException e) {
                 output.setText(list.get(1) + " is not a valid charater");
             } catch (IllegalArgumentException e) {
