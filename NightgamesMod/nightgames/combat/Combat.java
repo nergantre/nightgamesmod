@@ -467,7 +467,8 @@ public class Combat extends Observable implements Cloneable {
 
     private void doCombatUpkeep(Character self, Character other) {
         String beguilingbreastCompletedFlag = Trait.beguilingbreasts.name()+"Completed";
-        if (other.has(Trait.beguilingbreasts) && !getCombatantData(self).getBooleanFlag(beguilingbreastCompletedFlag)) {
+        if (other.has(Trait.beguilingbreasts) && !getCombatantData(self).getBooleanFlag(beguilingbreastCompletedFlag)
+                        && other.outfit.slotOpen(ClothingSlot.top)) {
             write(other, Global.format("The instant {self:subject-action:lay|lays} {self:possessive} eyes on {other:name-possessive} bare breasts, {self:possessive} consciousness flies out of {self:possessive} mind. " +
                             (other.canAct() ? "{other:SUBJECT-ACTION:giggle|giggles} a bit and cups her stupendous tits and gives them a little squeeze to which {self:subject} can only moan." : ""), 
                             self, other));

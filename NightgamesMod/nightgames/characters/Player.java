@@ -18,6 +18,11 @@ import nightgames.actions.Shortcut;
 import nightgames.areas.Area;
 import nightgames.areas.Deployable;
 import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.BreastsPart;
+import nightgames.characters.body.CockMod;
+import nightgames.characters.body.GenericBodyPart;
+import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.TentaclePart;
 import nightgames.combat.Combat;
 import nightgames.combat.IEncounter;
 import nightgames.combat.Result;
@@ -39,6 +44,7 @@ import nightgames.start.PlayerConfiguration;
 import nightgames.status.Enthralled;
 import nightgames.status.Horny;
 import nightgames.status.Masochistic;
+import nightgames.status.PlayerSlimeDummy;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
 import nightgames.status.addiction.Addiction;
@@ -165,6 +171,9 @@ public class Player extends Character {
                 getMojo().gain(1);
             }
         }
+        if (has(Trait.slime)) {
+            purge(c);
+        }
         if (c.p1.human()) {
             c.p2.defeat(c, flag);
         } else {
@@ -175,6 +184,9 @@ public class Player extends Character {
     @Override
     public void defeat(Combat c, Result flag) {
         c.write("Bad thing");
+        if (has(Trait.slime)) {
+            purge(c);
+        }
     }
 
     @Override
@@ -201,6 +213,9 @@ public class Player extends Character {
                 .gain(1);
             c.p2.getMojo()
                 .gain(1);
+        }
+        if (has(Trait.slime)) {
+            purge(c);
         }
         if (c.p1.human()) {
             c.p2.draw(c, flag);
@@ -713,6 +728,20 @@ public class Player extends Character {
             tempt(c, opponent, arousal.max() / 25);
             opponent.tempt(c, this, opponent.arousal.max() / 25);
         }
+        if (has(Trait.slime)) {
+            if (hasPussy() && !body.getRandomPussy().moddedPartCountsAs(this, PussyPart.gooey)) {
+                body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
+                c.write(this, 
+                                Global.format("{self:NAME-POSSESSIVE} %s turned back into a gooey pussy.",
+                                                this, opponent, body.getRandomPussy()));
+            }
+            if (hasDick() && !body.getRandomCock().moddedPartCountsAs(this, CockMod.slimy)) {
+                body.temporaryAddOrReplacePartWithType(body.getRandomCock().applyMod(CockMod.slimy), 999);
+                c.write(this, 
+                                Global.format("{self:NAME-POSSESSIVE} %s turned back into a gooey pussy.",
+                                                this, opponent, body.getRandomPussy()));
+            }
+        }
     }
 
     @Override
@@ -940,6 +969,69 @@ public class Player extends Character {
             escape -= getAddiction(AddictionType.DOMINANCE).get().getCombatSeverity().ordinal() * 8;
         }
         return escape;
+    }
+    
+    @Override
+    protected void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
+                    int totalTimes) {
+        super.resolveOrgasm(c, opponent, selfPart, opponentPart, times, totalTimes);
+        if (has(Trait.slimification) && times == totalTimes && getWillpower().percent() < 60 && !has(Trait.slime)) {
+            c.write(this, Global.format("A powerful shiver runs through your entire body. Oh boy, you know where this"
+                            + " is headed... Sure enough, you look down to see your skin seemingly <i>melt</i>,"
+                            + " turning a translucent blue. You legs fuse together and collapse into a puddle."
+                            + " It only takes a few seconds for you to regain some semblance of control over"
+                            + " your amorphous body, but you're not going to switch back to your human"
+                            + " form before this fight is over...", this, opponent));
+            nudify();
+            purge(c);
+            addTemporaryTrait(Trait.slime, 999);
+            add(new PlayerSlimeDummy());
+            if (hasPussy() && !body.getRandomPussy().moddedPartCountsAs(this, PussyPart.gooey)) {
+                body.temporaryAddOrReplacePartWithType(new TentaclePart("slime filaments", "pussy", "slime", 0.0, 1.0, 1.0), 999);
+                body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
+            }
+            if (hasDick() && !body.getRandomCock().moddedPartCountsAs(this, CockMod.slimy)) {
+                body.temporaryAddOrReplacePartWithType(body.getRandomCock().applyMod(CockMod.slimy), 999);
+            }
+            BreastsPart part = body.getBreastsBelow(BreastsPart.h.size);
+            if (part != null && body.getRandomBreasts() != BreastsPart.flat) {
+                body.temporaryAddOrReplacePartWithType(part.upgrade(), 10);
+            }
+            body.temporaryAddOrReplacePartWithType(new GenericBodyPart("gooey skin", 2.0, 1.5, .8, "skin", ""), 999);
+            body.temporaryAddOrReplacePartWithType(new TentaclePart("slime pseudopod", "back", "slime", 0.0, 1.0, 1.0), 999);
+            body.temporaryAddOrReplacePartWithType(new TentaclePart("gooey feelers", "hands", "slime", 0.0, 1.0, 1.0), 999);
+            body.temporaryAddOrReplacePartWithType(new TentaclePart("gooey feelers", "feet", "slime", 0.0, 1.0, 1.0), 999);
+            if (level >= 21) {
+                addTemporaryTrait(Trait.Sneaky, 999);
+            }
+            if (level >= 24) {
+                addTemporaryTrait(Trait.shameless, 999);
+            }
+            if (level >= 27) {
+                addTemporaryTrait(Trait.lactating, 999);
+            }
+            if (level >= 30) {
+                addTemporaryTrait(Trait.addictivefluids, 999);
+            }
+            if (level >= 33) {
+                addTemporaryTrait(Trait.autonomousPussy, 999);
+            }
+            if (level >= 36) {
+                addTemporaryTrait(Trait.entrallingjuices, 999);
+            }
+            if (level >= 39) {
+                addTemporaryTrait(Trait.energydrain, 999);
+            }
+            if (level >= 42) {
+                addTemporaryTrait(Trait.desensitized, 999);
+            }
+            if (level >= 45) {
+                addTemporaryTrait(Trait.steady, 999);
+            }
+            if (level >= 50) {
+                addTemporaryTrait(Trait.strongwilled, 999);
+            }
+        }
     }
 
 }

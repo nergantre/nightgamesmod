@@ -264,6 +264,8 @@ public enum Trait {
     dryad("Dryad", "Part girl, part tree."),
     temptress("Temptress", "Well versed in the carnal arts."),
     ninja("Ninja", "A shadowy servant."),
+    
+    slimification("Slimification", "May fall into slime form on orgasm"),
 
     // Class subtrait
     divinity("Divinity", "Has aspects of divinity."),

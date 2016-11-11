@@ -505,6 +505,7 @@ public class Global {
         getSkillPool().add(new Rewind(ch));
         getSkillPool().add(new Unstrip(ch));
         getSkillPool().add(new WindUp(ch));
+        getSkillPool().add(new ThrowSlime(ch));
 
 
         if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
@@ -1139,9 +1140,8 @@ public class Global {
         characterPool.put(maya.getCharacter().getType(), maya.getCharacter());
         characterPool.put(yui.getCharacter().getType(), yui.getCharacter());
 
-        debugChars.add(jewel.getCharacter());
     }
-
+    
     public static void loadWithDialog() {
         JFileChooser dialog = new JFileChooser("./");
         FileFilter savesFilter = new FileNameExtensionFilter("Nightgame Saves", "ngs");
