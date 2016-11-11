@@ -105,6 +105,7 @@ public abstract class SkillTag {
     public final static SkillTag hurt = new NameOnlySkillTag("Hurt");
     public final static SkillTag weaken = new NameOnlySkillTag("Weaken");
     public final static SkillTag heal = new NameOnlySkillTag("Heal");
+    public final static SkillTag calm = new NameOnlySkillTag("Calm");
     public final static SkillTag drain = new NameOnlySkillTag("Drain");
     public final static SkillTag mojoBuilding = new NameOnlySkillTag("MojoBuilding");
     public final static SkillTag mojoCosting = new NameOnlySkillTag("MojoCosting");

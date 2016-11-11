@@ -33,6 +33,9 @@ public class PetCharacter extends Character {
         distributePoints(Arrays.asList());
         this.getSkills().clear();
         this.mojo.setMax(100);
+        this.mojo.empty();
+        this.arousal.empty();
+        this.stamina.fill();
     }
 
     public PetCharacter cloneWithOwner(Character owner) throws CloneNotSupportedException {
@@ -92,7 +95,7 @@ public class PetCharacter extends Character {
                         .stream().filter(skill -> Skill.skillIsUsable(c, skill, getSelf().owner))
                         .collect(Collectors.toList()));
         Skill.filterAllowedSkills(c, allowedMasterSkills, this, getSelf().owner);
-        allowedEnemySkills.forEach(skill -> skillUse.add((combat, self, dontcare) -> Skill.resolve(skill, combat, getSelf().owner)));
+        allowedMasterSkills.forEach(skill -> skillUse.add((combat, self, dontcare) -> Skill.resolve(skill, combat, getSelf().owner)));
 
         Global.pickRandom(skillUse).ifPresent(use -> use.execute(c, this, target));
     }

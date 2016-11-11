@@ -39,7 +39,7 @@ public class FootPump extends Skill {
     }
 
     @Override public int getMojoBuilt(Combat c) {
-        return 20;
+        return 5;
     }
 
     @Override public boolean resolve(Combat c, Character target) {

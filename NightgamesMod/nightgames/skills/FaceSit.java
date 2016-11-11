@@ -92,11 +92,7 @@ public class FaceSit extends Skill {
 
     @Override
     public int getMojoBuilt(Combat c) {
-        if (c.getStance().enumerate() != Stance.facesitting) {
-            return 50;
-        } else {
-            return 25;
-        }
+        return 25;
     }
 
     @Override

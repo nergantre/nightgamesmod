@@ -124,7 +124,7 @@ public class FaceFuck extends Skill {
 
     @Override
     public int getMojoBuilt(Combat c) {
-        return 50;
+        return 25;
     }
 
     @Override

@@ -22,7 +22,7 @@ public class Wait extends Skill {
     @Override
     public int getMojoBuilt(Combat c) {
         if (focused() && !c.getStance().sub(getSelf())) {
-            return 25;
+            return 20;
         } else {
             return 15;
         }

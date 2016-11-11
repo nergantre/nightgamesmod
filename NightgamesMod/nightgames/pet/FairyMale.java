@@ -71,7 +71,7 @@ public class FairyMale extends Pet {
 
     @Override
     protected void buildSelf() {
-        PetCharacter self = new PetCharacter(this, own() + getName(), getName(), new Growth(), power);
+        PetCharacter self = new PetCharacter(this, owner().nameOrPossessivePronoun() + getName(), getName(), new Growth(), power);
         // fairies are about 20 centimeters tall
         self.learn(new FairyEnergize(self));
         self.learn(new FairyHeal(self));

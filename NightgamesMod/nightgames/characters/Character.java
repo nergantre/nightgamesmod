@@ -1079,7 +1079,7 @@ public abstract class Character extends Observable implements Cloneable {
         }
         if (combat) {
             if (has(Trait.exhibitionist) && mostlyNude()) {
-                buildMojo(c, 2);
+                buildMojo(c, 5);
             }
             if (outfit.has(ClothingTrait.stylish)) {
                 buildMojo(c, 1);
