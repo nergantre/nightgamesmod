@@ -18,7 +18,7 @@ public class FlyCatcher extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return target.pet != null && getSelf().canAct() && c.getStance().mobile(getSelf())
+        return !c.getPetsFor(target).isEmpty() && getSelf().canAct() && c.getStance().mobile(getSelf())
                         && !c.getStance().prone(getSelf());
     }
 
@@ -34,9 +34,7 @@ public class FlyCatcher extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.pet != null) {
-            target.pet.caught(c, getSelf());
-        }
+        c.getPetsFor(target).stream().findAny().ifPresent(pet -> pet.getSelf().caught(c, getSelf()));
         getSelf().weaken(c, 5);
 
         return true;

@@ -30,7 +30,7 @@ public class LegLock extends Skill {
         if (target.roll(this, c, accuracy(c))) {
             writeOutput(c, Result.normal, target);
             target.add(c, new Abuff(target, Attribute.Speed, -2, 5));
-            target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(10, 16)));
+            target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(10, 16)));
             target.emote(Emotion.angry, 15);
         } else {
             writeOutput(c, Result.miss, target);

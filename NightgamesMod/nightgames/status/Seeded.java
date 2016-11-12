@@ -139,7 +139,7 @@ public class Seeded extends Status {
             if (!c.shouldAutoresolve())
             Global.gui().message(c, affected, Global.format("The seed sits uncomfortably in {self:possessive} %s.",
                             affected, other, hole.describe(affected)));
-            affected.pain(c, 1, false, false);
+            affected.pain(c, other, 1, false, false);
         }
 
         affected.emote(Emotion.desperate, 10);

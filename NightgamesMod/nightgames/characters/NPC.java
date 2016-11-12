@@ -22,7 +22,6 @@ import nightgames.areas.Area;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.custom.CommentSituation;
 import nightgames.characters.custom.RecruitmentData;
-import nightgames.characters.custom.effect.CustomEffect;
 import nightgames.combat.Combat;
 import nightgames.combat.CombatScene;
 import nightgames.combat.IEncounter;
@@ -182,12 +181,6 @@ public class NPC extends Character {
         }
         gainXP(getVictoryXP(target));
         target.gainXP(getDefeatXP(this));
-        if (c.getStance().inserted() && c.getStance().dom(this)) {
-            getMojo().gain(1);
-            if (has(Trait.mojoMaster)) {
-                getMojo().gain(1);
-            }
-        }
         target.arousal.empty();
         if (target.has(Trait.insatiable)) {
             target.arousal.restore((int) (arousal.max() * .2));
@@ -266,12 +259,9 @@ public class NPC extends Character {
 
     @Override
     public void act(Combat c) {
-        Character target;
-        if (c.p1 == this) {
-            target = c.p2;
-        } else {
-            target = c.p1;
-        }
+        act(c, c.getOpponent(this));
+    }
+    public void act(Combat c, Character target) {
         if (target.human() && Global.isDebugOn(DebugFlags.DEBUG_SKILL_CHOICES)) {
             pickSkillsWithGUI(c, target);
         } else {
@@ -627,7 +617,7 @@ public class NPC extends Character {
         switch (type) {
             case damage:
                 c.write(this, name() + " avoids your clumsy attack and swings her fist into your nuts.");
-                target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
+                target.pain(c, target, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
                 break;
             case pleasure:
                 if (target.hasDick()) {
@@ -678,7 +668,7 @@ public class NPC extends Character {
                 } else {
                     c.write(this, name()
                                     + " manages to dodge your groping hands and gives a retaliating slap in return.");
-                    target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
+                    target.pain(c, target, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
                 }
                 break;
             case positioning:
@@ -692,7 +682,7 @@ public class NPC extends Character {
                 break;
             default:
                 c.write(this, name() + " manages to dodge your attack and gives a retaliating slap in return.");
-                target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
+                target.pain(c, target, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
         }
     }
 
@@ -764,11 +754,6 @@ public class NPC extends Character {
     public void eot(Combat c, Character opponent, Skill last) {
         super.eot(c, opponent, last);
         ai.eot(c, opponent, last);
-        if (opponent.pet != null && canAct() && c.getStance().mobile(this) && !c.getStance().prone(this)) {
-            if (get(Attribute.Speed) > opponent.pet.ac() * Global.random(20)) {
-                opponent.pet.caught(c, this);
-            }
-        }
         if (opponent.has(Trait.pheromones) && opponent.getArousal().percent() >= 20 && opponent.rollPheromones(c)) {
             c.write(opponent, "<br>You see " + name()
                             + " swoon slightly as she gets close to you. Seems like she's starting to feel the effects of your musk.");
@@ -833,113 +818,6 @@ public class NPC extends Character {
         return (NPC) super.clone();
     }
 
-    public double rateAction(Combat c, double selfFit, double otherFit, CustomEffect effect) {
-        // Clone ourselves a new combat... This should clone our characters, too
-        Combat c2;
-        try {
-            c2 = c.clone();
-        } catch (CloneNotSupportedException e) {
-            return 0;
-        }
-
-        Global.debugSimulation += 1;
-        Character newSelf;
-        Character newOther;
-        if (c.p1 == this) {
-            newSelf = c2.p1;
-            newOther = c2.p2;
-        } else if (c.p2 == this) {
-            newSelf = c2.p2;
-            newOther = c2.p1;
-        } else {
-            throw new IllegalArgumentException("Tried to use a badly cloned combat");
-        }
-        effect.execute(c2, newSelf, newOther);
-        Global.debugSimulation -= 1;
-        double selfFitnessDelta = newSelf.getFitness(c) - selfFit;
-        double otherFitnessDelta = newSelf.getOtherFitness(c, newOther) - otherFit;
-        if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS_RATING) && (c2.p1.human() || c2.p2.human())) {
-            System.out.println("After:\n" + c2.debugMessage());
-        }
-        return selfFitnessDelta - otherFitnessDelta;
-    }
-
-    private double rateMove(Skill skill, Combat c, double selfFit, double otherFit) {
-        // Clone ourselves a new combat... This should clone our characters, too
-        if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS_RATING) && (c.p1.human() || c.p2.human())) {
-            System.out.println("===> Rating " + skill);
-            System.out.println("Before:\n" + c.debugMessage());
-        }
-        return rateAction(c, selfFit, otherFit, (combat, self, other) -> {
-            skill.setSelf(self);
-            skill.resolve(combat, other);
-            skill.setSelf(this);
-            return true;
-        });
-    }
-
-    public Skill prioritizeNew(ArrayList<WeightedSkill> plist, Combat c) {
-        if (plist.isEmpty()) {
-            return null;
-        }
-        // The higher, the better the AI will plan for "rare" events better
-        final int RUN_COUNT = 5;
-        // Decrease to get an "easier" AI. Make negative to get a suicidal AI.
-        final double RATING_FACTOR = 0.02f;
-
-        // Starting fitness
-        Character other = c.getOther(this);
-        double selfFit = getFitness(c);
-        double otherFit = getOtherFitness(c, other);
-
-        // Now simulate the result of all actions
-        ArrayList<WeightedSkill> moveList = new ArrayList<>();
-        double sum = 0;
-        for (WeightedSkill wskill : plist) {
-            // Run it a couple of times
-            double rating, raw_rating = 0;
-            if (wskill.skill.type(c) == Tactics.fucking && has(Trait.experienced)) {
-                wskill.weight += 1.0;
-            }
-            if (wskill.skill.type(c) == Tactics.damage && has(Trait.sadist)) {
-                wskill.weight += 1.0;
-            }
-            for (int j = 0; j < RUN_COUNT; j++) {
-                raw_rating += rateMove(wskill.skill, c, selfFit, otherFit);
-            }
-
-            wskill.weight += ai.getAiModifiers().modAttack(wskill.skill.getClass());
-            // Sum up rating, add to map
-            rating = (double) Math.pow(2, RATING_FACTOR * raw_rating + wskill.weight + wskill.skill.priorityMod(c)
-                            + Global.getMatch().condition.getSkillModifier().encouragement(wskill.skill, c, this));
-            sum += rating;
-            moveList.add(new WeightedSkill(sum, raw_rating, rating, wskill.skill));
-        }
-        if (sum == 0 || moveList.size() == 0) {
-            return null;
-        }
-        // Debug
-        if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
-            String s = "AI choices: ";
-            for (WeightedSkill entry : moveList) {
-                s += String.format("\n(%.1f\t\t%.1f\t\tculm: %.1f\t\t/ %.1f)\t\t-> %s", entry.raw_rating, entry.rating,
-                                entry.weight, entry.rating * 100.0f / sum, entry.skill.getLabel(c));
-            }
-            System.out.println(s);
-        }
-        // Select
-        double s = Global.randomdouble() * sum;
-        for (WeightedSkill entry : moveList) {
-            if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
-                System.out.printf("%.1f/%.1f %s\n", entry.weight, s, entry.skill.toString());
-            }
-            if (entry.weight > s) {
-                return entry.skill;
-            }
-        }
-        return moveList.get(moveList.size() - 1).skill;
-    }
-    
     @Override
     protected void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
                     int totalTimes) {
@@ -966,7 +844,7 @@ public class NPC extends Character {
     }
 
     public Optional<String> getComment(Combat c) {
-        Set<CommentSituation> applicable = CommentSituation.getApplicableComments(c, this, c.getOther(this));
+        Set<CommentSituation> applicable = CommentSituation.getApplicableComments(c, this, c.getOpponent(this));
         Set<CommentSituation> forbidden = EnumSet.allOf(CommentSituation.class);
         forbidden.removeAll(applicable);
         Map<CommentSituation, String> comments = ai.getComments(c);

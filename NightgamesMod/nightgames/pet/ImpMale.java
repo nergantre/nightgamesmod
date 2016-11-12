@@ -1,10 +1,14 @@
 package nightgames.pet;
 
 import nightgames.characters.Character;
+import nightgames.characters.CharacterSex;
+import nightgames.characters.Growth;
 import nightgames.combat.Combat;
-import nightgames.global.Global;
-import nightgames.items.clothing.ClothingSlot;
-import nightgames.status.Horny;
+import nightgames.skills.petskills.ImpAssault;
+import nightgames.skills.petskills.ImpFacesit;
+import nightgames.skills.petskills.ImpSemenSquirt;
+import nightgames.skills.petskills.ImpStrip;
+import nightgames.skills.petskills.ImpTease;
 
 public class ImpMale extends Pet {
 
@@ -23,98 +27,28 @@ public class ImpMale extends Pet {
     }
 
     @Override
-    public void act(Combat c, Character target) {
-        if (target.human()) {
-
-        } else {
-            switch (Global.random(4)) {
-                case 3:
-                    c.write(owner(), "Your imp masturbates frantically until he cums intensely. He aims his spurting cock at "
-                                    + target.name() + ", hitting her in the face with a thick load "
-                                    + "of semen. The imp blinks out of existence, but the damage is done. "
-                                    + target.name()
-                                    + " flushes bright red and looks stunned as the aphrodisiac laden fluid "
-                                    + "overwhelms her senses.");
-                    target.arouse(4 + 4 * Global.random(power), c);
-                    target.add(c, new Horny(target, 5, 5, "imp cum"));
-                    remove();
-                    break;
-                case 2:
-                    if (target.crotchAvailable() && !c.getStance().vaginallyPenetrated(target)) {
-                        c.write(owner(), "Your imp latches onto " + target.name()
-                                        + " and shoves his thick cock into her pussy. As the demon humps her, she shrieks and punches him away.");
-                        target.body.pleasure(null, null, target.body.getRandom("pussy"), 2 + 3 * Global.random(power),
-                                        c);
-                    } else {
-                        c.write(owner(), own() + "imps strokes himself while watching the fight.");
-                    }
-                    break;
-                case 1:
-                    if (target.breastsAvailable()) {
-                        c.write(owner(), "Your imp jumps onto " + target.name()
-                                        + " and grabs her nipples. Unable to fight the law of gravity, the imp falls back to the floor, pulling painfully on her nipples.");
-                        target.pain(c, 3 + 2 * Global.random(power), false);
-                    } else {
-                        c.write(owner(), own() + "imps strokes himself while watching the fight.");
-                    }
-                    break;
-                default:
-                    if (!target.breastsAvailable()) {
-                        if (Global.random(25) > target.getOutfit().getTopOfSlot(ClothingSlot.top).dc()
-                                        + (target.getStamina().percent() - target.getArousal().percent()) / 4
-                                        || !target.canAct()) {
-                            c.write(owner(), own() + "imp steals " + target.name() + "'s "
-                                            + target.getOutfit().getTopOfSlot(ClothingSlot.top).getName()
-                                            + " and runs off with it.");
-                            target.strip(ClothingSlot.top, c);
-                        } else {
-                            c.write(owner(), own() + "imp yanks on " + target.name() + "'s "
-                                            + target.getOutfit().getTopOfSlot(ClothingSlot.top).getName()
-                                            + " ineffectually.");
-                        }
-                    } else if (!target.crotchAvailable()) {
-                        if (Global.random(25) > target.getOutfit().getTopOfSlot(ClothingSlot.bottom).dc()
-                                        + (target.getStamina().percent() - target.getArousal().percent()) / 4
-                                        || !target.canAct()) {
-                            c.write(owner(), own() + "imp steals " + target.name() + "'s "
-                                            + target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName()
-                                            + " and runs off with it.");
-                            target.strip(ClothingSlot.bottom, c);
-                        } else {
-                            c.write(owner(), own() + "imp yanks on " + target.name() + "'s "
-                                            + target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName()
-                                            + " ineffectually.");
-                        }
-                    } else {
-                        c.write(owner(), own() + "imps strokes himself while watching the fight.");
-                    }
-            }
-        }
-    }
-
-    @Override
     public void vanquish(Combat c, Pet opponent) {
         switch (opponent.type()) {
             case fairyfem:
-                c.write(owner(), own() + "imp manages to catch " + opponent.own()
+                c.write(getSelf(), own() + "imp manages to catch " + opponent.own()
                                 + "faerie as the tiny fae flies around his head. He shoves his cock into the faerie's face, smearing his pre-cum over her. "
                                 + "He presses her against his shaft, stroking himself with her entire body. The faerie, intoxicated by the potent fluid is unable to last long and cums with a high "
                                 + "pitched moan.");
                 break;
             case fairymale:
-                c.write(owner(), own() + "imp swats " + opponent.own() + "faerie out of the air.");
+                c.write(getSelf(), own() + "imp swats " + opponent.own() + "faerie out of the air.");
                 break;
             case impfem:
-                c.write(owner(), own() + "imp grabs " + opponent.own()
+                c.write(getSelf(), own() + "imp grabs " + opponent.own()
                                 + "female imp and bends her over. He rams his cock into her wet box without any foreplay. The female groans in protest and flails about "
                                 + "in an attempt to take control, but she's held fast. The male shows impressive stamina, fucking the female until she orgasms and vanishes right off his dick. He then seeks a "
                                 + "new target for his unsatisfied cock.");
                 break;
             case impmale:
-                c.write("");
+                c.write(getSelf(), "");
                 break;
             case slime:
-                c.write(owner(), own() + "imp pins " + opponent.own()
+                c.write(getSelf(), own() + "imp pins " + opponent.own()
                                 + "slime under foot and lets his leaking cock drip onto the amorphous mass. As the slime absorbs the first drops of pre-cum, it starts to "
                                 + "frantically attempt to reach the imp's penis. It seems unable to change shape though and the demon keeps it pinned while letting more pre-cum drip down. After absorbing enough "
                                 + "fluid, the slime's color darkens and it gradually solidifies, unable to move.");
@@ -122,7 +56,7 @@ public class ImpMale extends Pet {
             default:
                 break;
         }
-        opponent.remove();
+        c.removePet(getSelf());
     }
 
     @Override
@@ -132,13 +66,22 @@ public class ImpMale extends Pet {
                             + " shoves your imp to the floor and pins its cock under her foot. She grinds her foot, lubricated with the pre-cum that's streaming from "
                             + "your minion's erection. The imp jabbers incoherently as it shoots its load and disappears, leaving only a puddle of cum.");
         } else if (captor.human()) {
-            c.write("");
+            c.write(getSelf(), "");
         }
-        remove();
+        c.removePet(getSelf());
     }
 
     @Override
-    public boolean hasDick() {
-        return true;
+    protected void buildSelf() {
+        PetCharacter self = new PetCharacter(this, owner().nameOrPossessivePronoun() + getName(), getName(), new Growth(), power);
+        // imps are about as tall as goblins, maybe a bit shorter
+        self.body.setHeight(115);
+        self.body.finishBody(CharacterSex.male);
+        self.learn(new ImpAssault(self));
+        self.learn(new ImpTease(self));
+        self.learn(new ImpStrip(self));
+        self.learn(new ImpFacesit(self));
+        self.learn(new ImpSemenSquirt(self));
+        setSelf(self);
     }
 }

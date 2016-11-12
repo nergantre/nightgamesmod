@@ -17,7 +17,7 @@ public class TemptressRide extends Thrust {
 
     @Override
     public BodyPart getSelfOrgan(Combat c) {
-        if (c.getStance().vaginallyPenetratedBy(getSelf(), c.getOther(getSelf()))) {
+        if (c.getStance().vaginallyPenetratedBy(getSelf(), c.getOpponent(getSelf()))) {
             return getSelf().body.getRandomPussy();
         }
         return null;

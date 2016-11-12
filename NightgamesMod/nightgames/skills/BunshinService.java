@@ -51,10 +51,10 @@ public class BunshinService extends Skill {
         getSelf().buildMojo(c, (5 - clones) * 4);
         Result r;
         if(getSelf().human()){
-            c.write(String.format("You form %d shadow clones and rush forward.",clones));
+            c.write(getSelf(), String.format("You form %d shadow clones and rush forward.",clones));
         }
         else if(c.shouldPrintReceive(target)){
-            c.write(String.format("%s moves in a blur and suddenly %s %d of %s approaching %s.",getSelf().name(),
+            c.write(getSelf(), String.format("%s moves in a blur and suddenly %s %d of %s approaching %s.",getSelf().name(),
                             target.subjectAction("see"),clones,getSelf().pronoun(),target.reflectivePronoun()));
         }
         for (int i = 0; i < clones; i++) {

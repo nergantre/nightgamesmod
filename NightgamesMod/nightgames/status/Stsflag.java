@@ -52,6 +52,7 @@ public enum Stsflag {
     seeded,
     tied,
     drowsy,
+    inserted,
     tailsucked,
     aggressive,
     divinerecoil,

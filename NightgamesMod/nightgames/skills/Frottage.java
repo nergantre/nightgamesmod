@@ -38,7 +38,7 @@ public class Frottage extends Skill {
 
     @Override
     public int getMojoBuilt(Combat c) {
-        return 15;
+        return 10;
     }
 
     @Override

@@ -4,7 +4,6 @@ import static nightgames.requirements.RequirementShortcuts.bodypart;
 import static nightgames.requirements.RequirementShortcuts.not;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import nightgames.characters.Attribute;
@@ -21,7 +20,6 @@ import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
 import nightgames.global.Global;
 import nightgames.items.Item;
-import nightgames.items.Loot;
 import nightgames.requirements.BodyPartRequirement;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;

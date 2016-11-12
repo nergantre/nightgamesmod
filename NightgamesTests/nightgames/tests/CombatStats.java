@@ -109,7 +109,7 @@ public class CombatStats {
 
     public static void main(String[] args) {
         new Global(true);
-        Global.newGame("Dummy");
+        Global.newGame("TestPlayer", Optional.empty(), new ArrayList<>(), CharacterSex.asexual, new HashMap<>());
         Setup s1 = new Setup(1);
         // new CombatStats(s1).test();
 
@@ -200,7 +200,7 @@ public class CombatStats {
                 c.modMoney(level * 500);
                 Global.day = new Daytime(new Player("<player>"));
                 Global.day.advance(999);
-                Global.day.plan(true);
+                Global.day.plan();
             });
 
             return combatants;

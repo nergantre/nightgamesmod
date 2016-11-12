@@ -43,8 +43,8 @@ public class Invitation extends Skill {
     @Override
     public int getMojoCost(Combat c) {
         //Free if user is Kat and player has Breeder
-        if (!c.getOther(getSelf()).human() || !Global.getPlayer().checkAddiction(AddictionType.BREEDER, getSelf()))
-            return 30;
+        if (!c.getOpponent(getSelf()).human() || !Global.getPlayer().checkAddiction(AddictionType.BREEDER, getSelf()))
+            return 50;
         return 0;
     }
 

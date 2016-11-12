@@ -17,7 +17,7 @@ public class Tripline implements Trap {
         if (target.human()) {
             if (!target.check(Attribute.Perception, 20 - target.get(Attribute.Perception) + target.baseDisarm())) {
                 Global.gui().message("You trip over a line of cord and fall on your face.");
-                target.pain(null, m);
+                target.pain(null, null, m);
                 target.location().opportunity(target, this);
             } else {
                 Global.gui().message("You spot a line strung across the corridor and carefully step over it.");
@@ -29,7 +29,7 @@ public class Tripline implements Trap {
                     Global.gui().message(target.name()
                                     + " carelessly stumbles over the tripwire and lands with an audible thud.");
                 }
-                target.pain(null, m);
+                target.pain(null, null, m);
                 target.location().opportunity(target, this);
             }
         }

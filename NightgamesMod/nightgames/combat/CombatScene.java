@@ -24,11 +24,11 @@ public class CombatScene {
     }
 
     public void visit(Combat c, Character npc) {
-        Global.gui().message(message.provide(c, npc, c.getOther(npc)));
+        Global.gui().message(message.provide(c, npc, c.getOpponent(npc)));
         choices.forEach(choice -> Global.gui().choose(c, npc, choice.getChoice(), choice));
     }
 
     public boolean meetsRequirements(Combat c, NPC npc) {
-        return requirement.meets(c, npc, c.getOther(npc));
+        return requirement.meets(c, npc, c.getOpponent(npc));
     }
 }

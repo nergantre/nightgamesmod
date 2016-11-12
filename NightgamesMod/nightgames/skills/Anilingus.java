@@ -152,7 +152,7 @@ public class Anilingus extends Skill {
     @Override
     public String getLabel(Combat c) {
         Optional<BodyFetish> fetish = getSelf().body.getFetish("ass");
-        boolean worship = c.getOther(getSelf()).has(Trait.objectOfWorship);
+        boolean worship = c.getOpponent(getSelf()).has(Trait.objectOfWorship);
         boolean enthralled = getSelf().is(Stsflag.enthralled);
         return fetish.isPresent() || worship || enthralled ? worshipString : "Lick Ass";
     }

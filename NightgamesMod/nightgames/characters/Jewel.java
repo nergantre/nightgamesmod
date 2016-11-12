@@ -48,6 +48,7 @@ public class Jewel extends BasePersonality {
         character.mod(Attribute.Power, 2);
         character.mod(Attribute.Speed, 1);
         Global.gainSkills(character);
+        character.getMojo().setMax(80);
 
         getCharacter().addPersonalStrategy(new FootjobStrategy());
         getCharacter().addPersonalStrategy(new FacesitStrategy());
@@ -70,10 +71,8 @@ public class Jewel extends BasePersonality {
     public void setGrowth() {
         growth.stamina = 3;
         growth.arousal = 3;
-        growth.mojo = 1;
         growth.bonusStamina = 3;
         growth.bonusArousal = 1;
-        growth.bonusMojo = 1;
         growth.willpower = .7f;
         preferredAttributes.add(c -> c.get(Attribute.Ki) < 15 ? Optional.of(Attribute.Ki) : Optional.empty());
         preferredAttributes.add(c -> c.get(Attribute.Ki) >= 15 && c.get(Attribute.Fetish) < 100
@@ -178,8 +177,8 @@ public class Jewel extends BasePersonality {
     public String taunt(Combat c) {
         if (character.has(Trait.bitingwords) && c.getStance().dom(character)) {
             ArrayList<String> possible = new ArrayList<>(); 
-            Character other = c.getOther(character);
-            possible.add("Jewel looks down at you with a sadistic smirk, <i>\"That's a nice look on you there " + c.getOther(character).getName() + ".\"</i>");
+            Character other = c.getOpponent(character);
+            possible.add("Jewel looks down at you with a sadistic smirk, <i>\"That's a nice look on you there " + c.getOpponent(character).getName() + ".\"</i>");
             possible.add("Shifting her weight a bit to glare into your eyes, Jewel says happily, <i>\"Aha, it looks like you're quite comfortable there. Maybe you're a natural bottom?\"</i>");
             if (other.hasBalls()) {
                 possible.add("Jewel cups your vulnerable balls and gives them a light squeeze. <i>\"Worthless boys like you should just give up. Why even try when you end up as my seat every time?\"</i>");
@@ -196,7 +195,7 @@ public class Jewel extends BasePersonality {
 
     @Override
     public String victory(Combat c, Result flag) {
-        Character other = c.getOther(character);
+        Character other = c.getOpponent(character);
         Collection<BodyPart> selfOrgans = c.getStance().partsFor(character);
         Collection<BodyPart> otherOrgans = c.getStance().partsFor(other);
         if (BodyPart.hasType(otherOrgans, "ass") && c.getStance().anallyPenetrated(other)) {
@@ -329,7 +328,7 @@ public class Jewel extends BasePersonality {
 
     @Override
     public String defeat(Combat c, Result flag) {
-        Character other = c.getOther(character);
+        Character other = c.getOpponent(character);
         if (character.has(Trait.fighter)) {
             return "Jewel falters as her arousal begins to overwhelm her. You manage to force her to the ground and pin her hands. You press your thigh against her slick pussy, "
                             + "making her moan in pleasure. You rub her with your leg and suck on her neck until she can't resist grinding against you. She climaxes with a scream and you kiss "
@@ -476,7 +475,7 @@ public class Jewel extends BasePersonality {
 
     @Override
     public String intervene3p(Combat c, Character target, Character assist) {
-        Character other= c.getOther(character);
+        Character other= c.getOpponent(character);
         String vulnerability= other.hasBalls() ?"balls. You fall to the floor" :other.hasPussy() ?"pussy. You fall to the floor": other.hasBreasts() ?"breasts. You cringe" :"face. You cower";
         if (target.human()) {
             return "You skillfully force " + assist.name()
@@ -549,7 +548,7 @@ public class Jewel extends BasePersonality {
 
     @Override
     public String makeOrgasmLiner(Combat c) {
-        return "<i>\"Heh, no matter what, you're just a horny " + c.getOther(character).boyOrGirl()
+        return "<i>\"Heh, no matter what, you're just a horny " + c.getOpponent(character).boyOrGirl()
                         + " aren'tcha? Come on, no time for rest, let's see how many times in a row you can cum\"</i>";
     }
 }

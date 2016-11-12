@@ -19,7 +19,7 @@ public class FacesitStrategy extends KnockdownThenActionStrategy {
         if (self.getMood().equals(Emotion.dominant)) {
             weight *= 2;
         }
-        if (!(new FaceSit(self)).requirements(c, self, c.getOther(self))) {
+        if (!(new FaceSit(self)).requirements(c, self, c.getOpponent(self))) {
             weight = 0;
         }
         return weight;

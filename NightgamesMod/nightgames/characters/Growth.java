@@ -12,10 +12,8 @@ import nightgames.global.Global;
 public class Growth {
     public float arousal;
     public float stamina;
-    public float mojo;
     public float bonusArousal;
     public float bonusStamina;
-    public float bonusMojo;
     public int attributes[];
     public int bonusAttributes;
     public float willpower;
@@ -26,10 +24,8 @@ public class Growth {
     public Growth() {
         stamina = 2;
         arousal = 4;
-        mojo = 1;
         bonusStamina = 2;
         bonusArousal = 3;
-        bonusMojo = 1;
         bonusAttributes = 1;
         willpower = .5f;
         bonusWillpower = .25f;
@@ -54,7 +50,6 @@ public class Growth {
     public void levelUp(Character character) {
         character.getStamina().gain(stamina);
         character.getArousal().gain(arousal);
-        character.getMojo().gain(mojo);
         character.getWillpower().gain(willpower);
 
         character.availableAttributePoints += attributes[Math.min(character.rank, attributes.length-1)];
@@ -62,7 +57,6 @@ public class Growth {
         if (Global.checkFlag(Flag.hardmode)) {
             character.getStamina().gain(bonusStamina);
             character.getArousal().gain(bonusArousal);
-            character.getMojo().gain(bonusMojo);
             character.getWillpower().gain(bonusWillpower);
             character.availableAttributePoints += bonusAttributes;
         }

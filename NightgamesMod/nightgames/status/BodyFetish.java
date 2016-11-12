@@ -69,7 +69,7 @@ public class BodyFetish extends DurationStatus {
         }
         String magString = Global.formatDecimal(magnitude);
         if (affected.human()) {
-            if (origin != null && c != null && c.getOther(affected) == origin) {
+            if (origin != null && c != null && c.getOpponent(affected) == origin) {
                 return Global.capitalizeFirstLetter(
                                 desc + "fantasies of worshipping " + origin.nameOrPossessivePronoun() + " " + part
                                                 + " run through your mind (" + magString + ").");

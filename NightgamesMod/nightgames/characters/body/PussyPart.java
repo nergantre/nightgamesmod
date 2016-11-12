@@ -358,12 +358,12 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                                 "The heat emanating from %s %s is extremely hazardous for %s %s, nearly burning through its circuitry and definitely causing intense pain.",
                                 self.nameOrPossessivePronoun(), describe(self), opponent.nameOrPossessivePronoun(),
                                 target.describe(opponent)));
-                opponent.pain(c, Math.max(30, 20 + self.get(Attribute.Ki)));
+                opponent.pain(c, opponent, Math.max(30, 20 + self.get(Attribute.Ki)));
             } else {
                 c.write(self, String.format("Plugging %s %s into %s %s leaves %s gasping from the heat.",
                                 opponent.possessivePronoun(), target.describe(opponent), self.possessivePronoun(),
                                 describe(self), opponent.directObject()));
-                opponent.pain(c, 20 + self.get(Attribute.Ki) / 2);
+                opponent.pain(c, opponent, 20 + self.get(Attribute.Ki) / 2);
             }
         }
         if (countsAs(self, arcane)) {

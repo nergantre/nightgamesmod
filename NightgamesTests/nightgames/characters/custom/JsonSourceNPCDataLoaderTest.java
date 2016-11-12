@@ -134,8 +134,6 @@ public class JsonSourceNPCDataLoaderTest {
         expectedGrowth.bonusStamina = 2;
         expectedGrowth.arousal = 3;
         expectedGrowth.bonusArousal = 4;
-        expectedGrowth.mojo = 5;
-        expectedGrowth.bonusMojo = 6;
         expectedGrowth.willpower = 7.5f;
         expectedGrowth.bonusWillpower = 8.5f;
         expectedGrowth.attributes = new int[] {9, 10, 11, 11};

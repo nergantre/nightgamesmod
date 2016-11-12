@@ -70,7 +70,7 @@ public class Trip extends Skill {
         return Math.round(Math.max(
                         Math.min(150, 2.5f
                                         * (getSelf().get(Attribute.Cunning)
-                                                        - c.getOther(getSelf()).get(Attribute.Cunning))
+                                                        - c.getOpponent(getSelf()).get(Attribute.Cunning))
                                         + (isSlime() ? 100 : 75)),
                         isSlime() ? 70 : 40));
     }

@@ -28,7 +28,7 @@ public class ResourceEffect extends ItemEffect {
         } else if (type.equals("lose")) {
             user.loseMojo(c, amt);
         } else if (type.equals("pain")) {
-            user.pain(c, amt);
+            user.pain(c, opponent, amt);
         } else if (type.equals("wprestore")) {
             user.restoreWillpower(c, amt);
         } else if (type.equals("wplose")) {

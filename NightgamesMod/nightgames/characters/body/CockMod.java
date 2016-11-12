@@ -114,7 +114,7 @@ public enum CockMod implements BodyPartMod {
                                 " %s %s does not oblige, instead sending a pulse of electricity through %s %s and up %s spine",
                                 opponent.nameOrPossessivePronoun(), target.describe(opponent),
                                 self.nameOrPossessivePronoun(), part.describe(self), self.possessivePronoun());
-                self.pain(c, Global.random(9) + 4);
+                self.pain(c, opponent, Global.random(9) + 4);
                 amtDrained = 0;
             } else {
                 message += String.format(" Despite %s best efforts, some of the elusive energy passes into %s.",

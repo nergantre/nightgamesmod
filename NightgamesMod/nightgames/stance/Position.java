@@ -94,6 +94,10 @@ public abstract class Position implements Cloneable {
 
     public abstract boolean inserted(Character c);
 
+    public boolean penisInserted(Character c) {
+        return inserted(c) || c.is(Stsflag.inserted);
+    }
+
     public abstract String image();
 
     public boolean inserted() {

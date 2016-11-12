@@ -26,7 +26,7 @@ public class Tied extends DurationStatus {
         }
 
         return String.format("%s squirms against the rope, but %s %s tied it well.", affected.subject(),
-                        c.getOther(affected).subjectAction("know"), c.getOther(affected).pronoun());
+                        c.getOpponent(affected).subjectAction("know"), c.getOpponent(affected).pronoun());
     }
 
     @Override

@@ -47,7 +47,7 @@ public class Nurple extends Skill {
             } else {
                 writeOutput(c, Result.normal, target);
             }
-            target.pain(c, (int) getSelf().modifyDamage(damageType, target, m));
+            target.pain(c, getSelf(), (int) getSelf().modifyDamage(damageType, target, m));
             target.loseMojo(c, (int) getSelf().modifyDamage(DamageType.technique, target, 5));
             target.emote(Emotion.angry, 15);
         } else {

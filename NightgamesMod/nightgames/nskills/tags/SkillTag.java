@@ -67,6 +67,7 @@ public abstract class SkillTag {
                     (results, value) -> results.getSelf().getCharacter().crotchAvailable(), "NakedCrotch");
     public final static SkillTag foreplay = new NameOnlySkillTag("Foreplay");
     public final static SkillTag defensive = new NameOnlySkillTag("Defensive");
+    public final static SkillTag helping = new NameOnlySkillTag("Helping");
     public final static SkillTag buff = new NameOnlySkillTag("Buff");
     public final static SkillTag debuff = new NameOnlySkillTag("Debuff");
     public final static SkillTag physical = new NameOnlySkillTag("Physical");
@@ -103,6 +104,8 @@ public abstract class SkillTag {
     public final static SkillTag arouse = new NameOnlySkillTag("Arouse");
     public final static SkillTag hurt = new NameOnlySkillTag("Hurt");
     public final static SkillTag weaken = new NameOnlySkillTag("Weaken");
+    public final static SkillTag heal = new NameOnlySkillTag("Heal");
+    public final static SkillTag calm = new NameOnlySkillTag("Calm");
     public final static SkillTag drain = new NameOnlySkillTag("Drain");
     public final static SkillTag mojoBuilding = new NameOnlySkillTag("MojoBuilding");
     public final static SkillTag mojoCosting = new NameOnlySkillTag("MojoCosting");

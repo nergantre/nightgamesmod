@@ -25,7 +25,7 @@ public class SpawnImp extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().canAct() && c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf())
-                        && getSelf().pet == null;
+                        && c.getPetsFor(getSelf()).isEmpty();
     }
 
     @Override
@@ -41,7 +41,7 @@ public class SpawnImp extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         getSelf().arouse(5, c);
-        int power = 8 + getSelf().get(Attribute.Dark) / 10;
+        int power = 10 + getSelf().get(Attribute.Dark) / 2;
         int ac = 2 + getSelf().get(Attribute.Dark) / 10;
         if (getSelf().has(Trait.leadership)) {
             power += 5;
@@ -52,15 +52,15 @@ public class SpawnImp extends Skill {
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
             if (gender == Ptype.impfem) {
-                getSelf().pet = new ImpFem(getSelf(), power, ac);
+                c.addPet(new ImpFem(getSelf(), power, ac).getSelf());
             } else {
-                getSelf().pet = new ImpMale(getSelf(), power, ac);
+                c.addPet(new ImpMale(getSelf(), power, ac).getSelf());
             }
         } else {
             if (target.human()) {
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             }
-            getSelf().pet = new ImpFem(getSelf(), power, ac);
+            c.addPet(new ImpFem(getSelf(), power, ac).getSelf());
         }
         return true;
     }

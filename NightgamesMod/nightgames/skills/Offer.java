@@ -34,7 +34,7 @@ public class Offer extends Skill {
 
     @Override
     public String describe(Combat c) {
-        Character other = c.getOther(getSelf());
+        Character other = c.getOpponent(getSelf());
         return other.hasDick() || other.has(Trait.strapped)
                         ? "Offer your " + (getSelf().hasPussy() ? "pussy" : "ass") + " to " + other.possessivePronoun()
                                         + "'s " + other.body.getRandomInsertable().describe(other)

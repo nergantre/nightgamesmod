@@ -40,7 +40,7 @@ public class Struggle extends Skill {
     public boolean resolve(Combat c, Character target) {
         if (getSelf().bound()) {
             Bound status = (Bound) target.getStatus(Stsflag.bound);
-            if (getSelf().check(Attribute.Power, -getSelf().escape(c))) {
+            if (getSelf().check(Attribute.Power, -getSelf().escape(c, target))) {
                 if (getSelf().human()) {
                     if (status != null) {
                         c.write(getSelf(), "You manage to break free from the " + status + ".");
@@ -80,14 +80,14 @@ public class Struggle extends Skill {
                 if (getSelf().check(Attribute.Power,
                                 target.getStamina().get() / 2 - getSelf().getStamina().get() / 2
                                                 + target.get(Attribute.Power) - getSelf().get(Attribute.Power)
-                                                - getSelf().escape(c) + diffMod)) {
+                                                - getSelf().escape(c, target) + diffMod)) {
                     if (getSelf().human()) {
                         if (knotted) {
                             c.write(getSelf(), "With a herculean effort, you painfully force "
                                             + target.possessivePronoun()
                                             + " knot through your asshole, and the rest of her dick soon follows.");
                             getSelf().removeStatus(Stsflag.knotted);
-                            target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, 10));
+                            target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, 10));
                         } else {
                             c.write(getSelf(), "You manage to break away from " + target.name() + ".");
                         }
@@ -98,7 +98,7 @@ public class Struggle extends Skill {
                                             target.nameDirectObject(), target.possessivePronoun(),
                                             getSelf().possessivePronoun()));
                             getSelf().removeStatus(Stsflag.knotted);
-                            target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, 10));
+                            target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, 10));
                         } else {
                             c.write(getSelf(), String.format("%s pulls away from %s and"
                                             + " %s dick slides out of %s butt.",
@@ -142,7 +142,7 @@ public class Struggle extends Skill {
                 if (getSelf().check(Attribute.Power,
                                 target.getStamina().get() / 2 - getSelf().getStamina().get() / 2
                                                 + target.get(Attribute.Power) - getSelf().get(Attribute.Power)
-                                                - getSelf().escape(c) + diffMod)) {
+                                                - getSelf().escape(c, target) + diffMod)) {
                     if (getSelf().hasStatus(Stsflag.cockbound)) {
                         CockBound s = (CockBound) getSelf().getStatus(Stsflag.cockbound);
                         c.write(getSelf(),
@@ -160,7 +160,7 @@ public class Struggle extends Skill {
                                         Global.format("{self:subject} somehow {self:SUBJECT-ACTION:manage|manages} to force {other:possessive} knot through {self:possessive} tight opening, stretching it painfully in the process.",
                                                         getSelf(), target));
                         getSelf().removeStatus(Stsflag.knotted);
-                        getSelf().pain(c, 10);
+                        getSelf().pain(c, getSelf(), 10);
                     }
                     boolean reverseStrapped = BodyPart.hasOnlyType(c.getStance().partsFor(target), "strapon");
                     boolean reversedStance = false;
@@ -222,7 +222,7 @@ public class Struggle extends Skill {
             }
         } else {
             if (getSelf().check(Attribute.Power, target.getStamina().get() / 2 - getSelf().getStamina().get() / 2
-                            + target.get(Attribute.Power) - getSelf().get(Attribute.Power) - getSelf().escape(c))) {
+                            + target.get(Attribute.Power) - getSelf().get(Attribute.Power) - getSelf().escape(c, target))) {
                 if (getSelf().human()) {
                     c.write(getSelf(), "You manage to scrabble out of " + target.name() + "'s grip.");
                 } else if (c.shouldPrintReceive(target)) {

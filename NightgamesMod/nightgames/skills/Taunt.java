@@ -28,7 +28,7 @@ public class Taunt extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         writeOutput(c, Result.normal, target);
-        double m = (6 + Global.random(4) + getSelf().body.getHotness(getSelf(), target)) / 3
+        double m = (6 + Global.random(4) + getSelf().body.getHotness(target)) / 3
                         * Math.min(2, 1 + target.getExposure());
         double chance = .25;
         if (target.has(Trait.imagination)) {

@@ -16,7 +16,7 @@ public class WindUpStrategy extends AbstractStrategy {
     @Override
     public double weight(Combat c, Character self) {
         double weight = 2;
-        if ((WINDUP).requirements(c, c.getOther(self)) && Primed.isPrimed(self, 2)) {
+        if ((WINDUP).requirements(c, c.getOpponent(self)) && Primed.isPrimed(self, 2)) {
             return 0;
         }
         return weight;

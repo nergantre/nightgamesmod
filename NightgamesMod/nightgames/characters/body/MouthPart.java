@@ -106,7 +106,7 @@ public class MouthPart extends GenericBodyPart {
                             self, opponent));
 
             bonus += Global.random(3) + 4;
-            opponent.pain(c, 8 + Global.random(10), false, true);
+            opponent.pain(c, opponent, 8 + Global.random(10), false, true);
         }
         if (self.has(Trait.corrupting)) {
             opponent.add(c, new PartiallyCorrupted(self));
