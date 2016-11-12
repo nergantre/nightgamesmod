@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Observable;
 import java.util.Optional;
 import java.util.Set;
@@ -1426,7 +1427,8 @@ public abstract class Character extends Observable implements Cloneable {
 
         {
             traits = new CopyOnWriteArrayList<>(
-                            JsonUtils.collectionFromJson(object.getAsJsonArray("traits"), Trait.class));
+                            JsonUtils.collectionFromJson(object.getAsJsonArray("traits"), Trait.class).stream()
+                            .filter(Objects::isNull).collect(Collectors.toList()));
             if (getType().equals("Airi"))
                 traits.remove(Trait.slime);
         }
