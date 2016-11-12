@@ -44,9 +44,9 @@ public class Maya extends BasePersonality {
         character.set(Attribute.Speed, 17);
         character.set(Attribute.Power, 36);
         character.set(Attribute.Hypnosis, 8);
-        character.getStamina().setMax(250);
-        character.getArousal().setMax(600);
-        character.getMojo().setMax(350);
+        character.getStamina().setMax(90 + character.getLevel() * getGrowth().stamina);
+        character.getArousal().setMax(150 + character.getLevel() * getGrowth().arousal);
+        character.getMojo().setMax(150);
         character.getWillpower().setMax(100);
         character.add(Trait.darkpromises);
         character.add(Trait.tongueTraining1);
@@ -87,11 +87,9 @@ public class Maya extends BasePersonality {
     public void setGrowth() {
         growth.stamina = 2;
         growth.arousal = 5;
-        growth.mojo = 5;
         growth.willpower = 1;
         growth.bonusStamina = 2;
         growth.bonusArousal = 5;
-        growth.bonusMojo = 5;
     }
 
     @Override
@@ -116,7 +114,7 @@ public class Maya extends BasePersonality {
 
     @Override
     public String victory(Combat c, Result flag) {
-        Character target = c.getOther(character);
+        Character target = c.getOpponent(character);
         target.add(c, new Drowsy(target));
         character.arousal.empty();
         character.add(c, new Energized(character, 10));
@@ -243,7 +241,7 @@ public class Maya extends BasePersonality {
 
     @Override
     public String draw(Combat c, Result flag) {
-        Character target = c.getOther(character);
+        Character target = c.getOpponent(character);
         if (target.human()) {
             Global.flag(Flag.Clue1);
         }

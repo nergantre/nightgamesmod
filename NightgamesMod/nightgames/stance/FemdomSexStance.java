@@ -72,4 +72,8 @@ public abstract class FemdomSexStance extends Position {
     public double pheromoneMod(Character self) {
         return 3;
     }
+    @Override
+    public int distance() {
+        return 1;
+    }
 }

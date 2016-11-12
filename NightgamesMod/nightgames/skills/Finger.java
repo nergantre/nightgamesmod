@@ -7,11 +7,15 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.nskills.tags.SkillTag;
+import nightgames.stance.Stance;
 
 public class Finger extends Skill {
 
     public Finger(Character self) {
         super("Finger", self);
+        addTag(SkillTag.usesHands);
+        addTag(SkillTag.pleasure);
     }
 
     @Override
@@ -25,7 +29,7 @@ public class Finger extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         if (target.roll(this, c, accuracy(c))) {
-            int m = 6 + Global.random(4);
+            int m = Global.random(8, 13);
             if (getSelf().get(Attribute.Seduction) >= 8) {
                 m += 6;
                 if (getSelf().human()) {
@@ -58,7 +62,7 @@ public class Finger extends Skill {
 
     @Override
     public int accuracy(Combat c) {
-        return 95;
+        return c.getStance().en == Stance.neutral ? 35 : 100;
     }
 
     @Override
@@ -112,7 +116,7 @@ public class Finger extends Skill {
                             + "%s doesn't know where %s the most sensitive, so %s rubs and "
                             + "strokes every bit of %s moist flesh under %s fingers.",
                             getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().pronoun(),
-                            getSelf().subject(), target.subject(), getSelf().pronoun(),
+                            getSelf().subject(), target.subjectAction("are", "is"), getSelf().pronoun(),
                             target.possessivePronoun(), getSelf().possessivePronoun());
         } else {
             if (target.getArousal().get() <= 15) {
@@ -139,7 +143,7 @@ public class Finger extends Skill {
 
     @Override
     public String describe(Combat c) {
-        return "Digitally stimulate opponent's pussy";
+        return "Digitally stimulate opponent's pussy, difficult to land without pinning her down.";
     }
 
     @Override

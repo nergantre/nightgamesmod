@@ -54,7 +54,7 @@ public class LewdSuggestion extends Skill {
             c.write(getSelf(), receive(c, 0, Result.normal, target));
         }
 
-        target.add(c, new Horny(target, 10, 4, "Hypnosis"));
+        target.add(c, Horny.getWithPsycologicalType(getSelf(), target, 10, 4, "Hypnosis"));
         target.emote(Emotion.horny, 30);
         return true;
     }

@@ -53,6 +53,10 @@ public class Eve extends BasePersonality {
         character.body.add(BreastsPart.d);
         character.body.add(BasicCockPart.big);
         character.body.add(PussyPart.normal);
+        character.getMojo().setMax(120);
+
+        character.getStamina().setMax(90 + character.getLevel() * getGrowth().stamina);
+        character.getArousal().setMax(80 + character.getLevel() * getGrowth().arousal);
         // somewhat androgynous face
         character.body.add(new FacePart(.1, .9));
         character.initialGender = CharacterSex.herm;
@@ -63,10 +67,8 @@ public class Eve extends BasePersonality {
     public void setGrowth() {
         growth.stamina = 2;
         growth.arousal = 3;
-        growth.mojo = 2;
         growth.bonusStamina = 1;
         growth.bonusArousal = 3;
-        growth.bonusMojo = 2;
         preferredAttributes.add(c -> c.get(Attribute.Fetish) < 80 ? Optional.of(Attribute.Fetish) : Optional.empty());
         preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
         growth.addTrait(2, Trait.alwaysready);
@@ -120,23 +122,13 @@ public class Eve extends BasePersonality {
         }
         Decider.visit(character);
         int r;
+
         for (int i = 0; i < time; i++) {
-            r = Global.random(4);
+            r = Global.random(8);
             if (r == 1) {
-                if (character.has(Trait.fitnessNut)) {
-                    character.getStamina().gain(2);
-                }
-                character.getStamina().gain(2);
-            } else if (r == 3) {
-                if (character.has(Trait.expertGoogler)) {
-                    character.getArousal().gain(5);
-                }
-                character.getArousal().gain(5);
-            } else if (r == 2) {
-                if (character.has(Trait.mojoMaster)) {
-                    character.getMojo().gain(2);
-                }
-                character.getMojo().gain(2);
+                Global.getDay().visit("Exercise", this.character, 0);
+            } else if (r == 0) {
+                Global.getDay().visit("Browse Porn Sites", this.character, 0);
             }
         }
     }
@@ -169,7 +161,7 @@ public class Eve extends BasePersonality {
     @Override
     public String victory(Combat c, Result flag) {
         character.arousal.empty();
-        if (c.getStance().anallyPenetratedBy(c.getOther(character), character)) {
+        if (c.getStance().anallyPenetratedBy(c.getOpponent(character), character)) {
             return "As Eve pounds you mercilessly in the ass, your body is overwhelmed"
                             + " by the strange sensations radiating from your insides. <i>\"How"
                             + " does your prostate feel? I could probably milk you like this, but"
@@ -412,7 +404,7 @@ public class Eve extends BasePersonality {
 
     @Override
     public String orgasmLiner(Combat c) {
-        if (c.getStance().anallyPenetrated(c.getOther(character))) {
+        if (c.getStance().anallyPenetrated(c.getOpponent(character))) {
             return "<i>\"Oh fuck! You are one tight little cum bucket! Let's go again!\"</i>"
                             + " Eve immediately resumes her thrusting.";
         }
@@ -421,7 +413,7 @@ public class Eve extends BasePersonality {
 
     @Override
     public String makeOrgasmLiner(Combat c) {
-        if (c.getStance().anallyPenetrated(c.getOther(character))) {
+        if (c.getStance().anallyPenetrated(c.getOpponent(character))) {
             return "Eve laughs maniacally as you cum. <i>\"I knew you'd like it"
                             + ", you little ass slut! But you're not done yet!\"</i>";
         }

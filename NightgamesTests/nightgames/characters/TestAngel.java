@@ -103,10 +103,8 @@ public class TestAngel extends BasePersonality {
     @Override public void setGrowth() {
         growth.stamina = 1;
         growth.arousal = 5;
-        growth.mojo = 1;
         growth.bonusStamina = 1;
         growth.bonusArousal = 4;
-        growth.bonusMojo = 1;
         growth.addTrait(3, Trait.alwaysready);
         growth.addTrait(9, Trait.pussyTraining1);
         growth.addTrait(12, Trait.expertGoogler);
@@ -304,7 +302,7 @@ public class TestAngel extends BasePersonality {
     }
 
     @Override public String defeat(Combat c, Result flag) {
-        Character opponent = c.getOther(character);
+        Character opponent = c.getOpponent(character);
         if (c.getStance().vaginallyPenetrated(character)) {
             return "You thrust your cock continously into Angel's dripping pussy. Her hot insides feel amazing, but you're sure you have enough of an advantage to risk "
                             + "it. She lets out breathy moans in time to your thrusts and her arms are trembling too much to hold herself up. She's clearly about to cum, you just "

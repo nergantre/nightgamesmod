@@ -18,6 +18,11 @@ import nightgames.actions.Shortcut;
 import nightgames.areas.Area;
 import nightgames.areas.Deployable;
 import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.BreastsPart;
+import nightgames.characters.body.CockMod;
+import nightgames.characters.body.GenericBodyPart;
+import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.TentaclePart;
 import nightgames.combat.Combat;
 import nightgames.combat.IEncounter;
 import nightgames.combat.Result;
@@ -31,6 +36,7 @@ import nightgames.items.clothing.Clothing;
 import nightgames.skills.Skill;
 import nightgames.skills.Stage;
 import nightgames.skills.Tactics;
+import nightgames.skills.damage.DamageType;
 import nightgames.stance.Behind;
 import nightgames.stance.Neutral;
 import nightgames.stance.Position;
@@ -38,6 +44,7 @@ import nightgames.start.PlayerConfiguration;
 import nightgames.status.Enthralled;
 import nightgames.status.Horny;
 import nightgames.status.Masochistic;
+import nightgames.status.PlayerSlimeDummy;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
 import nightgames.status.addiction.Addiction;
@@ -76,6 +83,8 @@ public class Player extends Character {
         outfitPlan.add(Clothing.getByID("jeans"));
         outfitPlan.add(Clothing.getByID("socks"));
         outfitPlan.add(Clothing.getByID("sneakers"));
+        getStamina().setMax(80 + getLevel() * getGrowth().stamina);
+        getArousal().setMax(80 + getLevel() * getGrowth().arousal);
         config.ifPresent(this::applyConfigStats);
         finishCharacter(pickedTraits, selectedAttributes);
 
@@ -104,10 +113,8 @@ public class Player extends Character {
     public void setGrowth() {
         growth.stamina = 2;
         growth.arousal = 4;
-        growth.mojo = 2;
         growth.bonusStamina = 1;
         growth.bonusArousal = 2;
-        growth.bonusMojo = 1;
         growth.attributes = new int[]{2, 3, 3, 3};
     }
 
@@ -144,9 +151,7 @@ public class Player extends Character {
         description = description + outfit.describe(this);
         if (per >= 5 && status.size() > 0) {
             description += "<br>List of statuses:<br><i>";
-            for (Status s : status) {
-                description += s + ", ";
-            }
+            description += status.stream().map(Status::toString).collect(Collectors.joining(", "));
             description += "</i><br>";
         }
         description += Stage.describe(this);
@@ -159,10 +164,13 @@ public class Player extends Character {
         if (c.getStance()
              .inserted() && c.getStance()
                              .dom(this)) {
-            getMojo().gain(2);
+            getMojo().gain(1);
             if (has(Trait.mojoMaster)) {
-                getMojo().gain(2);
+                getMojo().gain(1);
             }
+        }
+        if (has(Trait.slime)) {
+            purge(c);
         }
         if (c.p1.human()) {
             c.p2.defeat(c, flag);
@@ -174,6 +182,9 @@ public class Player extends Character {
     @Override
     public void defeat(Combat c, Result flag) {
         c.write("Bad thing");
+        if (has(Trait.slime)) {
+            purge(c);
+        }
     }
 
     @Override
@@ -194,19 +205,14 @@ public class Player extends Character {
 
     @Override
     public void draw(Combat c, Result flag) {
-        if (c.getStance()
-             .inserted()) {
-            c.p1.getMojo()
-                .gain(3);
-            c.p2.getMojo()
-                .gain(3);
+        if (has(Trait.slime)) {
+            purge(c);
         }
         if (c.p1.human()) {
             c.p2.draw(c, flag);
         } else {
             c.p1.draw(c, flag);
         }
-
     }
 
     @Override
@@ -381,9 +387,7 @@ public class Player extends Character {
         level++;
         getStamina().gain(growth.stamina);
         getArousal().gain(growth.arousal);
-        getMojo().gain(growth.mojo);
         availableAttributePoints += growth.attributes[Math.min(rank, growth.attributes.length-1)];
-        getMojo().gain(1);
         gui.message("You've gained a Level!<br>Select which attributes to increase.");
         if (getLevel() % 3 == 0 && level < 10 || (getLevel() + 1) % 2 == 0 && level > 10) {
             traitPoints += 1;
@@ -618,7 +622,7 @@ public class Player extends Character {
             case damage:
                 c.write(this, "You dodge " + target.name()
                                 + "'s slow attack and hit her sensitive tit to stagger her.");
-                target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
+                target.pain(c, target, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
                 break;
             case pleasure:
                 if (!target.crotchAvailable() || !target.hasPussy()) {
@@ -663,14 +667,14 @@ public class Player extends Character {
                 } else {
                     c.write(this, "You manage to dodge " + target.possessivePronoun()
                                     + " groping hands and give a retaliating slap in return.");
-                    target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
+                    target.pain(c, target, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
                 }
                 break;
             case positioning:
                 if (c.getStance()
                      .dom(this)) {
                     c.write(this, "You outmanuever " + target.name() + " and you exhausted her from the struggle.");
-                    target.weaken(c, 10);
+                    target.weaken(c, (int) this.modifyDamage(DamageType.stance, target, 15));
                 } else {
                     c.write(this, target.name()
                                     + " loses her balance while grappling with you. Before she can fall to the floor, you catch her from behind and hold her up.");
@@ -680,30 +684,22 @@ public class Player extends Character {
             default:
                 c.write(this, "You manage to dodge " + target.possessivePronoun()
                                 + " attack and give a retaliating slap in return.");
-                target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
+                target.pain(c, target, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
         }
     }
 
     @Override
     public void eot(Combat c, Character opponent, Skill last) {
         super.eot(c, opponent, last);
-        if (opponent.pet != null && canAct() && c.getStance()
-                                                 .mobile(this)
-                        && !c.getStance()
-                             .prone(this)) {
-            if (get(Attribute.Speed) > opponent.pet.ac() * Global.random(20)) {
-                opponent.pet.caught(c, this);
-            }
-        }
         if (opponent.has(Trait.pheromones) && opponent.getArousal()
                                                       .percent() >= 20
                         && opponent.rollPheromones(c)) {
             c.write(opponent, "<br>Whenever you're near " + opponent.name()
                             + ", you feel your body heat up. Something in her scent is making you extremely horny.");
-            add(c, new Horny(this, opponent.getPheromonePower(), 10,
+            add(c, Horny.getWithBiologicalType(opponent, this, opponent.getPheromonePower(), 10,
                             opponent.nameOrPossessivePronoun() + " pheromones"));
         }
-        if (opponent.has(Trait.smqueen) && !is(Stsflag.masochism)) {
+        if (opponent.has(Trait.sadist) && !is(Stsflag.masochism)) {
             c.write("<br>"+Global.capitalizeFirstLetter(
                             String.format("%s seem to shudder in arousal at the thought of pain.", subject())));
             add(c, new Masochistic(this));
@@ -711,6 +707,20 @@ public class Player extends Character {
         if (has(Trait.RawSexuality)) {
             tempt(c, opponent, arousal.max() / 25);
             opponent.tempt(c, this, opponent.arousal.max() / 25);
+        }
+        if (has(Trait.slime)) {
+            if (hasPussy() && !body.getRandomPussy().moddedPartCountsAs(this, PussyPart.gooey)) {
+                body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
+                c.write(this, 
+                                Global.format("{self:NAME-POSSESSIVE} %s turned back into a gooey pussy.",
+                                                this, opponent, body.getRandomPussy()));
+            }
+            if (hasDick() && !body.getRandomCock().moddedPartCountsAs(this, CockMod.slimy)) {
+                body.temporaryAddOrReplacePartWithType(body.getRandomCock().applyMod(CockMod.slimy), 999);
+                c.write(this, 
+                                Global.format("{self:NAME-POSSESSIVE} %s turned back into a gooey pussy.",
+                                                this, opponent, body.getRandomPussy()));
+            }
         }
     }
 
@@ -921,7 +931,9 @@ public class Player extends Character {
             Character cause = Global.getCharacterByType(json.get("cause").getAsString());
             float mag = json.get("magnitude").getAsFloat();
             float combat = json.get("combat").getAsFloat();
-            Addiction addiction = Addiction.load(type, cause, mag, combat);
+            boolean overloading = json.has("overloading") ? json.get("overloading").getAsBoolean() : false;
+            boolean reenforced = json.has("reenforced") ? json.get("reenforced").getAsBoolean() : false;
+            Addiction addiction = Addiction.load(type, cause, mag, combat, overloading, reenforced);
             this.addictions.add(addiction);
         }
     }
@@ -929,14 +941,77 @@ public class Player extends Character {
     public Severity getAddictionSeverity(AddictionType type) {
         return getAddiction(type).map(Addiction::getSeverity).orElse(Severity.NONE);
     }
-    
+
     @Override
-    public int getEscape(Combat c) {
-        int escape = super.getEscape(c);
-        if (checkAddiction(AddictionType.DOMINANCE, c.getOther(this))) {
+    public int getEscape(Combat c, Character other) {
+        int escape = super.getEscape(c, other);
+        if (checkAddiction(AddictionType.DOMINANCE, c.getOpponent(this))) {
             escape -= getAddiction(AddictionType.DOMINANCE).get().getCombatSeverity().ordinal() * 8;
         }
         return escape;
+    }
+    
+    @Override
+    protected void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
+                    int totalTimes) {
+        super.resolveOrgasm(c, opponent, selfPart, opponentPart, times, totalTimes);
+        if (has(Trait.slimification) && times == totalTimes && getWillpower().percent() < 60 && !has(Trait.slime)) {
+            c.write(this, Global.format("A powerful shiver runs through your entire body. Oh boy, you know where this"
+                            + " is headed... Sure enough, you look down to see your skin seemingly <i>melt</i>,"
+                            + " turning a translucent blue. You legs fuse together and collapse into a puddle."
+                            + " It only takes a few seconds for you to regain some semblance of control over"
+                            + " your amorphous body, but you're not going to switch back to your human"
+                            + " form before this fight is over...", this, opponent));
+            nudify();
+            purge(c);
+            addTemporaryTrait(Trait.slime, 999);
+            add(new PlayerSlimeDummy());
+            if (hasPussy() && !body.getRandomPussy().moddedPartCountsAs(this, PussyPart.gooey)) {
+                body.temporaryAddOrReplacePartWithType(new TentaclePart("slime filaments", "pussy", "slime", 0.0, 1.0, 1.0), 999);
+                body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
+            }
+            if (hasDick() && !body.getRandomCock().moddedPartCountsAs(this, CockMod.slimy)) {
+                body.temporaryAddOrReplacePartWithType(body.getRandomCock().applyMod(CockMod.slimy), 999);
+            }
+            BreastsPart part = body.getBreastsBelow(BreastsPart.h.size);
+            if (part != null && body.getRandomBreasts() != BreastsPart.flat) {
+                body.temporaryAddOrReplacePartWithType(part.upgrade(), 10);
+            }
+            body.temporaryAddOrReplacePartWithType(new GenericBodyPart("gooey skin", 2.0, 1.5, .8, "skin", ""), 999);
+            body.temporaryAddOrReplacePartWithType(new TentaclePart("slime pseudopod", "back", "slime", 0.0, 1.0, 1.0), 999);
+            body.temporaryAddOrReplacePartWithType(new TentaclePart("gooey feelers", "hands", "slime", 0.0, 1.0, 1.0), 999);
+            body.temporaryAddOrReplacePartWithType(new TentaclePart("gooey feelers", "feet", "slime", 0.0, 1.0, 1.0), 999);
+            if (level >= 21) {
+                addTemporaryTrait(Trait.Sneaky, 999);
+            }
+            if (level >= 24) {
+                addTemporaryTrait(Trait.shameless, 999);
+            }
+            if (level >= 27) {
+                addTemporaryTrait(Trait.lactating, 999);
+            }
+            if (level >= 30) {
+                addTemporaryTrait(Trait.addictivefluids, 999);
+            }
+            if (level >= 33) {
+                addTemporaryTrait(Trait.autonomousPussy, 999);
+            }
+            if (level >= 36) {
+                addTemporaryTrait(Trait.entrallingjuices, 999);
+            }
+            if (level >= 39) {
+                addTemporaryTrait(Trait.energydrain, 999);
+            }
+            if (level >= 42) {
+                addTemporaryTrait(Trait.desensitized, 999);
+            }
+            if (level >= 45) {
+                addTemporaryTrait(Trait.steady, 999);
+            }
+            if (level >= 50) {
+                addTemporaryTrait(Trait.strongwilled, 999);
+            }
+        }
     }
 
 }

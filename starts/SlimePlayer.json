@@ -1,0 +1,16 @@
+{
+	"name":"Slime Player",
+	"summary":"Like Airi? Ever wanted to BE Airi? Here's your chance. This is almost the default start, but like Airi, the player will turn into a slime when reaching orgasm at low Willpower.",
+	"enabled":true,
+	"player": {
+		"traits": ["slimification"],
+		"attributes" : { "Slime": 1 }
+	},
+	"npcs": [
+
+	],
+	"all_npcs" : {
+		
+	},
+	"flags": []
+}

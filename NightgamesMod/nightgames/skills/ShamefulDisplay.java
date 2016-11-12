@@ -37,18 +37,18 @@ public class ShamefulDisplay extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         if (getSelf().human()) {
-            c.write(deal(c, 0, Result.normal, target));
+            c.write(getSelf(), deal(c, 0, Result.normal, target));
             if (Global.getPlayer().checkAddiction(AddictionType.MIND_CONTROL, target)) {
                 Global.getPlayer().unaddictCombat(AddictionType.MIND_CONTROL, 
                                 target, Addiction.LOW_INCREASE, c);
                 c.write(getSelf(), "Acting submissively voluntarily reduces Mara's control over you.");
             }
         } else if (c.shouldPrintReceive(target)) {
-            c.write(receive(c, 0, Result.normal, target));
+            c.write(getSelf(), receive(c, 0, Result.normal, target));
         }
         getSelf().add(c, new Shamed(getSelf()));
         int divisor = target.getMood() == Emotion.dominant ? 3 : 4;
-        target.add(c, new Horny(target, getSelf().get(Attribute.Submissive) / divisor, 2, " (Dominant Thrill)"));
+        target.add(c, Horny.getWithPsycologicalType(getSelf(), target, getSelf().get(Attribute.Submissive) / divisor, 2, " (Dominant Thrill)"));
         return true;
     }
 

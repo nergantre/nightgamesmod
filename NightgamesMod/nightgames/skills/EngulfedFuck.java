@@ -7,12 +7,16 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Stance;
 
 public class EngulfedFuck extends Skill {
 
     public EngulfedFuck(Character self) {
         super("Multi Fuck", self);
+        addTag(SkillTag.fucking);
+        addTag(SkillTag.pleasureSelf);
+        addTag(SkillTag.pleasure);
     }
 
     @Override

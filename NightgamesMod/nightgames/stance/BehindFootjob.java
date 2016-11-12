@@ -107,4 +107,9 @@ public class BehindFootjob extends AbstractBehindStance {
     public int dominance() {
         return 4;
     }
+    
+    @Override
+    public int distance() {
+        return 1;
+    }
 }

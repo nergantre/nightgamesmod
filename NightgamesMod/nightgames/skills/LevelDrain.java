@@ -6,12 +6,18 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.status.Satiated;
 
 public class LevelDrain extends Drain {
 
     public LevelDrain(Character self) {
         super("Level Drain", self);
+
+        addTag(SkillTag.drain);
+        addTag(SkillTag.staminaDamage);
+        addTag(SkillTag.fucking);
+        addTag(SkillTag.dark);
     }
 
     @Override
@@ -66,21 +72,21 @@ public class LevelDrain extends Drain {
                 if (stolen > 0) {
                     getSelf().add(c, new Satiated(getSelf(), stolen, 0));
                     if (getSelf().human()) {
-                        c.write("You have absorbed " + stolen + " XP from " + target.name() + "!\n");
+                        c.write(getSelf(), "You have absorbed " + stolen + " XP from " + target.name() + "!\n");
                     } else {
-                        c.write(getSelf().name() + " has absorbed " + stolen + " XP from you!\n");
+                        c.write(getSelf(), getSelf().name() + " has absorbed " + stolen + " XP from you!\n");
                     }
                 }
                 break;
             case 2:
                 int xpStolen = 95 + 5 * target.getLevel();
                 getSelf().add(c, new Satiated(target, xpStolen, 0));
-                c.write(target.dong());
+                c.write(getSelf(), target.dong());
                 if (getSelf().human()) {
-                    c.write("You have stolen a level from " + target.name() + "'s levels and absorbed it as " + xpStolen
+                    c.write(getSelf(), "You have stolen a level from " + target.name() + "'s levels and absorbed it as " + xpStolen
                                     + " XP!\n");
                 } else {
-                    c.write(getSelf().name() + " has stolen a level from "+target.subject()+" and absorbed it as " + xpStolen
+                    c.write(getSelf(), getSelf().name() + " has stolen a level from "+target.subject()+" and absorbed it as " + xpStolen
                                     + " XP!\n");
                 }
                 getSelf().gainXP(xpStolen);

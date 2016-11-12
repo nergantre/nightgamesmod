@@ -6,6 +6,8 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.nskills.tags.SkillTag;
+import nightgames.skills.damage.DamageType;
 import nightgames.stance.Mount;
 import nightgames.stance.Neutral;
 import nightgames.stance.ReverseMount;
@@ -15,6 +17,10 @@ import nightgames.status.Stsflag;
 public class Shove extends Skill {
     public Shove(Character self) {
         super("Shove", self);
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.hurt);
+        addTag(SkillTag.staminaDamage);
+        addTag(SkillTag.knockdown);
     }
 
     @Override
@@ -38,7 +44,7 @@ public class Shove extends Skill {
                         && getSelf().canSpend(5)) {
             writeOutput(c, Result.special, target);
             target.shred(ClothingSlot.top);
-            target.pain(c, Global.random(10) + 15 + (getSelf().get(Attribute.Power) + getSelf().get(Attribute.Ki)) / 4);
+            target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(10, 25)));
             if (getSelf().check(Attribute.Power, target.knockdownDC() - getSelf().get(Attribute.Ki))) {
                 c.setStance(new Neutral(getSelf(), target));
             }
@@ -61,7 +67,7 @@ public class Shove extends Skill {
                 }
                 success = false;
             }
-            target.pain(c, Global.random(10) + 10 + (getSelf().get(Attribute.Power) + getSelf().get(Attribute.Ki)) / 4);
+            target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(8, 20)));
         } else {
             if (getSelf().check(Attribute.Power, target.knockdownDC())) {
                 if (getSelf().human()) {
@@ -82,7 +88,7 @@ public class Shove extends Skill {
                 }
                 success = false;
             }
-            target.pain(c, Global.random(10) + 10 + (getSelf().get(Attribute.Power) + getSelf().get(Attribute.Ki)) / 4);
+            target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(16, 25)));
         }
         return success;
     }

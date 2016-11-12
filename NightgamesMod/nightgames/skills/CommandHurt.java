@@ -1,10 +1,10 @@
 package nightgames.skills;
 
-import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.skills.damage.DamageType;
 
 public class CommandHurt extends PlayerCommand {
 
@@ -19,7 +19,7 @@ public class CommandHurt extends PlayerCommand {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        target.pain(c, Global.random(10) + target.get(Attribute.Speed));
+        target.pain(c, getSelf(), (int) target.modifyDamage(DamageType.physical, target, Global.random(30, 50)));
         c.write(getSelf(), deal(c, 0, Result.normal, target));
         return true;
     }

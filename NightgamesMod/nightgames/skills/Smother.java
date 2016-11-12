@@ -7,6 +7,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
+import nightgames.skills.damage.DamageType;
 import nightgames.stance.Smothering;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
@@ -24,7 +25,7 @@ public class Smother extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.has(Trait.smqueen);
+        return user.get(Attribute.Fetish) >= 5;
     }
 
     @Override
@@ -56,14 +57,14 @@ public class Smother extends Skill {
         double n = 14 + Global.random(4);
         if (c.getStance().front(getSelf())) {
             // opponent can see self
-            n += 3 * getSelf().body.getCharismaBonus(target);
+            n += 3 * getSelf().body.getHotness(target);
         }
         if (target.has(Trait.imagination)) {
             n *= 1.5;
         }
 
         target.tempt(c, getSelf(), getSelf().body.getRandom("ass"), (int) Math.round(n / 2));
-        target.weaken(c, 10 + Global.random(10) + getSelf().get(Attribute.Power) / 3);
+        target.weaken(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(10, 25)));
 
         target.loseWillpower(c, Math.max(10, target.getWillpower().max() * 10 / 100 ));
         target.add(c, new Shamed(target));
@@ -78,7 +79,7 @@ public class Smother extends Skill {
 
     @Override
     public int getMojoBuilt(Combat c) {
-        return 50;
+        return 25;
     }
 
     @Override

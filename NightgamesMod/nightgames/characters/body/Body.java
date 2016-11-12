@@ -92,7 +92,7 @@ public class Body implements Cloneable {
     transient public BodyPart lastPleasuredBy;
     transient public BodyPart lastPleasured;
     public double baseFemininity;
-
+    private double height;
 
     public Body() {
         bodyParts = new LinkedHashSet<>();
@@ -101,6 +101,7 @@ public class Body implements Cloneable {
         lastPleasuredBy = nonePart;
         lastPleasured = nonePart;
         hotness = 1.0;
+        height = 170;
     }
 
     public Body(Character character) {
@@ -382,21 +383,22 @@ public class Body implements Cloneable {
         }
     }
 
-    public double getHotness(Character self, Character opponent) {
+    public double getHotness(Character opponent) {
         // represents tempt damage
-        double retval = hotness;
+        double bodyHotness = hotness;
         for (BodyPart part : getCurrentParts()) {
-            retval += part.getHotness(self, opponent) * (getFetish(part.getType()).isPresent() ? 2 : 1);
+            bodyHotness += part.getHotness(character, opponent) * (getFetish(part.getType()).isPresent() ? 2 : 1);
         }
-        retval += self.getOutfit()
-                      .getHotness();
-        int seductionDiff = Math.max(0, self.get(Attribute.Seduction) - opponent.get(Attribute.Seduction));
-        retval += seductionDiff / 10.0;
-        retval *= self.getExposure();
-        if (self.is(Stsflag.alluring)) {
-            retval *= 1.5;
+        double clothingHotness = character.getOutfit()
+                        .getHotness();
+        double totalHotness = bodyHotness * (.5 + character.getExposure()) + clothingHotness;
+        if (character.is(Stsflag.glamour)) {
+            totalHotness += 2.0;
         }
-        return retval;
+        if (character.is(Stsflag.alluring)) {
+            totalHotness *= 1.5;
+        }
+        return totalHotness;
     }
 
     public void remove(BodyPart part) {
@@ -454,6 +456,11 @@ public class Body implements Cloneable {
 
     public CockPart getRandomCock() {
         return (CockPart) getRandom("cock");
+    }
+    
+    public List<BodyPart> getAllGenitals() {
+        List<String> partTypes = Arrays.asList("cock", "pussy", "strapon", "ass");
+        return getCurrentPartsThatMatch(part -> partTypes.contains(part.getType()));
     }
 
     public BodyPart getRandomInsertable() {
@@ -520,7 +527,7 @@ public class Body implements Cloneable {
         }
         double perceptionBonus = 1.0;
         if (opponent != null) {
-            perceptionBonus *= getCharismaBonus(opponent);
+            perceptionBonus *= opponent.body.getCharismaBonus(character);
         }
         double bonusDamage = bonus;
         if (opponent != null) {
@@ -554,11 +561,16 @@ public class Body implements Cloneable {
         bonusDamage = Math.max(0, bonusDamage);
         double base = (magnitude + bonusDamage);
         double multiplier = Math.max(0, 1 + ((sensitivity - 1) + (pleasure - 1) + (perceptionBonus - 1)));
-
+        double staleness = 1.0;
+        double stageMultiplier = 1.0;
         if (skill != null) {
-            multiplier = Math.max(0, multiplier + skill.multiplierForStage(character));
+            if (opponent != null && c.getCombatantData(opponent) != null) {
+                staleness = c.getCombatantData(opponent).getMoveModifier(skill);
+            }
+            stageMultiplier = skill.getStage().multiplierFor(character);
         }
-        
+        multiplier = Math.max(0, multiplier + stageMultiplier) * staleness;
+
         double dominance = 0.0;
         if (character.human() && Global.getPlayer().checkAddiction(AddictionType.DOMINANCE, opponent)
                        && c.getStance().dom(opponent)) {
@@ -573,7 +585,7 @@ public class Body implements Cloneable {
 
         int result = (int) Math.round(damage);
         if (character.is(Stsflag.rewired)) {
-            character.pain(c, result, false, false);
+            character.pain(c, opponent, result, false, false);
             return 0;
         }
         if (opponent != null) {
@@ -590,12 +602,14 @@ public class Body implements Cloneable {
                             : "";
             String stageString = skill == null ? "" : String.format(" + stage:%.2f", skill.multiplierForStage(character));
             String dominanceString = dominance < 0.01 ? "" : String.format(" + dominance:%.2f", dominance);
+            String staleString = staleness < .99 ? String.format(" x staleness: %.2f", staleness) : "";
             String battleString = String.format(
                             "%s%s %s<font color='white'> was pleasured by %s%s<font color='white'> for <font color='rgb(255,50,200)'>%d<font color='white'> "
-                                            + "base:%.1f (%.1f%s) x multiplier: %.2f (1 + sen:%.1f + ple:%.1f + per:%.1f %s %s)\n",
+                                            + "base:%.1f (%.1f%s) x multiplier: %.2f (1 + sen:%.1f + ple:%.1f + per:%.1f %s %s)%s\n",
                             firstColor, Global.capitalizeFirstLetter(character.nameOrPossessivePronoun()),
                             target.describe(character), secondColor, pleasuredBy, result, base, magnitude, bonusString,
-                            multiplier, sensitivity - 1, pleasure - 1, perceptionBonus - 1, stageString, dominanceString);
+                            multiplier, sensitivity - 1, pleasure - 1, perceptionBonus - 1, stageString, dominanceString, 
+                            staleString);
             if (c != null) {
                 c.writeSystemMessage(battleString);
             }
@@ -635,15 +649,23 @@ public class Body implements Cloneable {
         return result;
     }
 
+    /**
+     * Gets how much your opponent views this body. 
+     */
     public double getCharismaBonus(Character opponent) {
         // you don't get turned on by yourself
         if (opponent == character) {
             return 1.0;
         } else {
-            double perceptionBonus = Math.sqrt(opponent.body.getHotness(opponent, character)
-                            * (1.0 + (Math.max(0, character.get(Attribute.Perception)) - 5) / 10.0));
-            if (character.is(Stsflag.lovestruck)) {
+            double seductionBonus = Math.max(0, character.get(Attribute.Seduction) - opponent.get(Attribute.Seduction)) / 10.0;
+            double perceptionBonus = Math.sqrt(getHotness(opponent) + seductionBonus
+                            * (1.0 + (opponent.get(Attribute.Perception) - 5) / 10.0));
+            
+            if (opponent.is(Stsflag.lovestruck)) {
                 perceptionBonus += 1;
+            }
+            if (character.has(Trait.romantic)) {
+                perceptionBonus += Math.max(0, opponent.getArousal().percent() - 70) / 100.0;
             }
             return perceptionBonus;
         }
@@ -905,7 +927,7 @@ public class Body implements Cloneable {
             part = character.body.getRandom("skin");
         }
         if (character.has(Trait.spiritphage)) {
-            c.write("<br><b>" + Global.capitalizeFirstLetter(character.subjectAction("glow", "glows")
+            c.write(character, "<br><b>" + Global.capitalizeFirstLetter(character.subjectAction("glow", "glows")
                             + " with power as the cum is absorbed by " + character.possessivePronoun() + " "
                             + part.describe(character) + ".</b>"));
             character.add(c, new Abuff(character, Attribute.Power, 5, 10));
@@ -914,7 +936,7 @@ public class Body implements Cloneable {
             character.buildMojo(c, 100);
         }
         if (opponent.has(Trait.hypnoticsemen)) {
-            c.write(Global.format(
+            c.write(character, Global.format(
                             "<br><b>{other:NAME-POSSESSIVE} hypnotic semen takes its toll on {self:name-possessive} willpower, rendering {self:direct-object} doe-eyed and compliant.</b>",
                             character, opponent));
             character.loseWillpower(c, 10 + Global.random(10));
@@ -1025,5 +1047,13 @@ public class Body implements Cloneable {
         temp = Double.doubleToLongBits(baseFemininity);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
     }
 }

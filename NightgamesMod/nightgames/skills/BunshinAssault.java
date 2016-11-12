@@ -5,11 +5,16 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
+import nightgames.skills.damage.DamageType;
 
 public class BunshinAssault extends Skill {
 
     public BunshinAssault(Character self) {
         super("Bunshin Assault", self);
+        addTag(SkillTag.hurt);
+        addTag(SkillTag.staminaDamage);
+        addTag(SkillTag.positioning);
     }
 
     @Override
@@ -47,10 +52,10 @@ public class BunshinAssault extends Skill {
         Result r;
         getSelf().buildMojo(c, (6-clones)*3);
         if(getSelf().human()){
-            c.write(String.format("You form %d shadow clones and rush forward.",clones));
+            c.write(getSelf(), String.format("You form %d shadow clones and rush forward.",clones));
         }
         else if(c.shouldPrintReceive(target)){
-            c.write(String.format("%s moves in a blur and suddenly %s %d of %s approaching %s.",getSelf().name(),
+            c.write(getSelf(), String.format("%s moves in a blur and suddenly %s %d of %s approaching %s.",getSelf().name(),
                             target.subjectAction("see"),clones,getSelf().pronoun(),target.reflectivePronoun()));
         }
         for(int i=0;i<clones;i++){
@@ -58,19 +63,19 @@ public class BunshinAssault extends Skill {
                 switch(Global.random(4)){
                 case 0:
                     r=Result.weak;
-                    target.pain(c,Global.random(4)+3);
+                    target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(1, 4)));
                     break;
                 case 1:
                     r=Result.normal;
-                    target.pain(c,Global.random(4)+getSelf().get(Attribute.Power)/3);
+                    target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(2, 5)));
                     break;
                 case 2:
                     r=Result.strong;
-                    target.pain(c,Global.random(8)+getSelf().get(Attribute.Power)/2);
+                    target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(6, 9)));
                     break;
                 default:
                     r=Result.critical;
-                    target.pain(c,Global.random(12)+getSelf().get(Attribute.Power));
+                    target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(10, 14)));
                     break;
                 }
                 writeOutput(c, r, target);

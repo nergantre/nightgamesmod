@@ -6,6 +6,7 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Stance;
 import nightgames.status.ArmLocked;
 import nightgames.status.LegLocked;
@@ -17,6 +18,8 @@ public class Invitation extends Skill {
 
     public Invitation(Character self) {
         super("Invitation", self, 6);
+        addTag(SkillTag.fucking);
+        addTag(SkillTag.positioning);
     }
 
     @Override
@@ -40,8 +43,8 @@ public class Invitation extends Skill {
     @Override
     public int getMojoCost(Combat c) {
         //Free if user is Kat and player has Breeder
-        if (!c.getOther(getSelf()).human() || !Global.getPlayer().checkAddiction(AddictionType.BREEDER, getSelf()))
-            return 30;
+        if (!c.getOpponent(getSelf()).human() || !Global.getPlayer().checkAddiction(AddictionType.BREEDER, getSelf()))
+            return 50;
         return 0;
     }
 

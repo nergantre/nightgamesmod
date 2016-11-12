@@ -7,12 +7,15 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Stance;
 
 public class Handjob extends Skill {
 
     public Handjob(Character self) {
         super("Handjob", self);
+        addTag(SkillTag.usesHands);
+        addTag(SkillTag.pleasure);
     }
 
     public Handjob(String string, Character self) {
@@ -34,8 +37,13 @@ public class Handjob extends Skill {
     }
 
     @Override
+    public int accuracy(Combat c) {
+        return c.getStance().en == Stance.neutral ? 35 : 100;
+    }
+
+    @Override
     public boolean resolve(Combat c, Character target) {
-        int m = 6 + Global.random(5);
+        int m = Global.random(8, 13);
 
         if (target.roll(this, c, accuracy(c))) {
             if (getSelf().get(Attribute.Seduction) >= 8) {

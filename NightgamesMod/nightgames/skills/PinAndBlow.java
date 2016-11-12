@@ -5,12 +5,17 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.HeldOral;
 import nightgames.stance.Stance;
 
 public class PinAndBlow extends Skill {
     public PinAndBlow(Character self) {
         super("Oral Pin", self);
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.pleasure);
+        addTag(SkillTag.oral);
+        addTag(SkillTag.foreplay);
     }
 
     @Override

@@ -1,120 +1,23 @@
 package nightgames.pet;
 
-import java.util.ArrayList;
-
 import nightgames.characters.Character;
-import nightgames.characters.body.PetPart;
+import nightgames.characters.CharacterSex;
+import nightgames.characters.Growth;
 import nightgames.combat.Combat;
-import nightgames.global.Global;
-import nightgames.status.BD;
-import nightgames.status.Masochistic;
-import nightgames.status.Shamed;
+import nightgames.skills.petskills.GoblinBondage;
+import nightgames.skills.petskills.GoblinDenial;
+import nightgames.skills.petskills.GoblinFaceFuck;
+import nightgames.skills.petskills.GoblinMasochism;
+import nightgames.skills.petskills.GoblinTease;
 
 public class FGoblin extends Pet {
-
-    private final PetPart part = new PetPart("fetish goblin");
-    
     public FGoblin(Character owner, int pow, int ac) {
         super("Fetish Goblin", owner, Ptype.fgoblin, pow, ac);
     }
 
     @Override
     public String describe() {
-        // TODO Auto-generated method stub
         return null;
-    }
-
-    @Override
-    public void act(Combat c, Character target) {
-        if(target.human()){
-            switch(pickSkill(c,target)){
-            case VIBRATOR:
-                c.write(owner(),String.format("%s's goblin pulls the vibrator out of her wet hole and thrusts it between your legs.",owner().name()));
-                target.body.pleasure(owner(), part, target.body.getRandomPussy(), 2+3*Global.random(power), c);
-                break;
-            case MASOCHISM:
-                c.write(owner(),String.format("%s's fetish goblin draws a riding crop and hits her own balls with it. She shivers with delight at the pain and you can "
-                        + "feel an aura of masochism radiate off her.",owner().name()));
-                owner().add(new Masochistic(owner()));
-                target.add(new Masochistic(target));
-                break;
-            case BONDAGE:
-                c.write(owner(),String.format("%s's fetish goblin pulls the bondage straps tighter around herself. You can see the leather and latex digging into her skin as "
-                        + "her bondage fascinatation begins to affect both you and %s.",owner().name(),owner().name()));
-                owner().add(new BD(owner()));
-                target.add(new BD(target));
-                break;
-            case DENIAL:
-                c.write(owner(),String.format("%s's fetish goblin suddenly appears to turn against %s and slaps %s sensitive testicles. You're momentarily confused, but you "
-                        + "realize the shock probably undid your efforts to make %s cum.",owner().name(),owner().directObject(),owner().possessivePronoun(),owner().directObject()));
-                owner().pain(c, 3*Global.random(power));
-                owner().calm(c,(3+Global.random(5))*power);
-                break;
-            case FACEFUCK:
-                c.write(owner(),String.format("%s's fetish goblin straddles your head, giving you an eyefull of her assorted genitals. She pulls the vibrator out of her "
-                        + "pussy, causing a rain of love juice to splash your face. She then wipes her leaking cock on your forehead, smearing you with precum. You feel "
-                        + "your face flush with shame as she marks you with her fluids.",owner().name()));
-                target.add(new Shamed(target));
-                break;
-            case ANALDILDO:
-                c.write(owner(),String.format("You jump in surprise as you suddenly feel something solid penetrating your asshole. %s's fetish goblin got behind you during "
-                        + "the fight and delivered a sneak attack with an anal dildo. Before you can retaliate she withdraws the toy and retreats to safety.",owner().name()));
-                target.body.pleasure(owner(), part, target.body.getRandomAss(), 2+3*Global.random(power), c);
-                break;
-            case ANALBEADS:
-                c.write(owner(),String.format("%s's fetish goblin takes advantage of your helplessness and positions herself behind you. She produces a string on anal beads "
-                        + "and proceeds to insert them one bead at a time into your anus. She manages to get five beads in while you're unable to defend yourself. When she "
-                        + "pulls them out, it feels like they're turning you inside out.",owner().name()));
-                target.body.pleasure(owner(), part, target.body.getRandomAss(), 5*Global.random(power), c);
-                break;
-            default:
-                c.write(owner(),String.format("%s's fetish goblin stays at the edge of battle and touches herself absentmindedly.",owner().name()));
-                break;
-            }
-        }
-        else{
-            switch(pickSkill(c,target)){
-            case VIBRATOR:
-                c.write(owner(),String.format("Your fetish goblin removes the humming vibrator from her own wet pussy and shoves it into %s's.",target.name()));
-                target.body.pleasure(owner(), part, target.body.getRandomPussy(), 2+3*Global.random(power), c);
-                break;
-            case MASOCHISM:
-                c.write(owner(),String.format("Your fetish goblin draws a riding crop and hits her own balls with it. She shivers with delight at the pain and you can "
-                        + "feel an aura of masochism radiate off her."));
-                owner().add(new Masochistic(owner()));
-                target.add(new Masochistic(target));
-                break;
-            case BONDAGE:
-                c.write(owner(),String.format("Your fetish goblin pulls the bondage straps tighter around herself. You can see the leather and latex digging into her skin as "
-                        + "her bondage fascinatation begins to affect both you and %s.",target.name()));
-                owner().add(new BD(owner()));
-                target.add(new BD(target));
-                break;
-            case DENIAL:
-                c.write(owner(),String.format("As you feel your arousal build, your fetish goblin suddenly turns and slaps you sharply on the balls. You wince in pain and "
-                        + "let out a yelp of protest. You can't see the goblin's expression through her mask, but her eyes seem to be scolding you for your lack of self control."));
-                owner().pain(c, 3*Global.random(power));
-                owner().calm(c,(3+Global.random(5))*power);
-                break;
-            case FACEFUCK:
-                c.write(owner(),String.format("Your fetish goblin leaps onto %s's face as %s's lying on the floor. The goblin rubs her cock and balls on %s face, humiliating %s",
-                        target.name(),target.pronoun(),target.possessivePronoun(),target.directObject()));
-                target.add(new Shamed(target));
-                break;
-            case ANALDILDO:
-                c.write(owner(),String.format("Your fetish goblin manages to sneak up on %s and stick a dildo in her ass. %s lets out a shriek of surprise at the sudden "
-                        + "sensation and your goblin gets away before %s can catch her",target.name(),target.pronoun(),target.name()));
-                target.body.pleasure(owner(), part, target.body.getRandomAss(), 2+3*Global.random(power), c);
-                break;
-            case ANALBEADS:
-                c.write(owner(),String.format("Your fetish goblin takes advantage of %s's defenselessness to push a string of anal beads into her butt. She lets out a "
-                        + "whimper of protest as each bead goes in and a moan of pleasure as they're all pulled out.", target.name()));
-                target.body.pleasure(owner(), part, target.body.getRandomAss(), 5*Global.random(power), c);
-                break;
-            default:
-                c.write(owner(),String.format("Your fetish goblin stays at the edge of battle and touches herself absentmindedly."));
-            }
-        }
     }
 
     @Override
@@ -169,50 +72,20 @@ public class FGoblin extends Pet {
                     + "a strong enough stimulus to push her over the theshold. You grab the end of the anal beads sticking out of her ass and yank them out all at once. "
                     + "The goblin shudders and the flow of liquid leaking out of her holes signals her orgasm before she vanishes.",owner().name()));
         }
-        remove();
-    }
-
-    @Override
-    public boolean hasDick() {
-        return true;
-    }
-
-    @Override
-    public boolean hasPussy() {
-        return true;
+        c.removePet(getSelf());
     }
     
-    public PetSkill pickSkill(Combat c, Character target){
-        ArrayList<PetSkill> available = new ArrayList<PetSkill>();
-        available.add(PetSkill.IDLE);
-        available.add(PetSkill.MASOCHISM);
-        available.add(PetSkill.BONDAGE);
-        if(owner().hasBalls()&&owner().getArousal().percent()>=80){
-            available.add(PetSkill.DENIAL);
-        }
-        if(target.hasPussy()&&target.pantsless()){
-            available.add(PetSkill.VIBRATOR);
-        }
-        if(target.pantsless()&&target.canAct()){
-            available.add(PetSkill.ANALDILDO);
-        }
-        if(target.pantsless()&&!target.canAct()){
-            available.add(PetSkill.ANALBEADS);
-        }
-        if(c.getStance().prone(target)){
-            available.add(PetSkill.FACEFUCK);
-        }
-        return available.get(Global.random(available.size()));
-    }
-    
-    private enum PetSkill{
-        VIBRATOR,
-        MASOCHISM,
-        BONDAGE,
-        DENIAL,
-        FACEFUCK,
-        ANALDILDO,
-        ANALBEADS,
-        IDLE,
+    @Override
+    protected void buildSelf() {
+        PetCharacter self = new PetCharacter(this, owner().nameOrPossessivePronoun() + getName(), getName(), new Growth(), power);
+        // goblins are about 120 centimeters tall (around 4' for US people)
+        self.body.setHeight(120);
+        self.body.finishBody(CharacterSex.herm);
+        self.learn(new GoblinTease(self));
+        self.learn(new GoblinBondage(self));
+        self.learn(new GoblinMasochism(self));
+        self.learn(new GoblinFaceFuck(self));
+        self.learn(new GoblinDenial(self));
+        setSelf(self);
     }
 }

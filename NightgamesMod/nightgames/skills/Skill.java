@@ -11,6 +11,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
+import nightgames.skills.damage.Staleness;
 import nightgames.status.FiredUp;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
@@ -24,6 +25,7 @@ public abstract class Skill {
     private int cooldown;
     private Set<SkillTag> tags;
     public String choice;
+    private Staleness staleness;
 
     public Skill(String name, Character self) {
         this(name, self, 0);
@@ -35,6 +37,7 @@ public abstract class Skill {
         this.cooldown = cooldown;
         choice = "";
         tags = new HashSet<>();
+        staleness = Staleness.build().withDecay(.1).withFloor(.5).withRecovery(.05);
     }
 
     public final boolean requirements(Combat c, Character target) {
@@ -121,6 +124,10 @@ public abstract class Skill {
         return 90;
     }
 
+    public Staleness getStaleness() {
+        return this.staleness;
+    }
+
     public int speed() {
         return 5;
     }
@@ -165,7 +172,7 @@ public abstract class Skill {
         return false;
     }
 
-    public static void resolve(Skill skill, Combat c, Character target) {
+    public static boolean resolve(Skill skill, Combat c, Character target) {
         skill.user().addCooldown(skill);
         // save the mojo built of the skill before resolving it (or the status
         // may change)
@@ -190,7 +197,13 @@ public abstract class Skill {
         if (success) {
             skill.user().buildMojo(c, generated);
         }
-        c.getCombatantData(skill.user()).setLastUsedSkillName(skill.getName());
+        if (c.getCombatantData(skill.getSelf()) != null) {
+            c.getCombatantData(skill.getSelf()).decreaseMoveModifier(c, skill);
+        }
+        if (c.getCombatantData(skill.user()) != null) { 
+            c.getCombatantData(skill.user()).setLastUsedSkillName(skill.getName());
+        }
+        return success;
     }
 
     public int getCooldown() {
@@ -206,7 +219,7 @@ public abstract class Skill {
     }
     
     protected void printBlinded(Combat c) {
-        c.write("<i>You're sure something is happening, but you can't figure out what it is.</i>");
+        c.write(getSelf(), "<i>You're sure something is happening, but you can't figure out what it is.</i>");
     }
     
     public Stage getStage() {

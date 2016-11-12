@@ -14,6 +14,9 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.skills.strategy.FacesitStrategy;
+import nightgames.skills.strategy.FootjobStrategy;
+import nightgames.skills.strategy.KnockdownStrategy;
 import nightgames.start.NpcConfiguration;
 
 public class Reyka extends BasePersonality {
@@ -41,7 +44,7 @@ public class Reyka extends BasePersonality {
         character.setTrophy(Item.ReykaTrophy);
         character.getStamina().setMax(40);
         character.getArousal().setMax(200);
-        character.getMojo().setMax(70);
+        character.getMojo().setMax(110);
         character.add(Trait.succubus);
         character.add(Trait.proheels);
         character.add(Trait.masterheels);
@@ -49,7 +52,13 @@ public class Reyka extends BasePersonality {
         character.add(Trait.Confident);
         character.add(Trait.shameless);
 
+        getCharacter().addPersonalStrategy(new FootjobStrategy());
+        getCharacter().addPersonalStrategy(new FacesitStrategy());
+        getCharacter().addPersonalStrategy(new KnockdownStrategy());
+
         Global.gainSkills(character);
+        character.getStamina().setMax(50 + character.getLevel() * getGrowth().stamina);
+        character.getArousal().setMax(120 + character.getLevel() * getGrowth().arousal);
 
         character.plan = Plan.hunting;
         character.mood = Emotion.confident;
@@ -58,7 +67,7 @@ public class Reyka extends BasePersonality {
         character.body.add(TailPart.demonic);
         character.body.add(WingsPart.demonic);
         character.body.add(EarPart.pointed);
-        character.body.add(new FacePart(4.5, 1.1));
+        character.body.add(new FacePart(1.5, 1.1));
         character.initialGender = CharacterSex.female;
     }
 
@@ -66,10 +75,8 @@ public class Reyka extends BasePersonality {
     public void setGrowth() {
         growth.stamina = 1;
         growth.arousal = 6;
-        growth.mojo = 2;
         growth.bonusStamina = 1;
         growth.bonusArousal = 3;
-        growth.bonusMojo = 2;
         preferredAttributes.add(c -> c.get(Attribute.Dark) < 50 && c.get(Attribute.Dark) <= c.get(Attribute.Fetish) + 10
                         ? Optional.of(Attribute.Dark) : Optional.empty());
         preferredAttributes
@@ -125,22 +132,11 @@ public class Reyka extends BasePersonality {
         Decider.visit(character);
         int r;
         for (int i = 0; i < time; i++) {
-            r = Global.random(4);
+            r = Global.random(8);
             if (r == 1) {
-                if (character.has(Trait.fitnessNut)) {
-                    character.getStamina().gain(2);
-                }
-                character.getStamina().gain(2);
-            } else if (r == 3) {
-                if (character.has(Trait.expertGoogler)) {
-                    character.getArousal().gain(8);
-                }
-                character.getArousal().gain(8);
-            } else if (r == 2) {
-                if (character.has(Trait.mojoMaster)) {
-                    character.getMojo().gain(1);
-                }
-                character.getMojo().gain(2);
+                Global.getDay().visit("Exercise", this.character, 0);
+            } else if (r == 0) {
+                Global.getDay().visit("Browse Porn Sites", this.character, 0);
             }
         }
         character.gain(Item.semen, Global.random(3) + 1);

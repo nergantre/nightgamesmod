@@ -9,6 +9,8 @@ import java.util.Optional;
  * Test personality, or maybe for those with a flat affect.
  */
 public class BlankPersonality extends BasePersonality {
+    private static final long serialVersionUID = 1L;
+
     public BlankPersonality(String name, int level) {
         super(name, level, Optional.empty(), Optional.empty());
     }

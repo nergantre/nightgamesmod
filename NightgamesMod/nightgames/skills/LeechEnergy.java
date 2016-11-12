@@ -10,6 +10,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 
 public class LeechEnergy extends Skill {
     String lastPart;
@@ -17,6 +18,9 @@ public class LeechEnergy extends Skill {
     public LeechEnergy(Character self) {
         super("Leech Energy", self, 2);
         lastPart = "none";
+        addTag(SkillTag.drain);
+        addTag(SkillTag.staminaDamage);
+        addTag(SkillTag.positioning);
     }
 
     @Override
@@ -45,7 +49,7 @@ public class LeechEnergy extends Skill {
                 }
             }
             if (part == null) {
-                c.write("<b>ERROR: Could not pick part in LeechEnergy!</b>");
+                c.write(getSelf(), "<b>ERROR: Could not pick part in LeechEnergy!</b>");
                 return false;
             }
             String partString = selfPart.describe(getSelf());

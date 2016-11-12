@@ -6,12 +6,14 @@ import nightgames.characters.Emotion;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Behind;
 
 public class Maneuver extends Skill {
 
     public Maneuver(Character self) {
         super("Manuever", self);
+        addTag(SkillTag.positioning);
     }
 
     @Override

@@ -7,12 +7,16 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.StandingOver;
 
 public class Dominate extends Skill {
 
     public Dominate(Character self) {
         super("Dominate", self, 3);
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.knockdown);
+        addTag(SkillTag.dark);
     }
 
     @Override
@@ -28,7 +32,7 @@ public class Dominate extends Skill {
 
     @Override
     public String describe(Combat c) {
-        return "Overwhelm your opponent to force her to lie down: 10 Arousal";
+        return "Overwhelm your opponent to force her to lie down: 10% Arousal";
     }
 
     @Override
@@ -38,7 +42,7 @@ public class Dominate extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        getSelf().arouse(10, c);
+        getSelf().arouse(getSelf().getArousal().max() / 10, c);
         writeOutput(c, Result.normal, target);
         c.setStance(new StandingOver(getSelf(), target));
         getSelf().emote(Emotion.dominant, 20);

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import nightgames.characters.Character;
+import nightgames.characters.Decider;
 import nightgames.characters.NPC;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
@@ -61,7 +62,7 @@ public class ThrowDraft extends Skill {
         double selfFitness = self.getFitness(c);
         double targetFitness = self.getOtherFitness(c, target);
         usables.stream().forEach(item -> {
-            double rating = self.rateAction(c, selfFitness, targetFitness, (newCombat, newSelf, newOther) -> {
+            double rating = Decider.rateAction(self, c, selfFitness, targetFitness, (newCombat, newSelf, newOther) -> {
                 for (ItemEffect e : item.getEffects()) {
                     e.use(newCombat, newOther, newSelf, item);
                 }
@@ -141,7 +142,7 @@ public class ThrowDraft extends Skill {
 
     @Override
     public Tactics type(Combat c) {
-        return Tactics.debuff;
+        return Tactics.misc;
     }
 
     @Override

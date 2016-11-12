@@ -3,6 +3,7 @@ package nightgames.stance;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.skills.damage.DamageType;
 
 public class Standing extends MaledomSexStance {
     public Standing(Character top, Character bottom) {
@@ -88,7 +89,7 @@ public class Standing extends MaledomSexStance {
     @Override
     public void decay(Combat c) {
         time++;
-        top.weaken(null, 2);
+        top.weaken(c, (int) bottom.modifyDamage(DamageType.stance, top, 2));
     }
 
     @Override

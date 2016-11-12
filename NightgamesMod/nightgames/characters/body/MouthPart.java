@@ -5,6 +5,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.skills.damage.DamageType;
 import nightgames.status.FluidAddiction;
 import nightgames.status.Frenzied;
 import nightgames.status.PartiallyCorrupted;
@@ -36,7 +37,10 @@ public class MouthPart extends GenericBodyPart {
         if (target.isErogenous() && opponent.has(Trait.lickable)) {
             c.write(opponent, Global.capitalizeFirstLetter(opponent.subjectAction("shudder", "shudders"))
                             + " when licked by " + self.directObject() + ".");
-            bonus += Global.random(4) + 5;
+            bonus += Global.random(2, 4) + opponent.getLevel() / 20;
+            if (target.isGenital()) {
+                bonus += Global.random(2, 4) + Math.max(0, opponent.getLevel() / 20 - 2);
+            }
         }
         String fluid = target.getFluids(opponent);
         if (!fluid.isEmpty() && opponent.has(Trait.lacedjuices)) {
@@ -92,12 +96,17 @@ public class MouthPart extends GenericBodyPart {
             bonus += Global.random(3) + Global.clamp(self.get(Attribute.Seduction) / 3, 10, 30)
                             * self.getArousal().percent() / 100.0;
         }
+        if (self.has(Trait.sweetlips) && c.getStance().sub(self)) {
+            c.write(opponent, Global.format("<br>{self:name-possessive} enticing lips turns {other:direct-object} on as {other:subject-action:force|forces} {other:reflective} into them.",
+                            self, opponent));
+            opponent.tempt(c, self, this, (int) self.modifyDamage(DamageType.temptation, opponent, damage));
+        }
         if (self.has(Trait.catstongue)) {
             c.write(opponent, Global.format("<br>{self:name-possessive} abrasive tongue produces an unique sensation.",
                             self, opponent));
 
             bonus += Global.random(3) + 4;
-            opponent.pain(c, 8 + Global.random(10), false, true);
+            opponent.pain(c, opponent, 8 + Global.random(10), false, true);
         }
         if (self.has(Trait.corrupting)) {
             opponent.add(c, new PartiallyCorrupted(self));

@@ -123,12 +123,10 @@ public abstract class CharacterConfiguration {
         for (int i = 0; i < levels; i++) {
             character.getStamina().gain(growth.stamina);
             character.getArousal().gain(growth.arousal);
-            character.getMojo().gain(growth.mojo);
             character.getWillpower().gain(growth.willpower);
             if (hard) {
                 character.getStamina().gain(growth.bonusStamina);
                 character.getArousal().gain(growth.bonusArousal);
-                character.getMojo().gain(growth.bonusMojo);
                 character.getWillpower().gain(growth.bonusWillpower);
             }
         }

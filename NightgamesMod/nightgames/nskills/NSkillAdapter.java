@@ -28,7 +28,7 @@ public class NSkillAdapter extends Skill {
 
     @Override
     public String describe(Combat c) {
-        Optional<SkillResult> maybeResult = skill.getHighestPriorityUsableResult(c, getSelf(), c.getOther(getSelf()));
+        Optional<SkillResult> maybeResult = skill.getHighestPriorityUsableResult(c, getSelf(), c.getOpponent(getSelf()));
         return maybeResult.isPresent() ? maybeResult.get().getDescription() : "";
     }
 

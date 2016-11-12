@@ -102,6 +102,6 @@ public class Doggy extends MaledomSexStance {
     
     @Override
     public int dominance() {
-        return 4;
+        return 3;
     }
 }

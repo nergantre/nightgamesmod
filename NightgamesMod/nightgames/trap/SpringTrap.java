@@ -26,13 +26,15 @@ public class SpringTrap implements Trap {
                                 + " right in the cooch. She eventually manages to extract the rope from between her legs "
                                 + "and collapses to the floor in pain.");
             }
+            int m = 50 + target.getLevel() * 5;
             if (target.has(ClothingTrait.armored)) {
-                target.pain(null, 3);
+                m /= 2;
+                target.pain(null, null, m);
             } else {
                 if (target.has(Trait.achilles)) {
-                    target.pain(null, 10);
+                    m += 20;
                 }
-                target.pain(null, 20);
+                target.pain(null, null, m);
                 target.add(new Winded(target));
             }
             target.location().opportunity(target, this);

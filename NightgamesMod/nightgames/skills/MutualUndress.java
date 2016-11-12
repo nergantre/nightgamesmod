@@ -12,6 +12,7 @@ public class MutualUndress extends Skill {
     public MutualUndress(Character self) {
         super("Tempt Undress", self);
         addTag(SkillTag.undressing);
+        addTag(SkillTag.stripping);
     }
 
     @Override

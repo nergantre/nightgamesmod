@@ -6,11 +6,13 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.nskills.tags.SkillTag;
 
 public class StealClothes extends Skill {
 
     public StealClothes(Character self) {
         super("Steal Clothes", self);
+        addTag(SkillTag.stripping);
     }
 
     @Override
@@ -65,7 +67,7 @@ public class StealClothes extends Skill {
             getSelf().outfit.equip(stripped);
             top = false;
         } else {
-            c.write("<b>Error: Couldn't strip anything in StealClothes#resolve</b>");
+            c.write(getSelf(), "<b>Error: Couldn't strip anything in StealClothes#resolve</b>");
             return false;
         }
         c.write(getSelf(), String.format(

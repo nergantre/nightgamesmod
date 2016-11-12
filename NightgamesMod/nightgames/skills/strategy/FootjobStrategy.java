@@ -1,64 +1,68 @@
 package nightgames.skills.strategy;
 
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.Footjob;
-import nightgames.skills.Kick;
 import nightgames.skills.Skill;
-import nightgames.skills.Tactics;
+import nightgames.skills.StandUp;
 import nightgames.skills.TakeOffShoes;
 
-public class FootjobStrategy implements CombatStrategy {
+public class FootjobStrategy extends KnockdownThenActionStrategy {
     @Override
     public double weight(Combat c, Character self) {
-        double weight = 1;
-        if (self.getMood().equals(Emotion.dominant)) {
-            weight *= 2;
+        double weight = .25;
+        if (!(new Footjob(self)).requirements(c, self, c.getOpponent(self))) {
+            return 0;
         }
-        if (!(new Footjob(self)).requirements(c, self, c.getOther(self))) {
-            weight = 0;
+        if (c.getOpponent(self).has(Trait.footfetishist)) {
+            weight += 2;
+        }
+        if (self.has(Trait.nimbletoes)) {
+            weight += 1;
+        }
+        if (self.getMood().equals(Emotion.dominant)) {
+            weight += .75;
         }
         return weight;
     }
 
     @Override
-    public Set<Skill> nextSkills(Combat c, Character self) {
-        Character other = c.getOther(self);
-        Set<Skill> availableSkills = new HashSet<>(self.getSkills());
-        Skill.filterAllowedSkills(c, availableSkills, self, other);
-        Set<Skill> allowedSkills = availableSkills.stream().filter(skill -> Skill.skillIsUsable(c, skill, other)).collect(Collectors.toSet());
+    protected Optional<Set<Skill>> getPreferredSkills(Combat c, Character self, Set<Skill> allowedSkills) {
         Set<Skill> footjobSkills = allowedSkills.stream()
-                        .filter(skill -> skill.getTags().contains(SkillTag.usesFeet)
+                        .filter(skill -> (skill.getTags().contains(SkillTag.usesFeet))
                                         && !skill.getTags().contains(SkillTag.suicidal))
                         .collect(Collectors.toSet());
 
-        if (!self.outfit.hasNoShoes()) {
-            return Collections.singleton(new TakeOffShoes(self));
-        }
-
         if (!footjobSkills.isEmpty()) {
-            return footjobSkills;
+            return Optional.of(footjobSkills);
+        }
+        if (!c.getOpponent(self).crotchAvailable()) {
+            Set<Skill> strippingSkills = allowedSkills.stream()
+                            .filter(skill -> (skill.getTags().contains(SkillTag.stripping))
+                                            && !skill.getTags().contains(SkillTag.suicidal))
+                            .collect(Collectors.toSet());
+            return Optional.of(strippingSkills);
+        }
+        
+        if (!self.outfit.hasNoShoes()) {
+            return Optional.of(Collections.singleton(new TakeOffShoes(self)));
         }
 
-        Set<Tactics> positioningTactics = new HashSet<>();
-        positioningTactics.add(Tactics.damage);
-        positioningTactics.add(Tactics.positioning);
-
-        Set<Skill> positioningSkills = allowedSkills.stream()
-                        .filter(skill -> positioningTactics.contains(skill.type(c)))
-                        .collect(Collectors.toSet());
-        if (!c.getStance().mobile(self) || c.getStance().mobile(other)) {
-            return positioningSkills;
+        StandUp standup = new StandUp(self);
+        if (allowedSkills.contains(standup)) {
+            return Optional.of(Collections.singleton(standup));
         }
-        return Collections.emptySet();
+
+        return Optional.empty();
     }
     
     @Override

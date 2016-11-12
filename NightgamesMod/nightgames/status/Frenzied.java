@@ -184,7 +184,7 @@ public class Frenzied extends DurationStatus {
     public Collection<Skill> allowedSkills(Combat c) {
         // Gather the preferred skills for which the character meets the
         // requirements
-        return FUCK_SKILLS.stream().filter(s -> s.requirements(c, affected, c.getOther(affected)))
+        return FUCK_SKILLS.stream().filter(s -> s.requirements(c, affected, c.getOpponent(affected)))
                         .map(s -> s.copy(affected)).collect(Collectors.toSet());
     }
 

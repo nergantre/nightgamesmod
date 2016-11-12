@@ -2,13 +2,11 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.Stance;
-import nightgames.status.BodyFetish;
 
 public class ViceGrip extends Thrust {
     public ViceGrip(Character self) {
@@ -23,7 +21,7 @@ public class ViceGrip extends Thrust {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().canRespond() && c.getStance().vaginallyPenetratedBy(getSelf(), target)
-                        && c.getStance().havingSexNoStrapped() && target.hasDick() && (target.stunned() || target.getStamina().percent() < 25);
+                        && c.getStance().havingSexNoStrapped() && target.hasDick() && (target.stunned() || target.getStamina().percent() < 25) && target.getArousal().percent() >= 50;
     }
 
     @Override

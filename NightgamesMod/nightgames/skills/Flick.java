@@ -7,11 +7,16 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
+import nightgames.skills.damage.DamageType;
 
 public class Flick extends Skill {
 
     public Flick(Character self) {
-        super("Flick", self, 3);
+        super("Flick", self, 2);
+        addTag(SkillTag.hurt);
+        addTag(SkillTag.staminaDamage);
+        addTag(SkillTag.positioning);
     }
 
     @Override
@@ -37,13 +42,13 @@ public class Flick extends Skill {
                 writeOutput(c, Result.weak, target);
             } else {
                 int mojoLost = 25;
-                int m = Global.random(6) + 5;
+                int m = Global.random(8) + 8;
                 writeOutput(c, Result.normal, target);
                 if (target.has(Trait.achilles)) {
                     m += 2 + Global.random(target.get(Attribute.Perception) / 2);
                     mojoLost = 40;
                 }
-                target.pain(c, m);
+                target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, m));
                 target.loseMojo(c, mojoLost);
                 getSelf().emote(Emotion.dominant, 10);
                 target.emote(Emotion.angry, 15);

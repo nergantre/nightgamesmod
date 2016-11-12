@@ -8,7 +8,7 @@ import nightgames.combat.Result;
 public class Sacrifice extends Skill {
 
     public Sacrifice(Character self) {
-        super("Sacrifice", self);
+        super("Sacrifice", self, 5);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class Sacrifice extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         writeOutput(c, Result.normal, target);
-        getSelf().weaken(c, 20 + getSelf().get(Attribute.Dark));
+        getSelf().pain(c, getSelf(), getSelf().getStamina().max() / 3);
         getSelf().calm(c, getSelf().getArousal().max() / 3 + 20 + getSelf().get(Attribute.Dark));
         return true;
     }

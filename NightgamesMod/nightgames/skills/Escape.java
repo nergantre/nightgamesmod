@@ -4,12 +4,15 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Neutral;
 import nightgames.status.Stsflag;
 
 public class Escape extends Skill {
     public Escape(Character self) {
         super("Escape", self);
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.escaping);
     }
 
     @Override
@@ -27,7 +30,7 @@ public class Escape extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         if (getSelf().bound()) {
-            if (getSelf().check(Attribute.Cunning, 5 - getSelf().escape(c))) {
+            if (getSelf().check(Attribute.Cunning, 5 - getSelf().escape(c, target))) {
                 if (getSelf().human()) {
                     c.write(getSelf(), "You slip your hands out of your restraints.");
                 } else if (c.shouldPrintReceive(target)) {
@@ -46,7 +49,7 @@ public class Escape extends Skill {
                 getSelf().struggle();
                 return false;
             }
-        } else if (getSelf().check(Attribute.Cunning, 10 + target.get(Attribute.Cunning) - getSelf().escape(c))) {
+        } else if (getSelf().check(Attribute.Cunning, 10 + target.get(Attribute.Cunning) - getSelf().escape(c, target))) {
             if (getSelf().human()) {
                 if (getSelf().hasStatus(Stsflag.cockbound)) {
                     c.write(getSelf(), "You somehow managed to wiggle out of " + target.name()
@@ -92,10 +95,10 @@ public class Escape extends Skill {
             } else if (c.shouldPrintReceive(target)) {
                 c.write(getSelf(),
                                 String.format("%s manages to slip out of %s grip for a moment, but %s %s %s "
-                                                + "before %s can get far and %s control.", getSelf().name(),
-                                                target.nameOrPossessivePronoun(), getSelf().pronoun(),
-                                                getSelf().action("tickle"), target.directObject(),
-                                                getSelf().pronoun(), target.action("regain")));
+                                                + "before %s can get far and %s control.",
+                                                getSelf().name(), target.nameOrPossessivePronoun(),
+                                                target.pronoun(), target.action("tickle"), getSelf().directObject(),
+                                                getSelf().pronoun(), getSelf().action("regain")));
             }
             getSelf().struggle();
             return false;

@@ -114,7 +114,7 @@ public enum CockMod implements BodyPartMod {
                                 " %s %s does not oblige, instead sending a pulse of electricity through %s %s and up %s spine",
                                 opponent.nameOrPossessivePronoun(), target.describe(opponent),
                                 self.nameOrPossessivePronoun(), part.describe(self), self.possessivePronoun());
-                self.pain(c, Global.random(9) + 4);
+                self.pain(c, opponent, Global.random(9) + 4);
                 amtDrained = 0;
             } else {
                 message += String.format(" Despite %s best efforts, some of the elusive energy passes into %s.",
@@ -308,7 +308,7 @@ public enum CockMod implements BodyPartMod {
             c.write(self, String.format("Raw sexual energy flows from %s %s into %s %s, enflaming %s lust",
                             self.nameOrPossessivePronoun(), part.describe(self), opponent.nameOrPossessivePronoun(),
                             otherOrgan.describe(opponent), opponent.possessivePronoun()));
-            opponent.add(c, new Horny(opponent, Global.random(3) + 1, 3,
+            opponent.add(c, Horny.getWithBiologicalType(self, opponent, Global.random(3) + 1, 3,
                             self.nameOrPossessivePronoun() + " primal passion"));
         }
     }

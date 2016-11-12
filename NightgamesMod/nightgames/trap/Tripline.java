@@ -13,10 +13,11 @@ public class Tripline implements Trap {
 
     @Override
     public void trigger(Character target) {
+        int m = 30 + target.getLevel() * 5;
         if (target.human()) {
             if (!target.check(Attribute.Perception, 20 - target.get(Attribute.Perception) + target.baseDisarm())) {
                 Global.gui().message("You trip over a line of cord and fall on your face.");
-                target.pain(null, 5);
+                target.pain(null, null, m);
                 target.location().opportunity(target, this);
             } else {
                 Global.gui().message("You spot a line strung across the corridor and carefully step over it.");
@@ -28,7 +29,7 @@ public class Tripline implements Trap {
                     Global.gui().message(target.name()
                                     + " carelessly stumbles over the tripwire and lands with an audible thud.");
                 }
-                target.pain(null, 5);
+                target.pain(null, null, m);
                 target.location().opportunity(target, this);
             }
         }

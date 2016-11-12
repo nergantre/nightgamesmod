@@ -38,7 +38,7 @@ public class Thrust extends Skill {
     public BodyPart getSelfOrgan(Combat c) {
         if (c.getStance().inserted(getSelf())) {
             return getSelf().body.getRandomInsertable();
-        } else if (c.getStance().anallyPenetratedBy(getSelf(), c.getOther(getSelf()))) {
+        } else if (c.getStance().anallyPenetratedBy(getSelf(), c.getOpponent(getSelf()))) {
             return getSelf().body.getRandom("ass");
         } else {
             return getSelf().body.getRandomPussy();
@@ -48,7 +48,7 @@ public class Thrust extends Skill {
     public BodyPart getTargetOrgan(Combat c, Character target) {
         if (c.getStance().inserted(target)) {
             return target.body.getRandomInsertable();
-        } else if (c.getStance().anallyPenetratedBy(c.getOther(getSelf()), getSelf())) {
+        } else if (c.getStance().anallyPenetratedBy(c.getOpponent(getSelf()), getSelf())) {
             return target.body.getRandom("ass");
         } else {
             return target.body.getRandomPussy();
@@ -72,7 +72,7 @@ public class Thrust extends Skill {
 
         if (getSelf().human() || target.human()) {
             Player p = Global.getPlayer();
-            Character npc = c.getOther(p);
+            Character npc = c.getOpponent(p);
             if (p.checkAddiction(AddictionType.BREEDER, npc)) {
                 float bonus = .3f * p.getAddiction(AddictionType.BREEDER).map(Addiction::getCombatSeverity)
                                 .map(Enum::ordinal).orElse(0);

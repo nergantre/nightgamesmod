@@ -68,4 +68,9 @@ public class TestPosition extends Position {
     @Override public String image() {
         return null;
     }
+
+    @Override
+    public int distance() {
+        return 0;
+    }
 }

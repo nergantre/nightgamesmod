@@ -1,6 +1,8 @@
 package nightgames.characters.body;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import com.google.gson.JsonObject;
 
@@ -145,5 +147,11 @@ public interface BodyPart {
 
     public default boolean moddedPartCountsAs(Character self, BodyPartMod mod) {
         return getMod(self).countsAs(self, mod);
+    }
+
+    static List<String> genitalTypes = Arrays.asList("pussy", "cock", "ass");
+    
+    public default boolean isGenital() {
+        return genitalTypes.contains(getType());
     }
 }

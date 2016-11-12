@@ -20,6 +20,7 @@ public class Nurse extends Skill {
     public Nurse(Character self) {
         super("Nurse", self);
         addTag(SkillTag.pleasureSelf);
+        addTag(SkillTag.breastfeed);
     }
 
     @Override
@@ -55,6 +56,7 @@ public class Nurse extends Skill {
         }
         if (special) {
             c.setStance(new NursingHold(getSelf(), target));
+            new Suckle(target).resolve(c, getSelf());
             getSelf().emote(Emotion.dominant, 20);
         } else {
             new Suckle(target).resolve(c, getSelf());
@@ -96,11 +98,7 @@ public class Nurse extends Skill {
 
     @Override
     public Tactics type(Combat c) {
-        if (c.getStance().enumerate() != Stance.nursing) {
-            return Tactics.positioning;
-        } else {
-            return Tactics.pleasure;
-        }
+        return Tactics.pleasure;
     }
 
     @Override

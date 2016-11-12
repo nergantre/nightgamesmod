@@ -21,7 +21,7 @@ public class FaceSit extends Skill {
         addTag(SkillTag.pleasureSelf);
         addTag(SkillTag.dominant);
         addTag(SkillTag.facesit);
-        
+        addTag(SkillTag.positioning);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class FaceSit extends Skill {
         double n = 4 + Global.random(4);
         if (c.getStance().front(getSelf())) {
             // opponent can see self
-            n += 3 * getSelf().body.getCharismaBonus(target);
+            n += 3 * getSelf().body.getHotness(target);
         }
         if (target.has(Trait.imagination)) {
             n *= 1.5;
@@ -92,11 +92,7 @@ public class FaceSit extends Skill {
 
     @Override
     public int getMojoBuilt(Combat c) {
-        if (c.getStance().enumerate() != Stance.facesitting) {
-            return 50;
-        } else {
-            return 25;
-        }
+        return 25;
     }
 
     @Override

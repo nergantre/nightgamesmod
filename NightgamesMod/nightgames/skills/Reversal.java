@@ -5,12 +5,15 @@ import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Pin;
 
 public class Reversal extends Skill {
 
     public Reversal(Character self) {
         super("Reversal", self);
+        addTag(SkillTag.escaping);
+        addTag(SkillTag.positioning);
     }
 
     @Override
@@ -56,7 +59,7 @@ public class Reversal extends Skill {
     @Override
     public int accuracy(Combat c) {
         return Math.round(Math.max(Math.min(150,
-                        2.5f * (getSelf().get(Attribute.Cunning) - c.getOther(getSelf()).get(Attribute.Cunning)) + 75),
+                        2.5f * (getSelf().get(Attribute.Cunning) - c.getOpponent(getSelf()).get(Attribute.Cunning)) + 75),
                         40));
     }
 

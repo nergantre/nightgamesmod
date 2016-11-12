@@ -3,10 +3,11 @@ package nightgames.pet;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 
-public abstract class Pet {
+public abstract class Pet implements Cloneable {
     private String name;
-    private Character owner;
+    private PetCharacter self;
     private Ptype type;
+    protected Character owner;
     protected int power;
     protected int ac;
 
@@ -16,7 +17,10 @@ public abstract class Pet {
         this.type = type;
         this.power = power;
         this.ac = ac;
+        buildSelf();
     }
+
+    protected abstract void buildSelf();
 
     @Override
     public String toString() {
@@ -37,15 +41,13 @@ public abstract class Pet {
 
     public abstract String describe();
 
-    public abstract void act(Combat c, Character target);
+    public void act(Combat c, Character target) {
+        getSelf().act(c, target);
+    }
 
     public abstract void vanquish(Combat c, Pet opponent);
 
     public abstract void caught(Combat c, Character captor);
-
-    public void remove() {
-        owner.pet = null;
-    }
 
     public Ptype type() {
         return type;
@@ -59,12 +61,29 @@ public abstract class Pet {
         return ac;
     }
 
-    public boolean hasDick() {
-        return false;
+    public final boolean hasDick() {
+        return getSelf().hasDick();
     }
 
-    public boolean hasPussy() {
-        return false;
+    public final boolean hasPussy() {
+        return getSelf().hasPussy();
     }
 
+    public PetCharacter getSelf() {
+        return self;
+    }
+
+    public void setSelf(PetCharacter self) {
+        this.self = self;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public Pet cloneWithOwner(Character owner) throws CloneNotSupportedException {
+        Pet clone = (Pet) this.clone();
+        clone.owner = owner;
+        return clone;
+    }
 }

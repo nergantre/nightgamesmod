@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 
@@ -13,9 +12,13 @@ public class Drowsy extends DurationStatus {
     private int magnitude;
 
     public Drowsy(Character affected) {
-        super("Drowsy", affected, affected.has(Trait.PersonalInertia) ? 6 : 4);
+        super("Drowsy", affected, 4);
         flag(Stsflag.drowsy);
         magnitude = 1;
+    }
+
+    public float fitnessModifier() {
+        return -10;
     }
 
     public Drowsy(Character affected, int magnitude, int duration) {
@@ -44,8 +47,7 @@ public class Drowsy extends DurationStatus {
 
     @Override
     public int regen(Combat c) {
-        super.regen(c);
-        return -3 * magnitude;
+        return -3 * magnitude + super.regen(c);
     }
 
     @Override
@@ -60,7 +62,7 @@ public class Drowsy extends DurationStatus {
 
     @Override
     public int weakened(int x) {
-        return x * magnitude / 4;
+        return x * (1 + magnitude);
     }
 
     @Override
@@ -80,7 +82,7 @@ public class Drowsy extends DurationStatus {
 
     @Override
     public int gainmojo(int x) {
-        return x * magnitude / 3;
+        return x * 1 / (1 + magnitude);
     }
 
     @Override

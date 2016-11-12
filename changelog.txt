@@ -1,3 +1,127 @@
+2.3.3
+Balance changes:
+- Pantymaster, and Bramaster have been removed
+- Dexterous has been buffed
+	- Now works with fondle breasts as well.
+	- Dexterous now will work with second layer clothing as well.
+		- This means you can now use finger, handjob, and fondle breasts with increased effectiveness when they are wearing shirt and pants (but not coats)
+- Romantic has been buffed
+	- Original effects: 
+		- Boost Kiss mojo gain by 5%
+		- Increase kiss pleasure damage by 3
+		- Increase deep kiss pleasure damage by 10
+	- New effects:
+		- Boost Kiss mojo gain by 5%
+		- Increase kiss accuracy from a base 30% when opponent is mobile to 70%.
+		- Increase kiss pleasure damage by 3
+		- Increase all advanced kisses (Kiss of Baptism, Drain Kiss, Deep Kiss) pleasure damage by 6
+		- Increases your charisma multiplier by your (opponent's arousal % - 70) when your opponent is below 30% arousal. (So at 0% arousal you have a 30% bonus and at 20%, you have a 10% bonus)
+			- This is pretty minor and is really only for flavour
+- Fixed a "bug?" not sure if this was intended, but counter pretty much never ever ever triggered. It can now trigger and has a base chance of 3% for skills.
+	- Counter chance increased by 3% for each of these traits: [clairvoyance, aikidonovice, fakeout]
+	- Counter is increased by certain statuses like WaterForm (+5), Nimble (+ Animism/2 * Arousal %)
+	- Counter chance is decreased by 1% for every 5 points of cunning your opponent has over you
+	- Counter chance is increased by 1% for every point of perception you have over the opponent and decreased the same way.
+	- Counter chance is increased by 1% for every 2 points of speed you have over the opponent and decreased the same way (maximum of +5 or -5 this way).
+- Locate will no longer consume a Talisman if you have one
+- Submissive (attribute) will now increase tempt damage for certain moves
+- Magic Missiles now has an increased base damage (it was to the point where upon becoming level 10, Cassie would just rather kick you rather than using her new skills because it sucked).
+	- Now does 10-19 base damage instead of 7-13.
+
+New:
+Cassie has been reworked:
+- At levels 10 and 20, after combat with the player, Cassie	will ask the player for your opinion on what she should focus on. The choice will influence what attributes and traits she will get upon leveling up.
+
+Introduced some new traits (some of them seem pretty OP, but really only comes into play in the extreme late game and are replacements for some equally OP traits):
+- Hawkeye
+	- +5% accuracy
+- Tempting Tits
+	- When your breasts are exposed, your tempt the opponent every turn if you are facing each other.
+	- When you are behind your opponent, you tempt the opponent every turn. More temptation damage if their top is off and your top is off/is more skimpy.
+- Beguiling breasts
+	- Once per fight, the first time your opponent sees your breasts, they are entranced for 4 turns
+- Sedative Cream
+	- Drinking milk will cause the opponent to be weakened by 10% and lose 1 Power for 20 turns.
+- Sweet Lips
+	- If you do oral pleasure from a submissive position, the opponent is also tempted for the base pleasure damage of the move.
+- Split SM Queen into different Traits
+	- SM Queen now applies dominance willpower loss every turn instead of every other turn in a dominant stance.
+	- (new) Sadist now automatically applies masochism to the opponent
+
+Bug fixes:
+- Fixed a bug that was causing charm, facesit, smother, and tempt to use the opponent's body's charisma bonus instead of the users. Woops.
+- Fixed a bug where doing Faerie play with Mara freezes the game
+- Fixed a bug where addiction overloading/day time visits were not being saved
+- Fixed a bug where the cause for Magic milk addiction was the player instead of Cassie
+- Fixed a bug where the Breeder addiction was not using voluntary insertion bonuses unless the player was also corrupted.
+- Fixed a bug where mouthpussy blowjobs was using a phantom cock from yourself instead of the opponents. Woops.
+- Fixed a bug where entranced wasn't let you masturbate.
+- Fixed a bug where drowsy was being affected by Personal Inertia twice.
+
+2.3.2.1
+
+- Actually fixed the bug with tentacles. Goddamn.
+
+2.3.2
+Bug fixes:
+- Fixed a crash bug still related to tentacles. Woops.
+- Fixed a crash bug related to spectating
+- Fixed a bug where any starts loaded after futanari time would fail to appear (extra comma in the json, guessing dndw fixed it but forgot to push)
+- Fixed a bug where Yui would join the game even though she's only half implemented. Woops.
+
+2.3.1
+Bug fixes:
+- Fixed a crash bug related to tentacles.
+	- Unfortunately this does change it a bit, in that it will use the character's stats in calculating pleasure damage whereas before it was using a dummy tentacles character. Oh well.
+- Fixed a crash bug related to the Glamour skill
+- Fixed a bug that caused AI opponents not to evaluate tickle and slap as stamina damage.
+- Stunned now 3 -> 2 turns and winded lasts 3-4 -> 4 turns.
+- Fixed a bug where characters will equip random clothing they own upon loading from a save. This removes compatibility with SUPER old saves. If you're using like < 1.9 saves, well, don't :P
+- Fixed a bunch of typos and grammar issues. I swear writing for nightgames is like doing madlibs...
+- Fixed a bug where Footjob strategy would cause the user to do squats. (repeatedly stand up and mount you)
+
+New:
+- Added WindUp strategy to Mara. Maybe she'll actually begin using some of those temporal skills...
+
+Balance:
+- Made windup a bit more attractive.
+	- Charging will now only cost charges * 5 mojo instead of charges * 10.
+- Dark Tendrils will now also knockdown upon successful bind.
+	- It now will arouse the user by 15% instead of by 5 flat.
+- Dominate will also now cost 10% arousal instead of a flat 10.
+
+2.3.0
+Bug fixes:
+- A lot of random miscellaneous stuff I've never noticed
+	- Fixed bug where you gain 5 mojo permanently every turn your naked as a exhibitionist... :(
+	- Fixed bug where you could not lick pussy from underneath a 69
+	- Many typo fixes
+
+New:
+- Added preset AI strategies that will hopefully spice up the game a bit more. Expect AIs to use some more of the lesser used skills
+- Added a new female Tighten variant: Vice. This will instantly make the target cum, but can only be used while the target is stunned or is under 25% stamina as well as having >50% arousal.
+	- Requires 24 Ninjutsu (so basically no one is going to use this yet)
+- Added a new arcane skill Glamour which increases the "hotness" multiplier for arousal damage by 2.0. Requires 6 arcane.
+
+Balance changes:
+- Changed how stamina works.
+	- Now all sources of healing is much less than before, so stamina damage will stick a bit more.
+	- Nerfed exercised and porn to give 1-2 points without fitness nut/expert googler, 2-4 with the perks.
+		- You can now only achieve a maximum of 100 + level * 8 arousal, and 100 + level * 5 stamina through training.
+			Hopefully this stops the stat ballooning at end game where you can just spam porn and have > 2000 maximum arousal.
+	- Taking points in power (and to a lesser extent cunning) will now both increase the amount of hurt you do, and the amount of stamina loss you get from taking damage.
+	- Getting knocked off your feet will stun you for 2 turns, and getting your stamina bar emptied will stun you for 4 turns.
+	- Being stunned/winded will reduce pleasure damage taken by 50%.
+	- Having a point in Divinity will upgrade the braced status after getting up, increasing the damage reduction and extending it to 6 turns.
+	- Shield now lasts for 7 turns (up from 4).
+	- Increased the pain threshold for reducing arousal from 4% up to 16.66%
+- Points in cunning will now decrease the amount of damage from toys taken as well as increasing damage dealt. Science will also increase toys damage, but will not add to defence.
+- Points in dark and arcane will increase the amount of drain damage dealt and decreased drain damage received.
+- Points in Bio/Animism/Science/Medicine will improve biological damage. So far this is limited to pheromones and aphrodisiacs. The same attributes will reduce damage from them with the addition of cunning to a lesser extent.
+- Mara now has a new perk "Deft hands" at 33 that increases her pleasure damage with hands by a flat 2-5.
+- Mara now has a new perk "Nimble toes" at 42 that increases her pleasure damage with feet by a flat 2-5.
+- Mara now has a new perk "Toymaster" at 36 that increases her skill effectiveness with toys.
+
 2.0.1 changelog
 Bug fixes:
 - Fixed a ton of Airi specific bugs (thanks dndw)

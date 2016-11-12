@@ -15,11 +15,12 @@ import nightgames.status.BodyFetish;
 public class FootWorship extends Skill {
     public FootWorship(Character self) {
         super("Foot Worship", self);
-        addTag(SkillTag.usesFeet);
         addTag(SkillTag.pleasure);
         addTag(SkillTag.worship);
         addTag(SkillTag.suicidal);
         addTag(SkillTag.pleasureSelf);
+        addTag(SkillTag.usesMouth);
+        addTag(SkillTag.pleasure);
     }
 
     @Override

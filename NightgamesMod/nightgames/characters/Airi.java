@@ -51,9 +51,9 @@ public class Airi extends BasePersonality {
         character.set(Attribute.Cunning, 15);
         character.set(Attribute.Speed, 4);
         character.set(Attribute.Seduction, 17);
-        character.getStamina().setMax(80);
-        character.getArousal().setMax(80);
-        character.getMojo().setMax(60);
+        character.getStamina().setMax(50 + character.getLevel() * getGrowth().stamina);
+        character.getArousal().setMax(80 + character.getLevel() * getGrowth().arousal);
+        character.getMojo().setMax(100);
         character.getWillpower().setMax(80);
         character.add(Trait.dexterous);
         character.add(Trait.imagination);
@@ -69,11 +69,9 @@ public class Airi extends BasePersonality {
     public void setGrowth() {
         growth.stamina = 1;
         growth.arousal = 1;
-        growth.mojo = 2;
         growth.willpower = 1.5f;
         growth.bonusStamina = 1;
         growth.bonusArousal = 1;
-        growth.bonusMojo = 2;
         growth.addTrait(9, Trait.limbTraining1);
         growth.addTrait(12, Trait.lacedjuices);
         growth.addTrait(15, Trait.QuickRecovery);
@@ -173,22 +171,11 @@ public class Airi extends BasePersonality {
         Decider.visit(character);
         int r;
         for (int i = 0; i < time; i++) {
-            r = Global.random(4);
+            r = Global.random(8);
             if (r == 1) {
-                if (character.has(Trait.fitnessNut)) {
-                    character.getStamina().gain(1);
-                }
-                character.getStamina().gain(1);
-            } else if (r == 3) {
-                if (character.has(Trait.expertGoogler)) {
-                    character.getArousal().gain(2);
-                }
-                character.getArousal().gain(2);
-            } else if (r == 2) {
-                if (character.has(Trait.mojoMaster)) {
-                    character.getMojo().gain(2);
-                }
-                character.getMojo().gain(1);
+                Global.getDay().visit("Exercise", this.character, 0);
+            } else if (r == 0) {
+                Global.getDay().visit("Browse Porn Sites", this.character, 0);
             }
         }
     }

@@ -5,6 +5,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.skills.damage.DamageType;
 
 public class Sedate extends Skill {
 
@@ -28,12 +29,12 @@ public class Sedate extends Skill {
         getSelf().consume(Item.Sedative, 1);
         if (getSelf().has(Item.Aersolizer)) {
             writeOutput(c, Result.special, target);
-            target.weaken(c, 30);
-            target.loseMojo(c, 25);
+            target.weaken(c, (int) getSelf().modifyDamage(DamageType.gadgets, target,30));
+            target.loseMojo(c, (int) getSelf().modifyDamage(DamageType.gadgets, target,25));
         } else if (target.roll(this, c, accuracy(c))) {
             writeOutput(c, Result.normal, target);
-            target.weaken(c, 30);
-            target.loseMojo(c, 25);
+            target.weaken(c, (int) getSelf().modifyDamage(DamageType.gadgets, target,30));
+            target.loseMojo(c, (int) getSelf().modifyDamage(DamageType.gadgets, target,25));
         } else {
             writeOutput(c, Result.miss, target);
             return false;
@@ -87,6 +88,6 @@ public class Sedate extends Skill {
 
     @Override
     public String describe(Combat c) {
-        return "Throw a sedative at your opponent, weakening " + c.getOther(getSelf()).directObject();
+        return "Throw a sedative at your opponent, weakening " + c.getOpponent(getSelf()).directObject();
     }
 }

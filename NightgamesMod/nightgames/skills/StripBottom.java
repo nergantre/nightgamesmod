@@ -8,6 +8,8 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.nskills.tags.SkillTag;
+import nightgames.skills.damage.DamageType;
 
 public class StripBottom extends Skill {
 
@@ -15,6 +17,11 @@ public class StripBottom extends Skill {
 
     public StripBottom(Character self) {
         super("Strip Bottoms", self);
+
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.stripping);
+        addTag(SkillTag.weaken);
+        addTag(SkillTag.staminaDamage);
     }
 
     @Override public boolean usable(Combat c, Character target) {
@@ -23,7 +30,7 @@ public class StripBottom extends Skill {
     }
 
     @Override public int getMojoCost(Combat c) {
-        return 10;
+        return c.getStance().dom(getSelf()) ? 2 : 10;
     }
 
     @Override public boolean resolve(Combat c, Character target) {
@@ -47,9 +54,9 @@ public class StripBottom extends Skill {
             }
             if (target.human() && target.crotchAvailable() && target.hasDick()) {
                 if (target.body.getRandomCock().isReady(target)) {
-                    c.write("Your boner springs out, no longer restrained by your pants.");
+                    c.write(getSelf(), "Your boner springs out, no longer restrained by your pants.");
                 } else {
-                    c.write(getSelf().name() + " giggles as "+target.nameOrPossessivePronoun()
+                    c.write(getSelf(), getSelf().name() + " giggles as "+target.nameOrPossessivePronoun()
                     +" flaccid dick is exposed.");
                 }
             }
@@ -57,7 +64,7 @@ public class StripBottom extends Skill {
         } else {
             stripped = target.outfit.getTopOfSlot(ClothingSlot.bottom);
             writeOutput(c, Result.miss, target);
-            target.weaken(c, Global.random(6) + getSelf().get(Attribute.Power) / 4);
+            target.weaken(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(8, 16)));
             return false;
         }
         return true;

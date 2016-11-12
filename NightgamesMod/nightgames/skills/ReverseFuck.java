@@ -5,10 +5,12 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 
 public class ReverseFuck extends Fuck {
     public ReverseFuck(String name, Character self, int cooldown) {
         super(name, self, cooldown);
+        addTag(SkillTag.positioning);
     }
 
     public ReverseFuck(Character self) {
@@ -73,7 +75,7 @@ public class ReverseFuck extends Fuck {
 
     @Override
     public String describe(Combat c) {
-        return "Straddle your opponent and ride " + c.getOther(getSelf()).possessivePronoun() + " cock";
+        return "Straddle your opponent and ride " + c.getOpponent(getSelf()).possessivePronoun() + " cock";
     }
 
     @Override

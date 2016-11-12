@@ -43,7 +43,7 @@ public class Meter implements Serializable, Cloneable {
         return Math.min(max, temporaryMax);
     }
 
-    float trueMax() {
+    public float trueMax() {
         return max;
     }
     

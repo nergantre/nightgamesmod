@@ -7,6 +7,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.skills.damage.DamageType;
 import nightgames.status.Abuff;
 import nightgames.status.CockBound;
 import nightgames.status.DivineCharge;
@@ -226,7 +227,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                                 opponent.subject()));
                 base /= 4;
             }
-            opponent.add(c, new Horny(opponent, (int) Math.max(1, Math.floor(base / 5)), 5,
+            opponent.add(c, Horny.getWithBiologicalType(self, opponent, (int) Math.max(1, Math.floor(base / 5)), 5,
                             self.nameOrPossessivePronoun() + " feral musk"));
         }
         if (opponent.has(Trait.pussyhandler) || opponent.has(Trait.anatomyknowledge)) {
@@ -279,7 +280,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                 } else {
                     strength = 10 + self.get(Attribute.Dark) / 2;
                 }
-                opponent.drain(c, self, strength);
+                opponent.drain(c, self, (int) self.modifyDamage(DamageType.drain, opponent, strength));
                 for (int i = 0; i < 10; i++) {
                     Attribute stolen = (Attribute) opponent.att.keySet()
                                                                .toArray()[Global.random(opponent.att.keySet()
@@ -357,12 +358,12 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                                 "The heat emanating from %s %s is extremely hazardous for %s %s, nearly burning through its circuitry and definitely causing intense pain.",
                                 self.nameOrPossessivePronoun(), describe(self), opponent.nameOrPossessivePronoun(),
                                 target.describe(opponent)));
-                opponent.pain(c, Math.max(30, 20 + self.get(Attribute.Ki)));
+                opponent.pain(c, opponent, Math.max(30, 20 + self.get(Attribute.Ki)));
             } else {
                 c.write(self, String.format("Plugging %s %s into %s %s leaves %s gasping from the heat.",
                                 opponent.possessivePronoun(), target.describe(opponent), self.possessivePronoun(),
                                 describe(self), opponent.directObject()));
-                opponent.pain(c, 20 + self.get(Attribute.Ki) / 2);
+                opponent.pain(c, opponent, 20 + self.get(Attribute.Ki) / 2);
             }
         }
         if (countsAs(self, arcane)) {
@@ -579,7 +580,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
             c.write(self, Global.format(
                             "As {self:SUBJECT-ACTION:cum|cums} hard, an literal explosion of pheromones hits {other:name-do}. {other:POSSESSIVE} entire body flushes in arousal; {other:subject} better finish this fast!",
                             self, opponent));
-            opponent.add(c, new Horny(opponent, self.getArousal()
+            opponent.add(c, Horny.getWithBiologicalType(self, opponent, self.getArousal()
                                                     .getReal()
                             / 10, 5, self.nameOrPossessivePronoun() + " orgasmic pheromones"));
         }

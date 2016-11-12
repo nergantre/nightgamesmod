@@ -60,6 +60,8 @@ public abstract class Position implements Cloneable {
         return 0;
     }
 
+    public abstract int distance();
+
     public abstract String describe();
 
     public abstract boolean mobile(Character c);
@@ -91,6 +93,10 @@ public abstract class Position implements Cloneable {
     }
 
     public abstract boolean inserted(Character c);
+
+    public boolean penisInserted(Character c) {
+        return inserted(c) || c.is(Stsflag.inserted);
+    }
 
     public abstract String image();
 
@@ -246,7 +252,7 @@ public abstract class Position implements Cloneable {
 
     public boolean vaginallyPenetrated(Character c) {
         List<BodyPart> parts = partsFor(c);
-        return BodyPart.hasType(parts, "pussy") || c.is(Stsflag.fucked);
+        return (BodyPart.hasType(parts, "pussy") && inserted()) || c.is(Stsflag.fucked);
     }
 
     public boolean havingSexOtherNoStrapped(Character c) {
@@ -283,8 +289,8 @@ public abstract class Position implements Cloneable {
         }
         List<BodyPart> parts = partsFor(self);
         List<BodyPart> otherParts = partsFor(other);
-        return BodyPart.hasType(parts, "ass")
-                        && (BodyPart.hasType(otherParts, "cock") || BodyPart.hasType(otherParts, "strapon"));
+        return (BodyPart.hasType(parts, "ass")
+                        && (BodyPart.hasType(otherParts, "cock") || BodyPart.hasType(otherParts, "strapon"))) && inserted();
     }
 
     public boolean connected() {

@@ -94,7 +94,7 @@ public class Nimble extends DurationStatus {
 
     @Override
     public int counter() {
-        return affected.get(Attribute.Animism) * affected.getArousal().percent() / 100;
+        return (affected.get(Attribute.Animism) / 2) * affected.getArousal().percent() / 100;
     }
 
     @Override

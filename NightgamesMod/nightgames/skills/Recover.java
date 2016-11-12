@@ -4,6 +4,7 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Neutral;
 import nightgames.status.Stsflag;
 
@@ -11,6 +12,8 @@ public class Recover extends Skill {
 
     public Recover(Character self) {
         super("Recover", self);
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.escaping);
     }
 
     @Override

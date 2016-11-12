@@ -7,10 +7,12 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.nskills.tags.SkillTag;
 
 public class LivingClothing extends Skill {
     public LivingClothing(Character self) {
         super("Living Clothing: Self", self, 5);
+        addTag(SkillTag.suicidal);
     }
 
     @Override

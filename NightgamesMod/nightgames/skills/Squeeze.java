@@ -10,6 +10,7 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.items.clothing.ClothingTrait;
+import nightgames.skills.damage.DamageType;
 
 public class Squeeze extends Skill {
 
@@ -31,12 +32,15 @@ public class Squeeze extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         if (target.roll(this, c, accuracy(c))) {
+            double m = Global.random(10, 20);
+            DamageType type = DamageType.physical;
             if (target.has(Trait.brassballs)) {
                 if (target.human()) {
                     c.write(getSelf(), receive(c, 0, Result.weak2, target));
                 } else if (getSelf().human()) {
                     c.write(getSelf(), deal(c, 0, Result.weak2, target));
                 }
+                m = 0;
             } else if (target.crotchAvailable()) {
                 if (getSelf().has(Item.ShockGlove) && getSelf().has(Item.Battery, 2)) {
                     getSelf().consume(Item.Battery, 2);
@@ -45,9 +49,10 @@ public class Squeeze extends Skill {
                     } else if (getSelf().human()) {
                         c.write(getSelf(), deal(c, 0, Result.special, target));
                     }
-                    target.pain(c, Global.random(8 + target.get(Attribute.Perception)) + 16);
+                    type = DamageType.gadgets;
+                    m += 15;
                     if (target.has(Trait.achilles)) {
-                        target.pain(c, 6);
+                        m += 5;
                     }
                 } else if (target.has(ClothingTrait.armored)) {
                     if (target.human()) {
@@ -55,7 +60,7 @@ public class Squeeze extends Skill {
                     } else if (getSelf().human()) {
                         c.write(getSelf(), deal(c, 0, Result.item, target));
                     }
-                    target.pain(c, Global.random(3));
+                    m *= .5;
                 } else {
                     if (target.human()) {
                         c.write(getSelf(), receive(c, 0, Result.normal, target));
@@ -63,9 +68,8 @@ public class Squeeze extends Skill {
                         c.write(getSelf(), deal(c, 0, Result.normal, target));
                     }
                     if (target.has(Trait.achilles)) {
-                        target.pain(c, 4);
+                        m += 5;
                     }
-                    target.pain(c, Global.random(7) + 5);
                 }
             } else {
                 if (target.human()) {
@@ -73,8 +77,9 @@ public class Squeeze extends Skill {
                 } else if (getSelf().human()) {
                     c.write(getSelf(), deal(c, 0, Result.weak, target));
                 }
-                target.pain(c, (int) Math.round(Global.random(7) + 5 - 5 * target.getExposure(ClothingSlot.bottom)));
+                m *= target.getExposure(ClothingSlot.bottom);
             }
+            target.pain(c, getSelf(), (int) getSelf().modifyDamage(type, target, m));
 
             target.emote(Emotion.angry, 15);
         } else {
@@ -86,7 +91,7 @@ public class Squeeze extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.get(Attribute.Power) >= 9;
+        return user.get(Attribute.Power) >= 9 && user.get(Attribute.Seduction) >= 9;
     }
 
     @Override

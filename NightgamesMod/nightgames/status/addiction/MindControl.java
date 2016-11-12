@@ -10,6 +10,7 @@ import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.skills.damage.DamageType;
 import nightgames.stance.Anal;
 import nightgames.stance.AnalCowgirl;
 import nightgames.stance.Position;
@@ -380,7 +381,7 @@ public class MindControl extends Addiction {
             if (affected.getStamina()
                         .percent() > 5) {
                 int amt = getSeverity().ordinal() * (Global.random(6) + 1);
-                affected.weaken(c, amt);
+                affected.weaken(c, (int) cause.modifyDamage(DamageType.temptation, affected, amt));
                 c.write(affected, "You keep fighting your own body to do as you want, and it's tiring you rapidly.");
             }
         }

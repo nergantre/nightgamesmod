@@ -48,7 +48,7 @@ public class StripTease extends Skill {
 
     @Override
     public int getMojoBuilt(Combat c) {
-        return 50;
+        return 30;
     }
 
     @Override

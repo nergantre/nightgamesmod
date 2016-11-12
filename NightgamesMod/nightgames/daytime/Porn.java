@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.global.Configuration;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 
@@ -21,26 +22,29 @@ public class Porn extends Activity {
     public void visit(String choice) {
         Global.gui().clearText();
         if (page == 0) {
-            if (player.getArousal().max() < 100 + player.getLevel() * 15) {
-                boolean fail = Global.random(10) < 1;
-                showScene(pickScene(fail ? 1 : 2));
-    
-                Global.gui().next(this);
-                int gain = Global.random(3) + 2;
-                if (player.has(Trait.expertGoogler)) {
-                    gain = gain * 3 / 2;
-                }
-                player.getArousal().gain(gain);
-                Global.gui().message("<b>Your maximum arousal has increased by " + gain + ".</b>");
-            }
+            int gain = gainArousal(player);
+            showScene(pickScene(gain));
+            Global.gui().next(this);
+            Global.gui().message("<b>Your maximum arousal has increased by " + gain + ".</b>");
         } else {
             done(true);
         }
     }
 
+    private int gainArousal(Character self) {
+        int maximumArousalForLevel = Configuration.getMaximumArousalPossible(self);
+        int gain = 1 + Global.random(2);
+        if (player.has(Trait.expertGoogler)) {
+            gain = gain + Global.random(2);
+        }
+        gain = (int) Math.max(0, (int) Math.min(maximumArousalForLevel, self.getArousal().trueMax() + gain) - self.getArousal().trueMax());
+        self.getArousal().gain(gain);
+        return gain;
+    }
+
     @Override
     public void shop(Character npc, int budget) {
-        npc.getArousal().gain(8);
+        gainArousal(npc);
     }
 
     private void showScene(Scene chosen) {
@@ -63,7 +67,7 @@ public class Porn extends Activity {
                 break;
             case fail1:
                 Global.gui().message(
-                                "It feels like the internet has run out of sexy. There's nothing new worth fapping to. Maybe there's something decent behind this paywall? No, don't do it. It's a trap.");
+                                "It feels like the internet has run out of sexy. There's nothing new worth fapping to. Maybe there's something decent behind this paywall? No, don't do it. It's a trap. (Need to raise your level more).");
                 break;
             case mara1:
                 Global.gui().message(
@@ -85,7 +89,6 @@ public class Porn extends Activity {
         ArrayList<Scene> available = new ArrayList<Scene>();
         if (gain == 0) {
             available.add(Scene.none);            
-        } else if (gain == 1) {
             available.add(Scene.fail1);
         } else {
             available.add(Scene.basic1);

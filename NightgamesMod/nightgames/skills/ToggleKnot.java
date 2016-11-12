@@ -35,7 +35,7 @@ public class ToggleKnot extends Skill {
 
     @Override
     public String getLabel(Combat c) {
-        if (isActive(c.getOther(getSelf()))) {
+        if (isActive(c.getOpponent(getSelf()))) {
             return "Deflate Knot";
         }
         return "Inflate Knot";

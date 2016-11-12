@@ -8,7 +8,6 @@ import nightgames.characters.NPC;
 import nightgames.characters.Trait;
 import nightgames.global.Global;
 import nightgames.global.TestGlobal;
-import nightgames.items.clothing.Clothing;
 import nightgames.stance.Stance;
 import nightgames.stance.TestPosition;
 import org.junit.Before;
