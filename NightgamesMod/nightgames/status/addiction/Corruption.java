@@ -132,10 +132,10 @@ public class Corruption extends Addiction {
     protected String describeIncrease() {
         switch (getSeverity()) {
             case HIGH:
-                return "Reyka's blackness threatens to overwhelm what purity "
+                return cause.name() + "'s blackness threatens to overwhelm what purity "
                                 + "remains inside of you, and it's a constant presence in your mind.";
             case LOW:
-                return "The blackness Reyka poured into you is still "
+                return "The blackness " + cause.name() + " poured into you is still "
                                 + "there, and it feels like it's alive somehow; a churning mass of corruption and depravity.";
             case MED:
                 return "The corruption in your soul spreads further, seeping into your flesh and bones.";
@@ -152,7 +152,7 @@ public class Corruption extends Addiction {
                 return "The corruption in your soul is backing off, but "
                                 + "there is work to be done yet if you are to be entirely free of it. ";
             case MED:
-                return "Whatever it was exactly that Reyka created in you "
+                return "Whatever it was exactly that " + cause.name() + " created in you "
                                 + "has weakened considerably and is no longer corrupting your every thought. ";
             case NONE:
                 return "The last of the infernal corruption is purified "
@@ -167,11 +167,11 @@ public class Corruption extends Addiction {
     protected String describeWithdrawal() {
         switch (getSeverity()) {
             case HIGH:
-                return "<b>Reyka's corruption is working hard to punish you "
+                return "<b>" + cause.name() + "'s corruption is working hard to punish you "
                                 + "for not feeding it today, and it will cause all kinds of trouble tonight.</b>";
             case LOW:
-                return "<b>Something is not quite right. The blackness Reyka "
-                                + "put in you is stirring, causing all kinds of strange sensations. Perhaps it's hungry?</b>";
+                return "<b>Something is not quite right. The blackness " + cause.name()
+                                + " put in you is stirring, causing all kinds of strange sensations. Perhaps it's hungry?</b>";
             case MED:
                 return "<b>The powerful corruption within you is rebelling"
                                 + " against not being fed today. Expect the unexpected tonight.</b>";
@@ -206,9 +206,9 @@ public class Corruption extends Addiction {
     @Override
     public String initialMessage(Combat c, boolean replaced) {
         if (inWithdrawal) {
-            return "The blackness resonates with Reyka, growing even more powerful and troublesome than before.";
+            return "The blackness resonates with " + cause.name() + ", growing even more powerful and troublesome than before.";
         }
-        return "The blackness Rayka places in you resonates with her. You can"
+        return "The blackness " + cause.name() + " places in you resonates with " + cause.directObject() + ". You can"
                         + " feel it starting to corrupt your mind and body!";
     }
 
@@ -289,7 +289,7 @@ public class Corruption extends Addiction {
 
     @Override
     public String informantsOverview() {
-        return "Dude. Not cool. I like Reyka shaking her evil ass around at night as much"
+        return "Dude. Not cool. I like " + cause.name() + " shaking " + cause.directObject() + " evil ass around at night as much"
                         + " as the next guy, but the evil should stay there, you know? Now, the"
                         + " rest of the competitors will not appreciate your new attitude either."
                         + " I don't see them jumping to your defence any time soon. You should also"
