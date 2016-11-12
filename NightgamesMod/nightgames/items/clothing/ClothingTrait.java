@@ -3,7 +3,7 @@ package nightgames.items.clothing;
 public enum ClothingTrait {
     open("Open", "Shows what's beneath"),
     bulky("Bulky", "Speed penalty"),
-    skimpy("Skimpy", "Better temptation daamage"),
+    skimpy("Skimpy", "Better temptation damage"),
     flexible("Flexible", "Can fuck by pulling it aside"),
     indestructible("Indestructible", "Cannot be destroyed"),
     geeky("Geeky", "Science bonus"),

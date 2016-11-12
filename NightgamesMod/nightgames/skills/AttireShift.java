@@ -11,7 +11,7 @@ import nightgames.status.Primed;
 public class AttireShift extends Skill {
 
     public AttireShift(Character self) {
-        super("Attrie Shift", self);
+        super("Attire Shift", self);
         addTag(SkillTag.stripping);
     }
 
