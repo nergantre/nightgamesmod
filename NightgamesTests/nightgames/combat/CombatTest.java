@@ -68,7 +68,7 @@ public class CombatTest {
 
         // Self is dominant. Other should lose willpower but self should not. Trait increases effective stance dominance.
         combat.setStance(new TestPosition(self, other, Stance.engulfed, 5));
-        assertThat(combat.getDominanceOfStance(self), equalTo(8));
+        assertThat(combat.getDominanceOfStance(self), equalTo(5));
         assertThat(combat.getDominanceOfStance(other), equalTo(0));
 
         // Negative position dominance. Not a valid dominance value, but we'll accept it and treat it like a neutral position.
