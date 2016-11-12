@@ -56,6 +56,7 @@ public class Nurse extends Skill {
         }
         if (special) {
             c.setStance(new NursingHold(getSelf(), target));
+            new Suckle(target).resolve(c, getSelf());
             getSelf().emote(Emotion.dominant, 20);
         } else {
             new Suckle(target).resolve(c, getSelf());
