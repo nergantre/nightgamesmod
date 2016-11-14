@@ -25,34 +25,39 @@ public class Angel extends BasePersonality {
     }
 
     public Angel(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Angel", 1, charConfig, commonConfig);
+        super("Angel", 1, charConfig, commonConfig, true);
     }
 
-    protected void applyBasicStats() {
-        character.isStartCharacter = true;
+    public void applyBasicStats(Character self ) {
         preferredCockMod = CockMod.blessed;
-        character.outfitPlan.add(Clothing.getByID("Tshirt"));
-        character.outfitPlan.add(Clothing.getByID("bra"));
-        character.outfitPlan.add(Clothing.getByID("thong"));
-        character.outfitPlan.add(Clothing.getByID("miniskirt"));
-        character.outfitPlan.add(Clothing.getByID("sandals"));
-        character.change();
-        character.mod(Attribute.Seduction, 2);
-        character.mod(Attribute.Perception, 1);
-        Global.gainSkills(character);
+        self.outfitPlan.add(Clothing.getByID("Tshirt"));
+        self.outfitPlan.add(Clothing.getByID("bra"));
+        self.outfitPlan.add(Clothing.getByID("thong"));
+        self.outfitPlan.add(Clothing.getByID("miniskirt"));
+        self.outfitPlan.add(Clothing.getByID("sandals"));
+        self.change();
+        self.mod(Attribute.Seduction, 2);
+        self.mod(Attribute.Perception, 1);
+        Global.gainSkills(self);
 
-        character.getStamina().setMax(60 + character.getLevel() * getGrowth().stamina);
-        character.getArousal().setMax(110 + character.getLevel() * getGrowth().arousal);
+        self.getStamina().setMax(60);
+        self.getArousal().setMax(110);
 
-        character.setTrophy(Item.AngelTrophy);
-        character.plan = Plan.hunting;
-        character.mood = Emotion.confident;
-        character.body.add(BreastsPart.dd);
+        self.setTrophy(Item.AngelTrophy);
+        if (self instanceof NPC) {
+        }
+        self.body.add(BreastsPart.dd);
         // very feminine face
-        character.body.add(new FacePart(0.6, 4.2));
-        character.initialGender = CharacterSex.female;
+        self.body.add(new FacePart(0.6, 4.2));
+        self.initialGender = CharacterSex.female;
     }
 
+    @Override public void applyStrategy(NPC self) {
+        NPC npcSelf = (NPC) self;
+        npcSelf.plan = Plan.retreating;
+        npcSelf.mood = Emotion.confident;
+    }
+    
     @Override
     public void setGrowth() {
         growth.stamina = 1;

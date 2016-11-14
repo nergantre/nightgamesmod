@@ -30,36 +30,40 @@ public class Mara extends BasePersonality {
     }
 
     public Mara(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Mara", 1, charConfig, commonConfig);
+        super("Mara", 1, charConfig, commonConfig, true);
     }
 
-    protected void applyBasicStats() {
-        character.isStartCharacter = true;
+    @Override
+    public void applyStrategy(NPC self) {
+        self.plan = Plan.hunting;
+        self.mood = Emotion.confident;
+
+        self.addPersonalStrategy(new FootjobStrategy());
+        self.addPersonalStrategy(new UseToyStrategy());
+        self.addPersonalStrategy(new StraponStrategy());
+        self.addPersonalStrategy(new WindUpStrategy());
+    }
+
+    @Override
+    public void applyBasicStats(Character self) {
         preferredCockMod = CockMod.bionic;
-        character.outfitPlan.add(Clothing.getByID("bra"));
-        character.outfitPlan.add(Clothing.getByID("Tshirt"));
-        character.outfitPlan.add(Clothing.getByID("underwear"));
-        character.outfitPlan.add(Clothing.getByID("shorts"));
-        character.outfitPlan.add(Clothing.getByID("pantyhose"));
-        character.outfitPlan.add(Clothing.getByID("boots"));
-        character.change();
-        character.mod(Attribute.Cunning, 2);
-        character.mod(Attribute.Perception, 2);
-        character.getStamina().setMax(80 + character.getLevel() * getGrowth().stamina);
-        character.getArousal().setMax(80 + character.getLevel() * getGrowth().arousal);
-        character.getMojo().setMax(120);
+        self.outfitPlan.add(Clothing.getByID("bra"));
+        self.outfitPlan.add(Clothing.getByID("Tshirt"));
+        self.outfitPlan.add(Clothing.getByID("underwear"));
+        self.outfitPlan.add(Clothing.getByID("shorts"));
+        self.outfitPlan.add(Clothing.getByID("pantyhose"));
+        self.outfitPlan.add(Clothing.getByID("boots"));
+        self.change();
+        self.mod(Attribute.Cunning, 2);
+        self.mod(Attribute.Perception, 2);
+        self.getStamina().setMax(80);
+        self.getArousal().setMax(80);
+        self.getMojo().setMax(120);
 
-        character.addPersonalStrategy(new FootjobStrategy());
-        character.addPersonalStrategy(new UseToyStrategy());
-        character.addPersonalStrategy(new StraponStrategy());
-        character.addPersonalStrategy(new WindUpStrategy());
-
-        Global.gainSkills(character);
-        character.setTrophy(Item.MaraTrophy);
-        character.plan = Plan.hunting;
-        character.mood = Emotion.confident;
-        character.body.add(new FacePart(.1, 1.1));
-        character.initialGender = CharacterSex.female;
+        Global.gainSkills(self);
+        self.setTrophy(Item.MaraTrophy);
+        self.body.add(new FacePart(.1, 1.1));
+        self.initialGender = CharacterSex.female;
     }
 
     @Override

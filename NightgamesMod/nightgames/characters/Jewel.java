@@ -32,36 +32,40 @@ public class Jewel extends BasePersonality {
     }
 
     public Jewel(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Jewel", 1, charConfig, commonConfig);
+        super("Jewel", 1, charConfig, commonConfig, true);
     }
 
-    protected void applyBasicStats() {
-        character.isStartCharacter = true;
+    @Override
+    public void applyStrategy(NPC self) {
+        self.plan = Plan.hunting;
+        self.mood = Emotion.confident;
+
+        self.addPersonalStrategy(new FootjobStrategy());
+        self.addPersonalStrategy(new FacesitStrategy());
+        self.addPersonalStrategy(new KnockdownStrategy());
+        self.addPersonalStrategy(new StraponStrategy());
+    }
+
+    @Override
+    public void applyBasicStats(Character self) {
         preferredCockMod = CockMod.enlightened;
-        character.outfitPlan.add(Clothing.getByID("bra"));
-        character.outfitPlan.add(Clothing.getByID("tanktop"));
-        character.outfitPlan.add(Clothing.getByID("panties"));
-        character.outfitPlan.add(Clothing.getByID("jeans"));
-        character.outfitPlan.add(Clothing.getByID("sneakers"));
-        character.outfitPlan.add(Clothing.getByID("socks"));
-        character.change();
-        character.mod(Attribute.Power, 2);
-        character.mod(Attribute.Speed, 1);
-        Global.gainSkills(character);
-        character.getMojo().setMax(80);
+        self.outfitPlan.add(Clothing.getByID("bra"));
+        self.outfitPlan.add(Clothing.getByID("tanktop"));
+        self.outfitPlan.add(Clothing.getByID("panties"));
+        self.outfitPlan.add(Clothing.getByID("jeans"));
+        self.outfitPlan.add(Clothing.getByID("sneakers"));
+        self.outfitPlan.add(Clothing.getByID("socks"));
+        self.change();
+        self.mod(Attribute.Power, 2);
+        self.mod(Attribute.Speed, 1);
+        Global.gainSkills(self);
+        self.getMojo().setMax(80);
 
-        getCharacter().addPersonalStrategy(new FootjobStrategy());
-        getCharacter().addPersonalStrategy(new FacesitStrategy());
-        getCharacter().addPersonalStrategy(new KnockdownStrategy());
-        getCharacter().addPersonalStrategy(new StraponStrategy());
-
-        character.setTrophy(Item.JewelTrophy);
-        character.plan = Plan.hunting;
-        character.mood = Emotion.confident;
-        character.body.add(BreastsPart.c);
+        self.setTrophy(Item.JewelTrophy);
+        self.body.add(BreastsPart.c);
         // fairly feminine face
-        character.body.add(new FacePart(.1, 1.9));
-        character.initialGender = CharacterSex.female;
+        self.body.add(new FacePart(.1, 1.9));
+        self.initialGender = CharacterSex.female;
     }
 
     @Override
@@ -93,8 +97,8 @@ public class Jewel extends BasePersonality {
         growth.addTrait(34, Trait.exhibitionist);
         growth.addTrait(37, Trait.naturalTop);
 
-        character.getStamina().setMax(100 + character.getLevel() * getGrowth().stamina);
-        character.getArousal().setMax(70 + character.getLevel() * getGrowth().arousal);
+        character.getStamina().setMax(100);
+        character.getArousal().setMax(70);
         growth.actions.put(40, () -> {
             character.body.addReplace(new AnalPussyPart(), 1);
         });

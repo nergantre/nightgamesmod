@@ -25,36 +25,41 @@ public class Eve extends BasePersonality {
     }
 
     public Eve(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Eve", 10, charConfig, commonConfig);
+        super("Eve", 10, charConfig, commonConfig, false);
     }
 
-    protected void applyBasicStats() {
-        character.outfitPlan.add(Clothing.getByID("tanktop"));
-        character.outfitPlan.add(Clothing.getByID("crotchlesspanties"));
-        character.outfitPlan.add(Clothing.getByID("jeans"));
-        character.outfitPlan.add(Clothing.getByID("stilettopumps"));
-        character.outfitPlan.add(Clothing.getByID("garters"));
+    @Override
+    public void applyStrategy(NPC self) {
+        self.plan = Plan.hunting;
+        self.mood = Emotion.confident;
+    }
 
-        character.change();
-        character.set(Attribute.Power, 12);
-        character.set(Attribute.Fetish, 15);
-        character.set(Attribute.Cunning, 12);
-        character.set(Attribute.Speed, 6);
-        character.set(Attribute.Seduction, 13);
-        Global.gainSkills(character);
-        character.setTrophy(Item.EveTrophy);
-        character.plan = Plan.hunting;
-        character.mood = Emotion.confident;
-        character.body.add(BreastsPart.d);
-        character.body.add(BasicCockPart.big);
-        character.body.add(PussyPart.normal);
-        character.getMojo().setMax(120);
+    @Override
+    public void applyBasicStats(Character self) {
+        self.outfitPlan.add(Clothing.getByID("tanktop"));
+        self.outfitPlan.add(Clothing.getByID("crotchlesspanties"));
+        self.outfitPlan.add(Clothing.getByID("jeans"));
+        self.outfitPlan.add(Clothing.getByID("stilettopumps"));
+        self.outfitPlan.add(Clothing.getByID("garters"));
 
-        character.getStamina().setMax(90 + character.getLevel() * getGrowth().stamina);
-        character.getArousal().setMax(80 + character.getLevel() * getGrowth().arousal);
+        self.change();
+        self.set(Attribute.Power, 12);
+        self.set(Attribute.Fetish, 15);
+        self.set(Attribute.Cunning, 12);
+        self.set(Attribute.Speed, 6);
+        self.set(Attribute.Seduction, 13);
+        Global.gainSkills(self);
+        self.setTrophy(Item.EveTrophy);
+        self.body.add(BreastsPart.d);
+        self.body.add(BasicCockPart.big);
+        self.body.add(PussyPart.normal);
+        self.getMojo().setMax(120);
+
+        self.getStamina().setMax(90);
+        self.getArousal().setMax(80);
         // somewhat androgynous face
-        character.body.add(new FacePart(.1, .9));
-        character.initialGender = CharacterSex.herm;
+        self.body.add(new FacePart(.1, .9));
+        self.initialGender = CharacterSex.herm;
         preferredCockMod = CockMod.primal;
     }
 

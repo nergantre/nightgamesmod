@@ -52,7 +52,6 @@ import nightgames.status.Stsflag;
 import nightgames.trap.Trap;
 
 public class NPC extends Character {
-
     public Personality ai;
     public HashMap<Emotion, Integer> emotes;
     public Emotion mood;

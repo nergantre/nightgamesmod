@@ -19,7 +19,6 @@ import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
-import nightgames.skills.strategy.WindUpStrategy;
 import nightgames.skills.strategy.NurseStrategy;
 import nightgames.start.NpcConfiguration;
 import nightgames.status.Energized;
@@ -39,35 +38,37 @@ public class Cassie extends BasePersonality {
     }
 
     public Cassie(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Cassie", 1, charConfig, commonConfig);
+        super("Cassie", 1, charConfig, commonConfig, true);
     }
 
-    protected void applyBasicStats() {
-        character.isStartCharacter = true;
+    @Override
+    public void applyStrategy(NPC self) {
+        self.plan = Plan.hunting;
+        self.mood = Emotion.confident;
+        self.addPersonalStrategy(new NurseStrategy());
+    }
+
+    @Override
+    public void applyBasicStats(Character self) {
         preferredCockMod = CockMod.runic;
-        character.outfitPlan.add(Clothing.getByID("bra"));
-        character.outfitPlan.add(Clothing.getByID("blouse"));
-        character.outfitPlan.add(Clothing.getByID("panties"));
-        character.outfitPlan.add(Clothing.getByID("skirt"));
-        character.outfitPlan.add(Clothing.getByID("shoes"));
+        self.outfitPlan.add(Clothing.getByID("bra"));
+        self.outfitPlan.add(Clothing.getByID("blouse"));
+        self.outfitPlan.add(Clothing.getByID("panties"));
+        self.outfitPlan.add(Clothing.getByID("skirt"));
+        self.outfitPlan.add(Clothing.getByID("shoes"));
 
-        character.change();
-        character.mod(Attribute.Power, 1);
-        character.mod(Attribute.Seduction, 1);
-        character.mod(Attribute.Cunning, 1);
-        character.mod(Attribute.Perception, 1);
+        self.change();
+        self.mod(Attribute.Power, 1);
+        self.mod(Attribute.Seduction, 1);
+        self.mod(Attribute.Cunning, 1);
+        self.mod(Attribute.Perception, 1);
 
-        character.addPersonalStrategy(new WindUpStrategy());
-        character.addPersonalStrategy(new NurseStrategy());
-
-        character.getStamina().setMax(70 + character.getLevel() * getGrowth().stamina);
-        character.getArousal().setMax(100 + character.getLevel() * getGrowth().arousal);
-        Global.gainSkills(character);
-        character.setTrophy(Item.CassieTrophy);
-        character.plan = Plan.hunting;
-        character.mood = Emotion.confident;
-        character.body.add(BreastsPart.c);
-        character.initialGender = CharacterSex.female;
+        self.getStamina().setMax(70);
+        self.getArousal().setMax(100);
+        Global.gainSkills(self);
+        self.setTrophy(Item.CassieTrophy);
+        self.body.add(BreastsPart.c);
+        self.initialGender = CharacterSex.female;
     }
 
     @Override

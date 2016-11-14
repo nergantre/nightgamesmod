@@ -29,36 +29,40 @@ public class Airi extends BasePersonality {
     }
 
     public Airi(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Airi", 10, charConfig, commonConfig);
+        super("Airi", 10, charConfig, commonConfig, false);
 
     }
 
-    @Override protected void applyBasicStats() {
-        character.change();
-        character.setTrophy(Item.AiriTrophy);
+    @Override
+    public void applyStrategy(NPC self) {
+        self.plan = Plan.retreating;
+        self.mood = Emotion.nervous;
+    }
+
+    @Override
+    public void applyBasicStats(Character self) {
+        self.change();
+        self.setTrophy(Item.AiriTrophy);
         preferredCockMod = CockMod.slimy;
 
-        character.outfitPlan.add(Clothing.getByID("shirt"));
-        character.outfitPlan.add(Clothing.getByID("bra"));
-        character.outfitPlan.add(Clothing.getByID("panties"));
-        character.outfitPlan.add(Clothing.getByID("skirt"));
-        character.outfitPlan.add(Clothing.getByID("pantyhose"));
-        character.outfitPlan.add(Clothing.getByID("shoes"));
-        character.change();
-        character.rank = 1;
-        character.set(Attribute.Power, 6);
-        character.set(Attribute.Slime, 1);
-        character.set(Attribute.Cunning, 15);
-        character.set(Attribute.Speed, 4);
-        character.set(Attribute.Seduction, 17);
-        character.getStamina().setMax(50 + character.getLevel() * getGrowth().stamina);
-        character.getArousal().setMax(80 + character.getLevel() * getGrowth().arousal);
-        character.getMojo().setMax(100);
-        character.getWillpower().setMax(80);
-
-        character.plan = Plan.retreating;
-        character.mood = Emotion.confident;
-        character.initialGender = CharacterSex.female;
+        self.outfitPlan.add(Clothing.getByID("shirt"));
+        self.outfitPlan.add(Clothing.getByID("bra"));
+        self.outfitPlan.add(Clothing.getByID("panties"));
+        self.outfitPlan.add(Clothing.getByID("skirt"));
+        self.outfitPlan.add(Clothing.getByID("pantyhose"));
+        self.outfitPlan.add(Clothing.getByID("shoes"));
+        self.change();
+        self.rank = 1;
+        self.set(Attribute.Power, 6);
+        self.set(Attribute.Slime, 1);
+        self.set(Attribute.Cunning, 15);
+        self.set(Attribute.Speed, 4);
+        self.set(Attribute.Seduction, 17);
+        self.getStamina().setMax(50);
+        self.getArousal().setMax(80);
+        self.getMojo().setMax(100);
+        self.getWillpower().setMax(80);
+        self.initialGender = CharacterSex.female;
     }
 
     @Override

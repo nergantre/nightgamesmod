@@ -30,38 +30,43 @@ public class Kat extends BasePersonality {
     }
 
     public Kat(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Kat", 10, charConfig, commonConfig);
+        super("Kat", 10, charConfig, commonConfig, false);
     }
 
-    protected void applyBasicStats() {
-        preferredCockMod = CockMod.primal;
-        character.outfitPlan.add(Clothing.getByID("bra"));
-        character.outfitPlan.add(Clothing.getByID("Tshirt"));
-        character.outfitPlan.add(Clothing.getByID("panties"));
-        character.outfitPlan.add(Clothing.getByID("skirt"));
-        character.outfitPlan.add(Clothing.getByID("sneakers"));
-        character.outfitPlan.add(Clothing.getByID("socks"));
-        character.change();
-        character.setTrophy(Item.KatTrophy);
-        character.set(Attribute.Power, 10);
-        character.set(Attribute.Animism, 2);
-        character.set(Attribute.Cunning, 8);
-        character.set(Attribute.Speed, 8);
-        character.set(Attribute.Seduction, 7);
-        character.getStamina().setMax(100 + character.getLevel() * getGrowth().stamina);
-        character.getArousal().setMax(50 + character.getLevel() * getGrowth().arousal);
-        character.getMojo().setMax(80);
-        getCharacter().addPersonalStrategy(new FacesitStrategy());
+    @Override
+    public void applyStrategy(NPC self) {
+        self.plan = Plan.retreating;
+        self.mood = Emotion.confident;
+        self.addPersonalStrategy(new FacesitStrategy());
+    }
 
-        character.plan = Plan.retreating;
-        character.mood = Emotion.confident;
-        character.body.add(BreastsPart.a);
-        character.body.add(PussyPart.feral);
-        character.body.add(TailPart.cat);
-        character.body.add(EarPart.cat);
+    @Override
+    public void applyBasicStats(Character self) {
+        preferredCockMod = CockMod.primal;
+        self.outfitPlan.add(Clothing.getByID("bra"));
+        self.outfitPlan.add(Clothing.getByID("Tshirt"));
+        self.outfitPlan.add(Clothing.getByID("panties"));
+        self.outfitPlan.add(Clothing.getByID("skirt"));
+        self.outfitPlan.add(Clothing.getByID("sneakers"));
+        self.outfitPlan.add(Clothing.getByID("socks"));
+        self.change();
+        self.setTrophy(Item.KatTrophy);
+        self.set(Attribute.Power, 10);
+        self.set(Attribute.Animism, 2);
+        self.set(Attribute.Cunning, 8);
+        self.set(Attribute.Speed, 6);
+        self.set(Attribute.Seduction, 7);
+        self.getStamina().setMax(100);
+        self.getArousal().setMax(60);
+        self.getMojo().setMax(80);
+
+        self.body.add(BreastsPart.a);
+        self.body.add(PussyPart.feral);
+        self.body.add(TailPart.cat);
+        self.body.add(EarPart.cat);
         // mostly feminine face
-        character.body.add(new FacePart(.1, 2.3));
-        character.initialGender = CharacterSex.female;
+        self.body.add(new FacePart(.1, 2.3));
+        self.initialGender = CharacterSex.female;
     }
 
     @Override

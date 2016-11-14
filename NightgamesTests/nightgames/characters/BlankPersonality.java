@@ -12,7 +12,7 @@ public class BlankPersonality extends BasePersonality {
     private static final long serialVersionUID = 1L;
 
     public BlankPersonality(String name, int level) {
-        super(name, level, Optional.empty(), Optional.empty());
+        super(name, level, Optional.empty(), Optional.empty(), false);
     }
 
     @Override public String bbLiner(Combat c, Character other) {
@@ -91,11 +91,17 @@ public class BlankPersonality extends BasePersonality {
         return null;
     }
 
-    @Override protected void applyBasicStats() {
+    @Override public void setGrowth() {
 
     }
 
-    @Override public void setGrowth() {
+    @Override
+    public void applyBasicStats(Character self) {
+        
+    }
 
+    @Override
+    public void applyStrategy(NPC self) {
+        
     }
 }

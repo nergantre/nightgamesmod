@@ -27,42 +27,45 @@ public class Reyka extends BasePersonality {
     }
 
     public Reyka(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Reyka", 1, charConfig, commonConfig);
+        super("Reyka", 1, charConfig, commonConfig, false);
     }
 
-    protected void applyBasicStats() {
+    @Override
+    public void applyStrategy(NPC self) {
+        self.plan = Plan.hunting;
+        self.mood = Emotion.confident;
+
+        self.addPersonalStrategy(new FootjobStrategy());
+        self.addPersonalStrategy(new FacesitStrategy());
+        self.addPersonalStrategy(new KnockdownStrategy());
+    }
+
+    @Override
+    public void applyBasicStats(Character self) {
         preferredCockMod = CockMod.incubus;
-        character.outfitPlan.add(Clothing.getByID("tanktop"));
-        character.outfitPlan.add(Clothing.getByID("miniskirt"));
-        character.outfitPlan.add(Clothing.getByID("garters"));
-        character.outfitPlan.add(Clothing.getByID("stilettopumps"));
-        character.change();
-        character.set(Attribute.Dark, 12);
-        character.set(Attribute.Seduction, 14);
-        character.set(Attribute.Cunning, 7);
-        character.set(Attribute.Speed, 5);
-        character.setTrophy(Item.ReykaTrophy);
-        character.getStamina().setMax(40);
-        character.getArousal().setMax(200);
-        character.getMojo().setMax(110);
+        self.outfitPlan.add(Clothing.getByID("tanktop"));
+        self.outfitPlan.add(Clothing.getByID("miniskirt"));
+        self.outfitPlan.add(Clothing.getByID("garters"));
+        self.outfitPlan.add(Clothing.getByID("stilettopumps"));
+        self.change();
+        self.set(Attribute.Dark, 2);
+        self.set(Attribute.Seduction, 3);
+        self.set(Attribute.Cunning, 2);
+        self.set(Attribute.Speed, 5);
+        self.setTrophy(Item.ReykaTrophy);
 
-        getCharacter().addPersonalStrategy(new FootjobStrategy());
-        getCharacter().addPersonalStrategy(new FacesitStrategy());
-        getCharacter().addPersonalStrategy(new KnockdownStrategy());
+        Global.gainSkills(self);
+        self.getStamina().setMax(50);
+        self.getArousal().setMax(120);
+        self.getMojo().setMax(110);
 
-        Global.gainSkills(character);
-        character.getStamina().setMax(50 + character.getLevel() * getGrowth().stamina);
-        character.getArousal().setMax(120 + character.getLevel() * getGrowth().arousal);
-
-        character.plan = Plan.hunting;
-        character.mood = Emotion.confident;
-        character.body.add(BreastsPart.dd);
-        character.body.add(PussyPart.succubus);
-        character.body.add(TailPart.demonic);
-        character.body.add(WingsPart.demonic);
-        character.body.add(EarPart.pointed);
-        character.body.add(new FacePart(1.5, 1.1));
-        character.initialGender = CharacterSex.female;
+        self.body.add(BreastsPart.dd);
+        self.body.add(PussyPart.succubus);
+        self.body.add(TailPart.demonic);
+        self.body.add(WingsPart.demonic);
+        self.body.add(EarPart.pointed);
+        self.body.add(new FacePart(1.5, 1.1));
+        self.initialGender = CharacterSex.female;
     }
 
     @Override

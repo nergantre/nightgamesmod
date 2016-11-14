@@ -26,11 +26,19 @@ public class Yui extends BasePersonality {
     }
 
     public Yui(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Yui", 1, charConfig, commonConfig);
+        // Yui is a start character so that you can gain affection with her straight off the bat.
+        // She is disabled when the game starts
+        super("Yui", 1, charConfig, commonConfig, true);
     }
 
-    protected void applyBasicStats() {
-        character.isStartCharacter = true;
+    @Override
+    public void applyStrategy(NPC self) {
+        self.plan = Plan.hunting;
+        self.mood = Emotion.confident;
+    }
+
+    @Override
+    public void applyBasicStats(Character self) {
         preferredCockMod = CockMod.error;
         character.outfitPlan.add(Clothing.getByID("sarashi"));
         character.outfitPlan.add(Clothing.getByID("shinobigarb"));
@@ -43,16 +51,15 @@ public class Yui extends BasePersonality {
         character.mod(Attribute.Cunning, 1);
         character.mod(Attribute.Perception, 1);
         character.mod(Attribute.Ninjutsu, 1);
-        character.getStamina().setMax(100 + character.getLevel() * getGrowth().stamina);
-        character.getArousal().setMax(90 + character.getLevel() * getGrowth().arousal);
+        character.mod(Attribute.Speed, 7);
+        character.getStamina().setMax(100);
+        character.getArousal().setMax(90);
         character.rank = 1;
         Global.gainSkills(character);
 
         character.getMojo().setMax(130);
 
         character.setTrophy(Item.YuiTrophy);
-        character.plan = Plan.hunting;
-        character.mood = Emotion.confident;
         character.body.add(BreastsPart.c);
         character.initialGender = CharacterSex.female;
     }
@@ -64,7 +71,7 @@ public class Yui extends BasePersonality {
         growth.willpower = .4f;
         growth.bonusStamina = 2;
         growth.bonusArousal = 2;
-        preferredAttributes.add(c -> c.get(Attribute.Ninjutsu) < 60 ? Optional.of(Attribute.Ninjutsu) : Optional.empty());
+        preferredAttributes.add(c -> c.get(Attribute.Ninjutsu) < 60 && c.getLevel() >= 10 ? Optional.of(Attribute.Ninjutsu)  : Optional.empty());
         preferredAttributes.add(c -> c.get(Attribute.Cunning) < 50 ? Optional.of(Attribute.Cunning) : Optional.empty());
 
         growth.addTrait(0, Trait.obedient);
@@ -186,9 +193,9 @@ public class Yui extends BasePersonality {
         } else {
             return "Yui looks placidly at the proof of your defeat staining her body and says sheepishly <i>\"My apologies Master, we of the Ishida clan have been trained since we hit puberty on sexual techniques. "
                             + "It's not really a fair fight.\"</i> You flush red at her unintended insult. You halfheartedly try making a grab for her boob again, but Yui seems to disappear. While you look around confused, "
-                            + "you hear her familiar voice behind you as she reaches into your pants and stokes your cock again, <i>\"It's okay, as much as you want, your Yui will keep Master company. Master only needs to ask!\"</i>"
+                            + "you hear her familiar voice behind you as she reaches into your pants and stokes your cock again, <i>\"It's okay, as much as you want, I will keep Master company. You only need to ask!\"</i>"
                             + "<br/>"
-                            + "You groan as she manages to tease yet another geyser of white cum from your cock. Maybe it's too much for you right now.";
+                            + "You groan as she manages to tease yet another geyser of white cum from your cock. Maybe she's too much for you right now.";
         }
     }
 

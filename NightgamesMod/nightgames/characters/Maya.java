@@ -23,39 +23,44 @@ public class Maya extends BasePersonality {
     }
 
     public Maya(int playerLevel, Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Maya", 50, charConfig, commonConfig);
+        super("Maya", 50, charConfig, commonConfig, false);
 
         while (character.getLevel() < playerLevel + 20) {
             character.ding();
         }
     }
 
-    protected void applyBasicStats() {
-        character.outfitPlan.add(Clothing.getByID("camisole"));
-        character.outfitPlan.add(Clothing.getByID("blouse"));
-        character.outfitPlan.add(Clothing.getByID("lacepanties"));
-        character.outfitPlan.add(Clothing.getByID("skirt"));
-        character.outfitPlan.add(Clothing.getByID("sneakers"));
-        character.outfitPlan.add(Clothing.getByID("socks"));
-        character.change();
-        character.set(Attribute.Dark, 40);
-        character.set(Attribute.Seduction, 66);
-        character.set(Attribute.Cunning, 39);
-        character.set(Attribute.Speed, 17);
-        character.set(Attribute.Power, 36);
-        character.set(Attribute.Hypnosis, 8);
-        character.getStamina().setMax(90 + character.getLevel() * getGrowth().stamina);
-        character.getArousal().setMax(150 + character.getLevel() * getGrowth().arousal);
-        character.getMojo().setMax(150);
-        character.getWillpower().setMax(100);
+    @Override
+    public void applyStrategy(NPC self) {
+        self.plan = Plan.hunting;
+        self.mood = Emotion.confident;
+    }
 
-        Global.gainSkills(character);
-        character.setTrophy(Item.MayaTrophy);
+    @Override
+    public void applyBasicStats(Character self) {
+        self.outfitPlan.add(Clothing.getByID("camisole"));
+        self.outfitPlan.add(Clothing.getByID("blouse"));
+        self.outfitPlan.add(Clothing.getByID("lacepanties"));
+        self.outfitPlan.add(Clothing.getByID("skirt"));
+        self.outfitPlan.add(Clothing.getByID("sneakers"));
+        self.outfitPlan.add(Clothing.getByID("socks"));
+        self.change();
+        self.set(Attribute.Dark, 10);
+        self.set(Attribute.Seduction, 20);
+        self.set(Attribute.Cunning, 19);
+        self.set(Attribute.Speed, 7);
+        self.set(Attribute.Power, 13);
+        self.set(Attribute.Hypnosis, 5);
+        self.getStamina().setMax(90);
+        self.getArousal().setMax(150);
+        self.getMojo().setMax(150);
+        self.getWillpower().setMax(100);
 
-        character.plan = Plan.hunting;
-        character.mood = Emotion.confident;
-        character.body.add(BreastsPart.d);
-        character.initialGender = CharacterSex.female;
+        Global.gainSkills(self);
+        self.setTrophy(Item.MayaTrophy);
+
+        self.body.add(BreastsPart.d);
+        self.initialGender = CharacterSex.female;
         preferredCockMod = CockMod.error;
     }
 

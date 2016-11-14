@@ -38,15 +38,17 @@ public abstract class BasePersonality implements Personality {
     }
 
     public BasePersonality(String name, int level, Optional<NpcConfiguration> charConfig,
-                    Optional<NpcConfiguration> commonConfig) {
+                    Optional<NpcConfiguration> commonConfig, boolean isStartCharacter) {
         // Make the built-in character
         type = getClass().getSimpleName();
         character = new NPC(name, level, this);
-        growth = new Growth();
+        character.isStartCharacter = isStartCharacter;
         preferredCockMod = CockMod.error;
         preferredAttributes = new ArrayList<PreferredAttribute>();
+        growth = new Growth();
         setGrowth();
-        applyBasicStats();
+        applyBasicStats(character);
+        applyStrategy(character);
         character.body.makeGenitalOrgans(character.initialGender);
 
         // Apply config changes
@@ -54,14 +56,12 @@ public abstract class BasePersonality implements Personality {
         mergedConfig.ifPresent(cfg -> cfg.apply(character));
 
         character.body.finishBody(character.initialGender);
+        for (int i = 1; i < level; i++) {
+            getGrowth().levelUp(character);
+        }
+        character.distributePoints(preferredAttributes);
         getGrowth().addOrRemoveTraits(character);
     }
-
-    /**
-     * Apply built-in character stats. Can be later overridden by StartConfiguration.
-     */
-    // TODO: Make this data-driven, like with custom NPCs.
-    protected abstract void applyBasicStats();
     
     public void setCharacter(NPC c) {
         this.character = c;

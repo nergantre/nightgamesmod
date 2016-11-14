@@ -11,9 +11,9 @@ public class HumanPet extends Pet {
     }
 
     private void buildSelfWithPrototype(NPC prototype) {
-        HumanPetCharacter self;
+        NPCPetCharacter self;
         try {
-            self = new HumanPetCharacter(this, prototype, power);
+            self = new NPCPetCharacter(this, prototype, power);
             setSelf(self);
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();

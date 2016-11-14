@@ -73,31 +73,29 @@ public class TestAngel extends BasePersonality {
     }
 
     public TestAngel(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("TestAngel", 1, charConfig, commonConfig);
+        super("TestAngel", 1, charConfig, commonConfig, true);
     }
 
-    protected void applyBasicStats() {
+    public void applyBasicStats(Character self) {
         preferredCockMod = CockMod.blessed;
-        character.outfitPlan.add(Clothing.getByID("Tshirt"));
-        character.outfitPlan.add(Clothing.getByID("bra"));
-        character.outfitPlan.add(Clothing.getByID("thong"));
-        character.outfitPlan.add(Clothing.getByID("miniskirt"));
-        character.outfitPlan.add(Clothing.getByID("sandals"));
-        character.change();
-        character.att.put(Attribute.Seduction, 7);
-        character.att.put(Attribute.Perception, 6);
-        Global.gainSkills(character);
+        self.outfitPlan.add(Clothing.getByID("Tshirt"));
+        self.outfitPlan.add(Clothing.getByID("bra"));
+        self.outfitPlan.add(Clothing.getByID("thong"));
+        self.outfitPlan.add(Clothing.getByID("miniskirt"));
+        self.outfitPlan.add(Clothing.getByID("sandals"));
+        self.change();
+        self.att.put(Attribute.Seduction, 7);
+        self.att.put(Attribute.Perception, 6);
+        Global.gainSkills(self);
 
-        character.add(Trait.undisciplined);
-        character.add(Trait.lickable);
-        character.setTrophy(Item.AngelTrophy);
-        character.plan = Plan.hunting;
-        character.mood = Emotion.confident;
-        character.body.add(BreastsPart.dd);
+        self.add(Trait.undisciplined);
+        self.add(Trait.lickable);
+        self.setTrophy(Item.AngelTrophy);
+        self.body.add(BreastsPart.dd);
         // very feminine face
-        character.body.add(new FacePart(.1, 4.2));
-        character.body.add(PussyPart.normal);
-        character.initialGender = CharacterSex.female;
+        self.body.add(new FacePart(.1, 4.2));
+        self.body.add(PussyPart.normal);
+        self.initialGender = CharacterSex.female;
     }
 
     @Override public void setGrowth() {
@@ -494,5 +492,9 @@ public class TestAngel extends BasePersonality {
 
     @Override public String makeOrgasmLiner(Combat c) {
         return "Angel stares you in the eye as your consciousness return from the precipice <i>\"Once isn't enough. I need more. You can do that for me right?\"</i>";
+    }
+
+    @Override
+    public void applyStrategy(NPC self) {   
     }
 }

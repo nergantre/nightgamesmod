@@ -68,7 +68,6 @@ public class Player extends Character {
     // TODO(Ryplinn): This initialization pattern is very close to that of BasePersonality. I think it makes sense to make NPC the primary parent of characters instead of BasePersonality.
     public Player(String name, CharacterSex sex, Optional<PlayerConfiguration> config, List<Trait> pickedTraits,
                     Map<Attribute, Integer> selectedAttributes) {
-
         super(name, 1);
         initialGender = sex;
         applyBasicStats();
@@ -83,15 +82,15 @@ public class Player extends Character {
         outfitPlan.add(Clothing.getByID("jeans"));
         outfitPlan.add(Clothing.getByID("socks"));
         outfitPlan.add(Clothing.getByID("sneakers"));
-        getStamina().setMax(80 + getLevel() * getGrowth().stamina);
-        getArousal().setMax(80 + getLevel() * getGrowth().arousal);
+
         config.ifPresent(this::applyConfigStats);
         finishCharacter(pickedTraits, selectedAttributes);
-
     }
 
     private void applyBasicStats() {
-        willpower.setMax(willpower.max());
+        getStamina().setMax(80);
+        getArousal().setMax(80);
+        getWillpower().setMax(willpower.max());
         availableAttributePoints = 0;
         setTrophy(Item.PlayerTrophy);
         growth = new Growth();

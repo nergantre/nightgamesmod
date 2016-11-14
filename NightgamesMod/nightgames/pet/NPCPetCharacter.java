@@ -6,12 +6,13 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.items.clothing.Outfit;
 
-public class HumanPetCharacter extends PetCharacter {
+public class NPCPetCharacter extends PetCharacter {
     private NPC prototype;
 
-    public HumanPetCharacter(Pet self, NPC prototypeCharacter, int level) throws CloneNotSupportedException {
+    public NPCPetCharacter(Pet self, NPC prototypeCharacter, int level) throws CloneNotSupportedException {
         super(self, prototypeCharacter.getName(), prototypeCharacter.getType() + "Pet", prototypeCharacter.getGrowth(), 1);
         prototype = prototypeCharacter.clone();
+        prototype.ai.applyBasicStats(this);
         for (int i = 1; i < level; i++) {
             getGrowth().levelUp(this);
         }
@@ -19,10 +20,6 @@ public class HumanPetCharacter extends PetCharacter {
         this.getSkills().clear();
         this.body = prototypeCharacter.body.clone(this);
         this.outfit = new Outfit(prototypeCharacter.outfit);
-        this.mojo.setMax(prototype.getMojo().trueMax());
-        this.arousal.setMax(prototype.getArousal().trueMax());
-        this.willpower.setMax(prototype.getWillpower().trueMax());
-        this.stamina.setMax(prototype.getStamina().trueMax());
         this.mojo.empty();
         this.arousal.empty();
         this.stamina.fill();
@@ -31,7 +28,7 @@ public class HumanPetCharacter extends PetCharacter {
 
     @Override
     public PetCharacter cloneWithOwner(Character owner) throws CloneNotSupportedException {
-        HumanPetCharacter clone = (HumanPetCharacter) super.cloneWithOwner(owner);
+        NPCPetCharacter clone = (NPCPetCharacter) super.cloneWithOwner(owner);
         clone.prototype = prototype.clone();
         return clone;
     }
