@@ -522,6 +522,7 @@ public class Combat extends Observable implements Cloneable {
             System.out.println(self.name() + " uses " + action.getLabel(this));
         }
         /*
+         * TODO fix this so it works with the new combat system
         if (doExtendedLog()) {
             log.logTurn(p1act, p2act);
         } else if (Global.isDebugOn(DebugFlags.DEBUG_SPECTATE) && beingObserved) {
