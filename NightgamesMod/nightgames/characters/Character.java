@@ -2304,7 +2304,7 @@ public abstract class Character extends Observable implements Cloneable {
             return;
         }
         if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-            System.out.printf("%s gained affection for %s\n", name(), other.name());
+            System.out.printf("%s gained %d affection for %s\n", name(), x, other.name());
         }
         if (affections.containsKey(other.getType())) {
             affections.put(other.getType(), affections.get(other.getType()) + x);

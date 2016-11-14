@@ -116,6 +116,7 @@ public class Airi extends BasePersonality {
             character.purge(c);
             character.addTemporaryTrait(Trait.slime, 999);
             character.removeTemporaryTrait(Trait.repressed, 999);
+            character.removeTemporaryTrait(Trait.softheart, 999);
             if (character.hasPussy() && !character.body.getRandomPussy().moddedPartCountsAs(character, PussyPart.gooey)) {
                 character.body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
             }

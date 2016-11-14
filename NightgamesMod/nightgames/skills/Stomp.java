@@ -21,12 +21,13 @@ public class Stomp extends Skill {
         addTag(SkillTag.hurt);
         addTag(SkillTag.positioning);
         addTag(SkillTag.staminaDamage);
+        addTag(SkillTag.mean);
     }
 
     @Override
     public boolean usable(Combat c, Character target) {
         return !c.getStance().prone(getSelf()) && c.getStance().prone(target) && c.getStance().feet(getSelf(), target)
-                        && getSelf().canAct() && !getSelf().has(Trait.softheart) && !c.getStance().inserted(target);
+                        && getSelf().canAct() && !c.getStance().inserted(target);
     }
 
     @Override
@@ -88,7 +89,7 @@ public class Stomp extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.get(Attribute.Power) >= 16 && !user.has(Trait.softheart);
+        return user.get(Attribute.Power) >= 16;
     }
 
     @Override

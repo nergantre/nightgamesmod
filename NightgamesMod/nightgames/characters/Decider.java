@@ -3,6 +3,7 @@ package nightgames.characters;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import nightgames.actions.Action;
 import nightgames.actions.Move;
@@ -14,8 +15,10 @@ import nightgames.global.DebugFlags;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.pet.PetCharacter;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
+import nightgames.skills.Wait;
 
 public class Decider {
     private static void addAllSkillsWithPriority(ArrayList<WeightedSkill> priority, HashSet<Skill> skills,
@@ -232,7 +235,72 @@ public class Decider {
             }
         }
     }
-    
+
+    public static WeightedSkill prioritizePet(PetCharacter self, Character target, List<Skill> plist, Combat c) {
+        List<WeightedSkill> weightedList = plist.stream().map(skill -> new WeightedSkill(1.0, skill)).collect(Collectors.toList());
+        return prioritizePetWithWeights(self, target, weightedList, c);
+    }
+
+    public static WeightedSkill prioritizePetWithWeights(PetCharacter self, Character target, List<WeightedSkill> plist, Combat c) {
+        if (plist.isEmpty()) {
+            return new WeightedSkill(1.0, new Wait(self));
+        }
+        // The higher, the better the AI will plan for "rare" events better
+        final int RUN_COUNT = 3;
+        // Decrease to get an "easier" AI. Make negative to get a suicidal AI.
+        final double RATING_FACTOR = 0.02f;
+
+        // Starting fitness
+        Character master = self.getSelf().owner();
+        Character other = c.getOpponent(self);
+        double masterFit = master.getFitness(c);
+        double otherFit = master.getOtherFitness(c, other);
+
+        // Now simulate the result of all actions
+        ArrayList<WeightedSkill> moveList = new ArrayList<>();
+        double sum = 0;
+
+        for (WeightedSkill wskill : plist) {
+            // Run it a couple of times
+            double rating, raw_rating = 0;
+            if (wskill.skill.type(c) == Tactics.damage && self.has(Trait.sadist)) {
+                wskill.weight += 1.0;
+            }
+            for (int j = 0; j < RUN_COUNT; j++) {
+                raw_rating += ratePetMove(self, wskill.skill, target, c, masterFit, otherFit);
+            }
+
+            // Sum up rating, add to map
+            rating = (double) Math.pow(2, RATING_FACTOR * raw_rating + wskill.weight + wskill.skill.priorityMod(c)
+                            + Global.getMatch().condition.getSkillModifier().encouragement(wskill.skill, c, self));
+            sum += rating;
+            moveList.add(new WeightedSkill(sum, raw_rating, rating, wskill.skill));
+        }
+        if (sum == 0 || moveList.size() == 0) {
+            return null;
+        }
+        // Debug
+        if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
+            String s = "Pet choices: ";
+            for (WeightedSkill entry : moveList) {
+                s += String.format("\n(%.1f\t\t%.1f\t\tculm: %.1f\t\t/ %.1f)\t\t-> %s", entry.raw_rating, entry.rating,
+                                entry.weight, entry.rating * 100.0f / sum, entry.skill.getLabel(c));
+            }
+            System.out.println(s);
+        }
+        // Select
+        double s = Global.randomdouble() * sum;
+        for (WeightedSkill entry : moveList) {
+            if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
+                System.out.printf("%.1f/%.1f %s\n", entry.weight, s, entry.skill.toString());
+            }
+            if (entry.weight > s) {
+                return entry;
+            }
+        }
+        return moveList.get(moveList.size() - 1);
+    }
+
     public static Skill prioritizeNew(Character self, List<WeightedSkill> plist, Combat c) {
         if (plist.isEmpty()) {
             return null;
@@ -297,6 +365,20 @@ public class Decider {
         return moveList.get(moveList.size() - 1).skill;
     }
 
+    private static double ratePetMove(PetCharacter self, Skill skill, Character target, Combat c, double masterFit, double otherFit) {
+        // Clone ourselves a new combat... This should clone our characters, too
+        if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS_RATING) && (c.p1.human() || c.p2.human())) {
+            System.out.println("===> Rating " + skill);
+            System.out.println("Before:\n" + c.debugMessage());
+        }
+        return rateActionWithObserver(self, self.getSelf().owner(), target, c, masterFit, otherFit, (combat, selfCopy, other) -> {
+            skill.setSelf(selfCopy);
+            skill.resolve(combat, other);
+            skill.setSelf(self);
+            return true;
+        });
+    }
+
     private static double rateMove(Character self, Skill skill, Combat c, double selfFit, double otherFit) {
         // Clone ourselves a new combat... This should clone our characters, too
         if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS_RATING) && (c.p1.human() || c.p2.human())) {
@@ -310,8 +392,25 @@ public class Decider {
             return true;
         });
     }
-    
-    public static double rateAction(Character self, Combat c, double selfFit, double otherFit, CustomEffect effect) {
+
+    private static Character getCopyFromCombat(Combat c, Combat clonedCombat, Character self) {
+        if (c.p1 == self) {
+            return clonedCombat.p1;
+        } else if (c.p2 == self) {
+            return clonedCombat.p2;
+        } else if (c.getOtherCombatants().contains(self)) {
+            return clonedCombat.getOtherCombatants().stream().filter(other -> other.equals(self)).findAny().get();
+        } else {
+            throw new IllegalArgumentException("Tried to use a badly cloned combat");
+        }
+    }
+
+    public static double rateAction(Character skillUser, Combat c, double selfFit, double otherFit, CustomEffect effect) {
+        return rateActionWithObserver(skillUser, skillUser, c.getOpponent(skillUser), c, selfFit, otherFit, effect);
+    }
+
+    public static double rateActionWithObserver(Character skillUser, Character fitnessObserver, Character target,
+                    Combat c, double selfFit, double otherFit, CustomEffect effect) {
         // Clone ourselves a new combat... This should clone our characters, too
         Combat c2;
         try {
@@ -321,24 +420,15 @@ public class Decider {
         }
 
         Global.debugSimulation += 1;
-        Character newSelf;
-        Character newOther;
-        if (c.p1 == self) {
-            newSelf = c2.p1;
-            newOther = c2.p2;
-        } else if (c.p2 == self) {
-            newSelf = c2.p2;
-            newOther = c2.p1;
-        } else if (c.getOtherCombatants().contains(self)) {
-            newSelf = c2.getOtherCombatants().stream().filter(other -> other.equals(self)).findAny().get();
-            newOther = c2.getOpponent(newSelf);
-        } else {
-            throw new IllegalArgumentException("Tried to use a badly cloned combat");
-        }
-        effect.execute(c2, newSelf, newOther);
+        Character newSkillUser = getCopyFromCombat(c, c2, skillUser);
+        Character newObserver = getCopyFromCombat(c, c2, fitnessObserver);
+        Character newOpponent = c2.getOpponent(newObserver);
+        Character newTarget = getCopyFromCombat(c, c2, target);
+
+        effect.execute(c2, newSkillUser, newTarget);
         Global.debugSimulation -= 1;
-        double selfFitnessDelta = newSelf.getFitness(c) - selfFit;
-        double otherFitnessDelta = newSelf.getOtherFitness(c, newOther) - otherFit;
+        double selfFitnessDelta = newObserver.getFitness(c) - selfFit;
+        double otherFitnessDelta = newObserver.getOtherFitness(c, newOpponent) - otherFit;
         if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS_RATING) && (c2.p1.human() || c2.p2.human())) {
             System.out.println("After:\n" + c2.debugMessage());
         }

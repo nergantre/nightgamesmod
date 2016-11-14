@@ -4,6 +4,7 @@ import nightgames.characters.Character;
 import nightgames.characters.CharacterSex;
 import nightgames.characters.Growth;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 import nightgames.skills.petskills.FairyEnergize;
 import nightgames.skills.petskills.FairyHeal;
 import nightgames.skills.petskills.FairyKick;
@@ -66,9 +67,8 @@ public class FairyFem extends Pet {
             c.write(captor, "You snag " + getSelf().getName() + " out of the air. She squirms in your hand, but has no chance of breaking free. You lick the fae from pussy to breasts and the little thing squeals "
                             + "in pleasure. The taste is surprisingly sweet and makes your tongue tingle. You continue lapping up the flavor until she climaxes and disappears.");
         } else {
-            c.write(captor, captor.name()
-                            + " manages to catch your faerie and starts pleasuring her with the tip of her finger. The sensitive fae clings to the probing finger desperately as she thrashes "
-                            + "in ecstasy. Before you can do anything to help, your faerie vanishes in a burst of orgasmic magic.");
+            c.write(captor, Global.format("{other:SUBJECT-ACTION:manage|manages} to catch {self:name-do} and starts pleasuring her with the tip of {other:possessive} finger. The sensitive fae clings to the probing finger desperately as she thrashes "
+                            + "in ecstasy. Before %s can do anything to help, {self:subject} vanishes in a burst of orgasmic magic.", getSelf(), captor, owner().subject()));
         }
         c.removePet(getSelf());
     }

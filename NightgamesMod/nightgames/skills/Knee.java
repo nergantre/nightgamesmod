@@ -15,9 +15,10 @@ public class Knee extends Skill {
 
     public Knee(Character self) {
         super("Knee", self);
+        addTag(SkillTag.mean);
         addTag(SkillTag.hurt);
-        addTag(SkillTag.staminaDamage);
         addTag(SkillTag.positioning);
+        addTag(SkillTag.staminaDamage);
     }
 
     @Override

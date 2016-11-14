@@ -32,13 +32,11 @@ public class HumanPet extends Pet {
 
     @Override
     public void vanquish(Combat c, Pet opponent) {
-        
+        opponent.caught(c, getSelf());
     }
 
     @Override
     public void caught(Combat c, Character captor) {
-        // TODO Auto-generated method stub
-        
+        getSelf().doOrgasm(c, captor, null, null);
     }
-
 }

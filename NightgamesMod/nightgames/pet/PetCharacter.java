@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import nightgames.characters.Character;
+import nightgames.characters.Decider;
 import nightgames.characters.Emotion;
 import nightgames.characters.Growth;
-import nightgames.characters.custom.effect.CustomEffect;
+import nightgames.characters.WeightedSkill;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.IEncounter;
 import nightgames.combat.Result;
@@ -17,6 +19,7 @@ import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
+import nightgames.status.Status;
 import nightgames.trap.Trap;
 
 public class PetCharacter extends Character {
@@ -86,23 +89,51 @@ public class PetCharacter extends Character {
     }
 
     public void act(Combat c, Character target) {
-        List<CustomEffect> skillUse = new ArrayList<>(); 
         List<Skill> allowedEnemySkills = new ArrayList<>(getSkills()
                         .stream().filter(skill -> Skill.skillIsUsable(c, skill, target) && !skill.getTags().contains(SkillTag.suicidal))
                         .collect(Collectors.toList()));
-        Skill.filterAllowedSkills(c, allowedEnemySkills, this, target);
-        allowedEnemySkills.forEach(skill -> skillUse.add((combat, self, dontcare) -> Skill.resolve(skill, combat, target)));
-        
+        Skill.filterAllowedSkills(c, allowedEnemySkills, this, target);        
+
         List<Skill> allowedMasterSkills = new ArrayList<>(getSkills()
                         .stream().filter(skill -> Skill.skillIsUsable(c, skill, getSelf().owner) && skill.getTags().contains(SkillTag.helping))
                         .collect(Collectors.toList()));
         Skill.filterAllowedSkills(c, allowedMasterSkills, this, getSelf().owner);
-        allowedMasterSkills.forEach(skill -> skillUse.add((combat, self, dontcare) -> Skill.resolve(skill, combat, getSelf().owner)));
-        if (Global.isDebugOn(DebugFlags.DEBUG_STRATEGIES)) {
+        WeightedSkill bestEnemySkill = Decider.prioritizePet(this, target, allowedEnemySkills, c);
+        WeightedSkill bestMasterSkill = Decider.prioritizePet(this, getSelf().owner, allowedMasterSkills, c);
+
+        if (Global.isDebugOn(DebugFlags.DEBUG_PET)) {
             System.out.println("Available Enemy Skills " + allowedEnemySkills);
             System.out.println("Available Master Skills " + allowedMasterSkills);
         }
-        Global.pickRandom(skillUse).ifPresent(use -> use.execute(c, this, target));
+
+        // don't let the ratings be negative.
+        double masterSkillRating = Math.max(.001, bestMasterSkill.rating);
+        double enemySkillRating = Math.max(.001, bestEnemySkill.rating);
+
+        double roll = Global.randomdouble(masterSkillRating + enemySkillRating) - masterSkillRating;
+        if (Global.isDebugOn(DebugFlags.DEBUG_PET)) {
+            System.out.printf("Rolled %s for master skill: %s [%.2f] and %s [%.2f]\n", roll, bestMasterSkill.skill.getLabel(c), -masterSkillRating, bestEnemySkill.skill.getLabel(c), enemySkillRating);
+        }
+        if (roll >= 0) {
+            if (Global.isDebugOn(DebugFlags.DEBUG_PET)) {
+                System.out.println("Using enemy skill " + bestEnemySkill.skill.getLabel(c));
+            }
+            Skill.resolve(bestEnemySkill.skill, c, target);
+        } else {
+            if (Global.isDebugOn(DebugFlags.DEBUG_PET)) {
+                System.out.println("Using master skill " + bestMasterSkill.skill.getLabel(c));
+            }
+            Skill.resolve(bestMasterSkill.skill, c, self.owner());
+        }
+    }
+
+    @Override
+    public void add(Combat c, Status status) {
+        super.add(c, status);
+        if (stunned()) {
+            c.write(this, Global.format("With {self:name-possessive} link to the fight weakened, {self:subject-action:disappears|disappears}..", this, this));
+            c.removePet(this);
+        }
     }
 
     @Override
@@ -135,20 +166,27 @@ public class PetCharacter extends Character {
     public String taunt(Combat c, Character target) {
         return "";
     }
-    
+
     @Override
     public String challenge(Character other) {
         return "";
     }
-    
+
     @Override
     public String getPortrait(Combat c) {
         return "";
     }
-    
+
     @Override
     public String getType() {
         return type;
+    }
+
+    @Override
+    protected void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times, int totalTimes) {
+        super.resolveOrgasm(c, opponent, selfPart, opponentPart, times, totalTimes);
+        c.write(this, Global.format("The force of {self:name-possessive} orgasm destroys {self:possessive} anchor to the fight and {self:pronoun} disappears.", this, opponent));
+        c.removePet(this);
     }
 
     @Override

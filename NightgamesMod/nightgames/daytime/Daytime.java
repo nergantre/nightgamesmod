@@ -130,7 +130,7 @@ public class Daytime {
             }
         } else {
             for (Character npc : Global.everyone()) {
-                if (!npc.human()) {
+                if (!npc.human() && npc instanceof NPC) {
                     if (npc.getLevel() / 10 > npc.getRank()) {
                         npc.rankup();
                     }

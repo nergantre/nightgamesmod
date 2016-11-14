@@ -71,10 +71,11 @@ public class FGoblin extends Pet {
                     + "collapses and disappears.",captor.name()));
         }
         else{
-            c.write(captor,String.format("You manage to catch %s's fetish goblin by her bondage gear, keeping her from escaping. It's not immediately clear how you can "
-                    + "finish off the overstimulated goblin. There's not much you can do to her genitals beyond what she's already doing with her 'accessories.' You need "
-                    + "a strong enough stimulus to push her over the theshold. You grab the end of the anal beads sticking out of her ass and yank them out all at once. "
-                    + "The goblin shudders and the flow of liquid leaking out of her holes signals her orgasm before she vanishes.",owner().name()));
+            c.write(captor, String.format("You manage to catch %s's ",owner().name()));
+            c.write(captor, Global.format("{other:SUBJECT} manage to catch {self:name-do} fetish goblin by her bondage gear, keeping her from escaping. It's not immediately clear how {other:pronoun} can "
+                    + "finish off the overstimulated goblin. There's not much {other:subject} can do to the goblin's genitals beyond what she's already doing with her 'accessories.' "
+                    + "{other:SUBJECT-ACTION:need|needs} a strong enough stimulus to push her over the theshold. {other:PRONOUN} grab the end of the anal beads sticking out of the fetish goblin's ass and "
+                    + "yank them out all at once. The goblin shudders and the flow of liquid leaking out of her holes signals her orgasm before she vanishes.", getSelf(), captor));
         }
         c.removePet(getSelf());
     }

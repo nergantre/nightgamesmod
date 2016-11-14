@@ -15,6 +15,7 @@ public class Nurple extends Skill {
     public Nurple(Character self) {
         super("Twist Nipples", self);
         addTag(SkillTag.hurt);
+        addTag(SkillTag.mean);
         addTag(SkillTag.staminaDamage);
         addTag(SkillTag.positioning);
     }

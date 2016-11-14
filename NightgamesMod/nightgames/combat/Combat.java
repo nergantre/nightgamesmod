@@ -307,15 +307,18 @@ public class Combat extends Observable implements Cloneable {
     }
     
     private void checkForCombatComment() {
-        NPC commenter;
+        Character other;
         if (p1.human() || p2.human()) {
-            commenter = (NPC) getOpponent(Global.getPlayer());
+            other = (NPC) getOpponent(Global.getPlayer());
         } else {
-            commenter = (NPC) (Global.random(2) == 0 ? p1 : p2);
+            other = (NPC) (Global.random(2) == 0 ? p1 : p2);
         }
-        Optional<String> comment = commenter.getComment(this);
-        if (comment.isPresent()) {
-            write(commenter, "<i>\"" + Global.format(comment.get(), commenter, Global.getPlayer()) + "\"</i>");
+        if (other instanceof NPC) {
+            NPC commenter = (NPC) other;
+            Optional<String> comment = commenter.getComment(this);
+            if (comment.isPresent()) {
+                write(commenter, "<i>\"" + Global.format(comment.get(), commenter, Global.getPlayer()) + "\"</i>");
+            }
         }
     }
 
@@ -841,9 +844,9 @@ public class Combat extends Observable implements Cloneable {
         boolean hasScene = false;
         if (p1.human() || p2.human()) {
             if (postCombatScenesSeen < 3) {
-                if (!p2.human()) {
+                if (!p2.human() && p2 instanceof NPC) {
                     hasScene = doPostCombatScenes((NPC)p2);
-                } else if (!p1.human()) {
+                } else if (!p1.human() && p1 instanceof NPC) {
                     hasScene = doPostCombatScenes((NPC)p1);
                 }
                 if (hasScene) {

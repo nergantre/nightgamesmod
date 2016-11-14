@@ -279,7 +279,7 @@ public class Encounter implements Serializable, IEncounter {
     }
 
     private void startFightTimer() {
-        fightTime = 5;
+        fightTime = 2;
     }
 
     protected void ambush(Character attacker, Character target) {

@@ -54,7 +54,7 @@ public class StripSelf extends Skill {
                 clothing = getSelf().getOutfit().unequip(stripped.get());
                 c.getCombatantData(getSelf()).addToClothesPile(clothing);
             }
-        } else {
+        } else if (getSelf() instanceof NPC) {
             NPC self = (NPC) getSelf();
             HashMap<Clothing, Double> checks = new HashMap<>();
             double selfFit = self.getFitness(c);

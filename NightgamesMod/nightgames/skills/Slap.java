@@ -16,15 +16,15 @@ public class Slap extends Skill {
 
     public Slap(Character self) {
         super("Slap", self);
-        addTag(SkillTag.staminaDamage);
-        addTag(SkillTag.positioning);
+        addTag(SkillTag.mean);
         addTag(SkillTag.hurt);
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.staminaDamage);
     }
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return c.getStance().reachTop(getSelf()) && getSelf().canAct() && !getSelf().has(Trait.softheart)
-                        && c.getStance().front(getSelf());
+        return c.getStance().reachTop(getSelf()) && getSelf().canAct() && c.getStance().front(getSelf());
     }
 
     @Override
@@ -80,7 +80,7 @@ public class Slap extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return !user.has(Trait.softheart) && user.get(Attribute.Power) >= 5;
+        return user.get(Attribute.Power) >= 5;
     }
 
     @Override

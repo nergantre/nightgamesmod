@@ -15,7 +15,7 @@ public class SummonYui extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return Global.getCharacterByType("Yui").getAffection(getSelf()) >= 10;
+        return user.human();//Global.getCharacterByType("Yui").getAffection(getSelf()) >= 10;
     }
 
     @Override
