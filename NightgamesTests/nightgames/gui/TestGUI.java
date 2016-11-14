@@ -53,13 +53,7 @@ public class TestGUI extends GUI {
     public void promptAmbush(IEncounter enc, Character target) {}
 
     @Override
-    public void update(Observable arg0, Object arg1) {
-        if (combat != null) {
-            if (combat.phase == 0 || combat.phase == 2) {
-                combat.next();
-            }
-        }
-    }
+    public void update(Observable arg0, Object arg1) {}
 
     @Override
     public void endCombat() {

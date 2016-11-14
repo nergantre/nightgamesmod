@@ -68,11 +68,11 @@ public class SixNine extends AbstractBehindStance {
     
     @Override
     public boolean mobile(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
-    public boolean kiss(Character c) {
+    public boolean kiss(Character c, Character target) {
         return false;
     }
 
@@ -86,7 +86,7 @@ public class SixNine extends AbstractBehindStance {
     }
 
     @Override
-    public boolean facing() {
+    public boolean facing(Character c, Character target) {
         return false;
     }
 
@@ -102,7 +102,7 @@ public class SixNine extends AbstractBehindStance {
 
     @Override
     public boolean reachTop(Character c) {
-        return false;
+        return c != bottom && c != bottom;
     }
 
     @Override
@@ -112,17 +112,17 @@ public class SixNine extends AbstractBehindStance {
 
     @Override
     public boolean prone(Character c) {
-        return true;
+        return c == top || c == bottom;
     }
 
     @Override
-    public boolean feet(Character c) {
+    public boolean feet(Character c, Character target) {
         return false;
     }
 
     @Override
-    public boolean oral(Character c) {
-        return true;
+    public boolean oral(Character c, Character target) {
+        return c == top || c == bottom;
     }
 
     @Override

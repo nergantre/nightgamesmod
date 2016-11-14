@@ -237,7 +237,7 @@ public abstract class Skill {
     protected void writeOutput(Combat c, int mag, Result result, Character target) {
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, mag, result, target));
-        } else if (c.shouldPrintReceive(target)) {
+        } else if (c.shouldPrintReceive(target, c)) {
             c.write(getSelf(), receive(c, mag, result, target));
         }
     }

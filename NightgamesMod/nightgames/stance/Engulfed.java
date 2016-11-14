@@ -41,7 +41,7 @@ public class Engulfed extends Position {
 
     @Override
     public boolean mobile(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
@@ -54,8 +54,8 @@ public class Engulfed extends Position {
     }
 
     @Override
-    public boolean kiss(Character c) {
-        return c == top;
+    public boolean kiss(Character c, Character target) {
+        return c == top || (target == top && c != bottom);
     }
 
     @Override
@@ -85,12 +85,12 @@ public class Engulfed extends Position {
 
 
     @Override
-    public boolean feet(Character c) {
+    public boolean feet(Character c, Character target) {
         return c == top;
     }
 
     @Override
-    public boolean oral(Character c) {
+    public boolean oral(Character c, Character target) {
         return c == top;
     }
 

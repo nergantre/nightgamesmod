@@ -32,11 +32,11 @@ public class Jumped extends FemdomSexStance {
 
     @Override
     public boolean mobile(Character c) {
-        return false;
+        return c != bottom && c != top;
     }
 
     @Override
-    public boolean kiss(Character c) {
+    public boolean kiss(Character c, Character target) {
         return true;
     }
 
@@ -52,26 +52,16 @@ public class Jumped extends FemdomSexStance {
 
     @Override
     public boolean reachTop(Character c) {
-        return false;
+        return c != bottom && c != top;
     }
 
     @Override
     public boolean reachBottom(Character c) {
-        return false;
+        return c != bottom && c != top;
     }
 
     @Override
     public boolean prone(Character c) {
-        return false;
-    }
-
-    @Override
-    public boolean feet(Character c) {
-        return false;
-    }
-
-    @Override
-    public boolean oral(Character c) {
         return false;
     }
 

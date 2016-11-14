@@ -35,7 +35,7 @@ public class Smothering extends AbstractBehindStance {
 
     @Override
     public boolean mobile(Character c) {
-        return top == c;
+        return top != bottom;
     }
 
     @Override
@@ -47,13 +47,13 @@ public class Smothering extends AbstractBehindStance {
     }
 
     @Override
-    public boolean kiss(Character c) {
+    public boolean kiss(Character c, Character target) {
         return false;
     }
 
     @Override
-    public boolean facing() {
-        return false;
+    public boolean facing(Character c, Character target) {
+        return c != bottom && target != bottom;
     }
 
     @Override
@@ -68,12 +68,12 @@ public class Smothering extends AbstractBehindStance {
 
     @Override
     public boolean reachTop(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
     public boolean reachBottom(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
@@ -82,13 +82,13 @@ public class Smothering extends AbstractBehindStance {
     }
 
     @Override
-    public boolean feet(Character c) {
-        return c == top;
+    public boolean feet(Character c, Character target) {
+        return target == bottom;
     }
 
     @Override
-    public boolean oral(Character c) {
-        return c == bottom;
+    public boolean oral(Character c, Character target) {
+        return c == bottom || (target == bottom && c != top);
     }
 
     @Override
@@ -149,7 +149,7 @@ public class Smothering extends AbstractBehindStance {
 
     @Override
     public Collection<Skill> availSkills(Character c) {
-        if (c == top) {
+        if (c != bottom) {
             return Collections.emptySet();
         } else {
             Collection<Skill> avail = new HashSet<Skill>();
@@ -179,7 +179,7 @@ public class Smothering extends AbstractBehindStance {
         }
         return 2;
     }
-    
+
     @Override
     public int dominance() {
         return 5;

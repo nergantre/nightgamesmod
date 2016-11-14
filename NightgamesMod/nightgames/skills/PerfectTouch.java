@@ -28,8 +28,8 @@ public class PerfectTouch extends Skill {
         if (target.roll(this, c, accuracy(c))) {
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.normal, target));
-                c.write(target, target.nakedLiner(c));
-            } else if (c.shouldPrintReceive(target)) {
+                c.write(target, target.nakedLiner(c, target));
+            } else if (c.shouldPrintReceive(target, c)) {
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             }
             target.undress(c);

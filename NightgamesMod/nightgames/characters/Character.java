@@ -310,7 +310,7 @@ public abstract class Character extends Observable implements Cloneable {
 
     public boolean check(Attribute a, int dc) {
         int rand = Global.random(20);
-        if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+        if (Global.isDebugOn(DebugFlags.DEBUG_DAMAGE)) {
             System.out.println("Checked " + a + " = " + get(a) + " against " + dc + ", rolled " + rand);
         }
         if (rand == 0) {
@@ -1005,12 +1005,12 @@ public abstract class Character extends Observable implements Cloneable {
         return false;
     }
 
-    public void add(Trait t) {
-        traits.addIfAbsent(t);
+    public boolean add(Trait t) {
+        return traits.addIfAbsent(t);
     }
 
-    public void remove(Trait t) {
-        traits.remove(t);
+    public boolean remove(Trait t) {
+        return traits.remove(t);
     }
 
     public boolean hasPure(Trait t) {
@@ -1092,6 +1092,9 @@ public abstract class Character extends Observable implements Cloneable {
                 buildMojo(c, -1);
             }
         }
+    }
+
+    public void preturnUpkeep() {
         orgasmed = false;
     }
 
@@ -1351,13 +1354,13 @@ public abstract class Character extends Observable implements Cloneable {
 
     public abstract boolean human();
 
-    public abstract String bbLiner(Combat c);
+    public abstract String bbLiner(Combat c, Character target);
 
-    public abstract String nakedLiner(Combat c);
+    public abstract String nakedLiner(Combat c, Character target);
 
-    public abstract String stunLiner(Combat c);
+    public abstract String stunLiner(Combat c, Character target);
 
-    public abstract String taunt(Combat c);
+    public abstract String taunt(Combat c, Character target);
 
     public abstract void intervene(IEncounter fight, Character p1, Character p2);
 
@@ -1812,28 +1815,28 @@ public abstract class Character extends Observable implements Cloneable {
         if (opponent.checkOrgasm()) {
             opponent.doOrgasm(c, this, null, null);
         }
-        if (opponent.has(Trait.magicEyeEnthrall) && getArousal().percent() >= 50 && c.getStance().facing()
+        if (opponent.has(Trait.magicEyeEnthrall) && getArousal().percent() >= 50 && c.getStance().facing(this, opponent)
                         && Global.random(20) == 0) {
             c.write(opponent,
                             Global.format("<br>{other:NAME-POSSESSIVE} eyes start glowing and captures both {self:name-possessive} gaze and consciousness.",
                                             this, opponent));
             add(c, new Enthralled(this, opponent, 2));
         }
-        if (opponent.has(Trait.magicEyeTrance) && getArousal().percent() >= 50 && c.getStance().facing()
+        if (opponent.has(Trait.magicEyeTrance) && getArousal().percent() >= 50 && c.getStance().facing(this, opponent)
                         && Global.random(10) == 0) {
             c.write(opponent,
                             Global.format("<br>{other:NAME-POSSESSIVE} eyes start glowing and send {self:subject} straight into a trance.",
                                             this, opponent));
             add(c, new Trance(this));
         }
-        if (opponent.has(Trait.magicEyeFrenzy) && getArousal().percent() >= 50 && c.getStance().facing()
+        if (opponent.has(Trait.magicEyeFrenzy) && getArousal().percent() >= 50 && c.getStance().facing(this, opponent)
                         && Global.random(10) == 0) {
             c.write(opponent,
                             Global.format("<br>{other:NAME-POSSESSIVE} eyes start glowing and send {self:subject} into a frenzy.",
                                             this, opponent));
             add(c, new Frenzied(this, 3));
         }
-        if (opponent.has(Trait.magicEyeArousal) && getArousal().percent() >= 50 && c.getStance().facing()
+        if (opponent.has(Trait.magicEyeArousal) && getArousal().percent() >= 50 && c.getStance().facing(this, opponent)
                         && Global.random(5) == 0) {
             c.write(opponent,
                             Global.format("<br>{other:NAME-POSSESSIVE} eyes start glowing and {self:subject-action:feel|feels} a strong pleasure wherever {other:possessive} gaze lands. {self:SUBJECT-ACTION:are|is} literally being raped by {other:name-possessive} eyes!",
@@ -2287,9 +2290,6 @@ public abstract class Character extends Observable implements Cloneable {
             return 0;
         }
 
-        if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-            System.out.printf("%s gained affection for %s\n", name(), other.name());
-        }
         if (affections.containsKey(other.getType())) {
             return affections.get(other.getType());
         } else {
@@ -2744,7 +2744,7 @@ public abstract class Character extends Observable implements Cloneable {
         }
         fit += Math.sqrt(totalAtts) * 5;
         // Always important: Position
-        fit += (c.getStance().priorityMod(this) + c.getDominanceOfStance(this)) * 4;
+        fit += (c.getStance().priorityMod(this) + c.getStance().getDominanceOfStance(this)) * 4;
 
         int escape = getEscape(c, other);
         if (escape > 1) {
@@ -2930,8 +2930,7 @@ public abstract class Character extends Observable implements Cloneable {
         gain(item, 1);
     }
 
-    public String temptLiner(Combat c) {
-        Character target = c.getOpponent(this);
+    public String temptLiner(Combat c, Character target) {
         return Global.format("{self:SUBJECT-ACTION:tempt|tempts} {other:direct-object}.", this, target);
     }
 

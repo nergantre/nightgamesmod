@@ -205,6 +205,9 @@ public class Decider {
     }
 
     public static void visit(Character self) {
+        if (Global.checkCharacterDisabledFlag(self)) {
+            return;
+        }
         int max = 0;
         Character bff = null;
         if (!self.attractions.isEmpty()) {

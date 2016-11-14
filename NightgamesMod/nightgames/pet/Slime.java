@@ -83,7 +83,7 @@ public class Slime extends Pet {
 
     @Override
     protected void buildSelf() {
-        PetCharacter self = new PetCharacter(this, owner().nameOrPossessivePronoun() + getName(), getName(), new Growth(), power);
+        PetCharacter self = new PetCharacter(this, owner().nameOrPossessivePronoun() + " " + getName(), getName(), new Growth(), power);
         // slimes are around 80 cm ish? comes up to about crotch level
         self.body.setHeight(80);
         self.body.add(new GenericBodyPart("skin", 0, 1, 1, "skin", ""));

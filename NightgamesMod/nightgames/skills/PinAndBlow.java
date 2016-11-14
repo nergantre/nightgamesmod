@@ -41,7 +41,7 @@ public class PinAndBlow extends Skill {
 
     @Override
     public int getMojoCost(Combat c) {
-        return 20;
+        return 5;
     }
 
     @Override

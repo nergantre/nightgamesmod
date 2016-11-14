@@ -20,7 +20,7 @@ public class GoodnightKiss extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return c.getStance()
-                .kiss(getSelf()) && getSelf().canAct();
+                .kiss(getSelf(), target) && getSelf().canAct();
     }
 
     @Override

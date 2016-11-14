@@ -166,7 +166,7 @@ public class AiriTime extends BaseNPCTime {
             if (Global.random(5) == 0 && (!player.has(Trait.Clingy) || !npc.has(Trait.Clingy))) {
                 Global.gui().message("You feel like you learned a lot about holding on to someone. Maybe you can apply this in the games?");
                 player.add(Trait.Clingy);
-                npc.add(Trait.Clingy);
+                npc.getGrowth().addTrait(0, Trait.Clingy);
             }
             Global.gui().choose(this, "Leave");
         } else if (choice.equals("Sparring")) {
@@ -194,7 +194,7 @@ public class AiriTime extends BaseNPCTime {
             if (Global.random(5) == 0 && (!player.has(Trait.fakeout) || !npc.has(Trait.fakeout))) {
                 Global.gui().message("You feel like you learned a lot about holding on to someone. Maybe you can apply this in the games?");
                 player.add(Trait.fakeout);
-                npc.add(Trait.fakeout);
+                npc.getGrowth().addTrait(0, Trait.fakeout);
             }
             Global.gui().choose(this, "Leave");
         } else if (choice.equals("Games")) {
@@ -207,7 +207,7 @@ public class AiriTime extends BaseNPCTime {
             if (Global.random(5) == 0 && (!player.has(Trait.fakeout) || !npc.has(Trait.fakeout))) {
                 Global.gui().message("You feel like you learned a lot about holding on to someone. Maybe you can apply this in the games?");
                 player.add(Trait.fakeout);
-                npc.add(Trait.fakeout);
+                npc.getGrowth().addTrait(0, Trait.fakeout);
             }
             Global.gui().choose(this, "Leave");
         } else {

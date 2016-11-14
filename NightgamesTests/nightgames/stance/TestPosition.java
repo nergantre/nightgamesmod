@@ -25,7 +25,7 @@ public class TestPosition extends Position {
         return false;
     }
 
-    @Override public boolean kiss(Character c) {
+    @Override public boolean kiss(Character c, Character target) {
         return false;
     }
 
@@ -49,11 +49,11 @@ public class TestPosition extends Position {
         return false;
     }
 
-    @Override public boolean feet(Character c) {
+    @Override public boolean feet(Character c, Character target) {
         return false;
     }
 
-    @Override public boolean oral(Character c) {
+    @Override public boolean oral(Character c, Character target) {
         return false;
     }
 

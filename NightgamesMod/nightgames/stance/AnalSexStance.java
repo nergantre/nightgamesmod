@@ -37,6 +37,16 @@ public abstract class AnalSexStance extends Position {
     }
 
     @Override
+    public boolean feet(Character c, Character target) {
+        return false;
+    }
+
+    @Override
+    public boolean oral(Character c, Character target) {
+        return false;
+    }
+
+    @Override
     public double pheromoneMod(Character self) {
         return 3;
     }

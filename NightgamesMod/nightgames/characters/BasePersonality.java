@@ -54,6 +54,7 @@ public abstract class BasePersonality implements Personality {
         mergedConfig.ifPresent(cfg -> cfg.apply(character));
 
         character.body.finishBody(character.initialGender);
+        getGrowth().addOrRemoveTraits(character);
     }
 
     /**
@@ -156,6 +157,11 @@ public abstract class BasePersonality implements Personality {
         growth.levelUp(character);
         onLevelUp();
         character.distributePoints(preferredAttributes);
+    }
+
+    @Override
+    public List<PreferredAttribute> getPreferredAttributes() {
+        return preferredAttributes;
     }
 
     protected void onLevelUp() {

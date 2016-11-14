@@ -96,27 +96,27 @@ public class CustomNPC extends BasePersonality {
     }
 
     @Override
-    public String bbLiner(Combat c) {
+    public String bbLiner(Combat c, Character other) {
         return data.getLine("hurt", c, character, c.getOpponent(character));
     }
 
     @Override
-    public String nakedLiner(Combat c) {
+    public String nakedLiner(Combat c, Character opponent) {
         return data.getLine("naked", c, character, c.getOpponent(character));
     }
 
     @Override
-    public String stunLiner(Combat c) {
+    public String stunLiner(Combat c, Character opponent) {
         return data.getLine("stunned", c, character, c.getOpponent(character));
     }
 
     @Override
-    public String taunt(Combat c) {
+    public String taunt(Combat c, Character opponent) {
         return data.getLine("taunt", c, character, c.getOpponent(character));
     }
 
     @Override
-    public String temptLiner(Combat c) {
+    public String temptLiner(Combat c, Character opponent) {
         return data.getLine("tempt", c, character, c.getOpponent(character));
     }
 

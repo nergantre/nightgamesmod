@@ -56,7 +56,7 @@ public class Locate extends Action {
             gui.clearText();
             gui.clearCommand();
             Global.getMatch().resume();
-        } else if ((target = Global.getNPC(choice)) != null) {
+        } else if ((target = Global.getCharacterByName(choice)) != null) {
             Area area = target.location();
             gui.clearText();
             if (area != null) {

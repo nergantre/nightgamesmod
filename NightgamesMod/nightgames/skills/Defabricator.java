@@ -35,7 +35,7 @@ public class Defabricator extends Skill {
     public boolean resolve(Combat c, Character target) {
         writeOutput(c, Result.normal, target);
         if (getSelf().human() || c.isBeingObserved())
-            c.write(target, target.nakedLiner(c));
+            c.write(target, target.nakedLiner(c, target));
         target.nudify();
         return true;
     }

@@ -42,11 +42,6 @@ public class Eve extends BasePersonality {
         character.set(Attribute.Speed, 6);
         character.set(Attribute.Seduction, 13);
         Global.gainSkills(character);
-        character.add(Trait.exhibitionist);
-        character.add(Trait.proheels);
-        character.add(Trait.insatiable);
-        character.add(Trait.assmaster);
-        character.add(Trait.analFanatic);
         character.setTrophy(Item.EveTrophy);
         character.plan = Plan.hunting;
         character.mood = Emotion.confident;
@@ -71,6 +66,12 @@ public class Eve extends BasePersonality {
         growth.bonusArousal = 3;
         preferredAttributes.add(c -> c.get(Attribute.Fetish) < 80 ? Optional.of(Attribute.Fetish) : Optional.empty());
         preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
+        growth.addTrait(0, Trait.exhibitionist);
+        growth.addTrait(0, Trait.proheels);
+        growth.addTrait(0, Trait.insatiable);
+        growth.addTrait(0, Trait.assmaster);
+        growth.addTrait(0, Trait.analFanatic);
+
         growth.addTrait(2, Trait.alwaysready);
         growth.addTrait(5, Trait.limbTraining1);
         growth.addTrait(8, Trait.expertGoogler);
@@ -134,27 +135,27 @@ public class Eve extends BasePersonality {
     }
 
     @Override
-    public String bbLiner(Combat c) {
+    public String bbLiner(Combat c, Character other) {
         return "Eve grins at you and pats her own groin. <i>\"Better you than me, boy.\"</i>";
     }
 
     @Override
-    public String nakedLiner(Combat c) {
+    public String nakedLiner(Combat c, Character opponent) {
         return "Eve seems more comfortable with her cock and balls hanging out than she was with her clothes on. <i>\"Like what you see? We're just getting started.\"</i>";
     }
 
     @Override
-    public String stunLiner(Combat c) {
+    public String stunLiner(Combat c, Character opponent) {
         return "Eve lets out a soft growl as she lays flat on the floor. <i>\"Enjoy it while you can, boy. As soon as I catch my breath, your ass is mine.\"</i>";
     }
 
     @Override
-    public String taunt(Combat c) {
+    public String taunt(Combat c, Character opponent) {
         return "Eve grins sadistically. <i>\"If you're intimidated by my cock, don't worry. Size isn't everything.\"</i>";
     }
 
     @Override
-    public String temptLiner(Combat c) {
+    public String temptLiner(Combat c, Character opponent) {
         return "Eve grins sadistically. <i>\"I'm an expert at making people like you squeal.\"</i>";
     }
 
@@ -370,8 +371,7 @@ public class Eve extends BasePersonality {
 
     @Override
     public String startBattle(Character other) {
-        return "Eve gives you a dominant grin and cracks her knuckles. <i>\"Come on " + other.boyOrGirl()
-                        + ", let's play.\"</i>";
+        return Global.format("{self:SUBJECT} gives {other:name-do} a dominant grin and cracks {self:possessive} knuckles. <i>\"Come on {self:name}, let's play.\"</i>", character, other);
     }
 
     @Override

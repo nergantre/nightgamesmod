@@ -48,31 +48,7 @@ public class Maya extends BasePersonality {
         character.getArousal().setMax(150 + character.getLevel() * getGrowth().arousal);
         character.getMojo().setMax(150);
         character.getWillpower().setMax(100);
-        character.add(Trait.darkpromises);
-        character.add(Trait.tongueTraining1);
-        character.add(Trait.tongueTraining2);
-        character.add(Trait.limbTraining1);
-        character.add(Trait.limbTraining2);
-        character.add(Trait.pussyTraining1);
-        character.add(Trait.pussyTraining2);
-        character.add(Trait.pussyTraining3);
-        character.add(Trait.analTraining1);
-        character.add(Trait.analTraining2);
-        character.add(Trait.Confident);
-        character.add(Trait.dickhandler);
-        character.add(Trait.tight);
-        character.add(Trait.vaginaltongue);
-        character.add(Trait.insertion);
-        character.add(Trait.holecontrol);
-        character.add(Trait.autonomousPussy);
-        character.add(Trait.experienced);
-        character.add(Trait.responsive);
-        character.add(Trait.powerfulhips);
 
-        character.add(Trait.enchantingVoice);
-        character.add(Trait.unnaturalgrowth);
-        character.add(Trait.event);
-        character.add(Trait.cursed);
         Global.gainSkills(character);
         character.setTrophy(Item.MayaTrophy);
 
@@ -90,25 +66,50 @@ public class Maya extends BasePersonality {
         growth.willpower = 1;
         growth.bonusStamina = 2;
         growth.bonusArousal = 5;
+        growth.addTrait(0, Trait.darkpromises);
+        growth.addTrait(0, Trait.tongueTraining1);
+        growth.addTrait(0, Trait.tongueTraining2);
+        growth.addTrait(0, Trait.limbTraining1);
+        growth.addTrait(0, Trait.limbTraining2);
+        growth.addTrait(0, Trait.pussyTraining1);
+        growth.addTrait(0, Trait.pussyTraining2);
+        growth.addTrait(0, Trait.pussyTraining3);
+        growth.addTrait(0, Trait.analTraining1);
+        growth.addTrait(0, Trait.analTraining2);
+        growth.addTrait(0, Trait.Confident);
+        growth.addTrait(0, Trait.dickhandler);
+        growth.addTrait(0, Trait.tight);
+        growth.addTrait(0, Trait.vaginaltongue);
+        growth.addTrait(0, Trait.insertion);
+        growth.addTrait(0, Trait.holecontrol);
+        growth.addTrait(0, Trait.autonomousPussy);
+        growth.addTrait(0, Trait.experienced);
+        growth.addTrait(0, Trait.responsive);
+        growth.addTrait(0, Trait.powerfulhips);
+
+        growth.addTrait(0, Trait.enchantingVoice);
+        growth.addTrait(0, Trait.unnaturalgrowth);
+        growth.addTrait(0, Trait.event);
+        growth.addTrait(0, Trait.cursed);
     }
 
     @Override
-    public String bbLiner(Combat c) {
+    public String bbLiner(Combat c, Character other) {
         return "Maya looks at you sympathetically. <i>\"Was that painful? Don't worry, you aren't seriously injured. Our Benefactor protects us.\"</i>";
     }
 
     @Override
-    public String nakedLiner(Combat c) {
+    public String nakedLiner(Combat c, Character opponent) {
         return "Maya smiles, unashamed of her nudity. <i>\"Well done. Not many participants are able to get my clothes off anymore. You'll at least be able to look at a naked woman while you orgasm.\"</i>";
     }
 
     @Override
-    public String stunLiner(Combat c) {
+    public String stunLiner(Combat c, Character opponent) {
         return "You think you see something dangerous flicker in Maya's eyes. <i>\"Well done. I may need to get a little serious.\"</i>";
     }
 
     @Override
-    public String taunt(Combat c) {
+    public String taunt(Combat c, Character opponent) {
         return "Maya gives you a look of gentle disapproval. <i>\"You aren't putting up much of a fight, are you? Aren't you a little overeager to cum?\"</i>";
     }
 
@@ -313,7 +314,11 @@ public class Maya extends BasePersonality {
 
     @Override
     public String startBattle(Character other) {
-        return "Maya smiles softly as she confidently steps toward you. <i>\"Are you simply unfortunate or were you actually hoping to challenge me? What a brave boy. I'll try not to disappoint you.\"</i>";
+        if (other.human()) {
+            return "Maya smiles softly as she confidently steps toward you. <i>\"Are you simply unfortunate or were you actually hoping to challenge me? What a brave boy. I'll try not to disappoint you.\"</i>";
+        } else {
+            return Global.format("{self:SUBJECT} smiles softly as she confidently steps towards {other:name-do}.", character, other);
+        }
     }
 
     @Override
@@ -341,7 +346,7 @@ public class Maya extends BasePersonality {
     }
 
     @Override
-    public String temptLiner(Combat c) {
+    public String temptLiner(Combat c, Character opponent) {
         return "Maya lowers her voice to a smokey tone as she speaks. <i>\"Shall"
                         + " I show you what experience can do for a sexfighter?\"</i>";
     }

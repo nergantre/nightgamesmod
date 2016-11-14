@@ -30,12 +30,12 @@ public class Cowgirl extends FemdomSexStance {
 
     @Override
     public boolean mobile(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
-    public boolean kiss(Character c) {
-        return true;
+    public boolean kiss(Character c, Character target) {
+        return c != bottom;
     }
 
     @Override
@@ -55,22 +55,12 @@ public class Cowgirl extends FemdomSexStance {
 
     @Override
     public boolean reachBottom(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
     public boolean prone(Character c) {
         return c == bottom;
-    }
-
-    @Override
-    public boolean feet(Character c) {
-        return false;
-    }
-
-    @Override
-    public boolean oral(Character c) {
-        return false;
     }
 
     @Override

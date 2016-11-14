@@ -26,7 +26,7 @@ public class Cunnilingus extends Skill {
         boolean canUse = c.getStance().enumerate() == Stance.facesitting && getSelf().canRespond()
                         || getSelf().canAct();
         boolean pussyAvailable = target.crotchAvailable() && target.hasPussy();
-        boolean stanceAvailable = c.getStance().oral(getSelf()) && !c.getStance().vaginallyPenetrated(target);
+        boolean stanceAvailable = c.getStance().oral(getSelf(), target) && !c.getStance().vaginallyPenetrated(target);
         boolean usable = pussyAvailable && stanceAvailable && canUse;
         return usable;
     }

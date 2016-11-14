@@ -57,6 +57,16 @@ public abstract class FemdomSexStance extends Position {
     }
 
     @Override
+    public boolean oral(Character c, Character target) {
+        return false;
+    }
+
+    @Override
+    public boolean feet(Character c, Character target) {
+        return false;
+    }
+
+    @Override
     public List<BodyPart> topParts() {
         return Arrays.asList(top.body.getRandomPussy()).stream().filter(part -> part != null && part.present())
                         .collect(Collectors.toList());

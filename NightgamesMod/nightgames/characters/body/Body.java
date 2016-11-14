@@ -575,7 +575,7 @@ public class Body implements Cloneable {
         if (character.human() && Global.getPlayer().checkAddiction(AddictionType.DOMINANCE, opponent)
                        && c.getStance().dom(opponent)) {
             float mag = Global.getPlayer().getAddiction(AddictionType.DOMINANCE).get().getMagnitude();
-            float dom = c.getDominanceOfStance(opponent);
+            float dom = c.getStance().getDominanceOfStance(opponent);
             dominance = mag * (dom / 5.0);
         }
         multiplier += dominance;

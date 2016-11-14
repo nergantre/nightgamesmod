@@ -25,7 +25,7 @@ public class BreastWorship extends Skill {
     public boolean usable(Combat c, Character target) {
         return target.breastsAvailable() && c.getStance().reachTop(getSelf()) && c.getStance().front(getSelf())
                         && (getSelf().canAct() || c.getStance().enumerate() == Stance.nursing && getSelf().canRespond())
-                        && c.getStance().facing();
+                        && c.getStance().facing(getSelf(), target);
     }
 
     @Override

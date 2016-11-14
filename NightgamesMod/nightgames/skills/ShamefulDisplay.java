@@ -43,7 +43,7 @@ public class ShamefulDisplay extends Skill {
                                 target, Addiction.LOW_INCREASE, c);
                 c.write(getSelf(), "Acting submissively voluntarily reduces Mara's control over you.");
             }
-        } else if (c.shouldPrintReceive(target)) {
+        } else if (c.shouldPrintReceive(target, c)) {
             c.write(getSelf(), receive(c, 0, Result.normal, target));
         }
         getSelf().add(c, new Shamed(getSelf()));

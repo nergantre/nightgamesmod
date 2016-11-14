@@ -14,7 +14,7 @@ public class CommandOral extends PlayerCommand {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return super.usable(c, target) && getSelf().crotchAvailable() && c.getStance().oral(target);
+        return super.usable(c, target) && getSelf().crotchAvailable() && c.getStance().oral(target, target);
     }
 
     @Override

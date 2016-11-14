@@ -24,7 +24,7 @@ public class Kiss extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return c.getStance().kiss(getSelf()) && getSelf().canAct();
+        return c.getStance().kiss(getSelf(), target) && getSelf().canAct();
     }
 
     @Override

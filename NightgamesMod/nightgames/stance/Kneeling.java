@@ -25,8 +25,8 @@ public class Kneeling extends AbstractFacingStance {
     }
 
     @Override
-    public boolean kiss(Character c) {
-        return false;
+    public boolean kiss(Character c, Character target) {
+        return c != top && c != bottom;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class Kneeling extends AbstractFacingStance {
 
     @Override
     public boolean reachTop(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
@@ -64,13 +64,13 @@ public class Kneeling extends AbstractFacingStance {
     }
 
     @Override
-    public boolean feet(Character c) {
-        return c == top;
+    public boolean feet(Character c, Character target) {
+        return c != bottom && target == bottom;
     }
 
     @Override
-    public boolean oral(Character c) {
-        return c == bottom;
+    public boolean oral(Character c, Character target) {
+        return c != top;
     }
 
     @Override

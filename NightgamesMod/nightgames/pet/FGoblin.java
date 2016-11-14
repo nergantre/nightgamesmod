@@ -4,6 +4,7 @@ import nightgames.characters.Character;
 import nightgames.characters.CharacterSex;
 import nightgames.characters.Growth;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 import nightgames.skills.petskills.GoblinBondage;
 import nightgames.skills.petskills.GoblinDenial;
 import nightgames.skills.petskills.GoblinFaceFuck;
@@ -56,6 +57,9 @@ public class FGoblin extends Pet {
                         + "dominant fetish goblin takes her time getting her helpless opponent off, but eventually %s goblin is whimpering and twitching in orgams",
                         own(),opponent.own(),own(),opponent.own()));
                 break;
+            default:
+                // TODO Write an actual scene for this.
+                c.write(owner(), Global.format("{self:SUBJECT-ACTION:fuck|fucks} {other:name-do} senseless, releasing the summon.", getSelf(), opponent.getSelf()));
             }
     }
 
@@ -77,7 +81,7 @@ public class FGoblin extends Pet {
     
     @Override
     protected void buildSelf() {
-        PetCharacter self = new PetCharacter(this, owner().nameOrPossessivePronoun() + getName(), getName(), new Growth(), power);
+        PetCharacter self = new PetCharacter(this, owner().nameOrPossessivePronoun() +" " + getName(), getName(), new Growth(), power);
         // goblins are about 120 centimeters tall (around 4' for US people)
         self.body.setHeight(120);
         self.body.finishBody(CharacterSex.herm);

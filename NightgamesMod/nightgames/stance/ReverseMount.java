@@ -20,7 +20,7 @@ public class ReverseMount extends AbstractBehindStance {
 
     @Override
     public boolean mobile(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
@@ -33,8 +33,8 @@ public class ReverseMount extends AbstractBehindStance {
     }
 
     @Override
-    public boolean kiss(Character c) {
-        return false;
+    public boolean kiss(Character c, Character target) {
+        return c != top && c != bottom;
     }
 
     @Override
@@ -49,12 +49,12 @@ public class ReverseMount extends AbstractBehindStance {
 
     @Override
     public boolean reachTop(Character c) {
-        return false;
+        return c != top && c != bottom;
     }
 
     @Override
     public boolean reachBottom(Character c) {
-        return c == top;
+        return true;
     }
 
     @Override
@@ -63,13 +63,13 @@ public class ReverseMount extends AbstractBehindStance {
     }
 
     @Override
-    public boolean feet(Character c) {
-        return c == top;
+    public boolean feet(Character c, Character target) {
+        return target == bottom;
     }
 
     @Override
-    public boolean oral(Character c) {
-        return c == top;
+    public boolean oral(Character c, Character target) {
+        return target == bottom;
     }
 
     @Override

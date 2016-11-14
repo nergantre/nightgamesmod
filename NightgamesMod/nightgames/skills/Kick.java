@@ -28,7 +28,7 @@ public class Kick extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return c.getStance().feet(getSelf()) && getSelf().canAct() && (!c.getStance().prone(getSelf())
+        return c.getStance().feet(getSelf(), target) && getSelf().canAct() && (!c.getStance().prone(getSelf())
                         || getSelf().has(Trait.dirtyfighter) && !c.getStance().connected());
     }
 
@@ -56,7 +56,7 @@ public class Kick extends Skill {
                     c.write(getSelf(), deal(c, 0, Result.normal, target));
 
                 }
-            } else if (c.shouldPrintReceive(target)) {
+            } else if (c.shouldPrintReceive(target, c)) {
                 if (c.getStance().prone(getSelf())) {
                     c.write(getSelf(), receive(c, 0, Result.strong, target));
                 } else {

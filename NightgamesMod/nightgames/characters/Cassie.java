@@ -63,10 +63,6 @@ public class Cassie extends BasePersonality {
         character.getStamina().setMax(70 + character.getLevel() * getGrowth().stamina);
         character.getArousal().setMax(100 + character.getLevel() * getGrowth().arousal);
         Global.gainSkills(character);
-        character.add(Trait.softheart);
-        character.add(Trait.romantic);
-        character.add(Trait.imagination);
-
         character.setTrophy(Item.CassieTrophy);
         character.plan = Plan.hunting;
         character.mood = Emotion.confident;
@@ -159,6 +155,10 @@ public class Cassie extends BasePersonality {
                     )
                 ));
         preferredAttributes.add(c -> c.get(Attribute.Arcane) < 80 ? Optional.of(Attribute.Arcane) : Optional.empty());
+
+        growth.addTrait(0, Trait.softheart);
+        growth.addTrait(0, Trait.romantic);
+        growth.addTrait(0, Trait.imagination);
         growth.addTrait(2, Trait.mojoMaster);
         growth.addTrait(5, Trait.responsive);
         growth.addTrait(8, Trait.tongueTraining1);
@@ -443,27 +443,27 @@ public class Cassie extends BasePersonality {
     }
 
     @Override
-    public String bbLiner(Combat c) {
+    public String bbLiner(Combat c, Character other) {
         return "Cassie winces apologetically. <i>\"That looks really painful. Sorry, but I can't afford to go easy on you.\"</i>";
     }
 
     @Override
-    public String nakedLiner(Combat c) {
+    public String nakedLiner(Combat c, Character opponent) {
         return "Cassie blushes noticeably and covers herself. <i>\"No matter how much time I spend naked, it doesn't get any less embarrassing.\"</i>";
     }
 
     @Override
-    public String stunLiner(Combat c) {
+    public String stunLiner(Combat c, Character opponent) {
         return "Cassie groans softly as she tends her bruises, <i>\"Come on, you don't have to be so rough.\"</i> she complains.";
     }
 
     @Override
-    public String taunt(Combat c) {
+    public String taunt(Combat c, Character opponent) {
         return "Cassie giggles and taps the head of your dick. <i>\"Your penis is so eager and cooperative,\"</i> she jokes. <i>\"Are you sure you're not just letting me win?\"</i>";
     }
 
     @Override
-    public String temptLiner(Combat c) {
+    public String temptLiner(Combat c, Character opponent) {
         return "Cassie catches you glancing at her body, and blows you a kiss. <i>\"Why don't you just stop resisting and let me make you cum?\"</i>";
     }
 
@@ -534,7 +534,7 @@ public class Cassie extends BasePersonality {
 
     @Override
     public String startBattle(Character other) {
-        return "Cassie looks hesitant for just a moment, but can't contain a curious little smile as she prepares to face you.";
+        return Global.format("{self:SUBJECT} looks hesitant for just a moment, but can't contain a curious little smile as {self:pronoun} prepares to face {other:name-do}.", character, other);
     }
 
     @Override
@@ -557,7 +557,7 @@ public class Cassie extends BasePersonality {
     }
 
     public void advance() {
-        character.add(Trait.witch);
+        growth.addTrait(10, Trait.witch);
         character.body.addReplace(PussyPart.arcane, 1);
         character.unequipAllClothing();
         character.outfitPlan.add(Clothing.getByID("bra"));

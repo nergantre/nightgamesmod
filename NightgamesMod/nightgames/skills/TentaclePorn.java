@@ -55,7 +55,7 @@ public class TentaclePorn extends Skill {
                 } else if (getSelf().human()) {
                     c.write(getSelf(), deal(c, 0, Result.normal, target));
                     TentaclePart.pleasureWithTentacles(c, target, m, target.body.getRandom("skin"));
-                } else if (c.shouldPrintReceive(target)) {
+                } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), receive(c, 0, Result.normal, target));
                     TentaclePart.pleasureWithTentacles(c, target, m, target.body.getRandom("skin"));
                 }

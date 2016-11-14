@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import nightgames.areas.Area;
@@ -50,12 +52,25 @@ import nightgames.status.addiction.Addiction.Severity;
 import nightgames.status.addiction.AddictionType;
 
 public class Combat extends Observable implements Cloneable {
+    
+    private enum CombatPhase {
+        PRETURN,
+        SKILL_SELECTION,
+        PET_ACTIONS,
+        P1_ACT_FIRST,
+        P2_ACT_FIRST,
+        P1_ACT_SECOND,
+        P2_ACT_SECOND,
+        UPKEEP,
+        RESULTS_SCENE,
+        FINISHED,
+    }
     public Character p1;
     public Character p2;
     public List<PetCharacter> otherCombatants;
     public Map<String, CombatantData> combatantData;
     public Optional<Character> winner;
-    public int phase;
+    public CombatPhase phase;
     protected Skill p1act;
     protected Skill p2act;
     public Area location;
@@ -69,6 +84,7 @@ public class Combat extends Observable implements Cloneable {
     private CombatLog log;
     private boolean beingObserved;
     private int postCombatScenesSeen;
+    private boolean wroteMessage;
 
     String imagePath = "";
 
@@ -87,7 +103,9 @@ public class Combat extends Observable implements Cloneable {
         p2.state = State.combat;
         postCombatScenesSeen = 0;
         otherCombatants = new ArrayList<>();
+        wroteMessage = false;
         winner = Optional.empty();
+        phase = CombatPhase.PRETURN;
         if (doExtendedLog()) {
             log = new CombatLog(this);
         }
@@ -132,7 +150,6 @@ public class Combat extends Observable implements Cloneable {
     }
 
     public void go() {
-        phase = 0;
         if (p1.mostlyNude() && !p2.mostlyNude()) {
             p1.emote(Emotion.nervous, 20);
         }
@@ -142,13 +159,11 @@ public class Combat extends Observable implements Cloneable {
         applyCombatStatuses(p1, p2);
         applyCombatStatuses(p2, p1);
 
-        if (shouldAutoresolve()) {
-            automate();
-        }
         updateMessage();
         if (doExtendedLog()) {
             log.logHeader("\n");
         }
+        next();
     }
 
     public CombatantData getCombatantData(Character character) {
@@ -256,49 +271,55 @@ public class Combat extends Observable implements Cloneable {
         }
     }
 
-    public void turn() {
-        timer++;
+    private void draw() {
+        state = eval();
+        p1.evalChallenges(this, null);
+        p2.evalChallenges(this, null);
+        p2.draw(this, state);
+        updateMessage();
+        winner = Optional.of(Global.noneCharacter());
+    }
+
+    private void victory(Character won) {
+        state = eval();
+        p1.evalChallenges(this, won);
+        p2.evalChallenges(this, won);
+        won.victory(this, state);
+        doVictory(won, getOpponent(won));
+        winner = Optional.of(won);
+        updateMessage();
+    }
+
+    private boolean checkLosses() {
         if (p1.checkLoss(this) && p2.checkLoss(this)) {
-            state = eval();
-            p1.evalChallenges(this, null);
-            p2.evalChallenges(this, null);
-            p2.draw(this, state);
-            phase = 2;
-            updateMessage();
-            winner = Optional.of(Global.noneCharacter());
-            if (shouldAutoresolve()) {
-                end();
-            }
-            return;
+            draw();
+            return true;
         }
         if (p1.checkLoss(this)) {
-            state = eval();
-            p1.evalChallenges(this, p2);
-            p2.evalChallenges(this, p2);
-            p2.victory(this, state);
-            doVictory(p2, p1);
-            winner = Optional.of(p2);
-            phase = 2;
-            updateMessage();
-            if (shouldAutoresolve()) {
-                end();
-            }
-            return;
+            victory(p2);
+            return true;
         }
         if (p2.checkLoss(this)) {
-            state = eval();
-            p1.evalChallenges(this, p1);
-            p2.evalChallenges(this, p1);
-            p1.victory(this, state);
-            doVictory(p1, p2);
-            winner = Optional.of(p1);
-            phase = 2;
-            updateMessage();
-            if (shouldAutoresolve()) {
-                end();
-            }
-            return;
+            victory(p1);
+            return true;
         }
+        return false;
+    }
+    
+    private void checkForCombatComment() {
+        NPC commenter;
+        if (p1.human() || p2.human()) {
+            commenter = (NPC) getOpponent(Global.getPlayer());
+        } else {
+            commenter = (NPC) (Global.random(2) == 0 ? p1 : p2);
+        }
+        Optional<String> comment = commenter.getComment(this);
+        if (comment.isPresent()) {
+            write(commenter, "<i>\"" + Global.format(comment.get(), commenter, Global.getPlayer()) + "\"</i>");
+        }
+    }
+
+    private void doPreturnUpkeep() {
         Character player;
         Character other;
         if (p1.human()) {
@@ -308,9 +329,6 @@ public class Combat extends Observable implements Cloneable {
             player = p2;
             other = p1;
         }
-        phase = 1;
-        p1.regen(this);
-        p2.regen(this);
         message = describe(player, other);
         if (!shouldAutoresolve() && !Global.checkFlag(Flag.noimage)) {
             Global.gui()
@@ -320,24 +338,118 @@ public class Combat extends Observable implements Cloneable {
                       .displayImage(imagePath, images.get(imagePath));
             }
         }
+        p1.preturnUpkeep();
+        p2.preturnUpkeep();
         p1act = null;
         p2act = null;
-        p1.act(this);
-
         if (Global.random(3) == 0 && !shouldAutoresolve()) {
-            NPC commenter;
-            if (p1.human() || p2.human()) {
-                commenter = (NPC) getOpponent(Global.getPlayer());
-            } else {
-                commenter = (NPC) (Global.random(2) == 0 ? p1 : p2);
-            }
-            Optional<String> comment = commenter.getComment(this);
-            if (comment.isPresent()) {
-                write(commenter, "<i>\"" + Global.format(comment.get(), commenter, Global.getPlayer()) + "\"</i>");
-            }
+            checkForCombatComment();
         }
+    }
 
+    private void doEndOfTurnUpkeep() {
+        p1.eot(this, p2, p2act);
+        p2.eot(this, p1, p1act);
+        checkStamina(p1);
+        checkStamina(p2);
+        doStanceTick(p1);
+        doStanceTick(p2);
+        combatantData.values().forEach(data -> data.tick(this));
+
+        doCombatUpkeep(p1, p2);
+        doCombatUpkeep(p2, p1);
+
+        getStance().decay(this);
+        getStance().checkOngoing(this);
+        p1.regen(this);
+        p2.regen(this);
+    }
+
+    public void turn() {
+        timer++;
+        if (phase != CombatPhase.FINISHED && phase != CombatPhase.RESULTS_SCENE && checkLosses()) {
+            phase = CombatPhase.RESULTS_SCENE;
+            next();
+            return;
+        }
+        if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+            System.out.println("Current phase = " + phase);
+        }
+        wroteMessage = false;
+        switch (phase) {
+            case PRETURN:
+                doPreturnUpkeep();
+                phase = CombatPhase.SKILL_SELECTION;
+                turn();
+                break;
+            case SKILL_SELECTION:
+                pickSkills();
+                break;
+            case PET_ACTIONS:
+                boolean acted = doPetActions();
+                phase = determineSkillOrder();
+                if (acted) {
+                    next();
+                } else {
+                    turn();
+                }
+                break;
+            case P1_ACT_FIRST:
+                if (doAction(p1, p2, p1act)) {
+                    phase = CombatPhase.UPKEEP;
+                } else {
+                    phase = CombatPhase.P2_ACT_SECOND;
+                }
+                next();
+                break;
+            case P1_ACT_SECOND:
+                doAction(p1, p2, p1act);
+                phase = CombatPhase.UPKEEP;
+                next();
+                break;
+            case P2_ACT_FIRST:
+                if (doAction(p2, p1, p2act)) {
+                    phase = CombatPhase.UPKEEP;
+                } else {
+                    phase = CombatPhase.P1_ACT_SECOND;
+                }
+                next();
+                break;
+            case P2_ACT_SECOND:
+                doAction(p2, p1, p2act);
+                phase = CombatPhase.UPKEEP;
+                next();
+                break;
+            case UPKEEP:
+                doEndOfTurnUpkeep();
+                phase = CombatPhase.PRETURN;
+                if (wroteMessage) {
+                    next();
+                } else {
+                    turn();
+                }
+                break;
+            case RESULTS_SCENE:
+                // fall through to the finished case.
+                phase = CombatPhase.FINISHED;
+            case FINISHED:
+            default:
+                next();
+                return;
+
+        }
         updateAndClearMessage();
+    }
+
+    private void pickSkills() {
+        if (p1act == null) {
+            p1.act(this);
+        } else if (p2act == null) {
+            p2.act(this);
+        } else {
+            phase = CombatPhase.PET_ACTIONS;
+            turn();
+        }        
     }
 
     private String describe(Character player, Character other) {
@@ -400,6 +512,31 @@ public class Combat extends Observable implements Cloneable {
         return def;
     }
 
+    public boolean doAction(Character self, Character target, Skill action) {
+        if (!shouldAutoresolve()) {
+            Global.gui().clearText();
+        }
+
+        action = checkWorship(self, target, action);
+        if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+            System.out.println(self.name() + " uses " + action.getLabel(this));
+        }
+        /*
+        if (doExtendedLog()) {
+            log.logTurn(p1act, p2act);
+        } else if (Global.isDebugOn(DebugFlags.DEBUG_SPECTATE) && beingObserved) {
+            write("<br/>");
+            write(log.logTurnToString(p1act, p2act, "<br>"));
+        } else {
+            useSkills();
+        }
+        */
+        boolean results = resolveSkill(action, target);
+        this.write("<br/>");
+        updateMessage();
+        return results;
+    }
+
     public void act(Character c, Skill action, String choice) {
         if (c == p1) {
             p1act = action;
@@ -408,51 +545,30 @@ public class Combat extends Observable implements Cloneable {
             p2act = action;
         }
         action.choice = choice;
-        if (p1act == null) {
-            p1.act(this);
-        } else if (p2act == null) {
-            p2.act(this);
-        } else {
-            clear();
-            if (!shouldAutoresolve()) {
-                Global.gui()
-                      .clearText();
-            }
-            p1act = checkWorship(p1, p2, p1act);
-            p2act = checkWorship(p2, p1, p2act);
-            if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-                System.out.println(p1.name() + " uses " + p1act.getLabel(this));
-                System.out.println(p2.name() + " uses " + p2act.getLabel(this));
-            }
-            otherCombatants.forEach(combatant -> combatant.act(this));
-            if (doExtendedLog()) {
-                log.logTurn(p1act, p2act);
-            } else if (Global.isDebugOn(DebugFlags.DEBUG_SPECTATE) && beingObserved) {
-                write("<br>");
-                write(log.logTurnToString(p1act, p2act, "<br>"));
-            } else {
-                useSkills();
-            }
-            this.write("<br>");
-            p1.eot(this, p2, p2act);
-            p2.eot(this, p1, p1act);
-            checkStamina(p1);
-            checkStamina(p2);
-            doStanceTick(p1);
-            doStanceTick(p2);
-            combatantData.values().forEach(data -> data.tick(this));
+        turn();
+    }
 
-            doCombatUpkeep(p1, p2);
-            doCombatUpkeep(p2, p1);
-
-            getStance().decay(this);
-            getStance().checkOngoing(this);
-            phase = 0;
-            if (shouldAutoresolve()) {
-                turn();
+    private boolean doPetActions() {
+        boolean acted = false;
+        Set<PetCharacter> alreadyBattled = new HashSet<>();
+        if (otherCombatants.size() > 0) {
+            for (PetCharacter pet : otherCombatants) {
+                if (alreadyBattled.contains(pet)) { continue; }
+                for (PetCharacter otherPet : otherCombatants) {
+                    if (alreadyBattled.contains(otherPet)) { continue; }
+                    if (!pet.getSelf().owner().equals(otherPet.getSelf().owner())) {
+                        petbattle(pet.getSelf(), otherPet.getSelf());
+                        alreadyBattled.add(pet);
+                        alreadyBattled.add(otherPet);
+                    }
+                }
             }
-            updateMessage();
+
+            otherCombatants.stream().filter(pet -> !alreadyBattled.contains(pet)).forEach(pet -> pet.act(this));
+            write("<br/>");
+            acted = true;
         }
+        return acted;
     }
 
     private void doCombatUpkeep(Character self, Character other) {
@@ -467,50 +583,19 @@ public class Combat extends Observable implements Cloneable {
         }
     }
 
-    /**
-     * Stances have a dominance rating that benefits the dominant character, queried from Position.dominance().
-     * 0: Not dominant at all. Seen in the Neutral position.
-     * 1: Very give-and-take. Seen in the 69 position.
-     * 2: Slightly dominant. Found in the TribadismStance and Mount positions.
-     * 3: Average dominance. Missionary, Kneeling, Standing, and other "vanilla" positions all have this rating.
-     * 4: High dominance. Anal positions and Pin are examples of positions with this rating.
-     * 5: Absurd dominance. Exotic positions like Engulfed and FlyingCarry have this rating, as well as the more mundane FaceSitting and Smothering.
-     *
-     * @param self The character whose traits are checked to modify the current stance's dominance score.
-     * @return The dominance of the current position, modified by one combatant's traits. Higher return values cause more willpower loss on each combat tick.
-     * If a character is not the dominant character of the position, their effective dominance is 0.
-     */
-    public int getDominanceOfStance(Character self) {
-        if (getStance().sub(self)) {
-            return 0;
-        }
-        int stanceDominance = getStance().dominance();
-        // It is unexpected, but not catastrophic if a character is at once a natural dom and submissive.
-        if (self.has(Trait.naturalTop)) {
-            // Rescales stance dominance values from 0-1-2-3-4-5 to 0-2-3-5-6-8
-            stanceDominance = Double.valueOf(Math.ceil(stanceDominance * 1.5)).intValue();
-        }
-        if (self.has(Trait.submissive)) {
-            // Rescales stance dominance values from 0-1-2-3-4-5 to 0-0-1-1-2-3
-            stanceDominance = Double.valueOf(Math.floor(stanceDominance * 0.6)).intValue();
-        }
-        return Math.max(0, stanceDominance);
-    }
-
     private void doStanceTick(Character self) {
-
-        int stanceDominance = getDominanceOfStance(self);
+        int stanceDominance = getStance().getDominanceOfStance(self);
 
         if (!(stanceDominance > 0)) {
             return;
         }
 
-        Character sub = getStance().getOther(self);
-        if (sub.human()) {
+        Character other = getStance().getOther(self);
+        if (other.human()) {
             Addiction add = Global.getPlayer().getAddiction(AddictionType.DOMINANCE).orElse(null);
             if (add != null && add.atLeast(Severity.MED) && !add.wasCausedBy(self)) {
                 write(self, Global.format("{self:name} does {self:possessive} best to be dominant, but with the "
-                            + "way Jewel has been working you over you're completely desensitized." , self, sub));
+                            + "way Jewel has been working you over you're completely desensitized." , self, other));
                 return;
             }
         }
@@ -518,132 +603,27 @@ public class Combat extends Observable implements Cloneable {
                 write(self,
                             Global.format("{self:NAME-POSSESSIVE} cold gaze in {self:possessive} dominant position"
                                             + " makes {other:direct-object} shiver.",
-                                            self, sub));
-            sub.loseWillpower(this, stanceDominance, 0, false, " (SM Queen)");
+                                            self, other));
+            other.loseWillpower(this, stanceDominance, 0, false, " (SM Queen)");
         } else if (getStance().time % 2 == 0 && getStance().time > 0) {
             write(self,
                             Global.format("{other:NAME-POSSESSIVE} compromising position takes a toll on {other:possessive} willpower.",
-                                            self, sub));
-            sub.loseWillpower(this, stanceDominance, 0, false, " (Dominance)");
+                                            self, other));
+            other.loseWillpower(this, stanceDominance, 0, false, " (Dominance)");
         }
-        
-        if (getStance().facing() && getOpponent(self).breastsAvailable() && getOpponent(self).has(Trait.temptingtits)) {
-            write(self, Global.format("{self:SUBJECT-ACTION:can't avert|can't avert} {self:possessive} eyes from {other:NAME-POSSESSIVE} perfectly shaped tits sitting in front of {self:possessive} eyes.",
-                                            self, sub));
-            self.tempt(this, sub, sub.body.getRandomBreasts(), 10 + Math.max(0, sub.get(Attribute.Seduction) / 3 - 7));
-        } else if (getOpponent(self).has(Trait.temptingtits) && getStance().behind(sub)) {
-            write(self, Global.format("{self:SUBJECT-ACTION:feel|feels} a heat in {self:possessive} groin as {other:name-possessive} enticing tits pressing against {self:possessive} back.",
-                            self, sub));
-            double selfTopExposure = self.outfit.getExposure(ClothingSlot.top);
-            double otherTopExposure = sub.outfit.getExposure(ClothingSlot.top);
-            double temptDamage = 20 + Math.max(0, sub.get(Attribute.Seduction) / 2 - 12);
-            temptDamage = temptDamage * Math.min(1, selfTopExposure + .5) * Math.min(1, otherTopExposure + .5);
-            self.tempt(this, sub, sub.body.getRandomBreasts(), (int) temptDamage);
-        }
-    }
 
-    public void automate() {
-        int turn = 0;
-        while (!(p1.checkLoss(this) || p2.checkLoss(this))) {
-            // guarantee the fight finishes in a timely manner
-            if (turn > 50) {
-                p1.pleasure(5 * (turn - 50), this, p2);
-                p2.pleasure(5 * (turn - 50), this, p1);
-            }
-            turn += 1;
-            phase = 1;
-            p1.regen(this);
-            p2.regen(this);
-            p1act = ((NPC) p1).actFast(this);
-            p2act = ((NPC) p2).actFast(this);
-            clear();
-            if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-                System.out.println(p1.name() + " uses " + p1act.getLabel(this));
-                System.out.println(p2.name() + " uses " + p2act.getLabel(this));
-            }
-            otherCombatants.forEach(combatant -> combatant.act(this));
-            useSkills();
-            p1.eot(this, p2, p2act);
-            p2.eot(this, p1, p1act);
-            checkStamina(p1);
-            checkStamina(p2);
-            getStance().decay(this);
-            getStance().checkOngoing(this);
-            phase = 0;
-        }
-        if (p1.checkLoss(this) && p2.checkLoss(this)) {
-            state = eval();
-            p1.evalChallenges(this, null);
-            p2.evalChallenges(this, null);
-            p2.draw(this, state);
-            winner = Optional.of(Global.noneCharacter());
-            end();
-            return;
-        }
-        if (p1.checkLoss(this)) {
-            state = eval();
-            p1.evalChallenges(this, p2);
-            p2.evalChallenges(this, p2);
-            p2.victory(this, state);
-            doVictory(p2, p1);
-            winner = Optional.of(p2);
-            end();
-            return;
-        }
-        if (p2.checkLoss(this)) {
-            state = eval();
-            p1.evalChallenges(this, p1);
-            p2.evalChallenges(this, p1);
-            p1.victory(this, state);
-            doVictory(p1, p2);
-            winner = Optional.of(p1);
-            end();
-            return;
-        }
-        if (timer > 25) {
-            if (p1.getWillpower()
-                  .percent() < p2.getWillpower()
-                                 .percent()) {
-                state = eval();
-                if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-                    System.out.println(p2.name() + " victory over " + p1.name());
-                }
-                p2.victory(this, state);
-                doVictory(p2, p1);
-                phase = 2;
-                updateMessage();
-                if (!shouldAutoresolve()) {
-                    end();
-                }
-                return;
-            } else if (p1.getWillpower()
-                         .percent() > p2.getWillpower()
-                                        .percent()) {
-                state = eval();
-                if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-                    System.out.println(p1.name() + " victory over " + p2.name());
-                }
-                p1.victory(this, state);
-                doVictory(p1, p2);
-                phase = 2;
-                updateMessage();
-                if (shouldAutoresolve()) {
-                    end();
-                }
-                return;
-            } else {
-                state = eval();
-                if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-                    System.out.println(p2.name() + " draw with " + p1.name());
-                }
-                p2.draw(this, state);
-                phase = 2;
-                updateMessage();
-                if (shouldAutoresolve()) {
-                    end();
-                }
-                return;
-            }
+        if (getStance().facing(self, other) && other.breastsAvailable() && other.has(Trait.temptingtits)) {
+            write(self, Global.format("{self:SUBJECT-ACTION:can't avert|can't avert} {self:possessive} eyes from {other:NAME-POSSESSIVE} perfectly shaped tits sitting in front of {self:possessive} eyes.",
+                                            self, other));
+            self.tempt(this, other, other.body.getRandomBreasts(), 10 + Math.max(0, other.get(Attribute.Seduction) / 3 - 7));
+        } else if (getOpponent(self).has(Trait.temptingtits) && getStance().behind(other)) {
+            write(self, Global.format("{self:SUBJECT-ACTION:feel|feels} a heat in {self:possessive} groin as {other:name-possessive} enticing tits pressing against {self:possessive} back.",
+                            self, other));
+            double selfTopExposure = self.outfit.getExposure(ClothingSlot.top);
+            double otherTopExposure = other.outfit.getExposure(ClothingSlot.top);
+            double temptDamage = 20 + Math.max(0, other.get(Attribute.Seduction) / 2 - 12);
+            temptDamage = temptDamage * Math.min(1, selfTopExposure + .5) * Math.min(1, otherTopExposure + .5);
+            self.tempt(this, other, other.body.getRandomBreasts(), (int) temptDamage);
         }
     }
 
@@ -691,24 +671,11 @@ public class Combat extends Observable implements Cloneable {
         return target.orgasmed || user.orgasmed;
     }
 
-    protected void useSkills() {
-        Skill firstSkill, secondSkill;
-        Character firstCharacter, secondCharacter;
+    protected CombatPhase determineSkillOrder() {
         if (p1.init() + p1act.speed() >= p2.init() + p2act.speed()) {
-            firstSkill = p1act;
-            secondSkill = p2act;
-            firstCharacter = p1;
-            secondCharacter = p2;
+            return CombatPhase.P1_ACT_FIRST;
         } else {
-            firstSkill = p2act;
-            secondSkill = p1act;
-            firstCharacter = p2;
-            secondCharacter = p1;
-        }
-        if (!resolveSkill(firstSkill, secondCharacter)) {
-            // only use second skill if an orgasm didn't happen
-            write("<br>");
-            resolveSkill(secondSkill, firstCharacter);
+            return CombatPhase.P2_ACT_FIRST;
         }
     }
 
@@ -724,6 +691,7 @@ public class Combat extends Observable implements Cloneable {
         }
         String added = message + "<br>" + text;
         message = added;
+        wroteMessage = true;
         lastTalked = null;
     }
 
@@ -747,13 +715,16 @@ public class Combat extends Observable implements Cloneable {
         if (text.length() > 0) {
             if (user.human()) {
                 message = message + "<br><font color='rgb(200,200,255)'>" + text + "<font color='white'>";
-            } else if (user.isPet()) {
+            } else if (user.isPet() && user.isPetOf(Global.getPlayer())) {
                 message = message + "<br><font color='rgb(130,225,200)'>" + text + "<font color='white'>";
-            } else  {
+            } else if (user.isPet()) {
+                message = message + "<br><font color='rgb(195,70,244)'>" + text + "<font color='white'>";
+            } else {
                 message = message + "<br><font color='rgb(255,200,200)'>" + text + "<font color='white'>";
             }
             lastTalked = user;
         }
+        wroteMessage = true;
     }
 
     public String getMessage() {
@@ -814,10 +785,14 @@ public class Combat extends Observable implements Cloneable {
         }
     }
 
-    public void next() {
-        if (phase == 0) {
-            turn();
-        } else if (phase == 2) {
+    private void next() {
+        if (phase != CombatPhase.FINISHED) {
+            if (shouldAutoresolve()) {
+                turn();
+            } else {
+                Global.gui().next(this);
+            }
+        } else {
             end();
         }
     }
@@ -846,12 +821,12 @@ public class Combat extends Observable implements Cloneable {
         } else {
             intruder.intervene3p(this, target, assist);
             assist.victory3p(this, target, intruder);
-            phase = 2;
+            phase = CombatPhase.RESULTS_SCENE;
             if (!(p1.human() || p2.human() || intruder.human())) {
                 end();
-            } else if (intruder.human()) {
-                Global.gui()
-                      .watchCombat(this);
+            } else {
+                Global.gui().watchCombat(this);
+                next();
             }
         }
         updateMessage();
@@ -860,7 +835,7 @@ public class Combat extends Observable implements Cloneable {
     /**
      * @return true if it should end the fight, false if there are still more scenes
      */
-    public boolean end() {
+    public void end() {
         clear();
         boolean hasScene = false;
         if (p1.human() || p2.human()) {
@@ -872,13 +847,11 @@ public class Combat extends Observable implements Cloneable {
                 }
                 if (hasScene) {
                     postCombatScenesSeen += 1;
-                    return false; 
                 }
             } else {
                 Global.gui().next(this);
             }
         }
-        phase = 2;
 
         p1.state = State.ready;
         p2.state = State.ready;
@@ -893,7 +866,9 @@ public class Combat extends Observable implements Cloneable {
         if (doExtendedLog()) {
             log.logEnd(winner);
         }
-        return !ding;
+        if (!ding && !shouldAutoresolve()) {
+            Global.gui().endCombat();
+        }
     }
 
     private boolean doPostCombatScenes(NPC npc) {
@@ -1001,6 +976,15 @@ public class Combat extends Observable implements Cloneable {
     }
 
     public void setStance(Position newStance, Character initiator, boolean voluntary) {
+        if ((newStance.top != getStance().bottom && newStance.top != getStance().top) || (newStance.bottom != getStance().bottom && newStance.bottom != getStance().top)) {
+            if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+                System.out.printf("Tried to chance stance without both players, stopping: %s -> %s\n",
+                                stance.getClass().getName(),
+                                newStance.getClass().getName());
+                Thread.dumpStack();
+            }
+            return;
+        }
         if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
             System.out.printf("Stance Change: %s -> %s\n", stance.getClass()
                                                                  .getName(),
@@ -1094,14 +1078,14 @@ public class Combat extends Observable implements Cloneable {
         }
     }
     
-    public boolean shouldPrintReceive(Character ch) {
-        return ch.human() || beingObserved;
+    public boolean shouldPrintReceive(Character ch, Combat c) {
+        return beingObserved || (c.p1.human() || c.p2.human());
     }
     
     public boolean shouldAutoresolve() {
         return !(p1.human() || p2.human()) && !beingObserved;
     }
-    
+
     public String bothDirectObject() {
         return beingObserved ? "them" : "you";
     }
@@ -1124,9 +1108,14 @@ public class Combat extends Observable implements Cloneable {
 
     public void addPet(PetCharacter self) {
         otherCombatants.add(self);
+        this.write(self, self.challenge(getOpponent(self)));
     }
 
     public List<PetCharacter> getOtherCombatants() {
         return otherCombatants;
+    }
+
+    public boolean isEnded() {
+        return phase == CombatPhase.FINISHED;
     }
 }

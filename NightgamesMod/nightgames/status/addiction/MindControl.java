@@ -331,7 +331,7 @@ public class MindControl extends Addiction {
                         }
                         break;
                     default:
-                        if (pos.facing()) {
+                        if (pos.facing(Global.getPlayer(), controller)) {
                             succeeded = true;
                             description = controller.name() + " gazes into your eyes as " + controller.pronoun() 
                                             + " pushes you over the edge. ";
