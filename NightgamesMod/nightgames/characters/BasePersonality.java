@@ -85,7 +85,7 @@ public abstract class BasePersonality implements Personality {
     }
 
     public void buyUpTo(Item item, int number) {
-        while (character.money > item.getPrice() && character.count(item) < 3) {
+        while (character.money > item.getPrice() && character.count(item) < number) {
             character.money -= item.getPrice();
             character.gain(item);
         }
