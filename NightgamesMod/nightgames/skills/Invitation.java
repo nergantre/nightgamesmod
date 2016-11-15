@@ -34,8 +34,8 @@ public class Invitation extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        boolean insertable = c.getStance().insert(getSelf(), getSelf()) != c.getStance()
-                        || c.getStance().insert(target, getSelf()) != c.getStance();
+        boolean insertable = c.getStance().insert(c, getSelf(), getSelf()) != c.getStance()
+                        || c.getStance().insert(c, target, getSelf()) != c.getStance();
         return insertable && getSelf().canRespond() && getSelf().crotchAvailable() && target.crotchAvailable()
                         && (getSelf().hasDick() && target.hasPussy() || getSelf().hasPussy() && target.hasDick());
     }
@@ -142,7 +142,7 @@ public class Invitation extends Skill {
         }
 
         if (success) {
-            c.setStance(c.getStance().insertRandomDom(target), getSelf(), getSelf().canMakeOwnDecision());
+            c.setStance(c.getStance().insertRandomDom(c, target), getSelf(), getSelf().canMakeOwnDecision());
         }
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, result, target));

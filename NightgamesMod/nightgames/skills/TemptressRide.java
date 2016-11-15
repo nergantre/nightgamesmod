@@ -17,7 +17,7 @@ public class TemptressRide extends Thrust {
 
     @Override
     public BodyPart getSelfOrgan(Combat c) {
-        if (c.getStance().vaginallyPenetratedBy(getSelf(), c.getOpponent(getSelf()))) {
+        if (c.getStance().vaginallyPenetratedBy(c, getSelf(), c.getOpponent(getSelf()))) {
             return getSelf().body.getRandomPussy();
         }
         return null;
@@ -48,7 +48,7 @@ public class TemptressRide extends Thrust {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (c.getStance().anallyPenetrated(getSelf())) {
+        if (c.getStance().anallyPenetrated(c, getSelf())) {
             return super.resolve(c, target);
         }
         int targetDmg = 10 + Global.random(Math.max(10, getSelf().get(Attribute.Technique)));

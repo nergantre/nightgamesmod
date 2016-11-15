@@ -22,7 +22,7 @@ public class NursingHold extends AbstractFacingStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         if (top.human()) {
             return "You are cradling " + bottom.nameOrPossessivePronoun()
                             + " head in your lap with your breasts dangling in front of " + bottom.directObject();
@@ -107,8 +107,8 @@ public class NursingHold extends AbstractFacingStance {
     }
 
     @Override
-    public Collection<Skill> availSkills(Character c) {
-        if (c != bottom) {
+    public Collection<Skill> availSkills(Combat c, Character self) {
+        if (self != bottom) {
             return Collections.emptySet();
         } else {
             Collection<Skill> avail = new HashSet<Skill>();

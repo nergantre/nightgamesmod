@@ -43,11 +43,11 @@ public class Eve extends BasePersonality {
         self.outfitPlan.add(Clothing.getByID("garters"));
 
         self.change();
-        self.set(Attribute.Power, 12);
-        self.set(Attribute.Fetish, 15);
-        self.set(Attribute.Cunning, 12);
-        self.set(Attribute.Speed, 6);
-        self.set(Attribute.Seduction, 13);
+        self.modAttributeDontSaveData(Attribute.Power, 1);
+        self.modAttributeDontSaveData(Attribute.Fetish, 1);
+        self.modAttributeDontSaveData(Attribute.Cunning, 1);
+        self.modAttributeDontSaveData(Attribute.Speed, 1);
+        self.modAttributeDontSaveData(Attribute.Seduction, 2);
         Global.gainSkills(self);
         self.setTrophy(Item.EveTrophy);
         self.body.add(BreastsPart.d);
@@ -59,7 +59,7 @@ public class Eve extends BasePersonality {
         self.getArousal().setMax(80);
         // somewhat androgynous face
         self.body.add(new FacePart(.1, .9));
-        self.initialGender = CharacterSex.herm;
+        self.initialGender = CharacterSex.shemale;
         preferredCockMod = CockMod.primal;
     }
 
@@ -80,11 +80,11 @@ public class Eve extends BasePersonality {
         growth.addTrait(2, Trait.alwaysready);
         growth.addTrait(5, Trait.limbTraining1);
         growth.addTrait(8, Trait.expertGoogler);
-        growth.addTrait(11, Trait.cockTraining1);
+        growth.addTrait(11, Trait.sexTraining1);
         growth.addTrait(14, Trait.testosterone);
         growth.addTrait(17, Trait.experienced);
         growth.addTrait(20, Trait.asshandler);
-        growth.addTrait(23, Trait.cockTraining2);
+        growth.addTrait(23, Trait.sexTraining2);
         growth.addTrait(26, Trait.limbTraining2);
         growth.addTrait(29, Trait.dickhandler);
         growth.addTrait(32, Trait.polecontrol);
@@ -93,7 +93,7 @@ public class Eve extends BasePersonality {
         growth.addTrait(41, Trait.responsive);
         growth.addTrait(44, Trait.strongwilled);
         growth.addTrait(47, Trait.insertion);
-        growth.addTrait(50, Trait.cockTraining3);
+        growth.addTrait(50, Trait.sexTraining3);
         growth.addTrait(53, Trait.limbTraining3);
         growth.addTrait(56, Trait.desensitized2);
     }
@@ -167,7 +167,7 @@ public class Eve extends BasePersonality {
     @Override
     public String victory(Combat c, Result flag) {
         character.arousal.empty();
-        if (c.getStance().anallyPenetratedBy(c.getOpponent(character), character)) {
+        if (c.getStance().anallyPenetratedBy(c, c.getOpponent(character), character)) {
             return "As Eve pounds you mercilessly in the ass, your body is overwhelmed"
                             + " by the strange sensations radiating from your insides. <i>\"How"
                             + " does your prostate feel? I could probably milk you like this, but"
@@ -409,7 +409,7 @@ public class Eve extends BasePersonality {
 
     @Override
     public String orgasmLiner(Combat c) {
-        if (c.getStance().anallyPenetrated(c.getOpponent(character))) {
+        if (c.getStance().anallyPenetrated(c, c.getOpponent(character))) {
             return "<i>\"Oh fuck! You are one tight little cum bucket! Let's go again!\"</i>"
                             + " Eve immediately resumes her thrusting.";
         }
@@ -418,7 +418,7 @@ public class Eve extends BasePersonality {
 
     @Override
     public String makeOrgasmLiner(Combat c) {
-        if (c.getStance().anallyPenetrated(c.getOpponent(character))) {
+        if (c.getStance().anallyPenetrated(c, c.getOpponent(character))) {
             return "Eve laughs maniacally as you cum. <i>\"I knew you'd like it"
                             + ", you little ass slut! But you're not done yet!\"</i>";
         }

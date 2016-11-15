@@ -1,3 +1,24 @@
+2.4.0
+New:
+- Completely reworked mojo. You now do not gain mojo per fight or level.
+	- Instead everyone starts with a set amount of maximum mojo that they will use for the rest of the game, barring certain traits.
+- Completely reworked how pets are handled. There are so many changes that it's hard to list everything here.
+	- The core change is that pets are treated like characters and can use skills on either the master or the opponent.
+	- Leadership now increases the level of pets summoned by 5.
+	- Pets now disappear if they orgasm or get knocked out or stunned.
+- Added some new summoning skills:
+	- Summon Yui can call the ninja to help you out in a fight at the cost of 1 affection per summon. This is unlocked at 10 affection with Yui.
+	- Simulacrum is a 12 divinity skill that creates a sex-changed copy of your opponent to fight for you temporarily.
+	- Threesome is a fuck skill that makes your pet to fuck your opponent.
+		- Added some new sex stances related to this:
+			- FFM Cowgirl
+			- FFM Cowgirl + Facesit
+			- MFF Missionary with Assist
+			- MFM Spitroast
+			- MFM Double Penetration
+- Changed how combat works. After each phase of combat, you advance the text by hitting next instead of all the text hitting you at once.
+- Changed how leveldowns work. Each level up is saved now, so that when you level down you get to exactly where you were before instead of randomly losing traits or attributes.
+
 2.3.3
 Balance changes:
 - Pantymaster, and Bramaster have been removed

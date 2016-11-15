@@ -70,4 +70,20 @@ public class Growth implements Cloneable {
             actions.get(i).run();
         });
     }
+
+    /**
+     * Note: only affects meters, not traits.
+     *
+     * @param character
+     */
+    public void levelDown(Character character) {
+        character.getStamina().gain(-stamina);
+        character.getArousal().gain(-arousal);
+        character.getWillpower().gain(-willpower);
+        if (Global.checkFlag(Flag.hardmode)) {
+            character.getStamina().gain(-bonusStamina);
+            character.getArousal().gain(-bonusArousal);
+            character.getWillpower().gain(-bonusWillpower);
+        }
+    }
 }

@@ -73,6 +73,9 @@ public enum Flag {
     FemalePronounsOnly,
     skipMM,
     skipFF,
+    hermHasBalls,
+    shemaleNoBalls,
+    femaleTGIntoHerm,
     ;
     
     public static boolean exists(String flag) {

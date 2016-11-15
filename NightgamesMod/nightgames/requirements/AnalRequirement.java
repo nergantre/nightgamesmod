@@ -12,7 +12,7 @@ public class AnalRequirement extends BaseRequirement {
     }
 
     @Override public boolean meets(Combat c, Character self, Character other) {
-        return c != null && c.getStance().anallyPenetrated(self);
+        return c != null && c.getStance().anallyPenetrated(c, self);
     }
 
 }

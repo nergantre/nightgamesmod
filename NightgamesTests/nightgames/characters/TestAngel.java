@@ -104,7 +104,7 @@ public class TestAngel extends BasePersonality {
         growth.bonusStamina = 1;
         growth.bonusArousal = 4;
         growth.addTrait(3, Trait.alwaysready);
-        growth.addTrait(9, Trait.pussyTraining1);
+        growth.addTrait(9, Trait.sexTraining1);
         growth.addTrait(12, Trait.expertGoogler);
         growth.addTrait(15, Trait.experienced);
         growth.addTrait(18, Trait.erophage);
@@ -113,14 +113,14 @@ public class TestAngel extends BasePersonality {
         growth.addTrait(21, Trait.holecontrol);
         growth.addTrait(24, Trait.insertion);
         growth.addTrait(27, Trait.lacedjuices);
-        growth.addTrait(30, Trait.pussyTraining2);
+        growth.addTrait(30, Trait.sexTraining2);
         growth.addTrait(33, Trait.RawSexuality);
         growth.addTrait(36, Trait.objectOfWorship);
         growth.addTrait(39, Trait.tight);
         growth.addTrait(42, Trait.desensitized);
         growth.addTrait(45, Trait.entrallingjuices);
         growth.addTrait(48, Trait.magicEyeArousal);
-        growth.addTrait(51, Trait.pussyTraining3);
+        growth.addTrait(51, Trait.sexTraining3);
         growth.addTrait(54, Trait.desensitized2);
 
         preferredAttributes
@@ -235,7 +235,7 @@ public class TestAngel extends BasePersonality {
         character.arousal.empty();
         Character opponent = character.equals(c.p1) ? c.p2 : c.p1;
         String message = "";
-        if (c.getStance().anallyPenetrated(opponent)) {
+        if (c.getStance().anallyPenetrated(c, opponent)) {
             message =
                             "Angel leans over you as she grinds her hips against yours. <i>\"You're going to come for me, aren't you?\"</i> she purrs into your ear. You shake your head; "
                                             + "no way could you live it down if you came while you had something in your ass. Angel frowns and gives your ass a firm slap. <i>\"No reach around for you "
@@ -301,7 +301,7 @@ public class TestAngel extends BasePersonality {
 
     @Override public String defeat(Combat c, Result flag) {
         Character opponent = c.getOpponent(character);
-        if (c.getStance().vaginallyPenetrated(character)) {
+        if (c.getStance().vaginallyPenetrated(c, character)) {
             return "You thrust your cock continously into Angel's dripping pussy. Her hot insides feel amazing, but you're sure you have enough of an advantage to risk "
                             + "it. She lets out breathy moans in time to your thrusts and her arms are trembling too much to hold herself up. She's clearly about to cum, you just "
                             + "need to push her over the edge. You maul her soft, heavy boobs and suck on her neck. Angel closes her eyes tightly and whimpers in pleasure. <p>You keep "

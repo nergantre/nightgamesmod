@@ -15,7 +15,7 @@ public class UpsideDownFemdom extends FemdomSexStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         if (top.human()) {
             return "You are holding " + bottom.name()
                             + " upsidedown by her legs while fucking her cock with your slit.";
@@ -77,7 +77,7 @@ public class UpsideDownFemdom extends FemdomSexStance {
     }
 
     @Override
-    public Position insertRandom() {
+    public Position insertRandom(Combat c) {
         return new StandingOver(top, bottom);
     }
 

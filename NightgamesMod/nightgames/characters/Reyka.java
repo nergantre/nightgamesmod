@@ -48,10 +48,9 @@ public class Reyka extends BasePersonality {
         self.outfitPlan.add(Clothing.getByID("garters"));
         self.outfitPlan.add(Clothing.getByID("stilettopumps"));
         self.change();
-        self.set(Attribute.Dark, 2);
-        self.set(Attribute.Seduction, 3);
-        self.set(Attribute.Cunning, 2);
-        self.set(Attribute.Speed, 5);
+        self.modAttributeDontSaveData(Attribute.Dark, 2);
+        self.modAttributeDontSaveData(Attribute.Seduction, 3);
+        self.modAttributeDontSaveData(Attribute.Cunning, 2);
         self.setTrophy(Item.ReykaTrophy);
 
         Global.gainSkills(self);
@@ -87,7 +86,7 @@ public class Reyka extends BasePersonality {
         growth.addTrait(0, Trait.darkpromises);
         growth.addTrait(0, Trait.Confident);
         growth.addTrait(0, Trait.shameless);
-        growth.addTrait(2, Trait.pussyTraining1);
+        growth.addTrait(2, Trait.sexTraining1);
         growth.addTrait(5, Trait.tongueTraining1);
         growth.addTrait(8, Trait.expertGoogler);
         growth.addTrait(11, Trait.addictivefluids);
@@ -100,11 +99,11 @@ public class Reyka extends BasePersonality {
         growth.addTrait(29, Trait.dickhandler);
         growth.addTrait(32, Trait.lacedjuices);
         growth.addTrait(35, Trait.energydrain);
-        growth.addTrait(38, Trait.pussyTraining2);
+        growth.addTrait(38, Trait.sexTraining2);
         growth.addTrait(41, Trait.soulsucker);
         growth.addTrait(44, Trait.analTraining1);
         growth.addTrait(47, Trait.desensitized2);
-        growth.addTrait(50, Trait.pussyTraining3);
+        growth.addTrait(50, Trait.sexTraining3);
         growth.addTrait(53, Trait.vaginaltongue);
         growth.addTrait(56, Trait.carnalvirtuoso);
     }
@@ -179,7 +178,7 @@ public class Reyka extends BasePersonality {
     @Override
     public String victory(Combat c, Result flag) {
         Character opponent = character.equals(c.p1) ? c.p2 : c.p1;
-        if (c.getStance().anallyPenetrated(opponent)) {
+        if (c.getStance().anallyPenetrated(c, opponent)) {
             return "Reyka alternates between long hard thrusts and sensual grinding to keep you from getting used to the stimulation, and the pleasure it is "
                             + "inflicting on you stops you from mustering the resolve to fight back. <i>\"I do love a good bit of pegging.\"</i> Reyka comments as she begins "
                             + "to gently rock the head of the strapon over your prostate, leaving you breathing hard as your mouth hangs open. <i>\"There's a special "

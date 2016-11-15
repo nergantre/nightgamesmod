@@ -15,7 +15,7 @@ public class FlowerSex extends FemdomSexStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         if (top.human()) {
             return "You're coiled around " + bottom.nameOrPossessivePronoun()
                             + " body with his cock inside you and the petals of your flower wrapped around both of you like a cocoon.";
@@ -76,7 +76,7 @@ public class FlowerSex extends FemdomSexStance {
     }
 
     @Override
-    public Position insertRandom() {
+    public Position insertRandom(Combat c) {
         return new Mount(top, bottom);
     }
 

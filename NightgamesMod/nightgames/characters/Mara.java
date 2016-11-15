@@ -54,8 +54,8 @@ public class Mara extends BasePersonality {
         self.outfitPlan.add(Clothing.getByID("pantyhose"));
         self.outfitPlan.add(Clothing.getByID("boots"));
         self.change();
-        self.mod(Attribute.Cunning, 2);
-        self.mod(Attribute.Perception, 2);
+        self.modAttributeDontSaveData(Attribute.Cunning, 2);
+        self.modAttributeDontSaveData(Attribute.Perception, 2);
         self.getStamina().setMax(80);
         self.getArousal().setMax(80);
         self.getMojo().setMax(120);
@@ -86,7 +86,7 @@ public class Mara extends BasePersonality {
         growth.addTrait(6, Trait.freeSpirit);
         growth.addTrait(9, Trait.limbTraining1);
         growth.addTrait(12, Trait.dickhandler);
-        growth.addTrait(15, Trait.pussyTraining1);
+        growth.addTrait(15, Trait.sexTraining1);
         growth.addTrait(18, Trait.pussyhandler);
         growth.addTrait(20, Trait.mindcontroller);
         growth.addTrait(21, Trait.tongueTraining1);
@@ -209,7 +209,7 @@ public class Mara extends BasePersonality {
     public String victory(Combat c, Result flag) {
         Character target = c.getOpponent(character);
         character.arousal.empty();
-        if (c.getStance().anallyPenetrated(target)) {
+        if (c.getStance().anallyPenetrated(c, target)) {
             return "The sensations coming from your prostate are too much as your arms give out below you. Mara doesn't let up either, grinding the head of the strap on over your "
                             + "prostate. <i>\"I've read that the prostate is the male equivalent of a g-spot,\"</i> she pants as she continues her assault on your ass. <i>\"I'd like to see if I can "
                             + "make you come without stimulating your penis.\"</i> she continues. You don't really listen as your brain is about to short circuit and your dick is about to give "
@@ -240,7 +240,7 @@ public class Mara extends BasePersonality {
                             + "involuntarily, but she manages to maintain both the kiss and her grip on your cock. The intense stimulation blows away your endurance and your head goes blank as you "
                             + "cover her hands with your seed. Mara breaks the kiss and leaves you completely exhausted.";
         }
-        if (c.getStance().vaginallyPenetrated(character)) {
+        if (c.getStance().vaginallyPenetrated(c, character)) {
             if(character.has(Item.ShockGlove)&&Global.random(2)==0){
                 return "You've got Mara just where you want her. Your arms are wrapped around her, holding her in place as you thrust your cock into her tight pussy over and over. Her moans are getting louder and louder, and you can feel her breath "
                         + "quickening. You're getting close to cumming, but she's definitely closer. She returns your embrace, squeezing her body against yours, stroking your back with her hands. Her hands creep down to grasp your buttocks. "
@@ -305,7 +305,7 @@ public class Mara extends BasePersonality {
                             + "she's cumming. You lean in and kiss her gently as she catches her breath.<p>After you've both recovered enough to get back to your feet, Mara punches you weakly "
                             + "in the chest. <i>\"You jerk! Do you have any idea how long this stuff lasts? How am I suppose to win my next fight when I'm this sensitive?\"</i> She pulls your head down "
                             + "to her height and kisses you passionately before storming off.";
-        } else if (c.getStance().vaginallyPenetrated(character)) {
+        } else if (c.getStance().vaginallyPenetrated(c, character)) {
             return "You bury yourself deep into Mara's tight pussy as she screams in pleasure. Her hot folds shudder and squeeze your cock, confirming she's reached her climax. "
                             + "The sensation is amazing, but you're not in danger of cumming with her. You gently stroke her head while spasms of pleasure continue to run through her small body. "
                             + "It occurs to you -not for the first time- that she's really cute, even when she's not trying to be.<p>As Mara catches her breath, you see realization slowly dawn "

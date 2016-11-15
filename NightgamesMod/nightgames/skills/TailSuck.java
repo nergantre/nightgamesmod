@@ -8,7 +8,6 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.skills.damage.DamageType;
-import nightgames.stance.Stance;
 import nightgames.status.Abuff;
 import nightgames.status.Stsflag;
 import nightgames.status.TailSucked;
@@ -45,7 +44,7 @@ public class TailSuck extends Skill {
                             Global.random(10) + 10, c, this);
             drain(c, target);
         } else if (getSelf().roll(this, c, accuracy(c))) {
-            Result res = c.getStance().en == Stance.facesitting && c.getStance().dom(getSelf()) ? Result.critical
+            Result res = c.getStance().isBeingFaceSatBy(c, target, getSelf()) ? Result.critical
                             : Result.normal;
             writeOutput(c, res, target);
             target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandomCock(),

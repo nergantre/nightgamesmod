@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
+import nightgames.combat.Combat;
 
 public abstract class AnalSexStance extends Position {
     public AnalSexStance(Character top, Character bottom, Stance stance) {
@@ -25,7 +26,7 @@ public abstract class AnalSexStance extends Position {
     }
 
     @Override
-    public List<BodyPart> topParts() {
+    public List<BodyPart> topParts(Combat c) {
         return Arrays.asList(top.body.getRandomInsertable()).stream().filter(part -> part != null && part.present())
                         .collect(Collectors.toList());
     }

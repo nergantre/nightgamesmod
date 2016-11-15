@@ -30,7 +30,7 @@ public class CheapShot extends Skill {
     public boolean usable(Combat c, Character target) {
         Position s = c.getStance();
         return s.mobile(getSelf()) && !s.prone(getSelf()) && !s.prone(target) && !s.behind(getSelf())
-                        && getSelf().canAct() && !s.penetrated(target) && !s.penetrated(getSelf())
+                        && getSelf().canAct() && !s.penetrated(c, target) && !s.penetrated(c, getSelf())
                         && Primed.isPrimed(getSelf(), 3);
     }
 

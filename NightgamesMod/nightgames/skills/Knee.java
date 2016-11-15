@@ -24,7 +24,7 @@ public class Knee extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf()) && getSelf().canAct()
-                        && c.getStance().front(target) && !c.getStance().connected();
+                        && c.getStance().front(target) && !c.getStance().connected(c);
     }
 
     @Override

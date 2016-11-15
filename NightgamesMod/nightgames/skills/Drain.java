@@ -30,7 +30,7 @@ public class Drain extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().canAct() && c.getStance().havingSexNoStrapped();
+        return getSelf().canAct() && c.getStance().havingSexNoStrapped(c);
     }
 
     @Override
@@ -117,8 +117,8 @@ public class Drain extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (c.getStance().inserted(target)) {
-            String muscDesc = c.getStance().anallyPenetrated(getSelf()) ? "anal" : "vaginal";
-            String partDesc = c.getStance().anallyPenetrated(getSelf())
+            String muscDesc = c.getStance().anallyPenetrated(c, getSelf()) ? "anal" : "vaginal";
+            String partDesc = c.getStance().anallyPenetrated(c, getSelf())
                             ? getSelf().body.getRandom("ass").describe(getSelf())
                             : getSelf().body.getRandomPussy().describe(getSelf());
             String base = "You put your powerful " + muscDesc + " muscles to work whilst" + " transfixing "
@@ -186,8 +186,8 @@ public class Drain extends Skill {
         String demon = getSelf().useFemalePronouns() ? "succubus" : "incubus";
         
         if (c.getStance().inserted(target)) {
-            String muscDesc = c.getStance().anallyPenetrated(getSelf()) ? "anal" : "vaginal";
-            String partDesc = c.getStance().anallyPenetrated(getSelf())
+            String muscDesc = c.getStance().anallyPenetrated(c, getSelf()) ? "anal" : "vaginal";
+            String partDesc = c.getStance().anallyPenetrated(c, getSelf())
                             ? getSelf().body.getRandom("ass").describe(getSelf())
                             : getSelf().body.getRandomPussy().describe(getSelf());
 
@@ -291,7 +291,7 @@ public class Drain extends Skill {
                     return String.format("%s draws upon %s will through %s connection, but %s"
                                     + " suddenly %s %s shudder and moan loudly. Looks like %s plan backfired.",
                                     getSelf().nameOrPossessivePronoun(), target.nameOrPossessivePronoun(),
-                                    c.bothPossessive(), target.subject(),
+                                    c.bothPossessive(target), target.subject(),
                                                     target.action("feel"), getSelf().subject(),
                                                     getSelf().possessivePronoun());
                 case 6:

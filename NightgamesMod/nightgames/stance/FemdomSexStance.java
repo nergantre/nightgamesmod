@@ -28,8 +28,8 @@ public abstract class FemdomSexStance extends Position {
 
     @Override
     public void checkOngoing(Combat c) {
-        Character inserter = inserted(top) ? top : bottom;
-        Character inserted = inserted(top) ? bottom : top;
+        Character inserter = inserted(domSexCharacter(c)) ? domSexCharacter(c) : bottom;
+        Character inserted = inserted(domSexCharacter(c)) ? bottom : domSexCharacter(c);
 
         if (!inserter.hasInsertable()) {
             if (inserter.human()) {
@@ -38,7 +38,7 @@ public abstract class FemdomSexStance extends Position {
                 c.write("With " + inserter.nameOrPossessivePronoun()
                                 + " phallus gone, you groan in frustration and cease your merciless riding.");
             }
-            c.setStance(insertRandom());
+            c.setStance(insertRandom(c));
         }
         if (!inserted.hasPussy()) {
             if (inserted.human()) {
@@ -47,8 +47,20 @@ public abstract class FemdomSexStance extends Position {
             } else {
                 c.write(inserted.name() + " groans with frustration with the sudden disappearance of her pussy.");
             }
-            c.setStance(insertRandom());
+            c.setStance(insertRandom(c));
         }
+    }
+
+    @Override
+    public List<BodyPart> topParts(Combat c) {
+        return Arrays.asList(domSexCharacter(c).body.getRandomPussy()).stream().filter(part -> part != null && part.present())
+                        .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BodyPart> bottomParts() {
+        return Arrays.asList(bottom.body.getRandomInsertable()).stream().filter(part -> part != null && part.present())
+                        .collect(Collectors.toList());
     }
 
     @Override
@@ -64,18 +76,6 @@ public abstract class FemdomSexStance extends Position {
     @Override
     public boolean feet(Character c, Character target) {
         return false;
-    }
-
-    @Override
-    public List<BodyPart> topParts() {
-        return Arrays.asList(top.body.getRandomPussy()).stream().filter(part -> part != null && part.present())
-                        .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<BodyPart> bottomParts() {
-        return Arrays.asList(bottom.body.getRandomInsertable()).stream().filter(part -> part != null && part.present())
-                        .collect(Collectors.toList());
     }
 
     @Override

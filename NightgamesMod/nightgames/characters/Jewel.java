@@ -56,8 +56,8 @@ public class Jewel extends BasePersonality {
         self.outfitPlan.add(Clothing.getByID("sneakers"));
         self.outfitPlan.add(Clothing.getByID("socks"));
         self.change();
-        self.mod(Attribute.Power, 2);
-        self.mod(Attribute.Speed, 1);
+        self.modAttributeDontSaveData(Attribute.Power, 2);
+        self.modAttributeDontSaveData(Attribute.Speed, 1);
         Global.gainSkills(self);
         self.getMojo().setMax(80);
 
@@ -200,9 +200,9 @@ public class Jewel extends BasePersonality {
     @Override
     public String victory(Combat c, Result flag) {
         Character other = c.getOpponent(character);
-        Collection<BodyPart> selfOrgans = c.getStance().partsFor(character);
-        Collection<BodyPart> otherOrgans = c.getStance().partsFor(other);
-        if (BodyPart.hasType(otherOrgans, "ass") && c.getStance().anallyPenetrated(other)) {
+        Collection<BodyPart> selfOrgans = c.getStance().partsFor(c, character);
+        Collection<BodyPart> otherOrgans = c.getStance().partsFor(c, other);
+        if (BodyPart.hasType(otherOrgans, "ass") && c.getStance().anallyPenetrated(c, other)) {
             BodyPart insertable = character.body.getRandomInsertable();
             String selfODesc = insertable == null ? "[none]" : insertable.describe(character);
             return "You gasp as Jewel pounds away at your ass without mercy. You're going to cum, you realize. "
@@ -353,7 +353,7 @@ public class Jewel extends BasePersonality {
                             + "being under you.\"</i> She practically hops back to her feet. Jesus, her recovery speed is inhuman. <i>\"Of course, next time I'm going to have to throw you to the ground "
                             + "and ravage you. I promise you'll love it.\"</i>";
         }
-        if (c.getStance().vaginallyPenetrated(character)) {
+        if (c.getStance().vaginallyPenetrated(c, character)) {
             return "You fuck Jewel passionately, driving her closer to orgasm. She runs her fingers through your hair and wraps her legs tightly around your hips. Judging by her moaning, "
                             + "she must know that she's losing, but that seems to be turning her on even more. Well, there's no reason to go easy on her. You bury your face in her neck and start to "
                             + "lick and suck. You feel a small tremor run through her body in response, followed by a much stronger shudder when she orgasms moments later. Her vaginal walls "

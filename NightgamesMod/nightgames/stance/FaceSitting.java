@@ -20,13 +20,15 @@ import nightgames.skills.Wait;
 import nightgames.skills.damage.DamageType;
 
 public class FaceSitting extends AbstractBehindStance {
-
+    FaceSitting(Character top, Character bottom, Stance en) {
+        super(top, bottom, en);
+    }
     public FaceSitting(Character top, Character bottom) {
         super(top, bottom, Stance.facesitting);
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         return Global.capitalizeFirstLetter(top.subjectAction("are", "is")) + " sitting on "
                         + bottom.nameOrPossessivePronoun() + " face while holding " + bottom.possessivePronoun()
                         + " arms so " + bottom.subject() + " cannot escape";
@@ -106,9 +108,9 @@ public class FaceSitting extends AbstractBehindStance {
     }
 
     @Override
-    public Position insert(Character pitcher, Character dom) {
-        Character catcher = getOther(pitcher);
-        Character sub = getOther(pitcher);
+    public Position insert(Combat c, Character pitcher, Character dom) {
+        Character catcher = getPartner(c, pitcher);
+        Character sub = getPartner(c, pitcher);
         if (pitcher.body.getRandomInsertable() == null || !catcher.hasPussy()) {
             // invalid
             return this;
@@ -152,8 +154,8 @@ public class FaceSitting extends AbstractBehindStance {
     }
 
     @Override
-    public Collection<Skill> availSkills(Character c) {
-        if (c != bottom) {
+    public Collection<Skill> availSkills(Combat c, Character self) {
+        if (self != bottom) {
             return Collections.emptySet();
         } else {
             Collection<Skill> avail = new HashSet<Skill>();
@@ -185,7 +187,7 @@ public class FaceSitting extends AbstractBehindStance {
         }
         return 2;
     }
-    
+
     @Override
     public int dominance() {
         return 5;
@@ -193,5 +195,13 @@ public class FaceSitting extends AbstractBehindStance {
     @Override
     public int distance() {
         return 1;
+    }
+
+    public boolean isFaceSitting(Character self) {
+        return self == top;
+    }
+
+    public boolean isFacesatOn(Character self) {
+        return self == bottom;
     }
 }

@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
+import nightgames.combat.Combat;
 
 public class TribadismStance extends Position {
     public TribadismStance(Character top, Character bottom) {
@@ -13,7 +14,7 @@ public class TribadismStance extends Position {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         return top.subjectAction("are", "is") + " holding " + bottom.nameOrPossessivePronoun() + " legs across "
                         + top.possessivePronoun() + " chest while grinding " + top.possessivePronoun()
                         + " soaked cunt into " + bottom.possessivePronoun() + " pussy.";
@@ -80,7 +81,7 @@ public class TribadismStance extends Position {
     }
 
     @Override
-    public Position insertRandom() {
+    public Position insertRandom(Combat c) {
         return new Mount(top, bottom);
     }
 
@@ -91,7 +92,7 @@ public class TribadismStance extends Position {
     }
 
     @Override
-    public List<BodyPart> topParts() {
+    public List<BodyPart> topParts(Combat c) {
         return Arrays.asList(top.body.getRandomPussy()).stream().filter(part -> part != null && part.present())
                         .collect(Collectors.toList());
     }

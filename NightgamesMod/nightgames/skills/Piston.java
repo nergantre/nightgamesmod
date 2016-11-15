@@ -19,8 +19,8 @@ public class Piston extends Thrust {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().canAct() && c.getStance().canthrust(getSelf())
-                        && c.getStance().havingSexOtherNoStrapped(getSelf());
+        return getSelf().canAct() && c.getStance().canthrust(c, getSelf())
+                        && c.getStance().havingSexOtherNoStrapped(c, getSelf());
     }
 
     @Override
@@ -80,12 +80,12 @@ public class Piston extends Thrust {
         } else if (modifier == Result.reverse) {
             return String.format("%s bounces on %s cock, relentlessly driving %s both toward orgasm.",
                             getSelf().subject(), target.nameOrPossessivePronoun(), 
-                            c.bothDirectObject());
+                            c.bothDirectObject(target));
         } else {
             return Global.format(
                             "{self:SUBJECT-ACTION:rapidly pound|rapidly pounds} {self:possessive} {self:body-part:cock} into {other:possessive} {other:body-part:pussy}, "
                                             + "relentlessly driving %s toward orgasm.",
-                            getSelf(), target, c.bothDirectObject());
+                            getSelf(), target, c.bothDirectObject(target));
         }
     }
 

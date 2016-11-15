@@ -51,11 +51,10 @@ public class Kat extends BasePersonality {
         self.outfitPlan.add(Clothing.getByID("socks"));
         self.change();
         self.setTrophy(Item.KatTrophy);
-        self.set(Attribute.Power, 10);
-        self.set(Attribute.Animism, 2);
-        self.set(Attribute.Cunning, 8);
-        self.set(Attribute.Speed, 6);
-        self.set(Attribute.Seduction, 7);
+        self.modAttributeDontSaveData(Attribute.Power, 1);
+        self.modAttributeDontSaveData(Attribute.Animism, 1);
+        self.modAttributeDontSaveData(Attribute.Cunning, 1);
+        self.modAttributeDontSaveData(Attribute.Speed, 1);
         self.getStamina().setMax(100);
         self.getArousal().setMax(60);
         self.getMojo().setMax(80);
@@ -170,7 +169,7 @@ public class Kat extends BasePersonality {
     public String victory(Combat c, Result flag) {
         Character opponent = c.getOpponent(character);
         character.arousal.empty();
-        if (c.getStance().vaginallyPenetrated(character)) {
+        if (c.getStance().vaginallyPenetrated(c, character)) {
             opponent.add(c, Horny.getWithBiologicalType(character, opponent, 5, 10, character.nameOrPossessivePronoun() + " pheromones"));
             return "She pounces at you, pushing you onto your back and holds you down with the weight of her body. A cute mew of a smile crosses her face, and her tongue sticks "
                             + "out slightly from between her lips. She is riding your cock in a regular rhythm now, not worried as she knows you are much closer to your climax than her.<p>"
@@ -227,7 +226,7 @@ public class Kat extends BasePersonality {
     @Override
     public String defeat(Combat c, Result flag) {
         Character opponent = c.getOpponent(character);
-        if (c.getStance().vaginallyPenetrated(character)) {
+        if (c.getStance().vaginallyPenetrated(c, character)) {
             opponent.add(c, Horny.getWithBiologicalType(character, opponent, 5, 10, character.nameOrPossessivePronoun() + " pheromones"));
             return "Kat squeaks as you pump your cock inside her over and over, penetrating her deeper with each thrust. She seems to be particularly vulnerable to being fucked"
                             + " doggy style; perhaps it makes her g-spot easier to hit each time you thrust into her.<p>"

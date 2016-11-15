@@ -12,7 +12,7 @@ public class ReverseCowgirl extends FemdomSexStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         if (top.human()) {
             return "";
         } else {
@@ -67,7 +67,7 @@ public class ReverseCowgirl extends FemdomSexStance {
     }
 
     @Override
-    public Position insertRandom() {
+    public Position insertRandom(Combat c) {
         return new ReverseMount(top, bottom);
     }
 

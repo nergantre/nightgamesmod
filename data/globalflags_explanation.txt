@@ -1,0 +1,8 @@
+{
+		"skipFF": false, <- this blocks female/female pet sexual interactions (only some)
+		"skipMM": true, <- this blocks male/male pet sexual interactions (only some)
+		"hermHasBalls": false, <- if true, hermaphrodites will have balls by default
+		"shemaleNoBalls": false, <- if false, shemales will not have balls by default
+		"femaleTGIntoHerm" : true, <- if true, anyone using female pronouns will change sex into hermaphrodites instead of males. If false, pure females will TG into males, hermaphrodites and asexuals will not TG, and shemales will TG into females.
+		"FemalePronounsOnly" : false <- if true, everyone will use female pronouns. INCLUDING THE PLAYER.
+}

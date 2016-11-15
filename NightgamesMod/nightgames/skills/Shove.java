@@ -29,7 +29,7 @@ public class Shove extends Skill {
             return false;
         }
         return !c.getStance().dom(getSelf()) && !c.getStance().prone(target) && c.getStance().reachTop(getSelf())
-                        && getSelf().canAct() && !c.getStance().havingSex();
+                        && getSelf().canAct() && !c.getStance().havingSex(c);
     }
 
     @Override

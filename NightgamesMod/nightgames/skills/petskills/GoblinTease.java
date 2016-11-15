@@ -35,13 +35,13 @@ public class GoblinTease extends SimpleEnemySkill {
                                     getSelf(), target));
                 target.body.pleasure(getSelf(), getSelf().body.getRandom("feet"), target.body.getRandomCock(),
                                 getSelf().modifyDamage(DamageType.pleasure, target, m), c);
-            } else if (target.hasPussy() && target.crotchAvailable() && !c.getStance().vaginallyPenetrated(target)) {
+            } else if (target.hasPussy() && target.crotchAvailable() && !c.getStance().vaginallyPenetrated(c, target)) {
                 c.write(getSelf(), Global.format("{self:SUBJECT} pulls the humming vibrator our of {self:possessive} wet hole and "
                                 + "thrusts it between {other:name-possessive} legs.",
                                 getSelf(), target));
                 target.body.pleasure(getSelf(), ToysPart.dildo, target.body.getRandomPussy(),
                                 getSelf().modifyDamage(DamageType.pleasure, target, m), c);
-            } else if (target.crotchAvailable() && !c.getStance().anallyPenetrated(target)) {
+            } else if (target.crotchAvailable() && !c.getStance().anallyPenetrated(c, target)) {
                 if (Global.random(2) == 0) {
                     c.write(getSelf(), Global.format("{other:SUBJECT-ACTION:jump|jumps} in surprise as {other:pronoun} suddenly feel something solid penetrating {other:possessive} asshole. "
                                     + "{self:SUBJECT} got behind {other:direct-object} during the fight and delivered a sneak attack with an anal dildo. Before {other:pronoun} can retaliate "

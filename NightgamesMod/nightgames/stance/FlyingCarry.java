@@ -16,7 +16,7 @@ public class FlyingCarry extends MaledomSexStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         return String.format(
                         "%s are flying some twenty feet up in the air,"
                                         + " joined to %s by %s hips. %s is on top of %s and %s %s is pumping into %s %s.",
@@ -112,7 +112,7 @@ public class FlyingCarry extends MaledomSexStance {
     }
 
     @Override
-    public Position insertRandom() {
+    public Position insertRandom(Combat c) {
         return new StandingOver(top, bottom);
     }
 

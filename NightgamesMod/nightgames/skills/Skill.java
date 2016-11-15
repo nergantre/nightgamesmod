@@ -48,7 +48,7 @@ public abstract class Skill {
 
     public static void filterAllowedSkills(Combat c, Collection<Skill> skills, Character user, Character target) {
         boolean filtered = false;
-        Set<Skill> stanceSkills = new HashSet<Skill>(c.getStance().availSkills(user));
+        Set<Skill> stanceSkills = new HashSet<Skill>(c.getStance().availSkills(c, user));
 
         if (stanceSkills.size() > 0) {
             skills.retainAll(stanceSkills);

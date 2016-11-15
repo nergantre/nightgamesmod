@@ -457,16 +457,16 @@ public class Combat extends Observable implements Cloneable {
 
     private String describe(Character player, Character other) {
         if (beingObserved) {
-            return Global.capitalizeFirstLetter(getStance().describe()) + "<p>"
+            return Global.capitalizeFirstLetter(getStance().describe(this)) + "<p>"
                             + player.describe(Global.getPlayer().get(Attribute.Perception), this) + "<p>"
                             + other.describe(Global.getPlayer().get(Attribute.Perception), this) + "<p>";
         } else if (!player.is(Stsflag.blinded)) {
             return other.describe(player.get(Attribute.Perception), this) + "<p>"
-                            + Global.capitalizeFirstLetter(getStance().describe()) + "<p>"
+                            + Global.capitalizeFirstLetter(getStance().describe(this)) + "<p>"
                             + player.describe(other.get(Attribute.Perception), this) + "<p>";
         } else {
             return "<b>You are blinded, and cannot see what " + other.name() + " is doing!</b><p>"
-                            + Global.capitalizeFirstLetter(getStance().describe()) + "<p>"
+                            + Global.capitalizeFirstLetter(getStance().describe(this)) + "<p>"
                             + player.describe(other.get(Attribute.Perception), this) + "<p>";
         }
     }
@@ -560,7 +560,7 @@ public class Combat extends Observable implements Cloneable {
                 if (alreadyBattled.contains(pet)) { continue; }
                 for (PetCharacter otherPet : otherCombatants) {
                     if (alreadyBattled.contains(otherPet)) { continue; }
-                    if (!pet.getSelf().owner().equals(otherPet.getSelf().owner())) {
+                    if (!pet.getSelf().owner().equals(otherPet.getSelf().owner()) && Global.random(2) == 0) {
                         petbattle(pet.getSelf(), otherPet.getSelf());
                         alreadyBattled.add(pet);
                         alreadyBattled.add(otherPet);
@@ -594,7 +594,7 @@ public class Combat extends Observable implements Cloneable {
             return;
         }
 
-        Character other = getStance().getOther(self);
+        Character other = getStance().getPartner(this, self);
         if (other.human()) {
             Addiction add = Global.getPlayer().getAddiction(AddictionType.DOMINANCE).orElse(null);
             if (add != null && add.atLeast(Severity.MED) && !add.wasCausedBy(self)) {
@@ -722,7 +722,7 @@ public class Combat extends Observable implements Cloneable {
             } else if (user.isPet() && user.isPetOf(Global.getPlayer())) {
                 message = message + "<br><font color='rgb(130,225,200)'>" + text + "<font color='white'>";
             } else if (user.isPet()) {
-                message = message + "<br><font color='rgb(195,70,244)'>" + text + "<font color='white'>";
+                message = message + "<br><font color='rgb(210,130,255)'>" + text + "<font color='white'>";
             } else {
                 message = message + "<br><font color='rgb(255,200,200)'>" + text + "<font color='white'>";
             }
@@ -904,7 +904,7 @@ public class Combat extends Observable implements Cloneable {
         } else if (roll2 > roll1) {
             two.vanquish(this, one);
         } else {
-            write(one.own() + one + " and " + two.own() + two
+            write(one.getName() + " and " + two.getName()
                             + " engage each other for awhile, but neither can gain the upper hand.");
         }
     }
@@ -940,6 +940,7 @@ public class Combat extends Observable implements Cloneable {
                 c.otherCombatants.add(pet.cloneWithOwner(c.p2));
             }
         }
+        c.getStance().setOtherCombatants(c.otherCombatants);
         c.postCombatScenesSeen = this.postCombatScenesSeen;
         return c;
     }
@@ -999,8 +1000,8 @@ public class Combat extends Observable implements Cloneable {
         checkStanceStatus(p2, stance, newStance);
 
         if (stance.inserted() && !newStance.inserted()) {
-            List<BodyPart> parts1 = stance.partsFor(p1);
-            List<BodyPart> parts2 = stance.partsFor(p2);
+            List<BodyPart> parts1 = stance.partsFor(this, p1);
+            List<BodyPart> parts2 = stance.partsFor(this, p2);
             parts1.forEach(part -> parts2.forEach(other -> part.onEndPenetration(this, p1, p2, other)));
             parts2.forEach(part -> parts1.forEach(other -> part.onEndPenetration(this, p2, p1, other)));
             getCombatantData(p1).setIntegerFlag("ChoseToFuck", 0);
@@ -1008,8 +1009,8 @@ public class Combat extends Observable implements Cloneable {
         } else if (!stance.inserted() && newStance.inserted()) {
             Player player = Global.getPlayer();
             Character opp = getOpponent(player);
-            List<BodyPart> parts1 = newStance.partsFor(p1);
-            List<BodyPart> parts2 = newStance.partsFor(p2);
+            List<BodyPart> parts1 = newStance.partsFor(this, p1);
+            List<BodyPart> parts2 = newStance.partsFor(this, p2);
             parts1.forEach(part -> parts2.forEach(other -> part.onStartPenetration(this, p1, p2, other)));
             parts2.forEach(part -> parts1.forEach(other -> part.onStartPenetration(this, p2, p1, other)));
             if (voluntary) {
@@ -1090,16 +1091,16 @@ public class Combat extends Observable implements Cloneable {
         return !(p1.human() || p2.human()) && !beingObserved;
     }
 
-    public String bothDirectObject() {
-        return beingObserved ? "them" : "you";
+    public String bothDirectObject(Character target) {
+        return target.human() ? "you" : "them";
     }
     
-    public String bothPossessive() {
-        return beingObserved ? "their" : "your";
+    public String bothPossessive(Character target) {
+        return target.human() ? "your" :  "their";
     }
     
-    public String bothSubject() {
-        return beingObserved ? "they" : "you";
+    public String bothSubject(Character target) {
+        return target.human() ? "you" : "they";
     }
 
     public List<PetCharacter> getPetsFor(Character target) {

@@ -12,7 +12,7 @@ public class Missionary extends MaledomSexStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         if (top.human()) {
             return "You are penetrating " + bottom.name() + " in traditional Missionary position.";
         } else {
@@ -68,7 +68,7 @@ public class Missionary extends MaledomSexStance {
     }
 
     @Override
-    public Position insertRandom() {
+    public Position insertRandom(Combat c) {
         return new Mount(top, bottom);
     }
 

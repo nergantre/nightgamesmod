@@ -6,7 +6,7 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.pet.HumanPet;
+import nightgames.pet.CharacterPet;
 
 public class SummonYui extends Skill {
     public SummonYui(Character self) {
@@ -15,7 +15,7 @@ public class SummonYui extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.human();//Global.getCharacterByType("Yui").getAffection(getSelf()) >= 10;
+        return Global.getCharacterByType("Yui").getAffection(getSelf()) >= 10;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class SummonYui extends Skill {
         }
         writeOutput(c, Result.normal, target);
         yui.gainAffection(getSelf(), -1);
-        c.addPet(new HumanPet(getSelf(), yui, power, ac).getSelf());
+        c.addPet(new CharacterPet(getSelf(), yui, power, ac).getSelf());
 
         return true;
     }

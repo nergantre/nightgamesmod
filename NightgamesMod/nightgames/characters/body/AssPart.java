@@ -57,7 +57,7 @@ public class AssPart extends GenericBodyPart {
             bonus += 5;
         }
 
-        if ((self.has(Trait.tight) || self.has(Trait.holecontrol)) && c.getStance().anallyPenetrated(self)) {
+        if ((self.has(Trait.tight) || self.has(Trait.holecontrol)) && c.getStance().anallyPenetrated(c, self)) {
             String desc = "";
             if (self.has(Trait.tight)) {
                 desc += "powerful ";

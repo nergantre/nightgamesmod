@@ -11,7 +11,7 @@ public class Standing extends MaledomSexStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         if (top.human()) {
             return "You are holding " + bottom.name() + " in the air while buried deep in her pussy.";
         } else {
@@ -72,7 +72,7 @@ public class Standing extends MaledomSexStance {
     }
 
     @Override
-    public Position insertRandom() {
+    public Position insertRandom(Combat c) {
         return new Neutral(top, bottom);
     }
 

@@ -22,16 +22,16 @@ import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
 public enum PussyPart implements BodyPart,BodyPartMod {
-    normal("", 0, 1, 1, 6, 15, 0),
-    arcane("arcane patterned ", .2, 1.1, 1, 9, 5, 3),
-    fiery("fiery ", 0, 1.3, 1.2, 8, 15, 3),
-    succubus("succubus ", .6, 1.5, 1.2, 999, 0, 4),
-    feral("feral ", 1, 1.3, 1.2, 8, 7, 2),
-    cybernetic("cybernetic ", -.50, 1.8, .5, 200, 0, 4),
-    gooey("gooey ", .4, 1.5, 1.2, 999, 0, 6),
-    tentacled("tentacled ", 0, 2, 1.2, 999, 0, 8),
-    plant("flower ", .5, 2, 1.2, 999, 0, 8),
-    divine("divine ", 0, 2.0, 1.0, 999, 0, 8);
+    normal("", 0, 1, 1, 6, 15, 0, CockMod.error),
+    arcane("arcane patterned ", .2, 1.1, 1, 9, 5, 3, CockMod.runic),
+    fiery("fiery ", 0, 1.3, 1.2, 8, 15, 3, CockMod.enlightened),
+    succubus("succubus ", .6, 1.5, 1.2, 999, 0, 4, CockMod.incubus),
+    feral("feral ", 1, 1.3, 1.2, 8, 7, 2, CockMod.primal),
+    cybernetic("cybernetic ", -.50, 1.8, .5, 200, 0, 4, CockMod.bionic),
+    gooey("gooey ", .4, 1.5, 1.2, 999, 0, 6, CockMod.slimy),
+    tentacled("tentacled ", 0, 2, 1.2, 999, 0, 8, CockMod.error),
+    plant("flower ", .5, 2, 1.2, 999, 0, 8, CockMod.error),
+    divine("divine ", 0, 2.0, 1.0, 999, 0, 8, CockMod.blessed);
 
     public double priority;
     public String desc;
@@ -41,16 +41,12 @@ public enum PussyPart implements BodyPart,BodyPartMod {
     public double capacity;
     public double sensitivity;
     public int wetThreshold;
+    private CockMod equivalent;
     public static String synonyms[] = {"pussy", "vagina", "slit",};
 
     PussyPart(String desc, double hotness, double pleasure, double sensitivity, double capacity, int wetThreshold,
-                    int priority) {
-        this(desc, hotness, pleasure, sensitivity, capacity, wetThreshold, priority, "pussy");
-    }
-
-    PussyPart(String desc, double hotness, double pleasure, double sensitivity, double capacity, int wetThreshold,
-                    int priority, String type) {
-        this.type = type;
+                    int priority, CockMod equivalent) {
+        this.type = "pussy";
         this.desc = desc;
         this.hotness = hotness;
         this.pleasure = pleasure;
@@ -58,6 +54,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
         this.sensitivity = sensitivity;
         this.wetThreshold = wetThreshold;
         this.priority = priority;
+        this.equivalent = equivalent;
     }
 
     @Override
@@ -137,9 +134,9 @@ public enum PussyPart implements BodyPart,BodyPartMod {
     @Override
     public double getPleasure(Character self, BodyPart target) {
         double pleasureMod = pleasure;
-        pleasureMod += self.has(Trait.pussyTraining1) ? .5 : 0;
-        pleasureMod += self.has(Trait.pussyTraining2) ? .7 : 0;
-        pleasureMod += self.has(Trait.pussyTraining3) ? .7 : 0;
+        pleasureMod += self.has(Trait.sexTraining1) ? .5 : 0;
+        pleasureMod += self.has(Trait.sexTraining2) ? .7 : 0;
+        pleasureMod += self.has(Trait.sexTraining3) ? .7 : 0;
         DivineCharge charge = (DivineCharge) self.getStatus(Stsflag.divinecharge);
         if (charge != null) {
             pleasureMod += charge.magnitude;
@@ -191,7 +188,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
     public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
         double bonus = 0;
         if (countsAs(self, divine) && c.getStance()
-                               .vaginallyPenetrated(self)) {
+                               .vaginallyPenetrated(c, self)) {
             DivineCharge charge = (DivineCharge) self.getStatus(Stsflag.divinecharge);
             if (charge == null) {
                 c.write(self, Global.format(
@@ -423,7 +420,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                             + ", preventing any escape.\n");
         }
         if ((self.has(Trait.tight) || self.has(Trait.holecontrol)) && c.getStance()
-                                                                       .vaginallyPenetrated(self)
+                                                                       .vaginallyPenetrated(c, self)
                                                                        && opponent.body.has("cock")) {
             String desc = "";
             if (self.has(Trait.tight)) {
@@ -621,5 +618,16 @@ public enum PussyPart implements BodyPart,BodyPartMod {
         } else {
             return part == this;
         }
+    }
+
+    public CockMod getEquivalentCockMod() {
+        return equivalent;
+    }
+
+    public CockPart getEquivalentCock(BasicCockPart part) {
+        if (equivalent != CockMod.error) {
+            return new ModdedCockPart(part, equivalent);
+        }
+        return part;
     }
 }

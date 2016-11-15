@@ -1179,14 +1179,20 @@ public class GUI extends JFrame implements Observer {
             skippedFeat = false;
             clearCommand();
             Global.gui().message(Global.gainSkills(player));
-            if (combat != null) {
-                endCombat();
-            } else if (Global.getMatch() != null) {
-                Global.getMatch().resume();
-            } else if (Global.day != null) {
-                Global.getDay().plan();
+            player.finishDing();
+            if (player.getLevelsToGain() > 0) {
+                player.actuallyDing();
+                ding();
             } else {
-                new Prematch(Global.human);
+                if (combat != null) {
+                    endCombat();
+                } else if (Global.getMatch() != null) {
+                    Global.getMatch().resume();
+                } else if (Global.day != null) {
+                    Global.getDay().plan();
+                } else {
+                    new Prematch(Global.human);
+                }
             }
         }
     }

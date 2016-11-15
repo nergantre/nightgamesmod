@@ -32,13 +32,13 @@ public class Thrust extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelfOrgan(c) != null && getTargetOrgan(c, target) != null && getSelf().canAct()
-                        && c.getStance().canthrust(getSelf()) && c.getStance().havingSexOtherNoStrapped(getSelf());
+                        && c.getStance().canthrust(c, getSelf()) && c.getStance().havingSexOtherNoStrapped(c, getSelf());
     }
 
     public BodyPart getSelfOrgan(Combat c) {
         if (c.getStance().inserted(getSelf())) {
             return getSelf().body.getRandomInsertable();
-        } else if (c.getStance().anallyPenetratedBy(getSelf(), c.getOpponent(getSelf()))) {
+        } else if (c.getStance().anallyPenetratedBy(c, getSelf(), c.getOpponent(getSelf()))) {
             return getSelf().body.getRandom("ass");
         } else {
             return getSelf().body.getRandomPussy();
@@ -48,7 +48,7 @@ public class Thrust extends Skill {
     public BodyPart getTargetOrgan(Combat c, Character target) {
         if (c.getStance().inserted(target)) {
             return target.body.getRandomInsertable();
-        } else if (c.getStance().anallyPenetratedBy(c.getOpponent(getSelf()), getSelf())) {
+        } else if (c.getStance().anallyPenetratedBy(c, c.getOpponent(getSelf()), getSelf())) {
             return target.body.getRandom("ass");
         } else {
             return target.body.getRandomPussy();
@@ -59,7 +59,7 @@ public class Thrust extends Skill {
         int results[] = new int[2];
 
         int m = 5 + Global.random(14);
-        if (c.getStance().anallyPenetrated(target) && getSelf().has(Trait.assmaster)) {
+        if (c.getStance().anallyPenetrated(c, target) && getSelf().has(Trait.assmaster)) {
             m *= 1.5;
         }
         
@@ -171,7 +171,7 @@ public class Thrust extends Skill {
                                 + "%s thrusting that much more powerful, and that much more "
                                 + "intense for the both of %s.", getSelf().nameOrPossessivePronoun(),
                                 getSelf().possessivePronoun(),
-                                c.bothDirectObject());
+                                c.bothDirectObject(target));
             }
             return res;
         } else if (modifier == Result.reverse) {
@@ -208,7 +208,7 @@ public class Thrust extends Skill {
     public boolean makesContact() {
         return true;
     }
-    
+
     @Override
     public Stage getStage() {
         return Stage.FINISHER;

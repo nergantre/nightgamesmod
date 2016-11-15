@@ -12,7 +12,7 @@ public class Jumped extends FemdomSexStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         if (top.human()) {
             return "You are clinging to " + bottom.nameOrPossessivePronoun()
                             + " arms while her dick is buried deep in your pussy";
@@ -71,7 +71,7 @@ public class Jumped extends FemdomSexStance {
     }
 
     @Override
-    public Position insertRandom() {
+    public Position insertRandom(Combat c) {
         return new Neutral(top, bottom);
     }
 

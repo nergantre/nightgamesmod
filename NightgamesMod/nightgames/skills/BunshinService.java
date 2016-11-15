@@ -27,9 +27,9 @@ public class BunshinService extends Skill {
                         && getSelf().canAct() && !c.getStance()
                                                    .behind(target)
                         && !c.getStance()
-                             .penetrated(target)
+                             .penetrated(c, target)
                         && !c.getStance()
-                             .penetrated(getSelf())
+                             .penetrated(c, getSelf())
                         && target.mostlyNude();
     }
 

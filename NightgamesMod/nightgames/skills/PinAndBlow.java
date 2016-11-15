@@ -30,7 +30,7 @@ public class PinAndBlow extends Skill {
                         && c.getStance()
                             .prone(target)
                         && target.crotchAvailable() && getSelf().canAct() && !c.getStance()
-                                                                               .connected()
+                                                                               .connected(c)
                         && c.getStance().en != Stance.oralpin;
     }
 

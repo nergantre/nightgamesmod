@@ -12,7 +12,7 @@ public class Doggy extends MaledomSexStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         if (top.human()) {
             return bottom.name() + " is on her hands and knees in front of you, while you fuck her Doggy style.";
         } else {
@@ -72,7 +72,7 @@ public class Doggy extends MaledomSexStance {
     }
 
     @Override
-    public Position insertRandom() {
+    public Position insertRandom(Combat c) {
         return new Behind(top, bottom);
     }
 

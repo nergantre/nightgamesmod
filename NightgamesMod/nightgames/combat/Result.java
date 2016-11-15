@@ -17,4 +17,9 @@ public enum Result {
     setup,
     sub,
     divine,
+    male,
+    female,
+    herm,
+    shemale,
+    asexual,
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
+import nightgames.combat.Combat;
 import nightgames.global.Global;
 
 public class SixNine extends AbstractBehindStance {
@@ -20,7 +21,7 @@ public class SixNine extends AbstractBehindStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         String topParts = describeParts(top);
         String bottomParts = describeParts(bottom);
         if (top.human()) {
@@ -46,7 +47,7 @@ public class SixNine extends AbstractBehindStance {
     }
 
     @Override
-    public List<BodyPart> topParts() {
+    public List<BodyPart> topParts(Combat c) {
         return parts(top);
     }
     
@@ -136,7 +137,7 @@ public class SixNine extends AbstractBehindStance {
     }
 
     @Override
-    public Position insertRandom() {
+    public Position insertRandom(Combat c) {
         return this;
     }
 

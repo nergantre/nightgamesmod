@@ -10,7 +10,7 @@ public class BehindFootjob extends AbstractBehindStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         return Global.format(
                         "{self:SUBJECT-ACTION:are|is} holding {other:name-do} from behind with {self:possessive} legs wrapped around {other:direct-object}",
                         top, bottom);

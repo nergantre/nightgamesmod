@@ -1,6 +1,7 @@
 package nightgames.stance;
 
 import nightgames.characters.Character;
+import nightgames.combat.Combat;
 
 public class ReverseMount extends AbstractBehindStance {
     public ReverseMount(Character top, Character bottom) {
@@ -9,7 +10,7 @@ public class ReverseMount extends AbstractBehindStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         if (top.human()) {
             return "You are straddling " + bottom.name() + ", with your back to her.";
         } else {

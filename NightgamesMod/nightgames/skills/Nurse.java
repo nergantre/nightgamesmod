@@ -46,7 +46,7 @@ public class Nurse extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        boolean special = c.getStance().en != Stance.nursing && !c.getStance().havingSex();
+        boolean special = c.getStance().en != Stance.nursing && !c.getStance().havingSex(c);
         writeOutput(c, special ? Result.special : Result.normal, target);
         if (getSelf().has(Trait.lactating) && !target.is(Stsflag.suckling) && !target.is(Stsflag.wary)) {
             c.write(target, Global.format(

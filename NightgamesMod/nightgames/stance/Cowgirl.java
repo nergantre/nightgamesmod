@@ -12,7 +12,7 @@ public class Cowgirl extends FemdomSexStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         if (top.human()) {
             return "You're on top of " + bottom.name() + ".";
         } else {
@@ -69,7 +69,7 @@ public class Cowgirl extends FemdomSexStance {
     }
 
     @Override
-    public Position insertRandom() {
+    public Position insertRandom(Combat c) {
         return new Mount(top, bottom);
     }
 

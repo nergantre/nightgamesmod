@@ -38,6 +38,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.ContextFactory;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonIOException;
@@ -230,6 +232,8 @@ public class Global {
         if (!cfgFlags.isEmpty()) {
             flags = cfgFlags.stream().map(Flag::name).collect(Collectors.toSet());
         }
+        Map<String, Boolean> configurationFlags = JsonUtils.mapFromJson(JsonUtils.rootJson(new InputStreamReader(ResourceLoader.getFileResourceAsStream("data/globalflags.json"))).getAsJsonObject(), String.class, Boolean.class);
+        configurationFlags.forEach((flag, val) -> Global.setFlag(flag, val));
         time = Time.NIGHT;
         setCharacterDisabledFlag(getNPCByType("Yui"));
         setUpMatch(new NoModifier());
@@ -497,6 +501,8 @@ public class Global {
         getSkillPool().add(new WindUp(ch));
         getSkillPool().add(new ThrowSlime(ch));
         getSkillPool().add(new SummonYui(ch));
+        getSkillPool().add(new Simulacrum(ch));
+        getSkillPool().add(new PetThreesome(ch));
 
         if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
             getSkillPool().add(new SelfStun(ch));
@@ -992,7 +998,15 @@ public class Global {
     public static void unflag(Flag f) {
         flags.remove(f.name());
     }
-    
+
+    public static void setFlag(String f, boolean value) {
+        if (value) { 
+            flag(f);
+        } else {
+            unflag(f);
+        }
+    }
+
     public static void setFlag(Flag f, boolean value) {
         if (value) { 
             flags.add(f.name()); 

@@ -30,7 +30,7 @@ public class HipThrow extends Skill {
     public boolean usable(Combat c, Character target) {
         return !target.wary() && c.getStance().mobile(getSelf()) && c.getStance().mobile(target)
                         && !c.getStance().prone(getSelf()) && !c.getStance().prone(target) && getSelf().canAct()
-                        && !c.getStance().connected();
+                        && !c.getStance().connected(c);
     }
 
     @Override

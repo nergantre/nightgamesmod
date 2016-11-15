@@ -1,6 +1,7 @@
 package nightgames.stance;
 
 import nightgames.characters.Character;
+import nightgames.combat.Combat;
 
 public class Kneeling extends AbstractFacingStance {
 
@@ -10,7 +11,7 @@ public class Kneeling extends AbstractFacingStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         if (top.human()) {
             return "You are standing over " + bottom.name() + ", who is kneeling before you.";
         } else {

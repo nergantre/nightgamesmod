@@ -36,7 +36,7 @@ public class Smother extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().crotchAvailable() && getSelf().canAct() && c.getStance().dom(getSelf())
-                        && (c.getStance().enumerate() == Stance.facesitting || c.getStance().enumerate() == Stance.smothering)
+                        && (c.getStance().isBeingFaceSatBy(c, target, getSelf()))
                         && !getSelf().has(Trait.shy);
     }
 

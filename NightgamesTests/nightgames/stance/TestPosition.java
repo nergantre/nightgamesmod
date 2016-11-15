@@ -1,6 +1,7 @@
 package nightgames.stance;
 
 import nightgames.characters.Character;
+import nightgames.combat.Combat;
 
 /**
  * Test position. Top character is dominant.
@@ -17,7 +18,7 @@ public class TestPosition extends Position {
         return dominance;
     }
 
-    @Override public String describe() {
+    @Override public String describe(Combat c) {
         return null;
     }
 

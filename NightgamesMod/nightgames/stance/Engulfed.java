@@ -22,7 +22,7 @@ public class Engulfed extends Position {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         if (top.human()) {
             return "You have engulfed " + bottom.name() + " inside your slime body, with only "
                             + bottom.possessivePronoun() + " face outside of you.";
@@ -110,7 +110,7 @@ public class Engulfed extends Position {
     }
 
     @Override
-    public Position insertRandom() {
+    public Position insertRandom(Combat c) {
         return new Neutral(top, bottom);
     }
 
@@ -141,7 +141,7 @@ public class Engulfed extends Position {
     }
 
     @Override
-    public List<BodyPart> topParts() {
+    public List<BodyPart> topParts(Combat c) {
         List<BodyPart> parts = new ArrayList<>();
         if (slimePitches) {
             parts.addAll(top.body.get("cock"));

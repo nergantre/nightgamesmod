@@ -16,7 +16,7 @@ public class FlyingCowgirl extends FemdomSexStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         return String.format(
                         "%s are flying some twenty feet up in the air,"
                                         + " joined to %s by %s hips. %s on top of %s and %s %s is strangling %s %s.",
@@ -105,7 +105,7 @@ public class FlyingCowgirl extends FemdomSexStance {
     }
 
     @Override
-    public Position insertRandom() {
+    public Position insertRandom(Combat c) {
         return new Mount(top, bottom);
     }
 

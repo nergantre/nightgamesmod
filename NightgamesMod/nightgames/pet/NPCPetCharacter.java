@@ -9,8 +9,8 @@ import nightgames.items.clothing.Outfit;
 public class NPCPetCharacter extends PetCharacter {
     private NPC prototype;
 
-    public NPCPetCharacter(Pet self, NPC prototypeCharacter, int level) throws CloneNotSupportedException {
-        super(self, prototypeCharacter.getName(), prototypeCharacter.getType() + "Pet", prototypeCharacter.getGrowth(), 1);
+    public NPCPetCharacter(String name, Pet self, NPC prototypeCharacter, int level) throws CloneNotSupportedException {
+        super(self, name, prototypeCharacter.getType() + "Pet", prototypeCharacter.getGrowth(), 1);
         prototype = prototypeCharacter.clone();
         prototype.ai.applyBasicStats(this);
         for (int i = 1; i < level; i++) {

@@ -73,7 +73,7 @@ public class Struggle extends Skill {
                 getSelf().struggle();
                 return false;
             }
-        } else if (c.getStance().havingSex()) {
+        } else if (c.getStance().havingSex(c)) {
             boolean knotted = getSelf().hasStatus(Stsflag.knotted);
             if (c.getStance().enumerate() == Stance.anal) {
                 int diffMod = knotted ? 50 : 0;
@@ -134,9 +134,9 @@ public class Struggle extends Skill {
                 }
             } else {
                 int diffMod = 0;
-                if (c.getStance().insertedPartFor(target).moddedPartCountsAs(target, CockMod.enlightened)) {
+                if (c.getStance().insertedPartFor(c, target).moddedPartCountsAs(target, CockMod.enlightened)) {
                     diffMod = 15;
-                } else if (c.getStance().insertedPartFor(getSelf()).moddedPartCountsAs(getSelf(), CockMod.enlightened)) {
+                } else if (c.getStance().insertedPartFor(c, getSelf()).moddedPartCountsAs(getSelf(), CockMod.enlightened)) {
                     diffMod = -15;
                 }
                 if (getSelf().check(Attribute.Power,
@@ -162,7 +162,7 @@ public class Struggle extends Skill {
                         getSelf().removeStatus(Stsflag.knotted);
                         getSelf().pain(c, getSelf(), 10);
                     }
-                    boolean reverseStrapped = BodyPart.hasOnlyType(c.getStance().partsFor(target), "strapon");
+                    boolean reverseStrapped = BodyPart.hasOnlyType(c.getStance().partsFor(c, target), "strapon");
                     boolean reversedStance = false;
                     if (!reverseStrapped) {
                         Position reversed = c.getStance().reverse(c);
@@ -230,7 +230,7 @@ public class Struggle extends Skill {
                 }
                 c.setStance(new Neutral(getSelf(), target));
             } else {
-                if (c.getStance().enumerate() == Stance.facesitting) {
+                if ((c.getStance().isBeingFaceSatBy(c, getSelf(), target))) {
                     if (getSelf().human()) {
                         c.write(getSelf(), "You try to free yourself from " + target.name()
                                         + ", but she drops her ass over your face again, forcing you to service her.");

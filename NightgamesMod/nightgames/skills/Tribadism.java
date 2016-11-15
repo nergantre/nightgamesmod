@@ -5,6 +5,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.stance.Stance;
 import nightgames.stance.TribadismStance;
 
 public class Tribadism extends Skill {
@@ -34,13 +35,13 @@ public class Tribadism extends Skill {
         if (possible) {
             stancePossible = true;
             if (selfO.isType("pussy")) {
-                stancePossible &= !c.getStance().vaginallyPenetrated(getSelf());
+                stancePossible &= !c.getStance().vaginallyPenetrated(c, getSelf());
             }
             if (targetO.isType("pussy")) {
-                stancePossible &= !c.getStance().vaginallyPenetrated(target);
+                stancePossible &= !c.getStance().vaginallyPenetrated(c, target);
             }
         }
-        stancePossible &= !c.getStance().havingSex();
+        stancePossible &= !c.getStance().havingSex(c);
         return possible && stancePossible && getSelf().clothingFuckable(selfO) && target.crotchAvailable();
     }
 
@@ -55,7 +56,9 @@ public class Tribadism extends Skill {
         BodyPart selfO = getSelfOrgan();
         BodyPart targetO = getTargetOrgan(target);
         writeOutput(c, Result.normal, target);
-        c.setStance(new TribadismStance(getSelf(), target));
+        if (c.getStance().en != Stance.trib) {
+            c.setStance(new TribadismStance(getSelf(), target));
+        }
         int otherm = 10;
         int m = 10;
         target.body.pleasure(getSelf(), selfO, targetO, m, c, this);

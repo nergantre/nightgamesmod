@@ -34,11 +34,7 @@ public abstract class BasePersonality implements Personality {
     protected CockMod preferredCockMod;
     protected AiModifiers mods;
 
-    protected BasePersonality() {
-    }
-
-    public BasePersonality(String name, int level, Optional<NpcConfiguration> charConfig,
-                    Optional<NpcConfiguration> commonConfig, boolean isStartCharacter) {
+    protected BasePersonality(String name, int level, boolean isStartCharacter) {
         // Make the built-in character
         type = getClass().getSimpleName();
         character = new NPC(name, level, this);
@@ -46,23 +42,32 @@ public abstract class BasePersonality implements Personality {
         preferredCockMod = CockMod.error;
         preferredAttributes = new ArrayList<PreferredAttribute>();
         growth = new Growth();
+    }
+
+    public BasePersonality(String name, int level, Optional<NpcConfiguration> charConfig,
+                    Optional<NpcConfiguration> commonConfig, boolean isStartCharacter) {
+        this(name, level, isStartCharacter);
+        setupCharacter(charConfig, commonConfig);
+    }
+    
+    protected void setupCharacter(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
         setGrowth();
         applyBasicStats(character);
         applyStrategy(character);
-        character.body.makeGenitalOrgans(character.initialGender);
 
         // Apply config changes
         Optional<NpcConfiguration> mergedConfig = NpcConfiguration.mergeOptionalNpcConfigs(charConfig, commonConfig);
         mergedConfig.ifPresent(cfg -> cfg.apply(character));
 
+        character.body.makeGenitalOrgans(character.initialGender);
         character.body.finishBody(character.initialGender);
-        for (int i = 1; i < level; i++) {
+        for (int i = 1; i < character.getLevel(); i++) {
             getGrowth().levelUp(character);
         }
         character.distributePoints(preferredAttributes);
         getGrowth().addOrRemoveTraits(character);
     }
-    
+
     public void setCharacter(NPC c) {
         this.character = c;
     }

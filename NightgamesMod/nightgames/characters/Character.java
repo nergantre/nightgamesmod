@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Observable;
 import java.util.Optional;
@@ -28,6 +29,7 @@ import nightgames.areas.Area;
 import nightgames.areas.NinjaStash;
 import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TentaclePart;
@@ -112,6 +114,7 @@ public abstract class Character extends Observable implements Cloneable {
     private boolean pleasured;
     public int orgasms;
     public int cloned;
+    private Map<Integer, LevelUpData> levelPlan;
 
     public Character(String name, int level) {
         this.name = name;
@@ -122,6 +125,7 @@ public abstract class Character extends Observable implements Cloneable {
         att = new HashMap<>();
         cooldowns = new HashMap<>();
         flags = new HashMap<>();
+        levelPlan = new HashMap<>();
         att.put(Attribute.Power, 5);
         att.put(Attribute.Cunning, 5);
         att.put(Attribute.Seduction, 5);
@@ -188,6 +192,10 @@ public abstract class Character extends Observable implements Cloneable {
         c.body.character = c;
         c.orgasmed = orgasmed;
         c.statusFlags = EnumSet.copyOf(statusFlags);
+        c.levelPlan = new HashMap<>();
+        for (Entry<Integer, LevelUpData> entry : levelPlan.entrySet()) {
+            levelPlan.put(entry.getKey(), (LevelUpData)entry.getValue().clone());
+        }
         return c;
     }
 
@@ -292,22 +300,6 @@ public abstract class Character extends Observable implements Cloneable {
         return total;
     }
 
-    public void mod(Attribute a, int i) {
-        if (a.equals(Attribute.Willpower)) {
-            getWillpower().gain(i * 2);
-            return;
-        }
-        if (att.containsKey(a)) {
-            att.put(a, att.get(a) + i);
-        } else {
-            set(a, i);
-        }
-    }
-
-    public void set(Attribute a, int i) {
-        att.put(a, i);
-    }
-
     public boolean check(Attribute a, int dc) {
         int rand = Global.random(20);
         if (Global.isDebugOn(DebugFlags.DEBUG_DAMAGE)) {
@@ -355,56 +347,11 @@ public abstract class Character extends Observable implements Cloneable {
     public abstract void ding();
 
     public String dong() {
+        getLevelUpFor(getLevel()).unapply(this);;
+        getGrowth().levelDown(this);
+        levelPlan.remove(getLevel());
         level--;
-        String message = loseRandomAttributes(Global.random(3) + 2);
-        if (countFeats() > level / 4) {
-            message += loseFeat();
-        }
-
-        getStamina().gain(-2);
-        getArousal().gain(-4);
-        return message + Global.gainSkills(this);
-    }
-
-    public String loseRandomAttributes(int number) {
-        ArrayList<Attribute> avail = new ArrayList<>();
-        String message = "";
-        while (number > 0) {
-            avail.clear();
-            for (Attribute a : att.keySet()) {
-                if (getPure(a) > 1 && a != Attribute.Speed && a != Attribute.Perception) {
-                    avail.add(a);
-                }
-            }
-            if (avail.size() == 0) {
-                break;
-            }
-            Attribute removed = avail.get(Global.random(avail.size()));
-            mod(removed, -1);
-            if (human()) {
-                message += "You've lost a point in " + removed.toString() + ".<br>";
-            }
-            number -= 1;
-        }
-        return message;
-    }
-
-    public String loseFeat() {
-        String string = "";
-        ArrayList<Trait> available = new ArrayList<>();
-        for (Trait feat : Global.getFeats(this)) {
-            if (has(feat)) {
-                available.add(feat);
-            }
-        }
-        if (available.isEmpty())
-            return "";
-        Trait removed = available.get(Global.random(available.size()));
-        if (human()) {
-            string += "You've lost " + removed.toString() + ".<br>";
-        }
-        remove(removed);
-        return string;
+        return Global.gainSkills(this);
     }
 
     public int getXP() {
@@ -1005,12 +952,41 @@ public abstract class Character extends Observable implements Cloneable {
         return false;
     }
 
+    public LevelUpData getLevelUpFor(int level) {
+        levelPlan.putIfAbsent(level, new LevelUpData());
+        return levelPlan.get(level);
+    }
+
+    public void modAttributeDontSaveData(Attribute a, int i) {
+        if (human() && i != 0) {
+            Global.gui().message("You have " + (i > 0 ? "gained" : "lost") + " " + i + " " + a.name());
+        }
+        if (a.equals(Attribute.Willpower)) {
+            getWillpower().gain(i * 2);
+        } else {
+            att.put(a, att.getOrDefault(a, 0) + i);
+        }
+    }
+
+    public void mod(Attribute a, int i) {
+        modAttributeDontSaveData(a, i);
+        getLevelUpFor(getLevel()).modAttribute(a, i);
+    }
+
     public boolean add(Trait t) {
-        return traits.addIfAbsent(t);
+        if (traits.addIfAbsent(t)) {
+            getLevelUpFor(getLevel()).addTrait(t);
+            return true;
+        }
+        return false;
     }
 
     public boolean remove(Trait t) {
-        return traits.remove(t);
+        if (traits.remove(t)) {
+            getLevelUpFor(getLevel()).removeTrait(t);
+            return true;
+        }
+        return false;
     }
 
     public boolean hasPure(Trait t) {
@@ -1380,9 +1356,9 @@ public abstract class Character extends Observable implements Cloneable {
         saveObj.addProperty("money", money);
         {
             JsonObject resources = new JsonObject();
-            resources.addProperty("stamina", stamina.maxFull());
-            resources.addProperty("arousal", arousal.maxFull());
-            resources.addProperty("mojo", mojo.maxFull());
+            resources.addProperty("stamina", stamina.trueMax());
+            resources.addProperty("arousal", arousal.trueMax());
+            resources.addProperty("mojo", mojo.trueMax());
             resources.addProperty("willpower", willpower.trueMax());
             saveObj.add("resources", resources);
         }
@@ -1396,6 +1372,7 @@ public abstract class Character extends Observable implements Cloneable {
         saveObj.add("inventory", JsonUtils.JsonFromMap(inventory));
         saveObj.addProperty("human", human());
         saveObj.add("flags", JsonUtils.JsonFromMap(flags));
+        saveObj.add("levelUps", JsonUtils.JsonFromMap(levelPlan));
         saveInternal(saveObj);
         return saveObj;
     }
@@ -1441,10 +1418,14 @@ public abstract class Character extends Observable implements Cloneable {
 
         inventory = JsonUtils.mapFromJson(object.getAsJsonObject("inventory"), Item.class, Integer.class);
 
-            flags.clear();
+        flags.clear();
         JsonUtils.getOptionalObject(object, "flags")
                         .ifPresent(obj -> flags.putAll(JsonUtils.mapFromJson(obj, String.class, Integer.class)));
-
+        if (object.has("levelUps")) {
+            levelPlan = JsonUtils.mapFromJson(object.getAsJsonObject("levelUps"), Integer.class, LevelUpData.class);
+        } else {
+            levelPlan = new HashMap<>();
+        }
         loadInternal(object);
         change();
         Global.gainSkills(this);
@@ -1665,7 +1646,7 @@ public abstract class Character extends Observable implements Cloneable {
             opponent.restoreWillpower(c, 10 + Global.random(10));
         }
         if (opponent.has(Trait.leveldrainer) && ((c.getStance()
-                                                  .penetratedBy(opponent, this)
+                                                  .penetratedBy(c, opponent, this)
                         && !has(Trait.strapped)) || c.getStance().en == Stance.trib)) {
             if (Global.random(10) < 8 && getLevel() > 1 && getLevel() <= opponent.getLevel()
                             && !c.getCombatantData(opponent).getBooleanFlag("has_drained")) {
@@ -1675,9 +1656,9 @@ public abstract class Character extends Observable implements Cloneable {
                             + " %s orgasm and drawing upon %s very strength and experience. Once it's over, %s"
                                                     + " left considerably more powerful, at %s expense.",
                                     opponent.nameOrPossessivePronoun(),
-                                    c.getStance().insertablePartFor(opponent).describe(opponent),
+                                    c.getStance().insertablePartFor(c, opponent).describe(opponent),
                                     nameOrPossessivePronoun(),
-                            c.getStance().insertedPartFor(this).describe(this), possessivePronoun(), possessivePronoun(),
+                            c.getStance().insertedPartFor(c, this).describe(this), possessivePronoun(), possessivePronoun(),
                             opponent.subjectAction("are", "is"), nameOrPossessivePronoun())));
                 else
                     c.write(opponent, Global.capitalizeFirstLetter(String.format("%s greedy %s sucks itself tightly to"
@@ -2768,7 +2749,7 @@ public abstract class Character extends Observable implements Cloneable {
         if (c.getStance().inserted()) { // If we are fucking...
             // ...we need to see if that's beneficial to us.
             fit += body.penetrationFitnessModifier(this, other, c.getStance().inserted(this),
-                            c.getStance().anallyPenetrated());
+                            c.getStance().anallyPenetrated(c));
         }
         if (hasDick()) {
             fit += (dickPreference() - 3) * 4;
@@ -2882,7 +2863,11 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public boolean useFemalePronouns() {
-        return hasPussy() || !hasDick() || Global.checkFlag(Flag.FemalePronounsOnly);
+        return hasPussy() 
+                        || !hasDick() 
+                        || (body.getLargestBreasts().size > BreastsPart.flat.size && body.getFace().getFemininity(this) > 0) 
+                        || (body.getFace().getFemininity(this) >= 1.5) 
+                        || Global.checkFlag(Flag.FemalePronounsOnly);
     }
 
     public String nameDirectObject() {

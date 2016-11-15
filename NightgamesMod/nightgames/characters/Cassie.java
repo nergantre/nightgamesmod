@@ -58,10 +58,10 @@ public class Cassie extends BasePersonality {
         self.outfitPlan.add(Clothing.getByID("shoes"));
 
         self.change();
-        self.mod(Attribute.Power, 1);
-        self.mod(Attribute.Seduction, 1);
-        self.mod(Attribute.Cunning, 1);
-        self.mod(Attribute.Perception, 1);
+        self.modAttributeDontSaveData(Attribute.Power, 1);
+        self.modAttributeDontSaveData(Attribute.Seduction, 1);
+        self.modAttributeDontSaveData(Attribute.Cunning, 1);
+        self.modAttributeDontSaveData(Attribute.Perception, 1);
 
         self.getStamina().setMax(70);
         self.getArousal().setMax(100);
@@ -174,7 +174,7 @@ public class Cassie extends BasePersonality {
         // 38 - first choice 3
         // 43 - second choice 4
         // 47 - second choice 5
-        growth.addTrait(50, Trait.pussyTraining2);
+        growth.addTrait(50, Trait.sexTraining2);
         growth.addTrait(53, Trait.addictivefluids);
         // 57 - first choice 4
         // 60 - second choice 6
@@ -273,7 +273,7 @@ public class Cassie extends BasePersonality {
 
     @Override
     public String victory(Combat c, Result flag) {
-        if (c.getStance().anallyPenetrated(c.getOpponent(character))) {
+        if (c.getStance().anallyPenetrated(c, c.getOpponent(character))) {
             character.arousal.empty();
             return "Cassie bucks her hips against your ass wildly causing the strapon to rub hard against your prostate. Your arms and legs feel like jelly as she thrusts in again and again. "
                             + "You're almost shocked as you feel yourself on the edge of orgasm and you're certain you wouldn't be able to stop yourself if Cassie keeps this pace up. Above you Cassie moans "
@@ -306,7 +306,7 @@ public class Cassie extends BasePersonality {
                             + "she regains consciousness. The feeling is noticeably singular and you feel somehow lonely as you realize her spell must have worn off. <i>\"Wow,\"</i> she lets out breathlessly. "
                             + "<i>\"That felt like I was 12 again and masturbating for the first time.\"</i> She suddenly turns bright red and hides her face in your chest. <i>\"You didn't hear that! Just pretend I "
                             + "didn't say anything.\"</i>";
-        } else if (c.getStance().vaginallyPenetrated(character)) {
+        } else if (c.getStance().vaginallyPenetrated(c, character)) {
             return "You feel yourself rapidly nearing the point of no return as Cassie rides your dick. You fondle and tease her sensitive nipples to increase her pleasure, but it's a losing battle. You're "
                             + "going to cum first. She smiles gently and kisses you as you ejaculate inside her hot pussy. She shivers slightly, but you know she hasn't climaxed yet. When she breaks the kiss, her flushed "
                             + "face lights up in a broad smile. <i>\"It feels like you released a lot. Did you feel good?\"</i> You groan and slump flat on the ground in defeat. She gives you a light kiss on the tip of your nose "

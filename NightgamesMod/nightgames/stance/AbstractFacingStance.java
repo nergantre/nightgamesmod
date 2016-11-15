@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nightgames.characters.Character;
+import nightgames.combat.Combat;
 import nightgames.global.Global;
 
 public abstract class AbstractFacingStance extends Position {
@@ -12,17 +13,17 @@ public abstract class AbstractFacingStance extends Position {
     }
 
     @Override
-    public Position insertRandomDom(Character dom) {
+    public Position insertRandomDom(Combat c, Character dom) {
         List<Position> possibleResults = new ArrayList<>();
-        Character sub = getOther(dom);
+        Character sub = getPartner(c, dom);
         if (dom.hasInsertable() && sub.hasPussy()) {
-            Position newPos = insert(dom, dom);
+            Position newPos = insert(c, dom, dom);
             if (newPos != this) {
                 possibleResults.add(newPos);
             }
         }
         if (dom.hasPussy() && sub.hasInsertable()) {
-            Position newPos = insert(sub, dom);
+            Position newPos = insert(c, sub, dom);
             if (newPos != this) {
                 possibleResults.add(newPos);
             }
@@ -35,9 +36,9 @@ public abstract class AbstractFacingStance extends Position {
     }
 
     @Override
-    public Position insert(Character pitcher, Character dom) {
-        Character catcher = getOther(pitcher);
-        Character sub = getOther(dom);
+    public Position insert(Combat c, Character pitcher, Character dom) {
+        Character catcher = getPartner(c, pitcher);
+        Character sub = getPartner(c, dom);
         if (pitcher.body.getRandomInsertable() == null || !catcher.hasPussy()) {
             // invalid
             return this;

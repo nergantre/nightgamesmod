@@ -38,7 +38,7 @@ public abstract class MaledomSexStance extends Position {
                 c.write(inserter.name() + " groans with frustration with the sudden disappearance of "
                                 + inserter.possessivePronoun() + " pole.");
             }
-            c.setStance(insertRandom());
+            c.setStance(insertRandom(c));
         }
         if (!inserted.hasPussy()) {
             if (inserted.human()) {
@@ -48,7 +48,7 @@ public abstract class MaledomSexStance extends Position {
                 c.write("You groan with frustration with the sudden disappearance of "
                                 + inserted.nameOrPossessivePronoun() + " pussy.");
             }
-            c.setStance(insertRandom());
+            c.setStance(insertRandom(c));
         }
     }
 
@@ -68,7 +68,7 @@ public abstract class MaledomSexStance extends Position {
     }
 
     @Override
-    public List<BodyPart> topParts() {
+    public List<BodyPart> topParts(Combat c) {
         return Arrays.asList(top.body.getRandomInsertable()).stream().filter(part -> part != null && part.present())
                         .collect(Collectors.toList());
     }

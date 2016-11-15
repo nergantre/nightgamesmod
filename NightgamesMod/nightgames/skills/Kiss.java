@@ -205,7 +205,7 @@ public class Kiss extends Skill {
                             Global.capitalizeFirstLetter(target.subjectAction("start")),
                             target.pronoun(), target.action("realize"), getSelf().subject(),
                             target.directObject(), getSelf().possessivePronoun(), 
-                            target.nameOrPossessivePronoun(), c.bothPossessive(), 
+                            target.nameOrPossessivePronoun(), c.bothPossessive(target), 
                             Global.capitalizeFirstLetter(target.subjectAction("try", "tries")),
                             getSelf().nameOrPossessivePronoun(), target.directObject());
         }
@@ -222,7 +222,7 @@ public class Kiss extends Skill {
         } else if (modifier == Result.weak) {
             return String.format("%s presses %s lips against %s in a passionate, if not particularly skillful, kiss.",
                             getSelf().subject(), getSelf().possessivePronoun(),
-                            target.human() ? "yours" : target.possessivePronoun());
+                            target.human() ? "yours" : target.nameOrPossessivePronoun());
         } else {
             switch (Global.random(3)) {
                 case 0:
@@ -240,7 +240,7 @@ public class Kiss extends Skill {
                     return String.format("%s kisses %s softly and romantically, slowly drawing %s into %s "
                                     + "embrace. As %s part, %s teasingly brushes %s lips against %s.",
                                     getSelf().subject(), target.nameDirectObject(), target.directObject(),
-                                    getSelf().possessivePronoun(), c.bothSubject(),
+                                    getSelf().possessivePronoun(), c.bothSubject(target),
                                     getSelf().subject(), target.possessivePronoun(),
                                     target.human() ? "yours" : target.possessivePronoun());
             }

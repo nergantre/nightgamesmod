@@ -30,7 +30,6 @@ public class Airi extends BasePersonality {
 
     public Airi(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
         super("Airi", 10, charConfig, commonConfig, false);
-
     }
 
     @Override
@@ -53,11 +52,11 @@ public class Airi extends BasePersonality {
         self.outfitPlan.add(Clothing.getByID("shoes"));
         self.change();
         self.rank = 1;
-        self.set(Attribute.Power, 6);
-        self.set(Attribute.Slime, 1);
-        self.set(Attribute.Cunning, 15);
-        self.set(Attribute.Speed, 4);
-        self.set(Attribute.Seduction, 17);
+        self.modAttributeDontSaveData(Attribute.Power, -1);
+        self.modAttributeDontSaveData(Attribute.Slime, 1);
+        self.modAttributeDontSaveData(Attribute.Cunning, 2);
+        self.modAttributeDontSaveData(Attribute.Speed, -1);
+        self.modAttributeDontSaveData(Attribute.Seduction, 6);
         self.getStamina().setMax(50);
         self.getArousal().setMax(80);
         self.getMojo().setMax(100);
@@ -80,11 +79,11 @@ public class Airi extends BasePersonality {
         growth.addTrait(12, Trait.lacedjuices);
         growth.addTrait(15, Trait.QuickRecovery);
         growth.addTrait(18, Trait.BoundlessEnergy);
-        growth.addTrait(23, Trait.pussyTraining1);
+        growth.addTrait(23, Trait.sexTraining1);
         growth.addTrait(31, Trait.limbTraining2);
         growth.addTrait(37, Trait.tongueTraining1);
         growth.addTrait(44, Trait.limbTraining3);
-        growth.addTrait(51, Trait.pussyTraining2);
+        growth.addTrait(51, Trait.sexTraining2);
         growth.addTrait(58, Trait.tongueTraining2);
 
         preferredAttributes.add(c -> Optional.of(Attribute.Slime));

@@ -293,25 +293,23 @@
 		</Requirements>
 	</Trait>
 	<Trait>
-		<Name>pussyTraining1</Name>
+		<Name>sexTraining1</Name>
 		<Requirements>
 				<BodypartReq>pussy</BodypartReq>
 				<LevelReq>5</LevelReq>
 		</Requirements>
 	</Trait>
 	<Trait>
-		<Name>pussyTraining2</Name>
+		<Name>sexTraining2</Name>
 		<Requirements>
-				<BodypartReq>pussy</BodypartReq>
-				<TraitReq>pussyTraining1</TraitReq>
+				<TraitReq>sexTraining1</TraitReq>
 				<LevelReq>15</LevelReq>
 		</Requirements>
 	</Trait>
 	<Trait>
-		<Name>pussyTraining3</Name>
+		<Name>sexTraining3</Name>
 		<Requirements>
-				<BodypartReq>pussy</BodypartReq>
-				<TraitReq>pussyTraining2</TraitReq>
+				<TraitReq>sexTraining2</TraitReq>
 				<LevelReq>25</LevelReq>
 		</Requirements>
 	</Trait>
@@ -335,29 +333,6 @@
 		<Requirements>
 				<BodypartReq>ass</BodypartReq>
 				<TraitReq>analTraining2</TraitReq>
-				<LevelReq>25</LevelReq>
-		</Requirements>
-	</Trait>
-	<Trait>
-		<Name>cockTraining1</Name>
-		<Requirements>
-				<BodypartReq>cock</BodypartReq>
-				<LevelReq>5</LevelReq>
-		</Requirements>
-	</Trait>
-	<Trait>
-		<Name>cockTraining2</Name>
-		<Requirements>
-				<BodypartReq>cock</BodypartReq>
-				<TraitReq>cockTraining1</TraitReq>
-				<LevelReq>15</LevelReq>
-		</Requirements>
-	</Trait>
-	<Trait>
-		<Name>cockTraining3</Name>
-		<Requirements>
-				<BodypartReq>cock</BodypartReq>
-				<TraitReq>cockTraining2</TraitReq>
 				<LevelReq>25</LevelReq>
 		</Requirements>
 	</Trait>

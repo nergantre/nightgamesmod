@@ -46,12 +46,12 @@ public class Yui extends BasePersonality {
         character.outfitPlan.add(Clothing.getByID("tabi"));
 
         character.change();
-        character.mod(Attribute.Power, 1);
-        character.mod(Attribute.Seduction, 1);
-        character.mod(Attribute.Cunning, 1);
-        character.mod(Attribute.Perception, 1);
-        character.mod(Attribute.Ninjutsu, 1);
-        character.mod(Attribute.Speed, 7);
+        character.modAttributeDontSaveData(Attribute.Power, 1);
+        character.modAttributeDontSaveData(Attribute.Seduction, 1);
+        character.modAttributeDontSaveData(Attribute.Cunning, 1);
+        character.modAttributeDontSaveData(Attribute.Perception, 1);
+        character.modAttributeDontSaveData(Attribute.Ninjutsu, 1);
+        character.modAttributeDontSaveData(Attribute.Speed, 2);
         character.getStamina().setMax(100);
         character.getArousal().setMax(90);
         character.rank = 1;
@@ -80,21 +80,21 @@ public class Yui extends BasePersonality {
         growth.addTrait(2, Trait.Sneaky);
         growth.addTrait(5, Trait.dexterous);
         growth.addTrait(8, Trait.tongueTraining1);
-        growth.addTrait(11, Trait.pussyTraining1);
+        growth.addTrait(11, Trait.sexTraining1);
         growth.addTrait(14, Trait.limbTraining1);
         growth.addTrait(17, Trait.analTraining1);
         growth.addTrait(20, Trait.lacedjuices);
         growth.addTrait(23, Trait.responsive);
         growth.addTrait(26, Trait.graceful);
         growth.addTrait(29, Trait.tongueTraining2);
-        growth.addTrait(32, Trait.pussyTraining2);
+        growth.addTrait(32, Trait.sexTraining2);
         growth.addTrait(35, Trait.limbTraining2);
         growth.addTrait(38, Trait.analTraining2);
         growth.addTrait(41, Trait.calm);
         growth.addTrait(41, Trait.SexualGroove);
         growth.addTrait(41, Trait.alwaysready);
         growth.addTrait(44, Trait.tongueTraining3);
-        growth.addTrait(47, Trait.pussyTraining3);
+        growth.addTrait(47, Trait.sexTraining3);
         growth.addTrait(50, Trait.limbTraining3);
         growth.addTrait(53, Trait.analTraining3);
         growth.addTrait(56, Trait.tight);
@@ -170,10 +170,10 @@ public class Yui extends BasePersonality {
 
     @Override
     public String victory(Combat c, Result flag) {
-        if (c.getStance().anallyPenetrated(c.getOpponent(character))) {
+        if (c.getStance().anallyPenetrated(c, c.getOpponent(character))) {
             character.arousal.empty();
             return "Yui fucks you from behind.";
-        } else if (c.getStance().vaginallyPenetrated(character)) {
+        } else if (c.getStance().vaginallyPenetrated(c, character)) {
             return "Yui's expert control of her love canal forces you over the edge. You desperately buckle and moan while trying to at least even the playing field, but a quick squeeze from her well trained "
                             + "vaginal muscles destroys any self control you may have had. Yui looks proudly at you and inquires, <i>\"Master! How is it? The women of the Ishida clan are well trained in the arts of "
                             + "seduction in addition to martial arts. I've been told they're very effective in things like information extraction and subversion! In these peaceful times, it's a bit hard getting hands "

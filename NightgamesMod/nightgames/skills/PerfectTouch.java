@@ -15,7 +15,7 @@ public class PerfectTouch extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return c.getStance().mobile(getSelf()) && !target.torsoNude() && !c.getStance().prone(getSelf())
-                        && getSelf().canAct() && !c.getStance().connected();
+                        && getSelf().canAct() && !c.getStance().connected(c);
     }
 
     @Override

@@ -10,7 +10,6 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
-import nightgames.stance.Stance;
 import nightgames.status.Stsflag;
 
 public class Strapon extends Skill {
@@ -29,7 +28,7 @@ public class Strapon extends Skill {
         return getSelf().canAct() && !getSelf().has(Trait.strapped) && c.getStance().mobile(getSelf())
                         && !c.getStance().prone(getSelf())
                         && (getSelf().has(Item.Strapon) || getSelf().has(Item.Strapon2)) && !getSelf().hasDick()
-                        && !c.getStance().connected() && c.getStance().enumerate() != Stance.facesitting;
+                        && !c.getStance().connected(c) && !c.getStance().isFaceSitting(getSelf());
     }
 
     @Override

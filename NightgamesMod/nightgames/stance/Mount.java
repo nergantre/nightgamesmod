@@ -1,6 +1,7 @@
 package nightgames.stance;
 
 import nightgames.characters.Character;
+import nightgames.combat.Combat;
 
 public class Mount extends AbstractFacingStance {
 
@@ -9,7 +10,7 @@ public class Mount extends AbstractFacingStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         if (top.human()) {
             return "You're on top of " + bottom.name() + ".";
         } else {

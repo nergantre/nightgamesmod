@@ -19,7 +19,7 @@ public class Restrain extends Skill {
     public boolean usable(Combat c, Character target) {
         return !target.wary() && c.getStance().mobile(getSelf()) && c.getStance().prone(target)
                         && c.getStance().reachTop(getSelf()) && getSelf().canAct() && c.getStance().reachTop(target)
-                        && !c.getStance().connected();
+                        && !c.getStance().connected(c);
     }
 
     @Override
