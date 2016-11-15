@@ -29,40 +29,39 @@ public class Airi extends BasePersonality {
     }
 
     public Airi(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Airi", 10, charConfig, commonConfig);
-
+        super("Airi", 10, charConfig, commonConfig, false);
     }
 
-    @Override protected void applyBasicStats() {
-        character.change();
-        character.setTrophy(Item.AiriTrophy);
+    @Override
+    public void applyStrategy(NPC self) {
+        self.plan = Plan.retreating;
+        self.mood = Emotion.nervous;
+    }
+
+    @Override
+    public void applyBasicStats(Character self) {
+        self.change();
+        self.setTrophy(Item.AiriTrophy);
         preferredCockMod = CockMod.slimy;
 
-        character.outfitPlan.add(Clothing.getByID("shirt"));
-        character.outfitPlan.add(Clothing.getByID("bra"));
-        character.outfitPlan.add(Clothing.getByID("panties"));
-        character.outfitPlan.add(Clothing.getByID("skirt"));
-        character.outfitPlan.add(Clothing.getByID("pantyhose"));
-        character.outfitPlan.add(Clothing.getByID("shoes"));
-        character.change();
-        character.rank = 1;
-        character.set(Attribute.Power, 6);
-        character.set(Attribute.Slime, 1);
-        character.set(Attribute.Cunning, 15);
-        character.set(Attribute.Speed, 4);
-        character.set(Attribute.Seduction, 17);
-        character.getStamina().setMax(50 + character.getLevel() * getGrowth().stamina);
-        character.getArousal().setMax(80 + character.getLevel() * getGrowth().arousal);
-        character.getMojo().setMax(100);
-        character.getWillpower().setMax(80);
-        character.add(Trait.dexterous);
-        character.add(Trait.imagination);
-        character.add(Trait.softheart);
-        character.add(Trait.repressed);
-
-        character.plan = Plan.retreating;
-        character.mood = Emotion.confident;
-        character.initialGender = CharacterSex.female;
+        self.outfitPlan.add(Clothing.getByID("shirt"));
+        self.outfitPlan.add(Clothing.getByID("bra"));
+        self.outfitPlan.add(Clothing.getByID("panties"));
+        self.outfitPlan.add(Clothing.getByID("skirt"));
+        self.outfitPlan.add(Clothing.getByID("pantyhose"));
+        self.outfitPlan.add(Clothing.getByID("shoes"));
+        self.change();
+        self.rank = 1;
+        self.modAttributeDontSaveData(Attribute.Power, -1);
+        self.modAttributeDontSaveData(Attribute.Slime, 1);
+        self.modAttributeDontSaveData(Attribute.Cunning, 2);
+        self.modAttributeDontSaveData(Attribute.Speed, -1);
+        self.modAttributeDontSaveData(Attribute.Seduction, 6);
+        self.getStamina().setMax(50);
+        self.getArousal().setMax(80);
+        self.getMojo().setMax(100);
+        self.getWillpower().setMax(80);
+        self.initialGender = CharacterSex.female;
     }
 
     @Override
@@ -72,15 +71,19 @@ public class Airi extends BasePersonality {
         growth.willpower = 1.5f;
         growth.bonusStamina = 1;
         growth.bonusArousal = 1;
+        growth.addTrait(0, Trait.dexterous);
+        growth.addTrait(0, Trait.imagination);
+        growth.addTrait(0, Trait.softheart);
+        growth.addTrait(0, Trait.repressed);
         growth.addTrait(9, Trait.limbTraining1);
         growth.addTrait(12, Trait.lacedjuices);
         growth.addTrait(15, Trait.QuickRecovery);
         growth.addTrait(18, Trait.BoundlessEnergy);
-        growth.addTrait(23, Trait.pussyTraining1);
+        growth.addTrait(23, Trait.sexTraining1);
         growth.addTrait(31, Trait.limbTraining2);
         growth.addTrait(37, Trait.tongueTraining1);
         growth.addTrait(44, Trait.limbTraining3);
-        growth.addTrait(51, Trait.pussyTraining2);
+        growth.addTrait(51, Trait.sexTraining2);
         growth.addTrait(58, Trait.tongueTraining2);
 
         preferredAttributes.add(c -> Optional.of(Attribute.Slime));
@@ -116,6 +119,7 @@ public class Airi extends BasePersonality {
             character.purge(c);
             character.addTemporaryTrait(Trait.slime, 999);
             character.removeTemporaryTrait(Trait.repressed, 999);
+            character.removeTemporaryTrait(Trait.softheart, 999);
             if (character.hasPussy() && !character.body.getRandomPussy().moddedPartCountsAs(character, PussyPart.gooey)) {
                 character.body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
             }
@@ -181,28 +185,28 @@ public class Airi extends BasePersonality {
     }
 
     @Override
-    public String bbLiner(Combat c) {
+    public String bbLiner(Combat c, Character other) {
         return character.has(Trait.slime) ? "Airi grimaces as you fall. <i>\"Apologies... but necessary.... Please understand...\"</i>" : "<i>\"Sorry... I hope it didn't hurt too badly...\"</i>";
     }
 
     @Override
-    public String nakedLiner(Combat c) {
+    public String nakedLiner(Combat c, Character opponent) {
         // always naked in slime form
         return character.has(Trait.slime) ? "" : "<i>Nooo! Don't look at me!</i>";
     }
 
     @Override
-    public String stunLiner(Combat c) {
+    public String stunLiner(Combat c, Character opponent) {
         return character.has(Trait.slime) ? "Airi glares at you from the puddle she formed on the floor. <i>\"Unforgivable...\"</i>" : "<i>\"Unforgivable...\"</i>";
     }
 
     @Override
-    public String taunt(Combat c) {
+    public String taunt(Combat c, Character opponent) {
         return character.has(Trait.slime) ? "Airi coos at you <i>\"About to cum..? ...even trying..?\"</i>" : "<i><b>Giggle</b> \"Try a bit harder okay?\"</i>";
     }
 
     @Override
-    public String temptLiner(Combat c) {
+    public String temptLiner(Combat c, Character opponent) {
         return character.has(Trait.slime) ? "<i>\"Fill me with yourself... forget everything...\"</i>" : "<i>\"Uhm, it's okay, you can come inside...\"</i>";
     }
 
@@ -316,8 +320,13 @@ public class Airi extends BasePersonality {
 
     @Override
     public String startBattle(Character other) {
-        return character.has(Trait.slime) ? "Airi's main body rises up from her slime blob and forms the demure beauty you're used to seeing. <i>\"Delicious... Quickly... Give me your seed...\"</i>"
-                        : "You're fighting Airi, a reticent asian girl. She looks pretty normal for now, but you know she's holding a secret.";
+        if (other.human()) {
+            return character.has(Trait.slime)
+                            ? "Airi's main body rises up from her slime blob and forms the demure beauty you're used to seeing. <i>\"Delicious... Quickly... Give me your seed...\"</i>"
+                            : "You're fighting Airi, a reticent asian girl. She looks pretty normal for now, but you know she's holding a secret.";
+        } else {
+            return "You... will do...";
+        }
     }
 
     @Override

@@ -27,48 +27,44 @@ public class Reyka extends BasePersonality {
     }
 
     public Reyka(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Reyka", 1, charConfig, commonConfig);
+        super("Reyka", 1, charConfig, commonConfig, false);
     }
 
-    protected void applyBasicStats() {
+    @Override
+    public void applyStrategy(NPC self) {
+        self.plan = Plan.hunting;
+        self.mood = Emotion.confident;
+
+        self.addPersonalStrategy(new FootjobStrategy());
+        self.addPersonalStrategy(new FacesitStrategy());
+        self.addPersonalStrategy(new KnockdownStrategy());
+    }
+
+    @Override
+    public void applyBasicStats(Character self) {
         preferredCockMod = CockMod.incubus;
-        character.outfitPlan.add(Clothing.getByID("tanktop"));
-        character.outfitPlan.add(Clothing.getByID("miniskirt"));
-        character.outfitPlan.add(Clothing.getByID("garters"));
-        character.outfitPlan.add(Clothing.getByID("stilettopumps"));
-        character.change();
-        character.set(Attribute.Dark, 12);
-        character.set(Attribute.Seduction, 14);
-        character.set(Attribute.Cunning, 7);
-        character.set(Attribute.Speed, 5);
-        character.setTrophy(Item.ReykaTrophy);
-        character.getStamina().setMax(40);
-        character.getArousal().setMax(200);
-        character.getMojo().setMax(110);
-        character.add(Trait.succubus);
-        character.add(Trait.proheels);
-        character.add(Trait.masterheels);
-        character.add(Trait.darkpromises);
-        character.add(Trait.Confident);
-        character.add(Trait.shameless);
+        self.outfitPlan.add(Clothing.getByID("tanktop"));
+        self.outfitPlan.add(Clothing.getByID("miniskirt"));
+        self.outfitPlan.add(Clothing.getByID("garters"));
+        self.outfitPlan.add(Clothing.getByID("stilettopumps"));
+        self.change();
+        self.modAttributeDontSaveData(Attribute.Dark, 2);
+        self.modAttributeDontSaveData(Attribute.Seduction, 3);
+        self.modAttributeDontSaveData(Attribute.Cunning, 2);
+        self.setTrophy(Item.ReykaTrophy);
 
-        getCharacter().addPersonalStrategy(new FootjobStrategy());
-        getCharacter().addPersonalStrategy(new FacesitStrategy());
-        getCharacter().addPersonalStrategy(new KnockdownStrategy());
+        Global.gainSkills(self);
+        self.getStamina().setMax(50);
+        self.getArousal().setMax(120);
+        self.getMojo().setMax(110);
 
-        Global.gainSkills(character);
-        character.getStamina().setMax(50 + character.getLevel() * getGrowth().stamina);
-        character.getArousal().setMax(120 + character.getLevel() * getGrowth().arousal);
-
-        character.plan = Plan.hunting;
-        character.mood = Emotion.confident;
-        character.body.add(BreastsPart.dd);
-        character.body.add(PussyPart.succubus);
-        character.body.add(TailPart.demonic);
-        character.body.add(WingsPart.demonic);
-        character.body.add(EarPart.pointed);
-        character.body.add(new FacePart(1.5, 1.1));
-        character.initialGender = CharacterSex.female;
+        self.body.add(BreastsPart.dd);
+        self.body.add(PussyPart.succubus);
+        self.body.add(TailPart.demonic);
+        self.body.add(WingsPart.demonic);
+        self.body.add(EarPart.pointed);
+        self.body.add(new FacePart(1.5, 1.1));
+        self.initialGender = CharacterSex.female;
     }
 
     @Override
@@ -83,7 +79,14 @@ public class Reyka extends BasePersonality {
                         .add(c -> c.get(Attribute.Dark) > c.get(Attribute.Fetish) + 10 && c.get(Attribute.Fetish) < 50
                                         ? Optional.of(Attribute.Fetish) : Optional.empty());
         preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
-        growth.addTrait(2, Trait.pussyTraining1);
+
+        growth.addTrait(0, Trait.succubus);
+        growth.addTrait(0, Trait.proheels);
+        growth.addTrait(0, Trait.masterheels);
+        growth.addTrait(0, Trait.darkpromises);
+        growth.addTrait(0, Trait.Confident);
+        growth.addTrait(0, Trait.shameless);
+        growth.addTrait(2, Trait.sexTraining1);
         growth.addTrait(5, Trait.tongueTraining1);
         growth.addTrait(8, Trait.expertGoogler);
         growth.addTrait(11, Trait.addictivefluids);
@@ -96,11 +99,11 @@ public class Reyka extends BasePersonality {
         growth.addTrait(29, Trait.dickhandler);
         growth.addTrait(32, Trait.lacedjuices);
         growth.addTrait(35, Trait.energydrain);
-        growth.addTrait(38, Trait.pussyTraining2);
+        growth.addTrait(38, Trait.sexTraining2);
         growth.addTrait(41, Trait.soulsucker);
         growth.addTrait(44, Trait.analTraining1);
         growth.addTrait(47, Trait.desensitized2);
-        growth.addTrait(50, Trait.pussyTraining3);
+        growth.addTrait(50, Trait.sexTraining3);
         growth.addTrait(53, Trait.vaginaltongue);
         growth.addTrait(56, Trait.carnalvirtuoso);
     }
@@ -144,13 +147,13 @@ public class Reyka extends BasePersonality {
     }
 
     @Override
-    public String bbLiner(Combat c) {
+    public String bbLiner(Combat c, Character other) {
         return "Reyka looks at you with a pang of regret: <i>\"In hindsight, damaging"
                         + " the source of my meal might not have been the best idea...\"</i>";
     }
 
     @Override
-    public String nakedLiner(Combat c) {
+    public String nakedLiner(Combat c, Character opponent) {
         return "<i>\"You could have just asked, you know.\"</i> As you gaze upon her naked form,"
                         + " noticing the radiant ruby ardorning her bellybutton, you feel"
                         + " sorely tempted to just give in to your desires. The hungry look"
@@ -158,24 +161,24 @@ public class Reyka extends BasePersonality {
     }
 
     @Override
-    public String stunLiner(Combat c) {
+    public String stunLiner(Combat c, Character opponent) {
         return "Reyka is laying on the floor, her wings spread out behind her," + " panting for breath";
     }
 
     @Override
-    public String taunt(Combat c) {
+    public String taunt(Combat c, Character opponent) {
         return "\"You look like you will taste nice. Maybe if you let me have " + "a taste, I will be nice to you too.\"";
     }
 
     @Override
-    public String temptLiner(Combat c) {
+    public String temptLiner(Combat c, Character opponent) {
         return "\"Why keep fighting? Wouldn't it just feel SO much better just to let me do what I do best?\"";
     }
 
     @Override
     public String victory(Combat c, Result flag) {
         Character opponent = character.equals(c.p1) ? c.p2 : c.p1;
-        if (c.getStance().anallyPenetrated(opponent)) {
+        if (c.getStance().anallyPenetrated(c, opponent)) {
             return "Reyka alternates between long hard thrusts and sensual grinding to keep you from getting used to the stimulation, and the pleasure it is "
                             + "inflicting on you stops you from mustering the resolve to fight back. <i>\"I do love a good bit of pegging.\"</i> Reyka comments as she begins "
                             + "to gently rock the head of the strapon over your prostate, leaving you breathing hard as your mouth hangs open. <i>\"There's a special "

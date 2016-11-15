@@ -44,18 +44,18 @@ public class CombatTest {
     @Test public void getDominanceOfStanceNoTraits() throws Exception {
         // Neutral position. No dominance involved, so neither character should lose willpower.
         combat.setStance(new TestPosition(self, other, Stance.neutral, 0));
-        assertThat(combat.getDominanceOfStance(self), equalTo(0));
-        assertThat(combat.getDominanceOfStance(other), equalTo(0));
+        assertThat(combat.getStance().getDominanceOfStance(self), equalTo(0));
+        assertThat(combat.getStance().getDominanceOfStance(other), equalTo(0));
 
         // Self is dominant. Other should lose willpower but self should not.
         combat.setStance(new TestPosition(self, other, Stance.engulfed, 5));
-        assertThat(combat.getDominanceOfStance(self), equalTo(5));
-        assertThat(combat.getDominanceOfStance(other), equalTo(0));
+        assertThat(combat.getStance().getDominanceOfStance(self), equalTo(5));
+        assertThat(combat.getStance().getDominanceOfStance(other), equalTo(0));
 
         // Negative position dominance. Not a valid dominance value, but we'll accept it and treat it like a neutral position.
         combat.setStance(new TestPosition(self, other, Stance.coiled, -5));
-        assertThat(combat.getDominanceOfStance(self), equalTo(0));
-        assertThat(combat.getDominanceOfStance(other), equalTo(0));
+        assertThat(combat.getStance().getDominanceOfStance(self), equalTo(0));
+        assertThat(combat.getStance().getDominanceOfStance(other), equalTo(0));
     }
 
 
@@ -63,18 +63,18 @@ public class CombatTest {
         self.add(Trait.smqueen);
         // Neutral position. No dominance involved, so neither character should lose willpower, regardless of traits.
         combat.setStance(new TestPosition(self, other, Stance.neutral, 0));
-        assertThat(combat.getDominanceOfStance(self), equalTo(0));
-        assertThat(combat.getDominanceOfStance(other), equalTo(0));
+        assertThat(combat.getStance().getDominanceOfStance(self), equalTo(0));
+        assertThat(combat.getStance().getDominanceOfStance(other), equalTo(0));
 
         // Self is dominant. Other should lose willpower but self should not. Trait increases effective stance dominance.
         combat.setStance(new TestPosition(self, other, Stance.engulfed, 5));
-        assertThat(combat.getDominanceOfStance(self), equalTo(8));
-        assertThat(combat.getDominanceOfStance(other), equalTo(0));
+        assertThat(combat.getStance().getDominanceOfStance(self), equalTo(5));
+        assertThat(combat.getStance().getDominanceOfStance(other), equalTo(0));
 
         // Negative position dominance. Not a valid dominance value, but we'll accept it and treat it like a neutral position.
         combat.setStance(new TestPosition(self, other, Stance.coiled, -5));
-        assertThat(combat.getDominanceOfStance(self), equalTo(0));
-        assertThat(combat.getDominanceOfStance(other), equalTo(0));
+        assertThat(combat.getStance().getDominanceOfStance(self), equalTo(0));
+        assertThat(combat.getStance().getDominanceOfStance(other), equalTo(0));
     }
 
 
@@ -82,17 +82,17 @@ public class CombatTest {
         self.add(Trait.submissive);
         // Neutral position. No dominance involved, so neither character should lose willpower, regardless of traits.
         combat.setStance(new TestPosition(self, other, Stance.neutral, 0));
-        assertThat(combat.getDominanceOfStance(self), equalTo(0));
-        assertThat(combat.getDominanceOfStance(other), equalTo(0));
+        assertThat(combat.getStance().getDominanceOfStance(self), equalTo(0));
+        assertThat(combat.getStance().getDominanceOfStance(other), equalTo(0));
 
         // Self is dominant. Other should lose willpower but self should not. Trait decreases effective stance dominance.
         combat.setStance(new TestPosition(self, other, Stance.engulfed, 5));
-        assertThat(combat.getDominanceOfStance(self), equalTo(3));
-        assertThat(combat.getDominanceOfStance(other), equalTo(0));
+        assertThat(combat.getStance().getDominanceOfStance(self), equalTo(3));
+        assertThat(combat.getStance().getDominanceOfStance(other), equalTo(0));
 
         // Negative position dominance. Not a valid dominance value, but we'll accept it and treat it like a neutral position.
         combat.setStance(new TestPosition(self, other, Stance.coiled, -5));
-        assertThat(combat.getDominanceOfStance(self), equalTo(0));
-        assertThat(combat.getDominanceOfStance(other), equalTo(0));
+        assertThat(combat.getStance().getDominanceOfStance(self), equalTo(0));
+        assertThat(combat.getStance().getDominanceOfStance(other), equalTo(0));
     }
 }

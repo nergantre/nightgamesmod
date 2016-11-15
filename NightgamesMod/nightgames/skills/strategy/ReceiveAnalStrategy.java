@@ -37,7 +37,7 @@ public class ReceiveAnalStrategy extends AbstractStrategy {
     
     @Override
     protected Set<Skill> filterSkills(Combat c, Character self, Set<Skill> allowedSkills) {
-        if (c.getStance().anallyPenetrated(self)) {
+        if (c.getStance().anallyPenetrated(c, self)) {
             return new FuckStrategy().filterSkills(c, self, allowedSkills);
         }
         Set<Skill> anal = allowedSkills.stream().filter(s -> s.getTags().contains(SkillTag.anal)).collect(Collectors.toSet());

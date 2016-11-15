@@ -33,7 +33,7 @@ public class Carry extends Fuck {
     public boolean usable(Combat c, Character target) {
         return fuckable(c, target) && !target.wary() && getTargetOrgan(target).isReady(target) && getSelf().canAct()
                         && c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf())
-                        && !c.getStance().prone(target) && c.getStance().facing() && getSelf().getStamina().get() >= 15;
+                        && !c.getStance().prone(target) && c.getStance().facing(getSelf(), target) && getSelf().getStamina().get() >= 15;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class Carry extends Fuck {
             if (getSelf().human()) {
                 c.write(getSelf(), Global.capitalizeFirstLetter(
                                 premessage + deal(c, premessage.length(), Result.normal, target)));
-            } else if (c.shouldPrintReceive(target)) {
+            } else if (c.shouldPrintReceive(target, c)) {
                 c.write(getSelf(), premessage + receive(c, premessage.length(), Result.normal, getSelf()));
             }
             int m = 5 + Global.random(5);
@@ -63,7 +63,7 @@ public class Carry extends Fuck {
             if (getSelf().human()) {
                 c.write(getSelf(), Global
                                 .capitalizeFirstLetter(premessage + deal(c, premessage.length(), Result.miss, target)));
-            } else if (c.shouldPrintReceive(target)) {
+            } else if (c.shouldPrintReceive(target, c)) {
                 c.write(getSelf(), premessage + receive(c, premessage.length(), Result.miss, target));
             }
             getSelf().add(c, new Falling(getSelf()));

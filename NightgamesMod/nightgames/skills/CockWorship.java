@@ -24,9 +24,9 @@ public class CockWorship extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return target.crotchAvailable() && target.hasDick() && c.getStance().oral(getSelf())
+        return target.crotchAvailable() && target.hasDick() && c.getStance().oral(getSelf(), target)
                         && c.getStance().front(getSelf()) && getSelf().canAct()
-                        && !c.getStance().vaginallyPenetrated(target);
+                        && !c.getStance().vaginallyPenetrated(c, target);
     }
 
     @Override

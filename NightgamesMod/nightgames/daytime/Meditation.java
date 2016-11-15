@@ -109,7 +109,7 @@ public class Meditation extends Activity {
                                                 + "before you hit your peak and cum in your pants. Suzume giggles when she realizes what happened. <i>\"I probably should have warned you to bring a change of underwear with you. Don't worry, "
                                                 + "your hypersensitivity will level out over the next hour or so. You'll be a bit more perceptive, but not like you are now.\"</i>");
                 if (player.getPure(Attribute.Perception) < 9) {
-                    player.set(Attribute.Perception, player.getPure(Attribute.Perception) + 1);
+                    player.mod(Attribute.Perception, 1);
                 }
             } else {
                 Global.gui().message(
@@ -141,7 +141,7 @@ public class Meditation extends Activity {
                                                 + "genitals, helps you to your feet, and hands you your missing clothes. <i>\"Your sensitivity should already be starting to return. You'll keep some of your endurance, but you'll probably "
                                                 + "feel it when someone undresses you.\"</i>");
                 if (player.getPure(Attribute.Perception) > 1) {
-                    player.set(Attribute.Perception, player.getPure(Attribute.Perception) - 1);
+                    player.mod(Attribute.Perception, -1);
                 }
             } else {
                 Global.gui().message(

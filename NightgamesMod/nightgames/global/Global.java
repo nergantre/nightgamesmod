@@ -38,6 +38,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.ContextFactory;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonIOException;
@@ -161,6 +163,8 @@ public class Global {
     public static final Path COMBAT_LOG_DIR = new File("combatlogs").toPath();
 
     public Global(boolean headless) {
+        debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
+        debug[DebugFlags.DEBUG_PET.ordinal()] = true;
         rng = new Random();
         flags = new HashSet<>();
         players = new HashSet<>();
@@ -186,16 +190,6 @@ public class Global {
         System.out.println("Night games");
         System.out.println(new Timestamp(jdate.getTime()));
 
-        debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
-        // debug[DebugFlags.DEBUG_LOADING.ordinal()] = true;
-        // debug[DebugFlags.DEBUG_FTC.ordinal()] = true;
-        // debug[DebugFlags.DEBUG_DAMAGE.ordinal()] = true;
-        // debug[DebugFlags.DEBUG_SKILLS.ordinal()] = true;
-        // debug[DebugFlags.DEBUG_SKILLS_RATING.ordinal()] = true;
-        // debug[DebugFlags.DEBUG_PLANNING.ordinal()] = true;
-        // debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
-        // debug[DebugFlags.DEBUG_ADDICTION.ordinal()] = true;
-        // debug[DebugFlags.DEBUG_SPECTATE.ordinal()] = true;
         traitRequirements = new TraitTree(ResourceLoader.getFileResourceAsStream("data/TraitRequirements.xml"));
         current = null;
         factory = new ContextFactory();
@@ -205,7 +199,6 @@ public class Global {
         buildFeatPool();
         buildSkillPool(noneCharacter);
         buildModifierPool();
-        flag(Flag.AiriEnabled);
         gui = makeGUI(headless);
     }
 
@@ -239,10 +232,11 @@ public class Global {
         if (!cfgFlags.isEmpty()) {
             flags = cfgFlags.stream().map(Flag::name).collect(Collectors.toSet());
         }
-        Set<Character> lineup = pickCharacters(players, Collections.singleton(human), 4);
-        match = new Match(lineup, new NoModifier());
+        Map<String, Boolean> configurationFlags = JsonUtils.mapFromJson(JsonUtils.rootJson(new InputStreamReader(ResourceLoader.getFileResourceAsStream("data/globalflags.json"))).getAsJsonObject(), String.class, Boolean.class);
+        configurationFlags.forEach((flag, val) -> Global.setFlag(flag, val));
         time = Time.NIGHT;
-        //saveWithDialog();
+        setCharacterDisabledFlag(getNPCByType("Yui"));
+        setUpMatch(new NoModifier());
     }
 
     public static int random(int start, int end) {
@@ -507,7 +501,9 @@ public class Global {
         getSkillPool().add(new WindUp(ch));
         getSkillPool().add(new ThrowSlime(ch));
         getSkillPool().add(new Edge(ch));
-
+        getSkillPool().add(new SummonYui(ch));
+        getSkillPool().add(new Simulacrum(ch));
+        getSkillPool().add(new PetThreesome(ch));
 
         if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
             getSkillPool().add(new SelfStun(ch));
@@ -687,7 +683,7 @@ public class Global {
         Global.gui().endMatch();
     }
     
-    private static Set<Character> pickCharacters(Set<Character> avail, Set<Character> added, int size) {
+    private static Set<Character> pickCharacters(Collection<Character> avail, Collection<Character> added, int size) {
         List<Character> randomizer = avail.stream()
                         .filter(c -> !c.human())
                         .filter(c -> !c.has(Trait.event))
@@ -726,7 +722,7 @@ public class Global {
             if (player.getPure(Attribute.Science) > 0) {
                 player.chargeBattery();
             }
-            if (human.getAffection(player) > maxaffection && !player.has(Trait.event)) {
+            if (human.getAffection(player) > maxaffection && !player.has(Trait.event) && !checkCharacterDisabledFlag(player)) {
                 maxaffection = human.getAffection(player);
                 lover = player;
             }
@@ -735,27 +731,15 @@ public class Global {
         // Disable characters flagged as disabled
         for (Character c : players) {
             // Disabling the player wouldn't make much sense, and there's no PlayerDisabled flag.
-            String flagName = c.getType() + "Disabled";
-            if (c.getType().equals("Player") || !checkFlag(flagName)) {
+            if (c.getType().equals("Player") || !checkCharacterDisabledFlag(c)) {
                 participants.add(c);
             }
         }
+        if (lover != null) {
+            lineup.add(lover);
+        }
+        lineup.add(human);
         if (matchmod.name().equals("maya")) {
-            ArrayList<Character> randomizer = new ArrayList<>();
-            if (lover != null) {
-                lineup.add(lover);
-            }
-            lineup.add(human);
-            randomizer.addAll(players);
-            Collections.shuffle(randomizer);
-            for (Character player : randomizer) {
-                if (!lineup.contains(player) && !player.human() && lineup.size() < 4 && !player.has(Trait.event)) {
-                    lineup.add(player);
-                } else if (lineup.size() >= 4 || player.has(Trait.event)) {
-                    resting.add(player);
-                }
-            }
-            lineup = pickCharacters(players, lineup, 4);
             if (!checkFlag(Flag.Maya)) {
                 newChallenger(new Maya(human.getLevel()));
                 flag(Flag.Maya);
@@ -763,6 +747,7 @@ public class Global {
             NPC maya = Optional.ofNullable(getNPC("Maya")).orElseThrow(() -> new IllegalStateException(
                             "Maya data unavailable when attempting to add her to lineup."));
             lineup.add(maya);
+            lineup = pickCharacters(participants, lineup, 5);
             resting = new HashSet<>(players);
             resting.removeAll(lineup);
             maya.gain(Item.Aphrodisiac, 10);
@@ -782,19 +767,15 @@ public class Global {
             match = new Match(lineup, matchmod);
         } else if (matchmod.name().equals("ftc")) {
             Character prey = ((FTCModifier) matchmod).getPrey();
-            lineup.add(prey);
-            if (!prey.human())
-                lineup.add(human);
-            lineup = pickCharacters(players, lineup, 4);
+            if (!prey.human()) {
+                lineup.add(prey);
+            }
+            lineup = pickCharacters(participants, lineup, 5);
             resting = new HashSet<>(players);
             resting.removeAll(lineup);
             match = buildMatch(lineup, matchmod);
         } else if (participants.size() > 5) {
-            if (lover != null) {
-                lineup.add(lover);
-            }
-            lineup.add(human);
-            lineup = pickCharacters(players, lineup, 4);
+            lineup = pickCharacters(participants, lineup, 5);
             resting = new HashSet<>(players);
             resting.removeAll(lineup);
             match = buildMatch(lineup, matchmod);
@@ -844,7 +825,6 @@ public class Global {
         }
         return original.substring(0, 1).toUpperCase() + original.substring(1);
     }
-
 
     public static NPC getNPCByType(String type) {
         NPC results = characterPool.get(type);
@@ -1019,7 +999,15 @@ public class Global {
     public static void unflag(Flag f) {
         flags.remove(f.name());
     }
-    
+
+    public static void setFlag(String f, boolean value) {
+        if (value) { 
+            flag(f);
+        } else {
+            unflag(f);
+        }
+    }
+
     public static void setFlag(Flag f, boolean value) {
         if (value) { 
             flags.add(f.name()); 
@@ -1208,6 +1196,8 @@ public class Global {
      */
     protected static void loadData(SaveData data) {
         players.addAll(data.players);
+        players.stream().filter(c -> c instanceof NPC).forEach(
+                        c -> characterPool.put(c.getType(), (NPC) c));
         flags.addAll(data.flags);
         counters.putAll(data.counters);
         date = data.date;
@@ -1480,6 +1470,10 @@ public class Global {
         return rng.nextDouble();
     }
 
+    public static double randomdouble(double to) {
+        return rng.nextDouble() * to;
+    }
+
     public static String prependPrefix(String prefix, String fullDescribe) {
         if (prefix.equals("a ") && "aeiou".contains(fullDescribe.substring(0, 1).toLowerCase())) {
             return "an " + fullDescribe;
@@ -1547,4 +1541,17 @@ public class Global {
     public static Character getCharacterByName(String name) {
         return players.stream().filter(c -> c.getName().equals(name)).findAny().get();
     }
+
+    private static String DISABLED_FORMAT = "%sDisabled";
+    public static boolean checkCharacterDisabledFlag(Character self) {
+        return checkFlag(String.format(DISABLED_FORMAT, self.getName()));
+    }
+
+    public static void setCharacterDisabledFlag(Character self) {
+        flag(String.format(DISABLED_FORMAT, self.getName()));
+    }    
+
+    public static void unsetCharacterDisabledFlag(Character self) {
+        unflag(String.format(DISABLED_FORMAT, self.getName()));
+    }    
 }

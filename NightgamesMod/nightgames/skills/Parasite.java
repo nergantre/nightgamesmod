@@ -21,7 +21,7 @@ public class Parasite extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return !target.is(Stsflag.parasited) && c.getStance().kiss(getSelf()) && !target.canAct() && getSelf().canAct();
+        return !target.is(Stsflag.parasited) && c.getStance().kiss(getSelf(), target) && !target.canAct() && getSelf().canAct();
     }
 
     @Override

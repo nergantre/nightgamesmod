@@ -25,36 +25,39 @@ public class Angel extends BasePersonality {
     }
 
     public Angel(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Angel", 1, charConfig, commonConfig);
+        super("Angel", 1, charConfig, commonConfig, true);
     }
 
-    protected void applyBasicStats() {
-        character.isStartCharacter = true;
+    public void applyBasicStats(Character self ) {
         preferredCockMod = CockMod.blessed;
-        character.outfitPlan.add(Clothing.getByID("Tshirt"));
-        character.outfitPlan.add(Clothing.getByID("bra"));
-        character.outfitPlan.add(Clothing.getByID("thong"));
-        character.outfitPlan.add(Clothing.getByID("miniskirt"));
-        character.outfitPlan.add(Clothing.getByID("sandals"));
-        character.change();
-        character.mod(Attribute.Seduction, 2);
-        character.mod(Attribute.Perception, 1);
-        Global.gainSkills(character);
+        self.outfitPlan.add(Clothing.getByID("Tshirt"));
+        self.outfitPlan.add(Clothing.getByID("bra"));
+        self.outfitPlan.add(Clothing.getByID("thong"));
+        self.outfitPlan.add(Clothing.getByID("miniskirt"));
+        self.outfitPlan.add(Clothing.getByID("sandals"));
+        self.change();
+        self.modAttributeDontSaveData(Attribute.Seduction, 2);
+        self.modAttributeDontSaveData(Attribute.Perception, 1);
+        Global.gainSkills(self);
 
-        character.getStamina().setMax(60 + character.getLevel() * getGrowth().stamina);
-        character.getArousal().setMax(110 + character.getLevel() * getGrowth().arousal);
+        self.getStamina().setMax(60);
+        self.getArousal().setMax(110);
 
-        character.add(Trait.undisciplined);
-        character.add(Trait.lickable);
-        character.setTrophy(Item.AngelTrophy);
-        character.plan = Plan.hunting;
-        character.mood = Emotion.confident;
-        character.body.add(BreastsPart.dd);
+        self.setTrophy(Item.AngelTrophy);
+        if (self instanceof NPC) {
+        }
+        self.body.add(BreastsPart.dd);
         // very feminine face
-        character.body.add(new FacePart(0.6, 4.2));
-        character.initialGender = CharacterSex.female;
+        self.body.add(new FacePart(0.6, 4.2));
+        self.initialGender = CharacterSex.female;
     }
 
+    @Override public void applyStrategy(NPC self) {
+        NPC npcSelf = (NPC) self;
+        npcSelf.plan = Plan.retreating;
+        npcSelf.mood = Emotion.confident;
+    }
+    
     @Override
     public void setGrowth() {
         growth.stamina = 1;
@@ -62,8 +65,10 @@ public class Angel extends BasePersonality {
         growth.bonusStamina = 1;
         growth.bonusArousal = 4;
 
+        growth.addTrait(0, Trait.undisciplined);
+        growth.addTrait(0, Trait.lickable);
         growth.addTrait(3, Trait.responsive);
-        growth.addTrait(9, Trait.pussyTraining1);
+        growth.addTrait(9, Trait.sexTraining1);
         growth.addTrait(12, Trait.expertGoogler);
         growth.addTrait(15, Trait.experienced);
         growth.addTrait(18, Trait.erophage);
@@ -72,14 +77,14 @@ public class Angel extends BasePersonality {
         growth.addTrait(21, Trait.holecontrol);
         growth.addTrait(24, Trait.insertion);
         growth.addTrait(27, Trait.alwaysready);
-        growth.addTrait(30, Trait.pussyTraining2);
+        growth.addTrait(30, Trait.sexTraining2);
         growth.addTrait(33, Trait.RawSexuality);
         growth.addTrait(36, Trait.objectOfWorship);
         growth.addTrait(39, Trait.tight);
         growth.addTrait(42, Trait.desensitized);
         growth.addTrait(45, Trait.limbTraining1);
         growth.addTrait(48, Trait.magicEyeArousal);
-        growth.addTrait(51, Trait.pussyTraining3);
+        growth.addTrait(51, Trait.sexTraining3);
         growth.addTrait(54, Trait.desensitized2);
         preferredAttributes
                         .add(c -> c.get(Attribute.Divinity) < 50 ? Optional.of(Attribute.Divinity) : Optional.empty());
@@ -92,9 +97,6 @@ public class Angel extends BasePersonality {
             if (!character.has(Trait.demigoddess) && character.money >= 1000) {
                 advance();
             }
-        }
-        if (character.has(Trait.demigoddess) && !character.has(Trait.divinity)) {
-            character.add(Trait.divinity);
         }
         super.rest(time);
         if (!(character.has(Item.Dildo) || character.has(Item.Dildo2)) && character.money >= 250) {
@@ -123,7 +125,7 @@ public class Angel extends BasePersonality {
         if (character.rank >= 1) {
             if (!character.has(Trait.lacedjuices) && character.money >= 1000) {
                 character.money -= 1000;
-                character.add(Trait.lacedjuices);
+                growth.addTrait(Math.min(20, character.getLevel()), Trait.lacedjuices);
             }
             if (character.money > 0) {
                 Global.getDay().visit("Body Shop", character, Global.random(character.money));
@@ -160,27 +162,27 @@ public class Angel extends BasePersonality {
     }
 
     @Override
-    public String bbLiner(Combat c) {
+    public String bbLiner(Combat c, Character other) {
         return "Angel seems to enjoy your anguish in a way that makes you more than a little nervous. <i>\"That's a great look for you, I'd like to see it more often.\"</i>";
     }
 
     @Override
-    public String nakedLiner(Combat c) {
+    public String nakedLiner(Combat c, Character opponent) {
         return "Angel gives you a haughty look, practically showing off her body. <i>\"I can't blame you for wanting to see me naked, everyone does.\"</i>";
     }
 
     @Override
-    public String stunLiner(Combat c) {
+    public String stunLiner(Combat c, Character opponent) {
         return "Angel groans on the floor. <i>\"You really are a beast. It takes a gentle touch to please a lady.\"</i>";
     }
 
     @Override
-    public String taunt(Combat c) {
+    public String taunt(Combat c, Character opponent) {
         return "Angel pushes the head of your dick with her finger and watches it spring back into place. <i>\"You obviously can't help yourself. If only you were a little bigger, we could have a lot of fun.\"</i>";
     }
 
     @Override
-    public String temptLiner(Combat c) {
+    public String temptLiner(Combat c, Character opponent) {
         return "Angel looks at you with a grin, <i>\"You're almost drooling. Is staring at my body that much fun? If you want me that much, why don't you just sit there and let me make you feel good.\"</i>";
     }
 
@@ -189,7 +191,7 @@ public class Angel extends BasePersonality {
         character.arousal.empty();
         Character opponent = character.equals(c.p1) ? c.p2 : c.p1;
         String message = "";
-        if (c.getStance().anallyPenetrated(opponent)) {
+        if (c.getStance().anallyPenetrated(c, opponent)) {
             message = "Angel leans over you as she grinds her hips against yours. <i>\"You're going to come for me, aren't you?\"</i> she purrs into your ear. You shake your head; "
                             + "no way could you live it down if you came while you had something in your ass. Angel frowns and gives your ass a firm slap. <i>\"No reach around for you "
                             + "then,\"</i> she snaps. <i>\"We'll just do this the old fashioned way.\"</i> She renews her assault on your poor ass and you feel your will slipping. Another solid slap "
@@ -251,7 +253,7 @@ public class Angel extends BasePersonality {
     @Override
     public String defeat(Combat c, Result flag) {
         Character opponent = c.getOpponent(character);
-        if (c.getStance().vaginallyPenetrated(character)) {
+        if (c.getStance().vaginallyPenetrated(c, character)) {
             return "You thrust your cock continously into Angel's dripping pussy. Her hot insides feel amazing, but you're sure you have enough of an advantage to risk "
                             + "it. She lets out breathy moans in time to your thrusts and her arms are trembling too much to hold herself up. She's clearly about to cum, you just "
                             + "need to push her over the edge. You maul her soft, heavy boobs and suck on her neck. Angel closes her eyes tightly and whimpers in pleasure. <p>You keep "
@@ -403,7 +405,7 @@ public class Angel extends BasePersonality {
 
     @Override
     public String startBattle(Character other) {
-        return "Angel licks her lips and stalks you like a predator.";
+        return Global.format("{self:SUBJECT} licks {self:possessive} lips and stalks {other:name-do} like a predator.", character, other);
     }
 
     @Override
@@ -423,9 +425,9 @@ public class Angel extends BasePersonality {
     }
 
     public void advance() {
-        character.add(Trait.demigoddess);
-        character.add(Trait.divinity);
-        character.add(Trait.proheels);
+        character.getGrowth().addTrait(10, Trait.demigoddess);
+        character.getGrowth().addTrait(10, Trait.divinity);
+        character.getGrowth().addTrait(10, Trait.proheels);
         character.body.addReplace(PussyPart.divine, 1);
         character.body.addReplace(WingsPart.angelic, 5);
         character.unequipAllClothing();

@@ -181,7 +181,7 @@ public class AssJob extends Skill {
                 } else {
                     res += String.format(
                                     "The swells of %s ass feel great on %s cock even through the clothing between %s.",
-                                    getSelf().possessivePronoun(), target.possessivePronoun(), c.bothDirectObject());
+                                    getSelf().possessivePronoun(), target.possessivePronoun(), c.bothDirectObject(target));
                 }
                 return res;
             case strong:

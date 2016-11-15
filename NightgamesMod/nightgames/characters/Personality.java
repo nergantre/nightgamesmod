@@ -2,6 +2,7 @@ package nightgames.characters;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 import nightgames.actions.Action;
@@ -23,13 +24,13 @@ public interface Personality extends Serializable {
 
     void rest(int time);
 
-    String bbLiner(Combat c);
+    String bbLiner(Combat c, Character other);
 
-    String nakedLiner(Combat c);
+    String nakedLiner(Combat c, Character opponent);
 
-    String stunLiner(Combat c);
+    String stunLiner(Combat c, Character opponent);
 
-    String taunt(Combat c);
+    String taunt(Combat c, Character opponent);
 
     String victory(Combat c, Result flag);
 
@@ -63,7 +64,7 @@ public interface Personality extends Serializable {
 
     String describeAll(Combat c);
 
-    String temptLiner(Combat c);
+    String temptLiner(Combat c, Character opponent);
 
     String orgasmLiner(Combat c);
 
@@ -80,6 +81,7 @@ public interface Personality extends Serializable {
     void resetAiModifiers();
 
     String resist3p(Combat combat, Character target, Character assist);
+    List<PreferredAttribute> getPreferredAttributes();
 
     Map<CommentSituation, String> getComments(Combat c);
 
@@ -95,4 +97,7 @@ public interface Personality extends Serializable {
     void setCharacter(NPC npc);
 
     Growth getGrowth();
+
+    void applyBasicStats(Character self);
+    void applyStrategy(NPC self);
 }

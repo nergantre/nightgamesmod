@@ -51,14 +51,14 @@ public class AssPart extends GenericBodyPart {
     @Override
     public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
         double bonus = 0;
-        if (self.has(Trait.oiledass) && c.getStance().anallyPenetratedBy(self, opponent)) {
+        if (self.has(Trait.oiledass) && c.getStance().anallyPenetratedBy(c, self, opponent)) {
             c.write(self, Global.format(
                             "{self:NAME-POSSESSIVE} naturally oiled asshole swallows {other:name-possessive} cock with ease.",
                             self, opponent));
             bonus += 5;
         }
 
-        if ((self.has(Trait.tight) || self.has(Trait.holecontrol)) && c.getStance().anallyPenetrated(self)) {
+        if ((self.has(Trait.tight) || self.has(Trait.holecontrol)) && c.getStance().anallyPenetrated(c, self)) {
             String desc = "";
             if (self.has(Trait.tight)) {
                 desc += "powerful ";
@@ -75,7 +75,7 @@ public class AssPart extends GenericBodyPart {
                 opponent.pain(c, opponent, Math.min(30, self.get(Attribute.Power)));
             }
         }
-        if (self.has(Trait.drainingass) && !opponent.has(Trait.strapped) && c.getStance().anallyPenetratedBy(self, opponent)) {
+        if (self.has(Trait.drainingass) && !opponent.has(Trait.strapped) && c.getStance().anallyPenetratedBy(c, self, opponent)) {
             if (Global.random(3) == 0) {
                 c.write(self, Global.format("{self:name-possessive} ass seems to <i>inhale</i>, drawing"
                                 + " great gouts of {other:name-possessive} strength from {other:possessive}"

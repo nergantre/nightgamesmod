@@ -9,7 +9,7 @@ import java.util.Map;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 
-public class Growth {
+public class Growth implements Cloneable {
     public float arousal;
     public float stamina;
     public float bonusArousal;
@@ -42,9 +42,14 @@ public class Growth {
         }
         traits.get(level).add(trait);
     }
-
-    public List<Trait> traitsAtLevel(int level) {
-        return traits.get(level);
+    
+    public void addOrRemoveTraits(Character character) {
+        traits.keySet().stream().filter(i -> i > character.level).forEach(i -> {
+            traits.get(i).forEach(character::remove);
+        });
+        traits.keySet().stream().filter(i -> i <= character.level).forEach(i -> {
+            traits.get(i).forEach(character::add);
+        });
     }
 
     public void levelUp(Character character) {
@@ -60,11 +65,25 @@ public class Growth {
             character.getWillpower().gain(bonusWillpower);
             character.availableAttributePoints += bonusAttributes;
         }
-        traits.keySet().stream().filter(i -> i <= character.level).forEach(i -> {
-            traits.get(i).forEach(character::add);
-        });
+        addOrRemoveTraits(character);
         actions.keySet().stream().filter(i -> i <= character.level).forEach(i -> {
             actions.get(i).run();
         });
+    }
+
+    /**
+     * Note: only affects meters, not traits.
+     *
+     * @param character
+     */
+    public void levelDown(Character character) {
+        character.getStamina().gain(-stamina);
+        character.getArousal().gain(-arousal);
+        character.getWillpower().gain(-willpower);
+        if (Global.checkFlag(Flag.hardmode)) {
+            character.getStamina().gain(-bonusStamina);
+            character.getArousal().gain(-bonusArousal);
+            character.getWillpower().gain(-bonusWillpower);
+        }
     }
 }

@@ -51,13 +51,6 @@ public enum Flag {
     threesome,
     bodyShop,
     hardmode,
-    AngelDisabled,
-    CassieDisabled,
-    MaraDisabled,
-    ReykaDisabled,
-    KatDisabled,
-    JewelDisabled,
-    AiriEnabled,
     systemMessages,
     malePref,
     masturbationSemen,
@@ -75,10 +68,14 @@ public enum Flag {
     YuiLoyalty, 
     YuiAvailable, 
     Yui,
+    YuiWalletReturned,
     YuiUnlocking,
     FemalePronounsOnly,
     skipMM,
     skipFF,
+    hermHasBalls,
+    shemaleNoBalls,
+    femaleTGIntoHerm,
     ;
     
     public static boolean exists(String flag) {

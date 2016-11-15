@@ -47,7 +47,7 @@ public class CockGrowth extends Skill {
             res = Result.special;
         }
 
-        boolean permanent = Global.random(20) == 0 && (getSelf().human() || c.shouldPrintReceive(target))
+        boolean permanent = Global.random(20) == 0 && (getSelf().human() || c.shouldPrintReceive(target, c))
                         && !target.has(Trait.stableform);
 
         if (res != Result.miss) {

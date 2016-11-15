@@ -35,7 +35,7 @@ public class ImpTease extends SimpleEnemySkill {
                 target.body.pleasure(getSelf(), getSelf().body.getRandomPussy(), target.body.getRandomCock(),
                                 getSelf().modifyDamage(DamageType.pleasure, target, m), c);
                 return true;
-            } else if (target.hasPussy() && !c.getStance().vaginallyPenetrated(target) && target.crotchAvailable() && getSelf().hasDick()) {
+            } else if (target.hasPussy() && !c.getStance().vaginallyPenetrated(c, target) && target.crotchAvailable() && getSelf().hasDick()) {
                 c.write(getSelf(), Global.format("{self:SUBJECT-ACTION} latches onto {other:name-do} and shoves {self:possessive} thick cock into {other:possessive} pussy. As the demon humps {other:direct-object}, {other:SUBJECT-ACTION:yell|shrieks} and punches {self:direct-object} away.",
                                 getSelf(), target));
                 target.body.pleasure(getSelf(), getSelf().body.getRandomCock(), target.body.getRandomPussy(),

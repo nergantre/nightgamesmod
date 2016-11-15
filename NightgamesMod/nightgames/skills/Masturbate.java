@@ -48,11 +48,11 @@ public class Masturbate extends Skill {
         if (cock != null && !c.getStance().inserted(target)) {
             parts.add(cock);
         }
-        if (pussy != null && !c.getStance().vaginallyPenetrated(target)) {
+        if (pussy != null && !c.getStance().vaginallyPenetrated(c, target)) {
             parts.add(pussy);
         }
         if ((parts.isEmpty() || getSelf().has(Trait.shameless)) && ass != null
-                        && !c.getStance().anallyPenetrated(target)) {
+                        && !c.getStance().anallyPenetrated(c, target)) {
             parts.add(ass);
         }
         if (parts.isEmpty()) {
@@ -86,7 +86,7 @@ public class Masturbate extends Skill {
                     c.write(getSelf(), "Touching yourself amuses Mara, reducing her control over you.");
                 }
             }
-        } else if (c.shouldPrintReceive(target)) {
+        } else if (c.shouldPrintReceive(target, c)) {
             c.write(getSelf(), receive(c, 0, Result.normal, target));
         }
         int pleasure;

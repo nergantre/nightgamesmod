@@ -43,12 +43,13 @@ public class MindControl extends Addiction {
     protected String describeIncrease() {
         switch (getSeverity()) {
             case HIGH:
-                return "Mara has you completely in her grasp. Your body moves automatically to obey her"
-                                + " commands, now.";
+                return cause.name() + " has you completely in " + cause.directObject() + " grasp. Your body moves "
+                        + "automatically to obey " + cause.directObject() + " commands, now.";
             case LOW:
-                return "You feel a tug on your mind every time Mara speaks, pushing you to do as she says.";
+                return "You feel a tug on your mind every time " + cause.name() + " speaks, pushing you to do as "
+                        + cause.pronoun() + " says.";
             case MED:
-                return "You find your body moving to Mara's words without any input from your mind.";
+                return "You find your body moving to " + cause.name() + "'s words without any input from your mind.";
             case NONE:
             default:
                 return ""; // hide
@@ -59,13 +60,14 @@ public class MindControl extends Addiction {
     protected String describeDecrease() {
         switch (getSeverity()) {
             case LOW:
-                return "Mara's control is weakening, and only her strongest commands have a noticable effect.";
+                return cause.name() + "'s control is weakening, and only " + cause.directObject() + " strongest commands"
+                        + " have a noticable effect.";
             case MED:
-                return "You feel as if Mara's words do not bury themselves as deeply into your psyche as before."
-                                + " Can you resist her?";
+                return "You feel as if " + cause.name() + "'s words do not bury themselves as deeply into your psyche as before."
+                        + " Can you resist " + cause.directObject() + "?";
             case NONE:
-                return "At last that invisible string tying you to Mara snaps, and you are back in control"
-                                + " of your mind.";
+                return "At last that invisible string tying you to " + cause.name() + " snaps, and you are back in control"
+                        + " of your mind.";
             case HIGH:
             default:
                 return ""; // hide
@@ -76,13 +78,13 @@ public class MindControl extends Addiction {
     protected String describeWithdrawal() {
         switch (getSeverity()) {
             case HIGH:
-                return "<b>You are now constantly fighting your own body to keep from doing Mara's will.</b>";
+                return "<b>You are now constantly fighting your own body to keep from doing " + cause.name() + "'s will.</b>";
             case LOW:
-                return "<b>Your body tries to steer you towards Mara all the time, and it's taking serious effort"
-                                + " to resist.</b>";
+                return "<b>Your body tries to steer you towards " + cause.name() + " all the time, and it's taking"
+                        + " serious effort to resist.</b>";
             case MED:
-                return "<b>Keeping your body in line and away from Mara is getting really difficult know, and it's a"
-                                + " severe strain on your stamina.</b>";
+                return "<b>Keeping your body in line and away from " + cause.name() + " is getting really difficult know,"
+                        + " and it's a severe strain on your stamina.</b>";
             case NONE:
             default:
                 return "";
@@ -91,38 +93,38 @@ public class MindControl extends Addiction {
 
     @Override
     protected String describeCombatIncrease() {
-        return "Mara's words weigh increasingly heavily on you, and it's getting harder to resist.";
+        return cause.name() + "'s words weigh increasingly heavily on you, and it's getting harder to resist.";
     }
 
     @Override
     protected String describeCombatDecrease() {
-        return "Doing Mara's bidding relieves some of the pressure in your mind.";
+        return "Doing " + cause.name() + "'s bidding relieves some of the pressure in your mind.";
     }
 
     @Override
     public String informantsOverview() {
-        return "Oh, that is just nasty. You've got to hand it to her, though, she got you good."
-                        + " It looks like her control somehow bypasses your mind and goes straight to"
-                        + " your motor functions. That's a special kind of mean, because you'll be entirely"
-                        + " conscious for the whole thing, not turned into some kind of willing slave. There's"
-                        + " two ways you can go about this: You can do what she wants you to do, but on your"
-                        + " terms, or you can try to defy her as long as you can and beat her quickly. If you"
-                        + " play along, by laying down or whacking off or something, then that will obviously be"
-                        + " bad for you but it would also mean you stay more or less in control of it all. If you"
-                        + " fight her control, you'll be able to function normally for a while, but you will eventually"
-                        + " break. When you do, she'll have total control until you recover, which would be far worse."
-                        + " Resisting her commands will take some serious effort, so it would probably leave you"
-                        + " quite tired. So my advice is: don't cum inside of her again while she can look you in the"
-                        + " eyes. It's that simple.";
+        return "Oh, that is just nasty. You've got to hand it to " + cause.directObject() + ", though, " + cause.pronoun()
+                + " got you good. It looks like " + cause.directObject() + " control somehow bypasses your mind and goes"
+                + " straight to your motor functions. That's a special kind of mean, because you'll be entirely"
+                + " conscious for the whole thing, not turned into some kind of willing slave. There's"
+                + " two ways you can go about this: You can do what " + cause.pronoun() + " wants you to do, but on your"
+                + " terms, or you can try to defy " + cause.directObject() + " as long as you can and beat "
+                + cause.directObject() + " quickly. If you play along, by laying down or whacking off or something, then"
+                + " that will obviously be bad for you but it would also mean you stay more or less in control of it all."
+                + " If you fight " + cause.directObject() + " control, you'll be able to function normally for a while,"
+                + " but you will eventually break. When you do, " + cause.pronoun() + "'ll have total control until you"
+                + " recover, which would be far worse. Resisting " + cause.directObject() + " commands will take"
+                + " some serious effort, so it would probably leave you quite tired. So my advice is: don't cum inside"
+                + " of " + cause.directObject() + " again while " + cause.pronoun() + " can look you in the eyes. It's that simple.";
     }
 
     @Override
     public String describeMorning() {
         return "Your hand shoots to your hardening dick as soon as you wake up. You have know idea how,"
-                        + " but you somehow know it's what Mara wants you to do, and your body is responding"
-                        + " accordingly. You force your hand to your side and awkwardly get dressed. Whenever you're"
-                        + " not paying attention, it shoots back and rubs your crotch again, though. Perhaps you"
-                        + " can persuade Mara to go a little easier on you? Then again, maybe not.";
+                + " but you somehow know it's what " + cause.name() + " wants you to do, and your body is responding"
+                + " accordingly. You force your hand to your side and awkwardly get dressed. Whenever you're"
+                + " not paying attention, it shoots back and rubs your crotch again, though. Perhaps you"
+                + " can persuade " + cause.name() + " to go a little easier on you? Then again, maybe not.";
     }
 
     @Override
@@ -133,22 +135,25 @@ public class MindControl extends Addiction {
     @Override
     public String initialMessage(Combat c, boolean replaced) {
         if (inWithdrawal) {
-            return "There she is! Mara does not look pleased after you haven't visited her all day.";
+            return "There " + cause.pronoun() + " is! " + cause.name() + " does not look pleased after you haven't visited "
+                    + cause.directObject() + " all day.";
         }
-        return "Your breathing accelerates when you see Mara; you know what power she has over you...";
+        return "Your breathing accelerates when you see " + cause.name() + "; you know what power " + cause.pronoun()
+                + " has over you...";
     }
 
     @Override
     public String describe(Combat c) {
         switch (getCombatSeverity()) {
             case HIGH:
-                return "Every word Mara speaks rings of truth to you, even though she's telling"
-                                + " you to submit to her. Your body trembles, and you will soon be forced to obey.";
+                return "Every word " + cause.name() + " speaks rings of truth to you, even though " + cause.pronoun() + "'s"
+                        + " telling you to submit to " + cause.directObject() + ". Your body trembles, and you will soon"
+                        + " be forced to obey.";
             case LOW:
-                return "Mara keeps saying things for you to do, and you don't know how"
-                                + " long you'll be able to resist her.";
+                return cause.name() + " keeps saying things for you to do, and you don't know how"
+                                + " long you'll be able to resist " + cause.directObject() + ".";
             case MED:
-                return "Mara's words are starting to have a greater pull on you. You won't hold out" + " much longer.";
+                return cause.name() + "'s words are starting to have a greater pull on you. You won't hold out much longer.";
             case NONE:
             default:
                 return "";
@@ -161,7 +166,7 @@ public class MindControl extends Addiction {
         super.tick(c);
         if (!affected.is(Stsflag.enthralled) && Global.randomdouble() < magnitude / 3) {
             affected.addlist.add(new Enthralled(affected, cause, 3));
-            c.write(cause, "Mara's constant urging overcomes your defences, washing away all of your resistance.");
+            c.write(cause, cause.name() + "'s constant urging overcomes your defences, washing away all of your resistance.");
         }
     }
 
@@ -244,25 +249,28 @@ public class MindControl extends Addiction {
             if (Global.getPlayer()
                       .is(Stsflag.blinded)) {
                 succeeded = false;
-                description = "Since you can't see, you are protected from Mara's controlling gaze.";
+                description = "Since you can't see, you are protected from " + controller.name() + "'s controlling gaze.";
             } else
                 switch (pos.en) {
                     case cowgirl:
                         succeeded = true;
-                        description = "You turn your head away as you feel your orgasm coming on, wary of Mara's"
-                                        + " hypnotic eyes. She's not having it, though. She grabs you head and forces"
-                                        + " and forces your eyelids open with her thumbs. ";
+                        description = "You turn your head away as you feel your orgasm coming on, wary of " + controller.name() + "'s"
+                                        + " hypnotic eyes. " + Global.capitalizeFirstLetter(controller.pronoun()) + "'s"
+                                        + " not having it, though. " + controller.pronoun() + " grabs your head"
+                                        + " and forces your eyelids open with " + controller.directObject()+ " thumbs. ";
                         break;
                     case anal:
                         if (pos instanceof AnalCowgirl) {
                             succeeded = true;
-                            description = "You turn your head away as you feel your orgasm coming on, wary of Mara's"
-                                            + " hypnotic eyes. She's not having it, though. She grabs you head and forces"
-                                            + " and forces your eyelids open with her thumbs. ";
+                            description = "You turn your head away as you feel your orgasm coming on, wary of " + controller.name() + "'s"
+                                            + " hypnotic eyes. " + Global.capitalizeFirstLetter(controller.pronoun()) + "'s"
+                                            + " not having it, though. " + controller.pronoun() + " grabs your head"
+                                            + " and forces your eyelids open with " + controller.directObject() + " thumbs. ";
                             break;
                         } else if (pos instanceof Anal) {
                             succeeded = false;
-                            description = "Since you're not facing Mara, her hypnotic eyes cannot affect you.";
+                            description = "Since you're not facing " + controller.name() + ", " + controller.directObject()
+                                            + " hypnotic eyes cannot affect you.";
                             break;
                         }
                         // Fall-through intentional -- AnalProne
@@ -271,37 +279,41 @@ public class MindControl extends Addiction {
                     case flying:
                         succeeded = true;
                         if (pos.dom(controller)) {
-                            description = "You turn your head away as you feel your orgasm coming on, wary of Mara's"
-                                            + " hypnotic eyes. She's not having it, though. She twists you head back"
-                                            + " and forces your eyelids open with her thumbs. ";
+                            description = "You turn your head away as you feel your orgasm coming on, wary of " + controller.name() + "'s"
+                                            + " hypnotic eyes. " + Global.capitalizeFirstLetter(controller.pronoun()) + "'s"
+                                            + " not having it, though. " + controller.pronoun() + " twists your head back"
+                                            + " and forces your eyelids open with " + controller.directObject() + " thumbs. ";
                         } else {
-                            description = "At the moment of your orgasm, Mara pulls herself up by your neck and touches"
-                                            + " her nose to yours. So close to cumming, you can't bring yourself to look away. ";
+                            description = "At the moment of your orgasm, " + controller.name() + " pulls herself up by"
+                                            + " your neck and touches " + controller.directObject() + " nose to yours."
+                                            + " So close to cumming, you can't bring yourself to look away. ";
                         }
                         break;
                     case pin:
                         if (pos.dom(controller)) {
                             succeeded = true;
-                            description = "You turn your head away as you feel your orgasm coming on, wary of Mara's"
-                                            + " hypnotic eyes. She's not having it, though. She grabs you head and forces"
-                                            + " and forces your eyelids open with her thumbs. ";
+                            description = "You turn your head away as you feel your orgasm coming on, wary of " + controller.name() + "'s"
+                                            + " hypnotic eyes. " + Global.capitalizeFirstLetter(controller.pronoun()) + "'s"
+                                            + " not having it, though. " + controller.pronoun() + " grabs your head"
+                                            + " and forces your eyelids open with " + controller.directObject() + " thumbs. ";
                         } else {
                             succeeded = false;
-                            description = "With Mara pinned beneath you as she is, it's not hard for you to keep your"
-                                            + " eyes from meeting hers as you launch into your orgasm.";
+                            description = "With " + controller.name() + " pinned beneath you as " + controller.pronoun()
+                                            + " is, it's not hard for you to keep your eyes from meeting hers as you "
+                                            + "launch into your orgasm.";
                         }
                         break;
                     case oralpin:
                         if (pos.dom(controller)) {
                             succeeded = true;
-                            description = "Mara grabs a fistful of your hair and pulls your head downwards. There is"
-                                            + " nothing you can do to evade her hypnotic gaze as you erupt into her "
-                                            + "sucking mouth. ";
+                            description = controller.name() + " grabs a fistful of your hair and pulls your head downwards. There is"
+                                            + " nothing you can do to evade " + controller.directObject() + " hypnotic"
+                                            + " gaze as you erupt into " + controller.directObject() + " sucking mouth. ";
                         } else {
                             // probably extremely rare
                             succeeded = false;
-                            description = "You close your eyes to make certain you're not going to be affected by Mara's eyes"
-                                            + " as you cum.";
+                            description = "You close your eyes to make certain you're not going to be affected by "
+                                            + controller.name() + "'s eyes as you cum.";
                         }
                         break;
                     case neutral:
@@ -310,20 +322,23 @@ public class MindControl extends Addiction {
                                   .canAct()) {
                             succeeded = false;
                             description = "With the freedom of movement you have at the moment, turning your gaze away"
-                                            + " from Mara's hypnotic eyes is quite easy even with your impending orgasm.";
+                                            + " from " + controller.name() + "'s hypnotic eyes is quite easy even with "
+                                            + "your impending orgasm.";
                         } else {
                             succeeded = true;
-                            description = "Immobilized as you are, you can't keep Mara from gazing deeply into your eyes"
-                                            + " as your orgasm begins to wash over you.";
+                            description = "Immobilized as you are, you can't keep " + controller.name() + " from gazing "
+                                            + "deeply into your eyes as your orgasm begins to wash over you.";
                         }
                         break;
                     default:
-                        if (pos.facing()) {
+                        if (pos.facing(Global.getPlayer(), controller)) {
                             succeeded = true;
-                            description = "Mara gazes into your eyes as she pushes you over the edge. ";
+                            description = controller.name() + " gazes into your eyes as " + controller.pronoun() 
+                                            + " pushes you over the edge. ";
                         } else {
                             succeeded = false;
-                            description = "Since you're not facing Mara, her hypnotic eyes cannot affect you.";
+                            description = "Since you're not facing " + controller.name() + ", "
+                                            + controller.directObject() + " hypnotic eyes cannot affect you.";
                         }
                 }
         }

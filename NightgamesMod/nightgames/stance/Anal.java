@@ -12,7 +12,7 @@ public class Anal extends AnalSexStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         if (top.human()) {
             return String.format("%s behind %s and %s cock in buried in %s ass.",
                             top.subjectAction("are", "is"),
@@ -39,12 +39,12 @@ public class Anal extends AnalSexStance {
 
     @Override
     public boolean mobile(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
-    public boolean kiss(Character c) {
-        return false;
+    public boolean kiss(Character c, Character target) {
+        return c != top && c != bottom;
     }
 
     @Override
@@ -59,26 +59,16 @@ public class Anal extends AnalSexStance {
 
     @Override
     public boolean reachTop(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
     public boolean reachBottom(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
     public boolean prone(Character c) {
-        return false;
-    }
-
-    @Override
-    public boolean feet(Character c) {
-        return false;
-    }
-
-    @Override
-    public boolean oral(Character c) {
         return false;
     }
 
@@ -93,7 +83,7 @@ public class Anal extends AnalSexStance {
     }
 
     @Override
-    public Position insertRandom() {
+    public Position insertRandom(Combat c) {
         return new Behind(top, bottom);
     }
 
@@ -108,7 +98,7 @@ public class Anal extends AnalSexStance {
             } else {
                 c.write(inserted.name() + " sighs with relief with your phallus gone.");
             }
-            c.setStance(insertRandom());
+            c.setStance(insertRandom(c));
         }
         if (inserted.body.getRandom("ass") == null) {
             if (inserted.human()) {
@@ -117,7 +107,7 @@ public class Anal extends AnalSexStance {
             } else {
                 c.write("Your dick pops out of " + inserted.name() + " as her asshole shrinks and disappears.");
             }
-            c.setStance(insertRandom());
+            c.setStance(insertRandom(c));
         }
     }
 

@@ -50,7 +50,7 @@ public class ShrinkRay extends Skill {
             } else {
                 c.write(getSelf(), deal(c, permanent ? 1 : 0, Result.normal, target));
             }
-        } else if (c.shouldPrintReceive(target)) {
+        } else if (c.shouldPrintReceive(target, c)) {
             if (target.hasDick()) {
                 c.write(getSelf(), receive(c, permanent ? 1 : 0, Result.special, target));
             } else {

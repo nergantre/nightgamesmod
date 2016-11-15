@@ -29,7 +29,7 @@ public class Shove extends Skill {
             return false;
         }
         return !c.getStance().dom(getSelf()) && !c.getStance().prone(target) && c.getStance().reachTop(getSelf())
-                        && getSelf().canAct() && !c.getStance().havingSex();
+                        && getSelf().canAct() && !c.getStance().havingSex(c);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class Shove extends Skill {
                 if (getSelf().human()) {
                     c.write(getSelf(), "You shove " + target.name()
                                     + " off of you and get to your feet before she can retaliate.");
-                } else if (c.shouldPrintReceive(target)) {
+                } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), String.format("%s shoves %s hard enough to free %s and jump up.",
                                     getSelf().subject(), target.nameDirectObject(), getSelf().reflectivePronoun()));
                 }
@@ -61,7 +61,7 @@ public class Shove extends Skill {
             } else {
                 if (getSelf().human()) {
                     c.write(getSelf(), "You push " + target.name() + ", but you're unable to dislodge her.");
-                } else if (c.shouldPrintReceive(target)) {
+                } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), String.format("%s shoves %s weakly.", getSelf().subject(), 
                                     target.nameDirectObject()));
                 }
@@ -72,7 +72,7 @@ public class Shove extends Skill {
             if (getSelf().check(Attribute.Power, target.knockdownDC())) {
                 if (getSelf().human()) {
                     c.write(getSelf(), "You shove " + target.name() + " hard enough to knock her flat on her back.");
-                } else if (c.shouldPrintReceive(target)) {
+                } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), String.format("%s knocks %s off balance and %s %s at her feet.",
                                     getSelf().subject(), target.nameDirectObject(),
                                     target.pronoun(), target.action("fall")));
@@ -81,7 +81,7 @@ public class Shove extends Skill {
             } else {
                 if (getSelf().human()) {
                     c.write(getSelf(), "You shove " + target.name() + " back a step, but she keeps her footing.");
-                } else if (c.shouldPrintReceive(target)) {
+                } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), String.format("%s pushes %s back, but %s %s able to maintain %s balance.",
                                     getSelf().subject(), target.nameDirectObject(), target.pronoun(),
                                     target.action("are", "is"), target.possessivePronoun()));

@@ -55,7 +55,7 @@ public class StripTease extends Skill {
     public boolean resolve(Combat c, Character target) {
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (c.shouldPrintReceive(target)) {
+        } else if (c.shouldPrintReceive(target, c)) {
             if (target.human() && target.is(Stsflag.blinded))
                 printBlinded(c);
             else

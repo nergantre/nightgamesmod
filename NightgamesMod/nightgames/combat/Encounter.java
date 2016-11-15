@@ -170,7 +170,7 @@ public class Encounter implements Serializable, IEncounter {
         }
         if (checkin >= 2) {
             if (p1ff && p2ff) {
-                fightTime = 2;
+                startFightTimer();
                 if (p1.human() || p2.human()) {
                     if (p1.human()) {
                         Global.gui()
@@ -189,7 +189,7 @@ public class Encounter implements Serializable, IEncounter {
                 if (p1Guaranteed.isPresent() && !p2Guaranteed.isPresent()) {
                     if (p1.human() || p2.human())
                         Global.gui().message(p1Guaranteed.get());
-                    fightTime = 2;
+                    startFightTimer();
                     Global.gui().refresh();
                     this.fight = Global.gui().beginCombat(p1, p2);
                 } else if (p2Guaranteed.isPresent()) {
@@ -204,7 +204,7 @@ public class Encounter implements Serializable, IEncounter {
                     }
                     p2.flee(location);
                 } else {
-                    fightTime = 2;
+                    startFightTimer();
                     if (p1.human() || p2.human()) {
                         if (p1.human()) {
                             Global.gui()
@@ -228,7 +228,7 @@ public class Encounter implements Serializable, IEncounter {
                 if (p2Guaranteed.isPresent() && !p1Guaranteed.isPresent()) {
                     if (p1.human() || p2.human())
                         Global.gui().message(p2Guaranteed.get());
-                    fightTime = 2;
+                    startFightTimer();
                     Global.gui().refresh();
                     this.fight = Global.gui().beginCombat(p1, p2);
                 } else if (p1Guaranteed.isPresent()) {
@@ -243,7 +243,7 @@ public class Encounter implements Serializable, IEncounter {
                     }
                     p1.flee(location);
                 } else {
-                    fightTime = 2;
+                    startFightTimer();
                     if (p1.human() || p2.human()) {
                         if (p2.human()) {
                             Global.gui()
@@ -278,8 +278,12 @@ public class Encounter implements Serializable, IEncounter {
         }
     }
 
-    protected void ambush(Character attacker, Character target) {
+    private void startFightTimer() {
         fightTime = 2;
+    }
+
+    protected void ambush(Character attacker, Character target) {
+        startFightTimer();
         target.add(new Flatfooted(target, 3));
         if (p1.human() || p2.human()) {
             fight = Global.gui()
@@ -297,7 +301,7 @@ public class Encounter implements Serializable, IEncounter {
     }
 
     protected void showerambush(Character attacker, Character target) {
-        fightTime = 2;
+        startFightTimer();
         if (target.human()) {
             if (location.id() == Movement.shower) {
                 Global.gui()
@@ -479,7 +483,7 @@ public class Encounter implements Serializable, IEncounter {
 
     public boolean battle() {
         fightTime--;
-        if (fightTime <= 0) {
+        if (fightTime <= 0 && !fight.isEnded()) {
             fight.go();
             return true;
         } else {
@@ -604,9 +608,7 @@ public class Encounter implements Serializable, IEncounter {
 
     @Override
     public void watch() {
-        fight.setBeingObserved(true);
-        Global.gui().combat = fight;
-        fight.addObserver(Global.gui());
-        Global.getMatch().resume();
+        Global.gui().watchCombat(fight);
+        fight.go();
     }
 }

@@ -53,12 +53,10 @@ import nightgames.status.addiction.AddictionType;
 import nightgames.trap.Trap;
 
 public class Player extends Character {
-    /**
-     *
-     */
     public GUI gui;
     private Growth growth;
     public int traitPoints;
+    private int levelsToGain;
     private List<Addiction> addictions;
 
     public Player(String name) {
@@ -68,11 +66,26 @@ public class Player extends Character {
     // TODO(Ryplinn): This initialization pattern is very close to that of BasePersonality. I think it makes sense to make NPC the primary parent of characters instead of BasePersonality.
     public Player(String name, CharacterSex sex, Optional<PlayerConfiguration> config, List<Trait> pickedTraits,
                     Map<Attribute, Integer> selectedAttributes) {
-
         super(name, 1);
+        growth = new Growth();
         initialGender = sex;
-        applyBasicStats();
+        addictions = new ArrayList<>();
+        levelsToGain = 0;
+        applyBasicStats(this);
+        setGrowth();
+
         body.makeGenitalOrgans(initialGender);
+
+        config.ifPresent(this::applyConfigStats);
+        finishCharacter(pickedTraits, selectedAttributes);
+    }
+
+    public void applyBasicStats(Character self) {
+        self.getStamina().setMax(80);
+        self.getArousal().setMax(80);
+        self.getWillpower().setMax(self.willpower.max());
+        self.availableAttributePoints = 0;
+        self.setTrophy(Item.PlayerTrophy);
         if (initialGender == CharacterSex.female || initialGender == CharacterSex.herm) {
             outfitPlan.add(Clothing.getByID("bra"));
             outfitPlan.add(Clothing.getByID("panties"));
@@ -83,20 +96,6 @@ public class Player extends Character {
         outfitPlan.add(Clothing.getByID("jeans"));
         outfitPlan.add(Clothing.getByID("socks"));
         outfitPlan.add(Clothing.getByID("sneakers"));
-        getStamina().setMax(80 + getLevel() * getGrowth().stamina);
-        getArousal().setMax(80 + getLevel() * getGrowth().arousal);
-        config.ifPresent(this::applyConfigStats);
-        finishCharacter(pickedTraits, selectedAttributes);
-
-    }
-
-    private void applyBasicStats() {
-        willpower.setMax(willpower.max());
-        availableAttributePoints = 0;
-        setTrophy(Item.PlayerTrophy);
-        growth = new Growth();
-        setGrowth();
-        addictions = new ArrayList<>();
     }
 
     private void applyConfigStats(PlayerConfiguration config) {
@@ -216,22 +215,22 @@ public class Player extends Character {
     }
 
     @Override
-    public String bbLiner(Combat c) {
+    public String bbLiner(Combat c, Character target) {
         return null;
     }
 
     @Override
-    public String nakedLiner(Combat c) {
+    public String nakedLiner(Combat c, Character target) {
         return null;
     }
 
     @Override
-    public String stunLiner(Combat c) {
+    public String stunLiner(Combat c, Character target) {
         return null;
     }
 
     @Override
-    public String taunt(Combat c) {
+    public String taunt(Combat c, Character target) {
         return null;
     }
 
@@ -384,7 +383,15 @@ public class Player extends Character {
 
     @Override
     public void ding() {
-        level++;
+        levelsToGain += 1;
+        if (levelsToGain == 1) {
+            actuallyDing();
+            gui.ding();
+        }
+    }
+
+    public void actuallyDing() {
+        level += 1;
         getStamina().gain(growth.stamina);
         getArousal().gain(growth.arousal);
         availableAttributePoints += growth.attributes[Math.min(rank, growth.attributes.length-1)];
@@ -392,9 +399,8 @@ public class Player extends Character {
         if (getLevel() % 3 == 0 && level < 10 || (getLevel() + 1) % 2 == 0 && level > 10) {
             traitPoints += 1;
         }
-        gui.ding();
     }
-
+    
     public Growth getGrowth() {
         return growth;
     }
@@ -1014,4 +1020,11 @@ public class Player extends Character {
         }
     }
 
+    public int getLevelsToGain() {
+        return levelsToGain;
+    }
+
+    public void finishDing() {
+        levelsToGain -= 1;
+    }
 }

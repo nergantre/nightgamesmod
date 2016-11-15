@@ -26,11 +26,19 @@ public class Yui extends BasePersonality {
     }
 
     public Yui(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Yui", 1, charConfig, commonConfig);
+        // Yui is a start character so that you can gain affection with her straight off the bat.
+        // She is disabled when the game starts
+        super("Yui", 1, charConfig, commonConfig, true);
     }
 
-    protected void applyBasicStats() {
-        character.isStartCharacter = false;
+    @Override
+    public void applyStrategy(NPC self) {
+        self.plan = Plan.hunting;
+        self.mood = Emotion.confident;
+    }
+
+    @Override
+    public void applyBasicStats(Character self) {
         preferredCockMod = CockMod.error;
         character.outfitPlan.add(Clothing.getByID("sarashi"));
         character.outfitPlan.add(Clothing.getByID("shinobigarb"));
@@ -38,22 +46,20 @@ public class Yui extends BasePersonality {
         character.outfitPlan.add(Clothing.getByID("tabi"));
 
         character.change();
-        character.mod(Attribute.Power, 1);
-        character.mod(Attribute.Seduction, 1);
-        character.mod(Attribute.Cunning, 1);
-        character.mod(Attribute.Perception, 1);
-        character.mod(Attribute.Ninjutsu, 1);
-        character.getStamina().setMax(100 + character.getLevel() * getGrowth().stamina);
-        character.getArousal().setMax(90 + character.getLevel() * getGrowth().arousal);
+        character.modAttributeDontSaveData(Attribute.Power, 1);
+        character.modAttributeDontSaveData(Attribute.Seduction, 1);
+        character.modAttributeDontSaveData(Attribute.Cunning, 1);
+        character.modAttributeDontSaveData(Attribute.Perception, 1);
+        character.modAttributeDontSaveData(Attribute.Ninjutsu, 1);
+        character.modAttributeDontSaveData(Attribute.Speed, 2);
+        character.getStamina().setMax(100);
+        character.getArousal().setMax(90);
+        character.rank = 1;
         Global.gainSkills(character);
-        character.add(Trait.obedient);
-        character.add(Trait.cute);
-        character.add(Trait.lickable);
+
         character.getMojo().setMax(130);
 
         character.setTrophy(Item.YuiTrophy);
-        character.plan = Plan.hunting;
-        character.mood = Emotion.confident;
         character.body.add(BreastsPart.c);
         character.initialGender = CharacterSex.female;
     }
@@ -65,26 +71,30 @@ public class Yui extends BasePersonality {
         growth.willpower = .4f;
         growth.bonusStamina = 2;
         growth.bonusArousal = 2;
-        preferredAttributes.add(c -> c.get(Attribute.Ninjutsu) < 60 ? Optional.of(Attribute.Ninjutsu) : Optional.empty());
+        preferredAttributes.add(c -> c.get(Attribute.Ninjutsu) < 60 && c.getLevel() >= 10 ? Optional.of(Attribute.Ninjutsu)  : Optional.empty());
         preferredAttributes.add(c -> c.get(Attribute.Cunning) < 50 ? Optional.of(Attribute.Cunning) : Optional.empty());
+
+        growth.addTrait(0, Trait.obedient);
+        growth.addTrait(0, Trait.cute);
+        growth.addTrait(0, Trait.lickable);
         growth.addTrait(2, Trait.Sneaky);
         growth.addTrait(5, Trait.dexterous);
         growth.addTrait(8, Trait.tongueTraining1);
-        growth.addTrait(11, Trait.pussyTraining1);
+        growth.addTrait(11, Trait.sexTraining1);
         growth.addTrait(14, Trait.limbTraining1);
         growth.addTrait(17, Trait.analTraining1);
         growth.addTrait(20, Trait.lacedjuices);
         growth.addTrait(23, Trait.responsive);
         growth.addTrait(26, Trait.graceful);
         growth.addTrait(29, Trait.tongueTraining2);
-        growth.addTrait(32, Trait.pussyTraining2);
+        growth.addTrait(32, Trait.sexTraining2);
         growth.addTrait(35, Trait.limbTraining2);
         growth.addTrait(38, Trait.analTraining2);
         growth.addTrait(41, Trait.calm);
         growth.addTrait(41, Trait.SexualGroove);
         growth.addTrait(41, Trait.alwaysready);
         growth.addTrait(44, Trait.tongueTraining3);
-        growth.addTrait(47, Trait.pussyTraining3);
+        growth.addTrait(47, Trait.sexTraining3);
         growth.addTrait(50, Trait.limbTraining3);
         growth.addTrait(53, Trait.analTraining3);
         growth.addTrait(56, Trait.tight);
@@ -160,10 +170,10 @@ public class Yui extends BasePersonality {
 
     @Override
     public String victory(Combat c, Result flag) {
-        if (c.getStance().anallyPenetrated(c.getOpponent(character))) {
+        if (c.getStance().anallyPenetrated(c, c.getOpponent(character))) {
             character.arousal.empty();
             return "Yui fucks you from behind.";
-        } else if (c.getStance().vaginallyPenetrated(character)) {
+        } else if (c.getStance().vaginallyPenetrated(c, character)) {
             return "Yui's expert control of her love canal forces you over the edge. You desperately buckle and moan while trying to at least even the playing field, but a quick squeeze from her well trained "
                             + "vaginal muscles destroys any self control you may have had. Yui looks proudly at you and inquires, <i>\"Master! How is it? The women of the Ishida clan are well trained in the arts of "
                             + "seduction in addition to martial arts. I've been told they're very effective in things like information extraction and subversion! In these peaceful times, it's a bit hard getting hands "
@@ -183,9 +193,9 @@ public class Yui extends BasePersonality {
         } else {
             return "Yui looks placidly at the proof of your defeat staining her body and says sheepishly <i>\"My apologies Master, we of the Ishida clan have been trained since we hit puberty on sexual techniques. "
                             + "It's not really a fair fight.\"</i> You flush red at her unintended insult. You halfheartedly try making a grab for her boob again, but Yui seems to disappear. While you look around confused, "
-                            + "you hear her familiar voice behind you as she reaches into your pants and stokes your cock again, <i>\"It's okay, as much as you want, your Yui will keep Master company. Master only needs to ask!\"</i>"
+                            + "you hear her familiar voice behind you as she reaches into your pants and stokes your cock again, <i>\"It's okay, as much as you want, I will keep Master company. You only need to ask!\"</i>"
                             + "<br/>"
-                            + "You groan as she manages to tease yet another geyser of white cum from your cock. Maybe it's too much for you right now.";
+                            + "You groan as she manages to tease yet another geyser of white cum from your cock. Maybe she's too much for you right now.";
         }
     }
 
@@ -200,28 +210,40 @@ public class Yui extends BasePersonality {
     }
 
     @Override
-    public String bbLiner(Combat c) {
-        return "Yui seems apologetic. <i>\"I'm sorry Master, but you did order a fair fight.\"</i>";
+    public String bbLiner(Combat c, Character other) {
+        if (other.human()) {
+            return "Yui seems apologetic. <i>\"I'm sorry Master, but you did order a fair fight.\"</i>";
+        } else {
+            return "Yui seems apologetic. <i>\"I'm sorry, but it's master's orders.\"</i>";
+        }
     }
 
     @Override
-    public String nakedLiner(Combat c) {
+    public String nakedLiner(Combat c, Character opponent) {
         return "Yui doesn't seem too fazed. <i>\"If Master wanted to see my body, you need just to ask.\"</i>";
     }
 
     @Override
-    public String stunLiner(Combat c) {
+    public String stunLiner(Combat c, Character opponent) {
         return "Yui groans as she falls, <i>\"Master, you are pretty good at this!\"</i>.";
     }
 
     @Override
-    public String taunt(Combat c) {
-        return "Yui blows you a kiss. <i>\"Master, your servant will comfort you soon!\"</i>";
+    public String taunt(Combat c, Character opponent) {
+        if (opponent.human()) {
+            return "Yui blows you a kiss. <i>\"Master, your servant will comfort you soon!\"</i>";
+        } else {
+            return "Yui taunts " + opponent + ", <i>\"Soon I'll have you on your knees serving master!\"</i>";
+        }
     }
 
     @Override
-    public String temptLiner(Combat c) {
-        return "Yui cups her breasts and looks at you slyly, <i>\"Master, keep your eyes on me.\"</i>";
+    public String temptLiner(Combat c, Character opponent) {
+        if (opponent.human()) {
+            return "Yui cups her breasts and looks at you slyly, <i>\"Master, keep your eyes on me.\"</i>";
+        } else {
+            return "Yui cups her breasts and looks at " + opponent.nameDirectObject() + " slyly, <i>\"Mmm don't look away.\"</i>";
+        }
     }
 
     @Override
@@ -274,7 +296,7 @@ public class Yui extends BasePersonality {
 
     @Override
     public String startBattle(Character other) {
-        return "Yui bows respectifully towards you before sliding into an easy stance";
+        return Global.format("{self:SUBJECT} bows respectifully towards {other:name-do} before sliding into an easy stance", character, other);
     }
 
     @Override

@@ -34,34 +34,40 @@ public abstract class BasePersonality implements Personality {
     protected CockMod preferredCockMod;
     protected AiModifiers mods;
 
-    protected BasePersonality() {
-    }
-
-    public BasePersonality(String name, int level, Optional<NpcConfiguration> charConfig,
-                    Optional<NpcConfiguration> commonConfig) {
+    protected BasePersonality(String name, int level, boolean isStartCharacter) {
         // Make the built-in character
         type = getClass().getSimpleName();
         character = new NPC(name, level, this);
-        growth = new Growth();
+        character.isStartCharacter = isStartCharacter;
         preferredCockMod = CockMod.error;
         preferredAttributes = new ArrayList<PreferredAttribute>();
+        growth = new Growth();
+    }
+
+    public BasePersonality(String name, int level, Optional<NpcConfiguration> charConfig,
+                    Optional<NpcConfiguration> commonConfig, boolean isStartCharacter) {
+        this(name, level, isStartCharacter);
+        setupCharacter(charConfig, commonConfig);
+    }
+    
+    protected void setupCharacter(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
         setGrowth();
-        applyBasicStats();
-        character.body.makeGenitalOrgans(character.initialGender);
+        applyBasicStats(character);
+        applyStrategy(character);
 
         // Apply config changes
         Optional<NpcConfiguration> mergedConfig = NpcConfiguration.mergeOptionalNpcConfigs(charConfig, commonConfig);
         mergedConfig.ifPresent(cfg -> cfg.apply(character));
 
+        character.body.makeGenitalOrgans(character.initialGender);
         character.body.finishBody(character.initialGender);
+        for (int i = 1; i < character.getLevel(); i++) {
+            getGrowth().levelUp(character);
+        }
+        character.distributePoints(preferredAttributes);
+        getGrowth().addOrRemoveTraits(character);
     }
 
-    /**
-     * Apply built-in character stats. Can be later overridden by StartConfiguration.
-     */
-    // TODO: Make this data-driven, like with custom NPCs.
-    protected abstract void applyBasicStats();
-    
     public void setCharacter(NPC c) {
         this.character = c;
     }
@@ -156,6 +162,11 @@ public abstract class BasePersonality implements Personality {
         growth.levelUp(character);
         onLevelUp();
         character.distributePoints(preferredAttributes);
+    }
+
+    @Override
+    public List<PreferredAttribute> getPreferredAttributes() {
+        return preferredAttributes;
     }
 
     protected void onLevelUp() {

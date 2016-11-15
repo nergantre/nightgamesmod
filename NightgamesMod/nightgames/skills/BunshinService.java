@@ -27,9 +27,9 @@ public class BunshinService extends Skill {
                         && getSelf().canAct() && !c.getStance()
                                                    .behind(target)
                         && !c.getStance()
-                             .penetrated(target)
+                             .penetrated(c, target)
                         && !c.getStance()
-                             .penetrated(getSelf())
+                             .penetrated(c, getSelf())
                         && target.mostlyNude();
     }
 
@@ -53,7 +53,7 @@ public class BunshinService extends Skill {
         if(getSelf().human()){
             c.write(getSelf(), String.format("You form %d shadow clones and rush forward.",clones));
         }
-        else if(c.shouldPrintReceive(target)){
+        else if(c.shouldPrintReceive(target, c)){
             c.write(getSelf(), String.format("%s moves in a blur and suddenly %s %d of %s approaching %s.",getSelf().name(),
                             target.subjectAction("see"),clones,getSelf().pronoun(),target.reflectivePronoun()));
         }

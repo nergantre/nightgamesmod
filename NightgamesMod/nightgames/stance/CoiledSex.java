@@ -16,7 +16,7 @@ public class CoiledSex extends FemdomSexStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         if (top.human()) {
             return "Your limbs are coiled around " + bottom.nameOrPossessivePronoun() + " body and "
                             + bottom.possessivePronoun() + " cock is inside you.";
@@ -35,11 +35,11 @@ public class CoiledSex extends FemdomSexStance {
 
     @Override
     public boolean mobile(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
-    public boolean kiss(Character c) {
+    public boolean kiss(Character c, Character target) {
         return true;
     }
 
@@ -55,12 +55,12 @@ public class CoiledSex extends FemdomSexStance {
 
     @Override
     public boolean reachTop(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
     public boolean reachBottom(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
@@ -69,22 +69,12 @@ public class CoiledSex extends FemdomSexStance {
     }
 
     @Override
-    public boolean feet(Character c) {
-        return false;
-    }
-
-    @Override
-    public boolean oral(Character c) {
-        return false;
-    }
-
-    @Override
     public boolean behind(Character c) {
         return false;
     }
 
     @Override
-    public Position insertRandom() {
+    public Position insertRandom(Combat c) {
         return new Mount(top, bottom);
     }
 

@@ -10,12 +10,17 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.items.clothing.ClothingTrait;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.damage.DamageType;
 
 public class Squeeze extends Skill {
 
     public Squeeze(Character self) {
         super("Squeeze Balls", self);
+        addTag(SkillTag.mean);
+        addTag(SkillTag.hurt);
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.staminaDamage);
     }
 
     @Override

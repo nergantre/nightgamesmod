@@ -15,7 +15,7 @@ public class CommandDown extends PlayerCommand {
     public boolean usable(Combat c, Character target) {
         return target.is(Stsflag.enthralled)
                         && ((Enthralled) target.getStatus(Stsflag.enthralled)).master.equals(getSelf())
-                        && !c.getStance().havingSex() && getSelf().canRespond() && c.getStance().en == Stance.neutral;
+                        && !c.getStance().havingSex(c) && getSelf().canRespond() && c.getStance().en == Stance.neutral;
     }
 
     public CommandDown(Character self) {

@@ -25,7 +25,7 @@ public class WildThrust extends Thrust {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().canAct() && c.getStance()
-                                      .havingSex()
+                                      .havingSex(c)
                         && c.getStance()
                             .inserted();
     }
@@ -115,12 +115,12 @@ public class WildThrust extends Thrust {
                             target.hasBalls() ? "prostate" : "insides");
         } else if (modifier == Result.reverse) {
             return String.format("%s frenziedly bounces on %s cock, relentlessly driving %s both toward orgasm.",
-                            getSelf().subject(), target.nameOrPossessivePronoun(), c.bothDirectObject());
+                            getSelf().subject(), target.nameOrPossessivePronoun(), c.bothDirectObject(target));
         } else {
             return Global.format(
                             "{self:SUBJECT-ACTION:rapidly pound|rapidly pounds} {self:possessive} {self:body-part:cock} into {other:possessive} {other:body-part:pussy}, "
                                             + "relentlessly driving %s both toward orgasm",
-                            getSelf(), target, c.bothDirectObject());
+                            getSelf(), target, c.bothDirectObject(target));
         }
     }
 

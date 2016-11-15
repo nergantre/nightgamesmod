@@ -21,12 +21,13 @@ public class Stomp extends Skill {
         addTag(SkillTag.hurt);
         addTag(SkillTag.positioning);
         addTag(SkillTag.staminaDamage);
+        addTag(SkillTag.mean);
     }
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return !c.getStance().prone(getSelf()) && c.getStance().prone(target) && c.getStance().feet(getSelf())
-                        && getSelf().canAct() && !getSelf().has(Trait.softheart) && !c.getStance().inserted(target);
+        return !c.getStance().prone(getSelf()) && c.getStance().prone(target) && c.getStance().feet(getSelf(), target)
+                        && getSelf().canAct() && !c.getStance().inserted(target);
     }
 
     @Override
@@ -41,10 +42,10 @@ public class Stomp extends Skill {
             if (getSelf().has(Trait.heeldrop) && target.crotchAvailable() && target.hasBalls()) {
                 if (getSelf().human()) {
                     c.write(getSelf(), deal(c, 0, Result.strong, target));
-                } else if (c.shouldPrintReceive(target)) {
+                } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), receive(c, 0, Result.strong, target));
                     if (target.hasBalls() && Global.random(5) >= 1) {
-                        c.write(getSelf(), getSelf().bbLiner(c));
+                        c.write(getSelf(), getSelf().bbLiner(c, target));
                     }
                 }
                 pain = 15 - (int) Math
@@ -55,10 +56,10 @@ public class Stomp extends Skill {
         } else if (getSelf().has(Trait.heeldrop) && target.crotchAvailable()) {
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.special, target));
-            } else if (c.shouldPrintReceive(target)) {
+            } else if (c.shouldPrintReceive(target, c)) {
                 c.write(getSelf(), receive(c, 0, Result.special, target));
                 if (target.hasBalls() && Global.random(5) >= 1) {
-                    c.write(getSelf(), getSelf().bbLiner(c));
+                    c.write(getSelf(), getSelf().bbLiner(c, target));
                 }
             }
             if (target.has(Trait.achilles)) {
@@ -71,10 +72,10 @@ public class Stomp extends Skill {
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.normal, target));
-            } else if (c.shouldPrintReceive(target)) {
+            } else if (c.shouldPrintReceive(target, c)) {
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
                 if (target.hasBalls() && Global.random(5) >= 1) {
-                    c.write(getSelf(), getSelf().bbLiner(c));
+                    c.write(getSelf(), getSelf().bbLiner(c, target));
                 }
             }
             pain += 20;
@@ -88,7 +89,7 @@ public class Stomp extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.get(Attribute.Power) >= 16 && !user.has(Trait.softheart);
+        return user.get(Attribute.Power) >= 16;
     }
 
     @Override

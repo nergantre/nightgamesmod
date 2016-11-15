@@ -15,7 +15,7 @@ public class AnalCowgirl extends AnalSexStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         if (top.human()) {
             return String.format("You're sitting on top of %s with your ass squeezing her cock.",
                             bottom.nameDirectObject());
@@ -28,12 +28,12 @@ public class AnalCowgirl extends AnalSexStance {
 
     @Override
     public boolean mobile(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
-    public boolean kiss(Character c) {
-        return false;
+    public boolean kiss(Character c, Character target) {
+        return c != top && c != bottom;
     }
 
     @Override
@@ -53,22 +53,12 @@ public class AnalCowgirl extends AnalSexStance {
 
     @Override
     public boolean reachBottom(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
     public boolean prone(Character c) {
         return c == bottom;
-    }
-
-    @Override
-    public boolean feet(Character c) {
-        return false;
-    }
-
-    @Override
-    public boolean oral(Character c) {
-        return false;
     }
 
     @Override
@@ -82,7 +72,7 @@ public class AnalCowgirl extends AnalSexStance {
     }
 
     @Override
-    public Position insertRandom() {
+    public Position insertRandom(Combat c) {
         return new Mount(top, bottom);
     }
 
@@ -103,7 +93,7 @@ public class AnalCowgirl extends AnalSexStance {
             } else {
                 c.write(inserted.name() + " groans with frustration with the sudden disappearance of your pole.");
             }
-            c.setStance(insertRandom());
+            c.setStance(insertRandom(c));
         }
         if (inserted.body.getRandom("ass") == null) {
             if (inserted.human()) {
@@ -112,17 +102,17 @@ public class AnalCowgirl extends AnalSexStance {
             } else {
                 c.write(inserted.name() + " groans with frustration with the sudden disappearance of her asshole.");
             }
-            c.setStance(insertRandom());
+            c.setStance(insertRandom(c));
         }
     }
 
     @Override
-    public boolean anallyPenetrated(Character self) {
+    public boolean anallyPenetrated(Combat combat, Character self) {
         return self == top;
     }
 
     @Override
-    public List<BodyPart> topParts() {
+    public List<BodyPart> topParts(Combat c) {
         return Arrays.asList(top.body.getRandomAss()).stream().filter(part -> part != null && part.present())
                         .collect(Collectors.toList());
     }

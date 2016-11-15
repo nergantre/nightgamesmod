@@ -24,6 +24,7 @@ import nightgames.characters.Character;
 import nightgames.characters.CharacterSex;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
+import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.json.JsonUtils;
 import nightgames.skills.Skill;
@@ -575,7 +576,7 @@ public class Body implements Cloneable {
         if (character.human() && Global.getPlayer().checkAddiction(AddictionType.DOMINANCE, opponent)
                        && c.getStance().dom(opponent)) {
             float mag = Global.getPlayer().getAddiction(AddictionType.DOMINANCE).get().getMagnitude();
-            float dom = c.getDominanceOfStance(opponent);
+            float dom = c.getStance().getDominanceOfStance(opponent);
             dominance = mag * (dom / 5.0);
         }
         multiplier += dominance;
@@ -705,6 +706,7 @@ public class Body implements Cloneable {
                 }
                 break;
             case herm:
+            case shemale:
                 baseFemininity += 1;
                 if (!has("face")) {
                     add(new FacePart(0, 0));
@@ -719,12 +721,132 @@ public class Body implements Cloneable {
                     add(new FacePart(0, 0));
                 }
                 break;
+            default:
+                break;
         }
         for (BodyPart part : requiredParts) {
             if (!has(part.getType())) {
                 add(part);
             }
         }
+    }
+
+    private void replacePussyWithCock(BasicCockPart basicCock) {
+        PussyPart pussy = getRandomPussy();
+        removeAll("pussy");
+        add(pussy == null ? basicCock : basicCock.applyMod(pussy.getEquivalentCockMod()));
+    }
+
+    private void replaceCockWithPussy() {
+        CockPart cock = getRandomCock();
+        removeAll("cock");
+        add(cock == null ? PussyPart.normal : cock.getEquivalentPussy());
+    }
+
+    private void addEquivalentCockAndPussy(BasicCockPart basicCock) {
+        boolean hasPussy = getRandomPussy() != null;
+        boolean hasCock = getRandomCock() != null;
+        if (!hasPussy) {
+            CockPart cock = getRandomCock();
+            add(cock == null ? PussyPart.normal : cock.getEquivalentPussy());
+        }
+        if (!hasCock) {
+            PussyPart pussy = getRandomPussy();
+            add(pussy == null ? basicCock : basicCock.applyMod(pussy.getEquivalentCockMod()));
+        }
+    }
+    
+    private void addBallsIfNeeded() {
+        if (getRandom("balls") == null) {
+            add(new GenericBodyPart("balls", 0, 1.0, 1.5, "balls", ""));
+        }
+    }
+
+    private void growBreastsUpTo(BreastsPart part) {
+        if (getLargestBreasts().size < part.size) {
+            addReplace(part, 1);
+        }
+    }
+
+    /**
+     * Guesses the character sex based on the current attributes.
+     * I'm sorry if I whatever you want to be considered, you're free to add it yourself.
+     */
+    public CharacterSex guessCharacterSex() {
+        if (getRandomCock() != null && getRandomPussy() != null) {
+            return CharacterSex.herm;
+        } else if (getRandomCock() == null && getRandomPussy() == null) {
+            return CharacterSex.asexual;
+        } else if (getRandomCock() == null && getRandomPussy() != null) {
+            return CharacterSex.female;
+        } else {
+            if (getLargestBreasts().size > BreastsPart.flat.size && getFace().getFemininity(character) > 0) {
+                return CharacterSex.shemale;
+            } else if (getFace().getFemininity(character) >= 1.5) {
+                return CharacterSex.shemale;
+            }
+            return CharacterSex.male;
+        }
+    }
+    
+    public void autoTG() {
+        CharacterSex currentSex = guessCharacterSex();
+        if (currentSex == CharacterSex.herm || currentSex == CharacterSex.asexual) {
+            // no TG for herms or asexuals
+            return;
+        }
+        if (character.useFemalePronouns() && Global.checkFlag(Flag.femaleTGIntoHerm)) {
+            changeSex(CharacterSex.herm);
+            return;
+        }
+        if (currentSex == CharacterSex.female) {
+            changeSex(CharacterSex.male);
+            return;
+        }
+        if (currentSex == CharacterSex.male || currentSex == CharacterSex.shemale) {
+            changeSex(CharacterSex.female);
+            return;
+        }
+    }
+    
+    public void changeSex(CharacterSex newSex) {
+        FacePart face = ((FacePart)getRandom("face"));
+        double femininity = face.getFemininity(character);
+        switch (newSex) {
+            case male:
+                femininity = Math.min(0, femininity);
+                replacePussyWithCock(BasicCockPart.average);
+                addBallsIfNeeded();
+                addReplace(BreastsPart.flat, 1);
+                break;
+            case female:
+                femininity = Math.max(2, femininity);
+                replaceCockWithPussy();
+                growBreastsUpTo(BreastsPart.c);
+                break;
+            case herm:
+                femininity = Math.max(1, femininity);
+                addEquivalentCockAndPussy(BasicCockPart.big);
+                growBreastsUpTo(BreastsPart.b);
+                break;
+            case shemale:
+                femininity = Math.max(1, femininity);
+                replacePussyWithCock(BasicCockPart.big);
+                growBreastsUpTo(BreastsPart.d);
+                addBallsIfNeeded();
+                break;
+            case asexual:
+                femininity = Math.max(0, femininity);
+                break;
+            default:
+                break;
+        }
+        if (newSex.hasBalls()) {
+            addBallsIfNeeded();
+        } else {
+            removeAll("balls");
+        }
+        addReplace(new FacePart(face.hotness, femininity), 1);
     }
 
     CharacterSex getEffectiveSex() {
@@ -753,12 +875,11 @@ public class Body implements Cloneable {
                 add(BasicCockPart.average);
             }
         }
-        if (sex == CharacterSex.male) {
+        if (sex.hasBalls()) {
             if (!has("balls")) {
                 add(new GenericBodyPart("balls", 0, 1.0, 1.5, "balls", ""));
             }
         }
-
     }
 
     @Override
@@ -1055,5 +1176,9 @@ public class Body implements Cloneable {
 
     public void setHeight(double height) {
         this.height = height;
+    }
+
+    public FacePart getFace() {
+        return (FacePart)getRandom("face");
     }
 }

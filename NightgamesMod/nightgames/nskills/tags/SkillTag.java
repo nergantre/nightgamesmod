@@ -46,7 +46,7 @@ public abstract class SkillTag {
     public final static SkillTag subPosition = new BothRequirementSkillTag(
                     (results, value) -> results.getCombat().getStance().sub(results.getSelf().getCharacter()), "SubPosition");
     public final static SkillTag oral = new BothRequirementSkillTag(
-                    (results, value) -> results.getCombat().getStance().oral(results.getSelf().getCharacter()), "Oral");
+                    (results, value) -> results.getCombat().getStance().oral(results.getSelf().getCharacter(), results.getCombat().getOpponent(results.getSelf().getCharacter())), "Oral");
     public final static SkillTag insertion = new NameOnlySkillTag("Insertion");
     public final static SkillTag fucking = new NameOnlySkillTag("Fucking");
     public final static SkillTag anal = new NameOnlySkillTag("Anal");
@@ -103,6 +103,7 @@ public abstract class SkillTag {
     public final static SkillTag temptation = new NameOnlySkillTag("Temptation");
     public final static SkillTag arouse = new NameOnlySkillTag("Arouse");
     public final static SkillTag hurt = new NameOnlySkillTag("Hurt");
+    public final static SkillTag mean = new NameOnlySkillTag("Mean");
     public final static SkillTag weaken = new NameOnlySkillTag("Weaken");
     public final static SkillTag heal = new NameOnlySkillTag("Heal");
     public final static SkillTag calm = new NameOnlySkillTag("Calm");
@@ -118,6 +119,7 @@ public abstract class SkillTag {
     public final static SkillTag positioning = new NameOnlySkillTag("Positioning");
     public final static SkillTag dark = new NameOnlySkillTag("Dark");
     public final static SkillTag escaping = new NameOnlySkillTag("Escaping");
+    public final static SkillTag petMasterSkill = new NameOnlySkillTag("PetOk");
 
     public final static SkillTag accuracy =
                     new BasicSkillTag((results, value) -> results.getRoll() * 100 >= (100 - value) || results.getResult().hasUserTag(perfectAccuracy),

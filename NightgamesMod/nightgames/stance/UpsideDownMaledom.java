@@ -15,7 +15,7 @@ public class UpsideDownMaledom extends MaledomSexStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         if (top.human()) {
             return "You are holding " + bottom.name() + " upsidedown by her legs while fucking her pussy.";
         } else {
@@ -32,12 +32,12 @@ public class UpsideDownMaledom extends MaledomSexStance {
 
     @Override
     public boolean mobile(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
-    public boolean kiss(Character c) {
-        return false;
+    public boolean kiss(Character c, Character target) {
+        return c != top && c != bottom;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class UpsideDownMaledom extends MaledomSexStance {
 
     @Override
     public boolean reachTop(Character c) {
-        return false;
+        return c != top && c != bottom;
     }
 
     @Override
@@ -66,16 +66,6 @@ public class UpsideDownMaledom extends MaledomSexStance {
     }
 
     @Override
-    public boolean feet(Character c) {
-        return false;
-    }
-
-    @Override
-    public boolean oral(Character c) {
-        return false;
-    }
-
-    @Override
     public boolean behind(Character c) {
         return false;
     }
@@ -86,12 +76,12 @@ public class UpsideDownMaledom extends MaledomSexStance {
     }
 
     @Override
-    public boolean facing() {
-        return false;
+    public boolean facing(Character c, Character target) {
+        return (c != bottom && c != top) || (target != bottom && target != top);
     }
 
     @Override
-    public Position insertRandom() {
+    public Position insertRandom(Combat c) {
         return new StandingOver(top, bottom);
     }
 

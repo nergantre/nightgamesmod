@@ -12,7 +12,7 @@ public class AnalProne extends AnalSexStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         if (top.human()) {
             return String.format("You're holding %s legs over your shoulder while your cock in buried in %s's ass.",
                             bottom.nameOrPossessivePronoun(), bottom.possessivePronoun());
@@ -31,11 +31,11 @@ public class AnalProne extends AnalSexStance {
 
     @Override
     public boolean mobile(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
-    public boolean kiss(Character c) {
+    public boolean kiss(Character c, Character target) {
         return true;
     }
 
@@ -56,7 +56,7 @@ public class AnalProne extends AnalSexStance {
 
     @Override
     public boolean reachBottom(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
@@ -65,12 +65,12 @@ public class AnalProne extends AnalSexStance {
     }
 
     @Override
-    public boolean feet(Character c) {
+    public boolean feet(Character c, Character target) {
         return false;
     }
 
     @Override
-    public boolean oral(Character c) {
+    public boolean oral(Character c, Character target) {
         return false;
     }
 
@@ -85,7 +85,7 @@ public class AnalProne extends AnalSexStance {
     }
 
     @Override
-    public Position insertRandom() {
+    public Position insertRandom(Combat c) {
         return new Mount(top, bottom);
     }
 
@@ -100,7 +100,7 @@ public class AnalProne extends AnalSexStance {
             } else {
                 c.write(inserted.name() + " sighs with relief with your dick gone.");
             }
-            c.setStance(insertRandom());
+            c.setStance(insertRandom(c));
         }
         if (inserted.body.getRandom("ass") == null) {
             if (inserted.human()) {
@@ -109,7 +109,7 @@ public class AnalProne extends AnalSexStance {
             } else {
                 c.write("Your dick pops out of " + inserted.name() + " as her asshole shrinks and disappears.");
             }
-            c.setStance(insertRandom());
+            c.setStance(insertRandom(c));
         }
     }
 

@@ -14,10 +14,12 @@ import nightgames.combat.Result;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
 import nightgames.items.clothing.Clothing;
+import nightgames.nskills.tags.SkillTag;
 
 public class StripSelf extends Skill {
     public StripSelf(Character self) {
         super("Strip Self", self);
+        addTag(SkillTag.suicidal);
     }
 
     @Override
@@ -28,7 +30,7 @@ public class StripSelf extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         boolean hasClothes = subChoices().size() > 0;
-        return hasClothes && getSelf().canAct() && c.getStance().mobile(getSelf());
+        return hasClothes && getSelf().canAct() && c.getStance().mobile(getSelf()) && !getSelf().isPet();
     }
 
     @Override
@@ -52,7 +54,7 @@ public class StripSelf extends Skill {
                 clothing = getSelf().getOutfit().unequip(stripped.get());
                 c.getCombatantData(getSelf()).addToClothesPile(clothing);
             }
-        } else {
+        } else if (getSelf() instanceof NPC) {
             NPC self = (NPC) getSelf();
             HashMap<Clothing, Double> checks = new HashMap<>();
             double selfFit = self.getFitness(c);

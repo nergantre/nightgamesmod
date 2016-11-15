@@ -90,7 +90,7 @@ public class Taunt extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().taunt(c);
+        return getSelf().taunt(c, target);
     }
 
     @Override

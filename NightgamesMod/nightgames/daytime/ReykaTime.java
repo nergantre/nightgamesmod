@@ -420,7 +420,7 @@ public class ReykaTime extends BaseNPCTime {
                           .message("<p><b>Having been in the maelstrom that is Reyka's pussy while she was orgasming, you are sure "
                                           + "nothing else will ever come close to those feelings. Your sexual endurance has permanently increased.</b>");
                     player.add(Trait.desensitized);
-                    npc.add(Trait.desensitized);
+                    npc.getGrowth().addTrait(0, Trait.desensitized);
                 }
             } else {
                 Global.gui()
@@ -508,7 +508,7 @@ public class ReykaTime extends BaseNPCTime {
                                           + "and licks everywhere else. You still need more practice, but <b>you have learned to tune in to "
                                           + "your opponents' minds, making it easier to evade and counter their attacks</b>.");
                     player.add(Trait.clairvoyance);
-                    npc.add(Trait.clairvoyance);
+                    npc.getGrowth().addTrait(0, Trait.clairvoyance);
                 } else {
                     Global.gui()
                           .message("<i>\"Ah, good. By now, you may have figured out that there really isn't that much room to grow, "

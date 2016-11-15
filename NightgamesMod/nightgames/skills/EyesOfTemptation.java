@@ -24,7 +24,7 @@ public class EyesOfTemptation extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().canRespond() && c.getStance()
-                                          .facing()
+                                          .facing(getSelf(), target)
                         && !getSelf().is(Stsflag.blinded) && !target.wary();
     }
 

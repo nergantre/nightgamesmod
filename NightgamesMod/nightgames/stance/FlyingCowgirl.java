@@ -16,7 +16,7 @@ public class FlyingCowgirl extends FemdomSexStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         return String.format(
                         "%s are flying some twenty feet up in the air,"
                                         + " joined to %s by %s hips. %s on top of %s and %s %s is strangling %s %s.",
@@ -39,47 +39,37 @@ public class FlyingCowgirl extends FemdomSexStance {
 
     @Override
     public boolean mobile(Character c) {
-        return top.equals(c);
+        return top == c;
     }
 
     @Override
-    public boolean kiss(Character c) {
-        return true;
+    public boolean kiss(Character c, Character target) {
+        return (c == top || c == bottom) && (target == top || target == bottom);
     }
 
     @Override
     public boolean dom(Character c) {
-        return top.equals(c);
+        return top == c;
     }
 
     @Override
     public boolean sub(Character c) {
-        return !top.equals(c);
+        return top == c;
     }
 
     @Override
     public boolean reachTop(Character c) {
-        return true;
+        return c == top || c == bottom;
     }
 
     @Override
     public boolean reachBottom(Character c) {
-        return top.equals(c);
+        return top == c;
     }
 
     @Override
     public boolean prone(Character c) {
-        return !top.equals(c);
-    }
-
-    @Override
-    public boolean feet(Character c) {
-        return false;
-    }
-
-    @Override
-    public boolean oral(Character c) {
-        return false;
+        return bottom == c;
     }
 
     @Override
@@ -115,7 +105,7 @@ public class FlyingCowgirl extends FemdomSexStance {
     }
 
     @Override
-    public Position insertRandom() {
+    public Position insertRandom(Combat c) {
         return new Mount(top, bottom);
     }
 

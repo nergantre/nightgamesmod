@@ -29,7 +29,7 @@ public class UseDraft extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         boolean hasItems = subChoices().size() > 0;
-        return hasItems && getSelf().canAct() && c.getStance().mobile(getSelf());
+        return hasItems && getSelf().canAct() && c.getStance().mobile(getSelf()) && !getSelf().isPet();
     }
 
     @Override
@@ -91,7 +91,7 @@ public class UseDraft extends Skill {
                     usables.add(i);
                 }
             }
-            if (usables.size() > 0) {
+            if (usables.size() > 0 && getSelf() instanceof NPC) {
                 used = pickBest(c, (NPC) getSelf(), target, usables);
             }
         }

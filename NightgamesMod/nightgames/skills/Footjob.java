@@ -25,7 +25,7 @@ public class Footjob extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return (target.hasDick() || target.hasPussy()) && c.getStance().feet(getSelf()) && target.crotchAvailable()
+        return (target.hasDick() || target.hasPussy()) && c.getStance().feet(getSelf(), target) && target.crotchAvailable()
                         && c.getStance().prone(getSelf()) != c.getStance().prone(target) && getSelf().canAct()
                         && !c.getStance().inserted() && getSelf().outfit.hasNoShoes();
     }
@@ -52,7 +52,7 @@ public class Footjob extends Skill {
             int m = 8 + Global.random(6);
             if (getSelf().human()) {
                 c.write(getSelf(), Global.format(deal(c, m, Result.normal, target), getSelf(), target));
-            } else if (c.shouldPrintReceive(target)) {
+            } else if (c.shouldPrintReceive(target, c)) {
                 c.write(getSelf(), Global.format(receive(c, m, Result.normal, target), getSelf(), target));
             }
             if (target.hasDick()) {
@@ -66,7 +66,7 @@ public class Footjob extends Skill {
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(), Global.format(deal(c, 0, Result.miss, target), getSelf(), target));
-            } else if (c.shouldPrintReceive(target)) {
+            } else if (c.shouldPrintReceive(target, c)) {
                 c.write(getSelf(), Global.format(receive(c, 0, Result.miss, target), getSelf(), target));
             }
             return false;

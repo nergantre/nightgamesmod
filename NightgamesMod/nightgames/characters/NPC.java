@@ -52,7 +52,6 @@ import nightgames.status.Stsflag;
 import nightgames.trap.Trap;
 
 public class NPC extends Character {
-
     public Personality ai;
     public HashMap<Emotion, Integer> emotes;
     public Emotion mood;
@@ -261,6 +260,7 @@ public class NPC extends Character {
     public void act(Combat c) {
         act(c, c.getOpponent(this));
     }
+
     public void act(Combat c, Character target) {
         if (target.human() && Global.isDebugOn(DebugFlags.DEBUG_SKILL_CHOICES)) {
             pickSkillsWithGUI(c, target);
@@ -407,28 +407,28 @@ public class NPC extends Character {
     }
 
     @Override
-    public String bbLiner(Combat c) {
-        return ai.bbLiner(c);
+    public String bbLiner(Combat c, Character target) {
+        return ai.bbLiner(c, target);
     }
 
     @Override
-    public String nakedLiner(Combat c) {
-        return ai.nakedLiner(c);
+    public String nakedLiner(Combat c, Character target) {
+        return ai.nakedLiner(c, target);
     }
 
     @Override
-    public String stunLiner(Combat c) {
-        return ai.stunLiner(c);
+    public String stunLiner(Combat c, Character target) {
+        return ai.stunLiner(c, target);
     }
 
     @Override
-    public String taunt(Combat c) {
-        return ai.taunt(c);
+    public String taunt(Combat c, Character target) {
+        return ai.taunt(c, target);
     }
 
     @Override
-    public String temptLiner(Combat c) {
-        return ai.temptLiner(c);
+    public String temptLiner(Combat c, Character target) {
+        return ai.temptLiner(c, target);
     }
 
     @Override public Growth getGrowth() {
@@ -443,9 +443,19 @@ public class NPC extends Character {
 
     @Override
     public void move() {
+        if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+            System.out.println(getName() + " is moving with state " + state);
+        }
         if (state == State.combat) {
             if (location != null && location.fight != null) {
+                if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+                    System.out.println(getName() + " is battling in the " + location.name);
+                }
                 location.fight.battle();
+            } else {
+                if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+                    System.out.println(getName() + " is done battling in the " + location.name);
+                }
             }
         } else if (busy > 0) {
             busy--;

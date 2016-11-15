@@ -28,9 +28,9 @@ public class Knotted extends Status {
     @Override
     public String initialMessage(Combat c, boolean replaced) {
         return String.format("The base of %s %s swells up, forming a tight seal within %s %s and keeping it inside.",
-                        opponent.nameOrPossessivePronoun(), c.getStance().insertedPartFor(opponent).describe(opponent),
+                        opponent.nameOrPossessivePronoun(), c.getStance().insertedPartFor(c, opponent).describe(opponent),
                         affected.nameOrPossessivePronoun(),
-                        c.getStance().insertablePartFor(affected).describe(affected));
+                        c.getStance().insertablePartFor(c, affected).describe(affected));
     }
 
     @Override

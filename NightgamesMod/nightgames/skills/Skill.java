@@ -48,7 +48,7 @@ public abstract class Skill {
 
     public static void filterAllowedSkills(Combat c, Collection<Skill> skills, Character user, Character target) {
         boolean filtered = false;
-        Set<Skill> stanceSkills = new HashSet<Skill>(c.getStance().availSkills(user));
+        Set<Skill> stanceSkills = new HashSet<Skill>(c.getStance().availSkills(c, user));
 
         if (stanceSkills.size() > 0) {
             skills.retainAll(stanceSkills);
@@ -237,7 +237,7 @@ public abstract class Skill {
     protected void writeOutput(Combat c, int mag, Result result, Character target) {
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, mag, result, target));
-        } else if (c.shouldPrintReceive(target)) {
+        } else if (c.shouldPrintReceive(target, c)) {
             c.write(getSelf(), receive(c, mag, result, target));
         }
     }

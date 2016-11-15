@@ -194,7 +194,7 @@
 			}, {
 				"requirements" :
 				{
-					"not": {"stance" : "Neutral"}
+					"not": {"position" : "Neutral"}
 				},
 				"text" : "She wins while not being in the neutral stance."
 			}, {

@@ -12,7 +12,7 @@ public class Cowgirl extends FemdomSexStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         if (top.human()) {
             return "You're on top of " + bottom.name() + ".";
         } else {
@@ -30,12 +30,12 @@ public class Cowgirl extends FemdomSexStance {
 
     @Override
     public boolean mobile(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
-    public boolean kiss(Character c) {
-        return true;
+    public boolean kiss(Character c, Character target) {
+        return c != bottom;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class Cowgirl extends FemdomSexStance {
 
     @Override
     public boolean reachBottom(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
@@ -64,22 +64,12 @@ public class Cowgirl extends FemdomSexStance {
     }
 
     @Override
-    public boolean feet(Character c) {
-        return false;
-    }
-
-    @Override
-    public boolean oral(Character c) {
-        return false;
-    }
-
-    @Override
     public boolean behind(Character c) {
         return false;
     }
 
     @Override
-    public Position insertRandom() {
+    public Position insertRandom(Combat c) {
         return new Mount(top, bottom);
     }
 

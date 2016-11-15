@@ -281,7 +281,7 @@ public class MaraTime extends BaseNPCTime {
                     Global.gui()
                           .message("<p><b>You've gotten better at finding sensitive spots when tickling nude opponents.</b>");
                     player.add(Trait.ticklemonster);
-                    npc.add(Trait.ticklemonster);
+                    npc.getGrowth().addTrait(0, Trait.ticklemonster);
                 }
             } else {
                 Global.gui()
@@ -351,7 +351,7 @@ public class MaraTime extends BaseNPCTime {
                     Global.gui()
                           .message("<p><b>Mara has taught you to make the brilliant and insanely complex Spiderweb Trap.</b>");
                     player.add(Trait.spider);
-                    npc.add(Trait.spider);
+                    npc.getGrowth().addTrait(0, Trait.spider);
                 }
             } else {
                 Global.gui()
@@ -409,7 +409,7 @@ public class MaraTime extends BaseNPCTime {
                     Global.gui()
                           .message("<p><b>You've experienced Mara's most painful technique and learned how to use it yourself.</b>");
                     player.add(Trait.heeldrop);
-                    npc.add(Trait.heeldrop);
+                    npc.getGrowth().addTrait(0, Trait.heeldrop);
                 }
             } else {
                 Global.gui()

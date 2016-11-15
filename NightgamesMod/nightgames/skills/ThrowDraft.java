@@ -43,7 +43,7 @@ public class ThrowDraft extends Skill {
     public boolean usable(Combat c, Character target) {
         boolean hasItems = subChoices().size() > 0;
         return hasItems && getSelf().canAct() && c.getStance().mobile(getSelf())
-                        && (c.getStance().reachTop(getSelf()) || c.getStance().reachBottom(getSelf()));
+                        && (c.getStance().reachTop(getSelf()) || c.getStance().reachBottom(getSelf())) && !getSelf().isPet();
     }
 
     @Override
@@ -105,7 +105,7 @@ public class ThrowDraft extends Skill {
                     usables.add(i);
                 }
             }
-            if (usables.size() > 0) {
+            if (usables.size() > 0 && getSelf() instanceof NPC) {
                 used = pickBest(c, (NPC) getSelf(), target, usables);
             }
         }

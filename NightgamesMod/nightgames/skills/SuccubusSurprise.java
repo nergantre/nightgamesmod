@@ -29,8 +29,8 @@ public class SuccubusSurprise extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().canRespond() && !getSelf().has(Trait.succubus) && getSelf().has(Item.SuccubusDraft)
-                        && c.getStance().inserted(target) && !c.getStance().anallyPenetrated()
-                        && !BodyPart.hasOnlyType(c.getStance().topParts(), "strapon") && c.getStance().sub(getSelf())
+                        && c.getStance().inserted(target) && !c.getStance().anallyPenetrated(c)
+                        && !BodyPart.hasOnlyType(c.getStance().topParts(c), "strapon") && c.getStance().sub(getSelf())
                         && getSelf().canSpend(getMojoCost(c)) && !target.is(Stsflag.armlocked)
                         && !target.is(Stsflag.leglocked);
     }
@@ -42,7 +42,7 @@ public class SuccubusSurprise extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        boolean oppHasBlessed = c.getStance().insertedPartFor(target).getMod(target).countsAs(target, CockMod.blessed);
+        boolean oppHasBlessed = c.getStance().insertedPartFor(c, target).getMod(target).countsAs(target, CockMod.blessed);
         if (getSelf().human()) {
             if (oppHasBlessed) {
                 c.write(getSelf(), deal(c, 0, Result.weak, target));

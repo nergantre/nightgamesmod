@@ -19,7 +19,6 @@ import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
-import nightgames.skills.strategy.WindUpStrategy;
 import nightgames.skills.strategy.NurseStrategy;
 import nightgames.start.NpcConfiguration;
 import nightgames.status.Energized;
@@ -39,39 +38,37 @@ public class Cassie extends BasePersonality {
     }
 
     public Cassie(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Cassie", 1, charConfig, commonConfig);
+        super("Cassie", 1, charConfig, commonConfig, true);
     }
 
-    protected void applyBasicStats() {
-        character.isStartCharacter = true;
+    @Override
+    public void applyStrategy(NPC self) {
+        self.plan = Plan.hunting;
+        self.mood = Emotion.confident;
+        self.addPersonalStrategy(new NurseStrategy());
+    }
+
+    @Override
+    public void applyBasicStats(Character self) {
         preferredCockMod = CockMod.runic;
-        character.outfitPlan.add(Clothing.getByID("bra"));
-        character.outfitPlan.add(Clothing.getByID("blouse"));
-        character.outfitPlan.add(Clothing.getByID("panties"));
-        character.outfitPlan.add(Clothing.getByID("skirt"));
-        character.outfitPlan.add(Clothing.getByID("shoes"));
+        self.outfitPlan.add(Clothing.getByID("bra"));
+        self.outfitPlan.add(Clothing.getByID("blouse"));
+        self.outfitPlan.add(Clothing.getByID("panties"));
+        self.outfitPlan.add(Clothing.getByID("skirt"));
+        self.outfitPlan.add(Clothing.getByID("shoes"));
 
-        character.change();
-        character.mod(Attribute.Power, 1);
-        character.mod(Attribute.Seduction, 1);
-        character.mod(Attribute.Cunning, 1);
-        character.mod(Attribute.Perception, 1);
+        self.change();
+        self.modAttributeDontSaveData(Attribute.Power, 1);
+        self.modAttributeDontSaveData(Attribute.Seduction, 1);
+        self.modAttributeDontSaveData(Attribute.Cunning, 1);
+        self.modAttributeDontSaveData(Attribute.Perception, 1);
 
-        character.addPersonalStrategy(new WindUpStrategy());
-        character.addPersonalStrategy(new NurseStrategy());
-
-        character.getStamina().setMax(70 + character.getLevel() * getGrowth().stamina);
-        character.getArousal().setMax(100 + character.getLevel() * getGrowth().arousal);
-        Global.gainSkills(character);
-        character.add(Trait.softheart);
-        character.add(Trait.romantic);
-        character.add(Trait.imagination);
-
-        character.setTrophy(Item.CassieTrophy);
-        character.plan = Plan.hunting;
-        character.mood = Emotion.confident;
-        character.body.add(BreastsPart.c);
-        character.initialGender = CharacterSex.female;
+        self.getStamina().setMax(70);
+        self.getArousal().setMax(100);
+        Global.gainSkills(self);
+        self.setTrophy(Item.CassieTrophy);
+        self.body.add(BreastsPart.c);
+        self.initialGender = CharacterSex.female;
     }
 
     @Override
@@ -159,6 +156,10 @@ public class Cassie extends BasePersonality {
                     )
                 ));
         preferredAttributes.add(c -> c.get(Attribute.Arcane) < 80 ? Optional.of(Attribute.Arcane) : Optional.empty());
+
+        growth.addTrait(0, Trait.softheart);
+        growth.addTrait(0, Trait.romantic);
+        growth.addTrait(0, Trait.imagination);
         growth.addTrait(2, Trait.mojoMaster);
         growth.addTrait(5, Trait.responsive);
         growth.addTrait(8, Trait.tongueTraining1);
@@ -173,7 +174,7 @@ public class Cassie extends BasePersonality {
         // 38 - first choice 3
         // 43 - second choice 4
         // 47 - second choice 5
-        growth.addTrait(50, Trait.pussyTraining2);
+        growth.addTrait(50, Trait.sexTraining2);
         growth.addTrait(53, Trait.addictivefluids);
         // 57 - first choice 4
         // 60 - second choice 6
@@ -272,7 +273,7 @@ public class Cassie extends BasePersonality {
 
     @Override
     public String victory(Combat c, Result flag) {
-        if (c.getStance().anallyPenetrated(c.getOpponent(character))) {
+        if (c.getStance().anallyPenetrated(c, c.getOpponent(character))) {
             character.arousal.empty();
             return "Cassie bucks her hips against your ass wildly causing the strapon to rub hard against your prostate. Your arms and legs feel like jelly as she thrusts in again and again. "
                             + "You're almost shocked as you feel yourself on the edge of orgasm and you're certain you wouldn't be able to stop yourself if Cassie keeps this pace up. Above you Cassie moans "
@@ -305,7 +306,7 @@ public class Cassie extends BasePersonality {
                             + "she regains consciousness. The feeling is noticeably singular and you feel somehow lonely as you realize her spell must have worn off. <i>\"Wow,\"</i> she lets out breathlessly. "
                             + "<i>\"That felt like I was 12 again and masturbating for the first time.\"</i> She suddenly turns bright red and hides her face in your chest. <i>\"You didn't hear that! Just pretend I "
                             + "didn't say anything.\"</i>";
-        } else if (c.getStance().vaginallyPenetrated(character)) {
+        } else if (c.getStance().vaginallyPenetrated(c, character)) {
             return "You feel yourself rapidly nearing the point of no return as Cassie rides your dick. You fondle and tease her sensitive nipples to increase her pleasure, but it's a losing battle. You're "
                             + "going to cum first. She smiles gently and kisses you as you ejaculate inside her hot pussy. She shivers slightly, but you know she hasn't climaxed yet. When she breaks the kiss, her flushed "
                             + "face lights up in a broad smile. <i>\"It feels like you released a lot. Did you feel good?\"</i> You groan and slump flat on the ground in defeat. She gives you a light kiss on the tip of your nose "
@@ -443,27 +444,27 @@ public class Cassie extends BasePersonality {
     }
 
     @Override
-    public String bbLiner(Combat c) {
+    public String bbLiner(Combat c, Character other) {
         return "Cassie winces apologetically. <i>\"That looks really painful. Sorry, but I can't afford to go easy on you.\"</i>";
     }
 
     @Override
-    public String nakedLiner(Combat c) {
+    public String nakedLiner(Combat c, Character opponent) {
         return "Cassie blushes noticeably and covers herself. <i>\"No matter how much time I spend naked, it doesn't get any less embarrassing.\"</i>";
     }
 
     @Override
-    public String stunLiner(Combat c) {
+    public String stunLiner(Combat c, Character opponent) {
         return "Cassie groans softly as she tends her bruises, <i>\"Come on, you don't have to be so rough.\"</i> she complains.";
     }
 
     @Override
-    public String taunt(Combat c) {
+    public String taunt(Combat c, Character opponent) {
         return "Cassie giggles and taps the head of your dick. <i>\"Your penis is so eager and cooperative,\"</i> she jokes. <i>\"Are you sure you're not just letting me win?\"</i>";
     }
 
     @Override
-    public String temptLiner(Combat c) {
+    public String temptLiner(Combat c, Character opponent) {
         return "Cassie catches you glancing at her body, and blows you a kiss. <i>\"Why don't you just stop resisting and let me make you cum?\"</i>";
     }
 
@@ -534,7 +535,7 @@ public class Cassie extends BasePersonality {
 
     @Override
     public String startBattle(Character other) {
-        return "Cassie looks hesitant for just a moment, but can't contain a curious little smile as she prepares to face you.";
+        return Global.format("{self:SUBJECT} looks hesitant for just a moment, but can't contain a curious little smile as {self:pronoun} prepares to face {other:name-do}.", character, other);
     }
 
     @Override
@@ -557,7 +558,7 @@ public class Cassie extends BasePersonality {
     }
 
     public void advance() {
-        character.add(Trait.witch);
+        growth.addTrait(10, Trait.witch);
         character.body.addReplace(PussyPart.arcane, 1);
         character.unequipAllClothing();
         character.outfitPlan.add(Clothing.getByID("bra"));

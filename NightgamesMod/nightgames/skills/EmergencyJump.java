@@ -29,9 +29,9 @@ public class EmergencyJump extends Skill {
                         && !c.getStance()
                              .mobile(getSelf())
                         && !c.getStance()
-                             .penetrated(getSelf())
+                             .penetrated(c, getSelf())
                         && !c.getStance()
-                             .penetrated(target))
+                             .penetrated(c, target))
                         || getSelf().bound()) && !getSelf().stunned() && !getSelf().distracted()
                         && Primed.isPrimed(getSelf(), 2);
     }

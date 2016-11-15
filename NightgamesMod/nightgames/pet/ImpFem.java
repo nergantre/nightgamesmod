@@ -82,7 +82,7 @@ public class ImpFem extends Pet {
     
     @Override
     protected void buildSelf() {
-        PetCharacter self = new PetCharacter(this, owner().nameOrPossessivePronoun() + getName(), getName(), new Growth(), power);
+        PetCharacter self = new PetCharacter(this, owner().nameOrPossessivePronoun() + " " + getName(), getName(), new Growth(), power);
         // imps are about as tall as goblins, maybe a bit shorter
         self.body.setHeight(110);
         self.body.finishBody(CharacterSex.female);

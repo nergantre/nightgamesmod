@@ -27,7 +27,7 @@ public class Fly extends Fuck {
     @Override
     public boolean usable(Combat c, Character target) {
         return fuckable(c, target) && !target.wary() && getSelf().canAct() && c.getStance().mobile(getSelf())
-                        && !c.getStance().prone(getSelf()) && c.getStance().facing()
+                        && !c.getStance().prone(getSelf()) && c.getStance().facing(getSelf(), target)
                         && getSelf().getStamina().get() >= 15;
     }
 
@@ -53,7 +53,7 @@ public class Fly extends Fuck {
         Result result = target.roll(this, c, accuracy(c)) ? Result.normal : Result.miss;
         if (getSelf().human()) {
             c.write(getSelf(), premessage + deal(c, premessage.length(), result, target));
-        } else if (c.shouldPrintReceive(target)) {
+        } else if (c.shouldPrintReceive(target, c)) {
             c.write(getSelf(), premessage + receive(c, premessage.length(), result, getSelf()));
         }
         if (result == Result.normal) {

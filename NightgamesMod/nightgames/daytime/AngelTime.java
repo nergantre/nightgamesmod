@@ -330,7 +330,7 @@ public class AngelTime extends BaseNPCTime {
                     Global.gui()
                           .message("<p><b>You've improved your kissing technique to the point where it may render opponents temporarily helpless.</b>");
                     player.add(Trait.experttongue);
-                    npc.add(Trait.experttongue);
+                    npc.getGrowth().addTrait(0, Trait.experttongue);
                 }
             } else {
                 Global.gui()
@@ -399,7 +399,7 @@ public class AngelTime extends BaseNPCTime {
                     Global.gui()
                           .message("<p><b>You've mastered the art of bluffing.</b>");
                     player.add(Trait.pokerface);
-                    npc.add(Trait.pokerface);
+                    npc.getGrowth().addTrait(0, Trait.pokerface);
                 }
             } else {
                 Global.gui()
@@ -465,7 +465,7 @@ public class AngelTime extends BaseNPCTime {
                     Global.gui()
                           .message("<p><b>You've learn how to spank your opponent in a way that can ruin their morale.</b>");
                     player.add(Trait.disciplinarian);
-                    npc.add(Trait.disciplinarian);
+                    npc.getGrowth().addTrait(0, Trait.disciplinarian);
                 }
             } else {
                 Global.gui()

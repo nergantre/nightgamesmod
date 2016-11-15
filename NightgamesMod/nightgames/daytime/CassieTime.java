@@ -410,7 +410,7 @@ public class CassieTime extends BaseNPCTime {
                     Global.gui().message(
                                     "<p><b>Through diligent practice, you and Cassie have gotten more skilled at oral sex.</b>");
                     player.add(Trait.silvertongue);
-                    npc.add(Trait.silvertongue);
+                    npc.getGrowth().addTrait(0, Trait.silvertongue);
                 }
             } else {
                 Global.gui().message(
@@ -462,7 +462,7 @@ public class CassieTime extends BaseNPCTime {
                     Global.gui().message(
                                     "<p><b>You've learned the art of using a diversion to distract your opponent.</b>");
                     player.add(Trait.misdirection);
-                    npc.add(Trait.misdirection);
+                    npc.getGrowth().addTrait(0, Trait.misdirection);
                 }
             } else {
                 Global.gui().message(
@@ -504,7 +504,7 @@ public class CassieTime extends BaseNPCTime {
                 if (!player.has(Trait.judonovice)) {
                     Global.gui().message("<p><b>By training with Cassie, you learned the Hip Throw skill.</b>");
                     player.add(Trait.judonovice);
-                    npc.add(Trait.judonovice);
+                    npc.getGrowth().addTrait(0, Trait.judonovice);
                 }
             } else {
                 Global.gui().message(

@@ -24,8 +24,8 @@ public class Tighten extends Thrust {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().canRespond() && c.getStance().penetratedBy(getSelf(), target)
-                        && c.getStance().havingSexNoStrapped() && target.hasDick();
+        return getSelf().canRespond() && c.getStance().penetratedBy(c, getSelf(), target)
+                        && c.getStance().havingSexNoStrapped(c) && target.hasDick();
     }
 
     @Override

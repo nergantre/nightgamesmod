@@ -10,7 +10,6 @@ import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.ReverseMount;
 import nightgames.stance.SixNine;
-import nightgames.stance.Stance;
 
 public class Blowjob extends Skill {
     public Blowjob(String name, Character self) {
@@ -26,9 +25,9 @@ public class Blowjob extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        boolean canUse = c.getStance().enumerate() == Stance.facesitting && getSelf().canRespond()
+        boolean canUse = c.getStance().isBeingFaceSatBy(c, getSelf(), target) && getSelf().canRespond()
                         || getSelf().canAct();
-        return target.crotchAvailable() && target.hasDick() && c.getStance().oral(getSelf())
+        return target.crotchAvailable() && target.hasDick() && c.getStance().oral(getSelf(), target)
                         && c.getStance().front(getSelf()) && canUse && !c.getStance().inserted(target)
                         || getSelf().canRespond() && isVaginal(c);
     }
@@ -36,7 +35,7 @@ public class Blowjob extends Skill {
     @Override
     public float priorityMod(Combat c) {
         float priority = 0;
-        if (c.getStance().penetratedBy(getSelf(), c.getOpponent(getSelf()))) {
+        if (c.getStance().penetratedBy(c, getSelf(), c.getOpponent(getSelf()))) {
             priority += 1.0f;
         }
         if (getSelf().has(Trait.silvertongue)) {
@@ -49,7 +48,7 @@ public class Blowjob extends Skill {
     }
 
     public boolean isVaginal(Combat c) {
-        return c.getStance().vaginallyPenetratedBy(getSelf(), c.getOpponent(getSelf()))
+        return c.getStance().vaginallyPenetratedBy(c, getSelf(), c.getOpponent(getSelf()))
                         && !c.getOpponent(getSelf()).has(Trait.strapped) && getSelf().has(Trait.vaginaltongue);
     }
 
@@ -57,7 +56,7 @@ public class Blowjob extends Skill {
     public int getMojoBuilt(Combat c) {
         if (isVaginal(c)) {
             return 10;
-        } else if (c.getStance().enumerate() == Stance.facesitting) {
+        } else if (c.getStance().isBeingFaceSatBy(c, getSelf(), c.getOpponent(getSelf()))) {
             return 0;
         } else {
             return 5;
@@ -67,7 +66,7 @@ public class Blowjob extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         int m = 10 + Global.random(8);
-        boolean facesitting = c.getStance().enumerate() == Stance.facesitting;
+        boolean facesitting = c.getStance().isBeingFaceSatBy(c, getSelf(), target);
         if (getSelf().has(Trait.silvertongue)) {
             m += 4;
         }
@@ -120,7 +119,7 @@ public class Blowjob extends Skill {
 
     @Override
     public Tactics type(Combat c) {
-        if (c.getStance().vaginallyPenetrated(getSelf()) && getSelf().has(Trait.vaginaltongue)) {
+        if (c.getStance().vaginallyPenetrated(c, getSelf()) && getSelf().has(Trait.vaginaltongue)) {
             return Tactics.fucking;
         } else {
             return Tactics.pleasure;
@@ -161,7 +160,7 @@ public class Blowjob extends Skill {
         if (modifier == Result.miss) {
             m += String.format("%s tries to suck %s cock, but %s %s %s hips back to avoid %s.",
                             getSelf().name(), target.nameOrPossessivePronoun(), target.pronoun(),
-                            target.action("pull"), target.possessivePronoun(), getSelf().pronoun());
+                            target.action("pull"), target.possessivePronoun(), getSelf().directObject());
         } else if (modifier == Result.special) {
             m += String.format("%s soft lips and talented tongue work over %s dick, drawing out"
                             + " dangerously irresistible pleasure with each touch.", 

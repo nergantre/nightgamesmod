@@ -772,6 +772,7 @@ public class GUI extends JFrame implements Observer {
         showPortrait();
         combat = c;
         combat.addObserver(this);
+        c.setBeingObserved(true);
         loadPortrait(c, c.p1, c.p2);
         showPortrait();
     }
@@ -973,7 +974,6 @@ public class GUI extends JFrame implements Observer {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
     }
 
     public void combatMessage(String text) {
@@ -1179,14 +1179,20 @@ public class GUI extends JFrame implements Observer {
             skippedFeat = false;
             clearCommand();
             Global.gui().message(Global.gainSkills(player));
-            if (combat != null) {
-                endCombat();
-            } else if (Global.getMatch() != null) {
-                Global.getMatch().resume();
-            } else if (Global.day != null) {
-                Global.getDay().plan();
+            player.finishDing();
+            if (player.getLevelsToGain() > 0) {
+                player.actuallyDing();
+                ding();
             } else {
-                new Prematch(Global.human);
+                if (combat != null) {
+                    endCombat();
+                } else if (Global.getMatch() != null) {
+                    Global.getMatch().resume();
+                } else if (Global.day != null) {
+                    Global.getDay().plan();
+                } else {
+                    new Prematch(Global.human);
+                }
             }
         }
     }
@@ -1381,9 +1387,6 @@ public class GUI extends JFrame implements Observer {
                 combatMessage(combat.getMessage());
                 combat.combatMessageChanged = false;
             }
-            if (Global.getMatch() != null && combat.phase == 0 || combat.phase == 2) {
-                next(combat);
-            }
         }
     }
 
@@ -1399,16 +1402,7 @@ public class GUI extends JFrame implements Observer {
             setText("Next");
             addActionListener(arg0 -> {
                 clearCommand();
-                if (GUI.NextButton.this.combat.phase == 0) {
-                    GUI.NextButton.this.combat.clear();
-                    clearText();
-                    GUI.NextButton.this.combat.turn();
-                } else if (GUI.NextButton.this.combat.phase == 2) {
-                    clearCommand();
-                    if (GUI.NextButton.this.combat.end()) {
-                        endCombat();
-                    }
-                }
+                GUI.NextButton.this.combat.turn();
             });
         }
     }

@@ -30,42 +30,42 @@ public class Kat extends BasePersonality {
     }
 
     public Kat(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Kat", 10, charConfig, commonConfig);
+        super("Kat", 10, charConfig, commonConfig, false);
     }
 
-    protected void applyBasicStats() {
-        preferredCockMod = CockMod.primal;
-        character.outfitPlan.add(Clothing.getByID("bra"));
-        character.outfitPlan.add(Clothing.getByID("Tshirt"));
-        character.outfitPlan.add(Clothing.getByID("panties"));
-        character.outfitPlan.add(Clothing.getByID("skirt"));
-        character.outfitPlan.add(Clothing.getByID("sneakers"));
-        character.outfitPlan.add(Clothing.getByID("socks"));
-        character.change();
-        character.setTrophy(Item.KatTrophy);
-        character.set(Attribute.Power, 10);
-        character.set(Attribute.Animism, 2);
-        character.set(Attribute.Cunning, 8);
-        character.set(Attribute.Speed, 8);
-        character.set(Attribute.Seduction, 7);
-        character.getStamina().setMax(100 + character.getLevel() * getGrowth().stamina);
-        character.getArousal().setMax(50 + character.getLevel() * getGrowth().arousal);
-        character.getMojo().setMax(80);
-        getCharacter().addPersonalStrategy(new FacesitStrategy());
+    @Override
+    public void applyStrategy(NPC self) {
+        self.plan = Plan.retreating;
+        self.mood = Emotion.confident;
+        self.addPersonalStrategy(new FacesitStrategy());
+    }
 
-        character.add(Trait.dexterous);
-        character.add(Trait.pheromones);
-        character.add(Trait.shy);
-        character.add(Trait.petite);
-        character.plan = Plan.retreating;
-        character.mood = Emotion.confident;
-        character.body.add(BreastsPart.a);
-        character.body.add(PussyPart.feral);
-        character.body.add(TailPart.cat);
-        character.body.add(EarPart.cat);
+    @Override
+    public void applyBasicStats(Character self) {
+        preferredCockMod = CockMod.primal;
+        self.outfitPlan.add(Clothing.getByID("bra"));
+        self.outfitPlan.add(Clothing.getByID("Tshirt"));
+        self.outfitPlan.add(Clothing.getByID("panties"));
+        self.outfitPlan.add(Clothing.getByID("skirt"));
+        self.outfitPlan.add(Clothing.getByID("sneakers"));
+        self.outfitPlan.add(Clothing.getByID("socks"));
+        self.change();
+        self.setTrophy(Item.KatTrophy);
+        self.modAttributeDontSaveData(Attribute.Power, 1);
+        self.modAttributeDontSaveData(Attribute.Animism, 1);
+        self.modAttributeDontSaveData(Attribute.Cunning, 1);
+        self.modAttributeDontSaveData(Attribute.Speed, 1);
+        self.getStamina().setMax(100);
+        self.getArousal().setMax(60);
+        self.getMojo().setMax(80);
+
+        self.body.add(BreastsPart.a);
+        self.body.add(PussyPart.feral);
+        self.body.add(TailPart.cat);
+        self.body.add(EarPart.cat);
         // mostly feminine face
-        character.body.add(new FacePart(.1, 2.3));
-        character.initialGender = CharacterSex.female;
+        self.body.add(new FacePart(.1, 2.3));
+        self.initialGender = CharacterSex.female;
     }
 
     @Override
@@ -75,7 +75,10 @@ public class Kat extends BasePersonality {
         growth.bonusStamina = 1;
         growth.bonusArousal = 2;
         preferredAttributes.add(c -> Optional.of(Attribute.Animism));
-
+        growth.addTrait(0, Trait.dexterous);
+        growth.addTrait(0, Trait.pheromones);
+        growth.addTrait(0, Trait.shy);
+        growth.addTrait(0, Trait.petite);
         growth.addTrait(10, Trait.sympathetic);
         growth.addTrait(13, Trait.analTraining1);
         growth.addTrait(16, Trait.powerfulhips);
@@ -134,12 +137,12 @@ public class Kat extends BasePersonality {
     }
 
     @Override
-    public String bbLiner(Combat c) {
+    public String bbLiner(Combat c, Character other) {
         return "Kat gives you a look of concern and sympathy. <i>\"Nya... Are you ok? I didn't mean to hit you that hard.\"</i>";
     }
 
     @Override
-    public String nakedLiner(Combat c) {
+    public String nakedLiner(Combat c, Character opponent) {
         if (character.getArousal().percent() >= 50) {
             return "Kat makes no effort to hide the moisture streaming down her thighs. <i>\"You want my pussy? I'm nyot going to myake it easy for you.\"</i>";
         } else {
@@ -148,17 +151,17 @@ public class Kat extends BasePersonality {
     }
 
     @Override
-    public String stunLiner(Combat c) {
+    public String stunLiner(Combat c, Character opponent) {
         return "Kat mews pitifully on the floor. <i>\"Don't be so meaNya.\"</i>";
     }
 
     @Override
-    public String taunt(Combat c) {
+    public String taunt(Combat c, Character opponent) {
         return "Kat smiles excitedly and bats at your cock. <i>\"Are you already close to cumming? Nya! I want to play with you more!\"</i>";
     }
 
     @Override
-    public String temptLiner(Combat c) {
+    public String temptLiner(Combat c, Character opponent) {
         return "Kat winks at you and looks at your crotch, <i>\"MmM! That looks tasty nya!\"</i>";
     }
 
@@ -166,7 +169,7 @@ public class Kat extends BasePersonality {
     public String victory(Combat c, Result flag) {
         Character opponent = c.getOpponent(character);
         character.arousal.empty();
-        if (c.getStance().vaginallyPenetrated(character)) {
+        if (c.getStance().vaginallyPenetrated(c, character)) {
             opponent.add(c, Horny.getWithBiologicalType(character, opponent, 5, 10, character.nameOrPossessivePronoun() + " pheromones"));
             return "She pounces at you, pushing you onto your back and holds you down with the weight of her body. A cute mew of a smile crosses her face, and her tongue sticks "
                             + "out slightly from between her lips. She is riding your cock in a regular rhythm now, not worried as she knows you are much closer to your climax than her.<p>"
@@ -223,7 +226,7 @@ public class Kat extends BasePersonality {
     @Override
     public String defeat(Combat c, Result flag) {
         Character opponent = c.getOpponent(character);
-        if (c.getStance().vaginallyPenetrated(character)) {
+        if (c.getStance().vaginallyPenetrated(c, character)) {
             opponent.add(c, Horny.getWithBiologicalType(character, opponent, 5, 10, character.nameOrPossessivePronoun() + " pheromones"));
             return "Kat squeaks as you pump your cock inside her over and over, penetrating her deeper with each thrust. She seems to be particularly vulnerable to being fucked"
                             + " doggy style; perhaps it makes her g-spot easier to hit each time you thrust into her.<p>"

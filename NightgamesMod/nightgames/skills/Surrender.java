@@ -4,11 +4,12 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 
 public class Surrender extends Skill {
-
     public Surrender(Character self) {
         super("Surrender", self);
+        addTag(SkillTag.suicidal);
     }
 
     @Override
