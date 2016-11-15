@@ -7,7 +7,9 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.status.Enthralled;
 import nightgames.status.Shamed;
+import nightgames.status.Trance;
 
 public class Taunt extends Skill {
 
@@ -46,6 +48,12 @@ public class Taunt extends Skill {
         if (c.getStance().dom(getSelf()) && getSelf().has(Trait.bitingwords)) {
             int willpowerLoss = Math.max(target.getWillpower().max() / 50, 3) + Global.random(3);
             target.loseWillpower(c, willpowerLoss, 0, false, " (Biting Words)");
+        }
+        if (getSelf().has(Trait.commandingvoice) && Global.random(3) == 0) {
+            c.write(getSelf(), Global.format("{other:SUBJECT-ACTION:speak|speaks} with such unquestionable"
+                            + " authority that {self:subject-action:don't|doesn't} even consider not obeying."
+                            , getSelf(), target));
+            target.add(new Enthralled(target, getSelf(), 1));
         }
         target.emote(Emotion.angry, 30);
         target.emote(Emotion.nervous, 15);

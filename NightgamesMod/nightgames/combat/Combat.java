@@ -37,9 +37,11 @@ import nightgames.stance.Neutral;
 import nightgames.stance.Position;
 import nightgames.stance.Stance;
 import nightgames.stance.StandingOver;
+import nightgames.status.Abuff;
 import nightgames.status.Braced;
 import nightgames.status.CounterStatus;
 import nightgames.status.DivineCharge;
+import nightgames.status.Flatfooted;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
 import nightgames.status.Trance;
@@ -514,6 +516,7 @@ public class Combat extends Observable implements Cloneable {
                 return;
             }
         }
+        
         if (self.has(Trait.smqueen)) {
                 write(self,
                             Global.format("{self:NAME-POSSESSIVE} cold gaze in {self:possessive} dominant position"
@@ -521,10 +524,42 @@ public class Combat extends Observable implements Cloneable {
                                             self, sub));
             sub.loseWillpower(this, stanceDominance, 0, false, " (SM Queen)");
         } else if (getStance().time % 2 == 0 && getStance().time > 0) {
-            write(self,
+            if (sub.has(Trait.indomitable)) {
+                write(self, Global.format("{other:SUBJECT}, typically being the dominant one,"
+                                + "{other:action:are|is} simply refusing to acknowledge {self:name-possessive}"
+                                + " current dominance.", self, sub));
+                stanceDominance = Math.max(1, stanceDominance - 3);
+            } else {
+                write(self,
                             Global.format("{other:NAME-POSSESSIVE} compromising position takes a toll on {other:possessive} willpower.",
                                             self, sub));
+            }
             sub.loseWillpower(this, stanceDominance, 0, false, " (Dominance)");
+        }
+        
+        if (self.has(Trait.confidentdom) && Global.random(2) == 0) {
+            Attribute attr;
+            String desc;
+            if (self.get(Attribute.Ki) > 0 && Global.random(2) == 0) {
+                attr = Attribute.Ki;
+                desc = "strengthening {self:possessive} focus on martial discipline";
+            } else if (Global.random(2) == 0) {
+                attr = Attribute.Power;
+                desc = "further empowering {self:possessive} muscles";
+            } else {
+                attr = Attribute.Cunning;
+                desc = "granting {self:direct-object} increased mental clarity";
+            }
+            write(self, Global.format("{self:SUBJECT-ACTION:feel|feels} right at home atop"
+                            + " {other:name-do}, %s.", self, sub, desc));
+            self.add(new Abuff(self, attr, Global.random(3) + 1, 10));
+        }
+        
+        if (self.has(Trait.unquestionable) && Global.random(4) == 0) {
+            write(self, Global.format("<b><i>\"Stay still, worm!\"</i> {self:subject-action:speak|speaks}"
+                            + " with such force that it casues {other:name-do} to temporarily"
+                            + " cease resisting.</b>", self, sub));
+            sub.add(new Flatfooted(sub, 1));
         }
         
         if (getStance().facing() && getOpponent(self).breastsAvailable() && getOpponent(self).has(Trait.temptingtits)) {

@@ -46,6 +46,7 @@ import nightgames.items.clothing.ClothingSlot;
 import nightgames.items.clothing.ClothingTrait;
 import nightgames.items.clothing.Outfit;
 import nightgames.json.JsonUtils;
+import nightgames.skills.AssFuck;
 import nightgames.skills.Command;
 import nightgames.skills.Nothing;
 import nightgames.skills.Skill;
@@ -53,7 +54,9 @@ import nightgames.skills.Tactics;
 import nightgames.skills.damage.DamageType;
 import nightgames.stance.Position;
 import nightgames.stance.Stance;
+import nightgames.status.Abuff;
 import nightgames.status.Alluring;
+import nightgames.status.BodyFetish;
 import nightgames.status.DivineCharge;
 import nightgames.status.DivineRecoil;
 import nightgames.status.Enthralled;
@@ -558,6 +561,12 @@ public abstract class Character extends Observable implements Cloneable {
         // if you are a masochist, arouse by pain up to the threshold.
         if (is(Stsflag.masochism) && physical) {
             this.arouse(Math.max(i, painAllowance), c);
+        }
+        if (other != null && other.has(Trait.disablingblows) && Global.random(5) == 0) {
+            int mag = Global.random(3) + 1;
+            c.write(other, Global.format("Something about the way {other:subject-action:hit|hits}"
+                            + " {self:name-do} seems to strip away {self:possessive} strength.", this, other));
+            add(new Abuff(this, Attribute.Power, -mag, 10));
         }
         stamina.reduce(pain);
     }
@@ -1861,6 +1870,32 @@ public abstract class Character extends Observable implements Cloneable {
         if (getPure(Attribute.Animism) >= 4 && getArousal().percent() >= 50 && !is(Stsflag.feral)) {
             add(c, new Feral(this));
         }
+        
+        if (opponent.has(Trait.temptingass) && !is(Stsflag.frenzied)) {
+            AssFuck fuck = new AssFuck(this);
+            if (fuck.requirements(c, opponent) && fuck.usable(c, opponent)) {
+                int chance = 20;
+                chance += Math.max(0, Math.min(15, opponent.get(Attribute.Seduction) - get(Attribute.Seduction)));
+                if (is(Stsflag.feral))
+                    chance += 10;
+                if (is(Stsflag.charmed) || opponent.is(Stsflag.alluring))
+                    chance += 5;
+                if (has(Trait.assmaster) || has(Trait.analFanatic))
+                    chance += 5;
+                Optional<BodyFetish> fetish = body.getFetish("ass");
+                if (fetish.isPresent() && opponent.has(Trait.bewitchingbottom)) {
+                    chance += 20 * fetish.get().magnitude;
+                }
+                if (chance >= Global.random(100)) {
+                    c.write(opponent, Global.format("<b>The look of {other:name-possessive} ass,"
+                                    + " so easily within {self:possessive} reach, causes"
+                                    + " {self:subject} to involuntarily switch to autopilot."
+                                    + " {self:SUBJECT} simply {self:action:NEED|NEEDS} that ass.</b>", this, opponent));
+                    add(new Frenzied(this, 1));
+                }
+            }
+        }
+        
         pleasured = false;
     }
 
@@ -3346,4 +3381,5 @@ public abstract class Character extends Observable implements Cloneable {
     public boolean isPet() {
         return false;
     }
+  
 }

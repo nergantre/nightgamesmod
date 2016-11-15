@@ -186,7 +186,7 @@ public class Global {
         System.out.println("Night games");
         System.out.println(new Timestamp(jdate.getTime()));
 
-        // debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
+        debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
         // debug[DebugFlags.DEBUG_LOADING.ordinal()] = true;
         // debug[DebugFlags.DEBUG_FTC.ordinal()] = true;
         // debug[DebugFlags.DEBUG_DAMAGE.ordinal()] = true;
@@ -506,6 +506,7 @@ public class Global {
         getSkillPool().add(new Unstrip(ch));
         getSkillPool().add(new WindUp(ch));
         getSkillPool().add(new ThrowSlime(ch));
+        getSkillPool().add(new Edge(ch));
 
 
         if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
@@ -1140,6 +1141,7 @@ public class Global {
         characterPool.put(maya.getCharacter().getType(), maya.getCharacter());
         characterPool.put(yui.getCharacter().getType(), yui.getCharacter());
 
+        debugChars.add(jewel.getCharacter());
     }
     
     public static void loadWithDialog() {
