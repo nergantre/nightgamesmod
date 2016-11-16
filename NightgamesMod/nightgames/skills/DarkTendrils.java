@@ -37,7 +37,7 @@ public class DarkTendrils extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         getSelf().arouse((int) (getSelf().getArousal().max() * .15), c);
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c))) {
             if (Global.random(2) == 1) {
                 writeOutput(c, Result.normal, target);
                 target.add(c, new Bound(target, Math.min(10 + 3 * getSelf().get(Attribute.Dark), 55), "shadows"));

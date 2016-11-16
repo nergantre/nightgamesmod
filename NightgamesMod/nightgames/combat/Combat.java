@@ -400,7 +400,7 @@ public class Combat extends Observable implements Cloneable {
                 }
                 break;
             case P1_ACT_FIRST:
-                if (doAction(p1, p2, p1act)) {
+                if (doAction(p1, p1act.getDefaultTarget(this), p1act)) {
                     phase = CombatPhase.UPKEEP;
                 } else {
                     phase = CombatPhase.P2_ACT_SECOND;
@@ -408,12 +408,12 @@ public class Combat extends Observable implements Cloneable {
                 next();
                 break;
             case P1_ACT_SECOND:
-                doAction(p1, p2, p1act);
+                doAction(p1, p1act.getDefaultTarget(this), p1act);
                 phase = CombatPhase.UPKEEP;
                 next();
                 break;
             case P2_ACT_FIRST:
-                if (doAction(p2, p1, p2act)) {
+                if (doAction(p2, p2act.getDefaultTarget(this), p2act)) {
                     phase = CombatPhase.UPKEEP;
                 } else {
                     phase = CombatPhase.P1_ACT_SECOND;
@@ -421,7 +421,7 @@ public class Combat extends Observable implements Cloneable {
                 next();
                 break;
             case P2_ACT_SECOND:
-                doAction(p2, p1, p2act);
+                doAction(p2, p2act.getDefaultTarget(this), p2act);
                 phase = CombatPhase.UPKEEP;
                 next();
                 break;
@@ -570,7 +570,13 @@ public class Combat extends Observable implements Cloneable {
                 }
             }
 
-            otherCombatants.stream().filter(pet -> !alreadyBattled.contains(pet)).forEach(pet -> pet.act(this));
+            otherCombatants.stream().filter(pet -> !alreadyBattled.contains(pet)).forEach(pet -> {
+                pet.act(this);
+                if (pet.getSelf().owner().has(Trait.devoteeFervor) && Global.random(2) == 0) {
+                    write(pet, Global.format("{self:SUBJECT} seems to have gained a second wind from {self:possessive} religious fervor!", pet, pet.getSelf().owner()));
+                    pet.act(this);
+                }
+            });
             write("<br/>");
             acted = true;
         }

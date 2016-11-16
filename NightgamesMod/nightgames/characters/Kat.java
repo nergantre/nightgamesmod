@@ -70,31 +70,31 @@ public class Kat extends BasePersonality {
 
     @Override
     public void setGrowth() {
-        growth.stamina = 2;
-        growth.arousal = 2;
-        growth.bonusStamina = 1;
-        growth.bonusArousal = 2;
+        character.getGrowth().stamina = 2;
+        character.getGrowth().arousal = 2;
+        character.getGrowth().bonusStamina = 1;
+        character.getGrowth().bonusArousal = 2;
         preferredAttributes.add(c -> Optional.of(Attribute.Animism));
-        growth.addTrait(0, Trait.dexterous);
-        growth.addTrait(0, Trait.pheromones);
-        growth.addTrait(0, Trait.shy);
-        growth.addTrait(0, Trait.petite);
-        growth.addTrait(10, Trait.sympathetic);
-        growth.addTrait(13, Trait.analTraining1);
-        growth.addTrait(16, Trait.powerfulhips);
-        growth.addTrait(19, Trait.alwaysready);
-        growth.addTrait(20, Trait.breeder);
-        growth.addTrait(22, Trait.cute);
-        growth.addTrait(25, Trait.nymphomania);
-        growth.addTrait(28, Trait.tongueTraining1);
-        growth.addTrait(31, Trait.lacedjuices);
-        growth.addTrait(34, Trait.tight);
-        growth.addTrait(37, Trait.catstongue);
-        growth.addTrait(40, Trait.graceful);
-        growth.addTrait(43, Trait.tongueTraining2);
-        growth.addTrait(46, Trait.strongwilled);
-        growth.addTrait(49, Trait.holecontrol);
-        growth.addTrait(52, Trait.analTraining3);
+        character.getGrowth().addTrait(0, Trait.dexterous);
+        character.getGrowth().addTrait(0, Trait.pheromones);
+        character.getGrowth().addTrait(0, Trait.shy);
+        character.getGrowth().addTrait(0, Trait.petite);
+        character.getGrowth().addTrait(10, Trait.sympathetic);
+        character.getGrowth().addTrait(13, Trait.analTraining1);
+        character.getGrowth().addTrait(16, Trait.powerfulhips);
+        character.getGrowth().addTrait(19, Trait.alwaysready);
+        character.getGrowth().addTrait(20, Trait.breeder);
+        character.getGrowth().addTrait(22, Trait.cute);
+        character.getGrowth().addTrait(25, Trait.nymphomania);
+        character.getGrowth().addTrait(28, Trait.tongueTraining1);
+        character.getGrowth().addTrait(31, Trait.lacedjuices);
+        character.getGrowth().addTrait(34, Trait.tight);
+        character.getGrowth().addTrait(37, Trait.catstongue);
+        character.getGrowth().addTrait(40, Trait.graceful);
+        character.getGrowth().addTrait(43, Trait.tongueTraining2);
+        character.getGrowth().addTrait(46, Trait.strongwilled);
+        character.getGrowth().addTrait(49, Trait.holecontrol);
+        character.getGrowth().addTrait(52, Trait.analTraining3);
     }
 
     @Override

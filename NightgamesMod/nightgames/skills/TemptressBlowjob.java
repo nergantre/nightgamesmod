@@ -41,7 +41,7 @@ public class TemptressBlowjob extends Blowjob {
             m += 4;
         }
 
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c))) {
             if (!target.body.getRandomCock().isReady(target)) {
                 m -= 7;
                 target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandomCock(), m, c, this);

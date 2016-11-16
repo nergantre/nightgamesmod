@@ -17,11 +17,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 
+import nightgames.characters.body.BodyPart;
 import nightgames.items.clothing.Clothing;
 
 public class JsonUtils {
     public static Gson gson =
-                    new GsonBuilder().setPrettyPrinting().registerTypeAdapter(Clothing.class, new ClothingAdaptor())
+                    new GsonBuilder().setPrettyPrinting()
+                                    .registerTypeAdapter(Clothing.class, new ClothingAdaptor())
+                                    .registerTypeAdapter(BodyPart.class, new BodyPartAdapter())
                                     .create();
 
 

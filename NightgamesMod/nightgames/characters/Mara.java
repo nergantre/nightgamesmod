@@ -68,10 +68,10 @@ public class Mara extends BasePersonality {
 
     @Override
     public void setGrowth() {
-        growth.stamina = 2;
-        growth.arousal = 4;
-        growth.bonusStamina = 1;
-        growth.bonusArousal = 2;
+        character.getGrowth().stamina = 2;
+        character.getGrowth().arousal = 4;
+        character.getGrowth().bonusStamina = 1;
+        character.getGrowth().bonusArousal = 2;
         preferredAttributes.add(c -> c.getRank() >= 4 && c.get(Attribute.Temporal) < 20 
                         ? Optional.of(Attribute.Temporal) : Optional.empty());
         preferredAttributes.add(c -> c.get(Attribute.Science) < 15 ? Optional.of(Attribute.Science) : Optional.empty());
@@ -79,27 +79,27 @@ public class Mara extends BasePersonality {
                         ? Optional.of(Attribute.Fetish) : Optional.empty());
         preferredAttributes
                         .add(c -> c.get(Attribute.Cunning) < 100 ? Optional.of(Attribute.Cunning) : Optional.empty());
-        growth.addTrait(0, Trait.petite);
-        growth.addTrait(0, Trait.dexterous);
-        growth.addTrait(0, Trait.ticklish);
-        growth.addTrait(3, Trait.cautious);
-        growth.addTrait(6, Trait.freeSpirit);
-        growth.addTrait(9, Trait.limbTraining1);
-        growth.addTrait(12, Trait.dickhandler);
-        growth.addTrait(15, Trait.sexTraining1);
-        growth.addTrait(18, Trait.pussyhandler);
-        growth.addTrait(20, Trait.mindcontroller);
-        growth.addTrait(21, Trait.tongueTraining1);
-        growth.addTrait(24, Trait.limbTraining2);
-        growth.addTrait(27, Trait.tight);
-        growth.addTrait(30, Trait.limbTraining3);
-        growth.addTrait(33, Trait.defthands);
-        growth.addTrait(36, Trait.toymaster);
-        growth.addTrait(39, Trait.calm);
-        growth.addTrait(42, Trait.nimbletoes);
-        growth.addTrait(45, Trait.dickhandler);
-        growth.addTrait(48, Trait.skeptical);
-        growth.addTrait(51, Trait.desensitized2);
+        character.getGrowth().addTrait(0, Trait.petite);
+        character.getGrowth().addTrait(0, Trait.dexterous);
+        character.getGrowth().addTrait(0, Trait.ticklish);
+        character.getGrowth().addTrait(3, Trait.cautious);
+        character.getGrowth().addTrait(6, Trait.freeSpirit);
+        character.getGrowth().addTrait(9, Trait.limbTraining1);
+        character.getGrowth().addTrait(12, Trait.dickhandler);
+        character.getGrowth().addTrait(15, Trait.sexTraining1);
+        character.getGrowth().addTrait(18, Trait.pussyhandler);
+        character.getGrowth().addTrait(20, Trait.mindcontroller);
+        character.getGrowth().addTrait(21, Trait.tongueTraining1);
+        character.getGrowth().addTrait(24, Trait.limbTraining2);
+        character.getGrowth().addTrait(27, Trait.tight);
+        character.getGrowth().addTrait(30, Trait.limbTraining3);
+        character.getGrowth().addTrait(33, Trait.defthands);
+        character.getGrowth().addTrait(36, Trait.toymaster);
+        character.getGrowth().addTrait(39, Trait.calm);
+        character.getGrowth().addTrait(42, Trait.nimbletoes);
+        character.getGrowth().addTrait(45, Trait.dickhandler);
+        character.getGrowth().addTrait(48, Trait.skeptical);
+        character.getGrowth().addTrait(51, Trait.desensitized2);
     }
 
     @Override
@@ -112,7 +112,7 @@ public class Mara extends BasePersonality {
     @Override
     public void rest(int time) {
         if (character.rank == 1 && !character.has(Trait.madscientist)) {
-            growth.addTrait(10, Trait.madscientist);
+            character.getGrowth().addTrait(10, Trait.madscientist);
             character.body.addReplace(PussyPart.cybernetic, 1);
             character.unequipAllClothing();
             character.outfitPlan.add(Clothing.getByID("bra"));

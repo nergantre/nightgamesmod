@@ -40,7 +40,7 @@ public class MagicMissile extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c))) {
             double m = Global.random(10, 20);
             if (target.mostlyNude() && Global.random(3) == 2) {
                 writeOutput(c, Result.critical, target);

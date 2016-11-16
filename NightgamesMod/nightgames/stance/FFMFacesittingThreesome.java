@@ -31,6 +31,12 @@ public class FFMFacesittingThreesome extends FFMCowgirlThreesome {
     }
 
     @Override
+    public float priorityMod(Character self) {
+        return super.priorityMod(self) + 3;
+    }
+
+
+    @Override
     public boolean kiss(Character c, Character target) {
         return c != bottom && target != bottom;
     }

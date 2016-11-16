@@ -59,7 +59,7 @@ public class TailPeg extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(this, c, accuracy(c) + (c.getStance().havingSex(c) ? 20 : -20))) {
+        if (target.roll(getSelf(), c, accuracy(c) + (c.getStance().havingSex(c) ? 20 : -20))) {
             int strength = Math.min(20, 10 + getSelf().get(Attribute.Dark) / 4);
             boolean vaginal = c.getStance().anallyPenetrated(c, c.getOpponent(getSelf()));
             boolean shamed = false;

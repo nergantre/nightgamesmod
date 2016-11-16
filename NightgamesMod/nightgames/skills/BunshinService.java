@@ -58,7 +58,7 @@ public class BunshinService extends Skill {
                             target.subjectAction("see"),clones,getSelf().pronoun(),target.reflectivePronoun()));
         }
         for (int i = 0; i < clones; i++) {
-            if (target.roll(this, c, accuracy(c) + getSelf().get(Attribute.Speed) + getSelf().getLevel())) {
+            if (target.roll(getSelf(), c, accuracy(c) + getSelf().get(Attribute.Speed) + getSelf().getLevel())) {
                 switch (Global.random(4)) {
                     case 0:
                         r = Result.weak;

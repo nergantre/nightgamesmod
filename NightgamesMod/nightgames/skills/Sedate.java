@@ -31,7 +31,7 @@ public class Sedate extends Skill {
             writeOutput(c, Result.special, target);
             target.weaken(c, (int) getSelf().modifyDamage(DamageType.gadgets, target,30));
             target.loseMojo(c, (int) getSelf().modifyDamage(DamageType.gadgets, target,25));
-        } else if (target.roll(this, c, accuracy(c))) {
+        } else if (target.roll(getSelf(), c, accuracy(c))) {
             writeOutput(c, Result.normal, target);
             target.weaken(c, (int) getSelf().modifyDamage(DamageType.gadgets, target,30));
             target.loseMojo(c, (int) getSelf().modifyDamage(DamageType.gadgets, target,25));

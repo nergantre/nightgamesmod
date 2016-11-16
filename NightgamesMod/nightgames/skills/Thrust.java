@@ -205,6 +205,11 @@ public class Thrust extends Skill {
     }
 
     @Override
+    public Character getDefaultTarget(Combat c) {
+        return c.getStance().getPartner(c, getSelf());
+    }
+
+    @Override
     public boolean makesContact() {
         return true;
     }

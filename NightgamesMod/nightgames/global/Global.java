@@ -38,8 +38,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.ContextFactory;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonIOException;

@@ -30,6 +30,11 @@ public enum TailPart implements BodyPart,BodyPartMod {
     }
 
     @Override
+    public String canonicalDescription() {
+        return desc + "tail";
+    }
+
+    @Override
     public String describe(Character c) {
         return desc + "tail";
     }

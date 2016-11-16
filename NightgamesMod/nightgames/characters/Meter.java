@@ -122,4 +122,8 @@ public class Meter implements Serializable, Cloneable {
     public String toString() {
         return String.format("current: %s / max: %s", Global.formatDecimal(current), Global.formatDecimal(max()));
     }
+
+    public double remaining() {
+        return max() - getReal();
+    }
 }

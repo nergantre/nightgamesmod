@@ -25,7 +25,7 @@ public class Simulacrum extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().canAct() && c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf())
-                        && c.getPetsFor(getSelf()).isEmpty() && !target.isPet();
+                        && c.getPetsFor(getSelf()).size() < getSelf().getPetLimit() && !target.isPet();
     }
 
     @Override

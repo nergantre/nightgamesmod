@@ -73,11 +73,11 @@ public class Cassie extends BasePersonality {
 
     @Override
     public void setGrowth() {
-        growth.stamina = 2;
-        growth.arousal = 4;
-        growth.willpower = .4f;
-        growth.bonusStamina = 1;
-        growth.bonusArousal = 3;
+        character.getGrowth().stamina = 2;
+        character.getGrowth().arousal = 4;
+        character.getGrowth().willpower = .4f;
+        character.getGrowth().bonusStamina = 1;
+        character.getGrowth().bonusArousal = 3;
 
         character.addCombatScene(new CombatScene((c, self, other) -> {
             return self.getLevel() >= 10 && !Global.checkFlag(CASSIE_BREAST_FOCUS) && !Global.checkFlag(CASSIE_MOUTH_FOCUS);
@@ -86,10 +86,10 @@ public class Cassie extends BasePersonality {
                         new CombatSceneChoice("Stare at her breasts", (c, self, other) -> {
                             c.write("Cassie catches your gaze with her eyes and lightly giggles. \"I knew it, boys are all about boobs right? Hmm I wonder if I can use this to my advantage...\"");
                             Global.flag(CASSIE_BREAST_FOCUS);
-                            growth.addTrait(11, Trait.lactating);
-                            growth.addTrait(25, Trait.magicmilk);
-                            growth.addTrait(38, Trait.temptingtits);
-                            growth.addTrait(57, Trait.sedativecream);
+                            character.getGrowth().addTrait(11, Trait.lactating);
+                            character.getGrowth().addTrait(25, Trait.magicmilk);
+                            character.getGrowth().addTrait(38, Trait.temptingtits);
+                            character.getGrowth().addTrait(57, Trait.sedativecream);
                             return true;
                         }),
                         new CombatSceneChoice("Stare at her lips", (c, self, other) -> {
@@ -97,12 +97,10 @@ public class Cassie extends BasePersonality {
                                             + "\"Oooooh, do you like how my mouth feels? I'm flattered! Maybe you like kissing? Or... perhaps something a bit more exciting?\"<br/>"
                                             + "She giggles a bit when your flush reveals your dirty thoughts. \"It's okay " + other.getName() + ", I enjoy it too. Maybe I'll even try a bit harder with it!\"");
                             Global.flag(CASSIE_MOUTH_FOCUS);
-                            growth.addTrait(11, Trait.experttongue);
-                            growth.addTrait(25, Trait.tongueTraining2);
-                            growth.addTrait(38, Trait.tongueTraining3);
-                            growth.actions.put(57, () -> {
-                                character.body.addReplace(new MouthPussyPart(), 1);
-                            });
+                            character.getGrowth().addTrait(11, Trait.experttongue);
+                            character.getGrowth().addTrait(25, Trait.tongueTraining2);
+                            character.getGrowth().addTrait(38, Trait.tongueTraining3);
+                            character.getGrowth().addBodyPart(57, new MouthPussyPart());
                             return true;
                         })
                     )
@@ -121,16 +119,16 @@ public class Cassie extends BasePersonality {
                                             + "But you know, it doesn't have to be this way. I think I can try applying some of that in a better way.\" She stands up and gives you a quick kiss on the cheek. "
                                             + "\"Thank you " +Global.getPlayer().getName() + ", you've really help me make up my mind. But the next time we fight, I definitely wont lose!\"");
                             Global.flag(CASSIE_SUBMISSIVE_FOCUS);
-                            growth.addTrait(21, Trait.submissive);
+                            character.getGrowth().addTrait(21, Trait.submissive);
                             if (Global.checkFlag(CASSIE_BREAST_FOCUS)) {
-                                growth.addTrait(28, Trait.augmentedPheromones);
+                                character.getGrowth().addTrait(28, Trait.augmentedPheromones);
                             } else if (Global.checkFlag(CASSIE_MOUTH_FOCUS)) {
-                                growth.addTrait(28, Trait.sweetlips);
+                                character.getGrowth().addTrait(28, Trait.sweetlips);
                             }
-                            growth.addTrait(32, Trait.addictivefluids);
-                            growth.addTrait(43, Trait.dickhandler);
-                            growth.addTrait(47, Trait.autonomousPussy);
-                            growth.addTrait(60, Trait.obsequiousAppeal);
+                            character.getGrowth().addTrait(32, Trait.addictivefluids);
+                            character.getGrowth().addTrait(43, Trait.dickhandler);
+                            character.getGrowth().addTrait(47, Trait.autonomousPussy);
+                            character.getGrowth().addTrait(60, Trait.obsequiousAppeal);
                             preferredAttributes.add(character -> character.get(Attribute.Submissive) < 20 ? Optional.of(Attribute.Submissive) : Optional.empty());
                             return true;
                         }),
@@ -141,41 +139,41 @@ public class Cassie extends BasePersonality {
                                                             + "Do you like being helpless? "
                                                             + "Does it excite you when you are under my control, doing my bidding? I think I can work with that...\"");
                             Global.flag(CASSIE_ENCHANTRESS_FOCUS);
-                            growth.addTrait(21, Trait.magicEyeArousal);
-                            growth.addTrait(28, Trait.magicEyeFrenzy);
-                            growth.addTrait(32, Trait.magicEyeTrance);
-                            growth.addTrait(43, Trait.magicEyeEnthrall);
+                            character.getGrowth().addTrait(21, Trait.magicEyeArousal);
+                            character.getGrowth().addTrait(28, Trait.magicEyeFrenzy);
+                            character.getGrowth().addTrait(32, Trait.magicEyeTrance);
+                            character.getGrowth().addTrait(43, Trait.magicEyeEnthrall);
                             if (Global.checkFlag(CASSIE_BREAST_FOCUS)) {
-                                growth.addTrait(47, Trait.beguilingbreasts);
+                                character.getGrowth().addTrait(47, Trait.beguilingbreasts);
                             } else if (Global.checkFlag(CASSIE_MOUTH_FOCUS)) {
-                                growth.addTrait(47, Trait.soulsucker);
+                                character.getGrowth().addTrait(47, Trait.soulsucker);
                             }
-                            growth.addTrait(60, Trait.enchantingVoice);
+                            character.getGrowth().addTrait(60, Trait.enchantingVoice);
                             return true;
                         })
                     )
                 ));
         preferredAttributes.add(c -> c.get(Attribute.Arcane) < 80 ? Optional.of(Attribute.Arcane) : Optional.empty());
 
-        growth.addTrait(0, Trait.softheart);
-        growth.addTrait(0, Trait.romantic);
-        growth.addTrait(0, Trait.imagination);
-        growth.addTrait(2, Trait.mojoMaster);
-        growth.addTrait(5, Trait.responsive);
-        growth.addTrait(8, Trait.tongueTraining1);
+        character.getGrowth().addTrait(0, Trait.softheart);
+        character.getGrowth().addTrait(0, Trait.romantic);
+        character.getGrowth().addTrait(0, Trait.imagination);
+        character.getGrowth().addTrait(2, Trait.mojoMaster);
+        character.getGrowth().addTrait(5, Trait.responsive);
+        character.getGrowth().addTrait(8, Trait.tongueTraining1);
         // 11 - first choice 1
-        growth.addTrait(14, Trait.hawkeye);
-        growth.addTrait(17, Trait.cute);
+        character.getGrowth().addTrait(14, Trait.hawkeye);
+        character.getGrowth().addTrait(17, Trait.cute);
         // 21 - second choice 1
         // 25 - second choice 2
         // 28 - first choice 2
         // 32 - second choice 3
-        growth.addTrait(35, Trait.SexualGroove);
+        character.getGrowth().addTrait(35, Trait.SexualGroove);
         // 38 - first choice 3
         // 43 - second choice 4
         // 47 - second choice 5
-        growth.addTrait(50, Trait.sexTraining2);
-        growth.addTrait(53, Trait.addictivefluids);
+        character.getGrowth().addTrait(50, Trait.sexTraining2);
+        character.getGrowth().addTrait(53, Trait.addictivefluids);
         // 57 - first choice 4
         // 60 - second choice 6
         
@@ -558,7 +556,7 @@ public class Cassie extends BasePersonality {
     }
 
     public void advance() {
-        growth.addTrait(10, Trait.witch);
+        character.getGrowth().addTrait(10, Trait.witch);
         character.body.addReplace(PussyPart.arcane, 1);
         character.unequipAllClothing();
         character.outfitPlan.add(Clothing.getByID("bra"));

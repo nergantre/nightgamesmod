@@ -4,6 +4,8 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.global.Global;
+import nightgames.skills.damage.DamageType;
 
 public class FlyCatcher extends Skill {
 
@@ -34,7 +36,9 @@ public class FlyCatcher extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        c.getPetsFor(target).stream().findAny().ifPresent(pet -> pet.getSelf().caught(c, getSelf()));
+        writeOutput(c, Result.normal, target);
+        double m = Global.random(50, 80);
+        target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, m));
         getSelf().weaken(c, 5);
 
         return true;
@@ -52,14 +56,13 @@ public class FlyCatcher extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        // TODO Auto-generated method stub
-        return null;
+        return receive(c, damage, modifier, target);
     }
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        // TODO Auto-generated method stub
-        return null;
+        return Global.format("{self:SUBJECT-ACTION:take|takes} the time to focus on chasing down {other:name-do}, "
+                        + "finally catching {other:direct-object} in a submission hold.", getSelf(), target);
     }
 
 }

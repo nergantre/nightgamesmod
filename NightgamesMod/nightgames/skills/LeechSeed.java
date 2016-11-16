@@ -36,7 +36,7 @@ public class LeechSeed extends Skill {
     
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (!target.canAct() || target.roll(this, c, accuracy(c))) {
+        if (!target.canAct() || target.roll(getSelf(), c, accuracy(c))) {
             Result results = Result.anal;
             if (!target.is(Stsflag.fucked) && target.hasPussy()) {
                 results = Result.normal;

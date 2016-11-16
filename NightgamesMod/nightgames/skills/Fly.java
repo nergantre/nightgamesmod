@@ -50,7 +50,7 @@ public class Fly extends Fuck {
     public boolean resolve(Combat c, Character target) {
         String premessage = premessage(c, target);
 
-        Result result = target.roll(this, c, accuracy(c)) ? Result.normal : Result.miss;
+        Result result = target.roll(getSelf(), c, accuracy(c)) ? Result.normal : Result.miss;
         if (getSelf().human()) {
             c.write(getSelf(), premessage + deal(c, premessage.length(), result, target));
         } else if (c.shouldPrintReceive(target, c)) {

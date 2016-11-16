@@ -4,6 +4,7 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.status.CounterStatus;
 import nightgames.status.Stsflag;
 
@@ -17,6 +18,7 @@ public abstract class CounterBase extends Skill {
 
     public CounterBase(String name, Character self, int cooldown, String description, int duration) {
         super(name, self, cooldown);
+        addTag(SkillTag.counter);
         this.description = description;
         this.duration = duration;
     }

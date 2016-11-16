@@ -117,7 +117,13 @@ public class FFMCowgirlThreesome extends FemdomSexStance {
         c.write(bottom, Global.format("{self:SUBJECT-ACTION:manage|manages} to unbalance {other:name-do} and push {other:direct-object} off {self:reflective}.", bottom, top));
         return new Neutral(bottom, top);
     }
-    
+
+    @Override
+    public float priorityMod(Character self) {
+        return super.priorityMod(self) + 3;
+    }
+
+
     @Override
     public int dominance() {
         return 3;

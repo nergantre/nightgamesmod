@@ -10,10 +10,9 @@ import nightgames.skills.Skill;
 
 public abstract class AbstractStrategy implements CombatStrategy {
     protected Set<Skill> getAllowedSkills(Combat c, nightgames.characters.Character self) {
-        nightgames.characters.Character other = c.getOpponent(self);
         Set<Skill> availableSkills = new HashSet<>(self.getSkills());
-        Skill.filterAllowedSkills(c, availableSkills, self, other);
-        Set<Skill> allowedSkills = availableSkills.stream().filter(skill -> Skill.skillIsUsable(c, skill, other)).collect(Collectors.toSet());
+        Skill.filterAllowedSkills(c, availableSkills, self);
+        Set<Skill> allowedSkills = availableSkills.stream().filter(skill -> Skill.skillIsUsable(c, skill)).collect(Collectors.toSet());
         return allowedSkills;
     }
     

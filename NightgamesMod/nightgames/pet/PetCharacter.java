@@ -2,7 +2,10 @@ package nightgames.pet;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import nightgames.characters.Character;
@@ -23,6 +26,12 @@ import nightgames.status.Status;
 import nightgames.trap.Trap;
 
 public class PetCharacter extends Character {
+    private static Set<SkillTag> PET_UNUSABLE_TAG = new HashSet<>();
+    static {
+        PET_UNUSABLE_TAG.add(SkillTag.suicidal);
+        PET_UNUSABLE_TAG.add(SkillTag.counter);
+    }
+    
     private String type;
     private String ownerType;
     private Pet self;
@@ -32,8 +41,9 @@ public class PetCharacter extends Character {
         this.ownerType = self.owner().getType();
         this.self = self;
         this.type = type;
+        this.setGrowth(growth);
         for (int i = 1; i < level; i++) {
-            growth.levelUp(this);
+            getGrowth().levelUp(this);
         }
         distributePoints(Arrays.asList());
         this.getSkills().clear();
@@ -90,12 +100,14 @@ public class PetCharacter extends Character {
 
     public void act(Combat c, Character target) {
         List<Skill> allowedEnemySkills = new ArrayList<>(getSkills()
-                        .stream().filter(skill -> Skill.skillIsUsable(c, skill, target) && !skill.getTags().contains(SkillTag.suicidal))
+                        .stream().filter(skill -> Skill.skillIsUsable(c, skill, target) && !Collections.disjoint(skill.getTags(), PET_UNUSABLE_TAG))
                         .collect(Collectors.toList()));
         Skill.filterAllowedSkills(c, allowedEnemySkills, this, target);        
 
         List<Skill> allowedMasterSkills = new ArrayList<>(getSkills()
-                        .stream().filter(skill -> Skill.skillIsUsable(c, skill, getSelf().owner) && skill.getTags().contains(SkillTag.helping))
+                        .stream().filter(skill -> Skill.skillIsUsable(c, skill, getSelf().owner)
+                                        && skill.getTags().contains(SkillTag.helping)
+                                        && !Collections.disjoint(skill.getTags(), PET_UNUSABLE_TAG))
                         .collect(Collectors.toList()));
         Skill.filterAllowedSkills(c, allowedMasterSkills, this, getSelf().owner);
         WeightedSkill bestEnemySkill = Decider.prioritizePet(this, target, allowedEnemySkills, c);

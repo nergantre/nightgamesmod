@@ -48,7 +48,7 @@ public class Dissolve extends Skill {
             if (getSelf().has(Item.Aersolizer)) {
                 writeOutput(c, Result.special, target);
                 shred(target, toShred);
-            } else if (target.roll(this, c, accuracy(c))) {
+            } else if (target.roll(getSelf(), c, accuracy(c))) {
                 writeOutput(c, Result.normal, target);
                 shred(target, toShred);
             } else {

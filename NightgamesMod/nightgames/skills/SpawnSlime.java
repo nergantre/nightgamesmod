@@ -22,7 +22,8 @@ public class SpawnSlime extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().canAct() && c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf())
-                        && c.getPetsFor(getSelf()).isEmpty() && getSelf().has(Item.Battery, 5);
+                        && c.getPetsFor(getSelf()).size() < getSelf().getPetLimit() 
+                        && getSelf().has(Item.Battery, 5);
     }
 
     @Override

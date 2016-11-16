@@ -30,6 +30,11 @@ public class MFFTribThreesome extends Position {
     }
 
     @Override
+    public float priorityMod(Character self) {
+        return super.priorityMod(self) + 3;
+    }
+
+    @Override
     protected Character domSexCharacter(Combat c) {
         return domSexCharacter;
     }

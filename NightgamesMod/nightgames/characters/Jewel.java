@@ -18,11 +18,11 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.skills.strategy.FacesitStrategy;
+import nightgames.skills.strategy.FootjobStrategy;
 import nightgames.skills.strategy.KnockdownStrategy;
 import nightgames.skills.strategy.ReceiveAnalStrategy;
 import nightgames.skills.strategy.StraponStrategy;
-import nightgames.skills.strategy.FacesitStrategy;
-import nightgames.skills.strategy.FootjobStrategy;
 import nightgames.start.NpcConfiguration;
 
 public class Jewel extends BasePersonality {
@@ -81,6 +81,7 @@ public class Jewel extends BasePersonality {
 
     @Override
     public void setGrowth() {
+        Growth growth = character.getGrowth();
         growth.stamina = 3;
         growth.arousal = 3;
         growth.bonusStamina = 3;
@@ -162,28 +163,29 @@ public class Jewel extends BasePersonality {
         growth.addTrait(1, Trait.fitnessNut);
         growth.addTrait(4, Trait.QuickRecovery);
         growth.addTrait(7, Trait.analTraining1);
+        growth.addTrait(10, Trait.powerfulhips);
         // 11 - Choice 1, trait 1
         growth.addTrait(13, Trait.shameless);
         growth.addTrait(16, Trait.limbTraining1);
         growth.addTrait(19, Trait.oiledass);
         growth.addTrait(20, Trait.dominatrix);
         growth.addTrait(22, Trait.alwaysready);
+        // 22 - Choice 2, trait 1 -- Two traits at this level? alwaysready isn't that powerful
         // 25 - Choice 1, trait 2
         growth.addTrait(28, Trait.limbTraining2);
         growth.addTrait(31, Trait.analTraining2);
         growth.addTrait(34, Trait.exhibitionist);
         // 37 - Choice 1, trait 3
-
         character.getStamina().setMax(100);
         character.getArousal().setMax(70);
+        growth.addBodyPart(40, new AnalPussyPart());
+        // 39 - Choice 2, trait 2
 
-        growth.actions.put(40, () -> {
-            character.body.addReplace(new AnalPussyPart(), 1);
-        });
         growth.addTrait(43, Trait.analTraining3);
         growth.addTrait(46, Trait.strongwilled);
         // 47 - Choice 1, trait 4
         growth.addTrait(49, Trait.smqueen);
+        // 50 - Choice 2, trait 3
         growth.addTrait(52, Trait.autonomousAss);
 
     }
@@ -621,7 +623,7 @@ public class Jewel extends BasePersonality {
     }
 
     public void advance() {
-        growth.addTrait(10, Trait.fighter);
+        character.getGrowth().addTrait(10, Trait.fighter);
         character.body.addReplace(PussyPart.fiery, 100);
         character.unequipAllClothing();
         character.outfitPlan.add(Clothing.getByID("gi"));
