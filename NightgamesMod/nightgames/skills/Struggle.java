@@ -2,6 +2,7 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
 import nightgames.combat.Combat;
@@ -92,6 +93,8 @@ public class Struggle extends Skill {
 
     private boolean struggleAnal(Combat c, Character target, boolean knotted) {
         int diffMod = knotted ? 50 : 0;
+        if (target.has(Trait.grappler))
+            diffMod += 15;
         if (getSelf().check(Attribute.Power,
                         target.getStamina().get() / 2 - getSelf().getStamina().get() / 2
                                         + target.get(Attribute.Power) - getSelf().get(Attribute.Power)
@@ -156,6 +159,9 @@ public class Struggle extends Skill {
             diffMod = 15;
         } else if (c.getStance().insertedPartFor(c, getSelf()).moddedPartCountsAs(getSelf(), CockMod.enlightened)) {
             diffMod = -15;
+        }
+        if (target.has(Trait.grappler)) {
+            diffMod += 15;
         }
         if (getSelf().check(Attribute.Power,
                         target.getStamina().get() / 2 - getSelf().getStamina().get() / 2
@@ -241,8 +247,9 @@ public class Struggle extends Skill {
     }
 
     private boolean struggleRegular(Combat c, Character target) {
-        if (getSelf().check(Attribute.Power, target.getStamina().get() / 2 - getSelf().getStamina().get() / 2
-                        + target.get(Attribute.Power) - getSelf().get(Attribute.Power) - getSelf().escape(c, target))) {
+        if ((getSelf().check(Attribute.Power, target.getStamina().get() / 2 - getSelf().getStamina().get() / 2
+                        + target.get(Attribute.Power) - getSelf().get(Attribute.Power) - getSelf().escape(c, target)))
+                        && (!target.has(Trait.grappler) || Global.random(10) >= 2)) {
             if (getSelf().human()) {
                 c.write(getSelf(), "You manage to scrabble out of " + target.name() + "'s grip.");
             } else if (c.shouldPrintReceive(target, c)) {

@@ -1417,7 +1417,7 @@ public abstract class Character extends Observable implements Cloneable {
         {
             traits = new CopyOnWriteArrayList<>(
                             JsonUtils.collectionFromJson(object.getAsJsonArray("traits"), Trait.class).stream()
-                            .filter(Objects::isNull).collect(Collectors.toList()));
+                            .filter(t -> t != null).collect(Collectors.toList()));
             if (getType().equals("Airi"))
                 traits.remove(Trait.slime);
         }
