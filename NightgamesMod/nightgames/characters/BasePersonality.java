@@ -29,7 +29,6 @@ public abstract class BasePersonality implements Personality {
     private static final long serialVersionUID = 2279220186754458082L;
     private String type;
     public NPC character;
-    protected Growth growth;
     protected List<PreferredAttribute> preferredAttributes;
     protected CockMod preferredCockMod;
     protected AiModifiers mods;
@@ -41,7 +40,6 @@ public abstract class BasePersonality implements Personality {
         character.isStartCharacter = isStartCharacter;
         preferredCockMod = CockMod.error;
         preferredAttributes = new ArrayList<PreferredAttribute>();
-        growth = new Growth();
     }
 
     public BasePersonality(String name, int level, Optional<NpcConfiguration> charConfig,
@@ -49,7 +47,7 @@ public abstract class BasePersonality implements Personality {
         this(name, level, isStartCharacter);
         setupCharacter(charConfig, commonConfig);
     }
-    
+
     protected void setupCharacter(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
         setGrowth();
         applyBasicStats(character);
@@ -62,10 +60,10 @@ public abstract class BasePersonality implements Personality {
         character.body.makeGenitalOrgans(character.initialGender);
         character.body.finishBody(character.initialGender);
         for (int i = 1; i < character.getLevel(); i++) {
-            getGrowth().levelUp(character);
+            character.getGrowth().levelUp(character);
         }
         character.distributePoints(preferredAttributes);
-        getGrowth().addOrRemoveTraits(character);
+        character.getGrowth().addOrRemoveTraits(character);
     }
 
     public void setCharacter(NPC c) {
@@ -153,13 +151,9 @@ public abstract class BasePersonality implements Personality {
                         .toLowerCase() + "_confident.jpg";
     }
 
-    public Growth getGrowth() {
-        return growth;
-    }
-
     @Override
     public void ding() {
-        growth.levelUp(character);
+        character.getGrowth().levelUp(character);
         onLevelUp();
         character.distributePoints(preferredAttributes);
     }

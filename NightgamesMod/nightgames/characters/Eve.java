@@ -65,37 +65,37 @@ public class Eve extends BasePersonality {
 
     @Override
     public void setGrowth() {
-        growth.stamina = 2;
-        growth.arousal = 3;
-        growth.bonusStamina = 1;
-        growth.bonusArousal = 3;
+        character.getGrowth().stamina = 2;
+        character.getGrowth().arousal = 3;
+        character.getGrowth().bonusStamina = 1;
+        character.getGrowth().bonusArousal = 3;
         preferredAttributes.add(c -> c.get(Attribute.Fetish) < 80 ? Optional.of(Attribute.Fetish) : Optional.empty());
         preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
-        growth.addTrait(0, Trait.exhibitionist);
-        growth.addTrait(0, Trait.proheels);
-        growth.addTrait(0, Trait.insatiable);
-        growth.addTrait(0, Trait.assmaster);
-        growth.addTrait(0, Trait.analFanatic);
+        character.getGrowth().addTrait(0, Trait.exhibitionist);
+        character.getGrowth().addTrait(0, Trait.proheels);
+        character.getGrowth().addTrait(0, Trait.insatiable);
+        character.getGrowth().addTrait(0, Trait.assmaster);
+        character.getGrowth().addTrait(0, Trait.analFanatic);
 
-        growth.addTrait(2, Trait.alwaysready);
-        growth.addTrait(5, Trait.limbTraining1);
-        growth.addTrait(8, Trait.expertGoogler);
-        growth.addTrait(11, Trait.sexTraining1);
-        growth.addTrait(14, Trait.testosterone);
-        growth.addTrait(17, Trait.experienced);
-        growth.addTrait(20, Trait.asshandler);
-        growth.addTrait(23, Trait.sexTraining2);
-        growth.addTrait(26, Trait.limbTraining2);
-        growth.addTrait(29, Trait.dickhandler);
-        growth.addTrait(32, Trait.polecontrol);
-        growth.addTrait(35, Trait.desensitized);
-        growth.addTrait(38, Trait.powerfulhips);
-        growth.addTrait(41, Trait.responsive);
-        growth.addTrait(44, Trait.strongwilled);
-        growth.addTrait(47, Trait.insertion);
-        growth.addTrait(50, Trait.sexTraining3);
-        growth.addTrait(53, Trait.limbTraining3);
-        growth.addTrait(56, Trait.desensitized2);
+        character.getGrowth().addTrait(2, Trait.alwaysready);
+        character.getGrowth().addTrait(5, Trait.limbTraining1);
+        character.getGrowth().addTrait(8, Trait.expertGoogler);
+        character.getGrowth().addTrait(11, Trait.sexTraining1);
+        character.getGrowth().addTrait(14, Trait.testosterone);
+        character.getGrowth().addTrait(17, Trait.experienced);
+        character.getGrowth().addTrait(20, Trait.asshandler);
+        character.getGrowth().addTrait(23, Trait.sexTraining2);
+        character.getGrowth().addTrait(26, Trait.limbTraining2);
+        character.getGrowth().addTrait(29, Trait.dickhandler);
+        character.getGrowth().addTrait(32, Trait.polecontrol);
+        character.getGrowth().addTrait(35, Trait.desensitized);
+        character.getGrowth().addTrait(38, Trait.powerfulhips);
+        character.getGrowth().addTrait(41, Trait.responsive);
+        character.getGrowth().addTrait(44, Trait.strongwilled);
+        character.getGrowth().addTrait(47, Trait.insertion);
+        character.getGrowth().addTrait(50, Trait.sexTraining3);
+        character.getGrowth().addTrait(53, Trait.limbTraining3);
+        character.getGrowth().addTrait(56, Trait.desensitized2);
     }
 
     @Override

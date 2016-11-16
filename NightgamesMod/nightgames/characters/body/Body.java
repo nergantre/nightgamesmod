@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -51,30 +49,6 @@ public class Body implements Cloneable {
             removed = new LinkedHashSet<>(original.removed);
             duration = original.duration;
         }
-    }
-
-    static private Map<String, BodyPart> prototypes;
-
-    static {
-        prototypes = new HashMap<>();
-        prototypes.put(PussyPart.class.getCanonicalName(), PussyPart.normal);
-        prototypes.put(BreastsPart.class.getCanonicalName(), BreastsPart.c);
-        prototypes.put(BasicCockPart.class.getCanonicalName(), BasicCockPart.average);
-        // for compatibility with < v1.8.1
-        prototypes.put(CockPart.class.getCanonicalName(), BasicCockPart.average);
-        prototypes.put(ModdedCockPart.class.getCanonicalName(),
-                        new ModdedCockPart(BasicCockPart.average, CockMod.bionic));
-        prototypes.put(WingsPart.class.getCanonicalName(), WingsPart.demonic);
-        prototypes.put(TailPart.class.getCanonicalName(), TailPart.cat);
-        prototypes.put(EarPart.class.getCanonicalName(), EarPart.normal);
-        prototypes.put(StraponPart.class.getCanonicalName(), StraponPart.generic);
-        prototypes.put(TentaclePart.class.getCanonicalName(), new TentaclePart("tentacles", "back", "semen", 0, 1, 1));
-        prototypes.put(AssPart.class.getCanonicalName(), new AssPart("ass", 0, 1, 1));
-        prototypes.put(MouthPart.class.getCanonicalName(), new MouthPart("mouth", 0, 1, 1));
-        prototypes.put(AnalPussyPart.class.getCanonicalName(), new AnalPussyPart());
-        prototypes.put(MouthPussyPart.class.getCanonicalName(), new MouthPussyPart());
-        prototypes.put(GenericBodyPart.class.getCanonicalName(), new GenericBodyPart("", 0, 1, 1, "none", "none"));
-        prototypes.put(FacePart.class.getCanonicalName(), new FacePart(.1, 2.3));
     }
 
     // yeah i know :(
@@ -907,16 +881,10 @@ public class Body implements Cloneable {
         return bodyObj;
     }
 
-    public static BodyPart loadPart(JsonObject obj) {
-        String classType = obj.get("class").getAsString();
-        return prototypes.get(classType)
-                         .load(obj);
-    }
-
     public void loadParts(JsonArray partsArr) {
         for (JsonElement element : partsArr) {
             JsonObject partJson = element.getAsJsonObject();
-            this.add(loadPart(partJson));
+            this.add(JsonUtils.gson.fromJson(partJson, BodyPart.class));
         }
     }
 
@@ -1156,7 +1124,6 @@ public class Body implements Cloneable {
         if (!(Math.abs(body.baseFemininity - baseFemininity) < 1e-6))
             return false;
         return bodyParts.equals(body.bodyParts);
-
     }
 
     @Override public int hashCode() {

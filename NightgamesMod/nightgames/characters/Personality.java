@@ -96,8 +96,6 @@ public interface Personality extends Serializable {
 
     void setCharacter(NPC npc);
 
-    Growth getGrowth();
-
     void applyBasicStats(Character self);
     void applyStrategy(NPC self);
 }

@@ -72,7 +72,7 @@ public class CustomNPC extends BasePersonality {
     }
 
     public void setGrowth() {
-        growth = data.getGrowth();
+        character.setGrowth(data.getGrowth());
     }
 
     @Override

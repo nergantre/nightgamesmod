@@ -90,6 +90,11 @@ public enum PussyPart implements BodyPart,BodyPartMod {
     }
 
     @Override
+    public String canonicalDescription() {
+        return desc + "pussy";
+    }
+
+    @Override
     public double priority(Character c) {
         return priority + (c.has(Trait.tight) ? 1 : 0) + (c.has(Trait.holecontrol) ? 1 : 0)
                         + +(c.has(Trait.autonomousPussy) ? 4 : 0);

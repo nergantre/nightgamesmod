@@ -12,7 +12,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Objects;
 import java.util.Observable;
 import java.util.Optional;
 import java.util.Set;
@@ -115,10 +114,12 @@ public abstract class Character extends Observable implements Cloneable {
     public int orgasms;
     public int cloned;
     private Map<Integer, LevelUpData> levelPlan;
+    private Growth growth;
 
     public Character(String name, int level) {
         this.name = name;
         this.level = level;
+        this.growth = new Growth();
         cloned = 0;
         custom = false;
         body = new Body(this);
@@ -181,6 +182,10 @@ public abstract class Character extends Observable implements Cloneable {
         c.traits = new CopyOnWriteArrayList<>(traits);
         c.temporaryAddedTraits = new HashMap<>(temporaryAddedTraits);
         c.temporaryRemovedTraits = new HashMap<>(temporaryRemovedTraits);
+
+        // TODO! We should NEVER modify the growth in a combat sim. If this is not true, this needs to be revisited and deepcloned.
+        c.growth = (Growth) growth.clone();
+
         c.removelist = new HashSet<>(removelist);
         c.addlist = new HashSet<>(addlist);
         c.mercy = new CopyOnWriteArrayList<>(mercy);
@@ -1373,6 +1378,7 @@ public abstract class Character extends Observable implements Cloneable {
         saveObj.addProperty("human", human());
         saveObj.add("flags", JsonUtils.JsonFromMap(flags));
         saveObj.add("levelUps", JsonUtils.JsonFromMap(levelPlan));
+        saveObj.add("growth", JsonUtils.gson.toJsonTree(growth));
         saveInternal(saveObj);
         return saveObj;
     }
@@ -1388,6 +1394,9 @@ public abstract class Character extends Observable implements Cloneable {
         level = object.get("level").getAsInt();
         rank = object.get("rank").getAsInt();
         xp = object.get("xp").getAsInt();
+        if (object.has("growth")) {
+            growth = JsonUtils.gson.fromJson(object.get("growth"), Growth.class);
+        }
         money = object.get("money").getAsInt();
         {
             JsonObject resources = object.getAsJsonObject("resources");
@@ -1408,7 +1417,7 @@ public abstract class Character extends Observable implements Cloneable {
         {
             traits = new CopyOnWriteArrayList<>(
                             JsonUtils.collectionFromJson(object.getAsJsonArray("traits"), Trait.class).stream()
-                            .filter(Objects::isNull).collect(Collectors.toList()));
+                            .filter(trait -> trait != null).collect(Collectors.toList()));
             if (getType().equals("Airi"))
                 traits.remove(Trait.slime);
         }
@@ -3272,8 +3281,13 @@ public abstract class Character extends Observable implements Cloneable {
         return result * 31 + name.hashCode();
     }
 
-    public abstract Growth getGrowth();
+    public Growth getGrowth() {
+        return growth;
+    }
 
+    public void setGrowth(Growth growth) {
+        this.growth = growth;
+    }
     public Collection<Skill> getSkills() {
         return skills;
     }
@@ -3324,7 +3338,7 @@ public abstract class Character extends Observable implements Cloneable {
             selected = null;
         }
     }
-    
+
     public boolean isPetOf(Character other) {
         return false;
     }

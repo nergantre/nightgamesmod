@@ -66,25 +66,25 @@ public class Airi extends BasePersonality {
 
     @Override
     public void setGrowth() {
-        growth.stamina = 1;
-        growth.arousal = 1;
-        growth.willpower = 1.5f;
-        growth.bonusStamina = 1;
-        growth.bonusArousal = 1;
-        growth.addTrait(0, Trait.dexterous);
-        growth.addTrait(0, Trait.imagination);
-        growth.addTrait(0, Trait.softheart);
-        growth.addTrait(0, Trait.repressed);
-        growth.addTrait(9, Trait.limbTraining1);
-        growth.addTrait(12, Trait.lacedjuices);
-        growth.addTrait(15, Trait.QuickRecovery);
-        growth.addTrait(18, Trait.BoundlessEnergy);
-        growth.addTrait(23, Trait.sexTraining1);
-        growth.addTrait(31, Trait.limbTraining2);
-        growth.addTrait(37, Trait.tongueTraining1);
-        growth.addTrait(44, Trait.limbTraining3);
-        growth.addTrait(51, Trait.sexTraining2);
-        growth.addTrait(58, Trait.tongueTraining2);
+        character.getGrowth().stamina = 1;
+        character.getGrowth().arousal = 1;
+        character.getGrowth().willpower = 1.5f;
+        character.getGrowth().bonusStamina = 1;
+        character.getGrowth().bonusArousal = 1;
+        character.getGrowth().addTrait(0, Trait.dexterous);
+        character.getGrowth().addTrait(0, Trait.imagination);
+        character.getGrowth().addTrait(0, Trait.softheart);
+        character.getGrowth().addTrait(0, Trait.repressed);
+        character.getGrowth().addTrait(9, Trait.limbTraining1);
+        character.getGrowth().addTrait(12, Trait.lacedjuices);
+        character.getGrowth().addTrait(15, Trait.QuickRecovery);
+        character.getGrowth().addTrait(18, Trait.BoundlessEnergy);
+        character.getGrowth().addTrait(23, Trait.sexTraining1);
+        character.getGrowth().addTrait(31, Trait.limbTraining2);
+        character.getGrowth().addTrait(37, Trait.tongueTraining1);
+        character.getGrowth().addTrait(44, Trait.limbTraining3);
+        character.getGrowth().addTrait(51, Trait.sexTraining2);
+        character.getGrowth().addTrait(58, Trait.tongueTraining2);
 
         preferredAttributes.add(c -> Optional.of(Attribute.Slime));
         preferredAttributes.add(c -> Optional.of(Attribute.Seduction));

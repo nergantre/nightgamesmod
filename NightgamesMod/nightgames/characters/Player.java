@@ -54,7 +54,6 @@ import nightgames.trap.Trap;
 
 public class Player extends Character {
     public GUI gui;
-    private Growth growth;
     public int traitPoints;
     private int levelsToGain;
     private List<Addiction> addictions;
@@ -67,7 +66,6 @@ public class Player extends Character {
     public Player(String name, CharacterSex sex, Optional<PlayerConfiguration> config, List<Trait> pickedTraits,
                     Map<Attribute, Integer> selectedAttributes) {
         super(name, 1);
-        growth = new Growth();
         initialGender = sex;
         addictions = new ArrayList<>();
         levelsToGain = 0;
@@ -110,11 +108,11 @@ public class Player extends Character {
     }
 
     public void setGrowth() {
-        growth.stamina = 2;
-        growth.arousal = 4;
-        growth.bonusStamina = 1;
-        growth.bonusArousal = 2;
-        growth.attributes = new int[]{2, 3, 3, 3};
+        getGrowth().stamina = 2;
+        getGrowth().arousal = 4;
+        getGrowth().bonusStamina = 1;
+        getGrowth().bonusArousal = 2;
+        getGrowth().attributes = new int[]{2, 3, 3, 3};
     }
 
     public String describeStatus() {
@@ -392,17 +390,13 @@ public class Player extends Character {
 
     public void actuallyDing() {
         level += 1;
-        getStamina().gain(growth.stamina);
-        getArousal().gain(growth.arousal);
-        availableAttributePoints += growth.attributes[Math.min(rank, growth.attributes.length-1)];
+        getStamina().gain(getGrowth().stamina);
+        getArousal().gain(getGrowth().arousal);
+        availableAttributePoints += getGrowth().attributes[Math.min(rank, getGrowth().attributes.length-1)];
         gui.message("You've gained a Level!<br>Select which attributes to increase.");
         if (getLevel() % 3 == 0 && level < 10 || (getLevel() + 1) % 2 == 0 && level > 10) {
             traitPoints += 1;
         }
-    }
-    
-    public Growth getGrowth() {
-        return growth;
     }
 
     @Override

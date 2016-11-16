@@ -46,6 +46,11 @@ public enum BreastsPart implements BodyPart {
     }
 
     @Override
+    public String canonicalDescription() {
+        return name;
+    }
+
+    @Override
     public double priority(Character c) {
         return getPleasure(c, null);
     }

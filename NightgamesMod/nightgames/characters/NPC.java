@@ -431,14 +431,8 @@ public class NPC extends Character {
         return ai.temptLiner(c, target);
     }
 
-    @Override public Growth getGrowth() {
-        return ai.getGrowth();
-    }
-
     @Override
     public void detect() {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
@@ -902,4 +896,5 @@ public class NPC extends Character {
         update();
         notifyObservers();
     }
+
 }

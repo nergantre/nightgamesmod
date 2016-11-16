@@ -68,6 +68,11 @@ public enum BasicCockPart implements CockPart {
         return desc;
     }
 
+    @Override
+    public String canonicalDescription() {
+        return desc;
+    }
+
     public String getName() {
         return name();
     }

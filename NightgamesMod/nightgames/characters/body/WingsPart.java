@@ -30,6 +30,11 @@ public enum WingsPart implements BodyPart,BodyPartMod {
     }
 
     @Override
+    public String canonicalDescription() {
+        return desc + "wings";
+    }
+
+    @Override
     public String describe(Character c) {
         return desc + "wings";
     }

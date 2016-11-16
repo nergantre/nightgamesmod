@@ -60,32 +60,32 @@ public class Angel extends BasePersonality {
     
     @Override
     public void setGrowth() {
-        growth.stamina = 1;
-        growth.arousal = 5;
-        growth.bonusStamina = 1;
-        growth.bonusArousal = 4;
+        character.getGrowth().stamina = 1;
+        character.getGrowth().arousal = 5;
+        character.getGrowth().bonusStamina = 1;
+        character.getGrowth().bonusArousal = 4;
 
-        growth.addTrait(0, Trait.undisciplined);
-        growth.addTrait(0, Trait.lickable);
-        growth.addTrait(3, Trait.responsive);
-        growth.addTrait(9, Trait.sexTraining1);
-        growth.addTrait(12, Trait.expertGoogler);
-        growth.addTrait(15, Trait.experienced);
-        growth.addTrait(18, Trait.erophage);
-        growth.addTrait(20, Trait.skeptical);
-        growth.addTrait(20, Trait.zealinspiring);
-        growth.addTrait(21, Trait.holecontrol);
-        growth.addTrait(24, Trait.insertion);
-        growth.addTrait(27, Trait.alwaysready);
-        growth.addTrait(30, Trait.sexTraining2);
-        growth.addTrait(33, Trait.RawSexuality);
-        growth.addTrait(36, Trait.objectOfWorship);
-        growth.addTrait(39, Trait.tight);
-        growth.addTrait(42, Trait.desensitized);
-        growth.addTrait(45, Trait.limbTraining1);
-        growth.addTrait(48, Trait.magicEyeArousal);
-        growth.addTrait(51, Trait.sexTraining3);
-        growth.addTrait(54, Trait.desensitized2);
+        character.getGrowth().addTrait(0, Trait.undisciplined);
+        character.getGrowth().addTrait(0, Trait.lickable);
+        character.getGrowth().addTrait(3, Trait.responsive);
+        character.getGrowth().addTrait(9, Trait.sexTraining1);
+        character.getGrowth().addTrait(12, Trait.expertGoogler);
+        character.getGrowth().addTrait(15, Trait.experienced);
+        character.getGrowth().addTrait(18, Trait.erophage);
+        character.getGrowth().addTrait(20, Trait.skeptical);
+        character.getGrowth().addTrait(20, Trait.zealinspiring);
+        character.getGrowth().addTrait(21, Trait.holecontrol);
+        character.getGrowth().addTrait(24, Trait.insertion);
+        character.getGrowth().addTrait(27, Trait.alwaysready);
+        character.getGrowth().addTrait(30, Trait.sexTraining2);
+        character.getGrowth().addTrait(33, Trait.RawSexuality);
+        character.getGrowth().addTrait(36, Trait.objectOfWorship);
+        character.getGrowth().addTrait(39, Trait.tight);
+        character.getGrowth().addTrait(42, Trait.desensitized);
+        character.getGrowth().addTrait(45, Trait.limbTraining1);
+        character.getGrowth().addTrait(48, Trait.magicEyeArousal);
+        character.getGrowth().addTrait(51, Trait.sexTraining3);
+        character.getGrowth().addTrait(54, Trait.desensitized2);
         preferredAttributes
                         .add(c -> c.get(Attribute.Divinity) < 50 ? Optional.of(Attribute.Divinity) : Optional.empty());
         preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
@@ -125,7 +125,7 @@ public class Angel extends BasePersonality {
         if (character.rank >= 1) {
             if (!character.has(Trait.lacedjuices) && character.money >= 1000) {
                 character.money -= 1000;
-                growth.addTrait(Math.min(20, character.getLevel()), Trait.lacedjuices);
+                character.getGrowth().addTrait(Math.min(20, character.getLevel()), Trait.lacedjuices);
             }
             if (character.money > 0) {
                 Global.getDay().visit("Body Shop", character, Global.random(character.money));

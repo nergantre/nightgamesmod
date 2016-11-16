@@ -31,6 +31,11 @@ public class ModdedCockPart implements CockPart {
     }
 
     @Override
+    public String canonicalDescription() {
+        return mod.name() + " cock";
+    }
+
+    @Override
     public double getHotness(Character self, Character opponent) {
         return mod.getHotness(self, opponent, getBase());
     }

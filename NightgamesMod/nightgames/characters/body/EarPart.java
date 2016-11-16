@@ -25,6 +25,11 @@ public enum EarPart implements BodyPart, BodyPartMod {
     }
 
     @Override
+    public String canonicalDescription() {
+        return desc + "ears";
+    }
+
+    @Override
     public void describeLong(StringBuilder b, Character c) {
         switch (this) {
             case cat:

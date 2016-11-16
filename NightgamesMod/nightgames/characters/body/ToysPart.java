@@ -39,6 +39,11 @@ public enum ToysPart implements BodyPart,BodyPartMod {
     }
 
     @Override
+    public String canonicalDescription() {
+        return desc;
+    }
+
+    @Override
     public double priority(Character c) {
         return getPleasure(c, null);
     }

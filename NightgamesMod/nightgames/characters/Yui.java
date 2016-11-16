@@ -66,39 +66,39 @@ public class Yui extends BasePersonality {
 
     @Override
     public void setGrowth() {
-        growth.stamina = 3;
-        growth.arousal = 4;
-        growth.willpower = .4f;
-        growth.bonusStamina = 2;
-        growth.bonusArousal = 2;
+        character.getGrowth().stamina = 3;
+        character.getGrowth().arousal = 4;
+        character.getGrowth().willpower = .4f;
+        character.getGrowth().bonusStamina = 2;
+        character.getGrowth().bonusArousal = 2;
         preferredAttributes.add(c -> c.get(Attribute.Ninjutsu) < 60 && c.getLevel() >= 10 ? Optional.of(Attribute.Ninjutsu)  : Optional.empty());
         preferredAttributes.add(c -> c.get(Attribute.Cunning) < 50 ? Optional.of(Attribute.Cunning) : Optional.empty());
 
-        growth.addTrait(0, Trait.obedient);
-        growth.addTrait(0, Trait.cute);
-        growth.addTrait(0, Trait.lickable);
-        growth.addTrait(2, Trait.Sneaky);
-        growth.addTrait(5, Trait.dexterous);
-        growth.addTrait(8, Trait.tongueTraining1);
-        growth.addTrait(11, Trait.sexTraining1);
-        growth.addTrait(14, Trait.limbTraining1);
-        growth.addTrait(17, Trait.analTraining1);
-        growth.addTrait(20, Trait.lacedjuices);
-        growth.addTrait(23, Trait.responsive);
-        growth.addTrait(26, Trait.graceful);
-        growth.addTrait(29, Trait.tongueTraining2);
-        growth.addTrait(32, Trait.sexTraining2);
-        growth.addTrait(35, Trait.limbTraining2);
-        growth.addTrait(38, Trait.analTraining2);
-        growth.addTrait(41, Trait.calm);
-        growth.addTrait(41, Trait.SexualGroove);
-        growth.addTrait(41, Trait.alwaysready);
-        growth.addTrait(44, Trait.tongueTraining3);
-        growth.addTrait(47, Trait.sexTraining3);
-        growth.addTrait(50, Trait.limbTraining3);
-        growth.addTrait(53, Trait.analTraining3);
-        growth.addTrait(56, Trait.tight);
-        growth.addTrait(60, Trait.dickhandler);
+        character.getGrowth().addTrait(0, Trait.obedient);
+        character.getGrowth().addTrait(0, Trait.cute);
+        character.getGrowth().addTrait(0, Trait.lickable);
+        character.getGrowth().addTrait(2, Trait.Sneaky);
+        character.getGrowth().addTrait(5, Trait.dexterous);
+        character.getGrowth().addTrait(8, Trait.tongueTraining1);
+        character.getGrowth().addTrait(11, Trait.sexTraining1);
+        character.getGrowth().addTrait(14, Trait.limbTraining1);
+        character.getGrowth().addTrait(17, Trait.analTraining1);
+        character.getGrowth().addTrait(20, Trait.lacedjuices);
+        character.getGrowth().addTrait(23, Trait.responsive);
+        character.getGrowth().addTrait(26, Trait.graceful);
+        character.getGrowth().addTrait(29, Trait.tongueTraining2);
+        character.getGrowth().addTrait(32, Trait.sexTraining2);
+        character.getGrowth().addTrait(35, Trait.limbTraining2);
+        character.getGrowth().addTrait(38, Trait.analTraining2);
+        character.getGrowth().addTrait(41, Trait.calm);
+        character.getGrowth().addTrait(41, Trait.SexualGroove);
+        character.getGrowth().addTrait(41, Trait.alwaysready);
+        character.getGrowth().addTrait(44, Trait.tongueTraining3);
+        character.getGrowth().addTrait(47, Trait.sexTraining3);
+        character.getGrowth().addTrait(50, Trait.limbTraining3);
+        character.getGrowth().addTrait(53, Trait.analTraining3);
+        character.getGrowth().addTrait(56, Trait.tight);
+        character.getGrowth().addTrait(60, Trait.dickhandler);
         // mostly feminine face, cute but not quite at Angel's level
         character.body.add(new FacePart(.1, 2.9));
     }
