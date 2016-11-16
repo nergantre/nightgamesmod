@@ -13,7 +13,6 @@ public class CounterRide extends CounterBase {
     public CounterRide(Character self) {
         super("Sex Counter", self, 5, Global.format(
                         "{self:SUBJECT-ACTION:invite|invites} the opponent with {self:possessive} body.", self, self));
-        addTag(SkillTag.counter);
         addTag(SkillTag.fucking);
         addTag(SkillTag.positioning);
     }

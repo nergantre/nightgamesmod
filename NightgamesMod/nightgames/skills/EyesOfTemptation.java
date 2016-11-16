@@ -36,7 +36,7 @@ public class EyesOfTemptation extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         Result result = target.is(Stsflag.blinded) ? Result.special
-                        : target.roll(this, c, accuracy(c)) ? Result.normal : Result.miss;
+                        : target.roll(getSelf(), c, accuracy(c)) ? Result.normal : Result.miss;
         writeOutput(c, result, target);
         if (result == Result.normal) {
             target.add(c, new Enthralled(target, getSelf(), 5));

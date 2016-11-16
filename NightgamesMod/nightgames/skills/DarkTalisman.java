@@ -38,7 +38,7 @@ public class DarkTalisman extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         Result result = target.is(Stsflag.blinded) ? Result.special
-                        : target.roll(this, c, accuracy(c)) ? Result.normal : Result.miss;
+                        : target.roll(getSelf(), c, accuracy(c)) ? Result.normal : Result.miss;
         writeOutput(c, result, target);
         getSelf().consume(Item.Talisman, 1);
         if (result == Result.normal) {

@@ -46,6 +46,9 @@ public abstract class Skill {
 
     public abstract boolean requirements(Combat c, Character user, Character target);
 
+    public static void filterAllowedSkills(Combat c, Collection<Skill> skills, Character user) {
+        filterAllowedSkills(c, skills, user, null);
+    }
     public static void filterAllowedSkills(Combat c, Collection<Skill> skills, Character user, Character target) {
         boolean filtered = false;
         Set<Skill> stanceSkills = new HashSet<Skill>(c.getStance().availSkills(c, user));
@@ -57,7 +60,7 @@ public abstract class Skill {
         Set<Skill> availSkills = new HashSet<Skill>();
         for (Status st : user.status) {
             for (Skill sk : st.allowedSkills(c)) {
-                if (skillIsUsable(c, sk, target)) {
+                if ((target != null && skillIsUsable(c, sk, target)) || skillIsUsable(c, sk)) {
                     availSkills.add(sk);
                 }
             }
@@ -71,7 +74,7 @@ public abstract class Skill {
             // if the skill is restricted by status/stance, do not check for
             // requirements
             for (Skill sk : skills) {
-                if (!sk.requirements(c, target)) {
+                if (!sk.requirements(c, target != null? target : sk.getDefaultTarget(c))) {
                     noReqs.add(sk);
                 }
             }
@@ -79,7 +82,13 @@ public abstract class Skill {
         }
     }
 
+    public static boolean skillIsUsable(Combat c, Skill s) {
+        return skillIsUsable(c, s, null);
+    }
     public static boolean skillIsUsable(Combat c, Skill s, Character target) {
+        if (target == null) {
+            target = s.getDefaultTarget(c);
+        }
         boolean charmRestricted = (s.getSelf().is(Stsflag.charmed))
                         && s.type(c) != Tactics.fucking && s.type(c) != Tactics.pleasure && s.type(c) != Tactics.misc;
         boolean allureRestricted =
@@ -225,7 +234,11 @@ public abstract class Skill {
     public Stage getStage() {
         return Stage.REGULAR;
     }
-    
+
+    public Character getDefaultTarget(Combat c) {
+        return c.getOpponent(getSelf());
+    }
+
     public final double multiplierForStage(Character target) {
         return getStage().multiplierFor(target);
     }

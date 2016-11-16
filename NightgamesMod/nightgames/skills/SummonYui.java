@@ -21,7 +21,7 @@ public class SummonYui extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().canAct() && c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf())
-                        && c.getPetsFor(getSelf()).isEmpty();
+                        && c.getPetsFor(getSelf()).size() < getSelf().getPetLimit();
     }
 
     @Override

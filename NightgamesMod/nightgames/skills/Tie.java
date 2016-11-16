@@ -34,7 +34,7 @@ public class Tie extends Skill {
             target.add(c, new Bound(target, 75, "handcuffs"));
         } else {
             getSelf().consume(Item.ZipTie, 1);
-            if (target.roll(this, c, accuracy(c))) {
+            if (target.roll(getSelf(), c, accuracy(c))) {
                 writeOutput(c, Result.normal, target);
                 target.add(c, new Bound(target, 50, "ziptie"));
             } else {

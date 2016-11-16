@@ -27,7 +27,7 @@ public class Trip extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(this, c, accuracy(c)) && getSelf().check(Attribute.Cunning, target.knockdownDC())) {
+        if (target.roll(getSelf(), c, accuracy(c)) && getSelf().check(Attribute.Cunning, target.knockdownDC())) {
             if (isSlime()) {
                 writeOutput(c, Result.special, target);
             } else {

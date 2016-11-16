@@ -43,7 +43,7 @@ public class TailSuck extends Skill {
             target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandomCock(),
                             Global.random(10) + 10, c, this);
             drain(c, target);
-        } else if (getSelf().roll(this, c, accuracy(c))) {
+        } else if (getSelf().roll(getSelf(), c, accuracy(c))) {
             Result res = c.getStance().isBeingFaceSatBy(c, target, getSelf()) ? Result.critical
                             : Result.normal;
             writeOutput(c, res, target);

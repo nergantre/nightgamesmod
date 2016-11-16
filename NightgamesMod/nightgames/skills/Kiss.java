@@ -55,7 +55,7 @@ public class Kiss extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         int m = Global.random(6, 10);
-        if (!target.roll(this, c, accuracy(c))) {
+        if (!target.roll(getSelf(), c, accuracy(c))) {
             writeOutput(c, Result.miss, target);
             return false;
         }

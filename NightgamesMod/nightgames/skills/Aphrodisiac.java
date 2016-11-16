@@ -58,7 +58,7 @@ public class Aphrodisiac extends Skill {
             getSelf().consume(Item.Aphrodisiac, 1);
             target.add(c, Horny.getWithBiologicalType(getSelf(), target, magnitude, 5, getSelf().nameOrPossessivePronoun() + " aphrodisiac spray"));
             target.emote(Emotion.horny, 20);
-        } else if (target.roll(this, c, accuracy(c))) {
+        } else if (target.roll(getSelf(), c, accuracy(c))) {
             writeOutput(c, (int) magnitude, Result.normal, target);
             target.emote(Emotion.horny, 20);
             getSelf().consume(Item.Aphrodisiac, 1);

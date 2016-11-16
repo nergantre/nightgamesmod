@@ -53,7 +53,7 @@ public class Cunnilingus extends Skill {
             m += 4;
         }
         int i = 0;
-        if (!facesitting && c.getStance().mobile(target) && !target.roll(this, c, accuracy(c))) {
+        if (!facesitting && c.getStance().mobile(target) && !target.roll(getSelf(), c, accuracy(c))) {
             results = Result.miss;
         } else {
             if (target.has(Trait.entrallingjuices) && Global.random(4) == 0 && !target.wary()) {

@@ -36,7 +36,7 @@ public class ReverseCarry extends Carry {
     public boolean resolve(Combat c, Character target) {
         String premessage = premessage(c, target);
 
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c))) {
             if (getSelf().human()) {
                 c.write(getSelf(), premessage + deal(c, premessage.length(), Result.normal, target));
             } else if (c.shouldPrintReceive(target, c)) {

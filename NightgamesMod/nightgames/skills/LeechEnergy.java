@@ -35,7 +35,7 @@ public class LeechEnergy extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c))) {
             BodyPart part = null;
             BodyPart selfPart = getSelf().body.getRandom("tentacles");
             List<String> targets = new ArrayList<String>(

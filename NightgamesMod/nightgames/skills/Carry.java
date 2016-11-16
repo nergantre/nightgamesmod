@@ -44,7 +44,7 @@ public class Carry extends Fuck {
     @Override
     public boolean resolve(Combat c, Character target) {
         String premessage = premessage(c, target);
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c))) {
             if (getSelf().human()) {
                 c.write(getSelf(), Global.capitalizeFirstLetter(
                                 premessage + deal(c, premessage.length(), Result.normal, target)));

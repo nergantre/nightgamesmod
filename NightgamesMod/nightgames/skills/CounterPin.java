@@ -10,7 +10,6 @@ import nightgames.nskills.tags.SkillTag;
 public class CounterPin extends CounterBase {
     public CounterPin(Character self) {
         super("Counter", self, 4, Global.format("{self:SUBJECT-ACTION:hold|holds} a low stance.", self, self));
-        addTag(SkillTag.counter);
         addTag(SkillTag.positioning);
     }
 

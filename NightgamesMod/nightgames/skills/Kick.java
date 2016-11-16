@@ -44,7 +44,7 @@ public class Kick extends Skill {
             writeOutput(c, Result.special, target);
             target.shred(ClothingSlot.bottom);
         } else
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c))) {
             double m = Global.random(16, 21);
             if (target.has(Trait.brassballs)) {
                 m *= .8;

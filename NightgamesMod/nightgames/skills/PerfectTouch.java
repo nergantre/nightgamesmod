@@ -25,7 +25,7 @@ public class PerfectTouch extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c))) {
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.normal, target));
                 c.write(target, target.nakedLiner(c, target));

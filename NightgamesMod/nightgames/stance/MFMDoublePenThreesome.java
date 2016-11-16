@@ -26,6 +26,11 @@ public class MFMDoublePenThreesome extends MaledomSexStance {
     }
 
     @Override
+    public float priorityMod(Character self) {
+        return super.priorityMod(self) + 3;
+    }
+
+    @Override
     public void setOtherCombatants(List<? extends Character> others) {
         for (Character other : others) {
             if (other.equals(domSexCharacter)) {

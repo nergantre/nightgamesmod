@@ -26,10 +26,8 @@ public class SpawnFGoblin extends Skill {
     public boolean usable(Combat c, Character target) {
         return getSelf().canAct() && c.getStance()
                                       .mobile(getSelf())
-                        && !c.getStance()
-                             .prone(getSelf())
-                        && c.getPetsFor(getSelf()).isEmpty() && getSelf().getArousal()
-                                                             .get() >= 25;
+                        && !c.getStance().prone(getSelf()) && getSelf().getArousal().get() >= 25
+                             && c.getPetsFor(getSelf()).size() < getSelf().getPetLimit();
     }
 
     @Override

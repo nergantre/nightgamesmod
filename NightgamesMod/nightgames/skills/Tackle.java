@@ -29,7 +29,7 @@ public class Tackle extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(this, c, accuracy(c))
+        if (target.roll(getSelf(), c, accuracy(c))
                         && getSelf().check(Attribute.Power, target.knockdownDC() - getSelf().get(Attribute.Animism))) {
             if (getSelf().get(Attribute.Animism) >= 1) {
                 writeOutput(c, Result.special, target);

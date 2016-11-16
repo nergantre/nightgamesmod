@@ -48,7 +48,7 @@ public class Footjob extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c))) {
             int m = 8 + Global.random(6);
             if (getSelf().human()) {
                 c.write(getSelf(), Global.format(deal(c, m, Result.normal, target), getSelf(), target));

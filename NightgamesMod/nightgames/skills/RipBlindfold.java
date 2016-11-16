@@ -49,7 +49,7 @@ public class RipBlindfold extends Skill {
         if (c.getStance()
              .penetratedBy(c, target, getSelf()))
             hit |= Global.random(3) == 0;
-        hit |= target.roll(this, c, 60);
+        hit |= target.roll(getSelf(), c, 60);
 
         if (hit) {
             c.write(getSelf(),

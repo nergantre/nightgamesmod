@@ -31,7 +31,7 @@ public class LickNipples extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         int m = 3 + Global.random(6);
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c))) {
             writeOutput(c, Result.normal, target);
             if (getSelf().has(Trait.silvertongue)) {
                 m += 4;

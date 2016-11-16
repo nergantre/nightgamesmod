@@ -36,7 +36,7 @@ public class Squeeze extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c))) {
             double m = Global.random(10, 20);
             DamageType type = DamageType.physical;
             if (target.has(Trait.brassballs)) {

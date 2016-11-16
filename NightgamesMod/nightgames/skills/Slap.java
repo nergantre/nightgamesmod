@@ -34,7 +34,7 @@ public class Slap extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c))) {
             if (isSlime()) {
                 writeOutput(c, Result.critical, target);
                 target.pain(c, getSelf(), Global.random(10) + getSelf().get(Attribute.Slime) + getSelf().get(Attribute.Power) / 2);

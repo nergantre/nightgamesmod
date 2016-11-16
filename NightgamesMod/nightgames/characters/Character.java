@@ -48,6 +48,7 @@ import nightgames.items.clothing.ClothingSlot;
 import nightgames.items.clothing.ClothingTrait;
 import nightgames.items.clothing.Outfit;
 import nightgames.json.JsonUtils;
+import nightgames.pet.PetCharacter;
 import nightgames.skills.Command;
 import nightgames.skills.Nothing;
 import nightgames.skills.Skill;
@@ -1819,6 +1820,7 @@ public abstract class Character extends Observable implements Cloneable {
                                             this, opponent));
             add(c, new Trance(this));
         }
+
         if (opponent.has(Trait.magicEyeFrenzy) && getArousal().percent() >= 50 && c.getStance().facing(this, opponent)
                         && Global.random(10) == 0) {
             c.write(opponent,
@@ -1826,6 +1828,7 @@ public abstract class Character extends Observable implements Cloneable {
                                             this, opponent));
             add(c, new Frenzied(this, 3));
         }
+
         if (opponent.has(Trait.magicEyeArousal) && getArousal().percent() >= 50 && c.getStance().facing(this, opponent)
                         && Global.random(5) == 0) {
             c.write(opponent,
@@ -1857,6 +1860,23 @@ public abstract class Character extends Observable implements Cloneable {
             add(c, new Feral(this));
         }
         pleasured = false;
+        Optional<PetCharacter> randomOpponentPetOptional = Global.pickRandom(c.getPetsFor(opponent));
+        if (randomOpponentPetOptional.isPresent()) {
+            PetCharacter pet = randomOpponentPetOptional.get();
+            boolean weakenBetter = modifyDamage(DamageType.physical, pet, 100) / pet.getStamina().remaining() 
+                            > modifyDamage(DamageType.pleasure, pet, 100) / pet.getStamina().remaining();
+            if (canAct() && pet.roll(this, c, 20)) {
+                if (weakenBetter) {
+                    c.write(Global.format("{self:SUBJECT-ACTION:focus|focuses} {self:possessive} attentions on {other:name-do}, "
+                                    + "thoroughly exhausting {other:direct-object} in a game of cat and mouse.", this, pet));
+                    pet.weaken(c, (int) modifyDamage(DamageType.physical, pet, Global.random(10, 20)));
+                } else {
+                    c.write(Global.format("{self:SUBJECT-ACTION:focus|focuses} {self:possessive} attentions on {other:name-do}, "
+                                    + "harassing and toying with {other:possessive} body as much as {self:pronoun} can.", this, pet));
+                    pet.body.pleasure(this, body.getRandom("hands"), pet.body.getRandomGenital(), modifyDamage(DamageType.pleasure, pet, Global.random(10, 20)), c);
+                }
+            }
+        }
     }
 
     public String orgasmLiner(Combat c) {
@@ -2352,13 +2372,12 @@ public abstract class Character extends Observable implements Cloneable {
         return Math.min(Math.max(get(Attribute.Speed) - opponent.get(Attribute.Speed), -5), 5);
     }
 
-    public boolean roll(Skill attack, Combat c, int accuracy) {
-        int hitDiff = attack.user().getSpeedDifference(this) + (attack.user().get(Attribute.Perception) - get(
+    public boolean roll(Character attacker, Combat c, int accuracy) {
+        int hitDiff = attacker.getSpeedDifference(this) + (attacker.get(Attribute.Perception) - get(
                         Attribute.Perception));
-        int levelDiff = Math.min(attack.user().level - level, 5);
-        levelDiff = Math.max(attack.user().level - level, -5);
+        int levelDiff = Math.min(attacker.level - level, 5);
+        levelDiff = Math.max(attacker.level - level, -5);
         int attackroll = Global.random(100);
-        
 
         // with no level or hit differences and an default accuracy of 80, 80%
         // hit rate
@@ -2563,7 +2582,7 @@ public abstract class Character extends Observable implements Cloneable {
         HashSet<Skill> available = new HashSet<>();
         HashSet<Skill> cds = new HashSet<>();
         for (Skill a : getSkills()) {
-            if (Skill.skillIsUsable(c, a, target)) {
+            if (Skill.skillIsUsable(c, a)) {
                 if (cooldownAvailable(a)) {
                     available.add(a);
                 } else {
@@ -3345,5 +3364,9 @@ public abstract class Character extends Observable implements Cloneable {
     
     public boolean isPet() {
         return false;
+    }
+
+    public int getPetLimit() {
+        return has(Trait.congregation) ? 2 : 1;
     }
 }

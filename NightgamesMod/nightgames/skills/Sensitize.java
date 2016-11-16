@@ -36,7 +36,7 @@ public class Sensitize extends Skill {
         if (getSelf().has(Item.Aersolizer)) {
             writeOutput(c, Result.special, target);
             target.add(c, new Hypersensitive(target));
-        } else if (target.roll(this, c, accuracy(c))) {
+        } else if (target.roll(getSelf(), c, accuracy(c))) {
             writeOutput(c, Result.normal, target);
             target.add(c, new Hypersensitive(target));
         } else {

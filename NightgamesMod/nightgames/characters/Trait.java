@@ -188,6 +188,8 @@ public enum Trait {
     masterheels("Heels Master", "Master at moving in heels, resists knockdowns"), // graceful when wearing heels
     naturalgrowth("Natural Growth", "Always keeps up on levels"), // levels up to highest level + 2 after each night
     unnaturalgrowth("Unnatural Growth", "Always keeps up on levels"), // levels up to highest level + 5 after each night
+    devoteeFervor("Devotee Fervor", "Pets can sometimes act twice"),
+    congregation("Congregation", "Doubles the amount of allowed pets"),
 
     // training perks
     analTraining1("Anal Training 1", "Refined ass control."),
@@ -222,6 +224,10 @@ public enum Trait {
     opportunist("Opportunist", "Always ready to stuff someone's backside."),
     carnalvirtuoso("Carnal Virtuoso", "Opponents cums twice"),
     toymaster("Toymaster", "Expert at using toys."),
+    apostles("Apostles", "Endless followers"),
+    sacrosanct("Sacrosanct", "Too sacred to hurt."),
+    mandateOfHeaven("Mandate of Heaven", "Temptation demands worship."),
+    piety("Piety", "If worshipping when dominating at sex, switch positions."),
     // Weaknesses
     ticklish("Ticklish", "Can be easily tickled into submission"), // more weaken damage and arousal from tickle
     insatiable("Insatiable", "One orgasm is never enough"), // arousal doesn't completely clear at end of match

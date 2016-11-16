@@ -54,7 +54,7 @@ public class AssJob extends Skill {
             if (Global.random(100) < fetishChance) {
                 target.add(c, new BodyFetish(target, getSelf(), "ass", .1 + getSelf().get(Attribute.Fetish) * .05));
             }
-        } else if (target.roll(this, c, accuracy(c))) {
+        } else if (target.roll(getSelf(), c, accuracy(c))) {
             if (c.getStance().en == Stance.reversemount) {
                 writeOutput(c, Result.strong, target);
                 int m = 4 + Global.random(4);
