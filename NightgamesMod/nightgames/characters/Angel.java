@@ -44,8 +44,6 @@ public class Angel extends BasePersonality {
         character.getStamina().setMax(60 + character.getLevel() * getGrowth().stamina);
         character.getArousal().setMax(110 + character.getLevel() * getGrowth().arousal);
 
-        character.add(Trait.undisciplined);
-        character.add(Trait.lickable);
         character.setTrophy(Item.AngelTrophy);
         character.plan = Plan.hunting;
         character.mood = Emotion.confident;
@@ -62,6 +60,8 @@ public class Angel extends BasePersonality {
         growth.bonusStamina = 1;
         growth.bonusArousal = 4;
 
+        growth.addTrait(0, Trait.undisciplined);
+        growth.addTrait(0, Trait.lickable);
         growth.addTrait(3, Trait.responsive);
         growth.addTrait(9, Trait.pussyTraining1);
         growth.addTrait(12, Trait.expertGoogler);
@@ -93,9 +93,6 @@ public class Angel extends BasePersonality {
                 advance();
             }
         }
-        if (character.has(Trait.demigoddess) && !character.has(Trait.divinity)) {
-            character.add(Trait.divinity);
-        }
         super.rest(time);
         if (!(character.has(Item.Dildo) || character.has(Item.Dildo2)) && character.money >= 250) {
             character.gain(Item.Dildo);
@@ -123,7 +120,7 @@ public class Angel extends BasePersonality {
         if (character.rank >= 1) {
             if (!character.has(Trait.lacedjuices) && character.money >= 1000) {
                 character.money -= 1000;
-                character.add(Trait.lacedjuices);
+                growth.addTrait(Math.min(20, character.getLevel()), Trait.lacedjuices);
             }
             if (character.money > 0) {
                 Global.getDay().visit("Body Shop", character, Global.random(character.money));
@@ -160,27 +157,27 @@ public class Angel extends BasePersonality {
     }
 
     @Override
-    public String bbLiner(Combat c) {
+    public String bbLiner(Combat c, Character other) {
         return "Angel seems to enjoy your anguish in a way that makes you more than a little nervous. <i>\"That's a great look for you, I'd like to see it more often.\"</i>";
     }
 
     @Override
-    public String nakedLiner(Combat c) {
+    public String nakedLiner(Combat c, Character opponent) {
         return "Angel gives you a haughty look, practically showing off her body. <i>\"I can't blame you for wanting to see me naked, everyone does.\"</i>";
     }
 
     @Override
-    public String stunLiner(Combat c) {
+    public String stunLiner(Combat c, Character opponent) {
         return "Angel groans on the floor. <i>\"You really are a beast. It takes a gentle touch to please a lady.\"</i>";
     }
 
     @Override
-    public String taunt(Combat c) {
+    public String taunt(Combat c, Character opponent) {
         return "Angel pushes the head of your dick with her finger and watches it spring back into place. <i>\"You obviously can't help yourself. If only you were a little bigger, we could have a lot of fun.\"</i>";
     }
 
     @Override
-    public String temptLiner(Combat c) {
+    public String temptLiner(Combat c, Character opponent) {
         return "Angel looks at you with a grin, <i>\"You're almost drooling. Is staring at my body that much fun? If you want me that much, why don't you just sit there and let me make you feel good.\"</i>";
     }
 
@@ -403,7 +400,7 @@ public class Angel extends BasePersonality {
 
     @Override
     public String startBattle(Character other) {
-        return "Angel licks her lips and stalks you like a predator.";
+        return Global.format("{self:SUBJECT} licks {self:possessive} lips and stalks {other:name-do} like a predator.", character, other);
     }
 
     @Override
@@ -423,9 +420,9 @@ public class Angel extends BasePersonality {
     }
 
     public void advance() {
-        character.add(Trait.demigoddess);
-        character.add(Trait.divinity);
-        character.add(Trait.proheels);
+        character.getGrowth().addTrait(10, Trait.demigoddess);
+        character.getGrowth().addTrait(10, Trait.divinity);
+        character.getGrowth().addTrait(10, Trait.proheels);
         character.body.addReplace(PussyPart.divine, 1);
         character.body.addReplace(WingsPart.angelic, 5);
         character.unequipAllClothing();

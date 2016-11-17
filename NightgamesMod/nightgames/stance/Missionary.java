@@ -29,11 +29,11 @@ public class Missionary extends MaledomSexStance {
 
     @Override
     public boolean mobile(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
-    public boolean kiss(Character c) {
+    public boolean kiss(Character c, Character target) {
         return true;
     }
 
@@ -54,7 +54,7 @@ public class Missionary extends MaledomSexStance {
 
     @Override
     public boolean reachBottom(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
@@ -63,23 +63,8 @@ public class Missionary extends MaledomSexStance {
     }
 
     @Override
-    public boolean feet(Character c) {
-        return false;
-    }
-
-    @Override
-    public boolean oral(Character c) {
-        return false;
-    }
-
-    @Override
     public boolean behind(Character c) {
         return false;
-    }
-
-    @Override
-    public boolean inserted(Character c) {
-        return c == top;
     }
 
     @Override

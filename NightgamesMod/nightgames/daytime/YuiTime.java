@@ -54,14 +54,8 @@ public class YuiTime extends BaseNPCTime {
                 }
                 Global.gui()
                       .choose(this, "Train with Yui");
-                if (Global.checkFlag(Flag.Yui)) {
-                    Global.getNPC("Yui")
-                          .gainAffection(player, 1);
-                    Global.newChallenger(Global.getNPCByType(new Yui().getType()).ai);
-                    player.gainAffection(Global.getNPC("Yui"), 1);
-                } else {
-                    Global.modCounter(Flag.YuiAffection, 1);
-                }
+                Global.getNPC("Yui").gainAffection(player, 1);
+                player.gainAffection(Global.getNPC("Yui"), 1);
                 Global.unflag(Flag.YuiAvailable);
                 acted = true;
                 player.gain(Item.Tripwire);
@@ -86,13 +80,8 @@ public class YuiTime extends BaseNPCTime {
                   .message("Yui's skills at subterfuge turn out to be as strong as she claimed. She's also quite a good teacher. Apparently she helped train her "
                                   + "younger sister, so she's used to it. Nothing she teaches you is overtly sexual, but you can see some useful applications for the Games.");
             player.mod(Attribute.Ninjutsu, 1);
-            if (Global.checkFlag(Flag.Yui)) {
-                Global.getNPC("Yui")
-                      .gainAffection(player, 1);
-                player.gainAffection(Global.getNPC("Yui"), 1);
-            } else {
-                Global.modCounter(Flag.YuiAffection, 1);
-            }
+            Global.getNPC("Yui").gainAffection(player, 1);
+            player.gainAffection(Global.getNPC("Yui"), 1);
             Global.gui()
                   .choose(this, "Leave");
         }

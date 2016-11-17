@@ -30,12 +30,12 @@ public class Behind extends AbstractBehindStance {
 
     @Override
     public boolean mobile(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
-    public boolean kiss(Character c) {
-        return false;
+    public boolean kiss(Character c, Character target) {
+        return c != top && c != bottom;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class Behind extends AbstractBehindStance {
 
     @Override
     public boolean reachTop(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
@@ -64,15 +64,13 @@ public class Behind extends AbstractBehindStance {
     }
 
     @Override
-    public boolean feet(Character c) {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean feet(Character c, Character target) {
+        return c != top && c != bottom && target == top;
     }
 
     @Override
-    public boolean oral(Character c) {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean oral(Character c, Character target) {
+        return c != top && c != bottom && target == top;
     }
 
     @Override

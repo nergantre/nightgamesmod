@@ -28,7 +28,7 @@ public class Blowjob extends Skill {
     public boolean usable(Combat c, Character target) {
         boolean canUse = c.getStance().enumerate() == Stance.facesitting && getSelf().canRespond()
                         || getSelf().canAct();
-        return target.crotchAvailable() && target.hasDick() && c.getStance().oral(getSelf())
+        return target.crotchAvailable() && target.hasDick() && c.getStance().oral(getSelf(), target)
                         && c.getStance().front(getSelf()) && canUse && !c.getStance().inserted(target)
                         || getSelf().canRespond() && isVaginal(c);
     }
@@ -161,7 +161,7 @@ public class Blowjob extends Skill {
         if (modifier == Result.miss) {
             m += String.format("%s tries to suck %s cock, but %s %s %s hips back to avoid %s.",
                             getSelf().name(), target.nameOrPossessivePronoun(), target.pronoun(),
-                            target.action("pull"), target.possessivePronoun(), getSelf().pronoun());
+                            target.action("pull"), target.possessivePronoun(), getSelf().directObject());
         } else if (modifier == Result.special) {
             m += String.format("%s soft lips and talented tongue work over %s dick, drawing out"
                             + " dangerously irresistible pleasure with each touch.", 

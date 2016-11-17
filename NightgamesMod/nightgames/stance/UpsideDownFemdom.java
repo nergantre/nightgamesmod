@@ -33,12 +33,12 @@ public class UpsideDownFemdom extends FemdomSexStance {
 
     @Override
     public boolean mobile(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
-    public boolean kiss(Character c) {
-        return false;
+    public boolean kiss(Character c, Character target) {
+        return c != top && c != bottom;
     }
 
     @Override
@@ -53,12 +53,12 @@ public class UpsideDownFemdom extends FemdomSexStance {
 
     @Override
     public boolean reachTop(Character c) {
-        return false;
+        return c != top && c != bottom;
     }
 
     @Override
-    public boolean facing() {
-        return false;
+    public boolean facing(Character c, Character target) {
+        return (c != bottom && c != top) || (target != bottom && target != top);
     }
 
     @Override
@@ -69,16 +69,6 @@ public class UpsideDownFemdom extends FemdomSexStance {
     @Override
     public boolean prone(Character c) {
         return c == bottom;
-    }
-
-    @Override
-    public boolean feet(Character c) {
-        return false;
-    }
-
-    @Override
-    public boolean oral(Character c) {
-        return false;
     }
 
     @Override

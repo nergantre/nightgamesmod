@@ -20,7 +20,7 @@ public class LickNipples extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return target.breastsAvailable() && c.getStance().reachTop(getSelf()) && c.getStance().front(getSelf())
-                        && getSelf().canAct() && c.getStance().facing() && c.getStance().en != Stance.neutral;
+                        && getSelf().canAct() && c.getStance().facing(getSelf(), target) && c.getStance().en != Stance.neutral;
     }
 
     @Override

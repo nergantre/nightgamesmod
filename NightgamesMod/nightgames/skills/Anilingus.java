@@ -33,7 +33,7 @@ public class Anilingus extends Skill {
     public boolean usable(Combat c, Character target) {
         boolean canUse = c.getStance().enumerate() == Stance.facesitting && getSelf().canRespond()
                         || getSelf().canAct();
-        return target.crotchAvailable() && target.body.has("ass") && c.getStance().oral(getSelf()) && canUse
+        return target.crotchAvailable() && target.body.has("ass") && c.getStance().oral(getSelf(), target) && canUse
                         && !c.getStance().anallyPenetrated(target);
     }
 

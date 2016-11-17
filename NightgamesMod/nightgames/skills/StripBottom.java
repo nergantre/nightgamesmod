@@ -25,7 +25,7 @@ public class StripBottom extends Skill {
     }
 
     @Override public boolean usable(Combat c, Character target) {
-        return (c.getStance().oral(getSelf()) || c.getStance().reachBottom(getSelf())) && !target.crotchAvailable()
+        return (c.getStance().oral(getSelf(), target) || c.getStance().reachBottom(getSelf())) && !target.crotchAvailable()
                         && getSelf().canAct();
     }
 
@@ -50,7 +50,7 @@ public class StripBottom extends Skill {
                 writeOutput(c, Result.normal, target);
             }
             if (getSelf().human() && target.mostlyNude()) {
-                c.write(target, target.nakedLiner(c));
+                c.write(target, target.nakedLiner(c, target));
             }
             if (target.human() && target.crotchAvailable() && target.hasDick()) {
                 if (target.body.getRandomCock().isReady(target)) {

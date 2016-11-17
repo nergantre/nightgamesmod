@@ -38,7 +38,7 @@ public class Dominance extends Addiction {
             return false;
         int sev = player.getAddictionSeverity(AddictionType.DOMINANCE)
                         .ordinal();
-        int dom = c.getDominanceOfStance(opp);
+        int dom = c.getStance().getDominanceOfStance(opp);
 
         return sev >= 5 - dom;
     }
@@ -76,11 +76,11 @@ public class Dominance extends Addiction {
     protected String describeIncrease() {
         switch (getSeverity()) {
             case HIGH:
-                return "Held down by Jewel, you feel completely powerless to resist.";
+                return "Held down by " + cause.name() + ", you feel completely powerless to resist.";
             case LOW:
-                return "You feel strangely weak in Jewel's powerful hold.";
+                return "You feel strangely weak in " + cause.name() + "'s powerful hold.";
             case MED:
-                return "Something about the way Jewel is holding on to you is causing your strength to seep away.";
+                return "Something about the way " + cause.name() + " is holding on to you is causing your strength to seep away.";
             case NONE:
             default:
                 return "";
@@ -91,12 +91,12 @@ public class Dominance extends Addiction {
     protected String describeDecrease() {
         switch (getSeverity()) {
             case LOW:
-                return "More and more of your strength is returning since escaping from Jewel. ";
+                return "More and more of your strength is returning since escaping from " + cause.name() + ". ";
             case MED:
-                return "You find some of the strange weakness caused by Jewel's powerful hold"
+                return "You find some of the strange weakness caused by " + cause.name() + "'s powerful hold"
                                 + " fleeing your bones. ";
             case NONE:
-                return "You have completely recovered from Jewel's hold. ";
+                return "You have completely recovered from " + cause.name() + "'s hold. ";
             case HIGH:
             default:
                 return "";
@@ -105,7 +105,7 @@ public class Dominance extends Addiction {
 
     @Override
     protected String describeWithdrawal() {
-        return "Your body longs for the exquisite pain and submission Jewel can bring you,"
+        return "Your body longs for the exquisite pain and submission " + cause.name() + " can bring you,"
                         + " reducing your stamina and causing masochisitc tendencies.";
     }
 
@@ -124,7 +124,7 @@ public class Dominance extends Addiction {
         return "<i>\"Is that all? With all the weird shit going on around here, you're worried about a submissive"
                         + " streak? Well, sure, I can see how it would be a problem. Being held down does not"
                         + " help your chances in a fight, and if you actually enjoy it you are not at all"
-                        + " likely to win. Basically, if she gets you down and tied up or something, you're going"
+                        + " likely to win. Basically, if " + cause.pronoun() + " gets you down and tied up or something, you're going"
                         + " to lose, because you subconciously don't actually want to win.\"</i> That does sound"
                         + " pretty bad... Any upsides? <i>\"Well, I suppose that being on the receiving end of such"
                         + " a powerful dominance, the stuff other people do won't make as much of an impression."
@@ -145,12 +145,12 @@ public class Dominance extends Addiction {
     @Override
     public String initialMessage(Combat c, boolean replaced) {
         if (inWithdrawal) {
-            return "Jewel is looking meaner than ever after you neglected to visit today. Equal"
-                            + " parts of fear and desire well up inside of you at the thought of" + " what "
-                            + cause.directObject() + " might do to you.";
+            return cause.name() + " is looking meaner than ever after you neglected to visit today. Equal"
+                            + " parts of fear and desire well up inside of you at the thought of what "
+                            + cause.pronoun() + " might do to you.";
         }
-        return "You are conflicted at the sight of Jewel. One part of you still remembers"
-                        + " the pain and humiliation " + cause.directObject() + " can cause and"
+        return "You are conflicted at the sight of " + cause.name() + ". One part of you still remembers"
+                        + " the pain and humiliation " + cause.pronoun() + " can cause and"
                         + " is terrified because of it, the other part is getting excited"
                         + " for the very same reason.";
     }

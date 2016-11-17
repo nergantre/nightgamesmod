@@ -53,10 +53,6 @@ public class Kat extends BasePersonality {
         character.getMojo().setMax(80);
         getCharacter().addPersonalStrategy(new FacesitStrategy());
 
-        character.add(Trait.dexterous);
-        character.add(Trait.pheromones);
-        character.add(Trait.shy);
-        character.add(Trait.petite);
         character.plan = Plan.retreating;
         character.mood = Emotion.confident;
         character.body.add(BreastsPart.a);
@@ -75,7 +71,10 @@ public class Kat extends BasePersonality {
         growth.bonusStamina = 1;
         growth.bonusArousal = 2;
         preferredAttributes.add(c -> Optional.of(Attribute.Animism));
-
+        growth.addTrait(0, Trait.dexterous);
+        growth.addTrait(0, Trait.pheromones);
+        growth.addTrait(0, Trait.shy);
+        growth.addTrait(0, Trait.petite);
         growth.addTrait(10, Trait.sympathetic);
         growth.addTrait(13, Trait.analTraining1);
         growth.addTrait(16, Trait.powerfulhips);
@@ -134,12 +133,12 @@ public class Kat extends BasePersonality {
     }
 
     @Override
-    public String bbLiner(Combat c) {
+    public String bbLiner(Combat c, Character other) {
         return "Kat gives you a look of concern and sympathy. <i>\"Nya... Are you ok? I didn't mean to hit you that hard.\"</i>";
     }
 
     @Override
-    public String nakedLiner(Combat c) {
+    public String nakedLiner(Combat c, Character opponent) {
         if (character.getArousal().percent() >= 50) {
             return "Kat makes no effort to hide the moisture streaming down her thighs. <i>\"You want my pussy? I'm nyot going to myake it easy for you.\"</i>";
         } else {
@@ -148,17 +147,17 @@ public class Kat extends BasePersonality {
     }
 
     @Override
-    public String stunLiner(Combat c) {
+    public String stunLiner(Combat c, Character opponent) {
         return "Kat mews pitifully on the floor. <i>\"Don't be so meaNya.\"</i>";
     }
 
     @Override
-    public String taunt(Combat c) {
+    public String taunt(Combat c, Character opponent) {
         return "Kat smiles excitedly and bats at your cock. <i>\"Are you already close to cumming? Nya! I want to play with you more!\"</i>";
     }
 
     @Override
-    public String temptLiner(Combat c) {
+    public String temptLiner(Combat c, Character opponent) {
         return "Kat winks at you and looks at your crotch, <i>\"MmM! That looks tasty nya!\"</i>";
     }
 

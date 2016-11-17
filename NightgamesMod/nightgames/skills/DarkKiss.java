@@ -30,7 +30,7 @@ public class DarkKiss extends Skill {
         return Global.getPlayer()
                      .checkAddiction(AddictionType.CORRUPTION)
                         && c.getStance()
-                            .kiss(getSelf())
+                            .kiss(getSelf(), target)
                         && getSelf().canAct();
     }
 

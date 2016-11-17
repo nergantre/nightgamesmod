@@ -11,11 +11,14 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.status.Horny;
 
 public class Aphrodisiac extends Skill {
     public Aphrodisiac(Character self) {
         super("Use Aphrodisiac", self);
+        addTag(SkillTag.debuff);
+        addTag(SkillTag.arouse);
     }
 
     @Override
@@ -37,7 +40,6 @@ public class Aphrodisiac extends Skill {
                                     .get() >= 10
                         && !c.getStance()
                              .prone(getSelf());
-
         return canMove && (hasItem || canGetFromOwnBody);
     }
 

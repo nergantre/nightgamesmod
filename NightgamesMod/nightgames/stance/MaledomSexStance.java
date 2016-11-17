@@ -53,8 +53,18 @@ public abstract class MaledomSexStance extends Position {
     }
 
     @Override
+    public boolean oral(Character c, Character target) {
+        return false;
+    }
+
+    @Override
     public boolean inserted(Character c) {
         return c == top;
+    }
+
+    @Override
+    public boolean feet(Character c, Character target) {
+        return false;
     }
 
     @Override

@@ -66,7 +66,7 @@ public abstract class Position implements Cloneable {
 
     public abstract boolean mobile(Character c);
 
-    public abstract boolean kiss(Character c);
+    public abstract boolean kiss(Character c, Character target);
 
     public abstract boolean dom(Character c);
 
@@ -78,9 +78,9 @@ public abstract class Position implements Cloneable {
 
     public abstract boolean prone(Character c);
 
-    public abstract boolean feet(Character c);
+    public abstract boolean feet(Character c, Character target);
 
-    public abstract boolean oral(Character c);
+    public abstract boolean oral(Character c, Character target);
 
     public abstract boolean behind(Character c);
 
@@ -120,8 +120,8 @@ public abstract class Position implements Cloneable {
         return dom(c) || c.has(Trait.powerfulhips);
     }
 
-    public boolean facing() {
-        return !behind(top) && !behind(bottom);
+    public boolean facing(Character c, Character target) {
+        return (!behind(top) && !behind(bottom)) || (c != bottom && c != top) || (target != bottom && target != top);
     }
 
     public float priorityMod(Character self) {
@@ -195,8 +195,8 @@ public abstract class Position implements Cloneable {
         }
     }
 
-    public boolean paizuri(Character self) {
-        return oral(self);
+    public boolean paizuri(Character self, Character target) {
+        return oral(self, target);
     }
 
     public List<BodyPart> topParts() {
@@ -317,5 +317,35 @@ public abstract class Position implements Cloneable {
 
     public String name() {
         return getClass().getSimpleName();
+    }
+
+    /**
+     * Stances have a dominance rating that benefits the dominant character, queried from Position.dominance().
+     * 0: Not dominant at all. Seen in the Neutral position.
+     * 1: Very give-and-take. Seen in the 69 position.
+     * 2: Slightly dominant. Found in the TribadismStance and Mount positions.
+     * 3: Average dominance. Missionary, Kneeling, Standing, and other "vanilla" positions all have this rating.
+     * 4: High dominance. Anal positions and Pin are examples of positions with this rating.
+     * 5: Absurd dominance. Exotic positions like Engulfed and FlyingCarry have this rating, as well as the more mundane FaceSitting and Smothering.
+     *
+     * @param self The character whose traits are checked to modify the current stance's dominance score.
+     * @return The dominance of the current position, modified by one combatant's traits. Higher return values cause more willpower loss on each combat tick.
+     * If a character is not the dominant character of the position, their effective dominance is 0.
+     */
+    public int getDominanceOfStance(Character self) {
+        if (sub(self)) {
+            return 0;
+        }
+        int stanceDominance = dominance();
+        // It is unexpected, but not catastrophic if a character is at once a natural dom and submissive.
+        if (self.has(Trait.naturalTop)) {
+            // Rescales stance dominance values from 0-1-2-3-4-5 to 0-2-3-5-6-8
+            stanceDominance = Double.valueOf(Math.ceil(stanceDominance * 1.5)).intValue();
+        }
+        if (self.has(Trait.submissive)) {
+            // Rescales stance dominance values from 0-1-2-3-4-5 to 0-0-1-1-2-3
+            stanceDominance = Double.valueOf(Math.floor(stanceDominance * 0.6)).intValue();
+        }
+        return Math.max(0, stanceDominance);
     }
 }

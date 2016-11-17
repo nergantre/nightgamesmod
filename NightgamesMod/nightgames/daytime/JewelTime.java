@@ -251,7 +251,7 @@ public class JewelTime extends BaseNPCTime {
                     Global.gui()
                           .message("<p><b>You've learned to harness the awesome power that has laid dormant in your soul... maybe. You've at least learned to move your hips a lot during sex.</b>");
                     player.add(Trait.spiral);
-                    npc.add(Trait.spiral);
+                    npc.getGrowth().addTrait(0, Trait.spiral);
                 }
             } else {
                 Global.gui()
@@ -304,7 +304,7 @@ public class JewelTime extends BaseNPCTime {
                     Global.gui()
                           .message("<p><b>Jewel has taught you a valuable lesson in reckless determination.</b>");
                     player.add(Trait.fearless);
-                    npc.add(Trait.fearless);
+                    npc.getGrowth().addTrait(0, Trait.fearless);
                 }
             } else {
                 Global.gui()
@@ -340,7 +340,7 @@ public class JewelTime extends BaseNPCTime {
                     Global.gui()
                           .message("<p><b>You've learned the hard way that kicks can be dangerous, even when you're down.</b>");
                     player.add(Trait.dirtyfighter);
-                    npc.add(Trait.dirtyfighter);
+                    npc.getGrowth().addTrait(0, Trait.dirtyfighter);
                 }
             } else {
                 Global.gui()

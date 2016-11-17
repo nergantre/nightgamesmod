@@ -86,7 +86,7 @@ public class Masturbate extends Skill {
                     c.write(getSelf(), "Touching yourself amuses Mara, reducing her control over you.");
                 }
             }
-        } else if (c.shouldPrintReceive(target)) {
+        } else if (c.shouldPrintReceive(target, c)) {
             c.write(getSelf(), receive(c, 0, Result.normal, target));
         }
         int pleasure;

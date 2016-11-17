@@ -12,7 +12,9 @@ import nightgames.characters.custom.effect.CustomEffect;
 import nightgames.combat.Combat;
 import nightgames.combat.IEncounter;
 import nightgames.combat.Result;
+import nightgames.global.DebugFlags;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 import nightgames.trap.Trap;
@@ -86,17 +88,20 @@ public class PetCharacter extends Character {
     public void act(Combat c, Character target) {
         List<CustomEffect> skillUse = new ArrayList<>(); 
         List<Skill> allowedEnemySkills = new ArrayList<>(getSkills()
-                        .stream().filter(skill -> Skill.skillIsUsable(c, skill, target))
+                        .stream().filter(skill -> Skill.skillIsUsable(c, skill, target) && !skill.getTags().contains(SkillTag.suicidal))
                         .collect(Collectors.toList()));
         Skill.filterAllowedSkills(c, allowedEnemySkills, this, target);
         allowedEnemySkills.forEach(skill -> skillUse.add((combat, self, dontcare) -> Skill.resolve(skill, combat, target)));
         
         List<Skill> allowedMasterSkills = new ArrayList<>(getSkills()
-                        .stream().filter(skill -> Skill.skillIsUsable(c, skill, getSelf().owner))
+                        .stream().filter(skill -> Skill.skillIsUsable(c, skill, getSelf().owner) && skill.getTags().contains(SkillTag.helping))
                         .collect(Collectors.toList()));
         Skill.filterAllowedSkills(c, allowedMasterSkills, this, getSelf().owner);
         allowedMasterSkills.forEach(skill -> skillUse.add((combat, self, dontcare) -> Skill.resolve(skill, combat, getSelf().owner)));
-
+        if (Global.isDebugOn(DebugFlags.DEBUG_STRATEGIES)) {
+            System.out.println("Available Enemy Skills " + allowedEnemySkills);
+            System.out.println("Available Master Skills " + allowedMasterSkills);
+        }
         Global.pickRandom(skillUse).ifPresent(use -> use.execute(c, this, target));
     }
 
@@ -112,23 +117,38 @@ public class PetCharacter extends Character {
     }
 
     @Override
-    public String bbLiner(Combat c) {
+    public String bbLiner(Combat c, Character target) {
         return "";
     }
 
     @Override
-    public String nakedLiner(Combat c) {
+    public String nakedLiner(Combat c, Character target) {
         return "";
     }
 
     @Override
-    public String stunLiner(Combat c) {
+    public String stunLiner(Combat c, Character target) {
         return "";
     }
 
     @Override
-    public String taunt(Combat c) {
+    public String taunt(Combat c, Character target) {
         return "";
+    }
+    
+    @Override
+    public String challenge(Character other) {
+        return "";
+    }
+    
+    @Override
+    public String getPortrait(Combat c) {
+        return "";
+    }
+    
+    @Override
+    public String getType() {
+        return type;
     }
 
     @Override
@@ -136,22 +156,11 @@ public class PetCharacter extends Character {
 
     @Override
     public void showerScene(Character target, IEncounter encounter) {}
-
-    @Override
-    public String getType() {
-        return type;
-    }
-
     @Override
     public void afterParty() {}
-
+    
     @Override
     public void emote(Emotion emo, int amt) {}
-
-    @Override
-    public String challenge(Character other) {
-        return "";
-    }
 
     @Override
     public void promptTrap(IEncounter fight, Character target, Trap trap) {}
@@ -159,10 +168,6 @@ public class PetCharacter extends Character {
     @Override
     public void counterattack(Character target, Tactics type, Combat c) {}
 
-    @Override
-    public String getPortrait(Combat c) {
-        return "";
-    }
 
     @Override
     public Growth getGrowth() {

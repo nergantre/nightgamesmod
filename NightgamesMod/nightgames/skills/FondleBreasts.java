@@ -42,9 +42,9 @@ public class FondleBreasts extends Skill {
             return false;
         }
 
+        writeOutput(c, result, target);
         target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("breasts"), m,
                         c, this);
-        writeOutput(c, result, target);
 
         return true;
     }

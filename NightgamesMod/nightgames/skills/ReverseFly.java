@@ -46,7 +46,7 @@ public class ReverseFly extends Fly {
         Result result = target.roll(this, c, accuracy(c)) ? Result.normal : Result.miss;
         if (getSelf().human()) {
             c.write(getSelf(), premessage + deal(c, 0, result, target));
-        } else if (c.shouldPrintReceive(target)) {
+        } else if (c.shouldPrintReceive(target, c)) {
             c.write(getSelf(), premessage + receive(c, 0, result, getSelf()));
         }
         if (result == Result.normal) {

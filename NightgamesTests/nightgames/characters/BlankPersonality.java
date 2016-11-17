@@ -15,19 +15,19 @@ public class BlankPersonality extends BasePersonality {
         super(name, level, Optional.empty(), Optional.empty());
     }
 
-    @Override public String bbLiner(Combat c) {
+    @Override public String bbLiner(Combat c, Character other) {
         return null;
     }
 
-    @Override public String nakedLiner(Combat c) {
+    @Override public String nakedLiner(Combat c, Character opponent) {
         return null;
     }
 
-    @Override public String stunLiner(Combat c) {
+    @Override public String stunLiner(Combat c, Character opponent) {
         return null;
     }
 
-    @Override public String taunt(Combat c) {
+    @Override public String taunt(Combat c, Character opponent) {
         return null;
     }
 
@@ -79,7 +79,7 @@ public class BlankPersonality extends BasePersonality {
         return value >= 100;
     }
 
-    @Override public String temptLiner(Combat c) {
+    @Override public String temptLiner(Combat c, Character opponent) {
         return null;
     }
 

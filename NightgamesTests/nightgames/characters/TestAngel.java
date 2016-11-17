@@ -213,23 +213,23 @@ public class TestAngel extends BasePersonality {
         }
     }
 
-    @Override public String bbLiner(Combat c) {
+    @Override public String bbLiner(Combat c, Character other) {
         return "Angel seems to enjoy your anguish in a way that makes you more than a little nervous. <i>\"That's a great look for you, I'd like to see it more often.\"</i>";
     }
 
-    @Override public String nakedLiner(Combat c) {
+    @Override public String nakedLiner(Combat c, Character opponent) {
         return "Angel gives you a haughty look, practically showing off her body. <i>\"I can't blame you for wanting to see me naked, everyone does.\"</i>";
     }
 
-    @Override public String stunLiner(Combat c) {
+    @Override public String stunLiner(Combat c, Character opponent) {
         return "Angel groans on the floor. <i>\"You really are a beast. It takes a gentle touch to please a lady.\"</i>";
     }
 
-    @Override public String taunt(Combat c) {
+    @Override public String taunt(Combat c, Character opponent) {
         return "Angel pushes the head of your dick with her finger and watches it spring back into place. <i>\"You obviously can't help yourself. If only you were a little bigger, we could have a lot of fun.\"</i>";
     }
 
-    @Override public String temptLiner(Combat c) {
+    @Override public String temptLiner(Combat c, Character opponent) {
         return "Angel looks at you with a grin, <i>\"You're almost drooling. Is staring at my body that much fun? If you want me that much, why don't you just sit there and let me make you feel good.\"</i>";
     }
 

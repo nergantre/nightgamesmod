@@ -17,7 +17,7 @@ public class Whisper extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return c.getStance().kiss(getSelf()) && getSelf().canAct() && !getSelf().has(Trait.direct);
+        return c.getStance().kiss(getSelf(), target) && getSelf().canAct() && !getSelf().has(Trait.direct);
     }
 
     @Override

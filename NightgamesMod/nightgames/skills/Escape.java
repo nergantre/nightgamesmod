@@ -33,14 +33,14 @@ public class Escape extends Skill {
             if (getSelf().check(Attribute.Cunning, 5 - getSelf().escape(c, target))) {
                 if (getSelf().human()) {
                     c.write(getSelf(), "You slip your hands out of your restraints.");
-                } else if (c.shouldPrintReceive(target)) {
+                } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), getSelf().name() + " manages to free " + getSelf().reflectivePronoun() + ".");
                 }
                 getSelf().free();
             } else {
                 if (getSelf().human()) {
                     c.write(getSelf(), "You try to slip your restraints, but can't get free.");
-                } else if (c.shouldPrintReceive(target)) {
+                } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), getSelf().name() + " squirms against " + getSelf().possessivePronoun()
                                     + " restraints fruitlessly.");
                     c.write(getSelf(), String.format("%s squirms against %s restraints fruitlessly.", getSelf().name(),
@@ -58,7 +58,7 @@ public class Escape extends Skill {
                     return true;
                 }
                 c.write(getSelf(), "Your quick wits find a gap in " + target.name() + "'s hold and you slip away.");
-            } else if (c.shouldPrintReceive(target)) {
+            } else if (c.shouldPrintReceive(target, c)) {
                 if (getSelf().hasStatus(Stsflag.cockbound)) {
                     c.write(getSelf(),
                                     String.format("%s somehow managed to wiggle out of %s iron grip on %s dick.",
@@ -92,7 +92,7 @@ public class Escape extends Skill {
                     c.write(getSelf(), "You think you see an opening in " + target.name()
                                     + "'s stance, but she corrects it before you can take advantage.");
                 }
-            } else if (c.shouldPrintReceive(target)) {
+            } else if (c.shouldPrintReceive(target, c)) {
                 c.write(getSelf(),
                                 String.format("%s manages to slip out of %s grip for a moment, but %s %s %s "
                                                 + "before %s can get far and %s control.",

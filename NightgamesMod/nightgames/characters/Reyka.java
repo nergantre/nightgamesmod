@@ -45,12 +45,6 @@ public class Reyka extends BasePersonality {
         character.getStamina().setMax(40);
         character.getArousal().setMax(200);
         character.getMojo().setMax(110);
-        character.add(Trait.succubus);
-        character.add(Trait.proheels);
-        character.add(Trait.masterheels);
-        character.add(Trait.darkpromises);
-        character.add(Trait.Confident);
-        character.add(Trait.shameless);
 
         getCharacter().addPersonalStrategy(new FootjobStrategy());
         getCharacter().addPersonalStrategy(new FacesitStrategy());
@@ -83,6 +77,13 @@ public class Reyka extends BasePersonality {
                         .add(c -> c.get(Attribute.Dark) > c.get(Attribute.Fetish) + 10 && c.get(Attribute.Fetish) < 50
                                         ? Optional.of(Attribute.Fetish) : Optional.empty());
         preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
+
+        growth.addTrait(0, Trait.succubus);
+        growth.addTrait(0, Trait.proheels);
+        growth.addTrait(0, Trait.masterheels);
+        growth.addTrait(0, Trait.darkpromises);
+        growth.addTrait(0, Trait.Confident);
+        growth.addTrait(0, Trait.shameless);
         growth.addTrait(2, Trait.pussyTraining1);
         growth.addTrait(5, Trait.tongueTraining1);
         growth.addTrait(8, Trait.expertGoogler);
@@ -144,13 +145,13 @@ public class Reyka extends BasePersonality {
     }
 
     @Override
-    public String bbLiner(Combat c) {
+    public String bbLiner(Combat c, Character other) {
         return "Reyka looks at you with a pang of regret: <i>\"In hindsight, damaging"
                         + " the source of my meal might not have been the best idea...\"</i>";
     }
 
     @Override
-    public String nakedLiner(Combat c) {
+    public String nakedLiner(Combat c, Character opponent) {
         return "<i>\"You could have just asked, you know.\"</i> As you gaze upon her naked form,"
                         + " noticing the radiant ruby ardorning her bellybutton, you feel"
                         + " sorely tempted to just give in to your desires. The hungry look"
@@ -158,17 +159,17 @@ public class Reyka extends BasePersonality {
     }
 
     @Override
-    public String stunLiner(Combat c) {
+    public String stunLiner(Combat c, Character opponent) {
         return "Reyka is laying on the floor, her wings spread out behind her," + " panting for breath";
     }
 
     @Override
-    public String taunt(Combat c) {
+    public String taunt(Combat c, Character opponent) {
         return "\"You look like you will taste nice. Maybe if you let me have " + "a taste, I will be nice to you too.\"";
     }
 
     @Override
-    public String temptLiner(Combat c) {
+    public String temptLiner(Combat c, Character opponent) {
         return "\"Why keep fighting? Wouldn't it just feel SO much better just to let me do what I do best?\"";
     }
 

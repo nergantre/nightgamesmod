@@ -54,7 +54,7 @@ public class BunshinAssault extends Skill {
         if(getSelf().human()){
             c.write(getSelf(), String.format("You form %d shadow clones and rush forward.",clones));
         }
-        else if(c.shouldPrintReceive(target)){
+        else if(c.shouldPrintReceive(target, c)){
             c.write(getSelf(), String.format("%s moves in a blur and suddenly %s %d of %s approaching %s.",getSelf().name(),
                             target.subjectAction("see"),clones,getSelf().pronoun(),target.reflectivePronoun()));
         }

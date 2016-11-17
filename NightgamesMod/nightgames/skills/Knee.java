@@ -37,14 +37,14 @@ public class Knee extends Skill {
             double m = Global.random(40, 60);
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.normal, target));
-            } else if (c.shouldPrintReceive(target)) {
+            } else if (c.shouldPrintReceive(target, c)) {
                 if (c.getStance().prone(target)) {
                     c.write(getSelf(), receive(c, 0, Result.special, target));
                 } else {
                     c.write(getSelf(), receive(c, 0, Result.normal, target));
                 }
                 if (target.hasBalls() && Global.random(5) >= 3) {
-                    c.write(getSelf(), getSelf().bbLiner(c));
+                    c.write(getSelf(), getSelf().bbLiner(c, target));
                 }
             }
             if (target.has(Trait.achilles) && !target.has(ClothingTrait.armored)) {

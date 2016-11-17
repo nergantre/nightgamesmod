@@ -216,22 +216,22 @@ public class Player extends Character {
     }
 
     @Override
-    public String bbLiner(Combat c) {
+    public String bbLiner(Combat c, Character target) {
         return null;
     }
 
     @Override
-    public String nakedLiner(Combat c) {
+    public String nakedLiner(Combat c, Character target) {
         return null;
     }
 
     @Override
-    public String stunLiner(Combat c) {
+    public String stunLiner(Combat c, Character target) {
         return null;
     }
 
     @Override
-    public String taunt(Combat c) {
+    public String taunt(Combat c, Character target) {
         return null;
     }
 

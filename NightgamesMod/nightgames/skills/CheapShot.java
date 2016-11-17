@@ -44,7 +44,7 @@ public class CheapShot extends Skill {
         getSelf().add(new Primed(getSelf(), -3));
         writeOutput(c, Result.normal, target);
         if (target.human() && Global.random(5) >= 3) {
-            c.write(getSelf(), getSelf().bbLiner(c));
+            c.write(getSelf(), getSelf().bbLiner(c, target));
         }
         c.setStance(new Behind(getSelf(), target));
         target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(8, 20)));

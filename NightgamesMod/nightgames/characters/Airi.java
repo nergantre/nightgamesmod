@@ -55,10 +55,6 @@ public class Airi extends BasePersonality {
         character.getArousal().setMax(80 + character.getLevel() * getGrowth().arousal);
         character.getMojo().setMax(100);
         character.getWillpower().setMax(80);
-        character.add(Trait.dexterous);
-        character.add(Trait.imagination);
-        character.add(Trait.softheart);
-        character.add(Trait.repressed);
 
         character.plan = Plan.retreating;
         character.mood = Emotion.confident;
@@ -72,6 +68,10 @@ public class Airi extends BasePersonality {
         growth.willpower = 1.5f;
         growth.bonusStamina = 1;
         growth.bonusArousal = 1;
+        growth.addTrait(0, Trait.dexterous);
+        growth.addTrait(0, Trait.imagination);
+        growth.addTrait(0, Trait.softheart);
+        growth.addTrait(0, Trait.repressed);
         growth.addTrait(9, Trait.limbTraining1);
         growth.addTrait(12, Trait.lacedjuices);
         growth.addTrait(15, Trait.QuickRecovery);
@@ -181,28 +181,28 @@ public class Airi extends BasePersonality {
     }
 
     @Override
-    public String bbLiner(Combat c) {
+    public String bbLiner(Combat c, Character other) {
         return character.has(Trait.slime) ? "Airi grimaces as you fall. <i>\"Apologies... but necessary.... Please understand...\"</i>" : "<i>\"Sorry... I hope it didn't hurt too badly...\"</i>";
     }
 
     @Override
-    public String nakedLiner(Combat c) {
+    public String nakedLiner(Combat c, Character opponent) {
         // always naked in slime form
         return character.has(Trait.slime) ? "" : "<i>Nooo! Don't look at me!</i>";
     }
 
     @Override
-    public String stunLiner(Combat c) {
+    public String stunLiner(Combat c, Character opponent) {
         return character.has(Trait.slime) ? "Airi glares at you from the puddle she formed on the floor. <i>\"Unforgivable...\"</i>" : "<i>\"Unforgivable...\"</i>";
     }
 
     @Override
-    public String taunt(Combat c) {
+    public String taunt(Combat c, Character opponent) {
         return character.has(Trait.slime) ? "Airi coos at you <i>\"About to cum..? ...even trying..?\"</i>" : "<i><b>Giggle</b> \"Try a bit harder okay?\"</i>";
     }
 
     @Override
-    public String temptLiner(Combat c) {
+    public String temptLiner(Combat c, Character opponent) {
         return character.has(Trait.slime) ? "<i>\"Fill me with yourself... forget everything...\"</i>" : "<i>\"Uhm, it's okay, you can come inside...\"</i>";
     }
 
@@ -316,8 +316,13 @@ public class Airi extends BasePersonality {
 
     @Override
     public String startBattle(Character other) {
-        return character.has(Trait.slime) ? "Airi's main body rises up from her slime blob and forms the demure beauty you're used to seeing. <i>\"Delicious... Quickly... Give me your seed...\"</i>"
-                        : "You're fighting Airi, a reticent asian girl. She looks pretty normal for now, but you know she's holding a secret.";
+        if (other.human()) {
+            return character.has(Trait.slime)
+                            ? "Airi's main body rises up from her slime blob and forms the demure beauty you're used to seeing. <i>\"Delicious... Quickly... Give me your seed...\"</i>"
+                            : "You're fighting Airi, a reticent asian girl. She looks pretty normal for now, but you know she's holding a secret.";
+        } else {
+            return "You... will do...";
+        }
     }
 
     @Override

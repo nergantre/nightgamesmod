@@ -30,7 +30,7 @@ public class Yui extends BasePersonality {
     }
 
     protected void applyBasicStats() {
-        character.isStartCharacter = false;
+        character.isStartCharacter = true;
         preferredCockMod = CockMod.error;
         character.outfitPlan.add(Clothing.getByID("sarashi"));
         character.outfitPlan.add(Clothing.getByID("shinobigarb"));
@@ -45,10 +45,9 @@ public class Yui extends BasePersonality {
         character.mod(Attribute.Ninjutsu, 1);
         character.getStamina().setMax(100 + character.getLevel() * getGrowth().stamina);
         character.getArousal().setMax(90 + character.getLevel() * getGrowth().arousal);
+        character.rank = 1;
         Global.gainSkills(character);
-        character.add(Trait.obedient);
-        character.add(Trait.cute);
-        character.add(Trait.lickable);
+
         character.getMojo().setMax(130);
 
         character.setTrophy(Item.YuiTrophy);
@@ -67,6 +66,10 @@ public class Yui extends BasePersonality {
         growth.bonusArousal = 2;
         preferredAttributes.add(c -> c.get(Attribute.Ninjutsu) < 60 ? Optional.of(Attribute.Ninjutsu) : Optional.empty());
         preferredAttributes.add(c -> c.get(Attribute.Cunning) < 50 ? Optional.of(Attribute.Cunning) : Optional.empty());
+
+        growth.addTrait(0, Trait.obedient);
+        growth.addTrait(0, Trait.cute);
+        growth.addTrait(0, Trait.lickable);
         growth.addTrait(2, Trait.Sneaky);
         growth.addTrait(5, Trait.dexterous);
         growth.addTrait(8, Trait.tongueTraining1);
@@ -200,28 +203,40 @@ public class Yui extends BasePersonality {
     }
 
     @Override
-    public String bbLiner(Combat c) {
-        return "Yui seems apologetic. <i>\"I'm sorry Master, but you did order a fair fight.\"</i>";
+    public String bbLiner(Combat c, Character other) {
+        if (other.human()) {
+            return "Yui seems apologetic. <i>\"I'm sorry Master, but you did order a fair fight.\"</i>";
+        } else {
+            return "Yui seems apologetic. <i>\"I'm sorry, but it's master's orders.\"</i>";
+        }
     }
 
     @Override
-    public String nakedLiner(Combat c) {
+    public String nakedLiner(Combat c, Character opponent) {
         return "Yui doesn't seem too fazed. <i>\"If Master wanted to see my body, you need just to ask.\"</i>";
     }
 
     @Override
-    public String stunLiner(Combat c) {
+    public String stunLiner(Combat c, Character opponent) {
         return "Yui groans as she falls, <i>\"Master, you are pretty good at this!\"</i>.";
     }
 
     @Override
-    public String taunt(Combat c) {
-        return "Yui blows you a kiss. <i>\"Master, your servant will comfort you soon!\"</i>";
+    public String taunt(Combat c, Character opponent) {
+        if (opponent.human()) {
+            return "Yui blows you a kiss. <i>\"Master, your servant will comfort you soon!\"</i>";
+        } else {
+            return "Yui taunts " + opponent + ", <i>\"Soon I'll have you on your knees serving master!\"</i>";
+        }
     }
 
     @Override
-    public String temptLiner(Combat c) {
-        return "Yui cups her breasts and looks at you slyly, <i>\"Master, keep your eyes on me.\"</i>";
+    public String temptLiner(Combat c, Character opponent) {
+        if (opponent.human()) {
+            return "Yui cups her breasts and looks at you slyly, <i>\"Master, keep your eyes on me.\"</i>";
+        } else {
+            return "Yui cups her breasts and looks at " + opponent.nameDirectObject() + " slyly, <i>\"Mmm don't look away.\"</i>";
+        }
     }
 
     @Override
@@ -274,7 +289,7 @@ public class Yui extends BasePersonality {
 
     @Override
     public String startBattle(Character other) {
-        return "Yui bows respectifully towards you before sliding into an easy stance";
+        return Global.format("{self:SUBJECT} bows respectifully towards {other:name-do} before sliding into an easy stance", character, other);
     }
 
     @Override

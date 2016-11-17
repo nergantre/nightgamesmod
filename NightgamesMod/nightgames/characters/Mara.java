@@ -55,9 +55,6 @@ public class Mara extends BasePersonality {
         character.addPersonalStrategy(new WindUpStrategy());
 
         Global.gainSkills(character);
-        character.add(Trait.petite);
-        character.add(Trait.dexterous);
-        character.add(Trait.ticklish);
         character.setTrophy(Item.MaraTrophy);
         character.plan = Plan.hunting;
         character.mood = Emotion.confident;
@@ -78,7 +75,9 @@ public class Mara extends BasePersonality {
                         ? Optional.of(Attribute.Fetish) : Optional.empty());
         preferredAttributes
                         .add(c -> c.get(Attribute.Cunning) < 100 ? Optional.of(Attribute.Cunning) : Optional.empty());
-
+        growth.addTrait(0, Trait.petite);
+        growth.addTrait(0, Trait.dexterous);
+        growth.addTrait(0, Trait.ticklish);
         growth.addTrait(3, Trait.cautious);
         growth.addTrait(6, Trait.freeSpirit);
         growth.addTrait(9, Trait.limbTraining1);
@@ -109,7 +108,7 @@ public class Mara extends BasePersonality {
     @Override
     public void rest(int time) {
         if (character.rank == 1 && !character.has(Trait.madscientist)) {
-            character.add(Trait.madscientist);
+            growth.addTrait(10, Trait.madscientist);
             character.body.addReplace(PussyPart.cybernetic, 1);
             character.unequipAllClothing();
             character.outfitPlan.add(Clothing.getByID("bra"));
@@ -177,28 +176,28 @@ public class Mara extends BasePersonality {
     }
 
     @Override
-    public String bbLiner(Combat c) {
+    public String bbLiner(Combat c, Character other) {
         return "Mara gives you a look of not quite genuine concern. <i>\"That must have really hurt. Sorry for scrambling your eggs. I feel really bad about that. Also for "
                         + "lying just now. I'm not actually that sorry.\"</i>";
     }
 
     @Override
-    public String nakedLiner(Combat c) {
+    public String nakedLiner(Combat c, Character opponent) {
         return "Mara gives an exaggerated squeal and covers herself. <i>\"You brute! You rapist! What are you trying to do to a helpless, innocent girl?\"</i>";
     }
 
     @Override
-    public String stunLiner(Combat c) {
+    public String stunLiner(Combat c, Character opponent) {
         return "Mara lets out a slightly pained whimper. <i>\"Go easy on me. I'm not really the masochistic type.\"</i>";
     }
 
     @Override
-    public String taunt(Combat c) {
+    public String taunt(Combat c, Character opponent) {
         return "<i>\"If you want me to get you off so badly,\"</i> Mara teases coyly. <i>\"You should have just said so from the start. You don't need to put up this token resistance.\"</i>";
     }
 
     @Override
-    public String temptLiner(Combat c) {
+    public String temptLiner(Combat c, Character opponent) {
         return "<i>\"If you want me to get you off so badly,\"</i> Mara teases coyly. <i>\"You should have just said so from the start. You don't need to put up this token resistance.\"</i>";
     }
 
@@ -486,7 +485,7 @@ public class Mara extends BasePersonality {
 
     @Override
     public String startBattle(Character other) {
-        return "Mara smiles and faces you, practically daring you to attack.";
+        return Global.format("{self:SUBJECT} smiles and faces {other:name-do}, practically daring {other:direct-object} to attack.", character, other);
     }
 
     @Override
