@@ -265,7 +265,7 @@ public class Airi extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c) {
+    public String describe(Combat c, Character self) {
         return character.has(Trait.slime) ? "A crystal blue figure stands in front of you. Well, \"stands\" might be an exaggeration. "
                         + "Airi sports a cute face and a tight body, but her thighs end in a giant ball of slime. "
                         + "Indeed, while her body might look human at a distance, she seems to be composed of a soft, translucent gel."
@@ -319,7 +319,7 @@ public class Airi extends BasePersonality {
     }
 
     @Override
-    public String startBattle(Character other) {
+    public String startBattle(Character self, Character other) {
         if (other.human()) {
             return character.has(Trait.slime)
                             ? "Airi's main body rises up from her slime blob and forms the demure beauty you're used to seeing. <i>\"Delicious... Quickly... Give me your seed...\"</i>"
@@ -372,7 +372,7 @@ public class Airi extends BasePersonality {
     }
 
     @Override
-    public String makeOrgasmLiner(Combat c) {
+    public String makeOrgasmLiner(Combat c, Character target) {
         return character.has(Trait.slime) ? "<i>\"...Feels good..? I'll suck more out... I'll drain you dry...\"</i>" : "<i>\"Feels good? Let me have some more...\"</i>";
     }
 

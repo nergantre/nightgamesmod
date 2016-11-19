@@ -138,8 +138,10 @@ public class MFFTribThreesome extends Position {
     }
 
     @Override
-    public Position reverse(Combat c) {
-        c.write(bottom, Global.format("{self:SUBJECT-ACTION:manage|manages} to unbalance {other:name-do} and push {other:direct-object} off {self:reflective}.", bottom, top));
+    public Position reverse(Combat c, boolean writeMessage) {
+        if (writeMessage) {
+            c.write(bottom, Global.format("{self:SUBJECT-ACTION:manage|manages} to unbalance {other:name-do} and push {other:direct-object} off {self:reflective}.", bottom, top));
+        }
         return new Neutral(bottom, top);
     }
 

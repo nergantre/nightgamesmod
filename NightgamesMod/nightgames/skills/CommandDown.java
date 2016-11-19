@@ -30,7 +30,7 @@ public class CommandDown extends PlayerCommand {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        c.setStance(new Mount(getSelf(), target));
+        c.setStance(new Mount(getSelf(), target), target, false);
         writeOutput(c, Result.normal, target);
         return true;
     }

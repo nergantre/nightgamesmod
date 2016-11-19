@@ -68,6 +68,60 @@
       "exposure":0.8
    },
    {
+      "displayName":"lacy bra",
+      "buffs":[
+      ],
+      "price":900,
+      "prefix":"a ",
+      "attributes":[
+	      "skimpy"
+      ],
+      "layer":0,
+	  "slots" : ["top"],
+	  "shops" : ["Boutique"],
+  	  "sex" : ["all"],
+	  "hotness":0.8,
+      "name":"lacybra",
+      "toughness":4,
+      "exposure":0.9
+   },
+   {
+	  "displayName":"lace panties",
+      "buffs":[
+      ],
+      "price":900,
+      "prefix":"a pair of ",
+      "attributes":[
+			"skimpy"
+      ],
+      "layer":0,
+	  "slots" : ["bottom"],
+	  "shops" : ["Boutique"],
+	  "sex" : ["all"],
+	  "hotness":0.8,
+      "name":"lacepanties",
+      "toughness":5,
+      "exposure":0.9
+	},
+   {
+      "displayName":"lacy bra",
+      "buffs":[
+      ],
+      "price":900,
+      "prefix":"a ",
+      "attributes":[
+    	"skimpy"
+      ],
+      "layer":0,
+	  "slots" : ["top"],
+	  "shops" : ["Boutique"],
+  	  "sex" : ["all"],
+	  "hotness":0.8,
+      "name":"lacybra",
+      "toughness":4,
+      "exposure":0.9
+   },
+   {
       "displayName":"pants",
       "buffs":[
       ],

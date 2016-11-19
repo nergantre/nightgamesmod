@@ -39,10 +39,10 @@ public class OralStrategy extends KnockdownThenActionStrategy {
     @Override
     protected Optional<Set<Skill>> getPreferredSkills(Combat c, Character self, Set<Skill> allowedSkills) {
         return emptyIfSetEmpty(allowedSkills.stream()
-                        .filter(skill -> ((skill.getTags().contains(SkillTag.oral)
-                                        && skill.getTags().contains(SkillTag.pleasure)
-                                        ) || skill.getTags().contains(SkillTag.stripping))
-                                        && !skill.getTags().contains(SkillTag.suicidal))
+                        .filter(skill -> ((skill.getTags(c).contains(SkillTag.oral)
+                                        && skill.getTags(c).contains(SkillTag.pleasure)
+                                        ) || skill.getTags(c).contains(SkillTag.stripping))
+                                        && !skill.getTags(c).contains(SkillTag.suicidal))
                         .collect(Collectors.toSet()));
     }
     

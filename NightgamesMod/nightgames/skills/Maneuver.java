@@ -32,7 +32,7 @@ public class Maneuver extends Skill {
     public boolean resolve(Combat c, Character target) {
         if (target.roll(getSelf(), c, accuracy(c))) {
             writeOutput(c, Result.normal, target);
-            c.setStance(new Behind(getSelf(), target));
+            c.setStance(new Behind(getSelf(), target), getSelf(), true);
             getSelf().emote(Emotion.confident, 15);
             getSelf().emote(Emotion.dominant, 15);
             target.emote(Emotion.nervous, 10);

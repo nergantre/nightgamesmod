@@ -262,7 +262,11 @@ public abstract class Skill {
     protected void removeTag(SkillTag tag) {
         tags.remove(tag);
     }
-    public Set<SkillTag> getTags() {
+    public final Set<SkillTag> getTags(Combat c) {
+        return getTags(c, c.getOpponent(self));
+    }
+
+    public Set<SkillTag> getTags(Combat c, Character target) {
         return Collections.unmodifiableSet(tags);
     }
 }

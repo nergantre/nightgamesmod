@@ -57,7 +57,7 @@ public class Tribadism extends Skill {
         BodyPart targetO = getTargetOrgan(target);
         writeOutput(c, Result.normal, target);
         if (c.getStance().en != Stance.trib) {
-            c.setStance(new TribadismStance(getSelf(), target));
+            c.setStance(new TribadismStance(getSelf(), target), getSelf(), true);
         }
         int otherm = 10;
         int m = 10;

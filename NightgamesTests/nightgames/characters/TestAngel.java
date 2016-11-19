@@ -336,7 +336,7 @@ public class TestAngel extends BasePersonality {
         }
     }
 
-    @Override public String describe(Combat c) {
+    @Override public String describe(Combat c, Character self) {
         if (character.has(Trait.demigoddess)) {
             return "Angel's transformation seems to have taken inspiration from her own name. She has large angelic wings behind her, which combined with her long blonde hair and perfect unblemished "
                             + "skin gives her a positively divine appearance. Her appearance should be emanating holy purity, but instead her eyes and expression seems lewder than ever. "
@@ -443,7 +443,7 @@ public class TestAngel extends BasePersonality {
         }
     }
 
-    @Override public String startBattle(Character other) {
+    @Override public String startBattle(Character self, Character other) {
         return "Angel licks her lips and stalks you like a predator.";
     }
 
@@ -490,7 +490,7 @@ public class TestAngel extends BasePersonality {
         return "<i>\"Mmm maybe you do have promise. Care to try that again?\"</i>";
     }
 
-    @Override public String makeOrgasmLiner(Combat c) {
+    @Override public String makeOrgasmLiner(Combat c, Character target) {
         return "Angel stares you in the eye as your consciousness return from the precipice <i>\"Once isn't enough. I need more. You can do that for me right?\"</i>";
     }
 

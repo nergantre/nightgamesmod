@@ -115,16 +115,21 @@ public class Engulfed extends Position {
     }
 
     @Override
-    public Position reverse(Combat c) {
+    public Position reverse(Combat c, boolean writeMessage) {
         if (bottom.has(Trait.slime)) {
-            c.write(bottom, String.format("%s %s slimy body around %s, reversing %s hold.",
-                            bottom.subjectAction("swirls", "swirl"), bottom.possessivePronoun(),
-                            top.nameOrPossessivePronoun(), top.possessivePronoun()));
-            return super.reverse(c);
+            if (writeMessage) {
+                c.write(bottom, String.format("%s %s slimy body a"
+                                + "round %s, reversing %s hold.",
+                                bottom.subjectAction("swirls", "swirl"), bottom.possessivePronoun(),
+                                top.nameOrPossessivePronoun(), top.possessivePronoun()));
+            }
+            return super.reverse(c, writeMessage);
         }
-        c.write(bottom, String.format("%s loose from %s slimy grip and %s away from %s.", 
-                        bottom.subjectAction("struggles", "struggle"), top.nameOrPossessivePronoun(),
-                        bottom.action("stagger", "staggers"), top.directObject()));
+        if (writeMessage) {
+            c.write(bottom, String.format("%s loose from %s slimy grip and %s away from %s.", 
+                            bottom.subjectAction("struggles", "struggle"), top.nameOrPossessivePronoun(),
+                            bottom.action("stagger", "staggers"), top.directObject()));
+        }
         return new Neutral(top, bottom);
     }
 

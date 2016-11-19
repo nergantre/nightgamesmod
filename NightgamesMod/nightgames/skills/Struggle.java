@@ -106,7 +106,7 @@ public class Struggle extends Skill {
                                             target.possessivePronoun(), getSelf().possessivePronoun()));
                         }
                     }
-                    c.setStance(new Neutral(getSelf(), target));
+                    c.setStance(new Neutral(getSelf(), target), getSelf(), true);
                 } else {
                     if (getSelf().human()) {
                         if (knotted) {
@@ -165,9 +165,9 @@ public class Struggle extends Skill {
                     boolean reverseStrapped = BodyPart.hasOnlyType(c.getStance().partsFor(c, target), "strapon");
                     boolean reversedStance = false;
                     if (!reverseStrapped) {
-                        Position reversed = c.getStance().reverse(c);
+                        Position reversed = c.getStance().reverse(c, true);
                         if (reversed != c.getStance()) {
-                            c.setStance(reversed);
+                            c.setStance(reversed, getSelf(), true);
                             reversedStance = true;
                         }
                     }
@@ -175,7 +175,7 @@ public class Struggle extends Skill {
                         c.write(getSelf(),
                                         Global.format("{self:SUBJECT-ACTION:manage|manages} to shake {other:direct-object} off.",
                                                         getSelf(), target));
-                        c.setStance(new Neutral(getSelf(), target));
+                        c.setStance(new Neutral(getSelf(), target), getSelf(), true);
                     }
                 } else {
                     if (getSelf().hasStatus(Stsflag.cockbound)) {
@@ -228,7 +228,7 @@ public class Struggle extends Skill {
                 } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), getSelf().name() + " squirms out from under "+target.nameDirectObject()+".");
                 }
-                c.setStance(new Neutral(getSelf(), target));
+                c.setStance(new Neutral(getSelf(), target), getSelf(), true);
             } else {
                 if ((c.getStance().isBeingFaceSatBy(c, getSelf(), target))) {
                     if (getSelf().human()) {

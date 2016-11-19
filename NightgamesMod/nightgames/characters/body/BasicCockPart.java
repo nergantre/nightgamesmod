@@ -237,7 +237,7 @@ public enum BasicCockPart implements CockPart {
     public int mod(Attribute a, int total) {
         switch (a) {
             case Speed:
-                return (int) -Math.round(Math.max(size - 6, 0));
+                return (int) -Math.round(Math.max(size - 6, 0)) / 2;
             case Seduction:
                 return (int) Math.round(Math.max(size - 6, 0));
             default:

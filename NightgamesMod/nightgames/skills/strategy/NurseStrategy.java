@@ -35,8 +35,8 @@ public class NurseStrategy extends KnockdownThenActionStrategy {
     @Override
     protected Optional<Set<Skill>> getPreferredSkills(Combat c, Character self, Set<Skill> allowedSkills) {
         return emptyIfSetEmpty(allowedSkills.stream()
-                        .filter(skill -> skill.getTags().contains(SkillTag.breastfeed)
-                                        && !skill.getTags().contains(SkillTag.suicidal))
+                        .filter(skill -> skill.getTags(c).contains(SkillTag.breastfeed)
+                                        && !skill.getTags(c).contains(SkillTag.suicidal))
                         .collect(Collectors.toSet()));
     }
     

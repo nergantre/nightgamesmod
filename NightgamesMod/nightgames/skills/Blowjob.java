@@ -88,7 +88,7 @@ public class Blowjob extends Skill {
             }
 
             if (ReverseMount.class.isInstance(c.getStance())) {
-                c.setStance(new SixNine(getSelf(), target));
+                c.setStance(new SixNine(getSelf(), target), getSelf(), true);
             }
         } else {
             writeOutput(c, Result.miss, target);

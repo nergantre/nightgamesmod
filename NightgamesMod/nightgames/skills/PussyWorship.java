@@ -16,7 +16,6 @@ public class PussyWorship extends Skill {
         super("Pussy Worship", self);
         addTag(SkillTag.usesMouth);
         addTag(SkillTag.pleasure);
-        addTag(SkillTag.suicidal);
         addTag(SkillTag.worship);
     }
 
@@ -65,7 +64,7 @@ public class PussyWorship extends Skill {
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
         Optional<BodyFetish> fetish = getSelf().body.getFetish("pussy");
-        return fetish.isPresent() && fetish.get().magnitude >= .5;
+        return user.isPetOf(target) || (fetish.isPresent() && fetish.get().magnitude >= .5);
     }
 
     @Override

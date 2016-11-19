@@ -351,7 +351,7 @@ public class Mara extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c) {
+    public String describe(Combat c, Character self) {
         if (character.has(Trait.madscientist)) {
             return "Mara has gone high tech. She has a rig of equipment on harnesses that seem carefully placed so as not to interfere with clothing removal. The glasses she's wearing appear to be "
                             + "computerized rather than prescription. She also has a device of unknown purpose strapped to her arm. Underneath all of that, she has the same cute, mischievous expression she "
@@ -488,7 +488,7 @@ public class Mara extends BasePersonality {
     }
 
     @Override
-    public String startBattle(Character other) {
+    public String startBattle(Character self, Character other) {
         return Global.format("{self:SUBJECT} smiles and faces {other:name-do}, practically daring {other:direct-object} to attack.", character, other);
     }
 
@@ -531,7 +531,7 @@ public class Mara extends BasePersonality {
     }
 
     @Override
-    public String makeOrgasmLiner(Combat c) {
+    public String makeOrgasmLiner(Combat c, Character target) {
         return "Mara lets out an impish little smirk, <i>\"Haha, all that talk, but you cum as soon as I touch you.\"</i>";
     }
 }

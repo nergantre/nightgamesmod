@@ -168,14 +168,14 @@ public abstract class BasePersonality implements Personality {
     }
     
     @Override
-    public String describeAll(Combat c) {
+    public String describeAll(Combat c, Character self) {
         StringBuilder b = new StringBuilder();
-        b.append(describe(c));
+        b.append(describe(c, self));
         b.append("<br><br>");
-        character.body.describe(b, character, " ");
+        self.body.describe(b, self, " ");
         b.append("<br>");
-        for (Trait t : character.getTraits()) {
-            t.describe(character, b);
+        for (Trait t : self.getTraits()) {
+            t.describe(self, b);
             b.append(' ');
         }
         b.append("<br>");

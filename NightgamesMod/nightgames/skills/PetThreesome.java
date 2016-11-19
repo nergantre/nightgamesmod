@@ -81,17 +81,17 @@ public class PetThreesome extends Skill {
             }
             if (selfO.isType("pussy")) {
                 if (result == Result.critical && getSelf().useFemalePronouns()) {
-                    c.setStance(new FFMFacesittingThreesome(fucker, getSelf(), target));
+                    c.setStance(new FFMFacesittingThreesome(fucker, getSelf(), target), getSelf(), true);
                 } else {                    
-                    c.setStance(new FFMCowgirlThreesome(fucker, getSelf(), target));
+                    c.setStance(new FFMCowgirlThreesome(fucker, getSelf(), target), getSelf(), true);
                 }
             } else if (selfO.isType("cock") && getSelf().useFemalePronouns()) {
-                c.setStance(new MFFMissionaryThreesome(fucker, getSelf(), target));
+                c.setStance(new MFFMissionaryThreesome(fucker, getSelf(), target), getSelf(), true);
             } else if (selfO.isType("cock")) {
                 if (result == Result.critical) {
-                    c.setStance(new MFMDoublePenThreesome(fucker, getSelf(), target));
+                    c.setStance(new MFMDoublePenThreesome(fucker, getSelf(), target), getSelf(), true);
                 } else {
-                    c.setStance(new MFMSpitroastThreesome(fucker, getSelf(), target));
+                    c.setStance(new MFMSpitroastThreesome(fucker, getSelf(), target), getSelf(), true);
                 }
             }
             int otherm = m;

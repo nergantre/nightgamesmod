@@ -46,7 +46,7 @@ public class CheapShot extends Skill {
         if (target.human() && Global.random(5) >= 3) {
             c.write(getSelf(), getSelf().bbLiner(c, target));
         }
-        c.setStance(new Behind(getSelf(), target));
+        c.setStance(new Behind(getSelf(), target), getSelf(), true);
         target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(8, 20)));
         getSelf().buildMojo(c, 10);
 

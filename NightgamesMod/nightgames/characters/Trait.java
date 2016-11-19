@@ -171,7 +171,9 @@ public enum Trait {
     mindcontroller("Mind Controller", "Can take control of others' minds. Inventive, yes?"),
     darkpromises("Dark Promises", "Can enthrall with the right words"), // whisper upgrade, can enthrall
     dominatrix("Dominatrix", "Relishes in hurting and humiliating partners."),
-    
+    inspirational("Inspirational", "Shares certain sexual traits with followers."),
+    lastStand("Last Stand", "When cumming while having sex, automatically uses one final skill."),
+
     energydrain("Energy Drain", "Drains energy during intercourse"),
     objectOfWorship("Object Of Worship", "Opponents is periodically forced to worship your body.",
                     (b, c, t) -> b.append("A divine aura surrounds " + c.nameDirectObject() + ".")),
@@ -190,6 +192,7 @@ public enum Trait {
     unnaturalgrowth("Unnatural Growth", "Always keeps up on levels"), // levels up to highest level + 5 after each night
     devoteeFervor("Devotee Fervor", "Pets can sometimes act twice"),
     congregation("Congregation", "Doubles the amount of allowed pets"),
+    sexualDynamo("Sexual Dynamo", "Gain mojo when pleasured, gain seduction when cumming"),
 
     // training perks
     analTraining1("Anal Training 1", "Refined ass control."),
@@ -228,6 +231,9 @@ public enum Trait {
     sacrosanct("Sacrosanct", "Too sacred to hurt."),
     mandateOfHeaven("Mandate of Heaven", "Temptation demands worship."),
     piety("Piety", "If worshipping when dominating at sex, switch positions."),
+    showmanship("Showmanship", "Tempt the opponent when pleasured by pets."),
+    genuflection("Genuflection!", "Sometimes opponents kneel instead of getting up."),
+
     // Weaknesses
     ticklish("Ticklish", "Can be easily tickled into submission"), // more weaken damage and arousal from tickle
     insatiable("Insatiable", "One orgasm is never enough"), // arousal doesn't completely clear at end of match
@@ -267,7 +273,8 @@ public enum Trait {
     dryad("Dryad", "Part girl, part tree."),
     temptress("Temptress", "Well versed in the carnal arts."),
     ninja("Ninja", "A shadowy servant."),
-    
+    fallenAngel("Fallen Angel", "An angelic being led astray"),
+
     slimification("Slimification", "May fall into slime form on orgasm"),
 
     // Class subtrait

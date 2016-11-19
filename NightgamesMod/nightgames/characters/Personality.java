@@ -40,7 +40,7 @@ public interface Personality extends Serializable {
 
     String intervene3p(Combat c, Character target, Character assist);
 
-    String describe(Combat c);
+    String describe(Combat c, Character self);
 
     String draw(Combat c, Result flag);
 
@@ -50,7 +50,7 @@ public interface Personality extends Serializable {
 
     void ding();
 
-    String startBattle(Character other);
+    String startBattle(Character self, Character other);
 
     boolean fit();
 
@@ -62,13 +62,13 @@ public interface Personality extends Serializable {
 
     void pickFeat();
 
-    String describeAll(Combat c);
+    String describeAll(Combat c, Character self);
 
     String temptLiner(Combat c, Character opponent);
 
     String orgasmLiner(Combat c);
 
-    String makeOrgasmLiner(Combat c);
+    String makeOrgasmLiner(Combat c, Character target);
 
     String getType();
 

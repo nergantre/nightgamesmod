@@ -267,7 +267,7 @@ public class Kat extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c) {
+    public String describe(Combat c, Character self) {
         return "It's easy to forget that Kat's older than you when she looks like she's about to start high school. She's a very short and slim, though you know she's "
                         + "stronger than she looks. Adorable cat ears poke through her short, strawberry blonde hair. She "
                         + "looks a bit timid, but there's a gleam of desire in her eyes.";
@@ -368,7 +368,7 @@ public class Kat extends BasePersonality {
     }
 
     @Override
-    public String startBattle(Character other) {
+    public String startBattle(Character self, Character other) {
         return "Kat looks a bit nervous, but her tail wags slowly in anticipation. <i>\"Let's have some funNya.\"</i>";
     }
 
@@ -436,7 +436,7 @@ public class Kat extends BasePersonality {
     }
 
     @Override
-    public String makeOrgasmLiner(Combat c) {
+    public String makeOrgasmLiner(Combat c, Character target) {
         return "<i>\"Mroewer, I gotcha! Hey hey, do you think you can cum again-nyaa? Let's try it out!\"</i>";
     }
 }

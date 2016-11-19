@@ -25,6 +25,7 @@ import nightgames.combat.Combat;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.json.JsonUtils;
+import nightgames.pet.PetCharacter;
 import nightgames.skills.Skill;
 import nightgames.status.Abuff;
 import nightgames.status.BodyFetish;
@@ -608,6 +609,18 @@ public class Body implements Cloneable {
                 c.writeSystemMessage(battleString);
             }
         }
+        double percentPleasure = result / character.getArousal().max() * 100;
+        if (character.has(Trait.sexualDynamo) && percentPleasure >= 5 && Global.random(4) == 0) {
+            c.write(character, Global.format("Sexual pleasure seems only to feed {self:name-possessive} ", character, opponent));
+            character.buildMojo(c, (int)Math.floor(percentPleasure));
+        }
+        if (character.has(Trait.showmanship) && percentPleasure >= 5 && opponent.isPet() && ((PetCharacter)opponent).getSelf().owner().equals(character)) {
+            Character voyeur = c.getOpponent(character);
+            c.write(character, Global.format("{self:NAME-POSSESSIVE} moans as {other:subject-action:make|makes} a show of pleasing {other:possessive} {self:master} "
+                            + "turns %s on immensely.", character, opponent, voyeur.nameDirectObject()));
+            voyeur.tempt(c, character, target, result);
+        }
+
         character.resolvePleasure(result, c, opponent, target, with);
 
         if (opponent != null && Arrays.asList(fetishParts)

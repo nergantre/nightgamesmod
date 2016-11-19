@@ -158,14 +158,6 @@ public class Player extends Character {
 
     @Override
     public void victory(Combat c, Result flag) {
-        if (c.getStance()
-             .inserted() && c.getStance()
-                             .dom(this)) {
-            getMojo().gain(1);
-            if (has(Trait.mojoMaster)) {
-                getMojo().gain(1);
-            }
-        }
         if (has(Trait.slime)) {
             purge(c);
         }
@@ -640,14 +632,14 @@ public class Player extends Character {
                 if (c.getStance()
                      .sub(this)) {
                     Position reverse = c.getStance()
-                                        .reverse(c);
+                                        .reverse(c, true);
                     if (reverse != c.getStance() && !BodyPart.hasOnlyType(reverse.bottomParts(), "strapon")) {
                         c.setStance(reverse, this, false);
                     } else {
                         c.write(this, Global.format(
                                         "{self:NAME-POSSESSIVE} quick wits find a gap in {other:name-possessive} hold and {self:action:slip|slips} away.",
                                         this, target));
-                        c.setStance(new Neutral(this, target));
+                        c.setStance(new Neutral(this, target), this, true);
                     }
                 } else {
                     target.body.pleasure(this, body.getRandom("hands"), target.body.getRandomBreasts(),

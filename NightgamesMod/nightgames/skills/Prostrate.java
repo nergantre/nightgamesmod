@@ -44,12 +44,12 @@ public class Prostrate extends Skill {
             c.write(target, "Angel lays a hand on the back of your head and then softly pushes to the side."
                             + " Understanding Her intent, you roll over onto your back, and she sits down on top of you,"
                             + " smiling kindly.");
-            c.setStance(new Mount(target, getSelf()));
+            c.setStance(new Mount(target, getSelf()), getSelf(), true);
         } else {
             c.write(target, "Angel curls a finger under your chin and lifts your head. She keeps going, and you"
                             + " understand she wants you to stand up. Back on your feet, She traces a hand over your"
                             + " chest and shoulder while walking around you and gently hugging you from behind.");
-            c.setStance(new Behind(target, getSelf()));
+            c.setStance(new Behind(target, getSelf()), getSelf(), true);
         }
         Global.getPlayer()
               .unaddictCombat(AddictionType.ZEAL, Global.getCharacterByType("Angel"), Addiction.LOW_INCREASE, c);

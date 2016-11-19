@@ -22,7 +22,7 @@ public class ReverseStraddle extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         writeOutput(c, Result.normal, target);
-        c.setStance(new ReverseMount(getSelf(), target));
+        c.setStance(new ReverseMount(getSelf(), target), getSelf(), true);
         return true;
     }
 

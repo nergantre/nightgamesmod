@@ -78,6 +78,7 @@ public abstract class SkillTag {
     public final static SkillTag suicidal = new NameOnlySkillTag("Suicidal");
     public final static SkillTag failed = new NameOnlySkillTag("Failed");
     public final static SkillTag counter = new NameOnlySkillTag("Counter");
+    public final static SkillTag petSummoning = new NameOnlySkillTag("PetSummoning");
     public final static SkillTag knockdown = new KnockdownSkillTag();
     public final static SkillTag chain = new NameOnlySkillTag("Chain");
     public final static SkillTag bodyAltering = new NameOnlySkillTag("BodyAltering");
@@ -125,6 +126,7 @@ public abstract class SkillTag {
                     new BasicSkillTag((results, value) -> results.getRoll() * 100 >= (100 - value) || results.getResult().hasUserTag(perfectAccuracy),
                                     SkillRequirement.noRequirement(), "Accuracy");
     public final static SkillTag miss = new NameOnlySkillTag("Miss");
+    public final static SkillTag petDisallowed = new NameOnlySkillTag("PetDisallowed");
     public final static SkillTag worship = new WorshipSkillTag();
     public static final SkillTag facesit = new NameOnlySkillTag("Facesitting");
 

@@ -96,7 +96,10 @@ public class HeldOral extends AbstractFacingStance {
     }
 
     @Override
-    public Position reverse(Combat c) {
+    public Position reverse(Combat c, boolean writeMessage) {
+        if (writeMessage) {
+            
+        }
         return new Mount(bottom, top);
     }
 

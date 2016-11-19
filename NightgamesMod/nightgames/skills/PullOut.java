@@ -62,10 +62,10 @@ public class PullOut extends Skill {
         }
         if (c.getStance().en == Stance.anal) {
             writeOutput(c, result, target);
-            c.setStance(c.getStance().insertRandom(c));
+            c.setStance(c.getStance().insertRandom(c), getSelf(), true);
         } else if (result == Result.special) {
             writeOutput(c, Result.special, target);
-            c.setStance(new StandingOver(getSelf(), target));
+            c.setStance(new StandingOver(getSelf(), target), getSelf(), true);
         } else {
             if (getSelf().hasStatus(Stsflag.leglocked) || getSelf().hasStatus(Stsflag.armlocked)
                             || target.has(Trait.tight) && c.getStance().inserted(getSelf())) {

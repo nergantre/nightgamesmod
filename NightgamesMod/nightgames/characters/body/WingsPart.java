@@ -10,7 +10,8 @@ public enum WingsPart implements BodyPart,BodyPartMod {
     demonicslime("demonic slime ", .2, 1.3, 1.2),
     angelicslime("angelic slime ", .2, 1.3, 1.2),
     demonic("demonic ", .2, 1.3, 1.2),
-    angelic("angelic ", .3, 1.4, 1.3);
+    angelic("angelic ", .3, 1.4, 1.3),
+    fallenangel("fallen angel  ", .3, 1.4, 1.3);
     public String desc;
     public double hotness;
     public double pleasure;

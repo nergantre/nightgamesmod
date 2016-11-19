@@ -1,6 +1,8 @@
 package nightgames.skills;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -21,6 +23,16 @@ public class Anilingus extends Skill {
         addTag(SkillTag.usesMouth);
         addTag(SkillTag.pleasure);
         addTag(SkillTag.oral);
+    }
+
+    @Override
+    public Set<SkillTag> getTags(Combat c, Character target) {
+        if (isWorship(c, target)) {
+            Set<SkillTag> tags = new HashSet<>(super.getTags(c));
+            tags.add(SkillTag.worship);
+            return tags;
+        }
+        return super.getTags(c, target);
     }
 
     @Override
@@ -48,7 +60,7 @@ public class Anilingus extends Skill {
         int m = 10;
         int n = 0;
         int selfm = 0;
-        if (getLabel(c).equals(worshipString)) {
+        if (isWorship(c, target)) {
             result = Result.sub;
             m += 4 + Global.random(6);
             n = 20;
@@ -148,11 +160,16 @@ public class Anilingus extends Skill {
         return "Perform anilingus on opponent";
     }
 
-    @Override
-    public String getLabel(Combat c) {
+    private boolean isWorship(Combat c, Character target) {
         Optional<BodyFetish> fetish = getSelf().body.getFetish("ass");
         boolean worship = c.getOpponent(getSelf()).has(Trait.objectOfWorship);
         boolean enthralled = getSelf().is(Stsflag.enthralled);
-        return fetish.isPresent() || worship || enthralled ? worshipString : "Lick Ass";
+        boolean isPet = target == null ? getSelf().isPet() : getSelf().isPetOf(target);
+        return fetish.isPresent() || worship || enthralled || isPet;
+    }
+
+    @Override
+    public String getLabel(Combat c) {
+        return isWorship(c, null) ? worshipString : "Lick Ass";
     }
 }

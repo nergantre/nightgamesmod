@@ -162,7 +162,7 @@ public class Yui extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c) {
+    public String describe(Combat c, Character self) {
         return character.name
                         + " is a cute girl with her short blonde hair in a what's almost a pixie cut. However, her long bangs hangs over her blue eyes, and makes it hard for you to tell what's in her mind."
                         + "She looks a bit strange dressed in what's obviously traditional eastern clothing while being very clearly white. Looking your way, she gives you a polite bow before taking her stance.";
@@ -295,7 +295,7 @@ public class Yui extends BasePersonality {
     }
 
     @Override
-    public String startBattle(Character other) {
+    public String startBattle(Character self, Character other) {
         return Global.format("{self:SUBJECT} bows respectifully towards {other:name-do} before sliding into an easy stance", character, other);
     }
 
@@ -328,7 +328,7 @@ public class Yui extends BasePersonality {
     }
 
     @Override
-    public String makeOrgasmLiner(Combat c) {
+    public String makeOrgasmLiner(Combat c, Character target) {
         return "Yui smiles, <i>\"Don't worry Master, you just need to everything to your humble servant.\"</i>";
     }
 }

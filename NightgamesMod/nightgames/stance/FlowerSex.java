@@ -81,7 +81,7 @@ public class FlowerSex extends FemdomSexStance {
     }
 
     @Override
-    public Position reverse(Combat c) {
+    public Position reverse(Combat c, boolean writeMessage) {
         return this;
     }
 

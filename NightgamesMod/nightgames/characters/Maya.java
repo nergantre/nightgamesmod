@@ -234,7 +234,7 @@ public class Maya extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c) {
+    public String describe(Combat c, Character self) {
         return "Maya is a beautiful young woman in her early twenties, though she carries"
                         + " herself with the grace of a more mature lady. She has soft, shapely "
                         + "breasts, larger than her slim frame would imply. Her waist length, raven "
@@ -318,7 +318,7 @@ public class Maya extends BasePersonality {
     }
 
     @Override
-    public String startBattle(Character other) {
+    public String startBattle(Character self, Character other) {
         if (other.human()) {
             return "Maya smiles softly as she confidently steps toward you. <i>\"Are you simply unfortunate or were you actually hoping to challenge me? What a brave boy. I'll try not to disappoint you.\"</i>";
         } else {
@@ -362,7 +362,7 @@ public class Maya extends BasePersonality {
     }
 
     @Override
-    public String makeOrgasmLiner(Combat c) {
+    public String makeOrgasmLiner(Combat c, Character target) {
         return "<i>\"Aaaand there we are. Think you can go again?\"</i>";
     }
 

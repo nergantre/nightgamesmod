@@ -339,7 +339,7 @@ public class Reyka extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c) {
+    public String describe(Combat c, Character self) {
         return "Reyka the succubus stands before you, six feet tall with"
                         + " the most stunningly beautiful body you have ever seen."
                         + " Her long black hair enshrines her perfect face like a priceless"
@@ -386,7 +386,7 @@ public class Reyka extends BasePersonality {
     }
 
     @Override
-    public String startBattle(Character other) {
+    public String startBattle(Character self, Character other) {
         return "<i>\"Yum, I was just looking for a tasty little morsel.\"</i><p>"
                         + "Reyka strikes a seductive pose and the devilish smile"
                         + " on her face reveals just what, or more specifically,"
@@ -439,7 +439,7 @@ public class Reyka extends BasePersonality {
     }
 
     @Override
-    public String makeOrgasmLiner(Combat c) {
+    public String makeOrgasmLiner(Combat c, Character target) {
         return "With a devilish smile, Reyka brings her face close to yours <i>\"Mmmmm that smells great! Too bad I'm still pretty hungry.\"</i>";
     }
 }

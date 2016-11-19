@@ -89,7 +89,7 @@ public class NPC extends Character {
 
     @Override
     public String describe(int per, Combat c) {
-        String description = ai.describeAll(c);
+        String description = ai.describeAll(c, this);
         for (Status s : status) {
             description = description + "<br>" + s.describe(c);
         }
@@ -313,12 +313,16 @@ public class NPC extends Character {
         stratsWithCumulativeWeights.put(lastWeight, defaultStrat);
         List<CombatStrategy> allStrategies = new ArrayList<>(CombatStrategy.availableStrategies);
         allStrategies.addAll(personalStrategies);
+        
         for (CombatStrategy strat: allStrategies) {
             if (strat.weight(c, this) < .01 || strat.nextSkills(c, this).isEmpty()) {
                 continue;
             }
             lastWeight += strat.weight(c, this);
             stratsWithCumulativeWeights.put(lastWeight, strat);
+        }
+        if (Global.isDebugOn(DebugFlags.DEBUG_STRATEGIES)) {
+            System.out.println("Available strategies: "+ stratsWithCumulativeWeights);
         }
         double random = Global.randomdouble() * lastWeight;
         for (Map.Entry<Double, CombatStrategy> entry: stratsWithCumulativeWeights.entrySet()) {
@@ -402,8 +406,8 @@ public class NPC extends Character {
     }
 
     @Override
-    public String makeOrgasmLiner(Combat c) {
-        return ai.makeOrgasmLiner(c);
+    public String makeOrgasmLiner(Combat c, Character target) {
+        return ai.makeOrgasmLiner(c, target);
     }
 
     @Override
@@ -590,7 +594,7 @@ public class NPC extends Character {
 
     @Override
     public String challenge(Character other) {
-        return ai.startBattle(other);
+        return ai.startBattle(this, other);
     }
 
     @Override
@@ -644,14 +648,14 @@ public class NPC extends Character {
                 break;
             case fucking:
                 if (c.getStance().sub(this)) {
-                    Position reverse = c.getStance().reverse(c);
+                    Position reverse = c.getStance().reverse(c, true);
                     if (reverse != c.getStance() && !BodyPart.hasOnlyType(reverse.bottomParts(), "strapon")) {
                         c.setStance(reverse, this, false);
                     } else {
                         c.write(this, Global.format(
                                         "{self:NAME-POSSESSIVE} quick wits find a gap in {other:name-possessive} hold and {self:action:slip|slips} away.",
                                         this, target));
-                        c.setStance(new Neutral(this, target));
+                        c.setStance(new Neutral(this, target), this, true);
                     }
                 } else {
                     target.body.pleasure(this, body.getRandom("hands"), target.body.getRandomBreasts(),
@@ -770,8 +774,8 @@ public class NPC extends Character {
             add(c, new Masochistic(this));
         }
         if (has(Trait.RawSexuality)) {
-            tempt(c, opponent, getArousal().max() / 25);
-            opponent.tempt(c, this, opponent.getArousal().max() / 25);
+            tempt(c, opponent, getArousal().max() / 20);
+            opponent.tempt(c, this, opponent.getArousal().max() / 20);
         }
         if (c.getStance().dom(this)) {
             emote(Emotion.dominant, 20);

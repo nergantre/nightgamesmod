@@ -47,7 +47,7 @@ public class PinAndBlow extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         writeOutput(c, Result.normal, target);
-        c.setStance(new HeldOral(getSelf(), target));
+        c.setStance(new HeldOral(getSelf(), target), getSelf(), true);
         if (target.hasDick()) {
             new Blowjob(getSelf()).resolve(c, target);
         } else if (target.hasPussy()) {

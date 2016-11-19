@@ -35,9 +35,9 @@ public class Stumble extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         if (Global.random(2) == 0) {
-            c.setStance(new Mount(target, getSelf()));
+            c.setStance(new Mount(target, getSelf()), target, false);
         } else {
-            c.setStance(new ReverseMount(target, getSelf()));
+            c.setStance(new ReverseMount(target, getSelf()), target, false);
         }
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));

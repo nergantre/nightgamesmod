@@ -304,7 +304,7 @@ public class Command extends Skill {
                                                 + " behind.", target.directObject(), getSelf().name(),
                                                 target.nameDirectObject(),
                                                 target.directObject()));
-                c.setStance(new Behind(getSelf(), target));
+                c.setStance(new Behind(getSelf(), target), target, false);
                 getSelf().buildMojo(c, 5);
                 break;
             case MASTER_MOUNT:
@@ -314,7 +314,7 @@ public class Command extends Skill {
                                                 getSelf().name(), target.subject(), 
                                                 target.directObject(), getSelf().possessivePronoun(),
                                                 target.possessivePronoun()));
-                c.setStance(new Mount(getSelf(), target));
+                c.setStance(new Mount(getSelf(), target), target, false);
                 getSelf().buildMojo(c, 5);
                 break;
             case MASTER_REVERSE_MOUNT:
@@ -325,7 +325,7 @@ public class Command extends Skill {
                                                 + " belly.", getSelf().name(), target.subject(),
                                                 target.directObject(), target.possessivePronoun(), getSelf().pronoun(),
                                                 target.directObject(), target.possessivePronoun()));
-                c.setStance(new ReverseMount(getSelf(), target));
+                c.setStance(new ReverseMount(getSelf(), target), target, false);
                 getSelf().buildMojo(c, 5);
                 break;
             case MASTER_STRAPON:
@@ -406,7 +406,7 @@ public class Command extends Skill {
                                                 target.nameOrPossessivePronoun(), target.directObject(),
                                                 target.pronoun(), 
                                                 Global.capitalizeFirstLetter(target.subjectAction("obey"))));
-                c.setStance(new StandingOver(getSelf(), target));
+                c.setStance(new StandingOver(getSelf(), target), target, false);
                 break;
             case WORSHIP_COCK:
                 c.write(getSelf(),
@@ -478,7 +478,7 @@ public class Command extends Skill {
             case MASTER_FACESIT:
                 c.write(getSelf(), String.format("%s stands over %s face and slowly lowers %s down onto it.",
                                 getSelf().name(), target.nameOrPossessivePronoun(), getSelf().reflectivePronoun()));
-                c.setStance(new FaceSitting(getSelf(), target));
+                c.setStance(new FaceSitting(getSelf(), target), target, false);
                 break;
         }
     }

@@ -1411,6 +1411,14 @@ public class Global {
             }
             return "";
         });
+
+        matchActions.put("master", (self, first, second, third) -> {
+            if (self.useFemalePronouns()) {
+                return "mistress";
+            } else {
+                return "master";
+            }
+        });
     }
 
     public static String format(String format, Character self, Character target, Object... strings) {

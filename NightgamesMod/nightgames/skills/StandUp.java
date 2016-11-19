@@ -22,7 +22,7 @@ public class StandUp extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         writeOutput(c, Result.normal, target);
-        c.setStance(new StandingOver(getSelf(), target));
+        c.setStance(new StandingOver(getSelf(), target), getSelf(), true);
         return true;
     }
 

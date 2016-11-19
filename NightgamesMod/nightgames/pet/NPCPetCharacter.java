@@ -60,7 +60,7 @@ public class NPCPetCharacter extends PetCharacter {
 
     @Override
     public String challenge(Character other) {
-        return prototype.challenge(other);
+        return prototype.ai.startBattle(this, other);
     }
 
     @Override

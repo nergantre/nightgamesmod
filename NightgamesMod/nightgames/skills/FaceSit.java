@@ -81,7 +81,7 @@ public class FaceSit extends Skill {
         target.loseWillpower(c, 5);
         target.add(c, new Shamed(target));
         if (!c.getStance().isFaceSitting(getSelf())) {
-            c.setStance(new FaceSitting(getSelf(), target));
+            c.setStance(new FaceSitting(getSelf(), target), getSelf(), true);
         }
         if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
             target.add(c, new BodyFetish(target, getSelf(), "ass", .25));

@@ -16,7 +16,6 @@ public class BreastWorship extends Skill {
         super("Breast Worship", self);
         addTag(SkillTag.usesMouth);
         addTag(SkillTag.pleasure);
-        addTag(SkillTag.suicidal);
         addTag(SkillTag.worship);
         addTag(SkillTag.pleasureSelf);
     }
@@ -62,7 +61,7 @@ public class BreastWorship extends Skill {
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
         Optional<BodyFetish> fetish = getSelf().body.getFetish("breasts");
-        return fetish.isPresent() && fetish.get().magnitude >= .5;
+        return user.isPetOf(target) || (fetish.isPresent() && fetish.get().magnitude >= .5);
     }
 
     @Override

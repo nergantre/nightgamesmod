@@ -31,7 +31,7 @@ public class FuckStrategy extends AbstractStrategy {
             return allowedSkills.stream().filter(skill -> skill.type(c).equals(Tactics.pleasure)).collect(Collectors.toSet());
         }
         if (self.getArousal().percent() < 15) {
-            return allowedSkills.stream().filter(skill -> skill.getTags().contains(SkillTag.pleasureSelf)).collect(Collectors.toSet());
+            return allowedSkills.stream().filter(skill -> skill.getTags(c).contains(SkillTag.pleasureSelf)).collect(Collectors.toSet());
         }
         Set<Skill> fuckSkills = allowedSkills.stream().filter(skill -> Tactics.fucking.equals(skill.type(c))).collect(Collectors.toSet());
         if (!fuckSkills.isEmpty()) {
@@ -50,7 +50,7 @@ public class FuckStrategy extends AbstractStrategy {
             allowedSkills.stream().filter(skill -> Tactics.stripping.equals(skill.type(c)));
         }
         if (!self.body.getAllGenitals().stream().allMatch(other::clothingFuckable)) {
-            return allowedSkills.stream().filter(skill -> skill.getTags().contains(SkillTag.undressing)).collect(Collectors.toSet());
+            return allowedSkills.stream().filter(skill -> skill.getTags(c).contains(SkillTag.undressing)).collect(Collectors.toSet());
         }
         return Collections.emptySet();
     }

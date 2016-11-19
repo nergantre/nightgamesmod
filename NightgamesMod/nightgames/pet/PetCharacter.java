@@ -12,6 +12,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Decider;
 import nightgames.characters.Emotion;
 import nightgames.characters.Growth;
+import nightgames.characters.Trait;
 import nightgames.characters.WeightedSkill;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
@@ -26,16 +27,80 @@ import nightgames.status.Status;
 import nightgames.trap.Trap;
 
 public class PetCharacter extends Character {
-    private static Set<SkillTag> PET_UNUSABLE_TAG = new HashSet<>();
+    private static final Set<SkillTag> PET_UNUSABLE_TAG = new HashSet<>();
     static {
         PET_UNUSABLE_TAG.add(SkillTag.suicidal);
+        PET_UNUSABLE_TAG.add(SkillTag.petDisallowed);
         PET_UNUSABLE_TAG.add(SkillTag.counter);
     }
-    
     private String type;
     private String ownerType;
     private Pet self;
 
+    @Override
+    public int getPetLimit() {
+        // NO PETS OF PETS ARGH
+        return 0;
+    }
+
+    private static final List<Trait> INSPIRABLE_TRAITS = Arrays.asList(
+                    Trait.analFanatic,
+                    Trait.analTraining1,
+                    Trait.analTraining2,
+                    Trait.analTraining3,
+                    Trait.anatomyknowledge,
+                    Trait.asshandler,
+                    Trait.assmaster,
+                    Trait.autonomousAss,
+                    Trait.autonomousPussy,
+                    Trait.carnalvirtuoso,
+                    Trait.defthands,
+                    Trait.desensitized,
+                    Trait.desensitized2,
+                    Trait.dexterous,
+                    Trait.dominatrix,
+                    Trait.energydrain,
+                    Trait.experienced,
+                    Trait.experttongue,
+                    Trait.fakeout,
+                    Trait.freeSpirit,
+                    Trait.graceful,
+                    Trait.hawkeye,
+                    Trait.holecontrol,
+                    Trait.insertion,
+                    Trait.limbTraining1,
+                    Trait.limbTraining2,
+                    Trait.limbTraining3,
+                    Trait.mojoMaster,
+                    Trait.naturalTop,
+                    Trait.nimbletoes,
+                    Trait.obsequiousAppeal,
+                    Trait.oiledass,
+                    Trait.polecontrol,
+                    Trait.powerfulhips,
+                    Trait.pussyhandler,
+                    Trait.responsive,
+                    Trait.romantic,
+                    Trait.RawSexuality,
+                    Trait.sadist,
+                    Trait.silvertongue,
+                    Trait.sexualmomentum,
+                    Trait.shameless,
+                    Trait.sexTraining1,
+                    Trait.sexTraining2,
+                    Trait.sexTraining3,
+                    Trait.soulsucker,
+                    Trait.spiral,
+                    Trait.submissive,
+                    Trait.sweetlips,
+                    Trait.SexualGroove,
+                    Trait.temptingtits,
+                    Trait.ticklemonster,
+                    Trait.toymaster,
+                    Trait.tongueTraining1,
+                    Trait.tongueTraining2,
+                    Trait.tongueTraining3,
+                    Trait.tight);
     public PetCharacter(Pet self, String name, String type, Growth growth, int level) {
         super(name, 1);
         this.ownerType = self.owner().getType();
@@ -46,6 +111,13 @@ public class PetCharacter extends Character {
             getGrowth().levelUp(this);
         }
         distributePoints(Arrays.asList());
+        if (self.owner().has(Trait.inspirational)) {
+            for (Trait t : INSPIRABLE_TRAITS) {
+                if (self.owner().has(t) && !has(t)) {
+                    add(t);
+                }
+            }
+        }
         this.getSkills().clear();
         this.mojo.setMax(100);
         this.mojo.empty();
@@ -100,14 +172,16 @@ public class PetCharacter extends Character {
 
     public void act(Combat c, Character target) {
         List<Skill> allowedEnemySkills = new ArrayList<>(getSkills()
-                        .stream().filter(skill -> Skill.skillIsUsable(c, skill, target) && !Collections.disjoint(skill.getTags(), PET_UNUSABLE_TAG))
+                        .stream().filter(skill -> Skill.skillIsUsable(c, skill, target) && !Collections.disjoint(skill.getTags(c), PET_UNUSABLE_TAG))
                         .collect(Collectors.toList()));
         Skill.filterAllowedSkills(c, allowedEnemySkills, this, target);        
 
+        List<Skill> possibleMasterSkills = new ArrayList<>(getSkills());
+        possibleMasterSkills.addAll(Combat.WORSHIP_SKILLS);
         List<Skill> allowedMasterSkills = new ArrayList<>(getSkills()
                         .stream().filter(skill -> Skill.skillIsUsable(c, skill, getSelf().owner)
-                                        && skill.getTags().contains(SkillTag.helping)
-                                        && !Collections.disjoint(skill.getTags(), PET_UNUSABLE_TAG))
+                                        && (skill.getTags(c).contains(SkillTag.helping) || (getSelf().owner.has(Trait.showmanship) && skill.getTags(c).contains(SkillTag.worship)))
+                                        && !Collections.disjoint(skill.getTags(c), PET_UNUSABLE_TAG))
                         .collect(Collectors.toList()));
         Skill.filterAllowedSkills(c, allowedMasterSkills, this, getSelf().owner);
         WeightedSkill bestEnemySkill = Decider.prioritizePet(this, target, allowedEnemySkills, c);

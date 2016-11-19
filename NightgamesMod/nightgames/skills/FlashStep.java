@@ -39,7 +39,7 @@ public class FlashStep extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         writeOutput(c, Result.normal, target);
-        c.setStance(new Behind(getSelf(), target));
+        c.setStance(new Behind(getSelf(), target), getSelf(), true);
         getSelf().weaken(c, 10);
 
         return true;

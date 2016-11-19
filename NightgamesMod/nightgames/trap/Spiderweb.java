@@ -86,7 +86,7 @@ public class Spiderweb implements Trap {
                             + "now and fondles your balls. When you cum, you shoot your load onto her face and chest. You hang in the rope web, literally and figuratively drained. "
                             + attacker.name() + " " + "gratiously unties you and helps you down.");
         }
-        if (victim.getOutfit().getBottomOfSlot(ClothingSlot.bottom).getLayer() == 0) {
+        if (victim.getOutfit().getBottomOfSlot(ClothingSlot.bottom) != null) {
             attacker.gain(victim.getTrophy());
         }
         victim.nudify();

@@ -20,7 +20,7 @@ import nightgames.start.NpcConfiguration;
 public class Angel extends BasePersonality {
     private static final long serialVersionUID = -8169646189131720872L;
     private static final String ANGEL_SEX_FOCUS = "AngelSexFocus";
-    private static final String ANGEL_TEMPT_FOCUS = "AngelTemptFocus";
+    private static final String ANGEL_NYMPHOMANIA_FOCUS = "AngelNymphomaniaFocus";
     private static final String ANGEL_WORSHIP_FOCUS = "AngelWorshipFocus";
     private static final String ANGEL_FOLLOWERS_FOCUS = "AngelFollowersFocus";
     public Angel() {
@@ -70,7 +70,7 @@ public class Angel extends BasePersonality {
 
         // lots of stuff still TODO
         character.addCombatScene(new CombatScene((c, self, other) -> {
-            return self.getLevel() >= 10 && !Global.checkFlag(ANGEL_SEX_FOCUS) && !Global.checkFlag(ANGEL_TEMPT_FOCUS);
+            return self.getLevel() >= 10 && !Global.checkFlag(ANGEL_SEX_FOCUS) && !Global.checkFlag(ANGEL_NYMPHOMANIA_FOCUS);
         }, (c, self, player) -> "Before leaving, " + character.getName() + " turns and asks you \"Hey " + player.getName() + ", what turns you on more? Just for the sakes of... science let's say.\"",
                 Arrays.asList(
                         new CombatSceneChoice("Stare at her breasts", (c, self, other) -> {
@@ -87,19 +87,20 @@ public class Angel extends BasePersonality {
                             c.write("Cassie watches you carefully and catches your gaze sliding towards her succulent pink lips. "
                                             + "\"Oooooh, do you like how my mouth feels? I'm flattered! Maybe you like kissing? Or... perhaps something a bit more exciting?\"<br/>"
                                             + "She giggles a bit when your flush reveals your dirty thoughts. \"It's okay " + other.getName() + ", I enjoy it too. Maybe I'll even try a bit harder with it!\"");
-                            Global.flag(ANGEL_TEMPT_FOCUS);
-                            character.getGrowth().addTrait(12, Trait.holecontrol);
-                            character.getGrowth().addTrait(20, Trait.zealinspiring);
-                            character.getGrowth().addTrait(25, Trait.powerfulhips);
-                            character.getGrowth().addTrait(39, Trait.insertion);
-                            character.getGrowth().addTrait(54, Trait.autonomousPussy);
+                            Global.flag(ANGEL_NYMPHOMANIA_FOCUS);
+                            character.mod(Attribute.Nymphomania, 1);
+                            character.getGrowth().addTrait(12, Trait.lastStand);
+                            character.getGrowth().addTrait(20, Trait.nymphomania);
+                            character.getGrowth().addTrait(25, Trait.RawSexuality);
+                            character.getGrowth().addTrait(39, Trait.erophage);
+                            character.getGrowth().addTrait(54, Trait.sexualDynamo);
                             return true;
                         })
                     )
                 ));
         character.addCombatScene(new CombatScene((c, self, other) -> {
             return self.getLevel() >= 20 && !Global.checkFlag(ANGEL_FOLLOWERS_FOCUS) && !Global.checkFlag(ANGEL_WORSHIP_FOCUS)
-                            && (Global.checkFlag(ANGEL_SEX_FOCUS) || Global.checkFlag(ANGEL_TEMPT_FOCUS));
+                            && (Global.checkFlag(ANGEL_SEX_FOCUS) || Global.checkFlag(ANGEL_NYMPHOMANIA_FOCUS));
         }, (c, self, player) -> "After you two recover from your afterglow, Cassie turns towards you. \"You know, we've been competing in the games for a while now. I can't believe how much I've changed! "
                         + "When we just started, I've only gone all the way with a boy once. I barely knew what to do even! Now though...\" Cassie gigles and starts tickling your spent "
                         + "cock with an conjured arcane feather. \"Hey " + player.getName()+", what do you think? are you disappointed I turned out this way?\"",
@@ -112,14 +113,14 @@ public class Angel extends BasePersonality {
                                             + "\"Thank you " +Global.getPlayer().getName() + ", you've really help me make up my mind. But the next time we fight, I definitely wont lose!\"");
                             Global.flag(ANGEL_FOLLOWERS_FOCUS);
                             character.getGrowth().addTrait(21, Trait.apostles);
+                            character.getGrowth().addTrait(30, Trait.leadership);
                             if (Global.checkFlag(ANGEL_SEX_FOCUS)) {
-                                character.getGrowth().addTrait(28, Trait.augmentedPheromones);
-                            } else if (Global.checkFlag(ANGEL_TEMPT_FOCUS)) {
-                                character.getGrowth().addTrait(28, Trait.sweetlips);
+                                character.getGrowth().addTrait(42, Trait.inspirational);
+                            } else if (Global.checkFlag(ANGEL_NYMPHOMANIA_FOCUS)) {
+                                character.getGrowth().addTrait(42, Trait.showmanship);
                             }
-                            character.getGrowth().addTrait(32, Trait.tactician);
-                            character.getGrowth().addTrait(43, Trait.leadership);
-                            character.getGrowth().addTrait(47, Trait.devoteeFervor);
+                            character.getGrowth().addTrait(45, Trait.tactician);
+                            character.getGrowth().addTrait(48, Trait.devoteeFervor);
                             character.getGrowth().addTrait(60, Trait.congregation);
                             return true;
                         }),
@@ -131,13 +132,13 @@ public class Angel extends BasePersonality {
                                                             + "Does it excite you when you are under my control, doing my bidding? I think I can work with that...\"");
                             Global.flag(ANGEL_WORSHIP_FOCUS);
                             character.getGrowth().addTrait(21, Trait.objectOfWorship);
-                            character.getGrowth().addTrait(28, Trait.magicEyeArousal);
-                            character.getGrowth().addTrait(32, Trait.sacrosanct);
-                            character.getGrowth().addTrait(43, Trait.achilles);
+                            character.getGrowth().addTrait(30, Trait.magicEyeArousal);
+                            character.getGrowth().addTrait(42, Trait.sacrosanct);
+                            character.getGrowth().addTrait(45, Trait.genuflection);
                             if (Global.checkFlag(ANGEL_SEX_FOCUS)) {
-                                character.getGrowth().addTrait(47, Trait.piety);
-                            } else if (Global.checkFlag(ANGEL_TEMPT_FOCUS)) {
-                                character.getGrowth().addTrait(47, Trait.mandateOfHeaven);
+                                character.getGrowth().addTrait(48, Trait.piety);
+                            } else if (Global.checkFlag(ANGEL_NYMPHOMANIA_FOCUS)) {
+                                character.getGrowth().addTrait(48, Trait.mandateOfHeaven);
                             }
                             character.getGrowth().addTrait(60, Trait.revered);
                             return true;
@@ -153,11 +154,11 @@ public class Angel extends BasePersonality {
         character.getGrowth().addTrait(18, Trait.experienced);
         character.getGrowth().addTrait(20, Trait.skeptical);
         // 21 - second choice 1
-        character.getGrowth().addTrait(24, Trait.sexTraining2);
+        character.getGrowth().addTrait(24, Trait.tongueTraining1);
         // 27 - first choice 2
         // 30 - second choice 2
-        character.getGrowth().addTrait(33, Trait.RawSexuality);
-        character.getGrowth().addTrait(36, Trait.sexTraining3);
+        character.getGrowth().addTrait(33, Trait.sexTraining2);
+        character.getGrowth().addTrait(36, Trait.tongueTraining2);
         // 39 - first choice 3
         // 42 - second choice 3
         // 45 - second choice 4
@@ -166,12 +167,10 @@ public class Angel extends BasePersonality {
         // 54 - first choice 4
         character.getGrowth().addTrait(57, Trait.desensitized2);
         // 60 - second choice 6
-        // character.getGrowth().addTrait(39, Trait.tight);
-        // character.getGrowth().addTrait(48, Trait.magicEyeArousal);
-        // character.getGrowth().addTrait(51, Trait.sexTraining3);
         preferredAttributes
                         .add(c -> c.get(Attribute.Divinity) < 50 ? Optional.of(Attribute.Divinity) : Optional.empty());
         preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
+        preferredAttributes.add(c -> (c.has(Trait.nymphomania) && c.get(Attribute.Nymphomania) < (c.getLevel() - 10) / 2) ? Optional.of(Attribute.Nymphomania) : Optional.empty());
     }
 
     @Override
@@ -372,7 +371,7 @@ public class Angel extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c) {
+    public String describe(Combat c, Character self) {
         if (character.has(Trait.demigoddess)) {
             return "Angel's transformation seems to have taken inspiration from her own name. She has large angelic wings behind her, which combined with her long blonde hair and perfect unblemished "
                             + "skin gives her a positively divine appearance. Her appearance should be emanating holy purity, but instead her eyes and expression seem lewder than ever. "
@@ -487,7 +486,7 @@ public class Angel extends BasePersonality {
     }
 
     @Override
-    public String startBattle(Character other) {
+    public String startBattle(Character self, Character other) {
         return Global.format("{self:SUBJECT} licks {self:possessive} lips and stalks {other:name-do} like a predator.", character, other);
     }
 
@@ -539,7 +538,7 @@ public class Angel extends BasePersonality {
     }
 
     @Override
-    public String makeOrgasmLiner(Combat c) {
+    public String makeOrgasmLiner(Combat c, Character target) {
         return "Angel stares you in the eye as your consciousness returns from the precipice <i>\"Once isn't enough. I need more. You can do that for me, right?\"</i>";
     }
 }

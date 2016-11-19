@@ -17,7 +17,6 @@ public class FootWorship extends Skill {
         super("Foot Worship", self);
         addTag(SkillTag.pleasure);
         addTag(SkillTag.worship);
-        addTag(SkillTag.suicidal);
         addTag(SkillTag.pleasureSelf);
         addTag(SkillTag.usesMouth);
         addTag(SkillTag.pleasure);
@@ -26,7 +25,7 @@ public class FootWorship extends Skill {
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
         Optional<BodyFetish> fetish = getSelf().body.getFetish("feet");
-        return fetish.isPresent() && fetish.get().magnitude >= .5;
+        return user.isPetOf(target) || (fetish.isPresent() && fetish.get().magnitude >= .5);
     }
 
     @Override
@@ -65,7 +64,7 @@ public class FootWorship extends Skill {
             target.buildMojo(c, n);
         }
         if (c.getStance().en == Stance.neutral) {
-            c.setStance(new Kneeling(target, getSelf()));
+            c.setStance(new Kneeling(target, getSelf()), getSelf(), true);
         }
         c.getCombatantData(getSelf()).toggleFlagOn("footworshipped", true);
         return result != Result.miss;

@@ -167,7 +167,7 @@ public abstract class Position implements Cloneable {
         return null;
     }
 
-    public Position reverse(Combat c) {
+    public Position reverse(Combat c, boolean writeMessage) {
         Position newStance;
         try {
             newStance = clone();
@@ -274,6 +274,10 @@ public abstract class Position implements Cloneable {
 
     public boolean havingSex(Combat c) {
         return penetratedBy(c, domSexCharacter(c), bottom) || penetratedBy(c, bottom, domSexCharacter(c));
+    }
+
+    public boolean havingSex(Combat c, Character self) {
+        return penetratedBy(c, domSexCharacter(c), self) || penetratedBy(c, self, domSexCharacter(c));
     }
 
     public boolean penetratedBy(Combat c, Character inserted, Character inserter) {

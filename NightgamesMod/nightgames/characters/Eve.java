@@ -249,7 +249,7 @@ public class Eve extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c) {
+    public String describe(Combat c, Character self) {
         return "If there's one word to describe Eve's appearance, it would have to be 'wild'. Her face is quite pretty, though her eyes are an unnerving silver color. "
                         + "She has bright purple hair gathered in a messy ponytail, a variety of tattoos decorating her extremely shapely body, and of couse it's "
                         + "impossible to miss the larger than average cock and balls hanging between between her legs.";
@@ -375,7 +375,7 @@ public class Eve extends BasePersonality {
     }
 
     @Override
-    public String startBattle(Character other) {
+    public String startBattle(Character self, Character other) {
         return Global.format("{self:SUBJECT} gives {other:name-do} a dominant grin and cracks {self:possessive} knuckles. <i>\"Come on {self:name}, let's play.\"</i>", character, other);
     }
 
@@ -417,7 +417,7 @@ public class Eve extends BasePersonality {
     }
 
     @Override
-    public String makeOrgasmLiner(Combat c) {
+    public String makeOrgasmLiner(Combat c, Character target) {
         if (c.getStance().anallyPenetrated(c, c.getOpponent(character))) {
             return "Eve laughs maniacally as you cum. <i>\"I knew you'd like it"
                             + ", you little ass slut! But you're not done yet!\"</i>";

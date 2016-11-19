@@ -392,7 +392,7 @@ public class Jewel extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c) {
+    public String describe(Combat c, Character self) {
         if (character.has(Trait.fighter)) {
             return "Something has changed about Jewel's demeanor, though it's hard to put your finger on it. Her body has always been toned, but now she seems like a weapon "
                             + "in human shape. She carries a calm composure subtly different from her normal arrogance. Her movements are deliberate and fluid, like you imagine a "
@@ -503,7 +503,7 @@ public class Jewel extends BasePersonality {
     }
 
     @Override
-    public String startBattle(Character other) {
+    public String startBattle(Character self, Character other) {
         return "Jewel approaches, looking confident and ready to fight.";
     }
 
@@ -553,7 +553,7 @@ public class Jewel extends BasePersonality {
     }
 
     @Override
-    public String makeOrgasmLiner(Combat c) {
+    public String makeOrgasmLiner(Combat c, Character target) {
         return "<i>\"Heh, no matter what, you're just a horny " + c.getOpponent(character).boyOrGirl()
                         + " aren'tcha? Come on, no time for rest, let's see how many times in a row you can cum\"</i>";
     }

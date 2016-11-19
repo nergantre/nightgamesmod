@@ -36,11 +36,11 @@ public enum Attribute {
         return skillTag;
     }
 
-    public static boolean isBasic(Attribute a) {
-        return a == Power || a == Seduction || a == Perception;
+    public static boolean isBasic(Character self, Attribute a) {
+        return a == Power || a == Seduction || a == Perception || (self.has(Trait.nymphomania) && a == Attribute.Nymphomania);
     }
 
-    public static boolean isTrainable(Attribute a, Character self) {
+    public static boolean isTrainable(Character self, Attribute a) {
         if (a == Willpower) {
             return self.getWillpower().max() + 2 <= self.getMaxWillpowerPossible();
         }

@@ -76,7 +76,7 @@ public class Escape extends Skill {
                                 target.pronoun(), target.action("move"), getSelf().pronoun(),
                                 target.possessivePronoun()));
             }
-            c.setStance(new Neutral(getSelf(), target));
+            c.setStance(new Neutral(getSelf(), target), getSelf(), true);
         } else {
             if (getSelf().human()) {
                 if (getSelf().hasStatus(Stsflag.cockbound)) {

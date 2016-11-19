@@ -32,9 +32,11 @@ import nightgames.pet.PetCharacter;
 import nightgames.skills.Anilingus;
 import nightgames.skills.BreastWorship;
 import nightgames.skills.CockWorship;
+import nightgames.skills.ConcedePosition;
 import nightgames.skills.FootWorship;
 import nightgames.skills.PussyWorship;
 import nightgames.skills.Skill;
+import nightgames.stance.Kneeling;
 import nightgames.stance.Neutral;
 import nightgames.stance.Position;
 import nightgames.stance.Stance;
@@ -481,13 +483,16 @@ public class Combat extends Observable implements Cloneable {
         }
     }
 
-    Skill worshipSkills[] = {new BreastWorship(null), new CockWorship(null), new FootWorship(null),
-                    new PussyWorship(null), new Anilingus(null),};
-
+    public static List<Skill> WORSHIP_SKILLS = Arrays.asList(new BreastWorship(null), new CockWorship(null), new FootWorship(null),
+                    new PussyWorship(null), new Anilingus(null));
+    public static final String TEMPT_WORSHIP_BONUS = "TEMPT_WORSHIP_BONUS";
     public boolean combatMessageChanged;
 
     public Optional<Skill> getRandomWorshipSkill(Character self, Character other) {
-        List<Skill> avail = new ArrayList<Skill>(Arrays.asList(worshipSkills));
+        List<Skill> avail = new ArrayList<Skill>(WORSHIP_SKILLS);
+        if (other.has(Trait.piety)) {
+            avail.add(new ConcedePosition(self));
+        }
         Collections.shuffle(avail);
         while (!avail.isEmpty()) {
             Skill skill = avail.remove(avail.size() - 1)
@@ -502,15 +507,24 @@ public class Combat extends Observable implements Cloneable {
         return Optional.ofNullable(null);
     }
 
-    private Skill checkWorship(Character self, Character other, Skill def) {
+    private boolean rollWorship(Character self, Character other) {
         if (other.has(Trait.objectOfWorship) && (other.breastsAvailable() || other.crotchAvailable())) {
-            int chance = Math.min(20, Math.max(5, other.get(Attribute.Divinity) + 10 - self.getLevel()));
+            double chance = Math.min(20, Math.max(5, other.get(Attribute.Divinity) + 10 - self.getLevel()));
             if (other.has(Trait.revered)) {
                 chance += 10;
             }
+            chance += getCombatantData(self).getDoubleFlag(TEMPT_WORSHIP_BONUS);
             if (Global.random(100) < chance) {
-                return getRandomWorshipSkill(self, other).orElse(def);
-            }
+                getCombatantData(self).setDoubleFlag(TEMPT_WORSHIP_BONUS, 0);
+                return true;
+            }            
+        }
+        return false;
+    }
+
+    private Skill checkWorship(Character self, Character other, Skill def) {
+        if (rollWorship(self, other)) {
+            return getRandomWorshipSkill(self, other).orElse(def);
         }
         return def;
     }
@@ -768,7 +782,7 @@ public class Combat extends Observable implements Cloneable {
                                         p.directObject()));
                     }
                 } else {
-                    setStance(new StandingOver(other, p));
+                    setStance(new StandingOver(other, p), null, false);
                     if (p.human()) {
                         write("You don't have the strength to stay on your feet. You slump to the floor.");
                     } else {
@@ -1001,6 +1015,14 @@ public class Combat extends Observable implements Cloneable {
                                                                  .getName(),
                             newStance.getClass()
                                      .getName());
+        }
+        if (initiator != null) {
+            Character otherCharacter = getOpponent(initiator);
+            if (voluntary && newStance.en == Stance.neutral && getStance().en != Stance.kneeling && otherCharacter.has(Trait.genuflection) && rollWorship(initiator, otherCharacter)) {
+                write(initiator, Global.format("While trying to get back up, {self:name-possessive} eyes accidentally met {other:name-possessive} gaze. "
+                                + "Like a deer in headlights, {self:possessive} body involuntarily stops moving and kneels down before {other:direct-object}.", initiator, otherCharacter));
+                newStance = new Kneeling(otherCharacter, initiator);
+            }
         }
         checkStanceStatus(p1, stance, newStance);
         checkStanceStatus(p2, stance, newStance);

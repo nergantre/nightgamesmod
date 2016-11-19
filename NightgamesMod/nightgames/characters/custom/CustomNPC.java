@@ -119,7 +119,7 @@ public class CustomNPC extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c) {
+    public String describe(Combat c, Character self) {
         return data.getLine("describe", c, character, c.getOpponent(character));
     }
 
@@ -157,7 +157,7 @@ public class CustomNPC extends BasePersonality {
     }
 
     @Override
-    public String startBattle(Character other) {
+    public String startBattle(Character self, Character other) {
         return data.getLine("startBattle", null, character, other);
     }
 
@@ -182,7 +182,7 @@ public class CustomNPC extends BasePersonality {
     }
 
     @Override
-    public String makeOrgasmLiner(Combat c) {
+    public String makeOrgasmLiner(Combat c, Character target) {
         return data.getLine("makeOrgasm", c, character, c.getOpponent(character));
     }
 

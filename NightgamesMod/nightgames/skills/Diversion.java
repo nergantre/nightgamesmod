@@ -49,7 +49,7 @@ public class Diversion extends Skill {
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             }
         }
-        c.setStance(new Behind(getSelf(), target));
+        c.setStance(new Behind(getSelf(), target), getSelf(), true);
         target.add(c, new Flatfooted(target, 1));
         return true;
     }

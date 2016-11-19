@@ -35,7 +35,7 @@ public class Turnover extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         writeOutput(c, Result.normal, target);
-        c.setStance(new Behind(getSelf(), target));
+        c.setStance(new Behind(getSelf(), target), getSelf(), true);
         target.emote(Emotion.dominant, 20);
         return true;
     }

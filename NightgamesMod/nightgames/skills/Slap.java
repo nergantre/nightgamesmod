@@ -39,7 +39,7 @@ public class Slap extends Skill {
                 writeOutput(c, Result.critical, target);
                 target.pain(c, getSelf(), Global.random(10) + getSelf().get(Attribute.Slime) + getSelf().get(Attribute.Power) / 2);
                 if (c.getStance().en == Stance.neutral && Global.random(5) == 0) {
-                    c.setStance(new StandingOver(getSelf(), target));
+                    c.setStance(new StandingOver(getSelf(), target), getSelf(), true);
                     c.write(getSelf(),
                                     Global.format("{self:SUBJECT-ACTION:slap|slaps} {other:direct-object} hard"
                                                     + " enough to throw {other:pronoun} to the ground.", getSelf(),

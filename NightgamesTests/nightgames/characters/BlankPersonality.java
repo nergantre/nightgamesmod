@@ -47,7 +47,7 @@ public class BlankPersonality extends BasePersonality {
         return null;
     }
 
-    @Override public String describe(Combat c) {
+    @Override public String describe(Combat c, Character self) {
         return "test 2 3";
     }
 
@@ -63,7 +63,7 @@ public class BlankPersonality extends BasePersonality {
         return false;
     }
 
-    @Override public String startBattle(Character other) {
+    @Override public String startBattle(Character self, Character other) {
         return null;
     }
 
@@ -87,7 +87,7 @@ public class BlankPersonality extends BasePersonality {
         return null;
     }
 
-    @Override public String makeOrgasmLiner(Combat c) {
+    @Override public String makeOrgasmLiner(Combat c, Character target) {
         return null;
     }
 

@@ -25,7 +25,7 @@ public class ForeplayStrategy extends KnockdownThenActionStrategy {
             // terminate this strategy if already fucking
             return Optional.of(Collections.emptySet());
         }
-        return emptyIfSetEmpty(allowedSkills.stream().filter(skill -> Tactics.pleasure.equals(skill.type(c)) || skill.getTags().contains(SkillTag.stripping)).collect(Collectors.toSet()));
+        return emptyIfSetEmpty(allowedSkills.stream().filter(skill -> Tactics.pleasure.equals(skill.type(c)) || skill.getTags(c).contains(SkillTag.stripping)).collect(Collectors.toSet()));
     }
 
     @Override

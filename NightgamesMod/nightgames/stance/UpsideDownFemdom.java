@@ -82,17 +82,19 @@ public class UpsideDownFemdom extends FemdomSexStance {
     }
 
     @Override
-    public Position reverse(Combat c) {
-        if (bottom.human()) {
-            c.write(bottom, Global.format(
-                            "Summoning your remaining strength, you hold your arms up against the floor and use your hips to tip {other:name-do} off-balance with self dick still held inside of {other:possessive}. "
-                                            + "{other:SUBJECT} lands on the floor with you on top of {other:direct-object} in a missionary position.",
-                            bottom, top));
-        } else {
-            c.write(bottom, Global.format(
-                            "{self:SUBJECT} suddenly pushes against the floor and knocks you to the ground with {self:possessive} hips. "
-                                            + "You land on the floor with {self:direct-object} on top of you, fucking you in a missionary position.",
-                            bottom, top));
+    public Position reverse(Combat c, boolean writeMessage) {
+        if (writeMessage) {
+            if (bottom.human()) {
+                c.write(bottom, Global.format(
+                                "Summoning your remaining strength, you hold your arms up against the floor and use your hips to tip {other:name-do} off-balance with self dick still held inside of {other:possessive}. "
+                                                + "{other:SUBJECT} lands on the floor with you on top of {other:direct-object} in a missionary position.",
+                                bottom, top));
+            } else {
+                c.write(bottom, Global.format(
+                                "{self:SUBJECT} suddenly pushes against the floor and knocks you to the ground with {self:possessive} hips. "
+                                                + "You land on the floor with {self:direct-object} on top of you, fucking you in a missionary position.",
+                                bottom, top));
+            }
         }
         return new UpsideDownMaledom(bottom, top);
     }

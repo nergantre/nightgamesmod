@@ -38,7 +38,7 @@ public class Tackle extends Skill {
                 writeOutput(c, Result.normal, target);
                 target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(10, 25)));
             }
-            c.setStance(new Mount(getSelf(), target));
+            c.setStance(new Mount(getSelf(), target), getSelf(), true);
         } else {
             writeOutput(c, Result.miss, target);
             return false;
