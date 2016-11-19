@@ -2,10 +2,12 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
 
@@ -13,6 +15,7 @@ public class AssJob extends Skill {
 
     public AssJob(Character self) {
         super("Assjob", self);
+        addTag(SkillTag.anal);
     }
 
     @Override
@@ -48,6 +51,9 @@ public class AssJob extends Skill {
                     m += 3;
                     fetishChance += 15;
                 }
+                if (getSelf().has(Trait.bewitchingbottom)) {
+                    fetishChance *= 2;
+                }
             }
             target.body.pleasure(getSelf(), getSelf().body.getRandomAss(), target.body.getRandomCock(), m, c, this);
 
@@ -66,6 +72,9 @@ public class AssJob extends Skill {
                     } else {
                         m += 3;
                         fetishChance += 15;
+                    }
+                    if (getSelf().has(Trait.bewitchingbottom)) {
+                        fetishChance *= 2;
                     }
                 }
                 if (target.body.getRandomCock().isReady(target)) {

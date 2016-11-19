@@ -341,6 +341,22 @@ public enum Trait {
     cautious("Cautious", "Better chance of avoiding traps"),
     responsive("Responsive", "Return more pleasure when being fucked"),
     assmaster("Ass Master", "Who needs lube? Also boosts pleasure to both parties when assfucking"),
+    
+    // Jewel's unique traits
+    powerfulcheeks("Powerful Cheeks", "As in asscheeks. Makes pulling out more difficult."),
+    temptingass("Tempting Ass", "Opponent's can't help butt fuck it"), // ... sorry
+    disablingblows("Disabling Blows", "Painful attacks may reduce Power"),
+    takedown("Takedown", "Expert at tackling weary opponents"),
+    indomitable("Indomitable", "Plainly refuses to be dominated"),
+    confidentdom("Confident Dom", "Attributes rise while dominant"),
+    drainingass("Draining Ass", "Taking it in the ass drains stamina an possibly Power"),
+    edger("Edger", "Can keep oppoenents right at the edge"),
+    commandingvoice("Commanding Voice", "Does not take 'no' for an answer"),
+    mentalfortress("Mental Fortress", "Confident enough to have a chance to resist mind control"),
+    bewitchingbottom("Bewitching Bottom", "Makes opponents go wild for ass"),
+    unquestionable("Unquestionable", "Does not tolerate resistance when on top"),
+    grappler("Grapller", "Bonus to hold strength"),
+    
     // Item
     strapped("Strapped", "Penis envy", (b, c, t) -> {
         if (c.human()) {
@@ -476,6 +492,12 @@ public enum Trait {
                if (Global.random(100) < threshold) {
                    return "Mara's Control";
                }
+           }
+           return "";
+        });
+        resistances.put(Trait.mentalfortress, (c, s) -> {
+           if (s.mindgames() && (c.getStamina().percent()*3 / 4) > Global.random(100)) {
+               return "Mental Fortress";
            }
            return "";
         });

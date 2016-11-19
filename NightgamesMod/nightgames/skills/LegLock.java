@@ -14,7 +14,7 @@ public class LegLock extends Skill {
 
     public LegLock(Character self) {
         super("Leg Lock", self);
-        addTag(SkillTag.positioning);
+        // addTag(SkillTag.positioning); it's not, right?
         addTag(SkillTag.hurt);
         addTag(SkillTag.staminaDamage);
     }

@@ -57,7 +57,7 @@ public class Tear extends Skill {
                                                     getSelf(), target));
                 } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(),
-                                    Global.format("{self:SUBJECT} leaps forward. {self:POSSESSIVE} hand is a blur but {other:subject-action:spot|spots} the glint of steel in them. Reflexively, {other:pronoun-action:cover|covers} {other:reflective} with {other:possessive} arms to prevent as much damage as possible. When nothing happens {other:subject-action:open|opens} {other:possessive} eyes to see {self:subject} grinning at {other:direct-object}, a scalpel still in {self:POSSESSIVE} hands. Looking down {other:pronoun-action:see|sees} that some of {ohter:possessive} clothes have been cut to ribbons!",
+                                    Global.format("{self:SUBJECT} leaps forward. {self:POSSESSIVE} hand is a blur but {other:subject-action:spot|spots} the glint of steel in them. Reflexively, {other:pronoun-action:cover|covers} {other:reflective} with {other:possessive} arms to prevent as much damage as possible. When nothing happens {other:subject-action:open|opens} {other:possessive} eyes to see {self:subject} grinning at {other:direct-object}, a scalpel still in {self:POSSESSIVE} hands. Looking down {other:pronoun-action:see|sees} that some of {other:possessive} clothes have been cut to ribbons!",
                                                     getSelf(), target));
                 }
                 target.shred(ClothingSlot.top);
