@@ -129,6 +129,19 @@ public class Fuck extends Skill {
         BodyPart selfO = getSelfOrgan();
         BodyPart targetO = getTargetOrgan(target);
         if (selfO.isReady(getSelf()) && targetO.isReady(target)) {
+            if (targetO.isType("pussy") && target.has(Trait.temptingass) && new AssFuck(getSelf()).usable(c, target)
+                && Global.random(3) == 1) {
+                
+                c.write(getSelf(), Global.format("%s{self:subject-action:line|lines}"
+                                + " {self:possessive} {self:body-part:cock} up with {other:name-possessive}"
+                                + " {other:body-part:pussy}. At the last moment before thrusting in, however,"
+                                + " {self:pronoun-action:shift|shifts} to the tantalizing hole next door,"
+                                + " and {self:action:sink|sinks} the hard rod into {other:name-possessive}"
+                                + " hot ass instead.<br>", getSelf(), target, premessage));
+                new AssFuck(getSelf()).resolve(c, target);
+                
+                return true;
+            }
             if (getSelf().human()) {
                 c.write(getSelf(), premessage + deal(c, premessage.length(), Result.normal, target));
             } else if (c.shouldPrintReceive(target, c)) {

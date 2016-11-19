@@ -9,6 +9,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.AnalCowgirl;
 import nightgames.status.BodyFetish;
 import nightgames.status.Oiled;
@@ -17,12 +18,17 @@ import nightgames.status.Stsflag;
 public class ReverseAssFuck extends Fuck {
     public ReverseAssFuck(Character self) {
         super("Anal Ride", self, 0);
+        addTag(SkillTag.anal);
     }
 
     @Override
     public float priorityMod(Combat c) {
-        return 0.0f + (getSelf().getMood() == Emotion.dominant ? 1.0f : 0)
-                        + (getSelf().has(Trait.autonomousAss) ? 4.0f : 0) + (getSelf().has(Trait.oiledass) ? 2.0f : 0);
+        return ((getSelf().getMood() == Emotion.dominant ? 1.0f : 0)
+                        + (getSelf().has(Trait.autonomousAss) ? 4.0f : 0) 
+                        + (getSelf().has(Trait.oiledass) ? 2.0f : 0)
+                        + (getSelf().has(Trait.drainingass) ? 3.f : 0)
+                        + (getSelf().has(Trait.bewitchingbottom) ? 3.f : 0))
+                        * (getSelf().has(Trait.powerfulcheeks) ? 2.f : 1.f);
     }
 
     @Override
@@ -79,7 +85,7 @@ public class ReverseAssFuck extends Fuck {
         getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c, this);
         c.setStance(new AnalCowgirl(getSelf(), target), getSelf(), getSelf().canMakeOwnDecision());
         getSelf().emote(Emotion.dominant, 30);
-        if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
+        if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish) || getSelf().has(Trait.bewitchingbottom)) {
             target.add(c, new BodyFetish(target, getSelf(), "ass", .25));
         }
         return true;

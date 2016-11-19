@@ -498,6 +498,7 @@ public class Global {
         getSkillPool().add(new Unstrip(ch));
         getSkillPool().add(new WindUp(ch));
         getSkillPool().add(new ThrowSlime(ch));
+        getSkillPool().add(new Edge(ch));
         getSkillPool().add(new SummonYui(ch));
         getSkillPool().add(new Simulacrum(ch));
         getSkillPool().add(new PetThreesome(ch));
@@ -1126,6 +1127,7 @@ public class Global {
         characterPool.put(maya.getCharacter().getType(), maya.getCharacter());
         characterPool.put(yui.getCharacter().getType(), yui.getCharacter());
 
+        debugChars.add(jewel.getCharacter());
     }
     
     public static void loadWithDialog() {
