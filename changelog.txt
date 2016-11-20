@@ -1,4 +1,4 @@
-2.4.0
+2.4.0 rc1
 Balance changes:
 - Skills now will display how accurate they are when you hover over them
 - Footjob now is less accurate (90 -> 80% base), but does much more pleasure damage (12-20 base)
