@@ -34,9 +34,8 @@ public class Sarah extends BasePersonality {
     @Override
     public void applyBasicStats(Character self) {
         preferredCockMod = CockMod.error;
-        character.outfitPlan.add(Clothing.getByID("lacybra"));
-        character.outfitPlan.add(Clothing.getByID("lacepanties"));
-        character.outfitPlan.add(Clothing.getByID("stockings"));
+        character.outfitPlan.add(Clothing.getByID("frillybra"));
+        character.outfitPlan.add(Clothing.getByID("frillypanties"));
 
         character.change();
         character.modAttributeDontSaveData(Attribute.Power, 2);

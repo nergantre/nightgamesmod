@@ -68,22 +68,38 @@
       "exposure":0.8
    },
    {
-      "displayName":"lacy bra",
+      "displayName":"frilly bra",
       "buffs":[
       ],
       "price":900,
       "prefix":"a ",
       "attributes":[
-	      "skimpy"
       ],
       "layer":0,
 	  "slots" : ["top"],
 	  "shops" : ["Boutique"],
   	  "sex" : ["all"],
-	  "hotness":0.8,
-      "name":"lacybra",
-      "toughness":4,
-      "exposure":0.9
+	  "hotness":0.7,
+      "name":"frillybra",
+      "toughness":7,
+      "exposure":0.8
+   },
+   {
+      "displayName":"frilly panties",
+      "buffs":[
+      ],
+      "price":1500,
+      "prefix":"a pair of ",
+      "attributes":[
+      ],
+      "layer":0,
+	  "slots" : ["top"],
+	  "shops" : ["Boutique"],
+  	  "sex" : ["all"],
+	  "hotness":0.9,
+      "name":"frillypanties",
+      "toughness":9,
+      "exposure":0.8
    },
    {
 	  "displayName":"lace panties",
@@ -119,6 +135,24 @@
 	  "hotness":0.8,
       "name":"lacybra",
       "toughness":4,
+      "exposure":0.9
+   },
+   {
+      "displayName":"negligee",
+      "buffs":[
+      ],
+      "price":1800,
+      "prefix":"a ",
+      "attributes":[
+    	"skimpy"
+      ],
+      "layer":0,
+	  "slots" : ["top", "bottom"],
+	  "shops" : ["Boutique"],
+  	  "sex" : ["all"],
+	  "hotness":1.0,
+      "name":"negligee",
+      "toughness":14,
       "exposure":0.9
    },
    {

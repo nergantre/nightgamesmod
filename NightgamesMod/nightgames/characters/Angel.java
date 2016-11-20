@@ -60,7 +60,7 @@ public class Angel extends BasePersonality {
         npcSelf.plan = Plan.retreating;
         npcSelf.mood = Emotion.confident;
     }
-    
+
     @Override
     public void setGrowth() {
         character.getGrowth().stamina = 1;

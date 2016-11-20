@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
@@ -317,6 +318,11 @@ public class KatTime extends BaseNPCTime {
                                             + "limp into your arms, eyes closed. You hold her and gently stroke her head. You pet her for a little while before she opens her eyes with a sleepy smile. <i>\"You're still inside "
                                             + "me.... It's a nice feeling.\"</i> You lay her gently onto the bed and she hugs you tightly to make you aren't going anywhere. She quickly falls asleep, cuddling up against you. "
                                             + "You pull a blanket over your naked bodies and close your eyes. You were supposed to be training, but a quick nap suddenly seems very inviting.");
+            if (!player.has(Trait.affectionate)) {
+                Global.gui().message("<p><b>You've gotten so much better at slow sex and cuddling that you start to score extra affection with your partners.</b>");
+                player.add(Trait.affectionate);
+                npc.getGrowth().addTrait(0, Trait.affectionate);
+            }
             Global.gui().choose(this, "Leave");
             Daytime.train(player, npc, Attribute.Seduction);
             npc.gainAffection(player, 1);
@@ -375,6 +381,11 @@ public class KatTime extends BaseNPCTime {
                                             + "already mid-orgasm. A wave of pleasure washes over you as you shoot your load into her womb.<p>"
                                             + "As you recover from your orgasm, you notice that Kat is fast asleep, or possibly pretending to be asleep to avoid an embarrassing conversation. You're exhausted, but neither of "
                                             + "you are going to be comfortable napping on the floor. You pick up Kat's petite body and carry her over to the bed.");
+            if (!player.has(Trait.tease)) {
+                Global.gui().message("<p><b>You've learned to take pride in your teasing.</b>");
+                player.add(Trait.tease);
+                npc.getGrowth().addTrait(0, Trait.tease);
+            }
             Global.gui().choose(this, "Leave");
             Daytime.train(player, npc, Attribute.Cunning);
             npc.gainAffection(player, 1);
@@ -415,6 +426,11 @@ public class KatTime extends BaseNPCTime {
             Daytime.train(player, npc, Attribute.Power);
             npc.gainAffection(player, 1);
             player.gainAffection(npc, 1);
+            if (!player.has(Trait.aikidoNovice)) {
+                Global.gui().message("<p><b>You're now more familiar with the art of counter attacking.</b>");
+                player.add(Trait.aikidoNovice);
+                npc.getGrowth().addTrait(0, Trait.aikidoNovice);
+            }
         } else if (choice.startsWith("Ask about Animal Spirit")) {
             Global.flag(Flag.catspirit);
             Global.gui().message("You know that Kat's power comes from an animal spirit "

@@ -105,6 +105,9 @@ public enum Trait {
     aikidoNovice("Aikido Novice", "Improved counterattack rate"), // Kat
                                                                   // Sparring
                                                                   // perk
+    tease("Tease", "Build mojo from dodging"),     // Kat
+                                                   // game
+                                                   // perk
     analFanatic("Anal Fanatic", "Lives for fucking ass"),
 
     // Passive Skills
@@ -326,7 +329,7 @@ public enum Trait {
     sympathetic("Sympathetic", "Intervening opponents are more likely to side with you"),
     fastLearner("Fast Learner", "Improved experience gain"),
     leadership("Leadership", "Summoned pets are more powerful"),
-    tactician("Tactician", "Summoned pets have higher evasion"),
+    tactician("Tactician", "Summoned pets have higher evasion and higher endurance."),
     faefriend("Fae Friend", "Less effort to summon Faeries"),
     fitnessNut("Fitness Nut", "More efficient at exercising"),
     expertGoogler("Expert Googler", "More efficient at finding porn"),
@@ -363,7 +366,7 @@ public enum Trait {
     bewitchingbottom("Bewitching Bottom", "Makes opponents go wild for ass"),
     unquestionable("Unquestionable", "Does not tolerate resistance when on top"),
     grappler("Grapller", "Bonus to hold strength"),
-    ladysGirl("Lady's Girl", "Bonus increases seduction vs girls."),
+    suave("Suave", "Bonus increases seduction vs girls."),
 
     // Item
     strapped("Strapped", "Penis envy", (b, c, t) -> {

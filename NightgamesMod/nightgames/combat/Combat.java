@@ -159,7 +159,7 @@ public class Combat extends Observable implements Cloneable {
                         .map(Addiction::isInWithdrawal).orElse(false)) {
             self.add(this, new DivineCharge(self, .3));
         }
-        if (self.has(Trait.ladysGirl) && !other.hasDick()) {
+        if (self.has(Trait.suave) && !other.hasDick()) {
             self.add(new SapphicSeduction(self));
         }
 
@@ -1294,6 +1294,8 @@ public class Combat extends Observable implements Cloneable {
         }
         if (master.has(Trait.tactician)) {
             self.getSelf().setAc(self.getSelf().getAc() + 3);
+            self.getArousal().setMax(self.getArousal().trueMax() * 1.5f);
+            self.getStamina().setMax(self.getStamina().trueMax() * 1.5f);
         }
         writeSystemMessage(self, Global.format("{self:SUBJECT-ACTION:have|has} summoned {other:name-do} (Level %s)",
                                         master, self, self.getLevel()));

@@ -21,6 +21,11 @@ public class PetThreesome extends Skill {
         super(name, self, cooldown);
     }
 
+    @Override
+    public float priorityMod(Combat c) {
+        return 6.0f;
+    }
+
     public PetThreesome(Character self) {
         super("Threesome", self);
     }

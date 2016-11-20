@@ -399,10 +399,6 @@ public class NPC extends Character {
         if (getAffection(target) > 0) {
             gainAffection(target, 1);
             target.gainAffection(this, 1);
-            if (this.has(Trait.affectionate) || target.has(Trait.affectionate)) {
-                gainAffection(target, 2);
-                target.gainAffection(this, 2);
-            }
         }
     }
 

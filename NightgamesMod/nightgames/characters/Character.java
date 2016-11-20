@@ -2432,6 +2432,11 @@ public abstract class Character extends Observable implements Cloneable {
             Thread.dumpStack();
             return;
         }
+
+        if (other.has(Trait.affectionate) && Global.random(2) == 0) {
+            x += 1;
+        }
+
         if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
             System.out.printf("%s gained %d affection for %s\n", name(), x, other.name());
         }

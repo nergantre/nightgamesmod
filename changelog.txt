@@ -31,6 +31,7 @@ Balance changes:
 - Buffed insertion damage for fuck skills (the insertion trait did not change)
 - Assjob base damage buffed from 4-7 to 10-14
 	- This is increased by 3 if your bottom is naked and by 3 again if the opponent's crotch is open.
+- NPCs should use strategies only 50% of the time now. They were spamming certain strategies too much and it was making the game a bit boring.
 
 New:
 - Completely reworked mojo. You now do not gain mojo per fight or level.
@@ -38,6 +39,7 @@ New:
 - Completely reworked how pets are handled. There are so many changes that it's hard to list everything here.
 	- The core change is that pets are treated like characters and can use skills on either the master or the opponent.
 	- Leadership now increases the level of pets summoned by 5.
+	- Tactician now also increases the maximum arousal and stamina of pets by 50%
 	- Pets now disappear if they orgasm or get knocked out or stunned.
 - Added some new summoning skills:
 	- Summon Yui can call the ninja to help you out in a fight at the cost of 1 affection per summon. This is unlocked at 10 affection with Yui.
@@ -99,8 +101,12 @@ New:
 	- Bewitching bottom
 	- Unquestionable
 	- Grapper
-	- Lady's Girl (I added this one, I found Jewel way too weak vs girls, especially when taking the ass fuck line)
+	- Suave (I added this one, I found Jewel way too weak vs girls, especially when taking the ass fuck line)
 		- Adds level / 2 Seduction when fighting someone without a penis
+Kat's daytime scenes now give the relevant traits.
+- Affectionate now makes it so you have a 50% to increase the amount of affection you gain by 1 instead of only adding bonus affection on draws.
+- Added a new Trait "tease" for Kat's games scene.
+	- Builds 5% mojo if your opponent misses
 
 Bug fixes:
 - Fixed a bug where you could be made to orgasm in a simulation and finish the match because of it. (woahdude)

@@ -16,22 +16,6 @@
       "toughness":8,
       "exposure":0.6
 	},{
-	  "displayName":"lacy bra",
-      "buffs":[
-      ],
-      "price":275,
-      "prefix":"a ",
-      "attributes":[
-      ],
-      "layer":0,
-	  "slots" : ["top"],
-	  "shops" : ["Boutique"],
-	  "sex" : ["all"],
-	  "hotness":0.6,
-      "name":"lacybra",
-      "toughness":5,
-      "exposure":0.8
-	},{
 	  "displayName":"lacy thong",
       "buffs":[
       ],
