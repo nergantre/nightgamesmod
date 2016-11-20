@@ -129,8 +129,8 @@ public abstract class Skill {
         return 0.0f;
     }
 
-    public int accuracy(Combat c) {
-        return 90;
+    public int accuracy(Combat c, Character target) {
+        return 200;
     }
 
     public Staleness getStaleness() {

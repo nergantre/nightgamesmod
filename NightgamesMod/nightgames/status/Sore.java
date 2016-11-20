@@ -13,6 +13,7 @@ public class Sore extends DurationStatus {
         super("Sore", affected, duration);
 
         flag(Stsflag.purgable);
+        flag(Stsflag.debuff);
         flag(Stsflag.sore);
     }
 

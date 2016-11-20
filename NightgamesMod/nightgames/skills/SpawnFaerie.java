@@ -42,24 +42,18 @@ public class SpawnFaerie extends Skill {
     public boolean resolve(Combat c, Character target) {
         int power = 10 + getSelf().get(Attribute.Arcane) / 2;
         int ac = 4 + getSelf().get(Attribute.Arcane) / 10;
-        if (getSelf().has(Trait.leadership)) {
-            power += 5;
-        }
-        if (getSelf().has(Trait.tactician)) {
-            ac += 3;
-        }
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
             if (gender == Ptype.fairyfem) {
-                c.addPet(new FairyFem(getSelf(), power, ac).getSelf());
+                c.addPet(getSelf(), new FairyFem(getSelf(), power, ac).getSelf());
             } else {
-                c.addPet(new FairyMale(getSelf(), power, ac).getSelf());
+                c.addPet(getSelf(), new FairyMale(getSelf(), power, ac).getSelf());
             }
         } else {
             if (target.human()) {
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             }
-            c.addPet(new FairyFem(getSelf(), power, ac).getSelf());
+            c.addPet(getSelf(), new FairyFem(getSelf(), power, ac).getSelf());
         }
         return true;
     }

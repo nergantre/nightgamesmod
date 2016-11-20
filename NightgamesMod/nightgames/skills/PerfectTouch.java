@@ -25,7 +25,7 @@ public class PerfectTouch extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(getSelf(), c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.normal, target));
                 c.write(target, target.nakedLiner(c, target));
@@ -57,7 +57,7 @@ public class PerfectTouch extends Skill {
     }
 
     @Override
-    public int accuracy(Combat c) {
+    public int accuracy(Combat c, Character target) {
         return Math.round(Math.max(Math.min(150,
                         2.5f * (getSelf().get(Attribute.Cunning) - c.getOpponent(getSelf()).get(Attribute.Cunning)) + 65),
                         40));

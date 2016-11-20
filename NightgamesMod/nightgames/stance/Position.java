@@ -246,7 +246,13 @@ public abstract class Position implements Cloneable {
     }
 
     public List<BodyPart> partsFor(Combat combat, Character c) {
-        return c.equals(top) ? topParts(combat) : bottomParts();
+        if (c.equals(top)) {
+            return topParts(combat);
+        } else if (c.equals(bottom)) {
+            return bottomParts();
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     public boolean vaginallyPenetrated(Combat c) {

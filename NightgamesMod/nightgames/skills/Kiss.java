@@ -44,10 +44,10 @@ public class Kiss extends Skill {
     }
 
     @Override
-    public int accuracy(Combat c) {
-        int accuracy = c.getStance().en == Stance.neutral ? 30 : 100;
+    public int accuracy(Combat c, Character target) {
+        int accuracy = c.getStance().en == Stance.neutral ? 50 : 100;
         if (getSelf().has(Trait.romantic)) {
-            accuracy += 40;
+            accuracy += 20;
         }
         return accuracy;
     }
@@ -55,7 +55,7 @@ public class Kiss extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         int m = Global.random(6, 10);
-        if (!target.roll(getSelf(), c, accuracy(c))) {
+        if (!target.roll(getSelf(), c, accuracy(c, target))) {
             writeOutput(c, Result.miss, target);
             return false;
         }
@@ -135,7 +135,7 @@ public class Kiss extends Skill {
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
             return "You pull " + target.name()
-                            + " in for a kiss, but " + target.pronoun() + " pushes your face away. Rude.";
+                            + " in for a kiss, but " + target.pronoun() + " pushes your face away. Rude. (Maybe you should try pinning her down?)";
         }
         if (modifier == Result.divine) {
             return "You pull " + target.name()

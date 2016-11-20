@@ -29,7 +29,7 @@ public class FootSmother extends Skill {
     }
 
     @Override
-    public int accuracy(Combat c) {
+    public int accuracy(Combat c, Character target) {
         return 150;
     }
 

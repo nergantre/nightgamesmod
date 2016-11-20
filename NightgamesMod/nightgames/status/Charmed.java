@@ -13,6 +13,7 @@ public class Charmed extends DurationStatus {
         super("Charmed", affected, 5);
         flag(Stsflag.charmed);
         flag(Stsflag.purgable);
+        flag(Stsflag.debuff);
     }
 
     public Charmed(Character affected, int duration) {

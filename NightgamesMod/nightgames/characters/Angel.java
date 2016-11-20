@@ -71,10 +71,24 @@ public class Angel extends BasePersonality {
         // lots of stuff still TODO
         character.addCombatScene(new CombatScene((c, self, other) -> {
             return self.getLevel() >= 10 && !Global.checkFlag(ANGEL_SEX_FOCUS) && !Global.checkFlag(ANGEL_NYMPHOMANIA_FOCUS);
-        }, (c, self, player) -> "Before leaving, " + character.getName() + " turns and asks you \"Hey " + player.getName() + ", what turns you on more? Just for the sakes of... science let's say.\"",
+        }, (c, self, player) -> Global.format("After another exhausting fight with her where you've been pretty much been driven insane with her sexual prowess, "
+                        + "Angel shows a rare moment of vulnerability and slides into your arms. <i>\"Hey {other:name}, I've been thinking, do you think this is wrong?\"</i> "
+                        + "Puzzled, you ask her what she means. <i>\"Well... you know, fucking like rabbits every day. "
+                        + "I love feeling good and I know I'm good at making other people feel good. Sometimes though, I wonder if I'm being too overbearing. "
+                        + "Most boys can't even keep up with me, but I feel like I always want more. I feel like sometimes I'm no longer in control you know?\"</i>"
+                        + "<br/><br/>"
+                        + "", self, player),
                 Arrays.asList(
-                        new CombatSceneChoice("Stare at her breasts", (c, self, other) -> {
-                            c.write("Cassie catches your gaze with her eyes and lightly giggles. \"I knew it, boys are all about boobs right? Hmm I wonder if I can use this to my advantage...\"");
+                        new CombatSceneChoice("Tell her you love her technique.", (c, self, other) -> {
+                            c.write("You hug Angel, and tell her that you love how she makes you feel, and sex with her is akin to a religious experience for you. "
+                                            + "Angel looks surprised for a second before giving you a wry grin. <i>\"You're not so bad yourself. But you're right, I am better.\"</i>"
+                                            + "<br/><br/>"
+                                            + "As if to prove a point, she sits down again on your rehardened cock. "
+                                            + "You groan as she slides rocks herself back and forth yet again, fucking you with a soft smile. "
+                                            + "<i>\"Quality over quantity as they say. I'll train you so you'll only be able to cum inside me. Wouldn't that be amusing " + other.getName() + "?\"</i>"
+                                            + "It's too much for your poor oversensitive cock, as you pump what remains into Angel a final time."
+                                            + "<br>"
+                                            + "Angel gives you a quick kiss on the lips before leaving. <i>\"Thanks for listening to me "+ other.getName() + ", but get you better be ready for me next time.\"</i>");
                             Global.flag(ANGEL_SEX_FOCUS);
                             character.getGrowth().addTrait(12, Trait.holecontrol);
                             character.getGrowth().addTrait(20, Trait.zealinspiring);
@@ -83,10 +97,8 @@ public class Angel extends BasePersonality {
                             character.getGrowth().addTrait(54, Trait.autonomousPussy);
                             return true;
                         }),
-                        new CombatSceneChoice("Stare at her lips", (c, self, other) -> {
-                            c.write("Cassie watches you carefully and catches your gaze sliding towards her succulent pink lips. "
-                                            + "\"Oooooh, do you like how my mouth feels? I'm flattered! Maybe you like kissing? Or... perhaps something a bit more exciting?\"<br/>"
-                                            + "She giggles a bit when your flush reveals your dirty thoughts. \"It's okay " + other.getName() + ", I enjoy it too. Maybe I'll even try a bit harder with it!\"");
+                        new CombatSceneChoice("Tell her you love her sex drive", (c, self, other) -> {
+                            c.write("You tell Angel that her insatiable sex drive is one of the things you like best about her. [TODO]");
                             Global.flag(ANGEL_NYMPHOMANIA_FOCUS);
                             character.mod(Attribute.Nymphomania, 1);
                             character.getGrowth().addTrait(12, Trait.lastStand);
@@ -101,16 +113,10 @@ public class Angel extends BasePersonality {
         character.addCombatScene(new CombatScene((c, self, other) -> {
             return self.getLevel() >= 20 && !Global.checkFlag(ANGEL_FOLLOWERS_FOCUS) && !Global.checkFlag(ANGEL_WORSHIP_FOCUS)
                             && (Global.checkFlag(ANGEL_SEX_FOCUS) || Global.checkFlag(ANGEL_NYMPHOMANIA_FOCUS));
-        }, (c, self, player) -> "After you two recover from your afterglow, Cassie turns towards you. \"You know, we've been competing in the games for a while now. I can't believe how much I've changed! "
-                        + "When we just started, I've only gone all the way with a boy once. I barely knew what to do even! Now though...\" Cassie gigles and starts tickling your spent "
-                        + "cock with an conjured arcane feather. \"Hey " + player.getName()+", what do you think? are you disappointed I turned out this way?\"",
+        }, (c, self, player) -> "[TODO] Angel asks you if she should try gathering a following or focus on her friends.",
                 Arrays.asList(
-                        new CombatSceneChoice("Answer: Liked her old submissiveness more", (c, self, other) -> {
-                            c.write("You reply that you love her new confidence, but you definitely did have a soft spot for her old self that loved to please."
-                                            + "<br/>"
-                                            + "Cassie smiles wryly, \"I thought so. I think I've been trying so hard that I've lost a bit of my true self. "
-                                            + "But you know, it doesn't have to be this way. I think I can try applying some of that in a better way.\" She stands up and gives you a quick kiss on the cheek. "
-                                            + "\"Thank you " +Global.getPlayer().getName() + ", you've really help me make up my mind. But the next time we fight, I definitely wont lose!\"");
+                        new CombatSceneChoice("Answer: Focus on your friends", (c, self, other) -> {
+                            c.write("You answer that it just doesn't seem like Angel to abandon her friends even if she does become a full Goddess.");
                             Global.flag(ANGEL_FOLLOWERS_FOCUS);
                             character.getGrowth().addTrait(21, Trait.apostles);
                             character.getGrowth().addTrait(30, Trait.leadership);
@@ -124,12 +130,8 @@ public class Angel extends BasePersonality {
                             character.getGrowth().addTrait(60, Trait.congregation);
                             return true;
                         }),
-                        new CombatSceneChoice("Answer: Like her new assertive self more", (c, self, other) -> {
-                            c.write("You reply that you love her magic and new her confident self. Falling into her eyes is a real turn on for you."
-                                            + "<br/>"
-                                            + "Cassie's eyes widen briefly before cracking into a wide smile, \""+ Global.getPlayer().getName() + ", I didn't realize you were a sub! "
-                                                            + "Do you like being helpless? "
-                                                            + "Does it excite you when you are under my control, doing my bidding? I think I can work with that...\"");
+                        new CombatSceneChoice("Answer: Focus on gathering a following", (c, self, other) -> {
+                            c.write("You reply that you would her first follower if she was looking for them. You jokingly kneel in front of her and kiss her feet. ");
                             Global.flag(ANGEL_WORSHIP_FOCUS);
                             character.getGrowth().addTrait(21, Trait.objectOfWorship);
                             character.getGrowth().addTrait(30, Trait.magicEyeArousal);
@@ -176,7 +178,7 @@ public class Angel extends BasePersonality {
     @Override
     public void rest(int time) {
         if (character.rank >= 1) {
-            if (!character.has(Trait.demigoddess) && character.money >= 1000) {
+            if (!character.has(Trait.demigoddess) && (Global.checkFlag(ANGEL_SEX_FOCUS) || Global.checkFlag(ANGEL_NYMPHOMANIA_FOCUS))) {
                 advance();
             }
         }

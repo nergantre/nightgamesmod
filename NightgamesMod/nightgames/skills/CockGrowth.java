@@ -41,8 +41,13 @@ public class CockGrowth extends Skill {
     }
 
     @Override
+    public int accuracy(Combat c, Character target) {
+        return 90;
+    }
+
+    @Override
     public boolean resolve(Combat c, Character target) {
-        Result res = target.roll(getSelf(), c, accuracy(c)) ? Result.normal : Result.miss;
+        Result res = target.roll(getSelf(), c, accuracy(c, target)) ? Result.normal : Result.miss;
         if (res == Result.normal && !target.hasDick()) {
             res = Result.special;
         }
@@ -51,7 +56,7 @@ public class CockGrowth extends Skill {
                         && !target.has(Trait.stableform);
 
         if (res != Result.miss) {
-            target.add(c, new Hypersensitive(target));
+            target.add(c, new Hypersensitive(target, 10));
             CockPart part = target.body.getCockBelow(BasicCockPart.massive.size);
             if (permanent) {
                 if (part != null) {

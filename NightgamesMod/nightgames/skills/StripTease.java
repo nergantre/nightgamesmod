@@ -92,11 +92,11 @@ public class StripTease extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return String.format("%s asks for a quick time out and starts sexily slipping %s clothes off."
+        return String.format("%s asks for a quick time out and starts sexily slipping %s own clothes off."
                         + " Although there are no time outs in the rules, %s can't help staring "
                         + "at the seductive display until %s finishes with a cute wiggle of %s naked ass.",
-                        getSelf().subject(), target.nameOrPossessivePronoun(), target.subject(),
-                        getSelf().subject(), getSelf().possessivePronoun());
+                        getSelf().subject(), getSelf().possessivePronoun(), target.subject(),
+                        getSelf().pronoun(), getSelf().possessivePronoun());
     }
 
     @Override

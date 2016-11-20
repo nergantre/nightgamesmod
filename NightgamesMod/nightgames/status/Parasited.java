@@ -24,6 +24,8 @@ public class Parasited extends Status {
         this.stage = 0;
         this.time = 0;
         flag(Stsflag.parasited);
+        flag(Stsflag.debuff);
+        flag(Stsflag.purgable);
     }
 
     @Override

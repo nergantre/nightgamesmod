@@ -74,7 +74,7 @@ public class ReverseAssFuck extends Fuck {
         }
         c.write(getSelf(), Global.format(premessage, getSelf(), target));
 
-        int m = 5 + Global.random(5);
+        int m = Global.random(10, 15);
         writeOutput(c, Result.normal, target);
 
         int otherm = m;

@@ -39,6 +39,8 @@ public class BodyFetish extends DurationStatus {
         this.origin = origin;
         this.part = part;
         this.magnitude = magnitude;
+        flag(Stsflag.debuff);
+        flag(Stsflag.purgable);
     }
 
     @Override
@@ -59,13 +61,13 @@ public class BodyFetish extends DurationStatus {
     public String describe(Combat c) {
         String desc = "";
         if (magnitude < .26) {
-            desc = "a slight ";
+            desc = "slight ";
         } else if (magnitude < .51) {
             desc = "";
         } else if (magnitude < .99) {
-            desc = "a fierce ";
+            desc = "fierce ";
         } else {
-            desc = "an overwhelming ";
+            desc = "overwhelming ";
         }
         String magString = Global.formatDecimal(magnitude);
         if (affected.human()) {

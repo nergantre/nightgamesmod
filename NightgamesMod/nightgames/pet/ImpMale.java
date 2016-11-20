@@ -73,7 +73,7 @@ public class ImpMale extends Pet {
 
     @Override
     protected void buildSelf() {
-        PetCharacter self = new PetCharacter(this, owner().nameOrPossessivePronoun() + " " + getName(), getName(), new Growth(), power);
+        PetCharacter self = new PetCharacter(this, owner().nameOrPossessivePronoun() + " " + getName(), getName(), new Growth(), getPower());
         // imps are about as tall as goblins, maybe a bit shorter
         self.body.setHeight(115);
         self.body.finishBody(CharacterSex.male);

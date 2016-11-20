@@ -36,21 +36,29 @@ public class BunshinAssault extends Skill {
                              .penetrated(c, getSelf());
     }
 
+    private int numberOfClones(Combat c) {
+        return Math.min(Math.min(getSelf().getMojo().get()/2, getSelf().get(Attribute.Ninjutsu)/2), 15);
+    }
+
     @Override
     public int getMojoCost(Combat c) {
-        return 18;
+        return numberOfClones(c) * 2;
     }
-    
+
     @Override
     public String describe(Combat c) {
-        return "Attack your opponent with shadow clones: 3 Mojo per attack (min 2)";
+        return "Attack your opponent with shadow clones: 2 Mojo per attack (min 2)";
+    }
+
+    @Override
+    public int accuracy(Combat c, Character target) {
+        return 25 + getSelf().get(Attribute.Speed) * 5;
     }
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        int clones = Math.min(Math.min(getSelf().getMojo().get()/3, getSelf().get(Attribute.Ninjutsu)/3),6);
+        int clones = numberOfClones(c);
         Result r;
-        getSelf().buildMojo(c, (6-clones)*3);
         if(getSelf().human()){
             c.write(getSelf(), String.format("You form %d shadow clones and rush forward.",clones));
         }
@@ -59,7 +67,7 @@ public class BunshinAssault extends Skill {
                             target.subjectAction("see"),clones,getSelf().pronoun(),target.reflectivePronoun()));
         }
         for(int i=0;i<clones;i++){
-            if(target.roll(getSelf(), c, accuracy(c)+getSelf().get(Attribute.Speed) + getSelf().getLevel())) {
+            if(target.roll(getSelf(), c, accuracy(c, target))) {
                 switch(Global.random(4)){
                 case 0:
                     r=Result.weak;

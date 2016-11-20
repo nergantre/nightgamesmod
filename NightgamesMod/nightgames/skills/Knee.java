@@ -33,8 +33,13 @@ public class Knee extends Skill {
     }
 
     @Override
+    public int accuracy(Combat c, Character target) {
+        return 80;
+    }
+
+    @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(getSelf(), c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             double m = Global.random(40, 60);
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.normal, target));

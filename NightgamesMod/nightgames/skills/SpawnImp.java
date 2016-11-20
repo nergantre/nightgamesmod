@@ -2,7 +2,6 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.pet.ImpFem;
@@ -43,24 +42,18 @@ public class SpawnImp extends Skill {
         getSelf().arouse(5, c);
         int power = 10 + getSelf().get(Attribute.Dark) / 2;
         int ac = 2 + getSelf().get(Attribute.Dark) / 10;
-        if (getSelf().has(Trait.leadership)) {
-            power += 5;
-        }
-        if (getSelf().has(Trait.tactician)) {
-            ac += 3;
-        }
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
             if (gender == Ptype.impfem) {
-                c.addPet(new ImpFem(getSelf(), power, ac).getSelf());
+                c.addPet(getSelf(), new ImpFem(getSelf(), power, ac).getSelf());
             } else {
-                c.addPet(new ImpMale(getSelf(), power, ac).getSelf());
+                c.addPet(getSelf(), new ImpMale(getSelf(), power, ac).getSelf());
             }
         } else {
             if (target.human()) {
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             }
-            c.addPet(new ImpFem(getSelf(), power, ac).getSelf());
+            c.addPet(getSelf(), new ImpFem(getSelf(), power, ac).getSelf());
         }
         return true;
     }

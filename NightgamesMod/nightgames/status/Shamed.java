@@ -15,6 +15,7 @@ public class Shamed extends DurationStatus {
     public Shamed(Character affected) {
         super("Shamed", affected, 4);
         flag(Stsflag.shamed);
+        flag(Stsflag.debuff);
         flag(Stsflag.purgable);
         magnitude = 1;
     }

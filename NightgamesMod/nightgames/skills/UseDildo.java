@@ -29,13 +29,13 @@ public class UseDildo extends Skill {
     }
 
     @Override
-    public int accuracy(Combat c) {
-        return c.getStance().en == Stance.neutral ? 35 : 100;
+    public int accuracy(Combat c, Character target) {
+        return c.getStance().en == Stance.neutral ? 50 : 100;
     }
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(getSelf(), c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             int m;
             if (getSelf().has(Item.Dildo2)) {
                 writeOutput(c, Result.upgrade, target);

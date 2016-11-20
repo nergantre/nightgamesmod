@@ -2,7 +2,6 @@ package nightgames.skills;
 
 import nightgames.characters.Character;
 import nightgames.characters.NPC;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -39,15 +38,9 @@ public class SummonYui extends Skill {
         NPC yui = Global.getNPCByType("Yui");
         int power = (getSelf().getLevel() + target.getLevel()) / 2;
         int ac = 4 + power / 3;
-        if (getSelf().has(Trait.leadership)) {
-            power += 5;
-        }
-        if (getSelf().has(Trait.tactician)) {
-            ac += 3;
-        }
         writeOutput(c, Result.normal, target);
         yui.gainAffection(getSelf(), -1);
-        c.addPet(new CharacterPet(getSelf(), yui, power, ac).getSelf());
+        c.addPet(getSelf(), new CharacterPet(getSelf(), yui, power, ac).getSelf());
 
         return true;
     }

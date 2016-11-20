@@ -7,16 +7,19 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.FlyingCarry;
 import nightgames.status.Falling;
 
 public class Fly extends Fuck {
     public Fly(Character self) {
-        super("Fly", self, 5);
+        this("Fly", self);
     }
 
     public Fly(String name, Character self) {
         super(name, self, 5);
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.petDisallowed);
     }
 
     @Override
@@ -42,7 +45,7 @@ public class Fly extends Fuck {
     }
 
     @Override
-    public int accuracy(Combat c) {
+    public int accuracy(Combat c, Character target) {
         return 65;
     }
 
@@ -50,7 +53,7 @@ public class Fly extends Fuck {
     public boolean resolve(Combat c, Character target) {
         String premessage = premessage(c, target);
 
-        Result result = target.roll(getSelf(), c, accuracy(c)) ? Result.normal : Result.miss;
+        Result result = target.roll(getSelf(), c, accuracy(c, target)) ? Result.normal : Result.miss;
         if (getSelf().human()) {
             c.write(getSelf(), premessage + deal(c, premessage.length(), result, target));
         } else if (c.shouldPrintReceive(target, c)) {

@@ -72,7 +72,7 @@ public class Spank extends Skill {
     }
 
     @Override
-    public int accuracy(Combat c) {
+    public int accuracy(Combat c, Character target) {
         return c.getStance().dom(getSelf()) ? 100 : 65;
     }
 

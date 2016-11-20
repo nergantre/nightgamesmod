@@ -76,7 +76,7 @@ public class FairyFem extends Pet {
     @Override
     protected void buildSelf() {
         Growth growth = new Growth();
-        PetCharacter self = new PetCharacter(this, owner().nameOrPossessivePronoun() + " " + getName(), getName(), growth, power);
+        PetCharacter self = new PetCharacter(this, owner().nameOrPossessivePronoun() + " " + getName(), getName(), growth, getPower());
         // fairies are about 20 centimeters tall
         self.body.setHeight(20);
         self.body.finishBody(CharacterSex.female);

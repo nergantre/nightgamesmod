@@ -8,15 +8,15 @@ public abstract class Pet implements Cloneable {
     private PetCharacter self;
     private Ptype type;
     protected Character owner;
-    protected int power;
-    protected int ac;
+    private int power;
+    private int ac;
 
     public Pet(String name, Character owner, Ptype type, int power, int ac) {
         this.owner = owner;
         this.name = name;
         this.type = type;
-        this.power = power;
-        this.ac = ac;
+        this.setPower(power);
+        this.setAc(ac);
         buildSelf();
     }
 
@@ -54,11 +54,11 @@ public abstract class Pet implements Cloneable {
     }
 
     public int power() {
-        return power;
+        return getPower();
     }
 
     public int ac() {
-        return ac;
+        return getAc();
     }
 
     public final boolean hasDick() {
@@ -85,5 +85,21 @@ public abstract class Pet implements Cloneable {
         Pet clone = (Pet) this.clone();
         clone.owner = owner;
         return clone;
+    }
+
+    public int getPower() {
+        return power;
+    }
+
+    public void setPower(int power) {
+        this.power = power;
+    }
+
+    public int getAc() {
+        return ac;
+    }
+
+    public void setAc(int ac) {
+        this.ac = ac;
     }
 }

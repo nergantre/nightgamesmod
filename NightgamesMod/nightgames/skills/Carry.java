@@ -18,6 +18,7 @@ public class Carry extends Fuck {
         addTag(SkillTag.pleasureSelf);
         addTag(SkillTag.fucking);
         addTag(SkillTag.positioning);
+        addTag(SkillTag.petDisallowed);
     }
 
     public Carry(Character self) {
@@ -44,7 +45,7 @@ public class Carry extends Fuck {
     @Override
     public boolean resolve(Combat c, Character target) {
         String premessage = premessage(c, target);
-        if (target.roll(getSelf(), c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             if (getSelf().human()) {
                 c.write(getSelf(), Global.capitalizeFirstLetter(
                                 premessage + deal(c, premessage.length(), Result.normal, target)));
@@ -78,7 +79,7 @@ public class Carry extends Fuck {
     }
 
     @Override
-    public int accuracy(Combat c) {
+    public int accuracy(Combat c, Character target) {
         return 60;
     }
 

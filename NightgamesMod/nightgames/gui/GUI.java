@@ -997,7 +997,7 @@ public class GUI extends JFrame implements Observer {
         commandPanel.repaint();
     }
 
-    public void addSkill(Skill action, Combat com) {
+    public void addSkill(Combat com, Skill action, Character target) {
         int index = 0;
         boolean placed = false;
         while (!placed) {
@@ -1007,7 +1007,7 @@ public class GUI extends JFrame implements Observer {
             if (skills.get(index).size() >= 25) {
                 index++;
             } else {
-                SkillButton btn = new SkillButton(action, com);
+                SkillButton btn = new SkillButton(com, action, target);
                 int others = skills.get(index).size();
                 if (index == 0 && others < 9) {
                     btn.addIndex(others+1);

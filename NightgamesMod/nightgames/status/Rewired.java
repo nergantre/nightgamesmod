@@ -11,6 +11,7 @@ public class Rewired extends DurationStatus {
     public Rewired(Character affected, int duration) {
         super("Rewired", affected, duration);
         flag(Stsflag.rewired);
+        flag(Stsflag.debuff);
         flag(Stsflag.purgable);
     }
 

@@ -14,6 +14,8 @@ public class Drowsy extends DurationStatus {
     public Drowsy(Character affected) {
         super("Drowsy", affected, 4);
         flag(Stsflag.drowsy);
+        flag(Stsflag.purgable);
+        flag(Stsflag.debuff);
         magnitude = 1;
     }
 

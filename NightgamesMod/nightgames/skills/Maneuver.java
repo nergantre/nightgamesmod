@@ -30,7 +30,7 @@ public class Maneuver extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(getSelf(), c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             writeOutput(c, Result.normal, target);
             c.setStance(new Behind(getSelf(), target), getSelf(), true);
             getSelf().emote(Emotion.confident, 15);
@@ -59,7 +59,7 @@ public class Maneuver extends Skill {
     }
 
     @Override
-    public int accuracy(Combat c) {
+    public int accuracy(Combat c, Character target) {
         return 75;
     }
 

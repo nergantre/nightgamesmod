@@ -202,7 +202,7 @@ public class Airi extends BasePersonality {
 
     @Override
     public String taunt(Combat c, Character opponent) {
-        return character.has(Trait.slime) ? "Airi coos at you <i>\"About to cum..? ...even trying..?\"</i>" : "<i><b>Giggle</b> \"Try a bit harder okay?\"</i>";
+        return character.has(Trait.slime) ? "Airi coos at you <i>\"About to cum..? ...even trying..?\"</i>" : "<i><b>Airi giggles, </b> \"Try a bit harder okay?\"</i>";
     }
 
     @Override

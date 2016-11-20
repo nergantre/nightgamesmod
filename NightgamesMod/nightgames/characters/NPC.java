@@ -46,7 +46,6 @@ import nightgames.stance.Neutral;
 import nightgames.stance.Position;
 import nightgames.status.Enthralled;
 import nightgames.status.Horny;
-import nightgames.status.Masochistic;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
 import nightgames.trap.Trap;
@@ -307,13 +306,20 @@ public class NPC extends Character {
     }
 
     private CombatStrategy pickStrategy(Combat c) {
+        if (Global.random(100) < 60 ) {
+            if (Global.isDebugOn(DebugFlags.DEBUG_STRATEGIES)) {
+                System.out.println("Using default strategy");
+            }
+            // most of the time don't bother using a strategy.
+            return new DefaultStrategy();
+        }
+
         Map<Double, CombatStrategy> stratsWithCumulativeWeights = new HashMap<>();
         DefaultStrategy defaultStrat = new DefaultStrategy();
         double lastWeight = defaultStrat.weight(c, this);
         stratsWithCumulativeWeights.put(lastWeight, defaultStrat);
         List<CombatStrategy> allStrategies = new ArrayList<>(CombatStrategy.availableStrategies);
         allStrategies.addAll(personalStrategies);
-        
         for (CombatStrategy strat: allStrategies) {
             if (strat.weight(c, this) < .01 || strat.nextSkills(c, this).isEmpty()) {
                 continue;
@@ -767,11 +773,6 @@ public class NPC extends Character {
                             + " swoon slightly as she gets close to you. Seems like she's starting to feel the effects of your musk.");
             add(c, Horny.getWithBiologicalType(opponent, this, opponent.getPheromonePower(), 10,
                             opponent.nameOrPossessivePronoun() + " pheromones"));
-        }
-        if (opponent.has(Trait.sadist) && !is(Stsflag.masochism)) {
-            c.write("<br>"+Global.capitalizeFirstLetter(
-                            String.format("%s seems to shudder in arousal at the thought of pain.", subject())));
-            add(c, new Masochistic(this));
         }
         if (has(Trait.RawSexuality)) {
             tempt(c, opponent, getArousal().max() / 20);

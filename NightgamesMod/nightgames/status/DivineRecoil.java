@@ -14,6 +14,7 @@ public class DivineRecoil extends DurationStatus {
         super("Divine Recoil", affected, 5);
         flag(Stsflag.divinerecoil);
         flag(Stsflag.purgable);
+        flag(Stsflag.debuff);
         this.magnitude = magnitude;
     }
 

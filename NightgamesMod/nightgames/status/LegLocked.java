@@ -19,6 +19,7 @@ public class LegLocked extends Status {
         requirements.add((c, self, other) -> toughness > .01);
         toughness = dc;
         flag(Stsflag.leglocked);
+        flag(Stsflag.debuff);
     }
 
     @Override

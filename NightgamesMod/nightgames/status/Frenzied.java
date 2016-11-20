@@ -60,6 +60,7 @@ public class Frenzied extends DurationStatus {
     public Frenzied(Character affected, int duration) {
         super("Frenzied", affected, duration);
         flag(Stsflag.frenzied);
+        flag(Stsflag.debuff);
         flag(Stsflag.purgable);
     }
 

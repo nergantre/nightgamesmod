@@ -357,7 +357,7 @@ public class Informant extends Activity {
                   .forEach(character -> Global.gui().choose(this, String.format(REMOVE_PREFIX + "%s", character.getName())));
             Global.everyone().stream()
                   .filter(c -> !c.human())
-                  .filter(c -> Global.checkCharacterDisabledFlag(c))
+                  .filter(c -> Global.checkCharacterDisabledFlag(c) && !c.getType().equals("Yui"))
                   .forEach(character -> Global.gui().choose(this, String.format(RETURN_PREFIX + "%s", character.getName())));
             Global.gui().choose(this, "Back");
             return;

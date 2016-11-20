@@ -24,6 +24,8 @@ public class Seeded extends Status {
         this.time = 0;
         flag(hole.equals("ass") ? Stsflag.pegged : Stsflag.fucked);
         flag(Stsflag.seeded);
+        flag(Stsflag.debuff);
+        flag(Stsflag.purgable);
     }
 
     @Override
@@ -100,7 +102,7 @@ public class Seeded extends Status {
                             Global.format("The seedling churns against {self:possessive} inner walls, while sending a chemical cocktail of aphrodisiacs and narcotics directly into {self:possessive} bloodstream. "
                                             + "{self:possessive} mind blanks out as every thought is replaced with a feral need to mate.",
                             affected, other, hole.describe(affected)));
-            affected.heal(c, 100);
+            affected.heal(c, 100, " (Seedling)");
             affected.arouse(Math.max(Global.random(50, 100), affected.getArousal().max() / 4), c,
                             other.nameOrPossessivePronoun() + " seedling");
             affected.body.pleasure(other, seed, hole, Global.random(10, 20) + other.get(Attribute.Bio) / 2, c);

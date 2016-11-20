@@ -82,7 +82,7 @@ public class FGoblin extends Pet {
     
     @Override
     protected void buildSelf() {
-        PetCharacter self = new PetCharacter(this, owner().nameOrPossessivePronoun() +" " + getName(), getName(), new Growth(), power);
+        PetCharacter self = new PetCharacter(this, owner().nameOrPossessivePronoun() +" " + getName(), getName(), new Growth(), getPower());
         // goblins are about 120 centimeters tall (around 4' for US people)
         self.body.setHeight(120);
         self.body.finishBody(CharacterSex.herm);

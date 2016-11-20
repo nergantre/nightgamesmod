@@ -8,15 +8,12 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.FlyingCowgirl;
 import nightgames.status.Falling;
 
 public class ReverseFly extends Fly {
     public ReverseFly(Character self) {
         super("ReverseFly", self);
-        addTag(SkillTag.positioning);
-
     }
 
     @Override
@@ -43,7 +40,7 @@ public class ReverseFly extends Fly {
     public boolean resolve(Combat c, Character target) {
         String premessage = premessage(c, target);
 
-        Result result = target.roll(getSelf(), c, accuracy(c)) ? Result.normal : Result.miss;
+        Result result = target.roll(getSelf(), c, accuracy(c, target)) ? Result.normal : Result.miss;
         if (getSelf().human()) {
             c.write(getSelf(), premessage + deal(c, 0, result, target));
         } else if (c.shouldPrintReceive(target, c)) {

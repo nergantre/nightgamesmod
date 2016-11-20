@@ -20,7 +20,7 @@ public class LickNipples extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return target.breastsAvailable() && c.getStance().reachTop(getSelf()) && c.getStance().front(getSelf())
-                        && getSelf().canAct() && c.getStance().facing(getSelf(), target) && c.getStance().en != Stance.neutral;
+                        && getSelf().canAct() && c.getStance().facing(getSelf(), target);
     }
 
     @Override
@@ -29,9 +29,14 @@ public class LickNipples extends Skill {
     }
 
     @Override
+    public int accuracy(Combat c, Character target) {
+        return c.getStance().en != Stance.neutral ? 200 : 70;
+    }
+
+    @Override
     public boolean resolve(Combat c, Character target) {
         int m = 3 + Global.random(6);
-        if (target.roll(getSelf(), c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             writeOutput(c, Result.normal, target);
             if (getSelf().has(Trait.silvertongue)) {
                 m += 4;
@@ -63,7 +68,7 @@ public class LickNipples extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You go after " + target.name() + "'s nipples, but she pushes you away.";
+            return "You go after " + target.name() + "'s nipples, but she pushes you away. (Maybe try getting closer?)";
         } else {
             return "You slowly circle your tongue around each of " + target.name()
                             + "'s nipples, making her moan and squirm in pleasure.";

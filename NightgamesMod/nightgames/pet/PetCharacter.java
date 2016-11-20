@@ -108,6 +108,7 @@ public class PetCharacter extends Character {
         this.type = type;
         this.setGrowth(growth);
         for (int i = 1; i < level; i++) {
+            this.level += 1;
             getGrowth().levelUp(this);
         }
         distributePoints(Arrays.asList());
@@ -132,7 +133,11 @@ public class PetCharacter extends Character {
     }
 
     @Override
-    public void ding() {}
+    public void ding() {
+        level += 1;
+        getGrowth().levelUp(this);
+        distributePoints(Arrays.asList());
+    }
 
     @Override
     public void detect() {}
@@ -172,7 +177,7 @@ public class PetCharacter extends Character {
 
     public void act(Combat c, Character target) {
         List<Skill> allowedEnemySkills = new ArrayList<>(getSkills()
-                        .stream().filter(skill -> Skill.skillIsUsable(c, skill, target) && !Collections.disjoint(skill.getTags(c), PET_UNUSABLE_TAG))
+                        .stream().filter(skill -> Skill.skillIsUsable(c, skill, target) && Collections.disjoint(skill.getTags(c), PET_UNUSABLE_TAG))
                         .collect(Collectors.toList()));
         Skill.filterAllowedSkills(c, allowedEnemySkills, this, target);        
 
@@ -181,7 +186,7 @@ public class PetCharacter extends Character {
         List<Skill> allowedMasterSkills = new ArrayList<>(getSkills()
                         .stream().filter(skill -> Skill.skillIsUsable(c, skill, getSelf().owner)
                                         && (skill.getTags(c).contains(SkillTag.helping) || (getSelf().owner.has(Trait.showmanship) && skill.getTags(c).contains(SkillTag.worship)))
-                                        && !Collections.disjoint(skill.getTags(c), PET_UNUSABLE_TAG))
+                                        && Collections.disjoint(skill.getTags(c), PET_UNUSABLE_TAG))
                         .collect(Collectors.toList()));
         Skill.filterAllowedSkills(c, allowedMasterSkills, this, getSelf().owner);
         WeightedSkill bestEnemySkill = Decider.prioritizePet(this, target, allowedEnemySkills, c);
@@ -295,7 +300,7 @@ public class PetCharacter extends Character {
 
     @Override
     public Growth getGrowth() {
-        return new Growth();
+        return super.getGrowth();
     }
 
     public boolean isPetOf(Character other) {
@@ -304,6 +309,10 @@ public class PetCharacter extends Character {
 
     public Pet getSelf() {
         return self;
+    }
+    
+    public double percentHealth() {
+        return Math.min(getStamina().percent(), getArousal().percent());
     }
 
     public boolean isPet() {

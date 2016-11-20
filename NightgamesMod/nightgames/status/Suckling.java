@@ -20,6 +20,7 @@ public class Suckling extends DurationStatus {
         super("Suckling", affected, duration);
         skill = new Suckle(opponent);
         flag(Stsflag.suckling);
+        flag(Stsflag.debuff);
         flag(Stsflag.purgable);
     }
 

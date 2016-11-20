@@ -58,7 +58,7 @@ public class PetThreesome extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return fuckable(c, target) && c.getStance().mobile(getSelf()) && !c.getStance().mobile(target) && getSelf().canAct() && !c.getPetsFor(getSelf()).isEmpty();
+        return fuckable(c, target) && c.getStance().mobile(getSelf()) && !c.getStance().mobile(target) && getSelf().canAct();
     }
 
     @Override
@@ -132,12 +132,12 @@ public class PetThreesome extends Skill {
     }
 
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return "You bowl your opponent over and pin her down while your pet fucks her <<PLACEHOLDER>>";
+        return "You bowl your opponent over and pin her down while your pet fucks her [PLACEHOLDER]";
     }
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name + " pins you down while her pet fucks you <<PLACEHOLDER>>";
+        return getSelf().name + " pins you down while her pet fucks you [PLACEHOLDER]";
     }
 
     @Override

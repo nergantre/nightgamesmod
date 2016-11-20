@@ -1,6 +1,7 @@
 package nightgames.status;
 
 public enum Stsflag {
+    debuff,
     bound,
     cockbound,
     cynical,

@@ -25,8 +25,7 @@ public class TortoiseWrap extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().canAct() && c.getStance().reachTop(getSelf()) && !c.getStance().reachTop(target)
-                        && getSelf().has(Item.Rope) && c.getStance().dom(getSelf()) && !target.is(Stsflag.tied)
-                        && getSelf().is(Stsflag.bondage);
+                        && getSelf().has(Item.Rope) && c.getStance().dom(getSelf()) && !target.is(Stsflag.tied);
     }
 
     @Override

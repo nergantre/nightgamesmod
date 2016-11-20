@@ -21,6 +21,7 @@ public class TailFucked extends Status {
         this.other = other;
         requirements.add(eitherinserted());
         flag(Stsflag.bound);
+        flag(Stsflag.debuff);
         flag(hole.equals("ass") ? Stsflag.pegged : Stsflag.fucked);
     }
 

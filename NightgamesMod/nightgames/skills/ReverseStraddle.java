@@ -11,6 +11,7 @@ public class ReverseStraddle extends Skill {
     public ReverseStraddle(Character self) {
         super("Mount(Reverse)", self);
         addTag(SkillTag.positioning);
+        addTag(SkillTag.petDisallowed);
     }
 
     @Override

@@ -195,7 +195,7 @@ public class Cassie extends BasePersonality {
     @Override
     public void rest(int time) {
         if (character.rank >= 1) {
-            if (!character.has(Trait.witch) && character.money >= 1000) {
+            if (!character.has(Trait.witch) && (Global.checkFlag(CASSIE_BREAST_FOCUS) || Global.checkFlag(CASSIE_MOUTH_FOCUS))) {
                 advance();
             }
         }

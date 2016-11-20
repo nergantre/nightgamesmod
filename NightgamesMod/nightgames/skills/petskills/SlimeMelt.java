@@ -30,7 +30,7 @@ public class SlimeMelt extends SimpleEnemySkill {
     }
 
     @Override
-    public int accuracy(Combat c) {
+    public int accuracy(Combat c, Character target) {
         return 65;
     }
 
@@ -44,7 +44,7 @@ public class SlimeMelt extends SimpleEnemySkill {
             strippable.add(ClothingSlot.top);
         }
         ClothingSlot targetSlot = Global.pickRandom(strippable).get();
-        if (target.roll(getSelf(), c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             // should never be null here, since otherwise we can't use the skill          
             Clothing stripped = target.strip(targetSlot, c);
             c.write(getSelf(), Global.format("{self:SUBJECT} pounces on {other:name-do} playfully, "

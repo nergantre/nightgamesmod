@@ -15,6 +15,7 @@ public class CrisisOfFaith extends Status {
     public CrisisOfFaith(Character affected) {
         super("Crisis of Faith", affected);
         assert affected.human();
+        flag(Stsflag.debuff);
     }
 
     @Override

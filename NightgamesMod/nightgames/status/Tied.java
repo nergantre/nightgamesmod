@@ -10,13 +10,14 @@ import nightgames.combat.Combat;
 public class Tied extends DurationStatus {
 
     public Tied(Character affected) {
-        super("Tied Up", affected, 5);
-        flag(Stsflag.tied);
+        this(affected, 5);
     }
 
     public Tied(Character affected, int duration) {
         super("Tied Up", affected, duration);
         flag(Stsflag.tied);
+        flag(Stsflag.debuff);
+        flag(Stsflag.purgable);
     }
 
     @Override

@@ -41,7 +41,7 @@ public class Tackle extends Skill {
             target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(15, 30)));
             target.add(new Winded(target, 2));
         }
-        if (target.roll(getSelf(), c, accuracy(c))
+        if (target.roll(getSelf(), c, accuracy(c, target))
                         && getSelf().check(Attribute.Power, target.knockdownDC() - getSelf().get(Attribute.Animism))) {
             if (getSelf().get(Attribute.Animism) >= 1) {
                 writeOutput(c, Result.special, target);
@@ -83,7 +83,11 @@ public class Tackle extends Skill {
     }
 
     @Override
-    public int accuracy(Combat c) {
+    public int accuracy(Combat c, Character target) {
+        if (getSelf().has(Trait.takedown) && target.getStamina().percent() <= 25) {
+            return 200;
+        }
+        
         int base = 80;
         if (getSelf().get(Attribute.Animism) >= 1) {
             base = 120 + (getSelf().getArousal().getReal() / 10);

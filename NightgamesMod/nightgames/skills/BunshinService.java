@@ -35,7 +35,7 @@ public class BunshinService extends Skill {
 
     @Override
     public int getMojoCost(Combat c) {
-        return 20;
+        return numberOfClones(c) * 2;
     }
 
     @Override
@@ -43,12 +43,18 @@ public class BunshinService extends Skill {
         return "Pleasure your opponent with shadow clones: 4 mojo per attack (min 2))";
     }
 
+    private int numberOfClones(Combat c) {
+        return Math.min(Math.min(getSelf().getMojo().get()/2, getSelf().get(Attribute.Ninjutsu)/2), 15);
+    }
+
+    @Override
+    public int accuracy(Combat c, Character target) {
+        return 25 + getSelf().get(Attribute.Speed) * 5;
+    }
+
     @Override
     public boolean resolve(Combat c, Character target) {
-        int clones = Math.min(Math.min(getSelf().getMojo()
-                                                .get()
-                        / 4, getSelf().get(Attribute.Ninjutsu) / 3), 5);
-        getSelf().buildMojo(c, (5 - clones) * 4);
+        int clones = numberOfClones(c);
         Result r;
         if(getSelf().human()){
             c.write(getSelf(), String.format("You form %d shadow clones and rush forward.",clones));
@@ -58,7 +64,7 @@ public class BunshinService extends Skill {
                             target.subjectAction("see"),clones,getSelf().pronoun(),target.reflectivePronoun()));
         }
         for (int i = 0; i < clones; i++) {
-            if (target.roll(getSelf(), c, accuracy(c) + getSelf().get(Attribute.Speed) + getSelf().getLevel())) {
+            if (target.roll(getSelf(), c, accuracy(c, target))) {
                 switch (Global.random(4)) {
                     case 0:
                         r = Result.weak;

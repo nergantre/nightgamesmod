@@ -53,7 +53,7 @@ public class Cunnilingus extends Skill {
             m += 4;
         }
         int i = 0;
-        if (!facesitting && c.getStance().mobile(target) && !target.roll(getSelf(), c, accuracy(c))) {
+        if (!facesitting && c.getStance().mobile(target) && !target.roll(getSelf(), c, accuracy(c, target))) {
             results = Result.miss;
         } else {
             if (target.has(Trait.entrallingjuices) && Global.random(4) == 0 && !target.wary()) {
@@ -98,8 +98,8 @@ public class Cunnilingus extends Skill {
     }
 
     @Override
-    public int accuracy(Combat c) {
-        return 75;
+    public int accuracy(Combat c, Character target) {
+        return !c.getStance().isBeingFaceSatBy(c, getSelf(), target) && c.getStance().mobile(target) ? 75 : 200;
     }
 
     @Override

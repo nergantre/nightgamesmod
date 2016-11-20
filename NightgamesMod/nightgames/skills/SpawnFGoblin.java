@@ -2,7 +2,6 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.pet.FGoblin;
@@ -39,12 +38,8 @@ public class SpawnFGoblin extends Skill {
     public boolean resolve(Combat c, Character target) {
         int power = 3 + getSelf().get(Attribute.Fetish) / 10;
         int ac = 2 + getSelf().get(Attribute.Fetish) / 10;
-        if (getSelf().has(Trait.leadership))
-            power += 2;
-        if (getSelf().has(Trait.tactician))
-            ac += 2;
         writeOutput(c, Result.normal, target);
-        c.addPet(new FGoblin(getSelf(), power, ac).getSelf());
+        c.addPet(getSelf(), new FGoblin(getSelf(), power, ac).getSelf());
         return true;
     }
 

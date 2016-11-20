@@ -34,9 +34,14 @@ public class EyesOfTemptation extends Skill {
     }
 
     @Override
+    public int accuracy(Combat c, Character target) {
+        return target.is(Stsflag.blinded) ? -100 : 90;
+    }
+
+    @Override
     public boolean resolve(Combat c, Character target) {
         Result result = target.is(Stsflag.blinded) ? Result.special
-                        : target.roll(getSelf(), c, accuracy(c)) ? Result.normal : Result.miss;
+                        : target.roll(getSelf(), c, accuracy(c, target)) ? Result.normal : Result.miss;
         writeOutput(c, result, target);
         if (result == Result.normal) {
             target.add(c, new Enthralled(target, getSelf(), 5));
@@ -53,11 +58,6 @@ public class EyesOfTemptation extends Skill {
     @Override
     public int speed() {
         return 9;
-    }
-
-    @Override
-    public int accuracy(Combat c) {
-        return 100;
     }
 
     @Override

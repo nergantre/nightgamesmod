@@ -9,7 +9,6 @@ import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
 import nightgames.characters.body.PussyPart;
-import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -40,48 +39,47 @@ public class Sarah extends BasePersonality {
         character.outfitPlan.add(Clothing.getByID("stockings"));
 
         character.change();
-        character.modAttributeDontSaveData(Attribute.Power, 1);
-        character.modAttributeDontSaveData(Attribute.Seduction, 1);
+        character.modAttributeDontSaveData(Attribute.Power, 2);
         character.modAttributeDontSaveData(Attribute.Cunning, 1);
         character.modAttributeDontSaveData(Attribute.Perception, 1);
-        character.modAttributeDontSaveData(Attribute.Speed, 1);
-        character.getStamina().setMax(70);
-        character.getArousal().setMax(70);
+        character.modAttributeDontSaveData(Attribute.Speed, 2);
+        character.getStamina().setMax(80);
+        character.getArousal().setMax(60);
         character.rank = 1;
         Global.gainSkills(character);
 
-        character.getMojo().setMax(110);
+        character.getMojo().setMax(90);
 
-        character.setTrophy(Item.ExtremeAphrodisiac);
-        character.body.add(BreastsPart.b);
+        character.setTrophy(Item.HolyWater);
+        character.body.add(BreastsPart.d);
         character.initialGender = CharacterSex.female;
     }
 
     @Override
     public void setGrowth() {
-        character.getGrowth().stamina = 2;
+        character.getGrowth().stamina = 3;
         character.getGrowth().arousal = 2;
         character.getGrowth().willpower = .4f;
         character.getGrowth().bonusStamina = 2;
         character.getGrowth().bonusArousal = 2;
 
         character.getGrowth().addTrait(0, Trait.imagination);
-        character.getGrowth().addTrait(0, Trait.wrassler);
-        character.getGrowth().addTrait(10, Trait.cute);
-        character.getGrowth().addTrait(15, Trait.dexterous);
-        character.getGrowth().addTrait(20, Trait.tight);
-        character.getGrowth().addTrait(25, Trait.sexTraining1);
-        character.getGrowth().addBodyPart(30, PussyPart.succubus);
-        character.getGrowth().addBodyPart(30, TailPart.demonic);
-        character.getGrowth().addBodyPart(30, WingsPart.fallenangel);
-        character.getGrowth().addTrait(35, Trait.fallenAngel);
-        character.getGrowth().addTrait(40, Trait.energydrain);
-        character.getGrowth().addTrait(45, Trait.soulsucker);
-        character.getGrowth().addTrait(50, Trait.lacedjuices);
-        character.getGrowth().addTrait(55, Trait.vaginaltongue);
-        character.getGrowth().addTrait(60, Trait.carnalvirtuoso);
-        preferredAttributes.add(c -> c.getLevel() >= 30 ? Optional.of(Attribute.Dark) : Optional.empty());
-        // mostly feminine face, cute but not quite at Angel's level
+        character.getGrowth().addTrait(0, Trait.pimphand);
+        character.getGrowth().addTrait(10, Trait.QuickRecovery);
+        character.getGrowth().addTrait(15, Trait.sadist);
+        character.getGrowth().addTrait(20, Trait.disablingblows);
+        character.getGrowth().addTrait(25, Trait.nimbletoes);
+        character.getGrowth().addBodyPart(30, PussyPart.fiery);
+        character.getGrowth().addBodyPart(30, WingsPart.angelic);
+        character.getGrowth().addTrait(30, Trait.valkyrie);
+        character.getGrowth().addTrait(35, Trait.overwhelmingPresence);
+        character.getGrowth().addTrait(40, Trait.bitingwords);
+        character.getGrowth().addTrait(45, Trait.commandingvoice);
+        character.getGrowth().addTrait(50, Trait.oblivious);
+        character.getGrowth().addTrait(55, Trait.resurrection);
+
+        preferredAttributes.add(c -> Optional.of(Attribute.Power));
+        preferredAttributes.add(c -> c.getLevel() >= 30 ? Optional.of(Attribute.Ki) : Optional.empty());
         character.body.add(new FacePart(.1, 2.9));
     }
 
@@ -116,27 +114,27 @@ public class Sarah extends BasePersonality {
 
     @Override
     public String bbLiner(Combat c, Character other) {
-        return "<i>They taught that one in self-defense class!</i>";
+        return "<i>\"...\"</i> Sarah silently looks at you, with no hint of remorse in her eyes.";
     }
 
     @Override
     public String nakedLiner(Combat c, Character opponent) {
-        return "While covering herself with her arms, Mei fake-screams <i>What do you think you're doing!?</i>";
+        return "Sarah looks unfazed at being undressed, but you can clearly she a flush creeping into her face.";
     }
 
     @Override
     public String stunLiner(Combat c, Character opponent) {
-        return "<i>Angel... Sorry...</i>";
+        return "<i>\"..!\"</i>";
     }
 
     @Override
     public String taunt(Combat c, Character opponent) {
-        return "<i>Mmm, that's right you're just a little " + opponent.boyOrGirl() + "toy for us. So why don't you just let us do our thing?</i>";
+        return "Sarah simply eyes you with a disdainful look. If looks could kill... well this still probably wouldn't kill you. But it definitely hurts your pride.";
     }
 
     @Override
     public String temptLiner(Combat c, Character opponent) {
-        return "Mei runs her hands all over her body while teasing you, <i>Mmmm you want some of this? Just ask and we'll do as you please.</i>";
+        return "Sarah cups her large breasts and gives you a show. The gap between her placid face and her lewd actions is surprisingly arousing.";
     }
 
     @Override
@@ -170,25 +168,28 @@ public class Sarah extends BasePersonality {
         if (other.human()) {
             if (sarahFought == 0)  {
                 other.setFlag(FOUGHT_SARAH_PET, 1);
-                return Global.format("{self:SUBJECT} waves happily at {other:name-do} <i>Hiya {other:name}, fancy meeting you here! "
-                                + "This is a pretty absurd dream, Angel's a goddess and we're sex fighting on campus... I wonder if I'm just pent up?"
-                                + "Oh well, no point minding it! Since we're doing this, I'm going all out!</i>", self, other);
-            } else if (self.has(Trait.fallenAngel) && sarahFought == 1) {
+                return Global.format("The summoned figure stands up while wobbling on her feet. When she lifts her head, you see that it's Angel's friend Sarah! "
+                                + "<br/>On closer inspection though, you see that the easily-embarassed glasses girl seems to have a completely different air about her. "
+                                + "To tell the truth, She looks rather glassy eyed and unstable. "
+                                + "<br/><br/>You look questioningly at Angel and she sighs "
+                                + "<i>\"Sarah is actually a bit too shy to bring into the games, even unconsciously. "
+                                + "Instead of having her freak out, I thought I'd just have her mind come for the ride. Don't worry, I guarantee that she'll enjoy it.\"</i>", self, other);
+            } else if (self.has(Trait.valkyrie) && sarahFought == 1) {
                 other.setFlag(FOUGHT_SARAH_PET, 2);
-                return Global.format("After {self:SUBJECT} materializes as usual, she notices that her body has changed. "
-                                + "Pitch black feathered wings grow out of her shoulder blades, and a thick demonic tail sprouts from her bum. "
-                                + "With her eyes wide, Mei exclaims <i>Oh wow, what am I supposed to be now? Some kind of fallen angel? "
-                                + "I knew I've been reading too much fantasy smut before bed...</i>", self, other);
-            } else if (self.has(Trait.fallenAngel)) {
-                return Global.format("{self:SUBJECT} opens her eyes and stretches her black wings. "
-                                + "<i>This dream again? Well, it got pretty hot last time, so no complaints from me! So cum again for me will you? "
-                                + "My little demon pussy seems pretty hungry!</i>", self, other);
+                return Global.format("After {self:SUBJECT} materializes as usual from a brillant burst of light, you see that she looks different. "
+                                + "Sarah was always rather tall, but now she looks positively Amazonian. "
+                                + "Subtle but powerful muscles are barely visible under her fleshy body, making her presence larger than ever. "
+                                + "To top it off, a pair of large angelic wings crown her upper back, completing her look as a valkyrie in service to her Goddess. "
+                                + "<br/><br/>"
+                                + "Angel smiles mischievously at you <i>\"Isn't she beautiful? I love Sarah the way she is, but in a fight, a Goddess does need her guardians.\"</i>", self, other);
+            } else if (self.has(Trait.valkyrie)) {
+                return Global.format("{self:SUBJECT} emerges from the pillar of light and stands at attention. "
+                                + "Angel walks over to {self:direct-object} and kisses her on the cheek. <i>\"Sarah dear, let's teach {other:direct-object} the proper way to worship a Goddess.\"<i>", self, other);
             } else {
-                return Global.format("{self:SUBJECT} opens her eyes and takes in the situation. "
-                                + "<i>This dream again? Well, it got pretty hot last time, so no complaints from me!</i>", self, other);
+                return Global.format("{self:SUBJECT} opens her glassy eyes stands silently while Angel coos, <i>\"Mmmm we're going to show you a good time.\"</i>", self, other);
             }
         }
-        return Global.format("{self:SUBJECT} curiously scans the situation and with an approving look from Angel, she gets ready to attack!</i>", self, other);
+        return Global.format("{self:SUBJECT} impassively scans the situation and with an approving look from Angel, she gets ready to attack.</i>", self, other);
     }
 
     @Override
@@ -204,7 +205,7 @@ public class Sarah extends BasePersonality {
     @Override
     public boolean checkMood(Combat c, Emotion mood, int value) {
         switch (mood) {
-            case nervous:
+            case angry:
                 return value >= 80;
             default:
                 return value >= 100;
@@ -213,11 +214,13 @@ public class Sarah extends BasePersonality {
 
     @Override
     public String orgasmLiner(Combat c) {
-        return "Sarah's eyes slam shut in a blissful silent orgasm.";
+        return "Sarah's eyes slam shut in a blissful silent orgasm. "
+                        + "You can clearly tell she's having turned on like hell, but her face remains impassive as usual.";
     }
 
     @Override
     public String makeOrgasmLiner(Combat c, Character target) {
-        return "Sarah looks a bit flushed as <i></i>";
+        return Global.format("Sarah looks a bit flushed as {other:subject-action:cum|cums} hard. "
+                        + "However she does changes neither her blank demeanor nor her stance.", character, target);
     }
 }

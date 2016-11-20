@@ -39,8 +39,13 @@ public class PlaceBlindfold extends Skill {
     }
 
     @Override
+    public int accuracy(Combat c, Character target) {
+        return target.canAct() ? 200 : 60;
+    }
+    
+    @Override
     public boolean resolve(Combat c, Character target) {
-        if (!target.canAct() || target.roll(getSelf(), c, 60)) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             c.write(getSelf(),
                             String.format("%s a blindfold around %s head, covering %s eyes.",
                                             getSelf().subjectAction("snap"), target.nameOrPossessivePronoun(),

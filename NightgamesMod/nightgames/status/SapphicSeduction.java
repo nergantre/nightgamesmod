@@ -6,13 +6,15 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
-import nightgames.stance.StandingOver;
 
-public class Falling extends Status {
-    public Falling(Character affected) {
-        super("Falling", affected);
-        flag(Stsflag.falling);
-        flag(Stsflag.debuff);
+public class SapphicSeduction extends Status {
+    public SapphicSeduction(Character affected) {
+        super("Sapphic Seduction", affected);
+    }
+
+    @Override
+    public String initialMessage(Combat c, boolean replaced) {
+        return "";
     }
 
     @Override
@@ -21,26 +23,16 @@ public class Falling extends Status {
     }
 
     @Override
-    public float fitnessModifier() {
-        return -20;
-    }
-
-    @Override
     public int mod(Attribute a) {
+        if (a == Attribute.Seduction) {
+            return affected.getLevel() / 2;
+        }
         return 0;
     }
 
     @Override
-    public String initialMessage(Combat c, boolean replaced) {
-        return String.format("%s knocked off balance.\n", affected.subjectAction("are", "is"));
-    }
-
-    @Override
-    public int regen(Combat c) {
-        affected.removelist.add(this);
-        c.setStance(new StandingOver(c.getOpponent(affected), affected));
-        affected.add(new Stunned(affected));
-        return 0;
+    public float fitnessModifier() {
+        return 4.0f;
     }
 
     @Override
@@ -95,7 +87,7 @@ public class Falling extends Status {
 
     @Override
     public Status instance(Character newAffected, Character newOther) {
-        return new Falling(newAffected);
+        return new SapphicSeduction(newAffected);
     }
 
     @Override  public JsonObject saveToJson() {
@@ -105,6 +97,11 @@ public class Falling extends Status {
     }
 
     @Override public Status loadFromJson(JsonObject obj) {
-        return new Falling(null);
+        return new SapphicSeduction(null);
+    }
+
+    @Override
+    public int regen(Combat c) {
+        return 0;
     }
 }

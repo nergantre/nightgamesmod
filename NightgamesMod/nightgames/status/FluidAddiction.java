@@ -30,6 +30,7 @@ public class FluidAddiction extends DurationStatus {
         this.magnitude = magnitude;
         activated = 0;
         flag(Stsflag.fluidaddiction);
+        flag(Stsflag.debuff);
         flag(Stsflag.purgable);
     }
 

@@ -17,6 +17,7 @@ public class CockBound extends Status {
         toughness = dc;
         this.binding = binding;
         flag(Stsflag.cockbound);
+        flag(Stsflag.debuff);
     }
 
     @Override

@@ -37,8 +37,13 @@ public class Flick extends Skill {
     }
 
     @Override
+    public int accuracy(Combat c, Character target) {
+        return 90;
+    }
+
+    @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(getSelf(), c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             if (target.has(Trait.brassballs)) {
                 writeOutput(c, Result.weak, target);
             } else {

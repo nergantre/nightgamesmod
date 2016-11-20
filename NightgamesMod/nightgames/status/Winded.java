@@ -17,6 +17,7 @@ public class Winded extends DurationStatus {
         super("Winded", affected, duration);
         flag(Stsflag.stunned);
         flag(Stsflag.purgable);
+        flag(Stsflag.debuff);
     }
 
     @Override
@@ -55,7 +56,7 @@ public class Winded extends DurationStatus {
             affected.addlist.add(new Braced(affected));
         }
         affected.addlist.add(new Wary(affected, 3));
-        affected.heal(c, affected.getStamina().max());
+        affected.heal(c, affected.getStamina().max(), " (Recovered)");
     }
 
     @Override

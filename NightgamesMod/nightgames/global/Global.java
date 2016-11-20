@@ -163,6 +163,7 @@ public class Global {
     public Global(boolean headless) {
         debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
         debug[DebugFlags.DEBUG_PET.ordinal()] = true;
+        debug[DebugFlags.DEBUG_STRATEGIES.ordinal()] = true;
         rng = new Random();
         flags = new HashSet<>();
         players = new HashSet<>();
@@ -348,7 +349,6 @@ public class Global {
         getSkillPool().add(new DarkTendrils(ch));
         getSkillPool().add(new Dominate(ch));
         getSkillPool().add(new FlashStep(ch));
-        getSkillPool().add(new FlyCatcher(ch));
         getSkillPool().add(new Illusions(ch));
         getSkillPool().add(new Glamour(ch));
         getSkillPool().add(new LustAura(ch));
@@ -502,6 +502,9 @@ public class Global {
         getSkillPool().add(new SummonYui(ch));
         getSkillPool().add(new Simulacrum(ch));
         getSkillPool().add(new PetThreesome(ch));
+        getSkillPool().add(new FlyCatcher(ch));
+        getSkillPool().add(new Honeypot(ch));
+        getSkillPool().add(new TakeOffShoes(ch));
 
         if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
             getSkillPool().add(new SelfStun(ch));
@@ -1421,6 +1424,10 @@ public class Global {
                 return "master";
             }
         });
+
+        matchActions.put("girl", (self, first, second, third) -> {
+                return self.guyOrGirl();
+        });
     }
 
     public static String format(String format, Character self, Character target, Object... strings) {
@@ -1521,6 +1528,9 @@ public class Global {
 
     private static Match buildMatch(Collection<Character> combatants, Modifier mod) {
         if (mod.name().equals("ftc")) {
+            if (combatants.size() < 5) {
+                return new Match(combatants, new NoModifier());
+            }
             flag(Flag.FTC);
             return new FTCMatch(combatants, ((FTCModifier) mod).getPrey());
         } else {

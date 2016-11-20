@@ -22,6 +22,7 @@ public class PartiallyCorrupted extends DurationStatus {
         counter = 1;
         this.cause = cause;
         flag(Stsflag.partiallyCorrupted);
+        flag(Stsflag.debuff);
         flag(Stsflag.purgable);
     }
 

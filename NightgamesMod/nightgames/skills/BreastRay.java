@@ -42,7 +42,7 @@ public class BreastRay extends Skill {
         boolean permanent = Global.random(20) == 0 && (getSelf().human() || c.shouldPrintReceive(target, c))
                         && !target.has(Trait.stableform);
         writeOutput(c, permanent ? 1 : 0, Result.normal, target);
-        target.add(c, new Hypersensitive(target));
+        target.add(c, new Hypersensitive(target, 10));
         BreastsPart part = target.body.getBreastsBelow(BreastsPart.f.size);
         if (permanent) {
             if (part != null) {

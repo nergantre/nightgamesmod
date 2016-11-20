@@ -19,7 +19,7 @@ public class CharacterPet extends Pet {
         if (prototype instanceof NPC) {
             NPCPetCharacter self;
             try {
-                self = new NPCPetCharacter(getName(), this, (NPC)prototype, power);
+                self = new NPCPetCharacter(getName(), this, (NPC)prototype, getPower());
                 setSelf(self);
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
@@ -27,7 +27,7 @@ public class CharacterPet extends Pet {
         } else if (prototype instanceof Player) {
             PlayerPetCharacter self;
             try {
-                self = new PlayerPetCharacter(getName(), this, (Player)prototype, power);
+                self = new PlayerPetCharacter(getName(), this, (Player)prototype, getPower());
                 setSelf(self);
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();

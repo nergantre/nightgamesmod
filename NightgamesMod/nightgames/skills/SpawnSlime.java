@@ -2,7 +2,6 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.items.Item;
@@ -41,14 +40,8 @@ public class SpawnSlime extends Skill {
         getSelf().consume(Item.Battery, 5);
         int power = 10 + getSelf().get(Attribute.Science) / 2;
         int ac = 3 + getSelf().get(Attribute.Science) / 10;
-        if (getSelf().has(Trait.leadership)) {
-            power += 5;
-        }
-        if (getSelf().has(Trait.tactician)) {
-            ac += 3;
-        }
         writeOutput(c, Result.normal, target);
-        c.addPet(new Slime(getSelf(), power, ac).getSelf());
+        c.addPet(getSelf(), new Slime(getSelf(), power, ac).getSelf());
         return true;
     }
 

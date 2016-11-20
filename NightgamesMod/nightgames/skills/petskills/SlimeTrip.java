@@ -26,13 +26,13 @@ public class SlimeTrip extends SimpleEnemySkill {
     }
 
     @Override
-    public int accuracy(Combat c) {
+    public int accuracy(Combat c, Character target) {
         return 50;
     }
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(getSelf(), c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             c.write(getSelf(), Global.format("{other:SUBJECT-ACTION:slip|slips} on {self:name-do} as it clings to {other:possessive} feet, losing {other:possessive} balance.", 
                             getSelf(), target));
             target.add(new Falling(target));

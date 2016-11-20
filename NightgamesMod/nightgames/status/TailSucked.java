@@ -22,6 +22,7 @@ public class TailSucked extends Status {
         requirements.add((c, self, other) -> c != null && self != null && other != null
                         && new TailSuck(other).usable(c, self));
         flag(Stsflag.bound);
+        flag(Stsflag.debuff);
         flag(Stsflag.tailsucked);
         flag(Stsflag.inserted);
     }

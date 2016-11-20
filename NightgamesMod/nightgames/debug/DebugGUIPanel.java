@@ -129,10 +129,19 @@ public class DebugGUIPanel extends JPanel {
         consoleCommands.add(new DebugCommand("(\\w+)\\.list", (output, list) -> {
             try {
                 Character target = Global.getCharacterByType(list.get(1));
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < target.traits.size(); i++) {
+                    sb.append(target.traits.get(i));
+                    if (i % 4 == 2) {
+                        sb.append("\n");
+                    } else if (i != target.traits.size() - 1) {
+                        sb.append(", ");
+                    }
+                }
                 String attString = target.att.entrySet().stream().map(e -> String.format("%s: %d", e.getKey(), e.getValue())).collect(Collectors.joining("\n"));
-                output.setText(String.format("Stamina [%s]\nArousal [%s]\nMojo [%s]\nWillpower [%s]\n%s",
+                output.setText(String.format("Stamina [%s]\nArousal [%s]\nMojo [%s]\nWillpower [%s]\n%s\n%s",
                                 target.getStamina().toString(), target.getArousal().toString(),
-                                target.getMojo().toString(), target.getWillpower().toString(), attString));
+                                target.getMojo().toString(), target.getWillpower().toString(), attString, sb.toString()));
             } catch (NullPointerException e) {
                 output.setText(list.get(1) + " is not a valid charater");
             }

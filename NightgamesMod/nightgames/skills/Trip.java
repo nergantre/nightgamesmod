@@ -27,7 +27,7 @@ public class Trip extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(getSelf(), c, accuracy(c)) && getSelf().check(Attribute.Cunning, target.knockdownDC())) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             if (isSlime()) {
                 writeOutput(c, Result.special, target);
             } else {
@@ -66,7 +66,7 @@ public class Trip extends Skill {
     }
 
     @Override
-    public int accuracy(Combat c) {
+    public int accuracy(Combat c, Character target) {
         return Math.round(Math.max(
                         Math.min(150, 2.5f
                                         * (getSelf().get(Attribute.Cunning)

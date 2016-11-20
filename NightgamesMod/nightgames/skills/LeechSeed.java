@@ -36,7 +36,7 @@ public class LeechSeed extends Skill {
     
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (!target.canAct() || target.roll(getSelf(), c, accuracy(c))) {
+        if (!target.canAct() || target.roll(getSelf(), c, accuracy(c, target))) {
             Result results = Result.anal;
             if (!target.is(Stsflag.fucked) && target.hasPussy()) {
                 results = Result.normal;
@@ -69,7 +69,7 @@ public class LeechSeed extends Skill {
         return 5;
     }
 
-    public int accuracy(Combat c) {
+    public int accuracy(Combat c, Character target) {
         return 15;
     }
 
@@ -80,7 +80,7 @@ public class LeechSeed extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You try to plant a seed in " + target.directObject() + ", but she dodges out of the way.";
+            return "You try to plant a seed in " + target.directObject() + ", but she dodges out of the way (maybe you should pin her down?).";
         }
         String hole = "pussy";
         if (modifier == Result.anal) {

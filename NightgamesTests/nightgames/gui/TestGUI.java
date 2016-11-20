@@ -44,7 +44,7 @@ public class TestGUI extends GUI {
     public void clearCommand() {}
 
     @Override
-    public void addSkill(Skill action, Combat com) {}
+    public void addSkill(Combat com, Skill action, Character target) {}
 
     @Override
     public void next(Combat combat) {}

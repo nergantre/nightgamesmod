@@ -5,7 +5,6 @@ import nightgames.characters.Character;
 import nightgames.characters.CharacterSex;
 import nightgames.characters.NPC;
 import nightgames.characters.Player;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -43,12 +42,6 @@ public class Simulacrum extends Skill {
         Pet pet;
         int power = Math.max(10, getSelf().getLevel() - 2);
         int ac = 4 + power / 3;
-        if (getSelf().has(Trait.leadership)) {
-            power += 5;
-        }
-        if (getSelf().has(Trait.tactician)) {
-            ac += 3;
-        }
 
         String cloneName = String.format("%s clone", target.nameOrPossessivePronoun());
         if (target instanceof Player) {
@@ -62,7 +55,7 @@ public class Simulacrum extends Skill {
         pet.getSelf().body.autoTG();
         CharacterSex finalSex = pet.getSelf().body.guessCharacterSex();
         writeOutput(c, Result.valueOf(finalSex.name()), target);
-        c.addPet(pet.getSelf());
+        c.addPet(getSelf(), pet.getSelf());
 
         return true;
     }

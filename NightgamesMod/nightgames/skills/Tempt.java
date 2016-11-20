@@ -28,7 +28,7 @@ public class Tempt extends Skill {
 
         if (c.getStance().front(getSelf())) {
             // opponent can see self
-            m += 3 * getSelf().body.getHotness(target);
+            m += 2 * getSelf().body.getHotness(target);
         }
 
         if (target.has(Trait.imagination)) {

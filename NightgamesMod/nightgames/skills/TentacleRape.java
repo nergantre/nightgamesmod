@@ -41,9 +41,14 @@ public class TentacleRape extends Skill {
     BodyPart tentacles = null;
 
     @Override
+    public int accuracy(Combat c, Character target) {
+        return 90;
+    }
+
+    @Override
     public boolean resolve(Combat c, Character target) {
         tentacles = getSelf().body.getRandom("tentacles");
-        if (target.roll(getSelf(), c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             if (target.mostlyNude()) {
                 int m = 2 + Global.random(4);
                 if (target.bound()) {

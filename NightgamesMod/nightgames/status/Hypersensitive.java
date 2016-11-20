@@ -9,8 +9,12 @@ import nightgames.combat.Combat;
 
 public class Hypersensitive extends DurationStatus {
     public Hypersensitive(Character affected) {
-        super("Hypersensitive", affected, 20);
+        this(affected, 20);
+    }
+    public Hypersensitive(Character affected, int duration) {
+        super("Hypersensitive", affected, duration);
         flag(Stsflag.hypersensitive);
+        flag(Stsflag.debuff);
         flag(Stsflag.purgable);
     }
 
@@ -50,12 +54,12 @@ public class Hypersensitive extends DurationStatus {
 
     @Override
     public int damage(Combat c, int x) {
-        return 0;
+        return x / 2;
     }
 
     @Override
     public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x) {
-        return x / 3;
+        return x / 2;
     }
 
     @Override

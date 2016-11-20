@@ -11,6 +11,7 @@ public class Straddle extends Skill {
     public Straddle(Character self) {
         super("Mount", self);
         addTag(SkillTag.positioning);
+        addTag(SkillTag.petDisallowed);
     }
 
     @Override

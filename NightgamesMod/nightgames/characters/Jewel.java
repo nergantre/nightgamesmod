@@ -119,7 +119,7 @@ public class Jewel extends BasePersonality {
 
         character.addCombatScene(new CombatScene((c, self, other) -> {
             return character.getLevel() >= 10 && !Global.checkFlag(JEWEL_MENTAL_FOCUS) 
-                            && !Global.checkFlag(JEWEL_PHYSICAL_FOCUS);
+                            && !Global.checkFlag(JEWEL_PHYSICAL_FOCUS) && (Global.checkFlag(JEWEL_MARTIAL_FOCUS) || Global.checkFlag(JEWEL_ANAL_FOCUS));
         }, (c, self, player) -> " <i>\"So, " + player.name + ". You're going to be doing what I tell"
                         + " you. No, don't interrupt. You are. My question is, are you just going"
                         + " to listen to me, or am I going to have to physically force you?\"</i>", Arrays.asList(
@@ -134,6 +134,7 @@ public class Jewel extends BasePersonality {
                             } else {
                                 growth.addTrait(50, Trait.unquestionable);
                             }
+                            growth.addTrait(55, Trait.overwhelmingPresence);
                             return true;
                         }),
                         new CombatSceneChoice("Yeah. No. Try me.", (c, self, other) -> {
@@ -149,10 +150,11 @@ public class Jewel extends BasePersonality {
                             } else {
                                 growth.addTrait(50, Trait.edger);
                             }
+                            growth.addTrait(55, Trait.oblivious);
                             return true;
                         })
         )));
-        
+
         preferredAttributes.add(c -> c.get(Attribute.Ki) < 15 ? Optional.of(Attribute.Ki) : Optional.empty());
         preferredAttributes.add(c -> c.get(Attribute.Ki) >= 15 && c.get(Attribute.Fetish) < 100
                         ? Optional.of(Attribute.Fetish) : Optional.empty());
@@ -163,10 +165,11 @@ public class Jewel extends BasePersonality {
         growth.addTrait(1, Trait.fitnessNut);
         growth.addTrait(4, Trait.QuickRecovery);
         growth.addTrait(7, Trait.analTraining1);
-        growth.addTrait(10, Trait.powerfulhips);
+        growth.addTrait(10, Trait.ladysGirl);
         // 11 - Choice 1, trait 1
-        growth.addTrait(13, Trait.shameless);
-        growth.addTrait(16, Trait.limbTraining1);
+        growth.addTrait(13, Trait.powerfulhips);
+        growth.addTrait(16, Trait.shameless);
+        growth.addTrait(19, Trait.limbTraining1);
         growth.addTrait(19, Trait.oiledass);
         growth.addTrait(20, Trait.dominatrix);
         growth.addTrait(22, Trait.alwaysready);
@@ -187,13 +190,13 @@ public class Jewel extends BasePersonality {
         growth.addTrait(49, Trait.smqueen);
         // 50 - Choice 2, trait 3
         growth.addTrait(52, Trait.autonomousAss);
-
+        growth.addTrait(55, Trait.overwhelmingPresence);
     }
 
     @Override
     public void rest(int time) {
         if (character.rank >= 1) {
-            if (!character.has(Trait.fighter) && character.money >= 1000) {
+            if (!character.has(Trait.fighter) && (Global.checkFlag(JEWEL_MARTIAL_FOCUS) || Global.checkFlag(JEWEL_ANAL_FOCUS))) {
                 advance();
             }
         }

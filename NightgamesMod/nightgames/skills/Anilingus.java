@@ -69,7 +69,7 @@ public class Anilingus extends Skill {
             result = Result.reverse;
             m += Global.random(6);
             n = 10;
-        } else if (!c.getStance().mobile(target) || target.roll(getSelf(), c, accuracy(c))) {
+        } else if (!c.getStance().mobile(target) || target.roll(getSelf(), c, accuracy(c, target))) {
             m += Global.random(6);
             if (getSelf().has(Trait.silvertongue)) {
                 m += 4;
@@ -104,7 +104,7 @@ public class Anilingus extends Skill {
     }
 
     @Override
-    public int accuracy(Combat c) {
+    public int accuracy(Combat c, Character target) {
         return 75;
     }
 

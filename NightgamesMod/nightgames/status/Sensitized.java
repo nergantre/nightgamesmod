@@ -20,6 +20,7 @@ public class Sensitized extends DurationStatus {
         this.magnitude = magnitude;
         this.maximum = maximum;
         flag(Stsflag.sensitized);
+        flag(Stsflag.debuff);
         flag(Stsflag.purgable);
     }
 

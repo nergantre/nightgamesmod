@@ -69,7 +69,7 @@ public class AssFuck extends Fuck {
         }
         c.write(getSelf(), Global.format(premessage, getSelf(), target));
 
-        int m = Global.random(5);
+        int m = Global.random(10, 15);
         if (getSelf().has(Trait.strapped) && getSelf().has(Item.Strapon2)) {
             m += 3;
         }

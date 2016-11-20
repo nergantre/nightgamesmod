@@ -33,7 +33,7 @@ public class OrgasmicTighten extends Thrust {
 
         int m = Global.random(25, 40) + Math.min(getSelf().get(Attribute.Power) / 3, 20);
         result[0] = m;
-        result[1] = 1;
+        result[1] = 0;
 
         return result;
     }

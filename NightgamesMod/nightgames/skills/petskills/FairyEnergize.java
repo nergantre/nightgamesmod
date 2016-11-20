@@ -18,13 +18,13 @@ public class FairyEnergize extends SimpleMasterSkill {
     }
 
     @Override
-    public int accuracy(Combat c) {
+    public int accuracy(Combat c, Character target) {
         return 80;
     }
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(getSelf(), c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             int m = Global.random(17, 24) + getSelf().getLevel() / 2;
             c.write(getSelf(), Global.format("{self:SUBJECT} flies around {other:name-do}, channeling energy into {other:direct-object}.", getSelf(), target));
             target.buildMojo(c, m, getSelf().getName());

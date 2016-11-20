@@ -29,6 +29,10 @@ public class Dissolve extends Skill {
                         && target.outfit.getRandomShreddableSlot() != null && !c.getStance().prone(getSelf());
     }
 
+    public int accuracy(Combat c, Character target) {
+        return getSelf().get(Attribute.Slime) > 0 || getSelf().has(Item.Aersolizer) ? 200 : 80;
+    }
+
     @Override
     public boolean resolve(Combat c, Character target) {
         ClothingSlot toShred = null;
@@ -48,7 +52,7 @@ public class Dissolve extends Skill {
             if (getSelf().has(Item.Aersolizer)) {
                 writeOutput(c, Result.special, target);
                 shred(target, toShred);
-            } else if (target.roll(getSelf(), c, accuracy(c))) {
+            } else if (target.roll(getSelf(), c, accuracy(c, target))) {
                 writeOutput(c, Result.normal, target);
                 shred(target, toShred);
             } else {

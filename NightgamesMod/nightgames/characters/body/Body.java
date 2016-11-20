@@ -609,7 +609,7 @@ public class Body implements Cloneable {
                 c.writeSystemMessage(battleString);
             }
         }
-        double percentPleasure = result / character.getArousal().max() * 100;
+        double percentPleasure = 100.0 * result / character.getArousal().max();
         if (character.has(Trait.sexualDynamo) && percentPleasure >= 5 && Global.random(4) == 0) {
             c.write(character, Global.format("Sexual pleasure seems only to feed {self:name-possessive} ", character, opponent));
             character.buildMojo(c, (int)Math.floor(percentPleasure));
@@ -618,7 +618,7 @@ public class Body implements Cloneable {
             Character voyeur = c.getOpponent(character);
             c.write(character, Global.format("{self:NAME-POSSESSIVE} moans as {other:subject-action:make|makes} a show of pleasing {other:possessive} {self:master} "
                             + "turns %s on immensely.", character, opponent, voyeur.nameDirectObject()));
-            voyeur.tempt(c, character, target, result);
+            voyeur.tempt(c, character, Math.max(Global.random(14, 20), result / 3));
         }
 
         character.resolvePleasure(result, c, opponent, target, with);

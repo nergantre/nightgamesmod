@@ -74,12 +74,14 @@ public class Mei extends BasePersonality {
         character.getGrowth().addBodyPart(30, PussyPart.succubus);
         character.getGrowth().addBodyPart(30, TailPart.demonic);
         character.getGrowth().addBodyPart(30, WingsPart.fallenangel);
-        character.getGrowth().addTrait(35, Trait.fallenAngel);
-        character.getGrowth().addTrait(40, Trait.energydrain);
-        character.getGrowth().addTrait(45, Trait.soulsucker);
-        character.getGrowth().addTrait(50, Trait.lacedjuices);
-        character.getGrowth().addTrait(55, Trait.vaginaltongue);
-        character.getGrowth().addTrait(60, Trait.carnalvirtuoso);
+        character.getGrowth().addTrait(30, Trait.fallenAngel);
+        character.getGrowth().addTrait(35, Trait.energydrain);
+        character.getGrowth().addTrait(40, Trait.soulsucker);
+        character.getGrowth().addTrait(45, Trait.lacedjuices);
+        character.getGrowth().addTrait(50, Trait.vaginaltongue);
+        character.getGrowth().addTrait(55, Trait.carnalvirtuoso);
+        preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
+
         preferredAttributes.add(c -> c.getLevel() >= 30 ? Optional.of(Attribute.Dark) : Optional.empty());
         // mostly feminine face, cute but not quite at Angel's level
         character.body.add(new FacePart(.1, 2.9));
@@ -121,7 +123,7 @@ public class Mei extends BasePersonality {
 
     @Override
     public String nakedLiner(Combat c, Character opponent) {
-        return "While covering herself with her arms, Mei fake-screams <i>What do you think you're doing!?</i>";
+        return "While covering herself with her arms, Mei fake-screams <i>What do you think you're doing!?</i> Her lewd smile however speaks volumes about her true thoughts.";
     }
 
     @Override
@@ -131,7 +133,7 @@ public class Mei extends BasePersonality {
 
     @Override
     public String taunt(Combat c, Character opponent) {
-        return "<i>Mmm, that's right you're just a little " + opponent.boyOrGirl() + "toy for us. So why don't you just let us do our thing?</i>";
+        return "<i>Mmm that's right, you're just a little " + opponent.boyOrGirl() + "toy for us. So why don't you just let us do our thing?</i>";
     }
 
     @Override
@@ -163,22 +165,28 @@ public class Mei extends BasePersonality {
         return "";
     }
 
-    private static String FOUGHT_MEI_PET = "FOUGHT_SARAH_PET";
+    private static String FOUGHT_MEI_PET = "FOUGHT_MEI_PET";
+
     @Override
     public String startBattle(Character self, Character other) {
         int meiFought = other.getFlag(FOUGHT_MEI_PET);
         if (other.human()) {
             if (meiFought == 0)  {
                 other.setFlag(FOUGHT_MEI_PET, 1);
-                return Global.format("{self:SUBJECT} waves happily at {other:name-do} <i>Hiya {other:name}, fancy meeting you here! "
-                                + "This is a pretty absurd dream, Angel's a goddess and we're sex fighting on campus... I wonder if I'm just pent up?"
-                                + "Oh well, no point minding it! Since we're doing this, I'm going all out!</i>", self, other);
+                return Global.format("Standing up in the fading light, {self:SUBJECT} looks around bewilderedly before catching sight of you and Angel. "
+                                + "{self:SUBJECT} waves happily at {other:name-do} <i>\"Hiya {other:name}, fancy meeting you here! Huh are we on campus? "
+                                + "I seem to be half naked and Angel has wings? Wait what's going on?\"</i> "
+                                + "<br/><br/>"
+                                + "When neither you nor Angel deigned to respond, Mei just shrugs <i>\"I get it. This is a pretty absurd dream. I wonder if I'm just pent up? "
+                                + "Oh well, no point in minding the details. Since we're doing this, I'm going all out!\"</i>"
+                                + "<br/><br/>"
+                                + "While you're glad she's so adaptable, it looks like the fight's become a two on one!", self, other);
             } else if (self.has(Trait.fallenAngel) && meiFought == 1) {
                 other.setFlag(FOUGHT_MEI_PET, 2);
                 return Global.format("After {self:SUBJECT} materializes as usual, she notices that her body has changed. "
                                 + "Pitch black feathered wings grow out of her shoulder blades, and a thick demonic tail sprouts from her bum. "
-                                + "With her eyes wide, Mei exclaims <i>Oh wow, what am I supposed to be now? Some kind of fallen angel? "
-                                + "I knew I've been reading too much fantasy smut before bed...</i>", self, other);
+                                + "With her eyes wide, Mei exclaims <i>\"Oh wow, what am I supposed to be now? Some kind of fallen angel? "
+                                + "I knew I've been reading too much fantasy smut before bed...\"</i>", self, other);
             } else if (self.has(Trait.fallenAngel)) {
                 return Global.format("{self:SUBJECT} opens her eyes and stretches her black wings. "
                                 + "<i>This dream again? Well, it got pretty hot last time, so no complaints from me! So cum again for me will you? "
@@ -213,7 +221,7 @@ public class Mei extends BasePersonality {
 
     @Override
     public String orgasmLiner(Combat c) {
-        return "Mei groans as she cums <i>\"Oh fuuuuckk!\"</i>";
+        return "Mei yelps as she cums <i>\"Oh fuuuuckk!\"</i>";
     }
 
     @Override

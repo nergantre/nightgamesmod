@@ -7,6 +7,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.pet.PetCharacter;
 import nightgames.skills.damage.DamageType;
 import nightgames.status.Abuff;
 import nightgames.status.CockBound;
@@ -282,7 +283,13 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                 } else {
                     strength = 10 + self.get(Attribute.Dark) / 2;
                 }
-                opponent.drain(c, self, (int) self.modifyDamage(DamageType.drain, opponent, strength));
+                strength = (int) self.modifyDamage(DamageType.drain, opponent, strength);
+                opponent.drain(c, self, strength);
+                if (self.isPet()) {
+                    Character master = ((PetCharacter) self).getSelf().owner();
+                    c.write(self, Global.format("The stolen strength seems to flow through {self:direct-object} and into {self:possessive} {other:master}.", self, master));
+                    master.heal(c, strength);
+                }
                 for (int i = 0; i < 10; i++) {
                     Attribute stolen = (Attribute) opponent.att.keySet()
                                                                .toArray()[Global.random(opponent.att.keySet()
@@ -291,6 +298,10 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                         int stolenStrength = Math.min(strength / 10, opponent.get(stolen));
                         opponent.add(c, new Abuff(opponent, stolen, -stolenStrength, 20));
                         self.add(c, new Abuff(self, stolen, stolenStrength, 20));
+                        if (self.isPet()) {
+                            Character master = ((PetCharacter) self).getSelf().owner();
+                            master.add(c, new Abuff(self, stolen, stolenStrength, 20));
+                        }
                         break;
                     }
                 }
@@ -388,6 +399,11 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                 }
                 opponent.loseMojo(c, strength);
                 self.buildMojo(c, strength);
+                if (self.isPet()) {
+                    Character master = ((PetCharacter) self).getSelf().owner();
+                    c.write(self, Global.format("The energy seems to flow through {self:direct-object} and into {self:possessive} {other:master}.", self, master));
+                    master.buildMojo(c, strength);
+                }
             } else {
                 message = String.format(
                                 "%s tattoos shine with an eldritch light, but they do not seem to be able to affect %s only partially-organic %s",

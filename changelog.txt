@@ -1,4 +1,37 @@
 2.4.0
+Balance changes:
+- Skills now will display how accurate they are when you hover over them
+- Footjob now is less accurate (90 -> 80% base), but does much more pleasure damage (12-20 base)
+	- Now 100% accurate when opponent has a foot fetish
+- Bunshin assault and bunshin service now has a lower accuracy but more clones summoned (each clone's accuracy is rolled separately)
+	- Now costs 2 mojo per clone, and maximum of 15 clones at 30 ninjitsu
+- Use Dildo, Use Onahole, Kiss, Handjob and Finger now has 30 -> 50 base accuracy (100 when close to each other)
+	- Romantic nerfed to only add 40 -> 20 base accuracy (Kiss still has 70 base like before if you have the trait)
+- Knee now has 90 -> 80 accuracy
+- Lick nipples and suckle now has 90 -> 70 accuracy when neutral, but guaranteed when closer
+- Throw needle now has 70 base accuracy
+- Aphrodisiac, Sedate, and sensitize have all been nerfed to 65% accuracy base, guaranteed with Aersolizer
+	- Dissolve has been nerfed to 80%, guaranteed with Aersolizer
+	- Sedate has been increased to 50 exhaustion damage and 35 mojo damage
+	- Aphrodisiac has been increased to 10 arousal damage per turn, lasting up to 8 turns (scaled by biological damage).
+		- Aphrodisiac with a succubus pussy is no longer guaranteed without an Aersolizer
+	- Hypersensitive now increases pleasure damage taken by 30% -> 50%
+		- Now also increases pain by 50%
+		- Hypersensitive from ticklemonster now only lasts 5 turns. Hypersensitive from breast and cock growth only lasts for 10 turns.
+- Tortoise wrap no longer requires the attacker to have an active bondage fetish to use
+- Sweet scent no longer always misses (wtf)
+- Trip now has only one cunning check instead of two
+- Pussy training and cock training has been merged into sex training
+- Beguiling breasts now entrances you for 50 turns instead of lasting for 4 turns
+	- Beguiling breasts is now an aura, and can work on opposing pets
+- Upon orgasming, all mindgames status effects will be now removed.
+- Nymphomania now only has a percent chance of restoring willpower upon orgasming if you not also feral.
+- The footfetish weakness has been made to increase your footfetish magnitude during a fight while the opponent has no shoes on or have exposed shoes.
+- The take off shoes skill can now be used to tempt anyone that has a footfetish
+- Buffed insertion damage for fuck skills (the insertion trait did not change)
+- Assjob base damage buffed from 4-7 to 10-14
+	- This is increased by 3 if your bottom is naked and by 3 again if the opponent's crotch is open.
+
 New:
 - Completely reworked mojo. You now do not gain mojo per fight or level.
 	- Instead everyone starts with a set amount of maximum mojo that they will use for the rest of the game, barring certain traits.
@@ -18,6 +51,60 @@ New:
 			- MFM Double Penetration
 - Changed how combat works. After each phase of combat, you advance the text by hitting next instead of all the text hitting you at once.
 - Changed how leveldowns work. Each level up is saved now, so that when you level down you get to exactly where you were before instead of randomly losing traits or attributes.
+- Flycatcher can now be used with 9 Ki or 18 Cunning
+	- Now instead of instantly downing the pet, it has a huge pain damage (30 - 50) targeted to a Pet
+	- Now costs 25% of your maximum stamina to use
+- New skill HoneyPot
+	- can be used with 9 Dark or 18 Seduction
+	- Does huge pleasure damage (30 - 50) targeted to a pet.
+- Jewel and Angel has been reworked
+	- At levels 10 and 20, after combat with the player, they will ask the player for your opinion on what she should focus on. The choice will influence what attributes and traits she will get upon leveling up.
+- Cassie, Jewel, and Angel will now not advance into their classes until you pick their respective level 10 decision. They now also do not need 1000$ to advance (no idea why this was there, they don't even spend it...)
+- Added new traits
+	Angel: 
+	- Last Stand
+	- Sexual Dynamo
+	- Inspirational
+	- Sacrosanct
+	- Mandate of Heaven
+	- Piety
+	- Genuflection
+	- Showmanship
+	- Apostles
+	- Devotee Fervor
+	- Congregation
+
+	Angel's pet only traits
+	- Valkyire
+	- Oblivious
+	- Overwhelming presence
+	- Resurrection
+	- Kabbalah
+	- Healer
+	- Supplicant
+	- Protective
+	- Fallen Angel
+
+	Jewel (from dndw):
+	- Powerful cheeks
+	- Tempting ass
+	- Disabling blows
+	- Takedown
+	- Indomitable
+	- Confident dom
+	- Draining ass
+	- Edger
+	- Commanding Voice
+	- Mental Fortress
+	- Bewitching bottom
+	- Unquestionable
+	- Grapper
+	- Lady's Girl (I added this one, I found Jewel way too weak vs girls, especially when taking the ass fuck line)
+		- Adds level / 2 Seduction when fighting someone without a penis
+
+Bug fixes:
+- Fixed a bug where you could be made to orgasm in a simulation and finish the match because of it. (woahdude)
+- Fixed a bug where if you drastically outleveled someone, moves would be very inaccurate (yes wtf)
 
 2.3.3
 Balance changes:

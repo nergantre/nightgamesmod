@@ -26,6 +26,7 @@ public class AssJob extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().canAct() && target.hasDick() && selfNakedOrUnderwear()
+                        && !c.getStance().havingSex(c, target)
                         && (c.getStance().behind(target)
                                         || (c.getStance().en == Stance.reversemount && c.getStance().dom(getSelf()))
                                         || c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf())
@@ -38,10 +39,15 @@ public class AssJob extends Skill {
     }
 
     @Override
+    public int accuracy(Combat c, Character target) {
+        return c.getStance().behind(target) ? 200 : 75;
+    }
+
+    @Override
     public boolean resolve(Combat c, Character target) {
         if (c.getStance().behind(target)) {
             writeOutput(c, Result.special, target);
-            int m = 4 + Global.random(4);
+            int m = Global.random(10, 14);
             int fetishChance = 20 + getSelf().get(Attribute.Fetish) / 2;
             if (target.crotchAvailable()) {
                 if (getSelf().crotchAvailable()) {
@@ -60,7 +66,7 @@ public class AssJob extends Skill {
             if (Global.random(100) < fetishChance) {
                 target.add(c, new BodyFetish(target, getSelf(), "ass", .1 + getSelf().get(Attribute.Fetish) * .05));
             }
-        } else if (target.roll(getSelf(), c, accuracy(c))) {
+        } else if (target.roll(getSelf(), c, accuracy(c, target))) {
             if (c.getStance().en == Stance.reversemount) {
                 writeOutput(c, Result.strong, target);
                 int m = 4 + Global.random(4);

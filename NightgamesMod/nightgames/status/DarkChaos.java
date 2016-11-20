@@ -18,6 +18,7 @@ public class DarkChaos extends Status {
 
     public DarkChaos() {
         super("Dark Chaos", Global.getPlayer());
+        flag(Stsflag.debuff);
     }
 
     @Override

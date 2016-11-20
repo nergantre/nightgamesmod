@@ -30,7 +30,7 @@ public class CoiledSex extends FemdomSexStance {
 
     @Override
     public String image() {
-        return "coiledsex.png";
+        return "coiledsex.jpg";
     }
 
     @Override

@@ -15,6 +15,7 @@ public class Lethargic extends DurationStatus {
         super("Lethargic", affected, duration);
         this.magnitude = magnitude;
         flag(Stsflag.lethargic);
+        flag(Stsflag.debuff);
         flag(Stsflag.purgable);
     }
 
