@@ -14,7 +14,7 @@ public class GoblinDenial extends SimpleMasterSkill {
 
     @Override
     public int getMojoCost(Combat c) {
-        return 5;
+        return 20;
     }
 
     @Override

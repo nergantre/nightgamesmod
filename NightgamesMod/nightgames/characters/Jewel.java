@@ -118,7 +118,7 @@ public class Jewel extends BasePersonality {
         )));
 
         character.addCombatScene(new CombatScene((c, self, other) -> {
-            return character.getLevel() >= 10 && !Global.checkFlag(JEWEL_MENTAL_FOCUS) 
+            return character.getLevel() >= 20 && !Global.checkFlag(JEWEL_MENTAL_FOCUS) 
                             && !Global.checkFlag(JEWEL_PHYSICAL_FOCUS) && (Global.checkFlag(JEWEL_MARTIAL_FOCUS) || Global.checkFlag(JEWEL_ANAL_FOCUS));
         }, (c, self, player) -> " <i>\"So, " + player.name + ". You're going to be doing what I tell"
                         + " you. No, don't interrupt. You are. My question is, are you just going"

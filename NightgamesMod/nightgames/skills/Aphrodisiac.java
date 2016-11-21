@@ -112,11 +112,10 @@ public class Aphrodisiac extends Skill {
                             + getSelf().possessivePronoun() + " dirty move.";
         } else {
             return "You uncap a small bottle of Aphrodisiac and splash it in " + target.name()
-                            + "'s face. For a second, " + target.possessivePronoun()
-                            + "'s just surprised, but gradually a growing desire " + "starts to make "
+                            + "'s face. For a second, " + target.pronoun()
+                            + " is just surprised, but gradually a growing desire " + "starts to make "
                             + target.directObject() + " weak in the knees.";
         }
-
     }
 
     @Override

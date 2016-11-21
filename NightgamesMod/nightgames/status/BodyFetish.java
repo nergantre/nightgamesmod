@@ -200,7 +200,7 @@ public class BodyFetish extends DurationStatus {
     @Override
     public int regen(Combat c) {
         if (magnitude > .25) {
-            magnitude = Math.max(.25, magnitude - .02);
+            magnitude = Math.max(.25, magnitude - .01);
         }
         return 0;
     }

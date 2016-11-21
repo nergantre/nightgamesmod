@@ -1,3 +1,11 @@
+2.4.2
+- Made Jewel's level 20 focus actually trigger at lvl 20 instead of 10
+
+2.4.1
+- Fixed a bug where stance images were being displayed for non-observed fights
+- Decreased Jewel's willingness to spam edge
+- Fixed some typos
+
 2.4.0
 Balance changes:
 - MojoMaster now gives you +20 maximum mojo (New since rc1)

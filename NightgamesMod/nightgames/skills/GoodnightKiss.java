@@ -75,4 +75,8 @@ public class GoodnightKiss extends Skill {
         return null;
     }
 
+    @Override
+    public boolean makesContact() {
+        return true;
+    }
 }

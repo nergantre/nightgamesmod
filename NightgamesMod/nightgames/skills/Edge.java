@@ -27,15 +27,15 @@ public class Edge extends Skill {
         return c.getStance().reachBottom(getSelf())
                         && target.crotchAvailable()
                         && target.hasDick() && getSelf().canAct()
-                        && (!c.getStance().inserted(target) || c.getStance().en == Stance.anal);
+                        && !c.getStance().havingSex(c);
     }
 
     @Override
     public float priorityMod(Combat c) {
-        float mod = 3.f;
+        float mod = 0.f;
         if (getSelf().has(Trait.dexterous) || getSelf().has(Trait.defthands) ||
                         getSelf().has(Trait.limbTraining1)) {
-            mod += 2.f;
+            mod += .5f;
         }
         if (c.getOpponent(getSelf()).getArousal().percent() >= 100 
                         && c.getOpponent(getSelf()).getArousal().percent() < 300) {
@@ -70,11 +70,11 @@ public class Edge extends Skill {
             c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:jerk|jerks} {other:name-possessive}"
                             + " {other:body-part:cock} slowly yet deliberately with both hands.", getSelf(), target));
         } else {
-            c.write(getSelf(), Global.format("{other:SUBJECT-ACITON:are|is} already so close to cumming, but"
+            c.write(getSelf(), Global.format("{other:SUBJECT-ACTION:are|is} already so close to cumming, but"
                             + " {self:name-possessive} hands make such careful, calculated movements all over"
-                            + " {other:possessive} {other:body-part:cock} that {other:pronoun} stays"
+                            + " {other:possessive} {other:body-part:cock} that {other:pronoun-action:stay|stays}"
                             + " <i>just</i> away from that impending peak. "
-                            + "{other:PRONOUN-ACTION:<i>do</i>|<i>does</i>} thrash around alot, trying desperately"
+                            + "{other:PRONOUN-ACTION:<i>do</i>|<i>does</i>} thrash around a lot, trying desperately"
                             + " to get that little bit of extra stimulation, and it's draining"
                             + " {other:possessive} energy quite rapidly.", getSelf(), target));
             target.weaken(c, Math.min(30, Global.random((target.getArousal().percent() - 100) / 10)));

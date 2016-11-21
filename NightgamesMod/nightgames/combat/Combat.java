@@ -1115,7 +1115,7 @@ public class Combat extends Observable implements Cloneable {
 
     public void offerImage(String path, String artist) {
         imagePath = path;
-        if (!imagePath.isEmpty() && !cloned) {
+        if (!imagePath.isEmpty() && !cloned && isBeingObserved()) {
             Global.gui()
                   .displayImage(imagePath, images.get(imagePath));
         }
