@@ -1,5 +1,9 @@
-2.4.0 rc1
+2.4.0
 Balance changes:
+- All drain now scales with dark and arcane (New since rc1)
+- Nerfed willpower loss from various drain sources to compensate (New since rc1)
+- Beguiling breasts now only work when you have dd cup breasts or bigger (yes cup sizes aren't a measure of size, stop being pedantic :D) (New since rc1)
+- The tempting tits now does not work if both characters have them. (New since rc1)
 - Skills now will display how accurate they are when you hover over them
 - Footjob now is less accurate (90 -> 80% base), but does much more pleasure damage (12-20 base)
 	- Now 100% accurate when opponent has a foot fetish
@@ -32,8 +36,13 @@ Balance changes:
 - Assjob base damage buffed from 4-7 to 10-14
 	- This is increased by 3 if your bottom is naked and by 3 again if the opponent's crotch is open.
 - NPCs should use strategies only 50% of the time now. They were spamming certain strategies too much and it was making the game a bit boring.
+- Mojo now no longer grows. You are limited to the amount of mojo you start with.
 
 New:
+- Added a pet initiated threesome skill for pets (New since rc1)
+- Added a lot of the new traits to the trait tree. Changed some traits around so more are unlocked in higher levels and or have more requirements. (New since rc1)
+- Pretty much all the traits now unlock something better, so try getting some of the previously "useless" traits. (New since rc1)
+- Now each night has 5 combatants (accidental change, but decided to keep it in there for now) (New since rc1)
 - Completely reworked mojo. You now do not gain mojo per fight or level.
 	- Instead everyone starts with a set amount of maximum mojo that they will use for the rest of the game, barring certain traits.
 - Completely reworked how pets are handled. There are so many changes that it's hard to list everything here.
@@ -61,6 +70,7 @@ New:
 	- Does huge pleasure damage (30 - 50) targeted to a pet.
 - Jewel and Angel has been reworked
 	- At levels 10 and 20, after combat with the player, they will ask the player for your opinion on what she should focus on. The choice will influence what attributes and traits she will get upon leveling up.
+- Added new portraits for Angel
 - Cassie, Jewel, and Angel will now not advance into their classes until you pick their respective level 10 decision. They now also do not need 1000$ to advance (no idea why this was there, they don't even spend it...)
 - Added new traits
 	Angel: 
@@ -111,6 +121,7 @@ Kat's daytime scenes now give the relevant traits.
 Bug fixes:
 - Fixed a bug where you could be made to orgasm in a simulation and finish the match because of it. (woahdude)
 - Fixed a bug where if you drastically outleveled someone, moves would be very inaccurate (yes wtf)
+- A bunch of bug and typo fixes (thanks guys for your bug reports)
 
 2.3.3
 Balance changes:

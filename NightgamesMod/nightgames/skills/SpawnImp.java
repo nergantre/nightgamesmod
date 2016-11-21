@@ -40,7 +40,7 @@ public class SpawnImp extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         getSelf().arouse(5, c);
-        int power = 10 + getSelf().get(Attribute.Dark) / 2;
+        int power = 5 + getSelf().get(Attribute.Dark);
         int ac = 2 + getSelf().get(Attribute.Dark) / 10;
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));

@@ -36,8 +36,8 @@ public class SpawnFGoblin extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        int power = 3 + getSelf().get(Attribute.Fetish) / 10;
-        int ac = 2 + getSelf().get(Attribute.Fetish) / 10;
+        int power = 3 + getSelf().get(Attribute.Fetish);
+        int ac = 2 + getSelf().get(Attribute.Fetish);
         writeOutput(c, Result.normal, target);
         c.addPet(getSelf(), new FGoblin(getSelf(), power, ac).getSelf());
         return true;

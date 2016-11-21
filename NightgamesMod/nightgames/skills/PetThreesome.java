@@ -1,7 +1,5 @@
 package nightgames.skills;
 
-import java.util.Optional;
-
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
@@ -9,7 +7,6 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.pet.PetCharacter;
 import nightgames.stance.FFMCowgirlThreesome;
 import nightgames.stance.FFMFacesittingThreesome;
 import nightgames.stance.MFFMissionaryThreesome;
@@ -40,11 +37,10 @@ public class PetThreesome extends Skill {
     }
 
     public boolean fuckable(Combat c, Character target) {
-        Optional<PetCharacter> fuckerOptional = Global.pickRandom(c.getPetsFor(getSelf()));
-        if (!fuckerOptional.isPresent()) {
+        Character fucker = getFucker(c);
+        if (fucker == null) {
             return false;
         }
-        Character fucker = fuckerOptional.get();
 
         BodyPart selfO = getSelfOrgan(fucker, c);
         BodyPart targetO = getTargetOrgan(target);
@@ -63,40 +59,62 @@ public class PetThreesome extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return fuckable(c, target) && c.getStance().mobile(getSelf()) && !c.getStance().mobile(target) && getSelf().canAct();
+        return fuckable(c, target) && c.getStance().mobile(getSelf()) && (c.getStance().mobile(target) || c.getStance().prone(target)) && getSelf().canAct();
     }
 
+    protected Character getFucker(Combat c) {
+        return Global.pickRandom(c.getPetsFor(getSelf())).orElse(null);
+    }
+
+    protected Character getMaster(Combat c) {
+        return getSelf();
+    }
     @Override
     public boolean resolve(Combat c, Character target) {
         int m = 5 + Global.random(5);
-        Optional<? extends Character> fuckerOptional = Global.pickRandom(c.getPetsFor(getSelf()));
-        if (!fuckerOptional.isPresent()) {
-            return false;
-        }
-        Character fucker = fuckerOptional.get();
-
+        Character fucker = getFucker(c);
+        Character master = getMaster(c);
         BodyPart selfO = getSelfOrgan(fucker, c);
         BodyPart targetO = getTargetOrgan(target);
         if (targetO.isReady(target)) {
             Result result = Global.random(3) == 0 ? Result.critical : Result.normal;
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, result, target));
-            } else if (c.shouldPrintReceive(target, c)) {
-                c.write(getSelf(), receive(c, 0, result, target));
-            }
             if (selfO.isType("pussy")) {
-                if (result == Result.critical && getSelf().useFemalePronouns()) {
-                    c.setStance(new FFMFacesittingThreesome(fucker, getSelf(), target), getSelf(), true);
-                } else {                    
-                    c.setStance(new FFMCowgirlThreesome(fucker, getSelf(), target), getSelf(), true);
+                if (result == Result.critical && master.useFemalePronouns()) {
+                    c.write(getSelf(), Global.format("While %s holding {other:name-do} down with %s ass, "
+                                    + "{self:subject} mounts {other:direct-object} and pierces "
+                                    + "{self:reflective} with {other:possessive} cock.", fucker, 
+                                    target, master.subjectAction("are", "is"), master.possessivePronoun()));
+                    c.setStance(new FFMFacesittingThreesome(fucker, master, target), getSelf(), true);
+                } else {
+                    c.write(getSelf(), Global.format("While %s holding {other:name-do} down, "
+                                    + "{self:subject} mounts {other:direct-object} and pierces "
+                                    + "{self:reflective} with {other:possessive} cock.", fucker, 
+                                    target, master.subjectAction("are", "is")));
+                    c.setStance(new FFMCowgirlThreesome(fucker, master, target), getSelf(), true);
                 }
-            } else if (selfO.isType("cock") && getSelf().useFemalePronouns()) {
-                c.setStance(new MFFMissionaryThreesome(fucker, getSelf(), target), getSelf(), true);
+            } else if (selfO.isType("cock") && master.useFemalePronouns()) {
+                c.write(getSelf(), Global.format("While %s holding {other:name-do} down, "
+                                + "{self:subject} mounts {other:direct-object} and pierces "
+                                + "{other:direct-object} with {self:possessive} cock in the missionary position.", fucker, 
+                                target, master.subjectAction("are", "is")));
+                c.setStance(new MFFMissionaryThreesome(fucker, master, target), getSelf(), true);
             } else if (selfO.isType("cock")) {
                 if (result == Result.critical) {
-                    c.setStance(new MFMDoublePenThreesome(fucker, getSelf(), target), getSelf(), true);
+                    c.write(getSelf(), Global.format("While %s holding {other:name-do} from behind, "
+                                    + "{self:subject} mounts {other:direct-object} and pierces "
+                                    + "{other:direct-object} with {self:possessive} cock in the missionary position. "
+                                    + "It does not end there however, as %s {other:possessive} remaining hole, "
+                                    + "leaving {other:direct-object} completely stuffed front and back.", fucker, 
+                                    target, master.subjectAction("are", "is"), master.pronoun() + master.action("grin and take", "grins and takes")));
+                    c.setStance(new MFMDoublePenThreesome(fucker, master, target), getSelf(), true);
                 } else {
-                    c.setStance(new MFMSpitroastThreesome(fucker, getSelf(), target), getSelf(), true);
+                    c.write(getSelf(), Global.format("While %s holding {other:name-possessive} head, "
+                                    + "{self:subject} gets behind {other:direct-object} and pierces "
+                                    + "{other:direct-object} with {self:possessive} cock. "
+                                    + "It does not end there however, as %s {other:direct-object} %s cock, "
+                                    + "leaving the poor {other:girl} spit-roasted.", fucker, 
+                                    target, master.subjectAction("are", "is"), master.pronoun() + master.action("feed", "feeds"), master.possessivePronoun()));
+                    c.setStance(new MFMSpitroastThreesome(fucker, master, target), getSelf(), true);
                 }
             }
             int otherm = m;
@@ -106,11 +124,8 @@ public class PetThreesome extends Skill {
             target.body.pleasure(fucker, selfO, targetO, m, c, this);
             fucker.body.pleasure(target, targetO, selfO, otherm, c, this);
         } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.miss, target));
-            } else if (c.shouldPrintReceive(target, c)) {
-                c.write(getSelf(), receive(c, 0, Result.miss, target));
-            }
+            c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:try|tries} to pull {other:name-do} into a threesome but {other:pronoun-action:are|is} not aroused enough yet.", 
+                            getSelf(), target));
             return false;
         }
         return true;

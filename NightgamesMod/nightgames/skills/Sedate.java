@@ -34,12 +34,12 @@ public class Sedate extends Skill {
         getSelf().consume(Item.Sedative, 1);
         if (getSelf().has(Item.Aersolizer)) {
             writeOutput(c, Result.special, target);
-            target.weaken(c, (int) getSelf().modifyDamage(DamageType.gadgets, target, 50));
-            target.loseMojo(c, (int) getSelf().modifyDamage(DamageType.gadgets, target, 35));
+            target.weaken(c, (int) getSelf().modifyDamage(DamageType.biological, target, 50));
+            target.loseMojo(c, (int) getSelf().modifyDamage(DamageType.biological, target, 35));
         } else if (target.roll(getSelf(), c, accuracy(c, target))) {
             writeOutput(c, Result.normal, target);
-            target.weaken(c, (int) getSelf().modifyDamage(DamageType.gadgets, target, 50));
-            target.loseMojo(c, (int) getSelf().modifyDamage(DamageType.gadgets, target, 35));
+            target.weaken(c, (int) getSelf().modifyDamage(DamageType.biological, target, 50));
+            target.loseMojo(c, (int) getSelf().modifyDamage(DamageType.biological, target, 35));
         } else {
             writeOutput(c, Result.miss, target);
             return false;

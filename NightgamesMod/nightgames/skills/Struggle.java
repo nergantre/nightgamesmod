@@ -155,6 +155,13 @@ public class Struggle extends Skill {
 
     private boolean struggleVaginal(Combat c, Character target, boolean knotted) {
         int diffMod = 0;
+        Character partner;
+        if (c.getStance().sub(getSelf())) {
+            partner = c.getStance().domSexCharacter(c);
+        } else {
+            partner = c.getStance().bottom;
+        }
+        target = partner;
         if (c.getStance().insertedPartFor(c, target).moddedPartCountsAs(target, CockMod.enlightened)) {
             diffMod = 15;
         } else if (c.getStance().insertedPartFor(c, getSelf()).moddedPartCountsAs(getSelf(), CockMod.enlightened)) {

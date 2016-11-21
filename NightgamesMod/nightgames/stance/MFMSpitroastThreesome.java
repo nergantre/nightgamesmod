@@ -22,8 +22,16 @@ public class MFMSpitroastThreesome extends MaledomSexStance {
     }
 
     @Override
-    protected Character domSexCharacter(Combat c) {
+    public Character domSexCharacter(Combat c) {
         return domSexCharacter;
+    }
+
+    @Override
+    public void checkOngoing(Combat c) {
+        if (!c.getOtherCombatants().contains(domSexCharacter)) {
+            c.write(bottom, Global.format("With the disappearance of {self:name-do}, {other:subject-action:manage|manages} to escape.", domSexCharacter, bottom));
+            c.setStance(new Neutral(top, bottom));
+        }
     }
 
     @Override

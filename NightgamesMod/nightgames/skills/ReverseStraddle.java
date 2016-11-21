@@ -7,7 +7,6 @@ import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.ReverseMount;
 
 public class ReverseStraddle extends Skill {
-
     public ReverseStraddle(Character self) {
         super("Mount(Reverse)", self);
         addTag(SkillTag.positioning);

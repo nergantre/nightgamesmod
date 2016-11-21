@@ -100,7 +100,7 @@ public class Meter implements Serializable, Cloneable {
         max = i;
         current = max();
     }
-    
+
     public void setTemporaryMax(int i) {
         if (i <= 0) {
             i = Integer.MAX_VALUE;

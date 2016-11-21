@@ -45,8 +45,8 @@ public class Mei extends BasePersonality {
         character.modAttributeDontSaveData(Attribute.Cunning, 1);
         character.modAttributeDontSaveData(Attribute.Perception, 1);
         character.modAttributeDontSaveData(Attribute.Speed, 1);
-        character.getStamina().setMax(70);
-        character.getArousal().setMax(70);
+        character.getStamina().setMax(100);
+        character.getArousal().setMax(150);
         character.rank = 1;
         Global.gainSkills(character);
 
@@ -59,8 +59,8 @@ public class Mei extends BasePersonality {
 
     @Override
     public void setGrowth() {
-        character.getGrowth().stamina = 2;
-        character.getGrowth().arousal = 2;
+        character.getGrowth().stamina = 3;
+        character.getGrowth().arousal = 5;
         character.getGrowth().willpower = .4f;
         character.getGrowth().bonusStamina = 2;
         character.getGrowth().bonusArousal = 2;
@@ -68,7 +68,7 @@ public class Mei extends BasePersonality {
         character.getGrowth().addTrait(0, Trait.hairtrigger);
         character.getGrowth().addTrait(0, Trait.petite);
         character.getGrowth().addTrait(10, Trait.cute);
-        character.getGrowth().addTrait(15, Trait.dexterous);
+        character.getGrowth().addTrait(15, Trait.lacedjuices);
         character.getGrowth().addTrait(20, Trait.tight);
         character.getGrowth().addTrait(25, Trait.sexTraining1);
         character.getGrowth().addBodyPart(30, PussyPart.succubus);
@@ -77,7 +77,7 @@ public class Mei extends BasePersonality {
         character.getGrowth().addTrait(30, Trait.fallenAngel);
         character.getGrowth().addTrait(35, Trait.energydrain);
         character.getGrowth().addTrait(40, Trait.soulsucker);
-        character.getGrowth().addTrait(45, Trait.lacedjuices);
+        character.getGrowth().addTrait(45, Trait.gluttony);
         character.getGrowth().addTrait(50, Trait.vaginaltongue);
         character.getGrowth().addTrait(55, Trait.carnalvirtuoso);
         preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
@@ -133,12 +133,12 @@ public class Mei extends BasePersonality {
 
     @Override
     public String taunt(Combat c, Character opponent) {
-        return "<i>Mmm that's right, you're just a little " + opponent.boyOrGirl() + "toy for us. So why don't you just let us do our thing?</i>";
+        return "<i>\"That's right, you're just a little " + opponent.boyOrGirl() + "toy for us. So why don't you just stay still?\"</i>";
     }
 
     @Override
     public String temptLiner(Combat c, Character opponent) {
-        return "Mei runs her hands all over her body while teasing you, <i>Mmmm you want some of this? Just ask and we'll do as you please.</i>";
+        return "Mei runs her hands all over her body while teasing you, <i>\"Mmmm you want some of this? Just ask and we'll do as you please.\"</i>";
     }
 
     @Override

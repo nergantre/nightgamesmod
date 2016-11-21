@@ -279,6 +279,7 @@ public enum Trait {
     fallenAngel("Fallen Angel", "An angelic being led astray"),
     valkyrie("Valkyrie", "A battle angel, enforcer of a Goddess's will"),
     kabbalah("Kabbalah", "A keeper of ancient arcana."),
+    gluttony("Gluttony", "Increases amount drained."),
     oblivious("Oblivious", "Almost immune to temptation"),
     overwhelmingPresence("Overwhelming Presence", "Aura passively weakens opponents"),
     resurrection("Resurrection", "This follower must be downed twice"),
@@ -333,7 +334,7 @@ public enum Trait {
     faefriend("Fae Friend", "Less effort to summon Faeries"),
     fitnessNut("Fitness Nut", "More efficient at exercising"),
     expertGoogler("Expert Googler", "More efficient at finding porn"),
-    mojoMaster("Mojo Master", "Max Mojo increases faster"),
+    mojoMaster("Mojo Master", "Increases max mojo by 20"),
     powerfulhips("Powerful Hips", "Can grind from submissive positions"),
     strongwilled("Strong Willed", "Lowers willpower loss from orgasms"),
     nymphomania("Nymphomania", "Restores willpower upon orgasm"),
@@ -365,7 +366,7 @@ public enum Trait {
     mentalfortress("Mental Fortress", "Confident enough to have a chance to resist mind control"),
     bewitchingbottom("Bewitching Bottom", "Makes opponents go wild for ass"),
     unquestionable("Unquestionable", "Does not tolerate resistance when on top"),
-    grappler("Grapller", "Bonus to hold strength"),
+    grappler("Grappler", "Bonus to hold strength"),
     suave("Suave", "Bonus increases seduction vs girls."),
 
     // Item
@@ -494,7 +495,7 @@ public enum Trait {
             return "";
         });
         resistances.put(Trait.mindcontrolresistance, (combat, c, s) -> {
-           if (s.mindgames() && combat.getOpponent(c).has(Trait.mindcontroller)) {
+           if (s.mindgames() && combat != null && combat.getOpponent(c).has(Trait.mindcontroller)) {
                float magnitude =
                                Global.getPlayer().getAddiction(AddictionType.MIND_CONTROL).map(Addiction::getMagnitude)
                                                .orElse(0f);

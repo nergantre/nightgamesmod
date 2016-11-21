@@ -376,7 +376,7 @@ public class Eve extends BasePersonality {
 
     @Override
     public String startBattle(Character self, Character other) {
-        return Global.format("{self:SUBJECT} gives {other:name-do} a dominant grin and cracks {self:possessive} knuckles. <i>\"Come on {self:name}, let's play.\"</i>", character, other);
+        return Global.format("{self:SUBJECT} gives {other:name-do} a dominant grin and cracks {self:possessive} knuckles. <i>\"Come on {other:name}, let's play.\"</i>", character, other);
     }
 
     @Override

@@ -738,7 +738,7 @@ public class Player extends Character {
 
     @Override
     public String reflectivePronoun() {
-        return directObject() + "self";
+        return "yourself";
     }
 
     @Override

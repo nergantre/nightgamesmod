@@ -42,8 +42,8 @@ public class Sarah extends BasePersonality {
         character.modAttributeDontSaveData(Attribute.Cunning, 1);
         character.modAttributeDontSaveData(Attribute.Perception, 1);
         character.modAttributeDontSaveData(Attribute.Speed, 2);
-        character.getStamina().setMax(80);
-        character.getArousal().setMax(60);
+        character.getStamina().setMax(150);
+        character.getArousal().setMax(100);
         character.rank = 1;
         Global.gainSkills(character);
 
@@ -56,8 +56,8 @@ public class Sarah extends BasePersonality {
 
     @Override
     public void setGrowth() {
-        character.getGrowth().stamina = 3;
-        character.getGrowth().arousal = 2;
+        character.getGrowth().stamina = 5;
+        character.getGrowth().arousal = 3;
         character.getGrowth().willpower = .4f;
         character.getGrowth().bonusStamina = 2;
         character.getGrowth().bonusArousal = 2;

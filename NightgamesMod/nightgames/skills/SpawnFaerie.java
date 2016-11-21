@@ -40,7 +40,7 @@ public class SpawnFaerie extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        int power = 10 + getSelf().get(Attribute.Arcane) / 2;
+        int power = 5 + getSelf().get(Attribute.Arcane);
         int ac = 4 + getSelf().get(Attribute.Arcane) / 10;
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));

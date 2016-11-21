@@ -468,7 +468,7 @@ public abstract class Character extends Observable implements Cloneable {
             case physical:
                 return (get(Attribute.Power) * 2 + get(Attribute.Cunning) + get(Attribute.Ki) * 2) / 3.0;
             case drain:
-                return (get(Attribute.Dark) * 2 + get(Attribute.Arcane)) / 3.0;
+                return (get(Attribute.Dark) * 2 + get(Attribute.Arcane)) / (has(Trait.gluttony) ? 1.5 : 2.0);
             case stance:
                 return (get(Attribute.Cunning) * 2 + get(Attribute.Power)) / 3.0;
             case weaken:
@@ -1067,6 +1067,9 @@ public abstract class Character extends Observable implements Cloneable {
 
     public boolean add(Trait t) {
         if (traits.addIfAbsent(t)) {
+            if (t.equals(Trait.mojoMaster)) {
+                mojo.gain(20);
+            }
             getLevelUpFor(getLevel()).addTrait(t);
             return true;
         }
@@ -1075,6 +1078,9 @@ public abstract class Character extends Observable implements Cloneable {
 
     public boolean remove(Trait t) {
         if (traits.remove(t)) {
+            if (t.equals(Trait.mojoMaster)) {
+                mojo.gain(-20);
+            }
             getLevelUpFor(getLevel()).removeTrait(t);
             return true;
         }
@@ -1694,7 +1700,7 @@ public abstract class Character extends Observable implements Cloneable {
         if (c.getStance().inserted(this) && !has(Trait.strapped)) {
             if (times == 1) {
                 c.write(this, Global.format(
-                                "<b>{self:SUBJECT-ACTION:tense|tenses} up as {self:possessive} hips wildly buck against {other:direct-object}. In no time, {self:possessive} hot seed spills into {other:possessive} pulsing hole.</b>",
+                                "<b>{self:SUBJECT-ACTION:tense|tenses} up as {self:possessive} hips wildly buck against {other:name-do}. In no time, {self:possessive} hot seed spills into {other:possessive} pulsing hole.</b>",
                                 this, opponent));
             } else {
                 c.write(this, Global.format(
@@ -1931,12 +1937,6 @@ public abstract class Character extends Observable implements Cloneable {
                 TentaclePart.pleasureWithTentacles(c, this, 5, body.getRandomPussy());
             }
             TentaclePart.pleasureWithTentacles(c, this, 5, body.getRandomAss());
-        }
-        if (checkOrgasm()) {
-            doOrgasm(c, opponent, null, null);
-        }
-        if (opponent.checkOrgasm()) {
-            opponent.doOrgasm(c, this, null, null);
         }
         if (getPure(Attribute.Animism) >= 4 && getArousal().percent() >= 50 && !is(Stsflag.feral)) {
             add(c, new Feral(this));
@@ -2811,13 +2811,13 @@ public abstract class Character extends Observable implements Cloneable {
         fit += Math.sqrt(totalAtts) * 5;
 
         // what an average piece of clothing should be worth in fitness
-        double topFitness = 4.0;
-        double bottomFitness = 4.0;
+        double topFitness = 8.0;
+        double bottomFitness = 6.0;
         // If I'm horny, I want the other guy's clothing off, so I put more
         // fitness in them
         if (getMood() == Emotion.horny) {
-            topFitness = 8;
-            topFitness = 6;
+            topFitness += 6;
+            bottomFitness += 8;
             // If I'm horny, I want to make the opponent cum asap, put more
             // emphasis on arousal
             arousalMod = 2.0f;
@@ -3135,6 +3135,50 @@ public abstract class Character extends Observable implements Cloneable {
 
     public void startBattle(Combat combat) {
         orgasms = 0;
+    }
+
+    public void drainWillpower(Combat c, Character drainer, int i) {
+        int drained = i;
+        int bonus = 0;
+
+        for (Status s : getStatuses()) {
+            bonus += s.drained(drained);
+        }
+        drained += bonus;
+        if (drained >= willpower.get()) {
+            drained = willpower.get();
+        }
+        drained = Math.max(1, drained);
+        int restored = drained;
+        if (c != null) {
+            c.writeSystemMessage(
+                            String.format("%s drained of <font color='rgb(220,130,40)'>%d<font color='white'> willpower<font color='white'> by %s",
+                                            subjectWas(), drained, drainer.subject()));
+        }
+        willpower.reduce(drained);
+        drainer.willpower.restore(restored);
+    }
+
+    public void drainWillpowerAsMojo(Combat c, Character drainer, int i, float efficiency) {
+        int drained = i;
+        int bonus = 0;
+
+        for (Status s : getStatuses()) {
+            bonus += s.drained(drained);
+        }
+        drained += bonus;
+        if (drained >= willpower.get()) {
+            drained = willpower.get();
+        }
+        drained = Math.max(1, drained);
+        int restored = Math.round(drained * efficiency);
+        if (c != null) {
+            c.writeSystemMessage(
+                            String.format("%s drained of <font color='rgb(220,130,40)'>%d<font color='white'> willpower as <font color='rgb(100,162,240)'>%d<font color='white'> mojo by %s",
+                                            subjectWas(), drained, restored, drainer.subject()));
+        }
+        willpower.reduce(drained);
+        drainer.mojo.restore(restored);
     }
 
     public void drainStaminaAsMojo(Combat c, Character drainer, int i, float efficiency) {

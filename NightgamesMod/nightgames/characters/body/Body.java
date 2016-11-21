@@ -340,18 +340,15 @@ public class Body implements Cloneable {
     }
 
     public Optional<BodyFetish> getFetish(String part) {
-        Optional<Status> fs = character.status.stream()
-                                              .filter(status -> {
-                                                  if (status.flags()
-                                                            .contains(Stsflag.bodyfetish)) {
+        Optional<Status> fs = character.status.stream().filter(status -> {
+                                                  if (status.flags().contains(Stsflag.bodyfetish)) {
                                                       BodyFetish fetish = (BodyFetish) status;
                                                       if (fetish.part.equalsIgnoreCase(part)) {
                                                           return true;
                                                       }
                                                   }
                                                   return false;
-                                              })
-                                              .findFirst();
+                                              }).findFirst();
         if (fs.isPresent()) {
             return Optional.of((BodyFetish) fs.get());
         } else {
@@ -1048,12 +1045,6 @@ public class Body implements Cloneable {
     public void tickHolding(Combat c, Character opponent, BodyPart selfOrgan, BodyPart otherOrgan) {
         if (selfOrgan != null && otherOrgan != null) {
             selfOrgan.tickHolding(c, character, opponent, otherOrgan);
-            if (character.checkOrgasm()) {
-                character.doOrgasm(c, opponent, selfOrgan, otherOrgan);
-            }
-            if (opponent.checkOrgasm()) {
-                opponent.doOrgasm(c, character, otherOrgan, selfOrgan);
-            }
         }
     }
 

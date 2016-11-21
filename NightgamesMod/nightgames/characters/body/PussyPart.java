@@ -300,7 +300,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                         self.add(c, new Abuff(self, stolen, stolenStrength, 20));
                         if (self.isPet()) {
                             Character master = ((PetCharacter) self).getSelf().owner();
-                            master.add(c, new Abuff(self, stolen, stolenStrength, 20));
+                            master.add(c, new Abuff(master, stolen, stolenStrength, 20));
                         }
                         break;
                     }

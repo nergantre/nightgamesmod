@@ -28,7 +28,7 @@ public class Anilingus extends Skill {
     @Override
     public Set<SkillTag> getTags(Combat c, Character target) {
         if (isWorship(c, target)) {
-            Set<SkillTag> tags = new HashSet<>(super.getTags(c));
+            Set<SkillTag> tags = new HashSet<>(super.getTags(c, target));
             tags.add(SkillTag.worship);
             return tags;
         }

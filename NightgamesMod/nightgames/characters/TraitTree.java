@@ -15,6 +15,8 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+import nightgames.characters.body.BreastsPart;
+
 public class TraitTree {
     private interface TraitRequirement {
         boolean meetsRequirement(Character self);
@@ -72,6 +74,10 @@ public class TraitTree {
                 reqs.add(c -> c.getLevel() > Integer.valueOf(val.trim()));
             } else if (qName.equals("TraitReq")) {
                 reqs.add(c -> c.has(Trait.valueOf(val.trim())));
+            } else if (qName.equals("NoTraitReq")) {
+                reqs.add(c -> !c.has(Trait.valueOf(val.trim())));
+            } else if (qName.equals("BreastsReq")) {
+                reqs.add(c -> c.body.getLargestBreasts().size >= BreastsPart.valueOf(val.trim()).size);
             } else if (qName.equals("AttributeReq")) {
                 final Attribute attribute = att;
                 reqs.add(c -> c.getPure(attribute) > Integer.valueOf(val.trim()));

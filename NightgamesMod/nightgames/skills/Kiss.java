@@ -91,8 +91,8 @@ public class Kiss extends Skill {
         }
         writeOutput(c, res, target);
         if (res == Result.upgrade) {
-            target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, 10));
-            target.loseWillpower(c, Global.random(3) + 2);
+            target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, target.getStamina().max() / 8));
+            target.drainWillpowerAsMojo(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, 2), 2);
         }
         if (res == Result.divine) {
             target.buildMojo(c, 50);
@@ -190,7 +190,7 @@ public class Kiss extends Skill {
                             target.action("try", "tries"), getSelf().possessivePronoun(),
                             target.possessivePronoun(), getSelf().subject(), getSelf().possessivePronoun(),
                             target.nameOrPossessivePronoun(), target.possessivePronoun(), 
-                            target.subjectAction("hold"), getSelf().name());
+                            target.subjectAction("hold"), getSelf().reflectivePronoun());
         }
         if (modifier == Result.upgrade) {
             return String.format("%s seductively pulls %s into a deep kiss. As first %s %s to match %s "

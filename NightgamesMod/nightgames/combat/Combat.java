@@ -21,6 +21,7 @@ import nightgames.characters.Player;
 import nightgames.characters.State;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.global.DebugFlags;
 import nightgames.global.Flag;
@@ -36,6 +37,7 @@ import nightgames.skills.CockWorship;
 import nightgames.skills.Command;
 import nightgames.skills.ConcedePosition;
 import nightgames.skills.FootWorship;
+import nightgames.skills.PetInitiatedThreesome;
 import nightgames.skills.PussyWorship;
 import nightgames.skills.Skill;
 import nightgames.stance.Kneeling;
@@ -49,6 +51,7 @@ import nightgames.status.Braced;
 import nightgames.status.CounterStatus;
 import nightgames.status.DivineCharge;
 import nightgames.status.Enthralled;
+import nightgames.status.Falling;
 import nightgames.status.Flatfooted;
 import nightgames.status.Frenzied;
 import nightgames.status.SapphicSeduction;
@@ -165,7 +168,7 @@ public class Combat extends Observable implements Cloneable {
 
         if (self.has(Trait.footfetishist) && !other.body.get("feet").isEmpty() && !self.body.getFetish("feet").isPresent()) {
             if (self.human()) {
-                write(self, "You can't help thinking about " + self.nameOrPossessivePronoun() + " feet.");
+                write(self, "You can't help thinking about " + other.nameOrPossessivePronoun() + " feet.");
             }
             self.add(new BodyFetish(self, null, "feet", .25));
         }
@@ -406,7 +409,7 @@ public class Combat extends Observable implements Cloneable {
             opponents.forEach(opponent -> opponent.weaken(this, opponent.getStamina().max() / 10));
         }
         String beguilingbreastCompletedFlag = Trait.beguilingbreasts.name() + "Completed";
-        if (character.has(Trait.beguilingbreasts) && !getCombatantData(character).getBooleanFlag(beguilingbreastCompletedFlag)
+        if (character.has(Trait.beguilingbreasts) && character.body.getLargestBreasts().size >= BreastsPart.dd.size && !getCombatantData(character).getBooleanFlag(beguilingbreastCompletedFlag)
                         && character.outfit.slotOpen(ClothingSlot.top)) {
             Character mainOpponent = getOpponent(character);
             write(character, Global.format("The instant {self:subject-action:lay|lays} {self:possessive} eyes on {other:name-possessive} bare breasts, {self:possessive} consciousness flies out of {self:possessive} mind. " +
@@ -694,7 +697,8 @@ public class Combat extends Observable implements Cloneable {
                 }
             }
 
-            otherCombatants.stream().filter(pet -> !alreadyBattled.contains(pet)).forEach(pet -> {
+            List<PetCharacter> actingPets = new ArrayList<>(otherCombatants);
+            actingPets.stream().filter(pet -> !alreadyBattled.contains(pet)).forEach(pet -> {
                 pet.act(this);
                 if (pet.getSelf().owner().has(Trait.devoteeFervor) && Global.random(2) == 0) {
                     write(pet, Global.format("{self:SUBJECT} seems to have gained a second wind from {self:possessive} religious fervor!", pet, pet.getSelf().owner()));
@@ -737,8 +741,7 @@ public class Combat extends Observable implements Cloneable {
                                 + " current dominance.", self, other));
                 stanceDominance = Math.max(1, stanceDominance - 3);
             } else {
-                write(self,
-                            Global.format("{self:NAME-POSSESSIVE} compromising position takes a toll on {other:possessive} willpower.",
+                write(self, Global.format("{other:NAME-POSSESSIVE} compromising position takes a toll on {other:possessive} willpower.",
                                             self, other));
             }
             other.loseWillpower(this, stanceDominance, 0, false, " (Dominance)");
@@ -769,7 +772,7 @@ public class Combat extends Observable implements Cloneable {
             other.add(new Flatfooted(other, 1));
         }
         
-        if (getStance().facing(self, other) && other.breastsAvailable() && other.has(Trait.temptingtits)) {
+        if (getStance().facing(self, other) && other.breastsAvailable() && !self.has(Trait.temptingtits) && other.has(Trait.temptingtits)) {
             write(self, Global.format("{self:SUBJECT-ACTION:can't avert|can't avert} {self:possessive} eyes from {other:NAME-POSSESSIVE} perfectly shaped tits sitting in front of {self:possessive} eyes.",
                                             self, other));
             self.tempt(this, other, other.body.getRandomBreasts(), 10 + Math.max(0, other.get(Attribute.Seduction) / 3 - 7));
@@ -1112,6 +1115,10 @@ public class Combat extends Observable implements Cloneable {
 
     public void offerImage(String path, String artist) {
         imagePath = path;
+        if (!imagePath.isEmpty() && !cloned) {
+            Global.gui()
+                  .displayImage(imagePath, images.get(imagePath));
+        }
     }
 
     public void forfeit(Character player) {
@@ -1137,13 +1144,24 @@ public class Combat extends Observable implements Cloneable {
 
     public void setStance(Position newStance, Character initiator, boolean voluntary) {
         if ((newStance.top != getStance().bottom && newStance.top != getStance().top) || (newStance.bottom != getStance().bottom && newStance.bottom != getStance().top)) {
-            if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-                System.out.printf("Tried to chance stance without both players, stopping: %s -> %s\n",
-                                stance.getClass().getName(),
-                                newStance.getClass().getName());
-                Thread.dumpStack();
+            if (initiator != null && initiator.isPet() && newStance.top == initiator) {
+                PetInitiatedThreesome threesomeSkill = new PetInitiatedThreesome(initiator);
+                if (newStance.havingSex(this)) {
+                    threesomeSkill.resolve(this, newStance.bottom);
+                } else if (!getStance().sub(newStance.bottom)) {
+                    write(initiator, Global.format("{self:SUBJECT-ACTION:take|takes} the chance to send {other:name-do} sprawling to the ground", initiator, newStance.bottom));
+                    newStance.bottom.add(this, new Falling(newStance.bottom));
+                    return;
+                }
+            } else {
+                if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+                    System.out.printf("Tried to chance stance without both players, stopping: %s -> %s\n",
+                                    stance.getClass().getName(),
+                                    newStance.getClass().getName());
+                    Thread.dumpStack();
+                }
+                return;
             }
-            return;
         }
         if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
             System.out.printf("Stance Change: %s -> %s\n", stance.getClass()
@@ -1287,8 +1305,9 @@ public class Combat extends Observable implements Cloneable {
 
     public void addPet(Character master, PetCharacter self) {
         if (master.has(Trait.leadership)) {
-            self.getSelf().setPower(self.getSelf().getPower() + 5);
-            for (int i = 0; i < 5; i++) {
+            int levelups = Math.max(5, master.getLevel() / 4);
+            self.getSelf().setPower(self.getSelf().getPower() + levelups);
+            for (int i = 0; i < levelups; i++) {
                 self.ding();
             }
         }
@@ -1297,6 +1316,8 @@ public class Combat extends Observable implements Cloneable {
             self.getArousal().setMax(self.getArousal().trueMax() * 1.5f);
             self.getStamina().setMax(self.getStamina().trueMax() * 1.5f);
         }
+        self.getArousal().empty();
+        self.getStamina().fill();
         writeSystemMessage(self, Global.format("{self:SUBJECT-ACTION:have|has} summoned {other:name-do} (Level %s)",
                                         master, self, self.getLevel()));
         otherCombatants.add(self);

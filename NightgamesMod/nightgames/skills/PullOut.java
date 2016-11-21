@@ -33,7 +33,7 @@ public class PullOut extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return !target.hasStatus(Stsflag.knotted) && getSelf().canAct() && (c.getStance().isFaceSitting(getSelf())
-                        || c.getStance().inserted() && c.getStance().dom(getSelf())) && !blockedByAddiction(getSelf());
+                        || c.getStance().havingSex(c, getSelf()) && c.getStance().dom(getSelf())) && !blockedByAddiction(getSelf());
     }
 
     public static boolean blockedByAddiction(Character user) {

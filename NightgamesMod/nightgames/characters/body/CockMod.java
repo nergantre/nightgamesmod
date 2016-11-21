@@ -6,6 +6,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.skills.damage.DamageType;
 import nightgames.status.Abuff;
 import nightgames.status.CockBound;
 import nightgames.status.DivineCharge;
@@ -122,8 +123,7 @@ public enum CockMod implements BodyPartMod {
                 amtDrained = 3;
             }
             if (amtDrained != 0) {
-                opponent.loseWillpower(c, amtDrained);
-                self.restoreWillpower(c, amtDrained);
+                opponent.drainWillpower(c, self, (int) self.modifyDamage(DamageType.drain, opponent, amtDrained));
             }
             c.write(self, message);
         } else if (this.countsAs(self, bionic)) {
@@ -288,16 +288,14 @@ public enum CockMod implements BodyPartMod {
                                     opponent.nameOrPossessivePronoun(), self.nameOrPossessivePronoun(),
                                     part.describe(self), opponent.directObject(), self.directObject()));
                     int attDamage = target.moddedPartCountsAs(opponent, PussyPart.feral) ? 10 : 5;
-                    int willDamage = target.moddedPartCountsAs(opponent, PussyPart.feral) ? 40 : 20;
+                    int willDamage = target.moddedPartCountsAs(opponent, PussyPart.feral) ? 10 : 5;
                     opponent.add(c, new Abuff(opponent, Attribute.Power, -attDamage, 20));
                     opponent.add(c, new Abuff(opponent, Attribute.Cunning, -attDamage, 20));
                     opponent.add(c, new Abuff(opponent, Attribute.Seduction, -attDamage, 20));
                     self.add(c, new Abuff(self, Attribute.Power, attDamage, 20));
                     self.add(c, new Abuff(self, Attribute.Cunning, attDamage, 20));
                     self.add(c, new Abuff(self, Attribute.Seduction, attDamage, 20));
-                    opponent.loseWillpower(c, willDamage);
-                    self.restoreWillpower(c, willDamage);
-
+                    opponent.drainWillpower(c, self, (int) self.modifyDamage(DamageType.drain, opponent, willDamage));
                 }
             }
         }

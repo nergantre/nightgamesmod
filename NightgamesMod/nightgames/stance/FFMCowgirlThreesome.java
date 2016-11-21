@@ -21,7 +21,7 @@ public class FFMCowgirlThreesome extends FemdomSexStance {
     }
 
     @Override
-    protected Character domSexCharacter(Combat c) {
+    public Character domSexCharacter(Combat c) {
         return domSexCharacter;
     }
 
@@ -118,6 +118,14 @@ public class FFMCowgirlThreesome extends FemdomSexStance {
             c.write(bottom, Global.format("{self:SUBJECT-ACTION:manage|manages} to unbalance {other:name-do} and push {other:direct-object} off {self:reflective}.", bottom, top));
         }
         return new Neutral(bottom, top);
+    }
+
+    @Override
+    public void checkOngoing(Combat c) {
+        if (!c.getOtherCombatants().contains(domSexCharacter)) {
+            c.write(bottom, Global.format("With the disappearance of {self:name-do}, {other:subject-action:manage|manages} to escape.", domSexCharacter, bottom));
+            c.setStance(new Neutral(top, bottom));
+        }
     }
 
     @Override

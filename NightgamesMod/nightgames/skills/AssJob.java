@@ -69,7 +69,7 @@ public class AssJob extends Skill {
         } else if (target.roll(getSelf(), c, accuracy(c, target))) {
             if (c.getStance().en == Stance.reversemount) {
                 writeOutput(c, Result.strong, target);
-                int m = 4 + Global.random(4);
+                int m = Global.random(14, 19);
                 int fetishChance = 20 + getSelf().get(Attribute.Fetish) / 2;
                 if (target.crotchAvailable()) {
                     if (getSelf().crotchAvailable()) {
@@ -94,7 +94,7 @@ public class AssJob extends Skill {
                 }
             } else {
                 writeOutput(c, Result.normal, target);
-                int m = 4 + Global.random(3);
+                int m = Global.random(10, 14);
                 if (target.crotchAvailable()) {
                     if (getSelf().crotchAvailable()) {
                         m += 6;

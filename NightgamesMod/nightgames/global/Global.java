@@ -189,7 +189,7 @@ public class Global {
         System.out.println("Night games");
         System.out.println(new Timestamp(jdate.getTime()));
 
-        traitRequirements = new TraitTree(ResourceLoader.getFileResourceAsStream("data/TraitRequirements.xml"));
+        setTraitRequirements(new TraitTree(ResourceLoader.getFileResourceAsStream("data/TraitRequirements.xml")));
         current = null;
         factory = new ContextFactory();
         cx = factory.enterContext();
@@ -206,7 +206,7 @@ public class Global {
     }
 
     public static boolean meetsRequirements(Character c, Trait t) {
-        return traitRequirements.meetsRequirements(c, t);
+        return getTraitRequirements().meetsRequirements(c, t);
     }
 
     public static boolean isDebugOn(DebugFlags flag) {
@@ -502,6 +502,7 @@ public class Global {
         getSkillPool().add(new SummonYui(ch));
         getSkillPool().add(new Simulacrum(ch));
         getSkillPool().add(new PetThreesome(ch));
+        getSkillPool().add(new PetInitiatedThreesome(ch));
         getSkillPool().add(new FlyCatcher(ch));
         getSkillPool().add(new Honeypot(ch));
         getSkillPool().add(new TakeOffShoes(ch));
@@ -604,7 +605,7 @@ public class Global {
     }
 
     public static List<Trait> getFeats(Character c) {
-        List<Trait> a = traitRequirements.availTraits(c);
+        List<Trait> a = getTraitRequirements().availTraits(c);
         a.sort((first, second) -> first.toString().compareTo(second.toString()));
         return a;
     }
@@ -1519,11 +1520,16 @@ public class Global {
     }
 
     public static MatchType decideMatchType() {
+        return MatchType.NORMAL;
+        /*
+         * TODO Lots of FTC bugs right now, will disable it for the time being.
+         * Enable again once some of the bugs are sorted out.
         if (human.getLevel() < 15)
             return MatchType.NORMAL;
         if (!checkFlag(Flag.didFTC))
             return MatchType.FTC;
         return isDebugOn(DebugFlags.DEBUG_FTC) || Global.random(10) == 0 ? MatchType.FTC : MatchType.NORMAL;
+        */
     }
 
     private static Match buildMatch(Collection<Character> combatants, Modifier mod) {
@@ -1569,5 +1575,13 @@ public class Global {
 
     public static void unsetCharacterDisabledFlag(Character self) {
         unflag(String.format(DISABLED_FORMAT, self.getName()));
+    }
+
+    public static TraitTree getTraitRequirements() {
+        return traitRequirements;
+    }
+
+    public static void setTraitRequirements(TraitTree traitRequirements) {
+        Global.traitRequirements = traitRequirements;
     }    
 }

@@ -41,10 +41,9 @@ public class Honeypot extends Skill {
         Optional<PetCharacter> targetPet = Global.pickRandom(c.getPetsFor(target));
         if (targetPet.isPresent()) {
             writeOutput(c, Result.normal, targetPet.get());
-            double m = Global.random(30, 50);
+            double m = Global.random(10, 25);
             targetPet.get().body.pleasure(getSelf(), getSelf().body.getRandom("hands"), 
-                            targetPet.get().body.getRandomGenital(), 
-                            (int) getSelf().modifyDamage(DamageType.technique, targetPet.get(), m), c);
+                            targetPet.get().body.getRandomGenital(), m, c);
             getSelf().arouse(getSelf().getArousal().max() / 4, c);
         return true;
         } else {
@@ -75,7 +74,7 @@ public class Honeypot extends Skill {
         }
         return Global.format("{self:SUBJECT-ACTION:take|takes} the time to entice {other:name-do}, "
                         + "rubbing {self:reflective} and putting on a show. "
-                        + "{other:SUBECT} takes the bait and approaches {self:direct-object}. With a sudden motion, {self:pronoun-action:capture|captures} "
+                        + "{other:SUBJECT} takes the bait and approaches {self:direct-object}. With a sudden motion, {self:pronoun-action:capture|captures} "
                         + "{other:direct-object} with {self:possessive} legs and {self:action:have|haves} {self:possessive} way with the poor follower.", getSelf(), target);
     }
 }

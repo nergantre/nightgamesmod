@@ -86,6 +86,7 @@ public class Cassie extends BasePersonality {
                         new CombatSceneChoice("Stare at her breasts", (c, self, other) -> {
                             c.write("Cassie catches your gaze with her eyes and lightly giggles. \"I knew it, boys are all about boobs right? Hmm I wonder if I can use this to my advantage...\"");
                             Global.flag(CASSIE_BREAST_FOCUS);
+                            character.body.addReplace(BreastsPart.f, 1);
                             character.getGrowth().addTrait(11, Trait.lactating);
                             character.getGrowth().addTrait(25, Trait.magicmilk);
                             character.getGrowth().addTrait(38, Trait.temptingtits);

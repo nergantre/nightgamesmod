@@ -31,7 +31,7 @@ public class SuckNeck extends Skill {
         if (target.roll(getSelf(), c, accuracy(c, target))) {
             if (getSelf().get(Attribute.Dark) >= 1) {
                 writeOutput(c, Result.special, target);
-                int m = 10;
+                int m = target.getStamina().max() / 8;
                 target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, m));
             } else {
                 writeOutput(c, Result.normal, target);

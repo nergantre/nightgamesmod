@@ -19,7 +19,6 @@ public class Fly extends Fuck {
     public Fly(String name, Character self) {
         super(name, self, 5);
         addTag(SkillTag.positioning);
-        addTag(SkillTag.petDisallowed);
     }
 
     @Override
@@ -69,9 +68,9 @@ public class Fly extends Fuck {
             if (getSelf().has(Trait.insertion)) {
                 otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
             }
+            c.setStance(new FlyingCarry(getSelf(), target), getSelf(), getSelf().canMakeOwnDecision());
             target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c, this);
             getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c, this);
-            c.setStance(new FlyingCarry(getSelf(), target), getSelf(), getSelf().canMakeOwnDecision());
         } else {
             getSelf().add(c, new Falling(getSelf()));
         }

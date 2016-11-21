@@ -16,35 +16,130 @@
 	<Trait>
 		<Name>RawSexuality</Name>
 		<Requirements>
-			<TraitReq>shameless</TraitReq>
-			<TraitReq>alwaysready</TraitReq>
-			<LevelReq>10</LevelReq>
+			<TraitReq>SexualGroove</TraitReq>
+			<LevelReq>25</LevelReq>
 		</Requirements>
 	</Trait>
 	<Trait>
-		<Name>soulsucker</Name>
+		<Name>sadist</Name>
 		<Requirements>
-			<AttributeReq type="Dark">10</AttributeReq>
+			<AttributeReq type="Fetish">25</AttributeReq>
+			<LevelReq>25</LevelReq>
+			<TraitReq>asshandler</TraitReq>
 		</Requirements>
 	</Trait>
 	<Trait>
 		<Name>fetishTrainer</Name>
 		<Requirements>
-			<AttributeReq type="Fetish">5</AttributeReq>
+			<AttributeReq type="Fetish">15</AttributeReq>
+			<LevelReq>20</LevelReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>analFanatic</Name>
+		<Requirements>
 			<LevelReq>15</LevelReq>
+			<AttributeReq type="Fetish">10</AttributeReq>
+			<TraitReq>assmaster</TraitReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>assmaster</Name>
+		<Requirements>
+			<AttributeReq type="Fetish">5</AttributeReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>energydrain</Name>
+		<Requirements>
+			<AttributeReq type="Dark">25</AttributeReq>
+			<LevelReq>25</LevelReq>
+			<TraitReq>spiritphage</TraitReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>soulsucker</Name>
+		<Requirements>
+			<LevelReq>45</LevelReq>
+			<AttributeReq type="Dark">45</AttributeReq>
+			<TraitReq>gluttony</TraitReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>gluttony</Name>
+		<Requirements>
+			<LevelReq>35</LevelReq>
+			<AttributeReq type="Dark">35</AttributeReq>
+			<TraitReq>energydrain</TraitReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>spiritphage</Name>
+		<Requirements>
+			<LevelReq>15</LevelReq>
+			<AttributeReq type="Dark">15</AttributeReq>
+			<TraitReq>Sneaky</TraitReq>
 		</Requirements>
 	</Trait>
 	<Trait>
 		<Name>entrallingjuices</Name>
 		<Requirements>
 			<TraitReq>lacedjuices</TraitReq>
+			<NoTraitReq>frenzyingjuices</NoTraitReq>
+			<AttributeReq type="Arcane">10</AttributeReq>
+			<AttributeReq type="Dark">10</AttributeReq>
 			<LevelReq>20</LevelReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>frenzyingjuices</Name>
+		<Requirements>
+			<TraitReq>lacedjuices</TraitReq>
+			<NoTraitReq>entrallingjuices</NoTraitReq>
+			<AttributeReq type="Arcane">10</AttributeReq>
+			<AttributeReq type="Dark">10</AttributeReq>
+			<LevelReq>20</LevelReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>magicEyeArousal</Name>
+		<Requirements>
+			<AttributeReq type="Arcane">5</AttributeReq>
+			<LevelReq>12</LevelReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>magicEyeTrance</Name>
+		<Requirements>
+			<AttributeReq type="Arcane">25</AttributeReq>
+			<LevelReq>36</LevelReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>magicEyeFrenzy</Name>
+		<Requirements>
+			<AttributeReq type="Arcane">15</AttributeReq>
+			<LevelReq>24</LevelReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>magicEyeEnthrall</Name>
+		<Requirements>
+			<AttributeReq type="Arcane">35</AttributeReq>
+			<LevelReq>48</LevelReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>enchantingVoice</Name>
+		<Requirements>
+			<AttributeReq type="Arcane">45</AttributeReq>
+			<LevelReq>60</LevelReq>
 		</Requirements>
 	</Trait>
 	<Trait>
 		<Name>addictivefluids</Name>
 		<Requirements>
-			<LevelReq>15</LevelReq>
+			<LevelReq>40</LevelReq>
 			<TraitReq>lacedjuices</TraitReq>
 		</Requirements>
 	</Trait>
@@ -76,21 +171,6 @@
 		</Requirements>
 	</Trait>
 	<Trait>
-		<Name>energydrain</Name>
-		<Requirements>
-			<LevelReq>25</LevelReq>
-			<TraitReq>soulsucker</TraitReq>
-		</Requirements>
-	</Trait>
-	<Trait>
-		<Name>spiritphage</Name>
-		<Requirements>
-			<LevelReq>20</LevelReq>
-			<BodypartReq>pussy</BodypartReq>
-			<TraitReq>soulsucker</TraitReq>
-		</Requirements>
-	</Trait>
-	<Trait>
 		<Name>tight</Name>
 		<Requirements>
 			<LevelReq>15</LevelReq>
@@ -101,6 +181,7 @@
 		<Name>holecontrol</Name>
 		<Requirements>
 			<BodypartReq>pussy</BodypartReq>
+			<TraitReq>sexTraining1</TraitReq>
 			<LevelReq>15</LevelReq>
 		</Requirements>
 	</Trait>
@@ -109,6 +190,7 @@
 		<Requirements>
 			<BodypartReq>cock</BodypartReq>
 			<LevelReq>15</LevelReq>
+			<TraitReq>sexTraining1</TraitReq>
 		</Requirements>
 	</Trait>
 	<Trait>
@@ -121,29 +203,149 @@
 	<Trait>
 		<Name>autonomousAss</Name>
 		<Requirements>
+			<BodypartReq>ass</BodypartReq>
+			<TraitReq>analTraining2</TraitReq>
 			<TraitReq>oiledass</TraitReq>
-			<AttributeReq type="Seduction">20</AttributeReq>
-			<TraitReq>alwaysready</TraitReq>
+			<AttributeReq type="Seduction">35</AttributeReq>
 		</Requirements>
 	</Trait>
 	<Trait>
 		<Name>cute</Name>
 		<Requirements>
-			<AttributeReq type="Seduction">30</AttributeReq>
+			<AttributeReq type="Cunning">20</AttributeReq>
+			<AttributeReq type="Seduction">20</AttributeReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>lastStand</Name>
+		<Requirements>
+			<AttributeReq type="Seduction">25</AttributeReq>
+			<TraitReq>alwaysready</TraitReq>
+			<TraitReq>sexTraining1</TraitReq>
+			<LevelReq>10</LevelReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>insertion</Name>
+		<Requirements>
+			<AttributeReq type="Seduction">50</AttributeReq>
+			<TraitReq>alwaysready</TraitReq>
+			<TraitReq>sexTraining2</TraitReq>
+			<LevelReq>20</LevelReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>carnalvirtuoso</Name>
+		<Requirements>
+			<AttributeReq type="Seduction">90</AttributeReq>
+			<TraitReq>insertion</TraitReq>
+			<TraitReq>shameless</TraitReq>
+			<TraitReq>sexTraining3</TraitReq>
+			<LevelReq>55</LevelReq>
 		</Requirements>
 	</Trait>
 	<Trait>
 		<Name>autonomousPussy</Name>
 		<Requirements>
-			<AttributeReq type="Seduction">20</AttributeReq>
+			<AttributeReq type="Seduction">70</AttributeReq>
 			<TraitReq>alwaysready</TraitReq>
+			<TraitReq>sexTraining3</TraitReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>grappler</Name>
+		<Requirements>
+			<AttributeReq type="Power">25</AttributeReq>
+			<TraitReq>freeSpirit</TraitReq>
+			<LevelReq>10</LevelReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>takedown</Name>
+		<Requirements>
+			<AttributeReq type="Power">45</AttributeReq>
+			<LevelReq>20</LevelReq>
+			<TraitReq>grappler</TraitReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>disablingblows</Name>
+		<Requirements>
+			<AttributeReq type="Power">65</AttributeReq>
+			<LevelReq>30</LevelReq>
+			<TraitReq>takedown</TraitReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>confidentdom</Name>
+		<Requirements>
+			<AttributeReq type="Power">85</AttributeReq>
+			<LevelReq>40</LevelReq>
+			<TraitReq>disablingblows</TraitReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>overwhelmingPresence</Name>
+		<Requirements>
+			<AttributeReq type="Ki">30</AttributeReq>
+			<LevelReq>40</LevelReq>
+			<TraitReq>mentalfortress</TraitReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>indomitable</Name>
+		<Requirements>
+			<AttributeReq type="Ki">10</AttributeReq>
+			<LevelReq>15</LevelReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>mentalfortress</Name>
+		<Requirements>
+			<AttributeReq type="Ki">20</AttributeReq>
+			<LevelReq>25</LevelReq>
+			<TraitReq>indomitable</TraitReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>oblivious</Name>
+		<Requirements>
+			<AttributeReq type="Ki">50</AttributeReq>
+			<LevelReq>55</LevelReq>
+			<TraitReq>overwhelmingPresence</TraitReq>
 		</Requirements>
 	</Trait>
 	<Trait>
 		<Name>submissive</Name>
 		<Requirements>
 			<AttributeReq type="Seduction">30</AttributeReq>
+			<AttributeReq type="Submissive">5</AttributeReq>
+			<TraitReq>responsive</TraitReq>
 			<LevelReq>10</LevelReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>toymaster</Name>
+		<Requirements>
+			<AttributeReq type="Cunning">30</AttributeReq>
+			<AttributeReq type="Science">1</AttributeReq>
+			<TraitReq>resourceful</TraitReq>
+			<LevelReq>20</LevelReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>nymphomania</Name>
+		<Requirements>
+			<AttributeReq type="Seduction">50</AttributeReq>
+			<LevelReq>30</LevelReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>obsequiousAppeal</Name>
+		<Requirements>
+			<AttributeReq type="Submissive">25</AttributeReq>
+			<TraitReq>submissive</TraitReq>
+			<LevelReq>25</LevelReq>
 		</Requirements>
 	</Trait>
 	<Trait>
@@ -155,6 +357,7 @@
 	<Trait>
 		<Name>QuickRecovery</Name>
 		<Requirements>
+			<AttributeReq type="Power">15</AttributeReq>
 		</Requirements>
 	</Trait>
 	<Trait>
@@ -164,22 +367,17 @@
 		</Requirements>
 	</Trait>
 	<Trait>
-		<Name>shameless</Name>
-		<Requirements>
-				<AttributeReq type="Seduction">15</AttributeReq>
-		</Requirements>
-	</Trait>
-	<Trait>
 		<Name>graceful</Name>
 		<Requirements>
-			<TraitReq>soulsucker</TraitReq>
-			<AttributeReq type="Cunning">25</AttributeReq>
+			<TraitReq>skeptical</TraitReq>
+			<AttributeReq type="Cunning">45</AttributeReq>
 		</Requirements>
 	</Trait>
 	<Trait>
 		<Name>skeptical</Name>
 		<Requirements>
 			<AttributeReq type="Cunning">25</AttributeReq>
+			<TraitReq>cautious</TraitReq>
 		</Requirements>
 	</Trait>
 	<Trait>
@@ -224,7 +422,7 @@
 	<Trait>
 		<Name>resourceful</Name>
 		<Requirements>
-			<Trait>treasureSeeker</Trait>
+			<TraitReq>treasureSeeker</TraitReq>
 		</Requirements>
 	</Trait>
 	<Trait>
@@ -245,16 +443,17 @@
 		</Requirements>
 	</Trait>
 	<Trait>
-		<Name>leadership</Name>
-		<Requirements>
-			<LevelReq>10</LevelReq>
-		</Requirements>
-	</Trait>
-	<Trait>
 		<Name>tactician</Name>
 		<Requirements>
 			<LevelReq>15</LevelReq>
-			<TraitReq>leadership</TraitReq>
+			<TraitReq>sympathetic</TraitReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>leadership</Name>
+		<Requirements>
+			<LevelReq>20</LevelReq>
+			<TraitReq>tactician</TraitReq>
 		</Requirements>
 	</Trait>
 	<Trait>
@@ -272,19 +471,48 @@
 	<Trait>
 		<Name>mojoMaster</Name>
 		<Requirements>
-			<AttributeReq type="Cunning">10</AttributeReq>
+			<AttributeReq type="Cunning">30</AttributeReq>
+			<TraitReq>Confident</TraitReq>
 		</Requirements>
 	</Trait>
 	<Trait>
 		<Name>powerfulhips</Name>
 		<Requirements>
-			<AttributeReq type="Power">15</AttributeReq>
+			<AttributeReq type="Power">20</AttributeReq>
+			<TraitReq>sexTraining2</TraitReq>
 		</Requirements>
 	</Trait>
 	<Trait>
 		<Name>strongwilled</Name>
 		<Requirements>
-			<LevelReq>15</LevelReq>
+			<LevelReq>25</LevelReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>temptingtits</Name>
+		<Requirements>
+			<AttributeReq type="Seduction">50</AttributeReq>
+			<LevelReq>35</LevelReq>
+			<BreastsReq>e</BreastsReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>beguilingbreasts</Name>
+		<Requirements>
+			<AttributeReq type="Seduction">70</AttributeReq>
+			<LevelReq>47</LevelReq>
+			<BreastsReq>e</BreastsReq>
+		</Requirements>
+	</Trait>
+	<Trait>
+		<Name>sedativecream</Name>
+		<Requirements>
+			<AttributeReq type="Seduction">70</AttributeReq>
+			<AttributeReq type="Science">30</AttributeReq>
+			<TraitReq>lacedjuices</TraitReq>
+			<TraitReq>lactating</TraitReq>
+			<LevelReq>57</LevelReq>
+			<BreastsReq>e</BreastsReq>
 		</Requirements>
 	</Trait>
 	<Trait>
@@ -389,11 +617,6 @@
 		<Name>responsive</Name>
 		<Requirements>
 			<AttributeReq type="Submissive">1</AttributeReq>
-		</Requirements>
-	</Trait>
-	<Trait>
-		<Name>assmaster</Name>
-		<Requirements>
 		</Requirements>
 	</Trait>
 </RequirementList>

@@ -67,6 +67,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Meter;
 import nightgames.characters.Player;
 import nightgames.characters.Trait;
+import nightgames.characters.TraitTree;
 import nightgames.combat.Combat;
 import nightgames.combat.CombatSceneChoice;
 import nightgames.combat.IEncounter;
@@ -454,7 +455,7 @@ public class GUI extends JFrame implements Observer {
         mntmCredits.addActionListener(arg0 -> {
             JPanel panel = new JPanel();
             panel.add(new JLabel("<html>Night Games created by The Silver Bard<br>"
-                            + "Reyka and Samantha created by DNDW<br>" + "Upgraded Strapon created by ElfBoyEni<br>"
+                            + "Reyka and Samantha and a whole lot of stuff created by DNDW<br>" + "Upgraded Strapon created by MotoKuchoma<br>"
                             + "Strapon victory scenes created by Legion<br>" + "Advanced AI by Jos<br>"
                             + "Magic Training scenes by Legion<br>" + "Jewel 2nd Victory scene by Legion<br>"
                             + "Video Games scenes 1-9 by Onyxdime<br>"
@@ -1475,6 +1476,7 @@ public class GUI extends JFrame implements Observer {
             setFont(new Font("Baskerville Old Face", 0, 18));
             this.feat = feat;
             setText(feat.toString());
+            TraitTree traitTree = Global.getTraitRequirements();
             setToolTipText(feat.getDesc());
             addActionListener(arg0 -> {
                 Player player = Global.human;

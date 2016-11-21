@@ -18,7 +18,6 @@ public class Carry extends Fuck {
         addTag(SkillTag.pleasureSelf);
         addTag(SkillTag.fucking);
         addTag(SkillTag.positioning);
-        addTag(SkillTag.petDisallowed);
     }
 
     public Carry(Character self) {
@@ -57,9 +56,9 @@ public class Carry extends Fuck {
             if (getSelf().has(Trait.insertion)) {
                 otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
             }
+            c.setStance(new Standing(getSelf(), target), getSelf(), getSelf().canMakeOwnDecision());
             target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c, this);
             getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c, this);
-            c.setStance(new Standing(getSelf(), target), getSelf(), getSelf().canMakeOwnDecision());
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(), Global

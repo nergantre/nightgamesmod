@@ -27,7 +27,7 @@ public abstract class Position implements Cloneable {
 
     public void setOtherCombatants(List<? extends Character> others) {}
 
-    protected Character domSexCharacter(Combat c) {
+    public Character domSexCharacter(Combat c) {
         return top;
     }
 

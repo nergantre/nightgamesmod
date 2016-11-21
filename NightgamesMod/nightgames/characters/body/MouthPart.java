@@ -111,10 +111,10 @@ public class MouthPart extends GenericBodyPart {
         if (self.has(Trait.corrupting)) {
             opponent.add(c, new PartiallyCorrupted(self));
         }
-        if (self.has(Trait.soulsucker)) {
+        if (self.has(Trait.soulsucker) && target.isGenital()) {
             if (!self.human()) {
                 c.write(opponent,
-                                "<br>You feel faint as her lips touch your body, as if your will to fight is being sucked out through your "
+                                "<br>You feel faint as her lips touch you, as if your will to fight is being sucked out through your "
                                                 + target.describe(opponent) + " into her mouth.");
             } else {
                 c.write(opponent,
@@ -123,8 +123,7 @@ public class MouthPart extends GenericBodyPart {
                                                 + target.describe(opponent) + " into your mouth.");
             }
             bonus += Global.random(3) + 2;
-            opponent.loseWillpower(c, Global.random(5) + 2);
-            self.buildMojo(c, 15);
+            opponent.drainWillpowerAsMojo(c, self, (int) self.modifyDamage(DamageType.drain, opponent, 2), 2);
         }
         return bonus;
     }

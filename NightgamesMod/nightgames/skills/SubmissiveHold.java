@@ -86,7 +86,7 @@ public class SubmissiveHold extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (isArmLock(c.getStance())) {
-            return Global.format("{self:SUBJECT} entwines {other:name-do} fingers with {self:possessive}"
+            return Global.format("{self:SUBJECT} entwines {other:name-possessive} fingers with {self:possessive}"
                             + " own, holding {other:direct-object} in position.",
                             getSelf(), target);
         } else {

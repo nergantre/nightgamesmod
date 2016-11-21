@@ -44,7 +44,7 @@ public class ReverseFly extends Fly {
         if (getSelf().human()) {
             c.write(getSelf(), premessage + deal(c, 0, result, target));
         } else if (c.shouldPrintReceive(target, c)) {
-            c.write(getSelf(), premessage + receive(c, 0, result, getSelf()));
+            c.write(getSelf(), premessage + receive(c, 0, result, target));
         }
         if (result == Result.normal) {
             getSelf().emote(Emotion.dominant, 50);
@@ -57,9 +57,9 @@ public class ReverseFly extends Fly {
             if (getSelf().has(Trait.insertion)) {
                 otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
             }
+            c.setStance(new FlyingCowgirl(getSelf(), target), getSelf(), getSelf().canMakeOwnDecision());
             target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c, this);
             getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c, this);
-            c.setStance(new FlyingCowgirl(getSelf(), target), getSelf(), getSelf().canMakeOwnDecision());
         } else {
             getSelf().add(c, new Falling(getSelf()));
             return false;

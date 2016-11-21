@@ -43,8 +43,8 @@ public class Caroline extends BasePersonality {
         character.modAttributeDontSaveData(Attribute.Cunning, 2);
         character.modAttributeDontSaveData(Attribute.Perception, 1);
         character.modAttributeDontSaveData(Attribute.Speed, 1);
-        character.getStamina().setMax(70);
-        character.getArousal().setMax(70);
+        character.getStamina().setMax(120);
+        character.getArousal().setMax(120);
         character.rank = 1;
         Global.gainSkills(character);
 
@@ -57,8 +57,8 @@ public class Caroline extends BasePersonality {
 
     @Override
     public void setGrowth() {
-        character.getGrowth().stamina = 2;
-        character.getGrowth().arousal = 2;
+        character.getGrowth().stamina = 4;
+        character.getGrowth().arousal = 4;
         character.getGrowth().willpower = .4f;
         character.getGrowth().bonusStamina = 2;
         character.getGrowth().bonusArousal = 2;
