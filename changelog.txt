@@ -1,5 +1,7 @@
 2.4.0
 Balance changes:
+- MojoMaster now gives you +20 maximum mojo (New since rc1)
+- Pet counterattacks can only happen when you are mobile (New since rc1)
 - All drain now scales with dark and arcane (New since rc1)
 - Nerfed willpower loss from various drain sources to compensate (New since rc1)
 - Beguiling breasts now only work when you have dd cup breasts or bigger (yes cup sizes aren't a measure of size, stop being pedantic :D) (New since rc1)

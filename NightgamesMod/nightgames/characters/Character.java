@@ -1973,7 +1973,7 @@ public abstract class Character extends Observable implements Cloneable {
             PetCharacter pet = randomOpponentPetOptional.get();
             boolean weakenBetter = modifyDamage(DamageType.physical, pet, 100) / pet.getStamina().remaining() 
                             > 100 / pet.getStamina().remaining();
-            if (canAct() && pet.roll(this, c, 20)) {
+            if (canAct() && c.getStance().mobile(this) && pet.roll(this, c, 20)) {
                 if (weakenBetter) {
                     c.write(Global.format("{self:SUBJECT-ACTION:focus|focuses} {self:possessive} attentions on {other:name-do}, "
                                     + "thoroughly exhausting {other:direct-object} in a game of cat and mouse.", this, pet));
