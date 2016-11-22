@@ -27,12 +27,13 @@ public class NinjaStash implements Deployable {
         }
     }
     @Override
-    public void resolve(Character active) {
+    public boolean resolve(Character active) {
         if(owner==active&&active.human()){
             Global.gui().message("You have a carefully hidden stash of emergency supplies here. You can replace your clothes and collect the items if you need to.");
         }
-        
+        return false;
     }
+
     public void collect(Character active){
         for(Item i: contents){
             active.gain(i);

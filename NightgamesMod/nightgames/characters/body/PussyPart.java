@@ -219,7 +219,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
         if (countsAs(self, feral)) {
             c.write(self, String.format("Musk emanating from %s %s leaves %s reeling.", self.possessivePronoun(),
                             describe(self), opponent.directObject()));
-            double base = damage + self.getPheromonePower();
+            double base = 3;
             if (target.getMod(opponent).countsAs(opponent, CockMod.runic)) {
                 c.write(self, String.format(
                                 "The wild scent overwhelms %s carefully layered enchantments, instantly sweeping %s away.",
@@ -228,9 +228,9 @@ public enum PussyPart implements BodyPart,BodyPartMod {
             } else if (target.getMod(opponent).countsAs(opponent, CockMod.incubus)) {
                 c.write(self, String.format("Whilst certainly invigorating, the scent leaves %s largely unaffected.",
                                 opponent.subject()));
-                base /= 4;
+                base /= 2;
             }
-            opponent.add(c, Horny.getWithBiologicalType(self, opponent, (int) Math.max(1, Math.floor(base / 5)), 5,
+            opponent.add(c, Horny.getWithBiologicalType(self, opponent, (float) base, 5,
                             self.nameOrPossessivePronoun() + " feral musk"));
         }
         if (opponent.has(Trait.pussyhandler) || opponent.has(Trait.anatomyknowledge)) {
@@ -598,9 +598,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
             c.write(self, Global.format(
                             "As {self:SUBJECT-ACTION:cum|cums} hard, an literal explosion of pheromones hits {other:name-do}. {other:POSSESSIVE} entire body flushes in arousal; {other:subject} better finish this fast!",
                             self, opponent));
-            opponent.add(c, Horny.getWithBiologicalType(self, opponent, self.getArousal()
-                                                    .getReal()
-                            / 10, 5, self.nameOrPossessivePronoun() + " orgasmic pheromones"));
+            opponent.add(c, Horny.getWithBiologicalType(self, opponent, 10, 5, self.nameOrPossessivePronoun() + " orgasmic pheromones"));
         }
     }
 

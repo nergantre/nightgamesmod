@@ -568,6 +568,7 @@ public class Cassie extends BasePersonality {
         character.outfitPlan.add(Clothing.getByID("shoes"));
 
         character.mod(Attribute.Arcane, 1);
+        character.getGrowth().addOrRemoveTraits(character);
     }
 
     @Override

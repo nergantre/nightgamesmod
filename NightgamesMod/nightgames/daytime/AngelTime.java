@@ -122,15 +122,18 @@ public class AngelTime extends BaseNPCTime {
             TransformationOption divinity = new TransformationOption();
             // WARNING this is using the players current divinity. If this
             // changes to work on other NPCs, it will fail.
-            final int currentDivinity = player.getPure(Attribute.Divinity);
-            final int numberHolyWaters = 1 + currentDivinity / 10;
             divinity.requirements.add((c, self, other) -> {
+                final int currentDivinity = player.getPure(Attribute.Divinity);
+                final int numberHolyWaters = 1 + currentDivinity / 10;
                 return self.has(Item.HolyWater, numberHolyWaters);
             });
-            divinity.additionalRequirements = numberHolyWaters + " Holy Waters";
+            divinity.additionalRequirements = "1 Holy Water, with an additional one per 10 levels of divinity";
             divinity.option = "Bestow Divinity";
             divinity.scene = "[Placeholder]<br>Angel has sex with you, lending you a part of her divinity.";
             divinity.effect = (c, self, other) -> {
+                final int currentDivinity = player.getPure(Attribute.Divinity);
+                final int numberHolyWaters = 1 + currentDivinity / 10;
+                self.consume(Item.HolyWater, numberHolyWaters);
                 self.mod(Attribute.Divinity, 1);
                 return true;
             };

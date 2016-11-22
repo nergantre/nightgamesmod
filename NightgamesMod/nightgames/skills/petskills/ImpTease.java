@@ -27,7 +27,7 @@ public class ImpTease extends SimpleEnemySkill {
     @Override
     public boolean resolve(Combat c, Character target) {
         if (target.roll(getSelf(), c, accuracy(c, target))) {
-            int m = Global.random(5, 11) + getSelf().getLevel() / 2;
+            int m = (int) (Global.random(10, 16) + Math.sqrt(getSelf().getLevel()));
             if (target.crotchAvailable() && !c.getStance().penisInserted(target) && target.hasDick()) {
                 c.write(getSelf(), Global.format("{self:SUBJECT} jumps onto {other:name-do} and humps at {other:possessive} dick before "
                                 + "{other:subject-action:can pull|can pull} {self:direct-object} off.",

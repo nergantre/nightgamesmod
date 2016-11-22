@@ -177,7 +177,7 @@ public class Caroline extends BasePersonality {
                                 + "It's Angel's friend Caroline!"
                                 + "<br/><br/>"
                                 + "Caroline looks around and spots you and Angel. <i>\"Hmmm I'm not entirely sure what's going on here, "
-                                + "but looks like some kind of sex fight? Sounds fun, I'm in!\"</i> You groan. Wll she sure is adaptable...", self, other);
+                                + "but looks like some kind of sex fight? Sounds fun, I'm in!\"</i> You groan. Well she sure is adaptable...", self, other);
             } else if (self.has(Trait.kabbalah) && carolineFought == 1) {
                 other.setFlag(FOUGHT_CAROLINE_PET, 2);
                 return Global.format("Caroline emerges again from the runic circles you're used to seeing by now. However, she looks a bit different. "

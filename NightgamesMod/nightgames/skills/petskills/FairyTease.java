@@ -28,7 +28,7 @@ public class FairyTease extends SimpleEnemySkill {
     @Override
     public boolean resolve(Combat c, Character target) {
         if (target.roll(getSelf(), c, accuracy(c, target))) {
-            int m = Global.random(5, 11) + getSelf().getLevel() / 2;
+            int m = (int) (Global.random(10, 16) + Math.sqrt(getSelf().getLevel()));
             if (target.crotchAvailable() && !c.getStance().penisInserted(target) && target.hasDick()) {
                 c.write(getSelf(), Global.format("{self:SUBJECT} hugs {other:name-possessive} dick and rubs it with "
                                     + "{self:possessive} entire body until {other:pronoun-action:pull|pulls} {self:direct-object} off.",

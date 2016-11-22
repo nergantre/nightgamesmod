@@ -30,7 +30,7 @@ public class GoblinFaceFuck extends SimpleEnemySkill {
     @Override
     public boolean resolve(Combat c, Character target) {
         c.write(getSelf(), Global.format("{self:SUBJECT} straddles {other:name-possessive} head, giving {other:direct-object} an eyefull of her assorted genitals. "
-                        + "She pulls the vibrator out of her pussy, causing a rain of love juice to splash {other:posssessive} face. "
+                        + "She pulls the vibrator out of her pussy, causing a rain of love juice to splash {other:possessive} face. "
                         + "{self:SUBJECT} then wipes her leaking cock on {other:name-possessive} forehead, smearing {other:direct-object} with precum. "
                         + "{other:NAME-POSSESSIVE} face flushes with shame as the goblin marks {other:direct-object} with her fluids.", getSelf(), target));
         getSelf().body.pleasure(target, target.body.getRandom("skin"), getSelf().body.getRandomCock(), 10, c);

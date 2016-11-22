@@ -7,7 +7,7 @@ import nightgames.status.Hypersensitive;
 public class VulnerableModifier extends BaseModifier {
 
     public VulnerableModifier() {
-        status = new StatusModifier(new Hypersensitive(null));
+        status = new StatusModifier(new Hypersensitive(null), true);
     }
 
     @Override

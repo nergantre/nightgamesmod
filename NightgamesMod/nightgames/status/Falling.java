@@ -38,7 +38,7 @@ public class Falling extends Status {
     @Override
     public int regen(Combat c) {
         affected.removelist.add(this);
-        if (c.getStance().prone(affected)) {
+        if (!c.getStance().prone(affected)) {
             c.setStance(new StandingOver(c.getOpponent(affected), affected));
         }
         affected.add(new Stunned(affected));

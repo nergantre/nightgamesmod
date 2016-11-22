@@ -85,10 +85,12 @@ public class EnthrallingTrap implements Trap {
     }
 
     @Override
-    public void resolve(Character active) {
+    public boolean resolve(Character active) {
         if (active != owner) {
             trigger(active);
+            return true;
         }
+        return false;
     }
 
     @Override

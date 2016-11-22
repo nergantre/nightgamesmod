@@ -3,6 +3,7 @@ package nightgames.areas;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import nightgames.actions.Movement;
 import nightgames.characters.Character;
@@ -111,9 +112,11 @@ public class Area implements Serializable {
 
     public void enter(Character p) {
         present.add(p);
-        Deployable found = getEnv();
-        if (found != null) {
-            found.resolve(p);
+        List<Deployable> deps = new ArrayList<>(env);
+        for (Deployable dep : deps) {
+            if (dep != null && dep.resolve(p)) {
+                return;
+            }
         }
     }
 
@@ -177,20 +180,12 @@ public class Area implements Serializable {
         return enumerator;
     }
 
-    public Deployable getEnv() {
-        if (env.isEmpty()) {
-            return null;
-        }
-        for (int i = 0; i < env.size(); i++) {
-            if (env.get(i).getClass() == Trap.class) {
-                return env.get(i);
-            }
-        }
-        return env.get(0);
-    }
-
     public void place(Deployable thing) {
-        env.add(thing);
+        if (thing instanceof Trap) {
+            env.add(0, thing);
+        } else {
+            env.add(thing);
+        }
     }
 
     public void remove(Deployable triggered) {

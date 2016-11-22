@@ -112,17 +112,7 @@ public class Mara extends BasePersonality {
     @Override
     public void rest(int time) {
         if (character.rank == 1 && !character.has(Trait.madscientist)) {
-            character.getGrowth().addTrait(10, Trait.madscientist);
-            character.body.addReplace(PussyPart.cybernetic, 1);
-            character.unequipAllClothing();
-            character.outfitPlan.add(Clothing.getByID("bra"));
-            character.outfitPlan.add(Clothing.getByID("shirt"));
-            character.outfitPlan.add(Clothing.getByID("labcoat"));
-            character.outfitPlan.add(Clothing.getByID("underwear"));
-            character.outfitPlan.add(Clothing.getByID("pants"));
-            character.outfitPlan.add(Clothing.getByID("pantyhose"));
-            character.outfitPlan.add(Clothing.getByID("boots"));
-            character.mod(Attribute.Science, 1);
+            advance();
         }
         if (character.rank == 2 && !character.has(Trait.madscientist)) {
             character.body.add(new GenericBodyPart("mechanical tentacles", "Four large mechanically feelers are attached to {self:possessive} back.", 1, 1.0, 0.0, true, "mechtentacles", ""));
@@ -177,6 +167,21 @@ public class Mara extends BasePersonality {
                 Global.getDay().visit("Browse Porn Sites", this.character, 0);
             }
         }
+    }
+
+    private void advance() {
+        character.getGrowth().addTrait(10, Trait.madscientist);
+        character.body.addReplace(PussyPart.cybernetic, 1);
+        character.unequipAllClothing();
+        character.outfitPlan.add(Clothing.getByID("bra"));
+        character.outfitPlan.add(Clothing.getByID("shirt"));
+        character.outfitPlan.add(Clothing.getByID("labcoat"));
+        character.outfitPlan.add(Clothing.getByID("underwear"));
+        character.outfitPlan.add(Clothing.getByID("pants"));
+        character.outfitPlan.add(Clothing.getByID("pantyhose"));
+        character.outfitPlan.add(Clothing.getByID("boots"));
+        character.mod(Attribute.Science, 1);
+        character.getGrowth().addOrRemoveTraits(character);
     }
 
     @Override

@@ -9,7 +9,6 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 
 public class Feral extends Status {
-
     public Feral(Character affected) {
         super("Feral", affected);
         flag(Stsflag.feral);

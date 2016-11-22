@@ -412,7 +412,7 @@ public abstract class Character extends Observable implements Cloneable {
         double minDamage = baseDamage * .5 * (1 + .05 * getLevel());
         double multiplier = (1 + .1 * getOffensivePower(type) - .05 * other.getDefensivePower(type));
         if (Global.isDebugOn(DebugFlags.DEBUG_DAMAGE)) {
-            System.out.println(baseDamage + " from " + getName() + " has multiplier " + multiplier + " against " + other.getName() + "["+ getOffensivePower(type) +", " + other.getDefensivePower(type) + "].");
+            System.out.println(baseDamage + " from " + getName() + " has multiplier " + multiplier + " against " + other.getName() + " ["+ getOffensivePower(type) +", " + other.getDefensivePower(type) + "].");
         }
         double damage = baseDamage * multiplier;
         return Math.min(Math.max(minDamage, damage), maxDamage);
@@ -423,7 +423,7 @@ public abstract class Character extends Observable implements Cloneable {
             case arcane:
                 return get(Attribute.Arcane) + get(Attribute.Dark) / 2 + get(Attribute.Divinity) / 2 + get(Attribute.Ki) / 2;
             case biological:
-                return get(Attribute.Animism) + get(Attribute.Bio) + get(Attribute.Medicine) / 2 + get(Attribute.Science) / 2 + get(Attribute.Cunning) / 2;
+                return get(Attribute.Animism) / 2 + get(Attribute.Bio) / 2 + get(Attribute.Medicine) / 2 + get(Attribute.Science) / 2 + get(Attribute.Cunning) / 2 + get(Attribute.Seduction) / 2;
             case pleasure:
                 return get(Attribute.Seduction);
             case temptation:
@@ -450,7 +450,7 @@ public abstract class Character extends Observable implements Cloneable {
     private double getOffensivePower(DamageType type){
         switch (type) {
             case biological:
-                return get(Attribute.Animism) + get(Attribute.Bio) + get(Attribute.Medicine) + get(Attribute.Science);
+                return (get(Attribute.Animism) + get(Attribute.Bio) + get(Attribute.Medicine) + get(Attribute.Science)) / 2;
             case gadgets:
                 double power = (get(Attribute.Science) * 2 + get(Attribute.Cunning)) / 3.0;
                 if (has(Trait.toymaster)) {
@@ -1257,7 +1257,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public int getPheromonePower() {
-        return 1 + (get(Attribute.Animism) + get(Attribute.Bio)) / 10;
+        return 5;
     }
 
     public void dropStatus(Combat c, Character opponent) {
@@ -1621,6 +1621,10 @@ public abstract class Character extends Observable implements Cloneable {
                 thrustCopy.resolve(c, opponent);
             }
         }
+        if (this != opponent && times == totalTimes) {
+            c.write(this, orgasmLiner);
+            c.write(opponent, opponentOrgasmLiner);
+        }
         if (has(Trait.nymphomania) && (is(Stsflag.feral) || Global.random(100) < Math.sqrt(get(Attribute.Nymphomania)) * 10) && !getWillpower().isEmpty() && times == totalTimes) {
             if (human()) {
                 c.write("Cumming actually made you feel kind of refreshed, albeit with a burning desire for more.");
@@ -1630,10 +1634,6 @@ public abstract class Character extends Observable implements Cloneable {
                                 this, opponent));
             }
             restoreWillpower(c, 5 + Math.min((get(Attribute.Animism) + get(Attribute.Nymphomania)) / 5, 15));
-        }
-        if (this != opponent && times == totalTimes) {
-            c.write(this, orgasmLiner);
-            c.write(opponent, opponentOrgasmLiner);
         }
         if (times == totalTimes) {
             List<Status> purgedStatuses = getStatuses().stream().filter(status -> status.mindgames() && status.flags().contains(Stsflag.purgable)).collect(Collectors.toList());
@@ -1829,7 +1829,7 @@ public abstract class Character extends Observable implements Cloneable {
             reduced = " (Strong-willed)";
         }
         if (is(Stsflag.feral) && primary) {
-            amt = amt / 3;
+            amt = amt * 2 / 3;
             reduced = " (Feral)";
         }
         int old = willpower.get();
@@ -2527,7 +2527,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public int knockdownDC() {
-        int dc = 10 + getStamina().get() / 2;
+        int dc = 10 + getStamina().get() / 10 + getStamina().percent() / 5;
         if (is(Stsflag.braced)) {
             dc += getStatus(Stsflag.braced).value();
         }
@@ -3360,7 +3360,6 @@ public abstract class Character extends Observable implements Cloneable {
             Global.gainSkills(this);
             placeNinjaStash(m);
         }
-
     }
 
     private void placeNinjaStash(Match m) {

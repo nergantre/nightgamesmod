@@ -560,6 +560,7 @@ public class Angel extends BasePersonality {
         character.outfitPlan.add(Clothing.getByID("bikinibottoms"));
         character.outfitPlan.add(Clothing.getByID("highheels"));
         character.mod(Attribute.Divinity, 1);
+        character.getGrowth().addOrRemoveTraits(character);
     }
 
     @Override

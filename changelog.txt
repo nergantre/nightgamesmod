@@ -1,3 +1,24 @@
+2.4.3
+Balance:
+- Heavily nerfed Kat's pheromones. Also nerfed feral, so she actually now loses more willpower in an orgasm than she gets back.
+- Biological damage modifiers have been halved (affects pheromones and sedate)
+- Biological defense now includes attributes in Seduction as well as Cunning/Science/Bio/Animism.
+- Knockdowns now has a new formula so that having over 300 stamina doesn't just make you immune to knockdowns.
+- Yui now gives 5 affection per visit, but caps out at a maximum of 20.
+
+New
+- Map now highlights cache drop locations
+- Orgasms done by pets will now skip the turn for the players.
+- Turned on system messages by default. Please note that you can turn it off in the options.
+
+Bug fixes:
+- Having a trap of your own will no longer make you unable to get cache rewards
+- Cassie, Angel and Jewel will no longer require an additional level up before getting their new Class traits after hitting 10.
+- Fixed an unintended bug where the match timer would increment every time phases changed, triggering the 0 willpower tiebreaker way too fast.
+- Fixed a bug where knocked downs never happened.
+- Fixed a bug where holy waters was not being consumed by Angel when training Divinity.
+- Fixed a lot of typo bugs (thanks for the bug reports as usual!)
+
 2.4.2
 - Made Jewel's level 20 focus actually trigger at lvl 20 instead of 10
 

@@ -127,7 +127,7 @@ public class Challenge implements Deployable {
     }
 
     @Override
-    public void resolve(Character active) {
+    public boolean resolve(Character active) {
         if (active.state == State.ready) {
             owner = active;
             target = Global.getMatch().combatants.get(Global.random(Global.getMatch().combatants.size() - 1));
@@ -135,7 +135,7 @@ public class Challenge implements Deployable {
                 target = Global.getMatch().combatants.get(Global.random(Global.getMatch().combatants.size() - 1));
             }
             if (target == active) {
-                return;
+                return false;
             }
             goal = pick();
             if (active.human()) {
@@ -145,7 +145,9 @@ public class Challenge implements Deployable {
             }
             active.location().remove(this);
             active.accept(this);
+            return true;
         }
+        return false;
     }
 
     @Override

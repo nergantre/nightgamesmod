@@ -11,6 +11,6 @@ public class Smothering extends FaceSitting {
 
     @Override
     public String describe(Combat c) {
-        return Global.format("{self:SUBJECT-ACTION:sit|sits} on {other:name-posssesive} face, with {self:possessive} round ass fully encompassing {other:possessive} view. {other:SUBJECT} cannot even breathe except for the short pauses when {self:subject-action:allow|allows} {other:direct-object} to by lifting {self:possessive} ass.", top, bottom);
+        return Global.format("{self:SUBJECT-ACTION:sit|sits} on {other:name-possesive} face, with {self:possessive} round ass fully encompassing {other:possessive} view. {other:SUBJECT} cannot even breathe except for the short pauses when {self:subject-action:allow|allows} {other:direct-object} to by lifting {self:possessive} ass.", top, bottom);
     }
 }

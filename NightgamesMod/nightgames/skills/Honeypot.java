@@ -8,7 +8,6 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.pet.PetCharacter;
-import nightgames.skills.damage.DamageType;
 
 public class Honeypot extends Skill {
     public Honeypot(Character self) {

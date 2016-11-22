@@ -81,6 +81,7 @@ import nightgames.modifier.standard.NoModifier;
 import nightgames.skills.Skill;
 import nightgames.trap.Trap;
 
+@SuppressWarnings("unused")
 public class GUI extends JFrame implements Observer {
     /**
      * 
@@ -1476,7 +1477,6 @@ public class GUI extends JFrame implements Observer {
             setFont(new Font("Baskerville Old Face", 0, 18));
             this.feat = feat;
             setText(feat.toString());
-            TraitTree traitTree = Global.getTraitRequirements();
             setToolTipText(feat.getDesc());
             addActionListener(arg0 -> {
                 Player player = Global.human;
@@ -1574,8 +1574,7 @@ public class GUI extends JFrame implements Observer {
     }
 
 
-    @SuppressWarnings("unused") private class MatchButton extends JButton {
-
+    private class MatchButton extends JButton {
         /**
          *
          */

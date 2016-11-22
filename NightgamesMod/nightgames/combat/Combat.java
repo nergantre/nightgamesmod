@@ -70,6 +70,8 @@ public class Combat extends Observable implements Cloneable {
         PRETURN,
         SKILL_SELECTION,
         PET_ACTIONS,
+        DETERMINE_SKILL_ORDER,
+        DETERMINE_SKILL_ORDER_AUTONEXT,
         P1_ACT_FIRST,
         P2_ACT_FIRST,
         P1_ACT_SECOND,
@@ -333,7 +335,7 @@ public class Combat extends Observable implements Cloneable {
         }
         return false;
     }
-    
+
     private void checkForCombatComment() {
         Character other;
         if (p1.human() || p2.human()) {
@@ -351,6 +353,7 @@ public class Combat extends Observable implements Cloneable {
     }
 
     private void doPreturnUpkeep() {
+        timer += 1;
         Character player;
         Character other;
         if (p1.human()) {
@@ -385,7 +388,7 @@ public class Combat extends Observable implements Cloneable {
         checkStamina(p2);
         doStanceTick(p1);
         doStanceTick(p2);
-        
+
         List<Character> team1 = new ArrayList<>();
         team1.addAll(getPetsFor(p1));
         team1.add(p1);
@@ -485,12 +488,21 @@ public class Combat extends Observable implements Cloneable {
         }
     }
 
+    private static final List<CombatPhase> SKIPPABLE_PHASES = 
+                    Arrays.asList(
+                    CombatPhase.PET_ACTIONS,
+                    CombatPhase.P1_ACT_FIRST,
+                    CombatPhase.P1_ACT_SECOND,
+                    CombatPhase.P2_ACT_FIRST,
+                    CombatPhase.P1_ACT_SECOND);
     public void turn() {
-        timer++;
         if (phase != CombatPhase.FINISHED && phase != CombatPhase.RESULTS_SCENE && checkLosses()) {
             phase = CombatPhase.RESULTS_SCENE;
             next();
             return;
+        }
+        if ((p1.orgasmed || p2.orgasmed) && SKIPPABLE_PHASES.contains(phase)) {
+            phase = CombatPhase.UPKEEP;
         }
         if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
             System.out.println("Current phase = " + phase);
@@ -506,13 +518,16 @@ public class Combat extends Observable implements Cloneable {
                 pickSkills();
                 break;
             case PET_ACTIONS:
-                boolean acted = doPetActions();
+                phase = doPetActions();
+                turn();
+                break;
+            case DETERMINE_SKILL_ORDER:
                 phase = determineSkillOrder();
-                if (acted) {
-                    next();
-                } else {
-                    turn();
-                }
+                next();
+                break;
+            case DETERMINE_SKILL_ORDER_AUTONEXT:
+                phase = determineSkillOrder();
+                turn();
                 break;
             case P1_ACT_FIRST:
                 if (doAction(p1, p1act.getDefaultTarget(this), p1act)) {
@@ -569,7 +584,7 @@ public class Combat extends Observable implements Cloneable {
         } else {
             phase = CombatPhase.PET_ACTIONS;
             turn();
-        }        
+        }
     }
 
     private String describe(Character player, Character other) {
@@ -681,8 +696,7 @@ public class Combat extends Observable implements Cloneable {
         turn();
     }
 
-    private boolean doPetActions() {
-        boolean acted = false;
+    private CombatPhase doPetActions() {
         Set<PetCharacter> alreadyBattled = new HashSet<>();
         if (otherCombatants.size() > 0) {
             for (PetCharacter pet : otherCombatants) {
@@ -706,14 +720,13 @@ public class Combat extends Observable implements Cloneable {
                 }
             });
             write("<br/>");
-            acted = true;
+            return CombatPhase.DETERMINE_SKILL_ORDER;
         }
-        return acted;
+        return CombatPhase.DETERMINE_SKILL_ORDER_AUTONEXT;
     }
 
     private void doStanceTick(Character self) {
         int stanceDominance = getStance().getDominanceOfStance(self);
-
         if (!(stanceDominance > 0)) {
             return;
         }

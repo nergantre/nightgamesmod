@@ -235,6 +235,7 @@ public class Global {
         configurationFlags.forEach((flag, val) -> Global.setFlag(flag, val));
         time = Time.NIGHT;
         setCharacterDisabledFlag(getNPCByType("Yui"));
+        setFlag(Flag.systemMessages, true);
         setUpMatch(new NoModifier());
     }
 

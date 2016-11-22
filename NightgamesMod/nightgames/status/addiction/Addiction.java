@@ -199,8 +199,7 @@ public abstract class Addiction extends Status {
         Severity old = getSeverity();
         magnitude = clamp(magnitude + amt);
         if (getSeverity() != old) {
-            Global.gui()
-                  .message(describeIncrease());
+            Global.gui().message(describeIncrease());
         }
     }
 
@@ -208,8 +207,7 @@ public abstract class Addiction extends Status {
         Severity old = getSeverity();
         magnitude = clamp(magnitude - amt);
         if (getSeverity() != old) {
-            Global.gui()
-                  .message(describeDecrease());
+            Global.gui().message(describeDecrease());
         }
     }
 
@@ -217,8 +215,7 @@ public abstract class Addiction extends Status {
         Severity old = getCombatSeverity();
         combatMagnitude = clamp(combatMagnitude + amt);
         if (getSeverity() != old) {
-            Global.gui()
-                  .message(describeCombatIncrease());
+            Global.gui().message(describeCombatIncrease());
         }
     }
 
@@ -226,8 +223,7 @@ public abstract class Addiction extends Status {
         Severity old = getCombatSeverity();
         combatMagnitude = clamp(combatMagnitude - amt);
         if (getSeverity() != old) {
-            Global.gui()
-                  .message(describeCombatDecrease());
+            Global.gui().message(describeCombatDecrease());
         }
     }
 

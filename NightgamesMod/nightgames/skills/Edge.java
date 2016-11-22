@@ -7,7 +7,6 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
-import nightgames.stance.Stance;
 
 public class Edge extends Skill {
 

@@ -53,7 +53,7 @@ public class Cache implements Deployable {
     }
 
     @Override
-    public void resolve(Character active) {
+    public boolean resolve(Character active) {
         if (active.state == State.ready) {
             if (active.has(Trait.treasureSeeker)) {
                 dc -= 5;
@@ -156,7 +156,9 @@ public class Cache implements Deployable {
                 }
             }
             active.location().remove(this);
+            return true;
         }
+        return false;
     }
 
     public void calcReward(int level) {

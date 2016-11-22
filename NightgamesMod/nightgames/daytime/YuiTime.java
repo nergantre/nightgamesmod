@@ -50,10 +50,9 @@ public class YuiTime extends BaseNPCTime {
                                           + "any sexual request you could think of. However, knowing Yui's sincerity and "
                                           + "innocence, your conscience won't let you take advantage of her loyalty.");
                 }
-                Global.gui()
-                      .choose(this, "Train with Yui");
-                Global.getNPC("Yui").gainAffection(player, 1);
-                player.gainAffection(Global.getNPC("Yui"), 1);
+                Global.gui().choose(this, "Train with Yui");
+                npc.gainAffection(player, Math.min(Math.max(0, 20 - npc.getAffection(player)), 5));
+                player.gainAffection(npc, Math.min(Math.max(0, 20 - player.getAffection(npc)), 5));
                 Global.unflag(Flag.YuiAvailable);
                 acted = true;
                 player.gain(Item.Tripwire);
@@ -78,8 +77,6 @@ public class YuiTime extends BaseNPCTime {
                   .message("Yui's skills at subterfuge turn out to be as strong as she claimed. She's also quite a good teacher. Apparently she helped train her "
                                   + "younger sister, so she's used to it. Nothing she teaches you is overtly sexual, but you can see some useful applications for the Games.");
             player.mod(Attribute.Ninjutsu, 1);
-            Global.getNPC("Yui").gainAffection(player, 1);
-            player.gainAffection(Global.getNPC("Yui"), 1);
             Global.gui()
                   .choose(this, "Leave");
         }
