@@ -56,7 +56,9 @@ public class MouthPart extends GenericBodyPart {
         if (!fluid.isEmpty() && target.getFluidAddictiveness(opponent) > 0 && !self.is(Stsflag.tolerance)) {
             self.add(c, new FluidAddiction(self, opponent, target.getFluidAddictiveness(opponent), 5));
             FluidAddiction st = (FluidAddiction) self.getStatus(Stsflag.fluidaddiction);
-            if (st.activated()) {
+            if (st == null) {
+                // pass (addiction was resisted)
+            } else if (st.activated()) {
                 if (self.human()) {
                     c.write(self, Global.capitalizeFirstLetter(Global.format(
                                     "As {other:name-possessive} " + fluid

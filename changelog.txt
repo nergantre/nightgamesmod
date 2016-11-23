@@ -1,3 +1,9 @@
+2.4.3.1
+Bug fixes:
+- Fixed a bug where Caroline's protection can cause fluid addictions to crash.
+- Fixed a long standing bug where outfits were never being loaded from saves.
+- Fixed a label issue with the clothing change UI (both the closet and the current outfit were being labeld closet)
+
 2.4.3
 Balance:
 - Heavily nerfed Kat's pheromones. Also nerfed feral, so she actually now loses more willpower in an orgasm than she gets back.

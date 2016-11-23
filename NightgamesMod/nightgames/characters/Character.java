@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Observable;
 import java.util.Optional;
 import java.util.Set;
@@ -1510,7 +1511,11 @@ public abstract class Character extends Observable implements Cloneable {
             outfitPlan.clear();
             JsonUtils.getOptionalArray(object, "outfit").ifPresent(this::addClothes);
         }
-
+        {
+            closet = new HashSet<>(
+                            JsonUtils.collectionFromJson(object.getAsJsonArray("closet"), Clothing.class).stream()
+                            .filter(c -> c != null).collect(Collectors.toList()));
+        }
         {
             traits = new CopyOnWriteArrayList<>(
                             JsonUtils.collectionFromJson(object.getAsJsonArray("traits"), Trait.class).stream()
@@ -1518,7 +1523,7 @@ public abstract class Character extends Observable implements Cloneable {
             if (getType().equals("Airi"))
                 traits.remove(Trait.slime);
         }
-
+        
         body = Body.load(object.getAsJsonObject("body"), this);
         att = JsonUtils.mapFromJson(object.getAsJsonObject("attributes"), Attribute.class, Integer.class);
 

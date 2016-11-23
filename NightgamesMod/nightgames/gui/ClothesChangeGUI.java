@@ -164,7 +164,7 @@ public class ClothesChangeGUI extends JPanel {
         outfitListPane.setMinimumSize(new Dimension(listWidth, 0));
         outfitListPane.setPreferredSize(new Dimension(listWidth, height));
 
-        JLabel outfitLabel = new JLabel("Closet");
+        JLabel outfitLabel = new JLabel("Current Outfit");
         outfitLabel.setForeground(GUIColors.textColorLight);
         outfitBox.add(outfitLabel);
         outfitBox.add(outfitListPane);
