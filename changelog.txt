@@ -1,3 +1,8 @@
+2.4.3.2
+Bug fixes:
+- All pet skills were incorrectly modifying their damage with seduction, causing them to do way too much. This was removed.
+- 69 stance was incorrectly counting as being penetrated. This was fixed.
+
 2.4.3.1
 Bug fixes:
 - Fixed a bug where Caroline's protection can cause fluid addictions to crash.

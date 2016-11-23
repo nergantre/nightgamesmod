@@ -1,6 +1,7 @@
 package nightgames.stance;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import nightgames.characters.Character;
@@ -48,14 +49,14 @@ public class SixNine extends AbstractBehindStance {
 
     @Override
     public List<BodyPart> topParts(Combat c) {
-        return parts(top);
+        return Collections.emptyList();
     }
-    
+
     @Override
     public List<BodyPart> bottomParts() {
-        return parts(top);
+        return Collections.emptyList();
     }
-    
+
     private List<BodyPart> parts(Character c) {
         List<BodyPart> parts = new ArrayList<>(2);
         if (c.hasDick())
