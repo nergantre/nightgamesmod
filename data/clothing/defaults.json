@@ -93,7 +93,7 @@
       "attributes":[
       ],
       "layer":0,
-	  "slots" : ["top"],
+	  "slots" : ["bottom"],
 	  "shops" : ["Boutique"],
   	  "sex" : ["all"],
 	  "hotness":0.9,
@@ -1019,6 +1019,44 @@
    	  "sex" : ["female"],
    	  "hotness":0.65,
       "name":"tentacletop",
+      "toughness":25,
+      "exposure":0.6
+   },
+   {
+      "displayName":"harpoon dildo",
+      "buffs":[
+      ],
+      "price":0,
+      "prefix":"",
+      "attributes":[
+         "skimpy",
+         "harpoonDildo"
+      ],
+	  "layer":0,
+ 	  "slots" : ["top", "bottom", "legs"],
+	  "shops" : [],
+   	  "sex" : ["female"],
+   	  "hotness":0.65,
+      "name":"harpoondildo",
+      "toughness":25,
+      "exposure":0.6
+   },
+   {
+      "displayName":"harpoon onahole",
+      "buffs":[
+      ],
+      "price":0,
+      "prefix":"",
+      "attributes":[
+         "skimpy",
+         "harpoonOnahole"
+      ],
+	  "layer":0,
+ 	  "slots" : ["top", "bottom", "legs"],
+	  "shops" : [],
+   	  "sex" : ["male"],
+   	  "hotness":0.65,
+      "name":"harpoononahole",
       "toughness":25,
       "exposure":0.6
    },

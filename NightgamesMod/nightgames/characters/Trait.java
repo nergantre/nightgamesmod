@@ -374,7 +374,14 @@ public enum Trait {
     unquestionable("Unquestionable", "Does not tolerate resistance when on top"),
     grappler("Grappler", "Bonus to hold strength"),
     suave("Suave", "Bonus increases seduction vs girls."),
-
+    
+    // Mara's unique traits
+    harpoon("Harpoon Toy", "Can launch a harpoon-like sex toy from their arm device"),
+    yank("Yank", "Can yank opponents to the ground if they have a harpoon toy on them"),
+    conducivetoy("Conducive Toy", "Greatly buffs Stun Blast against harpoon-ed opponents"),
+    intensesuction("Intense Suction", "Has a chance to cause a double orgasm with the harpoon toy"),
+    bomber("Bomber", "Can throw dangerous Pheromone Bombs"),
+    
     // Item
     strapped("Strapped", "Penis envy", (b, c, t) -> {
         if (c.human()) {
@@ -387,6 +394,7 @@ public enum Trait {
     event("event", "special character"),
     mindcontrolresistance("", "temporary resistance to mind games - hidden"),
     none("", "");
+    
     private String desc;
     private TraitDescription longDesc;
     private String name;
