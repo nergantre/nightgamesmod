@@ -47,6 +47,13 @@ public class StripSelf extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         Clothing clothing = null;
+        int diff = getSelf().stripDifficulty(target);
+        if (!choice.isEmpty() && Global.random(50) < diff) {
+            c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:try|tries} to remove a particularly"
+                            + " persistent item from {self:possessive} body, but it stubbornly sticks"
+                            + " to {self:direct-object}.", getSelf(), target));
+            return false;
+        }
         if (getSelf().human()) {
             Optional<Clothing> stripped = getSelf().getOutfit().getEquipped().stream()
                             .filter(article -> article.getName().equals(choice)).findAny();

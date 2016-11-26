@@ -36,6 +36,7 @@ import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TentaclePart;
+import nightgames.characters.body.ToysPart;
 import nightgames.characters.custom.AiModifiers;
 import nightgames.combat.Combat;
 import nightgames.combat.CombatantData;
@@ -1943,6 +1944,62 @@ public abstract class Character extends Observable implements Cloneable {
             }
             TentaclePart.pleasureWithTentacles(c, this, 5, body.getRandomAss());
         }
+        if (outfit.has(ClothingTrait.harpoonDildo)) {
+            if (!hasPussy()) {
+                c.write(Global.format("Since {self:name-possessive} pussy is now gone, the dildo that was stuck inside of it falls"
+                                + " to the ground. {other:SUBJECT-ACTION:reel|reels} it back into its slot on"
+                                + " {other:possessive} arm device.", this, opponent));
+            } else {
+                int damage = 5;
+                if (opponent.has(Trait.pussyhandler)) {
+                    damage += 2;
+                }
+                if (opponent.has(Trait.yank)) {
+                    damage += 3;
+                }
+                if (opponent.has(Trait.conducivetoy)) {
+                    damage += 3;
+                }
+                if (opponent.has(Trait.intensesuction)) {
+                    damage += 3;
+                }
+
+                c.write(Global.format("{other:NAME-POSSESSIVE} harpoon dildo is still stuck in {self:name-possessive}"
+                                + " {self:body-part:pussy}, vibrating against {other:possessive} walls.", this, opponent));
+                body.pleasure(opponent, ToysPart.dildo, body.getRandomPussy(), damage, c);
+            }
+        }
+        if (outfit.has(ClothingTrait.harpoonOnahole)) {
+            if (!hasDick()) {
+                c.write(Global.format("Since {self:name-possessive} dick is now gone, the onahole that was stuck onto it falls"
+                                + " to the ground. {other:SUBJECT-ACTION:reel|reels} it back into its slot on"
+                                + " {other:possessive} arm device.", this, opponent));
+            } else {
+                int damage = 5;
+                if (opponent.has(Trait.dickhandler)) {
+                    damage += 2;
+                }
+                if (opponent.has(Trait.yank)) {
+                    damage += 3;
+                }
+                if (opponent.has(Trait.conducivetoy)) {
+                    damage += 3;
+                }
+                if (opponent.has(Trait.intensesuction)) {
+                    damage += 3;
+                }
+                
+                c.write(Global.format("{other:NAME-POSSESSIVE} harpoon onahole is still stuck on {self:name-possessive}"
+                                + " {self:body-part:cock}, vibrating against {other:possessive} shaft.", this, opponent));
+                body.pleasure(opponent, ToysPart.onahole, body.getRandomCock(), damage, c);
+            }
+        }
+        if (checkOrgasm()) {
+            doOrgasm(c, opponent, null, null);
+        }
+        if (opponent.checkOrgasm()) {
+            opponent.doOrgasm(c, this, null, null);
+        }
         if (getPure(Attribute.Animism) >= 4 && getArousal().percent() >= 50 && !is(Stsflag.feral)) {
             add(c, new Feral(this));
         }
@@ -3134,6 +3191,19 @@ public abstract class Character extends Observable implements Cloneable {
     public int stripDifficulty(Character other) {
         if (outfit.has(ClothingTrait.tentacleSuit) || outfit.has(ClothingTrait.tentacleUnderwear)) {
             return other.get(Attribute.Science) + 20;
+        }
+        if (outfit.has(ClothingTrait.harpoonDildo) || outfit.has(ClothingTrait.harpoonOnahole)) {
+            int diff = 20;
+            if (other.has(Trait.yank)) {
+                diff += 5;
+            }
+            if (other.has(Trait.conducivetoy)) {
+                diff += 5;
+            }
+            if (other.has(Trait.intensesuction)) {
+                diff += 5;
+            }
+            return diff;
         }
         return 0;
     }
