@@ -33,6 +33,7 @@ public class Defabricator extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
+        getSelf().consume(Item.Battery, 8);
         writeOutput(c, Result.normal, target);
         if (getSelf().human() || c.isBeingObserved())
             c.write(target, target.nakedLiner(c, target));
