@@ -25,6 +25,7 @@ public enum ClothingTrait {
     lame("Lame", "Small mojo penalty"),
     harpoonDildo("Harpoon Dildo", "Has a dildo stuck inside"),
     harpoonOnahole("Harpoon Onahole", "Has an onahole stuck on"),
+    persistent("Persistent", "Difficult to remove"),
     none("", "");
 
     private String name;

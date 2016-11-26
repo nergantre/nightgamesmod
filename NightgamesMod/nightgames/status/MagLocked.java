@@ -76,7 +76,7 @@ public class MagLocked extends Status {
     public void tick(Combat c) {
         if (count > 1) {
             flag(Stsflag.bound);
-            c.getOpponent(affected).consume(Item.Battery, count);
+            c.getOpponent(affected).consume(Item.Battery, count - 1);
             if (count == 3) flag(Stsflag.hogtied);
         }
         if (!c.getOpponent(affected).has(Item.Battery)) {

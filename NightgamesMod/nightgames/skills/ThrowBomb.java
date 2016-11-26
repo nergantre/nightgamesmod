@@ -97,7 +97,7 @@ public class ThrowBomb extends Skill {
             case pin:
             case behindfootjob:
                 return Global.format(
-                                "{self:SUBJECT-ACTION} reaches around you from behind and holds a spherical device"
+                                "{self:SUBJECT} reaches around you from behind and holds a spherical device"
                                                 + " to your chest. It beeps softly when it makes contact, and"
                                                 + " when {self:pronoun} pulls {self:possessive} hand back it sticks to you,"
                                                 + " still beeping intermittently.",

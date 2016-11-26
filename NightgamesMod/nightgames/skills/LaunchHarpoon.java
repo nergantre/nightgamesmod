@@ -58,7 +58,7 @@ public class LaunchHarpoon extends Skill {
                                 + " harpoon toy at {other:direct-object}, it easily finds its goal. ";
             } else if (c.getStance().sub(target)) {
                 aim = "From {self:name-possessive} dominant position, it's trivial for {self:direct-object}"
-                                + " to lower {self:possessive} to {other:name-possessive} crotch to make"
+                                + " to lower {self:possessive} arm-launched harpoon to {other:name-possessive} crotch to make"
                                 + " sure it doesn't miss. ";
             } else {
                 aim = "{self:SUBJECT-ACTION:raise|raises} {self:possessive} arm at {other:name-do}. The harpoon-mounted"
