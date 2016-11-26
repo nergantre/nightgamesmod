@@ -71,17 +71,18 @@ public class RemoveBomb extends Skill {
         switch (c.getStance().en) {
             case behind:
             case pin:
-                return "You reach towards your chest, aiming to get the beeping sphere off and away,"
-                            + " but {other:subject} catches your wrists and pulls your hands back down.";    
+                return Global.format("You reach towards your chest, aiming to get the beeping sphere off and away,"
+                            + " but {other:subject} catches your wrists and pulls your hands back down."
+                                , getSelf(), target);    
             case missionary:
             case cowgirl:
             case mount:
-                return "You try to get the metallic sphere off your chest, but {other:subject} catches"
+                return Global.format("You try to get the metallic sphere off your chest, but {other:subject} catches"
                                 + " your hands and pulls them up over your head, well away from the"
-                                + " intimidating device.";
+                                + " intimidating device.", getSelf(), target);
             default:
-                return "You try to remove the metallic sphere from your chest, but {other:subject}"
-                                + " keeps your hands away from it.";
+                return Global.format("You try to remove the metallic sphere from your chest, but {other:subject}"
+                                + " keeps your hands away from it.", getSelf(), target);
         }
     }
 
