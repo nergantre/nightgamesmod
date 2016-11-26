@@ -19,6 +19,7 @@ public class LegLocked extends Status {
         requirements.add((c, self, other) -> toughness > .01);
         toughness = dc;
         flag(Stsflag.leglocked);
+        flag(Stsflag.debuff);
     }
 
     @Override
@@ -27,7 +28,7 @@ public class LegLocked extends Status {
             return "Her legs are locked around your waist, preventing you from pulling out.";
         } else {
             return String.format("%s legs are wrapped around %s waist, preventing %s from pulling out.",
-                            c.getOther(affected).nameOrPossessivePronoun(), affected.nameOrPossessivePronoun(),
+                            c.getOpponent(affected).nameOrPossessivePronoun(), affected.nameOrPossessivePronoun(),
                             affected.directObject());
         }
     }

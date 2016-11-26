@@ -4,7 +4,6 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
-import nightgames.global.Global;
 import nightgames.status.Blinded;
 import nightgames.status.Stsflag;
 
@@ -41,15 +40,23 @@ public class RipBlindfold extends Skill {
     }
 
     @Override
+    public int accuracy(Combat c, Character target) {
+        if (!target.canAct() || !((Blinded) target.getStatus(Stsflag.blinded)).isVoluntary()) {
+            return 200;
+        }
+        int base = 60;
+        if (c.getStance().sub(target)) {
+            base = 100 - (base / 2);
+        }
+        if (c.getStance().penetratedBy(c, target, getSelf())) {
+            base = 100 - (base / 3);
+        }
+        return base;
+    }
+
+    @Override
     public boolean resolve(Combat c, Character target) {
-        boolean hit = !target.canAct() || !((Blinded) target.getStatus(Stsflag.blinded)).isVoluntary();
-        if (c.getStance()
-             .sub(target))
-            hit |= Global.random(2) == 0;
-        if (c.getStance()
-             .penetratedBy(target, getSelf()))
-            hit |= Global.random(3) == 0;
-        hit |= target.roll(this, c, 60);
+        boolean hit = target.roll(getSelf(), c, accuracy(c, target));
 
         if (hit) {
             c.write(getSelf(),

@@ -1,6 +1,8 @@
 package nightgames.skills;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -10,7 +12,6 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
-import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
 import nightgames.status.Stsflag;
 
@@ -25,16 +26,26 @@ public class Anilingus extends Skill {
     }
 
     @Override
+    public Set<SkillTag> getTags(Combat c, Character target) {
+        if (isWorship(c, target)) {
+            Set<SkillTag> tags = new HashSet<>(super.getTags(c, target));
+            tags.add(SkillTag.worship);
+            return tags;
+        }
+        return super.getTags(c, target);
+    }
+
+    @Override
     public boolean requirements(Combat c, Character user, Character target) {
         return getSelf().has(Trait.shameless) || getSelf().get(Attribute.Seduction) >= 30;
     }
 
     @Override
     public boolean usable(Combat c, Character target) {
-        boolean canUse = c.getStance().enumerate() == Stance.facesitting && getSelf().canRespond()
+        boolean canUse = c.getStance().isBeingFaceSatBy(c, getSelf(), target) && getSelf().canRespond()
                         || getSelf().canAct();
-        return target.crotchAvailable() && target.body.has("ass") && c.getStance().oral(getSelf()) && canUse
-                        && !c.getStance().anallyPenetrated(target);
+        return target.crotchAvailable() && target.body.has("ass") && c.getStance().oral(getSelf(), target) && canUse
+                        && !c.getStance().anallyPenetrated(c, target);
     }
 
     @Override
@@ -49,16 +60,16 @@ public class Anilingus extends Skill {
         int m = 10;
         int n = 0;
         int selfm = 0;
-        if (getLabel(c).equals(worshipString)) {
+        if (isWorship(c, target)) {
             result = Result.sub;
             m += 4 + Global.random(6);
             n = 20;
             selfm = 20;
-        } else if (c.getStance().enumerate() == Stance.facesitting) {
+        } else if (c.getStance().isBeingFaceSatBy(c, getSelf(), target)) {
             result = Result.reverse;
             m += Global.random(6);
             n = 10;
-        } else if (!c.getStance().mobile(target) || target.roll(this, c, accuracy(c))) {
+        } else if (!c.getStance().mobile(target) || target.roll(getSelf(), c, accuracy(c, target))) {
             m += Global.random(6);
             if (getSelf().has(Trait.silvertongue)) {
                 m += 4;
@@ -93,7 +104,7 @@ public class Anilingus extends Skill {
     }
 
     @Override
-    public int accuracy(Combat c) {
+    public int accuracy(Combat c, Character target) {
         return 75;
     }
 
@@ -149,11 +160,16 @@ public class Anilingus extends Skill {
         return "Perform anilingus on opponent";
     }
 
+    private boolean isWorship(Combat c, Character target) {
+        Optional<BodyFetish> fetish = getSelf().body.getFetish("ass");
+        boolean worship = c.getOpponent(getSelf()).has(Trait.objectOfWorship);
+        boolean enthralled = getSelf().is(Stsflag.enthralled);
+        boolean isPet = target == null ? getSelf().isPet() : getSelf().isPetOf(target);
+        return fetish.isPresent() || worship || enthralled || isPet;
+    }
+
     @Override
     public String getLabel(Combat c) {
-        Optional<BodyFetish> fetish = getSelf().body.getFetish("ass");
-        boolean worship = c.getOther(getSelf()).has(Trait.objectOfWorship);
-        boolean enthralled = getSelf().is(Stsflag.enthralled);
-        return fetish.isPresent() || worship || enthralled ? worshipString : "Lick Ass";
+        return isWorship(c, null) ? worshipString : "Lick Ass";
     }
 }

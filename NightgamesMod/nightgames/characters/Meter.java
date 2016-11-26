@@ -100,7 +100,7 @@ public class Meter implements Serializable, Cloneable {
         max = i;
         current = max();
     }
-    
+
     public void setTemporaryMax(int i) {
         if (i <= 0) {
             i = Integer.MAX_VALUE;
@@ -121,5 +121,9 @@ public class Meter implements Serializable, Cloneable {
     @Override
     public String toString() {
         return String.format("current: %s / max: %s", Global.formatDecimal(current), Global.formatDecimal(max()));
+    }
+
+    public double remaining() {
+        return max() - getReal();
     }
 }

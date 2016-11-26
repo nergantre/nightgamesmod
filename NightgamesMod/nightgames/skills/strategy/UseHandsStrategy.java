@@ -18,7 +18,7 @@ public class UseHandsStrategy extends KnockdownThenActionStrategy {
     @Override
     public double weight(Combat c, Character self) {
         double weight = .75;
-        if (!(new Handjob(self)).requirements(c, self, c.getOther(self)) && !(new Finger(self).requirements(c, c.getOther(self)))) {
+        if (!(new Handjob(self)).requirements(c, self, c.getOpponent(self)) && !(new Finger(self).requirements(c, c.getOpponent(self)))) {
             return 0;
         }
         if (self.has(Trait.defthands)) {
@@ -33,10 +33,10 @@ public class UseHandsStrategy extends KnockdownThenActionStrategy {
     @Override
     protected Optional<Set<Skill>> getPreferredSkills(Combat c, Character self, Set<Skill> allowedSkills) {
         return emptyIfSetEmpty(allowedSkills.stream()
-                        .filter(skill -> ((skill.getTags().contains(SkillTag.usesHands)
-                                        && skill.getTags().contains(SkillTag.pleasure))
-                                        || skill.getTags().contains(SkillTag.stripping))
-                                        && !skill.getTags().contains(SkillTag.suicidal))
+                        .filter(skill -> ((skill.getTags(c).contains(SkillTag.usesHands)
+                                        && skill.getTags(c).contains(SkillTag.pleasure))
+                                        || skill.getTags(c).contains(SkillTag.stripping))
+                                        && !skill.getTags(c).contains(SkillTag.suicidal))
                         .collect(Collectors.toSet()));
     }
     

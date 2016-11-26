@@ -26,6 +26,7 @@ public class Horny extends DurationStatus {
         this.source = source;
         this.magnitude = magnitude;
         flag(Stsflag.horny);
+        flag(Stsflag.debuff);
         flag(Stsflag.purgable);
     }
 

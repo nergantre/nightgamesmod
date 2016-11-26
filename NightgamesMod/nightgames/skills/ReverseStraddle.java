@@ -7,10 +7,10 @@ import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.ReverseMount;
 
 public class ReverseStraddle extends Skill {
-
     public ReverseStraddle(Character self) {
         super("Mount(Reverse)", self);
         addTag(SkillTag.positioning);
+        addTag(SkillTag.petDisallowed);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class ReverseStraddle extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         writeOutput(c, Result.normal, target);
-        c.setStance(new ReverseMount(getSelf(), target));
+        c.setStance(new ReverseMount(getSelf(), target), getSelf(), true);
         return true;
     }
 

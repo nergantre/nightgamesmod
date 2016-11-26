@@ -15,15 +15,16 @@ public class Knee extends Skill {
 
     public Knee(Character self) {
         super("Knee", self);
+        addTag(SkillTag.mean);
         addTag(SkillTag.hurt);
-        addTag(SkillTag.staminaDamage);
         addTag(SkillTag.positioning);
+        addTag(SkillTag.staminaDamage);
     }
 
     @Override
     public boolean usable(Combat c, Character target) {
         return c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf()) && getSelf().canAct()
-                        && c.getStance().front(target) && !c.getStance().connected();
+                        && c.getStance().front(target) && !c.getStance().connected(c);
     }
 
     @Override
@@ -32,19 +33,24 @@ public class Knee extends Skill {
     }
 
     @Override
+    public int accuracy(Combat c, Character target) {
+        return 80;
+    }
+
+    @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             double m = Global.random(40, 60);
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.normal, target));
-            } else if (c.shouldPrintReceive(target)) {
+            } else if (c.shouldPrintReceive(target, c)) {
                 if (c.getStance().prone(target)) {
                     c.write(getSelf(), receive(c, 0, Result.special, target));
                 } else {
                     c.write(getSelf(), receive(c, 0, Result.normal, target));
                 }
                 if (target.hasBalls() && Global.random(5) >= 3) {
-                    c.write(getSelf(), getSelf().bbLiner(c));
+                    c.write(getSelf(), getSelf().bbLiner(c, target));
                 }
             }
             if (target.has(Trait.achilles) && !target.has(ClothingTrait.armored)) {
@@ -53,7 +59,7 @@ public class Knee extends Skill {
             if (target.has(ClothingTrait.armored) || target.has(Trait.brassballs)) {
                 m *= .75;
             }
-            target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, m));
+            target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, m));
 
             target.emote(Emotion.angry, 20);
         } else {

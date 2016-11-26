@@ -43,9 +43,14 @@ public class BreastGrowth extends Skill {
     }
 
     @Override
+    public int accuracy(Combat c, Character target) {
+        return 90;
+    }
+
+    @Override
     public boolean resolve(Combat c, Character target) {
         Result res;
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             if (target.body.getRandomBreasts() == BreastsPart.flat) {
                 res = Result.special;
             } else {
@@ -54,11 +59,11 @@ public class BreastGrowth extends Skill {
         } else {
             res = Result.miss;
         }
-        boolean permanent = Global.random(20) == 0 && (getSelf().human() || c.shouldPrintReceive(target))
+        boolean permanent = Global.random(20) == 0 && (getSelf().human() || c.shouldPrintReceive(target, c))
                         && !target.has(Trait.stableform);
         writeOutput(c, permanent ? 1 : 0, res, target);
         if (res != Result.miss) {
-            target.add(c, new Hypersensitive(target));
+            target.add(c, new Hypersensitive(target, 10));
             BreastsPart part = target.body.getBreastsBelow(BreastsPart.f.size);
             if (permanent) {
                 if (part != null) {

@@ -15,7 +15,6 @@ import nightgames.characters.Character;
 import nightgames.characters.State;
 import nightgames.characters.Trait;
 import nightgames.modifier.Modifier;
-import nightgames.status.BodyFetish;
 import nightgames.status.addiction.Addiction;
 
 public class Match {
@@ -73,9 +72,6 @@ public class Match {
             player.getWillpower().fill();
             if (player.getPure(Attribute.Science) > 0) {
                 player.chargeBattery();
-            }
-            if (player.has(Trait.footfetishist)) {
-                player.add(new BodyFetish(player, null, "feet", .25));
             }
             manageConditions(player);
         }

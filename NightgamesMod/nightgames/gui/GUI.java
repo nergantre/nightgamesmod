@@ -67,6 +67,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Meter;
 import nightgames.characters.Player;
 import nightgames.characters.Trait;
+import nightgames.characters.TraitTree;
 import nightgames.combat.Combat;
 import nightgames.combat.CombatSceneChoice;
 import nightgames.combat.IEncounter;
@@ -80,6 +81,7 @@ import nightgames.modifier.standard.NoModifier;
 import nightgames.skills.Skill;
 import nightgames.trap.Trap;
 
+@SuppressWarnings("unused")
 public class GUI extends JFrame implements Observer {
     /**
      * 
@@ -454,7 +456,7 @@ public class GUI extends JFrame implements Observer {
         mntmCredits.addActionListener(arg0 -> {
             JPanel panel = new JPanel();
             panel.add(new JLabel("<html>Night Games created by The Silver Bard<br>"
-                            + "Reyka and Samantha created by DNDW<br>" + "Upgraded Strapon created by ElfBoyEni<br>"
+                            + "Reyka and Samantha and a whole lot of stuff created by DNDW<br>" + "Upgraded Strapon created by MotoKuchoma<br>"
                             + "Strapon victory scenes created by Legion<br>" + "Advanced AI by Jos<br>"
                             + "Magic Training scenes by Legion<br>" + "Jewel 2nd Victory scene by Legion<br>"
                             + "Video Games scenes 1-9 by Onyxdime<br>"
@@ -772,6 +774,7 @@ public class GUI extends JFrame implements Observer {
         showPortrait();
         combat = c;
         combat.addObserver(this);
+        c.setBeingObserved(true);
         loadPortrait(c, c.p1, c.p2);
         showPortrait();
     }
@@ -973,7 +976,6 @@ public class GUI extends JFrame implements Observer {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
     }
 
     public void combatMessage(String text) {
@@ -997,7 +999,7 @@ public class GUI extends JFrame implements Observer {
         commandPanel.repaint();
     }
 
-    public void addSkill(Skill action, Combat com) {
+    public void addSkill(Combat com, Skill action, Character target) {
         int index = 0;
         boolean placed = false;
         while (!placed) {
@@ -1007,7 +1009,7 @@ public class GUI extends JFrame implements Observer {
             if (skills.get(index).size() >= 25) {
                 index++;
             } else {
-                SkillButton btn = new SkillButton(action, com);
+                SkillButton btn = new SkillButton(com, action, target);
                 int others = skills.get(index).size();
                 if (index == 0 && others < 9) {
                     btn.addIndex(others+1);
@@ -1155,7 +1157,7 @@ public class GUI extends JFrame implements Observer {
             message(player.availableAttributePoints + " Attribute Points remain.\n");
             clearCommand();
             for (Attribute att : player.att.keySet()) {
-                if (Attribute.isTrainable(att, player) && player.getPure(att) > 0) {
+                if (Attribute.isTrainable(player, att) && player.getPure(att) > 0) {
                     commandPanel.add(new AttributeButton(att));
                 }
             }
@@ -1179,14 +1181,20 @@ public class GUI extends JFrame implements Observer {
             skippedFeat = false;
             clearCommand();
             Global.gui().message(Global.gainSkills(player));
-            if (combat != null) {
-                endCombat();
-            } else if (Global.getMatch() != null) {
-                Global.getMatch().resume();
-            } else if (Global.day != null) {
-                Global.getDay().plan();
+            player.finishDing();
+            if (player.getLevelsToGain() > 0) {
+                player.actuallyDing();
+                ding();
             } else {
-                new Prematch(Global.human);
+                if (combat != null) {
+                    endCombat();
+                } else if (Global.getMatch() != null) {
+                    Global.getMatch().resume();
+                } else if (Global.day != null) {
+                    Global.getDay().plan();
+                } else {
+                    new Prematch(Global.human);
+                }
             }
         }
     }
@@ -1381,9 +1389,6 @@ public class GUI extends JFrame implements Observer {
                 combatMessage(combat.getMessage());
                 combat.combatMessageChanged = false;
             }
-            if (Global.getMatch() != null && combat.phase == 0 || combat.phase == 2) {
-                next(combat);
-            }
         }
     }
 
@@ -1399,16 +1404,7 @@ public class GUI extends JFrame implements Observer {
             setText("Next");
             addActionListener(arg0 -> {
                 clearCommand();
-                if (GUI.NextButton.this.combat.phase == 0) {
-                    GUI.NextButton.this.combat.clear();
-                    clearText();
-                    GUI.NextButton.this.combat.turn();
-                } else if (GUI.NextButton.this.combat.phase == 2) {
-                    clearCommand();
-                    if (GUI.NextButton.this.combat.end()) {
-                        endCombat();
-                    }
-                }
+                GUI.NextButton.this.combat.turn();
             });
         }
     }
@@ -1578,8 +1574,7 @@ public class GUI extends JFrame implements Observer {
     }
 
 
-    @SuppressWarnings("unused") private class MatchButton extends JButton {
-
+    private class MatchButton extends JButton {
         /**
          *
          */

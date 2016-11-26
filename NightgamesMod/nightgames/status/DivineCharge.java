@@ -23,7 +23,7 @@ public class DivineCharge extends Status {
 
     private String getPart(Combat c) {
         boolean penetrated = c.getStance()
-                              .vaginallyPenetrated(affected);
+                              .vaginallyPenetrated(c, affected);
         boolean inserted = c.getStance()
                             .inserted(affected);
         String part = "body";
@@ -41,7 +41,7 @@ public class DivineCharge extends Status {
 
     @Override
     public void tick(Combat c) {
-        if (!c.getStance().vaginallyPenetrated(affected) && !(affected.has(Trait.zealinspiring) && !Global.getPlayer()
+        if (!c.getStance().vaginallyPenetrated(c, affected) && !(affected.has(Trait.zealinspiring) && !Global.getPlayer()
                         .getAddiction(AddictionType.ZEAL).map(Addiction::isInWithdrawal).orElse(false))) {
             magnitude = magnitude / 2;
             c.write(affected, "The holy energy seeps out of " + affected.getName() + ".");

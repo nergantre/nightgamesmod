@@ -46,7 +46,7 @@ public abstract class SkillTag {
     public final static SkillTag subPosition = new BothRequirementSkillTag(
                     (results, value) -> results.getCombat().getStance().sub(results.getSelf().getCharacter()), "SubPosition");
     public final static SkillTag oral = new BothRequirementSkillTag(
-                    (results, value) -> results.getCombat().getStance().oral(results.getSelf().getCharacter()), "Oral");
+                    (results, value) -> results.getCombat().getStance().oral(results.getSelf().getCharacter(), results.getCombat().getOpponent(results.getSelf().getCharacter())), "Oral");
     public final static SkillTag insertion = new NameOnlySkillTag("Insertion");
     public final static SkillTag fucking = new NameOnlySkillTag("Fucking");
     public final static SkillTag anal = new NameOnlySkillTag("Anal");
@@ -67,6 +67,7 @@ public abstract class SkillTag {
                     (results, value) -> results.getSelf().getCharacter().crotchAvailable(), "NakedCrotch");
     public final static SkillTag foreplay = new NameOnlySkillTag("Foreplay");
     public final static SkillTag defensive = new NameOnlySkillTag("Defensive");
+    public final static SkillTag helping = new NameOnlySkillTag("Helping");
     public final static SkillTag buff = new NameOnlySkillTag("Buff");
     public final static SkillTag debuff = new NameOnlySkillTag("Debuff");
     public final static SkillTag physical = new NameOnlySkillTag("Physical");
@@ -77,6 +78,7 @@ public abstract class SkillTag {
     public final static SkillTag suicidal = new NameOnlySkillTag("Suicidal");
     public final static SkillTag failed = new NameOnlySkillTag("Failed");
     public final static SkillTag counter = new NameOnlySkillTag("Counter");
+    public final static SkillTag petSummoning = new NameOnlySkillTag("PetSummoning");
     public final static SkillTag knockdown = new KnockdownSkillTag();
     public final static SkillTag chain = new NameOnlySkillTag("Chain");
     public final static SkillTag bodyAltering = new NameOnlySkillTag("BodyAltering");
@@ -102,7 +104,10 @@ public abstract class SkillTag {
     public final static SkillTag temptation = new NameOnlySkillTag("Temptation");
     public final static SkillTag arouse = new NameOnlySkillTag("Arouse");
     public final static SkillTag hurt = new NameOnlySkillTag("Hurt");
+    public final static SkillTag mean = new NameOnlySkillTag("Mean");
     public final static SkillTag weaken = new NameOnlySkillTag("Weaken");
+    public final static SkillTag heal = new NameOnlySkillTag("Heal");
+    public final static SkillTag calm = new NameOnlySkillTag("Calm");
     public final static SkillTag drain = new NameOnlySkillTag("Drain");
     public final static SkillTag mojoBuilding = new NameOnlySkillTag("MojoBuilding");
     public final static SkillTag mojoCosting = new NameOnlySkillTag("MojoCosting");
@@ -115,11 +120,13 @@ public abstract class SkillTag {
     public final static SkillTag positioning = new NameOnlySkillTag("Positioning");
     public final static SkillTag dark = new NameOnlySkillTag("Dark");
     public final static SkillTag escaping = new NameOnlySkillTag("Escaping");
+    public final static SkillTag petMasterSkill = new NameOnlySkillTag("PetOk");
 
     public final static SkillTag accuracy =
                     new BasicSkillTag((results, value) -> results.getRoll() * 100 >= (100 - value) || results.getResult().hasUserTag(perfectAccuracy),
                                     SkillRequirement.noRequirement(), "Accuracy");
     public final static SkillTag miss = new NameOnlySkillTag("Miss");
+    public final static SkillTag petDisallowed = new NameOnlySkillTag("PetDisallowed");
     public final static SkillTag worship = new WorshipSkillTag();
     public static final SkillTag facesit = new NameOnlySkillTag("Facesitting");
 

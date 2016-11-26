@@ -9,7 +9,6 @@ import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.ReverseMount;
 import nightgames.stance.SixNine;
-import nightgames.stance.Stance;
 import nightgames.status.Enthralled;
 
 public class Cunnilingus extends Skill {
@@ -23,10 +22,10 @@ public class Cunnilingus extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        boolean canUse = c.getStance().enumerate() == Stance.facesitting && getSelf().canRespond()
+        boolean canUse = c.getStance().isBeingFaceSatBy(c, getSelf(), target) && getSelf().canRespond()
                         || getSelf().canAct();
         boolean pussyAvailable = target.crotchAvailable() && target.hasPussy();
-        boolean stanceAvailable = c.getStance().oral(getSelf()) && !c.getStance().vaginallyPenetrated(target);
+        boolean stanceAvailable = c.getStance().oral(getSelf(), target) && !c.getStance().vaginallyPenetrated(c, target);
         boolean usable = pussyAvailable && stanceAvailable && canUse;
         return usable;
     }
@@ -38,7 +37,7 @@ public class Cunnilingus extends Skill {
 
     @Override
     public int getMojoBuilt(Combat c) {
-        if (c.getStance().enumerate() == Stance.facesitting) {
+        if (c.getStance().isBeingFaceSatBy(c, getSelf(), c.getOpponent(getSelf()))) {
             return 0;
         } else {
             return 5;
@@ -48,13 +47,13 @@ public class Cunnilingus extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         Result results = Result.normal;
-        boolean facesitting = c.getStance().enumerate() == Stance.facesitting;
+        boolean facesitting = c.getStance().isBeingFaceSatBy(c, getSelf(), target);
         int m = 10 + Global.random(8);
         if (getSelf().has(Trait.silvertongue)) {
             m += 4;
         }
         int i = 0;
-        if (!facesitting && c.getStance().mobile(target) && !target.roll(this, c, accuracy(c))) {
+        if (!facesitting && c.getStance().mobile(target) && !target.roll(getSelf(), c, accuracy(c, target))) {
             results = Result.miss;
         } else {
             if (target.has(Trait.entrallingjuices) && Global.random(4) == 0 && !target.wary()) {
@@ -76,7 +75,7 @@ public class Cunnilingus extends Skill {
                 target.buildMojo(c, 10);
             }
             if (ReverseMount.class.isInstance(c.getStance())) {
-                c.setStance(new SixNine(getSelf(), target));
+                c.setStance(new SixNine(getSelf(), target), getSelf(), true);
             }
             target.body.pleasure(getSelf(), getSelf().body.getRandom("mouth"), target.body.getRandom("pussy"), m, c, this);
         }
@@ -99,8 +98,8 @@ public class Cunnilingus extends Skill {
     }
 
     @Override
-    public int accuracy(Combat c) {
-        return 75;
+    public int accuracy(Combat c, Character target) {
+        return !c.getStance().isBeingFaceSatBy(c, getSelf(), target) && c.getStance().mobile(target) ? 75 : 200;
     }
 
     @Override

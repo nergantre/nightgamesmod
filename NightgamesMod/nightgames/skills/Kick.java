@@ -28,8 +28,8 @@ public class Kick extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return c.getStance().feet(getSelf()) && getSelf().canAct() && (!c.getStance().prone(getSelf())
-                        || getSelf().has(Trait.dirtyfighter) && !c.getStance().connected());
+        return c.getStance().feet(getSelf(), target) && getSelf().canAct() && (!c.getStance().prone(getSelf())
+                        || getSelf().has(Trait.dirtyfighter) && !c.getStance().connected(c));
     }
 
     @Override
@@ -38,13 +38,17 @@ public class Kick extends Skill {
     }
 
     @Override
+    public int accuracy(Combat c, Character target) {
+        return 90;
+    }
+
+    @Override
     public boolean resolve(Combat c, Character target) {
         if (!target.getOutfit().slotUnshreddable(ClothingSlot.bottom) && getSelf().get(Attribute.Ki) >= 14
                         && Global.random(3) == 2) {
             writeOutput(c, Result.special, target);
             target.shred(ClothingSlot.bottom);
-        } else
-        if (target.roll(this, c, accuracy(c))) {
+        } else if (target.roll(getSelf(), c, accuracy(c, target))) {
             double m = Global.random(16, 21);
             if (target.has(Trait.brassballs)) {
                 m *= .8;
@@ -56,7 +60,7 @@ public class Kick extends Skill {
                     c.write(getSelf(), deal(c, 0, Result.normal, target));
 
                 }
-            } else if (c.shouldPrintReceive(target)) {
+            } else if (c.shouldPrintReceive(target, c)) {
                 if (c.getStance().prone(getSelf())) {
                     c.write(getSelf(), receive(c, 0, Result.strong, target));
                 } else {
@@ -69,7 +73,7 @@ public class Kick extends Skill {
             if (target.has(ClothingTrait.armored)) {
                 m = m / 2;
             }
-            target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, m));
+            target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, m));
             target.emote(Emotion.angry, 20);
         } else {
             writeOutput(c, Result.miss, target);

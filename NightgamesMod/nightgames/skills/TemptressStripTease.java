@@ -134,6 +134,6 @@ public class TemptressStripTease extends StripTease {
     }
 
     private boolean isDance(Combat c) {
-        return !super.usable(c, c.getOther(getSelf())) && usable(c, c.getOther(getSelf()));
+        return !super.usable(c, c.getOpponent(getSelf())) && usable(c, c.getOpponent(getSelf()));
     }
 }

@@ -20,7 +20,7 @@ public class Maneuver extends Skill {
     public boolean usable(Combat c, Character target) {
         return !target.wary() && c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf())
                         && !c.getStance().prone(target) && !c.getStance().behind(getSelf()) && getSelf().canAct()
-                        && !getSelf().has(Trait.undisciplined) && !c.getStance().connected();
+                        && !getSelf().has(Trait.undisciplined) && !c.getStance().connected(c);
     }
 
     @Override
@@ -30,9 +30,9 @@ public class Maneuver extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             writeOutput(c, Result.normal, target);
-            c.setStance(new Behind(getSelf(), target));
+            c.setStance(new Behind(getSelf(), target), getSelf(), true);
             getSelf().emote(Emotion.confident, 15);
             getSelf().emote(Emotion.dominant, 15);
             target.emote(Emotion.nervous, 10);
@@ -59,7 +59,7 @@ public class Maneuver extends Skill {
     }
 
     @Override
-    public int accuracy(Combat c) {
+    public int accuracy(Combat c, Character target) {
         return 75;
     }
 

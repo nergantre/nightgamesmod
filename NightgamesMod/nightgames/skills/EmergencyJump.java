@@ -29,9 +29,9 @@ public class EmergencyJump extends Skill {
                         && !c.getStance()
                              .mobile(getSelf())
                         && !c.getStance()
-                             .penetrated(getSelf())
+                             .penetrated(c, getSelf())
                         && !c.getStance()
-                             .penetrated(target))
+                             .penetrated(c, target))
                         || getSelf().bound()) && !getSelf().stunned() && !getSelf().distracted()
                         && Primed.isPrimed(getSelf(), 2);
     }
@@ -45,7 +45,7 @@ public class EmergencyJump extends Skill {
     public boolean resolve(Combat c, Character target) {
         getSelf().add(new Primed(getSelf(),-2));
         getSelf().free();
-        c.setStance(new Behind(getSelf(),target));
+        c.setStance(new Behind(getSelf(),target), getSelf(), true);
         if(getSelf().human()){
             c.write(getSelf(),deal(c,0,Result.normal,target));
         }

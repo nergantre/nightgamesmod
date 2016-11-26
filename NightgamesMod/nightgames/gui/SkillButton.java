@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.skills.Skill;
@@ -21,14 +22,16 @@ public class SkillButton extends JPanel {
     protected Combat combat;
     private JButton button;
 
-    public SkillButton(final Skill action, Combat c) {
+    public SkillButton(Combat c, final Skill action, Character target) {
         super();
         setButton(new JButton(action.getLabel(c)));
         getButton().setBorderPainted(false);
         getButton().setOpaque(true);
         getButton().setFont(fontForStage(action.getStage()));
         this.action = action;
-        String text = "<html>" + action.describe(c);
+        int actualAccuracy = target.getChanceToHit(action.getSelf(), c, action.accuracy(c, target));
+        int clampedAccuracy = Math.min(100, Math.max(0, actualAccuracy));
+        String text = "<html>" + action.describe(c) + " <p>Accuracy: " + (actualAccuracy >=150 ? "---" : clampedAccuracy + "%") + "</p>";
         if (action.type(c) == Tactics.damage) {
             getButton().setBackground(new Color(150, 0, 0));
         } else if (action.type(c) == Tactics.pleasure) {

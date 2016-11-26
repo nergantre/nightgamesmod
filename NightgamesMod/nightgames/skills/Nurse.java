@@ -46,7 +46,7 @@ public class Nurse extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        boolean special = c.getStance().en != Stance.nursing && !c.getStance().havingSex();
+        boolean special = c.getStance().en != Stance.nursing && !c.getStance().havingSex(c);
         writeOutput(c, special ? Result.special : Result.normal, target);
         if (getSelf().has(Trait.lactating) && !target.is(Stsflag.suckling) && !target.is(Stsflag.wary)) {
             c.write(target, Global.format(
@@ -55,7 +55,8 @@ public class Nurse extends Skill {
             target.add(c, new Suckling(target, getSelf(), 4));
         }
         if (special) {
-            c.setStance(new NursingHold(getSelf(), target));
+            c.setStance(new NursingHold(getSelf(), target), getSelf(), true);
+            new Suckle(target).resolve(c, getSelf());
             getSelf().emote(Emotion.dominant, 20);
         } else {
             new Suckle(target).resolve(c, getSelf());
@@ -97,11 +98,7 @@ public class Nurse extends Skill {
 
     @Override
     public Tactics type(Combat c) {
-        if (c.getStance().enumerate() != Stance.nursing) {
-            return Tactics.positioning;
-        } else {
-            return Tactics.pleasure;
-        }
+        return Tactics.pleasure;
     }
 
     @Override

@@ -7,4 +7,5 @@ public enum Ptype {
     impmale,
     slime,
     fgoblin,
+    human,
 }

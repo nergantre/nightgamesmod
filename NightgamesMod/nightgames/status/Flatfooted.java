@@ -12,6 +12,8 @@ public class Flatfooted extends DurationStatus {
     public Flatfooted(Character affected, int duration) {
         super("Flat-Footed", affected, duration);
         flag(Stsflag.distracted);
+        flag(Stsflag.debuff);
+        flag(Stsflag.purgable);
     }
 
     @Override

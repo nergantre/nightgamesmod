@@ -39,6 +39,8 @@ public class BodyFetish extends DurationStatus {
         this.origin = origin;
         this.part = part;
         this.magnitude = magnitude;
+        flag(Stsflag.debuff);
+        flag(Stsflag.purgable);
     }
 
     @Override
@@ -59,17 +61,17 @@ public class BodyFetish extends DurationStatus {
     public String describe(Combat c) {
         String desc = "";
         if (magnitude < .26) {
-            desc = "a slight ";
+            desc = "slight ";
         } else if (magnitude < .51) {
             desc = "";
         } else if (magnitude < .99) {
-            desc = "a fierce ";
+            desc = "fierce ";
         } else {
-            desc = "an overwhelming ";
+            desc = "overwhelming ";
         }
         String magString = Global.formatDecimal(magnitude);
         if (affected.human()) {
-            if (origin != null && c != null && c.getOther(affected) == origin) {
+            if (origin != null && c != null && c.getOpponent(affected) == origin) {
                 return Global.capitalizeFirstLetter(
                                 desc + "fantasies of worshipping " + origin.nameOrPossessivePronoun() + " " + part
                                                 + " run through your mind (" + magString + ").");
@@ -198,7 +200,7 @@ public class BodyFetish extends DurationStatus {
     @Override
     public int regen(Combat c) {
         if (magnitude > .25) {
-            magnitude = Math.max(.25, magnitude - .02);
+            magnitude = Math.max(.25, magnitude - .01);
         }
         return 0;
     }

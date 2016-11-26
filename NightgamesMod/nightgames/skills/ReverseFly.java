@@ -8,15 +8,12 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.FlyingCowgirl;
 import nightgames.status.Falling;
 
 public class ReverseFly extends Fly {
     public ReverseFly(Character self) {
         super("ReverseFly", self);
-        addTag(SkillTag.positioning);
-
     }
 
     @Override
@@ -43,11 +40,11 @@ public class ReverseFly extends Fly {
     public boolean resolve(Combat c, Character target) {
         String premessage = premessage(c, target);
 
-        Result result = target.roll(this, c, accuracy(c)) ? Result.normal : Result.miss;
+        Result result = target.roll(getSelf(), c, accuracy(c, target)) ? Result.normal : Result.miss;
         if (getSelf().human()) {
             c.write(getSelf(), premessage + deal(c, 0, result, target));
-        } else if (c.shouldPrintReceive(target)) {
-            c.write(getSelf(), premessage + receive(c, 0, result, getSelf()));
+        } else if (c.shouldPrintReceive(target, c)) {
+            c.write(getSelf(), premessage + receive(c, 0, result, target));
         }
         if (result == Result.normal) {
             getSelf().emote(Emotion.dominant, 50);
@@ -60,9 +57,9 @@ public class ReverseFly extends Fly {
             if (getSelf().has(Trait.insertion)) {
                 otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
             }
+            c.setStance(new FlyingCowgirl(getSelf(), target), getSelf(), getSelf().canMakeOwnDecision());
             target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c, this);
             getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c, this);
-            c.setStance(new FlyingCowgirl(getSelf(), target), getSelf(), getSelf().canMakeOwnDecision());
         } else {
             getSelf().add(c, new Falling(getSelf()));
             return false;

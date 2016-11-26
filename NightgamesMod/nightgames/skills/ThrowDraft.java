@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import nightgames.characters.Character;
+import nightgames.characters.Decider;
 import nightgames.characters.NPC;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
@@ -42,7 +43,7 @@ public class ThrowDraft extends Skill {
     public boolean usable(Combat c, Character target) {
         boolean hasItems = subChoices().size() > 0;
         return hasItems && getSelf().canAct() && c.getStance().mobile(getSelf())
-                        && (c.getStance().reachTop(getSelf()) || c.getStance().reachBottom(getSelf()));
+                        && (c.getStance().reachTop(getSelf()) || c.getStance().reachBottom(getSelf())) && !getSelf().isPet();
     }
 
     @Override
@@ -61,7 +62,7 @@ public class ThrowDraft extends Skill {
         double selfFitness = self.getFitness(c);
         double targetFitness = self.getOtherFitness(c, target);
         usables.stream().forEach(item -> {
-            double rating = self.rateAction(c, selfFitness, targetFitness, (newCombat, newSelf, newOther) -> {
+            double rating = Decider.rateAction(self, c, selfFitness, targetFitness, (newCombat, newSelf, newOther) -> {
                 for (ItemEffect e : item.getEffects()) {
                     e.use(newCombat, newOther, newSelf, item);
                 }
@@ -104,7 +105,7 @@ public class ThrowDraft extends Skill {
                     usables.add(i);
                 }
             }
-            if (usables.size() > 0) {
+            if (usables.size() > 0 && getSelf() instanceof NPC) {
                 used = pickBest(c, (NPC) getSelf(), target, usables);
             }
         }

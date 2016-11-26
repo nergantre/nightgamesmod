@@ -51,7 +51,7 @@ public class Trance extends DurationStatus {
 
     @Override
     public float fitnessModifier() {
-        return -(2 + getDuration() / 2.0f);
+        return -(2 + Math.min(5, getDuration()) / 2.0f);
     }
 
     @Override

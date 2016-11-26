@@ -1,8 +1,6 @@
 package nightgames.characters;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import nightgames.characters.body.BreastsPart;
@@ -20,87 +18,209 @@ import nightgames.items.clothing.Clothing;
 import nightgames.start.NpcConfiguration;
 
 public class Angel extends BasePersonality {
-    /**
-     *
-     */
     private static final long serialVersionUID = -8169646189131720872L;
-
+    private static final String ANGEL_SEX_FOCUS = "AngelSexFocus";
+    private static final String ANGEL_NYMPHOMANIA_FOCUS = "AngelNymphomaniaFocus";
+    private static final String ANGEL_WORSHIP_FOCUS = "AngelWorshipFocus";
+    private static final String ANGEL_FOLLOWERS_FOCUS = "AngelFollowersFocus";
     public Angel() {
         this(Optional.empty(), Optional.empty());
     }
 
     public Angel(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Angel", 1, charConfig, commonConfig);
+        super("Angel", 1, charConfig, commonConfig, true);
     }
 
-    protected void applyBasicStats() {
-        character.isStartCharacter = true;
+    public void applyBasicStats(Character self ) {
         preferredCockMod = CockMod.blessed;
-        character.outfitPlan.add(Clothing.getByID("Tshirt"));
-        character.outfitPlan.add(Clothing.getByID("bra"));
-        character.outfitPlan.add(Clothing.getByID("thong"));
-        character.outfitPlan.add(Clothing.getByID("miniskirt"));
-        character.outfitPlan.add(Clothing.getByID("sandals"));
-        character.change();
-        character.mod(Attribute.Seduction, 2);
-        character.mod(Attribute.Perception, 1);
-        Global.gainSkills(character);
+        self.outfitPlan.add(Clothing.getByID("Tshirt"));
+        self.outfitPlan.add(Clothing.getByID("bra"));
+        self.outfitPlan.add(Clothing.getByID("thong"));
+        self.outfitPlan.add(Clothing.getByID("miniskirt"));
+        self.outfitPlan.add(Clothing.getByID("sandals"));
+        self.change();
+        self.modAttributeDontSaveData(Attribute.Seduction, 2);
+        self.modAttributeDontSaveData(Attribute.Perception, 1);
+        Global.gainSkills(self);
 
-        character.getStamina().setMax(60 + character.getLevel() * getGrowth().stamina);
-        character.getArousal().setMax(110 + character.getLevel() * getGrowth().arousal);
+        self.getStamina().setMax(60);
+        self.getArousal().setMax(110);
 
-        character.add(Trait.undisciplined);
-        character.add(Trait.lickable);
-        character.setTrophy(Item.AngelTrophy);
-        character.plan = Plan.hunting;
-        character.mood = Emotion.confident;
-        character.body.add(BreastsPart.dd);
+        self.setTrophy(Item.AngelTrophy);
+        if (self instanceof NPC) {
+        }
+        self.body.add(BreastsPart.dd);
         // very feminine face
-        character.body.add(new FacePart(0.6, 4.2));
-        character.initialGender = CharacterSex.female;
+        self.body.add(new FacePart(0.6, 4.2));
+        self.initialGender = CharacterSex.female;
+    }
+
+    @Override public void applyStrategy(NPC self) {
+        NPC npcSelf = (NPC) self;
+        npcSelf.plan = Plan.retreating;
+        npcSelf.mood = Emotion.confident;
     }
 
     @Override
     public void setGrowth() {
-        growth.stamina = 1;
-        growth.arousal = 5;
-        growth.mojo = 1;
-        growth.bonusStamina = 1;
-        growth.bonusArousal = 4;
-        growth.bonusMojo = 1;
-        growth.addTrait(3, Trait.responsive);
-        growth.addTrait(9, Trait.pussyTraining1);
-        growth.addTrait(12, Trait.expertGoogler);
-        growth.addTrait(15, Trait.experienced);
-        growth.addTrait(18, Trait.erophage);
-        growth.addTrait(20, Trait.skeptical);
-        growth.addTrait(20, Trait.zealinspiring);
-        growth.addTrait(21, Trait.holecontrol);
-        growth.addTrait(24, Trait.insertion);
-        growth.addTrait(27, Trait.alwaysready);
-        growth.addTrait(30, Trait.pussyTraining2);
-        growth.addTrait(33, Trait.RawSexuality);
-        growth.addTrait(36, Trait.objectOfWorship);
-        growth.addTrait(39, Trait.tight);
-        growth.addTrait(42, Trait.desensitized);
-        growth.addTrait(45, Trait.limbTraining1);
-        growth.addTrait(48, Trait.magicEyeArousal);
-        growth.addTrait(51, Trait.pussyTraining3);
-        growth.addTrait(54, Trait.desensitized2);
+        character.getGrowth().stamina = 1;
+        character.getGrowth().arousal = 5;
+        character.getGrowth().bonusStamina = 1;
+        character.getGrowth().bonusArousal = 4;
+
+        character.addCombatScene(new CombatScene((c, self, other) -> {
+            return self.getLevel() >= 10 && !Global.checkFlag(ANGEL_SEX_FOCUS) && !Global.checkFlag(ANGEL_NYMPHOMANIA_FOCUS);
+        }, (c, self, player) -> Global.format("After another exhausting fight with her where you've been pretty much been driven insane with her sexual prowess, "
+                        + "Angel shows a rare moment of vulnerability and slides into your arms. <i>\"Hey {other:name}, I've been thinking, do you think this is wrong?\"</i> "
+                        + "Puzzled, you ask her what she means. <i>\"Well... you know, fucking like rabbits every day. "
+                        + "I love feeling good and I know I'm good at making other people feel good. Sometimes though, I wonder if I'm being too overbearing. "
+                        + "Most boys can't even keep up with me, but I feel like I always want more. I feel like sometimes I'm no longer in control you know?\"</i>"
+                        + "<br/><br/>"
+                        + "", self, player),
+                Arrays.asList(
+                        new CombatSceneChoice("Tell her you love her technique.", (c, self, other) -> {
+                            c.write("You hug Angel, and tell her that you love how she makes you feel, and sex with her is akin to a religious experience for you. "
+                                            + "Angel looks surprised for a second before giving you a wry grin. <i>\"You're not so bad yourself. But you're right, I am better.\"</i>"
+                                            + "<br/><br/>"
+                                            + "As if to prove a point, she sits down again on your rehardened cock. "
+                                            + "You groan as she slides rocks herself back and forth yet again, fucking you with a soft smile. "
+                                            + "<i>\"Quality over quantity as they say. I'll train you so you'll only be able to cum inside me. Wouldn't that be amusing " + other.getName() + "?\"</i>"
+                                            + "It's too much for your poor oversensitive cock, as you pump what remains into Angel a final time."
+                                            + "<br>"
+                                            + "Angel gives you a quick kiss on the lips before leaving. <i>\"Thanks for listening to me "+ other.getName() + ", but you better be ready for me next time.\"</i>");
+                            Global.flag(ANGEL_SEX_FOCUS);
+                            character.getGrowth().addTrait(12, Trait.holecontrol);
+                            character.getGrowth().addTrait(20, Trait.zealinspiring);
+                            character.getGrowth().addTrait(25, Trait.powerfulhips);
+                            character.getGrowth().addTrait(39, Trait.insertion);
+                            character.getGrowth().addTrait(54, Trait.autonomousPussy);
+                            return true;
+                        }),
+                        new CombatSceneChoice("Tell her you love her sex drive", (c, self, other) -> {
+                            c.write("You tell Angel that her insatiable sex drive is one of the things you like best about her. "
+                                            + "After all, there's nothing else quite like fucking someone as enthusiastic as her. "
+                                            + "Angel looks up and makes eye contact with you. She seems rather... amused? "
+                                            + "<i>\"That's what all " + other.boyOrGirl() + "s say before they're squeezed dry. "
+                                            + "You're not going to be the same are you?\"</i>"
+                                            + "<br/><br/>"
+                                            + "You swallow your saliva a bit worriedly. What have you gotten yourself into?");
+                            Global.flag(ANGEL_NYMPHOMANIA_FOCUS);
+                            character.mod(Attribute.Nymphomania, 1);
+                            character.getGrowth().addTrait(12, Trait.lastStand);
+                            character.getGrowth().addTrait(20, Trait.nymphomania);
+                            character.getGrowth().addTrait(25, Trait.RawSexuality);
+                            character.getGrowth().addTrait(39, Trait.erophage);
+                            character.getGrowth().addTrait(54, Trait.sexualDynamo);
+                            return true;
+                        })
+                    )
+                ));
+        character.addCombatScene(new CombatScene((c, self, other) -> {
+            return self.getLevel() >= 20 && !Global.checkFlag(ANGEL_FOLLOWERS_FOCUS) && !Global.checkFlag(ANGEL_WORSHIP_FOCUS)
+                            && (Global.checkFlag(ANGEL_SEX_FOCUS) || Global.checkFlag(ANGEL_NYMPHOMANIA_FOCUS));
+        }, (c, self, player) -> "After another session of fantastic sex with your favorite sex goddess, Angel looks a bit reluctant to leave. "
+                        + "You do want to try to get some more matches in, but her broody look invites some discussion. "
+                        + "Patting your own lap, you motion for Angel to sit down. Luckily for you, she doesn't leave you hanging and does just that. "
+                        + "<br/><br/>"
+                        + "The two of you spend a few moments relaxing before Angel decides to bring up her worries. "
+                        + "<i>\"Say " + player.name() + ", what do you really think of me become a real goddess? "
+                        + "To be honest, I'm not even sure how it started. One night after the games, I started feeling a heat in my chest. "
+                        + "The next night when we started the match, I already had my wings. "
+                        + "I didn't think too much of it, with all the other strange things going on, "
+                        + "but recently I've started hearing a voice in my head asking me to gather faith. "
+                        + "I don't know what to think of it. I'm pretty happy with who I am now, and my friends are very important to me. "
+                        + "If I do try and build a following, I'm worried that I'll start leaving them behind.\"</i>",
+                Arrays.asList(
+                        new CombatSceneChoice("Answer: Focus on your friends", (c, self, other) -> {
+                            c.write("You answer that it just doesn't seem like Angel to abandon her friends even if she does become a full Goddess. "
+                                            + "There's no need to pick right? If she tells them, Mei, Sarah and Caroline would probably volunteer to be "
+                                            + "her followers numbers 1, 2 and 3."
+                                            + "<br/><br/>"
+                                            + "Angel scowls a bit at you and questions, <i>\"You mean you're not going to be my follower?\"</i> "
+                                            + "You hastily deny that and try to resolve the misunderstanding before you realize Angel's stern "
+                                            + "expression melts into a smile and you realize she was just joking. "
+                                            + "<i>\"Thanks "+ other.name() + ", that took a lot off my mind. I'll pay you back, don't worry. "
+                                                            + "A Goddess always keeps her promises.\"</i>");
+                            Global.flag(ANGEL_FOLLOWERS_FOCUS);
+                            character.getGrowth().addTrait(21, Trait.apostles);
+                            character.getGrowth().addTrait(30, Trait.leadership);
+                            if (Global.checkFlag(ANGEL_SEX_FOCUS)) {
+                                character.getGrowth().addTrait(42, Trait.inspirational);
+                            } else if (Global.checkFlag(ANGEL_NYMPHOMANIA_FOCUS)) {
+                                character.getGrowth().addTrait(42, Trait.showmanship);
+                            }
+                            character.getGrowth().addTrait(45, Trait.tactician);
+                            character.getGrowth().addTrait(48, Trait.devoteeFervor);
+                            character.getGrowth().addTrait(60, Trait.congregation);
+                            return true;
+                        }),
+                        new CombatSceneChoice("Answer: Focus on gathering a following", (c, self, other) -> {
+                            c.write(Global.format("You reply that you would her first follower if she was looking for them. "
+                                            + "You jokingly kneel in front of her and kiss her feet. "
+                                            + "Angel seems surprised for a moment before a familiar lascivious smile creeps into her expression. "
+                                            + "<i>\"{other:name}, {other:name}, {other:name}, what do we have here? A willing supplicant? "
+                                            + "Do you want to serve your Goddess? Groveling, begging, pleading, does that thrill you?\"</i>"
+                                            + "<br/><br/>"
+                                            + "There's a bit of a dangerous tone in Angel's voice, and you motion to get back up. "
+                                            + "However, a shapely foot forces your head onto the ground again. "
+                                            + "<i>\"Stand down!\"</i> she demands. This started off as a joke, but something in Angel's voice demands your obedience. "
+                                            + "Trembling, you do as she says and avert her eyes, looking only at the lower half of her perfect body. Angel chuckles as she inspects your prone form. "
+                                            + "<i>\"You know {other:name}, I wasn't sure I was cut out for this deity business, but I have to admit, this feels pretty good right now. "
+                                            + "Well what are you waiting for? Show me your faith!\"</i> "
+                                            + "You scramble to your feet and start lapping at Angel's heavenly orfice. "
+                                            + "Only after you bring her to two consecutive climaxes does she let you go. "
+                                            + "<br/><br/>"
+                                            + "Before she leaves, Angel kneels down to face you, and gives you a big kiss on the lips."
+                                            + "<i>\"Thanks {other:name} for being patient with me. This is all pretty so new, but I feel good with you by my side.\"</i>", self, other));
+                            Global.flag(ANGEL_WORSHIP_FOCUS);
+                            character.getGrowth().addTrait(21, Trait.objectOfWorship);
+                            character.getGrowth().addTrait(30, Trait.magicEyeArousal);
+                            character.getGrowth().addTrait(42, Trait.sacrosanct);
+                            character.getGrowth().addTrait(45, Trait.genuflection);
+                            if (Global.checkFlag(ANGEL_SEX_FOCUS)) {
+                                character.getGrowth().addTrait(48, Trait.piety);
+                            } else if (Global.checkFlag(ANGEL_NYMPHOMANIA_FOCUS)) {
+                                character.getGrowth().addTrait(48, Trait.mandateOfHeaven);
+                            }
+                            character.getGrowth().addTrait(60, Trait.revered);
+                            return true;
+                        })
+                    )
+                ));
+        character.getGrowth().addTrait(0, Trait.undisciplined);
+        character.getGrowth().addTrait(0, Trait.lickable);
+        character.getGrowth().addTrait(3, Trait.responsive);
+        character.getGrowth().addTrait(9, Trait.sexTraining1);
+        // 12 - first choice 1
+        character.getGrowth().addTrait(15, Trait.expertGoogler);
+        character.getGrowth().addTrait(18, Trait.experienced);
+        character.getGrowth().addTrait(20, Trait.skeptical);
+        // 21 - second choice 1
+        character.getGrowth().addTrait(24, Trait.tongueTraining1);
+        // 27 - first choice 2
+        // 30 - second choice 2
+        character.getGrowth().addTrait(33, Trait.sexTraining2);
+        character.getGrowth().addTrait(36, Trait.tongueTraining2);
+        // 39 - first choice 3
+        // 42 - second choice 3
+        // 45 - second choice 4
+        // 48 - second choice 5
+        character.getGrowth().addTrait(51, Trait.desensitized);
+        // 54 - first choice 4
+        character.getGrowth().addTrait(57, Trait.desensitized2);
+        // 60 - second choice 6
         preferredAttributes
                         .add(c -> c.get(Attribute.Divinity) < 50 ? Optional.of(Attribute.Divinity) : Optional.empty());
         preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
+        preferredAttributes.add(c -> (c.has(Trait.nymphomania) && c.get(Attribute.Nymphomania) < (c.getLevel() - 10) / 2) ? Optional.of(Attribute.Nymphomania) : Optional.empty());
     }
 
     @Override
     public void rest(int time) {
         if (character.rank >= 1) {
-            if (!character.has(Trait.demigoddess) && character.money >= 1000) {
+            if (!character.has(Trait.demigoddess) && (Global.checkFlag(ANGEL_SEX_FOCUS) || Global.checkFlag(ANGEL_NYMPHOMANIA_FOCUS))) {
                 advance();
             }
-        }
-        if (character.has(Trait.demigoddess) && !character.has(Trait.divinity)) {
-            character.add(Trait.divinity);
         }
         super.rest(time);
         if (!(character.has(Item.Dildo) || character.has(Item.Dildo2)) && character.money >= 250) {
@@ -129,7 +249,7 @@ public class Angel extends BasePersonality {
         if (character.rank >= 1) {
             if (!character.has(Trait.lacedjuices) && character.money >= 1000) {
                 character.money -= 1000;
-                character.add(Trait.lacedjuices);
+                character.getGrowth().addTrait(Math.min(20, character.getLevel()), Trait.lacedjuices);
             }
             if (character.money > 0) {
                 Global.getDay().visit("Body Shop", character, Global.random(character.money));
@@ -166,27 +286,27 @@ public class Angel extends BasePersonality {
     }
 
     @Override
-    public String bbLiner(Combat c) {
+    public String bbLiner(Combat c, Character other) {
         return "Angel seems to enjoy your anguish in a way that makes you more than a little nervous. <i>\"That's a great look for you, I'd like to see it more often.\"</i>";
     }
 
     @Override
-    public String nakedLiner(Combat c) {
+    public String nakedLiner(Combat c, Character opponent) {
         return "Angel gives you a haughty look, practically showing off her body. <i>\"I can't blame you for wanting to see me naked, everyone does.\"</i>";
     }
 
     @Override
-    public String stunLiner(Combat c) {
+    public String stunLiner(Combat c, Character opponent) {
         return "Angel groans on the floor. <i>\"You really are a beast. It takes a gentle touch to please a lady.\"</i>";
     }
 
     @Override
-    public String taunt(Combat c) {
+    public String taunt(Combat c, Character opponent) {
         return "Angel pushes the head of your dick with her finger and watches it spring back into place. <i>\"You obviously can't help yourself. If only you were a little bigger, we could have a lot of fun.\"</i>";
     }
 
     @Override
-    public String temptLiner(Combat c) {
+    public String temptLiner(Combat c, Character opponent) {
         return "Angel looks at you with a grin, <i>\"You're almost drooling. Is staring at my body that much fun? If you want me that much, why don't you just sit there and let me make you feel good.\"</i>";
     }
 
@@ -195,7 +315,7 @@ public class Angel extends BasePersonality {
         character.arousal.empty();
         Character opponent = character.equals(c.p1) ? c.p2 : c.p1;
         String message = "";
-        if (c.getStance().anallyPenetrated(opponent)) {
+        if (c.getStance().anallyPenetrated(c, opponent)) {
             message = "Angel leans over you as she grinds her hips against yours. <i>\"You're going to come for me, aren't you?\"</i> she purrs into your ear. You shake your head; "
                             + "no way could you live it down if you came while you had something in your ass. Angel frowns and gives your ass a firm slap. <i>\"No reach around for you "
                             + "then,\"</i> she snaps. <i>\"We'll just do this the old fashioned way.\"</i> She renews her assault on your poor ass and you feel your will slipping. Another solid slap "
@@ -256,8 +376,8 @@ public class Angel extends BasePersonality {
 
     @Override
     public String defeat(Combat c, Result flag) {
-        Character opponent = c.getOther(character);
-        if (c.getStance().vaginallyPenetrated(character)) {
+        Character opponent = c.getOpponent(character);
+        if (c.getStance().vaginallyPenetrated(c, character)) {
             return "You thrust your cock continously into Angel's dripping pussy. Her hot insides feel amazing, but you're sure you have enough of an advantage to risk "
                             + "it. She lets out breathy moans in time to your thrusts and her arms are trembling too much to hold herself up. She's clearly about to cum, you just "
                             + "need to push her over the edge. You maul her soft, heavy boobs and suck on her neck. Angel closes her eyes tightly and whimpers in pleasure. <p>You keep "
@@ -293,7 +413,7 @@ public class Angel extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c) {
+    public String describe(Combat c, Character self) {
         if (character.has(Trait.demigoddess)) {
             return "Angel's transformation seems to have taken inspiration from her own name. She has large angelic wings behind her, which combined with her long blonde hair and perfect unblemished "
                             + "skin gives her a positively divine appearance. Her appearance should be emanating holy purity, but instead her eyes and expression seem lewder than ever. "
@@ -408,8 +528,8 @@ public class Angel extends BasePersonality {
     }
 
     @Override
-    public String startBattle(Character other) {
-        return "Angel licks her lips and stalks you like a predator.";
+    public String startBattle(Character self, Character other) {
+        return Global.format("{self:SUBJECT} licks {self:possessive} lips and stalks {other:name-do} like a predator.", character, other);
     }
 
     @Override
@@ -429,9 +549,9 @@ public class Angel extends BasePersonality {
     }
 
     public void advance() {
-        character.add(Trait.demigoddess);
-        character.add(Trait.divinity);
-        character.add(Trait.proheels);
+        character.getGrowth().addTrait(10, Trait.demigoddess);
+        character.getGrowth().addTrait(10, Trait.divinity);
+        character.getGrowth().addTrait(10, Trait.proheels);
         character.body.addReplace(PussyPart.divine, 1);
         character.body.addReplace(WingsPart.angelic, 5);
         character.unequipAllClothing();
@@ -440,6 +560,7 @@ public class Angel extends BasePersonality {
         character.outfitPlan.add(Clothing.getByID("bikinibottoms"));
         character.outfitPlan.add(Clothing.getByID("highheels"));
         character.mod(Attribute.Divinity, 1);
+        character.getGrowth().addOrRemoveTraits(character);
     }
 
     @Override
@@ -460,7 +581,7 @@ public class Angel extends BasePersonality {
     }
 
     @Override
-    public String makeOrgasmLiner(Combat c) {
+    public String makeOrgasmLiner(Combat c, Character target) {
         return "Angel stares you in the eye as your consciousness returns from the precipice <i>\"Once isn't enough. I need more. You can do that for me, right?\"</i>";
     }
 }

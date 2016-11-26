@@ -30,6 +30,7 @@ public class FluidAddiction extends DurationStatus {
         this.magnitude = magnitude;
         activated = 0;
         flag(Stsflag.fluidaddiction);
+        flag(Stsflag.debuff);
         flag(Stsflag.purgable);
     }
 
@@ -43,14 +44,14 @@ public class FluidAddiction extends DurationStatus {
             if (affected.human()) {
                 return "You feel a desperate need to taste more of " + target.nameOrPossessivePronoun() + " fluids.";
             } else {
-                return affected.name() + " is eyeing "+c.getOther(affected).nameDirectObject()+" like a junkie.";
+                return affected.name() + " is eyeing "+c.getOpponent(affected).nameDirectObject()+" like a junkie.";
             }
         } else {
             if (affected.human()) {
                 return "You're not sure why " + target.nameOrPossessivePronoun()
                                 + " fluids is so tantalizing, but you know you want some more";
             } else {
-                return affected.name() + " seems to want more of "+c.getOther(affected).nameOrPossessivePronoun()+" fluids.";
+                return affected.name() + " seems to want more of "+c.getOpponent(affected).nameOrPossessivePronoun()+" fluids.";
             }
         }
     }

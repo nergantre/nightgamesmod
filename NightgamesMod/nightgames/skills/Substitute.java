@@ -53,7 +53,7 @@ public class Substitute extends Skill {
         }
         getSelf().emote(Emotion.dominant, 10);
         target.emote(Emotion.nervous, 10);
-        c.setStance(new Behind(getSelf(), target));
+        c.setStance(new Behind(getSelf(), target), getSelf(), true);
         return true;
     }
 

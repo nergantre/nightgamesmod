@@ -1,14 +1,11 @@
 package nightgames.characters;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import nightgames.actions.Action;
 import nightgames.actions.Movement;
@@ -32,39 +29,43 @@ public abstract class BasePersonality implements Personality {
     private static final long serialVersionUID = 2279220186754458082L;
     private String type;
     public NPC character;
-    protected Growth growth;
     protected List<PreferredAttribute> preferredAttributes;
     protected CockMod preferredCockMod;
     protected AiModifiers mods;
 
-    protected BasePersonality() {
-    }
-
-    public BasePersonality(String name, int level, Optional<NpcConfiguration> charConfig,
-                    Optional<NpcConfiguration> commonConfig) {
+    protected BasePersonality(String name, int level, boolean isStartCharacter) {
         // Make the built-in character
         type = getClass().getSimpleName();
         character = new NPC(name, level, this);
-        growth = new Growth();
+        character.isStartCharacter = isStartCharacter;
         preferredCockMod = CockMod.error;
         preferredAttributes = new ArrayList<PreferredAttribute>();
+    }
+
+    public BasePersonality(String name, int level, Optional<NpcConfiguration> charConfig,
+                    Optional<NpcConfiguration> commonConfig, boolean isStartCharacter) {
+        this(name, level, isStartCharacter);
+        setupCharacter(charConfig, commonConfig);
+    }
+
+    protected void setupCharacter(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
         setGrowth();
-        applyBasicStats();
-        character.body.makeGenitalOrgans(character.initialGender);
+        applyBasicStats(character);
+        applyStrategy(character);
 
         // Apply config changes
         Optional<NpcConfiguration> mergedConfig = NpcConfiguration.mergeOptionalNpcConfigs(charConfig, commonConfig);
         mergedConfig.ifPresent(cfg -> cfg.apply(character));
 
+        character.body.makeGenitalOrgans(character.initialGender);
         character.body.finishBody(character.initialGender);
+        for (int i = 1; i < character.getLevel(); i++) {
+            character.getGrowth().levelUp(character);
+        }
+        character.distributePoints(preferredAttributes);
+        character.getGrowth().addOrRemoveTraits(character);
     }
 
-    /**
-     * Apply built-in character stats. Can be later overridden by StartConfiguration.
-     */
-    // TODO: Make this data-driven, like with custom NPCs.
-    protected abstract void applyBasicStats();
-    
     public void setCharacter(NPC c) {
         this.character = c;
     }
@@ -87,7 +88,7 @@ public abstract class BasePersonality implements Personality {
     }
 
     public void buyUpTo(Item item, int number) {
-        while (character.money > item.getPrice() && character.count(item) < 3) {
+        while (character.money > item.getPrice() && character.count(item) < number) {
             character.money -= item.getPrice();
             character.gain(item);
         }
@@ -104,7 +105,7 @@ public abstract class BasePersonality implements Personality {
         Skill chosen;
         ArrayList<WeightedSkill> priority = Decider.parseSkills(available, c, character);
         if (!Global.checkFlag(Flag.dumbmode)) {
-            chosen = character.prioritizeNew(priority, c);
+            chosen = Decider.prioritizeNew(character, priority, c);
         } else {
             chosen = character.prioritize(priority);
         }
@@ -150,15 +151,16 @@ public abstract class BasePersonality implements Personality {
                         .toLowerCase() + "_confident.jpg";
     }
 
-    public Growth getGrowth() {
-        return growth;
+    @Override
+    public void ding() {
+        character.getGrowth().levelUp(character);
+        onLevelUp();
+        character.distributePoints(preferredAttributes);
     }
 
     @Override
-    public void ding() {
-        growth.levelUp(character);
-        onLevelUp();
-        distributePoints();
+    public List<PreferredAttribute> getPreferredAttributes() {
+        return preferredAttributes;
     }
 
     protected void onLevelUp() {
@@ -166,14 +168,14 @@ public abstract class BasePersonality implements Personality {
     }
     
     @Override
-    public String describeAll(Combat c) {
+    public String describeAll(Combat c, Character self) {
         StringBuilder b = new StringBuilder();
-        b.append(describe(c));
+        b.append(describe(c, self));
         b.append("<br><br>");
-        character.body.describe(b, character, " ");
+        self.body.describe(b, self, " ");
         b.append("<br>");
-        for (Trait t : character.getTraits()) {
-            t.describe(character, b);
+        for (Trait t : self.getTraits()) {
+            t.describe(self, b);
             b.append(' ');
         }
         b.append("<br>");
@@ -183,53 +185,6 @@ public abstract class BasePersonality implements Personality {
     @Override
     public NPC getCharacter() {
         return character;
-    }
-
-    public void distributePoints() {
-        if (character.availableAttributePoints <= 0) {
-            return;
-        }
-        ArrayList<Attribute> avail = new ArrayList<Attribute>();
-        Deque<PreferredAttribute> preferred = new ArrayDeque<PreferredAttribute>(preferredAttributes);
-        for (Attribute a : character.att.keySet()) {
-            if (Attribute.isTrainable(a, character) && (character.getPure(a) > 0 || Attribute.isBasic(a))) {
-                avail.add(a);
-            }
-        }
-        if (avail.size() == 0) {
-            avail.add(Attribute.Cunning);
-            avail.add(Attribute.Power);
-            avail.add(Attribute.Seduction);
-        }
-        int noPrefAdded = 2;
-        for (; character.availableAttributePoints > 0; character.availableAttributePoints--) {
-            Attribute selected = null;
-            // remove all the attributes that isn't in avail
-            preferred = new ArrayDeque<>(preferred.stream()
-                                                  .filter(p -> {
-                                                      Optional<Attribute> att = p.getPreferred(character);
-                                                      return att.isPresent() && avail.contains(att.get());
-                                                  })
-                                                  .collect(Collectors.toList()));
-            if (preferred.size() > 0) {
-                if (noPrefAdded > 1) {
-                    noPrefAdded = 0;
-                    Optional<Attribute> pref = preferred.removeFirst()
-                                                        .getPreferred(character);
-                    if (pref.isPresent()) {
-                        selected = pref.get();
-                    }
-                } else {
-                    noPrefAdded += 1;
-                }
-            }
-
-            if (selected == null) {
-                selected = avail.get(Global.random(avail.size()));
-            }
-            character.mod(selected, 1);
-            selected = null;
-        }
     }
 
     @Override
@@ -266,7 +221,7 @@ public abstract class BasePersonality implements Personality {
         all.entrySet()
            .stream()
            .filter(e -> e.getKey()
-                         .isApplicable(c, character, c.getOther(character)))
+                         .isApplicable(c, character, c.getOpponent(character)))
            .forEach(e -> applicable.put(e.getKey(), e.getValue()));
         return applicable;
     }

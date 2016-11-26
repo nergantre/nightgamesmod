@@ -37,15 +37,15 @@ public class Handjob extends Skill {
     }
 
     @Override
-    public int accuracy(Combat c) {
-        return c.getStance().en == Stance.neutral ? 35 : 100;
+    public int accuracy(Combat c, Character target) {
+        return c.getStance().en == Stance.neutral ? 50 : 100;
     }
 
     @Override
     public boolean resolve(Combat c, Character target) {
         int m = Global.random(8, 13);
 
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             if (getSelf().get(Attribute.Seduction) >= 8) {
                 m += 6;
                 writeOutput(c, Result.normal, target);
@@ -79,7 +79,7 @@ public class Handjob extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You reach for " + target.name() + "'s dick but miss.";
+            return "You reach for " + target.name() + "'s dick but miss. (Maybe you should get closer?)";
         } else {
             return "You grab " + target.name()
                             + "'s girl-cock and stroke it using the techniques you use when masturbating.";

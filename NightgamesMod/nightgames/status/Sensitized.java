@@ -4,10 +4,10 @@ import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.json.JsonUtils;
 
 public class Sensitized extends DurationStatus {
     BodyPart part;
@@ -20,6 +20,7 @@ public class Sensitized extends DurationStatus {
         this.magnitude = magnitude;
         this.maximum = maximum;
         flag(Stsflag.sensitized);
+        flag(Stsflag.debuff);
         flag(Stsflag.purgable);
     }
 
@@ -33,7 +34,7 @@ public class Sensitized extends DurationStatus {
         if (replaced)
             return "";
         return Global.format(String.format("{self:NAME-POSSESSIVE} groans as {self:possessive} %s grows hot.",
-                        part.describe(affected)), affected, c.getOther(affected));
+                        part.describe(affected)), affected, c.getOpponent(affected));
     }
 
     @Override
@@ -126,12 +127,12 @@ public class Sensitized extends DurationStatus {
         obj.addProperty("magnitude", magnitude);
         obj.addProperty("maximum", maximum);
         obj.addProperty("duration", getDuration());
-        obj.add("part", part.save());
+        obj.add("part", JsonUtils.gson.toJsonTree(part));
         return obj;
     }
 
     @Override public Status loadFromJson(JsonObject obj) {
-        return new Sensitized(Global.noneCharacter(), Body.loadPart(obj), obj.get("magnitude").getAsFloat(),
+        return new Sensitized(Global.noneCharacter(), JsonUtils.gson.fromJson(obj.get("part"), BodyPart.class), obj.get("magnitude").getAsFloat(),
                         obj.get("maximum").getAsFloat(), obj.get("duration").getAsInt());
     }
 

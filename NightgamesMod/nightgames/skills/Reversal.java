@@ -28,10 +28,10 @@ public class Reversal extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             writeOutput(c, Result.normal, target);
 
-            c.setStance(new Pin(getSelf(), target));
+            c.setStance(new Pin(getSelf(), target), getSelf(), true);
             target.emote(Emotion.nervous, 10);
             getSelf().emote(Emotion.dominant, 10);
         } else {
@@ -57,9 +57,9 @@ public class Reversal extends Skill {
     }
 
     @Override
-    public int accuracy(Combat c) {
+    public int accuracy(Combat c, Character target) {
         return Math.round(Math.max(Math.min(150,
-                        2.5f * (getSelf().get(Attribute.Cunning) - c.getOther(getSelf()).get(Attribute.Cunning)) + 75),
+                        2.5f * (getSelf().get(Attribute.Cunning) - target.get(Attribute.Cunning)) + 75),
                         40));
     }
 

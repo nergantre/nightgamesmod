@@ -27,7 +27,7 @@ public class HeelGrind extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return c.getStance().behind(getSelf()) && target.crotchAvailable() && getSelf().canAct()
-                        && !c.getStance().vaginallyPenetrated(target) && target.hasPussy()
+                        && !c.getStance().vaginallyPenetrated(c, target) && target.hasPussy()
                         && getSelf().outfit.hasNoShoes();
     }
 
@@ -44,7 +44,7 @@ public class HeelGrind extends Skill {
 
     @Override
     public int getMojoBuilt(Combat c) {
-        return 20;
+        return 15;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class HeelGrind extends Skill {
         target.body.pleasure(getSelf(), getSelf().body.getRandom("feet"), target.body.getRandom("pussy"), m, c, this);
         target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("breasts"), m2, c, this);
         if (c.getStance().en != Stance.behindfootjob) {
-            c.setStance(new BehindFootjob(getSelf(), target));
+            c.setStance(new BehindFootjob(getSelf(), target), getSelf(), true);
         }
         if (Global.random(100) < 15 + 2 * getSelf().get(Attribute.Fetish)) {
             target.add(c, new BodyFetish(target, getSelf(), "feet", .25));

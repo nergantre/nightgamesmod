@@ -40,8 +40,13 @@ public class TentaclePorn extends Skill {
     }
 
     @Override
+    public int accuracy(Combat c, Character target) {
+        return 90;
+    }
+
+    @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             if (target.mostlyNude()) {
                 int m = Global.random(getSelf().get(Attribute.Fetish)) / 2 + 1;
                 if (target.bound()) {
@@ -55,7 +60,7 @@ public class TentaclePorn extends Skill {
                 } else if (getSelf().human()) {
                     c.write(getSelf(), deal(c, 0, Result.normal, target));
                     TentaclePart.pleasureWithTentacles(c, target, m, target.body.getRandom("skin"));
-                } else if (c.shouldPrintReceive(target)) {
+                } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), receive(c, 0, Result.normal, target));
                     TentaclePart.pleasureWithTentacles(c, target, m, target.body.getRandom("skin"));
                 }

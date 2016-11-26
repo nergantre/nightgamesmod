@@ -18,15 +18,14 @@ public class CockWorship extends Skill {
         addTag(SkillTag.pleasureSelf);
         addTag(SkillTag.usesMouth);
         addTag(SkillTag.pleasure);
-        addTag(SkillTag.suicidal);
         addTag(SkillTag.worship);
     }
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return target.crotchAvailable() && target.hasDick() && c.getStance().oral(getSelf())
+        return target.crotchAvailable() && target.hasDick() && c.getStance().oral(getSelf(), target)
                         && c.getStance().front(getSelf()) && getSelf().canAct()
-                        && !c.getStance().vaginallyPenetrated(target);
+                        && !c.getStance().vaginallyPenetrated(c, target);
     }
 
     @Override
@@ -68,11 +67,11 @@ public class CockWorship extends Skill {
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
         Optional<BodyFetish> fetish = getSelf().body.getFetish("cock");
-        return fetish.isPresent() && fetish.get().magnitude >= .5;
+        return user.isPetOf(target) || (fetish.isPresent() && fetish.get().magnitude >= .5);
     }
 
     @Override
-    public int accuracy(Combat c) {
+    public int accuracy(Combat c, Character target) {
         return 150;
     }
 

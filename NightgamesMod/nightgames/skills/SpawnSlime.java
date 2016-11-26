@@ -2,7 +2,6 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.items.Item;
@@ -22,7 +21,8 @@ public class SpawnSlime extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().canAct() && c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf())
-                        && getSelf().pet == null && getSelf().has(Item.Battery, 5);
+                        && c.getPetsFor(getSelf()).size() < getSelf().getPetLimit() 
+                        && getSelf().has(Item.Battery, 5);
     }
 
     @Override
@@ -38,16 +38,10 @@ public class SpawnSlime extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         getSelf().consume(Item.Battery, 5);
-        int power = 8 + getSelf().get(Attribute.Science) / 10;
+        int power = 5 + getSelf().get(Attribute.Science);
         int ac = 3 + getSelf().get(Attribute.Science) / 10;
-        if (getSelf().has(Trait.leadership)) {
-            power += 5;
-        }
-        if (getSelf().has(Trait.tactician)) {
-            ac += 3;
-        }
         writeOutput(c, Result.normal, target);
-        getSelf().pet = new Slime(getSelf(), power, ac);
+        c.addPet(getSelf(), new Slime(getSelf(), power, ac).getSelf());
         return true;
     }
 

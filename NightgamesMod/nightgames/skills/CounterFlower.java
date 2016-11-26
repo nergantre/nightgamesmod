@@ -15,7 +15,6 @@ public class CounterFlower extends CounterBase {
                         Global.format("<b>The giant flower at the base of {self:name-possessive} legs are open, with the petals waving invitingly.",
                                         self, self),
                         2);
-        addTag(SkillTag.counter);
         addTag(SkillTag.fucking);
         addTag(SkillTag.positioning);
     }

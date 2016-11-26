@@ -48,7 +48,7 @@ public class Spank extends Skill {
         } else {
             writeOutput(c, Result.normal, target);
         }
-        target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, m));
+        target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, m));
 
         target.emote(Emotion.angry, 25);
         target.emote(Emotion.nervous, 15);
@@ -72,7 +72,7 @@ public class Spank extends Skill {
     }
 
     @Override
-    public int accuracy(Combat c) {
+    public int accuracy(Combat c, Character target) {
         return c.getStance().dom(getSelf()) ? 100 : 65;
     }
 

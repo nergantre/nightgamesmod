@@ -42,7 +42,7 @@ public class TailPeg extends Skill {
 
     @Override
     public String describe(Combat c) {
-        if (c.getStance().anallyPenetrated(c.getOther(getSelf()))) {
+        if (c.getStance().anallyPenetrated(c, c.getOpponent(getSelf()))) {
             return "Fuck your opponent with your tail";
         }
         return "Shove your tail up your opponent's ass.";
@@ -50,18 +50,21 @@ public class TailPeg extends Skill {
 
     @Override
     public String getLabel(Combat c) {
-        if (c.getStance().anallyPenetrated(c.getOther(getSelf()))) {
+        if (c.getStance().anallyPenetrated(c, c.getOpponent(getSelf()))) {
             return "Tail Fuck";
         } else {
             return "Tail Peg";
         }
     }
 
+    public int accuracy(Combat c, Character target) {
+        return (c.getStance().havingSex(c) ? 100 : 60);
+    }
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(this, c, accuracy(c) + (c.getStance().havingSex() ? 20 : -20))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             int strength = Math.min(20, 10 + getSelf().get(Attribute.Dark) / 4);
-            boolean vaginal = c.getStance().anallyPenetrated(c.getOther(getSelf()));
+            boolean vaginal = c.getStance().anallyPenetrated(c, c.getOpponent(getSelf()));
             boolean shamed = false;
             if (!vaginal && Global.random(4) == 2) {
                 target.add(c, new Shamed(target));
@@ -101,7 +104,7 @@ public class TailPeg extends Skill {
                                     + "'s confidence.");
                 }
             }
-            if (c.getStance().havingSex()) {
+            if (c.getStance().havingSex(c)) {
                 if (vaginal) {
                     target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom("pussy"),
                                     strength, c, this);
@@ -112,7 +115,7 @@ public class TailPeg extends Skill {
                     target.add(c, new TailFucked(target, getSelf(), "ass"));
                 }
             }
-            target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, strength / 2));
+            target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, strength / 2));
             target.emote(Emotion.nervous, 10);
             target.emote(Emotion.desperate, 10);
             getSelf().emote(Emotion.confident, 15);

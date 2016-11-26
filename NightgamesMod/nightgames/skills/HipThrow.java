@@ -30,7 +30,7 @@ public class HipThrow extends Skill {
     public boolean usable(Combat c, Character target) {
         return !target.wary() && c.getStance().mobile(getSelf()) && c.getStance().mobile(target)
                         && !c.getStance().prone(getSelf()) && !c.getStance().prone(target) && getSelf().canAct()
-                        && !c.getStance().connected();
+                        && !c.getStance().connected(c);
     }
 
     @Override
@@ -40,9 +40,9 @@ public class HipThrow extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (getSelf().check(Attribute.Power, target.knockdownDC())) {
+        if (getSelf().check(Attribute.Power, target.knockdownDC() - target.get(Attribute.Cunning) / 2)) {
             writeOutput(c, Result.normal, target);
-            target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(10, 16)));
+            target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(10, 16)));
             target.add(c, new Falling(target));
             target.emote(Emotion.angry, 5);
         } else {

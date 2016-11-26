@@ -44,7 +44,7 @@ public class Dominate extends Skill {
     public boolean resolve(Combat c, Character target) {
         getSelf().arouse(getSelf().getArousal().max() / 10, c);
         writeOutput(c, Result.normal, target);
-        c.setStance(new StandingOver(getSelf(), target));
+        c.setStance(new StandingOver(getSelf(), target), target, false);
         getSelf().emote(Emotion.dominant, 20);
         target.emote(Emotion.nervous, 20);
         return true;

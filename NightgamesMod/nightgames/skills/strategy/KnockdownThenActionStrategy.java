@@ -31,7 +31,7 @@ public abstract class KnockdownThenActionStrategy extends AbstractStrategy {
     
     @Override
     protected Set<Skill> filterSkills(Combat c, Character self, Set<Skill> allowedSkills) {
-        Character other = c.getOther(self);
+        Character other = c.getOpponent(self);
         
         Optional<Set<Skill>> preferredSkills = getPreferredSkills(c, self, allowedSkills);
 
@@ -44,8 +44,8 @@ public abstract class KnockdownThenActionStrategy extends AbstractStrategy {
         positioningTags.add(SkillTag.positioning);
 
         Set<Skill> positioningSkills = allowedSkills.stream()
-                        .filter(skill -> positioningTags.stream().anyMatch(tag -> skill.getTags().contains(tag)))
-                        .filter(skill -> !skill.getTags().contains(SkillTag.suicidal))
+                        .filter(skill -> positioningTags.stream().anyMatch(tag -> skill.getTags(c).contains(tag)))
+                        .filter(skill -> !skill.getTags(c).contains(SkillTag.suicidal))
                         .collect(Collectors.toSet());
         if (!c.getStance().mobile(self) || c.getStance().mobile(other)) {
             return positioningSkills;

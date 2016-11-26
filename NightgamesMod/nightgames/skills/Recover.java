@@ -22,6 +22,7 @@ public class Recover extends Skill {
                 .prone(getSelf())
                         && c.getStance()
                             .mobile(getSelf())
+                        && !(new StandUp(getSelf())).usable(c, target)
                         && getSelf().canAct();
     }
 
@@ -29,13 +30,13 @@ public class Recover extends Skill {
     public boolean resolve(Combat c, Character target) {
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
-        } else if (c.shouldPrintReceive(target)) {
+        } else if (c.shouldPrintReceive(target, c)) {
             if (target.is(Stsflag.blinded))
                 printBlinded(c);
             else
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
         }
-        c.setStance(new Neutral(getSelf(), target));
+        c.setStance(new Neutral(getSelf(), target), getSelf(), true);
         getSelf().heal(c, Global.random(3));
         return true;
     }

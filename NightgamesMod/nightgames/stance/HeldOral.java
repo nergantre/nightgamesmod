@@ -3,7 +3,6 @@ package nightgames.stance;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.nskills.tags.SkillTag;
 
 public class HeldOral extends AbstractFacingStance {
     public HeldOral(Character top, Character bottom) {
@@ -11,7 +10,7 @@ public class HeldOral extends AbstractFacingStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         return Global.format(
                         "{self:SUBJECT-ACTION:are|is} holding {other:name-do} down with {self:possessive} face nested between {other:possessive} legs.",
                         top, bottom);
@@ -19,7 +18,7 @@ public class HeldOral extends AbstractFacingStance {
 
     @Override
     public boolean mobile(Character c) {
-        return false;
+        return c != bottom && c != top;
     }
 
     @Override
@@ -40,8 +39,8 @@ public class HeldOral extends AbstractFacingStance {
     }
 
     @Override
-    public boolean kiss(Character c) {
-        return false;
+    public boolean kiss(Character c, Character target) {
+        return c != top && target != top;
     }
 
     @Override
@@ -70,12 +69,12 @@ public class HeldOral extends AbstractFacingStance {
     }
 
     @Override
-    public boolean feet(Character c) {
+    public boolean feet(Character c, Character target) {
         return false;
     }
 
     @Override
-    public boolean oral(Character c) {
+    public boolean oral(Character c, Character target) {
         return c == top;
     }
 
@@ -97,7 +96,10 @@ public class HeldOral extends AbstractFacingStance {
     }
 
     @Override
-    public Position reverse(Combat c) {
+    public Position reverse(Combat c, boolean writeMessage) {
+        if (writeMessage) {
+            
+        }
         return new Mount(bottom, top);
     }
 
@@ -117,5 +119,10 @@ public class HeldOral extends AbstractFacingStance {
     @Override
     public int dominance() {
         return 3;
+    }
+
+    @Override
+    public int distance() {
+        return 1;
     }
 }

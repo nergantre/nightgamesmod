@@ -108,7 +108,7 @@ public class Exercise extends Activity {
                         + "She gives you a little bow before she walks away. After she's gone, you kinda regret not at getting at least her name. Oh well, maybe you'll run into her again.");
                 Global.flag(Flag.metYui);
                 Global.flag(Flag.YuiUnlocking);
-                Global.setCounter(Flag.YuiAffection, 0);
+                Global.getNPC("Yui").gainAffection(player, 1);
                 break;
             case yuiintro2:
                 Global.gui().message("As you jog around the campus, you stumble onto a wallet sitting on the ground. It's right next to a bench, so it probably fell out of the owner's pocket "
@@ -129,7 +129,8 @@ public class Exercise extends Activity {
                         + "trouble you needlessly after you've helped me so much. Besides, now that I have my ID back, I need to finish my registration.\"</i> She gives you a small, Japanese-style "
                         + "bow, but seems hesistant to leave right away. <i>\"This is the first time I've really regretted not owning a cell phone. If I ever buy one, I promise I'll give you my "
                         + "number.\"</i> She smiles brightly. <i>\"We've had two serendipitous meetings in such a short period of time. I'm sure we'll meet again soon.\"</i>");
-                Global.modCounter(Flag.YuiAffection, 2);
+                Global.getNPC("Yui").gainAffection(player, 1);
+                Global.flag(Flag.YuiWalletReturned);
                 Global.flag(Flag.YuiUnlocking);
                 break;
             case yuiintro3:
@@ -174,7 +175,7 @@ public class Exercise extends Activity {
                         + "People will assume you're in a kinky relationship.<p>"
                         + "Yui blushes again, but looks determined. <i>\"Please let me call you Master. It's really important to me to show you my commitment. I'll... try not to say it in front of "
                         + "other people.\"</i> Her expression is too sincere to turn down. Fine, she can call you whatever she wants." );
-                Global.modCounter(Flag.YuiAffection, 2);
+                Global.getNPC("Yui").gainAffection(player, 1);
                 Global.flag(Flag.YuiLoyalty);
                 break;
         }
@@ -185,10 +186,11 @@ public class Exercise extends Activity {
         if(player.getRank()>=1&&!Global.checkFlag(Flag.metYui)){
             available.add(Scene.yuiintro1);
         }
-        if(Global.checkFlag(Flag.metYui)&&Global.getValue(Flag.YuiAffection)<1&&!Global.checkFlag(Flag.YuiUnlocking)){
+
+        if(Global.checkFlag(Flag.metYui) && !Global.checkFlag(Flag.YuiWalletReturned) && !Global.checkFlag(Flag.YuiUnlocking)){
             available.add(Scene.yuiintro2);
         }
-        if(Global.getValue(Flag.YuiAffection)>1&&!Global.checkFlag(Flag.YuiLoyalty)&&!Global.checkFlag(Flag.YuiUnlocking)){
+        if(!Global.checkFlag(Flag.YuiLoyalty) && Global.checkFlag(Flag.YuiWalletReturned) && !Global.checkFlag(Flag.YuiUnlocking)){
             available.add(Scene.yuiintro3);
         }
         if (gain == 0) {

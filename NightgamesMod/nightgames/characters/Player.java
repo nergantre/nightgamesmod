@@ -18,6 +18,11 @@ import nightgames.actions.Shortcut;
 import nightgames.areas.Area;
 import nightgames.areas.Deployable;
 import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.BreastsPart;
+import nightgames.characters.body.CockMod;
+import nightgames.characters.body.GenericBodyPart;
+import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.TentaclePart;
 import nightgames.combat.Combat;
 import nightgames.combat.IEncounter;
 import nightgames.combat.Result;
@@ -39,6 +44,7 @@ import nightgames.start.PlayerConfiguration;
 import nightgames.status.Enthralled;
 import nightgames.status.Horny;
 import nightgames.status.Masochistic;
+import nightgames.status.PlayerSlimeDummy;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
 import nightgames.status.addiction.Addiction;
@@ -47,12 +53,9 @@ import nightgames.status.addiction.AddictionType;
 import nightgames.trap.Trap;
 
 public class Player extends Character {
-    /**
-     *
-     */
     public GUI gui;
-    private Growth growth;
     public int traitPoints;
+    private int levelsToGain;
     private List<Addiction> addictions;
 
     public Player(String name) {
@@ -62,11 +65,25 @@ public class Player extends Character {
     // TODO(Ryplinn): This initialization pattern is very close to that of BasePersonality. I think it makes sense to make NPC the primary parent of characters instead of BasePersonality.
     public Player(String name, CharacterSex sex, Optional<PlayerConfiguration> config, List<Trait> pickedTraits,
                     Map<Attribute, Integer> selectedAttributes) {
-
         super(name, 1);
         initialGender = sex;
-        applyBasicStats();
+        addictions = new ArrayList<>();
+        levelsToGain = 0;
+        applyBasicStats(this);
+        setGrowth();
+
         body.makeGenitalOrgans(initialGender);
+
+        config.ifPresent(this::applyConfigStats);
+        finishCharacter(pickedTraits, selectedAttributes);
+    }
+
+    public void applyBasicStats(Character self) {
+        self.getStamina().setMax(80);
+        self.getArousal().setMax(80);
+        self.getWillpower().setMax(self.willpower.max());
+        self.availableAttributePoints = 0;
+        self.setTrophy(Item.PlayerTrophy);
         if (initialGender == CharacterSex.female || initialGender == CharacterSex.herm) {
             outfitPlan.add(Clothing.getByID("bra"));
             outfitPlan.add(Clothing.getByID("panties"));
@@ -77,20 +94,6 @@ public class Player extends Character {
         outfitPlan.add(Clothing.getByID("jeans"));
         outfitPlan.add(Clothing.getByID("socks"));
         outfitPlan.add(Clothing.getByID("sneakers"));
-        getStamina().setMax(80 + getLevel() * getGrowth().stamina);
-        getArousal().setMax(80 + getLevel() * getGrowth().arousal);
-        config.ifPresent(this::applyConfigStats);
-        finishCharacter(pickedTraits, selectedAttributes);
-
-    }
-
-    private void applyBasicStats() {
-        willpower.setMax(willpower.max());
-        availableAttributePoints = 0;
-        setTrophy(Item.PlayerTrophy);
-        growth = new Growth();
-        setGrowth();
-        addictions = new ArrayList<>();
     }
 
     private void applyConfigStats(PlayerConfiguration config) {
@@ -105,13 +108,11 @@ public class Player extends Character {
     }
 
     public void setGrowth() {
-        growth.stamina = 2;
-        growth.arousal = 4;
-        growth.mojo = 2;
-        growth.bonusStamina = 1;
-        growth.bonusArousal = 2;
-        growth.bonusMojo = 1;
-        growth.attributes = new int[]{2, 3, 3, 3};
+        getGrowth().stamina = 2;
+        getGrowth().arousal = 4;
+        getGrowth().bonusStamina = 1;
+        getGrowth().bonusArousal = 2;
+        getGrowth().attributes = new int[]{2, 3, 3, 3};
     }
 
     public String describeStatus() {
@@ -157,13 +158,8 @@ public class Player extends Character {
 
     @Override
     public void victory(Combat c, Result flag) {
-        if (c.getStance()
-             .inserted() && c.getStance()
-                             .dom(this)) {
-            getMojo().gain(1);
-            if (has(Trait.mojoMaster)) {
-                getMojo().gain(1);
-            }
+        if (has(Trait.slime)) {
+            purge(c);
         }
         if (c.p1.human()) {
             c.p2.defeat(c, flag);
@@ -175,6 +171,9 @@ public class Player extends Character {
     @Override
     public void defeat(Combat c, Result flag) {
         c.write("Bad thing");
+        if (has(Trait.slime)) {
+            purge(c);
+        }
     }
 
     @Override
@@ -195,38 +194,33 @@ public class Player extends Character {
 
     @Override
     public void draw(Combat c, Result flag) {
-        if (c.getStance()
-             .inserted()) {
-            c.p1.getMojo()
-                .gain(1);
-            c.p2.getMojo()
-                .gain(1);
+        if (has(Trait.slime)) {
+            purge(c);
         }
         if (c.p1.human()) {
             c.p2.draw(c, flag);
         } else {
             c.p1.draw(c, flag);
         }
-
     }
 
     @Override
-    public String bbLiner(Combat c) {
+    public String bbLiner(Combat c, Character target) {
         return null;
     }
 
     @Override
-    public String nakedLiner(Combat c) {
+    public String nakedLiner(Combat c, Character target) {
         return null;
     }
 
     @Override
-    public String stunLiner(Combat c) {
+    public String stunLiner(Combat c, Character target) {
         return null;
     }
 
     @Override
-    public String taunt(Combat c) {
+    public String taunt(Combat c, Character target) {
         return null;
     }
 
@@ -379,21 +373,22 @@ public class Player extends Character {
 
     @Override
     public void ding() {
-        level++;
-        getStamina().gain(growth.stamina);
-        getArousal().gain(growth.arousal);
-        getMojo().gain(growth.mojo);
-        availableAttributePoints += growth.attributes[Math.min(rank, growth.attributes.length-1)];
-        getMojo().gain(1);
+        levelsToGain += 1;
+        if (levelsToGain == 1) {
+            actuallyDing();
+            gui.ding();
+        }
+    }
+
+    public void actuallyDing() {
+        level += 1;
+        getStamina().gain(getGrowth().stamina);
+        getArousal().gain(getGrowth().arousal);
+        availableAttributePoints += getGrowth().attributes[Math.min(rank, getGrowth().attributes.length-1)];
         gui.message("You've gained a Level!<br>Select which attributes to increase.");
         if (getLevel() % 3 == 0 && level < 10 || (getLevel() + 1) % 2 == 0 && level > 10) {
             traitPoints += 1;
         }
-        gui.ding();
-    }
-
-    public Growth getGrowth() {
-        return growth;
     }
 
     @Override
@@ -619,7 +614,7 @@ public class Player extends Character {
             case damage:
                 c.write(this, "You dodge " + target.name()
                                 + "'s slow attack and hit her sensitive tit to stagger her.");
-                target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
+                target.pain(c, target, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
                 break;
             case pleasure:
                 if (!target.crotchAvailable() || !target.hasPussy()) {
@@ -637,14 +632,14 @@ public class Player extends Character {
                 if (c.getStance()
                      .sub(this)) {
                     Position reverse = c.getStance()
-                                        .reverse(c);
+                                        .reverse(c, true);
                     if (reverse != c.getStance() && !BodyPart.hasOnlyType(reverse.bottomParts(), "strapon")) {
                         c.setStance(reverse, this, false);
                     } else {
                         c.write(this, Global.format(
                                         "{self:NAME-POSSESSIVE} quick wits find a gap in {other:name-possessive} hold and {self:action:slip|slips} away.",
                                         this, target));
-                        c.setStance(new Neutral(this, target));
+                        c.setStance(new Neutral(this, target), this, true);
                     }
                 } else {
                     target.body.pleasure(this, body.getRandom("hands"), target.body.getRandomBreasts(),
@@ -664,7 +659,7 @@ public class Player extends Character {
                 } else {
                     c.write(this, "You manage to dodge " + target.possessivePronoun()
                                     + " groping hands and give a retaliating slap in return.");
-                    target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
+                    target.pain(c, target, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
                 }
                 break;
             case positioning:
@@ -681,21 +676,13 @@ public class Player extends Character {
             default:
                 c.write(this, "You manage to dodge " + target.possessivePronoun()
                                 + " attack and give a retaliating slap in return.");
-                target.pain(c, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
+                target.pain(c, target, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
         }
     }
 
     @Override
     public void eot(Combat c, Character opponent, Skill last) {
         super.eot(c, opponent, last);
-        if (opponent.pet != null && canAct() && c.getStance()
-                                                 .mobile(this)
-                        && !c.getStance()
-                             .prone(this)) {
-            if (get(Attribute.Speed) > opponent.pet.ac() * Global.random(20)) {
-                opponent.pet.caught(c, this);
-            }
-        }
         if (opponent.has(Trait.pheromones) && opponent.getArousal()
                                                       .percent() >= 20
                         && opponent.rollPheromones(c)) {
@@ -704,7 +691,7 @@ public class Player extends Character {
             add(c, Horny.getWithBiologicalType(opponent, this, opponent.getPheromonePower(), 10,
                             opponent.nameOrPossessivePronoun() + " pheromones"));
         }
-        if (opponent.has(Trait.smqueen) && !is(Stsflag.masochism)) {
+        if (opponent.has(Trait.sadist) && !is(Stsflag.masochism)) {
             c.write("<br>"+Global.capitalizeFirstLetter(
                             String.format("%s seem to shudder in arousal at the thought of pain.", subject())));
             add(c, new Masochistic(this));
@@ -712,6 +699,20 @@ public class Player extends Character {
         if (has(Trait.RawSexuality)) {
             tempt(c, opponent, arousal.max() / 25);
             opponent.tempt(c, this, opponent.arousal.max() / 25);
+        }
+        if (has(Trait.slime)) {
+            if (hasPussy() && !body.getRandomPussy().moddedPartCountsAs(this, PussyPart.gooey)) {
+                body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
+                c.write(this, 
+                                Global.format("{self:NAME-POSSESSIVE} %s turned back into a gooey pussy.",
+                                                this, opponent, body.getRandomPussy()));
+            }
+            if (hasDick() && !body.getRandomCock().moddedPartCountsAs(this, CockMod.slimy)) {
+                body.temporaryAddOrReplacePartWithType(body.getRandomCock().applyMod(CockMod.slimy), 999);
+                c.write(this, 
+                                Global.format("{self:NAME-POSSESSIVE} %s turned back into a gooey pussy.",
+                                                this, opponent, body.getRandomPussy()));
+            }
         }
     }
 
@@ -737,7 +738,7 @@ public class Player extends Character {
 
     @Override
     public String reflectivePronoun() {
-        return directObject() + "self";
+        return "yourself";
     }
 
     @Override
@@ -922,7 +923,9 @@ public class Player extends Character {
             Character cause = Global.getCharacterByType(json.get("cause").getAsString());
             float mag = json.get("magnitude").getAsFloat();
             float combat = json.get("combat").getAsFloat();
-            Addiction addiction = Addiction.load(type, cause, mag, combat);
+            boolean overloading = json.has("overloading") ? json.get("overloading").getAsBoolean() : false;
+            boolean reenforced = json.has("reenforced") ? json.get("reenforced").getAsBoolean() : false;
+            Addiction addiction = Addiction.load(type, cause, mag, combat, overloading, reenforced);
             this.addictions.add(addiction);
         }
     }
@@ -930,14 +933,84 @@ public class Player extends Character {
     public Severity getAddictionSeverity(AddictionType type) {
         return getAddiction(type).map(Addiction::getSeverity).orElse(Severity.NONE);
     }
-    
+
     @Override
-    public int getEscape(Combat c) {
-        int escape = super.getEscape(c);
-        if (checkAddiction(AddictionType.DOMINANCE, c.getOther(this))) {
+    public int getEscape(Combat c, Character other) {
+        int escape = super.getEscape(c, other);
+        if (checkAddiction(AddictionType.DOMINANCE, c.getOpponent(this))) {
             escape -= getAddiction(AddictionType.DOMINANCE).get().getCombatSeverity().ordinal() * 8;
         }
         return escape;
     }
+    
+    @Override
+    protected void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
+                    int totalTimes) {
+        super.resolveOrgasm(c, opponent, selfPart, opponentPart, times, totalTimes);
+        if (has(Trait.slimification) && times == totalTimes && getWillpower().percent() < 60 && !has(Trait.slime)) {
+            c.write(this, Global.format("A powerful shiver runs through your entire body. Oh boy, you know where this"
+                            + " is headed... Sure enough, you look down to see your skin seemingly <i>melt</i>,"
+                            + " turning a translucent blue. You legs fuse together and collapse into a puddle."
+                            + " It only takes a few seconds for you to regain some semblance of control over"
+                            + " your amorphous body, but you're not going to switch back to your human"
+                            + " form before this fight is over...", this, opponent));
+            nudify();
+            purge(c);
+            addTemporaryTrait(Trait.slime, 999);
+            add(new PlayerSlimeDummy());
+            if (hasPussy() && !body.getRandomPussy().moddedPartCountsAs(this, PussyPart.gooey)) {
+                body.temporaryAddOrReplacePartWithType(new TentaclePart("slime filaments", "pussy", "slime", 0.0, 1.0, 1.0), 999);
+                body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
+            }
+            if (hasDick() && !body.getRandomCock().moddedPartCountsAs(this, CockMod.slimy)) {
+                body.temporaryAddOrReplacePartWithType(body.getRandomCock().applyMod(CockMod.slimy), 999);
+            }
+            BreastsPart part = body.getBreastsBelow(BreastsPart.h.size);
+            if (part != null && body.getRandomBreasts() != BreastsPart.flat) {
+                body.temporaryAddOrReplacePartWithType(part.upgrade(), 10);
+            }
+            body.temporaryAddOrReplacePartWithType(new GenericBodyPart("gooey skin", 2.0, 1.5, .8, "skin", ""), 999);
+            body.temporaryAddOrReplacePartWithType(new TentaclePart("slime pseudopod", "back", "slime", 0.0, 1.0, 1.0), 999);
+            body.temporaryAddOrReplacePartWithType(new TentaclePart("gooey feelers", "hands", "slime", 0.0, 1.0, 1.0), 999);
+            body.temporaryAddOrReplacePartWithType(new TentaclePart("gooey feelers", "feet", "slime", 0.0, 1.0, 1.0), 999);
+            if (level >= 21) {
+                addTemporaryTrait(Trait.Sneaky, 999);
+            }
+            if (level >= 24) {
+                addTemporaryTrait(Trait.shameless, 999);
+            }
+            if (level >= 27) {
+                addTemporaryTrait(Trait.lactating, 999);
+            }
+            if (level >= 30) {
+                addTemporaryTrait(Trait.addictivefluids, 999);
+            }
+            if (level >= 33) {
+                addTemporaryTrait(Trait.autonomousPussy, 999);
+            }
+            if (level >= 36) {
+                addTemporaryTrait(Trait.entrallingjuices, 999);
+            }
+            if (level >= 39) {
+                addTemporaryTrait(Trait.energydrain, 999);
+            }
+            if (level >= 42) {
+                addTemporaryTrait(Trait.desensitized, 999);
+            }
+            if (level >= 45) {
+                addTemporaryTrait(Trait.steady, 999);
+            }
+            if (level >= 50) {
+                addTemporaryTrait(Trait.strongwilled, 999);
+            }
+        }
+    }
 
+    public int getLevelsToGain() {
+        return levelsToGain;
+    }
+
+    public void finishDing() {
+        levelsToGain -= 1;
+    }
 }

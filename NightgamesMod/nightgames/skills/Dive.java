@@ -36,7 +36,7 @@ public class Dive extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        c.setStance(new StandingOver(target, getSelf()));
+        c.setStance(new StandingOver(target, getSelf()), target, true);
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
             if (Global.getPlayer().checkAddiction(AddictionType.MIND_CONTROL, target)) {

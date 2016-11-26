@@ -24,6 +24,8 @@ public class Parasited extends Status {
         this.stage = 0;
         this.time = 0;
         flag(Stsflag.parasited);
+        flag(Stsflag.debuff);
+        flag(Stsflag.purgable);
     }
 
     @Override
@@ -72,8 +74,8 @@ public class Parasited extends Status {
                     Global.gui().message(c, affected,
                                     Global.format("With absolutely no warning, {self:subject-action:feel|feels} an incredible orgasm rip through {self:possessive} body.",
                                     affected, other));
-                    BodyPart part = Global.pickRandom(c.getStance().partsFor(affected)).orElse(affected.body.getRandomGenital());
-                    BodyPart otherPart = Global.pickRandom(c.getStance().partsFor(other)).orElse(other.body.getRandom("skin"));
+                    BodyPart part = Global.pickRandom(c.getStance().partsFor(c, affected)).orElse(affected.body.getRandomGenital());
+                    BodyPart otherPart = Global.pickRandom(c.getStance().partsFor(c, other)).orElse(other.body.getRandom("skin"));
                     affected.doOrgasm(c, other, part, otherPart);
                     break;
                 case 1:

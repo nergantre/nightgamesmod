@@ -36,10 +36,10 @@ public class ReverseCarry extends Carry {
     public boolean resolve(Combat c, Character target) {
         String premessage = premessage(c, target);
 
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             if (getSelf().human()) {
                 c.write(getSelf(), premessage + deal(c, premessage.length(), Result.normal, target));
-            } else if (c.shouldPrintReceive(target)) {
+            } else if (c.shouldPrintReceive(target, c)) {
                 c.write(getSelf(), premessage + receive(c, premessage.length(), Result.normal, getSelf()));
             }
             int m = 5 + Global.random(5);
@@ -47,13 +47,13 @@ public class ReverseCarry extends Carry {
             if (getSelf().has(Trait.insertion)) {
                 otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
             }
+            c.setStance(new Jumped(getSelf(), target), getSelf(), getSelf().canMakeOwnDecision());
             target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c, this);
             getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c, this);
-            c.setStance(new Jumped(getSelf(), target), getSelf(), getSelf().canMakeOwnDecision());
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(), premessage + deal(c, premessage.length(), Result.miss, target));
-            } else if (c.shouldPrintReceive(target)) {
+            } else if (c.shouldPrintReceive(target, c)) {
                 c.write(getSelf(), premessage + receive(c, premessage.length(), Result.miss, target));
             }
             getSelf().add(c, new Falling(getSelf()));

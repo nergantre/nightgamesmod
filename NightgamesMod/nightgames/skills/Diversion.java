@@ -25,7 +25,7 @@ public class Diversion extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return !target.wary() && getSelf().canAct() && c.getStance().mobile(getSelf()) && c.getStance().facing()
+        return !target.wary() && getSelf().canAct() && c.getStance().mobile(getSelf()) && c.getStance().facing(getSelf(), target)
                         && !getSelf().torsoNude() && !c.getStance().prone(getSelf()) && !c.getStance().inserted();
     }
 
@@ -49,7 +49,7 @@ public class Diversion extends Skill {
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             }
         }
-        c.setStance(new Behind(getSelf(), target));
+        c.setStance(new Behind(getSelf(), target), getSelf(), true);
         target.add(c, new Flatfooted(target, 1));
         return true;
     }

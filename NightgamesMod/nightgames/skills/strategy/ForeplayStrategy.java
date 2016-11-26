@@ -21,11 +21,11 @@ public class ForeplayStrategy extends KnockdownThenActionStrategy {
 
     @Override
     protected Optional<Set<Skill>> getPreferredAfterKnockdownSkills(Combat c, Character self, Set<Skill> allowedSkills) {
-        if (c.getStance().havingSex()) {
+        if (c.getStance().havingSex(c)) {
             // terminate this strategy if already fucking
             return Optional.of(Collections.emptySet());
         }
-        return emptyIfSetEmpty(allowedSkills.stream().filter(skill -> Tactics.pleasure.equals(skill.type(c)) || skill.getTags().contains(SkillTag.stripping)).collect(Collectors.toSet()));
+        return emptyIfSetEmpty(allowedSkills.stream().filter(skill -> Tactics.pleasure.equals(skill.type(c)) || skill.getTags(c).contains(SkillTag.stripping)).collect(Collectors.toSet()));
     }
 
     @Override

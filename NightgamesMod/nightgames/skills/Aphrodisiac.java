@@ -11,12 +11,14 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.ClothingSlot;
-import nightgames.skills.damage.DamageType;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.status.Horny;
 
 public class Aphrodisiac extends Skill {
     public Aphrodisiac(Character self) {
         super("Use Aphrodisiac", self);
+        addTag(SkillTag.debuff);
+        addTag(SkillTag.arouse);
     }
 
     @Override
@@ -38,34 +40,38 @@ public class Aphrodisiac extends Skill {
                                     .get() >= 10
                         && !c.getStance()
                              .prone(getSelf());
-
         return canMove && (hasItem || canGetFromOwnBody);
+    }
+
+    @Override
+    public int accuracy(Combat c, Character target) {
+        return getSelf().has(Item.Aersolizer) ? 200 : 65;
     }
 
     @Override
     public boolean resolve(Combat c, Character target) {
         float magnitude = 10;
-        if (!getSelf().body.getCurrentPartsThatMatch(hasSuccubusPussy)
-                           .isEmpty()
-                        && getSelf().getArousal()
-                                    .percent() >= 15) {
+        String type = " aphrodisiacs";
+        if (!target.roll(getSelf(), c, accuracy(c, target))) {
+
+            writeOutput(c, Result.miss, target);
+            return false;
+        } else if (!getSelf().body.getCurrentPartsThatMatch(hasSuccubusPussy).isEmpty()
+                        && getSelf().getArousal().percent() >= 15) {
             writeOutput(c, (int) magnitude, Result.strong, target);
-            target.add(c, Horny.getWithBiologicalType(getSelf(), target, magnitude, 5, getSelf().nameOrPossessivePronoun() + " aphrodisiac juices"));
+            type = " aphrodisiac juices";
             target.emote(Emotion.horny, 20);
         } else if (getSelf().has(Item.Aersolizer)) {
             writeOutput(c, Result.special, target);
             getSelf().consume(Item.Aphrodisiac, 1);
-            target.add(c, Horny.getWithBiologicalType(getSelf(), target, magnitude, 5, getSelf().nameOrPossessivePronoun() + " aphrodisiac spray"));
-            target.emote(Emotion.horny, 20);
-        } else if (target.roll(this, c, accuracy(c))) {
+            type = " aphrodisiac spray";
+        } else {
             writeOutput(c, (int) magnitude, Result.normal, target);
             target.emote(Emotion.horny, 20);
             getSelf().consume(Item.Aphrodisiac, 1);
-            target.add(c, Horny.getWithBiologicalType(getSelf(), target, magnitude, 5, getSelf().nameOrPossessivePronoun() + " aphrodisiacs"));
-        } else {
-            writeOutput(c, Result.miss, target);
-            return false;
         }
+        target.add(c, Horny.getWithBiologicalType(getSelf(), target, magnitude, 8, getSelf().nameOrPossessivePronoun() + type));
+        target.emote(Emotion.horny, 20);
         return true;
     }
 
@@ -106,11 +112,10 @@ public class Aphrodisiac extends Skill {
                             + getSelf().possessivePronoun() + " dirty move.";
         } else {
             return "You uncap a small bottle of Aphrodisiac and splash it in " + target.name()
-                            + "'s face. For a second, " + target.possessivePronoun()
-                            + "'s just surprised, but gradually a growing desire " + "starts to make "
+                            + "'s face. For a second, " + target.pronoun()
+                            + " is just surprised, but gradually a growing desire " + "starts to make "
                             + target.directObject() + " weak in the knees.";
         }
-
     }
 
     @Override

@@ -62,7 +62,7 @@ public class FTCMatch extends Match {
     }
 
     public boolean isBase(Character ch, Area loc) {
-        return bases.get(ch).equals(loc);
+        return loc != null && loc.equals(getBase(ch));
     }
 
     public boolean inGracePeriod() {

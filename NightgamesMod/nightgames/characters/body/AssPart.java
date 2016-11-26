@@ -5,6 +5,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.status.Abuff;
 import nightgames.status.Stsflag;
 
 public class AssPart extends GenericBodyPart {
@@ -50,14 +51,14 @@ public class AssPart extends GenericBodyPart {
     @Override
     public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
         double bonus = 0;
-        if (self.has(Trait.oiledass)) {
+        if (self.has(Trait.oiledass) && c.getStance().anallyPenetratedBy(c, self, opponent)) {
             c.write(self, Global.format(
                             "{self:NAME-POSSESSIVE} naturally oiled asshole swallows {other:name-possessive} cock with ease.",
                             self, opponent));
             bonus += 5;
         }
 
-        if ((self.has(Trait.tight) || self.has(Trait.holecontrol)) && c.getStance().anallyPenetrated(self)) {
+        if ((self.has(Trait.tight) || self.has(Trait.holecontrol)) && c.getStance().anallyPenetrated(c, self)) {
             String desc = "";
             if (self.has(Trait.tight)) {
                 desc += "powerful ";
@@ -71,7 +72,22 @@ public class AssPart extends GenericBodyPart {
                             self, opponent));
             bonus += self.has(Trait.tight) && self.has(Trait.holecontrol) ? 10 : 5;
             if (self.has(Trait.tight)) {
-                opponent.pain(c, Math.min(30, self.get(Attribute.Power)));
+                opponent.pain(c, opponent, Math.min(30, self.get(Attribute.Power)));
+            }
+        }
+        if (self.has(Trait.drainingass) && !opponent.has(Trait.strapped) && c.getStance().anallyPenetratedBy(c, self, opponent)) {
+            if (Global.random(3) == 0) {
+                c.write(self, Global.format("{self:name-possessive} ass seems to <i>inhale</i>, drawing"
+                                + " great gouts of {other:name-possessive} strength from {other:possessive}"
+                                + " body.", self, opponent));
+                opponent.drain(c, self, self.getLevel());
+                opponent.add(new Abuff(opponent, Attribute.Power, -3, 10));
+                self.add(new Abuff(self, Attribute.Power, 3, 10));
+            } else {
+                c.write(self, Global.format("The feel of {self:name-possessive} ass around"
+                                + " {other:name-possessive} {other:body-part:cock} drains"
+                                + " {other:direct-object} of {other:possessive} energy.", self, opponent));
+                opponent.drain(c, self, self.getLevel()/2);
             }
         }
         return bonus;

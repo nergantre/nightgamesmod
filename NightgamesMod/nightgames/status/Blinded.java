@@ -20,6 +20,7 @@ public class Blinded extends Status {
         this.cause = cause;
         this.voluntary = voluntary;
         flag(Stsflag.blinded);
+        flag(Stsflag.debuff);
     }
 
     public boolean isVoluntary() {

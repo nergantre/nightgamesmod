@@ -1,6 +1,7 @@
 package nightgames.stance;
 
 import nightgames.characters.Character;
+import nightgames.combat.Combat;
 import nightgames.global.Global;
 
 public class Neutral extends Position {
@@ -10,7 +11,7 @@ public class Neutral extends Position {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         if (top.human()) {
             return "You and " + bottom.name() + " circle each other cautiously";
         } else {
@@ -35,7 +36,7 @@ public class Neutral extends Position {
     }
 
     @Override
-    public boolean kiss(Character c) {
+    public boolean kiss(Character c, Character target) {
         return true;
     }
 
@@ -65,12 +66,12 @@ public class Neutral extends Position {
     }
 
     @Override
-    public boolean feet(Character c) {
+    public boolean feet(Character c, Character target) {
         return true;
     }
 
     @Override
-    public boolean oral(Character c) {
+    public boolean oral(Character c, Character target) {
         return false;
     }
 
@@ -80,8 +81,8 @@ public class Neutral extends Position {
     }
 
     @Override
-    public Position insertRandomDom(Character dom) {
-        Character other = getOther(dom);
+    public Position insertRandomDom(Combat c, Character dom) {
+        Character other = getPartner(c, dom);
         boolean fuckPossible = dom.hasDick() && other.hasPussy();
         boolean reversePossible = other.hasDick() && dom.hasPussy();
         if (fuckPossible && reversePossible) {
@@ -100,9 +101,9 @@ public class Neutral extends Position {
     }
 
     @Override
-    public Position insert(Character pitcher, Character dom) {
-        Character catcher = getOther(pitcher);
-        Character sub = getOther(pitcher);
+    public Position insert(Combat c, Character pitcher, Character dom) {
+        Character catcher = getPartner(c, pitcher);
+        Character sub = getPartner(c, pitcher);
         if (pitcher.body.getRandomInsertable() == null || !catcher.hasPussy()) {
             // invalid
             return this;
@@ -123,5 +124,10 @@ public class Neutral extends Position {
     @Override
     public double pheromoneMod(Character self) {
         return .5;
+    }
+    
+    @Override
+    public int distance() {
+        return 3;
     }
 }

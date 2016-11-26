@@ -35,7 +35,7 @@ public class LeechEnergy extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             BodyPart part = null;
             BodyPart selfPart = getSelf().body.getRandom("tentacles");
             List<String> targets = new ArrayList<String>(
@@ -49,7 +49,7 @@ public class LeechEnergy extends Skill {
                 }
             }
             if (part == null) {
-                c.write("<b>ERROR: Could not pick part in LeechEnergy!</b>");
+                c.write(getSelf(), "<b>ERROR: Could not pick part in LeechEnergy!</b>");
                 return false;
             }
             String partString = selfPart.describe(getSelf());
@@ -133,7 +133,7 @@ public class LeechEnergy extends Skill {
     }
 
     @Override
-    public int accuracy(Combat c) {
+    public int accuracy(Combat c, Character target) {
         return 80;
     }
 

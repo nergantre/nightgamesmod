@@ -13,6 +13,7 @@ public class Masochistic extends DurationStatus {
         super("Masochism", affected, 10);
         flag(Stsflag.masochism);
         flag(Stsflag.purgable);
+        flag(Stsflag.debuff);
     }
 
     @Override

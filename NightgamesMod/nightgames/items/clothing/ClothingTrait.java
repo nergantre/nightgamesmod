@@ -3,7 +3,7 @@ package nightgames.items.clothing;
 public enum ClothingTrait {
     open("Open", "Shows what's beneath"),
     bulky("Bulky", "Speed penalty"),
-    skimpy("Skimpy", "Better temptation daamage"),
+    skimpy("Skimpy", "Better temptation damage"),
     flexible("Flexible", "Can fuck by pulling it aside"),
     indestructible("Indestructible", "Cannot be destroyed"),
     geeky("Geeky", "Science bonus"),
@@ -23,6 +23,8 @@ public enum ClothingTrait {
     ninja("Ninja Garb", "Bonus cunning and speed"),
     dexterous("Dextrous", "Bonus cunning"),
     lame("Lame", "Small mojo penalty"),
+    harpoonDildo("Harpoon Dildo", "Has a dildo stuck inside"),
+    harpoonOnahole("Harpoon Onahole", "Has an onahole stuck on"),
     none("", "");
 
     private String name;

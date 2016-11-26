@@ -10,7 +10,7 @@ public class Pin extends AbstractFacingStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         if (top.human()) {
             return "You're sitting on " + bottom.name() + ", holding her arms in place.";
         } else {
@@ -26,7 +26,7 @@ public class Pin extends AbstractFacingStance {
 
     @Override
     public boolean mobile(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
@@ -35,8 +35,8 @@ public class Pin extends AbstractFacingStance {
     }
 
     @Override
-    public boolean kiss(Character c) {
-        return c == top;
+    public boolean kiss(Character c, Character target) {
+        return c != bottom;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class Pin extends AbstractFacingStance {
 
     @Override
     public boolean reachTop(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
@@ -70,13 +70,13 @@ public class Pin extends AbstractFacingStance {
     }
 
     @Override
-    public boolean feet(Character c) {
-        return false;
+    public boolean feet(Character c, Character target) {
+        return c != bottom && target == top;
     }
 
     @Override
-    public boolean oral(Character c) {
-        return false;
+    public boolean oral(Character c, Character target) {
+        return c != bottom && target == top;
     }
 
     @Override
@@ -97,5 +97,10 @@ public class Pin extends AbstractFacingStance {
     @Override
     public int dominance() {
         return 4;
+    }
+    
+    @Override
+    public int distance() {
+        return 1;
     }
 }

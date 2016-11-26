@@ -35,9 +35,14 @@ public class NeedleThrow extends Skill {
     }
 
     @Override
+    public int accuracy(Combat c, Character target) {
+        return 70;
+    }
+
+    @Override
     public boolean resolve(Combat c, Character target) {
         getSelf().consume(Item.Needle, 1);
-        if (getSelf().roll(this, c, accuracy(c))) {
+        if (getSelf().roll(getSelf(), c, accuracy(c, target))) {
             c.write(getSelf(), String.format(
                             "%s %s with one of %s drugged needles. "
                                             + "%s %s with arousal and %s it difficult to stay on %s feet.",

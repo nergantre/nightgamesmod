@@ -12,6 +12,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.Stance;
 import nightgames.stance.StandingOver;
+import nightgames.status.BodyFetish;
 import nightgames.status.CockBound;
 import nightgames.status.Stsflag;
 import nightgames.status.addiction.Addiction;
@@ -31,8 +32,8 @@ public class PullOut extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return !target.hasStatus(Stsflag.knotted) && getSelf().canAct() && (c.getStance().en == Stance.facesitting
-                        || c.getStance().inserted() && c.getStance().dom(getSelf())) && !blockedByAddiction(getSelf());
+        return !target.hasStatus(Stsflag.knotted) && getSelf().canAct() && (c.getStance().isFaceSitting(getSelf())
+                        || c.getStance().havingSex(c, getSelf()) && c.getStance().dom(getSelf())) && !blockedByAddiction(getSelf());
     }
 
     public static boolean blockedByAddiction(Character user) {
@@ -60,22 +61,62 @@ public class PullOut extends Skill {
         } else {
             result = Result.special;
         }
+        boolean isLocked = getSelf().hasStatus(Stsflag.leglocked) || getSelf().hasStatus(Stsflag.armlocked);
+        int baseDifficulty = isLocked ? 17 : 10;
+        if (target.has(Trait.bewitchingbottom)) {
+            Optional<BodyFetish> fetish = getSelf().body.getFetish("ass");
+            if(fetish.isPresent()) {
+                baseDifficulty += 7 * fetish.get().magnitude;
+            }
+        }
+        int powerMod = Math.min(20, Math.max(5, target.get(Attribute.Power) - getSelf().get(Attribute.Power)));
         if (c.getStance().en == Stance.anal) {
-            writeOutput(c, result, target);
-            c.setStance(c.getStance().insertRandom());
+            if (!target.has(Trait.powerfulcheeks)) {
+                writeOutput(c, result, target);
+                c.setStance(c.getStance().insertRandom(c));
+                return true;
+            } else if (getSelf().check(Attribute.Power, 
+                            baseDifficulty - getSelf().escape(c, target) + powerMod)) {
+                if (isLocked) {
+                    c.write(getSelf(), Global.format("Despite {other:name-possessive} inhumanly tight"
+                                    + " ass and {other:possessive} strong grip on {self:direct-object},"
+                                    + " {self:pronoun-action:manage|manages} to pull {self:body-part:cock}"
+                                    + " ever so slowly out of {other:direct-object}.", getSelf(), target));
+                } else {
+                    c.write(getSelf(), Global.format("{other:NAME-POSSESSIVE} ass clenches powerfully"
+                                    + " around {self:name-possessive} {self:body-part:cock} as"
+                                    + " {self:pronoun-action:try|tries} to pull out of"
+                                    + " it, but it proves insufficient as the hard shaft escapes its"
+                                    + " former prison.", getSelf(), target));
+                }
+                c.setStance(c.getStance().insertRandom(c));
+            } else if (!isLocked) {
+                c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:try|tries} to pull out of"
+                                + " {other:name-possessive} lustrous ass, but {other:pronoun-action:squeeze|squeezes}"
+                                + " {other:possessive} asscheeks tightly around your {self:body-part:cock},"
+                                + " preventing your extraction.", getSelf(), target));
+                getSelf().body.pleasure(target, target.body.getRandomAss(), getSelf().body.getRandomCock(), 6, c, this);
+            } else {
+                String lockDesc = getSelf().hasStatus(Stsflag.leglocked) ? "legs" : "arms";
+                c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:try|tries} to pull out of"
+                                + " {other:name-possessive} lustrous ass, but the combination"
+                                + " of {other:possessive} tightly squeezing ass and"
+                                + " powerful %s locks {self:pronoun} firmly inside of {other:direct-object}."
+                                , getSelf(), target, lockDesc));
+                getSelf().body.pleasure(target, target.body.getRandomAss(), getSelf().body.getRandomCock(), 10, c, this);
+            }
         } else if (result == Result.special) {
             writeOutput(c, Result.special, target);
-            c.setStance(new StandingOver(getSelf(), target));
+            c.setStance(new StandingOver(getSelf(), target), getSelf(), true);
         } else {
-            if (getSelf().hasStatus(Stsflag.leglocked) || getSelf().hasStatus(Stsflag.armlocked)
-                            || target.has(Trait.tight) && c.getStance().inserted(getSelf())) {
+            if (isLocked || target.has(Trait.tight) && c.getStance().inserted(getSelf())) {
                 boolean escaped = getSelf().check(Attribute.Power,
-                                10 - getSelf().escape(c) + target.get(Attribute.Power));
+                                10 - getSelf().escape(c, target) + target.get(Attribute.Power));
                 if (escaped) {
                     writeOutput(c, result, target);
                 } else {
                     if (getSelf().hasStatus(Stsflag.leglocked)) {
-                        BodyPart part = c.getStance().anallyPenetrated(getSelf()) ? target.body.getRandom("ass")
+                        BodyPart part = c.getStance().anallyPenetrated(c, getSelf()) ? target.body.getRandom("ass")
                                         : target.body.getRandomPussy();
                         String partString = part.describe(target);
                         if (getSelf().human()) {
@@ -100,7 +141,7 @@ public class PullOut extends Skill {
                                             getSelf().pronoun(), target.directObject()));
                         }
                     } else if (target.has(Trait.tight) && c.getStance().inserted(getSelf())) {
-                        BodyPart part = c.getStance().anallyPenetrated(target) ? target.body.getRandom("ass")
+                        BodyPart part = c.getStance().anallyPenetrated(c, target) ? target.body.getRandom("ass")
                                         : target.body.getRandomPussy();
                         String partString = part.describe(target);
                         if (getSelf().human()) {
@@ -116,7 +157,7 @@ public class PullOut extends Skill {
                     }
                     int m = 8;
                     if (c.getStance().inserted(getSelf())) {
-                        BodyPart part = c.getStance().anallyPenetrated(target) ? target.body.getRandom("ass")
+                        BodyPart part = c.getStance().anallyPenetrated(c, target) ? target.body.getRandom("ass")
                                         : target.body.getRandomPussy();
                         getSelf().body.pleasure(target, part, getSelf().body.getRandomInsertable(), m, c, this);
                     }
@@ -135,7 +176,7 @@ public class PullOut extends Skill {
                 return false;
             } else 
                 writeOutput(c, result, target);
-            c.setStance(c.getStance().insertRandom());
+            c.setStance(c.getStance().insertRandom(c));
         }
         return true;
     }

@@ -56,7 +56,7 @@ public class Locate extends Action {
             gui.clearText();
             gui.clearCommand();
             Global.getMatch().resume();
-        } else if ((target = Global.getNPC(choice)) != null) {
+        } else if ((target = Global.getCharacterByName(choice)) != null) {
             Area area = target.location();
             gui.clearText();
             if (area != null) {
@@ -75,7 +75,6 @@ public class Locate extends Action {
                                 + "purple flames, the smoke flowing from your nose straight to your crotch and setting another fire there.");
             }
             self.add(new Horny(self, self.getArousal().max() / 10, 10, "Scrying Ritual"));
-            self.consume(Item.Talisman, 1);
             gui.clearCommand();
             gui.choose(this, "Leave", self);
         } else {

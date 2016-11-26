@@ -4,11 +4,12 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 
 public class Surrender extends Skill {
-
     public Surrender(Character self) {
         super("Surrender", self);
+        addTag(SkillTag.suicidal);
     }
 
     @Override
@@ -29,7 +30,7 @@ public class Surrender extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         writeOutput(c, Result.normal, target);
-        getSelf().tempt(c, getSelf().getArousal().max());
+        //getSelf().tempt(c, getSelf().getArousal().max());
         getSelf().loseWillpower(c, getSelf().getWillpower().max());
         return true;
     }

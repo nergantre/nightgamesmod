@@ -10,12 +10,17 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.items.clothing.ClothingTrait;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.damage.DamageType;
 
 public class Squeeze extends Skill {
 
     public Squeeze(Character self) {
         super("Squeeze Balls", self);
+        addTag(SkillTag.mean);
+        addTag(SkillTag.hurt);
+        addTag(SkillTag.positioning);
+        addTag(SkillTag.staminaDamage);
     }
 
     @Override
@@ -30,8 +35,13 @@ public class Squeeze extends Skill {
     }
 
     @Override
+    public int accuracy(Combat c, Character target) {
+        return 90;
+    }
+
+    @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             double m = Global.random(10, 20);
             DamageType type = DamageType.physical;
             if (target.has(Trait.brassballs)) {
@@ -79,7 +89,7 @@ public class Squeeze extends Skill {
                 }
                 m *= target.getExposure(ClothingSlot.bottom);
             }
-            target.pain(c, (int) getSelf().modifyDamage(type, target, m));
+            target.pain(c, getSelf(), (int) getSelf().modifyDamage(type, target, m));
 
             target.emote(Emotion.angry, 15);
         } else {

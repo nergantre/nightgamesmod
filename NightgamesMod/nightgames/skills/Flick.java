@@ -14,9 +14,10 @@ public class Flick extends Skill {
 
     public Flick(Character self) {
         super("Flick", self, 2);
+        addTag(SkillTag.mean);
         addTag(SkillTag.hurt);
-        addTag(SkillTag.staminaDamage);
         addTag(SkillTag.positioning);
+        addTag(SkillTag.staminaDamage);
     }
 
     @Override
@@ -36,8 +37,13 @@ public class Flick extends Skill {
     }
 
     @Override
+    public int accuracy(Combat c, Character target) {
+        return 90;
+    }
+
+    @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             if (target.has(Trait.brassballs)) {
                 writeOutput(c, Result.weak, target);
             } else {
@@ -48,7 +54,7 @@ public class Flick extends Skill {
                     m += 2 + Global.random(target.get(Attribute.Perception) / 2);
                     mojoLost = 40;
                 }
-                target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, m));
+                target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, m));
                 target.loseMojo(c, mojoLost);
                 getSelf().emote(Emotion.dominant, 10);
                 target.emote(Emotion.angry, 15);
@@ -63,7 +69,7 @@ public class Flick extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.get(Attribute.Seduction) >= 17 && !user.has(Trait.softheart);
+        return user.get(Attribute.Seduction) >= 17;
     }
 
     @Override

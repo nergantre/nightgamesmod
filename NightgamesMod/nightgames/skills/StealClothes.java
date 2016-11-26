@@ -67,7 +67,7 @@ public class StealClothes extends Skill {
             getSelf().outfit.equip(stripped);
             top = false;
         } else {
-            c.write("<b>Error: Couldn't strip anything in StealClothes#resolve</b>");
+            c.write(getSelf(), "<b>Error: Couldn't strip anything in StealClothes#resolve</b>");
             return false;
         }
         c.write(getSelf(), String.format(

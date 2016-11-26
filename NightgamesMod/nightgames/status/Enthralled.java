@@ -9,6 +9,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
+import nightgames.pet.PetCharacter;
 
 public class Enthralled extends DurationStatus {
     private int timesRefreshed;
@@ -17,8 +18,12 @@ public class Enthralled extends DurationStatus {
     public Enthralled(Character self, Character master, int duration) {
         super("Enthralled", self, duration);
         timesRefreshed = 0;
+        if (master.isPet()) {
+            master = ((PetCharacter) master).getSelf().owner();
+        }
         this.master = master;
         flag(Stsflag.enthralled);
+        flag(Stsflag.debuff);
         flag(Stsflag.purgable);
     }
 
@@ -39,7 +44,7 @@ public class Enthralled extends DurationStatus {
                             + " every command.";
         } else {
             return affected.name() + " looks dazed and compliant, ready to follow "
-                                +c.getOther(affected).nameOrPossessivePronoun()+" orders.";
+                                +c.getOpponent(affected).nameOrPossessivePronoun()+" orders.";
         }
     }
 

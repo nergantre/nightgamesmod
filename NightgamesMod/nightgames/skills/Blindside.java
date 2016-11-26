@@ -42,7 +42,7 @@ public class Blindside extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         writeOutput(c, Result.normal, target);
-        c.setStance(new Mount(getSelf(), target));
+        c.setStance(new Mount(getSelf(), target), getSelf(), true);
         getSelf().emote(Emotion.confident, 15);
         getSelf().emote(Emotion.dominant, 15);
         target.emote(Emotion.nervous, 10);

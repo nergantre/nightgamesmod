@@ -23,12 +23,12 @@ public class Finger extends Skill {
         return c.getStance().reachBottom(getSelf())
                         && (target.crotchAvailable() || getSelf().has(Trait.dexterous)
                                         && target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getLayer() <= 1)
-                        && target.hasPussy() && getSelf().canAct() && !c.getStance().vaginallyPenetrated(target);
+                        && target.hasPussy() && getSelf().canAct() && !c.getStance().vaginallyPenetrated(c, target);
     }
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             int m = Global.random(8, 13);
             if (getSelf().get(Attribute.Seduction) >= 8) {
                 m += 6;
@@ -61,8 +61,8 @@ public class Finger extends Skill {
     }
 
     @Override
-    public int accuracy(Combat c) {
-        return c.getStance().en == Stance.neutral ? 35 : 100;
+    public int accuracy(Combat c, Character target) {
+        return c.getStance().en == Stance.neutral ? 50 : 100;
     }
 
     @Override
@@ -83,7 +83,7 @@ public class Finger extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You grope at " + target.name() + "'s pussy, but miss.";
+            return "You grope at " + target.name() + "'s pussy, but miss. (Maybe you should get closer?)";
         }
         if (modifier == Result.weak) {
             return "You grope between " + target.name()

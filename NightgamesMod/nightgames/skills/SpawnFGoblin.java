@@ -2,7 +2,6 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.pet.FGoblin;
@@ -26,10 +25,8 @@ public class SpawnFGoblin extends Skill {
     public boolean usable(Combat c, Character target) {
         return getSelf().canAct() && c.getStance()
                                       .mobile(getSelf())
-                        && !c.getStance()
-                             .prone(getSelf())
-                        && getSelf().pet == null && getSelf().getArousal()
-                                                             .get() >= 25;
+                        && !c.getStance().prone(getSelf()) && getSelf().getArousal().get() >= 25
+                             && c.getPetsFor(getSelf()).size() < getSelf().getPetLimit();
     }
 
     @Override
@@ -39,14 +36,10 @@ public class SpawnFGoblin extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        int power = 3 + getSelf().get(Attribute.Fetish) / 10;
-        int ac = 2 + getSelf().get(Attribute.Fetish) / 10;
-        if (getSelf().has(Trait.leadership))
-            power += 2;
-        if (getSelf().has(Trait.tactician))
-            ac += 2;
+        int power = 3 + getSelf().get(Attribute.Fetish);
+        int ac = 2 + getSelf().get(Attribute.Fetish);
         writeOutput(c, Result.normal, target);
-        getSelf().pet = new FGoblin(getSelf(), power, ac);
+        c.addPet(getSelf(), new FGoblin(getSelf(), power, ac).getSelf());
         return true;
     }
 

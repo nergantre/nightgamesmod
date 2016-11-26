@@ -27,7 +27,7 @@ public class Glamour extends DurationStatus {
     public String describe(Combat c) {
         if (!affected.human()) {
             return String.format("%s inhumanly beautiful.",
-                            c.getOther(affected).subjectAction("look", "looks"));
+                            c.getOpponent(affected).subjectAction("look", "looks"));
         }
         return "";
     }

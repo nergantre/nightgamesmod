@@ -19,7 +19,7 @@ public class FacesitStrategy extends KnockdownThenActionStrategy {
         if (self.getMood().equals(Emotion.dominant)) {
             weight *= 2;
         }
-        if (!(new FaceSit(self)).requirements(c, self, c.getOther(self))) {
+        if (!(new FaceSit(self)).requirements(c, self, c.getOpponent(self))) {
             weight = 0;
         }
         return weight;
@@ -28,8 +28,8 @@ public class FacesitStrategy extends KnockdownThenActionStrategy {
     @Override
     protected Optional<Set<Skill>> getPreferredSkills(Combat c, Character self, Set<Skill> allowedSkills) {
         return emptyIfSetEmpty(allowedSkills.stream()
-                        .filter(skill -> skill.getTags().contains(SkillTag.facesit)
-                                        && !skill.getTags().contains(SkillTag.suicidal))
+                        .filter(skill -> skill.getTags(c).contains(SkillTag.facesit)
+                                        && !skill.getTags(c).contains(SkillTag.suicidal))
                         .collect(Collectors.toSet()));
     }
     

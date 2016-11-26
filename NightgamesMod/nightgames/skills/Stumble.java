@@ -35,19 +35,19 @@ public class Stumble extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         if (Global.random(2) == 0) {
-            c.setStance(new Mount(target, getSelf()));
+            c.setStance(new Mount(target, getSelf()), target, false);
         } else {
-            c.setStance(new ReverseMount(target, getSelf()));
+            c.setStance(new ReverseMount(target, getSelf()), target, false);
         }
         if (getSelf().human()) {
-            c.write(deal(c, 0, Result.normal, target));
+            c.write(getSelf(), deal(c, 0, Result.normal, target));
             if (Global.getPlayer().checkAddiction(AddictionType.MIND_CONTROL, target)) {
                 Global.getPlayer().unaddictCombat(AddictionType.MIND_CONTROL, 
                                 target, Addiction.LOW_INCREASE, c);
                 c.write(getSelf(), "Acting submissively voluntarily reduces Mara's control over you.");
             }
         } else {
-            c.write(receive(c, 0, Result.normal, target));
+            c.write(getSelf(), receive(c, 0, Result.normal, target));
         }
         return true;
     }

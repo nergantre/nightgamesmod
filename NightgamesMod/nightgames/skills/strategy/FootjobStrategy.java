@@ -20,10 +20,10 @@ public class FootjobStrategy extends KnockdownThenActionStrategy {
     @Override
     public double weight(Combat c, Character self) {
         double weight = .25;
-        if (!(new Footjob(self)).requirements(c, self, c.getOther(self))) {
+        if (!(new Footjob(self)).requirements(c, self, c.getOpponent(self))) {
             return 0;
         }
-        if (c.getOther(self).has(Trait.footfetishist)) {
+        if (c.getOpponent(self).has(Trait.footfetishist)) {
             weight += 2;
         }
         if (self.has(Trait.nimbletoes)) {
@@ -38,17 +38,17 @@ public class FootjobStrategy extends KnockdownThenActionStrategy {
     @Override
     protected Optional<Set<Skill>> getPreferredSkills(Combat c, Character self, Set<Skill> allowedSkills) {
         Set<Skill> footjobSkills = allowedSkills.stream()
-                        .filter(skill -> (skill.getTags().contains(SkillTag.usesFeet))
-                                        && !skill.getTags().contains(SkillTag.suicidal))
+                        .filter(skill -> (skill.getTags(c).contains(SkillTag.usesFeet))
+                                        && !skill.getTags(c).contains(SkillTag.suicidal))
                         .collect(Collectors.toSet());
 
         if (!footjobSkills.isEmpty()) {
             return Optional.of(footjobSkills);
         }
-        if (!c.getOther(self).crotchAvailable()) {
+        if (!c.getOpponent(self).crotchAvailable()) {
             Set<Skill> strippingSkills = allowedSkills.stream()
-                            .filter(skill -> (skill.getTags().contains(SkillTag.stripping))
-                                            && !skill.getTags().contains(SkillTag.suicidal))
+                            .filter(skill -> (skill.getTags(c).contains(SkillTag.stripping))
+                                            && !skill.getTags(c).contains(SkillTag.suicidal))
                             .collect(Collectors.toSet());
             return Optional.of(strippingSkills);
         }

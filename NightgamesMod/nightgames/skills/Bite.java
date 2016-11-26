@@ -5,7 +5,6 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.nskills.tags.SkillTag;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
@@ -22,7 +21,7 @@ public class Bite extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return target.human() && c.getStance().penetratedBy(getSelf(), target) && c.getStance().kiss(getSelf());
+        return target.human() && c.getStance().penetratedBy(c, getSelf(), target) && c.getStance().kiss(getSelf(), target);
     }
 
     @Override

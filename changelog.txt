@@ -1,3 +1,170 @@
+2.4.3.2
+Bug fixes:
+- All pet skills were incorrectly modifying their damage with seduction, causing them to do way too much. This was removed.
+- 69 stance was incorrectly counting as being penetrated. This was fixed.
+
+2.4.3.1
+Bug fixes:
+- Fixed a bug where Caroline's protection can cause fluid addictions to crash.
+- Fixed a long standing bug where outfits were never being loaded from saves.
+- Fixed a label issue with the clothing change UI (both the closet and the current outfit were being labeld closet)
+
+2.4.3
+Balance:
+- Heavily nerfed Kat's pheromones. Also nerfed feral, so she actually now loses more willpower in an orgasm than she gets back.
+- Biological damage modifiers have been halved (affects pheromones and sedate)
+- Biological defense now includes attributes in Seduction as well as Cunning/Science/Bio/Animism.
+- Knockdowns now has a new formula so that having over 300 stamina doesn't just make you immune to knockdowns.
+- Yui now gives 5 affection per visit, but caps out at a maximum of 20.
+
+New
+- Map now highlights cache drop locations
+- Orgasms done by pets will now skip the turn for the players.
+- Turned on system messages by default. Please note that you can turn it off in the options.
+
+Bug fixes:
+- Having a trap of your own will no longer make you unable to get cache rewards
+- Cassie, Angel and Jewel will no longer require an additional level up before getting their new Class traits after hitting 10.
+- Fixed an unintended bug where the match timer would increment every time phases changed, triggering the 0 willpower tiebreaker way too fast.
+- Fixed a bug where knocked downs never happened.
+- Fixed a bug where holy waters was not being consumed by Angel when training Divinity.
+- Fixed a lot of typo bugs (thanks for the bug reports as usual!)
+
+2.4.2
+- Made Jewel's level 20 focus actually trigger at lvl 20 instead of 10
+
+2.4.1
+- Fixed a bug where stance images were being displayed for non-observed fights
+- Decreased Jewel's willingness to spam edge
+- Fixed some typos
+
+2.4.0
+Balance changes:
+- MojoMaster now gives you +20 maximum mojo (New since rc1)
+- Pet counterattacks can only happen when you are mobile (New since rc1)
+- All drain now scales with dark and arcane (New since rc1)
+- Nerfed willpower loss from various drain sources to compensate (New since rc1)
+- Beguiling breasts now only work when you have dd cup breasts or bigger (yes cup sizes aren't a measure of size, stop being pedantic :D) (New since rc1)
+- The tempting tits now does not work if both characters have them. (New since rc1)
+- Skills now will display how accurate they are when you hover over them
+- Footjob now is less accurate (90 -> 80% base), but does much more pleasure damage (12-20 base)
+	- Now 100% accurate when opponent has a foot fetish
+- Bunshin assault and bunshin service now has a lower accuracy but more clones summoned (each clone's accuracy is rolled separately)
+	- Now costs 2 mojo per clone, and maximum of 15 clones at 30 ninjitsu
+- Use Dildo, Use Onahole, Kiss, Handjob and Finger now has 30 -> 50 base accuracy (100 when close to each other)
+	- Romantic nerfed to only add 40 -> 20 base accuracy (Kiss still has 70 base like before if you have the trait)
+- Knee now has 90 -> 80 accuracy
+- Lick nipples and suckle now has 90 -> 70 accuracy when neutral, but guaranteed when closer
+- Throw needle now has 70 base accuracy
+- Aphrodisiac, Sedate, and sensitize have all been nerfed to 65% accuracy base, guaranteed with Aersolizer
+	- Dissolve has been nerfed to 80%, guaranteed with Aersolizer
+	- Sedate has been increased to 50 exhaustion damage and 35 mojo damage
+	- Aphrodisiac has been increased to 10 arousal damage per turn, lasting up to 8 turns (scaled by biological damage).
+		- Aphrodisiac with a succubus pussy is no longer guaranteed without an Aersolizer
+	- Hypersensitive now increases pleasure damage taken by 30% -> 50%
+		- Now also increases pain by 50%
+		- Hypersensitive from ticklemonster now only lasts 5 turns. Hypersensitive from breast and cock growth only lasts for 10 turns.
+- Tortoise wrap no longer requires the attacker to have an active bondage fetish to use
+- Sweet scent no longer always misses (wtf)
+- Trip now has only one cunning check instead of two
+- Pussy training and cock training has been merged into sex training
+- Beguiling breasts now entrances you for 50 turns instead of lasting for 4 turns
+	- Beguiling breasts is now an aura, and can work on opposing pets
+- Upon orgasming, all mindgames status effects will be now removed.
+- Nymphomania now only has a percent chance of restoring willpower upon orgasming if you not also feral.
+- The footfetish weakness has been made to increase your footfetish magnitude during a fight while the opponent has no shoes on or have exposed shoes.
+- The take off shoes skill can now be used to tempt anyone that has a footfetish
+- Buffed insertion damage for fuck skills (the insertion trait did not change)
+- Assjob base damage buffed from 4-7 to 10-14
+	- This is increased by 3 if your bottom is naked and by 3 again if the opponent's crotch is open.
+- NPCs should use strategies only 50% of the time now. They were spamming certain strategies too much and it was making the game a bit boring.
+- Mojo now no longer grows. You are limited to the amount of mojo you start with.
+
+New:
+- Added a pet initiated threesome skill for pets (New since rc1)
+- Added a lot of the new traits to the trait tree. Changed some traits around so more are unlocked in higher levels and or have more requirements. (New since rc1)
+- Pretty much all the traits now unlock something better, so try getting some of the previously "useless" traits. (New since rc1)
+- Now each night has 5 combatants (accidental change, but decided to keep it in there for now) (New since rc1)
+- Completely reworked mojo. You now do not gain mojo per fight or level.
+	- Instead everyone starts with a set amount of maximum mojo that they will use for the rest of the game, barring certain traits.
+- Completely reworked how pets are handled. There are so many changes that it's hard to list everything here.
+	- The core change is that pets are treated like characters and can use skills on either the master or the opponent.
+	- Leadership now increases the level of pets summoned by 5.
+	- Tactician now also increases the maximum arousal and stamina of pets by 50%
+	- Pets now disappear if they orgasm or get knocked out or stunned.
+- Added some new summoning skills:
+	- Summon Yui can call the ninja to help you out in a fight at the cost of 1 affection per summon. This is unlocked at 10 affection with Yui.
+	- Simulacrum is a 12 divinity skill that creates a sex-changed copy of your opponent to fight for you temporarily.
+	- Threesome is a fuck skill that makes your pet to fuck your opponent.
+		- Added some new sex stances related to this:
+			- FFM Cowgirl
+			- FFM Cowgirl + Facesit
+			- MFF Missionary with Assist
+			- MFM Spitroast
+			- MFM Double Penetration
+- Changed how combat works. After each phase of combat, you advance the text by hitting next instead of all the text hitting you at once.
+- Changed how leveldowns work. Each level up is saved now, so that when you level down you get to exactly where you were before instead of randomly losing traits or attributes.
+- Flycatcher can now be used with 9 Ki or 18 Cunning
+	- Now instead of instantly downing the pet, it has a huge pain damage (30 - 50) targeted to a Pet
+	- Now costs 25% of your maximum stamina to use
+- New skill HoneyPot
+	- can be used with 9 Dark or 18 Seduction
+	- Does huge pleasure damage (30 - 50) targeted to a pet.
+- Jewel and Angel has been reworked
+	- At levels 10 and 20, after combat with the player, they will ask the player for your opinion on what she should focus on. The choice will influence what attributes and traits she will get upon leveling up.
+- Added new portraits for Angel
+- Cassie, Jewel, and Angel will now not advance into their classes until you pick their respective level 10 decision. They now also do not need 1000$ to advance (no idea why this was there, they don't even spend it...)
+- Added new traits
+	Angel: 
+	- Last Stand
+	- Sexual Dynamo
+	- Inspirational
+	- Sacrosanct
+	- Mandate of Heaven
+	- Piety
+	- Genuflection
+	- Showmanship
+	- Apostles
+	- Devotee Fervor
+	- Congregation
+
+	Angel's pet only traits
+	- Valkyire
+	- Oblivious
+	- Overwhelming presence
+	- Resurrection
+	- Kabbalah
+	- Healer
+	- Supplicant
+	- Protective
+	- Fallen Angel
+
+	Jewel (from dndw):
+	- Powerful cheeks
+	- Tempting ass
+	- Disabling blows
+	- Takedown
+	- Indomitable
+	- Confident dom
+	- Draining ass
+	- Edger
+	- Commanding Voice
+	- Mental Fortress
+	- Bewitching bottom
+	- Unquestionable
+	- Grapper
+	- Suave (I added this one, I found Jewel way too weak vs girls, especially when taking the ass fuck line)
+		- Adds level / 2 Seduction when fighting someone without a penis
+Kat's daytime scenes now give the relevant traits.
+- Affectionate now makes it so you have a 50% to increase the amount of affection you gain by 1 instead of only adding bonus affection on draws.
+- Added a new Trait "tease" for Kat's games scene.
+	- Builds 5% mojo if your opponent misses
+
+Bug fixes:
+- Fixed a bug where you could be made to orgasm in a simulation and finish the match because of it. (woahdude)
+- Fixed a bug where if you drastically outleveled someone, moves would be very inaccurate (yes wtf)
+- A bunch of bug and typo fixes (thanks guys for your bug reports)
+
 2.3.3
 Balance changes:
 - Pantymaster, and Bramaster have been removed
@@ -17,9 +184,50 @@ Balance changes:
 		- Increase all advanced kisses (Kiss of Baptism, Drain Kiss, Deep Kiss) pleasure damage by 6
 		- Increases your charisma multiplier by your (opponent's arousal % - 70) when your opponent is below 30% arousal. (So at 0% arousal you have a 30% bonus and at 20%, you have a 10% bonus)
 			- This is pretty minor and is really only for flavour
+- Fixed a "bug?" not sure if this was intended, but counter pretty much never ever ever triggered. It can now trigger and has a base chance of 3% for skills.
+	- Counter chance increased by 3% for each of these traits: [clairvoyance, aikidonovice, fakeout]
+	- Counter is increased by certain statuses like WaterForm (+5), Nimble (+ Animism/2 * Arousal %)
+	- Counter chance is decreased by 1% for every 5 points of cunning your opponent has over you
+	- Counter chance is increased by 1% for every point of perception you have over the opponent and decreased the same way.
+	- Counter chance is increased by 1% for every 2 points of speed you have over the opponent and decreased the same way (maximum of +5 or -5 this way).
+- Locate will no longer consume a Talisman if you have one
+- Submissive (attribute) will now increase tempt damage for certain moves
+- Magic Missiles now has an increased base damage (it was to the point where upon becoming level 10, Cassie would just rather kick you rather than using her new skills because it sucked).
+	- Now does 10-19 base damage instead of 7-13.
+
+New:
+Cassie has been reworked:
+- At levels 10 and 20, after combat with the player, Cassie	will ask the player for your opinion on what she should focus on. The choice will influence what attributes and traits she will get upon leveling up.
+
+Introduced some new traits (some of them seem pretty OP, but really only comes into play in the extreme late game and are replacements for some equally OP traits):
+- Hawkeye
+	- +5% accuracy
+- Tempting Tits
+	- When your breasts are exposed, your tempt the opponent every turn if you are facing each other.
+	- When you are behind your opponent, you tempt the opponent every turn. More temptation damage if their top is off and your top is off/is more skimpy.
+- Beguiling breasts
+	- Once per fight, the first time your opponent sees your breasts, they are entranced for 4 turns
+- Sedative Cream
+	- Drinking milk will cause the opponent to be weakened by 10% and lose 1 Power for 20 turns.
+- Sweet Lips
+	- If you do oral pleasure from a submissive position, the opponent is also tempted for the base pleasure damage of the move.
+- Split SM Queen into different Traits
+	- SM Queen now applies dominance willpower loss every turn instead of every other turn in a dominant stance.
+	- (new) Sadist now automatically applies masochism to the opponent
 
 Bug fixes:
 - Fixed a bug that was causing charm, facesit, smother, and tempt to use the opponent's body's charisma bonus instead of the users. Woops.
+- Fixed a bug where doing Faerie play with Mara freezes the game
+- Fixed a bug where addiction overloading/day time visits were not being saved
+- Fixed a bug where the cause for Magic milk addiction was the player instead of Cassie
+- Fixed a bug where the Breeder addiction was not using voluntary insertion bonuses unless the player was also corrupted.
+- Fixed a bug where mouthpussy blowjobs was using a phantom cock from yourself instead of the opponents. Woops.
+- Fixed a bug where entranced wasn't let you masturbate.
+- Fixed a bug where drowsy was being affected by Personal Inertia twice.
+
+2.3.2.1
+
+- Actually fixed the bug with tentacles. Goddamn.
 
 2.3.2
 Bug fixes:

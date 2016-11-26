@@ -17,6 +17,7 @@ public class Bound extends Status {
         toughness = dc;
         this.binding = binding;
         flag(Stsflag.bound);
+        flag(Stsflag.debuff);
     }
 
     @Override

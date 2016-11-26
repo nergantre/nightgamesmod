@@ -9,7 +9,6 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.FaceSitting;
-import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
 import nightgames.status.Enthralled;
 import nightgames.status.Shamed;
@@ -39,7 +38,7 @@ public class FaceSit extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().crotchAvailable() && getSelf().canAct() && c.getStance().dom(getSelf())
-                        && c.getStance().reachTop(getSelf()) && !c.getStance().penetrated(getSelf())
+                        && c.getStance().reachTop(getSelf()) && !c.getStance().penetrated(c, getSelf())
                         && !c.getStance().inserted(getSelf()) && c.getStance().prone(target)
                         && !getSelf().has(Trait.shy);
     }
@@ -70,7 +69,7 @@ public class FaceSit extends Skill {
         double n = 4 + Global.random(4);
         if (c.getStance().front(getSelf())) {
             // opponent can see self
-            n += 3 * getSelf().body.getCharismaBonus(target);
+            n += 3 * getSelf().body.getHotness(target);
         }
         if (target.has(Trait.imagination)) {
             n *= 1.5;
@@ -81,8 +80,8 @@ public class FaceSit extends Skill {
 
         target.loseWillpower(c, 5);
         target.add(c, new Shamed(target));
-        if (c.getStance().enumerate() != Stance.facesitting) {
-            c.setStance(new FaceSitting(getSelf(), target));
+        if (!c.getStance().isFaceSitting(getSelf())) {
+            c.setStance(new FaceSitting(getSelf(), target), getSelf(), true);
         }
         if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
             target.add(c, new BodyFetish(target, getSelf(), "ass", .25));
@@ -92,11 +91,7 @@ public class FaceSit extends Skill {
 
     @Override
     public int getMojoBuilt(Combat c) {
-        if (c.getStance().enumerate() != Stance.facesitting) {
-            return 50;
-        } else {
-            return 25;
-        }
+        return 25;
     }
 
     @Override
@@ -106,7 +101,7 @@ public class FaceSit extends Skill {
 
     @Override
     public Tactics type(Combat c) {
-        if (c.getStance().enumerate() != Stance.facesitting) {
+        if (c.getStance().isFaceSitting(getSelf())) {
             return Tactics.positioning;
         } else {
             return Tactics.pleasure;
@@ -117,7 +112,7 @@ public class FaceSit extends Skill {
     public String getLabel(Combat c) {
         if (getSelf().hasBalls() && !getSelf().hasPussy()) {
             return "Teabag";
-        } else if (c.getStance().enumerate() != Stance.facesitting) {
+        } else if (c.getStance().isFaceSitting(getSelf())) {
             return "Facesit";
         } else {
             return "Ride Face";

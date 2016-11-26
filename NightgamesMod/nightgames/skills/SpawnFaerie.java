@@ -25,7 +25,7 @@ public class SpawnFaerie extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().canAct() && c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf())
-                        && getSelf().pet == null;
+                        && c.getPetsFor(getSelf()).size() < getSelf().getPetLimit();
     }
 
     @Override
@@ -40,26 +40,20 @@ public class SpawnFaerie extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        int power = 7 + getSelf().get(Attribute.Arcane) / 10;
+        int power = 5 + getSelf().get(Attribute.Arcane);
         int ac = 4 + getSelf().get(Attribute.Arcane) / 10;
-        if (getSelf().has(Trait.leadership)) {
-            power += 5;
-        }
-        if (getSelf().has(Trait.tactician)) {
-            ac += 3;
-        }
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
             if (gender == Ptype.fairyfem) {
-                getSelf().pet = new FairyFem(getSelf(), power, ac);
+                c.addPet(getSelf(), new FairyFem(getSelf(), power, ac).getSelf());
             } else {
-                getSelf().pet = new FairyMale(getSelf(), power, ac);
+                c.addPet(getSelf(), new FairyMale(getSelf(), power, ac).getSelf());
             }
         } else {
             if (target.human()) {
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             }
-            getSelf().pet = new FairyFem(getSelf(), power, ac);
+            c.addPet(getSelf(), new FairyFem(getSelf(), power, ac).getSelf());
         }
         return true;
     }

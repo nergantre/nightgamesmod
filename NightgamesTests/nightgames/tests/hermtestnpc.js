@@ -231,7 +231,7 @@
             {
                 "requirements": {
                     "not": {
-                        "stance": "Neutral"
+                        "position": "Neutral"
                     }
                 },
                 "text": "She wins while not being in the neutral stance."

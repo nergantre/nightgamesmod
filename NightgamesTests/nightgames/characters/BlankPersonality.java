@@ -9,23 +9,25 @@ import java.util.Optional;
  * Test personality, or maybe for those with a flat affect.
  */
 public class BlankPersonality extends BasePersonality {
+    private static final long serialVersionUID = 1L;
+
     public BlankPersonality(String name, int level) {
-        super(name, level, Optional.empty(), Optional.empty());
+        super(name, level, Optional.empty(), Optional.empty(), false);
     }
 
-    @Override public String bbLiner(Combat c) {
+    @Override public String bbLiner(Combat c, Character other) {
         return null;
     }
 
-    @Override public String nakedLiner(Combat c) {
+    @Override public String nakedLiner(Combat c, Character opponent) {
         return null;
     }
 
-    @Override public String stunLiner(Combat c) {
+    @Override public String stunLiner(Combat c, Character opponent) {
         return null;
     }
 
-    @Override public String taunt(Combat c) {
+    @Override public String taunt(Combat c, Character opponent) {
         return null;
     }
 
@@ -45,7 +47,7 @@ public class BlankPersonality extends BasePersonality {
         return null;
     }
 
-    @Override public String describe(Combat c) {
+    @Override public String describe(Combat c, Character self) {
         return "test 2 3";
     }
 
@@ -61,7 +63,7 @@ public class BlankPersonality extends BasePersonality {
         return false;
     }
 
-    @Override public String startBattle(Character other) {
+    @Override public String startBattle(Character self, Character other) {
         return null;
     }
 
@@ -77,7 +79,7 @@ public class BlankPersonality extends BasePersonality {
         return value >= 100;
     }
 
-    @Override public String temptLiner(Combat c) {
+    @Override public String temptLiner(Combat c, Character opponent) {
         return null;
     }
 
@@ -85,15 +87,21 @@ public class BlankPersonality extends BasePersonality {
         return null;
     }
 
-    @Override public String makeOrgasmLiner(Combat c) {
+    @Override public String makeOrgasmLiner(Combat c, Character target) {
         return null;
-    }
-
-    @Override protected void applyBasicStats() {
-
     }
 
     @Override public void setGrowth() {
 
+    }
+
+    @Override
+    public void applyBasicStats(Character self) {
+        
+    }
+
+    @Override
+    public void applyStrategy(NPC self) {
+        
     }
 }

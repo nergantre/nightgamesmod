@@ -16,6 +16,7 @@ public class Lovestruck extends DurationStatus {
         flag(Stsflag.lovestruck);
         flag(Stsflag.charmed);
         flag(Stsflag.purgable);
+        flag(Stsflag.debuff);
     }
 
     @Override

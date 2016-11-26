@@ -6,6 +6,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.items.clothing.ClothingTrait;
 import nightgames.status.Falling;
 import nightgames.status.Winded;
 
@@ -23,7 +24,9 @@ public class StunBlast extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().canAct() && c.getStance().mobile(getSelf()) && c.getStance().front(getSelf())
-                        && getSelf().has(Item.Battery, 4);
+                        && (getSelf().has(Item.Battery, 4) || 
+                                        target.has(ClothingTrait.harpoonDildo) || 
+                                        target.has(ClothingTrait.harpoonOnahole));
     }
 
     @Override
@@ -33,6 +36,13 @@ public class StunBlast extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
+        if (target.has(ClothingTrait.harpoonDildo) || 
+                                        target.has(ClothingTrait.harpoonOnahole)) { 
+            writeOutput(c, Result.special, target);
+            target.getStamina().empty();
+            target.add(c, new Winded(target));
+            target.add(c, new Falling(target));
+        }
         getSelf().consume(Item.Battery, 4);
         if (Global.random(10) >= 4) {
             writeOutput(c, Result.normal, target);
@@ -74,6 +84,13 @@ public class StunBlast extends Skill {
                             + "danger, %s %s %s eyes just as the flashbang goes off.", getSelf().subject(),
                             getSelf().possessivePronoun(), target.nameOrPossessivePronoun(),
                             target.pronoun(), target.action("cover"), target.possessivePronoun());
+        } else if (modifier == Result.special) {
+            return Global.format("{self:SUBJECT} presses a button on {self:possessive} arm device,"
+                            + "and a bright flash suddenly travels along {self:possessive} connection to"
+                            + " the toy which is still stuck to you. When it reaches you, a huge shock"
+                            + " stuns your body, leaving you helpless on the ground while the toy"
+                            + " still merrily churns away.."
+                            , getSelf(), target);
         } else {
             return String.format("%s points a device in %s direction that glows slightly. A sudden "
                             + "flash of light disorients %s and %s ears ring from the blast.",

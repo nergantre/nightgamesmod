@@ -14,6 +14,9 @@ public class Abuff extends DurationStatus {
     public Abuff(Character affected, Attribute att, int value, int duration) {
         super(String.format("%s %+d", att.toString(), value), affected, duration);
         flag(Stsflag.purgable);
+        if (value < 0) {
+            flag(Stsflag.debuff);
+        }
         this.modded = att;
         this.value = value;
     }

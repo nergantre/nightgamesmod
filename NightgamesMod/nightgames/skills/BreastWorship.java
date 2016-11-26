@@ -16,7 +16,6 @@ public class BreastWorship extends Skill {
         super("Breast Worship", self);
         addTag(SkillTag.usesMouth);
         addTag(SkillTag.pleasure);
-        addTag(SkillTag.suicidal);
         addTag(SkillTag.worship);
         addTag(SkillTag.pleasureSelf);
     }
@@ -25,7 +24,7 @@ public class BreastWorship extends Skill {
     public boolean usable(Combat c, Character target) {
         return target.breastsAvailable() && c.getStance().reachTop(getSelf()) && c.getStance().front(getSelf())
                         && (getSelf().canAct() || c.getStance().enumerate() == Stance.nursing && getSelf().canRespond())
-                        && c.getStance().facing();
+                        && c.getStance().facing(getSelf(), target);
     }
 
     @Override
@@ -55,14 +54,14 @@ public class BreastWorship extends Skill {
     }
 
     @Override
-    public int accuracy(Combat c) {
+    public int accuracy(Combat c, Character target) {
         return 150;
     }
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
         Optional<BodyFetish> fetish = getSelf().body.getFetish("breasts");
-        return fetish.isPresent() && fetish.get().magnitude >= .5;
+        return user.isPetOf(target) || (fetish.isPresent() && fetish.get().magnitude >= .5);
     }
 
     @Override

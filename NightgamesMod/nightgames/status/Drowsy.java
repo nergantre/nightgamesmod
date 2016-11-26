@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 
@@ -13,8 +12,10 @@ public class Drowsy extends DurationStatus {
     private int magnitude;
 
     public Drowsy(Character affected) {
-        super("Drowsy", affected, affected.has(Trait.PersonalInertia) ? 6 : 4);
+        super("Drowsy", affected, 4);
         flag(Stsflag.drowsy);
+        flag(Stsflag.purgable);
+        flag(Stsflag.debuff);
         magnitude = 1;
     }
 

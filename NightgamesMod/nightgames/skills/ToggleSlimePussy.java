@@ -22,7 +22,7 @@ public class ToggleSlimePussy extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().canRespond() && (!hasSlimePussy() || !c.getStance().vaginallyPenetrated(getSelf()));
+        return getSelf().canRespond() && (!hasSlimePussy() || !c.getStance().vaginallyPenetrated(c, getSelf()));
     }
 
     @Override

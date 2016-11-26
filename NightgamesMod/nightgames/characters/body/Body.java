@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -24,8 +22,10 @@ import nightgames.characters.Character;
 import nightgames.characters.CharacterSex;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
+import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.json.JsonUtils;
+import nightgames.pet.PetCharacter;
 import nightgames.skills.Skill;
 import nightgames.status.Abuff;
 import nightgames.status.BodyFetish;
@@ -52,30 +52,6 @@ public class Body implements Cloneable {
         }
     }
 
-    static private Map<String, BodyPart> prototypes;
-
-    static {
-        prototypes = new HashMap<>();
-        prototypes.put(PussyPart.class.getCanonicalName(), PussyPart.normal);
-        prototypes.put(BreastsPart.class.getCanonicalName(), BreastsPart.c);
-        prototypes.put(BasicCockPart.class.getCanonicalName(), BasicCockPart.average);
-        // for compatibility with < v1.8.1
-        prototypes.put(CockPart.class.getCanonicalName(), BasicCockPart.average);
-        prototypes.put(ModdedCockPart.class.getCanonicalName(),
-                        new ModdedCockPart(BasicCockPart.average, CockMod.bionic));
-        prototypes.put(WingsPart.class.getCanonicalName(), WingsPart.demonic);
-        prototypes.put(TailPart.class.getCanonicalName(), TailPart.cat);
-        prototypes.put(EarPart.class.getCanonicalName(), EarPart.normal);
-        prototypes.put(StraponPart.class.getCanonicalName(), StraponPart.generic);
-        prototypes.put(TentaclePart.class.getCanonicalName(), new TentaclePart("tentacles", "back", "semen", 0, 1, 1));
-        prototypes.put(AssPart.class.getCanonicalName(), new AssPart("ass", 0, 1, 1));
-        prototypes.put(MouthPart.class.getCanonicalName(), new MouthPart("mouth", 0, 1, 1));
-        prototypes.put(AnalPussyPart.class.getCanonicalName(), new AnalPussyPart());
-        prototypes.put(MouthPussyPart.class.getCanonicalName(), new MouthPussyPart());
-        prototypes.put(GenericBodyPart.class.getCanonicalName(), new GenericBodyPart("", 0, 1, 1, "none", "none"));
-        prototypes.put(FacePart.class.getCanonicalName(), new FacePart(.1, 2.3));
-    }
-
     // yeah i know :(
     public static BodyPart nonePart = new GenericBodyPart("none", 0, 1, 1, "none", "");
     public static Set<String> pluralParts = new HashSet<>(Arrays.asList("hands", "feet", "wings", "breasts", "balls"));
@@ -92,7 +68,7 @@ public class Body implements Cloneable {
     transient public BodyPart lastPleasuredBy;
     transient public BodyPart lastPleasured;
     public double baseFemininity;
-
+    private double height;
 
     public Body() {
         bodyParts = new LinkedHashSet<>();
@@ -101,6 +77,7 @@ public class Body implements Cloneable {
         lastPleasuredBy = nonePart;
         lastPleasured = nonePart;
         hotness = 1.0;
+        height = 170;
     }
 
     public Body(Character character) {
@@ -363,18 +340,15 @@ public class Body implements Cloneable {
     }
 
     public Optional<BodyFetish> getFetish(String part) {
-        Optional<Status> fs = character.status.stream()
-                                              .filter(status -> {
-                                                  if (status.flags()
-                                                            .contains(Stsflag.bodyfetish)) {
+        Optional<Status> fs = character.status.stream().filter(status -> {
+                                                  if (status.flags().contains(Stsflag.bodyfetish)) {
                                                       BodyFetish fetish = (BodyFetish) status;
                                                       if (fetish.part.equalsIgnoreCase(part)) {
                                                           return true;
                                                       }
                                                   }
                                                   return false;
-                                              })
-                                              .findFirst();
+                                              }).findFirst();
         if (fs.isPresent()) {
             return Optional.of((BodyFetish) fs.get());
         } else {
@@ -382,24 +356,22 @@ public class Body implements Cloneable {
         }
     }
 
-    public double getHotness(Character self, Character opponent) {
+    public double getHotness(Character opponent) {
         // represents tempt damage
-        double retval = hotness;
+        double bodyHotness = hotness;
         for (BodyPart part : getCurrentParts()) {
-            retval += part.getHotness(self, opponent) * (getFetish(part.getType()).isPresent() ? 2 : 1);
+            bodyHotness += part.getHotness(character, opponent) * (getFetish(part.getType()).isPresent() ? 2 : 1);
         }
-        retval += self.getOutfit()
-                      .getHotness();
-        int seductionDiff = Math.max(0, self.get(Attribute.Seduction) - opponent.get(Attribute.Seduction));
-        retval += seductionDiff / 10.0;
-        retval *= (.5 + self.getExposure());
-        if (self.is(Stsflag.glamour)) {
-            retval += 2.0;
+        double clothingHotness = character.getOutfit()
+                        .getHotness();
+        double totalHotness = bodyHotness * (.5 + character.getExposure()) + clothingHotness;
+        if (character.is(Stsflag.glamour)) {
+            totalHotness += 2.0;
         }
-        if (self.is(Stsflag.alluring)) {
-            retval *= 1.5;
+        if (character.is(Stsflag.alluring)) {
+            totalHotness *= 1.5;
         }
-        return retval;
+        return totalHotness;
     }
 
     public void remove(BodyPart part) {
@@ -576,7 +548,7 @@ public class Body implements Cloneable {
         if (character.human() && Global.getPlayer().checkAddiction(AddictionType.DOMINANCE, opponent)
                        && c.getStance().dom(opponent)) {
             float mag = Global.getPlayer().getAddiction(AddictionType.DOMINANCE).get().getMagnitude();
-            float dom = c.getDominanceOfStance(opponent);
+            float dom = c.getStance().getDominanceOfStance(opponent);
             dominance = mag * (dom / 5.0);
         }
         multiplier += dominance;
@@ -586,7 +558,7 @@ public class Body implements Cloneable {
 
         int result = (int) Math.round(damage);
         if (character.is(Stsflag.rewired)) {
-            character.pain(c, result, false, false);
+            character.pain(c, opponent, result, false, false);
             return 0;
         }
         if (opponent != null) {
@@ -634,6 +606,18 @@ public class Body implements Cloneable {
                 c.writeSystemMessage(battleString);
             }
         }
+        double percentPleasure = 100.0 * result / character.getArousal().max();
+        if (character.has(Trait.sexualDynamo) && percentPleasure >= 5 && Global.random(4) == 0) {
+            c.write(character, Global.format("Sexual pleasure seems only to feed {self:name-possessive} ", character, opponent));
+            character.buildMojo(c, (int)Math.floor(percentPleasure));
+        }
+        if (character.has(Trait.showmanship) && percentPleasure >= 5 && opponent.isPet() && ((PetCharacter)opponent).getSelf().owner().equals(character)) {
+            Character voyeur = c.getOpponent(character);
+            c.write(character, Global.format("{self:NAME-POSSESSIVE} moans as {other:subject-action:make|makes} a show of pleasing {other:possessive} {self:master} "
+                            + "turns %s on immensely.", character, opponent, voyeur.nameDirectObject()));
+            voyeur.tempt(c, character, Math.max(Global.random(14, 20), result / 3));
+        }
+
         character.resolvePleasure(result, c, opponent, target, with);
 
         if (opponent != null && Arrays.asList(fetishParts)
@@ -658,8 +642,10 @@ public class Body implements Cloneable {
         if (opponent == character) {
             return 1.0;
         } else {
-            double perceptionBonus = Math.sqrt(getHotness(character, opponent)
-                            * (1.0 + (Math.max(0, opponent.get(Attribute.Perception)) - 5) / 10.0));
+            double seductionBonus = Math.max(0, character.get(Attribute.Seduction) - opponent.get(Attribute.Seduction)) / 10.0;
+            double perceptionBonus = Math.sqrt(getHotness(opponent) + seductionBonus
+                            * (1.0 + (opponent.get(Attribute.Perception) - 5) / 10.0));
+            
             if (opponent.is(Stsflag.lovestruck)) {
                 perceptionBonus += 1;
             }
@@ -704,6 +690,7 @@ public class Body implements Cloneable {
                 }
                 break;
             case herm:
+            case shemale:
                 baseFemininity += 1;
                 if (!has("face")) {
                     add(new FacePart(0, 0));
@@ -718,12 +705,132 @@ public class Body implements Cloneable {
                     add(new FacePart(0, 0));
                 }
                 break;
+            default:
+                break;
         }
         for (BodyPart part : requiredParts) {
             if (!has(part.getType())) {
                 add(part);
             }
         }
+    }
+
+    private void replacePussyWithCock(BasicCockPart basicCock) {
+        PussyPart pussy = getRandomPussy();
+        removeAll("pussy");
+        add(pussy == null ? basicCock : basicCock.applyMod(pussy.getEquivalentCockMod()));
+    }
+
+    private void replaceCockWithPussy() {
+        CockPart cock = getRandomCock();
+        removeAll("cock");
+        add(cock == null ? PussyPart.normal : cock.getEquivalentPussy());
+    }
+
+    private void addEquivalentCockAndPussy(BasicCockPart basicCock) {
+        boolean hasPussy = getRandomPussy() != null;
+        boolean hasCock = getRandomCock() != null;
+        if (!hasPussy) {
+            CockPart cock = getRandomCock();
+            add(cock == null ? PussyPart.normal : cock.getEquivalentPussy());
+        }
+        if (!hasCock) {
+            PussyPart pussy = getRandomPussy();
+            add(pussy == null ? basicCock : basicCock.applyMod(pussy.getEquivalentCockMod()));
+        }
+    }
+    
+    private void addBallsIfNeeded() {
+        if (getRandom("balls") == null) {
+            add(new GenericBodyPart("balls", 0, 1.0, 1.5, "balls", ""));
+        }
+    }
+
+    private void growBreastsUpTo(BreastsPart part) {
+        if (getLargestBreasts().size < part.size) {
+            addReplace(part, 1);
+        }
+    }
+
+    /**
+     * Guesses the character sex based on the current attributes.
+     * I'm sorry if I whatever you want to be considered, you're free to add it yourself.
+     */
+    public CharacterSex guessCharacterSex() {
+        if (getRandomCock() != null && getRandomPussy() != null) {
+            return CharacterSex.herm;
+        } else if (getRandomCock() == null && getRandomPussy() == null) {
+            return CharacterSex.asexual;
+        } else if (getRandomCock() == null && getRandomPussy() != null) {
+            return CharacterSex.female;
+        } else {
+            if (getLargestBreasts().size > BreastsPart.flat.size && getFace().getFemininity(character) > 0) {
+                return CharacterSex.shemale;
+            } else if (getFace().getFemininity(character) >= 1.5) {
+                return CharacterSex.shemale;
+            }
+            return CharacterSex.male;
+        }
+    }
+    
+    public void autoTG() {
+        CharacterSex currentSex = guessCharacterSex();
+        if (currentSex == CharacterSex.herm || currentSex == CharacterSex.asexual) {
+            // no TG for herms or asexuals
+            return;
+        }
+        if (character.useFemalePronouns() && Global.checkFlag(Flag.femaleTGIntoHerm)) {
+            changeSex(CharacterSex.herm);
+            return;
+        }
+        if (currentSex == CharacterSex.female) {
+            changeSex(CharacterSex.male);
+            return;
+        }
+        if (currentSex == CharacterSex.male || currentSex == CharacterSex.shemale) {
+            changeSex(CharacterSex.female);
+            return;
+        }
+    }
+    
+    public void changeSex(CharacterSex newSex) {
+        FacePart face = ((FacePart)getRandom("face"));
+        double femininity = face.getFemininity(character);
+        switch (newSex) {
+            case male:
+                femininity = Math.min(0, femininity);
+                replacePussyWithCock(BasicCockPart.average);
+                addBallsIfNeeded();
+                addReplace(BreastsPart.flat, 1);
+                break;
+            case female:
+                femininity = Math.max(2, femininity);
+                replaceCockWithPussy();
+                growBreastsUpTo(BreastsPart.c);
+                break;
+            case herm:
+                femininity = Math.max(1, femininity);
+                addEquivalentCockAndPussy(BasicCockPart.big);
+                growBreastsUpTo(BreastsPart.b);
+                break;
+            case shemale:
+                femininity = Math.max(1, femininity);
+                replacePussyWithCock(BasicCockPart.big);
+                growBreastsUpTo(BreastsPart.d);
+                addBallsIfNeeded();
+                break;
+            case asexual:
+                femininity = Math.max(0, femininity);
+                break;
+            default:
+                break;
+        }
+        if (newSex.hasBalls()) {
+            addBallsIfNeeded();
+        } else {
+            removeAll("balls");
+        }
+        addReplace(new FacePart(face.hotness, femininity), 1);
     }
 
     CharacterSex getEffectiveSex() {
@@ -752,12 +859,11 @@ public class Body implements Cloneable {
                 add(BasicCockPart.average);
             }
         }
-        if (sex == CharacterSex.male) {
+        if (sex.hasBalls()) {
             if (!has("balls")) {
                 add(new GenericBodyPart("balls", 0, 1.0, 1.5, "balls", ""));
             }
         }
-
     }
 
     @Override
@@ -785,16 +891,10 @@ public class Body implements Cloneable {
         return bodyObj;
     }
 
-    public static BodyPart loadPart(JsonObject obj) {
-        String classType = obj.get("class").getAsString();
-        return prototypes.get(classType)
-                         .load(obj);
-    }
-
     public void loadParts(JsonArray partsArr) {
         for (JsonElement element : partsArr) {
             JsonObject partJson = element.getAsJsonObject();
-            this.add(loadPart(partJson));
+            this.add(JsonUtils.gson.fromJson(partJson, BodyPart.class));
         }
     }
 
@@ -926,7 +1026,7 @@ public class Body implements Cloneable {
             part = character.body.getRandom("skin");
         }
         if (character.has(Trait.spiritphage)) {
-            c.write("<br><b>" + Global.capitalizeFirstLetter(character.subjectAction("glow", "glows")
+            c.write(character, "<br><b>" + Global.capitalizeFirstLetter(character.subjectAction("glow", "glows")
                             + " with power as the cum is absorbed by " + character.possessivePronoun() + " "
                             + part.describe(character) + ".</b>"));
             character.add(c, new Abuff(character, Attribute.Power, 5, 10));
@@ -935,7 +1035,7 @@ public class Body implements Cloneable {
             character.buildMojo(c, 100);
         }
         if (opponent.has(Trait.hypnoticsemen)) {
-            c.write(Global.format(
+            c.write(character, Global.format(
                             "<br><b>{other:NAME-POSSESSIVE} hypnotic semen takes its toll on {self:name-possessive} willpower, rendering {self:direct-object} doe-eyed and compliant.</b>",
                             character, opponent));
             character.loseWillpower(c, 10 + Global.random(10));
@@ -945,12 +1045,6 @@ public class Body implements Cloneable {
     public void tickHolding(Combat c, Character opponent, BodyPart selfOrgan, BodyPart otherOrgan) {
         if (selfOrgan != null && otherOrgan != null) {
             selfOrgan.tickHolding(c, character, opponent, otherOrgan);
-            if (character.checkOrgasm()) {
-                character.doOrgasm(c, opponent, selfOrgan, otherOrgan);
-            }
-            if (opponent.checkOrgasm()) {
-                opponent.doOrgasm(c, character, otherOrgan, selfOrgan);
-            }
         }
     }
 
@@ -1034,7 +1128,6 @@ public class Body implements Cloneable {
         if (!(Math.abs(body.baseFemininity - baseFemininity) < 1e-6))
             return false;
         return bodyParts.equals(body.bodyParts);
-
     }
 
     @Override public int hashCode() {
@@ -1046,5 +1139,17 @@ public class Body implements Cloneable {
         temp = Double.doubleToLongBits(baseFemininity);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
+    public FacePart getFace() {
+        return (FacePart)getRandom("face");
     }
 }

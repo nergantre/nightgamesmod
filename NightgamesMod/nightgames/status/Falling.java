@@ -12,6 +12,7 @@ public class Falling extends Status {
     public Falling(Character affected) {
         super("Falling", affected);
         flag(Stsflag.falling);
+        flag(Stsflag.debuff);
     }
 
     @Override
@@ -37,7 +38,9 @@ public class Falling extends Status {
     @Override
     public int regen(Combat c) {
         affected.removelist.add(this);
-        c.setStance(new StandingOver(c.getOther(affected), affected));
+        if (!c.getStance().prone(affected)) {
+            c.setStance(new StandingOver(c.getOpponent(affected), affected));
+        }
         affected.add(new Stunned(affected));
         return 0;
     }

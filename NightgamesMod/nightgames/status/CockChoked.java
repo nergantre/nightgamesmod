@@ -15,6 +15,8 @@ public class CockChoked extends DurationStatus {
         super("Cock Choked", affected, duration);
         this.other = other;
         flag(Stsflag.orgasmseal);
+        flag(Stsflag.debuff);
+        flag(Stsflag.purgable);
     }
 
     @Override

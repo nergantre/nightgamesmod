@@ -1,8 +1,10 @@
 package nightgames.requirements;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -76,7 +78,13 @@ public class JsonRequirementLoader implements RequirementLoader<JsonElement> {
     }
 
     @Override public AndRequirement loadAnd(JsonElement reqData) {
-        return new AndRequirement(loadSubReqs(reqData.getAsJsonObject()));
+        List<Requirement> subReqs;
+        if (reqData.isJsonArray()) {
+            subReqs = loadSubReqs(reqData.getAsJsonArray());
+        } else {
+            subReqs = loadSubReqs(reqData.getAsJsonObject());
+        }
+        return new AndRequirement(subReqs);
     }
 
     @Override public AttributeRequirement loadAttribute(JsonElement reqData) {
@@ -128,7 +136,13 @@ public class JsonRequirementLoader implements RequirementLoader<JsonElement> {
     }
 
     @Override public OrRequirement loadOr(JsonElement reqData) {
-        return new OrRequirement(loadSubReqs(reqData.getAsJsonObject()));
+        List<Requirement> subReqs;
+        if (reqData.isJsonArray()) {
+            subReqs = loadSubReqs(reqData.getAsJsonArray());
+        } else {
+            subReqs = loadSubReqs(reqData.getAsJsonObject());
+        }
+        return new OrRequirement(subReqs);
     }
 
     @Override public ProneRequirement loadProne(JsonElement reqData) {
@@ -172,9 +186,13 @@ public class JsonRequirementLoader implements RequirementLoader<JsonElement> {
         return new WinningRequirement();
     }
 
+    private List<Requirement> loadSubReqs(JsonArray reqData) {
+        List<Requirement> allReqs = new ArrayList<>();
+        reqData.forEach(object -> allReqs.addAll(loadSubReqs(object.getAsJsonObject())));
+        return allReqs;
+    }
     private List<Requirement> loadSubReqs(JsonObject reqData) {
         return reqData.entrySet().stream().map(e -> loadRequirement(e.getKey(), e.getValue()))
                         .collect(Collectors.toList());
     }
-
 }

@@ -12,9 +12,9 @@ public enum AddictionType {
     MIND_CONTROL(MindControl::new),
     DOMINANCE(Dominance::new)
     ;
-    
+
     private final BiFunction<Character, Float, ? extends Addiction> constructor;
-    
+
     private AddictionType(BiFunction<Character, Float, ? extends Addiction> constructor) {
         this.constructor = constructor;
     }

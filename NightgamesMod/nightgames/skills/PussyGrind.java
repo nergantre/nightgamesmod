@@ -27,8 +27,8 @@ public class PussyGrind extends Skill {
     }
 
     public boolean fuckable(Combat c, Character target) {
-        return BodyPart.hasType(c.getStance().partsFor(getSelf()), "pussy")
-                        && BodyPart.hasType(c.getStance().partsFor(target), "pussy");
+        return BodyPart.hasType(c.getStance().partsFor(c, getSelf()), "pussy")
+                        && BodyPart.hasType(c.getStance().partsFor(c, target), "pussy");
     }
 
     @Override
@@ -41,7 +41,7 @@ public class PussyGrind extends Skill {
         BodyPart selfO = getSelfOrgan();
         BodyPart targetO = getTargetOrgan(target);
         writeOutput(c, Result.normal, target);
-        c.setStance(new TribadismStance(getSelf(), target));
+        c.setStance(new TribadismStance(getSelf(), target), getSelf(), true);
         int m = 10 + Global.random(10);
         int otherm = 5 + Global.random(6);
         target.body.pleasure(getSelf(), selfO, targetO, m, c, this);
@@ -88,7 +88,7 @@ public class PussyGrind extends Skill {
                             + " crotch into %s. {other:SUBJECT-ACTION:moan|moans} passionately as the stimulation overwhelms {other:direct-object}. "
                                             + "Soon the floor is drenched with the fruits of %s combined labor.",
                             getSelf(), target, target.human() ? "yours" : target.useFemalePronouns() ? "hers" : "his",
-                                            c.bothPossessive());
+                                            c.bothPossessive(target));
         }
         return "Bad stuff happened";
     }

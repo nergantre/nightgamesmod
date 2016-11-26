@@ -33,7 +33,7 @@ public class Carry extends Fuck {
     public boolean usable(Combat c, Character target) {
         return fuckable(c, target) && !target.wary() && getTargetOrgan(target).isReady(target) && getSelf().canAct()
                         && c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf())
-                        && !c.getStance().prone(target) && c.getStance().facing() && getSelf().getStamina().get() >= 15;
+                        && !c.getStance().prone(target) && c.getStance().facing(getSelf(), target) && getSelf().getStamina().get() >= 15;
     }
 
     @Override
@@ -44,11 +44,11 @@ public class Carry extends Fuck {
     @Override
     public boolean resolve(Combat c, Character target) {
         String premessage = premessage(c, target);
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             if (getSelf().human()) {
                 c.write(getSelf(), Global.capitalizeFirstLetter(
                                 premessage + deal(c, premessage.length(), Result.normal, target)));
-            } else if (c.shouldPrintReceive(target)) {
+            } else if (c.shouldPrintReceive(target, c)) {
                 c.write(getSelf(), premessage + receive(c, premessage.length(), Result.normal, getSelf()));
             }
             int m = 5 + Global.random(5);
@@ -56,14 +56,14 @@ public class Carry extends Fuck {
             if (getSelf().has(Trait.insertion)) {
                 otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
             }
+            c.setStance(new Standing(getSelf(), target), getSelf(), getSelf().canMakeOwnDecision());
             target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c, this);
             getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c, this);
-            c.setStance(new Standing(getSelf(), target), getSelf(), getSelf().canMakeOwnDecision());
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(), Global
                                 .capitalizeFirstLetter(premessage + deal(c, premessage.length(), Result.miss, target)));
-            } else if (c.shouldPrintReceive(target)) {
+            } else if (c.shouldPrintReceive(target, c)) {
                 c.write(getSelf(), premessage + receive(c, premessage.length(), Result.miss, target));
             }
             getSelf().add(c, new Falling(getSelf()));
@@ -78,7 +78,7 @@ public class Carry extends Fuck {
     }
 
     @Override
-    public int accuracy(Combat c) {
+    public int accuracy(Combat c, Character target) {
         return 60;
     }
 
@@ -104,7 +104,7 @@ public class Carry extends Fuck {
             return Global.format(
                             (damage > 0 ? "" : "{self:subject} ")
                                             + "picks {other:subject} up, but {other:pronoun-action:manage|manages} out of"
-                                            + " {self:posessive} grip before {self:pronoun} can do anything. Moreover, "
+                                            + " {self:possessive} grip before {self:pronoun} can do anything. Moreover, "
                                             + "{other:pronoun-action:scramble|scrambles} to trip {self:direct-object} "
                                             + "while she's distracted.",
                             getSelf(), target);
@@ -112,7 +112,7 @@ public class Carry extends Fuck {
             return Global.format(
                             (damage > 0 ? "" : "{self:subject} ")
                                             + "scoops {other:subject} up in {self:possessive} powerful arms and simultaneously thrusts"
-                                            + " {self:posessive} {self:body-part:cock} into {other:possessive} {other:body-part:pussy}.",
+                                            + " {self:possessive} {self:body-part:cock} into {other:possessive} {other:body-part:pussy}.",
                             getSelf(), target);
         }
     }

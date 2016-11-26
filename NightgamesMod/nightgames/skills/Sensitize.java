@@ -31,18 +31,22 @@ public class Sensitize extends Skill {
     }
 
     @Override
+    public int accuracy(Combat c, Character target) {
+        return getSelf().has(Item.Aersolizer) ? 200 : 65;
+    }
+
+    @Override
     public boolean resolve(Combat c, Character target) {
         getSelf().consume(Item.SPotion, 1);
         if (getSelf().has(Item.Aersolizer)) {
             writeOutput(c, Result.special, target);
-            target.add(c, new Hypersensitive(target));
-        } else if (target.roll(this, c, accuracy(c))) {
+        } else if (target.roll(getSelf(), c, accuracy(c, target))) {
             writeOutput(c, Result.normal, target);
-            target.add(c, new Hypersensitive(target));
         } else {
             writeOutput(c, Result.miss, target);
             return false;
         }
+        target.add(c, new Hypersensitive(target));
         return true;
     }
 

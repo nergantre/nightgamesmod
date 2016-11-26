@@ -24,7 +24,7 @@ public class Kiss extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return c.getStance().kiss(getSelf()) && getSelf().canAct();
+        return c.getStance().kiss(getSelf(), target) && getSelf().canAct();
     }
 
     @Override
@@ -44,10 +44,10 @@ public class Kiss extends Skill {
     }
 
     @Override
-    public int accuracy(Combat c) {
-        int accuracy = c.getStance().en == Stance.neutral ? 30 : 100;
+    public int accuracy(Combat c, Character target) {
+        int accuracy = c.getStance().en == Stance.neutral ? 50 : 100;
         if (getSelf().has(Trait.romantic)) {
-            accuracy += 40;
+            accuracy += 20;
         }
         return accuracy;
     }
@@ -55,7 +55,7 @@ public class Kiss extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         int m = Global.random(6, 10);
-        if (!target.roll(this, c, accuracy(c))) {
+        if (!target.roll(getSelf(), c, accuracy(c, target))) {
             writeOutput(c, Result.miss, target);
             return false;
         }
@@ -91,8 +91,8 @@ public class Kiss extends Skill {
         }
         writeOutput(c, res, target);
         if (res == Result.upgrade) {
-            target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, 10));
-            target.loseWillpower(c, Global.random(3) + 2);
+            target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, target.getStamina().max() / 8));
+            target.drainWillpowerAsMojo(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, 2), 2);
         }
         if (res == Result.divine) {
             target.buildMojo(c, 50);
@@ -135,7 +135,7 @@ public class Kiss extends Skill {
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
             return "You pull " + target.name()
-                            + " in for a kiss, but " + target.pronoun() + " pushes your face away. Rude.";
+                            + " in for a kiss, but " + target.pronoun() + " pushes your face away. Rude. (Maybe you should try pinning her down?)";
         }
         if (modifier == Result.divine) {
             return "You pull " + target.name()
@@ -190,7 +190,7 @@ public class Kiss extends Skill {
                             target.action("try", "tries"), getSelf().possessivePronoun(),
                             target.possessivePronoun(), getSelf().subject(), getSelf().possessivePronoun(),
                             target.nameOrPossessivePronoun(), target.possessivePronoun(), 
-                            target.subjectAction("hold"), getSelf().name());
+                            target.subjectAction("hold"), getSelf().reflectivePronoun());
         }
         if (modifier == Result.upgrade) {
             return String.format("%s seductively pulls %s into a deep kiss. As first %s %s to match %s "
@@ -205,7 +205,7 @@ public class Kiss extends Skill {
                             Global.capitalizeFirstLetter(target.subjectAction("start")),
                             target.pronoun(), target.action("realize"), getSelf().subject(),
                             target.directObject(), getSelf().possessivePronoun(), 
-                            target.nameOrPossessivePronoun(), c.bothPossessive(), 
+                            target.nameOrPossessivePronoun(), c.bothPossessive(target), 
                             Global.capitalizeFirstLetter(target.subjectAction("try", "tries")),
                             getSelf().nameOrPossessivePronoun(), target.directObject());
         }
@@ -222,7 +222,7 @@ public class Kiss extends Skill {
         } else if (modifier == Result.weak) {
             return String.format("%s presses %s lips against %s in a passionate, if not particularly skillful, kiss.",
                             getSelf().subject(), getSelf().possessivePronoun(),
-                            target.human() ? "yours" : target.possessivePronoun());
+                            target.human() ? "yours" : target.nameOrPossessivePronoun());
         } else {
             switch (Global.random(3)) {
                 case 0:
@@ -240,7 +240,7 @@ public class Kiss extends Skill {
                     return String.format("%s kisses %s softly and romantically, slowly drawing %s into %s "
                                     + "embrace. As %s part, %s teasingly brushes %s lips against %s.",
                                     getSelf().subject(), target.nameDirectObject(), target.directObject(),
-                                    getSelf().possessivePronoun(), c.bothSubject(),
+                                    getSelf().possessivePronoun(), c.bothSubject(target),
                                     getSelf().subject(), target.possessivePronoun(),
                                     target.human() ? "yours" : target.possessivePronoun());
             }

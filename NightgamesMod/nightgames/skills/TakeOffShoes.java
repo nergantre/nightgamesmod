@@ -2,8 +2,10 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.nskills.tags.SkillTag;
 
@@ -16,12 +18,12 @@ public class TakeOffShoes extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.get(Attribute.Cunning) >= 5 && !user.human();
+        return (user.get(Attribute.Cunning) >= 5 && !user.human()) || target.body.getFetish("feet").isPresent() && getSelf().has(Trait.direct);
     }
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().canAct() && !getSelf().outfit.hasNoShoes();
+        return getSelf().canAct() && c.getStance().mobile(getSelf()) && !getSelf().outfit.hasNoShoes();
     }
 
     @Override
@@ -31,16 +33,17 @@ public class TakeOffShoes extends Skill {
 
     @Override
     public float priorityMod(Combat c) {
-        return -10.0f;
+        return 0.0f;
     }
 
     @Override
     public boolean resolve(Combat c, Character target) {
         getSelf().strip(ClothingSlot.feet, c);
-        if (getSelf().human()) {
-            deal(c, 0, null, target);
+        if (target.body.getFetish("feet").isPresent() && target.body.getFetish("feet").get().magnitude > .25) {
+            writeOutput(c, Result.special, target);
+            target.tempt(c, getSelf(), getSelf().body.getRandom("feet"), Global.random(17, 26));
         } else {
-            receive(c, 0, null, target);            
+            writeOutput(c, Result.normal, target);
         }
         return true;
     }
@@ -52,16 +55,25 @@ public class TakeOffShoes extends Skill {
 
     @Override
     public Tactics type(Combat c) {
-        return Tactics.misc;
+        Character target = c.getOpponent(getSelf());
+        return target.body.getFetish("feet").isPresent() && target.body.getFetish("feet").get().magnitude > .25 ? Tactics.pleasure : Tactics.misc;
     }
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
+        if (modifier == Result.special) {
+            return Global.format("{self:SUBJECT} take a moment to slide off {self:possessive} footwear with slow exaggerated motions. {other:SUBJECT-ACTION:gulp|gulps}. "
+                            + "While {other:pronoun-action:know|knows} what {self:pronoun} are doing, it changes nothing as desire fills {other:possessive} eyes.", getSelf(), target);
+        }
         return "You take a moment to kick off your footwear.";
     }
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
+        if (modifier == Result.special) {
+            return Global.format("{self:SUBJECT} takes a moment to slide off {self:possessive} footwear with slow exaggerated motions. {other:SUBJECT-ACTION:gulp|gulps}. "
+                            + "While {other:pronoun-action:know|knows} what {self:pronoun} is doing, it changes nothing as desire fills {other:possessive} eyes.", getSelf(), target);
+        }
         return getSelf().subject() + " takes a moment to kick off " + getSelf().possessivePronoun() + " footwear.";
     }
 }

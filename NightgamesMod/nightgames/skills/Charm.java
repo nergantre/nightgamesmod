@@ -17,7 +17,7 @@ public class Charm extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().canRespond() && c.getStance().facing() && !target.wary();
+        return getSelf().canRespond() && c.getStance().facing(getSelf(), target) && !target.wary();
     }
 
     @Override
@@ -32,7 +32,7 @@ public class Charm extends Skill {
             return false;
         }
         writeOutput(c, Result.normal, target);
-        double mag = 2 + Global.random(4) + 5 * getSelf().body.getCharismaBonus(target);
+        double mag = 2 + Global.random(4) + 2 * getSelf().body.getHotness(target);
         if (target.has(Trait.imagination)) {
             mag += 4;
         }
@@ -41,7 +41,7 @@ public class Charm extends Skill {
         double chance = (5 + Math.sqrt(Math.max(0, mag))) / 10.0;
         double roll = Global.randomdouble();
         if (chance > roll) {
-            c.write(target.subjectAction("were", "was") + " charmed.");
+            c.write(getSelf(), target.subjectAction("were", "was") + " charmed.");
             target.add(c, new Charmed(target));
             target.emote(Emotion.horny, 10);
             getSelf().emote(Emotion.confident, 20);

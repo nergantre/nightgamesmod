@@ -25,6 +25,12 @@ public abstract class Position implements Cloneable {
         time = 0;
     }
 
+    public void setOtherCombatants(List<? extends Character> others) {}
+
+    public Character domSexCharacter(Combat c) {
+        return top;
+    }
+
     public int pinDifficulty(Combat c, Character self) {
         return 4;
     }
@@ -60,11 +66,13 @@ public abstract class Position implements Cloneable {
         return 0;
     }
 
-    public abstract String describe();
+    public abstract int distance();
+
+    public abstract String describe(Combat c);
 
     public abstract boolean mobile(Character c);
 
-    public abstract boolean kiss(Character c);
+    public abstract boolean kiss(Character c, Character target);
 
     public abstract boolean dom(Character c);
 
@@ -76,9 +84,9 @@ public abstract class Position implements Cloneable {
 
     public abstract boolean prone(Character c);
 
-    public abstract boolean feet(Character c);
+    public abstract boolean feet(Character c, Character target);
 
-    public abstract boolean oral(Character c);
+    public abstract boolean oral(Character c, Character target);
 
     public abstract boolean behind(Character c);
 
@@ -92,30 +100,34 @@ public abstract class Position implements Cloneable {
 
     public abstract boolean inserted(Character c);
 
+    public boolean penisInserted(Character c) {
+        return inserted(c) || c.is(Stsflag.inserted);
+    }
+
     public abstract String image();
 
     public boolean inserted() {
         return inserted(top) || inserted(bottom);
     }
 
-    public Position insert(Character pitcher, Character dom) {
+    public Position insert(Combat c, Character pitcher, Character dom) {
         return this;
     }
 
-    public Position insertRandom() {
-        return insertRandomDom(top);
+    public Position insertRandom(Combat c) {
+        return insertRandomDom(c, top);
     }
 
-    public Collection<Skill> availSkills(Character c) {
+    public Collection<Skill> availSkills(Combat c, Character self) {
         return Collections.emptySet();
     }
 
-    public boolean canthrust(Character c) {
-        return dom(c) || c.has(Trait.powerfulhips);
+    public boolean canthrust(Combat c, Character self) {
+        return domSexCharacter(c) == self || self.has(Trait.powerfulhips);
     }
 
-    public boolean facing() {
-        return !behind(top) && !behind(bottom);
+    public boolean facing(Character c, Character target) {
+        return (!behind(top) && !behind(bottom)) || (c != bottom && c != top) || (target != bottom && target != top);
     }
 
     public float priorityMod(Character self) {
@@ -136,7 +148,8 @@ public abstract class Position implements Cloneable {
                         && self.canAct();
     }
 
-    public Stance enumerate() {
+    public Stance 
+    enumerate() {
         return en;
     }
 
@@ -154,7 +167,7 @@ public abstract class Position implements Cloneable {
         return null;
     }
 
-    public Position reverse(Combat c) {
+    public Position reverse(Combat c, boolean writeMessage) {
         Position newStance;
         try {
             newStance = clone();
@@ -168,32 +181,32 @@ public abstract class Position implements Cloneable {
         return newStance;
     }
 
-    public boolean anallyPenetrated() {
-        return anallyPenetrated(top) || anallyPenetrated(bottom);
+    public boolean anallyPenetrated(Combat combat) {
+        return anallyPenetrated(combat, top) || anallyPenetrated(combat, bottom);
     }
 
-    public boolean anallyPenetrated(Character self) {
-        List<BodyPart> parts = partsFor(self);
+    public boolean anallyPenetrated(Combat combat, Character self) {
+        List<BodyPart> parts = partsFor(combat, self);
         return BodyPart.hasType(parts, "ass") || self.is(Stsflag.pegged);
     }
 
-    public Position insertRandomDom(Character target) {
+    public Position insertRandomDom(Combat c, Character target) {
         return this;
     }
 
-    public Character getOther(Character c) {
-        if (c == top) {
+    public Character getPartner(Combat c, Character self) {
+        if (self == top) {
             return bottom;
         } else {
             return top;
         }
     }
 
-    public boolean paizuri(Character self) {
-        return oral(self);
+    public boolean paizuri(Character self, Character target) {
+        return oral(self, target);
     }
 
-    public List<BodyPart> topParts() {
+    public List<BodyPart> topParts(Combat c) {
         if (inserted()) {
             throw new UnsupportedOperationException("Attempted to get topPart in position " + getClass().getSimpleName()
                             + ", but that position does not override the appropriate method.");
@@ -210,85 +223,95 @@ public abstract class Position implements Cloneable {
         return Collections.emptyList();
     }
 
-    public BodyPart insertedPartFor(Character c) {
-        return partsFor(c).stream().filter(part -> part.isType("cock") || part.isType("strapon")).findAny()
+    public BodyPart insertedPartFor(Combat combat, Character c) {
+        return partsFor(combat, c).stream().filter(part -> part.isType("cock") || part.isType("strapon")).findAny()
                         .orElse(Body.nonePart);
     }
 
-    public BodyPart insertablePartFor(Character c) {
-        BodyPart res = pussyPartFor(c);
+    public BodyPart insertablePartFor(Combat combat, Character c) {
+        BodyPart res = pussyPartFor(combat, c);
         if (res.isType("none")) {
-            return assPartFor(c);
+            return assPartFor(combat, c);
         } else {
             return res;
         }
     }
 
-    public BodyPart pussyPartFor(Character c) {
-        return partsFor(c).stream().filter(part -> part.isType("pussy")).findAny().orElse(Body.nonePart);
+    public BodyPart pussyPartFor(Combat combat, Character c) {
+        return partsFor(combat, c).stream().filter(part -> part.isType("pussy")).findAny().orElse(Body.nonePart);
     }
 
-    public BodyPart assPartFor(Character c) {
-        return partsFor(c).stream().filter(part -> part.isType("ass")).findAny().orElse(Body.nonePart);
+    public BodyPart assPartFor(Combat combat, Character c) {
+        return partsFor(combat, c).stream().filter(part -> part.isType("ass")).findAny().orElse(Body.nonePart);
     }
 
-    public List<BodyPart> partsFor(Character c) {
-        return c.equals(top) ? topParts() : bottomParts();
+    public List<BodyPart> partsFor(Combat combat, Character c) {
+        if (c.equals(top)) {
+            return topParts(combat);
+        } else if (c.equals(bottom)) {
+            return bottomParts();
+        } else {
+            return Collections.emptyList();
+        }
     }
 
-    public boolean vaginallyPenetrated() {
-        return vaginallyPenetrated(top) || vaginallyPenetrated(bottom);
+    public boolean vaginallyPenetrated(Combat c) {
+        return vaginallyPenetrated(c, top) || vaginallyPenetrated(c, bottom);
     }
 
-    public boolean penetrated(Character c) {
-        return vaginallyPenetrated(c) || anallyPenetrated(c);
+    public boolean penetrated(Combat combat, Character c) {
+        return vaginallyPenetrated(combat, c) || anallyPenetrated(combat, c);
     }
 
-    public boolean vaginallyPenetrated(Character c) {
-        List<BodyPart> parts = partsFor(c);
+    public boolean vaginallyPenetrated(Combat combat, Character c) {
+        List<BodyPart> parts = partsFor(combat, c);
         return (BodyPart.hasType(parts, "pussy") && inserted()) || c.is(Stsflag.fucked);
     }
 
-    public boolean havingSexOtherNoStrapped(Character c) {
-        Character other = getOther(c);
-        return penetratedBy(other, c) || penetratedBy(c, other) && !other.has(Trait.strapped);
+    public boolean havingSexOtherNoStrapped(Combat c, Character self) {
+        Character other = getPartner(c, self);
+        return penetratedBy(c, other, self) || penetratedBy(c, self, other) && !other.has(Trait.strapped);
     }
 
-    public boolean havingSexNoStrapped() {
-        return penetratedBy(top, bottom) && !bottom.has(Trait.strapped)
-                        || penetratedBy(bottom, top) && !top.has(Trait.strapped);
+    public boolean havingSexNoStrapped(Combat c) {
+        return penetratedBy(c, top, bottom) && !bottom.has(Trait.strapped)
+                        || penetratedBy(c, bottom, top) && !top.has(Trait.strapped);
     }
 
-    public boolean havingSex() {
-        return penetratedBy(top, bottom) || penetratedBy(bottom, top);
+    public boolean havingSex(Combat c) {
+        return penetratedBy(c, domSexCharacter(c), bottom) || penetratedBy(c, bottom, domSexCharacter(c));
     }
 
-    public boolean penetratedBy(Character inserted, Character inserter) {
-        return vaginallyPenetratedBy(inserted, inserter) || anallyPenetratedBy(inserted, inserter);
+    public boolean havingSex(Combat c, Character self) {
+        return penetratedBy(c, domSexCharacter(c), self) || penetratedBy(c, self, domSexCharacter(c));
     }
 
-    public boolean vaginallyPenetratedBy(Character self, Character other) {
-        if (other != getOther(self)) {
+    public boolean penetratedBy(Combat c, Character inserted, Character inserter) {
+        return vaginallyPenetratedBy(c, inserted, inserter) || anallyPenetratedBy(c, inserted, inserter);
+    }
+
+    public boolean vaginallyPenetratedBy(Combat c, Character self, Character other) {
+        if (other != getPartner(c, self)) {
             return false;
         }
-        List<BodyPart> parts = partsFor(self);
-        List<BodyPart> otherParts = partsFor(other);
+        List<BodyPart> parts = partsFor(c, self);
+        List<BodyPart> otherParts = partsFor(c, other);
         return BodyPart.hasType(parts, "pussy")
                         && (BodyPart.hasType(otherParts, "cock") || BodyPart.hasType(otherParts, "strapon"));
     }
 
-    public boolean anallyPenetratedBy(Character self, Character other) {
-        if (other != getOther(self)) {
+    public boolean anallyPenetratedBy(Combat c, Character self, Character other) {
+        if (other != getPartner(c, self)) {
             return false;
         }
-        List<BodyPart> parts = partsFor(self);
-        List<BodyPart> otherParts = partsFor(other);
+        List<BodyPart> parts = partsFor(c, self);
+        List<BodyPart> otherParts = partsFor(c, other);
         return (BodyPart.hasType(parts, "ass")
                         && (BodyPart.hasType(otherParts, "cock") || BodyPart.hasType(otherParts, "strapon"))) && inserted();
     }
 
-    public boolean connected() {
-        return anallyPenetrated() || vaginallyPenetrated() || inserted();
+    public boolean connected(Combat c) {
+        return anallyPenetrated(c) || vaginallyPenetrated(c) || inserted();
     }
 
     public boolean faceAvailable(Character target) {
@@ -311,5 +334,47 @@ public abstract class Position implements Cloneable {
 
     public String name() {
         return getClass().getSimpleName();
+    }
+
+    /**
+     * Stances have a dominance rating that benefits the dominant character, queried from Position.dominance().
+     * 0: Not dominant at all. Seen in the Neutral position.
+     * 1: Very give-and-take. Seen in the 69 position.
+     * 2: Slightly dominant. Found in the TribadismStance and Mount positions.
+     * 3: Average dominance. Missionary, Kneeling, Standing, and other "vanilla" positions all have this rating.
+     * 4: High dominance. Anal positions and Pin are examples of positions with this rating.
+     * 5: Absurd dominance. Exotic positions like Engulfed and FlyingCarry have this rating, as well as the more mundane FaceSitting and Smothering.
+     *
+     * @param self The character whose traits are checked to modify the current stance's dominance score.
+     * @return The dominance of the current position, modified by one combatant's traits. Higher return values cause more willpower loss on each combat tick.
+     * If a character is not the dominant character of the position, their effective dominance is 0.
+     */
+    public int getDominanceOfStance(Character self) {
+        if (sub(self)) {
+            return 0;
+        }
+        int stanceDominance = dominance();
+        // It is unexpected, but not catastrophic if a character is at once a natural dom and submissive.
+        if (self.has(Trait.naturalTop)) {
+            // Rescales stance dominance values from 0-1-2-3-4-5 to 0-2-3-5-6-8
+            stanceDominance = Double.valueOf(Math.ceil(stanceDominance * 1.5)).intValue();
+        }
+        if (self.has(Trait.submissive)) {
+            // Rescales stance dominance values from 0-1-2-3-4-5 to 0-0-1-1-2-3
+            stanceDominance = Double.valueOf(Math.floor(stanceDominance * 0.6)).intValue();
+        }
+        return Math.max(0, stanceDominance);
+    }
+
+    public boolean isBeingFaceSatBy(Combat c, Character self, Character target) {
+        return isFacesatOn(self) && isFaceSitting(target);
+    }
+
+    public boolean isFaceSitting(Character self) {
+        return false;
+    }
+
+    public boolean isFacesatOn(Character self) {
+        return false;
     }
 }

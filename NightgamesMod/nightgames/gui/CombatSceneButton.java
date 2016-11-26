@@ -6,6 +6,7 @@ import javax.swing.JButton;
 
 import nightgames.combat.Combat;
 import nightgames.combat.CombatSceneChoice;
+import nightgames.global.Global;
 
 public class CombatSceneButton extends JButton {
     /**
@@ -17,8 +18,10 @@ public class CombatSceneButton extends JButton {
         super(label);
         setFont(new Font("Baskerville Old Face", 0, 18));
         addActionListener(arg0 -> {
+            c.write("<br>");
             choice.choose(c, npc);
-            c.end();
+            c.updateMessage();
+            Global.gui().next(c);
         });
     }
 }

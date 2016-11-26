@@ -72,8 +72,8 @@ public class CombatantData implements Cloneable {
         flags.put(key, val);
     }
 
-    public void setFloatFlag(String key, int val) {
-        flags.put(key, val);
+    public void setDoubleFlag(String key, double d) {
+        flags.put(key, d);
     }
 
     public int getIntegerFlag(String key) {
@@ -84,8 +84,12 @@ public class CombatantData implements Cloneable {
         return flags.containsKey(key) ? flags.get(key).intValue() != 0 : false;
     }
 
-    public float getFloatFlag(String key) {
-        return flags.containsKey(key) ? flags.get(key).floatValue() : 0f;
+    public void setBooleanFlag(String key, boolean val) {
+        flags.put(key, val ? Integer.valueOf(1) : Integer.valueOf(0));
+    }
+
+    public double getDoubleFlag(String key) {
+        return flags.getOrDefault(key, Double.valueOf(0)).doubleValue();
     }
 
     public String getLastUsedSkillName() {

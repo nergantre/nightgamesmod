@@ -90,9 +90,7 @@ public enum Trait {
                                              // action
     desensitized("Desensitized", "Sex is old hat now"), // Reyka Sex perk slight
                                                         // pleasure reduction
-    desensitized2("Desensitized 2", "Only the strongest stimulation gets you off"), // Reyka Sex perk
-                                                                                    // slight pleasure
-                                                                                    // reduction
+    desensitized2("Desensitized 2", "Only the strongest stimulation gets you off"),
     RawSexuality("Raw Sexuality", "Constant lust boost for you and your opponent in battle", (b, c, t) -> {
         if (c.human()) {
             b.append("You exude");
@@ -107,6 +105,9 @@ public enum Trait {
     aikidoNovice("Aikido Novice", "Improved counterattack rate"), // Kat
                                                                   // Sparring
                                                                   // perk
+    tease("Tease", "Build mojo from dodging"),     // Kat
+                                                   // game
+                                                   // perk
     analFanatic("Anal Fanatic", "Lives for fucking ass"),
 
     // Passive Skills
@@ -136,6 +137,8 @@ public enum Trait {
     frenzyingjuices("Frenzying juices", "Frenzying juices"),
     lacedjuices("Laced Juices", "Intoxicating bodily fluids"), // opponents take temptation when using oral skills
     addictivefluids("Addictive Fluids", "Addictive bodily fluids"), // opponents can only use oral skills if available
+    temptingtits("Tempting Tits", "Perfectly shaped and oh-so-tempting."),
+    beguilingbreasts("Beguiling Breasts", "Glamourous breasts can put you in trance"), // the first time in a fight that you see bare breasts you are entranced
     lactating("Lactating", "Breasts produces milk", new TraitDescription() {
         public void describe(StringBuilder b, Character c, Trait t) {
             if (!c.human()) {
@@ -150,11 +153,13 @@ public enum Trait {
             }
         }
     }),
+    sedativecream("Sedative Cream", "Lactate that weakens the drinker"), // the first time in a fight that you see bare breasts you are entranced
 
     defthands("Deft hands", "They know where to go"), // hands damage upgrade
     nimbletoes("Nimble toes", "Good both in the street and in the bed."), // feet damage upgrade
     polecontrol("Pole Control", "Always hit the right spots"), // Dick damage upgrade
     hypnoticsemen("Hypnotic Semen", "Cum drains willpower"), // Semen willpower damage trait
+    sweetlips("Sweet lips", "Enticing lips makes kissing dangerous"), // more kickback damage from kiss
     testosterone("Testosterone", "More powerful muscles"), // Having a cock gives + to power
     pussyhandler("Pussy Handler", "Expert at pleasing the pussy"), // Bonus damage to pussies
     dickhandler("Dick Handler", "Expert at pleasing cocks"), // Bonus damage to cocks
@@ -169,7 +174,7 @@ public enum Trait {
     mindcontroller("Mind Controller", "Can take control of others' minds. Inventive, yes?"),
     darkpromises("Dark Promises", "Can enthrall with the right words"), // whisper upgrade, can enthrall
     dominatrix("Dominatrix", "Relishes in hurting and humiliating partners."),
-    
+
     energydrain("Energy Drain", "Drains energy during intercourse"),
     objectOfWorship("Object Of Worship", "Opponents is periodically forced to worship your body.",
                     (b, c, t) -> b.append("A divine aura surrounds " + c.nameDirectObject() + ".")),
@@ -181,21 +186,30 @@ public enum Trait {
     autonomousAss("Autonomous Ass", "Asshole instinctively forces anything inside of it to cum."),
     fetishTrainer("Fetish Trainer", "Capable of developing others' fetishes."),
     insertion("Insertion Master", "More pleasure on insertion"), // more damage on insertion.
+    hawkeye("Hawk Eye", "More accurate"), // 5% additional accuracy
     proheels("Heels Pro", "Pro at walking around in heels"), // no speed penalty from heels
     masterheels("Heels Master", "Master at moving in heels, resists knockdowns"), // graceful when wearing heels
     naturalgrowth("Natural Growth", "Always keeps up on levels"), // levels up to highest level + 2 after each night
     unnaturalgrowth("Unnatural Growth", "Always keeps up on levels"), // levels up to highest level + 5 after each night
+    devoteeFervor("Devotee Fervor", "Pets can sometimes act twice"),
+    congregation("Congregation", "Doubles the amount of allowed pets"),
+    sexualDynamo("Sexual Dynamo", "Gain mojo when pleasured, gain seduction when cumming"),
+    inspirational("Inspirational", "Shares certain sexual traits with followers."),
+    lastStand("Last Stand", "When cumming while having sex, automatically uses one final skill."),
+    sacrosanct("Sacrosanct", "Too sacred to hurt."),
+    mandateOfHeaven("Mandate of Heaven", "Temptation demands worship."),
+    piety("Piety", "If worshipping when dominating at sex, switch positions."),
+    showmanship("Showmanship", "Tempt the opponent when pleasured by pets."),
+    genuflection("Genuflection", "Sometimes opponents kneel instead of getting up."),
+    apostles("Apostles", "Endless followers"),
 
     // training perks
     analTraining1("Anal Training 1", "Refined ass control."),
     analTraining2("Anal Training 2", "Perfected ass control."),
     analTraining3("Anal Training 3", "Godly ass control."),
-    pussyTraining1("Pussy Training 1", "Refined vaginal control."),
-    pussyTraining2("Pussy Training 2", "Perfected vaginal control."),
-    pussyTraining3("Pussy Training 3", "Godly vaginal control."),
-    cockTraining1("Cock Training 1", "Refined cock control."),
-    cockTraining2("Cock Training 2", "Perfected cock control."),
-    cockTraining3("Cock Training 3", "Godly cock control."),
+    sexTraining1("Sex Training 1", "Refined sex techniques."),
+    sexTraining2("Sex Training 2", "Perfected sex techniques."),
+    sexTraining3("Sex Training 3", "Godly sex techniques."),
     tongueTraining1("Tongue Training 1", "Refined tongue control."),
     tongueTraining2("Tongue Training 2", "Perfected tongue control."),
     tongueTraining3("Tongue Training 3", "Godly tongue control."),
@@ -222,6 +236,7 @@ public enum Trait {
     opportunist("Opportunist", "Always ready to stuff someone's backside."),
     carnalvirtuoso("Carnal Virtuoso", "Opponents cums twice"),
     toymaster("Toymaster", "Expert at using toys."),
+
     // Weaknesses
     ticklish("Ticklish", "Can be easily tickled into submission"), // more weaken damage and arousal from tickle
     insatiable("Insatiable", "One orgasm is never enough"), // arousal doesn't completely clear at end of match
@@ -261,6 +276,17 @@ public enum Trait {
     dryad("Dryad", "Part girl, part tree."),
     temptress("Temptress", "Well versed in the carnal arts."),
     ninja("Ninja", "A shadowy servant."),
+    fallenAngel("Fallen Angel", "An angelic being led astray"),
+    valkyrie("Valkyrie", "A battle angel, enforcer of a Goddess's will"),
+    kabbalah("Kabbalah", "A keeper of ancient arcana."),
+    gluttony("Gluttony", "Increases amount drained."),
+    oblivious("Oblivious", "Almost immune to temptation"),
+    overwhelmingPresence("Overwhelming Presence", "Aura passively weakens opponents"),
+    resurrection("Resurrection", "This follower must be downed twice"),
+    healer("Healer", "Shares energy with the master"),
+    supplicant("Supplicant", "Always worships the master"),
+    protective("Protective", "Shields the master from unwanted statuses."),
+    slimification("Slimification", "May fall into slime form on orgasm"),
 
     // Class subtrait
     divinity("Divinity", "Has aspects of divinity."),
@@ -292,7 +318,7 @@ public enum Trait {
     repressed("Repressed", "Sexually represssed, lower seduction"),
     // Feats
     sprinter("Sprinter", "Better at escaping combat"),
-    QuickRecovery("Quick Recovery", "Regain stamina rapidly out of combat"),
+    QuickRecovery("Quick Recovery", "Regain stamina rapidly"),
     Sneaky("Sneaky", "Easier time hiding and ambushing competitors"),
     PersonalInertia("Personal Inertia", "Status effects (positive and negative) last 50% longer"),
     Confident("Confident", "Mojo decays slower out of combat"),
@@ -304,11 +330,11 @@ public enum Trait {
     sympathetic("Sympathetic", "Intervening opponents are more likely to side with you"),
     fastLearner("Fast Learner", "Improved experience gain"),
     leadership("Leadership", "Summoned pets are more powerful"),
-    tactician("Tactician", "Summoned pets have higher evasion"),
+    tactician("Tactician", "Summoned pets have higher evasion and higher endurance."),
     faefriend("Fae Friend", "Less effort to summon Faeries"),
     fitnessNut("Fitness Nut", "More efficient at exercising"),
     expertGoogler("Expert Googler", "More efficient at finding porn"),
-    mojoMaster("Mojo Master", "Max Mojo increases faster"),
+    mojoMaster("Mojo Master", "Increases max mojo by 20"),
     powerfulhips("Powerful Hips", "Can grind from submissive positions"),
     strongwilled("Strong Willed", "Lowers willpower loss from orgasms"),
     nymphomania("Nymphomania", "Restores willpower upon orgasm"),
@@ -326,6 +352,30 @@ public enum Trait {
     cautious("Cautious", "Better chance of avoiding traps"),
     responsive("Responsive", "Return more pleasure when being fucked"),
     assmaster("Ass Master", "Who needs lube? Also boosts pleasure to both parties when assfucking"),
+    
+    // Jewel's unique traits
+    powerfulcheeks("Powerful Cheeks", "As in asscheeks. Makes pulling out more difficult."),
+    temptingass("Tempting Ass", "Opponent's can't help butt fuck it"), // ... sorry
+    disablingblows("Disabling Blows", "Painful attacks may reduce Power"),
+    takedown("Takedown", "Expert at tackling weary opponents"),
+    indomitable("Indomitable", "Plainly refuses to be dominated"),
+    confidentdom("Confident Dom", "Attributes rise while dominant"),
+    drainingass("Draining Ass", "Taking it in the ass drains stamina an possibly Power"),
+    edger("Edger", "Can keep oppoenents right at the edge"),
+    commandingvoice("Commanding Voice", "Does not take 'no' for an answer"),
+    mentalfortress("Mental Fortress", "Confident enough to have a chance to resist mind control"),
+    bewitchingbottom("Bewitching Bottom", "Makes opponents go wild for ass"),
+    unquestionable("Unquestionable", "Does not tolerate resistance when on top"),
+    grappler("Grappler", "Bonus to hold strength"),
+    suave("Suave", "Bonus increases seduction vs girls."),
+    
+    // Mara's unique traits
+    harpoon("Harpoon Toy", "Can launch a harpoon-like sex toy from their arm device"),
+    yank("Yank", "Can yank opponents to the ground if they have a harpoon toy on them"),
+    conducivetoy("Conducive Toy", "Greatly buffs Stun Blast against harpoon-ed opponents"),
+    intensesuction("Intense Suction", "Has a chance to cause a double orgasm with the harpoon toy"),
+    bomber("Bomber", "Can throw dangerous Pheromone Bombs"),
+    
     // Item
     strapped("Strapped", "Penis envy", (b, c, t) -> {
         if (c.human()) {
@@ -338,6 +388,7 @@ public enum Trait {
     event("event", "special character"),
     mindcontrolresistance("", "temporary resistance to mind games - hidden"),
     none("", "");
+    
     private String desc;
     private TraitDescription longDesc;
     private String name;
@@ -392,15 +443,15 @@ public enum Trait {
     public static Resistance nullResistance;
 
     static {
-        nullResistance = (c, s) -> "";
+        nullResistance = (combat, c, s) -> "";
         resistances = new HashMap<>();
-        resistances.put(shameless, (c, s) -> {
+        resistances.put(shameless, (combat, c, s) -> {
             if (s.flags().contains(Stsflag.shamed) || s.flags().contains(Stsflag.distracted)) {
                 return "Shameless";
             }
             return "";
         });
-        resistances.put(Trait.freeSpirit, (c, s) -> {
+        resistances.put(Trait.freeSpirit, (combat, c, s) -> {
             // 30% to resist enthrall and bound
             if ((s.flags().contains(Stsflag.enthralled) || s.flags().contains(Stsflag.bound))
                             && Global.random(100) < 30) {
@@ -408,7 +459,7 @@ public enum Trait {
             }
             return "";
         });
-        resistances.put(Trait.calm, (c, s) -> {
+        resistances.put(Trait.calm, (combat, c, s) -> {
             // 50% to resist horny and hypersensitive
             if ((s.flags().contains(Stsflag.horny) || s.flags().contains(Stsflag.hypersensitive))
                             && Global.random(100) < 50) {
@@ -416,44 +467,43 @@ public enum Trait {
             }
             return "";
         });
-        resistances.put(Trait.skeptical, (c, s) -> {
+        resistances.put(Trait.skeptical, (combat, c, s) -> {
             // 30% to resist mindgames
             if (s.mindgames() && Global.random(100) < 30) {
                 return "Skeptical";
             }
             return "";
         });
-        resistances.put(Trait.masterheels, (c, s) -> {
+        resistances.put(Trait.masterheels, (combat, c, s) -> {
             // 33% to resist falling wearing heels
             if (c.has(ClothingTrait.heels) && s.flags().contains(Stsflag.falling) && Global.random(100) < 33) {
                 return "Heels Master";
             }
             return "";
         });
-        resistances.put(Trait.graceful, (c, s) -> {
+        resistances.put(Trait.graceful, (combat, c, s) -> {
             // 25% to resist falling
             if (s.flags().contains(Stsflag.falling) && Global.random(100) < 25) {
                 return "Graceful";
             }
             return "";
         });
-        resistances.put(Trait.steady, (c, s) -> {
+        resistances.put(Trait.steady, (combat, c, s) -> {
             // 100% to resist falling
             if (s.flags().contains(Stsflag.falling)) {
                 return "Steady";
             }
             return "";
         });
-        resistances.put(Trait.naive, (c, s) -> {
+        resistances.put(Trait.naive, (combat, c, s) -> {
             // 50% to resist Cynical
             if (s.flags().contains(Stsflag.cynical) && Global.random(100) < 50) {
                 return "Naive";
             }
             return "";
         });
-        resistances.put(Trait.mindcontrolresistance, (c, s) -> {
-            // TODO: We should not be getting combat information from the gui; the gui should be focused on display and interaction.
-           if (s.mindgames() && !Global.gui().combat.getOther(c).has(Trait.mindcontroller)) {
+        resistances.put(Trait.mindcontrolresistance, (combat, c, s) -> {
+           if (s.mindgames() && combat != null && combat.getOpponent(c).has(Trait.mindcontroller)) {
                float magnitude =
                                Global.getPlayer().getAddiction(AddictionType.MIND_CONTROL).map(Addiction::getMagnitude)
                                                .orElse(0f);
@@ -461,6 +511,12 @@ public enum Trait {
                if (Global.random(100) < threshold) {
                    return "Mara's Control";
                }
+           }
+           return "";
+        });
+        resistances.put(Trait.mentalfortress, (combat, c, s) -> {
+           if (s.mindgames() && (c.getStamina().percent()*3 / 4) > Global.random(100)) {
+               return "Mental Fortress";
            }
            return "";
         });

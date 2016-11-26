@@ -19,14 +19,13 @@ public class TortoiseWrap extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return getSelf().getPure(Attribute.Fetish) >= 21;
+        return getSelf().getPure(Attribute.Fetish) >= 24;
     }
 
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().canAct() && c.getStance().reachTop(getSelf()) && !c.getStance().reachTop(target)
-                        && getSelf().has(Item.Rope) && c.getStance().dom(getSelf()) && !target.is(Stsflag.tied)
-                        && getSelf().is(Stsflag.bondage);
+                        && getSelf().has(Item.Rope) && c.getStance().dom(getSelf()) && !target.is(Stsflag.tied);
     }
 
     @Override

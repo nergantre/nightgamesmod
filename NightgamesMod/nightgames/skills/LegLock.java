@@ -14,7 +14,7 @@ public class LegLock extends Skill {
 
     public LegLock(Character self) {
         super("Leg Lock", self);
-        addTag(SkillTag.positioning);
+        // addTag(SkillTag.positioning); it's not, right?
         addTag(SkillTag.hurt);
         addTag(SkillTag.staminaDamage);
     }
@@ -22,15 +22,15 @@ public class LegLock extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return c.getStance().dom(getSelf()) && c.getStance().reachBottom(getSelf()) && c.getStance().prone(target)
-                        && getSelf().canAct() && !c.getStance().connected();
+                        && getSelf().canAct() && !c.getStance().connected(c);
     }
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             writeOutput(c, Result.normal, target);
             target.add(c, new Abuff(target, Attribute.Speed, -2, 5));
-            target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(10, 16)));
+            target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(10, 16)));
             target.emote(Emotion.angry, 15);
         } else {
             writeOutput(c, Result.miss, target);

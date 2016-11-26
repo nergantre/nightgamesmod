@@ -8,6 +8,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.status.Enthralled;
+import nightgames.status.Trance;
 
 public class Tempt extends Skill {
 
@@ -27,7 +28,7 @@ public class Tempt extends Skill {
 
         if (c.getStance().front(getSelf())) {
             // opponent can see self
-            m += 3 * getSelf().body.getCharismaBonus(target);
+            m += 2 * getSelf().body.getHotness(target);
         }
 
         if (target.has(Trait.imagination)) {
@@ -43,6 +44,11 @@ public class Tempt extends Skill {
                             Global.format("{self:NAME-POSSESSIVE} words fall on fertile grounds. {other:NAME-POSSESSIVE} will to resist crumbles in light of {self:possessive} temptation.",
                                             getSelf(), target));
             target.add(c, new Enthralled(target, getSelf(), 3));
+        } else if (getSelf().has(Trait.commandingvoice) && Global.random(3) == 0) {
+            c.write(getSelf(), Global.format("{other:SUBJECT-ACTION:speak|speaks} with such unquestionable"
+                            + " authority that {self:subject-action:don't|doesn't} even consider not obeying."
+                            , getSelf(), target));
+            target.add(new Trance(target, 1));
         }
 
         target.tempt(c, getSelf(), n);
@@ -73,12 +79,12 @@ public class Tempt extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().temptLiner(c);
+        return getSelf().temptLiner(c, target);
     }
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().temptLiner(c);
+        return getSelf().temptLiner(c, target);
     }
 
     @Override

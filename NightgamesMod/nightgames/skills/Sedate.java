@@ -25,16 +25,21 @@ public class Sedate extends Skill {
     }
 
     @Override
+    public int accuracy(Combat c, Character target) {
+        return getSelf().has(Item.Aersolizer) ? 200 : 65;
+    }
+
+    @Override
     public boolean resolve(Combat c, Character target) {
         getSelf().consume(Item.Sedative, 1);
         if (getSelf().has(Item.Aersolizer)) {
             writeOutput(c, Result.special, target);
-            target.weaken(c, (int) getSelf().modifyDamage(DamageType.gadgets, target,30));
-            target.loseMojo(c, (int) getSelf().modifyDamage(DamageType.gadgets, target,25));
-        } else if (target.roll(this, c, accuracy(c))) {
+            target.weaken(c, (int) getSelf().modifyDamage(DamageType.biological, target, 50));
+            target.loseMojo(c, (int) getSelf().modifyDamage(DamageType.biological, target, 35));
+        } else if (target.roll(getSelf(), c, accuracy(c, target))) {
             writeOutput(c, Result.normal, target);
-            target.weaken(c, (int) getSelf().modifyDamage(DamageType.gadgets, target,30));
-            target.loseMojo(c, (int) getSelf().modifyDamage(DamageType.gadgets, target,25));
+            target.weaken(c, (int) getSelf().modifyDamage(DamageType.biological, target, 50));
+            target.loseMojo(c, (int) getSelf().modifyDamage(DamageType.biological, target, 35));
         } else {
             writeOutput(c, Result.miss, target);
             return false;
@@ -88,6 +93,6 @@ public class Sedate extends Skill {
 
     @Override
     public String describe(Combat c) {
-        return "Throw a sedative at your opponent, weakening " + c.getOther(getSelf()).directObject();
+        return "Throw a sedative at your opponent, weakening " + c.getOpponent(getSelf()).directObject();
     }
 }

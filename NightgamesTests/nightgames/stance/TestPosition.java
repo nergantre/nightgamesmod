@@ -1,6 +1,7 @@
 package nightgames.stance;
 
 import nightgames.characters.Character;
+import nightgames.combat.Combat;
 
 /**
  * Test position. Top character is dominant.
@@ -17,7 +18,7 @@ public class TestPosition extends Position {
         return dominance;
     }
 
-    @Override public String describe() {
+    @Override public String describe(Combat c) {
         return null;
     }
 
@@ -25,7 +26,7 @@ public class TestPosition extends Position {
         return false;
     }
 
-    @Override public boolean kiss(Character c) {
+    @Override public boolean kiss(Character c, Character target) {
         return false;
     }
 
@@ -49,11 +50,11 @@ public class TestPosition extends Position {
         return false;
     }
 
-    @Override public boolean feet(Character c) {
+    @Override public boolean feet(Character c, Character target) {
         return false;
     }
 
-    @Override public boolean oral(Character c) {
+    @Override public boolean oral(Character c, Character target) {
         return false;
     }
 
@@ -67,5 +68,10 @@ public class TestPosition extends Position {
 
     @Override public String image() {
         return null;
+    }
+
+    @Override
+    public int distance() {
+        return 0;
     }
 }

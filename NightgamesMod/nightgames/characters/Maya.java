@@ -23,100 +23,104 @@ public class Maya extends BasePersonality {
     }
 
     public Maya(int playerLevel, Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Maya", 50, charConfig, commonConfig);
+        super("Maya", 50, charConfig, commonConfig, false);
 
         while (character.getLevel() < playerLevel + 20) {
             character.ding();
         }
     }
 
-    protected void applyBasicStats() {
-        character.outfitPlan.add(Clothing.getByID("camisole"));
-        character.outfitPlan.add(Clothing.getByID("blouse"));
-        character.outfitPlan.add(Clothing.getByID("lacepanties"));
-        character.outfitPlan.add(Clothing.getByID("skirt"));
-        character.outfitPlan.add(Clothing.getByID("sneakers"));
-        character.outfitPlan.add(Clothing.getByID("socks"));
-        character.change();
-        character.set(Attribute.Dark, 40);
-        character.set(Attribute.Seduction, 66);
-        character.set(Attribute.Cunning, 39);
-        character.set(Attribute.Speed, 17);
-        character.set(Attribute.Power, 36);
-        character.set(Attribute.Hypnosis, 8);
-        character.getStamina().setMax(90 + character.getLevel() * getGrowth().stamina);
-        character.getArousal().setMax(150 + character.getLevel() * getGrowth().arousal);
-        character.getMojo().setMax(350);
-        character.getWillpower().setMax(100);
-        character.add(Trait.darkpromises);
-        character.add(Trait.tongueTraining1);
-        character.add(Trait.tongueTraining2);
-        character.add(Trait.limbTraining1);
-        character.add(Trait.limbTraining2);
-        character.add(Trait.pussyTraining1);
-        character.add(Trait.pussyTraining2);
-        character.add(Trait.pussyTraining3);
-        character.add(Trait.analTraining1);
-        character.add(Trait.analTraining2);
-        character.add(Trait.Confident);
-        character.add(Trait.dickhandler);
-        character.add(Trait.tight);
-        character.add(Trait.vaginaltongue);
-        character.add(Trait.insertion);
-        character.add(Trait.holecontrol);
-        character.add(Trait.autonomousPussy);
-        character.add(Trait.experienced);
-        character.add(Trait.responsive);
-        character.add(Trait.powerfulhips);
+    @Override
+    public void applyStrategy(NPC self) {
+        self.plan = Plan.hunting;
+        self.mood = Emotion.confident;
+    }
 
-        character.add(Trait.enchantingVoice);
-        character.add(Trait.unnaturalgrowth);
-        character.add(Trait.event);
-        character.add(Trait.cursed);
-        Global.gainSkills(character);
-        character.setTrophy(Item.MayaTrophy);
+    @Override
+    public void applyBasicStats(Character self) {
+        self.outfitPlan.add(Clothing.getByID("camisole"));
+        self.outfitPlan.add(Clothing.getByID("blouse"));
+        self.outfitPlan.add(Clothing.getByID("lacepanties"));
+        self.outfitPlan.add(Clothing.getByID("skirt"));
+        self.outfitPlan.add(Clothing.getByID("sneakers"));
+        self.outfitPlan.add(Clothing.getByID("socks"));
+        self.change();
+        self.modAttributeDontSaveData(Attribute.Dark, 10);
+        self.modAttributeDontSaveData(Attribute.Seduction, 15);
+        self.modAttributeDontSaveData(Attribute.Cunning, 15);
+        self.modAttributeDontSaveData(Attribute.Speed, 2);
+        self.modAttributeDontSaveData(Attribute.Power, 7);
+        self.modAttributeDontSaveData(Attribute.Hypnosis, 5);
+        self.getStamina().setMax(90);
+        self.getArousal().setMax(150);
+        self.getMojo().setMax(150);
+        self.getWillpower().setMax(100);
 
-        character.plan = Plan.hunting;
-        character.mood = Emotion.confident;
-        character.body.add(BreastsPart.d);
-        character.initialGender = CharacterSex.female;
+        Global.gainSkills(self);
+        self.setTrophy(Item.MayaTrophy);
+
+        self.body.add(BreastsPart.d);
+        self.initialGender = CharacterSex.female;
         preferredCockMod = CockMod.error;
     }
 
     @Override
     public void setGrowth() {
-        growth.stamina = 2;
-        growth.arousal = 5;
-        growth.mojo = 5;
-        growth.willpower = 1;
-        growth.bonusStamina = 2;
-        growth.bonusArousal = 5;
-        growth.bonusMojo = 5;
+        character.getGrowth().stamina = 2;
+        character.getGrowth().arousal = 5;
+        character.getGrowth().willpower = 1;
+        character.getGrowth().bonusStamina = 2;
+        character.getGrowth().bonusArousal = 5;
+        character.getGrowth().addTrait(0, Trait.darkpromises);
+        character.getGrowth().addTrait(0, Trait.tongueTraining1);
+        character.getGrowth().addTrait(0, Trait.tongueTraining2);
+        character.getGrowth().addTrait(0, Trait.limbTraining1);
+        character.getGrowth().addTrait(0, Trait.limbTraining2);
+        character.getGrowth().addTrait(0, Trait.sexTraining1);
+        character.getGrowth().addTrait(0, Trait.sexTraining2);
+        character.getGrowth().addTrait(0, Trait.sexTraining3);
+        character.getGrowth().addTrait(0, Trait.analTraining1);
+        character.getGrowth().addTrait(0, Trait.analTraining2);
+        character.getGrowth().addTrait(0, Trait.Confident);
+        character.getGrowth().addTrait(0, Trait.dickhandler);
+        character.getGrowth().addTrait(0, Trait.tight);
+        character.getGrowth().addTrait(0, Trait.vaginaltongue);
+        character.getGrowth().addTrait(0, Trait.insertion);
+        character.getGrowth().addTrait(0, Trait.holecontrol);
+        character.getGrowth().addTrait(0, Trait.autonomousPussy);
+        character.getGrowth().addTrait(0, Trait.experienced);
+        character.getGrowth().addTrait(0, Trait.responsive);
+        character.getGrowth().addTrait(0, Trait.powerfulhips);
+
+        character.getGrowth().addTrait(0, Trait.enchantingVoice);
+        character.getGrowth().addTrait(0, Trait.unnaturalgrowth);
+        character.getGrowth().addTrait(0, Trait.event);
+        character.getGrowth().addTrait(0, Trait.cursed);
     }
 
     @Override
-    public String bbLiner(Combat c) {
+    public String bbLiner(Combat c, Character other) {
         return "Maya looks at you sympathetically. <i>\"Was that painful? Don't worry, you aren't seriously injured. Our Benefactor protects us.\"</i>";
     }
 
     @Override
-    public String nakedLiner(Combat c) {
+    public String nakedLiner(Combat c, Character opponent) {
         return "Maya smiles, unashamed of her nudity. <i>\"Well done. Not many participants are able to get my clothes off anymore. You'll at least be able to look at a naked woman while you orgasm.\"</i>";
     }
 
     @Override
-    public String stunLiner(Combat c) {
+    public String stunLiner(Combat c, Character opponent) {
         return "You think you see something dangerous flicker in Maya's eyes. <i>\"Well done. I may need to get a little serious.\"</i>";
     }
 
     @Override
-    public String taunt(Combat c) {
+    public String taunt(Combat c, Character opponent) {
         return "Maya gives you a look of gentle disapproval. <i>\"You aren't putting up much of a fight, are you? Aren't you a little overeager to cum?\"</i>";
     }
 
     @Override
     public String victory(Combat c, Result flag) {
-        Character target = c.getOther(character);
+        Character target = c.getOpponent(character);
         target.add(c, new Drowsy(target));
         character.arousal.empty();
         character.add(c, new Energized(character, 10));
@@ -230,7 +234,7 @@ public class Maya extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c) {
+    public String describe(Combat c, Character self) {
         return "Maya is a beautiful young woman in her early twenties, though she carries"
                         + " herself with the grace of a more mature lady. She has soft, shapely "
                         + "breasts, larger than her slim frame would imply. Her waist length, raven "
@@ -243,7 +247,7 @@ public class Maya extends BasePersonality {
 
     @Override
     public String draw(Combat c, Result flag) {
-        Character target = c.getOther(character);
+        Character target = c.getOpponent(character);
         if (target.human()) {
             Global.flag(Flag.Clue1);
         }
@@ -314,8 +318,12 @@ public class Maya extends BasePersonality {
     }
 
     @Override
-    public String startBattle(Character other) {
-        return "Maya smiles softly as she confidently steps toward you. <i>\"Are you simply unfortunate or were you actually hoping to challenge me? What a brave boy. I'll try not to disappoint you.\"</i>";
+    public String startBattle(Character self, Character other) {
+        if (other.human()) {
+            return "Maya smiles softly as she confidently steps toward you. <i>\"Are you simply unfortunate or were you actually hoping to challenge me? What a brave boy. I'll try not to disappoint you.\"</i>";
+        } else {
+            return Global.format("{self:SUBJECT} smiles softly as she confidently steps towards {other:name-do}.", character, other);
+        }
     }
 
     @Override
@@ -343,7 +351,7 @@ public class Maya extends BasePersonality {
     }
 
     @Override
-    public String temptLiner(Combat c) {
+    public String temptLiner(Combat c, Character opponent) {
         return "Maya lowers her voice to a smokey tone as she speaks. <i>\"Shall"
                         + " I show you what experience can do for a sexfighter?\"</i>";
     }
@@ -354,7 +362,7 @@ public class Maya extends BasePersonality {
     }
 
     @Override
-    public String makeOrgasmLiner(Combat c) {
+    public String makeOrgasmLiner(Combat c, Character target) {
         return "<i>\"Aaaand there we are. Think you can go again?\"</i>";
     }
 

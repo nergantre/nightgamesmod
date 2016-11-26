@@ -19,6 +19,7 @@ public class Stunned extends DurationStatus {
     public Stunned(Character affected, int duration) {
         super("Stunned", affected, duration);
         flag(Stsflag.stunned);
+        flag(Stsflag.debuff);
         flag(Stsflag.purgable);
     }
 
@@ -58,7 +59,7 @@ public class Stunned extends DurationStatus {
             affected.addlist.add(new Braced(affected, 2));
         }
         affected.addlist.add(new Wary(affected, 2));
-        affected.heal(c, affected.getStamina().max() / 3);
+        affected.heal(c, affected.getStamina().max() / 3, " (Recovered)");
     }
 
     @Override

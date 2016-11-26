@@ -39,17 +39,17 @@ public class FootPump extends Skill {
     }
 
     @Override public int getMojoBuilt(Combat c) {
-        return 20;
+        return 5;
     }
 
     @Override public boolean resolve(Combat c, Character target) {
         int m = 12 + Global.random(6);
         int m2 = m / 2;
         writeOutput(c, Result.normal, target);
-        target.body.pleasure(getSelf(), getSelf().body.getRandom("feet"), target.body.getRandom("cock"), m, c, this);
-        target.body.pleasure(getSelf(), getSelf().body.getRandom("hands"), target.body.getRandom("breasts"), m2, c, this);
+        target.body.pleasure(getSelf(), target.body.getRandom("feet"), getSelf().body.getRandom("cock"), m, c, this);
+        target.body.pleasure(getSelf(), target.body.getRandom("hands"), getSelf().body.getRandom("breasts"), m2, c, this);
         if (c.getStance().en != Stance.behindfootjob) {
-            c.setStance(new BehindFootjob(getSelf(), target));
+            c.setStance(new BehindFootjob(getSelf(), target), getSelf(), true);
         }
         if (Global.random(100) < 15 + 2 * getSelf().get(Attribute.Fetish)) {
             target.add(c, new BodyFetish(target, getSelf(), "feet", .25));

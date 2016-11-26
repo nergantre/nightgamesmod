@@ -13,6 +13,7 @@ public class OrgasmSeal extends DurationStatus {
     public OrgasmSeal(Character affected, int duration) {
         super("Orgasm Sealed", affected, duration);
         flag(Stsflag.orgasmseal);
+        flag(Stsflag.debuff);
         flag(Stsflag.purgable);
     }
 

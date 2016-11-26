@@ -17,7 +17,6 @@ import nightgames.skills.Carry;
 import nightgames.skills.Fly;
 import nightgames.skills.Fuck;
 import nightgames.skills.Invitation;
-import nightgames.skills.LegLock;
 import nightgames.skills.ReverseAssFuck;
 import nightgames.skills.ReverseCarry;
 import nightgames.skills.ReverseFly;
@@ -49,7 +48,6 @@ public class Frenzied extends DurationStatus {
         FUCK_SKILLS.add(new Fly(p));
         FUCK_SKILLS.add(new Fuck(p));
         FUCK_SKILLS.add(new Invitation(p));
-        FUCK_SKILLS.add(new LegLock(p));
         FUCK_SKILLS.add(new WildThrust(p));
         FUCK_SKILLS.add(new ReverseAssFuck(p));
         FUCK_SKILLS.add(new ReverseCarry(p));
@@ -62,6 +60,7 @@ public class Frenzied extends DurationStatus {
     public Frenzied(Character affected, int duration) {
         super("Frenzied", affected, duration);
         flag(Stsflag.frenzied);
+        flag(Stsflag.debuff);
         flag(Stsflag.purgable);
     }
 
@@ -184,7 +183,7 @@ public class Frenzied extends DurationStatus {
     public Collection<Skill> allowedSkills(Combat c) {
         // Gather the preferred skills for which the character meets the
         // requirements
-        return FUCK_SKILLS.stream().filter(s -> s.requirements(c, affected, c.getOther(affected)))
+        return FUCK_SKILLS.stream().filter(s -> s.requirements(c, affected, c.getOpponent(affected)))
                         .map(s -> s.copy(affected)).collect(Collectors.toSet());
     }
 

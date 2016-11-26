@@ -11,6 +11,7 @@ public class InducedEuphoria extends DurationStatus {
     public InducedEuphoria(Character affected) {
         super("Induced Euphoria", affected, 20);
         flag(Stsflag.aphrodisiac);
+        flag(Stsflag.debuff);
         flag(Stsflag.purgable);
     }
 

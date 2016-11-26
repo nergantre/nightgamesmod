@@ -40,17 +40,17 @@ public class MagicMissile extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(this, c, accuracy(c))) {
-            double m = Global.random(7,13);
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
+            double m = Global.random(10, 20);
             if (target.mostlyNude() && Global.random(3) == 2) {
                 writeOutput(c, Result.critical, target);
-                m += Global.random(7, 13);
+                m *= 2;
                 target.emote(Emotion.angry, 10);
             } else {
                 writeOutput(c, Result.normal, target);
                 target.emote(Emotion.angry, 5);
             }
-            target.pain(c, (int) getSelf().modifyDamage(DamageType.arcane, target, m));
+            target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.arcane, target, m));
         } else {
             writeOutput(c, Result.miss, target);
             return false;
@@ -69,7 +69,7 @@ public class MagicMissile extends Skill {
     }
 
     @Override
-    public int accuracy(Combat c) {
+    public int accuracy(Combat c, Character target) {
         return 80;
     }
 

@@ -31,51 +31,59 @@ public class BunshinAssault extends Skill {
                         && getSelf().canAct() && !c.getStance()
                                                    .behind(target)
                         && !c.getStance()
-                             .penetrated(target)
+                             .penetrated(c, target)
                         && !c.getStance()
-                             .penetrated(getSelf());
+                             .penetrated(c, getSelf());
+    }
+
+    private int numberOfClones(Combat c) {
+        return Math.min(Math.min(getSelf().getMojo().get()/2, getSelf().get(Attribute.Ninjutsu)/2), 15);
     }
 
     @Override
     public int getMojoCost(Combat c) {
-        return 18;
+        return numberOfClones(c) * 2;
     }
-    
+
     @Override
     public String describe(Combat c) {
-        return "Attack your opponent with shadow clones: 3 Mojo per attack (min 2)";
+        return "Attack your opponent with shadow clones: 2 Mojo per attack (min 2)";
+    }
+
+    @Override
+    public int accuracy(Combat c, Character target) {
+        return 25 + getSelf().get(Attribute.Speed) * 5;
     }
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        int clones = Math.min(Math.min(getSelf().getMojo().get()/3, getSelf().get(Attribute.Ninjutsu)/3),6);
+        int clones = numberOfClones(c);
         Result r;
-        getSelf().buildMojo(c, (6-clones)*3);
         if(getSelf().human()){
-            c.write(String.format("You form %d shadow clones and rush forward.",clones));
+            c.write(getSelf(), String.format("You form %d shadow clones and rush forward.",clones));
         }
-        else if(c.shouldPrintReceive(target)){
-            c.write(String.format("%s moves in a blur and suddenly %s %d of %s approaching %s.",getSelf().name(),
+        else if(c.shouldPrintReceive(target, c)){
+            c.write(getSelf(), String.format("%s moves in a blur and suddenly %s %d of %s approaching %s.",getSelf().name(),
                             target.subjectAction("see"),clones,getSelf().pronoun(),target.reflectivePronoun()));
         }
         for(int i=0;i<clones;i++){
-            if(target.roll(this, c, accuracy(c)+getSelf().get(Attribute.Speed) + getSelf().getLevel())) {
+            if(target.roll(getSelf(), c, accuracy(c, target))) {
                 switch(Global.random(4)){
                 case 0:
                     r=Result.weak;
-                    target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(1, 4)));
+                    target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(1, 4)));
                     break;
                 case 1:
                     r=Result.normal;
-                    target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(2, 5)));
+                    target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(2, 5)));
                     break;
                 case 2:
                     r=Result.strong;
-                    target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(6, 9)));
+                    target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(6, 9)));
                     break;
                 default:
                     r=Result.critical;
-                    target.pain(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(10, 14)));
+                    target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(10, 14)));
                     break;
                 }
                 writeOutput(c, r, target);

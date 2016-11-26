@@ -14,6 +14,7 @@ import java.util.Collection;
 import javax.swing.JComponent;
 
 import nightgames.areas.Area;
+import nightgames.areas.Cache;
 import nightgames.areas.MapDrawHint;
 import nightgames.global.Global;
 
@@ -76,17 +77,20 @@ public class MapComponent extends JComponent {
             Rectangle rect = new Rectangle(area.drawHint.rect.x * multiplier + mapBorder,
                             area.drawHint.rect.y * multiplier + yOffset + mapBorder,
                             area.drawHint.rect.width * multiplier, area.drawHint.rect.height * multiplier);
-            if (!area.humanPresent()) {
-                if (area.isDetected()) {
-                    g.setColor(new Color(150, 45, 60));
-                } else if (area.isPinged()) {
-                    g.setColor(new Color(75, 25, 120));
-                } else {
-                    g.setColor(new Color(0, 34, 100));
-                }
-            } else {
-                g.setColor(new Color(25, 74, 120));
+            Color mapColor = new Color(0, 34, 100);
+            if (area.humanPresent()) {
+                mapColor = new Color(25, 74, 120);
+            } else if (area.isDetected()) {
+                mapColor = new Color(150, 45, 60);
+            } else if (area.isPinged()) {
+                mapColor = new Color(75, 25, 120);
             }
+
+            if (area.env.stream().anyMatch(deployable -> deployable instanceof Cache)) {
+                mapColor = mapColor.brighter().brighter();
+            }
+
+            g.setColor(mapColor);
             g.fillRect(rect.x, rect.y, rect.width, rect.height);
         });
         rooms.stream().forEach(area -> {

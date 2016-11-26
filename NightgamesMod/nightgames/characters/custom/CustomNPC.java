@@ -9,9 +9,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import nightgames.characters.BasePersonality;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.Growth;
 import nightgames.characters.NPC;
-import nightgames.characters.body.CockMod;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -19,9 +17,6 @@ import nightgames.items.ItemAmount;
 import nightgames.start.NpcConfiguration;
 
 public class CustomNPC extends BasePersonality {
-    /**
-     *
-     */
     private final NPCData data;
     private static final long serialVersionUID = -8169646189131720872L;
 
@@ -31,61 +26,53 @@ public class CustomNPC extends BasePersonality {
         this(data, Optional.empty(), Optional.empty());
     }
 
-    // TODO: Once built-in NPCs are data-driven, this should be able to be replaced with a call to super().
     public CustomNPC(NPCData data, Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        // Make the built-in character
-        character = new NPC(data.getName(), data.getStats().level, this);
+        super(data.getName(), data.getStats().level, data.isStartCharacter());
         this.data = data;
-        applyBasicStats();
-        growth = new Growth();
-        preferredCockMod = CockMod.error;
-        preferredAttributes = new ArrayList<>();
-        setGrowth();
-        character.body.makeGenitalOrgans(character.initialGender);
-
-        // Apply config changes
-        Optional<NpcConfiguration> mergedConfig = NpcConfiguration.mergeOptionalNpcConfigs(charConfig, commonConfig);
-        mergedConfig.ifPresent(cfg -> cfg.apply(character));
-
-        character.body.finishBody(character.initialGender);
+        setupCharacter(charConfig, commonConfig);
     }
 
-    protected void applyBasicStats() {
+    @Override
+    public void applyStrategy(NPC self) {
+        self.isStartCharacter = data.isStartCharacter();
+        self.plan = data.getPlan();
+        self.mood = Emotion.confident;
+    }
+
+    @Override
+    public void applyBasicStats(Character self) {
         preferredAttributes = new ArrayList<>(data.getPreferredAttributes());
 
-        character.isStartCharacter = data.isStartCharacter();
-        character.outfitPlan.addAll(data.getTopOutfit());
-        character.outfitPlan.addAll(data.getBottomOutfit());
-        character.closet.addAll(character.outfitPlan);
-        character.change();
-        character.att = new HashMap<>(data.getStats().attributes);
-        character.traits = new CopyOnWriteArrayList<>(data.getStats().traits);
-        character.getArousal().setMax(data.getStats().arousal);
-        character.getStamina().setMax(data.getStats().stamina);
-        character.getMojo().setMax(data.getStats().mojo);
-        character.getWillpower().setMax(data.getStats().willpower);
-        character.setTrophy(data.getTrophy());
-        character.plan = data.getPlan();
-        character.mood = Emotion.confident;
-        character.custom = true;
+        self.outfitPlan.addAll(data.getTopOutfit());
+        self.outfitPlan.addAll(data.getBottomOutfit());
+        self.closet.addAll(self.outfitPlan);
+        self.change();
+        self.att = new HashMap<>(data.getStats().attributes);
+        self.traits = new CopyOnWriteArrayList<>(data.getStats().traits);
+        self.getArousal().setMax(data.getStats().arousal);
+        self.getStamina().setMax(data.getStats().stamina);
+        self.getMojo().setMax(data.getStats().mojo);
+        self.getWillpower().setMax(data.getStats().willpower);
+        self.setTrophy(data.getTrophy());
+        self.custom = true;
 
         try {
-            character.body = data.getBody().clone(character);
+            self.body = data.getBody().clone(self);
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
 
-        character.initialGender = data.getSex();
+        self.initialGender = data.getSex();
 
         for (ItemAmount i : data.getStartingItems()) {
-            character.gain(i.item, i.amount);
+            self.gain(i.item, i.amount);
         }
 
-        Global.gainSkills(character);
+        Global.gainSkills(self);
     }
 
     public void setGrowth() {
-        growth = data.getGrowth();
+        character.setGrowth(data.getGrowth());
     }
 
     @Override
@@ -96,49 +83,49 @@ public class CustomNPC extends BasePersonality {
     }
 
     @Override
-    public String bbLiner(Combat c) {
-        return data.getLine("hurt", c, character, c.getOther(character));
+    public String bbLiner(Combat c, Character other) {
+        return data.getLine("hurt", c, character, c.getOpponent(character));
     }
 
     @Override
-    public String nakedLiner(Combat c) {
-        return data.getLine("naked", c, character, c.getOther(character));
+    public String nakedLiner(Combat c, Character opponent) {
+        return data.getLine("naked", c, character, c.getOpponent(character));
     }
 
     @Override
-    public String stunLiner(Combat c) {
-        return data.getLine("stunned", c, character, c.getOther(character));
+    public String stunLiner(Combat c, Character opponent) {
+        return data.getLine("stunned", c, character, c.getOpponent(character));
     }
 
     @Override
-    public String taunt(Combat c) {
-        return data.getLine("taunt", c, character, c.getOther(character));
+    public String taunt(Combat c, Character opponent) {
+        return data.getLine("taunt", c, character, c.getOpponent(character));
     }
 
     @Override
-    public String temptLiner(Combat c) {
-        return data.getLine("tempt", c, character, c.getOther(character));
+    public String temptLiner(Combat c, Character opponent) {
+        return data.getLine("tempt", c, character, c.getOpponent(character));
     }
 
     @Override
     public String victory(Combat c, Result flag) {
         character.getArousal().empty();
-        return data.getLine("victory", c, character, c.getOther(character));
+        return data.getLine("victory", c, character, c.getOpponent(character));
     }
 
     @Override
     public String defeat(Combat c, Result flag) {
-        return data.getLine("defeat", c, character, c.getOther(character));
+        return data.getLine("defeat", c, character, c.getOpponent(character));
     }
 
     @Override
-    public String describe(Combat c) {
-        return data.getLine("describe", c, character, c.getOther(character));
+    public String describe(Combat c, Character self) {
+        return data.getLine("describe", c, character, c.getOpponent(character));
     }
 
     @Override
     public String draw(Combat c, Result flag) {
-        return data.getLine("draw", c, character, c.getOther(character));
+        return data.getLine("draw", c, character, c.getOpponent(character));
     }
 
     @Override
@@ -170,7 +157,7 @@ public class CustomNPC extends BasePersonality {
     }
 
     @Override
-    public String startBattle(Character other) {
+    public String startBattle(Character self, Character other) {
         return data.getLine("startBattle", null, character, other);
     }
 
@@ -191,12 +178,12 @@ public class CustomNPC extends BasePersonality {
 
     @Override
     public String orgasmLiner(Combat c) {
-        return data.getLine("orgasm", c, character, c.getOther(character));
+        return data.getLine("orgasm", c, character, c.getOpponent(character));
     }
 
     @Override
-    public String makeOrgasmLiner(Combat c) {
-        return data.getLine("makeOrgasm", c, character, c.getOther(character));
+    public String makeOrgasmLiner(Combat c, Character target) {
+        return data.getLine("makeOrgasm", c, character, c.getOpponent(character));
     }
 
     @Override
@@ -206,7 +193,7 @@ public class CustomNPC extends BasePersonality {
 
     @Override
     public String image(Combat c) {
-        Character other = c.getOther(character);
+        Character other = c.getOpponent(character);
         return data.getPortraitName(c, character, other);
     }
 
@@ -228,7 +215,7 @@ public class CustomNPC extends BasePersonality {
     public Map<CommentSituation, String> getComments(Combat c) {
         Map<CommentSituation, String> all = data.getComments();
         Map<CommentSituation, String> applicable = new HashMap<>();
-        all.entrySet().stream().filter(e -> e.getKey().isApplicable(c, character, c.getOther(character)))
+        all.entrySet().stream().filter(e -> e.getKey().isApplicable(c, character, c.getOpponent(character)))
                         .forEach(e -> applicable.put(e.getKey(), e.getValue()));
         return applicable;
     }

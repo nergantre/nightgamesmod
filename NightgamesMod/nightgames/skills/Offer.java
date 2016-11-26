@@ -34,7 +34,7 @@ public class Offer extends Skill {
 
     @Override
     public String describe(Combat c) {
-        Character other = c.getOther(getSelf());
+        Character other = c.getOpponent(getSelf());
         return other.hasDick() || other.has(Trait.strapped)
                         ? "Offer your " + (getSelf().hasPussy() ? "pussy" : "ass") + " to " + other.possessivePronoun()
                                         + "'s " + other.body.getRandomInsertable().describe(other)
@@ -55,7 +55,7 @@ public class Offer extends Skill {
             if (getSelf().hasPussy()) {
                 // offer pussy to dick/strapon
                 writeOutput(c, Result.special, target);
-                c.setStance(new Missionary(target, getSelf()), getSelf(), true);
+                c.setStance(new Missionary(target, getSelf()), target, true);
                 getSelf().body.pleasure(target, target.body.getRandomCock(), getSelf().body.getRandomPussy(),
                                 Global.random(5) + getSelf().get(Attribute.Perception), c, this);
                 target.body.pleasure(getSelf(), getSelf().body.getRandomPussy(), target.body.getRandomCock(),
@@ -64,7 +64,7 @@ public class Offer extends Skill {
             } else {
                 // offer ass to dick/strapon
                 writeOutput(c, Result.anal, target);
-                c.setStance(new Anal(target, getSelf()), getSelf(), true);
+                c.setStance(new Anal(target, getSelf()), target, true);
                 getSelf().body.pleasure(target, target.body.getRandomInsertable(), getSelf().body.getRandomAss(),
                                 Global.random(5) + getSelf().get(Attribute.Perception), c, this);
                 if (!target.has(Trait.strapped)) {
@@ -76,7 +76,7 @@ public class Offer extends Skill {
             assert getSelf().hasDick() && target.hasPussy();
             // Offer cock to female
             writeOutput(c, Result.normal, target);
-            c.setStance(new Cowgirl(target, getSelf()), getSelf(), true);
+            c.setStance(new Cowgirl(target, getSelf()), target, true);
             getSelf().body.pleasure(target, target.body.getRandomPussy(), getSelf().body.getRandomCock(),
                             Global.random(5) + getSelf().get(Attribute.Perception), c, this);
             target.body.pleasure(getSelf(), getSelf().body.getRandomCock(), target.body.getRandomPussy(),

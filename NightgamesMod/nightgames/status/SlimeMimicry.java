@@ -34,12 +34,12 @@ public class SlimeMimicry extends DurationStatus {
 
     @Override
     public String initialMessage(Combat c, boolean replaced) {
-        return Global.format("{self:SUBJECT} started mimicking a %s.", affected, c.getOther(affected), mimickedName);
+        return Global.format("{self:SUBJECT} started mimicking a %s.", affected, c.getOpponent(affected), mimickedName);
     }
 
     @Override
     public String describe(Combat c) {
-    	return Global.format("{self:SUBJECT-ACTION:are|is} mimicking a %s.", affected, c.getOther(affected), mimickedName);
+    	return Global.format("{self:SUBJECT-ACTION:are|is} mimicking a %s.", affected, c.getOpponent(affected), mimickedName);
     }
 
     @Override

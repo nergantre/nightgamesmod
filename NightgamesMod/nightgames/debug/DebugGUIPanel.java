@@ -15,6 +15,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import nightgames.characters.Character;
+import nightgames.characters.Attribute;
 import nightgames.characters.Trait;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
@@ -79,6 +80,21 @@ public class DebugGUIPanel extends JPanel {
                 output.setText(list.get(2) + " is not a valid item");
             }
         }));
+
+        consoleCommands.add(new DebugCommand("(\\w+)\\.addAtt (\\w+) ?(\\d+)?", (output, list) -> {
+            try {
+                Character target = Global.getCharacterByType(list.get(1));
+                int amt = 1;
+                if (list.size() > 3 && list.get(3) != null) {
+                    amt = Integer.valueOf(list.get(3));
+                }
+                target.mod(Attribute.valueOf(list.get(2)), amt);
+            } catch (NullPointerException e) {
+                output.setText(list.get(1) + " is not a valid charater");
+            } catch (IllegalArgumentException e) {
+                output.setText(list.get(2) + " is not a valid item");
+            }
+        }));
         consoleCommands.add(new DebugCommand("(\\w+)\\.ding( \\d+)?", (output, list) -> {
             Character target = Global.getCharacterByType(list.get(1));
             if (target == null) {
@@ -113,10 +129,19 @@ public class DebugGUIPanel extends JPanel {
         consoleCommands.add(new DebugCommand("(\\w+)\\.list", (output, list) -> {
             try {
                 Character target = Global.getCharacterByType(list.get(1));
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < target.traits.size(); i++) {
+                    sb.append(target.traits.get(i));
+                    if (i % 4 == 2) {
+                        sb.append("\n");
+                    } else if (i != target.traits.size() - 1) {
+                        sb.append(", ");
+                    }
+                }
                 String attString = target.att.entrySet().stream().map(e -> String.format("%s: %d", e.getKey(), e.getValue())).collect(Collectors.joining("\n"));
-                output.setText(String.format("Stamina [%s]\nArousal [%s]\nMojo [%s]\nWillpower [%s]\n%s",
+                output.setText(String.format("Stamina [%s]\nArousal [%s]\nMojo [%s]\nWillpower [%s]\n%s\n%s",
                                 target.getStamina().toString(), target.getArousal().toString(),
-                                target.getMojo().toString(), target.getWillpower().toString(), attString));
+                                target.getMojo().toString(), target.getWillpower().toString(), attString, sb.toString()));
             } catch (NullPointerException e) {
                 output.setText(list.get(1) + " is not a valid charater");
             }

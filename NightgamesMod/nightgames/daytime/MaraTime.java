@@ -281,7 +281,7 @@ public class MaraTime extends BaseNPCTime {
                     Global.gui()
                           .message("<p><b>You've gotten better at finding sensitive spots when tickling nude opponents.</b>");
                     player.add(Trait.ticklemonster);
-                    npc.add(Trait.ticklemonster);
+                    npc.getGrowth().addTrait(0, Trait.ticklemonster);
                 }
             } else {
                 Global.gui()
@@ -351,7 +351,7 @@ public class MaraTime extends BaseNPCTime {
                     Global.gui()
                           .message("<p><b>Mara has taught you to make the brilliant and insanely complex Spiderweb Trap.</b>");
                     player.add(Trait.spider);
-                    npc.add(Trait.spider);
+                    npc.getGrowth().addTrait(0, Trait.spider);
                 }
             } else {
                 Global.gui()
@@ -409,9 +409,39 @@ public class MaraTime extends BaseNPCTime {
                     Global.gui()
                           .message("<p><b>You've experienced Mara's most painful technique and learned how to use it yourself.</b>");
                     player.add(Trait.heeldrop);
-                    npc.add(Trait.heeldrop);
+                    npc.getGrowth().addTrait(0, Trait.heeldrop);
                 }
-            } else if(choice.equals("Faerie play")){
+            } else {
+                Global.gui()
+                      .message("You suggest heading to the gym to do a bit of sparring, but she suggests her room would give you more privacy. This turns out to be important, because when "
+                                      + "you arrive she starts undressing and invites you to do the same. Obviously she feels that wrestling naked will give her a natural advantage. <i>\"Of course it will,\"</i> she "
+                                      + "smiles mischieviously. <i>\"But you're not really going to refuse are you?\"</i> You look over her naked body top to bottom. There's no way you're going to to "
+                                      + "refuse. You hastily strip down while she starts stretching. She's remarkably flexible, and you're pretty sure some of the more provocative stretches she does are intended "
+                                      + "to tempt you. It makes sense for her to grasp for any edge she can get. While you know she can be quite formidable from your night matches, you outmatch her in both height "
+                                      + "and weight. In a pure physical contest without her tricks or seduction, she's at a substantial disadvantage.<p>The two of you square off in the middle of the room. Mara's "
+                                      + "nude form is a feast for the eyes, but you force yourself to keep your head in the match. Mara seems to have no such restraint and her eyes hungrily take in every inch of your "
+                                      + "body. You're about to take the offensive to punish her lack of focus, when she lunges at your legs without warning. It seems her mind was on wrestling after all. She was simply "
+                                      + "trying to lower your guard. It doesn't make any difference though, you're ready for her and easily push her back.<p>With deception having failed, her next move will probably "
+                                      + "be to try to exploit your nudity by aiming for your anatomical weakness. Sure enough, she launches a kick to your groin, which you easily catch before it reaches you. Before "
+                                      + "she can regain her balance, you advance and knock her to the mat. As you move to pin her, you catch first her right hand, then her left, when she makes desperate grabs for your "
+                                      + "dangling testicles. With both her hands in your control and your body pressing down on hers, she can't do anything except squirm against you.<p><i>\"Since when did you become psychic?\"</i> "
+                                      + "she asks with a pout, though she must already know the answer. She makes a much better rogue than a fighter. In a wrestling match with sex off the table, she only has one or two "
+                                      + "tricks, which makes her very predictable. She makes one last futile attempt to wriggle out from under you, at which point she notices your erection pressing against her thigh. "
+                                      + "<i>\"Are you planning to claim my body as the spoils of victory like some brutish barbarian?\"</i> Of course, you reply as you rub your dick against her vulva, but she's not really "
+                                      + "going to refuse is she? She sulks while maneuvering her hips to try to get some penetration. <i>\"Stop teasing me and just put it in already.\"</i><p>You release her hands so you can "
+                                      + "line up your insertion properly. You're a little worried that she'll try some last minute mischief, but when your dick pierces her wet folds she just wraps her arms around your "
+                                      + "neck to pull you into a kiss. You thrust into her tight pussy and play with her hard nipples. She lets out little whimpers of pleasure each time you bury yourself into her. "
+                                      + "You feel yourself nearing climax and suck on her neck, giving her a hickey. She gasps and shudders as you fill her with your hot seed. You pull out of her, smearing a significant "
+                                      + "amount of cum on her thighs in the process. You suggest getting cleaned up, but she murmurs, <i>\"Too sleepy.\"</i> With a bit of effort, you pick her up and carry her to the bed, lying "
+                                      + "down next to her. She rests her head on your arm, and in a few minutes she's asleep.");
+
+            }
+            Global.gui()
+                  .choose(this, "Leave");
+            Daytime.train(player, npc, Attribute.Power);
+            npc.gainAffection(player, 1);
+            player.gainAffection(npc, 1);
+        } else if(choice.equals("Faerie play")){
                     Global.gui().message("The two of you head to Mara's room, where apparently she has a request for you. A quick glance around her room doesn't reveal any obvious traps or preparation. Everything seems "
                             + "fairly normal: slightly messy and her laptop left unlocked with some 'adult entertainment' on the desktop. <i>\"Hey! Don't be nosy!\"</i> She closes her laptop, noticably blushing, and sits "
                             + "on her bed.<p>"
@@ -451,37 +481,7 @@ public class MaraTime extends BaseNPCTime {
                     Global.gui().choose(this,"Leave");
                     npc.gainAffection(player,1);
                     player.gainAffection(npc,1);
-            } else {
-                Global.gui()
-                      .message("You suggest heading to the gym to do a bit of sparring, but she suggests her room would give you more privacy. This turns out to be important, because when "
-                                      + "you arrive she starts undressing and invites you to do the same. Obviously she feels that wrestling naked will give her a natural advantage. <i>\"Of course it will,\"</i> she "
-                                      + "smiles mischieviously. <i>\"But you're not really going to refuse are you?\"</i> You look over her naked body top to bottom. There's no way you're going to to "
-                                      + "refuse. You hastily strip down while she starts stretching. She's remarkably flexible, and you're pretty sure some of the more provocative stretches she does are intended "
-                                      + "to tempt you. It makes sense for her to grasp for any edge she can get. While you know she can be quite formidable from your night matches, you outmatch her in both height "
-                                      + "and weight. In a pure physical contest without her tricks or seduction, she's at a substantial disadvantage.<p>The two of you square off in the middle of the room. Mara's "
-                                      + "nude form is a feast for the eyes, but you force yourself to keep your head in the match. Mara seems to have no such restraint and her eyes hungrily take in every inch of your "
-                                      + "body. You're about to take the offensive to punish her lack of focus, when she lunges at your legs without warning. It seems her mind was on wrestling after all. She was simply "
-                                      + "trying to lower your guard. It doesn't make any difference though, you're ready for her and easily push her back.<p>With deception having failed, her next move will probably "
-                                      + "be to try to exploit your nudity by aiming for your anatomical weakness. Sure enough, she launches a kick to your groin, which you easily catch before it reaches you. Before "
-                                      + "she can regain her balance, you advance and knock her to the mat. As you move to pin her, you catch first her right hand, then her left, when she makes desperate grabs for your "
-                                      + "dangling testicles. With both her hands in your control and your body pressing down on hers, she can't do anything except squirm against you.<p><i>\"Since when did you become psychic?\"</i> "
-                                      + "she asks with a pout, though she must already know the answer. She makes a much better rogue than a fighter. In a wrestling match with sex off the table, she only has one or two "
-                                      + "tricks, which makes her very predictable. She makes one last futile attempt to wriggle out from under you, at which point she notices your erection pressing against her thigh. "
-                                      + "<i>\"Are you planning to claim my body as the spoils of victory like some brutish barbarian?\"</i> Of course, you reply as you rub your dick against her vulva, but she's not really "
-                                      + "going to refuse is she? She sulks while maneuvering her hips to try to get some penetration. <i>\"Stop teasing me and just put it in already.\"</i><p>You release her hands so you can "
-                                      + "line up your insertion properly. You're a little worried that she'll try some last minute mischief, but when your dick pierces her wet folds she just wraps her arms around your "
-                                      + "neck to pull you into a kiss. You thrust into her tight pussy and play with her hard nipples. She lets out little whimpers of pleasure each time you bury yourself into her. "
-                                      + "You feel yourself nearing climax and suck on her neck, giving her a hickey. She gasps and shudders as you fill her with your hot seed. You pull out of her, smearing a significant "
-                                      + "amount of cum on her thighs in the process. You suggest getting cleaned up, but she murmurs, <i>\"Too sleepy.\"</i> With a bit of effort, you pick her up and carry her to the bed, lying "
-                                      + "down next to her. She rests her head on your arm, and in a few minutes she's asleep.");
-
-            }
-            Global.gui()
-                  .choose(this, "Leave");
-            Daytime.train(player, npc, Attribute.Power);
-            npc.gainAffection(player, 1);
-            player.gainAffection(npc, 1);
-        } else if (choice.equals("Leave")) {
+            } else if (choice.equals("Leave")) {
             done(true);
         }
     }

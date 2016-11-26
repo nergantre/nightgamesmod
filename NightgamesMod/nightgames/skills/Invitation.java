@@ -34,8 +34,8 @@ public class Invitation extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        boolean insertable = c.getStance().insert(getSelf(), getSelf()) != c.getStance()
-                        || c.getStance().insert(target, getSelf()) != c.getStance();
+        boolean insertable = c.getStance().insert(c, getSelf(), getSelf()) != c.getStance()
+                        || c.getStance().insert(c, target, getSelf()) != c.getStance();
         return insertable && getSelf().canRespond() && getSelf().crotchAvailable() && target.crotchAvailable()
                         && (getSelf().hasDick() && target.hasPussy() || getSelf().hasPussy() && target.hasDick());
     }
@@ -43,8 +43,8 @@ public class Invitation extends Skill {
     @Override
     public int getMojoCost(Combat c) {
         //Free if user is Kat and player has Breeder
-        if (!c.getOther(getSelf()).human() || !Global.getPlayer().checkAddiction(AddictionType.BREEDER, getSelf()))
-            return 30;
+        if (!c.getOpponent(getSelf()).human() || !Global.getPlayer().checkAddiction(AddictionType.BREEDER, getSelf()))
+            return 50;
         return 0;
     }
 
@@ -141,13 +141,13 @@ public class Invitation extends Skill {
             result = Result.divine;
         }
 
-        if (success) {
-            c.setStance(c.getStance().insertRandomDom(target), getSelf(), getSelf().canMakeOwnDecision());
-        }
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, result, target));
         } else {
             c.write(getSelf(), receive(c, 0, result, target));
+        }
+        if (success) {
+            c.setStance(c.getStance().insertRandomDom(c, target), getSelf(), getSelf().canMakeOwnDecision());
         }
         if (success) {
             if (c.getStance().en == Stance.missionary) {

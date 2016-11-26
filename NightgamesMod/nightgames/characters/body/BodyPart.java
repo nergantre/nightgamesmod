@@ -20,6 +20,8 @@ public interface BodyPart {
 
     public String getType();
 
+    public String canonicalDescription();
+
     public String describe(Character c);
 
     public double getHotness(Character self, Character opponent);

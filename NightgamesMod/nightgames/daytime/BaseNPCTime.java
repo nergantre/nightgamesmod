@@ -72,8 +72,7 @@ public abstract class BaseNPCTime extends Activity {
                             .allMatch(entry -> player.has(entry.getKey(), entry.getValue()));
             if (hasAll) {
                 Global.gui().message(Global.format(option.scene, npc, player));
-                option.ingredients.entrySet().stream()
-                                .forEach(entry -> player.consume(entry.getKey(), entry.getValue(), false));
+                option.ingredients.entrySet().stream().forEach(entry -> player.consume(entry.getKey(), entry.getValue(), false));
                 option.effect.execute(null, player, npc);
                 Global.gui().choose(this, "Leave");
             } else {

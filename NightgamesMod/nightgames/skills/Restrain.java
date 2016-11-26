@@ -19,7 +19,7 @@ public class Restrain extends Skill {
     public boolean usable(Combat c, Character target) {
         return !target.wary() && c.getStance().mobile(getSelf()) && c.getStance().prone(target)
                         && c.getStance().reachTop(getSelf()) && getSelf().canAct() && c.getStance().reachTop(target)
-                        && !c.getStance().connected();
+                        && !c.getStance().connected(c);
     }
 
     @Override
@@ -28,9 +28,9 @@ public class Restrain extends Skill {
     }
 
     public boolean resolve(Combat c, Character target, boolean nofail) {
-        if (nofail || target.roll(this, c, accuracy(c))) {
+        if (nofail || target.roll(getSelf(), c, accuracy(c, target))) {
             writeOutput(c, Result.normal, target);
-            c.setStance(new Pin(getSelf(), target));
+            c.setStance(new Pin(getSelf(), target), getSelf(), true);
             target.emote(Emotion.nervous, 10);
             target.emote(Emotion.desperate, 10);
             getSelf().emote(Emotion.dominant, 20);
@@ -57,7 +57,7 @@ public class Restrain extends Skill {
     }
 
     @Override
-    public int accuracy(Combat c) {
+    public int accuracy(Combat c, Character target) {
         return 75;
     }
 

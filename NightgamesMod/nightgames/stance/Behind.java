@@ -1,6 +1,7 @@
 package nightgames.stance;
 
 import nightgames.characters.Character;
+import nightgames.combat.Combat;
 
 public class Behind extends AbstractBehindStance {
 
@@ -9,7 +10,7 @@ public class Behind extends AbstractBehindStance {
     }
 
     @Override
-    public String describe() {
+    public String describe(Combat c) {
         if (top.human()) {
             return "You are holding " + bottom.name() + " from behind.";
         } else {
@@ -30,12 +31,12 @@ public class Behind extends AbstractBehindStance {
 
     @Override
     public boolean mobile(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
-    public boolean kiss(Character c) {
-        return false;
+    public boolean kiss(Character c, Character target) {
+        return c != top && c != bottom;
     }
 
     @Override
@@ -50,7 +51,7 @@ public class Behind extends AbstractBehindStance {
 
     @Override
     public boolean reachTop(Character c) {
-        return c == top;
+        return c != bottom;
     }
 
     @Override
@@ -64,15 +65,13 @@ public class Behind extends AbstractBehindStance {
     }
 
     @Override
-    public boolean feet(Character c) {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean feet(Character c, Character target) {
+        return c != top && c != bottom && target == top;
     }
 
     @Override
-    public boolean oral(Character c) {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean oral(Character c, Character target) {
+        return c != top && c != bottom && target == top;
     }
 
     @Override
@@ -98,5 +97,10 @@ public class Behind extends AbstractBehindStance {
     @Override
     public int dominance() {
         return 3;
+    }
+
+    @Override
+    public int distance() {
+        return 1;
     }
 }

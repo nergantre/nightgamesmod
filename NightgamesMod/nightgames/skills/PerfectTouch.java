@@ -15,7 +15,7 @@ public class PerfectTouch extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return c.getStance().mobile(getSelf()) && !target.torsoNude() && !c.getStance().prone(getSelf())
-                        && getSelf().canAct() && !c.getStance().connected();
+                        && getSelf().canAct() && !c.getStance().connected(c);
     }
 
     @Override
@@ -25,11 +25,11 @@ public class PerfectTouch extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.roll(this, c, accuracy(c))) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.normal, target));
-                c.write(target, target.nakedLiner(c));
-            } else if (c.shouldPrintReceive(target)) {
+                c.write(target, target.nakedLiner(c, target));
+            } else if (c.shouldPrintReceive(target, c)) {
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             }
             target.undress(c);
@@ -57,9 +57,9 @@ public class PerfectTouch extends Skill {
     }
 
     @Override
-    public int accuracy(Combat c) {
+    public int accuracy(Combat c, Character target) {
         return Math.round(Math.max(Math.min(150,
-                        2.5f * (getSelf().get(Attribute.Cunning) - c.getOther(getSelf()).get(Attribute.Cunning)) + 65),
+                        2.5f * (getSelf().get(Attribute.Cunning) - c.getOpponent(getSelf()).get(Attribute.Cunning)) + 65),
                         40));
     }
 

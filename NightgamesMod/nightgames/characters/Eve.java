@@ -25,72 +25,77 @@ public class Eve extends BasePersonality {
     }
 
     public Eve(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Eve", 10, charConfig, commonConfig);
+        super("Eve", 10, charConfig, commonConfig, false);
     }
 
-    protected void applyBasicStats() {
-        character.outfitPlan.add(Clothing.getByID("tanktop"));
-        character.outfitPlan.add(Clothing.getByID("crotchlesspanties"));
-        character.outfitPlan.add(Clothing.getByID("jeans"));
-        character.outfitPlan.add(Clothing.getByID("stilettopumps"));
-        character.outfitPlan.add(Clothing.getByID("garters"));
+    @Override
+    public void applyStrategy(NPC self) {
+        self.plan = Plan.hunting;
+        self.mood = Emotion.confident;
+    }
 
-        character.change();
-        character.set(Attribute.Power, 12);
-        character.set(Attribute.Fetish, 15);
-        character.set(Attribute.Cunning, 12);
-        character.set(Attribute.Speed, 6);
-        character.set(Attribute.Seduction, 13);
-        Global.gainSkills(character);
-        character.add(Trait.exhibitionist);
-        character.add(Trait.proheels);
-        character.add(Trait.insatiable);
-        character.add(Trait.assmaster);
-        character.add(Trait.analFanatic);
-        character.setTrophy(Item.EveTrophy);
-        character.plan = Plan.hunting;
-        character.mood = Emotion.confident;
-        character.body.add(BreastsPart.d);
-        character.body.add(BasicCockPart.big);
-        character.body.add(PussyPart.normal);
+    @Override
+    public void applyBasicStats(Character self) {
+        self.outfitPlan.add(Clothing.getByID("tanktop"));
+        self.outfitPlan.add(Clothing.getByID("crotchlesspanties"));
+        self.outfitPlan.add(Clothing.getByID("jeans"));
+        self.outfitPlan.add(Clothing.getByID("stilettopumps"));
+        self.outfitPlan.add(Clothing.getByID("garters"));
 
-        character.getStamina().setMax(90 + character.getLevel() * getGrowth().stamina);
-        character.getArousal().setMax(80 + character.getLevel() * getGrowth().arousal);
+        self.change();
+        self.modAttributeDontSaveData(Attribute.Power, 1);
+        self.modAttributeDontSaveData(Attribute.Fetish, 1);
+        self.modAttributeDontSaveData(Attribute.Cunning, 1);
+        self.modAttributeDontSaveData(Attribute.Speed, 1);
+        self.modAttributeDontSaveData(Attribute.Seduction, 2);
+        Global.gainSkills(self);
+        self.setTrophy(Item.EveTrophy);
+        self.body.add(BreastsPart.d);
+        self.body.add(BasicCockPart.big);
+        self.body.add(PussyPart.normal);
+        self.getMojo().setMax(120);
+
+        self.getStamina().setMax(90);
+        self.getArousal().setMax(80);
         // somewhat androgynous face
-        character.body.add(new FacePart(.1, .9));
-        character.initialGender = CharacterSex.herm;
+        self.body.add(new FacePart(.1, .9));
+        self.initialGender = CharacterSex.shemale;
         preferredCockMod = CockMod.primal;
     }
 
     @Override
     public void setGrowth() {
-        growth.stamina = 2;
-        growth.arousal = 3;
-        growth.mojo = 2;
-        growth.bonusStamina = 1;
-        growth.bonusArousal = 3;
-        growth.bonusMojo = 2;
+        character.getGrowth().stamina = 2;
+        character.getGrowth().arousal = 3;
+        character.getGrowth().bonusStamina = 1;
+        character.getGrowth().bonusArousal = 3;
         preferredAttributes.add(c -> c.get(Attribute.Fetish) < 80 ? Optional.of(Attribute.Fetish) : Optional.empty());
         preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
-        growth.addTrait(2, Trait.alwaysready);
-        growth.addTrait(5, Trait.limbTraining1);
-        growth.addTrait(8, Trait.expertGoogler);
-        growth.addTrait(11, Trait.cockTraining1);
-        growth.addTrait(14, Trait.testosterone);
-        growth.addTrait(17, Trait.experienced);
-        growth.addTrait(20, Trait.asshandler);
-        growth.addTrait(23, Trait.cockTraining2);
-        growth.addTrait(26, Trait.limbTraining2);
-        growth.addTrait(29, Trait.dickhandler);
-        growth.addTrait(32, Trait.polecontrol);
-        growth.addTrait(35, Trait.desensitized);
-        growth.addTrait(38, Trait.powerfulhips);
-        growth.addTrait(41, Trait.responsive);
-        growth.addTrait(44, Trait.strongwilled);
-        growth.addTrait(47, Trait.insertion);
-        growth.addTrait(50, Trait.cockTraining3);
-        growth.addTrait(53, Trait.limbTraining3);
-        growth.addTrait(56, Trait.desensitized2);
+        character.getGrowth().addTrait(0, Trait.exhibitionist);
+        character.getGrowth().addTrait(0, Trait.proheels);
+        character.getGrowth().addTrait(0, Trait.insatiable);
+        character.getGrowth().addTrait(0, Trait.assmaster);
+        character.getGrowth().addTrait(0, Trait.analFanatic);
+
+        character.getGrowth().addTrait(2, Trait.alwaysready);
+        character.getGrowth().addTrait(5, Trait.limbTraining1);
+        character.getGrowth().addTrait(8, Trait.expertGoogler);
+        character.getGrowth().addTrait(11, Trait.sexTraining1);
+        character.getGrowth().addTrait(14, Trait.testosterone);
+        character.getGrowth().addTrait(17, Trait.experienced);
+        character.getGrowth().addTrait(20, Trait.asshandler);
+        character.getGrowth().addTrait(23, Trait.sexTraining2);
+        character.getGrowth().addTrait(26, Trait.limbTraining2);
+        character.getGrowth().addTrait(29, Trait.dickhandler);
+        character.getGrowth().addTrait(32, Trait.polecontrol);
+        character.getGrowth().addTrait(35, Trait.desensitized);
+        character.getGrowth().addTrait(38, Trait.powerfulhips);
+        character.getGrowth().addTrait(41, Trait.responsive);
+        character.getGrowth().addTrait(44, Trait.strongwilled);
+        character.getGrowth().addTrait(47, Trait.insertion);
+        character.getGrowth().addTrait(50, Trait.sexTraining3);
+        character.getGrowth().addTrait(53, Trait.limbTraining3);
+        character.getGrowth().addTrait(56, Trait.desensitized2);
     }
 
     @Override
@@ -135,34 +140,34 @@ public class Eve extends BasePersonality {
     }
 
     @Override
-    public String bbLiner(Combat c) {
+    public String bbLiner(Combat c, Character other) {
         return "Eve grins at you and pats her own groin. <i>\"Better you than me, boy.\"</i>";
     }
 
     @Override
-    public String nakedLiner(Combat c) {
+    public String nakedLiner(Combat c, Character opponent) {
         return "Eve seems more comfortable with her cock and balls hanging out than she was with her clothes on. <i>\"Like what you see? We're just getting started.\"</i>";
     }
 
     @Override
-    public String stunLiner(Combat c) {
+    public String stunLiner(Combat c, Character opponent) {
         return "Eve lets out a soft growl as she lays flat on the floor. <i>\"Enjoy it while you can, boy. As soon as I catch my breath, your ass is mine.\"</i>";
     }
 
     @Override
-    public String taunt(Combat c) {
+    public String taunt(Combat c, Character opponent) {
         return "Eve grins sadistically. <i>\"If you're intimidated by my cock, don't worry. Size isn't everything.\"</i>";
     }
 
     @Override
-    public String temptLiner(Combat c) {
+    public String temptLiner(Combat c, Character opponent) {
         return "Eve grins sadistically. <i>\"I'm an expert at making people like you squeal.\"</i>";
     }
 
     @Override
     public String victory(Combat c, Result flag) {
         character.arousal.empty();
-        if (c.getStance().anallyPenetratedBy(c.getOther(character), character)) {
+        if (c.getStance().anallyPenetratedBy(c, c.getOpponent(character), character)) {
             return "As Eve pounds you mercilessly in the ass, your body is overwhelmed"
                             + " by the strange sensations radiating from your insides. <i>\"How"
                             + " does your prostate feel? I could probably milk you like this, but"
@@ -244,7 +249,7 @@ public class Eve extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c) {
+    public String describe(Combat c, Character self) {
         return "If there's one word to describe Eve's appearance, it would have to be 'wild'. Her face is quite pretty, though her eyes are an unnerving silver color. "
                         + "She has bright purple hair gathered in a messy ponytail, a variety of tattoos decorating her extremely shapely body, and of couse it's "
                         + "impossible to miss the larger than average cock and balls hanging between between her legs.";
@@ -370,9 +375,8 @@ public class Eve extends BasePersonality {
     }
 
     @Override
-    public String startBattle(Character other) {
-        return "Eve gives you a dominant grin and cracks her knuckles. <i>\"Come on " + other.boyOrGirl()
-                        + ", let's play.\"</i>";
+    public String startBattle(Character self, Character other) {
+        return Global.format("{self:SUBJECT} gives {other:name-do} a dominant grin and cracks {self:possessive} knuckles. <i>\"Come on {other:name}, let's play.\"</i>", character, other);
     }
 
     @Override
@@ -405,7 +409,7 @@ public class Eve extends BasePersonality {
 
     @Override
     public String orgasmLiner(Combat c) {
-        if (c.getStance().anallyPenetrated(c.getOther(character))) {
+        if (c.getStance().anallyPenetrated(c, c.getOpponent(character))) {
             return "<i>\"Oh fuck! You are one tight little cum bucket! Let's go again!\"</i>"
                             + " Eve immediately resumes her thrusting.";
         }
@@ -413,8 +417,8 @@ public class Eve extends BasePersonality {
     }
 
     @Override
-    public String makeOrgasmLiner(Combat c) {
-        if (c.getStance().anallyPenetrated(c.getOther(character))) {
+    public String makeOrgasmLiner(Combat c, Character target) {
+        if (c.getStance().anallyPenetrated(c, c.getOpponent(character))) {
             return "Eve laughs maniacally as you cum. <i>\"I knew you'd like it"
                             + ", you little ass slut! But you're not done yet!\"</i>";
         }

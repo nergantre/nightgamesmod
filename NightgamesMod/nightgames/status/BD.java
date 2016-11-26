@@ -12,6 +12,7 @@ public class BD extends DurationStatus {
         super("Bondage", affected, 10);
         flag(Stsflag.bondage);
         flag(Stsflag.purgable);
+        flag(Stsflag.debuff);
     }
 
     @Override

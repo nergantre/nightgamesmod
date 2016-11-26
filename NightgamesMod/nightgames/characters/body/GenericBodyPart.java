@@ -56,6 +56,11 @@ public class GenericBodyPart implements BodyPart {
     }
 
     @Override
+    public String canonicalDescription() {
+        return desc;
+    }
+
+    @Override
     public void describeLong(StringBuilder b, Character c) {
         String parsedDesc = Global.format(descLong, c, c);
         b.append(parsedDesc);

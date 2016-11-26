@@ -1,6 +1,7 @@
 package nightgames.status;
 
 public enum Stsflag {
+    debuff,
     bound,
     cockbound,
     cynical,
@@ -52,6 +53,7 @@ public enum Stsflag {
     seeded,
     tied,
     drowsy,
+    inserted,
     tailsucked,
     aggressive,
     divinerecoil,
@@ -63,5 +65,6 @@ public enum Stsflag {
     blinded,
     victimComplex, 
     primed, 
-    glamour
+    glamour, 
+    bombed
 }

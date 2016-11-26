@@ -32,10 +32,15 @@ public class Tickle extends Skill {
     }
 
     @Override
+    public int accuracy(Combat c, Character target) {
+        return 90;
+    }
+
+    @Override
     public boolean resolve(Combat c, Character target) {
         DamageType type = DamageType.technique;
-        if (getSelf().has(Trait.ticklemonster) || target.roll(this, c, accuracy(c))) {
-            if (target.crotchAvailable() && c.getStance().reachBottom(getSelf()) && !c.getStance().havingSex()) {
+        if (getSelf().has(Trait.ticklemonster) || target.roll(getSelf(), c, accuracy(c, target))) {
+            if (target.crotchAvailable() && c.getStance().reachBottom(getSelf()) && !c.getStance().havingSex(c)) {
                 int bonus = 0;
                 int weak = 0;
                 Result result = Result.normal;
@@ -62,7 +67,7 @@ public class Tickle extends Skill {
                     }
                 }
                 if (result == Result.special) {
-                    target.add(c, new Hypersensitive(target));
+                    target.add(c, new Hypersensitive(target, 5));
                 }
                 if (target.has(Trait.ticklish)) {
                     bonus = 4 + Global.random(3);

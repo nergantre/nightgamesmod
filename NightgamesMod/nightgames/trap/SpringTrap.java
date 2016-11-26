@@ -29,12 +29,12 @@ public class SpringTrap implements Trap {
             int m = 50 + target.getLevel() * 5;
             if (target.has(ClothingTrait.armored)) {
                 m /= 2;
-                target.pain(null, m);
+                target.pain(null, null, m);
             } else {
                 if (target.has(Trait.achilles)) {
                     m += 20;
                 }
-                target.pain(null, m);
+                target.pain(null, null, m);
                 target.add(new Winded(target));
             }
             target.location().opportunity(target, this);
@@ -86,9 +86,11 @@ public class SpringTrap implements Trap {
     }
 
     @Override
-    public void resolve(Character active) {
+    public boolean resolve(Character active) {
         if (active != owner) {
             trigger(active);
+            return true;
         }
+        return false;
     }
 }
