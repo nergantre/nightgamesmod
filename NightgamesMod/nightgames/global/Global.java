@@ -162,6 +162,7 @@ public class Global {
 
     public Global(boolean headless) {
         debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
+        debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
         rng = new Random();
         flags = new HashSet<>();
         players = new HashSet<>();
@@ -511,6 +512,7 @@ public class Global {
         getSkillPool().add(new LaunchHarpoon(ch));
         getSkillPool().add(new ThrowBomb(ch));
         getSkillPool().add(new RemoveBomb(ch));
+        getSkillPool().add(new MagLock(ch));
 
         if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
             getSkillPool().add(new SelfStun(ch));

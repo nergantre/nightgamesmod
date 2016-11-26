@@ -11,6 +11,7 @@ public class Glamour extends DurationStatus {
     public Glamour(Character affected, int duration) {
         super("Glamour", affected, duration);
         flag(Stsflag.alluring);
+        flag(Stsflag.glamour);
         flag(Stsflag.purgable);
     }
 

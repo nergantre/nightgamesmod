@@ -1,5 +1,8 @@
 package nightgames.skills;
 
+import java.util.Arrays;
+import java.util.Map;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
@@ -15,6 +18,7 @@ import nightgames.stance.Position;
 import nightgames.stance.Stance;
 import nightgames.status.Bound;
 import nightgames.status.CockBound;
+import nightgames.status.MagLocked;
 import nightgames.status.Stsflag;
 
 public class Struggle extends Skill {
@@ -33,13 +37,16 @@ public class Struggle extends Skill {
         if (getSelf().hasStatus(Stsflag.cockbound) || getSelf().hasStatus(Stsflag.knotted)) {
             return true;
         }
-        return (!c.getStance().mobile(getSelf()) && !c.getStance().dom(getSelf()) || getSelf().bound())
+        return (!c.getStance().mobile(getSelf()) && !c.getStance().dom(getSelf()) || getSelf().bound()
+                        || getSelf().is(Stsflag.maglocked))
                         && getSelf().canRespond();
     }
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (getSelf().bound()) {
+        if (getSelf().is(Stsflag.maglocked)) {
+            return struggleMagLock(c, target);
+        } else if (getSelf().bound()) {
             return struggleBound(c, target);
         } else if (c.getStance().havingSex(c)) {
             boolean knotted = getSelf().hasStatus(Stsflag.knotted);
@@ -51,6 +58,86 @@ public class Struggle extends Skill {
         } else {
             return struggleRegular(c, target);
         }
+    }
+    
+    private boolean struggleMagLock(Combat c, Character target) {
+        MagLocked stat = (MagLocked) getSelf().getStatus(Stsflag.maglocked);
+        
+        Attribute highestAdvancedAttr = null;
+        int attrLevel = 0;
+        for (Map.Entry<Attribute, Integer> ent : getSelf().att.entrySet()) {
+            Attribute attr = ent.getKey();
+            if (attr == Attribute.Power || attr == Attribute.Seduction || attr == Attribute.Cunning) {
+                continue;
+            }
+            if (ent.getValue() > attrLevel) {
+                highestAdvancedAttr = attr;
+                attrLevel = ent.getValue();
+            }
+        }
+        
+        boolean basic = highestAdvancedAttr == null;
+        int skill;
+        
+        if (basic) {
+           attrLevel = Math.max(getSelf().get(Attribute.Power), 
+                           Math.max(getSelf().get(Attribute.Seduction), 
+                                           getSelf().get(Attribute.Cunning))) / 2;        
+        }
+        skill = attrLevel - 10; // An extra adge for Mara;
+        
+        // One MagLock, pretty easy to remove
+        if (stat.getCount() == 1) {
+            if (!target.check(Attribute.Science, skill * 2)) {
+                c.write(getSelf(), Global.format("Still having one hand completely free, it's not to"
+                            + " difficult for {self:subject} to remove the lone MagLock"
+                            + " {other:subject} had placed around {self:possessive} wrist.", getSelf(), target));
+                getSelf().removeStatus(stat);
+                return true;
+            } else {
+                c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:pull|pulls} at the MagLock around"
+                                + " {self:possessive} wrist, but it's not budging.", getSelf(), target));
+            }
+        } else {
+            if (stat.getCount() != 2) {
+                // Three MagLocks? Shouldn't be able to struggle if that's the case...
+                c.write("ERROR: Something went wrong with the MagLocks...");
+                return false;
+            }
+            
+            // Two MagLocks, difficult to remove
+            if (target.check(Attribute.Science, skill)) {
+                String msg = "{self:SUBJECT-ACTION:struggle|struggles} against the powerful"
+                                + " MagLocks locked around {self:possessive} wrists by ";
+                if (Arrays.asList(Attribute.Dark, Attribute.Arcane, Attribute.Temporal, Attribute.Divinity)
+                                .contains(highestAdvancedAttr)) {
+                    msg += "trying to pry them of with {self:possessive} magic";
+                } else if (Arrays.asList(Attribute.Power, 
+                                Attribute.Ki, Attribute.Ninjutsu, Attribute.Animism, Attribute.Nymphomania)
+                                .contains(highestAdvancedAttr)) {
+                    msg += "applying brute force with {self:possessive} powerful muscles";
+                } else if (Arrays.asList(Attribute.Cunning, Attribute.Science, Attribute.Hypnosis)
+                                .contains(highestAdvancedAttr)) {
+                    msg += "finding and exploiting a weakness in their design";
+                } else {
+                    msg += "twisting and turning {slef:possessive} hands as much as possible"
+                                    + " while attempting to force them apart";
+                }
+                msg += ", and eventually succeeds. The two bands drop to the ground and power down.";
+                if (!target.human()) {
+                    msg += " {other:SUBJECT} seems very surprised that {self:subject} was able to escape.";
+                }
+                c.write(getSelf(), Global.format(msg, getSelf(), target));
+                getSelf().removeStatus(stat);
+                return true;
+            } else {
+                c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:struggle|struggles} against the"
+                                + " MagLocks around {self:possessive} wrist, but {self:action:prove|proves}"
+                                + " no match for their insanely strong attraction.", getSelf(), target));
+            }
+        }
+        
+        return false;
     }
     
     private boolean struggleBound(Combat c, Character target) {
