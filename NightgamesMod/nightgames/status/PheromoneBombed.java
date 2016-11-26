@@ -50,10 +50,9 @@ public class PheromoneBombed extends DurationStatus {
     public int mod(Attribute a) {
         return 0;
     }
-
+    
     @Override
-    public int regen(Combat c) {
-        super.regen(c);
+    public void tick(Combat c) {
         if (getDuration() <= 1) {
             affected.removelist.add(this);
             c.write(Global.format("<b>With a last, loud beep, the device on {self:name-possessive} chest"
@@ -67,7 +66,6 @@ public class PheromoneBombed extends DurationStatus {
             affected.add(new Frenzied(affected, 10));
             affected.add(new Hypersensitive(affected, 10));
         }
-        return 0;
     }
 
     @Override

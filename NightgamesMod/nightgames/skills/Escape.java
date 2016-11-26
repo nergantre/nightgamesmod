@@ -24,7 +24,7 @@ public class Escape extends Skill {
                  .sub(getSelf())
                         && !c.getStance()
                              .mobile(getSelf())
-                        || getSelf().bound()) && getSelf().canRespond();
+                        || (getSelf().bound() && !getSelf().is(Stsflag.maglocked))) && getSelf().canRespond();
     }
 
     @Override
