@@ -28,7 +28,6 @@ public class MagLock extends Skill {
                         && !c.getStance().reachTop(target)
                         && c.getStance().dom(getSelf())
                         && getSelf().has(Item.Battery, 2) // consumed by MagLocked status
-                        && !target.is(Stsflag.bound)
                         && (!target.is(Stsflag.maglocked) 
                                         || ((MagLocked) target.getStatus(Stsflag.maglocked)).getCount() < 3);
     }

@@ -63,8 +63,8 @@ public class PheromoneBombed extends DurationStatus {
                             + " turbocharging every nerve in {self:name-possessive} body!", affected,
                             c.getOpponent(affected)));
             affected.tempt(c, c.getOpponent(affected), affected.getArousal().max() / 4);
-            affected.add(new Frenzied(affected, 10));
-            affected.add(new Hypersensitive(affected, 10));
+            affected.addlist.add(new Frenzied(affected, 10));
+            affected.addlist.add(new Hypersensitive(affected, 10));
         }
     }
 
