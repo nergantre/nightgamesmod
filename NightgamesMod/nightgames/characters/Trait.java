@@ -376,6 +376,7 @@ public enum Trait {
     intensesuction("Intense Suction", "Has a chance to cause a double orgasm with the harpoon toy"),
     bomber("Bomber", "Can throw dangerous Pheromone Bombs"),
     maglocks("MagLocks", "Has MagLocks, which are very good at binding opponents' limbs together"),
+    trainingcollar("Training Collar", "Has a Training Collar, which can be used to 'encourage' opponents to be good"),
     
     // Item
     strapped("Strapped", "Penis envy", (b, c, t) -> {

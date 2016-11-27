@@ -25,18 +25,18 @@ public class PheromoneBombed extends DurationStatus {
     @Override
     public String describe(Combat c) {
         switch (getDuration()) {
-            case 4:
+            case 3:
                 return Global.format("{other:NAME-POSSESSIVE} spherical device is sticking to {self:subject}, "
                                 + "producing slow but insistent beeps.", affected, c.getOpponent(affected));
-            case 3:
+            case 2:
                 return Global.format("The sphere's beeping is accelerating, and some lights are beginning to flash."
                                 + " %s...", affected, c.getOpponent(affected),
                                 c.getOpponent(affected).human() ? "Excellent" : "This might be bad");
-            case 2:
+            case 1:
                 return Global.format("A high-pitched whirring sound joins the cacophony of beeps coming"
                                 + " from the sphere on {self:name-possessive} chest.", affected, 
                                 c.getOpponent(affected));
-            case 1:
+            case 0:
                 return Global.format("<b>A tube-like protrusion extends from the sphere sticking to"
                                 + " {self:name-possessive} chest. %s!</b>", affected, c.getOpponent(affected),
                                 c.getOpponent(affected).human() ? "Just a few more seconds" :
@@ -60,7 +60,7 @@ public class PheromoneBombed extends DurationStatus {
                             + " spewing the cloying substance for several seconds, and "
                             + "{self:pronoun-action:have|has} no choice but to breathe it in. The cloud"
                             + " smells <i>distinctly</i> of {other:subject}, and it is currently"
-                            + " turbocharging every nerve in {self:name-possessive} body!", affected,
+                            + " turbocharging every nerve in {self:name-possessive} body!</b>", affected,
                             c.getOpponent(affected)));
             affected.tempt(c, c.getOpponent(affected), affected.getArousal().max() / 4);
             affected.addlist.add(new Frenzied(affected, 10));

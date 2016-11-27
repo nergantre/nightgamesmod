@@ -39,15 +39,19 @@ import nightgames.skills.ConcedePosition;
 import nightgames.skills.FootWorship;
 import nightgames.skills.PetInitiatedThreesome;
 import nightgames.skills.PussyWorship;
+import nightgames.skills.Reversal;
 import nightgames.skills.Skill;
+import nightgames.skills.Tactics;
 import nightgames.stance.Kneeling;
 import nightgames.stance.Neutral;
+import nightgames.stance.Pin;
 import nightgames.stance.Position;
 import nightgames.stance.Stance;
 import nightgames.stance.StandingOver;
 import nightgames.status.Abuff;
 import nightgames.status.BodyFetish;
 import nightgames.status.Braced;
+import nightgames.status.Collared;
 import nightgames.status.CounterStatus;
 import nightgames.status.DivineCharge;
 import nightgames.status.Enthralled;
@@ -785,6 +789,25 @@ public class Combat extends Observable implements Cloneable {
             other.add(new Flatfooted(other, 1));
         }
         
+        if (self.is(Stsflag.collared) && Global.random(10) < 3 && new Reversal(other).usable(this, self)) {
+            self.pain(this, null, Global.random(20, 50));
+            Position nw = stance.reverse(this, false);
+            if (!stance.equals(nw)) {
+                stance = nw;
+                write(Global.format("Appearantly punishing {self:name-do} for being dominant, the collar"
+                                + " around {self:possessive} neck gives {self:direct-object} a painful"
+                                + " shock. At the same time, {other:subject-action:grab|grabs}"
+                                + " hold of {self:possessive} body and gets {other:reflective}"
+                                + " into a more advantegeous position.", self, other));
+            } else {
+                stance = new Pin(other, self);
+                write(Global.format("Distracted by a shock from the collar around {self:possessive}"
+                                + " neck, {self:subject-action:have|has} no chance to resist as"
+                                + " {other:subject-action:put|puts} {self:direct-object}"
+                                + " in a pin.", self, other));
+            }
+        }
+        
         if (getStance().facing(self, other) && other.breastsAvailable() && !self.has(Trait.temptingtits) && other.has(Trait.temptingtits)) {
             write(self, Global.format("{self:SUBJECT-ACTION:can't avert|can't avert} {self:possessive} eyes from {other:NAME-POSSESSIVE} perfectly shaped tits sitting in front of {self:possessive} eyes.",
                                             self, other));
@@ -827,6 +850,15 @@ public class Combat extends Observable implements Cloneable {
                 }
             } else {
                 Skill.resolve(skill, this, target);
+            }
+            if (skill.type(this) == Tactics.damage && skill.user().is(Stsflag.collared)) {
+                Collared stat = (Collared) skill.user().getStatus(Stsflag.collared);
+                stat.spendCharges(this, 1);
+                write(Global.format("The training collar around {self:name-possessive}"
+                                + "neck reacts to {self:possessive} aggression by sending"
+                                + " a powerful shock down {self:possessive} spine.", 
+                                skill.user(), target));
+                skill.user().pain(this, null, Global.random(10, 40));
             }
             checkStamina(target);
             checkStamina(skill.user());

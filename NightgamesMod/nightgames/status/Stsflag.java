@@ -68,5 +68,6 @@ public enum Stsflag {
     glamour, 
     bombed, 
     maglocked, 
-    hogtied
+    hogtied, 
+    collared
 }

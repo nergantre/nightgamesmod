@@ -4,6 +4,7 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.status.Collared;
 import nightgames.status.Stsflag;
 
 public class RemoveBomb extends Skill {
@@ -29,6 +30,13 @@ public class RemoveBomb extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
+        if (getSelf().is(Stsflag.collared) && Global.random(100) < 40) {
+            Collared stat = (Collared) getSelf().getStatus(Stsflag.collared);
+            stat.spendCharges(c, 1);
+            writeOutput(c, Result.special, target);
+            getSelf().pain(c, null, 20 + Global.random(40));
+            return false;
+        }
         if (c.getStance().dom(target)) {
             if (Global.random(100) < 75) {
                 writeOutput(c, Result.miss, target);
@@ -59,10 +67,14 @@ public class RemoveBomb extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        if (modifier != Result.miss) {
+        if (modifier == Result.normal) {
             return "You grab the beeping device on your chest and rip it off. It gives off"
                             + " a powerful shock, but you ignore it long enough to throw"
                             + " it away.";
+        }
+        if (modifier == Result.special) {
+            return "You reach up to grab the sphere on your chest, but the collar around your neck"
+                            + " does not appreciate the sentiment and shocks you to keep your arms down.";
         }
         if (!c.getStance().dom(target)) {
             return "You reach for the device on your chest, but the moment you touch it, it sends"
