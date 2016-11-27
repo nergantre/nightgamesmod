@@ -1,6 +1,6 @@
 package nightgames.characters;
 
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.Optional;
 
 import nightgames.actions.Action;
@@ -83,7 +83,7 @@ public class Sarah extends BasePersonality {
     }
 
     @Override
-    public Action move(HashSet<Action> available, HashSet<Movement> radar) {
+    public Action move(Collection<Action> available, Collection<Movement> radar) {
         Action proposed = Decider.parseMoves(available, radar, character);
         return proposed;
     }
