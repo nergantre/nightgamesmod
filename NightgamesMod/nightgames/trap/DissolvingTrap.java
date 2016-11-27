@@ -79,6 +79,5 @@ public class DissolvingTrap extends Trap {
     public void capitalize(Character attacker, Character victim, IEncounter enc) {
         victim.add(new Flatfooted(victim, 1));
         enc.engage(new Combat(attacker, victim, attacker.location()));
-        attacker.location().trap = null;
     }
 }

@@ -26,7 +26,6 @@ public class Area implements Serializable {
     public String description;
     public IEncounter fight;
     public boolean alarm;
-    public Trap trap;
     public ArrayList<Deployable> env;
     public transient MapDrawHint drawHint;
     private Movement enumerator;
@@ -46,7 +45,6 @@ public class Area implements Serializable {
         present = new ArrayList<Character>();
         env = new ArrayList<Deployable>();
         alarm = false;
-        trap = null;
         fight = null;
         this.drawHint = drawHint;
     }
