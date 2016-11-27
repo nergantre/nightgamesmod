@@ -2,6 +2,7 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -36,7 +37,7 @@ public class StunBlast extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.has(ClothingTrait.harpoonDildo) || 
+        if (target.has(Trait.conducivetoy) && target.has(ClothingTrait.harpoonDildo) || 
                                         target.has(ClothingTrait.harpoonOnahole)) { 
             writeOutput(c, Result.special, target);
             target.getStamina().empty();
