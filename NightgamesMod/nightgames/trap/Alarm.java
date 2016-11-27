@@ -6,8 +6,15 @@ import nightgames.combat.IEncounter;
 import nightgames.global.Global;
 import nightgames.items.Item;
 
-public class Alarm implements Trap {
-    private Character owner;
+public class Alarm extends Trap {
+    
+    public Alarm() {
+        this(null);
+    }
+    
+    public Alarm(Character owner) {
+        super("Alarm", owner);
+    }
 
     @Override
     public void trigger(Character target) {
@@ -45,32 +52,8 @@ public class Alarm implements Trap {
     }
 
     @Override
-    public Character owner() {
-        return owner;
-    }
-
-    @Override
-    public String toString() {
-        return "Alarm";
-    }
-
-    @Override
     public boolean requirements(Character owner) {
         return owner.get(Attribute.Cunning) >= 6;
     }
 
-    @Override
-    public void capitalize(Character attacker, Character victim, IEncounter enc) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public boolean resolve(Character active) {
-        if (active != owner) {
-            trigger(active);
-            return true;
-        }
-        return false;
-    }
 }

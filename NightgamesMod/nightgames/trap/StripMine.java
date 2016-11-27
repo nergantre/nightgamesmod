@@ -9,8 +9,15 @@ import nightgames.combat.IEncounter;
 import nightgames.global.Global;
 import nightgames.items.Item;
 
-public class StripMine implements Trap {
-    private Character owner;
+public class StripMine extends Trap {
+    
+    public StripMine() {
+        this(null);
+    }
+    
+    public StripMine(Character owner) {
+        super("Strip Mine", owner);
+    }
 
     @Override
     public void trigger(Character target) {
@@ -32,11 +39,6 @@ public class StripMine implements Trap {
     }
 
     @Override
-    public boolean decoy() {
-        return false;
-    }
-
-    @Override
     public boolean recipe(Character owner) {
         return owner.has(Item.Tripwire) && owner.has(Item.Battery, 3);
     }
@@ -55,27 +57,9 @@ public class StripMine implements Trap {
     }
 
     @Override
-    public Character owner() {
-        return owner;
-    }
-
-    @Override
-    public String toString() {
-        return "Strip Mine";
-    }
-
-    @Override
     public void capitalize(Character attacker, Character victim, IEncounter enc) {
         enc.engage(new Combat(attacker, victim, attacker.location()));
         attacker.location().remove(this);
     }
 
-    @Override
-    public boolean resolve(Character active) {
-        if (active != owner) {
-            trigger(active);
-            return true;
-        }
-        return false;
-    }
 }

@@ -8,16 +8,14 @@ import nightgames.items.Item;
 import nightgames.status.Hypersensitive;
 import nightgames.status.Oiled;
 
-public class TentacleTrap implements Trap {
-    private Character owner;
+public class TentacleTrap extends Trap {
 
-    @Override
-    public boolean resolve(Character active) {
-        if (active != owner) {
-            trigger(active);
-            return true;
-        }
-        return false;
+    public TentacleTrap() {
+        this(null);
+    }
+    
+    public TentacleTrap(Character owner) {
+        super("Tentacle Trap", owner);
     }
 
     @Override
@@ -57,11 +55,6 @@ public class TentacleTrap implements Trap {
     }
 
     @Override
-    public boolean decoy() {
-        return false;
-    }
-
-    @Override
     public boolean recipe(Character owner) {
         return owner.has(Item.Totem);
     }
@@ -80,18 +73,8 @@ public class TentacleTrap implements Trap {
     }
 
     @Override
-    public Character owner() {
-        return owner;
-    }
-
-    @Override
     public void capitalize(Character attacker, Character victim, IEncounter enc) {
         enc.engage(new Combat(attacker, victim, attacker.location()));
         attacker.location().remove(this);
-    }
-
-    @Override
-    public String toString() {
-        return "Tentacle Trap";
     }
 }
