@@ -7,9 +7,16 @@ import nightgames.combat.Combat;
 import nightgames.combat.IEncounter;
 import nightgames.global.Global;
 
-public class IllusionTrap implements Trap {
-    private Character owner;
+public class IllusionTrap extends Trap {
 
+    public IllusionTrap() {
+        this(null);
+    }
+    
+    public IllusionTrap(Character owner) {
+        super("Illusion Trap", owner);
+    }
+    
     @Override
     public void trigger(Character target) {
         if (target.human()) {
@@ -25,11 +32,6 @@ public class IllusionTrap implements Trap {
         }
         target.tempt(25);
         target.location().opportunity(target, this);
-    }
-
-    @Override
-    public boolean decoy() {
-        return false;
     }
 
     @Override
@@ -50,27 +52,9 @@ public class IllusionTrap implements Trap {
     }
 
     @Override
-    public Character owner() {
-        return owner;
-    }
-
-    @Override
-    public String toString() {
-        return "Illusion Trap";
-    }
-
-    @Override
     public void capitalize(Character attacker, Character victim, IEncounter enc) {
         enc.engage(new Combat(attacker,victim,attacker.location()));
         victim.location().remove(this);
     }
 
-    @Override
-    public boolean resolve(Character active) {
-        if (active != owner) {
-            trigger(active);
-            return true;
-        }
-        return false;
-    }
 }

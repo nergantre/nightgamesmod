@@ -8,9 +8,17 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.status.Bound;
 
-public class Snare implements Trap {
-    private Character owner;
+public class Snare extends Trap {
 
+    
+    public Snare() {
+        this(null);
+    }
+    
+    public Snare(Character owner) {
+        super("Snare", owner);
+    }
+    
     @Override
     public void trigger(Character target) {
         if (target.check(Attribute.Perception, 20 - target.get(Attribute.Perception) + target.baseDisarm())) {
@@ -32,11 +40,6 @@ public class Snare implements Trap {
     }
 
     @Override
-    public boolean decoy() {
-        return false;
-    }
-
-    @Override
     public boolean recipe(Character owner) {
         return owner.has(Item.Tripwire) && owner.has(Item.Rope);
     }
@@ -48,17 +51,7 @@ public class Snare implements Trap {
         owner.consume(Item.Rope, 1);
         return "You carefully rig up a complex and delicate system of ropes on a tripwire. In theory, it should be able to bind whoever triggers it.";
     }
-
-    @Override
-    public Character owner() {
-        return owner;
-    }
-
-    @Override
-    public String toString() {
-        return "Snare";
-    }
-
+    
     @Override
     public boolean requirements(Character owner) {
         return owner.get(Attribute.Cunning) >= 9;
@@ -68,14 +61,5 @@ public class Snare implements Trap {
     public void capitalize(Character attacker, Character victim, IEncounter enc) {
         enc.engage(new Combat(attacker, victim, attacker.location()));
         attacker.location().remove(this);
-    }
-
-    @Override
-    public boolean resolve(Character active) {
-        if (active != owner) {
-            trigger(active);
-            return true;
-        }
-        return false;
     }
 }

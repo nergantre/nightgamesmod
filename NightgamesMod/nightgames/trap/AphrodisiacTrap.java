@@ -9,9 +9,16 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.status.Flatfooted;
 
-public class AphrodisiacTrap implements Trap {
-    private Character owner;
+public class AphrodisiacTrap extends Trap {
 
+    public AphrodisiacTrap() {
+        this(null);
+    }
+    
+    public AphrodisiacTrap(Character owner) {
+        super("Aphrodisiac Trap", owner);
+    }
+    
     @Override
     public void trigger(Character target) {
         if (!target.check(Attribute.Perception, 15 + target.baseDisarm())) {
@@ -35,12 +42,7 @@ public class AphrodisiacTrap implements Trap {
             target.location().opportunity(target, this);
         }
     }
-
-    @Override
-    public boolean decoy() {
-        return false;
-    }
-
+    
     @Override
     public boolean recipe(Character owner) {
         return owner.has(Item.Aphrodisiac) && owner.has(Item.Tripwire) && owner.has(Item.Sprayer)
@@ -57,16 +59,6 @@ public class AphrodisiacTrap implements Trap {
     }
 
     @Override
-    public Character owner() {
-        return owner;
-    }
-
-    @Override
-    public String toString() {
-        return "Aphrodisiac Trap";
-    }
-
-    @Override
     public boolean requirements(Character owner) {
         return owner.get(Attribute.Cunning) >= 12 && !owner.has(Trait.direct);
     }
@@ -76,14 +68,5 @@ public class AphrodisiacTrap implements Trap {
         victim.add(new Flatfooted(victim, 1));
         enc.engage(new Combat(attacker, victim, attacker.location()));
         attacker.location().remove(this);
-    }
-
-    @Override
-    public boolean resolve(Character active) {
-        if (active != owner) {
-            trigger(active);
-            return true;
-        }
-        return false;
     }
 }

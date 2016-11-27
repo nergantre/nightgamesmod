@@ -8,9 +8,16 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.ClothingSlot;
 
-public class Spiderweb implements Trap {
-    private Character owner;
+public class Spiderweb extends Trap {
 
+    public Spiderweb() {
+        this(null);
+    }
+    
+    public Spiderweb(Character owner) {
+        super("Spiderweb", owner);
+    }
+    
     @Override
     public void trigger(Character target) {
         if (target.human()) {
@@ -36,11 +43,6 @@ public class Spiderweb implements Trap {
     }
 
     @Override
-    public boolean decoy() {
-        return false;
-    }
-
-    @Override
     public boolean recipe(Character owner) {
         return owner.has(Item.Rope, 4) && owner.has(Item.Spring, 2) && owner.has(Item.Tripwire);
     }
@@ -58,11 +60,6 @@ public class Spiderweb implements Trap {
         owner.consume(Item.Spring, 2);
         return "With quite a bit of time and effort, you carefully setup a complex series of spring loaded snares. Anyone who gets caught in this will be rendered as helpless "
                         + "as a fly in a web.";
-    }
-
-    @Override
-    public Character owner() {
-        return owner;
     }
 
     @Override
@@ -100,17 +97,4 @@ public class Spiderweb implements Trap {
         victim.location().remove(this);
     }
 
-    @Override
-    public String toString() {
-        return "Spiderweb";
-    }
-
-    @Override
-    public boolean resolve(Character active) {
-        if (active != owner) {
-            trigger(active);
-            return true;
-        }
-        return false;
-    }
 }

@@ -10,9 +10,15 @@ import nightgames.items.Item;
 import nightgames.status.Enthralled;
 import nightgames.status.Flatfooted;
 
-public class EnthrallingTrap implements Trap {
+public class EnthrallingTrap extends Trap {
 
-    private Character owner;
+    public EnthrallingTrap() {
+        this(null);
+    }
+    
+    public EnthrallingTrap(Character owner) {
+        super("Enthralling Trap", owner);
+    }
 
     @Override
     public void trigger(Character target) {
@@ -48,11 +54,6 @@ public class EnthrallingTrap implements Trap {
     }
 
     @Override
-    public boolean decoy() {
-        return false;
-    }
-
-    @Override
     public boolean recipe(Character owner) {
         return owner.has(Item.semen);
     }
@@ -73,28 +74,10 @@ public class EnthrallingTrap implements Trap {
     }
 
     @Override
-    public Character owner() {
-        return owner;
-    }
-
-    @Override
     public void capitalize(Character attacker, Character victim, IEncounter enc) {
         victim.add(new Flatfooted(victim, 1));
         enc.engage(new Combat(attacker, victim, attacker.location()));
         attacker.location().remove(this);
     }
 
-    @Override
-    public boolean resolve(Character active) {
-        if (active != owner) {
-            trigger(active);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public String toString() {
-        return "Enthralling Trap";
-    }
 }

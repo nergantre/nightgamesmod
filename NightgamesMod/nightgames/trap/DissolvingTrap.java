@@ -9,8 +9,16 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.status.Flatfooted;
 
-public class DissolvingTrap implements Trap {
-    private Character owner;
+public class DissolvingTrap extends Trap {
+    
+    public DissolvingTrap() {
+        this(null);
+    }
+    
+    public DissolvingTrap(Character owner) {
+        super("Dissolving Trap", owner);
+    }
+
 
     @Override
     public void trigger(Character target) {
@@ -48,11 +56,6 @@ public class DissolvingTrap implements Trap {
     }
 
     @Override
-    public boolean decoy() {
-        return false;
-    }
-
-    @Override
     public boolean recipe(Character owner) {
         return owner.has(Item.Tripwire) && owner.has(Item.DisSol) && owner.has(Item.Sprayer)
                         && !owner.has(Trait.direct);
@@ -68,16 +71,6 @@ public class DissolvingTrap implements Trap {
     }
 
     @Override
-    public Character owner() {
-        return owner;
-    }
-
-    @Override
-    public String toString() {
-        return "Dissolving Trap";
-    }
-
-    @Override
     public boolean requirements(Character owner) {
         return owner.get(Attribute.Cunning) >= 11 && !owner.has(Trait.direct);
     }
@@ -87,14 +80,5 @@ public class DissolvingTrap implements Trap {
         victim.add(new Flatfooted(victim, 1));
         enc.engage(new Combat(attacker, victim, attacker.location()));
         attacker.location().trap = null;
-    }
-
-    @Override
-    public boolean resolve(Character active) {
-        if (active != owner) {
-            trigger(active);
-            return true;
-        }
-        return false;
     }
 }
