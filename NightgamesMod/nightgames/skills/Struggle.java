@@ -18,6 +18,7 @@ import nightgames.stance.Position;
 import nightgames.stance.Stance;
 import nightgames.status.Bound;
 import nightgames.status.CockBound;
+import nightgames.status.Collared;
 import nightgames.status.MagLocked;
 import nightgames.status.Stsflag;
 
@@ -44,6 +45,9 @@ public class Struggle extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
+        if (blockedByCollar(c, target)) {
+            return false;
+        }
         if (getSelf().is(Stsflag.maglocked)) {
             return struggleMagLock(c, target);
         } else if (getSelf().bound()) {
@@ -60,8 +64,19 @@ public class Struggle extends Skill {
         }
     }
     
-   
-    
+    private boolean blockedByCollar(Combat c, Character target) {
+        Collared stat = (Collared) getSelf().getStatus(Stsflag.collared);
+        if (stat != null) {
+            c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:try|tries} to struggle, but"
+                            + " the collar is having none of it and shocks {self:direct-object}"
+                            + " into submission.", getSelf(), target));
+            getSelf().pain(c, null, Global.random(20, 50));
+            stat.spendCharges(c, 2);
+            return true;
+        }
+        return false;
+    }
+
     private boolean struggleBound(Combat c, Character target) {
         Bound status = (Bound) target.getStatus(Stsflag.bound);
         if (getSelf().check(Attribute.Power, -getSelf().escape(c, target))) {
