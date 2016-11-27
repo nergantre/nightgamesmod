@@ -1,6 +1,6 @@
 package nightgames.characters;
 
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.Optional;
 
 import nightgames.actions.Action;
@@ -104,7 +104,7 @@ public class Yui extends BasePersonality {
     }
 
     @Override
-    public Action move(HashSet<Action> available, HashSet<Movement> radar) {
+    public Action move(Collection<Action> available, Collection<Movement> radar) {
         for (Action act : available) {
             if (act.consider() == Movement.mana) {
                 return act;

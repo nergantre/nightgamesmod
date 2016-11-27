@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.google.gson.JsonObject;
 
+import nightgames.actions.Action;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
@@ -34,6 +35,10 @@ public abstract class Status implements Cloneable {
     }
 
     public Collection<Skill> allowedSkills(Combat c) {
+        return Collections.emptySet();
+    }
+    
+    public Collection<Action> allowedActions() {
         return Collections.emptySet();
     }
 
@@ -72,7 +77,7 @@ public abstract class Status implements Cloneable {
     public abstract int counter();
 
     public abstract int value();
-
+    
     public int drained(int x) {
         return 0;
     }

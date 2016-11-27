@@ -26,6 +26,7 @@ import javax.swing.plaf.basic.BasicTreeUI.TreeIncrementAction;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import nightgames.actions.Action;
 import nightgames.actions.Move;
 import nightgames.actions.Movement;
 import nightgames.areas.Area;
@@ -2115,7 +2116,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void upkeep() {
-        status.removeAll(status.stream().filter(s -> !s.lingering()).collect(Collectors.toSet()));
+        status.removeIf(s -> !s.lingering());
         getTraits().forEach(trait -> {
             if (trait.status != null) {
                 Status newStatus = trait.status.instance(this, null);
@@ -3619,5 +3620,9 @@ public abstract class Character extends Observable implements Cloneable {
 
     public int getPetLimit() {
         return has(Trait.congregation) ? 2 : 1;
+    }
+    
+    public Collection<Action> allowedActions() {
+        return status.stream().flatMap(s -> s.allowedActions().stream()).collect(Collectors.toSet());
     }
 }

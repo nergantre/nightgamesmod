@@ -121,6 +121,7 @@ import nightgames.trap.Decoy;
 import nightgames.trap.DissolvingTrap;
 import nightgames.trap.EnthrallingTrap;
 import nightgames.trap.IllusionTrap;
+import nightgames.trap.RoboWeb;
 import nightgames.trap.Snare;
 import nightgames.trap.Spiderweb;
 import nightgames.trap.SpringTrap;
@@ -555,6 +556,7 @@ public class Global {
         trapPool.add(new IllusionTrap());
         trapPool.add(new StripMine());
         trapPool.add(new TentacleTrap());
+        trapPool.add(new RoboWeb());
     }
 
     public static void buildFeatPool() {

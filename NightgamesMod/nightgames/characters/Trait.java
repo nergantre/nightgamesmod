@@ -377,7 +377,7 @@ public enum Trait {
     bomber("Bomber", "Can throw dangerous Pheromone Bombs"),
     maglocks("MagLocks", "Has MagLocks, which are very good at binding opponents' limbs together"),
     trainingcollar("Training Collar", "Has a Training Collar, which can be used to 'encourage' opponents to be good"),
-    
+    roboweb("RoboWeb", "Improved Spiderweb trap"),
     // Item
     strapped("Strapped", "Penis envy", (b, c, t) -> {
         if (c.human()) {
