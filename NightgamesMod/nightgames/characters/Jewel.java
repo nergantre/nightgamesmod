@@ -113,6 +113,31 @@ public class Jewel extends BasePersonality {
                             growth.addTrait(37, Trait.powerfulcheeks);
                             growth.addTrait(47, Trait.temptingass);
                             return true;
+                        }),
+                        new CombatSceneChoice("You'd rather be on top- you think you can take her", (c, self, other) -> {
+                            c.write("<i>\"You think you can take me?!\"<i> Jewel exclaims, narrowing her eyes angrily. Jewel seems to be legitimately irritated, "
+                                            + "but she relaxes after a few seconds, seeming to accept the boast as not being an insult to her prowess- though there's "
+                                            + "a dangerous glint in her eyes that wasn't there before, and you start to worry that provoking her might not have been the wisest"
+                                            + "idea.<br>\"I think you've just signed up for some good long lessons in learning your place. I'm stronger, more skilled, "
+                                            + "and more <b>worthy</b> than you are, and it's clear that my going <b>easy></b> on you has given you a swelled sense of your "
+                                            + "own ability.</i>\"<br>Jewel sneers at you, and then turns and stalks away. You must have accidentally hit upon something sensitive "
+                                            + "from Jewel's past- perhaps something she kept hearing growing up among a mostly-male military related to stereotypes about girls being "
+                                            + "weak and submissive. Once she's calmed down, you'll have to find her and apologize, but you suspect that from now on Jewel is going "
+                                            + "to be putting a lot more effort into the games. If you want to keep up, you'll probably have to step up your own efforts as well.");
+                            Global.flag(JEWEL_ANAL_FOCUS);
+                            growth.addTrait(11, Trait.powerfulhips);
+                            growth.addTrait(25, Trait.tight);
+                            growth.addTrait(37, Trait.powerfulcheeks);
+                            growth.addTrait(47, Trait.temptingass);
+                            Global.flag(JEWEL_MARTIAL_FOCUS);
+                            growth.addTrait(11, Trait.grappler);
+                            growth.addTrait(25, Trait.disablingblows);
+                            growth.addTrait(37, Trait.naturalTop);
+                            growth.addTrait(47, Trait.takedown);
+                            growth.bonusAttributes += 3;
+                            // some compensation for the added difficulty. She gets 4 traits and 3 attribute points/level, and you only get 2 traits, but you are fighting more people than just her.
+                            Global.getPlayer().getGrowth().addTraitPoints(new int[]{25,47});
+                            return true;
                         })
         )));
 
@@ -130,7 +155,8 @@ public class Jewel extends BasePersonality {
                             growth.addTrait(39, Trait.mentalfortress);
                             if (Global.checkFlag(JEWEL_ANAL_FOCUS)) {
                                 growth.addTrait(50, Trait.bewitchingbottom);
-                            } else {
+                            }
+                            if (Global.checkFlag(JEWEL_PHYSICAL_FOCUS)) {
                                 growth.addTrait(50, Trait.unquestionable);
                             }
                             growth.addTrait(55, Trait.overwhelmingPresence);
@@ -146,10 +172,38 @@ public class Jewel extends BasePersonality {
                             growth.addTrait(39, Trait.confidentdom);
                             if (Global.checkFlag(JEWEL_ANAL_FOCUS)) {
                                 growth.addTrait(50, Trait.drainingass);
-                            } else {
+                            }
+                            if (Global.checkFlag(JEWEL_PHYSICAL_FOCUS)) {
                                 growth.addTrait(50, Trait.edger);
                             }
                             growth.addTrait(55, Trait.oblivious);
+                            return true;
+                        }),
+                        new CombatSceneChoice("Placeholder both.", (c, self, other) -> {
+                            c.write("<i>\"Placeholder both\"</i>");
+                            Global.flag(JEWEL_PHYSICAL_FOCUS);
+                            growth.addTrait(22, Trait.indomitable);
+                            growth.addTrait(39, Trait.confidentdom);
+                            if (Global.checkFlag(JEWEL_ANAL_FOCUS)) {
+                                growth.addTrait(50, Trait.drainingass);
+                            }
+                            if (Global.checkFlag(JEWEL_PHYSICAL_FOCUS)) {
+                                growth.addTrait(50, Trait.edger);
+                            }
+                            growth.addTrait(55, Trait.oblivious);
+                            Global.flag(JEWEL_MENTAL_FOCUS);
+                            growth.addTrait(22, Trait.commandingvoice);
+                            growth.addTrait(39, Trait.mentalfortress);
+                            if (Global.checkFlag(JEWEL_ANAL_FOCUS)) {
+                                growth.addTrait(50, Trait.bewitchingbottom);
+                            }
+                            if (Global.checkFlag(JEWEL_PHYSICAL_FOCUS)) {
+                                growth.addTrait(50, Trait.unquestionable);
+                            }
+                            growth.addTrait(55, Trait.overwhelmingPresence);
+                            character.getGrowth().bonusAttributes += 3;
+                            // some compensation for the added difficulty. She gets 4 traits and 3 attribute points/level, and you only get 2 traits, but you are fighting more people than just her.
+                            Global.getPlayer().getGrowth().addTraitPoints(new int[]{1,57});
                             return true;
                         })
         )));

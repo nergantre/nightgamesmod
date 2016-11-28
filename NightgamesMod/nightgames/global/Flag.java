@@ -75,7 +75,8 @@ public enum Flag {
     skipFF,
     hermHasBalls,
     shemaleNoBalls,
-    femaleTGIntoHerm,
+    femaleTGIntoHerm, 
+    SuperTraitMode,
     ;
     
     public static boolean exists(String flag) {

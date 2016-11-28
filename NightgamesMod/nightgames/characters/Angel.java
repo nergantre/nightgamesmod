@@ -112,6 +112,31 @@ public class Angel extends BasePersonality {
                             character.getGrowth().addTrait(39, Trait.erophage);
                             character.getGrowth().addTrait(54, Trait.sexualDynamo);
                             return true;
+                        }),
+                        new CombatSceneChoice("Tell her you love both (hard mode, PC gets extra traits)", (c, self, other) -> {
+                            c.write("You tell Angel that her insatiable sex drive and amazing sex technique are both part of what makes her unique and amazing(ly attractive). "
+                                            + "There are people out there with one or the other, but no one but Angel is as good at both. Angel grins and licks her lips"
+                                            + "<i>\"From most people, that would sound like a pathetic wishy-washy non-answer, but the way you put that made it sound like "
+                                            + "a challenge. I'll take that challenge, but think you've just doomed yourself to being my sex toy\"</i>"
+                                            + "<br/><br/>"
+                                            + "Angel looks like she's found a whole new level of resolve- you suddenly realize that you've made a terrible mistake. You resolve to step up training yourself, if that's possible.");
+                            Global.flag(ANGEL_NYMPHOMANIA_FOCUS);
+                            character.mod(Attribute.Nymphomania, 1);
+                            character.getGrowth().addTrait(12, Trait.lastStand);
+                            character.getGrowth().addTrait(20, Trait.nymphomania);
+                            character.getGrowth().addTrait(25, Trait.RawSexuality);
+                            character.getGrowth().addTrait(39, Trait.erophage);
+                            character.getGrowth().addTrait(54, Trait.sexualDynamo);
+                            Global.flag(ANGEL_SEX_FOCUS);
+                            character.getGrowth().addTrait(12, Trait.holecontrol);
+                            character.getGrowth().addTrait(20, Trait.zealinspiring);
+                            character.getGrowth().addTrait(25, Trait.powerfulhips);
+                            character.getGrowth().addTrait(39, Trait.insertion);
+                            character.getGrowth().addTrait(54, Trait.autonomousPussy);
+                            character.getGrowth().bonusAttributes += 2;
+                            // some compensation for the added difficulty. She gets 6 traits and 2 attribute points/level, and you only get 2 traits, but you are fighting more people than just her.
+                            Global.getPlayer().getGrowth().addTraitPoints(new int[]{12,39});
+                            return true;
                         })
                     )
                 ));
@@ -146,7 +171,8 @@ public class Angel extends BasePersonality {
                             character.getGrowth().addTrait(30, Trait.leadership);
                             if (Global.checkFlag(ANGEL_SEX_FOCUS)) {
                                 character.getGrowth().addTrait(42, Trait.inspirational);
-                            } else if (Global.checkFlag(ANGEL_NYMPHOMANIA_FOCUS)) {
+                            }
+                            if (Global.checkFlag(ANGEL_NYMPHOMANIA_FOCUS)) {
                                 character.getGrowth().addTrait(42, Trait.showmanship);
                             }
                             character.getGrowth().addTrait(45, Trait.tactician);
@@ -179,10 +205,42 @@ public class Angel extends BasePersonality {
                             character.getGrowth().addTrait(45, Trait.genuflection);
                             if (Global.checkFlag(ANGEL_SEX_FOCUS)) {
                                 character.getGrowth().addTrait(48, Trait.piety);
-                            } else if (Global.checkFlag(ANGEL_NYMPHOMANIA_FOCUS)) {
+                            } 
+                            if (Global.checkFlag(ANGEL_NYMPHOMANIA_FOCUS)) {
                                 character.getGrowth().addTrait(48, Trait.mandateOfHeaven);
                             }
                             character.getGrowth().addTrait(60, Trait.revered);
+                            return true;
+                        }),
+                        new CombatSceneChoice("Answer: placeholder both", (c, self, other) -> {
+                            c.write(Global.format("placeholder both.\"</i>", self, other));
+                            Global.flag(ANGEL_WORSHIP_FOCUS);
+                            character.getGrowth().addTrait(21, Trait.objectOfWorship);
+                            character.getGrowth().addTrait(30, Trait.magicEyeArousal);
+                            character.getGrowth().addTrait(42, Trait.sacrosanct);
+                            character.getGrowth().addTrait(45, Trait.genuflection);
+                            if (Global.checkFlag(ANGEL_SEX_FOCUS)) {
+                                character.getGrowth().addTrait(48, Trait.piety);
+                            } 
+                            if (Global.checkFlag(ANGEL_NYMPHOMANIA_FOCUS)) {
+                                character.getGrowth().addTrait(48, Trait.mandateOfHeaven);
+                            }
+                            character.getGrowth().addTrait(60, Trait.revered);
+                            Global.flag(ANGEL_FOLLOWERS_FOCUS);
+                            character.getGrowth().addTrait(21, Trait.apostles);
+                            character.getGrowth().addTrait(30, Trait.leadership);
+                            if (Global.checkFlag(ANGEL_SEX_FOCUS)) {
+                                character.getGrowth().addTrait(42, Trait.inspirational);
+                            }
+                            if (Global.checkFlag(ANGEL_NYMPHOMANIA_FOCUS)) {
+                                character.getGrowth().addTrait(42, Trait.showmanship);
+                            }
+                            character.getGrowth().addTrait(45, Trait.tactician);
+                            character.getGrowth().addTrait(48, Trait.devoteeFervor);
+                            character.getGrowth().addTrait(60, Trait.congregation);
+                            character.getGrowth().bonusAttributes += 1;
+                            // some compensation for the added difficulty. She gets 6 traits and 1 attribute point/level, and you only get 2 traits, but you are fighting more people than just her.
+                            Global.getPlayer().getGrowth().addTraitPoints(new int[]{21,48});
                             return true;
                         })
                     )

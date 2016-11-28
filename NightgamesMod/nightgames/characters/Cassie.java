@@ -103,6 +103,24 @@ public class Cassie extends BasePersonality {
                             character.getGrowth().addTrait(38, Trait.tongueTraining3);
                             character.getGrowth().addBodyPart(57, new MouthPussyPart());
                             return true;
+                        }),
+                        new CombatSceneChoice("Placeholder both", (c, self, other) -> {
+                            c.write("Placeholder both");
+                            Global.flag(CASSIE_MOUTH_FOCUS);
+                            character.getGrowth().addTrait(11, Trait.experttongue);
+                            character.getGrowth().addTrait(25, Trait.tongueTraining2);
+                            character.getGrowth().addTrait(38, Trait.tongueTraining3);
+                            character.getGrowth().addBodyPart(57, new MouthPussyPart());
+                            Global.flag(CASSIE_BREAST_FOCUS);
+                            character.body.addReplace(BreastsPart.f, 1);
+                            character.getGrowth().addTrait(11, Trait.lactating);
+                            character.getGrowth().addTrait(25, Trait.magicmilk);
+                            character.getGrowth().addTrait(38, Trait.temptingtits);
+                            character.getGrowth().addTrait(57, Trait.sedativecream);
+                            character.getGrowth().bonusAttributes += 3;
+                            // some compensation for the added difficulty. She gets 4 traits and 3 attribute points/level, and you only get 2 traits, but you are fighting more people than just her.
+                            Global.getPlayer().getGrowth().addTraitPoints(new int[]{1,57});
+                            return true;
                         })
                     )
                 ));
@@ -123,7 +141,8 @@ public class Cassie extends BasePersonality {
                             character.getGrowth().addTrait(21, Trait.submissive);
                             if (Global.checkFlag(CASSIE_BREAST_FOCUS)) {
                                 character.getGrowth().addTrait(28, Trait.augmentedPheromones);
-                            } else if (Global.checkFlag(CASSIE_MOUTH_FOCUS)) {
+                            }
+                            if (Global.checkFlag(CASSIE_MOUTH_FOCUS)) {
                                 character.getGrowth().addTrait(28, Trait.sweetlips);
                             }
                             character.getGrowth().addTrait(32, Trait.addictivefluids);
@@ -146,7 +165,8 @@ public class Cassie extends BasePersonality {
                             character.getGrowth().addTrait(43, Trait.magicEyeEnthrall);
                             if (Global.checkFlag(CASSIE_BREAST_FOCUS)) {
                                 character.getGrowth().addTrait(47, Trait.beguilingbreasts);
-                            } else if (Global.checkFlag(CASSIE_MOUTH_FOCUS)) {
+                            }
+                            if (Global.checkFlag(CASSIE_MOUTH_FOCUS)) {
                                 character.getGrowth().addTrait(47, Trait.soulsucker);
                             }
                             character.getGrowth().addTrait(60, Trait.enchantingVoice);

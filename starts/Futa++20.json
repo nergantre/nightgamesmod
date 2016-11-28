@@ -1,0 +1,397 @@
+{
+	"name":"Futa++ Lvl20",
+	"summary":"All futanari, all characters unlocked, level 20. Bonus stats and traits.",
+	"enabled":true,
+	"player": {
+		"attributes": {
+			"Power":20,
+			"Seduction":50,
+			"Cunning":25,
+			"Perception":9,
+			"Arcane":16,
+			"Dark":16,
+			"Submissive":31,
+			"Nymphomania":16
+		},
+		"attribute_points": 0,
+		"level":20,
+		"money": 35000,
+		"gender":"herm",
+		"name":"Alexis",
+		"traits": [
+			"pussyhandler",
+			"dickhandler",
+			"limbTraining1",
+			"tongueTraining1",
+			"nymphomania",
+			"alwaysready",
+			"strongwilled",
+			"fastLearner",
+			"sympathetic",
+			"responsive",
+			"tight"
+		]
+	},
+	"npcs": [
+		{
+			"type":"Airi",
+			"start":true,
+			"level":20,
+			"rank":1,
+			"attributes": {
+				"Power": 36,
+				"Seduction": 34,
+				"Cunning": 35,
+				"Slime": 65,
+				"Speed": 4
+			},
+			"growth": {
+				"arousal": 2,
+				"stamina": 2,
+				"mojo": 3,
+				"willpower":2.0,
+				"bonusWillpower":0.5
+			},
+			"body":{
+				"genitals": {
+					"cock": {
+						"type":"basic",
+						"length":"average"
+					},
+					"pussy": "normal"
+
+				}
+			},
+			"traits": [
+				"dexterous",
+				"imagination",
+				"softheart",
+				"repressed",
+				"hypnoticsemen"
+			],
+			"clothing": [
+				"Tshirt",
+				"jeans",
+				"bra",
+				"panties"
+			]
+		},
+		{
+			"type":"Angel",
+			"start":true,
+			"level":20,
+			"rank":1,
+			"attributes": {
+				"Power": 26,
+				"Seduction": 50,
+				"Cunning": 33,
+				"Divinity": 61
+			},
+			"growth": {
+				"arousal": 2,
+				"stamina": 4,
+				"mojo": 3,
+				"willpower": 1
+			},
+			"body": {
+				"archetype":"ANGEL",
+				"genitals": {
+					"cock": {
+						"type":"blessed",
+						"length":"average"
+					},
+					"pussy": "divine"
+
+				}
+			},
+			"traits": [
+				"demigoddess",
+				"divinity",
+				"proheels",
+				"undisciplined",
+				"lickable",
+				"hypnoticsemen",
+				"zealinspiring"
+			],
+			"clothing": [
+				"translucentshawl",
+				"bikinitop",
+				"bikinibottoms",
+				"highheels"
+			]
+		},
+		{
+			"type":"Cassie",
+			"start":true,
+			"level":20,
+			"rank":1,
+			"attributes": {
+				"Power": 33,
+				"Seduction": 43,
+				"Cunning": 33,
+				"Arcane": 61
+			},
+			"growth": {
+				"arousal": 4,
+				"stamina": 2,
+				"mojo": 3,
+				"willpower": 0.7,
+				"bonusMojo":2
+			},
+			"body": {
+				"archetype":"WITCH",
+				"genitals": {
+					"cock": {
+						"type":"runic",
+						"length":"average"
+					},
+					"pussy": "normal"
+
+				}
+			},
+			"traits": [
+				"witch",
+				"softheart",
+				"romantic",
+				"imagination",
+				"hypnoticsemen",
+				"enthrallingjuices",
+				"lactating",
+				"magicmilk"
+			],
+			"clothing": [
+				"bra",
+				"blouse",
+				"cloak",
+				"panties",
+				"skirt",
+				"shoes"
+			]
+		},
+		{
+			"type":"Eve",
+			"start":true,
+			"level":20,
+			"rank":1,
+			"attributes": {
+				"Power": 42,
+				"Seduction": 33,
+				"Cunning": 30,
+				"Speed": 6,
+				"Fetish": 65
+			},
+			"body": {
+				"gender":"herm",
+				"genitals": {
+					"cock": {
+						"type":"primal",
+						"length":"big"
+					},
+					"pussy":"normal"
+				},
+				"breasts":"d"
+			},
+			"growth": {
+				"arousal": 4,
+				"stamina": 3,
+				"mojo": 2,
+				"willpower": 1
+			},
+			"traits": [
+				"exhibitionist",
+				"insatiable",
+				"proheels",
+				"assmaster",
+				"analFanatic",
+				"hypnoticsemen",
+				"fetishTrainer"
+			],
+			"clothing": [
+				"tanktop",
+				"crotchlesspanties",
+				"jeans",
+				"stilettopumps",
+				"garters"
+			]
+		},
+		{
+			"type":"Jewel",
+			"start":true,
+			"level":20,
+			"rank":1,
+			"attributes": {
+				"Power": 50,
+				"Seduction": 29,
+				"Cunning": 30,
+				"Ki": 61
+			},
+			"growth": {
+				"arousal": 5,
+				"stamina": 3,
+				"mojo": 1,
+				"willpower": 1,
+				"bonusWillpower":0.2
+			},
+			"body": {
+				"archetype":"REGULAR",
+				"genitals": {
+
+					"cock": {
+						"type":"enlightened",
+						"length":"average"
+					},
+					"pussy":"fiery"
+				}
+			},
+			"traits": [
+				"fighter",
+				"direct",
+				"wrassler",
+				"insatiable",
+				"hypnoticsemen",
+				"heatedsemen"
+			],
+			"clothing": [
+				"gi",
+				"panties"
+			]
+		},
+		{
+			"type":"Kat",
+			"start":true,
+			"level":20,
+			"rank":1,
+			"attributes": {
+				"Power": 50,
+				"Seduction": 27,
+				"Cunning": 28,
+				"Speed": 8,
+				"Animism": 62
+			},
+			"body": {
+				"archetype":"CAT",
+				"genitals": {
+					"cock": {
+						"type":"primal",
+						"length":"average"
+					},
+					"pussy": "feral"
+
+				}
+			},
+			"growth": {
+				"arousal": 3,
+				"stamina": 3,
+				"mojo": 3,
+				"willpower": 1,
+				"bonusWillpower":0.2
+			},
+			"traits": [
+				"dexterous",
+				"pheromones",
+				"shy",
+				"petite",
+				"hypnoticsemen",
+				"breeder"
+			],
+			"clothing": [
+				"bra",
+				"Tshirt",
+				"panties",
+				"skirt",
+				"sneakers",
+				"socks"
+			]
+		},
+		{
+			"type":"Mara",
+			"start":true,
+			"level":20,
+			"rank":1,
+			"attributes": {
+				"Power": 30,
+				"Seduction": 30,
+				"Cunning": 50,
+				"Perception": 7,
+				"Science": 61
+			},
+			"growth": {
+				"willpower": 1,
+				"bonusWillpower":0.2
+			},
+			"body": {
+				"archetype":"CYBORG",
+				"genitals": {
+					"cock": {
+						"type":"bionic",
+						"length":"average"
+					},
+					"pussy": "cybernetic"
+
+				}
+			},
+			"traits": [
+				"madscientist",
+				"petite",
+				"dexterous",
+				"ticklish",
+				"hypnoticsemen",
+				"mindcontroller"
+			],
+			"clothing": [
+				"bra",
+				"shirt",
+				"labcoat",
+				"underwear",
+				"pants",
+				"pantyhose",
+				"boots"
+			]
+		},
+		{
+			"type":"Reyka",
+			"start":true,
+			"level":20,
+			"rank":1,
+			"attributes": {
+				"Power": 25,
+				"Seduction": 44,
+				"Cunning": 27,
+				"Dark": 65
+			},
+			"body": {
+				"archetype":"DEMON",
+				"genitals": {
+					"cock": {
+						"type":"incubus",
+						"length":"average"
+					},
+					"pussy": "succubus"
+				}
+			},
+			"growth": {
+				"arousal": 3,
+				"stamina": 3,
+				"mojo": 3,
+				"willpower": 1
+			},
+			"traits": [
+				"succubus",
+				"proheels",
+				"masterheels",
+				"darkpromises",
+				"Confident",
+				"shameless",
+				"hypnoticsemen"
+			],
+			"clothing": [
+				"tanktop",
+				"miniskirt",
+				"garters",
+				"stilettopumps"
+			]
+		}
+	],
+	"all_npcs":{},
+	"flags":["isFuta", "hardmode","SuperTraitMode"]
+}

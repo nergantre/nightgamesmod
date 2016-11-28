@@ -21,6 +21,7 @@ public class Growth implements Cloneable {
     public float willpower;
     public float bonusWillpower;
     private Map<Integer, List<Trait>> traits;
+    private Map<Integer, Integer> traitPoints;
     public Map<Integer, List<BodyPart>> bodyParts;
 
     public Growth() {
@@ -36,6 +37,7 @@ public class Growth implements Cloneable {
         attributes[0] = 3;
         traits = new HashMap<>();
         bodyParts = new HashMap<>();
+        traitPoints = new HashMap<>();
     }
 
     public void addTrait(int level, Trait trait) {
@@ -45,6 +47,13 @@ public class Growth implements Cloneable {
         traits.get(level).add(trait);
     }
 
+    public void addTraitPoints(int[] levels) {
+        for (int level:levels) {
+            if (!(traitPoints.containsKey(level))) traitPoints.put(level, 0);
+            traitPoints.put(level,traitPoints.get(level)+1);
+        }
+    }
+    
     public void addBodyPart(int level, BodyPart part) {
         if (!bodyParts.containsKey(level)) {
             bodyParts.put(level, new ArrayList<BodyPart>());
@@ -78,6 +87,7 @@ public class Growth implements Cloneable {
         character.getStamina().gain(stamina);
         character.getArousal().gain(arousal);
         character.getWillpower().gain(willpower);
+        if (traitPoints.containsKey(character.level) && character instanceof Player) ((Player)character).traitPoints+=traitPoints.get(character.level);
 
         character.availableAttributePoints += attributes[Math.min(character.rank, attributes.length-1)];
 
