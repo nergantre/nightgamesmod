@@ -49,7 +49,7 @@ public class Carry extends Fuck {
                 c.write(getSelf(), Global.capitalizeFirstLetter(
                                 premessage + deal(c, premessage.length(), Result.normal, target)));
             } else if (c.shouldPrintReceive(target, c)) {
-                c.write(getSelf(), premessage + receive(c, premessage.length(), Result.normal, getSelf()));
+                c.write(getSelf(), premessage + receive(c, premessage.length(), Result.normal, target));
             }
             int m = 5 + Global.random(5);
             int otherm = m;

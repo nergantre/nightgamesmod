@@ -1002,7 +1002,7 @@ public class Player extends Character {
                 addTemporaryTrait(Trait.autonomousPussy, 999);
             }
             if (level >= 36) {
-                addTemporaryTrait(Trait.entrallingjuices, 999);
+                addTemporaryTrait(Trait.enthrallingjuices, 999);
             }
             if (level >= 39) {
                 addTemporaryTrait(Trait.energydrain, 999);

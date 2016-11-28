@@ -136,7 +136,7 @@ public class Jewel extends BasePersonality {
                             growth.addTrait(47, Trait.takedown);
                             growth.bonusAttributes += 3;
                             // some compensation for the added difficulty. She gets 4 traits and 3 attribute points/level, and you only get 2 traits, but you are fighting more people than just her.
-                            Global.getPlayer().getGrowth().addTraitPoints(new int[]{25,47});
+                            Global.getPlayer().getGrowth().addTraitPoints(new int[]{25,47},Global.getPlayer());
                             return true;
                         })
         )));
@@ -203,7 +203,7 @@ public class Jewel extends BasePersonality {
                             growth.addTrait(55, Trait.overwhelmingPresence);
                             character.getGrowth().bonusAttributes += 3;
                             // some compensation for the added difficulty. She gets 4 traits and 3 attribute points/level, and you only get 2 traits, but you are fighting more people than just her.
-                            Global.getPlayer().getGrowth().addTraitPoints(new int[]{1,57});
+                            Global.getPlayer().getGrowth().addTraitPoints(new int[]{1,57},Global.getPlayer());
                             return true;
                         })
         )));

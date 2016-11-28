@@ -47,10 +47,12 @@ public class Growth implements Cloneable {
         traits.get(level).add(trait);
     }
 
-    public void addTraitPoints(int[] levels) {
+    public void addTraitPoints(int[] levels, Character charfor) {
+        if (!(charfor instanceof Player)) return;
         for (int level:levels) {
             if (!(traitPoints.containsKey(level))) traitPoints.put(level, 0);
             traitPoints.put(level,traitPoints.get(level)+1);
+            if (charfor.level <= level) ((Player)charfor).traitPoints+=1;
         }
     }
     

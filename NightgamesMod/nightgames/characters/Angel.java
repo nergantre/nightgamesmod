@@ -135,7 +135,7 @@ public class Angel extends BasePersonality {
                             character.getGrowth().addTrait(54, Trait.autonomousPussy);
                             character.getGrowth().bonusAttributes += 2;
                             // some compensation for the added difficulty. She gets 6 traits and 2 attribute points/level, and you only get 2 traits, but you are fighting more people than just her.
-                            Global.getPlayer().getGrowth().addTraitPoints(new int[]{12,39});
+                            Global.getPlayer().getGrowth().addTraitPoints(new int[]{12,39},Global.getPlayer());
                             return true;
                         })
                     )
@@ -240,7 +240,7 @@ public class Angel extends BasePersonality {
                             character.getGrowth().addTrait(60, Trait.congregation);
                             character.getGrowth().bonusAttributes += 1;
                             // some compensation for the added difficulty. She gets 6 traits and 1 attribute point/level, and you only get 2 traits, but you are fighting more people than just her.
-                            Global.getPlayer().getGrowth().addTraitPoints(new int[]{21,48});
+                            Global.getPlayer().getGrowth().addTraitPoints(new int[]{21,48},Global.getPlayer());
                             return true;
                         })
                     )

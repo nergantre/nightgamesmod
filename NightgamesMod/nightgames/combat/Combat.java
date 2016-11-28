@@ -1065,7 +1065,7 @@ public class Combat extends Observable implements Cloneable {
 
     private void next() {
         if (phase != CombatPhase.FINISHED) {
-            if (shouldAutoresolve() || (phase != CombatPhase.SKILL_SELECTION && phase != CombatPhase.UPKEEP && phase != CombatPhase.RESULTS_SCENE)) {
+            if (shouldAutoresolve() || (phase != CombatPhase.SKILL_SELECTION && phase != CombatPhase.RESULTS_SCENE && phase != CombatPhase.PRETURN)) {
                 turn();
             } else {
                 Global.gui().next(this);

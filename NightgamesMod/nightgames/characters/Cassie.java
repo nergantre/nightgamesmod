@@ -119,7 +119,7 @@ public class Cassie extends BasePersonality {
                             character.getGrowth().addTrait(57, Trait.sedativecream);
                             character.getGrowth().bonusAttributes += 3;
                             // some compensation for the added difficulty. She gets 4 traits and 3 attribute points/level, and you only get 2 traits, but you are fighting more people than just her.
-                            Global.getPlayer().getGrowth().addTraitPoints(new int[]{1,57});
+                            Global.getPlayer().getGrowth().addTraitPoints(new int[]{1,57},Global.getPlayer());
                             return true;
                         })
                     )

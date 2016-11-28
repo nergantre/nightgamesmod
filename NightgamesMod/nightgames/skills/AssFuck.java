@@ -11,6 +11,8 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.stance.Anal;
 import nightgames.stance.AnalProne;
+import nightgames.stance.BehindFootjob;
+import nightgames.stance.Stance;
 import nightgames.status.Flatfooted;
 import nightgames.status.Frenzied;
 import nightgames.status.IgnoreOrgasm;
@@ -97,7 +99,8 @@ public class AssFuck extends Fuck {
             if (getSelf().getType().equals("Eve")) {
                 c.setStance(new AnalProne(getSelf(), target), getSelf(), voluntary);
             } else {
-                c.setStance(new Anal(getSelf(), target), getSelf(), voluntary);
+                if (c.getStance().enumerate() == Stance.behindfootjob) {c.setStance(new BehindFootjob(getSelf(),target));}
+                else {c.setStance(new Anal(getSelf(), target), getSelf(), voluntary);}
             }
         } else {
             c.setStance(new AnalProne(getSelf(), target), getSelf(), voluntary);

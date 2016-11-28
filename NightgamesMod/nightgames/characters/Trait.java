@@ -133,7 +133,7 @@ public enum Trait {
     magicEyeFrenzy("Magic Eyes: Frenzy", "Eyes have a chance to cause frenzy"),
     enchantingVoice("Enchanting Voice", "Willbending voice, can occasionally force a command."),
     soulsucker("Soulsucker", "Soul sucking lips"),
-    entrallingjuices("Enthralling cum", "Enthralling juices"),
+    enthrallingjuices("Enthralling cum", "Enthralling juices"),
     frenzyingjuices("Frenzying juices", "Frenzying juices"),
     lacedjuices("Laced Juices", "Intoxicating bodily fluids"), // opponents take temptation when using oral skills
     addictivefluids("Addictive Fluids", "Addictive bodily fluids"), // opponents can only use oral skills if available
