@@ -168,12 +168,31 @@ public class Combat extends Observable implements Cloneable {
             self.add(new SapphicSeduction(self));
         }
 
-        if (self.has(Trait.footfetishist) && !other.body.get("feet").isEmpty() && !self.body.getFetish("feet").isPresent()) {
-            if (self.human()) {
-                write(self, "You can't help thinking about " + other.nameOrPossessivePronoun() + " feet.");
-            }
-            self.add(new BodyFetish(self, null, "feet", .25));
+        
+        if (self.has(Trait.footfetishist)) {
+            applyFetish(self, other, "feet");
+        } else if(self.has(Trait.breastobsessed)) {
+            applyFetish(self, other, "breasts");
+        }else if(self.has(Trait.assaddict)) {
+            applyFetish(self, other, "ass");
+        }else if(self.has(Trait.pussywhipped)) {
+            applyFetish(self, other, "pussy");
+        }else if(self.has(Trait.cockcraver)) {
+            applyFetish(self, other, "cock");
         }
+        
+    }
+    
+    
+    public void applyFetish(Character self, Character other, String FetishType) {
+        
+        if ( !other.body.get(FetishType).isEmpty() && !self.body.getFetish(FetishType).isPresent()) {
+            if (self.human()) {
+                write(self, "As your first battle of the night begins, you can't help but think about " + FetishType + ".");
+            } 
+            self.add(new BodyFetish(self, null, FetishType, .25));
+        }
+    
     }
 
     public void go() {
@@ -422,17 +441,48 @@ public class Combat extends Observable implements Cloneable {
             getCombatantData(character).setBooleanFlag(beguilingbreastCompletedFlag, true);
         }
 
-        Optional<Character> otherWithFeet = opponents.stream().filter(other -> !other.body.get("feet").isEmpty()).findFirst();
-        Clothing footwear = otherWithFeet.get().getOutfit().getTopOfSlot(ClothingSlot.feet);
-        boolean seeFeet = footwear == null || footwear.getLayer() <= 1 || otherWithFeet.get().getOutfit().getExposure() >= .5;
-        if (character.has(Trait.footfetishist) && otherWithFeet.isPresent() && seeFeet && Global.random(5) == 0) {
-            if (character.human()) {
-                write(character, "You can't help thinking about " + otherWithFeet.get().nameOrPossessivePronoun() + " feet.");
-            }
-            character.add(new BodyFetish(character, null, "feet", .05));
+        
+        if (character.has(Trait.footfetishist)) {
+            fetishDisadvantageAura(character, allies, opponents, "feet", ClothingSlot.feet);
+        }else if (character.has(Trait.breastobsessed)) {
+            fetishDisadvantageAura(character, allies, opponents, "breasts", ClothingSlot.top);
+        }else if(character.has(Trait.assaddict)) {
+            fetishDisadvantageAura(character, allies, opponents, "ass", ClothingSlot.bottom);
+        }else if(character.has(Trait.pussywhipped)) {
+            fetishDisadvantageAura(character, allies, opponents, "pussy", ClothingSlot.bottom);
+        }else if(character.has(Trait.cockcraver)) {
+            fetishDisadvantageAura(character, allies, opponents, "cock", ClothingSlot.bottom);
         }
-
+        
         opponents.forEach(opponent -> checkIndividualAuraEffects(character, opponent));
+    }
+    
+    
+    private void fetishDisadvantageAura(Character character, List<Character> allies, List<Character> opponents, String fetishType, ClothingSlot clothingType) {
+        Optional<Character> otherWithAura = opponents.stream().filter(other -> !other.body.get(fetishType).isEmpty()).findFirst();
+        Clothing clothes = otherWithAura.get().getOutfit().getTopOfSlot(clothingType);
+        boolean seeFetish = clothes == null || clothes.getLayer() <= 1 || otherWithAura.get().getOutfit().getExposure() >= .5;
+        String partDescrip;
+        
+    if(fetishType == "breasts"){
+         partDescrip = otherWithAura.get().body.getRandomBreasts().describe(otherWithAura.get()) ;
+     } else if(fetishType == "ass"){
+         partDescrip = otherWithAura.get().body.getRandomAss().describe(otherWithAura.get()) ;
+     } else if(fetishType == "pussy"){
+         partDescrip = otherWithAura.get().body.getRandomPussy().describe(otherWithAura.get()) ;
+     } else if(fetishType == "cock"){
+         partDescrip = otherWithAura.get().body.getRandomCock().describe(otherWithAura.get()) ;
+     } else{
+         partDescrip = fetishType;
+     }
+        
+        if ( otherWithAura.isPresent() && seeFetish && Global.random(5) == 0) {
+            if (character.human()) {
+                write(character, "You can't help thinking about " + otherWithAura.get().nameOrPossessivePronoun() + " " + partDescrip + ".");
+            }
+            character.add(new BodyFetish(character, null, fetishType, .05));
+        }
+    
     }
     
     private void checkIndividualAuraEffects(Character self, Character other) {

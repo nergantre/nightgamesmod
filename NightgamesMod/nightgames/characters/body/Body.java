@@ -371,6 +371,9 @@ public class Body implements Cloneable {
         if (character.is(Stsflag.alluring)) {
             totalHotness *= 1.5;
         }
+        if (character.has(Trait.attractive)) {
+            totalHotness *= 1.25;
+        }
         return totalHotness;
     }
 

@@ -238,14 +238,18 @@ public enum Trait {
     toymaster("Toymaster", "Expert at using toys."),
 
     // Weaknesses
-    ticklish("Ticklish", "Can be easily tickled into submission"), // more weaken damage and arousal from tickle
-    insatiable("Insatiable", "One orgasm is never enough"), // arousal doesn't completely clear at end of match
-    lickable("Lickable", "Weak against oral sex"), // more arousal from oral attacks
-    imagination("Active Imagination", "More easily swayed by pillow talk"), // more temptation damage from indirect skills
-    achilles("Achilles Jewels", "Delicate parts are somehow even more delicate"), // more pain from groin attacks
-    naive("Naive", "Chance to not get cynical after mindgames"), // Chance to not get cynical after recovering from mindgames
-    footfetishist("Foot Fetishist", "Loves those feet"), // Starts off each match with a foot fetish
-    immobile("Immobile", "Unable to move"), // Cannot move
+    ticklish("Ticklish", "Can be easily tickled into submission."), // more weaken damage and arousal from tickle
+    insatiable("Insatiable", "One orgasm is never enough."), // arousal doesn't completely clear at end of match
+    lickable("Lickable", "Weak against oral sex."), // more arousal from oral attacks
+    imagination("Active Imagination", "More easily swayed by pillow talk."), // more temptation damage from indirect skills
+    achilles("Achilles Jewels", "Delicate parts are somehow even more delicate."), // more pain from groin attacks
+    naive("Naive", "Chance to not get cynical after mindgames."), // Chance to not get cynical after recovering from mindgames
+    footfetishist("Foot Fetishist", "Loves those feet, always have a feet fetish."), // Starts off each match with a foot fetish
+    breastobsessed("Breast Obsessed", "Infatuated with tits, always have a breast fetish."), // Starts off each match with a breast fetish
+    assaddict("Ass Addict", "Lusts for ass, always have an ass fetish."), // Starts off each match with an ass fetish
+    pussywhipped("Pussy Whipped", "Loves pussy far more than is healthy, always have a pussy fetish."), // Starts off each match with a pussy fetish
+    cockcraver("Cock Craver", "Constantly thinking about cocks, always has a cock fetish."), // Starts off each match with a cock fetish
+    immobile("Immobile", "Unable to move."), // Cannot move
     lethargic("Lethargic", "Very low mojo gain from normal methods.", new Lethargic(null, 999, .75)), // 25% mojo gain
     hairtrigger("Hair Trigger", "Very quick to shoot. Not for beginners."),
     obedient("Obedient", "Easy to order around."),
@@ -298,21 +302,23 @@ public enum Trait {
                                                                                 // stimulation
                                                                                 // through
                                                                                 // underwear
-    romantic("Romantic", "Every kiss is as good as the first"), // bonus to kiss
-    experienced("Experienced Lover", "Skilled at pacing yourself when thrusting"), // reduced recoil from
+    romantic("Romantic", "Every kiss is as good as the first."), // bonus to kiss
+    experienced("Experienced Lover", "Skilled at pacing yourself when thrusting."), // reduced recoil from
                                                                                    // penetration
-    wrassler("Wrassler", "A talent for fighting dirty"), // squeeze, knee, kick
+    wrassler("Wrassler", "A talent for fighting dirty."), // squeeze, knee, kick
                                                          // reduce arousal
                                                          // less
-    pimphand("Pimp Hand", "A devastating slap and a bonus to hands"),
-    stableform("Stable Form", "Cannot be affected by unexpected transformations"), // ignores
+    pimphand("Pimp Hand", "A devastating slap and a bonus to hands."),
+    stableform("Stable Form", "Cannot be affected by unexpected transformations."), // ignores
                                                                                    // thrown
                                                                                    // transformative
                                                                                    // drafts
                                                                                    // from the
                                                                                    // opponent
-    brassballs("Brass Balls", "Can take a kick"),
-
+    brassballs("Brass Balls", "Can take a kick."),
+    largereserves("Large Reserves", "You have more willpower than normal people. Start with 20 extra willpower."), //applys on new game start. Will not do anything if added later.
+    attractive("Attractive", "Hotter than the average person."),
+    
     Clingy("Clingy", "Harder to escape"),
     fakeout("Fakeout", "Easier to counter"),
     repressed("Repressed", "Sexually represssed, lower seduction"),

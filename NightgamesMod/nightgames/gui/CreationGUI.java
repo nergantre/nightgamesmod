@@ -353,6 +353,8 @@ public class CreationGUI extends JPanel {
         StrengthBox.addItem(Trait.pimphand);
         StrengthBox.addItem(Trait.stableform);
         StrengthBox.addItem(Trait.brassballs);
+        StrengthBox.addItem(Trait.attractive);
+        StrengthBox.addItem(Trait.largereserves);
         StrengthBox.addActionListener(
                         arg0 -> StrengthDescription.setText(((Trait) StrengthBox.getSelectedItem()).getDesc()));
         verticalBox.add(StrengthBox);
@@ -384,6 +386,10 @@ public class CreationGUI extends JPanel {
         WeaknessBox.addItem(Trait.lickable);
         WeaknessBox.addItem(Trait.naive);
         WeaknessBox.addItem(Trait.footfetishist);
+        WeaknessBox.addItem(Trait.breastobsessed);
+        WeaknessBox.addItem(Trait.assaddict);
+        WeaknessBox.addItem(Trait.pussywhipped);
+        WeaknessBox.addItem(Trait.cockcraver);
         WeaknessBox.addItem(Trait.hairtrigger);
         WeaknessBox.addActionListener(
                         arg0 -> WeaknessDescription.setText(((Trait) WeaknessBox.getSelectedItem()).getDesc()));

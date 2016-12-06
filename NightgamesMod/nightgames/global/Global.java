@@ -218,6 +218,9 @@ public class Global {
         Optional<PlayerConfiguration> playerConfig = config.map(c -> c.player);
         Collection<Flag> cfgFlags = config.map(StartConfiguration::getFlags).orElse(new ArrayList<>());
         human = new Player(playerName, pickedGender, playerConfig, pickedTraits, selectedAttributes);
+        if(human.has(Trait.largereserves)) {
+            human.getWillpower().gain(20);
+        }
         players.add(human);
         if (gui != null) {
             gui.populatePlayer(human);
