@@ -171,13 +171,13 @@ public class Combat extends Observable implements Cloneable {
         
         if (self.has(Trait.footfetishist)) {
             applyFetish(self, other, "feet");
-        } else if(self.has(Trait.breastobsessed)) {
+        } else if(self.has(Trait.breastobsessed) && other.hasBreasts()) {
             applyFetish(self, other, "breasts");
         }else if(self.has(Trait.assaddict)) {
             applyFetish(self, other, "ass");
-        }else if(self.has(Trait.pussywhipped)) {
+        }else if(self.has(Trait.pussywhipped ) && other.hasPussy()) {
             applyFetish(self, other, "pussy");
-        }else if(self.has(Trait.cockcraver)) {
+        }else if(self.has(Trait.cockcraver)&& other.hasDick()) {
             applyFetish(self, other, "cock");
         }
         
@@ -448,7 +448,7 @@ public class Combat extends Observable implements Cloneable {
             fetishDisadvantageAura(character, allies, opponents, "breasts", ClothingSlot.top);
         }else if(character.has(Trait.assaddict)) {
             fetishDisadvantageAura(character, allies, opponents, "ass", ClothingSlot.bottom);
-        }else if(character.has(Trait.pussywhipped)) {
+        }else if(character.has(Trait.pussywhipped ) )  {
             fetishDisadvantageAura(character, allies, opponents, "pussy", ClothingSlot.bottom);
         }else if(character.has(Trait.cockcraver)) {
             fetishDisadvantageAura(character, allies, opponents, "cock", ClothingSlot.bottom);
@@ -459,29 +459,52 @@ public class Combat extends Observable implements Cloneable {
     
     
     private void fetishDisadvantageAura(Character character, List<Character> allies, List<Character> opponents, String fetishType, ClothingSlot clothingType) {
-        Optional<Character> otherWithAura = opponents.stream().filter(other -> !other.body.get(fetishType).isEmpty()).findFirst();
-        Clothing clothes = otherWithAura.get().getOutfit().getTopOfSlot(clothingType);
-        boolean seeFetish = clothes == null || clothes.getLayer() <= 1 || otherWithAura.get().getOutfit().getExposure() >= .5;
-        String partDescrip;
+       
+        float ifPartNotNull = 0;
+       
         
-    if(fetishType == "breasts"){
-         partDescrip = otherWithAura.get().body.getRandomBreasts().describe(otherWithAura.get()) ;
-     } else if(fetishType == "ass"){
-         partDescrip = otherWithAura.get().body.getRandomAss().describe(otherWithAura.get()) ;
-     } else if(fetishType == "pussy"){
-         partDescrip = otherWithAura.get().body.getRandomPussy().describe(otherWithAura.get()) ;
-     } else if(fetishType == "cock"){
-         partDescrip = otherWithAura.get().body.getRandomCock().describe(otherWithAura.get()) ;
-     } else{
-         partDescrip = fetishType;
-     }
+        if(fetishType == "breasts" && opponents.get(0).hasBreasts()){
+            ifPartNotNull = 1;
+        } else if(fetishType == "pussy" && opponents.get(0).hasPussy()){
+            ifPartNotNull = 1;
+        } else if(fetishType == "cock" && opponents.get(0).hasDick()){
+            ifPartNotNull = 1;
+        } else if(fetishType == "ass" ){
+            ifPartNotNull = 1;
+        } else if(fetishType == "feet" ){
+            ifPartNotNull = 1;
+        } else{
+            ifPartNotNull = 0;
+        }      
         
-        if ( otherWithAura.isPresent() && seeFetish && Global.random(5) == 0) {
-            if (character.human()) {
-                write(character, "You can't help thinking about " + otherWithAura.get().nameOrPossessivePronoun() + " " + partDescrip + ".");
+        if(ifPartNotNull == 1)
+        {
+            Optional<Character> otherWithAura = opponents.stream().filter(other -> !other.body.get(fetishType).isEmpty()).findFirst();
+            Clothing clothes = otherWithAura.get().getOutfit().getTopOfSlot(clothingType);
+            boolean seeFetish = clothes == null || clothes.getLayer() <= 1 || otherWithAura.get().getOutfit().getExposure() >= .5;
+            String partDescrip;
+            
+        if(fetishType == "breasts"){
+             partDescrip = otherWithAura.get().body.getRandomBreasts().describe(otherWithAura.get()) ;
+         } else if(fetishType == "ass"){
+             partDescrip = otherWithAura.get().body.getRandomAss().describe(otherWithAura.get()) ;
+         } else if(fetishType == "pussy"){
+             partDescrip = otherWithAura.get().body.getRandomPussy().describe(otherWithAura.get()) ;
+         } else if(fetishType == "cock"){
+             partDescrip = otherWithAura.get().body.getRandomCock().describe(otherWithAura.get()) ;
+         } else{
+             partDescrip = fetishType;
+         }
+        
+            if ( otherWithAura.isPresent() && seeFetish && Global.random(5) == 0) {
+                if (character.human()) {
+                    write(character, "You can't help thinking about " + otherWithAura.get().nameOrPossessivePronoun() + " " + partDescrip + ".");
+                }
+                character.add(new BodyFetish(character, null, fetishType, .05));
             }
-            character.add(new BodyFetish(character, null, fetishType, .05));
         }
+        
+       
     
     }
     
