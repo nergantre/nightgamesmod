@@ -8,8 +8,15 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.stance.StandingOver;
 
-public class Tripline implements Trap {
-    private Character owner;
+public class Tripline extends Trap {
+    
+    public Tripline() {
+        this(null);
+    }
+    
+    public Tripline(Character owner) {
+        super("Tripline", owner);
+    }
 
     @Override
     public void trigger(Character target) {
@@ -36,11 +43,6 @@ public class Tripline implements Trap {
     }
 
     @Override
-    public boolean decoy() {
-        return false;
-    }
-
-    @Override
     public boolean recipe(Character owner) {
         return owner.has(Item.Rope);
     }
@@ -50,16 +52,6 @@ public class Tripline implements Trap {
         this.owner = owner;
         owner.consume(Item.Rope, 1);
         return "You run a length of rope at ankle height. It should trip anyone who isn't paying much attention.";
-    }
-
-    @Override
-    public Character owner() {
-        return owner;
-    }
-
-    @Override
-    public String toString() {
-        return "Tripline";
     }
 
     @Override
@@ -73,12 +65,4 @@ public class Tripline implements Trap {
         victim.location().remove(this);
     }
 
-    @Override
-    public boolean resolve(Character active) {
-        if (active != owner) {
-            trigger(active);
-            return true;
-        }
-        return false;
-    }
 }

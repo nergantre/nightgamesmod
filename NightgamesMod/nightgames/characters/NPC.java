@@ -481,17 +481,18 @@ public class NPC extends Character {
             masturbate();
         } else {
             if (!location.encounter(this)) {
-                HashSet<Action> available = new HashSet<>();
+                
+                HashSet<Action> moves = new HashSet<>();
                 HashSet<Movement> radar = new HashSet<>();
                 FTCMatch match;
-                if (Global.checkFlag(Flag.FTC)) {
+                if (Global.checkFlag(Flag.FTC) && allowedActions().isEmpty()) {
                     match = (FTCMatch) Global.getMatch();
                     if (match.isPrey(this) && match.getFlagHolder() == null) {
-                        available.add(findPath(match.gps("Central Camp")));
+                        moves.add(findPath(match.gps("Central Camp")));
                         if (Global.isDebugOn(DebugFlags.DEBUG_FTC))
                             System.out.println(name() + " moving to get flag (prey)");
                     } else if (!match.isPrey(this) && has(Item.Flag) && !match.isBase(this, location)) {
-                        available.add(findPath(match.getBase(this)));
+                        moves.add(findPath(match.getBase(this)));
                         if (Global.isDebugOn(DebugFlags.DEBUG_FTC))
                             System.out.println(name() + " moving to deliver flag (hunter)");
                     } else if (!match.isPrey(this) && has(Item.Flag) && match.isBase(this, location)) {
@@ -501,36 +502,40 @@ public class NPC extends Character {
                         return;
                     }
                 }
-                if (!has(Trait.immobile) && available.isEmpty()) {
+                if (!has(Trait.immobile) && moves.isEmpty()) {
                     for (Area path : location.adjacent) {
-                        available.add(new Move(path));
+                        moves.add(new Move(path));
                         if (path.ping(get(Attribute.Perception))) {
                             radar.add(path.id());
                         }
                     }
                     if (getPure(Attribute.Cunning) >= 28) {
                         for (Area path : location.shortcut) {
-                            available.add(new Shortcut(path));
+                            moves.add(new Shortcut(path));
                         }
                     }
                     if(getPure(Attribute.Ninjutsu)>=5){
                         for(Area path:location.jump){
-                            available.add(new Leap(path));
+                            moves.add(new Leap(path));
                         }
                     }
                 }
-                for (Action act : Global.getActions()) {
-                    if (act.usable(this)) {
-                        available.add(act);
-                    }
-                }
-                available.removeIf(a -> a == null);
-                if (location.humanPresent()) {
-                    Global.gui().message("You notice " + name() + ai.move(available, radar).execute(this).describe());
-                } else {
-                    ai.move(available, radar).execute(this);
-                }
+                
+                pickAndDoAction(allowedActions(), moves, radar);
             }
+        }
+    }
+    
+    private void pickAndDoAction(Collection<Action> available, Collection<Action> moves, Collection<Movement> radar) {
+        available.removeIf(a -> a == null || !a.usable(this));
+        if (available.isEmpty()) {
+            available.addAll(Global.getActions());
+            available.addAll(moves);
+        }
+        if (location.humanPresent()) {
+            Global.gui().message("You notice " + name() + ai.move(available, radar).execute(this).describe());
+        } else {
+            ai.move(available, radar).execute(this);
         }
     }
 
@@ -637,7 +642,7 @@ public class NPC extends Character {
                                         4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
                     } else {
                         c.write(this, name() + " catches you as you approach and grinds her knee into the tent in your "
-                                        + target.getOutfit().getTopOfSlot(ClothingSlot.bottom));
+                                        + target.getOutfit().getTopOfSlot(ClothingSlot.bottom) +".");
                         target.body.pleasure(this, body.getRandom("legs"), target.body.getRandom("cock"),
                                         4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
                     }

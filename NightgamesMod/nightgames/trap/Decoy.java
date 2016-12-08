@@ -7,9 +7,16 @@ import nightgames.combat.IEncounter;
 import nightgames.global.Global;
 import nightgames.items.Item;
 
-public class Decoy implements Trap {
-    private Character owner;
+public class Decoy extends Trap {
 
+    public Decoy() {
+        this(null);
+    }
+    
+    public Decoy(Character owner) {
+        super("Decoy", owner);
+    }
+    
     @Override
     public void trigger(Character target) {
         if (target.human()) {
@@ -25,11 +32,6 @@ public class Decoy implements Trap {
     @Override
     public boolean decoy() {
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Decoy";
     }
 
     @Override
@@ -52,26 +54,6 @@ public class Decoy implements Trap {
         } else {
             return null;
         }
-    }
-
-    @Override
-    public Character owner() {
-        return owner;
-    }
-
-    @Override
-    public void capitalize(Character attacker, Character victim, IEncounter enc) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public boolean resolve(Character active) {
-        if (active != owner) {
-            trigger(active);
-            return true;
-        }
-        return false;
     }
 
 }

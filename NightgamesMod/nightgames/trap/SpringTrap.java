@@ -11,8 +11,16 @@ import nightgames.items.clothing.ClothingTrait;
 import nightgames.stance.StandingOver;
 import nightgames.status.Winded;
 
-public class SpringTrap implements Trap {
-    private Character owner;
+public class SpringTrap extends Trap {
+    
+
+    public SpringTrap() {
+        this(null);
+    }
+    
+    public SpringTrap(Character owner) {
+        super("Spring Trap", owner);
+    }
 
     @Override
     public void trigger(Character target) {
@@ -47,11 +55,6 @@ public class SpringTrap implements Trap {
     }
 
     @Override
-    public boolean decoy() {
-        return false;
-    }
-
-    @Override
     public boolean recipe(Character owner) {
         return owner.has(Item.Spring) && owner.has(Item.Rope);
     }
@@ -65,16 +68,6 @@ public class SpringTrap implements Trap {
     }
 
     @Override
-    public Character owner() {
-        return owner;
-    }
-
-    @Override
-    public String toString() {
-        return "Spring Trap";
-    }
-
-    @Override
     public boolean requirements(Character owner) {
         return owner.get(Attribute.Cunning) >= 10;
     }
@@ -85,12 +78,4 @@ public class SpringTrap implements Trap {
         attacker.location().remove(this);
     }
 
-    @Override
-    public boolean resolve(Character active) {
-        if (active != owner) {
-            trigger(active);
-            return true;
-        }
-        return false;
-    }
 }

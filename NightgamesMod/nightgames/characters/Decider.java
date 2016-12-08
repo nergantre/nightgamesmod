@@ -1,6 +1,7 @@
 package nightgames.characters;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -129,7 +130,7 @@ public class Decider {
          */ return priority;
     }
 
-    public static Action parseMoves(HashSet<Action> available, HashSet<Movement> radar, NPC character) {
+    public static Action parseMoves(Collection<Action> available, Collection<Movement> radar, NPC character) {
         HashSet<Action> enemy = new HashSet<Action>();
         HashSet<Action> safe = new HashSet<Action>();
         HashSet<Action> utility = new HashSet<Action>();

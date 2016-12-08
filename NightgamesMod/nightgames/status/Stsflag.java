@@ -65,5 +65,9 @@ public enum Stsflag {
     blinded,
     victimComplex, 
     primed, 
-    glamour
+    glamour, 
+    bombed, 
+    maglocked, 
+    hogtied, 
+    collared
 }

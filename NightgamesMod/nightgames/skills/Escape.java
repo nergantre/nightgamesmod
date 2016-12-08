@@ -4,8 +4,10 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Neutral;
+import nightgames.status.Collared;
 import nightgames.status.Stsflag;
 
 public class Escape extends Skill {
@@ -24,11 +26,14 @@ public class Escape extends Skill {
                  .sub(getSelf())
                         && !c.getStance()
                              .mobile(getSelf())
-                        || getSelf().bound()) && getSelf().canRespond();
+                        || (getSelf().bound() && !getSelf().is(Stsflag.maglocked))) && getSelf().canRespond();
     }
 
     @Override
     public boolean resolve(Combat c, Character target) {
+        if (blockedByCollar(c, target)) {
+            return false;
+        }
         if (getSelf().bound()) {
             if (getSelf().check(Attribute.Cunning, 5 - getSelf().escape(c, target))) {
                 if (getSelf().human()) {
@@ -106,6 +111,19 @@ public class Escape extends Skill {
         return true;
     }
 
+    private boolean blockedByCollar(Combat c, Character target) {
+        Collared stat = (Collared) getSelf().getStatus(Stsflag.collared);
+        if (stat != null) {
+            c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:try|tries} to struggle, but"
+                            + " the collar is having none of it and shocks {self:direct-object}"
+                            + " into submission.", getSelf(), target));
+            getSelf().pain(c, null, Global.random(20, 50));
+            stat.spendCharges(c, 2);
+            return true;
+        }
+        return false;
+    }
+    
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
         return user.get(Attribute.Cunning) >= 8;

@@ -26,6 +26,7 @@ import javax.swing.plaf.basic.BasicTreeUI.TreeIncrementAction;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import nightgames.actions.Action;
 import nightgames.actions.Move;
 import nightgames.actions.Movement;
 import nightgames.areas.Area;
@@ -36,6 +37,7 @@ import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TentaclePart;
+import nightgames.characters.body.ToysPart;
 import nightgames.characters.custom.AiModifiers;
 import nightgames.combat.Combat;
 import nightgames.combat.CombatantData;
@@ -1943,6 +1945,62 @@ public abstract class Character extends Observable implements Cloneable {
             }
             TentaclePart.pleasureWithTentacles(c, this, 5, body.getRandomAss());
         }
+        if (outfit.has(ClothingTrait.harpoonDildo)) {
+            if (!hasPussy()) {
+                c.write(Global.format("Since {self:name-possessive} pussy is now gone, the dildo that was stuck inside of it falls"
+                                + " to the ground. {other:SUBJECT-ACTION:reel|reels} it back into its slot on"
+                                + " {other:possessive} arm device.", this, opponent));
+            } else {
+                int damage = 5;
+                if (opponent.has(Trait.pussyhandler)) {
+                    damage += 2;
+                }
+                if (opponent.has(Trait.yank)) {
+                    damage += 3;
+                }
+                if (opponent.has(Trait.conducivetoy)) {
+                    damage += 3;
+                }
+                if (opponent.has(Trait.intensesuction)) {
+                    damage += 3;
+                }
+
+                c.write(Global.format("{other:NAME-POSSESSIVE} harpoon dildo is still stuck in {self:name-possessive}"
+                                + " {self:body-part:pussy}, vibrating against {other:possessive} walls.", this, opponent));
+                body.pleasure(opponent, ToysPart.dildo, body.getRandomPussy(), damage, c);
+            }
+        }
+        if (outfit.has(ClothingTrait.harpoonOnahole)) {
+            if (!hasDick()) {
+                c.write(Global.format("Since {self:name-possessive} dick is now gone, the onahole that was stuck onto it falls"
+                                + " to the ground. {other:SUBJECT-ACTION:reel|reels} it back into its slot on"
+                                + " {other:possessive} arm device.", this, opponent));
+            } else {
+                int damage = 5;
+                if (opponent.has(Trait.dickhandler)) {
+                    damage += 2;
+                }
+                if (opponent.has(Trait.yank)) {
+                    damage += 3;
+                }
+                if (opponent.has(Trait.conducivetoy)) {
+                    damage += 3;
+                }
+                if (opponent.has(Trait.intensesuction)) {
+                    damage += 3;
+                }
+                
+                c.write(Global.format("{other:NAME-POSSESSIVE} harpoon onahole is still stuck on {self:name-possessive}"
+                                + " {self:body-part:cock}, vibrating against {other:possessive} shaft.", this, opponent));
+                body.pleasure(opponent, ToysPart.onahole, body.getRandomCock(), damage, c);
+            }
+        }
+        if (checkOrgasm()) {
+            doOrgasm(c, opponent, null, null);
+        }
+        if (opponent.checkOrgasm()) {
+            opponent.doOrgasm(c, this, null, null);
+        }
         if (getPure(Attribute.Animism) >= 4 && getArousal().percent() >= 50 && !is(Stsflag.feral)) {
             add(c, new Feral(this));
         }
@@ -2058,7 +2116,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void upkeep() {
-        status.removeAll(status.stream().filter(s -> !s.lingering()).collect(Collectors.toSet()));
+        status.removeIf(s -> !s.lingering());
         getTraits().forEach(trait -> {
             if (trait.status != null) {
                 Status newStatus = trait.status.instance(this, null);
@@ -3049,7 +3107,8 @@ public abstract class Character extends Observable implements Cloneable {
         }
         if (part.isType("cock")) {
             return outfit.slotEmptyOrMeetsCondition(ClothingSlot.bottom,
-                            (article) -> (!article.is(ClothingTrait.armored) && !article.is(ClothingTrait.bulky)));
+                            (article) -> (!article.is(ClothingTrait.armored) && !article.is(ClothingTrait.bulky)
+                                            && !article.is(ClothingTrait.persistent)));
         } else if (part.isType("pussy") || part.isType("ass")) {
             return outfit.slotEmptyOrMeetsCondition(ClothingSlot.bottom, (article) -> {
                 return article.is(ClothingTrait.skimpy) || article.is(ClothingTrait.open)
@@ -3134,6 +3193,19 @@ public abstract class Character extends Observable implements Cloneable {
     public int stripDifficulty(Character other) {
         if (outfit.has(ClothingTrait.tentacleSuit) || outfit.has(ClothingTrait.tentacleUnderwear)) {
             return other.get(Attribute.Science) + 20;
+        }
+        if (outfit.has(ClothingTrait.harpoonDildo) || outfit.has(ClothingTrait.harpoonOnahole)) {
+            int diff = 20;
+            if (other.has(Trait.yank)) {
+                diff += 5;
+            }
+            if (other.has(Trait.conducivetoy)) {
+                diff += 5;
+            }
+            if (other.has(Trait.intensesuction)) {
+                diff += 5;
+            }
+            return diff;
         }
         return 0;
     }
@@ -3548,5 +3620,9 @@ public abstract class Character extends Observable implements Cloneable {
 
     public int getPetLimit() {
         return has(Trait.congregation) ? 2 : 1;
+    }
+    
+    public Collection<Action> allowedActions() {
+        return status.stream().flatMap(s -> s.allowedActions().stream()).collect(Collectors.toSet());
     }
 }

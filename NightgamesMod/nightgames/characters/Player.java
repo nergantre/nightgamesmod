@@ -348,23 +348,28 @@ public class Player extends Character {
                 gui.message("You have found a hiding spot and are waiting for someone to pounce upon.");
             detect();
             if (!location.encounter(this)) {
-                for (Area path : location.adjacent) {
-                    gui.addAction(new Move(path), this);
-                }
-                if (getPure(Attribute.Cunning) >= 28) {
-                    for (Area path : location.shortcut) {
-                        gui.addAction(new Shortcut(path), this);
+                if (!allowedActions().isEmpty()) {
+                    allowedActions().forEach(a -> gui.addAction(a, this));
+                } else {
+                    for (Area path : location.adjacent) {
+                        gui.addAction(new Move(path), this);
                     }
-                }
+                    if (getPure(Attribute.Cunning) >= 28) {
+                        for (Area path : location.shortcut) {
+                            gui.addAction(new Shortcut(path), this);
+                        }
+                    }
 
-                if(getPure(Attribute.Ninjutsu)>=5){
-                    for(Area path:location.jump){
-                        gui.addAction(new Leap(path),this);
+                    if(getPure(Attribute.Ninjutsu)>=5){
+                        for(Area path:location.jump){
+                            gui.addAction(new Leap(path),this);
+                        }
                     }
-                }
-                for (Action act : Global.getActions()) {
-                    if (act.usable(this) && Global.getMatch().condition.allowAction(act, this, Global.getMatch())) {
-                        gui.addAction(act, this);
+                    for (Action act : Global.getActions()) {
+                        if (act.usable(this) 
+                                        && Global.getMatch().condition.allowAction(act, this, Global.getMatch())) {
+                            gui.addAction(act, this);
+                        }
                     }
                 }
             }

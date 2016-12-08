@@ -23,6 +23,9 @@ public enum ClothingTrait {
     ninja("Ninja Garb", "Bonus cunning and speed"),
     dexterous("Dextrous", "Bonus cunning"),
     lame("Lame", "Small mojo penalty"),
+    harpoonDildo("Harpoon Dildo", "Has a dildo stuck inside"),
+    harpoonOnahole("Harpoon Onahole", "Has an onahole stuck on"),
+    persistent("Persistent", "Difficult to remove"),
     none("", "");
 
     private String name;

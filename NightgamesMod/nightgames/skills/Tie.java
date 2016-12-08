@@ -23,7 +23,8 @@ public class Tie extends Skill {
         return !target.wary() && getSelf().canAct() && c.getStance().reachTop(getSelf())
                         && !c.getStance().reachTop(target)
                         && (getSelf().has(Item.ZipTie) || getSelf().has(Item.Handcuffs)) && c.getStance().dom(getSelf())
-                        && !target.is(Stsflag.bound);
+                        && !target.is(Stsflag.bound)
+                        && !target.is(Stsflag.maglocked);
     }
 
     @Override
