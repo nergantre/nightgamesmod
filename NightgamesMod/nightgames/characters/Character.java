@@ -672,7 +672,7 @@ public abstract class Character extends Observable implements Cloneable {
             double temptMultiplier;
             if (with != null) {
                 // triple multiplier for the body part
-                temptMultiplier = tempter.body.getCharismaBonus(this) + with.getHotness(tempter, this) * 2;
+                temptMultiplier = tempter.body.getCharismaBonus(c, this) + with.getHotness(tempter, this) * 2;
                 if (oblivious) {
                     temptMultiplier /= 10;
                 }
@@ -683,7 +683,7 @@ public abstract class Character extends Observable implements Cloneable {
                                 with.describe(tempter), dmg, i, temptMultiplier, extraMsg);
 
             } else {
-                temptMultiplier = tempter.body.getCharismaBonus(this);
+                temptMultiplier = tempter.body.getCharismaBonus(c, this);
                 if (c != null && tempter.has(Trait.obsequiousAppeal) && c.getStance()
                                                                          .sub(tempter)) {
                     temptMultiplier *= 2;
@@ -1213,7 +1213,7 @@ public abstract class Character extends Observable implements Cloneable {
             for (Status s : this.status) {
                 if (s.getVariant().equals(status.getVariant())) {
                     s.replace(status);
-                    message = s.initialMessage(c, false);
+                    message = s.initialMessage(c, true);
                     done = true;
                     effectiveStatus = s;
                     break;
@@ -2897,7 +2897,7 @@ public abstract class Character extends Observable implements Cloneable {
         fit += c.getPetsFor(other).stream().mapToDouble(pet -> (10 + pet.getSelf().power()) * ((100 + pet.percentHealth()) / 200.0) / 2).sum();
 
         fit += other.outfit.getFitness(c, bottomFitness, topFitness);
-        fit += other.body.getCharismaBonus(this);
+        fit += other.body.getCharismaBonus(c, this);
         // Extreme situations
         if (other.arousal.isFull()) {
             fit -= 50;
@@ -2968,7 +2968,7 @@ public abstract class Character extends Observable implements Cloneable {
             arousalMod = .7f;
         }
         fit += outfit.getFitness(c, bottomFitness, topFitness);
-        fit += body.getCharismaBonus(other);
+        fit += body.getCharismaBonus(c, other);
         if (c.getStance().inserted()) { // If we are fucking...
             // ...we need to see if that's beneficial to us.
             fit += body.penetrationFitnessModifier(this, other, c.getStance().inserted(this),

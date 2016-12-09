@@ -21,6 +21,7 @@ public class Stunned extends DurationStatus {
         flag(Stsflag.stunned);
         flag(Stsflag.debuff);
         flag(Stsflag.purgable);
+        flag(Stsflag.disabling);
     }
 
     @Override

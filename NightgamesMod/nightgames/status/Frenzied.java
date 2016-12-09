@@ -57,11 +57,17 @@ public class Frenzied extends DurationStatus {
         FUCK_SKILLS.add(new ToggleKnot(p));
     }
 
+    private boolean selfInflicted;
     public Frenzied(Character affected, int duration) {
+        this(affected, duration, false);
+    }
+
+    public Frenzied(Character affected, int duration, boolean selfInflicted) {
         super("Frenzied", affected, duration);
         flag(Stsflag.frenzied);
         flag(Stsflag.debuff);
         flag(Stsflag.purgable);
+        this.selfInflicted = selfInflicted;
     }
 
     @Override
@@ -73,7 +79,7 @@ public class Frenzied extends DurationStatus {
     @Override
     public String describe(Combat c) {
         if (affected.human()) {
-            return "You cannot think about anything other than fucking all those around.";
+            return "You cannot think about anything other than fucking all that moves.";
         } else {
             return String.format("%s has a frenzied look in %s eyes, interested in nothing but raw, hard sex.",
                             affected.name(), affected.possessivePronoun());
@@ -96,12 +102,14 @@ public class Frenzied extends DurationStatus {
 
     @Override
     public void onRemove(Combat c, Character other) {
-        affected.addlist.add(new Cynical(affected));
+        if (!selfInflicted) {
+            affected.addlist.add(new Cynical(affected));
+        }
     }
 
     @Override
     public boolean mindgames() {
-        return true;
+        return !selfInflicted;
     }
 
     @Override

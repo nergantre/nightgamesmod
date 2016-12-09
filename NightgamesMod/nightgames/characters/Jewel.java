@@ -86,7 +86,7 @@ public class Jewel extends BasePersonality {
         growth.arousal = 3;
         growth.bonusStamina = 3;
         growth.bonusArousal = 1;
-        growth.willpower = .7f;
+        growth.willpower = 1.2f;
 
         character.addCombatScene(new CombatScene((c, self, other) -> {
             return character.getLevel() >= 10 && !Global.checkFlag(JEWEL_ANAL_FOCUS) 
@@ -95,8 +95,8 @@ public class Jewel extends BasePersonality {
                         + " <i>\"Hey, " + player.name + ". Pop quiz. If I were to knock you on your ass and then"
                         + " ride your cock with </i>my<i> ass, which part would you enjoy more?\"</i>", Arrays.asList(
                         new CombatSceneChoice("The takedown", (c, self, other) -> {
-                            c.write("<i>\"Oh really? Well, at least you're being honest. "
-                                            + "I'll reward your honesty. Oh, yes. I will.\"</i>");
+                            c.write("Jewel raises a single shapely eyebrow, <i>\"Oh really? Well, at least you're being honest. "
+                                            + "I'll reward your honesty. Oh yes, I will.\"</i>");
                             Global.flag(JEWEL_MARTIAL_FOCUS);
                             growth.addTrait(11, Trait.grappler);
                             growth.addTrait(25, Trait.disablingblows);
@@ -105,11 +105,10 @@ public class Jewel extends BasePersonality {
                             return true;
                         }),
                         new CombatSceneChoice("The ass-fucking", (c, self, other) -> {
-                            c.write("<i>\"Of course. Why do I even ask? Not very subtle, are you?"
-                                            + " Well, anyway, I'm sure I can use that. Better get"
-                                            + " yourself ready.\"</i>");
+                            c.write("Jewel smirks knowingly, <i>\"Of course. Why do I even ask? Not very subtle, are you?"
+                                            + " Well, anyway, I'm sure I can use that. Better get yourself ready.\"</i>");
                             Global.flag(JEWEL_ANAL_FOCUS);
-                            growth.addTrait(11, Trait.powerfulhips);
+                            growth.addTrait(11, Trait.holecontrol);
                             growth.addTrait(25, Trait.tight);
                             growth.addTrait(37, Trait.powerfulcheeks);
                             growth.addTrait(47, Trait.temptingass);
@@ -120,11 +119,11 @@ public class Jewel extends BasePersonality {
         character.addCombatScene(new CombatScene((c, self, other) -> {
             return character.getLevel() >= 20 && !Global.checkFlag(JEWEL_MENTAL_FOCUS) 
                             && !Global.checkFlag(JEWEL_PHYSICAL_FOCUS) && (Global.checkFlag(JEWEL_MARTIAL_FOCUS) || Global.checkFlag(JEWEL_ANAL_FOCUS));
-        }, (c, self, player) -> " <i>\"So, " + player.name + ". You're going to be doing what I tell"
+        }, (c, self, player) -> "Jewel stands over you after the fight while looking at you rather coldly, <i>\"So, " + player.name + ". You're going to be doing what I tell"
                         + " you. No, don't interrupt. You are. My question is, are you just going"
                         + " to listen to me, or am I going to have to physically force you?\"</i>", Arrays.asList(
                         new CombatSceneChoice("No, No! I'll listen!", (c, self, other) -> {
-                            c.write("<i>\"Good. Remember that. Because I </i>will<i>"
+                            c.write("She smiles, <i>\"Good. Remember that. Because I </i>will<i>"
                                             + " be making demands.\"</i>");
                             Global.flag(JEWEL_MENTAL_FOCUS);
                             growth.addTrait(22, Trait.commandingvoice);
@@ -138,10 +137,10 @@ public class Jewel extends BasePersonality {
                             return true;
                         }),
                         new CombatSceneChoice("Yeah. No. Try me.", (c, self, other) -> {
-                            c.write("<i>\"Oh ho ho! Think you're tough, do you? I am already looking"
+                            c.write("Jewel lets a dirty smirk slide onto her face, <i>\"Oh ho ho! Think you're tough, do you? I am already looking"
                                             + " forward to knocking those balls you've apparently found"
                                             + " somewhere all the way up to your throat! And I'll make sure"
-                                            + " you enjoy it, too.\"</i>");
+                                            + " you enjoy it too.\"</i>");
                             Global.flag(JEWEL_PHYSICAL_FOCUS);
                             growth.addTrait(22, Trait.indomitable);
                             growth.addTrait(39, Trait.confidentdom);
@@ -166,6 +165,7 @@ public class Jewel extends BasePersonality {
         growth.addTrait(4, Trait.QuickRecovery);
         growth.addTrait(7, Trait.analTraining1);
         growth.addTrait(10, Trait.suave);
+        growth.addTrait(10, Trait.brutesCharisma);
         // 11 - Choice 1, trait 1
         growth.addTrait(13, Trait.powerfulhips);
         growth.addTrait(16, Trait.shameless);
@@ -190,7 +190,7 @@ public class Jewel extends BasePersonality {
         growth.addTrait(49, Trait.smqueen);
         // 50 - Choice 2, trait 3
         growth.addTrait(52, Trait.autonomousAss);
-        growth.addTrait(55, Trait.overwhelmingPresence);
+        growth.addTrait(58, Trait.naturalTop);
     }
 
     @Override

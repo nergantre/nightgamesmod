@@ -324,7 +324,8 @@ public enum Trait {
     repressed("Repressed", "Sexually represssed, lower seduction"),
     // Feats
     sprinter("Sprinter", "Better at escaping combat"),
-    QuickRecovery("Quick Recovery", "Regain stamina rapidly"),
+    Energetic("Energetic", "Regain stamina rapidly"),
+    QuickRecovery("Quick Recovery", "Faster recovery from disabling effects"),
     Sneaky("Sneaky", "Easier time hiding and ambushing competitors"),
     PersonalInertia("Personal Inertia", "Status effects (positive and negative) last 50% longer"),
     Confident("Confident", "Mojo decays slower out of combat"),
@@ -366,14 +367,15 @@ public enum Trait {
     takedown("Takedown", "Expert at tackling weary opponents"),
     indomitable("Indomitable", "Plainly refuses to be dominated"),
     confidentdom("Confident Dom", "Attributes rise while dominant"),
-    drainingass("Draining Ass", "Taking it in the ass drains stamina an possibly Power"),
+    drainingass("Draining Ass", "Taking it in the ass drains stamina and possibly Power"),
     edger("Edger", "Can keep oppoenents right at the edge"),
     commandingvoice("Commanding Voice", "Does not take 'no' for an answer"),
     mentalfortress("Mental Fortress", "Confident enough to have a chance to resist mind control"),
     bewitchingbottom("Bewitching Bottom", "Makes opponents go wild for ass"),
     unquestionable("Unquestionable", "Does not tolerate resistance when on top"),
     grappler("Grappler", "Bonus to hold strength"),
-    suave("Suave", "Bonus increases seduction vs girls."),
+    suave("Suave", "Bonus seduction vs girls."),
+    brutesCharisma("Brute's Charisma", "Extra charisma based on Power and Ki when on top."),
     
     // Mara's unique traits
     harpoon("Harpoon Toy", "Can launch a harpoon-like sex toy from their arm device"),

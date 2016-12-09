@@ -72,7 +72,7 @@ public class AssPart extends GenericBodyPart {
                             self, opponent));
             bonus += self.has(Trait.tight) && self.has(Trait.holecontrol) ? 10 : 5;
             if (self.has(Trait.tight)) {
-                opponent.pain(c, opponent, Math.min(30, self.get(Attribute.Power)));
+                opponent.pain(c, self, Math.min(30, self.get(Attribute.Power)));
             }
         }
         if (self.has(Trait.drainingass) && !opponent.has(Trait.strapped) && c.getStance().anallyPenetratedBy(c, self, opponent)) {

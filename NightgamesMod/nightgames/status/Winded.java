@@ -11,6 +11,7 @@ import nightgames.combat.Combat;
 public class Winded extends DurationStatus {
     public Winded(Character affected) {
         this(affected, 3);
+        flag(Stsflag.disabling);
     }
 
     public Winded(Character affected, int duration) {

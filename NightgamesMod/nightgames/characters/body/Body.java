@@ -503,7 +503,7 @@ public class Body implements Cloneable {
         }
         double perceptionBonus = 1.0;
         if (opponent != null) {
-            perceptionBonus *= opponent.body.getCharismaBonus(character);
+            perceptionBonus *= opponent.body.getCharismaBonus(c, character);
         }
         double bonusDamage = bonus;
         if (opponent != null) {
@@ -639,13 +639,18 @@ public class Body implements Cloneable {
 
     /**
      * Gets how much your opponent views this body. 
+     * @param c TODO
      */
-    public double getCharismaBonus(Character opponent) {
+    public double getCharismaBonus(Combat c, Character opponent) {
         // you don't get turned on by yourself
         if (opponent == character) {
             return 1.0;
         } else {
-            double seductionBonus = Math.max(0, character.get(Attribute.Seduction) - opponent.get(Attribute.Seduction)) / 10.0;
+            double effectiveSeduction = character.get(Attribute.Seduction);
+            if (c.getStance().dom(character)) {
+                effectiveSeduction += c.getStance().getDominanceOfStance(character) * (character.get(Attribute.Power) / 5.0 + character.get(Attribute.Ki) / 5.0);
+            }
+            double seductionBonus = Math.max(0, effectiveSeduction - opponent.get(Attribute.Seduction)) / 10.0;
             double perceptionBonus = Math.sqrt(getHotness(opponent) + seductionBonus
                             * (1.0 + (opponent.get(Attribute.Perception) - 5) / 10.0));
             

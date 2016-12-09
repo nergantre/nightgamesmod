@@ -9,11 +9,19 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 
 public class Flatfooted extends DurationStatus {
-    public Flatfooted(Character affected, int duration) {
+    private boolean makesWary;
+
+    public Flatfooted(Character affected, int duration, boolean makesWary) {
         super("Flat-Footed", affected, duration);
         flag(Stsflag.distracted);
         flag(Stsflag.debuff);
+        flag(Stsflag.disabling);
         flag(Stsflag.purgable);
+        this.makesWary = makesWary;
+    }
+
+    public Flatfooted(Character affected, int duration) {
+        this(affected, duration, true);
     }
 
     @Override
@@ -47,7 +55,9 @@ public class Flatfooted extends DurationStatus {
 
     @Override
     public void onRemove(Combat c, Character other) {
-        affected.addlist.add(new Wary(affected, 3));
+        if (makesWary) {
+            affected.addlist.add(new Wary(affected, 3));
+        }
     }
 
     @Override
@@ -109,17 +119,18 @@ public class Flatfooted extends DurationStatus {
 
     @Override
     public Status instance(Character newAffected, Character newOther) {
-        return new Flatfooted(newAffected, getDuration());
+        return new Flatfooted(newAffected, getDuration(), makesWary);
     }
 
     @Override  public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         obj.addProperty("duration", getDuration());
+        obj.addProperty("wary", makesWary);
         return obj;
     }
 
     @Override public Status loadFromJson(JsonObject obj) {
-        return new Flatfooted(null, obj.get("duration").getAsInt());
+        return new Flatfooted(null, obj.get("duration").getAsInt(), obj.get("wary").getAsBoolean());
     }
 }

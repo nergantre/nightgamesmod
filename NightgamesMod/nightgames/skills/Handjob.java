@@ -28,7 +28,7 @@ public class Handjob extends Skill {
                         && (target.crotchAvailable() || getSelf().has(Trait.dexterous)
                                         && target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getLayer() <= 1)
                         && target.hasDick() && getSelf().canAct()
-                        && (!c.getStance().inserted(target) || c.getStance().en == Stance.anal);
+                        && (!c.getStance().inserted(target));
     }
 
     @Override

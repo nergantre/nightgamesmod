@@ -260,7 +260,7 @@ public class ZealAddiction extends Addiction {
 
     @Override
     public Status instance(Character newAffected, Character newOther) {
-        return new ZealAddiction(newAffected);
+        return new ZealAddiction(newAffected, magnitude);
     }
 
     @Override public Status loadFromJson(JsonObject obj) {

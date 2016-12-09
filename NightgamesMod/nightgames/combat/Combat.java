@@ -859,7 +859,7 @@ public class Combat extends Observable implements Cloneable {
             write(self, Global.format("<b><i>\"Stay still, worm!\"</i> {self:subject-action:speak|speaks}"
                             + " with such force that it casues {other:name-do} to temporarily"
                             + " cease resisting.</b>", self, other));
-            other.add(new Flatfooted(other, 1));
+            other.add(new Flatfooted(other, 1, false));
         }
         
         if (self.is(Stsflag.collared) && Global.random(10) < 3 && new Reversal(other).usable(this, self)) {

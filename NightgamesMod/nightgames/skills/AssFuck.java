@@ -111,7 +111,11 @@ public class AssFuck extends Fuck {
             getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), m / 2, c, this);
         }
         getSelf().emote(Emotion.dominant, 100);
-        target.emote(Emotion.desperate, 50);
+        if (!target.has(Trait.analTraining1) && !target.has(Trait.shameless)) {
+            target.emote(Emotion.desperate, 50);
+        } else {
+            target.emote(Emotion.horny, 25);
+        }
         if (!target.has(Trait.Unflappable)) {
             target.add(c, new Flatfooted(target, 1));
         }

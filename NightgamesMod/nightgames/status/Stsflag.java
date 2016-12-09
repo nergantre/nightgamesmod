@@ -69,5 +69,6 @@ public enum Stsflag {
     bombed, 
     maglocked, 
     hogtied, 
-    collared
+    collared,
+    disabling
 }

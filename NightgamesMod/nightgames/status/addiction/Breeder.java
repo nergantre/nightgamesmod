@@ -231,7 +231,7 @@ public class Breeder extends Addiction {
 
     @Override
     public Status instance(Character newAffected, Character newOther) {
-        return new Breeder(newAffected);
+        return new Breeder(newAffected, magnitude);
     }
 
     @Override public Status loadFromJson(JsonObject obj) {

@@ -83,7 +83,7 @@ public class ReverseCarry extends Carry {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        String subject = (damage > 0 ? "" : target.subject() + " ");
+        String subject = (damage > 0 ? "" : getSelf().subject() + " ");
         if (modifier == Result.miss) {
             return String.format("%sjumps onto %s, but %s %s %s back onto the floor.",
                             subject, target.nameDirectObject(), target.pronoun(),

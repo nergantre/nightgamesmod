@@ -16,14 +16,22 @@ import nightgames.skills.Skill;
 import nightgames.skills.Thrust;
 
 public class Trance extends DurationStatus {
+    private boolean makesCynical;
+
     public Trance(Character affected, int duration) {
+        this(affected, duration, duration > 1);
+    }
+
+    public Trance(Character affected, int duration, boolean makesCynical) {
         super("Trance", affected, duration);
         flag(Stsflag.trance);
+        flag(Stsflag.disabling);
         flag(Stsflag.purgable);
+        this.makesCynical = makesCynical;
     }
 
     public Trance(Character affected) {
-        this(affected, 3);
+        this(affected, 3, true);
     }
 
     @Override
@@ -67,7 +75,9 @@ public class Trance extends DurationStatus {
 
     @Override
     public void onRemove(Combat c, Character other) {
-        affected.addlist.add(new Cynical(affected));
+        if (makesCynical) {
+            affected.addlist.add(new Cynical(affected));
+        }
     }
 
     @Override
@@ -139,10 +149,12 @@ public class Trance extends DurationStatus {
     @Override  public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
+        obj.addProperty("makesCynical", makesCynical);
+        obj.addProperty("duration", getDuration());
         return obj;
     }
 
     @Override public Status loadFromJson(JsonObject obj) {
-        return new Trance(null);
+        return new Trance(null, obj.get("duration").getAsInt(), obj.get("makesCynical").getAsBoolean());
     }
 }
