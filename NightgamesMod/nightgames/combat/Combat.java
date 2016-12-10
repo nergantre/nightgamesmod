@@ -175,13 +175,17 @@ public class Combat extends Observable implements Cloneable {
         
         if (self.has(Trait.footfetishist)) {
             applyFetish(self, other, "feet");
-        } else if(self.has(Trait.breastobsessed) && other.hasBreasts()) {
+        } 
+        if(self.has(Trait.breastobsessed) && other.hasBreasts()) {
             applyFetish(self, other, "breasts");
-        }else if(self.has(Trait.assaddict)) {
+        }
+        if(self.has(Trait.assaddict)) {
             applyFetish(self, other, "ass");
-        }else if(self.has(Trait.pussywhipped ) && other.hasPussy()) {
+        }
+        if(self.has(Trait.pussywhipped ) && other.hasPussy()) {
             applyFetish(self, other, "pussy");
-        }else if(self.has(Trait.cockcraver)&& other.hasDick()) {
+        }
+        if(self.has(Trait.cockcraver)&& other.hasDick()) {
             applyFetish(self, other, "cock");
         }
         
@@ -448,13 +452,17 @@ public class Combat extends Observable implements Cloneable {
         
         if (character.has(Trait.footfetishist)) {
             fetishDisadvantageAura(character, allies, opponents, "feet", ClothingSlot.feet);
-        }else if (character.has(Trait.breastobsessed)) {
+        }
+        if (character.has(Trait.breastobsessed)) {
             fetishDisadvantageAura(character, allies, opponents, "breasts", ClothingSlot.top);
-        }else if(character.has(Trait.assaddict)) {
+        }
+        if(character.has(Trait.assaddict)) {
             fetishDisadvantageAura(character, allies, opponents, "ass", ClothingSlot.bottom);
-        }else if(character.has(Trait.pussywhipped ) )  {
+        }
+        if(character.has(Trait.pussywhipped ) )  {
             fetishDisadvantageAura(character, allies, opponents, "pussy", ClothingSlot.bottom);
-        }else if(character.has(Trait.cockcraver)) {
+        }
+        if(character.has(Trait.cockcraver)) {
             fetishDisadvantageAura(character, allies, opponents, "cock", ClothingSlot.bottom);
         }
         

@@ -65,6 +65,10 @@ public class FaceSit extends Skill {
             getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("balls"), m, c, this);
         } else {
             getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("pussy"), m, c, this);
+            
+            if (Global.random(100) < 1 + getSelf().get(Attribute.Fetish) / 2) {
+                target.add(c, new BodyFetish(target, getSelf(), "pussy", .05));
+            }
         }
         double n = 4 + Global.random(4);
         if (c.getStance().front(getSelf())) {
@@ -86,6 +90,7 @@ public class FaceSit extends Skill {
         if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
             target.add(c, new BodyFetish(target, getSelf(), "ass", .25));
         }
+      
         return true;
     }
 
@@ -112,7 +117,7 @@ public class FaceSit extends Skill {
     public String getLabel(Combat c) {
         if (getSelf().hasBalls() && !getSelf().hasPussy()) {
             return "Teabag";
-        } else if (c.getStance().isFaceSitting(getSelf())) {
+        } else if (!c.getStance().isFaceSitting(getSelf())) {
             return "Facesit";
         } else {
             return "Ride Face";

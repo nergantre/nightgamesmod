@@ -373,8 +373,9 @@ public abstract class Position implements Cloneable {
     public boolean isFaceSitting(Character self) {
         return false;
     }
-
+   
     public boolean isFacesatOn(Character self) {
         return false;
     }
+
 }
