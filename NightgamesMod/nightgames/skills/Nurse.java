@@ -21,6 +21,7 @@ public class Nurse extends Skill {
         super("Nurse", self);
         addTag(SkillTag.pleasureSelf);
         addTag(SkillTag.breastfeed);
+        addTag(SkillTag.usesBreasts);
     }
 
     @Override

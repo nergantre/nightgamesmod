@@ -312,6 +312,7 @@ public class Global {
         getSkillPool().add(new Whisper(ch));
         getSkillPool().add(new Kick(ch));
         getSkillPool().add(new PinAndBlow(ch));
+        getSkillPool().add(new PinningPaizuri(ch));
         getSkillPool().add(new Footjob(ch));
         getSkillPool().add(new FootPump(ch));
         getSkillPool().add(new HeelGrind(ch));
@@ -403,6 +404,7 @@ public class Global {
         getSkillPool().add(new TailJob(ch));
         getSkillPool().add(new FaceSit(ch));
         getSkillPool().add(new Smother(ch));
+        getSkillPool().add(new BreastSmother(ch));
         getSkillPool().add(new Purr(ch));
         getSkillPool().add(new MutualUndress(ch));
         getSkillPool().add(new Surrender(ch));
