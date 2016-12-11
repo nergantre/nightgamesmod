@@ -129,12 +129,12 @@ public class BreastSmother extends Skill {
             b.append("They can't help but groan in pleasure from having their face stuck between your perfect tits");           
                           
             if (getSelf().has(Trait.beguilingbreasts)) {
-                b.append(", and you can't help but smile as they snuggle deeper into your cleavage.");
-            } else  {
-                b.append(".");
-            }
+                b.append(", and you can't help but smile as they snuggle deeper into your cleavage");
+            } 
+            b.append(".");
+            
         } else{
-            b.append(target.name() + " muffles something in confusion into your breasts before they begin to panic as they realize they cannot breathe!");            
+            b.append(" " + target.name() + " muffles something in confusion into your breasts before they begin to panic as they realize they cannot breathe!");            
         }   
         return b.toString();
 }
@@ -156,12 +156,12 @@ public class BreastSmother extends Skill {
             b.append(" perfect tits as they take your breath away");           
                           
             if (getSelf().has(Trait.beguilingbreasts)) {
-                b.append(", and due to their beguiling nature you can't help but want to stay there as long as possible.");
-            } else  {
-                b.append(".");
+                b.append(", and due to their beguiling nature you can't help but want to stay there as long as possible");
             }
+            b.append(".");
+            
         } else{
-            b.append("You let out a few panicked sounds muffled by the breasts now covering your face as you realize you cannot breathe!");
+            b.append(" You let out a few panicked sounds muffled by the breasts now covering your face as you realize you cannot breathe!");
         }        
         
         return b.toString();
