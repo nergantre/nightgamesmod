@@ -85,7 +85,7 @@ public class PinningPaizuri extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return Global.format(
-                        "{self:SUBJECT-ACTION:bow:bows} {other:name-do} over, and {self:action:wrap|settles} {self:possessive} breasts around {other:possessive} cock.",
+                        "{self:SUBJECT-ACTION:bow|bows} {other:name-do} over, and {self:action:wrap|settles} {self:possessive} breasts around {other:possessive} cock.",
                         getSelf(), target);
     }
 
