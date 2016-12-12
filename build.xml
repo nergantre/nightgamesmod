@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="build" name="nightgamesmod">
+    <property environment="env"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+    <path id="nightgamesmod.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="NightgamesMod/gson-2.7.jar"/>
+        <pathelement location="NightgamesMod/js.jar"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="NightgamesMod">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+        <delete file="nig-dev.jar"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project,create_run_jar" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="NightgamesMod"/>
+            <classpath refid="nightgamesmod.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target name="StartConfiguration">
+        <java classname="nightgames.global.Global" failonerror="true" fork="yes">
+            <classpath refid="nightgamesmod.classpath"/>
+        </java>
+    </target>
+    <target name="create_run_jar">
+        <jar destfile="ng-dev.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Main-Class" value="nightgames.global.Global"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="bin"/>
+            <zipfileset excludes="META-INF/*.SF" src="NightgamesMod/gson-2.7.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="NightgamesMod/js.jar"/>
+        </jar>
+    </target>
+</project>
