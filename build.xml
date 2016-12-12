@@ -20,7 +20,7 @@
     </target>
     <target name="clean">
         <delete dir="bin"/>
-        <delete file="nig-dev.jar"/>
+        <delete file="ng-dev.jar"/>
     </target>
     <target depends="clean" name="cleanall"/>
     <target depends="build-subprojects,build-project,create_run_jar" name="build"/>
