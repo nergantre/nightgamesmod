@@ -77,6 +77,8 @@ public class Paizuri extends Skill {
         
         if (target.human()) {
             c.write(getSelf(), receive(0, Result.normal, target, breasts));
+        } else {
+            c.write(getSelf(), deal(c, 0, Result.normal, target));
         }
         target.body.pleasure(getSelf(), getSelf().body.getRandom("breasts"), target.body.getRandom("cock"), m, c, this);
         if (Global.random(100) < fetishChance) {
