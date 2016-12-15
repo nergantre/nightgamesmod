@@ -60,7 +60,7 @@ public class Tighten extends Thrust {
         if (m[0] != 0)
             target.body.pleasure(getSelf(), selfO, targetO, m[0], c, this);
         if (m[1] != 0)
-            getSelf().body.pleasure(target, targetO, selfO, m[1], -10000, c, false, this);
+            getSelf().body.pleasure(target, targetO, selfO, m[1], 0, c, false, this);
         if (selfO.isType("ass") && Global.random(100) < 2 + getSelf().get(Attribute.Fetish)) {
             target.add(c, new BodyFetish(target, getSelf(), "ass", .25));
         }

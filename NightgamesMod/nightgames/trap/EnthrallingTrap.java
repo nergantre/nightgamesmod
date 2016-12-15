@@ -29,7 +29,7 @@ public class EnthrallingTrap extends Trap {
                                 + ", you notice a pentagram drawn on the floor,"
                                 + " appearing to have been drawn in cum. Wisely," + " you avoid stepping into it.");
             } else {
-                target.add(new Enthralled(target, owner, 5));
+                target.addNonCombat(new Enthralled(target, owner, 5));
                 target.location().opportunity(target, this);
                 Global.gui().message("As you step across the " + target.location().name
                                 + ", you are suddenly surrounded by purple flames. Your mind "
@@ -48,7 +48,7 @@ public class EnthrallingTrap extends Trap {
                                 + " It would seem to be very easy to have your way with her now, but"
                                 + " who or whatever left that thing there will probably be thinking" + " the same.");
             }
-            target.add(new Enthralled(target, owner, 5));
+            target.addNonCombat(new Enthralled(target, owner, 5));
             target.location().opportunity(target, this);
         }
     }
@@ -75,7 +75,7 @@ public class EnthrallingTrap extends Trap {
 
     @Override
     public void capitalize(Character attacker, Character victim, IEncounter enc) {
-        victim.add(new Flatfooted(victim, 1));
+        victim.addNonCombat(new Flatfooted(victim, 1));
         enc.engage(new Combat(attacker, victim, attacker.location()));
         attacker.location().remove(this);
     }

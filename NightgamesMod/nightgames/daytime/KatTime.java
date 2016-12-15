@@ -21,6 +21,8 @@ import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.requirements.BodyPartRequirement;
+import nightgames.requirements.NotRequirement;
+import nightgames.requirements.RequirementShortcuts;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
@@ -40,10 +42,73 @@ public class KatTime extends BaseNPCTime {
     @Override
     public void buildTransformationPool() {
         options = new ArrayList<>();
+        {
+            TransformationOption growCock = new TransformationOption();
+            growCock.ingredients.put(Item.PriapusDraft, 3);
+            growCock.requirements.add(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))));
+            growCock.additionalRequirements = "";
+            growCock.option = "Kat: Grow a cock";
+            growCock.scene = "<br><i>\"Mrrr... Y-you want me to w-what!?\"</i> Kat doesn't seem to be too amused at your suggestion for a little switch-up. "
+                           + "She glows red like a tomato, and starts stammering like she just learned how to talk. "
+                           + "<i>\"W-what do you mean a c-c-c-... a p-penis? But I'm a girl, nya!\"</i>"
+                           + "You respond dryly that you can clearly see that she's a girl. There's definitely no mistaking that feminine form of hers. "
+                           + "However that doesn't preclude her from experiencing some action from the masculine sex's side. "
+                           + "You take out the three vials of priapus draft you brought from your backpack. The smooth cans look like normal sport drinks, "
+                           + "with only the lewd picture of a large curved cock on it hinting at its true nature."
+                           + "<br/><br/>"
+                           + "You cute senior seems shocked at seeing the drugs that you brought and gulps, "
+                           + "<i>\"B-but why? Do you not like me as a girl? If... if so just tell me and...!\"</i> "
+                           + "Seeing this conversation quickly falling apart, you seal her lips with a kiss. "
+                           + "You forgot that when the cat spirit isn't in control, Kat has very low self confidence. "
+                           + "You admonish her that it's not that you don't like her as a girl, but you'd find her even sexier with both parts. "
+                           + "Kat bites her lips in indecision when faced with your appeal. While you don't want to pressure her too much, "
+                           + "you try to tempt her by offering her a reward if she drinks the reagents. You promise that she can do whatever she wants with you if she drinks them. "
+                           + "To reenforce your point, you snake your hand into her skirt and start rubbing her crotch on the outside of her panties. "
+                           + "Your little kitty clearly still has some reservations about drinking the unknown substance, but the familiar smell of arousal quickly starts emanating from her body. "
+                           + "You stop before you get too far though, keeping her deliciously edged and hopefully too distracted to think about this too hard."
+                           + "<br/><br/>"
+                           + "Finally Kat makes up her mind and the catgirl swipes the three potions from your hands and drinks them one after another in rapid succession. "
+                           + "At first, nothing seems to happen, and you wondering if you brought along duds. A few seconds later though, Kat's eyes bulge and lets out a loud \"MRrroww!\". "
+                           + "Crouching down, the girl strips off her panties spreads her legs. You can now see her clearly engorged clit rapidly ballooning into a large fleshy rod. "
+                           + "Thick veins adorn her new dark blood gorged male implement, making it look ridiculously out of place on the petite girl. She now has a freshly grown primal cock!"
+                           + "<br/><br/>"
+                           + "When Kat finally raises her head, she looks back at you with crazed eyes. You know you promised her that you'd do whatever she wanted if she drank the reagents, "
+                           + "but the catgirl looks positively dangerous right now. You stammer an excuse that you forgot you had an appointment with your professor while edging back against the door ready to escape. "
+                           + "However Kat clearly is not going to let you go. She forcefully tackles you as you grip the door and grabs you from behind, <i>\"No running... You promised! Nya!\"</i> "
+                           + "Without waiting for your reply, Kat tears off your clothing with her sharp claws and exposes your naked rear. "
+                           + "{other:if-female:It's lucky that you are already throughly aroused by Kat's pheromones because she gave you no warning before porking you from behind with her new cock. "
+                           + "Slipping easily into your wet love canal, Kat fucks you like a beast in a rut, gasping and meowing her pleasure.}"
+                           + "{other:if-male:Luckily Kat had the presense of mind to rub her wetness onto her newly grown cock before slamming it into your ass. "
+                           + "Without minding your pleas for a break, Kat fucks you like a beast in a rut, gasping and meowing her pleasure.} "
+                           + "Just as you think you cannot take much more of this, Kat stiffens behind you and cums loudly, flooding your hole with her feral spunk. Her orgasm seems to trigger yours, as you "
+                           + "{other:if-female:also spray your juices on the floor}{other:if-male:also spray out your thick cum onto the floor}. "
+                           + "<br/><br/>"
+                           + "Fortunately for you, the poor kitty seems exhausted by her new transformation and falls into a soft slumber after the exertion. "
+                           + "You pick her up, depositing her onto her bed and covering her with a blanket before turning to leave. Hopefully the next time you meet in the games, she'll be a bit gentler than that.";
+            growCock.effect = (c, self, other) -> {
+                other.body.add(new ModdedCockPart(BasicCockPart.big, CockMod.primal));
+                return true;
+            };
+            options.add(growCock);
+        }
+        {
+            TransformationOption removeCock = new TransformationOption();
+            removeCock.ingredients.put(Item.FemDraft, 3);
+            removeCock.requirements.add(RequirementShortcuts.rev(new BodyPartRequirement("cock")));
+            removeCock.additionalRequirements = "";
+            removeCock.option = "Kat: Remove her cock";
+            removeCock.scene = "<br>Kat gladly drinks the three femdrafts one after another and her penis shrinks back into her normal clitoris. "
+                            + "Kat shyly whispers, <i>\"Mrrowwww, t-that was embarassing... but it did feel pretty good when I had it...\"</i>";
+            removeCock.effect = (c, self, other) -> {
+                other.body.removeAll("cock");
+                return true;
+            };
+            options.add(removeCock);
+        }
         TransformationOption primalCock = new TransformationOption();
         primalCock.ingredients.put(Item.PriapusDraft, 10);
         primalCock.ingredients.put(Item.Rope, 10);
-        primalCock.ingredients.put(Item.Aphrodisiac, 50);
+        primalCock.ingredients.put(Item.Aphrodisiac, 25);
         primalCock.requirements.add(new BodyPartRequirement("cock"));
         primalCock.requirements.add((c, self, other) -> {
             return self.body.get("cock").stream().anyMatch(cock -> ((CockPart) cock).isGeneric(self));
@@ -63,7 +128,7 @@ public class KatTime extends BaseNPCTime {
         options.add(primalCock);
         TransformationOption feralPussy = new TransformationOption();
         feralPussy.ingredients.put(Item.Rope, 10);
-        feralPussy.ingredients.put(Item.Aphrodisiac, 50);
+        feralPussy.ingredients.put(Item.Aphrodisiac, 25);
         feralPussy.ingredients.put(Item.FemDraft, 10);
         feralPussy.requirements.add(new BodyPartRequirement("pussy"));
         feralPussy.requirements.add((c, self, other) -> {
@@ -79,7 +144,7 @@ public class KatTime extends BaseNPCTime {
         options.add(feralPussy);
         TransformationOption catTail = new TransformationOption();
         catTail.ingredients.put(Item.Rope, 10);
-        catTail.ingredients.put(Item.Aphrodisiac, 50);
+        catTail.ingredients.put(Item.Aphrodisiac, 25);
         catTail.requirements.add(not(bodypart("tail")));
         catTail.requirements.add((c, self, other) -> {
             return self.body.get("tail").stream().anyMatch(part -> part != TailPart.cat) || !self.body.has("tail");
@@ -93,7 +158,7 @@ public class KatTime extends BaseNPCTime {
         options.add(catTail);
         TransformationOption catEars = new TransformationOption();
         catEars.ingredients.put(Item.Rope, 10);
-        catEars.ingredients.put(Item.Aphrodisiac, 50);
+        catEars.ingredients.put(Item.Aphrodisiac, 25);
         catEars.requirements.add(new BodyPartRequirement("ears"));
         catEars.requirements.add((c, self, other) -> {
             return self.body.get("ears").stream().anyMatch(part -> part != EarPart.cat) || !self.body.has("ears");
@@ -173,7 +238,7 @@ public class KatTime extends BaseNPCTime {
                                             + "also stands between you and Kat. This is bad. You quickly explain that you weren't trying to scare Kat, you just wanted to talk to her. <p><i>\"Our Kat is pretty delicate. "
                                             + "Maybe you should learn how to approach a girl without scaring her before you try to pick her up.\"</i> The brunette speaks in a reasonable tone, but there's a definite "
                                             + "edge to her voice. The redhead snorts and starts to lead Kat away. <br><i>\"I don't want this creep talking to Kat at all.\"</i> Kat tugs on the girl's sleeve to stop her and "
-                                            + "whispers something in her ear. The girl looks back at you shocked. <i>\"This guy? Are you kidding me?\"</i> The brunette joins the two of them and they enter a brief huddle. "
+                                            + "whispers something in her ear. The girl looks back at you shocked. <i>\"This " + Global.getPlayer().guyOrGirl() + "? Are you kidding me?\"</i> The brunette joins the two of them and they enter a brief huddle. "
                                             + "You stand there awkwardly, unable to hear their conversation. There are more than a few glances in your direction, and Kat's face is gradually turning red. <br>Eventually, "
                                             + "Kat leaves the huddle to stand behind you, as if hiding from her friends. The calmer of the two girls gives you an awkward smile. <i>\"We'll give you two some space.\"</i> "
                                             + "She has to practically drag away the other girl, who is glaring daggers at you."
@@ -188,7 +253,7 @@ public class KatTime extends BaseNPCTime {
                                             + "leave her horny and unsatisfied? She squirms noticeably as she sits up on the bed. <i>\"It's really frustrating to stop nyow, but I need to be patient. I'm counting on "
                                             + "you to reward me when we're done.\"</i> She settles into a comfortable seated position on the bed, apparently not bothered that her naked lower half is visible. <i>\"We've "
                                             + "fought together a bunch, but since you're myaking an effort to get to know me, I wanted to explain how my animal spirit works. The Girl was too flustered about being "
-                                            + "alone with a boy to talk properly, so I needed your help to bring out the Cat to do the talking.\"</i><p>"
+                                            + "alone with a " + Global.getPlayer().boyOrGirl() + " to talk properly, so I needed your help to bring out the Cat to do the talking.\"</i><p>"
                                             + "By arousing Kat, you brought out her animal side. So that's who "
                                             + "you're talking to now? <i>\"The urge to mate is a very primal thing. The more I feel it, the stronger the cat spirit gets, which improves my instinct and my reflexes. It's "
                                             + "nyat like a Jekyll and Hyde thing though. The Girl and the Cat have the same memories, same intelligence, same personality, and same interests. I'm still Kat, just "
@@ -286,7 +351,7 @@ public class KatTime extends BaseNPCTime {
                                             + "an eagerness to her voice. You both want the same thing. You give her a quick kiss on the lips and help her remove her shirt. She shyly crosses her arms over her bra "
                                             + "and smiles weakly. <i>\"It's embarrassing if I'm the only one who is naked. Take off your shirt too.\"</i> You obligingly strip of your own top and she helps you remove "
                                             + "her bra. Her breasts are quite big and soft looking, considering her petite build. If she didn't cover up her body with baggy clothing during the day, her friends would "
-                                            + "surely need to beat guys off of her left and right. Kat turns even redder when she catches you staring and covers her breasts. <i>\"D-don't stare at my boobs so much. It's "
+                                            + "surely need to beat " + Global.getPlayer().guyOrGirl() + "s off of her left and right. Kat turns even redder when she catches you staring and covers her breasts. <i>\"D-don't stare at my boobs so much. It's "
                                             + "your turn to undress.\"</i> Of course, she deserves a little eye candy too. You kick off your pants, leaving only your boxers. Kat hesitantly takes her hands off her chest "
                                             + "so she can remove her pants. <p>"
                                             + "You're both down to your underwear and Kat stares at your boxers in anticipation. She's obviously ready for some passionate sex, but you "
@@ -305,7 +370,7 @@ public class KatTime extends BaseNPCTime {
                                             + "to sit behind her. She's a bit startled when you pull her into your lap to lean against your chest. From this new position, you slip your hand between her legs and resume "
                                             + "fingering her. She lets out breathy moans and shivers in your arms. Within a handful of seconds, you feel her tail twitching against you leg and her moans have a clear mewing "
                                             + "quality. <p>"
-                                            + "She was doing pretty well up until now. <i>\"I've been in the games long enyough to endure being fingered if I focus, but being held by a guy... and the "
+                                            + "She was doing pretty well up until now. <i>\"I've been in the games long enyough to endure being fingered if I focus, but being held by a " + Global.getPlayer().boyOrGirl() + "... and the "
                                             + "warmth... and the breath on my neck! How is a girl suppose to handle that?\"</i> She squirms out of your arms and turns to face you. <i>\"I know this 'training' was just an "
                                             + "excuse to tease me. I didn't complain because I liked what you were doing, but it's your turn nyow. Either get those boxers off, or they're gonnya be shredded.\"</i> You "
                                             + "quickly strip off your underwear. These are your good boxers, not like the cheap throwaway pairs that you wear during a match. Kat gives an approving purr as she looks over"

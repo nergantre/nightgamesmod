@@ -82,7 +82,7 @@
 		</Requirements>
 	</Trait>
 	<Trait>
-		<Name>entrallingjuices</Name>
+		<Name>enthrallingjuices</Name>
 		<Requirements>
 			<TraitReq>lacedjuices</TraitReq>
 			<NoTraitReq>frenzyingjuices</NoTraitReq>
@@ -95,7 +95,7 @@
 		<Name>frenzyingjuices</Name>
 		<Requirements>
 			<TraitReq>lacedjuices</TraitReq>
-			<NoTraitReq>entrallingjuices</NoTraitReq>
+			<NoTraitReq>enthrallingjuices</NoTraitReq>
 			<AttributeReq type="Arcane">10</AttributeReq>
 			<AttributeReq type="Dark">10</AttributeReq>
 			<LevelReq>20</LevelReq>

@@ -11,7 +11,7 @@ import nightgames.items.Item;
 public class Resupply extends Action {
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = -3349606637987124335L;
 
@@ -41,7 +41,7 @@ public class Resupply extends Action {
             if (user.human()) {
                 if (Global.getMatch().condition.name().equals("nudist")) {
                     Global.gui().message(
-                                    "You check in so you're eligible to fight again, but you still don't get any clothes.");
+                                    "You check in so that you're eligible to fight again, but you still don't get any clothes.");
                 } else {
                     Global.gui().message("You pick up a change of clothes and prepare to get back in the fray.");
                 }

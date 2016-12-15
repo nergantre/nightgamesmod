@@ -8,6 +8,7 @@ import java.util.Set;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 import nightgames.characters.Character;
 import nightgames.json.JsonUtils;
@@ -42,6 +43,9 @@ public class SaveData {
 
     public SaveData(JsonObject rootJSON) {
         this();
+        if (rootJSON.has("xpRate")) {
+            Global.xpRate = rootJSON.get("xpRate").getAsDouble();
+        }
 
         JsonArray charactersJSON = rootJSON.getAsJsonArray(JSONKey.PLAYERS.key);
         for (JsonElement element : charactersJSON) {
@@ -68,6 +72,7 @@ public class SaveData {
 
     public JsonObject toJson() {
         JsonObject rootJSON = new JsonObject();
+        rootJSON.add("xpRate", new JsonPrimitive(Global.xpRate));
 
         JsonArray characterJSON = new JsonArray();
         players.stream().map(Character::save).forEach(characterJSON::add);

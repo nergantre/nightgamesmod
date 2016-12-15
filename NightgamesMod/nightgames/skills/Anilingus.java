@@ -45,7 +45,7 @@ public class Anilingus extends Skill {
         boolean canUse = c.getStance().isBeingFaceSatBy(c, getSelf(), target) && getSelf().canRespond()
                         || getSelf().canAct();
         return target.crotchAvailable() && target.body.has("ass") && c.getStance().oral(getSelf(), target) && canUse
-                        && !c.getStance().anallyPenetrated(c, target);
+                        && !c.getStance().anallyPenetrated(c, target) && !c.getStance().paizuri(getSelf(), target);
     }
 
     @Override

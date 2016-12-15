@@ -151,7 +151,7 @@ public class Airi extends BasePersonality {
                 character.addTemporaryTrait(Trait.autonomousPussy, 999);
             }
             if (character.level >= 36) {
-                character.addTemporaryTrait(Trait.entrallingjuices, 999);
+                character.addTemporaryTrait(Trait.enthrallingjuices, 999);
             }
             if (character.level >= 39) {
                 character.addTemporaryTrait(Trait.energydrain, 999);

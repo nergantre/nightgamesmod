@@ -30,14 +30,17 @@ public abstract class Skill {
     public Skill(String name, Character self) {
         this(name, self, 0);
     }
-
     public Skill(String name, Character self, int cooldown) {
+        this(name, self, cooldown, Staleness.build().withDecay(.1).withFloor(.5).withRecovery(.05));
+    }
+
+    public Skill(String name, Character self, int cooldown, Staleness staleness) {
         this.name = name;
         setSelf(self);
         this.cooldown = cooldown;
+        this.staleness = staleness;
         choice = "";
         tags = new HashSet<>();
-        staleness = Staleness.build().withDecay(.1).withFloor(.5).withRecovery(.05);
     }
 
     public final boolean requirements(Combat c, Character target) {
@@ -205,11 +208,11 @@ public abstract class Skill {
         skill.user().spendMojo(c, skill.getMojoCost(c));
         if (success) {
             skill.user().buildMojo(c, generated);
-        } else if (target.has(Trait.tease)) {
+        } else if (target.has(Trait.tease) && Global.random(4) == 0) {
             c.write(target, Global.format("Dancing just past {other:name-possessive} reach gives {self:name-do} a minor high.", target, skill.getSelf()));
-            target.buildMojo(c, 5);
+            target.buildMojo(c, 20);
         }
-        if (c.getCombatantData(skill.getSelf()) != null) {
+        if (success && c.getCombatantData(skill.getSelf()) != null) {
             c.getCombatantData(skill.getSelf()).decreaseMoveModifier(c, skill);
         }
         if (c.getCombatantData(skill.user()) != null) { 

@@ -4,6 +4,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.stance.Stance;
 import nightgames.status.Nimble;
 import nightgames.status.Stsflag;
 
@@ -20,7 +21,7 @@ public class CatsGrace extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return !getSelf().is(Stsflag.nimble) && getSelf().canAct() && c.getStance().mobile(getSelf())
+        return !getSelf().is(Stsflag.nimble) && c.getStance().en == Stance.neutral && getSelf().canAct() && c.getStance().mobile(getSelf())
                         && getSelf().getArousal().percent() >= 20;
     }
 

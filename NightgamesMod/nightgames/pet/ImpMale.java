@@ -13,11 +13,11 @@ import nightgames.skills.petskills.ImpTease;
 public class ImpMale extends Pet {
 
     public ImpMale(Character owner) {
-        super("Imp", owner, Ptype.impmale, 3, 2);
+        super("imp", owner, Ptype.impmale, 3, 2);
     }
 
     public ImpMale(Character owner, int power, int ac) {
-        super("Imp", owner, Ptype.impmale, power, ac);
+        super("imp", owner, Ptype.impmale, power, ac);
     }
 
     @Override

@@ -7,20 +7,24 @@ import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 
 /**
  * Kind of like a mini-winded.
  */
 public class Stunned extends DurationStatus {
+    private boolean makesBraced;
     public Stunned(Character affected) {
-        this(affected, 1);
+        this(affected, 1, true);
     }
 
-    public Stunned(Character affected, int duration) {
+    public Stunned(Character affected, int duration, boolean makesBraced) {
         super("Stunned", affected, duration);
         flag(Stsflag.stunned);
         flag(Stsflag.debuff);
         flag(Stsflag.purgable);
+        flag(Stsflag.disabling);
+        this.makesBraced = makesBraced;
     }
 
     @Override
@@ -53,13 +57,15 @@ public class Stunned extends DurationStatus {
 
     @Override
     public void onRemove(Combat c, Character other) {
-        if (affected.get(Attribute.Divinity) > 0) {
-            affected.addlist.add(new BastionOfFaith(affected, 3));
-        } else {
-            affected.addlist.add(new Braced(affected, 2));
+        if (makesBraced) {
+            if (affected.get(Attribute.Divinity) > 0) {
+                affected.addlist.add(new BastionOfFaith(affected, 3));
+            } else {
+                affected.addlist.add(new Braced(affected, 2));
+            }
+            affected.addlist.add(new Wary(affected, 2));
+            affected.heal(c, affected.getStamina().max() / 3, " (Recovered)");
         }
-        affected.addlist.add(new Wary(affected, 2));
-        affected.heal(c, affected.getStamina().max() / 3, " (Recovered)");
     }
 
     @Override
@@ -77,7 +83,7 @@ public class Stunned extends DurationStatus {
 
     @Override
     public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x) {
-        return -x / 2;
+        return 0;
     }
 
     @Override
@@ -122,18 +128,18 @@ public class Stunned extends DurationStatus {
 
     @Override
     public Status instance(Character newAffected, Character newOther) {
-        return new Stunned(newAffected);
+        return new Stunned(newAffected, getDuration(), makesBraced);
     }
 
     @Override public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
+        obj.addProperty("duration", getDuration());
+        obj.addProperty("makesBraced", makesBraced);
         return obj;
     }
 
     @Override public Status loadFromJson(JsonObject obj) {
-        //Winded constructor can't handle nulls
-        throw new UnsupportedOperationException();
-        //return new Winded(null);
+        return new Stunned(Global.noneCharacter(), obj.get("duration").getAsInt(), obj.get("makesBraced").getAsBoolean());
     }
 }

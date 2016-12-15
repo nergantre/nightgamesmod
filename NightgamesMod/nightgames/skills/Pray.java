@@ -1,6 +1,7 @@
 package nightgames.skills;
 
 import nightgames.characters.Character;
+import nightgames.characters.Player;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -20,7 +21,7 @@ public class Pray extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return Global.getPlayer().getAddiction(AddictionType.ZEAL).map(addiction -> addiction.wasCausedBy(target))
+        return getSelf().human() && ((Player)getSelf()).getAddiction(AddictionType.ZEAL).map(addiction -> addiction.wasCausedBy(target))
                         .orElse(false);
     }
 
@@ -37,10 +38,10 @@ public class Pray extends Skill {
                                         + " the knowledge that Angel is there for you reinvigorates your spirit"
                                         + " and strengthens your faith.",
                         target.name()));
-        int amt = Math.round((Global.getPlayer().getAddiction(AddictionType.ZEAL)
+        int amt = Math.round((((Player)getSelf()).getAddiction(AddictionType.ZEAL)
                         .orElseThrow(() -> new SkillUnusableException(this)).getMagnitude() * 5));
         getSelf().restoreWillpower(c, amt);
-        Global.getPlayer().addict(AddictionType.ZEAL, Global.getCharacterByType("Angel"), Addiction.LOW_INCREASE);
+        ((Player)getSelf()).addict(AddictionType.ZEAL, Global.getCharacterByType("Angel"), Addiction.LOW_INCREASE);
         return true;
     }
 

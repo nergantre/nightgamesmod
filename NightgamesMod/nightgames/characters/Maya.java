@@ -165,7 +165,7 @@ public class Maya extends BasePersonality {
     @Override
     public String victory3p(Combat c, Character target, Character assist) {
         if (target.human()) {
-            return "<i>\"Oh my. I don't think the boy had much of a chance to start with,"
+            return "<i>\"Oh my. I don't think the " + c.getOpponent(character).boyOrGirl() + " had much of a chance to start with,"
                             + " but now the other girls are picking on him too.\"</i> She looks over "
                             + "your helpless body and sides of her mouth curl slightly with amusement."
                             + " She delicately extends her stocking-covered foot and teases the tip "
@@ -215,7 +215,7 @@ public class Maya extends BasePersonality {
                             + "your chest. She's lighter than she looks, but you're still "
                             + "completely unable to move her. <i>\"Sorry, it's just your "
                             + "bad luck. I could have helped you instead, but I don't do this v"
-                            + "ery often anymore and I wanted to watch a cute boy orgasm. You "
+                            + "ery often anymore and I wanted to watch a cute " + c.getOpponent(character).boyOrGirl() + " orgasm. You "
                             + "should try to enjoy your defeat, it's just another " + "part of the Game.\"</i><br>";
         }
         return "In the middle of your fight with " + target.name()
@@ -320,7 +320,7 @@ public class Maya extends BasePersonality {
     @Override
     public String startBattle(Character self, Character other) {
         if (other.human()) {
-            return "Maya smiles softly as she confidently steps toward you. <i>\"Are you simply unfortunate or were you actually hoping to challenge me? What a brave boy. I'll try not to disappoint you.\"</i>";
+            return "Maya smiles softly as she confidently steps toward you. <i>\"Are you simply unfortunate or were you actually hoping to challenge me? What a brave " + other.boyOrGirl() + ". I'll try not to disappoint you.\"</i>";
         } else {
             return Global.format("{self:SUBJECT} smiles softly as she confidently steps towards {other:name-do}.", character, other);
         }
@@ -389,7 +389,7 @@ public class Maya extends BasePersonality {
                         + "surprise (you probably never had it), but it's still 2 on 1.<br>" + "You suddenly feel "
                         + assist.name()
                         + " grab you from behind. You turn your head and notice her eyes are dull and unfocused. Maya must have hypnotized her to "
-                        + "help trap you. Maya speaks up in a melodic voice. <i>\"How rude of you to interrupt a perfectly enjoyable fight. Naughty boys should be punished.\"</i> She strips off your clothes and "
+                        + "help trap you. Maya speaks up in a melodic voice. <i>\"How rude of you to interrupt a perfectly enjoyable fight. Naughty " + c.getOpponent(character).boyOrGirl() + "s should be punished.\"</i> She strips off your clothes and "
                         + "runs her fingers over your exposed dick. You immediately grow hard under her touch. She's too skilled with her hands for you to hold back and you're completely "
                         + "unable to defend yourself. She makes you cum embarrassingly quickly and both girls discard you unceremoniously to the floor. Maya snaps her fingers in front of "
                         + assist.name()

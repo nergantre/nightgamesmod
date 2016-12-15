@@ -1,6 +1,7 @@
 package nightgames.skills;
 
 import nightgames.characters.Character;
+import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -8,6 +9,7 @@ import nightgames.global.Global;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
+@SuppressWarnings("unused")
 public class Bite extends Skill {
 
     public Bite(Character self) {
@@ -32,7 +34,10 @@ public class Bite extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         boolean katOnTop = c.getStance().dom(getSelf());
-        
+        if (!(target instanceof Player)) {
+            return false;
+        }
+
         if (katOnTop) {
             c.write(getSelf(), "Kat leans in close, grinding her breasts against you and biting your neck!"
                             + " You briefly panic, but you know Kat wouldn't seriously hurt you. She quickly sits"
@@ -46,8 +51,8 @@ public class Bite extends Skill {
                             + " you do realize you've sped up your thrusting and it does seem to feel even"
                             + " better than before.");            
         }
-        
-        Global.getPlayer().addict(AddictionType.BREEDER, getSelf(), Addiction.MED_INCREASE);
+        Player player = (Player) target;
+        player.addict(AddictionType.BREEDER, getSelf(), Addiction.MED_INCREASE);
         
         return true;
     }

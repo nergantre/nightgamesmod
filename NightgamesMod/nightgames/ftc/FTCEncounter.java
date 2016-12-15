@@ -47,11 +47,11 @@ public class FTCEncounter extends Encounter {
 
     private void treeAmbush(Character attacker, Character victim) {
         fightTime = 2;
-        victim.add(new Flatfooted(victim, 3));
+        victim.addNonCombat(new Flatfooted(victim, 3));
         if (attacker.has(Item.Handcuffs))
-            victim.add(new Bound(victim, 75, "handcuffs"));
+            victim.addNonCombat(new Bound(victim, 75, "handcuffs"));
         else
-            victim.add(new Bound(victim, 50, "zip-tie"));
+            victim.addNonCombat(new Bound(victim, 50, "zip-tie"));
         if (p1.human() || p2.human()) {
             fight = Global.gui().beginCombat(attacker, victim, 0);
             fight.setStance(new Pin(attacker, victim));
@@ -91,11 +91,11 @@ public class FTCEncounter extends Encounter {
 
     private void bushAmbush(Character attacker, Character victim) {
         fightTime = 2;
-        victim.add(new Flatfooted(victim, 3));
+        victim.addNonCombat(new Flatfooted(victim, 3));
         if (attacker.has(Item.Handcuffs))
-            victim.add(new Bound(victim, 75, "handcuffs"));
+            victim.addNonCombat(new Bound(victim, 75, "handcuffs"));
         else
-            victim.add(new Bound(victim, 50, "zip-tie"));
+            victim.addNonCombat(new Bound(victim, 50, "zip-tie"));
         if (p1.human() || p2.human()) {
             fight = Global.gui().beginCombat(attacker, victim, 0);
             fight.setStance(new Mount(attacker, victim));
@@ -145,7 +145,7 @@ public class FTCEncounter extends Encounter {
                                 + " at a disadvantage.";
             }
             fight = Global.gui().beginCombat(attacker, victim);
-            victim.add(new Flatfooted(victim, 3));
+            victim.addNonCombat(new Flatfooted(victim, 3));
         } else {
             if (attacker.human()) {
                 message += "While you are hiding behind a rock, waiting for someone to"
@@ -165,7 +165,7 @@ public class FTCEncounter extends Encounter {
                                 + " {self:direct-object} to fall to the ground.";
             }
             fight = Global.gui().beginCombat(attacker, victim);
-            attacker.add(new Flatfooted(attacker, 3));
+            attacker.addNonCombat(new Flatfooted(attacker, 3));
         }
         if (attacker.human() || victim.human()) {
             Global.gui().message(Global.format(message, attacker, victim));

@@ -35,7 +35,7 @@ public class Unstrip extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         getSelf().outfit.dress(getSelf().outfitPlan);
-        getSelf().add(new Primed(getSelf(), -6));
+        getSelf().add(c, new Primed(getSelf(), -6));
         writeOutput(c, Result.normal, target);
         getSelf().emote(Emotion.confident, 20);
         return true;

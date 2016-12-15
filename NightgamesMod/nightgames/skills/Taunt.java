@@ -52,7 +52,7 @@ public class Taunt extends Skill {
             c.write(getSelf(), Global.format("{other:SUBJECT-ACTION:speak|speaks} with such unquestionable"
                             + " authority that {self:subject-action:don't|doesn't} even consider not obeying."
                             , getSelf(), target));
-            target.add(new Enthralled(target, getSelf(), 1));
+            target.add(c, new Enthralled(target, getSelf(), 1, false));
         }
         target.emote(Emotion.angry, 30);
         target.emote(Emotion.nervous, 15);

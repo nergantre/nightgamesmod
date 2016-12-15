@@ -15,6 +15,8 @@ import nightgames.characters.body.PussyPart;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.requirements.BodyPartRequirement;
+import nightgames.requirements.NotRequirement;
+import nightgames.requirements.RequirementShortcuts;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
@@ -27,7 +29,7 @@ public class JewelTime extends BaseNPCTime {
         transformationOptionString = "Training";
         transformationIntro = "[Placeholder]<br>Jewel explains her training to you and how you can too train yourself.";
         loveIntro = "You're about to go see Jewel, but she shows up at your dorm room first. You invite her inside and she sits on your bed with her legs crossed. <i>\"I need "
-                        + "some advice and you're my best friend, but I'm not sure if I should ask you. It's probably something I should talk to another girl about, but there aren't any girls "
+                        + "some advice and you're my best friend, but I'm not sure if I should ask you. It's probably something I should talk to another girl about, but there aren't any other girls "
                         + "I can really confide in. When I was growing up I mostly hung out with the boys, so all that girl talk is kinda.... Will you hear me out?\"</i> You're not sure how much "
                         + "help you can be on feminine issues, but if you're the only person Jewel trusts enough to confide in, you have to at least hear her out. Jewel takes a deep breath "
                         + "before speaking. <i>\"I think I may be in love with you, but I'm not sure how to tell.\"</i> That was... not what you expected. Jewel's face turns a bit pink as you're "
@@ -48,9 +50,35 @@ public class JewelTime extends BaseNPCTime {
     @Override
     public void buildTransformationPool() {
         options = new ArrayList<>();
+        {
+            TransformationOption growCock = new TransformationOption();
+            growCock.ingredients.put(Item.PriapusDraft, 3);
+            growCock.requirements.add(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))));
+            growCock.additionalRequirements = "";
+            growCock.option = "Jewel: Grow a cock";
+            growCock.scene = "[Placeholder]<br>Jewel chugs down the three priapus drafts one after the other, making her clit grow into a large enlightened cock.";
+            growCock.effect = (c, self, other) -> {
+                other.body.add(new ModdedCockPart(BasicCockPart.big, CockMod.enlightened));
+                return true;
+            };
+            options.add(growCock);
+        }
+        {
+            TransformationOption removeCock = new TransformationOption();
+            removeCock.ingredients.put(Item.FemDraft, 3);
+            removeCock.requirements.add(RequirementShortcuts.rev(new BodyPartRequirement("cock")));
+            removeCock.additionalRequirements = "";
+            removeCock.option = "Jewel: Remove her cock";
+            removeCock.scene = "[Placeholder]<br>Jewel drinks the three femdrafts one after another and her penis shrinks back into her normal clitoris.";
+            removeCock.effect = (c, self, other) -> {
+                other.body.removeAll("cock");
+                return true;
+            };
+            options.add(removeCock);
+        }
         TransformationOption enlightenedCock = new TransformationOption();
         enlightenedCock.ingredients.put(Item.PriapusDraft, 10);
-        enlightenedCock.ingredients.put(Item.EnergyDrink, 40);
+        enlightenedCock.ingredients.put(Item.EnergyDrink, 20);
         enlightenedCock.ingredients.put(Item.JuggernautJuice, 10);
         enlightenedCock.requirements.add(new BodyPartRequirement("cock"));
         enlightenedCock.requirements.add((c, self, other) -> {
@@ -73,7 +101,7 @@ public class JewelTime extends BaseNPCTime {
         };
         options.add(enlightenedCock);
         TransformationOption fieryPussy = new TransformationOption();
-        fieryPussy.ingredients.put(Item.EnergyDrink, 40);
+        fieryPussy.ingredients.put(Item.EnergyDrink, 20);
         fieryPussy.ingredients.put(Item.JuggernautJuice, 10);
         fieryPussy.ingredients.put(Item.FemDraft, 10);
         fieryPussy.requirements.add(new BodyPartRequirement("pussy"));
@@ -177,7 +205,7 @@ public class JewelTime extends BaseNPCTime {
                                   + "swept out from under you. You fall hard on your back, and Jewel less-than-gracefully"
                                   + " drops herself onto your chest, knocking the wind out of you. Before you can even"
                                   + " catch your breath, Jewel finishes pulling off your shirt and attaches two ropes to"
-                                  + " your wrists. <br/><br/>\"Right over here, boy.\" She gets up and uses the ropes to"
+                                  + " your wrists. <br/><br/>\"Right over here, " + Global.getPlayer().boyOrGirl() + ".\" She gets up and uses the ropes to"
                                   + " drag you to the couch, attaching the ropes to its legs. While you test how much "
                                   + "movement you still have, Jewel finishes her work by tying your ankles to other "
                                   + "furniture. Now spread-eagled on your back, the near future is looking rather bleak. "

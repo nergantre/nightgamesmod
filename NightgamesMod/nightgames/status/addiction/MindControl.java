@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
@@ -20,12 +21,12 @@ import nightgames.status.Stsflag;
 
 public class MindControl extends Addiction {
 
-    public MindControl(Character cause, float magnitude) {
-        super("Mind Control", cause, magnitude);
+    public MindControl(Player affected, Character cause, float magnitude) {
+        super(affected, "Mind Control", cause, magnitude);
     }
 
-    public MindControl(Character cause) {
-        this(cause, .01f);
+    public MindControl(Player affected, Character cause) {
+        this(affected, cause, .01f);
     }
 
     @Override
@@ -233,11 +234,11 @@ public class MindControl extends Addiction {
     @Override
     public Status instance(Character newAffected, Character newOther) {
         assert newAffected.human();
-        return new MindControl(newOther, magnitude);
+        return new MindControl((Player)newAffected, newOther, magnitude);
     }
 
     @Override public Status loadFromJson(JsonObject obj) {
-        return new MindControl(Global.getCharacterByType(obj.get("cause").getAsString()),
+        return new MindControl(Global.getPlayer(), Global.getCharacterByType(obj.get("cause").getAsString()),
                         obj.get("magnitude").getAsInt());
     }
 

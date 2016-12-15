@@ -1,6 +1,7 @@
 package nightgames.skills;
 
 import nightgames.characters.Character;
+import nightgames.characters.Player;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -27,8 +28,7 @@ public class DarkKiss extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return Global.getPlayer()
-                     .checkAddiction(AddictionType.CORRUPTION)
+        return getSelf() instanceof Player && ((Player)getSelf()).checkAddiction(AddictionType.CORRUPTION)
                         && c.getStance()
                             .kiss(getSelf(), target)
                         && getSelf().canAct();
@@ -46,7 +46,7 @@ public class DarkKiss extends Skill {
                         + " has imbued you with stirs, and greedily draws %s willpower in through your connection, growing"
                         + " more powerful.", target.nameOrPossessivePronoun(), target.possessivePronoun()));
 
-        Addiction add = Global.getPlayer().getAddiction(AddictionType.CORRUPTION)
+        Addiction add = ((Player)getSelf()).getAddiction(AddictionType.CORRUPTION)
                         .orElseThrow(() -> new SkillUnusableException(this));
         float mag = add.getMagnitude();
         int min = (int) (mag * 3);
@@ -54,7 +54,7 @@ public class DarkKiss extends Skill {
         int amt = min + Global.random(mod);
         target.loseWillpower(c, amt, false);
         add.alleviateCombat(Addiction.HIGH_INCREASE);
-        Global.getPlayer().addict(AddictionType.CORRUPTION, null, Addiction.LOW_INCREASE);
+        ((Player)getSelf()).addict(AddictionType.CORRUPTION, null, Addiction.LOW_INCREASE);
         return true;
     }
 

@@ -15,6 +15,8 @@ import nightgames.characters.body.PussyPart;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.requirements.BodyPartRequirement;
+import nightgames.requirements.NotRequirement;
+import nightgames.requirements.RequirementShortcuts;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
@@ -46,6 +48,32 @@ public class MaraTime extends BaseNPCTime {
     @Override
     public void buildTransformationPool() {
         options = new ArrayList<>();
+        {
+            TransformationOption growCock = new TransformationOption();
+            growCock.ingredients.put(Item.Dildo, 1);
+            growCock.requirements.add(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))));
+            growCock.additionalRequirements = "";
+            growCock.option = "Mara: Install a cock";
+            growCock.scene = "[Placeholder]<br>Mara makes some modifications to the dildo and manages to attach it to her own body through methods unknown to you.";
+            growCock.effect = (c, self, other) -> {
+                other.body.add(new ModdedCockPart(BasicCockPart.big, CockMod.bionic));
+                return true;
+            };
+            options.add(growCock);
+        }
+        {
+            TransformationOption removeCock = new TransformationOption();
+            removeCock.ingredients.put(Item.DisSol, 3);
+            removeCock.requirements.add(RequirementShortcuts.rev(new BodyPartRequirement("cock")));
+            removeCock.additionalRequirements = "";
+            removeCock.option = "Mara: Remove her cock";
+            removeCock.scene = "[Placeholder]<br>Mara uses the solvent to dissolve the bond from her modified cock, making her wholly female again.";
+            removeCock.effect = (c, self, other) -> {
+                other.body.removeAll("cock");
+                return true;
+            };
+            options.add(removeCock);
+        }
         TransformationOption bionicCock = new TransformationOption();
         bionicCock.ingredients.put(Item.PriapusDraft, 10);
         bionicCock.ingredients.put(Item.TinkersMix, 20);
@@ -204,7 +232,7 @@ public class MaraTime extends BaseNPCTime {
                                       + "you. <i>\"Okay, so, now... Just... Strip and sit in that chair over there.\"</i> Still mute, you do"
                                       + " as she says. Once you've seated yourself, Mara walks over and kneels down in front of you. She looks"
                                       + " at your limp cock, and a smirk forms on her face. <i>\"Let's see if this works: Get hard.\"</i> You"
-                                      + " want to tell her that's not something guys can really control like that, but inexplicably you feel "
+                                      + " want to tell her that's not something " + Global.getPlayer().guyOrGirl() + "s can really control like that, but inexplicably you feel "
                                       + "the familiar sensation of blood rushing into your dick. Within seconds, it's as hard as it's ever been."
                                       + " <i>\"Oooh, that's going to be useful at night! Now, until I say otherwise, don't cum!\"</i> You do "
                                       + "<i>not</i> like the sound of that, but it's not as if you can actually do anything about it. You are "
@@ -251,7 +279,7 @@ public class MaraTime extends BaseNPCTime {
                       .message("You invite Mara to your room some fun. As soon as you get there she walks up behind you, shoves her hand down the front of your pants, and grabs you penis. "
                                       + "You're taken by surprise, but it doesn't stop you from getting hard in her hand. <i>\"You said we're here to have fun and I've decided you're my toy today,\"</i> she whispers "
                                       + "in an unusually sultry voice. When you're fully erect, she withdraws her hand and orders you to strip. Once you're naked, she has you sit on the bed and begins to fondle "
-                                      + "your balls. <i>\"Boys get really nervous when I play with these, but it feels good, doesn't it?\"</i> She's mostly back to her typical, mischievous self, but you can see a "
+                                      + "your balls. <i>\"" +Global.capitalizeFirstLetter(Global.getPlayer().boyOrGirl()) + "s get really nervous when I play with these, but it feels good, doesn't it?\"</i> She's mostly back to her typical, mischievous self, but you can see a "
                                       + "dominant gleam in her eye. She takes her time undressing, turning it into a full stripshow, then she sits on your lap facing you. Her pussy is close enough to your straining "
                                       + "dick that you can feel her heat. <i>\"I think it would be a lot of fun to train you,\"</i> she says in her sweetest, innocent voice. <i>\"I'll train you so no other girl can get you "
                                       + "hard, but you'll come instantly at my touch. Then you'll win against everyone except me. Doesn't that sound advantageous for both of us?\"</i> You can't tell if she's joking or "
@@ -370,7 +398,7 @@ public class MaraTime extends BaseNPCTime {
                                       + "noise escapes her as she lays there, unresisting. As suddenly as you grabbed her, you release her and stand back up, leaving her a bit dazed. You finally feel like your head is clear. "
                                       + "Looking at the board, you realize you're trailing enough in units to use your flare card, giving you an extra action. Playing a gun tower disrupts Mara's formation and, by the end of your "
                                       + "turn, you're in a much better position. <p><i>\"That's not fair!\"</i> Mara protests as she comes to her senses. <i>\"You can't play with a girl's heart like that just to win a game.\"</i> It doesn't "
-                                      + "really seem like you did anything worse than what she was doing just seconds ago. <i>\"It's completely different. If you tease a boy, he just gets hard and then you have something else to "
+                                      + "really seem like you did anything worse than what she was doing just seconds ago. <i>\"It's completely different. If you tease a " + Global.getPlayer().boyOrGirl() + ", he just gets hard and then you have something else to "
                                       + "tease. But if you do that to a girl, she's going to fall in love! Look at my flushed cheeks. Feel my heartbeat. I'm madly in love right now and it's totally your fault!\"</i> She glares down "
                                       + "at the gameboard and looks through her cards. <i>\"I'm going to have to completely destroy you to avenge the wounded heart of a pure maiden.\"</i><p>In the end, Mara still ends up winning, but "
                                       + "it's far from completely destroying you. You managed to give her a pretty good run for her money for the second half. By the time the game is over, she's mostly forgotten why she's "
@@ -399,7 +427,7 @@ public class MaraTime extends BaseNPCTime {
                                       + "you can't really get mad at her for doing it effectively. She sits down on the mat and moves your head to her lap. <i>\"Here you go, we'll stay like this while you recover.\"</i> Her warm, "
                                       + "bare thighs make a very good pillow. You'd probably be able to enjoy it more if you weren't distracted by the pain from your balls. <i>\"I wish I had a chance of winning without hurting "
                                       + "you so much,\"</i> Mara says while stroking your hair. <i>\"I'm not as strong as Jewel, or as sexy as Angel. What I am is clever. The only way I can win it by finding my opponent's weakness "
-                                      + "and hitting it as hard as I can.\"</i> She leans down and softly kisses you on the lips. <i>\"Unfortunately, sometimes that means hurting a boy I like a lot.\"</i><p>By now, the pain in your groin "
+                                      + "and hitting it as hard as I can.\"</i> She leans down and softly kisses you on the lips. <i>\"Unfortunately, sometimes that means hurting a " + Global.getPlayer().boyOrGirl() + " I like a lot.\"</i><p>By now, the pain in your groin "
                                       + "has started to recede and you're starting to react to being held by a naked girl. Mara glances between your legs and smiles. <i>\"Looks like you're feeling better.\"</i> She gently strokes "
                                       + "your dick until it becomes completely hard. <i>\"Feeling well enough for a quick squirt?\"</i> Your face reddens a bit at how she phrased her offer, but you nod. She grasps your shaft more "
                                       + "firmly and pumps it steadily. Your sore nuts give a twinge of protest, but it's quickly drowned out by your increasing need to cum. Mara smiles as you squirm under her hand and speeds "

@@ -43,7 +43,7 @@ public class SpringTrap extends Trap {
                     m += 20;
                 }
                 target.pain(null, null, m);
-                target.add(new Winded(target));
+                target.addNonCombat(new Winded(target));
             }
             target.location().opportunity(target, this);
         } else if (target.human()) {

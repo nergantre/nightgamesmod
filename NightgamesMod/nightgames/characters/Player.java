@@ -42,8 +42,8 @@ import nightgames.stance.Neutral;
 import nightgames.stance.Position;
 import nightgames.start.PlayerConfiguration;
 import nightgames.status.Enthralled;
-import nightgames.status.Horny;
 import nightgames.status.Masochistic;
+import nightgames.status.Pheromones;
 import nightgames.status.PlayerSlimeDummy;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
@@ -78,6 +78,14 @@ public class Player extends Character {
         finishCharacter(pickedTraits, selectedAttributes);
     }
 
+    public Character clone() throws CloneNotSupportedException {
+        Player clone = (Player) super.clone();
+        clone.addictions = new ArrayList<>();
+        for (Addiction addiction : addictions) {
+            clone.addictions.add((Addiction) addiction.instance(clone, null));
+        }
+        return clone;
+    }
     public void applyBasicStats(Character self) {
         self.getStamina().setMax(80);
         self.getArousal().setMax(80);
@@ -391,7 +399,7 @@ public class Player extends Character {
         getArousal().gain(getGrowth().arousal);
         availableAttributePoints += getGrowth().attributes[Math.min(rank, getGrowth().attributes.length-1)];
         gui.message("You've gained a Level!<br>Select which attributes to increase.");
-        if (getLevel() % 3 == 0 && level < 10 || (getLevel() + 1) % 2 == 0 && level > 10) {
+        if (getLevel() % 3 == 0 && level < 10 || (getLevel() + 1) % 2 == 0 && level > 10 /*|| (Global.checkFlag(Flag.SuperTraitMode) && ((level < 10 && getLevel()%2 == 0) || (getLevel() % 3 != 0 && level > 10)))*/) {
             traitPoints += 1;
         }
     }
@@ -693,8 +701,7 @@ public class Player extends Character {
                         && opponent.rollPheromones(c)) {
             c.write(opponent, "<br>Whenever you're near " + opponent.name()
                             + ", you feel your body heat up. Something in her scent is making you extremely horny.");
-            add(c, Horny.getWithBiologicalType(opponent, this, opponent.getPheromonePower(), 10,
-                            opponent.nameOrPossessivePronoun() + " pheromones"));
+            add(c, Pheromones.getWith(opponent, this, opponent.getPheromonePower(), 10));
         }
         if (opponent.has(Trait.sadist) && !is(Stsflag.masochism)) {
             c.write("<br>"+Global.capitalizeFirstLetter(
@@ -702,6 +709,7 @@ public class Player extends Character {
             add(c, new Masochistic(this));
         }
         if (has(Trait.RawSexuality)) {
+            c.write(this, Global.format("{self:NAME-POSSESSIVE} raw sexuality turns both of you on.", this, opponent));
             tempt(c, opponent, arousal.max() / 25);
             opponent.tempt(c, this, opponent.arousal.max() / 25);
         }
@@ -827,7 +835,7 @@ public class Player extends Character {
             if (dbg) {
                 System.out.printf("Creating initial %s on player with %.3f\n", type.name(), mag);
             }
-            Addiction addict = type.build(cause, mag);
+            Addiction addict = type.build(this, cause, mag);
             addictions.add(addict);
             addict.describeInitial();
         }
@@ -872,7 +880,7 @@ public class Player extends Character {
                 System.out.printf("Creating initial %s on player with %.3f (Combat vs %s)\n", type.name(), mag,
                                 cause.getName());
             }
-            Addiction addict = type.build(cause, Addiction.LOW_THRESHOLD);
+            Addiction addict = type.build(this, cause, Addiction.LOW_THRESHOLD);
             addict.aggravateCombat(mag);
             addictions.add(addict);
         }
@@ -930,7 +938,7 @@ public class Player extends Character {
             float combat = json.get("combat").getAsFloat();
             boolean overloading = json.has("overloading") ? json.get("overloading").getAsBoolean() : false;
             boolean reenforced = json.has("reenforced") ? json.get("reenforced").getAsBoolean() : false;
-            Addiction addiction = Addiction.load(type, cause, mag, combat, overloading, reenforced);
+            Addiction addiction = Addiction.load(this, type, cause, mag, combat, overloading, reenforced);
             this.addictions.add(addiction);
         }
     }
@@ -962,7 +970,7 @@ public class Player extends Character {
             nudify();
             purge(c);
             addTemporaryTrait(Trait.slime, 999);
-            add(new PlayerSlimeDummy());
+            add(c, new PlayerSlimeDummy(this));
             if (hasPussy() && !body.getRandomPussy().moddedPartCountsAs(this, PussyPart.gooey)) {
                 body.temporaryAddOrReplacePartWithType(new TentaclePart("slime filaments", "pussy", "slime", 0.0, 1.0, 1.0), 999);
                 body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
@@ -994,7 +1002,7 @@ public class Player extends Character {
                 addTemporaryTrait(Trait.autonomousPussy, 999);
             }
             if (level >= 36) {
-                addTemporaryTrait(Trait.entrallingjuices, 999);
+                addTemporaryTrait(Trait.enthrallingjuices, 999);
             }
             if (level >= 39) {
                 addTemporaryTrait(Trait.energydrain, 999);

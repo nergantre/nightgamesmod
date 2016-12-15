@@ -65,7 +65,7 @@ public class AphrodisiacTrap extends Trap {
 
     @Override
     public void capitalize(Character attacker, Character victim, IEncounter enc) {
-        victim.add(new Flatfooted(victim, 1));
+        victim.addNonCombat(new Flatfooted(victim, 1));
         enc.engage(new Combat(attacker, victim, attacker.location()));
         attacker.location().remove(this);
     }

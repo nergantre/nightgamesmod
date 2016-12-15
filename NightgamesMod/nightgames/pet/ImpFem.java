@@ -12,11 +12,11 @@ import nightgames.skills.petskills.ImpTease;
 
 public class ImpFem extends Pet {
     public ImpFem(Character owner) {
-        super("Imp", owner, Ptype.impfem, 3, 2);
+        super("imp", owner, Ptype.impfem, 3, 2);
     }
 
     public ImpFem(Character owner, int power, int ac) {
-        super("Imp", owner, Ptype.impfem, power, ac);
+        super("imp", owner, Ptype.impfem, power, ac);
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Player;
 import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
@@ -25,12 +26,12 @@ import nightgames.status.Status;
 
 public class Corruption extends Addiction {
 
-    public Corruption(Character cause, float magnitude) {
-        super("Corruption", cause, magnitude);
+    public Corruption(Player affected, Character cause, float magnitude) {
+        super(affected, "Corruption", cause, magnitude);
     }
 
-    public Corruption(Character cause) {
-        this(cause, .01f);
+    public Corruption(Player affected, Character cause) {
+        this(affected, cause, .01f);
     }
 
     @Override
@@ -120,7 +121,7 @@ public class Corruption extends Addiction {
 
     @Override
     protected Optional<Status> withdrawalEffects() {
-       return Optional.of(new DarkChaos());
+       return Optional.of(new DarkChaos((Player) affected));
     }
 
     @Override
@@ -279,11 +280,11 @@ public class Corruption extends Addiction {
 
     @Override
     public Status instance(Character newAffected, Character newOther) {
-        return new Corruption(newOther, magnitude);
+        return new Corruption((Player)newAffected, newOther, magnitude);
     }
 
     @Override public Status loadFromJson(JsonObject obj) {
-        return new Corruption(Global.getCharacterByType(obj.get("cause").getAsString()),
+        return new Corruption(Global.getPlayer(), Global.getCharacterByType(obj.get("cause").getAsString()),
                         (float) obj.get("magnitude").getAsInt());
     }
 

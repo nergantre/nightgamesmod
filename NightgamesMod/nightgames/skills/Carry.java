@@ -49,7 +49,7 @@ public class Carry extends Fuck {
                 c.write(getSelf(), Global.capitalizeFirstLetter(
                                 premessage + deal(c, premessage.length(), Result.normal, target)));
             } else if (c.shouldPrintReceive(target, c)) {
-                c.write(getSelf(), premessage + receive(c, premessage.length(), Result.normal, getSelf()));
+                c.write(getSelf(), premessage + receive(c, premessage.length(), Result.normal, target));
             }
             int m = 5 + Global.random(5);
             int otherm = m;
@@ -57,8 +57,8 @@ public class Carry extends Fuck {
                 otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
             }
             c.setStance(new Standing(getSelf(), target), getSelf(), getSelf().canMakeOwnDecision());
-            target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c, this);
-            getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c, this);
+            target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), otherm, c, this);
+            getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), m, c, this);
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(), Global
