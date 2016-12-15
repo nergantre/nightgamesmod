@@ -106,11 +106,7 @@ public class FaceSit extends Skill {
 
     @Override
     public Tactics type(Combat c) {
-        if (c.getStance().isFaceSitting(getSelf())) {
-            return Tactics.positioning;
-        } else {
-            return Tactics.pleasure;
-        }
+        return Tactics.pleasure;
     }
 
     @Override

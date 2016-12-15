@@ -15,6 +15,7 @@ import nightgames.skills.Nothing;
 import nightgames.skills.Nurple;
 import nightgames.skills.Skill;
 import nightgames.skills.Struggle;
+import nightgames.skills.Suckle;
 import nightgames.skills.Tickle;
 import nightgames.skills.Wait;
 import nightgames.skills.damage.DamageType;
@@ -25,7 +26,6 @@ public class BreastSmothering extends AbstractFacingStance {
     }
     
     public String image() {
-       
         return "breast_smother.png";
     }
 
@@ -108,6 +108,7 @@ public class BreastSmothering extends AbstractFacingStance {
         } else {
             Collection<Skill> avail = new HashSet<Skill>();
             avail.add(new FondleBreasts(bottom));
+            avail.add(new Suckle(bottom));
             avail.add(new Tickle(bottom));
             avail.add(new Finger(bottom));
             avail.add(new Nurple(bottom));

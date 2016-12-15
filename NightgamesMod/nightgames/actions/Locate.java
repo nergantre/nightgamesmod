@@ -67,14 +67,14 @@ public class Locate extends Action {
                                 + target.name()
                                 + " currently is. Your small talisman is already burning up in those creepy "
                                 + "purple flames, the smoke flowing from your nose straight to your crotch and setting another fire there.");
-                target.add(new Detected(target, 10));
+                target.addNonCombat(new Detected(target, 10));
             } else {
                 gui.message("Drawing on the dark energies inside the talisman, you attempt to scry for "
                                 + target.nameOrPossessivePronoun() + " location. "
                                 + "However, you draw a blank. Your small talisman is already burning up in those creepy "
                                 + "purple flames, the smoke flowing from your nose straight to your crotch and setting another fire there.");
             }
-            self.add(new Horny(self, self.getArousal().max() / 10, 10, "Scrying Ritual"));
+            self.addNonCombat(new Horny(self, self.getArousal().max() / 10, 10, "Scrying Ritual"));
             gui.clearCommand();
             gui.choose(this, "Leave", self);
         } else {

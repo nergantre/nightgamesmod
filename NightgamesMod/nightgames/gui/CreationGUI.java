@@ -110,6 +110,7 @@ public class CreationGUI extends JPanel {
 
         sexBox = new JComboBox<>();
         Arrays.stream(CharacterSex.values())
+              .filter(sex -> !CharacterSex.asexual.equals(sex))
               .forEach(s -> sexBox.addItem(s));
         topPanel.add(sexBox);
 
@@ -345,8 +346,8 @@ public class CreationGUI extends JPanel {
         StrengthBox = new JComboBox<>();
         StrengthBox.setBackground(new Color(0, 10, 30));
         StrengthBox.setForeground(new Color(240, 240, 255));
-        StrengthBox.addItem(Trait.exhibitionist);
         StrengthBox.addItem(Trait.romantic);
+        StrengthBox.addItem(Trait.exhibitionist);
         StrengthBox.addItem(Trait.dexterous);
         StrengthBox.addItem(Trait.experienced);
         StrengthBox.addItem(Trait.wrassler);
@@ -403,6 +404,45 @@ public class CreationGUI extends JPanel {
         WeaknessDescription.setText(((Trait) WeaknessBox.getSelectedItem()).getDesc());
         verticalBox.add(WeaknessDescription);
 
+        JLabel expLbl = new JLabel("Exp Rate");
+        expLbl.setBackground(new Color(0, 10, 30));
+        expLbl.setForeground(new Color(240, 240, 255));
+
+        verticalBox.add(new JLabel("Exp Rate"));
+        JComboBox<String> ExpBox = new JComboBox<>();
+        ExpBox.setBackground(new Color(0, 10, 30));
+        ExpBox.setForeground(new Color(240, 240, 255));
+        ExpBox.addItem("Slow");
+        ExpBox.addItem("Normal");
+        ExpBox.addItem("Fast");
+        ExpBox.addItem("Very Fast");
+        ExpBox.setSelectedItem("Normal");
+        verticalBox.add(ExpBox);
+
+        JTextPane ExpDescription = new JTextPane();
+        ExpDescription.setBackground(new Color(18, 30, 49));
+        ExpDescription.setForeground(new Color(240, 240, 255));
+        ExpDescription.setPreferredSize(new Dimension(100, 100));
+        ExpDescription.setEditable(false);
+        ExpDescription.setText((String) ExpBox.getSelectedItem());
+
+        ExpBox.addActionListener(arg0 -> {
+            String rate = (String) ExpBox.getSelectedItem();
+            ExpDescription.setText(rate);
+            if ("Slow".equals(rate)) {
+                Global.xpRate = .5;
+            }
+            if ("Normal".equals(rate)) {
+                Global.xpRate = 1;
+            }
+            if ("Fast".equals(rate)) {
+                Global.xpRate = 1.5;
+            }
+            if ("Very Fast".equals(rate)) {
+                Global.xpRate = 3;
+            }
+        });
+        verticalBox.add(ExpDescription);
         separator_1 = new JSeparator();
         verticalBox.add(separator_1);
         power = 3;

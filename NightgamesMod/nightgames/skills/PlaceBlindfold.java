@@ -51,7 +51,7 @@ public class PlaceBlindfold extends Skill {
                                             getSelf().subjectAction("snap"), target.nameOrPossessivePronoun(),
                                             target.possessivePronoun()));
             getSelf().remove(Item.Blindfold);
-            target.add(new Blinded(target, "a blindfold", false));
+            target.add(c, new Blinded(target, "a blindfold", false));
         } else {
             c.write(getSelf(),
                             String.format("%s out a blindfold and %s to place it around %s "

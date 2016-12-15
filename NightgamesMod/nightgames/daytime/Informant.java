@@ -514,7 +514,7 @@ public class Informant extends Activity {
         if (choice.equals("Competition Info")) {
             String message = "<i>\"You want to know how the competition is doing? I can give you a breakdown on each of your opponents:\"</i><p>";
             for (Character npc : Global.everyone()) {
-                if (!npc.human()) {
+                if (!npc.human() && !Global.checkCharacterDisabledFlag(npc)) {
                     message = message + npc.dumpstats(false) + "<p>";
                 }
             }

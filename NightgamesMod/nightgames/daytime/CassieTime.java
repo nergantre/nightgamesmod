@@ -18,6 +18,7 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.requirements.BodyPartRequirement;
 import nightgames.requirements.NotRequirement;
+import nightgames.requirements.RequirementShortcuts;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 import nightgames.status.addiction.Addiction.Severity;
@@ -51,9 +52,9 @@ public class CassieTime extends BaseNPCTime {
         {
             TransformationOption growCock = new TransformationOption();
             growCock.ingredients.put(Item.PriapusDraft, 3);
-            growCock.requirements.add(new NotRequirement(new BodyPartRequirement("cock")));
+            growCock.requirements.add(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))));
             growCock.additionalRequirements = "";
-            growCock.option = "Grow a cock";
+            growCock.option = "Cassie: Grow a cock";
             growCock.scene = "[Placeholder]<br>Cassie hesistantly drinks the 3 priapus drafts and grows a large runic cock.";
             growCock.effect = (c, self, other) -> {
                 other.body.add(new ModdedCockPart(BasicCockPart.big, CockMod.runic));
@@ -64,9 +65,9 @@ public class CassieTime extends BaseNPCTime {
         {
             TransformationOption removeCock = new TransformationOption();
             removeCock.ingredients.put(Item.FemDraft, 3);
-            removeCock.requirements.add(new BodyPartRequirement("cock"));
+            removeCock.requirements.add(RequirementShortcuts.rev(new BodyPartRequirement("cock")));
             removeCock.additionalRequirements = "";
-            removeCock.option = "Remove her cock";
+            removeCock.option = "Cassie: Remove her cock";
             removeCock.scene = "[Placeholder]<br>Cassie hesistantly drinks the three femdrafts and her runic cock shrinks into her normal clitoris.";
             removeCock.effect = (c, self, other) -> {
                 other.body.removeAll("cock");

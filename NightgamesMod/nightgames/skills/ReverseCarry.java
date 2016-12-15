@@ -48,8 +48,8 @@ public class ReverseCarry extends Carry {
                 otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
             }
             c.setStance(new Jumped(getSelf(), target), getSelf(), getSelf().canMakeOwnDecision());
-            target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c, this);
-            getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c, this);
+            target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), otherm, c, this);
+            getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), m, c, this);
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(), premessage + deal(c, premessage.length(), Result.miss, target));

@@ -101,7 +101,9 @@ public abstract class BaseNPCTime extends Activity {
             if (!transformationFlag.equals("")) {
                 Global.flag(transformationFlag);
             }
-            options.forEach(opt -> {
+            options.stream()
+                   .filter(option -> option.requirements.stream().allMatch(req -> req.meets(null, player, npc)))
+                   .forEach(opt -> {
                 Global.gui().message(opt.option + ":");
                 opt.ingredients.entrySet().forEach((entry) -> {
                     if (MyInventory.get(entry.getKey()) == null || MyInventory.get(entry.getKey()) == 0) {
@@ -117,11 +119,7 @@ public abstract class BaseNPCTime extends Activity {
                     Global.gui().message(opt.additionalRequirements);
                 }
                 Global.gui().message("<br>");
-            });
-            options.forEach(opt -> {
-                if (opt.requirements.stream().allMatch(req -> req.meets(null, player, npc))) {
-                    Global.gui().choose(this, opt.option);
-                }
+                Global.gui().choose(this, opt.option);
             });
             Global.gui().choose(this, "Back");
         } else if (choice.equals("Start") || choice.equals("Back")) {

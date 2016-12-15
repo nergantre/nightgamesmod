@@ -548,7 +548,10 @@ public class Body implements Cloneable {
         sensitivity += statusMultiplier - 1;
 
         boolean unsatisfied = false;
-        if (character.has(Trait.Unsatisfied) && (character.getArousal().percent() >= 50 || character.getWillpower().percent() < 25) && (skill == null || !skill.getTags(c).contains(SkillTag.fucking))) {
+        if (character.has(Trait.Unsatisfied)
+                        && (character.getArousal().percent() >= 50 || character.getWillpower().percent() < 25)
+                        && (skill == null || !skill.getTags(c).contains(SkillTag.fucking))
+                        && !(with.isGenital() && target.isGenital() && c.getStance().havingSex(c))) {
             pleasure -= 4;
             unsatisfied = true;
         }
@@ -556,9 +559,13 @@ public class Body implements Cloneable {
         double multiplier = Math.max(0, 1 + ((sensitivity - 1) + (pleasure - 1) + (perceptionBonus - 1)));
         double staleness = 1.0;
         double stageMultiplier = 1.0;
+        boolean staleMove = false;
         if (skill != null) {
-            if (opponent != null && c.getCombatantData(opponent) != null) {
-                staleness = c.getCombatantData(opponent).getMoveModifier(skill);
+            if (skill.getSelf() != null && c.getCombatantData(skill.getSelf()) != null) {
+                staleness = c.getCombatantData(skill.getSelf()).getMoveModifier(skill);
+            }
+            if (staleness <= .51) {
+                staleMove = true;
             }
             stageMultiplier = skill.getStage().multiplierFor(character);
         }
@@ -592,7 +599,7 @@ public class Body implements Cloneable {
                             opponent.human() ? "<font color='rgb(150,150,255)'>" : "<font color='rgb(255,150,150)'>";
             String bonusString = baseBonusDamage > 0
                             ? String.format(" + <font color='rgb(255,100,50)'>%.1f<font color='white'>", baseBonusDamage)
-                            : baseBonusDamage < 0 ? String.format(" + <font color='rgb(50,100,255)'>-%.1f<font color='white'>", baseBonusDamage) : "";
+                            : baseBonusDamage < 0 ? String.format(" + <font color='rgb(50,100,255)'>%.1f<font color='white'>", baseBonusDamage) : "";
             String stageString = skill == null ? "" : String.format(" + stage:%.2f", skill.multiplierForStage(character));
             String dominanceString = dominance < 0.01 ? "" : String.format(" + dominance:%.2f", dominance);
             String staleString = staleness < .99 ? String.format(" x staleness: %.2f", staleness) : "";
@@ -628,6 +635,9 @@ public class Body implements Cloneable {
         }
         if (unsatisfied) {
             c.write(character, Global.format("Foreplay doesn't seem to do it for {self:name-do} anymore. {self:PRONOUN-ACTION:clearly need|clearly needs} to fuck!", character, opponent));
+        }
+        if (staleMove && skill.user().human()) {
+            c.write(opponent, Global.format("This seems to be a getting bit boring for {other:direct-object}... Maybe it's time to switch it up?", opponent, character));
         }
         double percentPleasure = 100.0 * result / character.getArousal().max();
         if (character.has(Trait.sexualDynamo) && percentPleasure >= 5 && Global.random(4) == 0) {

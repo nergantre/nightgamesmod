@@ -743,7 +743,7 @@ public class Jewel extends BasePersonality {
                         };
         switch (target.orgasms) {
             case 0:
-                return "<i>\"Heh, no matter what, you're just a horny " + c.getOpponent(character).boyOrGirl()
+                return "<i>\"Heh, no matter what, you're just a horny little " + c.getOpponent(character).boyOrGirl()
                             + " aren'tcha? Come on, no time for rest, let's see how many times in a row you can cum\"</i>";
             case 1:
                 return "<i>\"Oooh that's two now. Hope you can keep going!\"</i>";

@@ -50,7 +50,7 @@ public class WindUp extends Skill {
         int charges = Math.min(4, getSelf().getMojo()
                                            .get()
                         / 5);
-        getSelf().add(new Primed(getSelf(), charges + 1));
+        getSelf().add(c, new Primed(getSelf(), charges + 1));
         getSelf().spendMojo(c, charges * 5);
         writeOutput(c, Result.normal, target);
         return true;

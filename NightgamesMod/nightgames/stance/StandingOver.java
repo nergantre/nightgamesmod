@@ -72,7 +72,7 @@ public class StandingOver extends AbstractFacingStance {
 
     @Override
     public boolean oral(Character c, Character target) {
-        return target == bottom;
+        return target == bottom && c != top;
     }
 
     @Override

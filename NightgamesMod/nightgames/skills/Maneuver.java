@@ -12,7 +12,7 @@ import nightgames.stance.Behind;
 public class Maneuver extends Skill {
 
     public Maneuver(Character self) {
-        super("Manuever", self);
+        super("Manuever", self, 1);
         addTag(SkillTag.positioning);
     }
 
@@ -85,7 +85,7 @@ public class Maneuver extends Skill {
                             target.action("are", "is"), getSelf().directObject());
         } else {
             return String.format("%s lunges at %s, but when %s %s to grab %s, %s ducks out of sight. "
-                            + "Suddenly %s arms are wrapped around %s. How did %s get behind %s?",
+                            + "Suddenly %s arms are wrapped around %ss. How did %s get behind %s?",
                             getSelf().subject(), target.nameDirectObject(), target.pronoun(),
                             target.action("try", "tries"), target.directObject(), getSelf().pronoun(),
                             getSelf().nameOrPossessivePronoun(), target.nameOrPossessivePronoun(),

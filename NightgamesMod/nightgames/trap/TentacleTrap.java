@@ -37,8 +37,8 @@ public class TentacleTrap extends Trap {
             }
             target.tempt(target.getArousal().max());
             target.calm(null, 1);
-            target.add(new Oiled(target));
-            target.add(new Hypersensitive(target));
+            target.addNonCombat(new Oiled(target));
+            target.addNonCombat(new Hypersensitive(target));
             target.location().opportunity(target, this);
         } else {
             if (target.human()) {

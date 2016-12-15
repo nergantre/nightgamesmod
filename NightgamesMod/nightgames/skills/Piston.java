@@ -32,8 +32,8 @@ public class Piston extends Thrust {
     public int[] getDamage(Combat c, Character target) {
         int results[] = new int[2];
 
-        int m = 12 + Global.random(8);
-        int mt = 8 + Global.random(5);
+        int m = 15 + Global.random(8);
+        int mt = 10 + Global.random(5);
         if (getSelf().has(Trait.experienced)) {
             mt = mt * 2 / 3;
         }

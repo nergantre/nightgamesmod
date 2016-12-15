@@ -34,7 +34,7 @@ public class Cache implements Deployable {
             case 1:
                 test = Attribute.Perception;
                 secondary = Attribute.Arcane;
-                dc -= 5;
+                dc -= 8;
                 break;
             default:
                 test = Attribute.Power;

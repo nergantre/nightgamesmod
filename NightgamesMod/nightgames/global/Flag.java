@@ -77,6 +77,7 @@ public enum Flag {
     shemaleNoBalls,
     femaleTGIntoHerm, 
     SuperTraitMode,
+    AutoNext,
     ;
     
     public static boolean exists(String flag) {

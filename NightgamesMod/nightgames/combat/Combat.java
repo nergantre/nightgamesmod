@@ -173,7 +173,7 @@ public class Combat extends Observable implements Cloneable {
             self.add(this, new DivineCharge(self, .3));
         }
         if (self.has(Trait.suave) && !other.hasDick()) {
-            self.add(new SapphicSeduction(self));
+            self.add(this, new SapphicSeduction(self));
         }
 
         
@@ -202,7 +202,7 @@ public class Combat extends Observable implements Cloneable {
             if (self.human()) {
                 write(self, "As your first battle of the night begins, you can't help but think about " + FetishType + ".");
             } 
-            self.add(new BodyFetish(self, null, FetishType, .25));
+            self.add(this, new BodyFetish(self, null, FetishType, .25));
         }
     
     }
@@ -449,7 +449,7 @@ public class Combat extends Observable implements Cloneable {
             write(character, Global.format("The instant {self:subject-action:lay|lays} {self:possessive} eyes on {other:name-possessive} bare breasts, {self:possessive} consciousness flies out of {self:possessive} mind. " +
                             (character.canAct() ? "{other:SUBJECT-ACTION:giggle|giggles} a bit and cups her stupendous tits and gives them a little squeeze to which {self:subject} can only moan." : ""), 
                             character, mainOpponent));
-            opponents.forEach(opponent -> opponent.add(new Trance(opponent, 50)));
+            opponents.forEach(opponent -> opponent.add(this, new Trance(opponent, 50)));
             getCombatantData(character).setBooleanFlag(beguilingbreastCompletedFlag, true);
         }
 
@@ -516,7 +516,7 @@ public class Combat extends Observable implements Cloneable {
                 if (character.human()) {
                     write(character, "You can't help thinking about " + otherWithAura.get().nameOrPossessivePronoun() + " " + partDescrip + ".");
                 }
-                character.add(new BodyFetish(character, null, fetishType, .05));
+                character.add(this, new BodyFetish(character, null, fetishType, .05));
             }
         }
         
@@ -864,14 +864,14 @@ public class Combat extends Observable implements Cloneable {
             }
             write(self, Global.format("{self:SUBJECT-ACTION:feel|feels} right at home atop"
                             + " {other:name-do}, %s.", self, other, desc));
-            self.add(new Abuff(self, attr, Global.random(3) + 1, 10));
+            self.add(this, new Abuff(self, attr, Global.random(3) + 1, 10));
         }
         
         if (self.has(Trait.unquestionable) && Global.random(4) == 0) {
             write(self, Global.format("<b><i>\"Stay still, worm!\"</i> {self:subject-action:speak|speaks}"
                             + " with such force that it casues {other:name-do} to temporarily"
                             + " cease resisting.</b>", self, other));
-            other.add(new Flatfooted(other, 1, false));
+            other.add(this, new Flatfooted(other, 1, false));
         }
         
         if (self.is(Stsflag.collared) && Global.random(10) < 3 && new Reversal(other).usable(this, self)) {
@@ -923,7 +923,7 @@ public class Combat extends Observable implements Cloneable {
                 write(target, Global.format("As {other:subject} moves to counter your assault, you press {other:possessive} arms down with your weight and leverage {other:possessive} "
                                 + "forward motion to trip {other:direct-object}, sending the poor {other:girl} crashing onto the floor.", skill.user(), target));
             }
-            skill.user().add(new Falling(skill.user()));
+            skill.user().add(this, new Falling(skill.user()));
             return true;
         }
         return false;
@@ -967,7 +967,7 @@ public class Combat extends Observable implements Cloneable {
                 }
                 if (skill.getTags(this).contains(SkillTag.thrusting) && skill.user().has(Trait.Piledriver) && Global.random(3) == 0) {
                     write(skill.user(), Global.format("{self:SUBJECT-ACTION:fuck|fucks} {other:name-do} <b>hard</b>, so much so that {other:pronoun-action:are|is} momentarily floored by the stimulation.", skill.user(), target));
-                    target.add(new Stunned(target, 1, false));
+                    target.add(this, new Stunned(target, 1, false));
                 }
                 if (skill.type(this) == Tactics.damage && skill.user().is(Stsflag.collared)) {
                     Collared stat = (Collared) skill.user().getStatus(Stsflag.collared);
@@ -1111,7 +1111,7 @@ public class Combat extends Observable implements Cloneable {
 
     private void next() {
         if (phase != CombatPhase.FINISHED) {
-            if (shouldAutoresolve() || (phase != CombatPhase.SKILL_SELECTION && phase != CombatPhase.RESULTS_SCENE && phase != CombatPhase.PRETURN)) {
+            if (shouldAutoresolve() || (Global.checkFlag(Flag.AutoNext) && phase != CombatPhase.SKILL_SELECTION && phase != CombatPhase.RESULTS_SCENE && phase != CombatPhase.PRETURN)) {
                 turn();
             } else {
                 Global.gui().next(this);
@@ -1392,7 +1392,7 @@ public class Combat extends Observable implements Cloneable {
         if (stance != newStance && initiator != null && initiator.has(Trait.Catwalk)) {
             write(initiator, Global.format("The way {self:subject-action:move|moves} exudes such feline grace that it demands {other:name-possessive} attention.",
                             initiator, getOpponent(initiator)));
-            initiator.add(new Alluring(initiator, 1));
+            initiator.add(this, new Alluring(initiator, 1));
         }
 
         stance = newStance;

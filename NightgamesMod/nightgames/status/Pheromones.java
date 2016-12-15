@@ -18,8 +18,6 @@ import nightgames.skills.damage.DamageType;
 public class Pheromones extends Horny {
     static List<Attribute> NON_DEBUFFABLE_ATTS = Arrays.asList(
                     Attribute.Speed,
-                    Attribute.Power,
-                    Attribute.Seduction,
                     Attribute.Animism,
                     Attribute.Nymphomania,
                     Attribute.Willpower
@@ -49,31 +47,39 @@ public class Pheromones extends Horny {
 
     @Override
     public void tick(Combat c) {
-        affected.arouse(Math.round(getMagnitude()), c, " (" + sourceCharacter + ")");
-        affected.emote(Emotion.horny, 20);
-        if (sourceCharacter.has(Trait.BefuddlingFragrance)) {
-            List<Attribute> debuffable = Arrays.stream(Attribute.values())
-                              .filter(att -> !NON_DEBUFFABLE_ATTS.contains(att))
-                              .filter(att -> affected.get(att) > 0)
-                              .collect(Collectors.toList());
-            Optional<Attribute> att = Global.pickRandom(debuffable);
-            if (att.isPresent()) {
-                c.write(affected, Global.format("{other:NAME-POSSESSIVE} intoxicating aroma is messing with {self:name-possessive} head, "
-                                + "{self:pronoun-action:feel|seems} %s than before.", affected, sourceCharacter, att.get().getLowerPhrase()));
-                affected.add(new Abuff(affected, att.get(), -1, 10));
-            }
-        }
-        if (sourceCharacter.has(Trait.FrenzyScent)) {
-            if (Global.random(13 - stacks) == 0) {
-                if (affected.human()) {
-                    c.write(affected, Global.format("The heady obscene scent clinging to you is too much. You can't help it any more, you NEED to fuck something right this second!", affected, sourceCharacter));
+        // only use secondary effects for normal pheromones
+        if (source.endsWith(" pheromones")) {
+            if (sourceCharacter.has(Trait.BefuddlingFragrance)) {
+                List<Attribute> debuffable = Arrays.stream(Attribute.values())
+                                  .filter(att -> !NON_DEBUFFABLE_ATTS.contains(att))
+                                  .filter(att -> affected.get(att) > 0)
+                                  .collect(Collectors.toList());
+                Optional<Attribute> att = Global.pickRandom(debuffable);
+                String message = Global.format("{other:NAME-POSSESSIVE} intoxicating aroma is messing with {self:name-possessive} head, "
+                                + "{self:pronoun-action:feel|seems} %s than before.", affected, sourceCharacter, att.get().getLowerPhrase());
+                if (c != null && att.isPresent()) {
+                    c.write(affected, message);
                 } else {
-                    c.write(affected, Global.format("The heady obscene scent clinging to {self:name-do} is clearly overwhelming {self:direct-object}. "
-                                    + "Groaning with animal passion, {self:subject} is descends into a frenzy!", affected, sourceCharacter));
+                    Global.gui().message(message);                
                 }
-                affected.add(new Frenzied(affected, 3));
+                affected.add(c, new Abuff(affected, att.get(), -1, 10));
+            }
+            if (c != null && sourceCharacter.has(Trait.FrenzyScent)) {
+                if (Global.random(13 - stacks) == 0) {
+                    String message;
+                    if (affected.human()) {
+                        message = Global.format("The heady obscene scent clinging to you is too much. You can't help it any more, you NEED to fuck something right this second!", affected, sourceCharacter);
+                    } else {
+                        message = Global.format("The heady obscene scent clinging to {self:name-do} is clearly overwhelming {self:direct-object}. "
+                                        + "Groaning with animal passion, {self:subject} is descends into a frenzy!", affected, sourceCharacter);
+                    }
+                    c.write(affected, message);
+                    affected.add(c, new Frenzied(affected, 3));
+                }
             }
         }
+        affected.arouse(Math.round(getMagnitude()), c, " (" + source + ")");
+        affected.emote(Emotion.horny, Math.round(getMagnitude()) / 2);
     }
 
     private int getMaxStacks() {

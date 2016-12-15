@@ -60,7 +60,7 @@ public class ThrowSlime extends Skill {
             HitType type = decideEffect(c, target);
             type.message(c, getSelf(), target);
             if (type != HitType.NONE) {
-                target.add(type.build(getSelf(), target));
+                target.add(c, type.build(getSelf(), target));
             }
         }
         return true;

@@ -598,7 +598,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
             c.write(self, Global.format(
                             "As {self:SUBJECT-ACTION:cum|cums} hard, an literal explosion of pheromones hits {other:name-do}. {other:POSSESSIVE} entire body flushes in arousal; {other:subject} better finish this fast!",
                             self, opponent));
-            opponent.add(c, Pheromones.getWith(self, opponent, 10, 5, " orgasmic pheromones"));
+            opponent.add(c, Pheromones.getWith(self, opponent, 10, 5, " orgasmic secretions"));
         }
     }
 

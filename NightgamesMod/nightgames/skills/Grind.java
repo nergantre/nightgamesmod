@@ -35,8 +35,8 @@ public class Grind extends Thrust {
     public int[] getDamage(Combat c, Character target) {
         int results[] = new int[2];
 
-        int ms = 8;
-        int mt = 5;
+        int ms = 12;
+        int mt = 6;
         if (getLabel(c).equals(divineName)) {
             ms = 16;
             mt = 10;

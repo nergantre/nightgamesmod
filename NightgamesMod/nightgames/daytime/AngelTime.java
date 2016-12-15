@@ -17,6 +17,7 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.requirements.BodyPartRequirement;
 import nightgames.requirements.NotRequirement;
+import nightgames.requirements.RequirementShortcuts;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
@@ -53,9 +54,9 @@ public class AngelTime extends BaseNPCTime {
         {
             TransformationOption growCock = new TransformationOption();
             growCock.ingredients.put(Item.PriapusDraft, 3);
-            growCock.requirements.add(new NotRequirement(new BodyPartRequirement("cock")));
+            growCock.requirements.add(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))));
             growCock.additionalRequirements = "";
-            growCock.option = "Grow a cock";
+            growCock.option = "Angel: Grow a cock";
             growCock.scene = "[Placeholder]<br>Angel chugs down the three priapus drafts one after another and grows a splendid new blessed cock.";
             growCock.effect = (c, self, other) -> {
                 other.body.add(new ModdedCockPart(BasicCockPart.big, CockMod.blessed));
@@ -66,9 +67,9 @@ public class AngelTime extends BaseNPCTime {
         {
             TransformationOption removeCock = new TransformationOption();
             removeCock.ingredients.put(Item.FemDraft, 3);
-            removeCock.requirements.add(new BodyPartRequirement("cock"));
+            removeCock.requirements.add(RequirementShortcuts.rev(new BodyPartRequirement("cock")));
             removeCock.additionalRequirements = "";
-            removeCock.option = "Remove her cock";
+            removeCock.option = "Angel: Remove her cock";
             removeCock.scene = "[Placeholder]<br>Angel drinks the three femdrafts one after another and her blessed cock shrinks back into her normal clitoris.";
             removeCock.effect = (c, self, other) -> {
                 other.body.removeAll("cock");
@@ -78,7 +79,7 @@ public class AngelTime extends BaseNPCTime {
         }
         {
             TransformationOption blessedCock = new TransformationOption();
-            blessedCock.ingredients.put(Item.HolyWater, 10);
+            blessedCock.ingredients.put(Item.HolyWater, 3);
             blessedCock.requirements.add(new BodyPartRequirement("cock"));
             blessedCock.requirements.add((c, self, other) -> {
                 return self.body.get("cock")
@@ -106,7 +107,7 @@ public class AngelTime extends BaseNPCTime {
         }
         {
             TransformationOption divinePussy = new TransformationOption();
-            divinePussy.ingredients.put(Item.HolyWater, 10);
+            divinePussy.ingredients.put(Item.HolyWater, 3);
             divinePussy.requirements.add(new BodyPartRequirement("pussy"));
             divinePussy.requirements.add((c, self, other) -> {
                 return self.body.get("pussy")
@@ -128,7 +129,7 @@ public class AngelTime extends BaseNPCTime {
         }
         {
             TransformationOption angelWings = new TransformationOption();
-            angelWings.ingredients.put(Item.HolyWater, 10);
+            angelWings.ingredients.put(Item.HolyWater, 2);
             angelWings.requirements.add((c, self, other) -> {
                 return self.body.get("wings")
                                 .size() == 0;
@@ -147,20 +148,10 @@ public class AngelTime extends BaseNPCTime {
         }
         {
             TransformationOption divinity = new TransformationOption();
-            // WARNING this is using the players current divinity. If this
-            // changes to work on other NPCs, it will fail.
-            divinity.requirements.add((c, self, other) -> {
-                final int currentDivinity = player.getPure(Attribute.Divinity);
-                final int numberHolyWaters = 1 + currentDivinity / 10;
-                return self.has(Item.HolyWater, numberHolyWaters);
-            });
-            divinity.additionalRequirements = "1 Holy Water, with an additional one per 10 levels of divinity";
+            divinity.ingredients.put(Item.HolyWater, 1);
             divinity.option = "Bestow Divinity";
             divinity.scene = "[Placeholder]<br>Angel has sex with you, lending you a part of her divinity.";
             divinity.effect = (c, self, other) -> {
-                final int currentDivinity = player.getPure(Attribute.Divinity);
-                final int numberHolyWaters = 1 + currentDivinity / 10;
-                self.consume(Item.HolyWater, numberHolyWaters);
                 self.mod(Attribute.Divinity, 1);
                 return true;
             };

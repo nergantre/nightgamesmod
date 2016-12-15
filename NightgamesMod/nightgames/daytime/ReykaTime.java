@@ -22,6 +22,7 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.requirements.BodyPartRequirement;
 import nightgames.requirements.NotRequirement;
+import nightgames.requirements.RequirementShortcuts;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
@@ -49,9 +50,9 @@ public class ReykaTime extends BaseNPCTime {
             TransformationOption growCock = new TransformationOption();
             growCock.ingredients.put(Item.PriapusDraft, 1);
             growCock.ingredients.put(Item.Talisman, 1);
-            growCock.requirements.add(new NotRequirement(new BodyPartRequirement("cock")));
+            growCock.requirements.add(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))));
             growCock.additionalRequirements = "";
-            growCock.option = "Grow a cock";
+            growCock.option = "Reyka: Grow a cock";
             growCock.scene = "[Placeholder]<br>Reyka downs the bottle of the priapus draft after channeling her dark magic into the talisman and attaching it to her clitoris. "
                             + "The two of you wait, and soon enough, a large demonic cock sprouts out under the talisman, ripping it off from her body.";
             growCock.effect = (c, self, other) -> {
@@ -63,9 +64,9 @@ public class ReykaTime extends BaseNPCTime {
         {
             TransformationOption removeCock = new TransformationOption();
             removeCock.ingredients.put(Item.FemDraft, 3);
-            removeCock.requirements.add(new BodyPartRequirement("cock"));
+            removeCock.requirements.add(RequirementShortcuts.rev(new BodyPartRequirement("cock")));
             removeCock.additionalRequirements = "";
-            removeCock.option = "Remove her cock";
+            removeCock.option = "Reyka: Remove her cock";
             removeCock.scene = "<br>Reyka doesn't seem extremely pleased with your request to remove her new found maleness, but complies anyways with your wishes. "
                             + "Taking the FemDrafts you offer her, she drinks them one after another and waits with her cock still proudly erect. "
                             + "Soon enough though, the organ starts shrinking back into her body as if being absorbed by her lower lips. "
@@ -79,7 +80,7 @@ public class ReykaTime extends BaseNPCTime {
         TransformationOption incubusCock = new TransformationOption();
         incubusCock.ingredients.put(Item.PriapusDraft, 10);
         incubusCock.ingredients.put(Item.SuccubusDraft, 20);
-        incubusCock.ingredients.put(Item.semen, 10);
+        incubusCock.ingredients.put(Item.semen, 5);
         incubusCock.requirements.add(new BodyPartRequirement("cock"));
         incubusCock.requirements.add((c, self, other) -> {
             return self.body.get("cock")
@@ -130,7 +131,7 @@ public class ReykaTime extends BaseNPCTime {
         options.add(incubusCock);
         TransformationOption demonWings = new TransformationOption();
         demonWings.ingredients.put(Item.SuccubusDraft, 20);
-        demonWings.ingredients.put(Item.semen, 10);
+        demonWings.ingredients.put(Item.semen, 5);
         demonWings.requirements.add(not(bodypart("wings")));
         demonWings.option = "Demonic Wings";
         demonWings.scene =
@@ -146,7 +147,7 @@ public class ReykaTime extends BaseNPCTime {
         options.add(demonWings);
         TransformationOption demonTail = new TransformationOption();
         demonTail.ingredients.put(Item.SuccubusDraft, 20);
-        demonTail.ingredients.put(Item.semen, 10);
+        demonTail.ingredients.put(Item.semen, 5);
         demonTail.requirements.add(not(bodypart("tail")));
         demonTail.requirements.add((c, self, other) -> {
             return self.body.get("tail")
@@ -163,7 +164,7 @@ public class ReykaTime extends BaseNPCTime {
         options.add(demonTail);
         TransformationOption pointedEars = new TransformationOption();
         pointedEars.ingredients.put(Item.SuccubusDraft, 20);
-        pointedEars.ingredients.put(Item.semen, 10);
+        pointedEars.ingredients.put(Item.semen, 5);
         pointedEars.requirements.add(new BodyPartRequirement("ears"));
         pointedEars.requirements.add((c, self, other) -> {
             return self.body.get("ears")
@@ -187,7 +188,7 @@ public class ReykaTime extends BaseNPCTime {
         succubusPussy.ingredients.put(Item.SuccubusDraft, 20);
         succubusPussy.ingredients.put(Item.BewitchingDraught, 20);
         succubusPussy.ingredients.put(Item.FemDraft, 20);
-        succubusPussy.ingredients.put(Item.semen, 10);
+        succubusPussy.ingredients.put(Item.semen, 5);
         succubusPussy.requirements.add(new BodyPartRequirement("pussy"));
         succubusPussy.requirements.add((c, self, other) -> {
             return self.body.get("pussy")

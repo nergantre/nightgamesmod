@@ -22,13 +22,13 @@ public class Thrust extends Skill {
     }
     public Thrust(String name, Character self, Staleness staleness) {
         super(name, self, 0 , staleness);
+        addTag(SkillTag.fucking);
+        addTag(SkillTag.thrusting);
+        addTag(SkillTag.pleasureSelf);
     }
 
     public Thrust(Character self) {
         this("Thrust", self);
-        addTag(SkillTag.pleasureSelf);
-        addTag(SkillTag.fucking);
-        addTag(SkillTag.thrusting);
     }
 
     @Override
@@ -65,11 +65,11 @@ public class Thrust extends Skill {
     public int[] getDamage(Combat c, Character target) {
         int results[] = new int[2];
 
-        int m = 5 + Global.random(14);
+        int m = 8 + Global.random(11);
         if (c.getStance().anallyPenetrated(c, target) && getSelf().has(Trait.assmaster)) {
             m *= 1.5;
         }
-        
+
         float mt = Math.max(1, m / 3.f);
 
         if (getSelf().has(Trait.experienced)) {

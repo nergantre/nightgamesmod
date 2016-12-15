@@ -159,7 +159,7 @@ public abstract class Addiction extends Status {
         if (inWithdrawal) {
             Optional<Status> opt = withdrawalEffects();
             if (opt.isPresent() && !affected.has(opt.get()))
-                affected.add(opt.get().instance(affected, cause));
+                affected.addNonCombat(opt.get().instance(affected, cause));
         }
     }
 

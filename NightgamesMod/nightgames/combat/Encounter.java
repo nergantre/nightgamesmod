@@ -51,8 +51,8 @@ public class Encounter implements Serializable, IEncounter {
         if (enthrall != null) {
             if (((Enthralled) enthrall).master != p2) {
                 p1.removelist.add(enthrall);
-                p1.add(new Flatfooted(p1, 2));
-                p1.add(new Hypersensitive(p1));
+                p1.addNonCombat(new Flatfooted(p1, 2));
+                p1.addNonCombat(new Hypersensitive(p1));
                 if (p1.human()) {
                     Global.gui()
                           .message("At " + p2.name() + "'s interruption, you break free from the"
@@ -284,7 +284,7 @@ public class Encounter implements Serializable, IEncounter {
 
     protected void ambush(Character attacker, Character target) {
         startFightTimer();
-        target.add(new Flatfooted(target, 3));
+        target.addNonCombat(new Flatfooted(target, 3));
         if (p1.human() || p2.human()) {
             fight = Global.gui()
                           .beginCombat(attacker, target, 0);

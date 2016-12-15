@@ -45,11 +45,11 @@ public class Falling extends Status {
         }
         if (affected.has(Trait.NimbleRecovery)) {
             c.write(Global.format("{self:NAME-POSSESSIVE} nimble body expertly breaks the fall.", affected, c.getOpponent(affected)));
-            affected.add(new Stunned(affected, 0, true));
+            affected.add(c, new Stunned(affected, 0, true));
         } else if (affected.has(Trait.Unwavering)) {
             c.write(Global.format("{self:SUBJECT-ACTION:go|goes} down but the fall seems to hardly affect {self:direct-object}.", affected, c.getOpponent(affected)));
         } else {
-            affected.add(new Stunned(affected));            
+            affected.add(c, new Stunned(affected));            
         }
         return 0;
     }

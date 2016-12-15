@@ -48,7 +48,7 @@ public class Tempt extends Skill {
             c.write(getSelf(), Global.format("{other:SUBJECT-ACTION:speak|speaks} with such unquestionable"
                             + " authority that {self:subject-action:don't|doesn't} even consider not obeying."
                             , getSelf(), target));
-            target.add(new Trance(target, 1, false));
+            target.add(c, new Trance(target, 1, false));
         }
 
         target.tempt(c, getSelf(), n);

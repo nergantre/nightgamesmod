@@ -52,7 +52,7 @@ public class ToggleBlindfold extends Skill {
             getSelf().remove(Item.Blindfold);
             if (!c.getStance()
                   .sub(getSelf()) || target.roll(getSelf(), c, 80)) {
-                getSelf().add(new Blinded(getSelf(), "a blindfold", true));
+                getSelf().add(c, new Blinded(getSelf(), "a blindfold", true));
                 c.write(getSelf(), String.format("%s a blindfold around %s eyes.",
                                 getSelf().subjectAction("tie"), getSelf().possessivePronoun()));
             } else {

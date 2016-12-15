@@ -970,7 +970,7 @@ public class Player extends Character {
             nudify();
             purge(c);
             addTemporaryTrait(Trait.slime, 999);
-            add(new PlayerSlimeDummy(this));
+            add(c, new PlayerSlimeDummy(this));
             if (hasPussy() && !body.getRandomPussy().moddedPartCountsAs(this, PussyPart.gooey)) {
                 body.temporaryAddOrReplacePartWithType(new TentaclePart("slime filaments", "pussy", "slime", 0.0, 1.0, 1.0), 999);
                 body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);

@@ -10,6 +10,7 @@ import nightgames.characters.body.BasicCockPart;
 import nightgames.global.Global;
 import nightgames.requirements.BodyPartRequirement;
 import nightgames.requirements.NotRequirement;
+import nightgames.requirements.RequirementShortcuts;
 
 public class AiriTime extends BaseNPCTime {
     public AiriTime(Character player) {
@@ -29,9 +30,9 @@ public class AiriTime extends BaseNPCTime {
         options = new ArrayList<>();
         {
             TransformationOption growCock = new TransformationOption();
-            growCock.requirements.add(new NotRequirement(new BodyPartRequirement("cock")));
+            growCock.requirements.add(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))));
             growCock.additionalRequirements = "";
-            growCock.option = "Grow a cock";
+            growCock.option = "Airi: Grow a cock";
             growCock.scene = "<br>You ask Airi if she would consider growing a cock. "
                             + "Surprisingly, she agrees fairly easily, considering her usual recalcitrant personality. "
                             + "When you move to ask her what she needs from you, she puts a finger on your lips. "
@@ -44,7 +45,7 @@ public class AiriTime extends BaseNPCTime {
                             + "It looks almost like a seven inch long deflated balloon to your eyes as it hangs between her legs. "
                             + "Then it starts inflating, transforming into what looks like a large flaccid blue dong. "
                             + "It doesn't stop there though. After filling her cock, the slime pouring in starts making it turgid and erect. "
-                            + "Letting out the breath she was holding, Airi grins at you with a massive hard-on on her still-feminine hips and motions for you to feel it. "
+                            + "Letting out the breath she was holding, Airi grins and motions for you to feel the a massive hard-on on her feminine hips. "
                             + "<br/><br/>"
                             + "You hesitantly touch the distended goo cock and without warning Airi lets out a soft cry and her cock spews "
                             + "blue viscous cum all over your hand. The cock's coloring fades back into her pale flesh tone as it softens, "
@@ -57,9 +58,9 @@ public class AiriTime extends BaseNPCTime {
         }
         {
             TransformationOption removeCock = new TransformationOption();
-            removeCock.requirements.add(new BodyPartRequirement("cock"));
+            removeCock.requirements.add(RequirementShortcuts.rev(new BodyPartRequirement("cock")));
             removeCock.additionalRequirements = "";
-            removeCock.option = "Remove her cock";
+            removeCock.option = "Airi: Remove her cock";
             removeCock.scene = "<br>Airi frowns when you ask her if she can remove her new cock, \"<i>If you didn't like it, don't ask me for one in the first place... "
                             + "I guess you {other:guy}s are fickle. ...Fine, I'll do it but you're going to help me...</i>\""
                             + "<br/><br/>"

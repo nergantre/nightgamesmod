@@ -155,7 +155,7 @@ public class Global {
     public static boolean debug[] = new boolean[DebugFlags.values().length];
     public static int debugSimulation = 0;
     public static double moneyRate = 1.0;
-    public static double xpRate = 3.0;
+    public static double xpRate = 1.0;
     public static ContextFactory factory;
     public static Context cx;
 
@@ -812,7 +812,7 @@ public class Global {
     public static void startMatch() {
         Global.getPlayer().getAddictions().forEach(a -> {
             Optional<Status> withEffect = a.startNight();
-            withEffect.ifPresent(s -> Global.getPlayer().add(s));
+            withEffect.ifPresent(s -> Global.getPlayer().addNonCombat(s));
         });
         Global.gui().startMatch();
         match.round();
@@ -1300,6 +1300,7 @@ public class Global {
         match = null;
         human = new Player("Dummy");
         gui.purgePlayer();
+        xpRate = 1.0;
         gui.createCharacter();
     }
 

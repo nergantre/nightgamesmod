@@ -144,13 +144,14 @@ public class Invitation extends Skill {
             result = Result.divine;
         }
 
+        if (success) {
+            c.setStance(c.getStance().insertRandomDom(c, target), getSelf(), getSelf().canMakeOwnDecision());
+        }
+
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, result, target));
         } else {
             c.write(getSelf(), receive(c, 0, result, target));
-        }
-        if (success) {
-            c.setStance(c.getStance().insertRandomDom(c, target), getSelf(), getSelf().canMakeOwnDecision());
         }
         if (success) {
             if (c.getStance().en == Stance.missionary) {

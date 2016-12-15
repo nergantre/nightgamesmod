@@ -59,7 +59,7 @@ public class Kat extends BasePersonality {
         self.modAttributeDontSaveData(Attribute.Cunning, 1);
         self.modAttributeDontSaveData(Attribute.Speed, 1);
         self.getStamina().setMax(100);
-        self.getArousal().setMax(60);
+        self.getArousal().setMax(100);
         self.getMojo().setMax(80);
 
         self.body.add(BreastsPart.a);
@@ -123,7 +123,7 @@ public class Kat extends BasePersonality {
     @Override
     public void setGrowth() {
         character.getGrowth().stamina = 2;
-        character.getGrowth().arousal = 2;
+        character.getGrowth().arousal = 4;
         character.getGrowth().bonusStamina = 1;
         character.getGrowth().bonusArousal = 2;
         character.addCombatScene(new CombatScene((c, self, other) -> {
@@ -613,6 +613,6 @@ public class Kat extends BasePersonality {
 
     @Override
     public String makeOrgasmLiner(Combat c, Character target) {
-        return "<i>\"Mroewer, I gotcha! Hey hey, do you think you can cum again-nyaa? Let's try it out!\"</i>";
+        return "<i>\"Nya! I gotcha! Hey hey, do you think you can cum again-nyaa? Let's try it out!\"</i>";
     }
 }

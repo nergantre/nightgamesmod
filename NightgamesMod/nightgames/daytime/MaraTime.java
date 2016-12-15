@@ -16,6 +16,7 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.requirements.BodyPartRequirement;
 import nightgames.requirements.NotRequirement;
+import nightgames.requirements.RequirementShortcuts;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
@@ -50,9 +51,9 @@ public class MaraTime extends BaseNPCTime {
         {
             TransformationOption growCock = new TransformationOption();
             growCock.ingredients.put(Item.Dildo, 1);
-            growCock.requirements.add(new NotRequirement(new BodyPartRequirement("cock")));
+            growCock.requirements.add(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))));
             growCock.additionalRequirements = "";
-            growCock.option = "Install a cock";
+            growCock.option = "Mara: Install a cock";
             growCock.scene = "[Placeholder]<br>Mara makes some modifications to the dildo and manages to attach it to her own body through methods unknown to you.";
             growCock.effect = (c, self, other) -> {
                 other.body.add(new ModdedCockPart(BasicCockPart.big, CockMod.bionic));
@@ -63,9 +64,9 @@ public class MaraTime extends BaseNPCTime {
         {
             TransformationOption removeCock = new TransformationOption();
             removeCock.ingredients.put(Item.DisSol, 3);
-            removeCock.requirements.add(new BodyPartRequirement("cock"));
+            removeCock.requirements.add(RequirementShortcuts.rev(new BodyPartRequirement("cock")));
             removeCock.additionalRequirements = "";
-            removeCock.option = "Remove her cock";
+            removeCock.option = "Mara: Remove her cock";
             removeCock.scene = "[Placeholder]<br>Mara uses the solvent to dissolve the bond from her modified cock, making her wholly female again.";
             removeCock.effect = (c, self, other) -> {
                 other.body.removeAll("cock");

@@ -19,7 +19,7 @@ public class Kiss extends Skill {
 
     public Kiss(Character self) {
         // kiss starts off strong, but becomes stale fast. It recovers pretty quickly too, but makes spamming it less effective
-        super("Kiss", self, 0, Staleness.build().withDefault(1.0).withFloor(.25).withDecay(.25).withRecovery(.20));
+        super("Kiss", self, 0, Staleness.build().withDefault(1.0).withFloor(.25).withDecay(.40).withRecovery(.20));
         addTag(SkillTag.usesMouth);
         addTag(SkillTag.pleasure);
     }

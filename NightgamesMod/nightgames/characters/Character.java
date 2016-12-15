@@ -364,8 +364,12 @@ public abstract class Character extends Observable implements Cloneable {
             System.out.println("Checked " + a + " = " + get(a) + " against " + dc + ", rolled " + rand);
         }
         if (rand == 0) {
-            // critical hit, don't check
+            // critical hit
             return true;
+        }
+        if (rand == 19) {
+            // critical miss
+            return false;
         }
         return get(a) != 0 && get(a) + rand >= dc;
     }
@@ -537,7 +541,7 @@ public abstract class Character extends Observable implements Cloneable {
                 c.write(this, Global.format(
                                 "{other:SUBJECT-ACTION:well|wells} up with guilt at hurting such a holy being. {self:PRONOUN-ACTION:become|becomes} temporarily untouchable in {other:possessive} eyes.",
                                 this, other));
-                add(new Alluring(this, 1));
+                add(c, new Alluring(this, 1));
             }
 
             for (Status s : getStatuses()) {
@@ -582,7 +586,7 @@ public abstract class Character extends Observable implements Cloneable {
             int mag = Global.random(3) + 1;
             c.write(other, Global.format("Something about the way {other:subject-action:hit|hits}"
                             + " {self:name-do} seems to strip away {self:possessive} strength.", this, other));
-            add(new Abuff(this, Attribute.Power, -mag, 10));
+            add(c, new Abuff(this, Attribute.Power, -mag, 10));
         }
         stamina.reduce(pain);
     }
@@ -1033,7 +1037,7 @@ public abstract class Character extends Observable implements Cloneable {
 
     public void tick(Combat c) {
         body.tick(c);
-        status.stream().filter(s -> c != null || s.lingering()).forEach(s -> s.tick(c));
+        status.stream().filter(s -> c != null || s.lingering()).collect(Collectors.toList()).forEach(s -> s.tick(c));
         countdown(temporaryAddedTraits);
         countdown(temporaryRemovedTraits);
     }
@@ -1196,7 +1200,7 @@ public abstract class Character extends Observable implements Cloneable {
         orgasmed = false;
     }
 
-    public void add(Status status) {
+    public void addNonCombat(Status status) {
         add(null, status);
     }
 
@@ -1637,13 +1641,13 @@ public abstract class Character extends Observable implements Cloneable {
         if (is(Stsflag.feral)) {
             arousal.restore(arousal.max() / 2);
         }
-        float extra = 25.0f * overflow / (arousal.max() / 2.0f);
+        float extra = 25.0f * overflow / (arousal.max());
 
         loseWillpower(c, getOrgasmWillpowerLoss(), Math.round(extra), true, "");
         if (has(Trait.sexualDynamo)) {
             c.write(this, Global.format("{self:NAME-POSSESSIVE} climax makes {self:direct-object} positively gleam with erotic splendor; "
                             + "{self:possessive} every move seems more seductive than ever.", this, opponent));
-            add(new Abuff(this, Attribute.Seduction, 5, 10));
+            add(c, new Abuff(this, Attribute.Seduction, 5, 10));
         }
         if (has(Trait.lastStand)) {
             OrgasmicTighten tightenCopy = (OrgasmicTighten) TIGHTEN_SKILL.copy(this);
@@ -2033,12 +2037,6 @@ public abstract class Character extends Observable implements Cloneable {
                 body.pleasure(opponent, ToysPart.onahole, body.getRandomCock(), damage, c);
             }
         }
-        if (checkOrgasm()) {
-            doOrgasm(c, opponent, null, null);
-        }
-        if (opponent.checkOrgasm()) {
-            opponent.doOrgasm(c, this, null, null);
-        }
         if (getPure(Attribute.Animism) >= 4 && getArousal().percent() >= 50 && !is(Stsflag.feral)) {
             add(c, new Feral(this));
         }
@@ -2063,11 +2061,11 @@ public abstract class Character extends Observable implements Cloneable {
                                     + " so easily within {self:possessive} reach, causes"
                                     + " {self:subject} to involuntarily switch to autopilot."
                                     + " {self:SUBJECT} simply {self:action:NEED|NEEDS} that ass.</b>", this, opponent));
-                    add(new Frenzied(this, 1));
+                    add(c, new Frenzied(this, 1));
                 }
             }
         }
-        
+
         pleasured = false;
         Optional<PetCharacter> randomOpponentPetOptional = Global.pickRandom(c.getPetsFor(opponent));
         if (randomOpponentPetOptional.isPresent()) {
@@ -2096,6 +2094,11 @@ public abstract class Character extends Observable implements Cloneable {
         }
         if (c.getPetsFor(this).size() < getPetLimit()) {
             c.getCombatantData(this).setIntegerFlag(APOSTLES_COUNT, c.getCombatantData(this).getIntegerFlag(APOSTLES_COUNT) + 1);
+        }
+
+        if (has(Trait.Rut) && Global.random(100) < (getArousal().percent() - 50)) {
+            c.write(this, Global.format("<b>{self:NAME-POSSESSIVE} eyes dilate and {self:possessive} body flushes as {self:pronoun-action:descend|descends} into a mating frenzy!</b>", this, opponent));
+            add(c, new Frenzied(this, 3, true));
         }
     }
 
@@ -2126,9 +2129,9 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public boolean spotCheck(Character checked) {
-        int dc = 0;
+        int dc = checked.get(Attribute.Cunning) / 4;
         if (state == State.hidden) {
-            dc += checked.get(Attribute.Cunning) + 20;
+            dc += (checked.get(Attribute.Cunning) * 3 / 4) + 20;
         }
         if (has(Trait.Sneaky)) {
             dc += 20;
@@ -2159,7 +2162,7 @@ public abstract class Character extends Observable implements Cloneable {
             if (trait.status != null) {
                 Status newStatus = trait.status.instance(this, null);
                 if (!has(newStatus)) {
-                    add(newStatus);
+                    addNonCombat(newStatus);
                 }
             }
         });
@@ -2462,22 +2465,22 @@ public abstract class Character extends Observable implements Cloneable {
 
     public int lvlBonus(Character opponent) {
         if (opponent.getLevel() > getLevel()) {
-            return 10 * (opponent.getLevel() - getLevel());
+            return 12 * (opponent.getLevel() - getLevel());
         } else {
             return 0;
         }
     }
 
     public int getVictoryXP(Character opponent) {
-        return 15 + lvlBonus(opponent);
+        return 25 + lvlBonus(opponent);
     }
 
     public int getAssistXP(Character opponent) {
-        return 10 + lvlBonus(opponent);
+        return 18 + lvlBonus(opponent);
     }
 
     public int getDefeatXP(Character opponent) {
-        return 10 + lvlBonus(opponent);
+        return 18 + lvlBonus(opponent);
     }
 
     public int getAttraction(Character other) {
@@ -3005,9 +3008,9 @@ public abstract class Character extends Observable implements Cloneable {
         double bottomFitness = 4.0;
         // If I'm horny, I don't care about my clothing, so I put more less
         // fitness in them
-        if (getMood() == Emotion.horny) {
-            topFitness = 1;
-            topFitness = 1;
+        if (getMood() == Emotion.horny || is(Stsflag.feral)) {
+            topFitness = .5;
+            bottomFitness = .5;
             // If I'm horny, I put less importance on my own arousal
             arousalMod = .7f;
         }

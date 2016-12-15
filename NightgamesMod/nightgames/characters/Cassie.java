@@ -131,7 +131,7 @@ public class Cassie extends BasePersonality {
 
         character.addCombatScene(new CombatScene((c, self, other) -> {
             return self.getLevel() >= 10 && !Global.checkFlag(CASSIE_BREAST_FOCUS) && !Global.checkFlag(CASSIE_MOUTH_FOCUS);
-        }, (c, self, player) -> "Before leaving, " + character.getName() + " turns and asks you \"Hey " + player.getName() + ", what turns you on more? Just for the sakes of... science let's say. I noticed you spending a lot of time on my boobs... are you a breast " + player.guyOrGirl()+ "? Or do you prefer something more romantic? Maybe a kiss would do?\"",
+        }, (c, self, player) -> "Before leaving, " + character.getName() + " turns and asks you \"Hey " + player.getName() + ", what turns you on more? Just for the sakes of... science let's say. I noticed you spending a lot of time on my boobs... are you a tits " + player.guyOrGirl()+ "? Or do you prefer something more romantic? Maybe a kiss would do?\"",
                 Arrays.asList(
                         new CombatSceneChoice("Stare at her breasts", (c, self, other) -> {
                             c.write("Cassie catches your gaze with her eyes and lightly giggles. \"I knew it, " + c.getOpponent(character).boyOrGirl() + "s are all about boobs right? Hmm I wonder if I can use this to my advantage...\"");
@@ -445,8 +445,8 @@ public class Cassie extends BasePersonality {
                             + "rub her clit relentlessly. She shudders and holds you tight as she rides out an intense orgasm. You wait until she comes down before gently disentangling yourself "
                             + "from her embrace. <p><i>\"Thanks. Not that I'm happy about losing, but that felt amazing.\"</i> Cassie smiles "
                             + "sheepishly and takes hold of your still-hard cock. <i>\"I'm the one who got you this turned on, right? Then I'm going to take responsibility and finish you off.\"</i> "
-                            + "You're slightly skeptical of her reasoning, not that you're going to turn down her offer. <p><i>\"As a girl, it would be a disgrace to get a " + c.getOpponent(character).boyOrGirl() + " all hot and bothered, "
-                            + "only to have another girl make him cum.\"</i> She explains. She sets to licking and stroking your dick, showing no less enthusiasm than she did during the fight. "
+                            + "You're slightly skeptical of her reasoning, not that you're going to turn down her offer. <p><i>\"It would be a disgrace to get a " + c.getOpponent(character).boyOrGirl() + " all hot and bothered, "
+                            + "only to have another girl make " + opponent.directObject() + " cum.\"</i> She explains. She sets to licking and stroking your dick, showing no less enthusiasm than she did during the fight. "
                             + "The delightful sensations from her fingers and tongue soon bring you to a messy climax on her face. You thank her as you collect your clothes and hers, "
                             + "leaving her naked, but still in good spirits.";
         } else {
@@ -680,7 +680,7 @@ public class Cassie extends BasePersonality {
             case 0:
                 return "Cassie grins at you <i>\"Did you feel good? Come on, no time for rest now, I bet I can make you feel even better!\"</i>";
             case 1:
-                return "<i>\"Ahh, did it feel good?\"</i> Cassie happily exclaims, <i>\"I know it felt good! We can do more though, let's keep it up!\"</i>";
+                return "<i>\"Ahh, did it feel good the second time?\"</i> Cassie happily exclaims, <i>\"I know it felt good! We can do more though, let's keep it up!\"</i>";
             case 2:
                 return "<i>\"Wow I didn't know " + target.guyOrGirl()+ "s could cum that much! That just proves that you're having a good time right?\"</i>";
             default:

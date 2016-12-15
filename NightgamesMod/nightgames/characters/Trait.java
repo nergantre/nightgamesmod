@@ -486,7 +486,7 @@ public enum Trait {
         nullResistance = (combat, c, s) -> "";
         resistances = new HashMap<>();
         resistances.put(shameless, (combat, c, s) -> {
-            if (s.flags().contains(Stsflag.shamed) || s.flags().contains(Stsflag.distracted)) {
+            if (s.flags().contains(Stsflag.shamed)) {
                 return "Shameless";
             }
             return "";

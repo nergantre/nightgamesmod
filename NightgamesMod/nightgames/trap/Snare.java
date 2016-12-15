@@ -27,7 +27,7 @@ public class Snare extends Trap {
             }
             target.location().remove(this);
         } else {
-            target.add(new Bound(target, 30, "rope"));
+            target.addNonCombat(new Bound(target, 30, "rope"));
             if (target.human()) {
                 Global.gui().message(
                                 "You hear a sudden snap and you're suddenly overwhelmed by a blur of ropes. The tangle of ropes trip you up and firmly bind your arms.");

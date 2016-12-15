@@ -22,6 +22,7 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.requirements.BodyPartRequirement;
 import nightgames.requirements.NotRequirement;
+import nightgames.requirements.RequirementShortcuts;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
@@ -44,9 +45,9 @@ public class KatTime extends BaseNPCTime {
         {
             TransformationOption growCock = new TransformationOption();
             growCock.ingredients.put(Item.PriapusDraft, 3);
-            growCock.requirements.add(new NotRequirement(new BodyPartRequirement("cock")));
+            growCock.requirements.add(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))));
             growCock.additionalRequirements = "";
-            growCock.option = "Grow a cock";
+            growCock.option = "Kat: Grow a cock";
             growCock.scene = "<br><i>\"Mrrr... Y-you want me to w-what!?\"</i> Kat doesn't seem to be too amused at your suggestion for a little switch-up. "
                            + "She glows red like a tomato, and starts stammering like she just learned how to talk. "
                            + "<i>\"W-what do you mean a c-c-c-... a p-penis? But I'm a girl, nya!\"</i>"
@@ -93,9 +94,9 @@ public class KatTime extends BaseNPCTime {
         {
             TransformationOption removeCock = new TransformationOption();
             removeCock.ingredients.put(Item.FemDraft, 3);
-            removeCock.requirements.add(new BodyPartRequirement("cock"));
+            removeCock.requirements.add(RequirementShortcuts.rev(new BodyPartRequirement("cock")));
             removeCock.additionalRequirements = "";
-            removeCock.option = "Remove her cock";
+            removeCock.option = "Kat: Remove her cock";
             removeCock.scene = "<br>Kat gladly drinks the three femdrafts one after another and her penis shrinks back into her normal clitoris. "
                             + "Kat shyly whispers, <i>\"Mrrowwww, t-that was embarassing... but it did feel pretty good when I had it...\"</i>";
             removeCock.effect = (c, self, other) -> {
@@ -107,7 +108,7 @@ public class KatTime extends BaseNPCTime {
         TransformationOption primalCock = new TransformationOption();
         primalCock.ingredients.put(Item.PriapusDraft, 10);
         primalCock.ingredients.put(Item.Rope, 10);
-        primalCock.ingredients.put(Item.Aphrodisiac, 50);
+        primalCock.ingredients.put(Item.Aphrodisiac, 25);
         primalCock.requirements.add(new BodyPartRequirement("cock"));
         primalCock.requirements.add((c, self, other) -> {
             return self.body.get("cock").stream().anyMatch(cock -> ((CockPart) cock).isGeneric(self));
@@ -127,7 +128,7 @@ public class KatTime extends BaseNPCTime {
         options.add(primalCock);
         TransformationOption feralPussy = new TransformationOption();
         feralPussy.ingredients.put(Item.Rope, 10);
-        feralPussy.ingredients.put(Item.Aphrodisiac, 50);
+        feralPussy.ingredients.put(Item.Aphrodisiac, 25);
         feralPussy.ingredients.put(Item.FemDraft, 10);
         feralPussy.requirements.add(new BodyPartRequirement("pussy"));
         feralPussy.requirements.add((c, self, other) -> {
@@ -143,7 +144,7 @@ public class KatTime extends BaseNPCTime {
         options.add(feralPussy);
         TransformationOption catTail = new TransformationOption();
         catTail.ingredients.put(Item.Rope, 10);
-        catTail.ingredients.put(Item.Aphrodisiac, 50);
+        catTail.ingredients.put(Item.Aphrodisiac, 25);
         catTail.requirements.add(not(bodypart("tail")));
         catTail.requirements.add((c, self, other) -> {
             return self.body.get("tail").stream().anyMatch(part -> part != TailPart.cat) || !self.body.has("tail");
@@ -157,7 +158,7 @@ public class KatTime extends BaseNPCTime {
         options.add(catTail);
         TransformationOption catEars = new TransformationOption();
         catEars.ingredients.put(Item.Rope, 10);
-        catEars.ingredients.put(Item.Aphrodisiac, 50);
+        catEars.ingredients.put(Item.Aphrodisiac, 25);
         catEars.requirements.add(new BodyPartRequirement("ears"));
         catEars.requirements.add((c, self, other) -> {
             return self.body.get("ears").stream().anyMatch(part -> part != EarPart.cat) || !self.body.has("ears");

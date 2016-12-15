@@ -265,7 +265,7 @@ public enum BreastsPart implements BodyPart {
                                 Global.format("The power seems to leave {other:name-possessive} body as {other:pronoun-action:sip|sips} {self:possessive} cloying cream.",
                                                 self, opponent));
                 opponent.weaken(c, opponent.getStamina().max() / 10);
-                opponent.add(new Abuff(opponent, Attribute.Power, -Global.random(1, 3), 20));
+                opponent.add(c, new Abuff(opponent, Attribute.Power, -Global.random(1, 3), 20));
             }
         }
         return 0;

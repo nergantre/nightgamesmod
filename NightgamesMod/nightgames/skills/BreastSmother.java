@@ -53,13 +53,9 @@ public class BreastSmother extends Skill {
         boolean special = c.getStance().en != Stance.breastsmothering && !c.getStance().havingSex(c);        
         writeOutput(c, special ? Result.special : Result.normal, target);
 
-       
+
         double n = 10 + Global.random(5) + getSelf().body.getLargestBreasts().size;
-        if (c.getStance().front(getSelf())) {
-            // opponent can see self
-            n += 3 * getSelf().body.getHotness(target);
-        }
-        
+
         if (target.has(Trait.temptingtits)) {
             n += Global.random(5, 10);
         }
@@ -70,11 +66,11 @@ public class BreastSmother extends Skill {
         if (target.has(Trait.imagination)) {
             n *= 1.5;
         }
-        
+
         target.tempt(c, getSelf(), getSelf().body.getRandom("breasts"), (int) Math.round(n / 2));
         target.weaken(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(5, 15)));
 
-        target.loseWillpower(c, Math.max(10, target.getWillpower().max() * 10 / 100 ));     
+        target.loseWillpower(c, Math.min(5, target.getWillpower().max() * 10 / 100 ));     
         
         if (special) {
             c.setStance(new BreastSmothering(getSelf(), target), getSelf(), true);      
