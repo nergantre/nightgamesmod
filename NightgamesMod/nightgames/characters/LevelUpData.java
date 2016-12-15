@@ -61,6 +61,10 @@ public class LevelUpData implements Cloneable {
             traitsRemoved.add(t);
         }        
     }
+    
+    public Set<Trait> getAddedTraits() {
+        return new HashSet<>(traitsAdded);
+    }
 
     public void modAttribute(Attribute a, int i) {
         attributes.put(a, attributes.getOrDefault(a, 0) + i);

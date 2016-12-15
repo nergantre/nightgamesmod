@@ -12,6 +12,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 import nightgames.characters.Attribute;
+import nightgames.characters.CharacterSex;
 import nightgames.characters.Growth;
 import nightgames.characters.MaxAttribute;
 import nightgames.characters.Plan;
@@ -81,7 +82,7 @@ public class JsonSourceNPCDataLoader {
         data.portraits = loadLines(object.getAsJsonArray("portraits"));
         loadRecruitment(object.getAsJsonObject("recruitment"), data.recruitment);
         data.body = Body.load(object.getAsJsonObject("body"), null);
-        data.sex = object.get("sex").getAsString();
+        data.sex = CharacterSex.valueOf(object.get("sex").getAsString());
 
         JsonUtils.getOptionalArray(object, "ai-modifiers").ifPresent(arr -> loadAiModifiers(arr, data.aiModifiers));
 

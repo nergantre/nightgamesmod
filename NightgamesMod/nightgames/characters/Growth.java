@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import nightgames.characters.body.BodyPart;
 import nightgames.global.Flag;
@@ -44,7 +46,11 @@ public class Growth implements Cloneable {
         }
         traits.get(level).add(trait);
     }
-
+    
+    public Map<Integer, List<Trait>> getTraits() {
+        return new HashMap<>(traits);
+    }
+    
     public void addBodyPart(int level, BodyPart part) {
         if (!bodyParts.containsKey(level)) {
             bodyParts.put(level, new ArrayList<BodyPart>());

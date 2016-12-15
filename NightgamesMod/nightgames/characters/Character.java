@@ -1051,7 +1051,7 @@ public abstract class Character extends Observable implements Cloneable {
         levelPlan.putIfAbsent(level, new LevelUpData());
         return levelPlan.get(level);
     }
-
+    
     public void modAttributeDontSaveData(Attribute a, int i) {
         if (human() && i != 0) {
             Global.gui().message("You have " + (i > 0 ? "gained" : "lost") + " " + i + " " + a.name());
