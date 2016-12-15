@@ -1,0 +1,693 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="1000.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                  <MenuItem fx:id="menuNew" mnemonicParsing="false" onAction="#reset" text="New" />
+                  <MenuItem fx:id="menuDisplay" mnemonicParsing="false" onAction="#displayJson" text="Display JSON" />
+                  <MenuItem mnemonicParsing="false" onAction="#save" text="Save" />
+                  <Menu fx:id="loadMenu" mnemonicParsing="false" text="Load">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#loadChar" text="From File..." />
+                    </items>
+                  </Menu>
+                  <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#showTags" text="Tags" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <TabPane layoutY="27.0" prefHeight="774.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+            <Tab text="Generic">
+              <content>
+                <AnchorPane fx:id="genericPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox fx:id="genericBox" layoutX="14.0" layoutY="14.0" prefHeight="340.0" prefWidth="482.0" spacing="5.0">
+                           <children>
+                              <HBox prefHeight="27.0" prefWidth="482.0">
+                                 <children>
+                                    <Label text="Name: ">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="name" promptText="Name" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="27.0" prefWidth="482.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Sex:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="sex" prefWidth="150.0" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="27.0" prefWidth="482.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Trophy:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="trophy" prefWidth="150.0" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="27.0" prefWidth="482.0">
+                                 <children>
+                                    <Label text="Default Portrait: ">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="defaultPortrait" editable="false" promptText="Disabled for now" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="27.0" prefWidth="482.0" spacing="37.0">
+                                 <children>
+                                    <Label text="Starting Level:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="level" prefHeight="25.0" prefWidth="35.0" text="10" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="27.0" prefWidth="482.0" spacing="74.0">
+                                 <children>
+                                    <Label text="Stamina:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="staminaStart" prefHeight="25.0" prefWidth="35.0" text="80" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="27.0" prefWidth="482.0" spacing="78.0">
+                                 <children>
+                                    <Label text="Arousal:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="arousalStart" prefHeight="25.0" prefWidth="35.0" text="80" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="27.0" prefWidth="482.0" spacing="93.0">
+                                 <children>
+                                    <Label text="Mojo:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="mojoStart" prefHeight="25.0" prefWidth="35.0" text="100" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="27.0" prefWidth="482.0" spacing="60.0">
+                                 <children>
+                                    <Label text="Willpower:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="willpowerStart" prefHeight="25.0" prefWidth="35.0" text="40" />
+                                 </children>
+                              </HBox>
+                           </children></VBox>
+                        <VBox fx:id="bodyBox" layoutX="500.0" layoutY="371.0" prefHeight="357.0" prefWidth="484.0">
+                           <children>
+                              <HBox prefHeight="27.0" prefWidth="482.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Breasts:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="breasts" prefWidth="150.0" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="27.0" prefWidth="482.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Cock:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="cockSize" prefWidth="150.0" />
+                                    <ChoiceBox fx:id="cockType" prefWidth="150.0" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="27.0" prefWidth="482.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Pussy:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="pussy" prefWidth="150.0" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="27.0" prefWidth="482.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Ears:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="ears" prefWidth="150.0" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="27.0" prefWidth="482.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Mouth:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="mouth" prefWidth="150.0" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="27.0" prefWidth="482.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Tail:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="tail" prefWidth="150.0" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="27.0" prefWidth="482.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Wings:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="wings" prefWidth="150.0" />
+                                    <HBox prefHeight="27.0" prefWidth="482.0" spacing="10.0">
+                                       <children>
+                                          <Label text="Hotness:">
+                                             <font>
+                                                <Font name="Segoe UI Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="hotness" prefHeight="25.0" prefWidth="24.0" promptText="Name" text="1" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                           </children></VBox>
+                        <ListView fx:id="outfit" layoutX="14.0" layoutY="402.0" prefHeight="323.0" prefWidth="485.0" />
+                        <Label layoutX="14.0" layoutY="376.0" text="Outfit:">
+                           <font>
+                              <Font name="Segoe UI Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <ChoiceBox fx:id="clothingChoice" layoutX="136.0" layoutY="372.0" prefWidth="150.0" />
+                        <Button fx:id="clothingAddBtn" layoutX="88.0" layoutY="371.0" mnemonicParsing="false" onAction="#addClothing" text="Add">
+                           <font>
+                              <Font name="Segoe UI Bold" size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="clothingRemoveBtn" layoutX="363.0" layoutY="370.0" mnemonicParsing="false" onAction="#removeSelectedClothing" text="Remove Selected">
+                           <font>
+                              <Font name="Segoe UI Bold" size="14.0" />
+                           </font>
+                        </Button>
+                        <ScrollPane layoutX="499.0" layoutY="14.0" prefHeight="350.0" prefWidth="491.0">
+                           <content>
+                              <HBox prefHeight="347.0" prefWidth="488.0">
+                                 <children>
+                                    <VBox prefHeight="347.0" prefWidth="262.0">
+                                       <children>
+                                          <HBox prefHeight="27.0" prefWidth="482.0" spacing="74.0">
+                                             <children>
+                                                <Label text="Power:">
+                                                   <font>
+                                                      <Font name="Segoe UI Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="power" prefHeight="25.0" prefWidth="30.0" text="3" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="27.0" prefWidth="482.0" spacing="50.0">
+                                             <children>
+                                                <Label text="Seduction:">
+                                                   <font>
+                                                      <Font name="Segoe UI Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="seduction" prefHeight="25.0" prefWidth="30.0" text="3" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="27.0" prefWidth="482.0" spacing="60.0">
+                                             <children>
+                                                <Label text="Cunning:">
+                                                   <font>
+                                                      <Font name="Segoe UI Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="cunning" prefHeight="25.0" prefWidth="30.0" text="3" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="27.0" prefWidth="482.0" spacing="45.0">
+                                             <children>
+                                                <Label text="Perception:">
+                                                   <font>
+                                                      <Font name="Segoe UI Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="perception" prefHeight="25.0" prefWidth="30.0" text="5" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="27.0" prefWidth="482.0" spacing="75.0">
+                                             <children>
+                                                <Label text="Speed:">
+                                                   <font>
+                                                      <Font name="Segoe UI Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="speed" prefHeight="25.0" prefWidth="30.0" text="5" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="27.0" prefWidth="482.0" spacing="67.0">
+                                             <children>
+                                                <Label text="Science:">
+                                                   <font>
+                                                      <Font name="Segoe UI Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="science" prefHeight="25.0" prefWidth="30.0" text="0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="27.0" prefWidth="482.0" spacing="84.0">
+                                             <children>
+                                                <Label text="Dark:">
+                                                   <font>
+                                                      <Font name="Segoe UI Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="dark" prefHeight="25.0" prefWidth="30.0" text="0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="27.0" prefWidth="482.0" spacing="77.0">
+                                             <children>
+                                                <Label text="Fetish:">
+                                                   <font>
+                                                      <Font name="Segoe UI Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="fetish" prefHeight="25.0" prefWidth="30.0" text="0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="27.0" prefWidth="482.0" spacing="58.0">
+                                             <children>
+                                                <Label text="Animism:">
+                                                   <font>
+                                                      <Font name="Segoe UI Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="animism" prefHeight="25.0" prefWidth="30.0" text="0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="27.0" prefWidth="482.0" spacing="103.0">
+                                             <children>
+                                                <Label text="Ki:">
+                                                   <font>
+                                                      <Font name="Segoe UI Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="ki" prefHeight="25.0" prefWidth="30.0" text="0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="27.0" prefWidth="482.0" spacing="94.0">
+                                             <children>
+                                                <Label text="Bio:">
+                                                   <font>
+                                                      <Font name="Segoe UI Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="bio" prefHeight="25.0" prefWidth="30.0" text="0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="27.0" prefWidth="482.0" spacing="64.0">
+                                             <children>
+                                                <Label text="Divinity:">
+                                                   <font>
+                                                      <Font name="Segoe UI Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="divinity" prefHeight="25.0" prefWidth="30.0" text="0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="27.0" prefWidth="482.0" spacing="70.0">
+                                             <children>
+                                                <Label text="Arcane:">
+                                                   <font>
+                                                      <Font name="Segoe UI Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="arcane" prefHeight="25.0" prefWidth="30.0" text="0" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="347.0" prefWidth="267.0">
+                                       <children>
+                                          <HBox prefHeight="27.0" prefWidth="482.0" spacing="79.0">
+                                             <children>
+                                                <Label text="Willpower:">
+                                                   <font>
+                                                      <Font name="Segoe UI Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="willpower" prefHeight="25.0" prefWidth="34.0" text="40" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="27.0" prefWidth="482.0" spacing="86.0">
+                                             <children>
+                                                <Label text="Medicine:">
+                                                   <font>
+                                                      <Font name="Segoe UI Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="medicine" prefHeight="25.0" prefWidth="30.0" text="0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="27.0" prefWidth="482.0" spacing="80.0">
+                                             <children>
+                                                <Label text="Technique:">
+                                                   <font>
+                                                      <Font name="Segoe UI Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="technique" prefHeight="25.0" prefWidth="30.0" text="0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="27.0" prefWidth="482.0" spacing="74.0">
+                                             <children>
+                                                <Label text="Submissive:">
+                                                   <font>
+                                                      <Font name="Segoe UI Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="submissive" prefHeight="25.0" prefWidth="30.0" text="0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="27.0" prefWidth="482.0" spacing="87.0">
+                                             <children>
+                                                <Label text="Hypnosis:">
+                                                   <font>
+                                                      <Font name="Segoe UI Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="hypnosis" prefHeight="25.0" prefWidth="30.0" text="0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="27.0" prefWidth="482.0" spacing="50.0">
+                                             <children>
+                                                <Label text="Nymphomania:">
+                                                   <font>
+                                                      <Font name="Segoe UI Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="nymphomania" prefHeight="25.0" prefWidth="30.0" text="0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="27.0" prefWidth="482.0" spacing="113.0">
+                                             <children>
+                                                <Label text="Slime:">
+                                                   <font>
+                                                      <Font name="Segoe UI Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="slime" prefHeight="25.0" prefWidth="30.0" text="0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="27.0" prefWidth="482.0" spacing="94.0">
+                                             <children>
+                                                <Label text="Ninjutsu:">
+                                                   <font>
+                                                      <Font name="Segoe UI Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="ninjutsu" prefHeight="25.0" prefWidth="30.0" text="0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="27.0" prefWidth="482.0" spacing="87.0">
+                                             <children>
+                                                <Label text="Temporal:">
+                                                   <font>
+                                                      <Font name="Segoe UI Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="temporal" prefHeight="25.0" prefWidth="30.0" text="0" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Traits and Growth">
+               <content>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ListView fx:id="startTraits" prefHeight="745.0" prefWidth="390.0" />
+                        <AnchorPane prefHeight="745.0" prefWidth="275.0">
+                           <children>
+                              <Button fx:id="traitStartBtn" layoutX="60.0" layoutY="129.0" mnemonicParsing="false" onAction="#addTraitAtStart" text="&lt;- Add at start">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                              <ChoiceBox fx:id="traitChoice" layoutX="77.0" layoutY="92.0" prefWidth="150.0" />
+                              <Button fx:id="traitLvlBtn" layoutX="60.0" layoutY="159.0" mnemonicParsing="false" onAction="#addTraitAtLevel" text="Add at level -&gt;">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                              <Label layoutX="13.0" layoutY="95.0" text="Trait:">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="traitRemove" layoutX="56.0" layoutY="235.0" mnemonicParsing="false" onAction="#removeSelectedTraits" text="Remove Selected">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                              <Label layoutX="102.0" layoutY="14.0" text="Traits">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="1.0" layoutY="47.0" text="&lt;- Starting Traits | Unlocked Traits -&gt;">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Line endX="100.0" layoutX="120.0" layoutY="325.0" startX="-100.0" />
+                              <Label layoutX="68.0" layoutY="346.0" text="Points per level">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <HBox layoutX="17.0" layoutY="376.0" spacing="40.0">
+                                 <children>
+                                    <Label layoutX="17.0" layoutY="379.0" text="Stamina:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="staminaBase" layoutX="101.0" layoutY="376.0" prefHeight="25.0" prefWidth="37.0" text="2" />
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="17.0" layoutY="401.0" spacing="40.0">
+                                 <children>
+                                    <Label layoutX="17.0" layoutY="379.0" text="Bonus:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="staminaBonus" layoutX="101.0" layoutY="376.0" prefHeight="25.0" prefWidth="37.0" text="1" />
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="13.0" layoutY="434.0" spacing="40.0">
+                                 <children>
+                                    <Label layoutX="17.0" layoutY="379.0" text="Arousal:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="arousalBase" layoutX="101.0" layoutY="376.0" prefHeight="25.0" prefWidth="37.0" text="2" />
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="13.0" layoutY="459.0" spacing="40.0">
+                                 <children>
+                                    <Label layoutX="17.0" layoutY="379.0" text="Bonus:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="arousalBonus" layoutX="101.0" layoutY="376.0" prefHeight="25.0" prefWidth="37.0" text="1" />
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="15.0" layoutY="496.0" spacing="40.0">
+                                 <children>
+                                    <Label layoutX="17.0" layoutY="379.0" text="Mojo:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="mojoBase" layoutX="101.0" layoutY="376.0" prefHeight="25.0" prefWidth="37.0" text="2" />
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="15.0" layoutY="521.0" spacing="40.0">
+                                 <children>
+                                    <Label layoutX="17.0" layoutY="379.0" text="Bonus:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="mojoBonus" layoutX="101.0" layoutY="376.0" prefHeight="25.0" prefWidth="37.0" text="1" />
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="15.0" layoutY="552.0" spacing="40.0">
+                                 <children>
+                                    <Label layoutX="17.0" layoutY="379.0" text="Willpower:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="willpowerBase" layoutX="101.0" layoutY="376.0" prefHeight="25.0" prefWidth="37.0" text="2" />
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="15.0" layoutY="577.0" spacing="40.0">
+                                 <children>
+                                    <Label layoutX="17.0" layoutY="379.0" text="Bonus:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="willpowerBonus" layoutX="101.0" layoutY="376.0" prefHeight="25.0" prefWidth="37.0" text="1" />
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="17.0" layoutY="602.0" spacing="5.0">
+                                 <children>
+                                    <Label layoutX="17.0" layoutY="379.0" text="Bonus Attribute Points:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="attrBonus" layoutX="101.0" layoutY="376.0" prefHeight="25.0" prefWidth="37.0" text="1" />
+                                 </children>
+                              </HBox>
+                              <Label layoutX="5.0" layoutY="654.0" text="Bonus points are allocated in hard mode only">
+                                 <font>
+                                    <Font name="Segoe UI" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <ListView fx:id="growthTraits" prefHeight="745.0" prefWidth="409.0" />
+                     </children>
+                  </HBox>
+               </content>
+            </Tab>
+            <Tab text="Scenes">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TabPane prefHeight="747.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE">
+                           <tabs>
+                              <Tab text="Requirements">
+                                 <content>
+                                    <VBox prefHeight="710.0" prefWidth="1000.0">
+                                       <children>
+                                          <AnchorPane prefHeight="747.0" prefWidth="1000.0">
+                                             <children>
+                                                <TreeView fx:id="reqTree" prefHeight="666.0" prefWidth="1000.0" />
+                                                <Button layoutX="471.0" layoutY="683.0" mnemonicParsing="false" onAction="#validateRequirements" text="Validate" />
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </VBox>
+                                 </content>
+                              </Tab>
+                              <Tab text="Text">
+                                 <content>
+                                    <AnchorPane>
+                                       <children>
+                                          <SplitPane dividerPositions="0.496" layoutY="44.0" prefHeight="700.0" prefWidth="1000.0">
+                                             <items>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                   <children>
+                                                      <TextArea fx:id="rawText" onKeyReleased="#parseText" prefHeight="698.0" prefWidth="492.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                   <children>
+                                                      <TextFlow fx:id="parsedText" prefHeight="698.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </items>
+                                          </SplitPane>
+                                          <ChoiceBox fx:id="selfBox" layoutX="90.0" layoutY="14.0" prefWidth="150.0" />
+                                          <ChoiceBox fx:id="otherBox" layoutX="350.0" layoutY="14.0" prefWidth="150.0" />
+                                          <Label layoutX="58.0" layoutY="18.0" text="Self:" />
+                                          <Label layoutX="310.0" layoutY="18.0" text="Other:" />
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                           </tabs>
+                        </TabPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Other Data">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
