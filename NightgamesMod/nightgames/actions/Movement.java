@@ -27,7 +27,7 @@ public enum Movement {
     craft(" start mixing various liquids. Whatever it is doesn't look healthy."),
     wait(" loitering nearby"),
     resupply(" heads for one of the safe rooms, probably to get a change of clothes."),
-    oil(" rubbing body oil on her every inch of her skin. Wow, you wouldn't mind watching that again."),
+    oil(" rubbing body oil on every inch of her skin. Wow, you wouldn't mind watching that again."),
     enerydrink(" opening an energy drink and downing the whole thing."),
     beer(" opening a beer and downing the whole thing."),
     recharge(" plugging a battery pack into a nearby charging station."),
