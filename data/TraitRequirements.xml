@@ -82,7 +82,7 @@
 		</Requirements>
 	</Trait>
 	<Trait>
-		<Name>entrallingjuices</Name>
+		<Name>enthrallingjuices</Name>
 		<Requirements>
 			<TraitReq>lacedjuices</TraitReq>
 			<NoTraitReq>frenzyingjuices</NoTraitReq>

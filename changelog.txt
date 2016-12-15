@@ -1,3 +1,26 @@
+2.4.4
+New:
+- Added specializations for Kat.
+	- Added 18 new traits for her.
+- Generalized some scenes for girls and herms.
+- You can now convince NPCs to get male genitalia when they have reached level 10 and you have a good relationship with them during the day time.
+- Merged in logicK's hard mode "both specializations" choices and added some new scenes for them.
+	- Picking the "[Hard Mode]" choices will make the character drastically more difficult to fight against. They will gain both traits for specializations as well as an additional trait point per level.
+	- Picking hard mode choices will also give you two additional trait points, one immediately and one at a higher level.
+
+Balance changes:
+- Nerfed pheromones so that it does not stack infinitely. Now pheromones can only stack up to 5 times per unique source
+	- Pheromone can stack up to 10 times if the applier has the "Complex Aroma" trait
+- Further nerfed non-character pets. (Fairies were pleasuring people for 100 arousal at like level 15... :\)
+- Made certain short disables not give you the wary buff. This will buff Jewel because her short stuns will not make you invulnerable to disables for 3+ turns.
+- Made nymphomania + feral not always trigger. Instead nymphomania will use the nymphomania + animism attributes to determine trigger chance.
+
+Bug Fixes:
+- Fixed addictions randomly applying during night time.
+- Fixed pull out not working
+- Fixed some skill related bugs that was making things unintentionally usable and unusable in certain situations.
+- Changed Maya's camisole to only cover top instead of top + bottom and moved it to layer 1 so she can actually wear a blouse and skirt like she's supposed to. Woops.
+
 2.4.3.2
 Bug fixes:
 - All pet skills were incorrectly modifying their damage with seduction, causing them to do way too much. This was removed.

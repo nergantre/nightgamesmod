@@ -2,6 +2,7 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -43,7 +44,9 @@ public class Invitation extends Skill {
     @Override
     public int getMojoCost(Combat c) {
         //Free if user is Kat and player has Breeder
-        if (!c.getOpponent(getSelf()).human() || !Global.getPlayer().checkAddiction(AddictionType.BREEDER, getSelf()))
+        Character opp = c.getOpponent(getSelf());
+        boolean humanIsBreeder = opp.human() && (opp instanceof Player) && ((Player)opp).checkAddiction(AddictionType.BREEDER, getSelf());
+        if (getSelf().has(Trait.breeder) && humanIsBreeder)
             return 50;
         return 0;
     }

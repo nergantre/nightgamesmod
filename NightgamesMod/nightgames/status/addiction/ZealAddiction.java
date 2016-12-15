@@ -2,10 +2,13 @@ package nightgames.status.addiction;
 
 import java.util.Optional;
 
+import javax.naming.OperationNotSupportedException;
+
 import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Player;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
@@ -21,13 +24,13 @@ public class ZealAddiction extends Addiction {
 
     private boolean shouldApplyDivineCharge;
     
-    public ZealAddiction(Character cause, float magnitude) {
-        super("Zeal", cause, magnitude);
+    public ZealAddiction(Player affected, Character cause, float magnitude) {
+        super(affected, "Zeal", cause, magnitude);
         shouldApplyDivineCharge = false;
     }
 
-    public ZealAddiction(Character cause) {
-        this(cause, .01f);
+    public ZealAddiction(Player affected, Character cause) {
+        this(affected, cause, .01f);
     }
 
     @Override
@@ -260,11 +263,11 @@ public class ZealAddiction extends Addiction {
 
     @Override
     public Status instance(Character newAffected, Character newOther) {
-        return new ZealAddiction(newAffected, magnitude);
+        return new ZealAddiction((Player)newAffected, newOther, magnitude);
     }
 
     @Override public Status loadFromJson(JsonObject obj) {
-        return null;
+        throw new RuntimeException(new OperationNotSupportedException("not supported yet"));
     }
 
     @Override

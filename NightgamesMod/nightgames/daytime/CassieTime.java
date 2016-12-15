@@ -10,12 +10,14 @@ import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
+import nightgames.characters.body.ModdedCockPart;
 import nightgames.characters.body.MouthPussyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.requirements.BodyPartRequirement;
+import nightgames.requirements.NotRequirement;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 import nightgames.status.addiction.Addiction.Severity;
@@ -36,7 +38,7 @@ public class CassieTime extends BaseNPCTime {
                         + "she says without looking at you. <i>\"You're cute, funny, and we got along so well whenever we talked. I tried to think of ways to flirt with you so you'd see me as more than "
                         + "a friend, but I don't think I'd have ever worked up the courage to try. When I saw that we had both joined the games, I can't properly describe what I felt. Embarrassed"
                         + " of course - maybe more embarrassed than I've been in years - to be seen at a sexfighting competition by someone I knew. I was also really excited about the possibility "
-                        + "of being intimate with the boy I liked. Most of all, I was scared that you might look down on me when you found out what a horny girl I am.\"</i> She grasps your hand and you "
+                        + "of being intimate with the " + Global.getPlayer().boyOrGirl() + " I liked. Most of all, I was scared that you might look down on me when you found out what a horny girl I am.\"</i> She grasps your hand and you "
                         + "squeeze it reassuringly. You pull her towards you and kiss her softly. <i>\"I guess it turned out better than I could have hoped.\"</i><p>She sits up and looks at you, blushing "
                         + "deeply. <i>\"We can't keep lying here with my embarrassing story in the air, let's do some training.\"</i>";
         advTrait = Trait.witch;
@@ -46,6 +48,32 @@ public class CassieTime extends BaseNPCTime {
     @Override
     public void buildTransformationPool() {
         options = new ArrayList<>();
+        {
+            TransformationOption growCock = new TransformationOption();
+            growCock.ingredients.put(Item.PriapusDraft, 3);
+            growCock.requirements.add(new NotRequirement(new BodyPartRequirement("cock")));
+            growCock.additionalRequirements = "";
+            growCock.option = "Grow a cock";
+            growCock.scene = "[Placeholder]<br>Cassie hesistantly drinks the 3 priapus drafts and grows a large runic cock.";
+            growCock.effect = (c, self, other) -> {
+                other.body.add(new ModdedCockPart(BasicCockPart.big, CockMod.runic));
+                return true;
+            };
+            options.add(growCock);
+        }
+        {
+            TransformationOption removeCock = new TransformationOption();
+            removeCock.ingredients.put(Item.FemDraft, 3);
+            removeCock.requirements.add(new BodyPartRequirement("cock"));
+            removeCock.additionalRequirements = "";
+            removeCock.option = "Remove her cock";
+            removeCock.scene = "[Placeholder]<br>Cassie hesistantly drinks the three femdrafts and her runic cock shrinks into her normal clitoris.";
+            removeCock.effect = (c, self, other) -> {
+                other.body.removeAll("cock");
+                return true;
+            };
+            options.add(removeCock);
+        }
         TransformationOption runicCock = new TransformationOption();
         runicCock.ingredients.put(Item.PriapusDraft, 10);
         runicCock.ingredients.put(Item.BewitchingDraught, 20);
@@ -185,7 +213,7 @@ public class CassieTime extends BaseNPCTime {
                                             + "out together or practicing for the night games, but it won't change who she is. There's surely enough overlap between her two worlds for you to fit. She's quiet "
                                             + "for another short while, then stands up on her toes and presses her mouth softly against yours. You've tasted her lips before, but this is something different. this "
                                             + "is hesitant and innocent, like a lover's first kiss.<p><i>\"If I can pretend to be anyone, can I pretend to be your girlfriend?\"</i> You answer by wrapping your arms "
-                                            + "around her and kissing her tenderly. <i>\"Hanging out with a cute boy interspersed with wild sex games? Sounds like a great date,\"</i> she says, face flushed but "
+                                            + "around her and kissing her tenderly. <i>\"Hanging out with a cute " + Global.getPlayer().boyOrGirl() + " interspersed with wild sex games? Sounds like a great date,\"</i> she says, face flushed but "
                                             + "lit up in a genuine smile. <i>\"What exactly do you have in mind?\"</i>");
             npc.gainAffection(player, 1);
             player.gainAffection(npc, 1);
@@ -395,9 +423,9 @@ public class CassieTime extends BaseNPCTime {
                                                 + "When she tongues you just under the glans and applies a little suction, it pushes you over the edge. You give a low groan and shoot your load into her mouth.<p>"
                                                 + "Cassie swallows your semen and giggles. <i>\"I think I found a sensitive spot. I'll have to remember that.\"</i> She doesn't move away from your groin, watching with a smile "
                                                 + "as your dick starts to soften. This isn't the first time she's seen a penis. Is it really that fascinating? Her cheeks grow slightly redder than they already were. "
-                                                + "<i>\"Girls are interested in sex too. I've spent a lot of nights thinking about boys since puberty. You're the closest I've ever had to an actual boyfriend.\"</i> So she was a virgin "
+                                                + "<i>\"Girls are interested in sex too. I've spent a lot of nights thinking about " + Global.getPlayer().boyOrGirl() + "s since puberty. You're the closest I've ever had to an actual " + Global.getPlayer().boyOrGirl() + "friend.\"</i> So she was a virgin "
                                                 + "when she first joined the night games? She fidgets a bit at the question, which you notice makes her hips wiggle in quite an attractive way. <i>\"Not quite a virgin. "
-                                                + "In high school, I had a friend, who was a boy, but we were just friends. One day as it's getting close to graduation, we end up talking about how we both want to lose "
+                                                + "In high school, I had a close friend like that, but in the end we were just friends. One day as it's getting close to graduation, we end up talking about how we both want to lose "
                                                 + "our virginities before we get to college, so we decide to help each other out.\"</i> She's bright red with embarrassment, but continues. <i>\"It was kinda awkward, but a lot of fun, "
                                                 + "and afterwards we went back to being just friends and never talked about it again. I don't regret doing it, but I never felt any strong feelings for him.\"</i> She turns to "
                                                 + "face you and gives you a shy smile. <i>\"That's probably why it feels so much better with you.\"</i><p>She looks back at your crotch and grins eagerly. <i>\"Looks like you're ready "

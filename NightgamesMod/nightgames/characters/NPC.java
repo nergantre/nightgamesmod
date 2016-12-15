@@ -45,7 +45,7 @@ import nightgames.stance.Behind;
 import nightgames.stance.Neutral;
 import nightgames.stance.Position;
 import nightgames.status.Enthralled;
-import nightgames.status.Horny;
+import nightgames.status.Pheromones;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
 import nightgames.trap.Trap;
@@ -527,11 +527,11 @@ public class NPC extends Character {
     }
     
     private void pickAndDoAction(Collection<Action> available, Collection<Action> moves, Collection<Movement> radar) {
-        available.removeIf(a -> a == null || !a.usable(this));
         if (available.isEmpty()) {
             available.addAll(Global.getActions());
             available.addAll(moves);
         }
+        available.removeIf(a -> a == null || !a.usable(this));
         if (location.humanPresent()) {
             Global.gui().message("You notice " + name() + ai.move(available, radar).execute(this).describe());
         } else {
@@ -772,10 +772,10 @@ public class NPC extends Character {
         if (opponent.has(Trait.pheromones) && opponent.getArousal().percent() >= 20 && opponent.rollPheromones(c)) {
             c.write(opponent, "<br>You see " + name()
                             + " swoon slightly as she gets close to you. Seems like she's starting to feel the effects of your musk.");
-            add(c, Horny.getWithBiologicalType(opponent, this, opponent.getPheromonePower(), 10,
-                            opponent.nameOrPossessivePronoun() + " pheromones"));
+            add(c, Pheromones.getWith(opponent, this, opponent.getPheromonePower(), 10));
         }
         if (has(Trait.RawSexuality)) {
+            c.write(this, Global.format("{self:NAME-POSSESSIVE} raw sexuality turns both of you on.", this, opponent));
             tempt(c, opponent, getArousal().max() / 20);
             opponent.tempt(c, this, opponent.getArousal().max() / 20);
         }

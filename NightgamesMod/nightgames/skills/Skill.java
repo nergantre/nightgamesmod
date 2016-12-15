@@ -30,14 +30,17 @@ public abstract class Skill {
     public Skill(String name, Character self) {
         this(name, self, 0);
     }
-
     public Skill(String name, Character self, int cooldown) {
+        this(name, self, cooldown, Staleness.build().withDecay(.1).withFloor(.5).withRecovery(.05));
+    }
+
+    public Skill(String name, Character self, int cooldown, Staleness staleness) {
         this.name = name;
         setSelf(self);
         this.cooldown = cooldown;
+        this.staleness = staleness;
         choice = "";
         tags = new HashSet<>();
-        staleness = Staleness.build().withDecay(.1).withFloor(.5).withRecovery(.05);
     }
 
     public final boolean requirements(Combat c, Character target) {

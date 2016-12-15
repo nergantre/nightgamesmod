@@ -104,15 +104,15 @@ public class Encounter implements Serializable, IEncounter {
             } else if (p2.state == State.masturbating) {
                 caught(p1, p2);
                 return true;
-            } else if (p1.spotCheck(p2.get(Attribute.Perception))) {
-                if (p2.spotCheck(p1.get(Attribute.Perception))) {
+            } else if (p2.spotCheck(p1)) {
+                if (p1.spotCheck(p2)) {
                     p1.faceOff(p2, this);
                     p2.faceOff(p1, this);
                 } else {
                     p2.spy(p1, this);
                 }
             } else {
-                if (p2.spotCheck(p1.get(Attribute.Perception))) {
+                if (p1.spotCheck(p2)) {
                     p1.spy(p2, this);
                 } else {
                     location.endEncounter();

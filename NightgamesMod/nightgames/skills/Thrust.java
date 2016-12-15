@@ -9,6 +9,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
+import nightgames.skills.damage.Staleness;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
 import nightgames.status.addiction.Addiction;
@@ -16,12 +17,18 @@ import nightgames.status.addiction.AddictionType;
 
 public class Thrust extends Skill {
     public Thrust(String name, Character self) {
-        super(name, self);
+        // thrust skills become stale very slowly and recovers pretty fast
+        this(name, self, Staleness.build().withDecay(.05).withDefault(1.0).withRecovery(.10).withFloor(.5));
+    }
+    public Thrust(String name, Character self, Staleness staleness) {
+        super(name, self, 0 , staleness);
     }
 
     public Thrust(Character self) {
-        super("Thrust", self);
+        this("Thrust", self);
         addTag(SkillTag.pleasureSelf);
+        addTag(SkillTag.fucking);
+        addTag(SkillTag.thrusting);
     }
 
     @Override
@@ -70,8 +77,13 @@ public class Thrust extends Skill {
         }
         mt = target.modRecoilPleasure(c, mt);
 
-        if (getSelf().human() || target.human()) {
-            Player p = Global.getPlayer();
+        Player p = null;
+        if (getSelf().human()) {
+            p = (Player) getSelf();
+        } else if (target.human()) {
+            p = (Player) target;
+        }
+        if (p != null) {
             Character npc = c.getOpponent(p);
             if (p.checkAddiction(AddictionType.BREEDER, npc)) {
                 float bonus = .3f * p.getAddiction(AddictionType.BREEDER).map(Addiction::getCombatSeverity)
@@ -180,7 +192,7 @@ public class Thrust extends Skill {
                             + "%s dick is gradually driving %s to %s limit.", getSelf().subject(),
                             getSelf().possessivePronoun(), target.nameDirectObject(),
                             target.directObject(), getSelf().nameOrPossessivePronoun(),
-                            getSelfOrgan(c).fullDescribe(getSelf()),
+                            getSelfOrgan(c).describe(getSelf()),
                             target.nameOrPossessivePronoun(), target.directObject(),
                             target.possessivePronoun());
         } else {

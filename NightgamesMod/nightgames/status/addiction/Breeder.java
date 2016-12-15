@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.Player;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
@@ -16,12 +17,12 @@ import nightgames.status.Stsflag;
 
 public class Breeder extends Addiction {
 
-    public Breeder(Character cause, float magnitude) {
-        super("Breeder", cause, magnitude);
+    public Breeder(Player affected, Character cause, float magnitude) {
+        super(affected, "Breeder", cause, magnitude);
     }
 
-    public Breeder(Character cause) {
-        this(cause, .01f);
+    public Breeder(Player affected, Character cause) {
+        this(affected, cause, .01f);
     }
 
     @Override
@@ -135,7 +136,7 @@ public class Breeder extends Addiction {
     @Override
     public String initialMessage(Combat c, boolean replaced) {
         if (inWithdrawal) {
-            return "Arousal rages through your body at the sight of " + c.getOpponent(Global.getPlayer()).name() 
+            return "Arousal rages through your body at the sight of " + c.getOpponent(affected).name() 
                             + ", expecting a well-earned fuck.";
         }
         return "Your instincts howl at the sight of " + cause.name() + ", urging you to fuck " + cause.directObject() + " as soon as possible.";
@@ -231,11 +232,11 @@ public class Breeder extends Addiction {
 
     @Override
     public Status instance(Character newAffected, Character newOther) {
-        return new Breeder(newAffected, magnitude);
+        return new Breeder((Player) newAffected, newOther, magnitude);
     }
 
     @Override public Status loadFromJson(JsonObject obj) {
-        return new Breeder(Global.getCharacterByType(obj.get("cause").getAsString()),
+        return new Breeder(Global.getPlayer(), Global.getCharacterByType(obj.get("cause").getAsString()),
                         (float) obj.get("magnitude").getAsInt());
     }
 

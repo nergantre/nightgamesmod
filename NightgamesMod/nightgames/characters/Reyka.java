@@ -75,8 +75,7 @@ public class Reyka extends BasePersonality {
         character.getGrowth().bonusArousal = 3;
         preferredAttributes.add(c -> c.get(Attribute.Dark) < 50 && c.get(Attribute.Dark) <= c.get(Attribute.Fetish) + 10
                         ? Optional.of(Attribute.Dark) : Optional.empty());
-        preferredAttributes
-                        .add(c -> c.get(Attribute.Dark) > c.get(Attribute.Fetish) + 10 && c.get(Attribute.Fetish) < 50
+        preferredAttributes.add(c -> c.get(Attribute.Dark) > c.get(Attribute.Fetish) + 10 && c.get(Attribute.Fetish) < 50
                                         ? Optional.of(Attribute.Fetish) : Optional.empty());
         preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
 
@@ -182,8 +181,8 @@ public class Reyka extends BasePersonality {
             return "Reyka alternates between long hard thrusts and sensual grinding to keep you from getting used to the stimulation, and the pleasure it is "
                             + "inflicting on you stops you from mustering the resolve to fight back. <i>\"I do love a good bit of pegging.\"</i> Reyka comments as she begins "
                             + "to gently rock the head of the strapon over your prostate, leaving you breathing hard as your mouth hangs open. <i>\"There's a special "
-                            + "pleasure in making a boy a little butt slave.\"</i> Her words shock you and cause your resistance to slip a little. <i>\"Hmmm?\"</i> She purrs <i>\"Would "
-                            + "you like that?\"</i> she asks, picking up the pace of her thrusting. <i>\"To be my little pet boy slut?\"</i> Your only response is to cum. Hard. Ropes "
+                            + "pleasure in making a " + Global.getPlayer().boyOrGirl() + " a little butt slave.\"</i> Her words shock you and cause your resistance to slip a little. <i>\"Hmmm?\"</i> She purrs <i>\"Would "
+                            + "you like that?\"</i> she asks, picking up the pace of her thrusting. <i>\"To be my little pet " + Global.getPlayer().boyOrGirl() + " slut?\"</i> Your only response is to cum. Hard. Ropes "
                             + "of cum fall to the ground below you.<p>Reyka pouts as she pulls out <i>\"Such a good waste of semen though.\"</i> she tuts. <i>\"Looks like you "
                             + "still owe me a meal.\"</i> She smirks in a way that makes your eyes flash quickly left to right, looking for an escape route. Reyka is too quick "
                             + "however and soon you find yourself pinned with your still hard cock buried deep in her pussy.<p>She rides you until you cum again and she "
@@ -224,7 +223,7 @@ public class Reyka extends BasePersonality {
     @Override
     public String defeat(Combat paramCombat, Result flag) {
         character.arousal.empty();
-        if (character.has(Trait.succubus) && character.get(Attribute.Dark) >= 6) {
+        if (character.has(Trait.lacedjuices) && Global.random(3) == 0 ) {
             return "Reyka shivers as she approaches her climax and her legs fall open defenselessly. You can't resist taking advantage of this opening to deliver the "
                             + "coup de grace. You grab hold of her thighs and run your tongue across her wet pussy. Her love juice is surprisingly sweet and almost intoxicating, "
                             + "but you stay focused on your goal. You ravage her vulnerable love button with your tongue and a flood of tasty wetness hits you as she cums. You "
@@ -402,11 +401,11 @@ public class Reyka extends BasePersonality {
     @Override
     public String night() {
         return "You feel exhausted after yet another night of sexfighting. You're not complaining, of course; "
-                        + "what guy would when having this much sex with several different girls? Still, a weekend would "
+                        + "what " + Global.getPlayer().guyOrGirl() + " would when having this much sex with several different girls? Still, a weekend would "
                         + "be nice sometime... About half way to your room, Reyka steps in front of you. Where did she come from? "
                         + "<i>\"Listen, " + Global.getPlayer().name()
                         + ", I've been doing some thinking lately. You know very well I've had sex with a lot "
-                        + "of guys and a fair amount of girls, too, right?\"</i> You just nod, wondering where this is going. <i>\"Well, "
+                        + "of " + Global.getPlayer().guyOrGirl() + "s and a fair amount of girls, too, right?\"</i> You just nod, wondering where this is going. <i>\"Well, "
                         + "in all that time no one has ever made me feel the way you can. I don't know why, really, but I can't help "
                         + "feeling there's something special about you.\"</i> You stand there, paralyzed, with a look of amazement "
                         + "on your face. Reyka intimidates you. Hell, she is downright terrifying at times. To see and hear "

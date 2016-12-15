@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
@@ -14,8 +15,8 @@ import nightgames.status.CockBound;
 import nightgames.status.DivineCharge;
 import nightgames.status.Enthralled;
 import nightgames.status.Frenzied;
-import nightgames.status.Horny;
 import nightgames.status.IgnoreOrgasm;
+import nightgames.status.Pheromones;
 import nightgames.status.Shamed;
 import nightgames.status.SlimeMimicry;
 import nightgames.status.Stsflag;
@@ -230,8 +231,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                                 opponent.subject()));
                 base /= 2;
             }
-            opponent.add(c, Horny.getWithBiologicalType(self, opponent, (float) base, 5,
-                            self.nameOrPossessivePronoun() + " feral musk"));
+            opponent.add(c, Pheromones.getWith(self, opponent, (float) base, 5, " feral musk"));
         }
         if (opponent.has(Trait.pussyhandler) || opponent.has(Trait.anatomyknowledge)) {
             c.write(opponent,
@@ -598,7 +598,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
             c.write(self, Global.format(
                             "As {self:SUBJECT-ACTION:cum|cums} hard, an literal explosion of pheromones hits {other:name-do}. {other:POSSESSIVE} entire body flushes in arousal; {other:subject} better finish this fast!",
                             self, opponent));
-            opponent.add(c, Horny.getWithBiologicalType(self, opponent, 10, 5, self.nameOrPossessivePronoun() + " orgasmic pheromones"));
+            opponent.add(c, Pheromones.getWith(self, opponent, 10, 5, " orgasmic pheromones"));
         }
     }
 
@@ -613,15 +613,14 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                                                 + " over, {other:subject-action:are|is} much more drained of cum than usual.",
                                 self, opponent));
                 opponent.loseWillpower(c, 10 + Global.random(Math.min(20, self.get(Attribute.Bio))));
-            } else if (countsAs(self, divine) && self.has(Trait.zealinspiring) && opponent.human()
+            } else if (countsAs(self, divine) && self.has(Trait.zealinspiring) && opponent.human() && opponent instanceof Player
                             && Global.random(4) > 0) {
                 c.write(self, Global.format(
                                 "As {other:possessive} cum floods {self:name-possessive} "
                                                 + "{self:body-part:pussy}, a holy aura surrounds {self:direct-object}. The soothing"
                                                 + " light washes over {other:pronoun}, filling {other:direct-object} with zeal.",
                                 self, opponent));
-                Global.getPlayer()
-                      .addict(AddictionType.ZEAL, self, Addiction.MED_INCREASE);
+                ((Player)opponent).addict(AddictionType.ZEAL, self, Addiction.MED_INCREASE);
             }
         }
     }

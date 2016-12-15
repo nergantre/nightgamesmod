@@ -55,6 +55,7 @@ import nightgames.items.clothing.ClothingSlot;
 import nightgames.items.clothing.ClothingTrait;
 import nightgames.items.clothing.Outfit;
 import nightgames.json.JsonUtils;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.pet.CharacterPet;
 import nightgames.pet.PetCharacter;
 import nightgames.skills.Command;
@@ -294,9 +295,19 @@ public abstract class Character extends Observable implements Cloneable {
                     total += 2;
                 }
                 break;
+            case Cunning:
+                if (has(Trait.FeralAgility) && is(Stsflag.feral)) {
+                    // extra 5 strength at 10, extra 17 at 60.
+                    total += Math.pow(getLevel(), .7);
+                }
+                break;
             case Power:
                 if (has(Trait.testosterone) && hasDick()) {
                     total += Math.min(20, 10 + getLevel() / 4);
+                }
+                if (has(Trait.FeralStrength) && is(Stsflag.feral)) {
+                    // extra 5 strength at 10, extra 17 at 60.
+                    total += Math.pow(getLevel(), .7);
                 }
                 if (has(Trait.valkyrie)) {
                     total += 10;
@@ -662,9 +673,14 @@ public abstract class Character extends Observable implements Cloneable {
     public void tempt(Combat c, Character tempter, BodyPart with, int i) {
         String extraMsg = "";
         boolean oblivious = false;
+        double extraModifiers = 1.0;
         if (has(Trait.oblivious)) {
-            extraMsg = " (Oblivious)";
-            oblivious = true;
+            extraMsg += " (Oblivious)";
+            extraModifiers *= .1;
+        }
+        if (has(Trait.Unsatisfied) && (getArousal().percent() >= 50 || getWillpower().percent() < 25)) {
+            extraMsg += " (Unsatisfied)";
+            extraModifiers *= .2;
         }
         if (tempter != null) {
             int dmg;
@@ -735,8 +751,13 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void arouse(int i, Combat c, String source) {
-        String message = String.format("%s aroused for <font color='rgb(240,100,100)'>%d<font color='white'> %s\n",
-                        Global.capitalizeFirstLetter(subjectWas()), i, source);
+        String extraMsg = "";
+        if (has(Trait.Unsatisfied) && (getArousal().percent() >= 50 || getWillpower().percent() < 25)) {
+            extraMsg += " (Unsatisfied)";
+            i = Math.max(1, i / 5);
+        }
+        String message = String.format("%s aroused for <font color='rgb(240,100,100)'>%d<font color='white'> %s%s\n",
+                        Global.capitalizeFirstLetter(subjectWas()), i, source, extraMsg);
         if (c != null) {
             c.writeSystemMessage(message);
         }
@@ -1246,8 +1267,11 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     private double getPheromonesChance(Combat c) {
-        double baseChance = .1 + getExposure() / 2 + (arousal.getOverflow() + arousal.get()) / (float) arousal.max();
+        double baseChance = .1 + getExposure() / 3 + (arousal.getOverflow() + arousal.get()) / (float) arousal.max();
         double mod = c.getStance().pheromoneMod(this);
+        if (has(Trait.FastDiffusion)) {
+            mod = Math.max(2, mod);
+        }
         return Math.min(1, baseChance * mod);
     }
 
@@ -1378,6 +1402,9 @@ public abstract class Character extends Observable implements Cloneable {
         }
         if (from.has(Trait.Clingy)) {
             total -= 5;
+        }
+        if (from.has(Trait.FeralStrength) && is(Stsflag.feral)) {
+            total += 5;
         }
         int stanceMod = c.getStance().escape(c, this);
         if (stanceMod < 0) {
@@ -1632,7 +1659,8 @@ public abstract class Character extends Observable implements Cloneable {
             c.write(this, orgasmLiner);
             c.write(opponent, opponentOrgasmLiner);
         }
-        if (has(Trait.nymphomania) && (is(Stsflag.feral) || Global.random(100) < Math.sqrt(get(Attribute.Nymphomania)) * 10) && !getWillpower().isEmpty() && times == totalTimes) {
+
+        if (has(Trait.nymphomania) && (Global.random(100) < Math.sqrt(get(Attribute.Nymphomania) + get(Attribute.Animism)) * 10) && !getWillpower().isEmpty() && times == totalTimes) {
             if (human()) {
                 c.write("Cumming actually made you feel kind of refreshed, albeit with a burning desire for more.");
             } else {
@@ -1642,11 +1670,12 @@ public abstract class Character extends Observable implements Cloneable {
             }
             restoreWillpower(c, 5 + Math.min((get(Attribute.Animism) + get(Attribute.Nymphomania)) / 5, 15));
         }
+
         if (times == totalTimes) {
             List<Status> purgedStatuses = getStatuses().stream().filter(status -> status.mindgames() && status.flags().contains(Stsflag.purgable)).collect(Collectors.toList());
             if (!purgedStatuses.isEmpty()){
                 if (human()) {
-                    c.write(this, "Your mind clears up from after your release.");
+                    c.write(this, "Your mind clears up after your release.");
                 } else {
                     c.write(this, "You see the light of reason return to " + nameDirectObject() + "  after " + possessivePronoun() + " release.");
                 }
@@ -1753,7 +1782,7 @@ public abstract class Character extends Observable implements Cloneable {
                                 this, opponent));
             }
         }
-        if (human() && opponent.has(Trait.mindcontroller) && cloned == 0) {
+        if (human() && this instanceof Player && opponent.has(Trait.mindcontroller) && cloned == 0) {
             MindControl.Result res = new MindControl.Result(opponent, c.getStance());
             String message = res.getDescription();
             if (res.hasSucceeded()) {
@@ -1763,8 +1792,7 @@ public abstract class Character extends Observable implements Cloneable {
                                 + " With a satisfied smirk, Mara tells you to lift an arm. Before you have even processed"
                                 + " her words, you discover that your right arm is sticking straight up into the air. This"
                                 + " is probably really bad.";
-                Global.getPlayer()
-                      .addict(AddictionType.MIND_CONTROL, opponent, Addiction.MED_INCREASE);
+                ((Player)this).addict(AddictionType.MIND_CONTROL, opponent, Addiction.MED_INCREASE);
             }
             c.write(this, message);
         }
@@ -1846,7 +1874,7 @@ public abstract class Character extends Observable implements Cloneable {
             reduced = " (Strong-willed)";
         }
         if (is(Stsflag.feral) && primary) {
-            amt = amt * 2 / 3;
+            amt = amt * 1 / 2;
             reduced = " (Feral)";
         }
         int old = willpower.get();
@@ -2097,16 +2125,16 @@ public abstract class Character extends Observable implements Cloneable {
         return check(Attribute.Cunning, Global.random(20) + perception) || state == State.hidden;
     }
 
-    public boolean spotCheck(int perception) {
+    public boolean spotCheck(Character checked) {
+        int dc = 0;
         if (state == State.hidden) {
-            int dc = perception + 10;
-            if (has(Trait.Sneaky)) {
-                dc -= 5;
-            }
-            return check(Attribute.Cunning, dc);
-        } else {
-            return true;
+            dc += checked.get(Attribute.Cunning) + 20;
         }
+        if (has(Trait.Sneaky)) {
+            dc += 20;
+        }
+        dc -= get(Attribute.Perception) * 2;
+        return check(Attribute.Cunning, dc);
     }
 
     public void travel(Area dest) {
@@ -2528,6 +2556,9 @@ public abstract class Character extends Observable implements Cloneable {
         if (has(Trait.clairvoyance)) {
             ac += 5;
         }
+        if (has(Trait.FeralAgility) && is(Stsflag.feral)) {
+            ac += 5;
+        }
         return ac;
     }
 
@@ -2559,7 +2590,10 @@ public abstract class Character extends Observable implements Cloneable {
         if (opponent.is(Stsflag.countered)) {
             counter -= 10;
         }
-        // Maximum counter chance is 3 + 5 + 2 + 3 + 3 + 3 = 19, which is super hard to achieve.
+        if (has(Trait.FeralAgility) && is(Stsflag.feral)) {
+            counter += 5;
+        }
+        // Maximum counter chance is 3 + 5 + 2 + 3 + 3 + 3 + 5 = 24, which is super hard to achieve.
         // I guess you also get some more counter with certain statuses effects like water form.
         // Counters should be pretty rare.
         return Math.max(0, counter);

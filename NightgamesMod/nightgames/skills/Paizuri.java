@@ -55,7 +55,7 @@ public class Paizuri extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.get(Attribute.Seduction) >= 28 && user.hasBreasts();
+        return user.get(Attribute.Seduction) >= 20 && user.hasBreasts();
     }
 
     @Override

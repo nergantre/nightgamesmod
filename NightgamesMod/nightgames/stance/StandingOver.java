@@ -52,12 +52,12 @@ public class StandingOver extends AbstractFacingStance {
 
     @Override
     public boolean reachTop(Character c) {
-        return c != bottom;
+        return c != top && c != bottom;
     }
 
     @Override
     public boolean reachBottom(Character c) {
-        return c != bottom;
+        return c != top && c != bottom;
     }
 
     @Override
@@ -94,7 +94,7 @@ public class StandingOver extends AbstractFacingStance {
     public double pheromoneMod(Character self) {
         return 1.5;
     }
-    
+
     @Override
     public int dominance() {
         return 1;

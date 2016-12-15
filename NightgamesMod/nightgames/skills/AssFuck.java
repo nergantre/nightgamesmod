@@ -93,7 +93,7 @@ public class AssFuck extends Fuck {
                 c.write(getSelf(), receive(c, premessage.length(), Result.normal, target));
             }
         }
-        
+
         boolean voluntary = getSelf().canMakeOwnDecision();
         if (c.getStance().behind(getSelf())) {
             if (getSelf().getType().equals("Eve")) {

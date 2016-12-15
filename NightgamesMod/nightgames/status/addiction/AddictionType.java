@@ -1,8 +1,7 @@
 package nightgames.status.addiction;
 
-import java.util.function.BiFunction;
-
 import nightgames.characters.Character;
+import nightgames.characters.Player;
 
 public enum AddictionType {
     MAGIC_MILK(MagicMilkAddiction::new),
@@ -12,18 +11,22 @@ public enum AddictionType {
     MIND_CONTROL(MindControl::new),
     DOMINANCE(Dominance::new)
     ;
+    
+    interface AddictionConstructor {
+        Addiction construct(Player affected, Character supplier, Float magnitude);
+    }
+    
+    private final AddictionConstructor constructor;
 
-    private final BiFunction<Character, Float, ? extends Addiction> constructor;
-
-    private AddictionType(BiFunction<Character, Float, ? extends Addiction> constructor) {
+    private AddictionType(AddictionConstructor constructor) {
         this.constructor = constructor;
     }
-    
-    public Addiction build(Character cause) {
-        return build(cause, .01f);
+
+    public Addiction build(Player affected, Character cause) {
+        return build(affected, cause, .01f);
     }
     
-    public Addiction build(Character cause, float mag) {
-        return constructor.apply(cause, mag);
+    public Addiction build(Player affected, Character cause, float mag) {
+        return constructor.construct(affected, cause, mag);
     }
 }

@@ -155,7 +155,7 @@ public class Global {
     public static boolean debug[] = new boolean[DebugFlags.values().length];
     public static int debugSimulation = 0;
     public static double moneyRate = 1.0;
-    public static double xpRate = 1.0;
+    public static double xpRate = 3.0;
     public static ContextFactory factory;
     public static Context cx;
 
@@ -276,6 +276,11 @@ public class Global {
         return gui;
     }
 
+    /**
+     * WARNING DO NOT USE THIS IN ANY COMBAT RELATED CODE.
+     * IT DOES NOT TAKE INTO ACCOUNT THAT THE PLAYER GETS CLONED. WARNING. WARNING.
+     * @return
+     */
     public static Player getPlayer() {
         return human;
     }
@@ -1442,6 +1447,12 @@ public class Global {
 
         matchActions.put("girl", (self, first, second, third) -> {
                 return self.guyOrGirl();
+        });
+        matchActions.put("guy", (self, first, second, third) -> {
+            return self.guyOrGirl();
+        });
+        matchActions.put("boy", (self, first, second, third) -> {
+            return self.boyOrGirl();
         });
     }
 

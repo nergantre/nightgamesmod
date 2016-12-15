@@ -141,7 +141,7 @@ public class Eve extends BasePersonality {
 
     @Override
     public String bbLiner(Combat c, Character other) {
-        return "Eve grins at you and pats her own groin. <i>\"Better you than me, boy.\"</i>";
+        return "Eve grins at you and pats her own groin. <i>\"Better you than me, " + c.getOpponent(character).boyOrGirl() + ".\"</i>";
     }
 
     @Override
@@ -151,7 +151,7 @@ public class Eve extends BasePersonality {
 
     @Override
     public String stunLiner(Combat c, Character opponent) {
-        return "Eve lets out a soft growl as she lays flat on the floor. <i>\"Enjoy it while you can, boy. As soon as I catch my breath, your ass is mine.\"</i>";
+        return "Eve lets out a soft growl as she lays flat on the floor. <i>\"Enjoy it while you can, " + c.getOpponent(character).boyOrGirl() + ". As soon as I catch my breath, your ass is mine.\"</i>";
     }
 
     @Override
@@ -189,7 +189,7 @@ public class Eve extends BasePersonality {
                             + "pain causes your ass to clench up involuntarily. Eve buries her "
                             + "cock deep in your ass and you feel her hot seed fill you. You slump "
                             + "to the floor as she releases you, defeated and spent. <i>\"You make"
-                            + " a pretty good cocksleeve, boy. Let's do this again sometime.\"</i>";
+                            + " a pretty good cocksleeve, " + c.getOpponent(character).boyOrGirl() + ". Let's do this again sometime.\"</i>";
         }
 
         return "You try valiantly to outlast Eve, but it's no good. She's got you right "
@@ -233,7 +233,7 @@ public class Eve extends BasePersonality {
                         + " Through the haze of pain, you're vaguely aware that Eve is jerking "
                         + "off while watching your reaction, and she soon adds her ejaculation "
                         + "to the pool of semen you shot out. <i>\"You sure put on a hell of a "
-                        + "show, boy. Don't worry, I didn't hit you nearly as hard as it must have"
+                        + "show, " + c.getOpponent(character).boyOrGirl() + ". Don't worry, I didn't hit you nearly as hard as it must have"
                         + " felt. You'll be ok in a couple minutes.\"</i>";
     }
 
@@ -242,7 +242,7 @@ public class Eve extends BasePersonality {
         return "As you pleasure Eve, she gradually stops fighting back, apparently more interested in enjoying her orgasm than in the outcome of the fight. You grab her throbbing "
                         + "cock and pump it rapidly. She lets out a scream of pleasure as she cums and fires powerful jets of semen into the air. She relaxes on the floor with a blissful "
                         + "expression, idly playing with her own fluids and occasionally licking them off her fingers. <p>You wave your unsatisfied erection in front of her face to remind her "
-                        + "that she still owes you an orgasm. Eve smiles up at you lewdly. <i>\"Don't worry, boy. I'll get you off properly, but I don't want you just sitting back and enjoying "
+                        + "that she still owes you an orgasm. Eve smiles up at you lewdly. <i>\"Don't worry, " + c.getOpponent(character).boyOrGirl() + ". I'll get you off properly, but I don't want you just sitting back and enjoying "
                         + "it. Sucking you dry is bound to get me all hot and bothered again, and I don't plan to walk away with a boner. Make sure you give as good as you get.\"</i> She's pretty "
                         + "demanding for a loser. Fortunately for her, you're in a generous mood. Eve seems eager to hold up her side of the deal. She takes most of your cock into her mouth "
                         + "without much difficulty and begins to explore your length with her tongue. You watch her dick harden again, sooner than you would have expected.";
@@ -288,7 +288,7 @@ public class Eve extends BasePersonality {
                         + " same as a win. Eve probably doesn't care about losing her clothes, "
                         + "but giving you a free point isn't the way to win a match. She lets out "
                         + "surprisingly girly giggle in response. <i>\"You're adorably naive if "
-                        + "you think winning is the point of all this. I like seeing dumb boys "
+                        + "you think winning is the point of all this. I like seeing dumb " + c.getOpponent(character).boyOrGirl() + "s "
                         + "like you try your hardest.\"</i> She sits up and smiles at you in pure "
                         + "amusement. <i>\"Go on then Tiger. Let's see you win this match and "
                         + "prove you're the best sexfighter on campus. Keep imagining it makes a "
@@ -314,7 +314,7 @@ public class Eve extends BasePersonality {
                             + " are many better ways to lose than getting pegged in the ass. You "
                             + "struggle as best you can, but you're well aware it's completely futile."
                             + " Pretty quickly, she gives you a slap on the ass and leaves your anus"
-                            + " alone. <i>\"Bad angle for insertion, lucky for you boy. You're going"
+                            + " alone. <i>\"Bad angle for insertion, lucky for you " + c.getOpponent(character).boyOrGirl() + ". You're going"
                             + " to have to find another way to entertain me.\"</i> It seems a little"
                             + " unfair that she's putting the responsibility of entertainment on you"
                             + ", when you're almost completely incapacitated. She doesn't actually "
@@ -367,7 +367,7 @@ public class Eve extends BasePersonality {
                         + "and bends down to suck on your defenseless dick. You groan in pleasure as her tongue plays with your glans. Suddenly, she yelps in surprise and loses her balance. "
                         + "You spot Eve standing behind her, fondling her exposed girl parts. " + target.name()
                         + " tries to get back to her feet, but Eve easily forces her onto her back. "
-                        + "<i>\"When I saw your sexy ass waving in front of me, I thought about giving you a good fucking, but then I noticed how enthusiastically you were blowing that boy.\"</i> "
+                        + "<i>\"When I saw your sexy ass waving in front of me, I thought about giving you a good fucking, but then I noticed how enthusiastically you were blowing that " + c.getOpponent(character).boyOrGirl() + ".\"</i> "
                         + "She straddles the other girl's face and presses her girl-cock against her lips. <i>\"Let's see you put those skills to better use.\"</i><br>"
                         + "Apparently you've been forgotten. Oh well. " + target.name()
                         + "'s pussy looks pretty lonely. Looks like this will be your win.<br>";

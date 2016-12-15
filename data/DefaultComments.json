@@ -61,7 +61,7 @@
       },
       {
         "situation": "VAG_SUB_CATCH_WIN",
-        "comment": "Haha! I knew a horny boy like just can't resist once he's inside of me! Now finish it!"
+        "comment": "Haha! I knew a horny {other:boy} like just can't resist once he's inside of me! Now finish it!"
       },
       {
         "situation": "VAG_SUB_CATCH_LOSE",
@@ -69,7 +69,7 @@
       },
       {
         "situation": "ANAL_DOM_CATCH_WIN",
-        "comment": "You are a dirty boy, aren't you? I might be a bit dirty as well for doing this..."
+        "comment": "You are a dirty {other:boy}, aren't you? I might be a bit dirty as well for doing this..."
       },
       {
         "situation": "ANAL_SUB_CATCH_LOSE",
@@ -89,7 +89,7 @@
       },
       {
         "situation": "OTHER_ENTHRALLED",
-        "comment": "Oh, I do so enjoy to have a boy at my bidding like this!"
+        "comment": "Oh, I do so enjoy to have a {other:boy} at my bidding like this!"
       },
       {
         "situation": "OTHER_BOUND",
@@ -179,7 +179,7 @@
       },
       {
         "situation": "ANAL_SUB_CATCH_WIN",
-        "comment": "I have a boy pegging himself for me! Best. Day. Ever!"
+        "comment": "I have a {other:boy} pegging himself for me! Best. Day. Ever!"
       },
       {
         "situation": "ANAL_DOM_CATCH_LOSE",
@@ -289,7 +289,7 @@
       },
       {
         "situation": "ANAL_SUB_CATCH_WIN",
-        "comment": "That's what you get for being such a dirty boy! Cum in my ass already!"
+        "comment": "That's what you get for being such a dirty {other:boy}! Cum in my ass already!"
       },
       {
         "situation": "ANAL_SUB_CATCH_LOSE",

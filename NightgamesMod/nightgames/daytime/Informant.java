@@ -368,7 +368,7 @@ public class Informant extends Activity {
                   .message("Got it, I'll see about sending " + name+ " to another session.");
             Global.setCharacterDisabledFlag(Global.getCharacterByName(name));
             Global.gui()
-                  .choose(this, "Back");
+                  .choose(this, "Select Competitors");
             return;
         }
         if (choice.startsWith(RETURN_PREFIX)) {
@@ -377,7 +377,7 @@ public class Informant extends Activity {
                   .message("Missing " + name+ " already? I'll see what I can do.");
             Global.unsetCharacterDisabledFlag(Global.getCharacterByName(name));
             Global.gui()
-                  .choose(this, "Back");
+                  .choose(this, "Select Competitors");
             return;
         }
         if (choice.equals("More Competitors")) {

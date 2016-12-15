@@ -20,11 +20,13 @@ import com.google.gson.JsonObject;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.CharacterSex;
+import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.json.JsonUtils;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.pet.PetCharacter;
 import nightgames.skills.Skill;
 import nightgames.status.Abuff;
@@ -505,37 +507,52 @@ public class Body implements Cloneable {
         if (opponent != null) {
             perceptionBonus *= opponent.body.getCharismaBonus(c, character);
         }
-        double bonusDamage = bonus;
+        double baseBonusDamage = bonus;
         if (opponent != null) {
-            bonusDamage += with.applyBonuses(opponent, character, target, magnitude, c);
-            bonusDamage += target.applyReceiveBonuses(character, opponent, with, magnitude, c);
+            baseBonusDamage += with.applyBonuses(opponent, character, target, magnitude, c);
+            baseBonusDamage += target.applyReceiveBonuses(character, opponent, with, magnitude, c);
             if (!sub) {
                 for (BodyPart p : opponent.body.getCurrentParts()) {
-                    bonusDamage += p.applySubBonuses(opponent, character, with, target, magnitude, c);
+                    baseBonusDamage += p.applySubBonuses(opponent, character, with, target, magnitude, c);
                 }
             }
             // double the base damage if the opponent is submissive and in a
             // submissive stance
             if (c.getStance()
                  .sub(opponent) && opponent.has(Trait.submissive) && target.isErogenous()) {
-                bonusDamage += bonusDamage + magnitude;
+                baseBonusDamage += baseBonusDamage + magnitude;
             } else if (c.getStance()
                         .dom(opponent) && opponent.has(Trait.submissive) && target.isErogenous()) {
-                bonusDamage -= (bonusDamage + magnitude) * 2. / 3.;
+                baseBonusDamage -= (baseBonusDamage + magnitude) * 2. / 3.;
             }
         }
+
+        if (character.has(Trait.Rut) && character.is(Stsflag.frenzied)) {
+            baseBonusDamage -= (baseBonusDamage + magnitude) / 2;
+        }
+
         Optional<BodyFetish> fetish = getFetish(with.getType());
         if (fetish.isPresent()) {
-            bonusDamage += magnitude * (1 + fetish.get().magnitude);
+            perceptionBonus += fetish.get().magnitude * 3;
             character.add(c, new BodyFetish(character, opponent, with.getType(), .05));
         }
-        double origBase = bonusDamage + magnitude;
+        double base = baseBonusDamage + magnitude;
 
+        // use the status bonus damage as part of the multiplier instead of adding to the base.
+        double statusBonusDamage = 0;
         for (Status s : character.status) {
-            bonusDamage += s.pleasure(c, with, target, origBase);
+            statusBonusDamage += s.pleasure(c, with, target, base);
         }
-        bonusDamage = Math.max(0, bonusDamage);
-        double base = (magnitude + bonusDamage);
+
+        double statusMultiplier = (base + statusBonusDamage) / base;
+        sensitivity += statusMultiplier - 1;
+
+        boolean unsatisfied = false;
+        if (character.has(Trait.Unsatisfied) && (character.getArousal().percent() >= 50 || character.getWillpower().percent() < 25) && (skill == null || !skill.getTags(c).contains(SkillTag.fucking))) {
+            pleasure -= 4;
+            unsatisfied = true;
+        }
+
         double multiplier = Math.max(0, 1 + ((sensitivity - 1) + (pleasure - 1) + (perceptionBonus - 1)));
         double staleness = 1.0;
         double stageMultiplier = 1.0;
@@ -548,14 +565,14 @@ public class Body implements Cloneable {
         multiplier = Math.max(0, multiplier + stageMultiplier) * staleness;
 
         double dominance = 0.0;
-        if (character.human() && Global.getPlayer().checkAddiction(AddictionType.DOMINANCE, opponent)
+        if (character.human() && character instanceof Player && ((Player)character).checkAddiction(AddictionType.DOMINANCE, opponent)
                        && c.getStance().dom(opponent)) {
-            float mag = Global.getPlayer().getAddiction(AddictionType.DOMINANCE).get().getMagnitude();
+            float mag = ((Player)character).getAddiction(AddictionType.DOMINANCE).get().getMagnitude();
             float dom = c.getStance().getDominanceOfStance(opponent);
             dominance = mag * (dom / 5.0);
         }
         multiplier += dominance;
-        
+
         double damage = base * multiplier;
         double perceptionlessDamage = base * (multiplier - (perceptionBonus - 1));
 
@@ -573,9 +590,9 @@ public class Body implements Cloneable {
                             character.human() ? "<font color='rgb(150,150,255)'>" : "<font color='rgb(255,150,150)'>";
             String secondColor =
                             opponent.human() ? "<font color='rgb(150,150,255)'>" : "<font color='rgb(255,150,150)'>";
-            String bonusString = bonusDamage > 0
-                            ? String.format(" + <font color='rgb(255,100,50)'>%.1f<font color='white'>", bonusDamage)
-                            : "";
+            String bonusString = baseBonusDamage > 0
+                            ? String.format(" + <font color='rgb(255,100,50)'>%.1f<font color='white'>", baseBonusDamage)
+                            : baseBonusDamage < 0 ? String.format(" + <font color='rgb(50,100,255)'>-%.1f<font color='white'>", baseBonusDamage) : "";
             String stageString = skill == null ? "" : String.format(" + stage:%.2f", skill.multiplierForStage(character));
             String dominanceString = dominance < 0.01 ? "" : String.format(" + dominance:%.2f", dominance);
             String staleString = staleness < .99 ? String.format(" x staleness: %.2f", staleness) : "";
@@ -596,8 +613,8 @@ public class Body implements Cloneable {
         } else {
             String firstColor =
                             character.human() ? "<font color='rgb(150,150,255)'>" : "<font color='rgb(255,150,150)'>";
-            String bonusString = bonusDamage > 0
-                            ? String.format(" + <font color='rgb(255,100,50)'>%.1f<font color='white'>", bonusDamage)
+            String bonusString = baseBonusDamage > 0
+                            ? String.format(" + <font color='rgb(255,100,50)'>%.1f<font color='white'>", baseBonusDamage)
                             : "";
             String battleString = String.format(
                             "%s%s %s<font color='white'> was pleasured for <font color='rgb(255,50,200)'>%d<font color='white'> "
@@ -608,6 +625,9 @@ public class Body implements Cloneable {
             if (c != null) {
                 c.writeSystemMessage(battleString);
             }
+        }
+        if (unsatisfied) {
+            c.write(character, Global.format("Foreplay doesn't seem to do it for {self:name-do} anymore. {self:PRONOUN-ACTION:clearly need|clearly needs} to fuck!", character, opponent));
         }
         double percentPleasure = 100.0 * result / character.getArousal().max();
         if (character.has(Trait.sexualDynamo) && percentPleasure >= 5 && Global.random(4) == 0) {
@@ -639,7 +659,6 @@ public class Body implements Cloneable {
 
     /**
      * Gets how much your opponent views this body. 
-     * @param c TODO
      */
     public double getCharismaBonus(Combat c, Character opponent) {
         // you don't get turned on by yourself
@@ -650,6 +669,15 @@ public class Body implements Cloneable {
             if (c.getStance().dom(character)) {
                 effectiveSeduction += c.getStance().getDominanceOfStance(character) * (character.get(Attribute.Power) / 5.0 + character.get(Attribute.Ki) / 5.0);
             }
+
+            if (character.has(Trait.PrimalHeat) && character.is(Stsflag.frenzied)) {
+                effectiveSeduction += character.get(Attribute.Animism) / 2;
+            }
+
+            if (opponent.has(Trait.MindlessDesire) && character.is(Stsflag.frenzied)) {
+                effectiveSeduction /= 2;
+            }
+
             double seductionBonus = Math.max(0, effectiveSeduction - opponent.get(Attribute.Seduction)) / 10.0;
             double perceptionBonus = Math.sqrt(getHotness(opponent) + seductionBonus
                             * (1.0 + (opponent.get(Attribute.Perception) - 5) / 10.0));

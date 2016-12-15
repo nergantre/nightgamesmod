@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Player;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
@@ -16,14 +17,14 @@ public class MagicMilkAddiction extends Addiction {
 
     private int originalMaxWill;
 
-    public MagicMilkAddiction(Character cause, float magnitude) {
-        super("Magic Milk Addiction", cause, magnitude);
+    public MagicMilkAddiction(Player affected, Character cause, float magnitude) {
+        super(affected, "Magic Milk Addiction", cause, magnitude);
         flag(Stsflag.magicmilkcraving);
         flag(Stsflag.tolerance); // immune to regular addiction
     }
 
-    public MagicMilkAddiction(Character cause) {
-        this(cause, .01f);
+    public MagicMilkAddiction(Player affected, Character cause) {
+        this(affected, cause, .01f);
     }
 
     @Override
@@ -203,11 +204,11 @@ public class MagicMilkAddiction extends Addiction {
     @Override
     public Status instance(Character newAffected, Character newOther) {
         assert newAffected.human();
-        return new MagicMilkAddiction(newOther, magnitude);
+        return new MagicMilkAddiction((Player)newAffected, newOther, magnitude);
     }
 
     @Override public Status loadFromJson(JsonObject obj) {
-        return new MagicMilkAddiction(Global.getCharacterByType(obj.get("cause").getAsString()),
+        return new MagicMilkAddiction(Global.getPlayer(), Global.getCharacterByType(obj.get("cause").getAsString()),
                         (float) obj.get("magnitude").getAsInt());
     }
 
