@@ -184,7 +184,7 @@ public class Cassie extends BasePersonality {
                             return true;
                         }),
                         new CombatSceneChoice("Both are nice [Hard Mode]", (c, self, other) -> {
-                            c.write("You hesistate a bit when faced with the sudden question. Cassie at you expectantly, so in a moment of indecision, you reply that both sides of her are nice."
+                            c.write("You hesistate a bit when faced with the sudden question. Cassie looks at you expectantly, so in a moment of indecision, you reply that both sides of her are nice."
                                             + "<br/>"
                                             + "Cassie blushes and responds, \"Aww that's so sweet! I'll have to work hard to live up to your expectations then.\"");
                             useSubmissiveBonus();

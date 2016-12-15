@@ -128,11 +128,11 @@ public class Kat extends BasePersonality {
         character.getGrowth().bonusArousal = 2;
         character.addCombatScene(new CombatScene((c, self, other) -> {
             return self.getLevel() >= 13 && !Global.checkFlag(KAT_POWER_FOCUS) && !Global.checkFlag(KAT_SPEED_FOCUS);
-        }, (c, self, player) -> Global.format("Exhilarated after the fight, Kat pounce on you once again. "
+        }, (c, self, player) -> Global.format("Exhilarated after the fight, Kat pounces on you once again. "
                         + "She doesn't seem too keen on having more sex, so you just hold her in your lap and pet her cute cat ears. "
                         + "Kat narrows her eyes and purrs, <i>\"So what do you think nya? I've gotten better right?\"</i> "
                         + "You grin and continue scratching her fluffy ears, letting her know that she has. "
-                        + "Unfortunately Kat seems to think you're just teasing her, and puff up her cheeks cutely. "
+                        + "Unfortunately Kat seems to think you're just teasing her, and puffs up her cheeks cutely. "
                         + "<i>\"Mrrrr! You're not taking me seriously! I'm actually older than you, you know?\"</i>"
                         + "<br/><br/>"
                         + "Face with a pouting Kat, you need to say something to appease her. Maybe some flattery would do?", self, player),
@@ -159,11 +159,11 @@ public class Kat extends BasePersonality {
                             usePower();
                             return true;
                         }),
-                        new CombatSceneChoice("You cute like a housecat! You can be my pet! [Hard Mode]", (c, self, other) -> {
+                        new CombatSceneChoice("You're cute like a housecat! You can be my pet! [Hard Mode]", (c, self, other) -> {
                             c.write("<i>\"MRRrr!\"</i> Kat grows at you, <i>\"You're still underestimating me, nya! "
                                             + "I'll show you I can be just as fast and strong as everyone else!\"</i> "
                                             + "She gets up angrily and stomps away. Okay you <b>PROBABLY</b> shouldn't have done that. "
-                                            + "Her new resolve could be... <i>troubling</i>");
+                                            + "Her new resolve could be... <i>troubling</i>.");
                             useSpeed();
                             usePower();
                             character.getGrowth().extraAttributes += 1;
@@ -187,7 +187,7 @@ public class Kat extends BasePersonality {
                 Arrays.asList(
                         new CombatSceneChoice("Continue sniffing her", (c, self, other) -> {
                             c.write("You ignore Kat's invitation, causing her to huff angrily. It hardly bothers you though, when your head is full of "
-                                            + "Kat's inticing pheromones. You lift Kat's arm above her head and plunge your nose into her armpit. "
+                                            + "Kat's enticing pheromones. You lift Kat's arm above her head and plunge your nose into her armpit. "
                                             + "She smells wonderful! The complex aroma is difficult to describe, containing hints of musk, cinnamon "
                                             + "and good old fashioned female arousal. "
                                             + "<br/><br/>"
@@ -208,7 +208,7 @@ public class Kat extends BasePersonality {
                             return true;
                         }),
                         new CombatSceneChoice("Fuck her like she asked", (c, self, other) -> {
-                            c.write(Global.format("Well you're not one to refuse a lady. Holding Kat's lovely legs above your shoulders, you slam into her drentch snatch. "
+                            c.write(Global.format("Well you're not one to refuse a lady. Holding Kat's lovely legs above your shoulders, you slam into her drenched snatch. "
                                             + "She screeches at your sudden intrusion, but soon her voice mellows out to sweet moans as you pound her with reckless abandon. "
                                             + "The two of you spend a while just enjoying the sensations of your bodys meeting again and again; her velvety wetness against your rockhard pole. "
                                             + "Alas all good things have to come to an end. With a final few pumps, you ejaculate your thick cum into the petite girl, eliciting a pleasant purr from her. "

@@ -43,6 +43,12 @@ public class Pheromones extends Horny {
         flag(Stsflag.pheromones);
         flag(Stsflag.debuff);
         flag(Stsflag.purgable);
+        if (sourceCharacter.has(Trait.PiercingOdor)) {
+            flag(Stsflag.piercingOdor);
+            if (!affected.has(Trait.calm)) {
+                setMagnitude(getMagnitude() * 1.25f);
+            }
+        }
     }
 
     @Override

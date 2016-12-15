@@ -1,3 +1,10 @@
+2.4.4.1
+Bug fixes:
+- Typos (reports courtesy of dndw)
+- Actually implemented the Piercing Odor trait
+- Untamed now only flips sexual positions when you are in a submissive position.
+	- Also increase chance to 25%
+
 2.4.4
 New:
 - Added specializations for Kat.
