@@ -19,6 +19,8 @@ import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.skills.strategy.OralStrategy;
+import nightgames.skills.strategy.BreastStrategy;
 import nightgames.skills.strategy.NurseStrategy;
 import nightgames.start.NpcConfiguration;
 import nightgames.status.Energized;
@@ -46,6 +48,9 @@ public class Cassie extends BasePersonality {
     public void applyStrategy(NPC self) {
         self.plan = Plan.hunting;
         self.mood = Emotion.confident;
+        
+        self.addPersonalStrategy(new OralStrategy());
+        self.addPersonalStrategy(new BreastStrategy());
         self.addPersonalStrategy(new NurseStrategy());
     }
 
