@@ -179,8 +179,8 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                 c.write(self, Global.format(
                                 "As soon as you penetrate {self:name-do}, you realize it was a bad idea. While it looks innocuous enough, {self:name-possessive} {self:body-part:pussy} "
                                                 + "feels like pure ecstasy. You're not sure why you thought fucking a bonafide sex goddess was a good idea. "
-                                                + "{self:SUBJECT} isn't even moving yet, but warm walls of flesh kneeds your cock ceaselessly while her perfectly trained vaginal muscles constrict and "
-                                                + "relax around your dick bringing you waves of pleasure.",
+                                                + "{self:SUBJECT} isn't even moving yet, but warm walls of flesh kneed your cock ceaselessly while her perfectly trained vaginal muscles constrict and "
+                                                + "relax around your dick, bringing you waves of pleasure.",
                                 self, opponent));
             }
         } else if (countsAs(self, gooey) && target.isErogenous()) {
@@ -214,7 +214,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
         if (countsAs(self, plant) && damage > opponent.getArousal()
                                                         .max()
                         / 5 && Global.random(4) == 0) {
-            c.write(self, String.format("An intoxicating scent emanating from %s %s leaves %s in a trance!.",
+            c.write(self, String.format("An intoxicating scent emanating from %s %s leaves %s in a trance!",
                             self.possessivePronoun(), describe(self), opponent.directObject()));
         }
         if (countsAs(self, feral)) {
@@ -326,7 +326,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
             } else {
                 if (!self.human()) {
                     c.write(self, Global.format(
-                                    "As you thrust into {self:name-possessive} pussy, hundreds of tentacles squirms against the motions of your cock, "
+                                    "As you thrust into {self:name-possessive} pussy, hundreds of tentacles squirm against the motions of your cock, "
                                                     + "making each motion feel like it will push you over the edge.",
                                     self, opponent));
                 } else {
@@ -392,7 +392,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                     strength = 10 + self.get(Attribute.Arcane) / 4;
                 } else {
                     message = self.nameOrPossessivePronoun() + " tattoos surrounding " + self.possessivePronoun()
-                                    + " vagina lights up with arcane energy as " + opponent.subjectAction("are", "is")
+                                    + " vagina light up with arcane energy as " + opponent.subjectAction("are", "is")
                                     + " inside " + self.directObject() + ", channeling some of "
                                     + opponent.possessivePronoun() + " energies back to its master.";
                     strength = 5 + self.get(Attribute.Arcane) / 6;
@@ -521,7 +521,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
             c.write(self, Global.format(
                             "{self:NAME-POSSESSIVE} " + fullDescribe(self)
                                             + " churns against {other:name-possessive} cock, "
-                                            + "seemingly with a mind of its own. Warm waves of flesh rubs against {other:possessive} shaft, elliciting groans of pleasure from {other:direct-object}.",
+                                            + "seemingly with a mind of its own. Warm waves of flesh rub against {other:possessive} shaft, elliciting groans of pleasure from {other:direct-object}.",
                             self, opponent));
             opponent.body.pleasure(self, this, otherOrgan, 10, c);
         }
@@ -596,7 +596,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
     public void onOrgasm(Combat c, Character self, Character opponent) {
         if (countsAs(self, feral)) {
             c.write(self, Global.format(
-                            "As {self:SUBJECT-ACTION:cum|cums} hard, an literal explosion of pheromones hits {other:name-do}. {other:POSSESSIVE} entire body flushes in arousal; {other:subject} better finish this fast!",
+                            "As {self:SUBJECT-ACTION:cum|cums} hard, a literal explosion of pheromones hits {other:name-do}. {other:POSSESSIVE} entire body flushes in arousal; {other:subject} better finish this fast!",
                             self, opponent));
             opponent.add(c, Pheromones.getWith(self, opponent, 10, 5, " orgasmic pheromones"));
         }
