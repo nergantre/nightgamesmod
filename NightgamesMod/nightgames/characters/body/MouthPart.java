@@ -64,7 +64,7 @@ public class MouthPart extends GenericBodyPart {
                                     "As {other:name-possessive} " + fluid
                                                     + " flow down your throat, your entire mind fogs up. "
                                                     + "You forget where you are, why you're here, and what you're doing. "
-                                                    + "The only thing left in you is an primal need to obtain more of {other:possessive} fluids.",
+                                                    + "The only thing left in you is a primal need to obtain more of {other:possessive} fluids.",
                                     self, opponent)));
                 } else {
                     c.write(self, Global.capitalizeFirstLetter(Global.format(
