@@ -162,12 +162,6 @@ public class Global {
     public static final Path COMBAT_LOG_DIR = new File("combatlogs").toPath();
 
     public Global(boolean headless) {
-        debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
-        debug[DebugFlags.DEBUG_STRATEGIES.ordinal()] = true;
-        debug[DebugFlags.DEBUG_DAMAGE.ordinal()] = true;
-        debug[DebugFlags.DEBUG_PET.ordinal()] = true;
-        debug[DebugFlags.DEBUG_ADDICTION.ordinal()] = true;
-
         //debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
         rng = new Random();
         flags = new HashSet<>();
