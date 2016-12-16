@@ -266,6 +266,6 @@ public abstract class Addiction extends Status {
     }
 
     public boolean wasCausedBy(Character target) {
-        return target.getType().equals(cause.getType());
+        return target != null && target.getType().equals(cause.getType());
     }
 }

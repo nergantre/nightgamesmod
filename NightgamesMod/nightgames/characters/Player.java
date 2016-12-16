@@ -78,14 +78,16 @@ public class Player extends Character {
         finishCharacter(pickedTraits, selectedAttributes);
     }
 
-    public Character clone() throws CloneNotSupportedException {
-        Player clone = (Player) super.clone();
-        clone.addictions = new ArrayList<>();
-        for (Addiction addiction : addictions) {
-            clone.addictions.add((Addiction) addiction.instance(clone, null));
+    @Override
+    public void finishClone(Character other) {
+        super.finishClone(other);
+        List<Addiction> oldaddictions = addictions;
+        addictions = new ArrayList<>();
+        for (Status s : oldaddictions) {
+            addictions.add((Addiction)s.instance(this, other));
         }
-        return clone;
     }
+
     public void applyBasicStats(Character self) {
         self.getStamina().setMax(80);
         self.getArousal().setMax(80);

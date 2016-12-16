@@ -3585,13 +3585,11 @@ public abstract class Character extends Observable implements Cloneable {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (o == null || getClass() != o.getClass())
+        if (o == null || !getClass().equals(o.getClass()))
             return false;
 
         Character character = (Character) o;
-
         return getType().equals(character.getType()) && name.equals(character.name);
-
     }
 
     @Override public int hashCode() {

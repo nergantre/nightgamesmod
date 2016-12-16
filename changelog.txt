@@ -1,3 +1,7 @@
+2.4.4.2
+Bug fixes:
+- fixed a bug that was causing consistent crashes when the player was inflicted with dominance addiction (may affect other addictions too)
+
 2.4.4.1
 Bug fixes:
 - Typos (reports courtesy of dndw)

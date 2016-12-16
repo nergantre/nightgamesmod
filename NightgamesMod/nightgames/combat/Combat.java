@@ -1074,9 +1074,9 @@ public class Combat extends Observable implements Cloneable {
             if (!getStance().prone(p)) {
                 if (getStance().inserted() && getStance().dom(other)) {
                     if (p.human()) {
-                        write("Your legs give out, but " + other.name() + " holds you up.");
+                        write(p, "Your legs give out, but " + other.name() + " holds you up.");
                     } else {
-                        write(String.format("%s slumps in %s arms, but %s %s %s to keep %s from collapsing.",
+                        write(p, String.format("%s slumps in %s arms, but %s %s %s to keep %s from collapsing.",
                                         p.subject(), other.nameOrPossessivePronoun(),
                                         other.pronoun(), other.action("support"), p.directObject(),
                                         p.directObject()));
@@ -1084,9 +1084,9 @@ public class Combat extends Observable implements Cloneable {
                 } else {
                     setStance(new StandingOver(other, p), null, false);
                     if (p.human()) {
-                        write("You don't have the strength to stay on your feet. You slump to the floor.");
+                        write(p, "You don't have the strength to stay on your feet. You slump to the floor.");
                     } else {
-                        write(p.name() + " drops to the floor, exhausted.");
+                        write(p, p.name() + " drops to the floor, exhausted.");
                     }
                 }
                 p.loseWillpower(this, Math.min(p.getWillpower()
@@ -1095,11 +1095,11 @@ public class Combat extends Observable implements Cloneable {
             }
             if (p.human() && p instanceof Player && other.has(Trait.dominatrix)) {
                 if (((Player)p).hasAddiction(AddictionType.DOMINANCE)) {
-                    write(String.format("Being dominated by %s again reinforces your"
+                    write(other, String.format("Being dominated by %s again reinforces your"
                                     + " submissiveness towards %s.", other.getName(),
                                     other.directObject()));
                 } else {
-                    write(String.format("There's something about the way %s knows just"
+                    write(other, String.format("There's something about the way %s knows just"
                                     + " how and where to hurt you which some part of your"
                                     + " psyche finds strangely appealing. You find yourself"
                                     + " wanting more.", other.getName()));
@@ -1406,7 +1406,7 @@ public class Combat extends Observable implements Cloneable {
         if (self.equals(p2) || self.isPetOf(p2)) {
             return p1;
         }
-        System.err.println("Tried  to get an opponent for " + self.getName() + " which does not exist in combat.");
+        System.err.println("Tried to get an opponent for " + self.getName() + " which does not exist in combat.");
         return Global.noneCharacter();
     }
 
